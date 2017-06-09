@@ -10,11 +10,15 @@ using static Nuke.Core.EnvironmentInfo;
 
 class DefaultBuild : GitHubBuild
 {
+    // This is the application entry point for the build.
+    // It also defines the default target to execute.
     public static void Main () => Execute<DefaultBuild>(x => x.Compile);
 
     Target Restore => _ => _
             .Executes(() =>
             {
+                // You can remove either one of the restore tasks as needed.
+
                 NuGetRestore(SolutionFile);
 
                 if (MSBuildVersion == Nuke.Common.Tools.MSBuild.MSBuildVersion.VS2017)
@@ -26,6 +30,7 @@ class DefaultBuild : GitHubBuild
             .Executes(() => MSBuild(s => DefaultSettings.MSBuildCompile
                     .SetMSBuildVersion(MSBuildVersion)));
 
+    // If you have xproj-based projects, you need to downgrade to VS2015.
     MSBuildVersion? MSBuildVersion =>
             !IsUnix
                 ? GlobFiles(SolutionDirectory, "*.xproj").Any()
