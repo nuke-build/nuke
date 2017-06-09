@@ -9,7 +9,7 @@ using static Nuke.Common.Tools.NuGet.NuGetTasks;
 using static Nuke.Core.EnvironmentInfo;
 
 // ReSharper disable CheckNamespace
-class DefaultBuild : Build
+class DefaultBuild : GitHubBuild
 {
     public static void Main () => Execute<DefaultBuild> (x => x.Compile);
 
