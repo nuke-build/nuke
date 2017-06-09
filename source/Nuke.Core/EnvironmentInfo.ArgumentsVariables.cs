@@ -7,14 +7,16 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Core;
 using Nuke.Core.Execution;
+
+[assembly: IconClass(typeof(EnvironmentInfo), "chip")]
 
 namespace Nuke.Core
 {
     [PublicAPI]
     [DebuggerNonUserCode]
     [DebuggerStepThrough]
-    [IconClass("chip")]
     public static partial class EnvironmentInfo
     {
         /// Provides access to an environment variable.

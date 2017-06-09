@@ -9,13 +9,15 @@ using System.Linq;
 using System.Net;
 using JetBrains.Annotations;
 using Nuke.Common.FileSystem;
+using Nuke.Common.Ftp;
 using Nuke.Core;
 using Nuke.Core.Execution;
+
+[assembly: IconClass(typeof(FtpTasks), "earth")]
 
 namespace Nuke.Common.Ftp
 {
     [PublicAPI]
-    [IconClass("earth")]
     public static class FtpTasks
     {
         public static void FtpUploadDirectoryRecursively (string directory, string hostRoot, NetworkCredential networkCredential)

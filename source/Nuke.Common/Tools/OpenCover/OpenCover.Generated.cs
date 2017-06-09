@@ -12,11 +12,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+[assembly: IconClass(typeof(Nuke.Common.Tools.OpenCover.OpenCoverTasks), "shield2")]
+
 namespace Nuke.Common.Tools.OpenCover
 {
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    [IconClass("shield2")]
     public static partial class OpenCoverTasks
     {
         static partial void PreProcess (OpenCoverSettings openCoverSettings);

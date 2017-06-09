@@ -18,7 +18,6 @@ namespace Nuke.Core
     /// Base class for build definitions.
     /// </summary>
     [PublicAPI]
-    [IconClass("star-full")]
     public abstract class Build
     {
         private const string c_configFile = ".nuke";

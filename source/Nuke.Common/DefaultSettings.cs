@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common;
 using Nuke.Common.Tools.GitLink;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.InspectCode;
@@ -12,13 +13,14 @@ using Nuke.Core;
 using Nuke.Core.Execution;
 using Nuke.Core.Tooling;
 
+[assembly: IconClass (typeof (DefaultSettings), "equalizer")]
+
 namespace Nuke.Common
 {
     /// <summary>
     /// Provides a variety of best-practice settings.
     /// </summary>
     [PublicAPI]
-    [IconClass("equalizer")]
     public class DefaultSettings
     {
         public static MSBuildSettings MSBuildRestore => new MSBuildSettings ()

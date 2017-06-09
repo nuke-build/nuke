@@ -106,7 +106,7 @@ public static class Documentation
 
     static string GetIconClassText (this Type type)
     {
-        var iconClass = type.GetAttribute<IconClassAttribute>()?.ConstructorArguments.Single().Value.ToString();
+        var iconClass = type.GetAttribute<IconClassAttribute>()?.ConstructorArguments[index: 1].Value.ToString();
         if (iconClass != null)
             return iconClass;
         if (type.IsEntryType())
@@ -119,5 +119,8 @@ public static class Documentation
 
     [CanBeNull]
     static CustomAttributeData GetAttribute<T> (this Type type)
-        => type.GetCustomAttributesData().SingleOrDefault(x => x.AttributeType.Name == typeof(T).Name);
+        => type.GetCustomAttributesData().SingleOrDefault(x => x.AttributeType.Name == typeof(T).Name)
+           ?? type.Assembly.GetCustomAttributesData()
+                   .Where(x => x.AttributeType.Name == typeof(T).Name)
+                   .SingleOrDefault(x => ((Type) x.ConstructorArguments.First().Value).Name == type.Name);
 }

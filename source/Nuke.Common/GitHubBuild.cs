@@ -10,7 +10,6 @@ using JetBrains.Annotations;
 using Nuke.Common.Tools.Git;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Core;
-using Nuke.Core.Execution;
 
 namespace Nuke.Common
 {
@@ -19,7 +18,6 @@ namespace Nuke.Common
     /// </summary>
     [PublicAPI]
     [SuppressMessage ("ReSharper", "VirtualMemberNeverOverridden.Global")]
-    [IconClass ("star-full")]
     public abstract class GitHubBuild : Build
     {
         public new static GitHubBuild Instance { get; private set; }

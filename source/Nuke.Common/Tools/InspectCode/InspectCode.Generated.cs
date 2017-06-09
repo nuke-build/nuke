@@ -12,11 +12,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+[assembly: IconClass(typeof(Nuke.Common.Tools.InspectCode.InspectCodeTasks), "code")]
 namespace Nuke.Common.Tools.InspectCode
 {
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    [IconClass("code")]
     public static partial class InspectCodeTasks
     {
         static partial void PreProcess (InspectCodeSettings inspectCodeSettings);

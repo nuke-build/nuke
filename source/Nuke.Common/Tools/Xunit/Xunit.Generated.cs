@@ -12,11 +12,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+[assembly: IconClass(typeof(Nuke.Common.Tools.Xunit.XunitTasks), "bug2")]
 namespace Nuke.Common.Tools.Xunit
 {
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    [IconClass("bug2")]
     public static partial class XunitTasks
     {
         static partial void PreProcess (XunitSettings xunitSettings);

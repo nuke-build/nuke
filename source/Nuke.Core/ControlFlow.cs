@@ -6,17 +6,17 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Runtime.InteropServices;
 using JetBrains.Annotations;
+using Nuke.Core;
 using Nuke.Core.Execution;
+
+[assembly: IconClass(typeof(ControlFlow), "footprint")]
 
 namespace Nuke.Core
 {
     [PublicAPI]
     [DebuggerNonUserCode]
     [DebuggerStepThrough]
-    [IconClass("footprint")]
     public static class ControlFlow
     {
         /// <summary>

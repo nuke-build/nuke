@@ -12,10 +12,11 @@ using Nuke.Core;
 using Nuke.Core.Execution;
 using Nuke.Core.Utilities.Collections;
 
+[assembly: IconClass(typeof(FileSystemInfo), "folder-open")]
+
 namespace Nuke.Common.FileSystem
 {
     [PublicAPI]
-    [IconClass("folder-open")]
     public static class FileSystemTasks
     {
         public static void PrepareCleanDirectory (params string[] directories)

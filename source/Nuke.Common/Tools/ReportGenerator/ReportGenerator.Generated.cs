@@ -12,11 +12,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+[assembly: IconClass(typeof(Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks), "flag3")]
 namespace Nuke.Common.Tools.ReportGenerator
 {
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    [IconClass("flag3")]
     public static partial class ReportGeneratorTasks
     {
         static partial void PreProcess (ReportGeneratorSettings reportGeneratorSettings);

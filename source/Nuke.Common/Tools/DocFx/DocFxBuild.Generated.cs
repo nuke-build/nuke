@@ -12,11 +12,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+[assembly: IconClass(typeof(Nuke.Common.Tools.DocFx.DocFxTasks), "books")]
 namespace Nuke.Common.Tools.DocFx
 {
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    [IconClass("books")]
     public static partial class DocFxTasks
     {
         static partial void PreProcess (DocFxBuildSettings docFxBuildSettings);

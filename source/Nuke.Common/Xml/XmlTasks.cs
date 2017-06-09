@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.Xml;
 using Nuke.Core;
 using Nuke.Core.Execution;
 #if !NETCORE
@@ -14,10 +15,11 @@ using System.Collections;
 using System.Xml.XPath;
 #endif
 
+[assembly: IconClass(typeof(XmlTasks), "file-empty2")]
+
 namespace Nuke.Common.Xml
 {
     [PublicAPI]
-    [IconClass("file-empty2")]
     public static class XmlTasks
     {
         public static IEnumerable<string> XmlPeek (string path, string xpath)

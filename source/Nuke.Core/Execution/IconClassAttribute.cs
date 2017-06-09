@@ -7,13 +7,16 @@ using System.Linq;
 
 namespace Nuke.Core.Execution
 {
+    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public class IconClassAttribute : Attribute
     {
-        public IconClassAttribute (string iconClass)
+        public IconClassAttribute (Type type, string iconClass)
         {
+            Type = type;
             IconClass = iconClass;
         }
 
+        public Type Type { get; }
         public string IconClass { get; }
     }
 }

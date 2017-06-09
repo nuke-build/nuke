@@ -6,16 +6,18 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Core;
 using Nuke.Core.BuildServers;
 using Nuke.Core.Execution;
 using Nuke.Core.Output;
+
+[assembly: IconClass (typeof (Logger), "quill4")]
 
 namespace Nuke.Core
 {
     [PublicAPI]
     [DebuggerNonUserCode]
     [DebuggerStepThrough]
-    [IconClass("quill4")]
     public static class Logger
     {
         /// <summary>

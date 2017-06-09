@@ -12,11 +12,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+[assembly: IconClass(typeof(Nuke.Common.Tools.MSBuild.MSBuildTasks), "download2")]
 namespace Nuke.Common.Tools.MSBuild
 {
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    [IconClass("download2")]
     public static partial class MSBuildTasks
     {
         static partial void PreProcess (MSBuildSettings msbuildSettings);

@@ -12,11 +12,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+[assembly: IconClass(typeof(Nuke.Common.Tools.NuGet.NuGetTasks), "box")]
 namespace Nuke.Common.Tools.NuGet
 {
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    [IconClass("box")]
     public static partial class NuGetTasks
     {
         static partial void PreProcess (NuGetPackSettings nuGetPackSettings);

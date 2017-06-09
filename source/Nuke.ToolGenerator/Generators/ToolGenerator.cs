@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.ToolGenerator.Model;
 using Nuke.ToolGenerator.Writers;
 
@@ -22,12 +23,22 @@ namespace Nuke.ToolGenerator.Generators
                 writer
                         .ForEach(GetNamespaceImports(), x => writer.WriteLine($"using {x};"))
                         .WriteLine(string.Empty)
+                        .WriteLine(GetIconClassAttribute(tool))
                         .WriteLine($"namespace {tool.GetNamespace()}")
                         .WriteBlock(w => w
                                 .WriteAlias()
                                 .WriteDataClasses()
                                 .WriteEnumerations());
             }
+        }
+
+        [CanBeNull]
+        private static string GetIconClassAttribute (Tool tool)
+        {
+            if (tool.Alias?.IconClass == null)
+                return null;
+
+            return $"[assembly: IconClass(typeof({tool.GetNamespace()}.{tool.Alias.GetTaskClassName()}), \"{tool.Alias.IconClass}\")]";
         }
 
         private static ToolWriter WriteAlias (this ToolWriter writer)

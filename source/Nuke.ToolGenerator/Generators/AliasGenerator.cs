@@ -24,7 +24,6 @@ namespace Nuke.ToolGenerator.Generators
             writer
                     .WriteLineIfTrue(!alias.SkipAttributes, "[PublicAPI]")
                     .WriteLineIfTrue(!alias.SkipAttributes, "[ExcludeFromCodeCoverage]")
-                    .WriteLineIfTrue(alias.IconClass != null, $"[IconClass(\"{alias.IconClass}\")]")
                     .WriteLine($"public static partial class {alias.TaskName}Tasks")
                     .WriteBlock(w =>
                     {

@@ -3,16 +3,19 @@
 // https://github.com/matkoch/Nuke/blob/master/LICENSE
 
 using System;
+using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using LibGit2Sharp;
 using Nuke.Core;
 using Nuke.Core.Execution;
+using Nuke.Git;
+
+[assembly: IconClass (typeof (GitTasks), "git")]
 
 namespace Nuke.Git
 {
     [PublicAPI]
-    [IconClass("git")]
     public static class GitTasks
     {
         private static string s_repositoryDirectory;

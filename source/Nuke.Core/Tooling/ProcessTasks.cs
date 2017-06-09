@@ -8,11 +8,13 @@ using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Core.Execution;
+using Nuke.Core.Tooling;
+
+[assembly: IconClass (typeof (ProcessTasks), "terminal")]
 
 namespace Nuke.Core.Tooling
 {
     [PublicAPI]
-    [IconClass("terminal")]
     public static class ProcessTasks
     {
         /// <summary>

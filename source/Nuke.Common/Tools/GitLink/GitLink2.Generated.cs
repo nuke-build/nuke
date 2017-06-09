@@ -12,11 +12,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+[assembly: IconClass(typeof(Nuke.Common.Tools.GitLink.GitLinkTasks), "link")]
 namespace Nuke.Common.Tools.GitLink
 {
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    [IconClass("link")]
     public static partial class GitLinkTasks
     {
         static partial void PreProcess (GitLink2Settings gitLink2Settings);
