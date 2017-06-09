@@ -172,7 +172,7 @@ namespace Nuke.Common.Tools
             return packagesDirectory.AssertNotNull("GetPackagesDirectory != null");
         }
 
-        private static string GetBuildPackagesConfigFile ()
+        public static string GetBuildPackagesConfigFile ()
         {
             var assemblyLocation = EnvironmentInfo.BuildAssembly.Location.AssertNotNull();
             return new DirectoryInfo(Path.GetDirectoryName(assemblyLocation).AssertNotNull())
