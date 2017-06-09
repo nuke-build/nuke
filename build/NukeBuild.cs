@@ -29,7 +29,6 @@ class NukeBuild : GitHubBuild
     public static int Main () => Execute<NukeBuild>(x => x.Pack);
 
     Target Clean => _ => _
-            .OnlyWhen(() => IsServerBuild)
             .Executes(() => PrepareCleanDirectory(OutputDirectory));
 
     Target Restore => _ => _
@@ -56,12 +55,13 @@ class NukeBuild : GitHubBuild
             .OnlyWhen(() => GitVersion.BranchName == "master" || GitVersion.BranchName == "dev")
             .DependsOn(Pack)
             .Executes(() => GlobFiles(OutputDirectory, "*.nupkg")
+                    .Where(x => !x.EndsWith("symbols.nupkg"))
                     .ForEach(x => NuGetPush(s => s
                             .SetVerbosity(NuGetVerbosity.Detailed)
                             .SetTargetPath(x)
                             .SetApiKey(EnsureVariable(IsMasterBranch ? "NUGET_API_KEY" : "MYGET_API_KEY"))
                             .SetSource(IsMasterBranch
-                                ? null /* default */
+                                ? "https://www.nuget.org/api/v2/package"
                                 : "https://www.myget.org/F/nukebuild/api/v2/package"))));
 
     Target Analysis => _ => _
