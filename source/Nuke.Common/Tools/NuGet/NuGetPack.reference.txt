@@ -1,0 +1,85 @@
+
+
+
+Option
+Description
+
+
+
+
+BasePath
+Sets the base path of the files defined in the .nuspec file.
+
+
+Build
+Specifies that the project should be built before building the package.
+
+
+Exclude
+Specifies one or more wildcard patterns to exclude when creating a package.
+
+
+ExcludeEmptyDirectories
+Prevents inclusion of empty directories when building the package.
+
+
+ForceEnglishOutput
+(3.5+) Forces nuget.exe to run using an invariant, English-based culture.
+
+
+Help
+Displays help information for the command.
+
+
+IncludeReferencedProjects
+Indicates that the built package should include referenced projects either as dependencies or as part of the package. If a referenced project has a corresponding .nuspec file that has the same name as the project, then that referenced project is added as a dependency. Otherwise, the referenced project is added as part of the package.
+
+
+MinClientVersion
+Set the minClientVersion attribute for the created package. This value will override the value of the existing minClientVersion attribute (if any) in the .nuspec file.
+
+
+MSBuildPath
+(4.0+) Specifies the path of MSBuild to use with the command, taking precedence over -MSBuildVersion.
+
+
+MSBuildVersion
+(3.2+) Specifies the version of MSBuild to be used with this command. Supported values are 4, 12, 14, 15. By default the MSBuild in your path is picked, otherwise it defaults to the highest installed version of MSBuild.
+
+
+NoDefaultExcludes
+Prevents default exclusion of NuGet package files and files and folders starting with a dot, such as .svn and .gitignore.
+
+
+NoPackageAnalysis
+Specifies that pack should not run package analysis after building the package.
+
+
+OutputDirectory
+Specifies the folder in which the created package is stored. If no folder is specified, the current folder is used.
+
+
+Properties
+Specifies a list of token=value pairs, separated by semicolons, where each occurrence of $token$ in the .nuspec file will be replaced with the given value. Values can be strings in quotation marks.
+
+
+Suffix
+(3.4.4+) Appends a suffix to the internally generated version number, typically used for appending build or other pre-release identifiers. For example, using -suffix nightly will create a package with a version number like 1.2.3-nightly. Suffixes must start with a letter to avoid warnings, errors, and potential incompatibilities with different versions of NuGet and the NuGet Package Manager.
+
+
+Symbols
+Specifies that the package contains sources and symbols. When used with a .nuspec file, this creates a regular NuGet package file and the corresponding symbols package.
+
+
+Tool
+Specifies that the output files of the project should be placed in the tool folder.
+
+
+Verbosity
+Specifies the amount of detail displayed in the output: normal, quiet, detailed (2.5+).
+
+
+Version
+Overrides the version number from the .nuspec file.
+
+

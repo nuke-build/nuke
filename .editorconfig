@@ -1,0 +1,17 @@
+root = true
+
+[*]
+indent_style = space
+insert_final_newline = true
+
+[*.cs]
+indent_size = 4
+
+[*.{js,ts}]
+indent_size = 4
+
+[*.{xml,csproj,targets,props,nuspec,resx}]
+indent_size = 2
+
+[*.json]
+indent_size = 2

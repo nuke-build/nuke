@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net46</TargetFramework>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <IsTool>True</IsTool>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+    <DefineConstants>DEBUG;JETBRAINS_ANNOTATIONS</DefineConstants>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+    <DefineConstants>RELEASE;JETBRAINS_ANNOTATIONS</DefineConstants>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);LOCATOR</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Nuke.Common\Tools\MSBuild\MSBuildPlatform.cs" Link="MSBuildPlatform.cs" />
+    <Compile Include="..\Nuke.Common\Tools\MSBuild\MSBuildToolPathResolver.cs" Link="MSBuildToolPathResolver.cs" />
+    <Compile Include="..\Nuke.Common\Tools\MSBuild\MSBuildVersion.cs" Link="MSBuildVersion.cs" />
+    <Compile Include="..\Nuke.Core\EnvironmentInfo.Platform.cs" Link="EnvironmentInfo.Platform.cs" />
+    <Compile Include="..\Nuke.Core\EnvironmentInfo.SpecialFolder.cs" Link="EnvironmentInfo.SpecialFolder.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="10.4.0">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

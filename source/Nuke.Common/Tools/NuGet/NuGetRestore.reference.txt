@@ -1,0 +1,85 @@
+
+
+
+Option
+Description
+
+
+
+
+ConfigFile
+The NuGet configuration file to apply. If not specified, %AppData%\NuGet\NuGet.Config is used.
+
+
+DirectDownload
+(4.0+) Downloads packages directly without populating caches with any binaries or metadata.
+
+
+DisableParallelProcessing
+Disables restoring multiple packages in parallel.
+
+
+FallbackSource
+(3.2+) A list of package sources to use as fallbacks in case the package isn&#39;t found in the primary or default source.
+
+
+ForceEnglishOutput
+(3.5+) Forces nuget.exe to run using an invariant, English-based culture.
+
+
+Help
+Displays help information for the command.
+
+
+MSBuildPath
+(4.0+) Specifies the path of MSBuild to use with the command, taking precedence over -MSBuildVersion.
+
+
+MSBuildVersion
+(3.2+) Specifies the version of MSBuild to be used with this command. Supported values are 4, 12, 14, 15. By default the MSBuild in your path is picked, otherwise it defaults to the highest installed version of MSBuild.
+
+
+NoCache
+Prevents NuGet from using packages from local machine caches.
+
+
+NonInteractive
+Suppresses prompts for user input or confirmations.
+
+
+OutputDirectory
+Specifies the folder in which packages are installed. If no folder is specified, the current folder is used.
+
+
+PackageSaveMode
+Specifies the types of files to save after package installation: one of nuspec, nupkg, or nuspec;nupkg.
+
+
+PackagesDirectory
+Same as OutputDirectory.
+
+
+Project2ProjectTimeOut
+Timeout in seconds for resolving project-to-project references.
+
+
+Recursive
+(4.0+) Restores all references projects for UWP and .NET Core projects. Does not apply to projects using packages.config.
+
+
+RequireConsent
+Verifies that restoring packages is enabled before downloading and installing the packages. For details, see Package Restore.
+
+
+SolutionDirectory
+Specifies the solution folder. Not valid when restoring packages for a solution.
+
+
+Source
+Specifies list of package sources to use for the restore.
+
+
+Verbosity
+&gt;Specifies the amount of detail displayed in the output: normal, quiet, detailed (2.5+).
+
+

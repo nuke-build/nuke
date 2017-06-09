@@ -1,0 +1,79 @@
+NOTE: When you install OpenCover, either by MSI, NuGet package or ZIP file, there is [supplied documentation](https://github.com/opencover/opencover/blob/master/main/OpenCover.Documentation/Usage.pdf) that is much richer than the wiki pages. 
+
+## Console Application Usage
+### Mandatory Arguments
+* `-target:<path to target>` - The name of the target application or service that will be started; this can also be a path to the target application.
+
+or
+
+* `-?` - show help
+
+or
+
+* `-version` - to print the current version and exit.
+
+### Optional Arguments
+* <a id="coverbytest"/>`-coverbytest:<filter>[;<filter>][;<filter>]` - Gather coverage by test by analysing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request – please raise support request on GitHub.
+* <a id="enableperformancecounters"/>`-enableperformancecounters` - “Administrator” privileges required. Allows the monitoring in “Performance Monitor” of the following values (they are usually cleared at the end of a performance run):
+    1.	“messages remaining on the queue”
+    2.	“number of messages processed”
+* <a id="excludebyattribute"/>`-excludebyattribute:<filter>[;filter][;filter]` - Exclude a class or method by filter(s) that match attributes that have been applied. An `*` can be used as a wildcard.
+* <a id="excludebyfile"/>`-excludebyfile:<filter>[;<filter>][;<filter>]` - Exclude a class (or methods) by filter(s) that match the filenames. An `*` can be used as a wildcard.
+* <a id="excludedirs"/>`-excludedirs:<path to exclude>[;<path to exclude>]` - Assemblies being loaded from these locations will be ignored.
+* <a id="filter"/>`-filter:<filters>` - A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where `(+|-)[Assembly-Filter]Type-Filter`.  For example `+[Open*]*` includes all types in assemblies starting with _Open_, `-[*]Core.*` exclude all types in the _Core_ namespace regardless of the assembly. If no filters are supplied then the default inclusive filter `+[*]*` is applied automatically. See [Understanding Filters](#understanding-filters) for more information.
+    * NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: `-filter:"+[*]* -[A*]Name.*"` 
+    * NOTE: Exclusion filters take precedence over inclusion filters.
+* <a id="hideskipped"/>`-hideskipped:File;Filter;Attribute;MissingPdb;All` - Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches [`–excludebyfile`](#excludebyfile), [`-excludebyattribute`](#excludebyattribute) and [`–filter`](#filter) or where the PDB is missing.  Multiple arguments can be used by separating them with a semicolon, e.g. `-hideskipped:File;MissingPdb;Attribute`
+* <a id="log"/>`-log:[Off|Fatal|Error|Warn|Info|Debug|Verbose|All]` - Change the logging level, default is set to Info. Logging is based on log4net logging levels and appenders.
+* <a id="mergebyhash"/>`-mergebyhash` - Under some scenarios e.g. using MSTest, an assembly may be loaded many times from different locations. This option is used to merge the coverage results for an assembly regardless of where it was loaded assuming the assembly has the same file-hash in each location.
+* <a id="mergeoutput"/>`-mergeoutput` - Allow to merge the results with an existing file (specified by [`-output`](#output) option). So the coverage from the output file will be loaded first (if exists).
+* <a id="nodefaultfilters"/>`-nodefaultfilters` - A list of default exclusion filters are usually applied, this option can be used to turn them off. The default filters are:
+    * `-[System]*`
+    * `-[System.*]*`
+    * `-[mscorlib]*` 
+    * `-[mscorlib.*]*` 
+    * `-[Microsoft.VisualBasic]*`
+* <a id="oldStyle"/>`-oldStyle` - Use old style instrumentation – the instrumentation is not Silverlight friendly and is provided to support environments where mscorlib instrumentation is not working.  _ONLY_ use this option if you are encountering `MissingMethodException` like errors when the code is run under OpenCover. The issue could be down to _ngen /Profile_ of the mscorlib which then interferes with the instrumentation. 
+* <a id="output"/>`-output:<output file>` - The location and name of the output Xml file. If no value is supplied then the current directory will be used and the output filename will be `results.xml`.
+* <a id="register"/>`-register[:user]` - Use this switch to register and de-register the code coverage profiler. Alternatively use the optional `user` argument to do per-user registration where the user account does not have administrative permissions. Alternatively use an administrative account to register the profilers using the _regsvr32_ utility. If you do not want to use the registry entries, use <a id="register"/>`-register[:Path32]` or <a id="register"/>`-register[:Path64]`to let opencover select the profiler for you. Depending on your choice it selects the OpenCoverAssemblyLocation/x86/OpenCover.Profiler.dll or OpenCoverAssemblyLocation/x64/OpenCover.Profiler.dll.
+* <a id="returntargetcode"/>`-returntargetcode[:<opencoverreturncodeoffset>]` - Return the target process return code instead of the OpenCover console return code. Use the offset to return the OpenCover console at a value outside the range returned by the target process. 
+* <a id="safemode"/>`-safemode:[on|off|yes|no]` - enable or disable safemode - default is on/yes. When safemode is on OpenCover will use a common buffer for all threads in an instrumented process and this may have performance impacts depending on your code and its tests. Turning safemode off uses individual buffers for each thread but this may lead to data loss (uncovered code reported) if the runtime shuts down the instrumented process before the profiler has had time to retrieve the data and shunt it to the host for processing. 
+* <a id="searchdirs"/>`-searchdirs:<path to pdbs>[;<path to pdbs>]` - Alternative locations to look for PDBs.
+* <a id="service"/>`-service` - The value provided in the target parameter is the name of a service rather than a name of a process. “Administrator” privileges recommended. 
+* <a id="showunvisited"/>`-showunvisited` - Show a list of unvisited methods and classes after the coverage run is finished and the results are presented.
+* <a id="skipautoprops"/>`-skipautoprops` - Neither track nor record auto-implemented properties. That is, skip getters and setters like these: `public bool Service { get; set; }`
+* <a id="targetargs"/>`-targetargs:<target arguments>` - Arguments to be passed to the target process.
+* <a id="targetdir"/>`-targetdir:<target directory>` - The path to the target directory; if the target argument already contains a path then this argument can be used to provide an alternate path where PDB files may be found. 
+* <a id="threshold"/>`-threshold:<max visit count>` - Limits the number of visit counts recorded/reported for an instrumentation point. May have some performance gains as it can reduce the number of messages sent from the profiler. Coverage results should not be affected but will have an obvious impact on the Visit Counts reported.
+
+
+### Notes on Spaces in Arguments
+* If your argument requires spaces then use quotes i.e. `-targetargs:"arg1 arg2 arg3"`
+* If your argument needs to escape quotes i.e. to pass arguments with spaces to that target process then you can use `\"`  i.e. `-targetargs:"\"c:\program files\" xyz"`
+* When using PowerShell and your argument requires spaces then the quotes must be before the argument name i.e. `"-targetargs:arg1 arg2 arg3"`. Interestingly this format can be used for a command file as well.
+* If you are using NUnit to run your tests, NUnit is your target application. The dll that contains the unit tests foo the Application Under Test (AUT) goes in the **targetargs** argument because NUnit is responsible for running it. For example:
+```
+OpenCover.Console.exe -target:"C:\Program Files (x86)\NUnit 2.6\bin\nunit-console.exe" 
+  -targetargs:"/nologo /noshadow C:\AUT\Ihavethetests.dll" -filter:"+[*]* -[Ihavethetests*]*" -register:user
+```
+
+### <a id="understandingfilters"/>Understanding Filters
+Filters are core to understanding how OpenCover works and how it is determined which assemblies are to be instrumented to provide coverage results.
+
+Filters can be inclusive and exclusive represented by `+` and `–` prefix respectively, where exclusive (`-`) filters take precedence over inclusive (`+`) filters.
+
+The next part of a filter is the module-filter and usually this happens to be the same name as the assembly but without the extension and this rule will normally apply 99.999% of the time. If this filter isn’t working look in the coverage XML and compare the found `<ModuleName/>` entries against the filter.
+The final part of the filter is the class-filter and this also includes the namespace part of the class as well.
+
+**Examples**
+
+* `+[Open*]* -[Open.Test]*`    
+    Include all classes in modules starting with Open.* but exclude all those in modules Open.Test.
+
+* `+[Open]* -[Open]Data.*`    
+    Include all classes in module Open but exclude all classes in the Data namespace.
+
+* `+[Open]* -[Open]*Attribute`    
+    Include all classes in module Open but exclude all classes ending with Attribute.
+
+**Note**: This filters are case-sensitive. 
