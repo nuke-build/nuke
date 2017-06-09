@@ -114,19 +114,20 @@ namespace Nuke.Core.Tooling
             if (redirectOutput)
             {
                 output = new BlockingCollection<Output>();
-                process.OutputDataReceived += (s, e) => AddNotNullData(output, e, OutputType.Std);
-                process.ErrorDataReceived += (s, e) => AddNotNullData(output, e, OutputType.Err);
+
+                void AddNotNullData (DataReceivedEventArgs e, OutputType outputType)
+                {
+                    if (e.Data != null)
+                        output.Add (new Output { Text = e.Data, Type = outputType });
+                }
+
+                process.OutputDataReceived += (s, e) => AddNotNullData(e, OutputType.Std);
+                process.ErrorDataReceived += (s, e) => AddNotNullData(e, OutputType.Err);
                 process.BeginOutputReadLine();
                 process.BeginErrorReadLine();
             }
 
             return new Process2(process, timeout, output, outputFilter ?? (x => x));
-        }
-
-        private static void AddNotNullData (BlockingCollection<Output> output, DataReceivedEventArgs e, OutputType outputType)
-        {
-            if (e.Data != null)
-                output.Add(new Output { Text = e.Data, Type = outputType });
         }
 
         private static void PrintEnvironmentVariables (ProcessStartInfo startInfo)
