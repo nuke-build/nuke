@@ -13,7 +13,7 @@ namespace Nuke.Common.Tools.OpenCover
     {
         public static void OpenCover (OpenCoverSettings openCoverSettings, ProcessSettings processSettings = null)
         {
-            var testAction = openCoverSettings.TestAction.AssertNotNull("testAction != null");
+            var testAction = openCoverSettings.TestAction.NotNull("testAction != null");
             var capturedArguments = ProcessManager.Instance.CaptureProcessStartInfo(testAction);
             openCoverSettings = openCoverSettings
                     .SetTargetPath(capturedArguments.ToolPath)

@@ -24,7 +24,7 @@ namespace Nuke.MSBuildLocator
 
         [AssertionMethod]
         [ContractAnnotation("obj: null => halt")]
-        public static T AssertNotNull<T> ([AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull] this T obj, string text = null)
+        public static T NotNull<T> ([AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull] this T obj, string text = null)
             where T : class
         {
             if (obj == null)

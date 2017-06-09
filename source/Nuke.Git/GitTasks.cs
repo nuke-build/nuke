@@ -47,7 +47,7 @@ namespace Nuke.Git
 
         public static void GitPush (string branchName)
         {
-            UsingRepository(x => x.Network.Push(x.Branches[branchName].AssertNotNull("branch != null"), PushOptions));
+            UsingRepository(x => x.Network.Push(x.Branches[branchName].NotNull("branch != null"), PushOptions));
         }
 
         public static void GitPushRef (string remote, string refSpec)

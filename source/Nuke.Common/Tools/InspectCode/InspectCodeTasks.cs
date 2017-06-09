@@ -31,8 +31,8 @@ namespace Nuke.Common.Tools.InspectCode
         //            continue;
         //        }
 
-        //        var inspectCodeDirectory = Path.GetDirectoryName (inspectCodeSettings.ToolPath).AssertNotNull ();
-        //        var installedPackageName = Path.GetFileName (installedPackage.FileName).AssertNotNull ();
+        //        var inspectCodeDirectory = Path.GetDirectoryName (inspectCodeSettings.ToolPath).NotNull ();
+        //        var installedPackageName = Path.GetFileName (installedPackage.FileName).NotNull ();
         //        File.Copy (installedPackage.FileName, Path.Combine (inspectCodeDirectory, installedPackageName));
         //    }
         //}

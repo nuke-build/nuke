@@ -42,13 +42,13 @@ namespace Nuke.Core.Tooling
 
         public void Add(TKey key, TValue value)
         {
-            var list = (_dictionary[key] = _dictionary.GetValueOrDefault(key, new List<TValue>())).AssertNotNull();
+            var list = (_dictionary[key] = _dictionary.GetValueOrDefault(key, new List<TValue>())).NotNull();
             list.Add(value);
         }
 
         public void AddRange(TKey key, IEnumerable<TValue> values)
         {
-            var list = (_dictionary[key] = _dictionary.GetValueOrDefault(key, new List<TValue>())).AssertNotNull();
+            var list = (_dictionary[key] = _dictionary.GetValueOrDefault(key, new List<TValue>())).NotNull();
             foreach (var value in values)
                 list.Add(value);
         }

@@ -17,7 +17,7 @@ namespace Nuke.Common.Tools.ReSharperWave
         {
             return NuGetPackageResolver.GetLocalInstalledPackages(packagesConfigFile)
                     .SingleOrDefault(x => x.Id.Equals("Wave", StringComparison.OrdinalIgnoreCase))
-                    .AssertNotNull("wavePackage != null")
+                    .NotNull("wavePackage != null")
                     .Version.ToFullString();
         }
     }

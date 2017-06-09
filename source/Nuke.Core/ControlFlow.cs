@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 using Nuke.Core.Execution;
 
@@ -19,12 +20,12 @@ namespace Nuke.Core
     public static class ControlFlow
     {
         /// <summary>
-        /// Checks a condition to be true, calling <see cref="Logger.Warn(string)"/> otherwise.
+        /// Asserts a condition to be true, calling <see cref="Logger.Warn(string)"/> otherwise.
         /// </summary>
-        public static void Check (bool condition, string text)
+        public static void AssertWarn (bool condition, string text)
         {
             if (!condition)
-                Logger.Warn($"Check failed: {text}");
+                Logger.Warn($"Assertion failed: {text}");
         }
 
         /// <summary>
@@ -43,7 +44,7 @@ namespace Nuke.Core
         /// </summary>
         [AssertionMethod]
         [ContractAnnotation("obj: null => halt")]
-        public static T AssertNotNull<T> ([AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull] this T obj, string text = null)
+        public static T NotNull<T> ([AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull] this T obj, string text = null)
             where T : class
         {
             if (obj == null)
@@ -52,10 +53,10 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Checks an object to be not null, calling <see cref="Logger.Fail(string)"/> otherwise.
+        /// Checks an object to be not null, calling <see cref="Logger.Warn(string)"/> otherwise.
         /// </summary>
         [CanBeNull]
-        public static T CheckNotNull<T> ([CanBeNull] this T obj, string text = null)
+        public static T NotNullWarn<T> ([CanBeNull] this T obj, string text = null)
             where T : class
         {
             if (obj == null)
@@ -70,7 +71,7 @@ namespace Nuke.Core
         public static IReadOnlyCollection<T> NotEmpty<T> ([CanBeNull] this IEnumerable<T> enumerable)
             where T : class
         {
-            var collection = enumerable.AssertNotNull("enumerable != null").ToList().AsReadOnly();
+            var collection = enumerable.NotNull("enumerable != null").ToList().AsReadOnly();
             Assert(collection.Count > 0, "collection.Count > 0");
             return collection;
         }
@@ -82,41 +83,76 @@ namespace Nuke.Core
         public static IReadOnlyCollection<T> NoNullItems<T> ([CanBeNull] this IEnumerable<T> enumerable)
             where T : class
         {
-            var collection = enumerable.AssertNotNull("enumerable != null").ToList().AsReadOnly();
+            var collection = enumerable.NotNull("enumerable != null").ToList().AsReadOnly();
             Assert(collection.All(x => x != null), "collection.All(x => x != null)");
             return collection;
         }
 
         /// <summary>
-        /// Executes a given action and suppresses all thrown exceptions while calling <see cref="Logger.Warn(string)"/>.
+        /// Executes a given action and suppresses all errors while delegating them to <see cref="Logger.Warn(string)"/>.
         /// </summary>
-        [ContractAnnotation("defaultValue: notnull => notnull")]
-        [CanBeNull]
-        public static T CatchAll<T> (Expression<Func<T>> func, T defaultValue = null)
-            where T : class
+        public static void SuppressErrors (Action action)
         {
-            try
-            {
-                return func.Compile().Invoke();
-            }
-            catch (Exception exception)
-            {
-                Logger.Warn($"{((MethodCallExpression) func.Body).Method.Name} failed with: {exception.Message}");
-                return defaultValue;
-            }
+            SuppressErrorsIf(condition: true, action: action);
         }
 
         /// <summary>
-        /// Executes a given action and suppresses all thrown exceptions while calling <see cref="Logger.Warn(string)"/>.
+        /// Executes a given action and suppresses all errors while delegating them to <see cref="Logger.Warn(string)"/>.
+        /// </summary>
+        [ContractAnnotation ("defaultValue: notnull => notnull")]
+        [CanBeNull]
+        public static T SuppressErrors<T> (Func<T> action, T defaultValue = default (T))
+        {
+            return SuppressErrorsIf(condition: true, action: action, defaultValue: defaultValue);
+        }
+
+        /// <summary>
+        /// Executes a given action and suppresses all errors while delegating them to <see cref="Logger.Warn(string)"/>.
         /// </summary>
         /// <returns>
         /// Returns an empty collection for convenience.
         /// </returns>
-        public static IEnumerable<T> CatchAll<T> (Expression<Func<IEnumerable<T>>> func)
-            where T : class
+        public static IEnumerable<T> SuppressErrors<T> (Func<IEnumerable<T>> action)
         {
-            return CatchAll<IEnumerable<T>>(func) ?? Enumerable.Empty<T>();
+            return SuppressErrors<IEnumerable<T>>(action) ?? Enumerable.Empty<T>();
         }
+
+        private static void SuppressErrorsIf (bool condition, Action action)
+        {
+            if (!condition)
+                action();
+
+            try
+            {
+                action();
+            }
+            catch (Exception exception)
+            {
+                Logger.Warn(exception.Message);
+            }
+        }
+
+        /// <summary>
+        /// Executes a given action and suppresses all errors while delegating them to <see cref="Logger.Warn(string)"/>.
+        /// </summary>
+        [ContractAnnotation ("defaultValue: notnull => notnull")]
+        [CanBeNull]
+        private static T SuppressErrorsIf<T> (bool condition, Func<T> action, T defaultValue = default(T))
+        {
+            if (!condition)
+                return action();
+
+            try
+            {
+                return action();
+            }
+            catch (Exception exception)
+            {
+                Logger.Warn(exception.Message);
+                return defaultValue;
+            }
+        }
+
 
         //public static void ExecuteWithRetry (Action action, Action cleanup = null, int retryAttempts = 3, int timeoutInSeconds = 3600)
         //{

@@ -47,16 +47,16 @@ namespace Nuke.Common.Tools.Git
         public string Name { get; set; }
 
         /// <summary>A construction of <c>owner/name</c></summary>
-        public string Identifier => $"{Owner.AssertNotNull("Owner != null")}/{Name.AssertNotNull("Repository != null")}";
+        public string Identifier => $"{Owner.NotNull("Owner != null")}/{Name.NotNull("Repository != null")}";
 
         /// <summary>Url in the form of <c>https://endpoint/identifier</c></summary>
-        public string SvnUrl => $"https://{Endpoint.AssertNotNull("Endpoint != Endpoint")}/{Identifier}";
+        public string SvnUrl => $"https://{Endpoint.NotNull("Endpoint != Endpoint")}/{Identifier}";
         /// <summary>Url in the form of <c>https://endpoint/identifier.git</c></summary>
-        public string CloneUrl => $"https://{Endpoint.AssertNotNull("Endpoint != Endpoint")}/{Identifier}.git";
+        public string CloneUrl => $"https://{Endpoint.NotNull("Endpoint != Endpoint")}/{Identifier}.git";
         /// <summary>Url in the form of <c>git://endpoint/identifier.git</c></summary>
-        public string GitUrl => $"git://{Endpoint.AssertNotNull("Endpoint != Endpoint")}/{Identifier}.git";
+        public string GitUrl => $"git://{Endpoint.NotNull("Endpoint != Endpoint")}/{Identifier}.git";
         /// <summary>Url in the form of <c>git@endpoint:identifier.git</c></summary>
-        public string SshUrl => $"git@{Endpoint.AssertNotNull("Endpoint != Endpoint")}:{Identifier}.git";
+        public string SshUrl => $"git@{Endpoint.NotNull("Endpoint != Endpoint")}:{Identifier}.git";
 
         public override string ToString ()
         {

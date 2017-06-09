@@ -63,7 +63,7 @@ namespace Nuke.Common.Tools.MSBuild
         private static Instance GetVs2017Instance (MSBuildPlatform platform, string vs2017Edition)
         {
             var basePath = Path.Combine(
-                EnvironmentInfo.SpecialFolder(SpecialFolders.ProgramFilesX86).AssertNotNull("path1 != null"),
+                EnvironmentInfo.SpecialFolder(SpecialFolders.ProgramFilesX86).NotNull("path1 != null"),
                 $@"Microsoft Visual Studio\2017\{vs2017Edition}\MSBuild\{GetVersionFolder(MSBuildVersion.VS2017)}\Bin");
 
             return new Instance(
@@ -77,7 +77,7 @@ namespace Nuke.Common.Tools.MSBuild
         private static Instance GetVs2013To2015Instance (MSBuildPlatform platform, MSBuildVersion version)
         {
             var basePath = Path.Combine(
-                EnvironmentInfo.SpecialFolder(SpecialFolders.ProgramFilesX86).AssertNotNull("path1 != null"),
+                EnvironmentInfo.SpecialFolder(SpecialFolders.ProgramFilesX86).NotNull("path1 != null"),
                 $@"MSBuild\{GetVersionFolder(version)}\Bin");
 
             return new Instance(

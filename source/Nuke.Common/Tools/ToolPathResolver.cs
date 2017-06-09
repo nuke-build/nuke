@@ -44,18 +44,18 @@ namespace Nuke.Common.Tools
                 ControlFlow.Assert(packageId != null && packageExecutable != null, "packageId != null && packageExecutable != null");
                 var packagesConfigFile = NuGetPackageResolver.GetBuildPackagesConfigFile();
                 var installedPackage = NuGetPackageResolver.GetLocalInstalledPackage(packagesConfigFile, packageId)
-                        .AssertNotNull($"Could not find package '{packageId}' via '{packagesConfigFile}'.");
-                var packageDirectory = Path.GetDirectoryName(installedPackage.FileName).AssertNotNull("packageDirectory != null");
+                        .NotNull($"Could not find package '{packageId}' via '{packagesConfigFile}'.");
+                var packageDirectory = Path.GetDirectoryName(installedPackage.FileName).NotNull("packageDirectory != null");
                 return Directory.GetFiles(packageDirectory, packageExecutable, SearchOption.AllDirectories)
                         .SingleOrDefault()
-                        .AssertNotNull($"Could not find '{packageExecutable}' inside '{packageDirectory}'.");
+                        .NotNull($"Could not find '{packageExecutable}' inside '{packageDirectory}'.");
             }
 
             return EnvironmentInfo.EnsureVariable("PATH")
                     .Split(';')
                     .Select(x => Path.Combine(x, pathExecutable))
                     .SingleOrDefault(File.Exists)
-                    .AssertNotNull($"Could not find '{pathExecutable}' in PATH.");
+                    .NotNull($"Could not find '{pathExecutable}' in PATH.");
         }
     }
 }

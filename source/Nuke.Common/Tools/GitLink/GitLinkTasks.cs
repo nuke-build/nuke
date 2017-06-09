@@ -10,12 +10,12 @@ namespace Nuke.Common.Tools.GitLink
     {
         static partial void PreProcess (GitLink2Settings gitLink2Settings)
         {
-            ControlFlow.Check(gitLink2Settings.ToolPath.Contains("gitlink\\2"), "gitLink2Settings.ToolPath.Contains('gitlink\\2')");
+            ControlFlow.AssertWarn(gitLink2Settings.ToolPath.Contains("gitlink\\2"), "gitLink2Settings.ToolPath.Contains('gitlink\\2')");
         }
 
         static partial void PreProcess (GitLink3Settings gitLink3Settings)
         {
-            ControlFlow.Check (gitLink3Settings.ToolPath.Contains ("gitlink\\3"), "gitLink3Settings.ToolPath.Contains('gitlink\\3')");
+            ControlFlow.AssertWarn (gitLink3Settings.ToolPath.Contains ("gitlink\\3"), "gitLink3Settings.ToolPath.Contains('gitlink\\3')");
         }
     }
 }

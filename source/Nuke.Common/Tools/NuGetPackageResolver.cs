@@ -22,11 +22,11 @@ namespace Nuke.Common.Tools
         {
             packagesConfigFile = packagesConfigFile ?? GetBuildPackagesConfigFile();
             var installedPackage = GetLocalInstalledPackage(packagesConfigFile, packageId)
-                    .AssertNotNull($"Could not find package '{packageId}' via '{packagesConfigFile}'.");
-            var packageDirectory = Path.GetDirectoryName(installedPackage.FileName).AssertNotNull("packageDirectory != null");
+                    .NotNull($"Could not find package '{packageId}' via '{packagesConfigFile}'.");
+            var packageDirectory = Path.GetDirectoryName(installedPackage.FileName).NotNull("packageDirectory != null");
             return Directory.GetFiles(packageDirectory, executableName, SearchOption.AllDirectories)
                     .SingleOrDefault()
-                    .AssertNotNull($"Could not find '{executableName}' inside '{packageDirectory}'.");
+                    .NotNull($"Could not find '{executableName}' inside '{packageDirectory}'.");
         }
 
         [CanBeNull]
@@ -60,10 +60,10 @@ namespace Nuke.Common.Tools
                             IsDedicatedFile(packagesConfigFile)
                                 ? $".//package[@id='{packageId}']/@version"
                                 : $".//PackageReference[@Include='{packageId}']/@Version")
-                        .AssertNotNull("version != null");
+                        .NotNull("version != null");
 
                 var packageData = GetGlobalInstalledPackage(packageId, version, packagesDirectory)
-                    .AssertNotNull($"GetGlobalInstalledPackage({packageId}, {version}, {packagesDirectory}) != null");
+                    .NotNull($"GetGlobalInstalledPackage({packageId}, {version}, {packagesDirectory}) != null");
                 installedPackages.Add(packageData);
 
                 yield return packageData;
@@ -95,7 +95,7 @@ namespace Nuke.Common.Tools
             return packageToCheck.Metadata.GetDependencyGroups()
                     .SelectMany(x => x.Packages)
                     .Select(x => GetGlobalInstalledPackage(x.Id, x.VersionRange, packagesDirectory)
-                            .CheckNotNull($"GetGlobalInstalledPackage({x.Id}, {x.VersionRange}, {packagesDirectory}) != null"))
+                            .NotNullWarn($"GetGlobalInstalledPackage({x.Id}, {x.VersionRange}, {packagesDirectory}) != null"))
                     .WhereNotNull()
                     .Distinct(x => new { x.Id, x.Version });
         }
@@ -157,29 +157,29 @@ namespace Nuke.Common.Tools
             if (!IsDedicatedFile(packagesConfigFile))
                 return Path.Combine(
                     EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile)
-                            .AssertNotNull("EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile) != null"),
+                            .NotNull("EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile) != null"),
                     ".nuget",
                     "packages");
 
             if (Build.Instance != null)
-                return Path.Combine(Path.GetDirectoryName(Build.Instance.SolutionFile).AssertNotNull(), "packages");
+                return Path.Combine(Path.GetDirectoryName(Build.Instance.SolutionFile).NotNull(), "packages");
 
-            var packagesDirectory = new FileInfo(packagesConfigFile).Directory.AssertNotNull()
+            var packagesDirectory = new FileInfo(packagesConfigFile).Directory.NotNull()
                     .DescendantsAndSelf(x => x.Parent)
                     .SingleOrDefault(x => x.GetFiles("*.sln").Any() && x.GetDirectories("packages").Any())
                     ?.FullName;
 
-            return packagesDirectory.AssertNotNull("GetPackagesDirectory != null");
+            return packagesDirectory.NotNull("GetPackagesDirectory != null");
         }
 
         public static string GetBuildPackagesConfigFile ()
         {
-            var assemblyLocation = EnvironmentInfo.BuildAssembly.Location.AssertNotNull();
-            return new DirectoryInfo(Path.GetDirectoryName(assemblyLocation).AssertNotNull())
+            var assemblyLocation = EnvironmentInfo.BuildAssembly.Location.NotNull();
+            return new DirectoryInfo(Path.GetDirectoryName(assemblyLocation).NotNull())
                     .DescendantsAndSelf(x => x.Parent)
                     .Select(x => GetPackageConfigFile(x.FullName))
                     .FirstOrDefault(x => x != null)
-                    .AssertNotNull("GetBuildPackagesConfigFile != null");
+                    .NotNull("GetBuildPackagesConfigFile != null");
         }
 
         private static bool IsDedicatedFile (string packagesConfigFile)

@@ -53,7 +53,7 @@ namespace Nuke.Core
         {
             get
             {
-                var buildAssemblyLocation = BuildAssembly.Location.AssertNotNull("executingAssembly != null");
+                var buildAssemblyLocation = BuildAssembly.Location.NotNull("executingAssembly != null");
                 var rootDirectory = Directory.GetParent(buildAssemblyLocation);
 
                 while (rootDirectory != null && !rootDirectory.GetFiles(c_configFile).Any())
@@ -61,7 +61,7 @@ namespace Nuke.Core
                     rootDirectory = rootDirectory.Parent;
                 }
 
-                return rootDirectory?.FullName.AssertNotNull(
+                return rootDirectory?.FullName.NotNull(
                     $"Could not locate {c_configFile} file while traversing up from {buildAssemblyLocation}.");
             }
         }

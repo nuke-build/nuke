@@ -32,17 +32,17 @@ namespace Nuke.Core
             return (T) (Convert<T>(value) ?? default(T));
         }
 
-        /// Provides access to an environment variable using <see cref="ControlFlow.AssertNotNull{T}"/>.
+        /// Provides access to an environment variable using <see cref="ControlFlow.NotNull{T}"/>.
         public static string EnsureVariable (string name)
         {
-            return Variable(name).AssertNotNull($"Variable({name}) != null");
+            return Variable(name).NotNull($"Variable({name}) != null");
         }
 
-        /// Provides access to a converted variable using <see cref="ControlFlow.AssertNotNull{T}"/>.
+        /// Provides access to a converted variable using <see cref="ControlFlow.NotNull{T}"/>.
         public static T EnsureVariable<T> (string name)
         {
             var value = EnsureVariable(name);
-            return (T) Convert<T>(value).AssertNotNull($"Convert<{typeof (T)}>(EnsureVariable({name})) != null");
+            return (T) Convert<T>(value).NotNull($"Convert<{typeof (T)}>(EnsureVariable({name})) != null");
         }
 
 
@@ -65,10 +65,10 @@ namespace Nuke.Core
             return (T) (Convert<T>(value) ?? default(T));
         }
 
-        /// Provides access to a command line argument using <see cref="ControlFlow.AssertNotNull{T}"/>.
+        /// Provides access to a command line argument using <see cref="ControlFlow.NotNull{T}"/>.
         public static string EnsureArgument (string name)
         {
-            return Argument(name).AssertNotNull($"Argument({name}) != null");
+            return Argument(name).NotNull($"Argument({name}) != null");
         }
 
         /// Checks if the specified switch was passed.
@@ -79,11 +79,11 @@ namespace Nuke.Core
                               || x.Equals($"-{name}", StringComparison.OrdinalIgnoreCase));
         }
 
-        /// Provides access to a converted command line argument using <see cref="ControlFlow.AssertNotNull{T}"/>.
+        /// Provides access to a converted command line argument using <see cref="ControlFlow.NotNull{T}"/>.
         public static T EnsureArgument<T> (string name)
         {
             var value = EnsureArgument(name);
-            return (T) Convert<T>(value).AssertNotNull($"Convert<{typeof(T)}>(EnsureArgument({name})) != null");
+            return (T) Convert<T>(value).NotNull($"Convert<{typeof(T)}>(EnsureArgument({name})) != null");
         }
 
 
