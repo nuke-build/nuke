@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -47,6 +48,7 @@ namespace Nuke.Core.Tooling
                 toolSettings.ToolPath,
                 arguments.RenderForExecution(),
                 toolSettings.WorkingDirectory,
+                processSettings.EnvironmentVariables,
                 processSettings.ExecutionTimeout,
                 processSettings.RedirectOutput,
                 processSettings.RedirectOutput ? new Func<string, string>(arguments.Filter) : null);
@@ -57,6 +59,7 @@ namespace Nuke.Core.Tooling
             string toolPath,
             string arguments = null,
             string workingDirectory = null,
+            IReadOnlyDictionary<string, string> environmentVariables = null,
             int? timeout = null,
             bool redirectOutput = false,
             Func<string, string> outputFilter = null)
@@ -64,7 +67,13 @@ namespace Nuke.Core.Tooling
             ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
             OutputSink.Info($"> {toolPath} {arguments}");
 
-            return StartProcessInternal(toolPath, arguments, workingDirectory, timeout, redirectOutput, outputFilter ?? (x => x));
+            return StartProcessInternal(toolPath,
+                arguments,
+                workingDirectory,
+                environmentVariables,
+                timeout,
+                redirectOutput,
+                outputFilter ?? (x => x));
         }
 
         [CanBeNull]
@@ -72,6 +81,7 @@ namespace Nuke.Core.Tooling
             string toolPath,
             [CanBeNull] string arguments,
             [CanBeNull] string workingDirectory,
+            [CanBeNull] IReadOnlyDictionary<string, string> environmentVariables,
             int? timeout,
             bool redirectOutput,
             [CanBeNull] Func<string, string> outputFilter)
@@ -89,8 +99,12 @@ namespace Nuke.Core.Tooling
                                 UseShellExecute = false
                             };
 
-            // TODO: environment variables
-            PrintEnvironmentVariables(startInfo);
+            if (environmentVariables != null)
+            {
+                foreach (var pair in environmentVariables)
+                    startInfo.Environment[pair.Key] = pair.Value;
+            }
+            PrintEnvironmentVariables (startInfo);
 
             var process = Process.Start(startInfo);
             if (process == null)

@@ -3,6 +3,7 @@
 // https://github.com/matkoch/Nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 
@@ -19,6 +20,7 @@ namespace Nuke.Core.Tooling
             string toolPath,
             string arguments = null,
             string workingDirectory = null,
+            IReadOnlyDictionary<string, string> environmentVariables = null,
             int? timeout = null,
             bool redirectOutput = false,
             Func<string, string> outputFilter = null);
