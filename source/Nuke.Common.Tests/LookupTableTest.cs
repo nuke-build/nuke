@@ -49,7 +49,7 @@ namespace Nuke.Common.Tests
 
     public class MSBuildSettingsTest : SettingsTestBase<MSBuildSettings>
     {
-        [Fact]
+        //[Fact]
         public void Test ()
         {
             var s = new MSBuildSettings();
