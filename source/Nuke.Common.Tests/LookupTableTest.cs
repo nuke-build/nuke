@@ -55,7 +55,6 @@ namespace Nuke.Common.Tests
             var s = new MSBuildSettings();
 
             s = Modify(() => s.AddTarget("rebuild"));
-            s = Modify(() => s.DisableLogo());
             s = Modify(() => s.AddProperty("runCodeAnalysis", "true"));
 
             Throws(() => s.SetTargetPath("abc"));

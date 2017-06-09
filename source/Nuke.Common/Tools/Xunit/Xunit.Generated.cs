@@ -52,20 +52,20 @@ namespace Nuke.Common.Tools.Xunit
         internal LookupTable<string, string> TargetAssemblyWithConfigsInternal { get; set; } = new LookupTable<string, string>(StringComparer.OrdinalIgnoreCase);
         /// <summary><p>The report file output path.</p></summary>
         public virtual string OutputPath { get; internal set; }
-        /// <summary><p>Show the copyright message.</p></summary>
-        public virtual bool Logo { get; internal set; } = true;
-        /// <summary><p>Output results with colors.</p></summary>
-        public virtual bool Color { get; internal set; } = true;
-        /// <summary><p>Use app domains to run test code.</p></summary>
-        public virtual bool AppDomain { get; internal set; } = true;
+        /// <summary><p>Do not show the copyright message.</p></summary>
+        public virtual bool NoLogo { get; internal set; }
+        /// <summary><p>Do not output results with colors.</p></summary>
+        public virtual bool NoColor { get; internal set; }
+        /// <summary><p>Do not use app domains to run test code.</p></summary>
+        public virtual bool NoAppDomain { get; internal set; }
         /// <summary><p>Convert skipped tests into failures.</p></summary>
         public virtual bool FailSkips { get; internal set; }
         /// <summary><p>Set parallelization based on option:<ul><li><b>none:</b> turn off all parallelization</li><li><b>collections:</b> only parallelize collections</li><li><b>assemblies:</b> only parallelize assemblies</li><li><b>all:</b> parallelize assemblies &amp; collections</li></ul></p></summary>
         public virtual ParallelOption? Parallel { get; internal set; }
         /// <summary><p>Maximum thread count for collection parallelization:<br/><ul><li><b>default:</b> run with default (1 thread per CPU thread)</li><li><b>unlimited:</b> run with unbounded thread count</li><li><b>(number):</b> limit task thread pool size to 'count'</li></ul></p></summary>
         public virtual int? MaxThreads { get; internal set; }
-        /// <summary><p>Shadow copy assemblies.</p></summary>
-        public virtual bool ShadowCopying { get; internal set; } = true;
+        /// <summary><p>Do not shadow copy assemblies.</p></summary>
+        public virtual bool NoShadowCopying { get; internal set; }
         /// <summary><p>Wait for input after completion.</p></summary>
         public virtual bool Wait { get; internal set; }
         /// <summary><p>Enable diagnostics messages for all test assemblies.</p></summary>
@@ -89,8 +89,8 @@ namespace Nuke.Common.Tools.Xunit
         /// <summary><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
         public virtual IReadOnlyList<string> Namespaces => NamespacesInternal.AsReadOnly();
         internal List<string> NamespacesInternal { get; set; } = new List<string>();
-        /// <summary><p>Allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p></summary>
-        public virtual bool AutoReporters { get; internal set; } = true;
+        /// <summary><p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p></summary>
+        public virtual bool NoAutoReporters { get; internal set; }
         /// <summary><p>Reporters:<ul><li><c>-appveyor</c>: forces AppVeyor CI mode (normally auto-detected)</li><li><c>-json</c>: show progress messages in JSON format</li><li><c>-quiet</c>: do not show progress messages</li><li><c>-teamcity</c>: forces TeamCity mode (normally auto-detected)</li><li><c>-verbose</c>: show verbose progress messages</li></ul></p></summary>
         public virtual ReporterType? Reporter { get; internal set; }
         /// <summary><p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p></summary>
@@ -100,13 +100,13 @@ namespace Nuke.Common.Tools.Xunit
             return base.GetArgumentsInternal()
               .Add("{value}", TargetAssemblyWithConfigs, keyValueSeparator: $" ")
               .Add("{value}", OutputPath)
-              .Add("-nologo", !Logo)
-              .Add("-nocolor", !Color)
-              .Add("-noappdomain", !AppDomain)
+              .Add("-nologo", NoLogo)
+              .Add("-nocolor", NoColor)
+              .Add("-noappdomain", NoAppDomain)
               .Add("-failskips", FailSkips)
               .Add("-parallel {value}", Parallel)
               .Add("-maxthreads {value}", MaxThreads)
-              .Add("-noshadow", !ShadowCopying)
+              .Add("-noshadow", NoShadowCopying)
               .Add("-wait", Wait)
               .Add("-diagnostics", Diagnostics)
               .Add("-debug", Debug)
@@ -116,7 +116,7 @@ namespace Nuke.Common.Tools.Xunit
               .Add("-method {value}", Methods)
               .Add("-class {value}", Classes)
               .Add("-namespace {value}", Namespaces)
-              .Add("-noautoreporters", !AutoReporters)
+              .Add("-noautoreporters", NoAutoReporters)
               .Add("-{value}", Reporter)
               .Add("-{value}", ResultFormat);
         }
@@ -181,135 +181,135 @@ namespace Nuke.Common.Tools.Xunit
             return xunitSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for setting <see cref="XunitSettings.Logo"/>.</i></p>
-        /// <p>Show the copyright message.</p>
+        /// <p><i>Extension method for setting <see cref="XunitSettings.NoLogo"/>.</i></p>
+        /// <p>Do not show the copyright message.</p>
         /// </summary>
         [Pure]
-        public static XunitSettings SetLogo(this XunitSettings xunitSettings, bool logo)
+        public static XunitSettings SetNoLogo(this XunitSettings xunitSettings, bool noLogo)
         {
             xunitSettings = xunitSettings.NewInstance();
-            xunitSettings.Logo = logo;
+            xunitSettings.NoLogo = noLogo;
             return xunitSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for enabling <see cref="XunitSettings.Logo"/>.</i></p>
-        /// <p>Show the copyright message.</p>
+        /// <p><i>Extension method for enabling <see cref="XunitSettings.NoLogo"/>.</i></p>
+        /// <p>Do not show the copyright message.</p>
         /// </summary>
         [Pure]
-        public static XunitSettings EnableLogo(this XunitSettings xunitSettings)
+        public static XunitSettings EnableNoLogo(this XunitSettings xunitSettings)
         {
             xunitSettings = xunitSettings.NewInstance();
-            xunitSettings.Logo = true;
+            xunitSettings.NoLogo = true;
             return xunitSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for disabling <see cref="XunitSettings.Logo"/>.</i></p>
-        /// <p>Show the copyright message.</p>
+        /// <p><i>Extension method for disabling <see cref="XunitSettings.NoLogo"/>.</i></p>
+        /// <p>Do not show the copyright message.</p>
         /// </summary>
         [Pure]
-        public static XunitSettings DisableLogo(this XunitSettings xunitSettings)
+        public static XunitSettings DisableNoLogo(this XunitSettings xunitSettings)
         {
             xunitSettings = xunitSettings.NewInstance();
-            xunitSettings.Logo = false;
+            xunitSettings.NoLogo = false;
             return xunitSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for toggling <see cref="XunitSettings.Logo"/>.</i></p>
-        /// <p>Show the copyright message.</p>
+        /// <p><i>Extension method for toggling <see cref="XunitSettings.NoLogo"/>.</i></p>
+        /// <p>Do not show the copyright message.</p>
         /// </summary>
         [Pure]
-        public static XunitSettings ToggleLogo(this XunitSettings xunitSettings)
+        public static XunitSettings ToggleNoLogo(this XunitSettings xunitSettings)
         {
             xunitSettings = xunitSettings.NewInstance();
-            xunitSettings.Logo = !xunitSettings.Logo;
+            xunitSettings.NoLogo = !xunitSettings.NoLogo;
             return xunitSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for setting <see cref="XunitSettings.Color"/>.</i></p>
-        /// <p>Output results with colors.</p>
+        /// <p><i>Extension method for setting <see cref="XunitSettings.NoColor"/>.</i></p>
+        /// <p>Do not output results with colors.</p>
         /// </summary>
         [Pure]
-        public static XunitSettings SetColor(this XunitSettings xunitSettings, bool color)
+        public static XunitSettings SetNoColor(this XunitSettings xunitSettings, bool noColor)
         {
             xunitSettings = xunitSettings.NewInstance();
-            xunitSettings.Color = color;
+            xunitSettings.NoColor = noColor;
             return xunitSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for enabling <see cref="XunitSettings.Color"/>.</i></p>
-        /// <p>Output results with colors.</p>
+        /// <p><i>Extension method for enabling <see cref="XunitSettings.NoColor"/>.</i></p>
+        /// <p>Do not output results with colors.</p>
         /// </summary>
         [Pure]
-        public static XunitSettings EnableColor(this XunitSettings xunitSettings)
+        public static XunitSettings EnableNoColor(this XunitSettings xunitSettings)
         {
             xunitSettings = xunitSettings.NewInstance();
-            xunitSettings.Color = true;
+            xunitSettings.NoColor = true;
             return xunitSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for disabling <see cref="XunitSettings.Color"/>.</i></p>
-        /// <p>Output results with colors.</p>
+        /// <p><i>Extension method for disabling <see cref="XunitSettings.NoColor"/>.</i></p>
+        /// <p>Do not output results with colors.</p>
         /// </summary>
         [Pure]
-        public static XunitSettings DisableColor(this XunitSettings xunitSettings)
+        public static XunitSettings DisableNoColor(this XunitSettings xunitSettings)
         {
             xunitSettings = xunitSettings.NewInstance();
-            xunitSettings.Color = false;
+            xunitSettings.NoColor = false;
             return xunitSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for toggling <see cref="XunitSettings.Color"/>.</i></p>
-        /// <p>Output results with colors.</p>
+        /// <p><i>Extension method for toggling <see cref="XunitSettings.NoColor"/>.</i></p>
+        /// <p>Do not output results with colors.</p>
         /// </summary>
         [Pure]
-        public static XunitSettings ToggleColor(this XunitSettings xunitSettings)
+        public static XunitSettings ToggleNoColor(this XunitSettings xunitSettings)
         {
             xunitSettings = xunitSettings.NewInstance();
-            xunitSettings.Color = !xunitSettings.Color;
+            xunitSettings.NoColor = !xunitSettings.NoColor;
             return xunitSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for setting <see cref="XunitSettings.AppDomain"/>.</i></p>
-        /// <p>Use app domains to run test code.</p>
+        /// <p><i>Extension method for setting <see cref="XunitSettings.NoAppDomain"/>.</i></p>
+        /// <p>Do not use app domains to run test code.</p>
         /// </summary>
         [Pure]
-        public static XunitSettings SetAppDomain(this XunitSettings xunitSettings, bool appDomain)
+        public static XunitSettings SetNoAppDomain(this XunitSettings xunitSettings, bool noAppDomain)
         {
             xunitSettings = xunitSettings.NewInstance();
-            xunitSettings.AppDomain = appDomain;
+            xunitSettings.NoAppDomain = noAppDomain;
             return xunitSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for enabling <see cref="XunitSettings.AppDomain"/>.</i></p>
-        /// <p>Use app domains to run test code.</p>
+        /// <p><i>Extension method for enabling <see cref="XunitSettings.NoAppDomain"/>.</i></p>
+        /// <p>Do not use app domains to run test code.</p>
         /// </summary>
         [Pure]
-        public static XunitSettings EnableAppDomain(this XunitSettings xunitSettings)
+        public static XunitSettings EnableNoAppDomain(this XunitSettings xunitSettings)
         {
             xunitSettings = xunitSettings.NewInstance();
-            xunitSettings.AppDomain = true;
+            xunitSettings.NoAppDomain = true;
             return xunitSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for disabling <see cref="XunitSettings.AppDomain"/>.</i></p>
-        /// <p>Use app domains to run test code.</p>
+        /// <p><i>Extension method for disabling <see cref="XunitSettings.NoAppDomain"/>.</i></p>
+        /// <p>Do not use app domains to run test code.</p>
         /// </summary>
         [Pure]
-        public static XunitSettings DisableAppDomain(this XunitSettings xunitSettings)
+        public static XunitSettings DisableNoAppDomain(this XunitSettings xunitSettings)
         {
             xunitSettings = xunitSettings.NewInstance();
-            xunitSettings.AppDomain = false;
+            xunitSettings.NoAppDomain = false;
             return xunitSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for toggling <see cref="XunitSettings.AppDomain"/>.</i></p>
-        /// <p>Use app domains to run test code.</p>
+        /// <p><i>Extension method for toggling <see cref="XunitSettings.NoAppDomain"/>.</i></p>
+        /// <p>Do not use app domains to run test code.</p>
         /// </summary>
         [Pure]
-        public static XunitSettings ToggleAppDomain(this XunitSettings xunitSettings)
+        public static XunitSettings ToggleNoAppDomain(this XunitSettings xunitSettings)
         {
             xunitSettings = xunitSettings.NewInstance();
-            xunitSettings.AppDomain = !xunitSettings.AppDomain;
+            xunitSettings.NoAppDomain = !xunitSettings.NoAppDomain;
             return xunitSettings;
         }
         /// <summary>
@@ -379,47 +379,47 @@ namespace Nuke.Common.Tools.Xunit
             return xunitSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for setting <see cref="XunitSettings.ShadowCopying"/>.</i></p>
-        /// <p>Shadow copy assemblies.</p>
+        /// <p><i>Extension method for setting <see cref="XunitSettings.NoShadowCopying"/>.</i></p>
+        /// <p>Do not shadow copy assemblies.</p>
         /// </summary>
         [Pure]
-        public static XunitSettings SetShadowCopying(this XunitSettings xunitSettings, bool shadowCopying)
+        public static XunitSettings SetNoShadowCopying(this XunitSettings xunitSettings, bool noShadowCopying)
         {
             xunitSettings = xunitSettings.NewInstance();
-            xunitSettings.ShadowCopying = shadowCopying;
+            xunitSettings.NoShadowCopying = noShadowCopying;
             return xunitSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for enabling <see cref="XunitSettings.ShadowCopying"/>.</i></p>
-        /// <p>Shadow copy assemblies.</p>
+        /// <p><i>Extension method for enabling <see cref="XunitSettings.NoShadowCopying"/>.</i></p>
+        /// <p>Do not shadow copy assemblies.</p>
         /// </summary>
         [Pure]
-        public static XunitSettings EnableShadowCopying(this XunitSettings xunitSettings)
+        public static XunitSettings EnableNoShadowCopying(this XunitSettings xunitSettings)
         {
             xunitSettings = xunitSettings.NewInstance();
-            xunitSettings.ShadowCopying = true;
+            xunitSettings.NoShadowCopying = true;
             return xunitSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for disabling <see cref="XunitSettings.ShadowCopying"/>.</i></p>
-        /// <p>Shadow copy assemblies.</p>
+        /// <p><i>Extension method for disabling <see cref="XunitSettings.NoShadowCopying"/>.</i></p>
+        /// <p>Do not shadow copy assemblies.</p>
         /// </summary>
         [Pure]
-        public static XunitSettings DisableShadowCopying(this XunitSettings xunitSettings)
+        public static XunitSettings DisableNoShadowCopying(this XunitSettings xunitSettings)
         {
             xunitSettings = xunitSettings.NewInstance();
-            xunitSettings.ShadowCopying = false;
+            xunitSettings.NoShadowCopying = false;
             return xunitSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for toggling <see cref="XunitSettings.ShadowCopying"/>.</i></p>
-        /// <p>Shadow copy assemblies.</p>
+        /// <p><i>Extension method for toggling <see cref="XunitSettings.NoShadowCopying"/>.</i></p>
+        /// <p>Do not shadow copy assemblies.</p>
         /// </summary>
         [Pure]
-        public static XunitSettings ToggleShadowCopying(this XunitSettings xunitSettings)
+        public static XunitSettings ToggleNoShadowCopying(this XunitSettings xunitSettings)
         {
             xunitSettings = xunitSettings.NewInstance();
-            xunitSettings.ShadowCopying = !xunitSettings.ShadowCopying;
+            xunitSettings.NoShadowCopying = !xunitSettings.NoShadowCopying;
             return xunitSettings;
         }
         /// <summary>
@@ -918,47 +918,47 @@ namespace Nuke.Common.Tools.Xunit
             return xunitSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for setting <see cref="XunitSettings.AutoReporters"/>.</i></p>
-        /// <p>Allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p>
+        /// <p><i>Extension method for setting <see cref="XunitSettings.NoAutoReporters"/>.</i></p>
+        /// <p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p>
         /// </summary>
         [Pure]
-        public static XunitSettings SetAutoReporters(this XunitSettings xunitSettings, bool autoReporters)
+        public static XunitSettings SetNoAutoReporters(this XunitSettings xunitSettings, bool noAutoReporters)
         {
             xunitSettings = xunitSettings.NewInstance();
-            xunitSettings.AutoReporters = autoReporters;
+            xunitSettings.NoAutoReporters = noAutoReporters;
             return xunitSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for enabling <see cref="XunitSettings.AutoReporters"/>.</i></p>
-        /// <p>Allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p>
+        /// <p><i>Extension method for enabling <see cref="XunitSettings.NoAutoReporters"/>.</i></p>
+        /// <p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p>
         /// </summary>
         [Pure]
-        public static XunitSettings EnableAutoReporters(this XunitSettings xunitSettings)
+        public static XunitSettings EnableNoAutoReporters(this XunitSettings xunitSettings)
         {
             xunitSettings = xunitSettings.NewInstance();
-            xunitSettings.AutoReporters = true;
+            xunitSettings.NoAutoReporters = true;
             return xunitSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for disabling <see cref="XunitSettings.AutoReporters"/>.</i></p>
-        /// <p>Allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p>
+        /// <p><i>Extension method for disabling <see cref="XunitSettings.NoAutoReporters"/>.</i></p>
+        /// <p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p>
         /// </summary>
         [Pure]
-        public static XunitSettings DisableAutoReporters(this XunitSettings xunitSettings)
+        public static XunitSettings DisableNoAutoReporters(this XunitSettings xunitSettings)
         {
             xunitSettings = xunitSettings.NewInstance();
-            xunitSettings.AutoReporters = false;
+            xunitSettings.NoAutoReporters = false;
             return xunitSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for toggling <see cref="XunitSettings.AutoReporters"/>.</i></p>
-        /// <p>Allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p>
+        /// <p><i>Extension method for toggling <see cref="XunitSettings.NoAutoReporters"/>.</i></p>
+        /// <p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p>
         /// </summary>
         [Pure]
-        public static XunitSettings ToggleAutoReporters(this XunitSettings xunitSettings)
+        public static XunitSettings ToggleNoAutoReporters(this XunitSettings xunitSettings)
         {
             xunitSettings = xunitSettings.NewInstance();
-            xunitSettings.AutoReporters = !xunitSettings.AutoReporters;
+            xunitSettings.NoAutoReporters = !xunitSettings.NoAutoReporters;
             return xunitSettings;
         }
         /// <summary>

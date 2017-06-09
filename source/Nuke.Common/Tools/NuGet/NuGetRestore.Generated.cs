@@ -57,8 +57,8 @@ namespace Nuke.Common.Tools.NuGet
         public virtual string ConfigFile { get; internal set; }
         /// <summary><p><i>(4.0+)</i> Downloads packages directly without populating caches with any binaries or metadata.</p></summary>
         public virtual bool DirectDownload { get; internal set; }
-        /// <summary><p>Restore multiple packages in parallel.</p></summary>
-        public virtual bool ParallelProcessing { get; internal set; } = true;
+        /// <summary><p>Disables restoring multiple packages in parallel.</p></summary>
+        public virtual bool DisableParallelProcessing { get; internal set; }
         /// <summary><p><i>(3.2+)</i> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
         public virtual IReadOnlyList<string> FallbackSource => FallbackSourceInternal.AsReadOnly();
         internal List<string> FallbackSourceInternal { get; set; } = new List<string>();
@@ -68,8 +68,8 @@ namespace Nuke.Common.Tools.NuGet
         public virtual string MSBuildPath { get; internal set; }
         /// <summary><p><i>(3.2+)</i> Specifies the version of MSBuild to be used with this command. Supported values are <i>4</i>, <i>12</i>, <i>14</i>, <i>15</i>. By default the MSBuild in your path is picked, otherwise it defaults to the highest installed version of MSBuild.</p></summary>
         public virtual Nuke.Common.Tools.MSBuild.MSBuildVersion? MSBuildVersion { get; internal set; }
-        /// <summary><p>Use packages from local machine caches.</p></summary>
-        public virtual bool Cache { get; internal set; } = true;
+        /// <summary><p>Prevents NuGet from using packages from local machine caches.</p></summary>
+        public virtual bool NoCache { get; internal set; }
         /// <summary><p>Suppresses prompts for user input or confirmations.</p></summary>
         public virtual bool NonInteractive { get; internal set; }
         /// <summary><p>Specifies the folder in which packages are installed. If no folder is specified, the current folder is used.</p></summary>
@@ -98,12 +98,12 @@ namespace Nuke.Common.Tools.NuGet
               .Add("{value}", TargetPath)
               .Add("-ConfigFile {value}", ConfigFile)
               .Add("-DirectDownload", DirectDownload)
-              .Add("-DisableParallelProcessing", !ParallelProcessing)
+              .Add("-DisableParallelProcessing", DisableParallelProcessing)
               .Add("-FallbackSource {value}", FallbackSource, mainSeparator: $";")
               .Add("-ForceEnglishOutput", ForceEnglishOutput)
               .Add("-MSBuildPath {value}", MSBuildPath)
               .Add("-MSBuildVersion {value}", MSBuildVersion)
-              .Add("-NoCache", !Cache)
+              .Add("-NoCache", NoCache)
               .Add("-NonInteractive", NonInteractive)
               .Add("-OutputDirectory {value}", OutputDirectory)
               .Add("-PackageSaveMode {value}", GetPackageSaveMode())
@@ -187,47 +187,47 @@ namespace Nuke.Common.Tools.NuGet
             return nuGetRestoreSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetRestoreSettings.ParallelProcessing"/>.</i></p>
-        /// <p>Restore multiple packages in parallel.</p>
+        /// <p><i>Extension method for setting <see cref="NuGetRestoreSettings.DisableParallelProcessing"/>.</i></p>
+        /// <p>Disables restoring multiple packages in parallel.</p>
         /// </summary>
         [Pure]
-        public static NuGetRestoreSettings SetParallelProcessing(this NuGetRestoreSettings nuGetRestoreSettings, bool parallelProcessing)
+        public static NuGetRestoreSettings SetDisableParallelProcessing(this NuGetRestoreSettings nuGetRestoreSettings, bool disableParallelProcessing)
         {
             nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.ParallelProcessing = parallelProcessing;
+            nuGetRestoreSettings.DisableParallelProcessing = disableParallelProcessing;
             return nuGetRestoreSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for enabling <see cref="NuGetRestoreSettings.ParallelProcessing"/>.</i></p>
-        /// <p>Restore multiple packages in parallel.</p>
+        /// <p><i>Extension method for enabling <see cref="NuGetRestoreSettings.DisableParallelProcessing"/>.</i></p>
+        /// <p>Disables restoring multiple packages in parallel.</p>
         /// </summary>
         [Pure]
-        public static NuGetRestoreSettings EnableParallelProcessing(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings EnableDisableParallelProcessing(this NuGetRestoreSettings nuGetRestoreSettings)
         {
             nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.ParallelProcessing = true;
+            nuGetRestoreSettings.DisableParallelProcessing = true;
             return nuGetRestoreSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for disabling <see cref="NuGetRestoreSettings.ParallelProcessing"/>.</i></p>
-        /// <p>Restore multiple packages in parallel.</p>
+        /// <p><i>Extension method for disabling <see cref="NuGetRestoreSettings.DisableParallelProcessing"/>.</i></p>
+        /// <p>Disables restoring multiple packages in parallel.</p>
         /// </summary>
         [Pure]
-        public static NuGetRestoreSettings DisableParallelProcessing(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings DisableDisableParallelProcessing(this NuGetRestoreSettings nuGetRestoreSettings)
         {
             nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.ParallelProcessing = false;
+            nuGetRestoreSettings.DisableParallelProcessing = false;
             return nuGetRestoreSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for toggling <see cref="NuGetRestoreSettings.ParallelProcessing"/>.</i></p>
-        /// <p>Restore multiple packages in parallel.</p>
+        /// <p><i>Extension method for toggling <see cref="NuGetRestoreSettings.DisableParallelProcessing"/>.</i></p>
+        /// <p>Disables restoring multiple packages in parallel.</p>
         /// </summary>
         [Pure]
-        public static NuGetRestoreSettings ToggleParallelProcessing(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings ToggleDisableParallelProcessing(this NuGetRestoreSettings nuGetRestoreSettings)
         {
             nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.ParallelProcessing = !nuGetRestoreSettings.ParallelProcessing;
+            nuGetRestoreSettings.DisableParallelProcessing = !nuGetRestoreSettings.DisableParallelProcessing;
             return nuGetRestoreSettings;
         }
         /// <summary>
@@ -374,47 +374,47 @@ namespace Nuke.Common.Tools.NuGet
             return nuGetRestoreSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetRestoreSettings.Cache"/>.</i></p>
-        /// <p>Use packages from local machine caches.</p>
+        /// <p><i>Extension method for setting <see cref="NuGetRestoreSettings.NoCache"/>.</i></p>
+        /// <p>Prevents NuGet from using packages from local machine caches.</p>
         /// </summary>
         [Pure]
-        public static NuGetRestoreSettings SetCache(this NuGetRestoreSettings nuGetRestoreSettings, bool cache)
+        public static NuGetRestoreSettings SetNoCache(this NuGetRestoreSettings nuGetRestoreSettings, bool noCache)
         {
             nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.Cache = cache;
+            nuGetRestoreSettings.NoCache = noCache;
             return nuGetRestoreSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for enabling <see cref="NuGetRestoreSettings.Cache"/>.</i></p>
-        /// <p>Use packages from local machine caches.</p>
+        /// <p><i>Extension method for enabling <see cref="NuGetRestoreSettings.NoCache"/>.</i></p>
+        /// <p>Prevents NuGet from using packages from local machine caches.</p>
         /// </summary>
         [Pure]
-        public static NuGetRestoreSettings EnableCache(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings EnableNoCache(this NuGetRestoreSettings nuGetRestoreSettings)
         {
             nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.Cache = true;
+            nuGetRestoreSettings.NoCache = true;
             return nuGetRestoreSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for disabling <see cref="NuGetRestoreSettings.Cache"/>.</i></p>
-        /// <p>Use packages from local machine caches.</p>
+        /// <p><i>Extension method for disabling <see cref="NuGetRestoreSettings.NoCache"/>.</i></p>
+        /// <p>Prevents NuGet from using packages from local machine caches.</p>
         /// </summary>
         [Pure]
-        public static NuGetRestoreSettings DisableCache(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings DisableNoCache(this NuGetRestoreSettings nuGetRestoreSettings)
         {
             nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.Cache = false;
+            nuGetRestoreSettings.NoCache = false;
             return nuGetRestoreSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for toggling <see cref="NuGetRestoreSettings.Cache"/>.</i></p>
-        /// <p>Use packages from local machine caches.</p>
+        /// <p><i>Extension method for toggling <see cref="NuGetRestoreSettings.NoCache"/>.</i></p>
+        /// <p>Prevents NuGet from using packages from local machine caches.</p>
         /// </summary>
         [Pure]
-        public static NuGetRestoreSettings ToggleCache(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings ToggleNoCache(this NuGetRestoreSettings nuGetRestoreSettings)
         {
             nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.Cache = !nuGetRestoreSettings.Cache;
+            nuGetRestoreSettings.NoCache = !nuGetRestoreSettings.NoCache;
             return nuGetRestoreSettings;
         }
         /// <summary>

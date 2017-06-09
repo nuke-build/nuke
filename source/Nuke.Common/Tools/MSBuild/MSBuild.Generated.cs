@@ -64,8 +64,8 @@ namespace Nuke.Common.Tools.MSBuild
         public virtual int? MaxCpuCount { get; internal set; }
         /// <summary><p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p></summary>
         public virtual bool? NodeReuse { get; internal set; }
-        /// <summary><p>Display the startup banner or the copyright message.</p></summary>
-        public virtual bool Logo { get; internal set; } = true;
+        /// <summary><p>Don't display the startup banner or the copyright message.</p></summary>
+        public virtual bool NoLogo { get; internal set; }
         /// <summary><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
         public virtual IReadOnlyDictionary<string, string> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, string> PropertiesInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
@@ -93,7 +93,7 @@ namespace Nuke.Common.Tools.MSBuild
               .Add("/detailedsummary", DetailedSummary)
               .Add("/maxcpucount:{value}", MaxCpuCount)
               .Add("/nodeReuse:{value}", NodeReuse)
-              .Add("/nologo", !Logo)
+              .Add("/nologo", NoLogo)
               .Add("/property:{value}", Properties, keyValueSeparator: $"=")
               .Add("/target:{value}", Targets, mainSeparator: $";")
               .Add("/toolsversion:{value}", GetToolsVersion())
@@ -215,47 +215,47 @@ namespace Nuke.Common.Tools.MSBuild
             return msbuildSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for setting <see cref="MSBuildSettings.Logo"/>.</i></p>
-        /// <p>Display the startup banner or the copyright message.</p>
+        /// <p><i>Extension method for setting <see cref="MSBuildSettings.NoLogo"/>.</i></p>
+        /// <p>Don't display the startup banner or the copyright message.</p>
         /// </summary>
         [Pure]
-        public static MSBuildSettings SetLogo(this MSBuildSettings msbuildSettings, bool logo)
+        public static MSBuildSettings SetNoLogo(this MSBuildSettings msbuildSettings, bool noLogo)
         {
             msbuildSettings = msbuildSettings.NewInstance();
-            msbuildSettings.Logo = logo;
+            msbuildSettings.NoLogo = noLogo;
             return msbuildSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for enabling <see cref="MSBuildSettings.Logo"/>.</i></p>
-        /// <p>Display the startup banner or the copyright message.</p>
+        /// <p><i>Extension method for enabling <see cref="MSBuildSettings.NoLogo"/>.</i></p>
+        /// <p>Don't display the startup banner or the copyright message.</p>
         /// </summary>
         [Pure]
-        public static MSBuildSettings EnableLogo(this MSBuildSettings msbuildSettings)
+        public static MSBuildSettings EnableNoLogo(this MSBuildSettings msbuildSettings)
         {
             msbuildSettings = msbuildSettings.NewInstance();
-            msbuildSettings.Logo = true;
+            msbuildSettings.NoLogo = true;
             return msbuildSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for disabling <see cref="MSBuildSettings.Logo"/>.</i></p>
-        /// <p>Display the startup banner or the copyright message.</p>
+        /// <p><i>Extension method for disabling <see cref="MSBuildSettings.NoLogo"/>.</i></p>
+        /// <p>Don't display the startup banner or the copyright message.</p>
         /// </summary>
         [Pure]
-        public static MSBuildSettings DisableLogo(this MSBuildSettings msbuildSettings)
+        public static MSBuildSettings DisableNoLogo(this MSBuildSettings msbuildSettings)
         {
             msbuildSettings = msbuildSettings.NewInstance();
-            msbuildSettings.Logo = false;
+            msbuildSettings.NoLogo = false;
             return msbuildSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for toggling <see cref="MSBuildSettings.Logo"/>.</i></p>
-        /// <p>Display the startup banner or the copyright message.</p>
+        /// <p><i>Extension method for toggling <see cref="MSBuildSettings.NoLogo"/>.</i></p>
+        /// <p>Don't display the startup banner or the copyright message.</p>
         /// </summary>
         [Pure]
-        public static MSBuildSettings ToggleLogo(this MSBuildSettings msbuildSettings)
+        public static MSBuildSettings ToggleNoLogo(this MSBuildSettings msbuildSettings)
         {
             msbuildSettings = msbuildSettings.NewInstance();
-            msbuildSettings.Logo = !msbuildSettings.Logo;
+            msbuildSettings.NoLogo = !msbuildSettings.NoLogo;
             return msbuildSettings;
         }
         /// <summary>

@@ -31,25 +31,22 @@
         "Help": "The report file output path."
       },
       {
-        "Name": "Logo",
+        "Name": "NoLogo",
         "Type": "bool",
         "Format": "-nologo",
-        "Negate": true,
-        "Help": "Show the copyright message."
+        "Help": "Do not show the copyright message."
       },
       {
-        "Name": "Color",
+        "Name": "NoColor",
         "Type": "bool",
         "Format": "-nocolor",
-        "Negate": true,
-        "Help": "Output results with colors."
+        "Help": "Do not output results with colors."
       },
       {
-        "Name": "AppDomain",
+        "Name": "NoAppDomain",
         "Type": "bool",
         "Format": "-noappdomain",
-        "Negate": true,
-        "Help": "Use app domains to run test code."
+        "Help": "Do not use app domains to run test code."
       },
       {
         "Name": "FailSkips",
@@ -70,11 +67,10 @@
         "Help": "Maximum thread count for collection parallelization:<br/><ul><li><b>default:</b> run with default (1 thread per CPU thread)</li><li><b>unlimited:</b> run with unbounded thread count</li><li><b>(number):</b> limit task thread pool size to 'count'</li></ul>"
       },
       {
-        "Name": "ShadowCopying",
+        "Name": "NoShadowCopying",
         "Type": "bool",
         "Format": "-noshadow",
-        "Negate": true,
-        "Help": "Shadow copy assemblies."
+        "Help": "Do not shadow copy assemblies."
       },
       {
         "Name": "Wait",
@@ -133,11 +129,10 @@
         "Help": "Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace')."
       },
       {
-        "Name": "AutoReporters",
+        "Name": "NoAutoReporters",
         "Type": "bool",
         "Format": "-noautoreporters",
-        "Negate": true,
-        "Help": "Allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor)."
+        "Help": "Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor)."
       },
       {
         "Name": "Reporter",

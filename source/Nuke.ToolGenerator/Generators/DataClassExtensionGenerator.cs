@@ -48,6 +48,8 @@ namespace Nuke.ToolGenerator.Generators
                         .WriteMethod($"Disable{property.Name}", $"{instanceName}.{property.Name} = false;")
                         .WriteSummaryExtension($"toggling {reference}", property)
                         .WriteMethod($"Toggle{property.Name}", $"{instanceName}.{property.Name} = !{instanceName}.{property.Name};");
+
+                // TODO: negate for 'skip', 'no', 'disable'
             }
             else if (property.IsList())
             {

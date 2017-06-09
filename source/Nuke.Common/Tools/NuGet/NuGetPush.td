@@ -52,18 +52,16 @@
         "Help": "<i>(3.5+)</i> Specifies the API key for the URL specified in <c>-SymbolSource</c>."
       },
       {
-        "Name": "Symbols",
+        "Name": "NoSymbols",
         "Type": "bool",
         "Format": "-NoSymbols",
-        "Negate": true,
-        "Help": "<i>(3.5+)</i> If a symbols package exists, it will be pushed to a symbol server."
+        "Help": "<i>(3.5+)</i> If a symbols package exists, it will not be pushed to a symbol server."
       },
       {
-        "Name": "Buffering",
+        "Name": "DisableBuffering",
         "Type": "bool",
         "Format": "-DisableBuffering",
-        "Negate": true,
-        "Help": "Enables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work."
+        "Help": "Disables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work."
       },
       {
         "Name": "ConfigFile",

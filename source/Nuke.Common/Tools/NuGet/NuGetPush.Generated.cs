@@ -52,10 +52,10 @@ namespace Nuke.Common.Tools.NuGet
         public virtual string SymbolSource { get; internal set; }
         /// <summary><p><i>(3.5+)</i> Specifies the API key for the URL specified in <c>-SymbolSource</c>.</p></summary>
         public virtual string SymbolApiKey { get; internal set; }
-        /// <summary><p><i>(3.5+)</i> If a symbols package exists, it will be pushed to a symbol server.</p></summary>
-        public virtual bool Symbols { get; internal set; } = true;
-        /// <summary><p>Enables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.</p></summary>
-        public virtual bool Buffering { get; internal set; } = true;
+        /// <summary><p><i>(3.5+)</i> If a symbols package exists, it will not be pushed to a symbol server.</p></summary>
+        public virtual bool NoSymbols { get; internal set; }
+        /// <summary><p>Disables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.</p></summary>
+        public virtual bool DisableBuffering { get; internal set; }
         /// <summary><p><i>(2.5+)</i> The NuGet configuration file to apply. If not specified, <i>%AppData%\NuGet\NuGet.Config</i> is used.</p></summary>
         public virtual string ConfigFile { get; internal set; }
         /// <summary><p><i>(2.5+)</i> Specifies the amount of details displayed in the output: <i>normal</i>, <i>quiet</i>, <i>detailed</i>.</p></summary>
@@ -82,8 +82,8 @@ namespace Nuke.Common.Tools.NuGet
               .Add("-Source {value}", Source)
               .Add("-SymbolSource {value}", SymbolSource)
               .Add("-SymbolApiKey {value}", SymbolApiKey, secret: true)
-              .Add("-NoSymbols", !Symbols)
-              .Add("-DisableBuffering", !Buffering)
+              .Add("-NoSymbols", NoSymbols)
+              .Add("-DisableBuffering", DisableBuffering)
               .Add("-ConfigFile {value}", ConfigFile)
               .Add("-Verbosity {value}", Verbosity)
               .Add("-ForceEnglishOutput", ForceEnglishOutput)
@@ -151,91 +151,91 @@ namespace Nuke.Common.Tools.NuGet
             return nuGetPushSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPushSettings.Symbols"/>.</i></p>
-        /// <p><i>(3.5+)</i> If a symbols package exists, it will be pushed to a symbol server.</p>
+        /// <p><i>Extension method for setting <see cref="NuGetPushSettings.NoSymbols"/>.</i></p>
+        /// <p><i>(3.5+)</i> If a symbols package exists, it will not be pushed to a symbol server.</p>
         /// </summary>
         [Pure]
-        public static NuGetPushSettings SetSymbols(this NuGetPushSettings nuGetPushSettings, bool symbols)
+        public static NuGetPushSettings SetNoSymbols(this NuGetPushSettings nuGetPushSettings, bool noSymbols)
         {
             nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.Symbols = symbols;
+            nuGetPushSettings.NoSymbols = noSymbols;
             return nuGetPushSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for enabling <see cref="NuGetPushSettings.Symbols"/>.</i></p>
-        /// <p><i>(3.5+)</i> If a symbols package exists, it will be pushed to a symbol server.</p>
+        /// <p><i>Extension method for enabling <see cref="NuGetPushSettings.NoSymbols"/>.</i></p>
+        /// <p><i>(3.5+)</i> If a symbols package exists, it will not be pushed to a symbol server.</p>
         /// </summary>
         [Pure]
-        public static NuGetPushSettings EnableSymbols(this NuGetPushSettings nuGetPushSettings)
+        public static NuGetPushSettings EnableNoSymbols(this NuGetPushSettings nuGetPushSettings)
         {
             nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.Symbols = true;
+            nuGetPushSettings.NoSymbols = true;
             return nuGetPushSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for disabling <see cref="NuGetPushSettings.Symbols"/>.</i></p>
-        /// <p><i>(3.5+)</i> If a symbols package exists, it will be pushed to a symbol server.</p>
+        /// <p><i>Extension method for disabling <see cref="NuGetPushSettings.NoSymbols"/>.</i></p>
+        /// <p><i>(3.5+)</i> If a symbols package exists, it will not be pushed to a symbol server.</p>
         /// </summary>
         [Pure]
-        public static NuGetPushSettings DisableSymbols(this NuGetPushSettings nuGetPushSettings)
+        public static NuGetPushSettings DisableNoSymbols(this NuGetPushSettings nuGetPushSettings)
         {
             nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.Symbols = false;
+            nuGetPushSettings.NoSymbols = false;
             return nuGetPushSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for toggling <see cref="NuGetPushSettings.Symbols"/>.</i></p>
-        /// <p><i>(3.5+)</i> If a symbols package exists, it will be pushed to a symbol server.</p>
+        /// <p><i>Extension method for toggling <see cref="NuGetPushSettings.NoSymbols"/>.</i></p>
+        /// <p><i>(3.5+)</i> If a symbols package exists, it will not be pushed to a symbol server.</p>
         /// </summary>
         [Pure]
-        public static NuGetPushSettings ToggleSymbols(this NuGetPushSettings nuGetPushSettings)
+        public static NuGetPushSettings ToggleNoSymbols(this NuGetPushSettings nuGetPushSettings)
         {
             nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.Symbols = !nuGetPushSettings.Symbols;
+            nuGetPushSettings.NoSymbols = !nuGetPushSettings.NoSymbols;
             return nuGetPushSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPushSettings.Buffering"/>.</i></p>
-        /// <p>Enables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.</p>
+        /// <p><i>Extension method for setting <see cref="NuGetPushSettings.DisableBuffering"/>.</i></p>
+        /// <p>Disables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.</p>
         /// </summary>
         [Pure]
-        public static NuGetPushSettings SetBuffering(this NuGetPushSettings nuGetPushSettings, bool buffering)
+        public static NuGetPushSettings SetDisableBuffering(this NuGetPushSettings nuGetPushSettings, bool disableBuffering)
         {
             nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.Buffering = buffering;
+            nuGetPushSettings.DisableBuffering = disableBuffering;
             return nuGetPushSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for enabling <see cref="NuGetPushSettings.Buffering"/>.</i></p>
-        /// <p>Enables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.</p>
+        /// <p><i>Extension method for enabling <see cref="NuGetPushSettings.DisableBuffering"/>.</i></p>
+        /// <p>Disables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.</p>
         /// </summary>
         [Pure]
-        public static NuGetPushSettings EnableBuffering(this NuGetPushSettings nuGetPushSettings)
+        public static NuGetPushSettings EnableDisableBuffering(this NuGetPushSettings nuGetPushSettings)
         {
             nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.Buffering = true;
+            nuGetPushSettings.DisableBuffering = true;
             return nuGetPushSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for disabling <see cref="NuGetPushSettings.Buffering"/>.</i></p>
-        /// <p>Enables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.</p>
+        /// <p><i>Extension method for disabling <see cref="NuGetPushSettings.DisableBuffering"/>.</i></p>
+        /// <p>Disables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.</p>
         /// </summary>
         [Pure]
-        public static NuGetPushSettings DisableBuffering(this NuGetPushSettings nuGetPushSettings)
+        public static NuGetPushSettings DisableDisableBuffering(this NuGetPushSettings nuGetPushSettings)
         {
             nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.Buffering = false;
+            nuGetPushSettings.DisableBuffering = false;
             return nuGetPushSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for toggling <see cref="NuGetPushSettings.Buffering"/>.</i></p>
-        /// <p>Enables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.</p>
+        /// <p><i>Extension method for toggling <see cref="NuGetPushSettings.DisableBuffering"/>.</i></p>
+        /// <p>Disables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.</p>
         /// </summary>
         [Pure]
-        public static NuGetPushSettings ToggleBuffering(this NuGetPushSettings nuGetPushSettings)
+        public static NuGetPushSettings ToggleDisableBuffering(this NuGetPushSettings nuGetPushSettings)
         {
             nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.Buffering = !nuGetPushSettings.Buffering;
+            nuGetPushSettings.DisableBuffering = !nuGetPushSettings.DisableBuffering;
             return nuGetPushSettings;
         }
         /// <summary>

@@ -87,8 +87,6 @@ namespace Nuke.ToolGenerator.Generators
                 initializationExpression = $"new {property.Type}()";
             else if (property.IsDictionary() ||property.IsLookupTable())
                 initializationExpression = $"new {property.Type}(StringComparer.OrdinalIgnoreCase)";
-            else if (property.IsBoolean() && property.Negate)
-                initializationExpression = "true";
             else
                 initializationExpression = property.Default;
 
@@ -194,7 +192,7 @@ namespace Nuke.ToolGenerator.Generators
             var arguments = new List<string>
                             {
                                 property.Format.Quote(interpolation: false),
-                                GetPropertyFormatValue(property)
+                                property.CustomValue ? $"Get{property.Name}()" : property.Name
                             };
             if (property.MainSeparator != null)
                 arguments.Add($"mainSeparator: {property.MainSeparator.Quote()}");
@@ -204,15 +202,6 @@ namespace Nuke.ToolGenerator.Generators
                 arguments.Add($"secret: true");
 
             return $"  .Add({arguments.Join()})";
-        }
-
-        private static string GetPropertyFormatValue (Property property)
-        {
-            if (property.CustomValue)
-                return $"Get{property.Name}()";
-            if (property.Negate)
-                return $"!{property.Name}";
-            return property.Name;
         }
     }
 }

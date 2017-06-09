@@ -88,7 +88,7 @@ namespace Nuke.Common.Tools.OpenCover
         /// <summary><p>Allow to merge the results with an existing file (specified by <c>-output</c> option). So the coverage from the output file will be loaded first (if exists).</p></summary>
         public virtual bool MergeOutput { get; internal set; }
         /// <summary><p>A list of default exclusion filters are usually applied, this option can be used to turn them off. The default filters are:<ul><li><c>-[System]*</c></li><li><c>-[System.*]*</c></li><li><c>-[mscorlib]*</c></li><li><c>-[mscorlib.*]*</c></li><li><c>-[Microsoft.VisualBasic]*</c></li></ul></p></summary>
-        public virtual bool DefaultFilters { get; internal set; } = true;
+        public virtual bool NoDefaultFilters { get; internal set; }
         /// <summary><p>Use old style instrumentation - the instrumentation is not Silverlight friendly and is provided to support environments where mscorlib instrumentation is not working. <i>ONLY</i> use this option if you are encountering <see cref="MissingMethodException"/> like errors when the code is run under OpenCover. The issue could be down to <i>ngen /Profile</i> of the mscorlib which then interferes with the instrumentation.</p></summary>
         public virtual bool OldStyle { get; internal set; }
         /// <summary><p>The location and name of the output Xml file. If no value is supplied then the current directory will be used and the output filename will be <c>results.xml</c>.</p></summary>
@@ -135,7 +135,7 @@ namespace Nuke.Common.Tools.OpenCover
               .Add("-log:{value}", Verbosity)
               .Add("-mergebyhash", MergeByHash)
               .Add("-mergeoutput", MergeOutput)
-              .Add("-nodefaultfilters", !DefaultFilters)
+              .Add("-nodefaultfilters", NoDefaultFilters)
               .Add("-oldStyle", OldStyle)
               .Add("-output:{value}", Output)
               .Add("-safemode:{value}", SafeMode)
@@ -725,47 +725,47 @@ namespace Nuke.Common.Tools.OpenCover
             return openCoverSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for setting <see cref="OpenCoverSettings.DefaultFilters"/>.</i></p>
+        /// <p><i>Extension method for setting <see cref="OpenCoverSettings.NoDefaultFilters"/>.</i></p>
         /// <p>A list of default exclusion filters are usually applied, this option can be used to turn them off. The default filters are:<ul><li><c>-[System]*</c></li><li><c>-[System.*]*</c></li><li><c>-[mscorlib]*</c></li><li><c>-[mscorlib.*]*</c></li><li><c>-[Microsoft.VisualBasic]*</c></li></ul></p>
         /// </summary>
         [Pure]
-        public static OpenCoverSettings SetDefaultFilters(this OpenCoverSettings openCoverSettings, bool defaultFilters)
+        public static OpenCoverSettings SetNoDefaultFilters(this OpenCoverSettings openCoverSettings, bool noDefaultFilters)
         {
             openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.DefaultFilters = defaultFilters;
+            openCoverSettings.NoDefaultFilters = noDefaultFilters;
             return openCoverSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for enabling <see cref="OpenCoverSettings.DefaultFilters"/>.</i></p>
+        /// <p><i>Extension method for enabling <see cref="OpenCoverSettings.NoDefaultFilters"/>.</i></p>
         /// <p>A list of default exclusion filters are usually applied, this option can be used to turn them off. The default filters are:<ul><li><c>-[System]*</c></li><li><c>-[System.*]*</c></li><li><c>-[mscorlib]*</c></li><li><c>-[mscorlib.*]*</c></li><li><c>-[Microsoft.VisualBasic]*</c></li></ul></p>
         /// </summary>
         [Pure]
-        public static OpenCoverSettings EnableDefaultFilters(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings EnableNoDefaultFilters(this OpenCoverSettings openCoverSettings)
         {
             openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.DefaultFilters = true;
+            openCoverSettings.NoDefaultFilters = true;
             return openCoverSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for disabling <see cref="OpenCoverSettings.DefaultFilters"/>.</i></p>
+        /// <p><i>Extension method for disabling <see cref="OpenCoverSettings.NoDefaultFilters"/>.</i></p>
         /// <p>A list of default exclusion filters are usually applied, this option can be used to turn them off. The default filters are:<ul><li><c>-[System]*</c></li><li><c>-[System.*]*</c></li><li><c>-[mscorlib]*</c></li><li><c>-[mscorlib.*]*</c></li><li><c>-[Microsoft.VisualBasic]*</c></li></ul></p>
         /// </summary>
         [Pure]
-        public static OpenCoverSettings DisableDefaultFilters(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings DisableNoDefaultFilters(this OpenCoverSettings openCoverSettings)
         {
             openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.DefaultFilters = false;
+            openCoverSettings.NoDefaultFilters = false;
             return openCoverSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for toggling <see cref="OpenCoverSettings.DefaultFilters"/>.</i></p>
+        /// <p><i>Extension method for toggling <see cref="OpenCoverSettings.NoDefaultFilters"/>.</i></p>
         /// <p>A list of default exclusion filters are usually applied, this option can be used to turn them off. The default filters are:<ul><li><c>-[System]*</c></li><li><c>-[System.*]*</c></li><li><c>-[mscorlib]*</c></li><li><c>-[mscorlib.*]*</c></li><li><c>-[Microsoft.VisualBasic]*</c></li></ul></p>
         /// </summary>
         [Pure]
-        public static OpenCoverSettings ToggleDefaultFilters(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings ToggleNoDefaultFilters(this OpenCoverSettings openCoverSettings)
         {
             openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.DefaultFilters = !openCoverSettings.DefaultFilters;
+            openCoverSettings.NoDefaultFilters = !openCoverSettings.NoDefaultFilters;
             return openCoverSettings;
         }
         /// <summary>

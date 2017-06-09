@@ -44,11 +44,10 @@
         "Help": "<p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p>"
       },
       {
-        "Name": "Logo",
+        "Name": "NoLogo",
         "Type": "bool",
         "Format": "/nologo",
-        "Negate": true,
-        "Help": "Display the startup banner or the copyright message."
+        "Help": "Don't display the startup banner or the copyright message."
       },
       {
         "Name": "Properties",

@@ -70,7 +70,7 @@ namespace Nuke.Common.Tools.GitLink
         /// <summary><p>Don't fail on errors, but treat them as warnings instead.</p></summary>
         public virtual bool ErrorsAsWarnings { get; internal set; }
         /// <summary><p>Skip pdb verification in case it causes issues (it's a formality anyway)</p></summary>
-        public virtual bool Verification { get; internal set; } = true;
+        public virtual bool SkipVerification { get; internal set; }
         /// <summary><p>Enables debug mode with special dumps of msbuild.</p></summary>
         public virtual bool Debug { get; internal set; }
         protected override Arguments GetArgumentsInternal()
@@ -87,7 +87,7 @@ namespace Nuke.Common.Tools.GitLink
               .Add("-d {value}", PdbDirectory)
               .Add("-powershell", UsePowershell)
               .Add("-errorsaswarnings", ErrorsAsWarnings)
-              .Add("-skipverify", !Verification)
+              .Add("-skipverify", SkipVerification)
               .Add("-debug", Debug);
         }
     }
@@ -283,47 +283,47 @@ namespace Nuke.Common.Tools.GitLink
             return gitLink2Settings;
         }
         /// <summary>
-        /// <p><i>Extension method for setting <see cref="GitLink2Settings.Verification"/>.</i></p>
+        /// <p><i>Extension method for setting <see cref="GitLink2Settings.SkipVerification"/>.</i></p>
         /// <p>Skip pdb verification in case it causes issues (it's a formality anyway)</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings SetVerification(this GitLink2Settings gitLink2Settings, bool verification)
+        public static GitLink2Settings SetSkipVerification(this GitLink2Settings gitLink2Settings, bool skipVerification)
         {
             gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.Verification = verification;
+            gitLink2Settings.SkipVerification = skipVerification;
             return gitLink2Settings;
         }
         /// <summary>
-        /// <p><i>Extension method for enabling <see cref="GitLink2Settings.Verification"/>.</i></p>
+        /// <p><i>Extension method for enabling <see cref="GitLink2Settings.SkipVerification"/>.</i></p>
         /// <p>Skip pdb verification in case it causes issues (it's a formality anyway)</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings EnableVerification(this GitLink2Settings gitLink2Settings)
+        public static GitLink2Settings EnableSkipVerification(this GitLink2Settings gitLink2Settings)
         {
             gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.Verification = true;
+            gitLink2Settings.SkipVerification = true;
             return gitLink2Settings;
         }
         /// <summary>
-        /// <p><i>Extension method for disabling <see cref="GitLink2Settings.Verification"/>.</i></p>
+        /// <p><i>Extension method for disabling <see cref="GitLink2Settings.SkipVerification"/>.</i></p>
         /// <p>Skip pdb verification in case it causes issues (it's a formality anyway)</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings DisableVerification(this GitLink2Settings gitLink2Settings)
+        public static GitLink2Settings DisableSkipVerification(this GitLink2Settings gitLink2Settings)
         {
             gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.Verification = false;
+            gitLink2Settings.SkipVerification = false;
             return gitLink2Settings;
         }
         /// <summary>
-        /// <p><i>Extension method for toggling <see cref="GitLink2Settings.Verification"/>.</i></p>
+        /// <p><i>Extension method for toggling <see cref="GitLink2Settings.SkipVerification"/>.</i></p>
         /// <p>Skip pdb verification in case it causes issues (it's a formality anyway)</p>
         /// </summary>
         [Pure]
-        public static GitLink2Settings ToggleVerification(this GitLink2Settings gitLink2Settings)
+        public static GitLink2Settings ToggleSkipVerification(this GitLink2Settings gitLink2Settings)
         {
             gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.Verification = !gitLink2Settings.Verification;
+            gitLink2Settings.SkipVerification = !gitLink2Settings.SkipVerification;
             return gitLink2Settings;
         }
         /// <summary>

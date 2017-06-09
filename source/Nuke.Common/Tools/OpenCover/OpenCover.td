@@ -104,10 +104,9 @@
         "Help": "Allow to merge the results with an existing file (specified by <c>-output</c> option). So the coverage from the output file will be loaded first (if exists)."
       },
       {
-        "Name": "DefaultFilters",
+        "Name": "NoDefaultFilters",
         "Type": "bool",
         "Format": "-nodefaultfilters",
-        "Negate": true,
         "Help": "A list of default exclusion filters are usually applied, this option can be used to turn them off. The default filters are:<ul><li><c>-[System]*</c></li><li><c>-[System.*]*</c></li><li><c>-[mscorlib]*</c></li><li><c>-[mscorlib.*]*</c></li><li><c>-[Microsoft.VisualBasic]*</c></li></ul>"
       },
       {

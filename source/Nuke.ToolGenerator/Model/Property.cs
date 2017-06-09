@@ -43,10 +43,6 @@ namespace Nuke.ToolGenerator.Model
         /// </summary>
         public bool Secret { get; set; }
         /// <summary>
-        /// If set to <v>true</v>, the argument will be rendered when the property is set to false. At the same time, the default value is set to <v>true</v>.
-        /// </summary>
-        public bool Negate { get; set; }
-        /// <summary>
         /// If set to <v>true</v>, will call a custom value provider method.
         /// </summary>
         public bool CustomValue { get; set; }

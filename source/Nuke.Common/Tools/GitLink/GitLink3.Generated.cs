@@ -54,8 +54,8 @@ namespace Nuke.Common.Tools.GitLink
         public virtual string CommitSha { get; internal set; }
         /// <summary><p>The path to the root of the git repo.</p></summary>
         public virtual string BaseDirectory { get; internal set; }
-        /// <summary><p>Verify all source files are available in source control.</p></summary>
-        public virtual bool Verification { get; internal set; } = true;
+        /// <summary><p>Skip verification that all source files are available in source control.</p></summary>
+        public virtual bool SkipVerification { get; internal set; }
         protected override Arguments GetArgumentsInternal()
         {
             return base.GetArgumentsInternal()
@@ -64,7 +64,7 @@ namespace Nuke.Common.Tools.GitLink
               .Add("--url {value}", RepositoryUrl)
               .Add("--commit {value}", CommitSha)
               .Add("--baseDir {value}", BaseDirectory)
-              .Add("--skipVerify", !Verification);
+              .Add("--skipVerify", SkipVerification);
         }
     }
     [PublicAPI]
@@ -127,47 +127,47 @@ namespace Nuke.Common.Tools.GitLink
             return gitLink3Settings;
         }
         /// <summary>
-        /// <p><i>Extension method for setting <see cref="GitLink3Settings.Verification"/>.</i></p>
-        /// <p>Verify all source files are available in source control.</p>
+        /// <p><i>Extension method for setting <see cref="GitLink3Settings.SkipVerification"/>.</i></p>
+        /// <p>Skip verification that all source files are available in source control.</p>
         /// </summary>
         [Pure]
-        public static GitLink3Settings SetVerification(this GitLink3Settings gitLink3Settings, bool verification)
+        public static GitLink3Settings SetSkipVerification(this GitLink3Settings gitLink3Settings, bool skipVerification)
         {
             gitLink3Settings = gitLink3Settings.NewInstance();
-            gitLink3Settings.Verification = verification;
+            gitLink3Settings.SkipVerification = skipVerification;
             return gitLink3Settings;
         }
         /// <summary>
-        /// <p><i>Extension method for enabling <see cref="GitLink3Settings.Verification"/>.</i></p>
-        /// <p>Verify all source files are available in source control.</p>
+        /// <p><i>Extension method for enabling <see cref="GitLink3Settings.SkipVerification"/>.</i></p>
+        /// <p>Skip verification that all source files are available in source control.</p>
         /// </summary>
         [Pure]
-        public static GitLink3Settings EnableVerification(this GitLink3Settings gitLink3Settings)
+        public static GitLink3Settings EnableSkipVerification(this GitLink3Settings gitLink3Settings)
         {
             gitLink3Settings = gitLink3Settings.NewInstance();
-            gitLink3Settings.Verification = true;
+            gitLink3Settings.SkipVerification = true;
             return gitLink3Settings;
         }
         /// <summary>
-        /// <p><i>Extension method for disabling <see cref="GitLink3Settings.Verification"/>.</i></p>
-        /// <p>Verify all source files are available in source control.</p>
+        /// <p><i>Extension method for disabling <see cref="GitLink3Settings.SkipVerification"/>.</i></p>
+        /// <p>Skip verification that all source files are available in source control.</p>
         /// </summary>
         [Pure]
-        public static GitLink3Settings DisableVerification(this GitLink3Settings gitLink3Settings)
+        public static GitLink3Settings DisableSkipVerification(this GitLink3Settings gitLink3Settings)
         {
             gitLink3Settings = gitLink3Settings.NewInstance();
-            gitLink3Settings.Verification = false;
+            gitLink3Settings.SkipVerification = false;
             return gitLink3Settings;
         }
         /// <summary>
-        /// <p><i>Extension method for toggling <see cref="GitLink3Settings.Verification"/>.</i></p>
-        /// <p>Verify all source files are available in source control.</p>
+        /// <p><i>Extension method for toggling <see cref="GitLink3Settings.SkipVerification"/>.</i></p>
+        /// <p>Skip verification that all source files are available in source control.</p>
         /// </summary>
         [Pure]
-        public static GitLink3Settings ToggleVerification(this GitLink3Settings gitLink3Settings)
+        public static GitLink3Settings ToggleSkipVerification(this GitLink3Settings gitLink3Settings)
         {
             gitLink3Settings = gitLink3Settings.NewInstance();
-            gitLink3Settings.Verification = !gitLink3Settings.Verification;
+            gitLink3Settings.SkipVerification = !gitLink3Settings.SkipVerification;
             return gitLink3Settings;
         }
     }

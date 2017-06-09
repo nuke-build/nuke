@@ -39,11 +39,10 @@
         "Help": "<i>(4.0+)</i> Downloads packages directly without populating caches with any binaries or metadata."
       },
       {
-        "Name": "ParallelProcessing",
+        "Name": "DisableParallelProcessing",
         "Type": "bool",
         "Format": "-DisableParallelProcessing",
-        "Negate": true,
-        "Help": "Restore multiple packages in parallel."
+        "Help": "Disables restoring multiple packages in parallel."
       },
       {
         "Name": "FallbackSource",
@@ -71,11 +70,10 @@
         "Help": "<i>(3.2+)</i> Specifies the version of MSBuild to be used with this command. Supported values are <i>4</i>, <i>12</i>, <i>14</i>, <i>15</i>. By default the MSBuild in your path is picked, otherwise it defaults to the highest installed version of MSBuild."
       },
       {
-        "Name": "Cache",
+        "Name": "NoCache",
         "Type": "bool",
         "Format": "-NoCache",
-        "Negate": true,
-        "Help": "Use packages from local machine caches."
+        "Help": "Prevents NuGet from using packages from local machine caches."
       },
       {
         "Name": "NonInteractive",

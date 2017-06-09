@@ -85,18 +85,16 @@
         "Help": "<i>(3.2+)</i> Specifies the version of MSBuild to be used with this command. Supported values are <i>4</i>, <i>12</i>, <i>14</i>. By default the MSBuild in your path is picked, otherwise it defaults to the highest installed version of MSBuild."
       },
       {
-        "Name": "DefaultExcludes",
+        "Name": "NoDefaultExcludes",
         "Type": "bool",
         "Format": "-NoDefaultExcludes",
-        "Negate": true,
         "Help": "Prevents default exclusion of NuGet package files and files and folders starting with a dot, such as <i>.svn</i> and <c>.gitignore</c>."
       },
       {
-        "Name": "PackageAnalysis",
+        "Name": "NoPackageAnalysis",
         "Type": "bool",
         "Format": "-NoPackageAnalysis",
-        "Negate": true,
-        "Help": "Specifies that pack should run package analysis after building the package."
+        "Help": "Specifies that pack should not run package analysis after building the package."
       },
       {
         "Name": "OutputDirectory",

@@ -75,9 +75,9 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary><p><i>(3.2+)</i> Specifies the version of MSBuild to be used with this command. Supported values are <i>4</i>, <i>12</i>, <i>14</i>. By default the MSBuild in your path is picked, otherwise it defaults to the highest installed version of MSBuild.</p></summary>
         public virtual Nuke.Common.Tools.MSBuild.MSBuildVersion? MSBuildVersion { get; internal set; }
         /// <summary><p>Prevents default exclusion of NuGet package files and files and folders starting with a dot, such as <i>.svn</i> and <c>.gitignore</c>.</p></summary>
-        public virtual bool DefaultExcludes { get; internal set; } = true;
-        /// <summary><p>Specifies that pack should run package analysis after building the package.</p></summary>
-        public virtual bool PackageAnalysis { get; internal set; } = true;
+        public virtual bool NoDefaultExcludes { get; internal set; }
+        /// <summary><p>Specifies that pack should not run package analysis after building the package.</p></summary>
+        public virtual bool NoPackageAnalysis { get; internal set; }
         /// <summary><p>Specifies the folder in which the created package is stored. If no folder is specified, the current folder is used.</p></summary>
         public virtual string OutputDirectory { get; internal set; }
         /// <summary><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
@@ -115,8 +115,8 @@ namespace Nuke.Common.Tools.NuGet
               .Add("-ForceEnglishOutput", ForceEnglishOutput)
               .Add("-MSBuildPath {value}", MSBuildPath)
               .Add("-MSBuildVersion {value}", GetMSBuildVersion())
-              .Add("-NoDefaultExcludes", !DefaultExcludes)
-              .Add("-NoPackageAnalysis", !PackageAnalysis)
+              .Add("-NoDefaultExcludes", NoDefaultExcludes)
+              .Add("-NoPackageAnalysis", NoPackageAnalysis)
               .Add("-OutputDirectory {value}", OutputDirectory)
               .Add("-Properties {value}", GetProperties())
               .Add("-Suffix {value}", Suffix)
@@ -406,91 +406,91 @@ namespace Nuke.Common.Tools.NuGet
             return nuGetPackSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackSettings.DefaultExcludes"/>.</i></p>
+        /// <p><i>Extension method for setting <see cref="NuGetPackSettings.NoDefaultExcludes"/>.</i></p>
         /// <p>Prevents default exclusion of NuGet package files and files and folders starting with a dot, such as <i>.svn</i> and <c>.gitignore</c>.</p>
         /// </summary>
         [Pure]
-        public static NuGetPackSettings SetDefaultExcludes(this NuGetPackSettings nuGetPackSettings, bool defaultExcludes)
+        public static NuGetPackSettings SetNoDefaultExcludes(this NuGetPackSettings nuGetPackSettings, bool noDefaultExcludes)
         {
             nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.DefaultExcludes = defaultExcludes;
+            nuGetPackSettings.NoDefaultExcludes = noDefaultExcludes;
             return nuGetPackSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for enabling <see cref="NuGetPackSettings.DefaultExcludes"/>.</i></p>
+        /// <p><i>Extension method for enabling <see cref="NuGetPackSettings.NoDefaultExcludes"/>.</i></p>
         /// <p>Prevents default exclusion of NuGet package files and files and folders starting with a dot, such as <i>.svn</i> and <c>.gitignore</c>.</p>
         /// </summary>
         [Pure]
-        public static NuGetPackSettings EnableDefaultExcludes(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings EnableNoDefaultExcludes(this NuGetPackSettings nuGetPackSettings)
         {
             nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.DefaultExcludes = true;
+            nuGetPackSettings.NoDefaultExcludes = true;
             return nuGetPackSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for disabling <see cref="NuGetPackSettings.DefaultExcludes"/>.</i></p>
+        /// <p><i>Extension method for disabling <see cref="NuGetPackSettings.NoDefaultExcludes"/>.</i></p>
         /// <p>Prevents default exclusion of NuGet package files and files and folders starting with a dot, such as <i>.svn</i> and <c>.gitignore</c>.</p>
         /// </summary>
         [Pure]
-        public static NuGetPackSettings DisableDefaultExcludes(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings DisableNoDefaultExcludes(this NuGetPackSettings nuGetPackSettings)
         {
             nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.DefaultExcludes = false;
+            nuGetPackSettings.NoDefaultExcludes = false;
             return nuGetPackSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for toggling <see cref="NuGetPackSettings.DefaultExcludes"/>.</i></p>
+        /// <p><i>Extension method for toggling <see cref="NuGetPackSettings.NoDefaultExcludes"/>.</i></p>
         /// <p>Prevents default exclusion of NuGet package files and files and folders starting with a dot, such as <i>.svn</i> and <c>.gitignore</c>.</p>
         /// </summary>
         [Pure]
-        public static NuGetPackSettings ToggleDefaultExcludes(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings ToggleNoDefaultExcludes(this NuGetPackSettings nuGetPackSettings)
         {
             nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.DefaultExcludes = !nuGetPackSettings.DefaultExcludes;
+            nuGetPackSettings.NoDefaultExcludes = !nuGetPackSettings.NoDefaultExcludes;
             return nuGetPackSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackSettings.PackageAnalysis"/>.</i></p>
-        /// <p>Specifies that pack should run package analysis after building the package.</p>
+        /// <p><i>Extension method for setting <see cref="NuGetPackSettings.NoPackageAnalysis"/>.</i></p>
+        /// <p>Specifies that pack should not run package analysis after building the package.</p>
         /// </summary>
         [Pure]
-        public static NuGetPackSettings SetPackageAnalysis(this NuGetPackSettings nuGetPackSettings, bool packageAnalysis)
+        public static NuGetPackSettings SetNoPackageAnalysis(this NuGetPackSettings nuGetPackSettings, bool noPackageAnalysis)
         {
             nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.PackageAnalysis = packageAnalysis;
+            nuGetPackSettings.NoPackageAnalysis = noPackageAnalysis;
             return nuGetPackSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for enabling <see cref="NuGetPackSettings.PackageAnalysis"/>.</i></p>
-        /// <p>Specifies that pack should run package analysis after building the package.</p>
+        /// <p><i>Extension method for enabling <see cref="NuGetPackSettings.NoPackageAnalysis"/>.</i></p>
+        /// <p>Specifies that pack should not run package analysis after building the package.</p>
         /// </summary>
         [Pure]
-        public static NuGetPackSettings EnablePackageAnalysis(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings EnableNoPackageAnalysis(this NuGetPackSettings nuGetPackSettings)
         {
             nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.PackageAnalysis = true;
+            nuGetPackSettings.NoPackageAnalysis = true;
             return nuGetPackSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for disabling <see cref="NuGetPackSettings.PackageAnalysis"/>.</i></p>
-        /// <p>Specifies that pack should run package analysis after building the package.</p>
+        /// <p><i>Extension method for disabling <see cref="NuGetPackSettings.NoPackageAnalysis"/>.</i></p>
+        /// <p>Specifies that pack should not run package analysis after building the package.</p>
         /// </summary>
         [Pure]
-        public static NuGetPackSettings DisablePackageAnalysis(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings DisableNoPackageAnalysis(this NuGetPackSettings nuGetPackSettings)
         {
             nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.PackageAnalysis = false;
+            nuGetPackSettings.NoPackageAnalysis = false;
             return nuGetPackSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for toggling <see cref="NuGetPackSettings.PackageAnalysis"/>.</i></p>
-        /// <p>Specifies that pack should run package analysis after building the package.</p>
+        /// <p><i>Extension method for toggling <see cref="NuGetPackSettings.NoPackageAnalysis"/>.</i></p>
+        /// <p>Specifies that pack should not run package analysis after building the package.</p>
         /// </summary>
         [Pure]
-        public static NuGetPackSettings TogglePackageAnalysis(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings ToggleNoPackageAnalysis(this NuGetPackSettings nuGetPackSettings)
         {
             nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.PackageAnalysis = !nuGetPackSettings.PackageAnalysis;
+            nuGetPackSettings.NoPackageAnalysis = !nuGetPackSettings.NoPackageAnalysis;
             return nuGetPackSettings;
         }
         /// <summary>

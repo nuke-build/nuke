@@ -80,10 +80,9 @@
         "Help": "Don't fail on errors, but treat them as warnings instead."
       },
       {
-        "Name": "Verification",
+        "Name": "SkipVerification",
         "Type": "bool",
         "Format": "-skipverify",
-        "Negate": true,
         "Help": "Skip pdb verification in case it causes issues (it's a formality anyway)"
       },
       {
