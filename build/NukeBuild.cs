@@ -49,20 +49,15 @@ class NukeBuild : GitHubBuild
             .DependsOn(Restore, Link)
             .Executes(() => MSBuild(s => DefaultSettings.MSBuildPack));
 
-    bool IsMasterBranch => GitVersion.BranchName == "master";
-
     Target Publish => _ => _
-            .OnlyWhen(() => GitVersion.BranchName == "master" || GitVersion.BranchName == "dev")
             .DependsOn(Pack)
             .Executes(() => GlobFiles(OutputDirectory, "*.nupkg")
                     .Where(x => !x.EndsWith("symbols.nupkg"))
                     .ForEach(x => NuGetPush(s => s
                             .SetVerbosity(NuGetVerbosity.Detailed)
                             .SetTargetPath(x)
-                            .SetApiKey(EnsureVariable(IsMasterBranch ? "NUGET_API_KEY" : "MYGET_API_KEY"))
-                            .SetSource(IsMasterBranch
-                                ? "https://www.nuget.org/api/v2/package"
-                                : "https://www.myget.org/F/nukebuild/api/v2/package"))));
+                            .SetApiKey(EnsureVariable("MYGET_API_KEY"))
+                            .SetSource("https://www.myget.org/F/nukebuild/api/v2/package"))));
 
     Target Analysis => _ => _
             .DependsOn(Restore)
