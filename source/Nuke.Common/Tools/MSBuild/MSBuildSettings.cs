@@ -5,7 +5,6 @@
 using System;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Core.Utilities;
 
 namespace Nuke.Common.Tools.MSBuild
 {

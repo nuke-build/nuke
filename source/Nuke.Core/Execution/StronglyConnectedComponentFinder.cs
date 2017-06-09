@@ -47,7 +47,9 @@ namespace Nuke.Core.Execution
                     v.LowLink = Math.Min (v.LowLink, w1.LowLink);
                 }
                 else if (_stack.Contains (w1))
+                {
                     v.LowLink = Math.Min (v.LowLink, w1.Index);
+                }
             }
 
             if (v.LowLink != v.Index)

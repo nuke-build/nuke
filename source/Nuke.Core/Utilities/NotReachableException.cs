@@ -1,0 +1,18 @@
+// Copyright Matthias Koch 2017.
+// Distributed under the MIT License.
+// https://github.com/matkoch/Nuke/blob/master/LICENSE
+
+using System;
+using System.Linq;
+
+namespace Nuke.Core.Utilities
+{
+    [Serializable]
+    public class NotReachableException : Exception
+    {
+        public NotReachableException (int exitCode)
+        {
+            Environment.Exit(exitCode);
+        }
+    }
+}

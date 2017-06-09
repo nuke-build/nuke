@@ -14,34 +14,23 @@ namespace Nuke.Core.Execution
             _list = new LinkedList<Vertex<T>> ();
         }
 
-        public StronglyConnectedComponent (IEnumerable<Vertex<T>> collection)
-        {
-            _list = new LinkedList<Vertex<T>> (collection);
-        }
-
         public void Add (Vertex<T> vertex)
         {
             _list.AddLast (vertex);
         }
+
+        public int Count => _list.Count;
+
+        public bool IsCycle => _list.Count > 1;
 
         public IEnumerator<Vertex<T>> GetEnumerator ()
         {
             return _list.GetEnumerator ();
         }
 
-        public int Count
-        {
-            get { return _list.Count; }
-        }
-
         IEnumerator IEnumerable.GetEnumerator ()
         {
             return _list.GetEnumerator ();
-        }
-
-        public bool IsCycle
-        {
-            get { return _list.Count > 1; }
         }
     }
 }

@@ -14,20 +14,12 @@ namespace Nuke.Core.Execution
             _collection = new LinkedList<StronglyConnectedComponent<T>> ();
         }
 
-        public StronglyConnectedComponentList (IEnumerable<StronglyConnectedComponent<T>> collection)
-        {
-            _collection = new LinkedList<StronglyConnectedComponent<T>> (collection);
-        }
-
         public void Add (StronglyConnectedComponent<T> scc)
         {
             _collection.AddLast (scc);
         }
 
-        public int Count
-        {
-            get { return _collection.Count; }
-        }
+        public int Count => _collection.Count;
 
         public IEnumerator<StronglyConnectedComponent<T>> GetEnumerator ()
         {
@@ -41,12 +33,12 @@ namespace Nuke.Core.Execution
 
         public IEnumerable<StronglyConnectedComponent<T>> IndependentComponents ()
         {
-            return Enumerable.Where (this, c => !c.IsCycle);
+            return this.Where (c => !c.IsCycle);
         }
 
         public IEnumerable<StronglyConnectedComponent<T>> Cycles ()
         {
-            return Enumerable.Where (this, c => c.IsCycle);
+            return this.Where (c => c.IsCycle);
         }
     }
 }

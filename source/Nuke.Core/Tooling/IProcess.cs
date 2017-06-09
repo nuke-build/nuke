@@ -32,7 +32,7 @@ namespace Nuke.Core.Tooling
         void Kill ();
 
         /// <summary>
-        /// Waits for the process to exit. The timeout is provided via <see cref="ProcessTasks.StartProcess(string,string,string,System.Nullable{int},bool,System.Func{string,string})"/> or <see cref="ToolSettings"/>.
+        /// Waits for the process to exit. The timeout is provided via <see cref="ProcessTasks.StartProcess(string,string,string,System.Collections.Generic.IReadOnlyDictionary{string,string},System.Nullable{int},bool,System.Func{string,string})"/> or <see cref="ToolSettings"/>.
         /// If the process is not exiting within a given timeout, <see cref="Kill"/> is called.
         /// </summary>
         /// <returns>

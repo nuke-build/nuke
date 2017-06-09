@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Nuke.Core.Output;
+using Nuke.Core.Utilities;
 using Nuke.Core.Utilities.Collections;
 
 namespace Nuke.Core.Execution
@@ -84,7 +85,7 @@ namespace Nuke.Core.Execution
                     OutputSink.Fail(
                         "Incomplete target definition order.",
                         string.Join(EnvironmentInfo.NewLine, independents.Select(x => $"  - {x.Value.Name}")));
-                    Environment.Exit(exitCode: -10);
+                    throw new NotReachableException(exitCode: -10);
                 }
 
                 var independent = independents.FirstOrDefault();
@@ -97,7 +98,7 @@ namespace Nuke.Core.Execution
                     OutputSink.Fail(
                         "Circular dependencies between target definitions.",
                         string.Join(EnvironmentInfo.NewLine, $"  - {cycles}"));
-                    Environment.Exit(exitCode: -10);
+                    throw new NotReachableException(exitCode: -11);
                 }
 
                 graphAsList.Remove(independent);
