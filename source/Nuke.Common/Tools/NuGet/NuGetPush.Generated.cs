@@ -22,11 +22,11 @@ namespace Nuke.Common.Tools.NuGet
         /// <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>
         /// <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p>
         /// </summary>
-        public static void NuGetPush (Configure<NuGetPushSettings> nuGetPushSettingsConfigure = null, ProcessSettings processSettings = null)
+        public static void NuGetPush (Configure<NuGetPushSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            nuGetPushSettingsConfigure = nuGetPushSettingsConfigure ?? (x => x);
+            configurator = configurator ?? (x => x);
             var nuGetPushSettings = new NuGetPushSettings();
-            nuGetPushSettings = nuGetPushSettingsConfigure(nuGetPushSettings);
+            nuGetPushSettings = configurator(nuGetPushSettings);
             PreProcess(nuGetPushSettings);
             var process = ProcessManager.Instance.StartProcess(nuGetPushSettings, processSettings);
             process.AssertZeroExitCode();

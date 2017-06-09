@@ -25,11 +25,11 @@ namespace Nuke.Common.Tools.GitVersion
         /// <p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p>
         /// <p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p>
         /// </summary>
-        public static void GitVersion (Configure<GitVersionSettings> gitVersionSettingsConfigure = null, ProcessSettings processSettings = null)
+        public static void GitVersion (Configure<GitVersionSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            gitVersionSettingsConfigure = gitVersionSettingsConfigure ?? (x => x);
+            configurator = configurator ?? (x => x);
             var gitVersionSettings = new GitVersionSettings();
-            gitVersionSettings = gitVersionSettingsConfigure(gitVersionSettings);
+            gitVersionSettings = configurator(gitVersionSettings);
             PreProcess(gitVersionSettings);
             var process = ProcessManager.Instance.StartProcess(gitVersionSettings, processSettings);
             process.AssertZeroExitCode();

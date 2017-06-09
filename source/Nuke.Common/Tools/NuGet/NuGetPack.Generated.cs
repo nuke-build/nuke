@@ -25,11 +25,11 @@ namespace Nuke.Common.Tools.NuGet
         /// <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>
         /// <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p>
         /// </summary>
-        public static void NuGetPack (Configure<NuGetPackSettings> nuGetPackSettingsConfigure = null, ProcessSettings processSettings = null)
+        public static void NuGetPack (Configure<NuGetPackSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            nuGetPackSettingsConfigure = nuGetPackSettingsConfigure ?? (x => x);
+            configurator = configurator ?? (x => x);
             var nuGetPackSettings = new NuGetPackSettings();
-            nuGetPackSettings = nuGetPackSettingsConfigure(nuGetPackSettings);
+            nuGetPackSettings = configurator(nuGetPackSettings);
             PreProcess(nuGetPackSettings);
             var process = ProcessManager.Instance.StartProcess(nuGetPackSettings, processSettings);
             process.AssertZeroExitCode();
@@ -39,10 +39,10 @@ namespace Nuke.Common.Tools.NuGet
         /// <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>
         /// <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p>
         /// </summary>
-        public static void NuGetPack (string targetPath, Configure<NuGetPackSettings> nuGetPackSettingsConfigure = null, ProcessSettings processSettings = null)
+        public static void NuGetPack (string targetPath, Configure<NuGetPackSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            nuGetPackSettingsConfigure = nuGetPackSettingsConfigure ?? (x => x);
-            NuGetPack(x => nuGetPackSettingsConfigure(x).SetTargetPath(targetPath));
+            configurator = configurator ?? (x => x);
+            NuGetPack(x => configurator(x).SetTargetPath(targetPath));
         }
     }
     /// <summary>

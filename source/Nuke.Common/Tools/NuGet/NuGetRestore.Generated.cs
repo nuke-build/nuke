@@ -22,11 +22,11 @@ namespace Nuke.Common.Tools.NuGet
         /// <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>
         /// <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p>
         /// </summary>
-        public static void NuGetRestore (Configure<NuGetRestoreSettings> nuGetRestoreSettingsConfigure = null, ProcessSettings processSettings = null)
+        public static void NuGetRestore (Configure<NuGetRestoreSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            nuGetRestoreSettingsConfigure = nuGetRestoreSettingsConfigure ?? (x => x);
+            configurator = configurator ?? (x => x);
             var nuGetRestoreSettings = new NuGetRestoreSettings();
-            nuGetRestoreSettings = nuGetRestoreSettingsConfigure(nuGetRestoreSettings);
+            nuGetRestoreSettings = configurator(nuGetRestoreSettings);
             PreProcess(nuGetRestoreSettings);
             var process = ProcessManager.Instance.StartProcess(nuGetRestoreSettings, processSettings);
             process.AssertZeroExitCode();
@@ -36,10 +36,10 @@ namespace Nuke.Common.Tools.NuGet
         /// <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>
         /// <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p>
         /// </summary>
-        public static void NuGetRestore (string targetPath, Configure<NuGetRestoreSettings> nuGetRestoreSettingsConfigure = null, ProcessSettings processSettings = null)
+        public static void NuGetRestore (string targetPath, Configure<NuGetRestoreSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            nuGetRestoreSettingsConfigure = nuGetRestoreSettingsConfigure ?? (x => x);
-            NuGetRestore(x => nuGetRestoreSettingsConfigure(x).SetTargetPath(targetPath));
+            configurator = configurator ?? (x => x);
+            NuGetRestore(x => configurator(x).SetTargetPath(targetPath));
         }
     }
     /// <summary>

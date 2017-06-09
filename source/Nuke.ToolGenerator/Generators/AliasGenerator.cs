@@ -46,7 +46,7 @@ namespace Nuke.ToolGenerator.Generators
             var additionalParameterDeclarations = properties.Select(x => $"{x.GetNullabilityAttribute()}{x.Type} {x.Name.ToInstance()}");
 
             var nextArguments = properties.Skip(count: 1).Select(x => x.Name.ToInstance());
-            var configuratorName = GetConfigureName(alias.SettingsClass);
+            var configuratorName = "configurator";
             var currentArgument = properties.First();
             var setter = $"x => {configuratorName}(x).Set{currentArgument.Name}({currentArgument.Name.ToInstance()})";
             var allArguments = nextArguments.Concat(new[] { setter });
@@ -55,7 +55,7 @@ namespace Nuke.ToolGenerator.Generators
                     .WriteSummary(writer.Tool)
                     .WriteLine(GetAliasSignature(writer.Alias, additionalParameterDeclarations))
                     .WriteBlock(w => w
-                            .WriteLine(GetConfiguratorInitialization(alias))
+                            .WriteLine("configurator = configurator ?? (x => x);")
                             .WriteLine($"{alias.GetTaskCommandMethodName()}({allArguments.Join()});"));
         }
 
@@ -74,7 +74,7 @@ namespace Nuke.ToolGenerator.Generators
                     (additionalParameterDeclarations ?? Enumerable.Empty<string>())
                     .Concat(new[]
                             {
-                                $"Configure<{className}> {GetConfigureName(className)} = null",
+                                $"Configure<{className}> configurator = null",
                                 "ProcessSettings processSettings = null"
                             });
 
@@ -87,18 +87,13 @@ namespace Nuke.ToolGenerator.Generators
             var settingsClassInstance = settingsClass.ToInstance();
 
             writer
-                    .WriteLine(GetConfiguratorInitialization(writer.Alias))
+                    .WriteLine("configurator = configurator ?? (x => x);")
                     .WriteLine($"var {settingsClassInstance} = new {settingsClass}();")
-                    .WriteLine($"{settingsClassInstance} = {GetConfigureName(settingsClass)}({settingsClassInstance});")
+                    .WriteLine($"{settingsClassInstance} = configurator({settingsClassInstance});")
                     .WriteLine($"PreProcess({settingsClassInstance});")
                     .WriteLine($"var process = ProcessManager.Instance.StartProcess({settingsClassInstance}, processSettings);")
                     .WriteLine(GetProcessAssertion(writer.Alias))
                     .WriteLine($"PostProcess({settingsClassInstance});");
-        }
-
-        private static string GetConfiguratorInitialization (Alias alias)
-        {
-            return $"{GetConfigureName(alias.SettingsClass)} = {GetConfigureName(alias.SettingsClass)} ?? (x => x);";
         }
 
         public static string GetProcessAssertion (Alias alias)
@@ -106,11 +101,6 @@ namespace Nuke.ToolGenerator.Generators
             return !alias.CustomAssertion
                 ? "process.AssertZeroExitCode();"
                 : $"AssertProcess(process, {alias.SettingsClass.ToInstance()});";
-        }
-
-        private static string GetConfigureName (string className)
-        {
-            return $"{className.ToInstance()}Configure";
         }
 
         private static AliasWriter WritePreAndPostProcess (this AliasWriter writer)

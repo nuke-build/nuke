@@ -25,11 +25,11 @@ namespace Nuke.Common.Tools.OpenCover
         /// <p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p>
         /// <p>For more details, visit the <a href="https://github.com/OpenCover/opencover">official website</a>.</p>
         /// </summary>
-        public static void OpenCover (Configure<OpenCoverSettings> openCoverSettingsConfigure = null, ProcessSettings processSettings = null)
+        public static void OpenCover (Configure<OpenCoverSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            openCoverSettingsConfigure = openCoverSettingsConfigure ?? (x => x);
+            configurator = configurator ?? (x => x);
             var openCoverSettings = new OpenCoverSettings();
-            openCoverSettings = openCoverSettingsConfigure(openCoverSettings);
+            openCoverSettings = configurator(openCoverSettings);
             PreProcess(openCoverSettings);
             var process = ProcessManager.Instance.StartProcess(openCoverSettings, processSettings);
             process.AssertZeroExitCode();
@@ -39,10 +39,10 @@ namespace Nuke.Common.Tools.OpenCover
         /// <p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p>
         /// <p>For more details, visit the <a href="https://github.com/OpenCover/opencover">official website</a>.</p>
         /// </summary>
-        public static void OpenCover (string targetPath, Configure<OpenCoverSettings> openCoverSettingsConfigure = null, ProcessSettings processSettings = null)
+        public static void OpenCover (string targetPath, Configure<OpenCoverSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            openCoverSettingsConfigure = openCoverSettingsConfigure ?? (x => x);
-            OpenCover(x => openCoverSettingsConfigure(x).SetTargetPath(targetPath));
+            configurator = configurator ?? (x => x);
+            OpenCover(x => configurator(x).SetTargetPath(targetPath));
         }
     }
     /// <summary>
