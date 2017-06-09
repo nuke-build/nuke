@@ -44,6 +44,15 @@ namespace Nuke.Common.Tools.NuGet
             configurator = configurator ?? (x => x);
             NuGetPack(x => configurator(x).SetTargetPath(targetPath));
         }
+        /// <summary>
+        /// <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>
+        /// <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p>
+        /// </summary>
+        public static void NuGetPack (string targetPath, string version, Configure<NuGetPackSettings> configurator = null, ProcessSettings processSettings = null)
+        {
+            configurator = configurator ?? (x => x);
+            NuGetPack(targetPath, x => configurator(x).SetVersion(version));
+        }
     }
     /// <summary>
     /// <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>

@@ -13,7 +13,6 @@ using System.Linq;
 using System.Text;
 
 [assembly: IconClass(typeof(Nuke.Common.Tools.OpenCover.OpenCoverTasks), "shield2")]
-
 namespace Nuke.Common.Tools.OpenCover
 {
     [PublicAPI]
@@ -32,7 +31,7 @@ namespace Nuke.Common.Tools.OpenCover
             var openCoverSettings = new OpenCoverSettings();
             openCoverSettings = configurator(openCoverSettings);
             PreProcess(openCoverSettings);
-            var process = ProcessManager.Instance.StartProcess(openCoverSettings, processSettings);
+            var process = StartProcess(openCoverSettings, processSettings);
             process.AssertZeroExitCode();
             PostProcess(openCoverSettings);
         }
@@ -40,10 +39,19 @@ namespace Nuke.Common.Tools.OpenCover
         /// <p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p>
         /// <p>For more details, visit the <a href="https://github.com/OpenCover/opencover">official website</a>.</p>
         /// </summary>
-        public static void OpenCover (string targetPath, Configure<OpenCoverSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void OpenCover (Action testAction, Configure<OpenCoverSettings> configurator = null, ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
-            OpenCover(x => configurator(x).SetTargetPath(targetPath));
+            OpenCover(x => configurator(x).SetTestAction(testAction));
+        }
+        /// <summary>
+        /// <p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p>
+        /// <p>For more details, visit the <a href="https://github.com/OpenCover/opencover">official website</a>.</p>
+        /// </summary>
+        public static void OpenCover (Action testAction, string output, Configure<OpenCoverSettings> configurator = null, ProcessSettings processSettings = null)
+        {
+            configurator = configurator ?? (x => x);
+            OpenCover(testAction, x => configurator(x).SetOutput(output));
         }
     }
     /// <summary>

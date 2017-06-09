@@ -25,7 +25,12 @@ namespace Nuke.ToolGenerator.Model
         public string MethodPostfix { get; set; }
 
         /// <summary>
-        /// If set to <v>true</v>, will generate a call to <c>AssertProcess</c> which needs to be implemented in a partial class definition.
+        /// If set to <c>true</c>, will generate a call to <c>StartProcess</c> which needs to be implemented in a partial class definition  .
+        /// </summary>
+        public bool CustomStart { get; set; }
+
+        /// <summary>
+        /// If set to <c>true</c>, will generate a call to <c>AssertProcess</c> which needs to be implemented in a partial class definition.
         /// Otherwise, just asserts the exit code to be zero.
         /// </summary>
         public bool CustomAssertion { get; set; }

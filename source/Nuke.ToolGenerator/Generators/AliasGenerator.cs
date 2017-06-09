@@ -44,18 +44,20 @@ namespace Nuke.ToolGenerator.Generators
             var properties = alias.OverloadArguments.Take(index + 1).Select(x => settingsClass.Properties.Single(y => y.Name == x)).ToList();
             var additionalParameterDeclarations = properties.Select(x => $"{x.GetNullabilityAttribute()}{x.Type} {x.Name.ToInstance()}");
 
-            var nextArguments = properties.Skip(count: 1).Select(x => x.Name.ToInstance());
+            var nextArguments = properties.AsEnumerable().Reverse().Skip(count: 1).Reverse().Select(x => x.Name.ToInstance());
             var configuratorName = "configurator";
-            var currentArgument = properties.First();
+            var currentArgument = properties.Last();
             var setter = $"x => {configuratorName}(x).Set{currentArgument.Name}({currentArgument.Name.ToInstance()})";
             var allArguments = nextArguments.Concat(new[] { setter });
 
-            return writer
+            writer
                     .WriteSummary(writer.Tool)
                     .WriteLine(GetAliasSignature(writer.Alias, additionalParameterDeclarations))
                     .WriteBlock(w => w
                             .WriteLine("configurator = configurator ?? (x => x);")
                             .WriteLine($"{alias.GetTaskCommandMethodName()}({allArguments.Join()});"));
+
+            return WriteAliasOverloads(writer, index + 1);
         }
 
         private static AliasWriter WriteMainAlias (this AliasWriter writer)
@@ -90,9 +92,16 @@ namespace Nuke.ToolGenerator.Generators
                     .WriteLine($"var {settingsClassInstance} = new {settingsClass}();")
                     .WriteLine($"{settingsClassInstance} = configurator({settingsClassInstance});")
                     .WriteLine($"PreProcess({settingsClassInstance});")
-                    .WriteLine($"var process = ProcessManager.Instance.StartProcess({settingsClassInstance}, processSettings);")
+                    .WriteLine($"var process = {GetProcessStart(writer.Alias)};")
                     .WriteLine(GetProcessAssertion(writer.Alias))
                     .WriteLine($"PostProcess({settingsClassInstance});");
+        }
+
+        public static string GetProcessStart(Alias alias)
+        {
+            return !alias.CustomStart
+                ? $"ProcessManager.Instance.StartProcess({alias.SettingsClass.ToInstance()}, processSettings)"
+                : $"StartProcess({alias.SettingsClass.ToInstance()}, processSettings)";
         }
 
         public static string GetProcessAssertion (Alias alias)

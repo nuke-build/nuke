@@ -8,9 +8,11 @@
   "Alias": {
     "IconClass": "shield2",
     "TaskName": "OpenCover",
+    "CustomStart": true,
     "SettingsClass": "OpenCoverSettings",
     "OverloadArguments": [
-      "TargetPath"
+      "TestAction",
+      "Output"
     ]
   },
   "SettingsClass": {

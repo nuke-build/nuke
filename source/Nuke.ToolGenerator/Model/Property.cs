@@ -39,11 +39,11 @@ namespace Nuke.ToolGenerator.Model
         /// </summary>
         public string Default { get; set; }
         /// <summary>
-        /// If set to <v>true</v>, the value won't be rendered in clear text.
+        /// If set to <c>true</c>, the value won't be rendered in clear text.
         /// </summary>
         public bool Secret { get; set; }
         /// <summary>
-        /// If set to <v>true</v>, will call a custom value provider method.
+        /// If set to <c>true</c>, will call a custom value provider method.
         /// </summary>
         public bool CustomValue { get; set; }
         

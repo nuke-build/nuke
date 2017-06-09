@@ -44,6 +44,15 @@ namespace Nuke.Common.Tools.InspectCode
             configurator = configurator ?? (x => x);
             InspectCode(x => configurator(x).SetTargetPath(targetPath));
         }
+        /// <summary>
+        /// <p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p>
+        /// <p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p>
+        /// </summary>
+        public static void InspectCode (string targetPath, string output, Configure<InspectCodeSettings> configurator = null, ProcessSettings processSettings = null)
+        {
+            configurator = configurator ?? (x => x);
+            InspectCode(targetPath, x => configurator(x).SetOutput(output));
+        }
     }
     /// <summary>
     /// <p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p>

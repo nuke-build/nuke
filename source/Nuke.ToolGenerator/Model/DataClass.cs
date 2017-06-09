@@ -17,7 +17,7 @@ namespace Nuke.ToolGenerator.Model
         public string BaseClass { get; set; }
 
         /// <summary>
-        /// If set to <v>true</v>, no extension methods will be generated.
+        /// If set to <c>true</c>, no extension methods will be generated.
         /// </summary>
         public bool NoExtensionMethods { get; set; }
 
