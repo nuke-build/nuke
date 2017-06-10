@@ -68,7 +68,7 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary><p>Ignores project-to-project (P2P) references and only builds the root project specified to build.</p></summary>
         public virtual bool NoDependencies { get; internal set; }
         /// <summary><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
-        public virtual DotNetVerbosity Verbosity { get; internal set; }
+        public virtual DotNetVerbosity? Verbosity { get; internal set; }
         protected override Arguments GetArgumentsInternal()
         {
             return base.GetArgumentsInternal()
@@ -247,7 +247,7 @@ namespace Nuke.Common.Tools.DotNet
         /// <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetBuildSettings SetVerbosity(this DotNetBuildSettings dotNetBuildSettings, DotNetVerbosity verbosity)
+        public static DotNetBuildSettings SetVerbosity(this DotNetBuildSettings dotNetBuildSettings, DotNetVerbosity? verbosity)
         {
             dotNetBuildSettings = dotNetBuildSettings.NewInstance();
             dotNetBuildSettings.Verbosity = verbosity;

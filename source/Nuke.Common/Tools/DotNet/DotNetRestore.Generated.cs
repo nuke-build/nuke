@@ -74,7 +74,7 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
         public virtual bool NoDependencies { get; internal set; }
         /// <summary><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
-        public virtual DotNetVerbosity Verbosity { get; internal set; }
+        public virtual DotNetVerbosity? Verbosity { get; internal set; }
         protected override Arguments GetArgumentsInternal()
         {
             return base.GetArgumentsInternal()
@@ -397,7 +397,7 @@ namespace Nuke.Common.Tools.DotNet
         /// <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetRestoreSettings SetVerbosity(this DotNetRestoreSettings dotNetRestoreSettings, DotNetVerbosity verbosity)
+        public static DotNetRestoreSettings SetVerbosity(this DotNetRestoreSettings dotNetRestoreSettings, DotNetVerbosity? verbosity)
         {
             dotNetRestoreSettings = dotNetRestoreSettings.NewInstance();
             dotNetRestoreSettings.Verbosity = verbosity;

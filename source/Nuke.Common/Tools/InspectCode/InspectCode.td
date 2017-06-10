@@ -53,8 +53,9 @@
       },
       {
         "Name": "DisableSettingsLayers",
-        "Type": "bool",
+        "Type": "List<InspectCodeSettingsLayers>",
         "Format": "--disable-settings-layers={value}",
+        "MainSeparator": ";",
         "Help": "Disables specified <a href=\"https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers\">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>."
       },
       {
@@ -99,8 +100,7 @@
   "DataClasses": [],
   "Enumerations": [
     {
-      "Name": "SettingsLayers",
-      "IsFlags": true,
+      "Name": "InspectCodeSettingsLayers",
       "Values": [
         "GlobalAll",
         "GlobalPerProduct",

@@ -68,7 +68,7 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary><p>Sets the serviceable flag in the package. For more information, see <a href="https://aka.ms/nupkgservicing">.NET Blog: .NET 4.5.1 Supports Microsoft Security Updates for .NET NuGet Libraries</a>.</p></summary>
         public virtual bool Serviceable { get; internal set; }
         /// <summary><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
-        public virtual DotNetVerbosity Verbostiy { get; internal set; }
+        public virtual DotNetVerbosity? Verbostiy { get; internal set; }
         protected override Arguments GetArgumentsInternal()
         {
             return base.GetArgumentsInternal()
@@ -313,7 +313,7 @@ namespace Nuke.Common.Tools.DotNet
         /// <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
         /// </summary>
         [Pure]
-        public static DotNetPackSettings SetVerbostiy(this DotNetPackSettings dotNetPackSettings, DotNetVerbosity verbostiy)
+        public static DotNetPackSettings SetVerbostiy(this DotNetPackSettings dotNetPackSettings, DotNetVerbosity? verbostiy)
         {
             dotNetPackSettings = dotNetPackSettings.NewInstance();
             dotNetPackSettings.Verbostiy = verbostiy;

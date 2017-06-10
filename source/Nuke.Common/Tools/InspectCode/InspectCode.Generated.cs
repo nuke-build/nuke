@@ -76,7 +76,8 @@ namespace Nuke.Common.Tools.InspectCode
         /// <summary><p>Allows analyzing particular project(s) instead of the whole solution. After this parameter, you can type a project name or a wildcard that matches several projects within your solution. For example, <c>--project=*Billing</c></p></summary>
         public virtual string Project { get; internal set; }
         /// <summary><p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p></summary>
-        public virtual bool DisableSettingsLayers { get; internal set; }
+        public virtual IReadOnlyList<InspectCodeSettingsLayers> DisableSettingsLayers => DisableSettingsLayersInternal.AsReadOnly();
+        internal List<InspectCodeSettingsLayers> DisableSettingsLayersInternal { get; set; } = new List<InspectCodeSettingsLayers>();
         /// <summary><p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p></summary>
         public virtual bool NoBuiltinSettings { get; internal set; }
         /// <summary><p>Lets you specify a custom location for the data that InspectCode caches. By default, the <i>%LOCALAPPDATA%</i> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.</p></summary>
@@ -106,7 +107,7 @@ namespace Nuke.Common.Tools.InspectCode
               .Add("--no-swea", NoSwea)
               .Add("--profile={value}", Profile)
               .Add("--project={value}", Project)
-              .Add("--disable-settings-layers={value}", DisableSettingsLayers)
+              .Add("--disable-settings-layers={value}", DisableSettingsLayers, mainSeparator: $";")
               .Add("--no-buildin-settings", NoBuiltinSettings)
               .Add("--caches-home={value}", CachesHome)
               .Add("--properties={value}", Properties, mainSeparator: $";", keyValueSeparator: $"=")
@@ -207,47 +208,80 @@ namespace Nuke.Common.Tools.InspectCode
             return inspectCodeSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for setting <see cref="InspectCodeSettings.DisableSettingsLayers"/>.</i></p>
+        /// <p><i>Extension method for setting <see cref="InspectCodeSettings.DisableSettingsLayers"/> to a new list.</i></p>
         /// <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings SetDisableSettingsLayers(this InspectCodeSettings inspectCodeSettings, bool disableSettingsLayers)
+        public static InspectCodeSettings SetDisableSettingsLayers(this InspectCodeSettings inspectCodeSettings, params InspectCodeSettingsLayers[] disableSettingsLayers)
         {
             inspectCodeSettings = inspectCodeSettings.NewInstance();
-            inspectCodeSettings.DisableSettingsLayers = disableSettingsLayers;
+            inspectCodeSettings.DisableSettingsLayersInternal = disableSettingsLayers.ToList();
             return inspectCodeSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for enabling <see cref="InspectCodeSettings.DisableSettingsLayers"/>.</i></p>
+        /// <p><i>Extension method for setting <see cref="InspectCodeSettings.DisableSettingsLayers"/> to a new list.</i></p>
         /// <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings EnableDisableSettingsLayers(this InspectCodeSettings inspectCodeSettings)
+        public static InspectCodeSettings SetDisableSettingsLayers(this InspectCodeSettings inspectCodeSettings, IEnumerable<InspectCodeSettingsLayers> disableSettingsLayers)
         {
             inspectCodeSettings = inspectCodeSettings.NewInstance();
-            inspectCodeSettings.DisableSettingsLayers = true;
+            inspectCodeSettings.DisableSettingsLayersInternal = disableSettingsLayers.ToList();
             return inspectCodeSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for disabling <see cref="InspectCodeSettings.DisableSettingsLayers"/>.</i></p>
+        /// <p><i>Extension method for adding new disableSettingsLayers to the existing <see cref="InspectCodeSettings.DisableSettingsLayers"/>.</i></p>
         /// <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings DisableDisableSettingsLayers(this InspectCodeSettings inspectCodeSettings)
+        public static InspectCodeSettings AddDisableSettingsLayers(this InspectCodeSettings inspectCodeSettings, params InspectCodeSettingsLayers[] disableSettingsLayers)
         {
             inspectCodeSettings = inspectCodeSettings.NewInstance();
-            inspectCodeSettings.DisableSettingsLayers = false;
+            inspectCodeSettings.DisableSettingsLayersInternal.AddRange(disableSettingsLayers);
             return inspectCodeSettings;
         }
         /// <summary>
-        /// <p><i>Extension method for toggling <see cref="InspectCodeSettings.DisableSettingsLayers"/>.</i></p>
+        /// <p><i>Extension method for adding new disableSettingsLayers to the existing <see cref="InspectCodeSettings.DisableSettingsLayers"/>.</i></p>
         /// <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
         /// </summary>
         [Pure]
-        public static InspectCodeSettings ToggleDisableSettingsLayers(this InspectCodeSettings inspectCodeSettings)
+        public static InspectCodeSettings AddDisableSettingsLayers(this InspectCodeSettings inspectCodeSettings, IEnumerable<InspectCodeSettingsLayers> disableSettingsLayers)
         {
             inspectCodeSettings = inspectCodeSettings.NewInstance();
-            inspectCodeSettings.DisableSettingsLayers = !inspectCodeSettings.DisableSettingsLayers;
+            inspectCodeSettings.DisableSettingsLayersInternal.AddRange(disableSettingsLayers);
+            return inspectCodeSettings;
+        }
+        /// <summary>
+        /// <p><i>Extension method for clearing <see cref="InspectCodeSettings.DisableSettingsLayers"/>.</i></p>
+        /// <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
+        /// </summary>
+        [Pure]
+        public static InspectCodeSettings ClearDisableSettingsLayers(this InspectCodeSettings inspectCodeSettings)
+        {
+            inspectCodeSettings = inspectCodeSettings.NewInstance();
+            inspectCodeSettings.DisableSettingsLayersInternal.Clear();
+            return inspectCodeSettings;
+        }
+        /// <summary>
+        /// <p><i>Extension method for adding a single disableSettingsLayer to <see cref="InspectCodeSettings.DisableSettingsLayers"/>.</i></p>
+        /// <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
+        /// </summary>
+        [Pure]
+        public static InspectCodeSettings AddDisableSettingsLayer(this InspectCodeSettings inspectCodeSettings, InspectCodeSettingsLayers disableSettingsLayer)
+        {
+            inspectCodeSettings = inspectCodeSettings.NewInstance();
+            inspectCodeSettings.DisableSettingsLayersInternal.Add(disableSettingsLayer);
+            return inspectCodeSettings;
+        }
+        /// <summary>
+        /// <p><i>Extension method for removing a single disableSettingsLayer from <see cref="InspectCodeSettings.DisableSettingsLayers"/>.</i></p>
+        /// <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
+        /// </summary>
+        [Pure]
+        public static InspectCodeSettings RemoveDisableSettingsLayer(this InspectCodeSettings inspectCodeSettings, InspectCodeSettingsLayers disableSettingsLayer)
+        {
+            inspectCodeSettings = inspectCodeSettings.NewInstance();
+            inspectCodeSettings.DisableSettingsLayersInternal.Remove(disableSettingsLayer);
             return inspectCodeSettings;
         }
         /// <summary>
@@ -498,8 +532,7 @@ namespace Nuke.Common.Tools.InspectCode
     /// <p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p>
     /// </summary>
     [PublicAPI]
-    [Flags]
-    public enum SettingsLayers
+    public enum InspectCodeSettingsLayers
     {
         GlobalAll,
         GlobalPerProduct,

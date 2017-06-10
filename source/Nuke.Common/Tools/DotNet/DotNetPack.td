@@ -70,7 +70,7 @@
       },
       {
         "Name": "Verbostiy",
-        "Type": "DotNetVerbosity",
+        "Type": "DotNetVerbosity?",
         "Format": "--verbosity {value}",
         "Help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
       }
