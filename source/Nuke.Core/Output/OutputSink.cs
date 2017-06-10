@@ -23,6 +23,8 @@ namespace Nuke.Core.Output
 
     internal static class OutputSink
     {
+        private static readonly List<string> s_warnings = new List<string>();
+
         public static IOutputSink Instance =>
                 TeamCityOutputSink.Instance
                 ?? BitriseOutputSink.Instance
@@ -49,6 +51,7 @@ namespace Nuke.Core.Output
             if (Build.Instance.LogLevel > LogLevel.Warning)
                 return;
 
+            s_warnings.Add(text);
             Instance.Warn(text, details);
         }
 
@@ -64,6 +67,7 @@ namespace Nuke.Core.Output
 
         public static void WriteSummary (IReadOnlyCollection<TargetDefinition> executionList)
         {
+            s_warnings.ForEach(x => Instance.Warn(x));
             Instance.WriteSummary(executionList);
         }
     }
