@@ -52,10 +52,12 @@ namespace Nuke.Common.Tools
                         .NotNull($"Could not find '{packageExecutable}' inside '{packageDirectory}'.");
             }
 
+            // TODO: move to Core and call ProcessManager.Instance ?
+            var locateExecutable = EnvironmentInfo.IsWin
+                ? @"C:\Windows\System32\where.exe"
+                : "/usr/bin/which";
             var locateProcess = ProcessTasks.StartProcess(
-                EnvironmentInfo.IsWin
-                    ? @"C:\Windows\System32\where.exe"
-                    : "/usr/bin/which",
+                locateExecutable,
                 pathExecutable,
                 redirectOutput: true);
             locateProcess.AssertWaitForExit();
@@ -63,7 +65,7 @@ namespace Nuke.Common.Tools
             return locateProcess.Output
                     .Select(x => x.Text)
                     .FirstOrDefault(File.Exists)
-                    .NotNull($"Could not find '{pathExecutable}' in global context.");
+                    .NotNull($"Could not find '{pathExecutable}' via '{locateProcess}'.");
         }
     }
 }
