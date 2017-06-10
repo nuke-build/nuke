@@ -46,7 +46,7 @@ namespace Nuke.Common.Tools.GitLink
     public partial class GitLink2Settings : ToolSettings
     {
         /// <inheritdoc />
-        public override string ToolPath => base.ToolPath ?? NuGetPackageResolver.GetToolPath($"gitlink", $"GitLink.exe");
+        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetToolPath(packageId: $"gitlink", packageExecutable: $"GitLink.exe");
         /// <summary><p>The directory containing the solution with the pdb files.</p></summary>
         public virtual string SolutionDirectory { get; internal set; }
         /// <summary><p>Url to remote git repository.</p></summary>

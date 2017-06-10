@@ -55,6 +55,11 @@ namespace Nuke.ToolGenerator.Model
         public string EnvironmentExecutable { get; set; }
 
         /// <summary>
+        /// Defines a executable to use from PATH.
+        /// </summary>
+        public string PathExecutable { get; set; }
+
+        /// <summary>
         /// Custom expression that returns the executable.
         /// </summary>
         public string CustomExecutable { get; set; }

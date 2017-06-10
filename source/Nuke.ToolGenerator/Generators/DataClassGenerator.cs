@@ -39,21 +39,25 @@ namespace Nuke.ToolGenerator.Generators
             if (settingsClass == null)
                 return writer;
 
-            string expression;
+            var arguments = new List<string>();
             if (settingsClass.PackageId != null)
-                expression =
-                        $"NuGetPackageResolver.GetToolPath({settingsClass.PackageId.Quote()}, {(settingsClass.PackageExecutable ?? "{GetExecutable()}").Quote()})";
-            else if (settingsClass.EnvironmentExecutable != null)
-                expression = $"EnvironmentInfo.EnsureVariable({settingsClass.EnvironmentExecutable.Quote()})";
-            else
-                expression = settingsClass.CustomExecutable;
+            {
+                arguments.Add($"packageId: {settingsClass.PackageId.Quote()}");
+                arguments.Add($"packageExecutable: {(settingsClass.PackageExecutable ?? "{GetPackageExecutable()}").Quote()}");
+            }
+            if (settingsClass.EnvironmentExecutable != null)
+                arguments.Add($"environmentExecutable: {settingsClass.EnvironmentExecutable.Quote()}");
+            if (settingsClass.PathExecutable != null)
+                arguments.Add($"pathExecutable: {settingsClass.PathExecutable.Quote()}");
 
-            if (expression == null)
+            if (arguments.Count == 0 && settingsClass.CustomExecutable == null)
                 return writer;
 
+            var toolPathResolver = settingsClass.CustomExecutable ?? $"ToolPathResolver.GetToolPath({arguments.Join()})";
+
             return writer
-                .WriteSummaryInherit()
-                .WriteLine ($"public override string ToolPath => base.ToolPath ?? {expression};");
+                    .WriteSummaryInherit()
+                    .WriteLine($"public override string ToolPath => base.ToolPath ?? {toolPathResolver};");
         }
 
         private static void WritePropertyDeclaration (DataClassWriter writer, Property property)

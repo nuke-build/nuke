@@ -10,7 +10,7 @@ namespace Nuke.Common.Tools.Xunit
 {
     partial class XunitSettings
     {
-        private string GetExecutable ()
+        private string GetPackageExecutable ()
         {
             return EnvironmentInfo.Is64Bit ? "xunit.console.exe" : "xunit.console.x86.exe";
         }

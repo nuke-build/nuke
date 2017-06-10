@@ -52,7 +52,7 @@ namespace Nuke.Common.Tools.DocFx
     public partial class DocFxMetadataSettings : ToolSettings
     {
         /// <inheritdoc />
-        public override string ToolPath => base.ToolPath ?? NuGetPackageResolver.GetToolPath($"docfx.console", $"docfx.exe");
+        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetToolPath(packageId: $"docfx.console", packageExecutable: $"docfx.exe");
         /// <summary><p>Path to the docfx.json configuration file.</p></summary>
         public virtual string ConfigPath { get; internal set; }
         /// <summary><p>Force re-generate all the metadata.</p></summary>

@@ -43,7 +43,7 @@ namespace Nuke.Common.Tools.GitLink
     public partial class GitLink3Settings : ToolSettings
     {
         /// <inheritdoc />
-        public override string ToolPath => base.ToolPath ?? NuGetPackageResolver.GetToolPath($"gitlink", $"GitLink.exe");
+        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetToolPath(packageId: $"gitlink", packageExecutable: $"GitLink.exe");
         /// <summary><p>The PDB to add source indexing to.</p></summary>
         public virtual string PdbFile { get; internal set; }
         /// <summary><p>The method for SRCSRV to retrieve source code. One of &lt;Http|Powershell&gt;. Default is Http.</p></summary>

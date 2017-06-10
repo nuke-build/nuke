@@ -46,7 +46,7 @@ namespace Nuke.Common.Tools.ReportGenerator
     public partial class ReportGeneratorSettings : ToolSettings
     {
         /// <inheritdoc />
-        public override string ToolPath => base.ToolPath ?? NuGetPackageResolver.GetToolPath($"ReportGenerator", $"ReportGenerator.exe");
+        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetToolPath(packageId: $"ReportGenerator", packageExecutable: $"ReportGenerator.exe");
         /// <summary><p>The coverage reports that should be parsed (separated by semicolon). Wildcards are allowed.</p></summary>
         public virtual IReadOnlyList<string> Reports => ReportsInternal.AsReadOnly();
         internal List<string> ReportsInternal { get; set; } = new List<string>();

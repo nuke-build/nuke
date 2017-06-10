@@ -64,7 +64,7 @@ namespace Nuke.Common.Tools.OpenCover
     public partial class OpenCoverSettings : ToolSettings
     {
         /// <inheritdoc />
-        public override string ToolPath => base.ToolPath ?? NuGetPackageResolver.GetToolPath($"OpenCover", $"OpenCover.Console.exe");
+        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetToolPath(packageId: $"OpenCover", packageExecutable: $"OpenCover.Console.exe");
         /// <summary><p>The name of the target application or service that will be started; this can also be a path to the target application.</p></summary>
         public virtual string TargetPath { get; internal set; }
         /// <summary><p>Arguments to be passed to the target process.</p></summary>

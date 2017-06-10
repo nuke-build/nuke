@@ -64,7 +64,7 @@ namespace Nuke.Common.Tools.InspectCode
     public partial class InspectCodeSettings : ToolSettings
     {
         /// <inheritdoc />
-        public override string ToolPath => base.ToolPath ?? NuGetPackageResolver.GetToolPath($"JetBrains.ReSharper.CommandLineTools", $"{GetExecutable()}");
+        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetToolPath(packageId: $"JetBrains.ReSharper.CommandLineTools", packageExecutable: $"{GetPackageExecutable()}");
         /// <summary><p>Target path.</p></summary>
         public virtual string TargetPath { get; internal set; }
         /// <summary><p>Lets you set the output file. By default, the output file is saved in the <i>%TEMP%</i> directory.</p></summary>

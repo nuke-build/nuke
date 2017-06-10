@@ -54,7 +54,7 @@ namespace Nuke.Common.Tools
             return EnvironmentInfo.EnsureVariable("PATH")
                     .Split(';')
                     .Select(x => Path.Combine(x, pathExecutable))
-                    .SingleOrDefault(File.Exists)
+                    .FirstOrDefault(File.Exists)
                     .NotNull($"Could not find '{pathExecutable}' in PATH.");
         }
     }

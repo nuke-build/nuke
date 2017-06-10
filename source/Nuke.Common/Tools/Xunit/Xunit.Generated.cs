@@ -46,7 +46,7 @@ namespace Nuke.Common.Tools.Xunit
     public partial class XunitSettings : ToolSettings
     {
         /// <inheritdoc />
-        public override string ToolPath => base.ToolPath ?? NuGetPackageResolver.GetToolPath($"xunit.runner.console", $"{GetExecutable()}");
+        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetToolPath(packageId: $"xunit.runner.console", packageExecutable: $"{GetPackageExecutable()}");
         /// <summary><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
         public virtual ILookup<string, string> TargetAssemblyWithConfigs => TargetAssemblyWithConfigsInternal.AsReadOnly();
         internal LookupTable<string, string> TargetAssemblyWithConfigsInternal { get; set; } = new LookupTable<string, string>(StringComparer.OrdinalIgnoreCase);

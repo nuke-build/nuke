@@ -46,7 +46,7 @@ namespace Nuke.Common.Tools.GitVersion
     public partial class GitVersionSettings : ToolSettings
     {
         /// <inheritdoc />
-        public override string ToolPath => base.ToolPath ?? NuGetPackageResolver.GetToolPath($"GitVersion.CommandLine", $"GitVersion.exe");
+        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetToolPath(packageId: $"GitVersion.CommandLine", packageExecutable: $"GitVersion.exe");
         public virtual bool UpdateAssemblyInfo { get; internal set; }
         protected override Arguments GetArgumentsInternal()
         {
