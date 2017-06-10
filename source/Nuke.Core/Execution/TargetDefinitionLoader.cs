@@ -45,6 +45,7 @@ namespace Nuke.Core.Execution
                     .AppendLine("Available targets are:");
             nameDictionary
                     .Where(x => !x.Key.Equals("default", StringComparison.OrdinalIgnoreCase))
+                    .OrderBy(x => x.Key, StringComparer.OrdinalIgnoreCase)
                     .ForEach(x => stringBuilder.AppendLine($"  - {x.Key}{(x.Value.Factory == defaultTarget ? " (default)" : string.Empty)}"));
 
             throw new LoaderException(stringBuilder.ToString());
