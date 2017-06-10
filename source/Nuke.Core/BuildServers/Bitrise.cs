@@ -16,7 +16,7 @@ namespace Nuke.Core.BuildServers
     public class Bitrise
     {
         [CanBeNull]
-        public static Bitrise Instance => EnvironmentInfo.Variable("BITRISE_BUILD_URL") != null ? new Bitrise() : null;
+        public static Bitrise Instance { get; } = EnvironmentInfo.Variable("BITRISE_BUILD_URL") != null ? new Bitrise() : null;
 
         private Bitrise ()
         {
