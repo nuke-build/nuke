@@ -33,7 +33,6 @@ namespace Nuke.Core.Execution
         internal Target Factory { get; }
         internal TimeSpan Duration { get; set; }
         internal ExecutionStatus Status { get; set; }
-        internal bool ContinueOnFailure { get; private set; }
         internal List<Func<bool>> Conditions { get; }
         internal List<Target> DependentTargets { get; }
         internal List<string> DependentShadowTargets { get; }
@@ -59,13 +58,6 @@ namespace Nuke.Core.Execution
         public ITargetDefinition DependsOn (params string[] shadowTargets)
         {
             DependentShadowTargets.AddRange(shadowTargets);
-            return this;
-        }
-
-
-        public ITargetDefinition ContinuousOnFailure ()
-        {
-            ContinueOnFailure = true;
             return this;
         }
 

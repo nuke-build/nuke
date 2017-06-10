@@ -38,20 +38,12 @@ namespace Nuke.Core.Execution
 
                         target.Status = ExecutionStatus.Executed;
                     }
-                    catch (Exception ex)
+                    catch (Exception exception)
                     {
-                        if (target.ContinueOnFailure)
-                        {
-                            OutputSink.Warn(ex.Message, ex.StackTrace);
-                            target.Status = ExecutionStatus.Continued;
-                        }
-                        else
-                        {
-                            OutputSink.Fail(ex.Message, ex.StackTrace);
-                            target.Status = ExecutionStatus.Failed;
+                        OutputSink.Fail(exception.Message, exception.StackTrace);
+                        target.Status = ExecutionStatus.Failed;
 
-                            break;
-                        }
+                        break;
                     }
                     finally
                     {

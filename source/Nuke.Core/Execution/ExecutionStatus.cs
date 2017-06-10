@@ -12,7 +12,6 @@ namespace Nuke.Core.Execution
         None,
         Skipped,
         Executed,
-        Continued,
         Failed,
         Absent
     }

@@ -63,7 +63,7 @@ uid: index
             </div>
             <div class="media-body">
               <h3>Clean DSL</h3>
-              Thanks static imports and intensive API design, your build will look neat and clean.
+              Resulting build code reads fluent and natural. Also thanks to static imports.
             </div>
           </div>
         </div>

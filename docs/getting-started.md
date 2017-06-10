@@ -112,7 +112,6 @@ Let's write a more advanced example:
 ```c#
 Target Publish => _ => _
         .OnlyWhen(() => IsServerBuild)
-        .ContinuousOnFailure()
         .DependsOn(Pack)
         .Executes(() => GlobFiles(OutputDirectory, "*.nupkg")
                 .ForEach(x => NuGetPush(s => s
@@ -123,7 +122,6 @@ Target Publish => _ => _
 ```
 
 - `OnlyWhen`: the target is only executed when running on a server. The property `IsServerBuild` is provided from the `Build` base class, and checks whether any of the known build servers is currently hosting the process (i.e., TeamCity or Bitrise).
-- `ContinuousOnFailure`: even when the executed actions are throwing an exception, the build continuous with further targets
 - `DependsOn`: again, this target depends on another target called `Pack`. Multiple dependent targets can be separated by comma since the method accepts `params Target[] targets`.
 - `Executes`:
   - Files are collected using the glob mechanism.

@@ -37,11 +37,6 @@ namespace Nuke.Core
         ITargetDefinition DependsOn (params string[] shadowtargets);
 
         /// <summary>
-        ///   Defines whether the execution continuous if this target throws an exception.
-        /// </summary>
-        ITargetDefinition ContinuousOnFailure ();
-
-        /// <summary>
         ///   Adds a set of conditions that will be checked before executing this target.
         /// </summary>
         ITargetDefinition OnlyWhen (params Func<bool>[] conditions);
