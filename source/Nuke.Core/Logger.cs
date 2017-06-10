@@ -136,9 +136,6 @@ namespace Nuke.Core
         [ContractAnnotation ("=> halt")]
         public static void Fail (string text)
         {
-            if (EnvironmentInfo.ArgumentSwitch("debugOnError"))
-                Debugger.Launch();
-
             throw new Exception(text);
         }
     }
