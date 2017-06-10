@@ -51,7 +51,7 @@ namespace Nuke.Common
                 .SetConfiguration(Build.Instance.Configuration)
                 .SetProperty("PackageOutputPath", Build.Instance.OutputDirectory)
                 .SetProperty("IncludeSymbols", "True")
-                .SetProperty("PackageVersion", GitHubBuild.Instance.GitVersion.NuGetVersionV2);
+                .SetProperty("PackageVersion", GitHubBuild.Instance?.GitVersion?.NuGetVersionV2);
 
 
         public static GitVersionSettings GitVersion => new GitVersionSettings()
@@ -61,7 +61,7 @@ namespace Nuke.Common
                 .SetWorkingDirectory(Build.Instance.RootDirectory.NotNull("Build.Instance.RootDirectory != null"))
                 .SetOutputDirectory(Build.Instance.OutputDirectory)
                 .SetConfiguration(Build.Instance.Configuration)
-                .SetVersion(GitHubBuild.Instance.GitVersion?.NuGetVersionV2);
+                .SetVersion(GitHubBuild.Instance?.GitVersion?.NuGetVersionV2);
 
         public static NuGetRestoreSettings NuGetRestore => new NuGetRestoreSettings()
                 .SetWorkingDirectory(Build.Instance.RootDirectory.NotNull("Build.Instance.RootDirectory != null"));
