@@ -63,7 +63,7 @@ uid: index
             </div>
             <div class="media-body">
               <h3>Clean DSL</h3>
-              Resulting build code reads fluent and natural. Also thanks to static imports.
+              Your build code will be fluent and natural. Also thanks to static imports.
             </div>
           </div>
         </div>
