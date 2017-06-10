@@ -36,7 +36,7 @@ class NukeBuild : GitHubBuild
             .Executes(() => MSBuild(s => DefaultSettings.MSBuildRestore));
 
     Target Compile => _ => _
-            .DependsOn(Clean, Restore)
+            .DependsOn(Restore)
             .Executes(() => MSBuild(s => IsWin ? DefaultSettings.MSBuildCompileWithAssemblyInfo : DefaultSettings.MSBuildCompile));
 
     Target Link => _ => _

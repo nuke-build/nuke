@@ -4,6 +4,7 @@ using Nuke.Common;
 using Nuke.Common.Tools.MSBuild;
 using Nuke.Core;
 using static Nuke.Common.FileSystem.FileSystemTasks;
+using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 using static Nuke.Common.Tools.NuGet.NuGetTasks;
 using static Nuke.Core.EnvironmentInfo;
@@ -17,7 +18,9 @@ class DefaultBuild : GitHubBuild
     Target Restore => _ => _
             .Executes(() =>
             {
-                // You can remove either one of the restore tasks as needed.
+                // Remove restore tasks as needed. They exist for compatibility.
+
+                DotNetRestore(SolutionDirectory);
 
                 NuGetRestore(SolutionFile);
 
