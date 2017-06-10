@@ -33,7 +33,7 @@ namespace Nuke.Core.Tooling
                     {
                         ToolPath = toolPath,
                         Arguments = arguments,
-                        WorkingDirectory = workingDirectory,
+                        WorkingDirectory = workingDirectory
                     };
             FakeProcessStartInfo = fakeProcessStartInfo;
             return new FakeProcess();

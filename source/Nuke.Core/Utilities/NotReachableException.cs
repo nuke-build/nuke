@@ -5,6 +5,10 @@
 using System;
 using System.Linq;
 
+#if !NETCORE
+using System.Runtime.Serialization;
+#endif
+
 namespace Nuke.Core.Utilities
 {
     [Serializable]
@@ -14,5 +18,12 @@ namespace Nuke.Core.Utilities
         {
             Environment.Exit(exitCode);
         }
+
+#if !NETCORE
+        protected NotReachableException (SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
+#endif
     }
 }

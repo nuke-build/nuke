@@ -3,7 +3,6 @@
 // https://github.com/matkoch/Nuke/blob/master/LICENSE
 
 using System;
-using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using LibGit2Sharp;
