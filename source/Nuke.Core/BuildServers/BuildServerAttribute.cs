@@ -4,9 +4,11 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Nuke.Core.BuildServers
 {
+    [MeansImplicitUse(ImplicitUseTargetFlags.WithMembers)]
     [AttributeUsage(AttributeTargets.Class)]
     public class BuildServerAttribute : Attribute
     {
