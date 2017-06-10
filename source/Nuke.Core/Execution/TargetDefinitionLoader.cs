@@ -27,7 +27,7 @@ namespace Nuke.Core.Execution
 
             ControlFlow.Assert(!nameDictionary.ContainsKey("default"), "Don't use 'default' as a target identifier.");
             nameDictionary.Add("default", nameDictionary.Values.Single(x => x.Factory == defaultTarget));
-            var targetTargets = build.Targets.Select(x => GetTargetByName(x, nameDictionary)).ToList();
+            var targetTargets = build.Targets.Select(x => GetTargetByName(x, defaultTarget, nameDictionary)).ToList();
 
             var targetDependencies = targetDefinitions.ToDictionary(
                 x => x,
@@ -35,7 +35,7 @@ namespace Nuke.Core.Execution
             return GetSortedList(targetTargets, targetDependencies);
         }
 
-        private static TargetDefinition GetTargetByName (string targetName, Dictionary<string, TargetDefinition> nameDictionary)
+        private static TargetDefinition GetTargetByName (string targetName, Target defaultTarget, Dictionary<string, TargetDefinition> nameDictionary)
         {
             if (nameDictionary.TryGetValue(targetName, out var targetDefinition))
                 return targetDefinition;
@@ -43,9 +43,11 @@ namespace Nuke.Core.Execution
             var stringBuilder = new StringBuilder()
                     .AppendLine($"Target with name '{targetName}' does not exist.")
                     .AppendLine("Available targets are:");
-            nameDictionary.Keys.ForEach(x=>  stringBuilder.AppendLine($"  - {x}"));
+            nameDictionary
+                    .Where(x => !x.Key.Equals("default", StringComparison.OrdinalIgnoreCase))
+                    .ForEach(x => stringBuilder.AppendLine($"  - {x.Key}{(x.Value.Factory == defaultTarget ? " (default)" : string.Empty)}"));
 
-            throw new Exception(stringBuilder.ToString());
+            throw new LoaderException(stringBuilder.ToString());
         }
 
         private TargetDefinition LoadTargetDefinition (Build build, PropertyInfo property)
@@ -82,10 +84,9 @@ namespace Nuke.Core.Execution
                 var independents = graphAsList.Where(x => !graphAsList.Any(y => y.Dependencies.Contains(x))).ToList();
                 if (EnvironmentInfo.ArgumentSwitch("strict") && independents.Count > 1)
                 {
-                    OutputSink.Fail(
+                    throw new LoaderException(
                         "Incomplete target definition order.",
                         string.Join(EnvironmentInfo.NewLine, independents.Select(x => $"  - {x.Value.Name}")));
-                    throw new NotReachableException(exitCode: -10);
                 }
 
                 var independent = independents.FirstOrDefault();
@@ -95,10 +96,10 @@ namespace Nuke.Core.Execution
                     var cycles = scc.DetectCycle(graphAsList)
                             .Cycles()
                             .Select(x => string.Join(" -> ", x.Select(y => y.Value.Name)));
-                    OutputSink.Fail(
+
+                    throw new LoaderException(
                         "Circular dependencies between target definitions.",
                         string.Join(EnvironmentInfo.NewLine, $"  - {cycles}"));
-                    throw new NotReachableException(exitCode: -11);
                 }
 
                 graphAsList.Remove(independent);
