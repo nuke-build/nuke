@@ -28,7 +28,7 @@ namespace Nuke.Common.Tools.GitLink
             var gitLink3Settings = new GitLink3Settings();
             gitLink3Settings = configurator(gitLink3Settings);
             PreProcess(gitLink3Settings);
-            var process = ProcessManager.Instance.StartProcess(gitLink3Settings, processSettings);
+            var process = ProcessTasks.StartProcess(gitLink3Settings, processSettings);
             process.AssertZeroExitCode();
             PostProcess(gitLink3Settings);
         }

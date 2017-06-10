@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Nuke.Core.Tooling
 {
-    public class FakeProcess : IProcess
+    internal class FakeProcess : IProcess
     {
         public void Dispose ()
         {

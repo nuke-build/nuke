@@ -31,7 +31,7 @@ namespace Nuke.Common.Tools.MSBuild
             var msbuildSettings = new MSBuildSettings();
             msbuildSettings = configurator(msbuildSettings);
             PreProcess(msbuildSettings);
-            var process = ProcessManager.Instance.StartProcess(msbuildSettings, processSettings);
+            var process = ProcessTasks.StartProcess(msbuildSettings, processSettings);
             process.AssertZeroExitCode();
             PostProcess(msbuildSettings);
         }

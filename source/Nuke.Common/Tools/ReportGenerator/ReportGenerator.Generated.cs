@@ -31,7 +31,7 @@ namespace Nuke.Common.Tools.ReportGenerator
             var reportGeneratorSettings = new ReportGeneratorSettings();
             reportGeneratorSettings = configurator(reportGeneratorSettings);
             PreProcess(reportGeneratorSettings);
-            var process = ProcessManager.Instance.StartProcess(reportGeneratorSettings, processSettings);
+            var process = ProcessTasks.StartProcess(reportGeneratorSettings, processSettings);
             process.AssertZeroExitCode();
             PostProcess(reportGeneratorSettings);
         }

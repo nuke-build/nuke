@@ -9,9 +9,9 @@ using JetBrains.Annotations;
 
 namespace Nuke.Core.Tooling
 {
-    public class FakeProcessManager : ProcessManager
+    internal class CapturingProcessManager : ProcessManager
     {
-        public FakeProcessStartInfo FakeProcessStartInfo { get; private set; }
+        public CapturedProcessStartInfo CapturedProcessStartInfo { get; private set; }
 
         [CanBeNull]
         public override IProcess StartProcess (
@@ -29,13 +29,13 @@ namespace Nuke.Core.Tooling
             ControlFlow.Assert(outputFilter == null, "outputFilter == null");
 
             var fakeProcessStartInfo =
-                    new FakeProcessStartInfo
+                    new CapturedProcessStartInfo
                     {
                         ToolPath = toolPath,
                         Arguments = arguments,
                         WorkingDirectory = workingDirectory
                     };
-            FakeProcessStartInfo = fakeProcessStartInfo;
+            CapturedProcessStartInfo = fakeProcessStartInfo;
             return new FakeProcess();
         }
     }

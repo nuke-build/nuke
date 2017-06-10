@@ -31,7 +31,7 @@ namespace Nuke.Common.Tools.DocFx
             var docFxBuildSettings = new DocFxBuildSettings();
             docFxBuildSettings = configurator(docFxBuildSettings);
             PreProcess(docFxBuildSettings);
-            var process = ProcessManager.Instance.StartProcess(docFxBuildSettings, processSettings);
+            var process = ProcessTasks.StartProcess(docFxBuildSettings, processSettings);
             process.AssertZeroExitCode();
             PostProcess(docFxBuildSettings);
         }

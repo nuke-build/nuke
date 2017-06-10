@@ -100,7 +100,7 @@ namespace Nuke.ToolGenerator.Generators
         public static string GetProcessStart(Alias alias)
         {
             return !alias.CustomStart
-                ? $"ProcessManager.Instance.StartProcess({alias.SettingsClass.ToInstance()}, processSettings)"
+                ? $"ProcessTasks.StartProcess({alias.SettingsClass.ToInstance()}, processSettings)"
                 : $"StartProcess({alias.SettingsClass.ToInstance()}, processSettings)";
         }
 

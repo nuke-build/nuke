@@ -31,7 +31,7 @@ namespace Nuke.Common.Tools.DotNet
             var dotNetRestoreSettings = new DotNetRestoreSettings();
             dotNetRestoreSettings = configurator(dotNetRestoreSettings);
             PreProcess(dotNetRestoreSettings);
-            var process = ProcessManager.Instance.StartProcess(dotNetRestoreSettings, processSettings);
+            var process = ProcessTasks.StartProcess(dotNetRestoreSettings, processSettings);
             process.AssertZeroExitCode();
             PostProcess(dotNetRestoreSettings);
         }

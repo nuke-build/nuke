@@ -14,7 +14,7 @@ using Nuke.Core.Utilities;
 
 namespace Nuke.Core.Tooling
 {
-    public class ProcessManager : IProcessManager
+    internal class ProcessManager : IProcessManager
     {
         public static IProcessManager Instance { get; private set; } = new ProcessManager();
 
@@ -22,15 +22,15 @@ namespace Nuke.Core.Tooling
         {
         }
 
-        public FakeProcessStartInfo CaptureProcessStartInfo (Action action)
+        public CapturedProcessStartInfo CaptureProcessStartInfo (Action action)
         {
-            var fakeProcessManager = new FakeProcessManager();
+            var fakeProcessManager = new CapturingProcessManager();
             using (DelegateDisposable.CreateBracket(
                 () => Instance = fakeProcessManager,
                 () => Instance = this))
             {
                 action();
-                return fakeProcessManager.FakeProcessStartInfo;
+                return fakeProcessManager.CapturedProcessStartInfo;
             }
         }
 

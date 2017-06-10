@@ -28,7 +28,7 @@ namespace Nuke.Common.Tools.NuGet
             var nuGetRestoreSettings = new NuGetRestoreSettings();
             nuGetRestoreSettings = configurator(nuGetRestoreSettings);
             PreProcess(nuGetRestoreSettings);
-            var process = ProcessManager.Instance.StartProcess(nuGetRestoreSettings, processSettings);
+            var process = ProcessTasks.StartProcess(nuGetRestoreSettings, processSettings);
             process.AssertZeroExitCode();
             PostProcess(nuGetRestoreSettings);
         }

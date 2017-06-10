@@ -25,6 +25,6 @@ namespace Nuke.Core.Tooling
             bool redirectOutput = false,
             Func<string, string> outputFilter = null);
         
-        FakeProcessStartInfo CaptureProcessStartInfo (Action action);
+        CapturedProcessStartInfo CaptureProcessStartInfo (Action action);
     }
 }

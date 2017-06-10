@@ -31,7 +31,7 @@ namespace Nuke.Common.Tools.InspectCode
             var inspectCodeSettings = new InspectCodeSettings();
             inspectCodeSettings = configurator(inspectCodeSettings);
             PreProcess(inspectCodeSettings);
-            var process = ProcessManager.Instance.StartProcess(inspectCodeSettings, processSettings);
+            var process = ProcessTasks.StartProcess(inspectCodeSettings, processSettings);
             process.AssertZeroExitCode();
             PostProcess(inspectCodeSettings);
         }

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Nuke.Core.Tooling
 {
-    public class FakeProcessStartInfo
+    public class CapturedProcessStartInfo
     {
         public string ToolPath { get; set; }
         public string Arguments { get; set; }

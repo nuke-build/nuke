@@ -28,7 +28,7 @@ namespace Nuke.Common.Tools.NuGet
             var nuGetPushSettings = new NuGetPushSettings();
             nuGetPushSettings = configurator(nuGetPushSettings);
             PreProcess(nuGetPushSettings);
-            var process = ProcessManager.Instance.StartProcess(nuGetPushSettings, processSettings);
+            var process = ProcessTasks.StartProcess(nuGetPushSettings, processSettings);
             process.AssertZeroExitCode();
             PostProcess(nuGetPushSettings);
         }

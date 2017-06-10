@@ -31,7 +31,7 @@ namespace Nuke.Common.Tools.GitVersion
             var gitVersionSettings = new GitVersionSettings();
             gitVersionSettings = configurator(gitVersionSettings);
             PreProcess(gitVersionSettings);
-            var process = ProcessManager.Instance.StartProcess(gitVersionSettings, processSettings);
+            var process = ProcessTasks.StartProcess(gitVersionSettings, processSettings);
             process.AssertZeroExitCode();
             PostProcess(gitVersionSettings);
         }

@@ -28,7 +28,7 @@ namespace Nuke.Common.Tools.DocFx
             var docFxMetadataSettings = new DocFxMetadataSettings();
             docFxMetadataSettings = configurator(docFxMetadataSettings);
             PreProcess(docFxMetadataSettings);
-            var process = ProcessManager.Instance.StartProcess(docFxMetadataSettings, processSettings);
+            var process = ProcessTasks.StartProcess(docFxMetadataSettings, processSettings);
             process.AssertZeroExitCode();
             PostProcess(docFxMetadataSettings);
         }

@@ -31,7 +31,7 @@ namespace Nuke.Common.Tools.Xunit
             var xunitSettings = new XunitSettings();
             xunitSettings = configurator(xunitSettings);
             PreProcess(xunitSettings);
-            var process = ProcessManager.Instance.StartProcess(xunitSettings, processSettings);
+            var process = ProcessTasks.StartProcess(xunitSettings, processSettings);
             AssertProcess(process, xunitSettings);
             PostProcess(xunitSettings);
         }

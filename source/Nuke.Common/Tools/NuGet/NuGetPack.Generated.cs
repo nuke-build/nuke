@@ -31,7 +31,7 @@ namespace Nuke.Common.Tools.NuGet
             var nuGetPackSettings = new NuGetPackSettings();
             nuGetPackSettings = configurator(nuGetPackSettings);
             PreProcess(nuGetPackSettings);
-            var process = ProcessManager.Instance.StartProcess(nuGetPackSettings, processSettings);
+            var process = ProcessTasks.StartProcess(nuGetPackSettings, processSettings);
             process.AssertZeroExitCode();
             PostProcess(nuGetPackSettings);
         }

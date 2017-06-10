@@ -28,7 +28,7 @@ namespace Nuke.Common.Tools.DotNet
             var dotNetRunSettings = new DotNetRunSettings();
             dotNetRunSettings = configurator(dotNetRunSettings);
             PreProcess(dotNetRunSettings);
-            var process = ProcessManager.Instance.StartProcess(dotNetRunSettings, processSettings);
+            var process = ProcessTasks.StartProcess(dotNetRunSettings, processSettings);
             process.AssertZeroExitCode();
             PostProcess(dotNetRunSettings);
         }
