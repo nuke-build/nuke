@@ -24,7 +24,7 @@ You have a valuable piece of code and want to share it with the community? Don't
 
 If you want to contribute, please first get personal with us about your intentions in [our Gitter channel](https://gitter.im/nuke-build/nuke). This helps us establishing a clean and meaningful design of new features, improvements or bug fixes. At the same time it reduces the chances of duplicated work.
 
-Adding support for third party executables is very easy. You just need to generate a _tool.td_ file ([schema](https://github.com/matkoch/Nuke/tree/master/source/Nuke.ToolGenerator/Definitions) and [examples](https://github.com/nuke-build/nuke/search?q=extension%3Atd)) for it, and execute the `Nuke.ToolGenerator` executable in its folder. It will generate a static _entry class_ `<tool>Nuke`, a _settings class_ `<tool>Settings` derived from `ToolSettings` along with extension methods for manipulation, as well as necessary enumerations.
+Adding support for third party executables is very easy. You just need to generate a _tool.td_ file ([schema](https://github.com/nuke-build/nuke/tree/master/source/Nuke.ToolGenerator/Model) and [examples](https://github.com/nuke-build/nuke/search?q=extension%3Atd)) for it, and execute the `Nuke.ToolGenerator` executable in its folder. It will generate a static _entry class_ `<tool>Tasks`, a _settings class_ `<tool>Settings` derived from `ToolSettings` along with extension methods for manipulation.
 
 ## License
 
