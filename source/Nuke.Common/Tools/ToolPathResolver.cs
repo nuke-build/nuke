@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Linq;
 using Nuke.Core;
+using Nuke.Core.Tooling;
 
 namespace Nuke.Common.Tools
 {
@@ -51,11 +52,18 @@ namespace Nuke.Common.Tools
                         .NotNull($"Could not find '{packageExecutable}' inside '{packageDirectory}'.");
             }
 
-            return EnvironmentInfo.EnsureVariable("PATH")
-                    .Split(';')
-                    .Select(x => Path.Combine(x, pathExecutable))
+            var locateProcess = ProcessTasks.StartProcess(
+                EnvironmentInfo.IsWin
+                    ? @"C:\Windows\System32\where.exe"
+                    : "/usr/bin/which",
+                pathExecutable,
+                redirectOutput: true);
+            locateProcess.AssertWaitForExit();
+
+            return locateProcess.Output
+                    .Select(x => x.Text)
                     .FirstOrDefault(File.Exists)
-                    .NotNull($"Could not find '{pathExecutable}' in PATH.");
+                    .NotNull($"Could not find '{pathExecutable}' in global context.");
         }
     }
 }
