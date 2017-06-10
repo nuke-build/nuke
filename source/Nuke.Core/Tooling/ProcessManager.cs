@@ -37,15 +37,17 @@ namespace Nuke.Core.Tooling
         [CanBeNull]
         public IProcess StartProcess (ToolSettings toolSettings, ProcessSettings processSettings = null)
         {
-            ControlFlow.Assert(toolSettings.ToolPath != null,
+            var toolPath = toolSettings.ToolPath;
+            var arguments = toolSettings.GetArguments();
+
+            ControlFlow.Assert(toolPath != null,
                 $"ToolPath could not be resolved automatically. Please set it manually using '{toolSettings.GetType().Name}.SetToolPath()'.");
-            ControlFlow.Assert(File.Exists(toolSettings.ToolPath), $"ToolPath '{toolSettings.ToolPath}' does not exist.");
-            OutputSink.Info($"> {toolSettings.ToolPath} {toolSettings.GetArguments().RenderForOutput()}");
+            ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
+            OutputSink.Info($"> {toolPath.DoubleQuoteIfNeeded()} {arguments.RenderForOutput()}");
 
             processSettings = processSettings ?? new ProcessSettings();
-            var arguments = toolSettings.GetArguments();
             return StartProcessInternal(
-                toolSettings.ToolPath,
+                toolPath,
                 arguments.RenderForExecution(),
                 toolSettings.WorkingDirectory,
                 processSettings.EnvironmentVariables,
@@ -65,7 +67,7 @@ namespace Nuke.Core.Tooling
             Func<string, string> outputFilter = null)
         {
             ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
-            OutputSink.Info($"> {toolPath} {arguments}");
+            OutputSink.Info($"> {toolPath.DoubleQuoteIfNeeded()} {arguments}");
 
             return StartProcessInternal(toolPath,
                 arguments,
