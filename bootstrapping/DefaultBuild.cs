@@ -39,5 +39,5 @@ class DefaultBuild : GitHubBuild
                 ? GlobFiles(SolutionDirectory, "*.xproj").Any()
                     ? Nuke.Common.Tools.MSBuild.MSBuildVersion.VS2015
                     : Nuke.Common.Tools.MSBuild.MSBuildVersion.VS2017
-                : default(MSBuildVersion);
+                : default(MSBuildVersion?);
 }
