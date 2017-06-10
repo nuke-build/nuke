@@ -12,7 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-[assembly: IconClass(typeof(Nuke.Common.Tools.DotNet.DotNetTasks), "radio-checked2")]
+[assembly: IconClass(typeof(Nuke.Common.Tools.DotNet.DotNetTasks), "magic-wand")]
 namespace Nuke.Common.Tools.DotNet
 {
     [PublicAPI]

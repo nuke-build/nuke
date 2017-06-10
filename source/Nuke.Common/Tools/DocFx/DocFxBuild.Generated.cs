@@ -12,7 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-[assembly: IconClass(typeof(Nuke.Common.Tools.DocFx.DocFxTasks), "books")]
+[assembly: IconClass(typeof(Nuke.Common.Tools.DocFx.DocFxTasks), "book")]
 namespace Nuke.Common.Tools.DocFx
 {
     [PublicAPI]
