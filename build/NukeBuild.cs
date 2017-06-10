@@ -23,6 +23,7 @@ using static Nuke.Common.Tools.NuGet.NuGetTasks;
 using static Nuke.Common.Tools.Xunit.XunitTasks;
 using static Nuke.Core.EnvironmentInfo;
 using static Nuke.Common.FileSystem.FileSystemTasks;
+using static Nuke.Core.ControlFlow;
 
 class NukeBuild : GitHubBuild
 {
@@ -53,11 +54,12 @@ class NukeBuild : GitHubBuild
             .DependsOn(Pack)
             .Executes(() => GlobFiles(OutputDirectory, "*.nupkg")
                     .Where(x => !x.EndsWith("symbols.nupkg"))
-                    .ForEach(x => NuGetPush(s => s
-                            .SetVerbosity(NuGetVerbosity.Detailed)
-                            .SetTargetPath(x)
-                            .SetApiKey(EnsureVariable("MYGET_API_KEY"))
-                            .SetSource("https://www.myget.org/F/nukebuild/api/v2/package"))));
+                    .ForEach(x => SuppressErrors(() =>
+                        NuGetPush(s => s
+                                .SetVerbosity(NuGetVerbosity.Detailed)
+                                .SetTargetPath(x)
+                                .SetApiKey(EnsureVariable("MYGET_API_KEY"))
+                                .SetSource("https://www.myget.org/F/nukebuild/api/v2/package")))));
 
     Target Analysis => _ => _
             .DependsOn(Restore)
