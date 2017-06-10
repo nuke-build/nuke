@@ -64,7 +64,7 @@ if ($SolutionFiles.length -gt 1) {
 
 $SolutionFile = $SolutionFiles[$SolutionFileSelection].FullName
 $SolutionDirectory = Split-Path $SolutionFile -Parent
-(GetRelative $RootDirectory $SolutionFile) | Out-File "$RootDirectory/.nuke"
+((GetRelative $RootDirectory $SolutionFile) -replace "\\","/") | Out-File "$RootDirectory\.nuke"
 
 Write-Host "Using '$(GetRelative $PSScriptRoot $SolutionFile)' as solution file."
 
@@ -139,10 +139,14 @@ Download $BuildProjectUrl "$BuildProjectFile"
 Download $DotSettingsUrl "$BuildProjectFile.dotsettings"
 Download $DefaultBuildUrl "$BuildDirectory\DefaultBuild.cs"
 
+$ProjectGuid = [guid]::NewGuid().ToString().ToUpper()
+$ProjectKindGuid = @("FAE04EC0-301F-11D3-BF4B-00C04F79EFBC", "9A19103F-16F7-4668-BE54-9A1E7A4F7556")[$FormatSelection]
+
 if ($FormatSelection -eq 0) {
     Download "$BootstrappingUrl/.build.legacy.packages.config" "$BuildDirectory\packages.config"
 
     Set-Content $BuildProjectFile ((Get-Content $BuildProjectFile) `
+        -replace "_BUILD_PROJECT_GUID_",$ProjectGuid `
         -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
         -replace "_SOLUTION_DIRECTORY_",(GetRelative $BuildDirectory $SolutionDirectory))
 
@@ -158,9 +162,6 @@ $SolutionFileContent = (Get-Content $SolutionFile)
 if (!($SolutionFileContent -match "`"$BuildProjectName`"")) {
     Write-Host "Adding $BuildProjectName project to solution..."
 
-    $ProjectKindGuid = @("FAE04EC0-301F-11D3-BF4B-00C04F79EFBC", "9A19103F-16F7-4668-BE54-9A1E7A4F7556")[$FormatSelection]
-    $ProjectGuid = [guid]::NewGuid().ToString().ToUpper()
-
     $SolutionFileContent | Foreach-Object {
         $_
         if ($_ -match "MinimumVisualStudioVersion") {
@@ -168,8 +169,8 @@ if (!($SolutionFileContent -match "`"$BuildProjectName`"")) {
             "EndProject"
         }
         if ($_ -match "ProjectConfigurationPlatforms") {
-            "        {$ProjectGuid}.Debug|Any CPU.ActiveCfg = Debug|Any CPU"
-            "        {$ProjectGuid}.Release|Any CPU.ActiveCfg = Release|Any CPU"
+            "`t`t{$ProjectGuid}.Debug|Any CPU.ActiveCfg = Debug|Any CPU"
+            "`t`t{$ProjectGuid}.Release|Any CPU.ActiveCfg = Release|Any CPU"
         }
     } | Set-Content $SolutionFile -Encoding UTF8
 }

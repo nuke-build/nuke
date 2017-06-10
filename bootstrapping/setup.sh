@@ -148,11 +148,16 @@ Download $BUILD_PROJECT_URL "$BUILD_PROJECT_FILE"
 Download $DOTSETTINGS_URL "$BUILD_PROJECT_FILE.dotsettings"
 Download $DEFAULTBUILD_URL "$BUILD_DIRECTORY/DefaultBuild.cs"
 
+PROJECTKIND_GUID_ARRAY=("FAE04EC0-301F-11D3-BF4B-00C04F79EFBC" "9A19103F-16F7-4668-BE54-9A1E7A4F7556")
+PROJECTKIND_GUID=${PROJECTKIND_GUID_ARRAY[$FORMAT_SELECTION]}
+PROJECT_GUID="$(uuidgen)"
+
 if [ $FORMAT_SELECTION == 0 ]; then
     Download "$BOOTSTRAPPING_URL/.build.legacy.packages.config" "$BUILD_DIRECTORY/packages.config"
 
     SOLUTION_DIRECTORY_RELATIVE="$(GetRelative $BUILD_DIRECTORY $SOLUTION_DIRECTORY)"
-    sed -e 's~_BUILD_PROJECT_NAME_~'"$BUILD_PROJECT_NAME"'~g' \
+    sed -e 's~_BUILD_PROJECT_GUID_~'"$PROJECT_GUID"'~g' \
+        -e 's~_BUILD_PROJECT_NAME_~'"$BUILD_PROJECT_NAME"'~g' \
         -e 's~_SOLUTION_DIRECTORY_~'"${SOLUTION_DIRECTORY_RELATIVE//\//\\}"'~g' \
         <<<"$(cat $BUILD_PROJECT_FILE)" \
         > $BUILD_PROJECT_FILE
@@ -168,15 +173,14 @@ fi
 if ! grep -q "$BUILD_PROJECT_NAME" "$SOLUTION_FILE"; then
     echo "Adding $BuildProjectName project to solution..."
 
-    PROJECTKIND_GUID_ARRAY=("FAE04EC0-301F-11D3-BF4B-00C04F79EFBC" "9A19103F-16F7-4668-BE54-9A1E7A4F7556")
-    PROJECTKIND_GUID=${PROJECTKIND_GUID_ARRAY[$FORMAT_SELECTION]}
-    PROJECT_GUID="$(uuidgen)"
     BUILD_PROJECT_FILE_RELATIVE=$(GetRelative $SOLUTION_DIRECTORY $BUILD_PROJECT_FILE)
-    
+
     PROJECT_DEFINITION='Project(\"{'$PROJECTKIND_GUID'}\") = \"'$BUILD_PROJECT_NAME'\", \"'${BUILD_PROJECT_FILE_RELATIVE//\//\\\\}'\", \"{'$PROJECT_GUID'}\"\nEndProject'
-    PROJECT_CONFIGURATION='        {'$PROJECT_GUID'}.Debug|Any CPU.ActiveCfg = Debug|Any CPU\n        {'$PROJECT_GUID'}.Release|Any CPU.ActiveCfg = Release|Any CPU'
+    PROJECT_CONFIGURATION='\t\t{'$PROJECT_GUID'}.Debug|Any CPU.ActiveCfg = Debug|Any CPU\n\t\t{'$PROJECT_GUID'}.Release|Any CPU.ActiveCfg = Release|Any CPU'
+    
     awk "/MinimumVisualStudioVersion/{print \$0 RS \"$PROJECT_DEFINITION\";next}1" $SOLUTION_FILE > "$SOLUTION_FILE.bak"
     awk "/ProjectConfigurationPlatforms/{print \$0 RS \"$PROJECT_CONFIGURATION\";next}1" "$SOLUTION_FILE.bak" > $SOLUTION_FILE
+    
     rm "$SOLUTION_FILE.bak"
 fi
 
