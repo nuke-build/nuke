@@ -1,0 +1,123 @@
+
+Name
+dotnet-test - .NET test driver used to execute unit tests.
+Synopsis
+dotnet test [&lt;PROJECT&gt;] [-s|--settings] [-t|--list-tests] [--filter] [-a|--test-adapter-path] [-l|--logger] [-c|--configuration] [-f|--framework] [-o|--output] [-d|--diag] [--no-build] [-v|--verbosity] [-h|--help]
+Description
+The dotnet test command is used to execute unit tests in a given project. Unit tests are console application projects that have dependencies on the unit test framework (for example, MSTest, NUnit, or xUnit) and the dotnet test runner for the unit testing framework. These are packaged as NuGet packages and are restored as ordinary dependencies for the project.
+Test projects also must specify the test runner. This is specified using an ordinary &lt;PackageReference&gt; element, as seen in the following sample project file:
+&lt;Project Sdk=&quot;Microsoft.NET.Sdk&quot;&gt;
+
+  &lt;PropertyGroup&gt;
+    &lt;TargetFramework&gt;netcoreapp1.1&lt;/TargetFramework&gt;
+  &lt;/PropertyGroup&gt;
+
+  &lt;ItemGroup&gt;
+    &lt;PackageReference Include=&quot;Microsoft.NET.Test.Sdk&quot; Version=&quot;15.0.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;xunit&quot; Version=&quot;2.2.0&quot; /&gt;
+    &lt;PackageReference Include=&quot;xunit.runner.visualstudio&quot; Version=&quot;2.2.0&quot; /&gt;
+  &lt;/ItemGroup&gt;
+
+&lt;/Project&gt;
+Options
+PROJECT
+Specifies a path to the test project. If omitted, it defaults to current directory.
+-h|--help
+Prints out a short help for the command.
+-s|--settings &lt;SETTINGS_FILE&gt;
+Settings to use when running tests. 
+-t|--list-tests
+List all of the discovered tests in the current project. 
+--filter &lt;EXPRESSION&gt;
+Filters out tests in the current project using the given expression. For more information, see the Filter option details section. For additional information and examples on how to use selective unit test filtering, see Running selective unit tests.
+-a|--test-adapter-path &lt;PATH_TO_ADAPTER&gt;
+Use the custom test adapters from the specified path in the test run. 
+-l|--logger &lt;LoggerUri/FriendlyName&gt;
+Specifies a logger for test results. 
+-c|--configuration &lt;CONFIGURATION&gt;
+Configuration under which to build. The default value is Debug, but your project&#39;s configuration could override this default SDK setting.
+-f|--framework &lt;FRAMEWORK&gt;
+Looks for test binaries for a specific framework.
+-o|--output &lt;OUTPUT_DIRECTORY&gt;
+Directory in which to find the binaries to run.
+-d|--diag &lt;PATH_TO_DIAGNOSTICS_FILE&gt;
+Enables diagnostic mode for the test platform and write diagnostic messages to the specified file. 
+--no-build 
+Does not build the test project prior to running it.
+-v|--verbosity &lt;LEVEL&gt;
+Sets the verbosity level of the command. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+Examples
+Run the tests in the project in the current directory:
+dotnet test 
+Run the tests in the test1 project:
+dotnet test ~/projects/test1/test1.csproj
+Filter option details
+--filter &lt;EXPRESSION&gt;
+&lt;Expression&gt; has the format &lt;property&gt;&lt;operator&gt;&lt;value&gt;[|&amp;&lt;Expression&gt;].
+&lt;property&gt; is an attribute of the Test Case. The following are the properties supported by popular unit test frameworks:
+
+
+
+Test Framework
+Supported properties
+
+
+
+
+MSTest
+FullyQualifiedNameNameClassNamePriorityTestCategory
+
+
+Xunit
+FullyQualifiedNameDisplayNameTraits
+
+
+
+The &lt;operator&gt; describes the relationship between the property and the value:
+
+
+
+Operator
+Function
+
+
+
+
+=
+Exact match
+
+
+!=
+Not exact match
+
+
+~
+Contains
+
+
+
+&lt;value&gt; is a string. All the lookups are case insensitive.
+An expression without an &lt;operator&gt; is automatically considered as a contains on FullyQualifiedName property (for example, dotnet test --filter xyz is same as dotnet test --filter FullyQualifiedName~xyz).
+Expressions can be joined with conditional operators:
+
+
+
+Operator
+Function
+
+
+
+
+`
+`
+
+
+&amp;
+AND
+
+
+
+You can enclose expressions in paranthesis when using conditional operators (for example, (Name~TestMethod1) | (Name~TestMethod2)).
+For a additional information and examples on how to use selective unit test filtering, see Running selective unit tests.
+See also
+Frameworks and Targets.NET Core Runtime IDentifier (RID) catalog
