@@ -72,8 +72,12 @@ namespace Nuke.Core
                 var nukeFile = Path.Combine(RootDirectory, c_configFile);
                 ControlFlow.Assert(File.Exists(nukeFile), $"File.Exists({c_configFile})");
 
-                var solutionFile = Path.GetFullPath(Path.Combine(RootDirectory, File.ReadAllLines(nukeFile)[0]));
+                var solutionFileRelative = File.ReadAllLines(nukeFile)[0];
+                ControlFlow.Assert(!solutionFileRelative.Contains(value: '\\'), $"{c_configFile} must use unix-styled separators");
+
+                var solutionFile = Path.GetFullPath(Path.Combine(RootDirectory, solutionFileRelative));
                 ControlFlow.Assert(File.Exists(solutionFile), "File.Exists(solutionFile)");
+
                 return solutionFile;
             }
         }
