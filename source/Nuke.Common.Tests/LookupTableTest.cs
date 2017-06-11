@@ -10,6 +10,7 @@ using System.Text;
 using FluentAssertions;
 using JetBrains.Annotations;
 using Nuke.Common.Tools.MSBuild;
+using Nuke.Core;
 using Nuke.Core.Tooling;
 using Xunit;
 
@@ -44,6 +45,24 @@ namespace Nuke.Common.Tests
                 @"C:\OSS\Nuke\log.txt",
                 new[] { text, exception.Message, Environment.NewLine },
                 Encoding.UTF8);
+        }
+    }
+
+    public class ControlFlowTest
+    {
+        [Fact]
+        public void Test()
+        {
+            var executions = 0;
+            void OnSecondExecution()
+            {
+                executions++;
+                if (executions != 2)
+                    throw new Exception(executions.ToString());
+            }
+
+            ControlFlow.ExecuteWithRetry(OnSecondExecution, waitInSeconds: 10);
+            executions.Should().Be(2);
         }
     }
 

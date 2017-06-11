@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Nuke.Core;
 using Nuke.Core.Execution;
@@ -153,40 +154,31 @@ namespace Nuke.Core
             }
         }
 
+        public static void ExecuteWithRetry (
+            [InstantHandle] Action action,
+            [InstantHandle] Action cleanup = null,
+            int retryAttempts = 3,
+            int waitInSeconds = 3600)
+        {
+            Assert(retryAttempts > 0, "retryAttempts > 0");
 
-        //public static void ExecuteWithRetry (Action action, Action cleanup = null, int retryAttempts = 3, int timeoutInSeconds = 3600)
-        //{
-        //    ExecuteWithRetry ((attempt, max) => action.Invoke (), cleanup, retryAttempts, timeoutInSeconds);
-        //}
+            for (var attempt = 0; attempt < retryAttempts; attempt++)
+            {
+                try
+                {
+                    action();
+                    return;
+                }
+                catch (Exception exception)
+                {
+                    Logger.Warn($"Attempt #{attempt + 1} failed with:");
+                    Logger.Warn(exception.Message);
 
-        //public static void ExecuteWithRetry (Action<int, int> action, Action cleanup, int retryAttempts = 3, int timeoutInSeconds = 3600)
-        //{
-        //    for (var attempt = 0; attempt < retryAttempts; attempt++)
-        //    {
-        //        try
-        //        {
-        //            ExecuteWithTimeout (() => action (attempt + 1, retryAttempts), cleanup, timeoutInSeconds);
-        //            return;
-        //        }
-        //        catch (Exception exception)
-        //        {
-        //            Logger.Warn ($"Attempt #{attempt + 1} failed with:");
-        //            Logger.Warn (exception.Message);
-        //        }
-        //    }
+                    Task.Delay(TimeSpan.FromSeconds(waitInSeconds)).Wait();
+                }
+            }
 
-        //    Logger.Warn ($"Executing action after " + retryAttempts + " attempts failed.");
-        //}
-
-        //public static void ExecuteWithTimeout (Action action, Action cleanup = null, int timeoutInSeconds = 3600)
-        //{
-        //    var task = System.Threading.Tasks.Task.Run (action);
-        //    var delay = System.Threading.Tasks.Task.Delay (TimeSpan.FromSeconds (timeoutInSeconds));
-        //    if (System.Threading.Tasks.Task.WhenAny (task, delay) == task)
-        //        return;
-
-        //    cleanup?.Invoke ();
-        //    Logger.Fail ("Executing action with timeout failed.");
-        //}
+            Logger.Fail($"Executing failed permanently after {retryAttempts} attempts.");
+        }
     }
 }
