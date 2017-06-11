@@ -8,11 +8,12 @@ using System.IO;
 using System.Linq;
 using Glob;
 using JetBrains.Annotations;
+using Nuke.Common.FileSystem;
 using Nuke.Core;
 using Nuke.Core.Execution;
 using Nuke.Core.Utilities.Collections;
 
-[assembly: IconClass(typeof(FileSystemInfo), "folder-open")]
+[assembly: IconClass(typeof(FileSystemTasks), "folder-open")]
 
 namespace Nuke.Common.FileSystem
 {
