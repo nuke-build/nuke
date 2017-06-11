@@ -55,7 +55,7 @@ public static class Documentation
             return Kind.Entry;
         if (type.IsServerType())
             return Kind.Server;
-        if (type.HasIconClassAttributes())
+        if (type.HasIconClassAttributes() || type.Name.EndsWith("Tasks"))
             return Kind.Common;
 
         return Kind.None;
