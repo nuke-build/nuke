@@ -14,6 +14,8 @@ using Nuke.Core;
 using Nuke.Core.Tooling;
 using Xunit;
 
+// ReSharper disable ArgumentsStyleLiteral
+
 namespace Nuke.Common.Tests
 {
     public abstract class SettingsTestBase<T>
@@ -61,7 +63,7 @@ namespace Nuke.Common.Tests
                     throw new Exception(executions.ToString());
             }
 
-            ControlFlow.ExecuteWithRetry(OnSecondExecution, waitInSeconds: 10);
+            ControlFlow.ExecuteWithRetry (OnSecondExecution, waitInSeconds: 10);
             executions.Should().Be(2);
         }
     }
@@ -94,21 +96,21 @@ namespace Nuke.Common.Tests
             lookupTable.Add("first", value: 3);
             lookupTable.Add("first", value: 4);
             lookupTable.Add("second", value: 5);
-            lookupTable.Should().HaveCount(expected: 2);
-            lookupTable["first"].Should().HaveCount(expected: 3);
+            lookupTable.Should().HaveCount(2);
+            lookupTable["first"].Should().HaveCount(3);
             lookupTable["first"].Should().BeEquivalentTo(2, 3, 4);
 
             lookupTable.Remove("first", value: 3);
-            lookupTable["first"].Should().HaveCount(expected: 2);
+            lookupTable["first"].Should().HaveCount(2);
             lookupTable["first"].Should().BeEquivalentTo(2, 4);
 
             lookupTable.Remove("first");
             lookupTable["first"].Should().BeEmpty();
-            lookupTable.Should().HaveCount(expected: 1);
+            lookupTable.Should().HaveCount(1);
 
             var copy = new LookupTable<string, int>(lookupTable, StringComparer.OrdinalIgnoreCase);
             lookupTable.Add("second", value: 6);
-            copy["second"].Should().HaveCount(expected: 1);
+            copy["second"].Should().HaveCount(1);
 
             lookupTable.Clear();
             lookupTable.Should().BeEmpty();
