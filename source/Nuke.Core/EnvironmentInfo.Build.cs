@@ -11,14 +11,8 @@ namespace Nuke.Core
     public static partial class EnvironmentInfo
     {
         /// <summary>
-        /// The assembly executing the build.
+        /// The build entry assembly.
         /// </summary>
-        public static Assembly BuildAssembly =>
-#if NETCORE
-                Assembly.GetEntryAssembly();
-#else
-                Assembly.GetExecutingAssembly();
-
-#endif
+        public static Assembly BuildAssembly => Assembly.GetEntryAssembly();
     }
 }
