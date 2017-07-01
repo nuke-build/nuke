@@ -158,7 +158,7 @@ namespace Nuke.Core
             [InstantHandle] Action action,
             [InstantHandle] Action cleanup = null,
             int retryAttempts = 3,
-            int waitInSeconds = 3600)
+            int waitInSeconds = 0)
         {
             Assert(retryAttempts > 0, "retryAttempts > 0");
 
@@ -174,6 +174,10 @@ namespace Nuke.Core
                     Logger.Warn($"Attempt #{attempt + 1} failed with:");
                     Logger.Warn(exception.Message);
 
+                    if (waitInSeconds <= 0 || attempt + 1 >= retryAttempts)
+                        continue;
+
+                    Logger.Warn($"Waiting {waitInSeconds} seconds before next attempt...");
                     Task.Delay(TimeSpan.FromSeconds(waitInSeconds)).Wait();
                 }
             }
