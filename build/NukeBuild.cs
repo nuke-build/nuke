@@ -34,10 +34,11 @@ class NukeBuild : GitHubBuild
             .Executes(() => GlobDirectories(SolutionDirectory, "*/bin", "*/obj").ForEach(DeleteDirectory));
 
     Target Restore => _ => _
+            .DependsOn(Clean)
             .Executes(() => MSBuild(s => DefaultSettings.MSBuildRestore));
 
     Target Compile => _ => _
-            .DependsOn(Restore, Clean)
+            .DependsOn(Restore)
             .Executes(() => MSBuild(s =>
                 (IsWin
                     ? DefaultSettings.MSBuildCompileWithAssemblyInfo
