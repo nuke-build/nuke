@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using Glob;
 using JetBrains.Annotations;
@@ -21,7 +20,12 @@ namespace Nuke.Common.IO
     [PublicAPI]
     public static class FileSystemTasks
     {
-        public static void PrepareCleanDirectory (params string[] directories)
+        public static void PrepareCleanDirectory (string directory)
+        {
+            PrepareCleanDirectories(new[] { directory });
+        }
+
+        public static void PrepareCleanDirectories (IEnumerable<string> directories)
         {
             foreach (var directory in directories)
             {
@@ -37,6 +41,29 @@ namespace Nuke.Common.IO
                     directoryInfo.GetDirectories().ForEach(x => x.Delete(recursive: true));
                     directoryInfo.GetFiles().ForEach(x => x.Delete());
                 }
+            }
+        }
+
+        public static void DeleteDirectory(string directory)
+        {
+            DeleteDirectories(new[] { directory });
+        }
+
+        public static void DeleteDirectory(string directory, bool recursive)
+        {
+            DeleteDirectories(new[] { directory }, recursive);
+        }
+
+        public static void DeleteDirectories(IEnumerable<string> directories, bool recursive = true)
+        {
+            foreach (var directory in directories)
+            {
+                var directoryInfo = new DirectoryInfo (directory);
+                if (!directoryInfo.Exists)
+                    continue;
+
+                Logger.Info ($"Deleting directory '{directoryInfo.FullName}'...");
+                directoryInfo.Delete(recursive: recursive);
             }
         }
 
