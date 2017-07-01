@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Nuke.Core.Tooling
 {
@@ -11,7 +12,7 @@ namespace Nuke.Core.Tooling
     
     public static class ConfigureExtensions
     {
-        public static T InvokeSafe<T> (this Configure<T> configurator, T obj)
+        public static T InvokeSafe<T> ([CanBeNull] this Configure<T> configurator, T obj)
         {
             return (configurator ?? (x => x)).Invoke(obj);
         }

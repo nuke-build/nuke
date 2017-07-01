@@ -5,6 +5,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common.IO;
 using Nuke.Core.Execution;
 using Nuke.Core.Tooling;
@@ -15,9 +16,10 @@ using YamlDotNet.Serialization.NamingConventions;
 
 namespace Nuke.Common.IO
 {
+    [PublicAPI]
     public class YamlTasks
     {
-        public static void YamlDeserialize<T> (T obj, string path, Configure<SerializerBuilder> configurator = null)
+        public static void YamlSerialize<T> (T obj, string path, Configure<SerializerBuilder> configurator = null)
         {
             var builder = new SerializerBuilder()
                     .WithNamingConvention(new CamelCaseNamingConvention());

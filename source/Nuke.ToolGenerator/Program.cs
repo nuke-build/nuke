@@ -3,7 +3,6 @@
 // https://github.com/matkoch/Nuke/blob/master/LICENSE
 
 using System;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;

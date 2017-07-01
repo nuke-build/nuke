@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using JetBrains.Annotations;
@@ -14,6 +13,7 @@ using Nuke.Core.Execution;
 
 #if !NETCORE
 using System.Collections;
+using System.IO;
 using System.Xml.Serialization;
 using System.Xml.XPath;
 #endif

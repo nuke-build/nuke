@@ -14,6 +14,7 @@ using Nuke.Common.Tools.Xunit;
 using Nuke.Core;
 using Nuke.Core.Utilities.Collections;
 using static Documentation;
+using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.FtpTasks;
 using static Nuke.Common.Tools.DocFx.DocFxTasks;
 using static Nuke.Common.Tools.GitLink.GitLinkTasks;
@@ -21,9 +22,8 @@ using static Nuke.Common.Tools.InspectCode.InspectCodeTasks;
 using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 using static Nuke.Common.Tools.NuGet.NuGetTasks;
 using static Nuke.Common.Tools.Xunit.XunitTasks;
-using static Nuke.Core.EnvironmentInfo;
-using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Core.ControlFlow;
+using static Nuke.Core.EnvironmentInfo;
 
 class NukeBuild : GitHubBuild
 {

@@ -48,7 +48,7 @@ namespace Nuke.Common.Tools
 
             var packageIds = XmlTasks.XmlPeek(
                 packagesConfigFile,
-                IsDedicatedFile(packagesConfigFile)
+                IsLegacyFile(packagesConfigFile)
                     ? ".//package/@id"
                     : ".//PackageReference/@Include");
 
@@ -57,7 +57,7 @@ namespace Nuke.Common.Tools
             {
                 var version = XmlTasks.XmlPeekSingle(
                             packagesConfigFile,
-                            IsDedicatedFile(packagesConfigFile)
+                            IsLegacyFile(packagesConfigFile)
                                 ? $".//package[@id='{packageId}']/@version"
                                 : $".//PackageReference[@Include='{packageId}']/@Version")
                         .NotNull("version != null");
@@ -154,7 +154,7 @@ namespace Nuke.Common.Tools
         // TODO: check for config ( repositoryPath / globalPackagesFolder )
         public static string GetPackagesDirectory (string packagesConfigFile)
         {
-            if (!IsDedicatedFile(packagesConfigFile))
+            if (!IsLegacyFile(packagesConfigFile))
                 return Path.Combine(
                     EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile)
                             .NotNull("EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile) != null"),
@@ -182,14 +182,14 @@ namespace Nuke.Common.Tools
                     .NotNull("GetBuildPackagesConfigFile != null");
         }
 
-        private static bool IsDedicatedFile (string packagesConfigFile)
+        private static bool IsLegacyFile (string packagesConfigFile)
         {
             return packagesConfigFile.EndsWith(".config");
         }
 
         private static bool IncludesDependencies (string packagesConfigFile)
         {
-            return IsDedicatedFile(packagesConfigFile);
+            return IsLegacyFile(packagesConfigFile);
         }
 
 
