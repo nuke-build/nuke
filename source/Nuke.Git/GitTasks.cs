@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 using LibGit2Sharp;
 using Nuke.Core;
 using Nuke.Core.Execution;
+using Nuke.Core.Tooling;
 using Nuke.Git;
 
 [assembly: IconClass (typeof (GitTasks), "git")]
@@ -19,13 +20,23 @@ namespace Nuke.Git
     {
         private static string s_repositoryDirectory;
 
-        public static string RepositoryDirectory
+        [CanBeNull]
+        public static string GitRepositoryDirectory
         {
             get => s_repositoryDirectory ?? Build.Instance?.RootDirectory;
             set => s_repositoryDirectory = value;
         }
 
-        public static PushOptions PushOptions { get; set; }
+        [CanBeNull]
+        public static SecureUsernamePasswordCredentials GitCredentials { get; set; }
+
+        private static CloneOptions CloneOptions => new CloneOptions { CredentialsProvider = (url, usernameFromUrl, types) => GitCredentials };
+        private static PushOptions PushOptions => new PushOptions { CredentialsProvider = (url, usernameFromUrl, types) => GitCredentials };
+
+        public static string GitClone(string sourceUrl, string workingDirectory, Configure<CloneOptions> configurator = null)
+        {
+            return Repository.Clone(sourceUrl, workingDirectory, configurator.InvokeSafe(CloneOptions));
+        }
 
         public static void GitTag (string tagName)
         {
@@ -39,27 +50,35 @@ namespace Nuke.Git
 
         public static void GitAddAll ()
         {
-            UsingRepository(x => Commands.Stage(x, "*"));
+            GitAdd("*");
         }
 
-        public static void GitPush ()
+        private static void GitAdd (string path)
         {
-            UsingRepository(x => x.Network.Push(x.Branches, PushOptions));
+            UsingRepository(x => Commands.Stage(x, path));
         }
 
-        public static void GitPush (string branchName)
+        public static void GitPush (Configure<PushOptions> configurator = null)
         {
-            UsingRepository(x => x.Network.Push(x.Branches[branchName].NotNull("branch != null"), PushOptions));
+            var pushOptions = configurator.InvokeSafe(PushOptions);
+            UsingRepository(x => x.Network.Push(x.Branches, pushOptions));
         }
 
-        public static void GitPushRef (string remote, string refSpec)
+        public static void GitPush (string branchName, Configure<PushOptions> configurator = null)
         {
-            UsingRepository(x => x.Network.Push(x.Network.Remotes[remote], x.Tags[refSpec].CanonicalName, PushOptions));
+            var pushOptions = configurator.InvokeSafe(PushOptions);
+            UsingRepository(x => x.Network.Push(x.Branches[branchName].NotNull("branch != null"), pushOptions));
+        }
+
+        public static void GitPushRef (string remote, string refSpec, Configure<PushOptions> configurator = null)
+        {
+            var pushOptions = configurator.InvokeSafe(PushOptions);
+            UsingRepository(x => x.Network.Push(x.Network.Remotes[remote], x.Tags[refSpec].CanonicalName, pushOptions));
         }
 
         private static void UsingRepository (Action<Repository> action)
         {
-            using (var repository = new Repository(RepositoryDirectory))
+            using (var repository = new Repository(GitRepositoryDirectory.NotNull("GitRepositoryDirectory != null")))
             {
                 action(repository);
             }

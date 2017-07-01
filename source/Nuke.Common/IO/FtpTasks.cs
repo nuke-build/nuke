@@ -19,7 +19,10 @@ namespace Nuke.Common.IO
     [PublicAPI]
     public static class FtpTasks
     {
-        public static void FtpUploadDirectoryRecursively (string directory, string hostRoot, NetworkCredential networkCredential)
+        [CanBeNull]
+        public static NetworkCredential FtpCredentials { get; set; }
+
+        public static void FtpUploadDirectoryRecursively (string directory, string hostRoot)
         {
             Logger.Info($"Uploading directory '{directory}' to '{hostRoot}'...");
             
@@ -30,27 +33,27 @@ namespace Nuke.Common.IO
                 var relativePath = FileSystemTasks.GetRelativePath(directory, file);
                 var hostPath = $"{hostRoot}/{relativePath}";
 
-                FtpUploadFileInternal(networkCredential, file, hostPath, info: false, prefix: $"[{index + 1}/{files.Count}] ");
+                FtpUploadFileInternal(file, hostPath, info: false, prefix: $"[{index + 1}/{files.Count}] ");
             }
         }
 
-        public static void FtpUploadFile (NetworkCredential credentials, string file, string hostDestination)
+        public static void FtpUploadFile (string file, string hostDestination)
         {
-            FtpUploadFileInternal(credentials, file, hostDestination, info: true);
+            FtpUploadFileInternal(file, hostDestination, info: true);
         }
 
-        private static void FtpUploadFileInternal (NetworkCredential credentials, string file, string hostDestination, bool info, string prefix = null)
+        private static void FtpUploadFileInternal (string file, string hostDestination, bool info, string prefix = null)
         {
             if (info)
                 Logger.Info($"{prefix}Uploading to '{hostDestination}'...");
             else
                 Logger.Trace($"{prefix}Uploading to '{hostDestination}'...");
 
-            FtpMakeDirectory(credentials, GetParentPath(hostDestination));
+            FtpMakeDirectory(GetParentPath(hostDestination));
 
-            var request = (FtpWebRequest) WebRequest.Create(hostDestination);
+            var request = WebRequest.Create(hostDestination);
+            request.Credentials = FtpCredentials;
             request.Method = WebRequestMethods.Ftp.UploadFile;
-            request.Credentials = credentials;
 
             var content = File.ReadAllBytes(file);
             request.ContentLength = content.Length;
@@ -65,15 +68,15 @@ namespace Nuke.Common.IO
             }
         }
 
-        public static void FtpMakeDirectory (NetworkCredential credentials, string path)
+        public static void FtpMakeDirectory (string path)
         {
             var parentPath = GetParentPath(path);
             if (parentPath != path)
-                FtpMakeDirectory(credentials, parentPath);
+                FtpMakeDirectory(parentPath);
 
             var request = WebRequest.Create(path);
             request.Method = WebRequestMethods.Ftp.MakeDirectory;
-            request.Credentials = credentials;
+            request.Credentials = FtpCredentials;
             try
             {
                 request.GetResponse().Dispose();
