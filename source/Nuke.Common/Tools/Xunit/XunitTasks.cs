@@ -12,9 +12,12 @@ namespace Nuke.Common.Tools.Xunit
 {
     public static partial class XunitTasks
     {
-        public static void Xunit2 (IEnumerable<string> assemblyFiles, Xunit2Settings xunitSettings = null, ProcessSettings processSettings = null)
+        public static void Xunit2 (
+            IEnumerable<string> assemblyFiles,
+            Configure<Xunit2Settings> configurator = null,
+            ProcessSettings processSettings = null)
         {
-            Xunit2(x => (xunitSettings ?? x).AddTargetAssemblies(assemblyFiles), processSettings);
+            Xunit2(x => configurator.InvokeSafe(x).AddTargetAssemblies(assemblyFiles), processSettings);
         }
 
         private static void AssertProcess (IProcess process, Xunit2Settings xunitSettings)
