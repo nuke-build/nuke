@@ -1,3 +1,7 @@
+// Copyright Matthias Koch 2017.
+// Distributed under the MIT License.
+// https://github.com/matkoch/Nuke/blob/master/LICENSE
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -11,17 +15,17 @@ namespace Nuke.ToolGenerator.Generators
         {
             var firstLowerCaseIndex = text.TakeWhile(char.IsUpper).Count();
             return (text.Substring(startIndex: 0, length: firstLowerCaseIndex).ToLower(CultureInfo.InvariantCulture) +
-                    text.Substring(startIndex: firstLowerCaseIndex))
+                    text.Substring(firstLowerCaseIndex))
                     .Replace("namespace", "ns");
         }
 
         public static string ToMember (this string text)
         {
-            return text.Substring (startIndex: 0, length: 1).ToUpper (CultureInfo.InvariantCulture) +
-                   text.Substring (startIndex: 1);
+            return text.Substring(startIndex: 0, length: 1).ToUpper(CultureInfo.InvariantCulture) +
+                   text.Substring(startIndex: 1);
         }
 
-        public static string Paragraph(this string text)
+        public static string Paragraph (this string text)
         {
             return !text.StartsWith("<p>") ? $"<p>{text}</p>" : text;
         }
@@ -47,7 +51,7 @@ namespace Nuke.ToolGenerator.Generators
             return string.Join(separator, values);
         }
 
-        public static string ToSeeCref(this string reference)
+        public static string ToSeeCref (this string reference)
         {
             return $"<see cref={reference.Quote(interpolation: false)}/>";
         }

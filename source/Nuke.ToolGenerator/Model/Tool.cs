@@ -1,25 +1,36 @@
+// Copyright Matthias Koch 2017.
+// Distributed under the MIT License.
+// https://github.com/matkoch/Nuke/blob/master/LICENSE
+
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 
 namespace Nuke.ToolGenerator.Model
 {
+    [UsedImplicitly]
+    [DebuggerDisplay("{" + nameof(DefinitionFile) + "}")]
     public class Tool
     {
         [JsonIgnore]
-        public string File { get; set; }
+        public string DefinitionFile { get; set; }
+
+        [JsonIgnore]
+        public string GenerationFile { get; set; }
+
+        [JsonIgnore]
+        public string ReferenceFile { get; set; }
 
         public Reference Reference { get; set; }
-        
+
         /// <summary>
-        /// The brief help text, best taken from the project website.
+        /// The name of the tool.
         /// </summary>
-        /// <remarks>
-        /// This help text is copied to all involved top-level members.
-        /// </remarks>
-        public string Help { get; set; }
-        
+        public string Name { get; set; }
+
         /// <summary>
         /// The url to the tool's offical website.
         /// </summary>
@@ -27,29 +38,29 @@ namespace Nuke.ToolGenerator.Model
         /// This official url is copied to all involved top-level members.
         /// </remarks>
         public string OfficialUrl { get; set; }
-        
-        /// <summary>
-        /// The alias.
-        /// </summary>
-        public Alias Alias { get; set; }
 
         /// <summary>
-        /// The settings class.
+        /// The brief help text, best taken from the project website.
         /// </summary>
-        public SettingsClass SettingsClass { get; set; }
+        /// <remarks>
+        /// This help text is copied to all involved top-level members.
+        /// </remarks>
+        public string Help { get; set; }
+
+        /// <summary>
+        /// The task.
+        /// </summary>
+        [CanBeNull]
+        public Task Task { get; set; }
 
         /// <summary>
         /// The list of data classes.
         /// </summary>
         public List<DataClass> DataClasses { get; set; } = new List<DataClass>();
+
         /// <summary>
         /// The list of enumerations.
         /// </summary>
         public List<Enumeration> Enumerations { get; set; } = new List<Enumeration>();
-
-        public override string ToString ()
-        {
-            return File;
-        }
     }
 }

@@ -94,7 +94,7 @@ namespace Nuke.Common.Tools.NuGet
         protected override Arguments GetArgumentsInternal()
         {
             return base.GetArgumentsInternal()
-              .Add($"restore")
+              .Add("restore")
               .Add("{value}", TargetPath)
               .Add("-ConfigFile {value}", ConfigFile)
               .Add("-DirectDownload", DirectDownload)

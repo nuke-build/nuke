@@ -108,8 +108,8 @@ Function
 
 
 
-`
-`
+&#124;
+OR
 
 
 &amp;
@@ -118,6 +118,6 @@ AND
 
 
 You can enclose expressions in paranthesis when using conditional operators (for example, (Name~TestMethod1) | (Name~TestMethod2)).
-For a additional information and examples on how to use selective unit test filtering, see Running selective unit tests.
+For additional information and examples on how to use selective unit test filtering, see Running selective unit tests.
 See also
 Frameworks and Targets.NET Core Runtime IDentifier (RID) catalog

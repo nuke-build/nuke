@@ -69,7 +69,7 @@ namespace Nuke.Common.Tools.DotNet
         protected override Arguments GetArgumentsInternal()
         {
             return base.GetArgumentsInternal()
-              .Add($"test")
+              .Add("test")
               .Add("{value}", ProjectFile)
               .Add("--settings {value}", SettingsFile)
               .Add("--list-tests", ListTests)

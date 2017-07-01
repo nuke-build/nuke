@@ -8,7 +8,7 @@ using Nuke.Core;
 
 namespace Nuke.Common.Tools.Xunit
 {
-    partial class XunitSettings
+    partial class Xunit2Settings
     {
         private string GetPackageExecutable ()
         {

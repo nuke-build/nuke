@@ -85,7 +85,7 @@ class NukeBuild : GitHubBuild
 
     Target Test => _ => _
             .DependsOn(Compile)
-            .Executes(() => Xunit2(GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/net4*/Nuke.*.Tests.dll"), new XunitSettings()));
+            .Executes(() => Xunit2(GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/net4*/Nuke.*.Tests.dll"), new Xunit2Settings()));
 
     Target Full => _ => _
             .DependsOn(Compile, Test, Analysis, Publish, UploadDocs);

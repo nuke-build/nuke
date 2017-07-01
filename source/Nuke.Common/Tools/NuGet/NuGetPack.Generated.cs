@@ -113,7 +113,7 @@ namespace Nuke.Common.Tools.NuGet
         protected override Arguments GetArgumentsInternal()
         {
             return base.GetArgumentsInternal()
-              .Add($"pack")
+              .Add("pack")
               .Add("{value}", TargetPath)
               .Add("-BasePath {value}", BasePath)
               .Add("-Build", Build)

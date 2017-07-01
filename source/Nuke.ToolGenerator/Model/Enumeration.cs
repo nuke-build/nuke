@@ -1,9 +1,15 @@
+// Copyright Matthias Koch 2017.
+// Distributed under the MIT License.
+// https://github.com/matkoch/Nuke/blob/master/LICENSE
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Nuke.ToolGenerator.Model
 {
+    [UsedImplicitly]
     public class Enumeration
     {
         /// <summary>
@@ -15,7 +21,7 @@ namespace Nuke.ToolGenerator.Model
         /// Defines whether the enumeration is a flag-enum.
         /// </summary>
         public bool IsFlags { get; set; }
-        
+
         /// <summary>
         /// The list of values defined.
         /// </summary>

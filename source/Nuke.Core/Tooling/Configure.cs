@@ -7,6 +7,13 @@ using System.Linq;
 
 namespace Nuke.Core.Tooling
 {
-    public delegate T Configure<T> (T settings)
-        where T : ToolSettings;
+    public delegate T Configure<T> (T settings);
+    
+    public static class ConfigureExtensions
+    {
+        public static T InvokeSafe<T> (this Configure<T> configurator, T obj)
+        {
+            return (configurator ?? (x => x)).Invoke(obj);
+        }
+    }
 }

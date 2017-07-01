@@ -72,7 +72,7 @@ namespace Nuke.Common.Tools.DotNet
         protected override Arguments GetArgumentsInternal()
         {
             return base.GetArgumentsInternal()
-              .Add($"pack")
+              .Add("pack")
               .Add("{value}", Project)
               .Add("--output {value}", OutputDirectory)
               .Add("--no-build", NoBuild)

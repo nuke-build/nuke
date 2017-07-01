@@ -78,7 +78,7 @@ namespace Nuke.Common.Tools.DotNet
         protected override Arguments GetArgumentsInternal()
         {
             return base.GetArgumentsInternal()
-              .Add($"restore")
+              .Add("restore")
               .Add("{value}", ProjectFile)
               .Add("--source {value}", Source)
               .Add("--runtime {value}", Runtimes)

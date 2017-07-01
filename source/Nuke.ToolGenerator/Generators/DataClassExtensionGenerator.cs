@@ -10,7 +10,6 @@ using Nuke.ToolGenerator.Writers;
 
 // ReSharper disable UnusedMethodReturnValue.Local
 
-
 namespace Nuke.ToolGenerator.Generators
 {
     public static class DataClassExtensionGenerator

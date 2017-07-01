@@ -20,6 +20,7 @@ keywords: nuspec reference, NuGet package metadata, NuGet package manifest, nusp
 #audience:
 #ms.devlang:
 ms.reviewer:
+- anangaur
 - karann
 - unnir
 #ms.suite:
@@ -94,7 +95,7 @@ Element | Description
 **owners** | A comma-separated list of the package creators using profile names on nuget.org. This is often the same list as in authors, and is ignored when uploading the package to nuget.org. See [Managing package owners on nuget.org](../create-packages/publish-a-package.md#managing-package-owners-on-nugetorg)
 **projectUrl** | A URL for the package's home page, often shown in UI displays as well as nuget.org.
 **licenseUrl** | A URL for the package's license, often shown in UI displays as well as nuget.org.
-**iconUrl** | A URL for a 64x64 image with transparency background to use as the icon for the package in UI display.
+**iconUrl** | A URL for a 64x64 image with transparency background to use as the icon for the package in UI display. Note: this should be the image URL and not a web page containing the image. For example, to use an image from GitHub, use the raw file URL like `https://github.com/<username\>/<repsitory>/raw/<branch>/<logo.png>`.
 **requireLicenseAcceptance** | A Boolean value specifying whether the client must prompt the consumer to accept the package license before installing the package.
 **developmentDependency** | *(2.8+)*  A Boolean value specifying whether the package will be marked as a development-only-dependency, which prevents the package from being included as a dependency in other packages.
 **summary** | A short description of the package for UI display. If omitted, a truncated version of the **description** is used.

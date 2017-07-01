@@ -73,7 +73,7 @@ namespace Nuke.Common.Tools.DocFx
         protected override Arguments GetArgumentsInternal()
         {
             return base.GetArgumentsInternal()
-              .Add($"metadata")
+              .Add("metadata")
               .Add("{value}", ConfigPath)
               .Add("--force", Force)
               .Add("--repositoryRoot {value}", RepositoryRoot)

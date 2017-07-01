@@ -51,7 +51,7 @@ namespace Nuke.Common.Tools.DotNet
         protected override Arguments GetArgumentsInternal()
         {
             return base.GetArgumentsInternal()
-              .Add($"run")
+              .Add("run")
               .Add("--configuration {value}", Configuration)
               .Add("--framework {value}", Framework)
               .Add("--project {value}", ProjectFile);

@@ -76,7 +76,7 @@ namespace Nuke.Common.Tools.NuGet
         protected override Arguments GetArgumentsInternal()
         {
             return base.GetArgumentsInternal()
-              .Add($"push")
+              .Add("push")
               .Add("{value}", TargetPath)
               .Add("-ApiKey {value}", ApiKey, secret: true)
               .Add("-Source {value}", Source)

@@ -9,7 +9,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using NuGet.Packaging;
 using NuGet.Versioning;
-using Nuke.Common.Xml;
+using Nuke.Common.IO;
 using Nuke.Core;
 using Nuke.Core.Utilities.Collections;
 

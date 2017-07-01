@@ -1,15 +1,25 @@
+// Copyright Matthias Koch 2017.
+// Distributed under the MIT License.
+// https://github.com/matkoch/Nuke/blob/master/LICENSE
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
+using Newtonsoft.Json;
 
 namespace Nuke.ToolGenerator.Model
 {
+    [UsedImplicitly]
     public class DataClass
     {
+        [JsonIgnore]
+        public Tool Tool { get; set; }
+
         /// <summary>
         /// The name of the data class.
         /// </summary>
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
         /// <summary>
         /// The base class to inherit from.
@@ -19,12 +29,7 @@ namespace Nuke.ToolGenerator.Model
         /// <summary>
         /// If set to <c>true</c>, no extension methods will be generated.
         /// </summary>
-        public bool NoExtensionMethods { get; set; }
-
-        /// <summary>
-        /// The argument that is always rendered.
-        /// </summary>
-        public string DefiniteArgument { get; set; }
+        public bool SkipExtensionMethods { get; set; }
 
         /// <summary>
         /// The list of properties.
@@ -32,37 +37,9 @@ namespace Nuke.ToolGenerator.Model
         public List<Property> Properties { get; set; } = new List<Property>();
     }
 
+    [UsedImplicitly]
     public class SettingsClass : DataClass
     {
-        /// <summary>
-        /// NuGet package id that contains the executable.
-        /// </summary>
-        /// <remarks>
-        /// Also requires <see cref="PackageExecutable"/> to be set.
-        /// </remarks>
-        public string PackageId { get; set; }
-        /// <summary>
-        /// Name of the executable that is contained in a NuGet package.
-        /// </summary>
-        /// <remarks>
-        /// Also requires <see cref="PackageId"/> to bet set.
-        /// </remarks>
-        public string PackageExecutable { get; set; }
-
-        /// <summary>
-        /// Environment variable that holds the path to the executable.
-        /// </summary>
-        public string EnvironmentExecutable { get; set; }
-
-        /// <summary>
-        /// Defines a executable to use from PATH.
-        /// </summary>
-        public string PathExecutable { get; set; }
-
-        /// <summary>
-        /// Custom expression that returns the executable.
-        /// </summary>
-        public string CustomExecutable { get; set; }
-
+        public override string Name => $"{Tool.Name}{Tool.Task.Postfix}Settings";
     }
 }

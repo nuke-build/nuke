@@ -19,20 +19,21 @@ using Nuke.ToolGenerator.Model;
 namespace Nuke.ToolGenerator
 {
     [SuppressMessage("ReSharper", "MissingXmlDoc")]
-    public class Program
+    public static class Program
     {
-        private static void Main ()
+        private static void Main (string[] args)
         {
-            var files = Directory.GetFiles(Environment.CurrentDirectory, "*.td", SearchOption.AllDirectories);
+            var files = Directory.GetFiles(args[0], "*.td", SearchOption.TopDirectoryOnly);
 
             foreach (var file in files)
             {
                 Console.WriteLine($"Processing {file}...");
 
                 var tool = Load(file);
-                var streamWriter = new StreamWriter(File.Open(Path.ChangeExtension (tool.File, "Generated.cs"), FileMode.Create));
-
-                Generators.ToolGenerator.Run(tool, streamWriter);
+                using (var streamWriter = new StreamWriter(File.Open(tool.GenerationFile, FileMode.Create)))
+                {
+                    Generators.ToolGenerator.Run(tool, streamWriter);
+                }
                 TryUpdateReference (tool);
                 Save(tool);
             }
@@ -42,7 +43,22 @@ namespace Nuke.ToolGenerator
         {
             var content = File.ReadAllText(file);
             var tool = JsonConvert.DeserializeObject<Tool>(content);
-            tool.File = file;
+
+            var directory = Path.Combine(Environment.CurrentDirectory, tool.Name);
+            Directory.CreateDirectory(directory);
+            
+            tool.DefinitionFile = file;
+            tool.GenerationFile = Path.Combine(directory, Path.ChangeExtension(Path.GetFileNameWithoutExtension(file), "Generated.cs"));
+            tool.ReferenceFile = Path.Combine(directory, Path.ChangeExtension(Path.GetFileNameWithoutExtension(file), "reference.txt"));
+            
+            if (tool.Task != null)
+            {
+                tool.Task.Tool = tool;
+                tool.Task.SettingsClass.Tool = tool;
+            }
+            foreach (var dataClass in tool.DataClasses)
+                dataClass.Tool = tool;
+
             return tool;
         }
 
@@ -53,16 +69,12 @@ namespace Nuke.ToolGenerator
 
             try
             {
-                var reference = GetReferenceContent(tool);
-                var referenceFile = Path.ChangeExtension(tool.File, ".reference.txt");
-                Trace.Assert(referenceFile != null, "referenceFile != null");
-                File.WriteAllText(referenceFile, reference);
-                tool.Reference.HashCode = reference.GetHashCode();
+                File.WriteAllText(tool.ReferenceFile, GetReferenceContent(tool));
             }
             catch (Exception exception)
             {
-                Console.WriteLine("Couldn't update reference for {0}:", Path.GetFileName(tool.File));
-                Console.WriteLine(exception.Message);
+                Console.Error.WriteLine("Couldn't update reference for {0}:", Path.GetFileName(tool.DefinitionFile));
+                Console.Error.WriteLine(exception.Message);
             }
         }
 
@@ -77,7 +89,7 @@ namespace Nuke.ToolGenerator
                     NullValueHandling = NullValueHandling.Ignore,
                     DefaultValueHandling = DefaultValueHandling.Ignore
                 });
-            File.WriteAllText(tool.File, content);
+            File.WriteAllText(tool.DefinitionFile, content);
         }
 
         private static string GetReferenceContent (Tool tool)

@@ -1,3 +1,7 @@
+// Copyright Matthias Koch 2017.
+// Distributed under the MIT License.
+// https://github.com/matkoch/Nuke/blob/master/LICENSE
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,17 +15,17 @@ namespace Nuke.ToolGenerator.Generators
     {
         public static string GetNamespace (this Tool tool)
         {
-            var namespaces = new Stack<string> ();
-            var directory = new FileInfo (tool.File).Directory;
+            var namespaces = new Stack<string>();
+            var directory = new FileInfo(tool.GenerationFile).Directory;
             while (directory != null)
             {
-                namespaces.Push (directory.Name);
+                namespaces.Push(directory.Name);
 
-                if (directory.GetFiles ("*.csproj", SearchOption.TopDirectoryOnly).Any ())
+                if (directory.GetFiles("*.csproj", SearchOption.TopDirectoryOnly).Any())
                     break;
                 directory = directory.Parent;
             }
-            return string.Join (".", namespaces);
+            return string.Join(".", namespaces);
         }
 
         public static string GetListValueType (this Property property)
@@ -43,18 +47,18 @@ namespace Nuke.ToolGenerator.Generators
 
         private static string[] GetGenerics (Property property)
         {
-            var match = Regex.Match (property.Type, ".*<(?<generics>.*)>");
+            var match = Regex.Match(property.Type, ".*<(?<generics>.*)>");
             return match.Groups["generics"].Value.Split(',').Select(x => x.Trim()).ToArray();
         }
 
         public static bool IsList (this Property property)
         {
-            return property.Type.StartsWith ("List");
+            return property.Type.StartsWith("List");
         }
 
         public static bool IsDictionary (this Property property)
         {
-            return property.Type.StartsWith ("Dictionary");
+            return property.Type.StartsWith("Dictionary");
         }
 
         public static bool IsLookupTable (this Property property)
@@ -64,28 +68,23 @@ namespace Nuke.ToolGenerator.Generators
 
         public static bool IsBoolean (this Property property)
         {
-            return property.Type.StartsWith ("bool");
+            return property.Type.StartsWith("bool");
         }
 
         public static string GetNullabilityAttribute (this Property property)
         {
-            var isOptional = property.Assertion.ToString ().StartsWith ("NullOr");
+            var isOptional = property.Assertion.ToString().StartsWith("NullOr");
             return isOptional ? "[CanBeNull] " : string.Empty;
         }
 
-        public static string GetTaskClassName(this Alias alias)
+        public static string GetTaskClassName (this Task task)
         {
-            return $"{alias.TaskName}Tasks";
+            return $"{task.Tool.Name}Tasks";
         }
 
-        public static string GetTaskCommandMethodName(this Alias alias)
+        public static string GetTaskMethodName (this Task task)
         {
-            return $"{alias.TaskName}{alias.MethodPostfix}";
-        }
-
-        public static string GetTaskCommandFullName(this Alias alias)
-        {
-            return $"{alias.GetTaskClassName()}.{alias.GetTaskCommandMethodName()}";
+            return $"{task.Tool.Name}{task.Postfix}";
         }
     }
 }

@@ -65,6 +65,8 @@ namespace Nuke.Common.Tools.OpenCover
     {
         /// <inheritdoc />
         public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetToolPath(packageId: $"OpenCover", packageExecutable: $"OpenCover.Console.exe");
+        /// <summary><p>The action that executes tests.</p></summary>
+        public virtual Action TestAction { get; internal set; }
         /// <summary><p>The name of the target application or service that will be started; this can also be a path to the target application.</p></summary>
         public virtual string TargetPath { get; internal set; }
         /// <summary><p>Arguments to be passed to the target process.</p></summary>
@@ -119,8 +121,6 @@ namespace Nuke.Common.Tools.OpenCover
         public virtual RegistrationType? Registration { get; internal set; }
         /// <summary><p>Return the target process exit code instead of the OpenCover console exit code. Use the offset to return the OpenCover console at a value outside the range returned by the target process.</p></summary>
         public virtual int? TargetExitCodeOffset { get; internal set; }
-        /// <summary><p>The action that executes tests.</p></summary>
-        public virtual Action TestAction { get; internal set; }
         /// <inheritdoc />
         protected override void AssertValid()
         {
@@ -161,6 +161,17 @@ namespace Nuke.Common.Tools.OpenCover
     [ExcludeFromCodeCoverage]
     public static partial class OpenCoverSettingsExtensions
     {
+        /// <summary>
+        /// <p><i>Extension method for setting <see cref="OpenCoverSettings.TestAction"/>.</i></p>
+        /// <p>The action that executes tests.</p>
+        /// </summary>
+        [Pure]
+        public static OpenCoverSettings SetTestAction(this OpenCoverSettings openCoverSettings, Action testAction)
+        {
+            openCoverSettings = openCoverSettings.NewInstance();
+            openCoverSettings.TestAction = testAction;
+            return openCoverSettings;
+        }
         /// <summary>
         /// <p><i>Extension method for setting <see cref="OpenCoverSettings.TargetPath"/>.</i></p>
         /// <p>The name of the target application or service that will be started; this can also be a path to the target application.</p>
@@ -1116,17 +1127,6 @@ namespace Nuke.Common.Tools.OpenCover
         {
             openCoverSettings = openCoverSettings.NewInstance();
             openCoverSettings.TargetExitCodeOffset = targetExitCodeOffset;
-            return openCoverSettings;
-        }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="OpenCoverSettings.TestAction"/>.</i></p>
-        /// <p>The action that executes tests.</p>
-        /// </summary>
-        [Pure]
-        public static OpenCoverSettings SetTestAction(this OpenCoverSettings openCoverSettings, Action testAction)
-        {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.TestAction = testAction;
             return openCoverSettings;
         }
     }

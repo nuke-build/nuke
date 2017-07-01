@@ -8,12 +8,10 @@ namespace Nuke.ToolGenerator.Writers
     {
         public DataClassWriter (DataClass dataClass, ToolWriter writer)
         {
-            Tool = writer.Tool;
             DataClass = dataClass;
             Writer = writer;
         }
 
-        public Tool Tool { get; }
         public DataClass DataClass { get; }
         public IWriter Writer { get; }
     }
