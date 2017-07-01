@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using Nuke.Common;
+using Nuke.Common.IO;
 using Nuke.Common.Tools.DocFx;
 using Nuke.Common.Tools.GitLink;
 using Nuke.Common.Tools.MSBuild;
@@ -30,8 +31,8 @@ class NukeBuild : GitHubBuild
     public static int Main () => Execute<NukeBuild>(x => x.Pack);
 
     Target Clean => _ => _
-            .Executes(() => PrepareCleanDirectory(OutputDirectory))
-            .Executes(() => GlobDirectories(SolutionDirectory, "*/bin", "*/obj").ForEach(DeleteDirectory));
+            .Executes(() => DeleteDirectories(GlobDirectories(SolutionDirectory, "*/bin", "*/obj")))
+            .Executes(() => PrepareCleanDirectory(OutputDirectory));
 
     Target Restore => _ => _
             .DependsOn(Clean)
@@ -85,10 +86,10 @@ class NukeBuild : GitHubBuild
 
     Target UploadDocs => _ => _
             .DependsOn(GenerateDocs)
+            .Executes(() => FtpCredentials = new NetworkCredential(EnsureVariable("FTP_USERNAME"), EnsureVariable("FTP_PASSWORD")))
             .Executes(() => FtpUploadDirectoryRecursively(
                 Path.Combine(RootDirectory, "docs", "_site"),
-                "ftp://www58.world4you.com",
-                new NetworkCredential(EnsureVariable("FTP_USERNAME"), EnsureVariable("FTP_PASSWORD"))));
+                "ftp://www58.world4you.com"));
 
     Target Test => _ => _
             .DependsOn(Compile)
