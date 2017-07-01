@@ -6,6 +6,7 @@
 using System;
 using System.Linq;
 using System.Net;
+using JetBrains.Annotations;
 using Nuke.Common.IO;
 using Nuke.Core.Execution;
 using Nuke.Core.Tooling;
@@ -14,8 +15,10 @@ using Nuke.Core.Tooling;
 
 namespace Nuke.Common.IO
 {
+    [PublicAPI]
     public static class HttpTasks
     {
+        [Pure]
         public static string HttpDownloadString (
             string uri,
             Configure<WebClient> configurator = null,

@@ -80,6 +80,11 @@ namespace Nuke.Common.Tools.MSBuild
         public virtual MSBuildVerbosity? Verbosity { get; internal set; }
         /// <summary><p>Specifies the platform to use when building.</p></summary>
         public virtual MSBuildPlatform? MSBuildPlatform { get; internal set; }
+        /// <summary><p>Specifies the loggers to use to log events from MSBuild.</p></summary>
+        public virtual IReadOnlyList<string> Loggers => LoggersInternal.AsReadOnly();
+        internal List<string> LoggersInternal { get; set; } = new List<string>();
+        /// <summary><p>Disable the default console logger, and don't log events to the console.</p></summary>
+        public virtual bool NoConsoleLogger { get; internal set; }
         /// <inheritdoc />
         protected override void AssertValid()
         {
@@ -97,7 +102,9 @@ namespace Nuke.Common.Tools.MSBuild
               .Add("/property:{value}", Properties, keyValueSeparator: $"=")
               .Add("/target:{value}", Targets, mainSeparator: $";")
               .Add("/toolsversion:{value}", GetToolsVersion())
-              .Add("/verbosity:{value}", Verbosity);
+              .Add("/verbosity:{value}", Verbosity)
+              .Add("/logger:{value}", Loggers)
+              .Add("/noconsolelogger", NoConsoleLogger);
         }
     }
     [PublicAPI]
@@ -432,6 +439,127 @@ namespace Nuke.Common.Tools.MSBuild
         {
             msbuildSettings = msbuildSettings.NewInstance();
             msbuildSettings.MSBuildPlatform = msbuildPlatform;
+            return msbuildSettings;
+        }
+        /// <summary>
+        /// <p><i>Extension method for setting <see cref="MSBuildSettings.Loggers"/> to a new list.</i></p>
+        /// <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
+        [Pure]
+        public static MSBuildSettings SetLoggers(this MSBuildSettings msbuildSettings, params string[] loggers)
+        {
+            msbuildSettings = msbuildSettings.NewInstance();
+            msbuildSettings.LoggersInternal = loggers.ToList();
+            return msbuildSettings;
+        }
+        /// <summary>
+        /// <p><i>Extension method for setting <see cref="MSBuildSettings.Loggers"/> to a new list.</i></p>
+        /// <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
+        [Pure]
+        public static MSBuildSettings SetLoggers(this MSBuildSettings msbuildSettings, IEnumerable<string> loggers)
+        {
+            msbuildSettings = msbuildSettings.NewInstance();
+            msbuildSettings.LoggersInternal = loggers.ToList();
+            return msbuildSettings;
+        }
+        /// <summary>
+        /// <p><i>Extension method for adding new loggers to the existing <see cref="MSBuildSettings.Loggers"/>.</i></p>
+        /// <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
+        [Pure]
+        public static MSBuildSettings AddLoggers(this MSBuildSettings msbuildSettings, params string[] loggers)
+        {
+            msbuildSettings = msbuildSettings.NewInstance();
+            msbuildSettings.LoggersInternal.AddRange(loggers);
+            return msbuildSettings;
+        }
+        /// <summary>
+        /// <p><i>Extension method for adding new loggers to the existing <see cref="MSBuildSettings.Loggers"/>.</i></p>
+        /// <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
+        [Pure]
+        public static MSBuildSettings AddLoggers(this MSBuildSettings msbuildSettings, IEnumerable<string> loggers)
+        {
+            msbuildSettings = msbuildSettings.NewInstance();
+            msbuildSettings.LoggersInternal.AddRange(loggers);
+            return msbuildSettings;
+        }
+        /// <summary>
+        /// <p><i>Extension method for clearing <see cref="MSBuildSettings.Loggers"/>.</i></p>
+        /// <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
+        [Pure]
+        public static MSBuildSettings ClearLoggers(this MSBuildSettings msbuildSettings)
+        {
+            msbuildSettings = msbuildSettings.NewInstance();
+            msbuildSettings.LoggersInternal.Clear();
+            return msbuildSettings;
+        }
+        /// <summary>
+        /// <p><i>Extension method for adding a single logger to <see cref="MSBuildSettings.Loggers"/>.</i></p>
+        /// <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
+        [Pure]
+        public static MSBuildSettings AddLogger(this MSBuildSettings msbuildSettings, string logger)
+        {
+            msbuildSettings = msbuildSettings.NewInstance();
+            msbuildSettings.LoggersInternal.Add(logger);
+            return msbuildSettings;
+        }
+        /// <summary>
+        /// <p><i>Extension method for removing a single logger from <see cref="MSBuildSettings.Loggers"/>.</i></p>
+        /// <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
+        [Pure]
+        public static MSBuildSettings RemoveLogger(this MSBuildSettings msbuildSettings, string logger)
+        {
+            msbuildSettings = msbuildSettings.NewInstance();
+            msbuildSettings.LoggersInternal.Remove(logger);
+            return msbuildSettings;
+        }
+        /// <summary>
+        /// <p><i>Extension method for setting <see cref="MSBuildSettings.NoConsoleLogger"/>.</i></p>
+        /// <p>Disable the default console logger, and don't log events to the console.</p>
+        /// </summary>
+        [Pure]
+        public static MSBuildSettings SetNoConsoleLogger(this MSBuildSettings msbuildSettings, bool noConsoleLogger)
+        {
+            msbuildSettings = msbuildSettings.NewInstance();
+            msbuildSettings.NoConsoleLogger = noConsoleLogger;
+            return msbuildSettings;
+        }
+        /// <summary>
+        /// <p><i>Extension method for enabling <see cref="MSBuildSettings.NoConsoleLogger"/>.</i></p>
+        /// <p>Disable the default console logger, and don't log events to the console.</p>
+        /// </summary>
+        [Pure]
+        public static MSBuildSettings EnableNoConsoleLogger(this MSBuildSettings msbuildSettings)
+        {
+            msbuildSettings = msbuildSettings.NewInstance();
+            msbuildSettings.NoConsoleLogger = true;
+            return msbuildSettings;
+        }
+        /// <summary>
+        /// <p><i>Extension method for disabling <see cref="MSBuildSettings.NoConsoleLogger"/>.</i></p>
+        /// <p>Disable the default console logger, and don't log events to the console.</p>
+        /// </summary>
+        [Pure]
+        public static MSBuildSettings DisableNoConsoleLogger(this MSBuildSettings msbuildSettings)
+        {
+            msbuildSettings = msbuildSettings.NewInstance();
+            msbuildSettings.NoConsoleLogger = false;
+            return msbuildSettings;
+        }
+        /// <summary>
+        /// <p><i>Extension method for toggling <see cref="MSBuildSettings.NoConsoleLogger"/>.</i></p>
+        /// <p>Disable the default console logger, and don't log events to the console.</p>
+        /// </summary>
+        [Pure]
+        public static MSBuildSettings ToggleNoConsoleLogger(this MSBuildSettings msbuildSettings)
+        {
+            msbuildSettings = msbuildSettings.NewInstance();
+            msbuildSettings.NoConsoleLogger = !msbuildSettings.NoConsoleLogger;
             return msbuildSettings;
         }
     }

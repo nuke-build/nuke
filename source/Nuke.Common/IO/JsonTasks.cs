@@ -33,6 +33,7 @@ namespace Nuke.Common.IO
             File.WriteAllText(path, content);
         }
         
+        [Pure]
         public static T JsonDeserialize<T>(string path, Configure<JsonSerializerSettings> configurator = null)
         {
             configurator = configurator ?? (x => x);

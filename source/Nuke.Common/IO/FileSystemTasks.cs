@@ -49,18 +49,21 @@ namespace Nuke.Common.IO
         //    return Directory.GetFiles (directory, filePattern, includeSubDirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
         //}
 
+        [Pure]
         public static IEnumerable<string> GlobFiles (string directory, params string[] globPatterns)
         {
             var directoryInfo = new DirectoryInfo(directory);
             return globPatterns.SelectMany(x => directoryInfo.GlobFiles(x)).Select(x => x.FullName);
         }
 
+        [Pure]
         public static IEnumerable<string> GlobDirectories (string directory, params string[] globPatterns)
         {
             var directoryInfo = new DirectoryInfo(directory);
             return globPatterns.SelectMany(x => directoryInfo.GlobDirectories(x)).Select(x => x.FullName);
         }
 
+        [Pure]
         public static string GetRelativePath (string basePath, string destinationPath)
         {
             return Uri.UnescapeDataString(new Uri($@"{basePath}\").MakeRelativeUri(new Uri(destinationPath)).ToString());

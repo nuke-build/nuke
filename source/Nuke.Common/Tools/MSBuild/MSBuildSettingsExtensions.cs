@@ -21,6 +21,7 @@ namespace Nuke.Common.Tools.MSBuild
             return msbuildSettings.SetTargetPath(projectFile);
         }
 
+        /// <summary>Sets the configuration in <see cref="MSBuildSettings.Properties"/>.</summary>
         public static MSBuildSettings SetConfiguration(this MSBuildSettings msbuildSettings, string configuration)
         {
             return msbuildSettings.SetProperty("configuration", configuration);

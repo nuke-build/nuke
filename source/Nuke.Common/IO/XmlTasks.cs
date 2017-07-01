@@ -36,6 +36,7 @@ namespace Nuke.Common.IO
             }
         }
         
+        [Pure]
         public static T XmlDeserialize<T>(string path)
         {
             var xmlSerializer = new XmlSerializer(typeof(T));

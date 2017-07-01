@@ -30,6 +30,7 @@ namespace Nuke.Common.IO
             File.WriteAllText(path, content);
         }
 
+        [Pure]
         public static T YamlDeserialize<T> (string path, Configure<DeserializerBuilder> configurator = null)
         {
             var builder = new DeserializerBuilder()
