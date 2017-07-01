@@ -14,7 +14,7 @@ using Nuke.Common.Tools.Xunit;
 using Nuke.Core;
 using Nuke.Core.Utilities.Collections;
 using static Documentation;
-using static Nuke.Common.Ftp.FtpTasks;
+using static Nuke.Common.IO.FtpTasks;
 using static Nuke.Common.Tools.DocFx.DocFxTasks;
 using static Nuke.Common.Tools.GitLink.GitLinkTasks;
 using static Nuke.Common.Tools.InspectCode.InspectCodeTasks;
@@ -22,7 +22,7 @@ using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 using static Nuke.Common.Tools.NuGet.NuGetTasks;
 using static Nuke.Common.Tools.Xunit.XunitTasks;
 using static Nuke.Core.EnvironmentInfo;
-using static Nuke.Common.FileSystem.FileSystemTasks;
+using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Core.ControlFlow;
 
 class NukeBuild : GitHubBuild
@@ -36,7 +36,7 @@ class NukeBuild : GitHubBuild
             .Executes(() => MSBuild(s => DefaultSettings.MSBuildRestore));
 
     Target Compile => _ => _
-            .DependsOn(Restore)
+            .DependsOn(Restore, Clean)
             .Executes(() => MSBuild(s => IsWin ? DefaultSettings.MSBuildCompileWithAssemblyInfo : DefaultSettings.MSBuildCompile));
 
     Target Link => _ => _

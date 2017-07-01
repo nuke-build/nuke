@@ -5,17 +5,18 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using Glob;
 using JetBrains.Annotations;
-using Nuke.Common.FileSystem;
+using Nuke.Common.IO;
 using Nuke.Core;
 using Nuke.Core.Execution;
 using Nuke.Core.Utilities.Collections;
 
 [assembly: IconClass(typeof(FileSystemTasks), "folder-open")]
 
-namespace Nuke.Common.FileSystem
+namespace Nuke.Common.IO
 {
     [PublicAPI]
     public static class FileSystemTasks

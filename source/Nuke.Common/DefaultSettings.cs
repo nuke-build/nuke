@@ -96,11 +96,11 @@ namespace Nuke.Common
                 .SetSolutionDirectory(Build.Instance.SolutionDirectory.NotNull("Build.Instance.SolutionDirectory != null"))
                 .SetConfiguration(Build.Instance.Configuration)
                 .SetBranchName(GitHubBuild.Instance.GitVersion.NotNull("GitHubBuild.Instance.GitVersion != null").BranchName)
-                .SetRepositoryUrl(GitHubBuild.Instance.GitRepositoryUrl.NotNull("GitHubBuild.Instance.GitRepositoryUrl != null").SvnUrl);
+                .SetRepositoryUrl(GitHubBuild.Instance.GitRepository.NotNull("GitHubBuild.Instance.GitRepositoryUrl != null").SvnUrl);
 
         public static GitLink3Settings GitLink3 => new GitLink3Settings()
                 .SetWorkingDirectory(Build.Instance.RootDirectory.NotNull("Build.Instance.RootDirectory != null"))
                 .SetBaseDirectory(Build.Instance.RootDirectory.NotNull("Build.Instance.RootDirectory != null"))
-                .SetRepositoryUrl(GitHubBuild.Instance.GitRepositoryUrl.NotNull("GitHubBuild.Instance.GitRepositoryUrl != null").SvnUrl);
+                .SetRepositoryUrl(GitHubBuild.Instance.GitRepository.NotNull("GitHubBuild.Instance.GitRepositoryUrl != null").SvnUrl);
     }
 }

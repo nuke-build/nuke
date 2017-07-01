@@ -7,14 +7,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Common.Tools.Git;
+using Nuke.Common.Git;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Core;
 
 namespace Nuke.Common
 {
     /// <summary>
-    /// In addition to <see cref="Build"/>, automatically loads <see cref="GitVersion"/> and <see cref="GitRepositoryUrl"/>.
+    /// In addition to <see cref="Build"/>, automatically loads <see cref="GitVersion"/> and <see cref="GitRepository"/>.
     /// </summary>
     [PublicAPI]
     [SuppressMessage ("ReSharper", "VirtualMemberNeverOverridden.Global")]
@@ -30,19 +30,19 @@ namespace Nuke.Common
             Initialize ();
         }
 
-        public GitRepositoryUrl GitRepositoryUrl { get; protected set; }
+        public GitRepository GitRepository { get; protected set; }
         public GitVersion GitVersion { get; protected set; }
 
         // ReSharper disable once VirtualMemberNeverOverridden.Global
         // ReSharper disable once CyclomaticComplexity
         public virtual void Initialize ()
         {
-            GitRepositoryUrl = GitRepositoryUrl ?? GetGitRepository (RootDirectory);
+            GitRepository = GitRepository ?? GetGitRepository (RootDirectory);
             GitVersion = GitVersion ?? GetGitVersion (RootDirectory);
         }
 
         [CanBeNull]
-        public virtual GitRepositoryUrl GetGitRepository ([CanBeNull] string rootDirectory)
+        public virtual GitRepository GetGitRepository ([CanBeNull] string rootDirectory)
         {
             if (rootDirectory == null)
                 return null;
@@ -57,7 +57,7 @@ namespace Nuke.Common
                     .Single (x => x.StartsWith ("url = ", StringComparison.OrdinalIgnoreCase))
                     .Split ('=')[1];
 
-            return GitRepositoryUrl.TryParse (url);
+            return GitRepository.TryParse (url);
         }
 
         [CanBeNull]

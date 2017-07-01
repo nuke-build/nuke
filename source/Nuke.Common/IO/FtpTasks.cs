@@ -8,14 +8,13 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using JetBrains.Annotations;
-using Nuke.Common.FileSystem;
-using Nuke.Common.Ftp;
+using Nuke.Common.IO;
 using Nuke.Core;
 using Nuke.Core.Execution;
 
 [assembly: IconClass(typeof(FtpTasks), "earth")]
 
-namespace Nuke.Common.Ftp
+namespace Nuke.Common.IO
 {
     [PublicAPI]
     public static class FtpTasks
