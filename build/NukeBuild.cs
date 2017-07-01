@@ -9,8 +9,8 @@ using System.Net;
 using Nuke.Common;
 using Nuke.Common.Tools.DocFx;
 using Nuke.Common.Tools.GitLink;
+using Nuke.Common.Tools.MSBuild;
 using Nuke.Common.Tools.NuGet;
-using Nuke.Common.Tools.Xunit;
 using Nuke.Core;
 using Nuke.Core.Utilities.Collections;
 using static Documentation;
@@ -30,14 +30,20 @@ class NukeBuild : GitHubBuild
     public static int Main () => Execute<NukeBuild>(x => x.Pack);
 
     Target Clean => _ => _
-            .Executes(() => PrepareCleanDirectory(OutputDirectory));
+            .Executes(() => PrepareCleanDirectory(OutputDirectory))
+            .Executes(() => GlobDirectories(SolutionDirectory, "*/bin", "*/obj").ForEach(DeleteDirectory));
 
     Target Restore => _ => _
             .Executes(() => MSBuild(s => DefaultSettings.MSBuildRestore));
 
     Target Compile => _ => _
             .DependsOn(Restore, Clean)
-            .Executes(() => MSBuild(s => IsWin ? DefaultSettings.MSBuildCompileWithAssemblyInfo : DefaultSettings.MSBuildCompile));
+            .Executes(() => MSBuild(s =>
+                (IsWin
+                    ? DefaultSettings.MSBuildCompileWithAssemblyInfo
+                    : DefaultSettings.MSBuildCompile)
+                // TODO: AddLogger(Variable("ija"), ifNotNull: true)));
+                .AddLoggers(new[] { Variable("CUSTOM_LOGGER") }.WhereNotNull())));
 
     Target Link => _ => _
             .OnlyWhen(() => false)
@@ -85,7 +91,7 @@ class NukeBuild : GitHubBuild
 
     Target Test => _ => _
             .DependsOn(Compile)
-            .Executes(() => Xunit2(GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/net4*/Nuke.*.Tests.dll"), new Xunit2Settings()));
+            .Executes(() => Xunit2(GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/net4*/Nuke.*.Tests.dll")));
 
     Target Full => _ => _
             .DependsOn(Compile, Test, Analysis, Publish, UploadDocs);
