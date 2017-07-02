@@ -17,6 +17,14 @@ using Nuke.Core.Utilities.Collections;
 
 namespace Nuke.Common.IO
 {
+    public enum FileExistsPolicy
+    {
+        Fail,
+        Skip,
+        Overwrite,
+        OverwriteIfNewer
+    }
+
     [PublicAPI]
     public static class FileSystemTasks
     {
@@ -63,21 +71,65 @@ namespace Nuke.Common.IO
 
         private static void DeleteFile(string file)
         {
-            File.SetAttributes(file, FileAttributes.Normal);
+            EnsureFileAttributes(file);
             File.Delete(file);
         }
 
-        public static void CopyRecursively (string source, string destination)
+        public static void CopyRecursively (string source, string target, FileExistsPolicy policy = FileExistsPolicy.Fail)
         {
-            ControlFlow.Assert(!destination.StartsWith(source), "!destination.StartsWith(source)");
+            ControlFlow.Assert(Directory.Exists(source), $"Directory.Exists({source})");
+            ControlFlow.Assert(!Contains(target, source), $"Source '{source}' is not contained in target '{target}'.");
+            //ControlFlow.Assert(!Contains(source, target), $"Target '{target}' is not contained in source '{source}'.");
 
+            Logger.Info($"Copying recursively from '{source}' to '{target}'...");
+            CopyRecursivelyInternal(source, target, policy);
+        }
+
+        private static bool ShouldCopyFile (string sourceFile, string targetFile, FileExistsPolicy policy)
+        {
+            if (!File.Exists(targetFile))
+                return true;
+
+            switch (policy)
+            {
+                case FileExistsPolicy.Fail:
+                    ControlFlow.Fail($"File '{targetFile}' already exists.");
+                    return false;
+                case FileExistsPolicy.Skip:
+                    return false;
+                case FileExistsPolicy.Overwrite:
+                    return true;
+                case FileExistsPolicy.OverwriteIfNewer:
+                    return File.GetLastWriteTimeUtc(targetFile) < File.GetLastWriteTimeUtc(sourceFile);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(policy), policy, message: null);
+            }
+        }
+
+        private static void CopyRecursivelyInternal (string source, string target, FileExistsPolicy policy)
+        {
             string GetDestinationPath (string path)
-                => Path.Combine(destination, GetRelativePath(source, path));
+                => Path.Combine(target, GetRelativePath(source, path));
 
-            Directory.CreateDirectory(destination);
+            Directory.CreateDirectory(target);
+            Directory.GetDirectories(source).ForEach(x => CopyRecursively(x, GetDestinationPath(x), policy));
 
-            Directory.GetDirectories(source).ForEach(x => CopyRecursively(x, GetDestinationPath(x)));
-            Directory.GetFiles(source).ForEach(x => File.Copy(x, GetDestinationPath(x)));
+            foreach (var sourceFile in Directory.GetFiles(source))
+            {
+                var targetFile = GetDestinationPath(sourceFile);
+                if (!ShouldCopyFile(sourceFile, targetFile, policy))
+                    continue;
+                
+                //EnsureFileAttributes(sourceFile);
+                File.Copy(sourceFile, targetFile, overwrite: true);
+            }
+        }
+
+        private static bool Contains (string baseDirectory, string otherDirectory)
+        {
+            var otherDirectoryInfo = new DirectoryInfo(otherDirectory);
+            return new DirectoryInfo(baseDirectory).DescendantsAndSelf(x => x.Parent)
+                    .Any(x => x.FullName == otherDirectoryInfo.FullName);
         }
 
         //public static IEnumerable<string> GetFiles (string directory, string filePattern, bool includeSubDirectories = true)
@@ -121,6 +173,11 @@ namespace Nuke.Common.IO
         {
             var directoryName = Path.GetDirectoryName(path).NotNull();
             Directory.CreateDirectory(directoryName);
+        }
+
+        private static void EnsureFileAttributes (string file)
+        {
+            File.SetAttributes(file, FileAttributes.Normal);
         }
     }
 }
