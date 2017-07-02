@@ -6,12 +6,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 
 namespace Nuke.ToolGenerator.Model
 {
     [UsedImplicitly]
     public class Enumeration
     {
+        [JsonIgnore]
+        public Tool Tool { get; set; }
+
         /// <summary>
         /// The name of the enumeration.
         /// </summary>

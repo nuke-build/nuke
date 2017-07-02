@@ -18,7 +18,7 @@ namespace Nuke.ToolGenerator.Generators
                 values[i] += ",";
 
             toolWriter
-                    .WriteSummary(toolWriter.Tool)
+                    .WriteSummary(enumeration)
                     .WriteLine("[PublicAPI]")
                     .WriteLineIfTrue(enumeration.IsFlags, "[Flags]")
                     .WriteLine($"public enum {enumeration.Name}")

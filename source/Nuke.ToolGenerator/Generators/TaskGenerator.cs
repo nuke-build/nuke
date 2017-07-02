@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using Nuke.ToolGenerator.Model;
 using Nuke.ToolGenerator.Writers;
 
@@ -15,26 +14,24 @@ namespace Nuke.ToolGenerator.Generators
 {
     public static class TaskGenerator
     {
-        public static void Run ([CanBeNull] Task task, ToolWriter toolWriter)
+        public static void Run (Tool tool, ToolWriter toolWriter)
         {
-            if (task == null)
+            if (tool.Tasks.Count == 0)
                 return;
 
-            var writer = new TaskWriter(task, toolWriter);
-            writer
-                    .WriteLineIfTrue(!task.SkipAttributes, "[PublicAPI]")
-                    .WriteLineIfTrue(!task.SkipAttributes, "[ExcludeFromCodeCoverage]")
-                    .WriteLine($"public static partial class {task.GetTaskClassName()}")
-                    .WriteBlock(w => w
+            toolWriter
+                    .WriteLine("[PublicAPI]")
+                    .WriteLine("[ExcludeFromCodeCoverage]")
+                    .WriteLine($"public static partial class {tool.GetClassName()}")
+                    .WriteBlock(w => tool.Tasks.ForEach(x => new TaskWriter(x, toolWriter)
                             .WritePreAndPostProcess()
                             .WriteMainTask()
-                            .WriteTaskOverloads());
+                            .WriteTaskOverloads()));
         }
 
         private static TaskWriter WriteTaskOverloads (this TaskWriter writer, int index = 0)
         {
             var task = writer.Task;
-            var settingsClass = task.SettingsClass;
             var properties = task.SettingsClass.Properties.Where(x => x.CreateOverload).Take(index + 1).ToList();
 
             if (properties.Count == 0 || index >= properties.Count)
@@ -48,7 +45,7 @@ namespace Nuke.ToolGenerator.Generators
             var allArguments = nextArguments.Concat(new[] { setter });
 
             writer
-                    .WriteSummary(task.Tool)
+                    .WriteSummary(task)
                     .WriteLine(GetTaskSignature(writer.Task, additionalParameterDeclarations))
                     .WriteBlock(w => w
                             .WriteLine("configurator = configurator ?? (x => x);")
@@ -60,7 +57,7 @@ namespace Nuke.ToolGenerator.Generators
         private static TaskWriter WriteMainTask (this TaskWriter writer)
         {
             return writer
-                    .WriteSummary(writer.Task.Tool)
+                    .WriteSummary(writer.Task)
                     .WriteLine(GetTaskSignature(writer.Task))
                     .WriteBlock(WriteMainTaskBlock);
         }

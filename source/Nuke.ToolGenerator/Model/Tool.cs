@@ -19,12 +19,9 @@ namespace Nuke.ToolGenerator.Model
         public string DefinitionFile { get; set; }
 
         [JsonIgnore]
-        public string GenerationFile { get; set; }
+        public string GenerationFileBase { get; set; }
 
-        [JsonIgnore]
-        public string ReferenceFile { get; set; }
-
-        public Reference Reference { get; set; }
+        public List<string> References { get; set; } = new List<string>();
 
         /// <summary>
         /// The name of the tool.
@@ -48,10 +45,43 @@ namespace Nuke.ToolGenerator.Model
         public string Help { get; set; }
 
         /// <summary>
-        /// The task.
+        /// NuGet package id that contains the executable.
         /// </summary>
+        /// <remarks>
+        /// Also requires <see cref="PackageExecutable"/> to be set.
+        /// </remarks>
+        public string PackageId { get; set; }
+
+        /// <summary>
+        /// Name of the executable that is contained in a NuGet package.
+        /// </summary>
+        /// <remarks>
+        /// Also requires <see cref="PackageId"/> to bet set.
+        /// </remarks>
+        public string PackageExecutable { get; set; }
+
+        /// <summary>
+        /// Environment variable that holds the path to the executable.
+        /// </summary>
+        public string EnvironmentExecutable { get; set; }
+
+        /// <summary>
+        /// Defines a executable to use from PATH.
+        /// </summary>
+        public string PathExecutable { get; set; }
+
+        /// <summary>
+        /// Custom expression that returns the executable.
+        /// </summary>
+        public string CustomExecutable { get; set; }
+
         [CanBeNull]
-        public Task Task { get; set; }
+        public string IconClass { get; set; }
+
+        /// <summary>
+        /// The list of tasks.
+        /// </summary>
+        public List<Task> Tasks { get; set; } = new List<Task>();
 
         /// <summary>
         /// The list of data classes.

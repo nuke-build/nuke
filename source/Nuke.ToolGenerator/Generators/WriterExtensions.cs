@@ -3,8 +3,8 @@
 // https://github.com/matkoch/Nuke/blob/master/LICENSE
 
 using System;
-using System.Diagnostics;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.ToolGenerator.Model;
 using Nuke.ToolGenerator.Writers;
 
@@ -12,42 +12,48 @@ namespace Nuke.ToolGenerator.Generators
 {
     public static class WriterExtensions
     {
-        public static T WriteSummary<T> (this T writerWrapper, Tool tool)
+        public static T WriteSummary<T> (this T writerWrapper, Task task)
             where T : IWriterWrapper
         {
-            Trace.Assert(tool.Help != null, "tool.Help != null");
-
-            writerWrapper.WriteLine("/// <summary>");
-
-            writerWrapper.WriteLine($"/// {tool.Help.Paragraph()}");
-
-            if (tool.OfficialUrl != null)
-                writerWrapper.WriteLine($"/// <p>For more details, visit the <a href=\"{tool.OfficialUrl}\">official website</a>.</p>");
-
-            writerWrapper.WriteLine("/// </summary>");
-            return writerWrapper;
+            return WriteSummary(writerWrapper, task.Help ?? task.Tool.Help, task.Tool.OfficialUrl);
         }
 
         public static T WriteSummary<T> (this T writerWrapper, Property property)
             where T : IWriterWrapper
         {
-            if (property.Help == null)
-                return writerWrapper;
+            return WriteSummary(writerWrapper, property.Help, url: null);
+        }
 
-            return writerWrapper.WriteLine($"/// <summary>{property.Help.Paragraph()}</summary>");
+        public static T WriteSummary<T> (this T writerWrapper, DataClass dataClass)
+            where T : IWriterWrapper
+        {
+            return WriteSummary(writerWrapper, dataClass.Tool.Help, url: null);
+        }
+
+        public static T WriteSummary<T> (this T writerWrapper, Enumeration enumeration)
+            where T : IWriterWrapper
+        {
+            return WriteSummary(writerWrapper, enumeration.Tool.Help, url: null);
         }
 
         public static T WriteSummaryExtension<T> (this T writerWrapper, string actionText, Property property)
             where T : IWriterWrapper
         {
-            if (property.Help == null)
+            return WriteSummary(writerWrapper, $"<p><i>Extension method for {actionText}.</i></p>{property.Help.Paragraph()}", url: null);
+        }
+
+        private static T WriteSummary<T> (T writerWrapper, [CanBeNull] string help, [CanBeNull] string url)
+            where T : IWriterWrapper
+        {
+            if (help == null)
                 return writerWrapper;
 
-            return writerWrapper
-                    .WriteLine("/// <summary>")
-                    .WriteLine($"/// <p><i>Extension method for {actionText}.</i></p>")
-                    .WriteLine($"/// {property.Help.Paragraph()}")
-                    .WriteLine("/// </summary>");
+            var officialUrlParagraph = url != null
+                ? $"<p>For more details, visit the <a href=\"{url}\">official website</a>.</p>"
+                : string.Empty;
+
+            writerWrapper.WriteLine($"/// <summary>{help.Paragraph()}{officialUrlParagraph}</summary>");
+            return writerWrapper;
         }
 
         public static T WriteSummaryInherit<T> (this T writerWrapper)

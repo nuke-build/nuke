@@ -21,7 +21,7 @@ namespace Nuke.ToolGenerator.Generators
             var baseType = dataClass.BaseClass ?? (dataClass.Name.EndsWith("Settings") ? "ToolSettings" : "ISettingsEntity");
 
             writer
-                    .WriteSummary(dataClass.Tool)
+                    .WriteSummary(dataClass)
                     .WriteLine("[PublicAPI]")
                     .WriteLine("[ExcludeFromCodeCoverage]")
                     .WriteLine("[Serializable]")
@@ -39,22 +39,22 @@ namespace Nuke.ToolGenerator.Generators
             if (settingsClass == null)
                 return writer;
 
-            var task = settingsClass.Tool.Task.NotNull();
+            var tool = settingsClass.Tool.NotNull();
             var arguments = new List<string>();
-            if (task.PackageId != null)
+            if (tool.PackageId != null)
             {
-                arguments.Add($"packageId: {task.PackageId.Quote()}");
-                arguments.Add($"packageExecutable: {(task.PackageExecutable ?? "{GetPackageExecutable()}").Quote()}");
+                arguments.Add($"packageId: {tool.PackageId.Quote()}");
+                arguments.Add($"packageExecutable: {(tool.PackageExecutable ?? "{GetPackageExecutable()}").Quote()}");
             }
-            if (task.EnvironmentExecutable != null)
-                arguments.Add($"environmentExecutable: {task.EnvironmentExecutable.Quote()}");
-            if (task.PathExecutable != null)
-                arguments.Add($"pathExecutable: {task.PathExecutable.Quote()}");
+            if (tool.EnvironmentExecutable != null)
+                arguments.Add($"environmentExecutable: {tool.EnvironmentExecutable.Quote()}");
+            if (tool.PathExecutable != null)
+                arguments.Add($"pathExecutable: {tool.PathExecutable.Quote()}");
 
-            if (arguments.Count == 0 && task.CustomExecutable == null)
+            if (arguments.Count == 0 && tool.CustomExecutable == null)
                 return writer;
 
-            var toolPathResolver = task.CustomExecutable ?? $"ToolPathResolver.GetToolPath({arguments.Join()})";
+            var toolPathResolver = tool.CustomExecutable ?? $"ToolPathResolver.GetToolPath({arguments.Join()})";
 
             return writer
                     .WriteSummaryInherit()
@@ -169,7 +169,7 @@ namespace Nuke.ToolGenerator.Generators
         private static DataClassWriter WriteGetArgumentsInternal (this DataClassWriter writer)
         {
             var formatProperties = writer.DataClass.Properties.Where(x => x.Format != null).ToList();
-            if ((writer.DataClass as SettingsClass)?.Tool.Task.NotNull().DefiniteArgument == null && formatProperties.Count == 0)
+            if ((writer.DataClass as SettingsClass)?.Task.DefiniteArgument == null && formatProperties.Count == 0)
                 return writer;
 
             var argumentAdditions = formatProperties.Select(GetArgumentAddition).ToArray();
@@ -188,8 +188,8 @@ namespace Nuke.ToolGenerator.Generators
         private static string GetCommandAdditionOrNull (DataClass dataClass)
         {
             var settingsClass = dataClass as SettingsClass;
-            return settingsClass?.Tool.Task.NotNull().DefiniteArgument != null
-                ? $"  .Add({settingsClass.Tool.Task.DefiniteArgument.Quote(interpolation: false)})"
+            return settingsClass?.Task.DefiniteArgument != null
+                ? $"  .Add({settingsClass.Task.DefiniteArgument.Quote(interpolation: false)})"
                 : null;
         }
 

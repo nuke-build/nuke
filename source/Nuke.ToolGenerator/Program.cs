@@ -29,11 +29,11 @@ namespace Nuke.ToolGenerator
                 Console.WriteLine($"Processing {file}...");
 
                 var tool = Load(file);
-                using (var streamWriter = new StreamWriter(File.Open(tool.GenerationFile, FileMode.Create)))
+                using (var streamWriter = new StreamWriter(File.Open(tool.GenerationFileBase + ".Generated.cs", FileMode.Create)))
                 {
                     Generators.ToolGenerator.Run(tool, streamWriter);
                 }
-                TryUpdateReference (tool);
+                UpdateReferences (tool);
                 Save(tool);
             }
         }
@@ -47,33 +47,37 @@ namespace Nuke.ToolGenerator
             Directory.CreateDirectory(directory);
             
             tool.DefinitionFile = file;
-            tool.GenerationFile = Path.Combine(directory, Path.ChangeExtension(Path.GetFileNameWithoutExtension(file), "Generated.cs"));
-            tool.ReferenceFile = Path.Combine(directory, Path.ChangeExtension(Path.GetFileNameWithoutExtension(file), "reference.txt"));
-            
-            if (tool.Task != null)
+            tool.GenerationFileBase = Path.Combine(directory, Path.GetFileNameWithoutExtension(file));
+
+            foreach (var task in tool.Tasks)
             {
-                tool.Task.Tool = tool;
-                tool.Task.SettingsClass.Tool = tool;
+                task.Tool = tool;
+                task.SettingsClass.Tool = tool;
+                task.SettingsClass.Task = task;
             }
             foreach (var dataClass in tool.DataClasses)
                 dataClass.Tool = tool;
+            foreach (var enumeration in tool.Enumerations)
+                enumeration.Tool = tool;
 
             return tool;
         }
 
-        private static void TryUpdateReference (Tool tool)
+        private static void UpdateReferences (Tool tool)
         {
-            if (tool.Reference?.Url == null)
-                return;
-
-            try
+            for (var i = 0; i < tool.References.Count; i++)
             {
-                File.WriteAllText(tool.ReferenceFile, GetReferenceContent(tool));
-            }
-            catch (Exception exception)
-            {
-                Console.Error.WriteLine("Couldn't update reference for {0}:", Path.GetFileName(tool.DefinitionFile));
-                Console.Error.WriteLine(exception.Message);
+                try
+                {
+                    File.WriteAllText(
+                        $"{tool.GenerationFileBase}.ref.{i.ToString().PadLeft(totalWidth: 3, paddingChar: '0')}.txt",
+                        GetReferenceContent(tool.References[i]));
+                }
+                catch (Exception exception)
+                {
+                    Console.Error.WriteLine($"Couldn't update reference #{i} for {Path.GetFileName(tool.DefinitionFile)}:");
+                    Console.Error.WriteLine(exception.Message);
+                }
             }
         }
 
@@ -91,20 +95,22 @@ namespace Nuke.ToolGenerator
             File.WriteAllText(tool.DefinitionFile, content);
         }
 
-        private static string GetReferenceContent (Tool tool)
+        private static string GetReferenceContent (string reference)
         {
+            var referenceValues = reference.Split('#');
+
             var tempFile = Path.GetTempFileName();
             using (var webClient = new WebClient())
             {
-                webClient.DownloadFile(tool.Reference.Url, tempFile);
+                webClient.DownloadFile(referenceValues[0], tempFile);
             }
 
-            if (tool.Reference.XPath == null)
+            if (referenceValues.Length == 1)
                 return File.ReadAllText(tempFile, Encoding.UTF8);
 
             var document = new HtmlDocument();
             document.Load(tempFile, Encoding.UTF8);
-            return document.DocumentNode.SelectSingleNode(tool.Reference.XPath).InnerText;
+            return document.DocumentNode.SelectSingleNode(referenceValues[1]).InnerText;
         }
 
         private class CustomContractResolver : DefaultContractResolver

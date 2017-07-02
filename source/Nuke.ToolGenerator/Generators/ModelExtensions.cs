@@ -16,7 +16,7 @@ namespace Nuke.ToolGenerator.Generators
         public static string GetNamespace (this Tool tool)
         {
             var namespaces = new Stack<string>();
-            var directory = new FileInfo(tool.GenerationFile).Directory;
+            var directory = new FileInfo(tool.GenerationFileBase).Directory;
             while (directory != null)
             {
                 namespaces.Push(directory.Name);
@@ -77,9 +77,9 @@ namespace Nuke.ToolGenerator.Generators
             return isOptional ? "[CanBeNull] " : string.Empty;
         }
 
-        public static string GetTaskClassName (this Task task)
+        public static string GetClassName (this Tool tool)
         {
-            return $"{task.Tool.Name}Tasks";
+            return $"{tool.Name}Tasks";
         }
 
         public static string GetTaskMethodName (this Task task)

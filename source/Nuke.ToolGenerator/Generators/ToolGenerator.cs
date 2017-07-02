@@ -35,24 +35,22 @@ namespace Nuke.ToolGenerator.Generators
         [CanBeNull]
         private static string GetIconClassAttribute (Tool tool)
         {
-            if (tool.Task?.IconClass == null)
+            if (tool.IconClass == null && tool.Tasks.Count > 0)
                 return null;
 
-            return $"[assembly: IconClass(typeof({tool.GetNamespace()}.{tool.Task.GetTaskClassName()}), \"{tool.Task.NotNull().IconClass}\")]";
+            return $"[assembly: IconClass(typeof({tool.GetNamespace()}.{tool.GetClassName()}), \"{tool.IconClass}\")]"
+                   + Environment.NewLine;
         }
 
         private static ToolWriter WriteAlias (this ToolWriter writer)
         {
-            TaskGenerator.Run(writer.Tool.Task, writer);
+            TaskGenerator.Run(writer.Tool, writer);
             return writer;
         }
 
         private static ToolWriter WriteDataClasses (this ToolWriter writer)
         {
-            var dataClasses = writer.Tool.DataClasses.ToList();
-            if (writer.Tool.Task?.SettingsClass != null)
-                dataClasses.Insert(index: 0, item: writer.Tool.Task.SettingsClass);
-
+            var dataClasses = writer.Tool.Tasks.Select(x => x.SettingsClass).Concat(writer.Tool.DataClasses).ToList();
             dataClasses.ForEach(x => DataClassGenerator.Run(x, writer));
             dataClasses.Where(x => !x.SkipExtensionMethods).ForEach(x => DataClassExtensionGenerator.Run(x, writer));
             return writer;

@@ -40,6 +40,9 @@ namespace Nuke.ToolGenerator.Model
     [UsedImplicitly]
     public class SettingsClass : DataClass
     {
-        public override string Name => $"{Tool.Name}{Tool.Task.Postfix}Settings";
+        [JsonIgnore]
+        public Task Task { get; set; }
+
+        public override string Name => $"{Tool.Name}{Task.Postfix}Settings";
     }
 }

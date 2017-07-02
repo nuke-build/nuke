@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Nuke.ToolGenerator.Generators
 {
@@ -25,8 +26,11 @@ namespace Nuke.ToolGenerator.Generators
                    text.Substring(startIndex: 1);
         }
 
-        public static string Paragraph (this string text)
+        public static string Paragraph ([CanBeNull] this string text)
         {
+            if (text == null)
+                return string.Empty;
+
             return !text.StartsWith("<p>") ? $"<p>{text}</p>" : text;
         }
 
