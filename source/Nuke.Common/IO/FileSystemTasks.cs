@@ -22,49 +22,50 @@ namespace Nuke.Common.IO
     {
         public static void PrepareCleanDirectory (string directory)
         {
-            PrepareCleanDirectories(new[] { directory });
+            var directoryInfo = new DirectoryInfo (directory);
+            if (!directoryInfo.Exists)
+            {
+                Logger.Info ($"Creating directory '{directoryInfo.FullName}'...");
+                directoryInfo.Create ();
+            }
+            else
+            {
+                Logger.Info ($"Cleaning directory '{directoryInfo.FullName}'...");
+                directoryInfo.GetDirectories ().ForEach (x => x.Delete (recursive: true));
+                directoryInfo.GetFiles ().ForEach (x => x.Delete ());
+            }
         }
 
         public static void PrepareCleanDirectories (IEnumerable<string> directories)
         {
-            foreach (var directory in directories)
-            {
-                var directoryInfo = new DirectoryInfo(directory);
-                if (!directoryInfo.Exists)
-                {
-                    Logger.Info($"Creating directory '{directoryInfo.FullName}'...");
-                    directoryInfo.Create();
-                }
-                else
-                {
-                    Logger.Info($"Cleaning directory '{directoryInfo.FullName}'...");
-                    directoryInfo.GetDirectories().ForEach(x => x.Delete(recursive: true));
-                    directoryInfo.GetFiles().ForEach(x => x.Delete());
-                }
-            }
+            directories.ForEach(PrepareCleanDirectory);
         }
 
-        public static void DeleteDirectory(string directory)
+        public static void DeleteDirectory (string directory)
         {
-            DeleteDirectories(new[] { directory });
+            if (!Directory.Exists(directory))
+                return;
+
+            Logger.Info($"Deleting directory '{directory}'...");
+            DeleteDirectoryInternal(directory);
         }
 
-        public static void DeleteDirectory(string directory, bool recursive)
+        public static void DeleteDirectories (IEnumerable<string> directories)
         {
-            DeleteDirectories(new[] { directory }, recursive);
+            directories.ForEach(DeleteDirectory);
         }
 
-        public static void DeleteDirectories(IEnumerable<string> directories, bool recursive = true)
+        public static void DeleteDirectoryInternal(string directory)
         {
-            foreach (var directory in directories)
-            {
-                var directoryInfo = new DirectoryInfo (directory);
-                if (!directoryInfo.Exists)
-                    continue;
+            Directory.GetFiles(directory).ForEach(DeleteFile);
+            Directory.GetDirectories(directory).ForEach(DeleteDirectoryInternal);
+            Directory.Delete(directory, recursive: false);
+        }
 
-                Logger.Info ($"Deleting directory '{directoryInfo.FullName}'...");
-                directoryInfo.Delete(recursive: recursive);
-            }
+        private static void DeleteFile(string file)
+        {
+            File.SetAttributes(file, FileAttributes.Normal);
+            File.Delete(file);
         }
 
         //public static void Copy (IEnumerable<string> sources, string destination)

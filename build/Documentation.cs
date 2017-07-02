@@ -17,7 +17,7 @@ using Nuke.Core.Tooling;
 using Nuke.Core.Utilities.Collections;
 using static Nuke.Core.Logger;
 
-public static class Documentation
+static class Documentation
 {
     public static void WriteCustomToc (string tocFile, IEnumerable<string> assemblyFiles)
     {
