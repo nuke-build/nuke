@@ -20,6 +20,25 @@ namespace Nuke.Core
     [DebuggerStepThrough]
     public static class ControlFlow
     {
+        [StringFormatMethod("format")]
+        [ContractAnnotation("=> halt")]
+        public static void Fail (string format, params object[] args)
+        {
+            Logger.Fail(format, args);
+        }
+
+        [ContractAnnotation("=> halt")]
+        public static void Fail (object value)
+        {
+            Logger.Fail(value);
+        }
+
+        [ContractAnnotation("=> halt")]
+        public static void Fail (string text)
+        {
+            Logger.Fail(text);
+        }
+
         /// <summary>
         /// Asserts a condition to be true, calling <see cref="Logger.Warn(string)"/> otherwise.
         /// </summary>

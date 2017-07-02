@@ -11,7 +11,7 @@ using Nuke.Core.BuildServers;
 using Nuke.Core.Execution;
 using Nuke.Core.Output;
 
-[assembly: IconClass (typeof (Logger), "quill4")]
+[assembly: IconClass(typeof(Logger), "quill4")]
 
 namespace Nuke.Core
 {
@@ -31,7 +31,7 @@ namespace Nuke.Core
         /// <returns>
         /// Returns an <see cref="IDisposable"/> which will automatically end the block.
         /// </returns>
-        [StringFormatMethod ("format")]
+        [StringFormatMethod("format")]
         public static IDisposable Block (string text)
         {
             return OutputSink.WriteBlock(text);
@@ -40,10 +40,10 @@ namespace Nuke.Core
         /// <summary>
         /// Logs a message if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Trace"/>.
         /// </summary>
-        [StringFormatMethod ("format")]
+        [StringFormatMethod("format")]
         public static void Trace (string format, params object[] args)
         {
-            Trace (string.Format (format, args));
+            Trace(string.Format(format, args));
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Nuke.Core
         /// <summary>
         /// Logs a message if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Information"/>.
         /// </summary>
-        [StringFormatMethod ("format")]
+        [StringFormatMethod("format")]
         public static void Info (string format, params object[] args)
         {
             Info(string.Format(format, args));
@@ -90,7 +90,7 @@ namespace Nuke.Core
         /// <summary>
         /// Logs a message if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Warning"/>.
         /// </summary>
-        [StringFormatMethod ("format")]
+        [StringFormatMethod("format")]
         public static void Warn (string format, params object[] args)
         {
             Warn(string.Format(format, args));
@@ -115,7 +115,8 @@ namespace Nuke.Core
         /// <summary>
         /// Throws an exception if <see cref="Build.LogLevel"/> is equal to <see cref="LogLevel.Failure"/>.
         /// </summary>
-        [StringFormatMethod ("format")]
+        [StringFormatMethod("format")]
+        [ContractAnnotation("=> halt")]
         public static void Fail (string format, params object[] args)
         {
             Fail(string.Format(format, args));
@@ -124,7 +125,7 @@ namespace Nuke.Core
         /// <summary>
         /// Throws an exception if <see cref="Build.LogLevel"/> is equal to <see cref="LogLevel.Failure"/>.
         /// </summary>
-        [ContractAnnotation ("=> halt")]
+        [ContractAnnotation("=> halt")]
         public static void Fail (object value)
         {
             Fail(value.ToString());
@@ -133,7 +134,7 @@ namespace Nuke.Core
         /// <summary>
         /// Throws an exception if <see cref="Build.LogLevel"/> is equal to <see cref="LogLevel.Failure"/>.
         /// </summary>
-        [ContractAnnotation ("=> halt")]
+        [ContractAnnotation("=> halt")]
         public static void Fail (string text)
         {
             throw new Exception(text);
