@@ -22,17 +22,16 @@ namespace Nuke.Common.IO
     {
         public static void PrepareCleanDirectory (string directory)
         {
-            var directoryInfo = new DirectoryInfo (directory);
-            if (!directoryInfo.Exists)
+            if (!Directory.Exists(directory))
             {
-                Logger.Info ($"Creating directory '{directoryInfo.FullName}'...");
-                directoryInfo.Create ();
+                Logger.Info ($"Creating directory '{directory}'...");
+                EnsureDirectoryExists(directory);
             }
             else
             {
-                Logger.Info ($"Cleaning directory '{directoryInfo.FullName}'...");
-                directoryInfo.GetDirectories ().ForEach (x => x.Delete (recursive: true));
-                directoryInfo.GetFiles ().ForEach (x => x.Delete ());
+                Logger.Info ($"Cleaning directory '{directory}'...");
+                Directory.GetDirectories(directory).ForEach(DeleteDirectoryInternal);
+                Directory.GetFiles(directory).ForEach(DeleteFile);
             }
         }
 
@@ -95,6 +94,24 @@ namespace Nuke.Common.IO
         public static string GetRelativePath (string basePath, string destinationPath)
         {
             return Uri.UnescapeDataString(new Uri($@"{basePath}\").MakeRelativeUri(new Uri(destinationPath)).ToString());
+        }
+
+        public static void Touch(string path, DateTime? time = null)
+        {
+            Logger.Info($"Touching file '{path}'...");
+
+            EnsureDirectoryExists(path);
+
+            if (!File.Exists(path))
+                TextTasks.WriteAllBytes(path, new byte[0]);
+            else
+                File.SetLastWriteTime(path, time ?? DateTime.UtcNow);
+        }
+
+        internal static void EnsureDirectoryExists(string path)
+        {
+            var directoryName = Path.GetDirectoryName(path).NotNull();
+            Directory.CreateDirectory(directoryName);
         }
     }
 }
