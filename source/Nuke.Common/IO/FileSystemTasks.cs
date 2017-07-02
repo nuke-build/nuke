@@ -67,9 +67,18 @@ namespace Nuke.Common.IO
             File.Delete(file);
         }
 
-        //public static void Copy (IEnumerable<string> sources, string destination)
-        //{
-        //}
+        public static void CopyRecursively (string source, string destination)
+        {
+            ControlFlow.Assert(!destination.StartsWith(source), "!destination.StartsWith(source)");
+
+            string GetDestinationPath (string path)
+                => Path.Combine(destination, GetRelativePath(source, path));
+
+            Directory.CreateDirectory(destination);
+
+            Directory.GetDirectories(source).ForEach(x => CopyRecursively(x, GetDestinationPath(x)));
+            Directory.GetFiles(source).ForEach(x => File.Copy(x, GetDestinationPath(x)));
+        }
 
         //public static IEnumerable<string> GetFiles (string directory, string filePattern, bool includeSubDirectories = true)
         //{
