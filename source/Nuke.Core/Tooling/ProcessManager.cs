@@ -11,6 +11,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Core.Output;
 using Nuke.Core.Utilities;
+using Nuke.Core.Utilities.Collections;
 
 namespace Nuke.Core.Tooling
 {
@@ -102,7 +103,8 @@ namespace Nuke.Core.Tooling
                             };
 
             ApplyEnvironmentVariables(environmentVariables, startInfo);
-            PrintEnvironmentVariables (startInfo);
+            PrintEnvironmentVariables(startInfo);
+            CheckPathVariables(startInfo);
 
             var process = Process.Start(startInfo);
             if (process == null)
@@ -149,20 +151,31 @@ namespace Nuke.Core.Tooling
         private static void PrintEnvironmentVariables (ProcessStartInfo startInfo)
         {
             Logger.Trace("Environment variables:");
+
             foreach (var pair in startInfo.Environment.OrderBy(x => x.Key, StringComparer.OrdinalIgnoreCase))
             {
-                void Trace(string key, string value) => Logger.Trace($"  - {key} = {value}");
                 if (pair.Key.Equals("path", StringComparison.OrdinalIgnoreCase))
                 {
                     var paths = pair.Value.Split(';');
+                    var padding = (int) Math.Floor(Math.Log10(paths.Length) + 1);
+
                     for (var i = 0; i < paths.Length; i++)
-                        Trace($"{pair.Key}[{i}]", paths[i]);
+                        Logger.Trace($"  - {pair.Key}[{i.ToString().PadLeft(padding, paddingChar: '0')}] = {paths[i]}");
                 }
                 else
                 {
-                    Trace(pair.Key, pair.Value);
+                    Logger.Trace($"  - {pair.Key} = {pair.Value}");
                 }
             }
+        }
+
+        private static void CheckPathVariables (ProcessStartInfo startInfo)
+        {
+            startInfo.Environment
+                    .SingleOrDefault(x => x.Key.Equals("path", StringComparison.OrdinalIgnoreCase))
+                    .Value.Split(';')
+                    .Where(x => !Directory.Exists(x))
+                    .ForEach(x => Logger.Warn($"Path variable contains invalid path '{x}'."));
         }
     }
 }
