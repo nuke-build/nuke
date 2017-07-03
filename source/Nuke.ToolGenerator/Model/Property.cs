@@ -10,7 +10,7 @@ using Newtonsoft.Json.Converters;
 
 namespace Nuke.ToolGenerator.Model
 {
-    [UsedImplicitly]
+    [UsedImplicitly(ImplicitUseKindFlags.Assign, ImplicitUseTargetFlags.WithMembers)]
     public class Property
     {
         /// <summary>
@@ -30,7 +30,7 @@ namespace Nuke.ToolGenerator.Model
         public AssertionType? Assertion { get; set; }
 
         /// <summary>
-        /// The format how the property is renderd.
+        /// The format how the property is rendered.
         /// </summary>
         public string Format { get; set; }
 

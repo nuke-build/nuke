@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace Nuke.ToolGenerator.Model
 {
-    [UsedImplicitly]
+    [UsedImplicitly(ImplicitUseKindFlags.Assign, ImplicitUseTargetFlags.WithMembers)]
     public class Task
     {
         [JsonIgnore]

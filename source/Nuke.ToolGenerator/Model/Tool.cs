@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace Nuke.ToolGenerator.Model
 {
-    [UsedImplicitly]
+    [UsedImplicitly(ImplicitUseKindFlags.Assign, ImplicitUseTargetFlags.WithMembers)]
     [DebuggerDisplay("{" + nameof(DefinitionFile) + "}")]
     public class Tool
     {
