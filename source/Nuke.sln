@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.12
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.Core", "Nuke.Core\Nuke.Core.csproj", "{F73A2786-3DE2-4011-8111-333B91D97F9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Core", "Nuke.Core\Nuke.Core.csproj", "{F73A2786-3DE2-4011-8111-333B91D97F9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.ToolGenerator", "Nuke.ToolGenerator\Nuke.ToolGenerator.csproj", "{5ED5D178-CE4D-466A-A951-D8C4ADB6FE3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.ToolGenerator", "Nuke.ToolGenerator\Nuke.ToolGenerator.csproj", "{5ED5D178-CE4D-466A-A951-D8C4ADB6FE3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = ".build", "..\build\.build.csproj", "{BB6A9024-24DB-4170-A09B-02349148A78F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = ".build", "..\build\.build.csproj", "{BB6A9024-24DB-4170-A09B-02349148A78F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.Common", "Nuke.Common\Nuke.Common.csproj", "{B6D4E654-6822-42FF-86AD-DB07BE759760}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Common", "Nuke.Common\Nuke.Common.csproj", "{B6D4E654-6822-42FF-86AD-DB07BE759760}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Common.Tests", "Nuke.Common.Tests\Nuke.Common.Tests.csproj", "{C4CEFCC5-1387-4340-B1BE-EC421511F734}"
 EndProject
@@ -40,6 +40,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{B43B0E45-8
 		..\GitVersion.yml = ..\GitVersion.yml
 		..\.github\ISSUE_TEMPLATE.md = ..\.github\ISSUE_TEMPLATE.md
 		..\LICENSE = ..\LICENSE
+		Nuke.sln.DotSettings = Nuke.sln.DotSettings
 		..\.github\PULL_REQUEST_TEMPLATE.md = ..\.github\PULL_REQUEST_TEMPLATE.md
 		..\README.md = ..\README.md
 	EndProjectSection
