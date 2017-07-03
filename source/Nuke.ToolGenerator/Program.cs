@@ -1,6 +1,6 @@
 ﻿// Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -33,7 +33,7 @@ namespace Nuke.ToolGenerator
                 {
                     Generators.ToolGenerator.Run(tool, streamWriter);
                 }
-                UpdateReferences (tool);
+                UpdateReferences(tool);
                 Save(tool);
             }
         }
@@ -45,7 +45,7 @@ namespace Nuke.ToolGenerator
 
             var directory = Path.Combine(Environment.CurrentDirectory, tool.Name);
             Directory.CreateDirectory(directory);
-            
+
             tool.DefinitionFile = file;
             tool.GenerationFileBase = Path.Combine(directory, Path.GetFileNameWithoutExtension(file));
 

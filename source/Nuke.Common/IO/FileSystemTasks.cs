@@ -1,6 +1,6 @@
 ﻿// Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
@@ -32,12 +32,12 @@ namespace Nuke.Common.IO
         {
             if (!Directory.Exists(directory))
             {
-                Logger.Info ($"Creating directory '{directory}'...");
+                Logger.Info($"Creating directory '{directory}'...");
                 EnsureDirectoryExists(directory);
             }
             else
             {
-                Logger.Info ($"Cleaning directory '{directory}'...");
+                Logger.Info($"Cleaning directory '{directory}'...");
                 Directory.GetDirectories(directory).ForEach(DeleteDirectoryInternal);
                 Directory.GetFiles(directory).ForEach(DeleteFile);
             }
@@ -62,14 +62,14 @@ namespace Nuke.Common.IO
             directories.ForEach(DeleteDirectory);
         }
 
-        public static void DeleteDirectoryInternal(string directory)
+        public static void DeleteDirectoryInternal (string directory)
         {
             Directory.GetFiles(directory).ForEach(DeleteFile);
             Directory.GetDirectories(directory).ForEach(DeleteDirectoryInternal);
             Directory.Delete(directory, recursive: false);
         }
 
-        private static void DeleteFile(string file)
+        private static void DeleteFile (string file)
         {
             EnsureFileAttributes(file);
             File.Delete(file);
@@ -119,7 +119,7 @@ namespace Nuke.Common.IO
                 var targetFile = GetDestinationPath(sourceFile);
                 if (!ShouldCopyFile(sourceFile, targetFile, policy))
                     continue;
-                
+
                 //EnsureFileAttributes(sourceFile);
                 File.Copy(sourceFile, targetFile, overwrite: true);
             }
@@ -157,7 +157,7 @@ namespace Nuke.Common.IO
             return Uri.UnescapeDataString(new Uri($@"{basePath}\").MakeRelativeUri(new Uri(destinationPath)).ToString());
         }
 
-        public static void Touch(string path, DateTime? time = null)
+        public static void Touch (string path, DateTime? time = null)
         {
             Logger.Info($"Touching file '{path}'...");
 
@@ -169,7 +169,7 @@ namespace Nuke.Common.IO
                 File.SetLastWriteTime(path, time ?? DateTime.UtcNow);
         }
 
-        internal static void EnsureDirectoryExists(string path)
+        internal static void EnsureDirectoryExists (string path)
         {
             var directoryName = Path.GetDirectoryName(path).NotNull();
             Directory.CreateDirectory(directoryName);

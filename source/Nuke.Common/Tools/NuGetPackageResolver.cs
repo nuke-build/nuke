@@ -1,6 +1,6 @@
 // Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
@@ -44,7 +44,7 @@ namespace Nuke.Common.Tools
             ControlFlow.Assert(
                 includeDependencies || IncludesDependencies(packagesConfigFile),
                 $"includeDependencies || IncludesDependencies({packagesConfigFile})");
-            var packagesDirectory = GetPackagesDirectory (packagesConfigFile);
+            var packagesDirectory = GetPackagesDirectory(packagesConfigFile);
 
             var packageIds = XmlTasks.XmlPeek(
                 packagesConfigFile,
@@ -63,7 +63,7 @@ namespace Nuke.Common.Tools
                         .NotNull("version != null");
 
                 var packageData = GetGlobalInstalledPackage(packageId, version, packagesDirectory)
-                    .NotNull($"GetGlobalInstalledPackage({packageId}, {version}, {packagesDirectory}) != null");
+                        .NotNull($"GetGlobalInstalledPackage({packageId}, {version}, {packagesDirectory}) != null");
                 installedPackages.Add(packageData);
 
                 yield return packageData;
@@ -118,7 +118,7 @@ namespace Nuke.Common.Tools
         {
             packageId = packageId.ToLowerInvariant();
             packagesDirectory = packagesDirectory ?? GetPackagesDirectory(GetBuildPackagesConfigFile());
-            
+
             var packagesDirectoryInfo = new DirectoryInfo(packagesDirectory);
             var packageFiles = packagesDirectoryInfo
                     .GetDirectories(packageId)
@@ -221,13 +221,13 @@ namespace Nuke.Common.Tools
             public InstalledPackage (string fileName)
             {
                 FileName = fileName;
-                Metadata = new PackageArchiveReader (fileName).NuspecReader;
+                Metadata = new PackageArchiveReader(fileName).NuspecReader;
             }
 
             public string FileName { get; }
             public NuspecReader Metadata { get; }
-            public string Id => Metadata.GetIdentity ().Id;
-            public NuGetVersion Version => Metadata.GetIdentity ().Version;
+            public string Id => Metadata.GetIdentity().Id;
+            public NuGetVersion Version => Metadata.GetIdentity().Version;
 
             public override string ToString ()
             {

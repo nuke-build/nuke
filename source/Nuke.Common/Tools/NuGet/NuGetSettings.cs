@@ -1,6 +1,6 @@
 // Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.IO;
@@ -13,7 +13,8 @@ namespace Nuke.Common.Tools.NuGet
     [Serializable]
     public class NuGetSettings : ToolSettings
     {
-        public override string ToolPath => EnvironmentInfo.Variable("NUGET_EXE") 
-            ?? Path.Combine(Build.Instance.TemporaryDirectory, "nuget.exe");
+        public override string ToolPath =>
+                EnvironmentInfo.Variable("NUGET_EXE")
+                ?? Path.Combine(Build.Instance.TemporaryDirectory, "nuget.exe");
     }
 }

@@ -1,13 +1,13 @@
 // Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Linq;
 using Nuke.Core.Utilities;
-
 #if !NETCORE
 using System.Runtime.Serialization;
+
 #endif
 
 namespace Nuke.Core.Execution

@@ -1,6 +1,6 @@
 ﻿// Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Linq;
@@ -41,8 +41,10 @@ namespace Nuke.Common.Git
 
         /// <summary>The endpoint for the repository. For instance <i>github.com</i>.</summary>
         public string Endpoint { get; set; }
+
         /// <summary>The owner of the repository.</summary>
         public string Owner { get; set; }
+
         /// <summary>The name of the repository.</summary>
         public string Name { get; set; }
 
@@ -51,10 +53,13 @@ namespace Nuke.Common.Git
 
         /// <summary>Url in the form of <c>https://endpoint/identifier</c></summary>
         public string SvnUrl => $"https://{Endpoint.NotNull("Endpoint != Endpoint")}/{Identifier}";
+
         /// <summary>Url in the form of <c>https://endpoint/identifier.git</c></summary>
         public string CloneUrl => $"https://{Endpoint.NotNull("Endpoint != Endpoint")}/{Identifier}.git";
+
         /// <summary>Url in the form of <c>git://endpoint/identifier.git</c></summary>
         public string GitUrl => $"git://{Endpoint.NotNull("Endpoint != Endpoint")}/{Identifier}.git";
+
         /// <summary>Url in the form of <c>git@endpoint:identifier.git</c></summary>
         public string SshUrl => $"git@{Endpoint.NotNull("Endpoint != Endpoint")}:{Identifier}.git";
 

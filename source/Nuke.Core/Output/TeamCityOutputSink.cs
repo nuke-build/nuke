@@ -1,6 +1,6 @@
 ﻿// Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace Nuke.Core.Output
 {
     public class TeamCityOutputSink : ConsoleOutputSink
     {
-        public new static IOutputSink Instance { get; } = TeamCity.Instance != null ? new TeamCityOutputSink (TeamCity.Instance) : null;
+        public new static IOutputSink Instance { get; } = TeamCity.Instance != null ? new TeamCityOutputSink(TeamCity.Instance) : null;
 
         private readonly TeamCity _teamCity;
 

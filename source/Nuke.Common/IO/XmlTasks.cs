@@ -1,6 +1,6 @@
 ﻿// Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
@@ -10,12 +10,12 @@ using JetBrains.Annotations;
 using Nuke.Common.IO;
 using Nuke.Core;
 using Nuke.Core.Execution;
-
 #if !NETCORE
 using System.Collections;
 using System.IO;
 using System.Xml.Serialization;
 using System.Xml.XPath;
+
 #endif
 
 [assembly: IconClass(typeof(XmlTasks), "file-empty2")]
@@ -26,7 +26,7 @@ namespace Nuke.Common.IO
     public static class XmlTasks
     {
 #if !NETCORE
-        public static void XmlSerialize<T>(T obj, string path)
+        public static void XmlSerialize<T> (T obj, string path)
         {
             var xmlSerializer = new XmlSerializer(typeof(T));
             using (var memoryStream = new MemoryStream())
@@ -35,9 +35,9 @@ namespace Nuke.Common.IO
                 File.WriteAllBytes(path, memoryStream.GetBuffer());
             }
         }
-        
+
         [Pure]
-        public static T XmlDeserialize<T>(string path)
+        public static T XmlDeserialize<T> (string path)
         {
             var xmlSerializer = new XmlSerializer(typeof(T));
             var bytes = File.ReadAllBytes(path);
@@ -47,7 +47,7 @@ namespace Nuke.Common.IO
             }
         }
 #endif
-        
+
         public static IEnumerable<string> XmlPeek (string path, string xpath)
         {
             var (elements, attributes) = GetObjects(XDocument.Load(path), xpath);

@@ -1,6 +1,6 @@
 ﻿// Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections;
@@ -18,12 +18,12 @@ namespace Nuke.Core.Tooling
         private readonly Dictionary<TKey, List<TValue>> _dictionary;
 
         public LookupTable (IEqualityComparer<TKey> comparer)
-            : this(new Dictionary<TKey, List<TValue>> (comparer))
+            : this(new Dictionary<TKey, List<TValue>>(comparer))
         {
         }
 
         public LookupTable (ILookup<TKey, TValue> lookupTable, IEqualityComparer<TKey> comparer = null)
-            : this (lookupTable.ToDictionary(x => x.Key, x => x.ToList(), comparer))
+            : this(lookupTable.ToDictionary(x => x.Key, x => x.ToList(), comparer))
         {
         }
 
@@ -40,30 +40,30 @@ namespace Nuke.Core.Tooling
 
         public IEnumerable<TValue> this [[NotNull] TKey key] => Lookup[key];
 
-        public void Add(TKey key, TValue value)
+        public void Add (TKey key, TValue value)
         {
             var list = (_dictionary[key] = _dictionary.GetValueOrDefault(key, new List<TValue>())).NotNull();
             list.Add(value);
         }
 
-        public void AddRange(TKey key, IEnumerable<TValue> values)
+        public void AddRange (TKey key, IEnumerable<TValue> values)
         {
             var list = (_dictionary[key] = _dictionary.GetValueOrDefault(key, new List<TValue>())).NotNull();
             foreach (var value in values)
                 list.Add(value);
         }
 
-        public void Remove(TKey key)
+        public void Remove (TKey key)
         {
             _dictionary.Remove(key);
         }
 
-        public void Remove(TKey key, TValue value)
+        public void Remove (TKey key, TValue value)
         {
             _dictionary.GetValueOrDefault(key)?.Remove(value);
         }
 
-        public void Clear()
+        public void Clear ()
         {
             _dictionary.Clear();
         }
@@ -87,7 +87,7 @@ namespace Nuke.Core.Tooling
     [PublicAPI]
     public static class LookupTableExtensions
     {
-        public static ILookup<TKey, TValue> AsReadOnly<TKey, TValue>(this LookupTable<TKey, TValue> lookupTable)
+        public static ILookup<TKey, TValue> AsReadOnly<TKey, TValue> (this LookupTable<TKey, TValue> lookupTable)
         {
             return lookupTable;
         }
@@ -97,7 +97,10 @@ namespace Nuke.Core.Tooling
             return new LookupTable<TKey, TValue>(lookup, comparer);
         }
 
-        public static LookupTable<TKey ,TValue> ToLookupTable<TItem, TKey, TValue>(this IEnumerable<TItem> enumerable, Func<TItem, TKey> keySelector, Func<TItem, TValue> valueSelector)
+        public static LookupTable<TKey, TValue> ToLookupTable<TItem, TKey, TValue> (
+            this IEnumerable<TItem> enumerable,
+            Func<TItem, TKey> keySelector,
+            Func<TItem, TValue> valueSelector)
         {
             return new LookupTable<TKey, TValue>(enumerable.ToLookup(keySelector, valueSelector));
         }

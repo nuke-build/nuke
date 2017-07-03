@@ -1,6 +1,6 @@
 // Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
@@ -36,7 +36,7 @@ namespace Nuke.ToolGenerator.Generators
 
             if (properties.Count == 0 || index >= properties.Count)
                 return writer;
-            
+
             var additionalParameterDeclarations = properties.Select(x => $"{x.GetNullabilityAttribute()}{x.Type} {x.Name.ToInstance()}");
             var nextArguments = properties.AsEnumerable().Reverse().Skip(count: 1).Reverse().Select(x => x.Name.ToInstance());
             var configuratorName = "configurator";
@@ -91,7 +91,7 @@ namespace Nuke.ToolGenerator.Generators
                     .WriteLine($"PostProcess({settingsClassInstance});");
         }
 
-        public static string GetProcessStart(Task task)
+        public static string GetProcessStart (Task task)
         {
             return !task.CustomStart
                 ? $"ProcessTasks.StartProcess({task.SettingsClass.Name.ToInstance()}, processSettings)"

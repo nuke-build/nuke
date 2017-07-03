@@ -1,6 +1,6 @@
 ﻿// Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
@@ -117,15 +117,16 @@ namespace Nuke.Core.Tooling
 
         private string Render (bool forOutput)
         {
-            return _arguments
-                    .Aggregate(
-                        new StringBuilder(),
-                        (sb, a) => sb.AppendFormat(a.Item1, forOutput && _secrets.Contains(a.Item2) ? HiddenString : a.Item2.Trim().DoubleQuoteIfNeeded())
-                                .Append(value: ' '),
-                        sb => sb.ToString().TrimEnd(' '));
+            return _arguments.Aggregate(
+                new StringBuilder(),
+                (sb, a) => sb.AppendFormat(
+                            a.Item1,
+                            forOutput && _secrets.Contains(a.Item2) ? HiddenString : a.Item2.Trim().DoubleQuoteIfNeeded())
+                        .Append(value: ' '),
+                sb => sb.ToString().TrimEnd(' '));
         }
 
-        public string RenderForExecution()
+        public string RenderForExecution ()
         {
             return Render(forOutput: false);
         }

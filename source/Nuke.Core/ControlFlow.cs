@@ -1,6 +1,6 @@
 ﻿// Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
@@ -119,9 +119,9 @@ namespace Nuke.Core
         /// <summary>
         /// Executes a given action and suppresses all errors while delegating them to <see cref="Logger.Warn(string)"/>.
         /// </summary>
-        [ContractAnnotation ("defaultValue: notnull => notnull")]
+        [ContractAnnotation("defaultValue: notnull => notnull")]
         [CanBeNull]
-        public static T SuppressErrors<T> (Func<T> action, T defaultValue = default (T))
+        public static T SuppressErrors<T> (Func<T> action, T defaultValue = default(T))
         {
             return SuppressErrorsIf(condition: true, action: action, defaultValue: defaultValue);
         }
@@ -155,7 +155,7 @@ namespace Nuke.Core
         /// <summary>
         /// Executes a given action and suppresses all errors while delegating them to <see cref="Logger.Warn(string)"/>.
         /// </summary>
-        [ContractAnnotation ("defaultValue: notnull => notnull")]
+        [ContractAnnotation("defaultValue: notnull => notnull")]
         [CanBeNull]
         private static T SuppressErrorsIf<T> (bool condition, Func<T> action, T defaultValue = default(T))
         {

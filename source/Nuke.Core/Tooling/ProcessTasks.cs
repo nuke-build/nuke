@@ -1,6 +1,6 @@
 // Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using JetBrains.Annotations;
 using Nuke.Core.Execution;
 using Nuke.Core.Tooling;
 
-[assembly: IconClass (typeof (ProcessTasks), "terminal")]
+[assembly: IconClass(typeof(ProcessTasks), "terminal")]
 
 namespace Nuke.Core.Tooling
 {
@@ -48,7 +48,7 @@ namespace Nuke.Core.Tooling
             return ProcessManager.Instance.StartProcess(toolSettings, processSettings);
         }
 
-        public static CapturedProcessStartInfo CaptureProcessStartInfo(Action action)
+        public static CapturedProcessStartInfo CaptureProcessStartInfo (Action action)
         {
             return ProcessManager.Instance.CaptureProcessStartInfo(action);
         }

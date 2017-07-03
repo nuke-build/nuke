@@ -1,6 +1,6 @@
 ﻿// Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace Nuke.Core.Utilities.Collections
 {
     public static partial class EnumerableExtensions
     {
-        public static IEnumerable<TSource> Distinct<TSource, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TValue> selector)
+        public static IEnumerable<TSource> Distinct<TSource, TValue> (this IEnumerable<TSource> enumerable, Func<TSource, TValue> selector)
         {
             return enumerable.Distinct(new DelegateEqualityComparer<TSource, TValue>(selector));
         }
@@ -27,22 +27,21 @@ namespace Nuke.Core.Utilities.Collections
 
             public bool Equals ([CanBeNull] TSource x, [CanBeNull] TSource y)
             {
-                if (ReferenceEquals (x, y))
+                if (ReferenceEquals(x, y))
                     return true;
-                if (ReferenceEquals (x, objB: null))
+                if (ReferenceEquals(x, objB: null))
                     return false;
-                if (ReferenceEquals (y, objB: null))
+                if (ReferenceEquals(y, objB: null))
                     return false;
-                if (x.GetType () != y.GetType ())
+                if (x.GetType() != y.GetType())
                     return false;
-                return Equals (_selector (x), _selector (y));
+                return Equals(_selector(x), _selector(y));
             }
 
             public int GetHashCode ([NotNull] TSource obj)
             {
-                return _selector (obj).GetHashCode ();
+                return _selector(obj).GetHashCode();
             }
         }
-
     }
 }

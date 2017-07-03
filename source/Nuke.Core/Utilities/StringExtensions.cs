@@ -1,6 +1,6 @@
 // Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
@@ -25,18 +25,18 @@ namespace Nuke.Core.Utilities
 
         public static string DoubleQuoteIfNeeded ([CanBeNull] this string str)
         {
-            if (string.IsNullOrWhiteSpace (str))
+            if (string.IsNullOrWhiteSpace(str))
                 return string.Empty;
 
-            return str.Contains (" ") ? str.DoubleQuote () : str;
+            return str.Contains(" ") ? str.DoubleQuote() : str;
         }
 
         public static string DoubleQuote ([CanBeNull] this string str)
         {
-            if (string.IsNullOrWhiteSpace (str))
+            if (string.IsNullOrWhiteSpace(str))
                 return string.Empty;
 
-            return $"\"{str.Replace ("\"", "\\\"")}\"";
+            return $"\"{str.Replace("\"", "\\\"")}\"";
         }
 
         public static string SingleQuoteIfNeeded ([CanBeNull] this string str)
@@ -55,7 +55,7 @@ namespace Nuke.Core.Utilities
             return $"'{str.Replace("'", "\\'")}'";
         }
 
-        public static string Join(this IEnumerable<string> enumerable, string separator)
+        public static string Join (this IEnumerable<string> enumerable, string separator)
         {
             return string.Join(separator, enumerable);
         }

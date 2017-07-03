@@ -1,6 +1,6 @@
 // Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Linq;
@@ -11,8 +11,8 @@ namespace Nuke.Core.Utilities
     {
         public static IDisposable CreateBracket (Action setup, Action cleanup)
         {
-            setup ();
-            return new DelegateDisposable (cleanup);
+            setup();
+            return new DelegateDisposable(cleanup);
         }
 
         private readonly Action _cleanup;
@@ -24,7 +24,7 @@ namespace Nuke.Core.Utilities
 
         public void Dispose ()
         {
-            _cleanup ();
+            _cleanup();
         }
     }
 }

@@ -1,3 +1,7 @@
+// Copyright Matthias Koch 2017.
+// Distributed under the MIT License.
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +11,10 @@ namespace Nuke.ToolGenerator.Writers
 {
     public static class WriterExtensions
     {
-        public static TWrapper ForEach<TWrapper, TItem>(this TWrapper writerWrapper, IEnumerable<TItem> enumerable, [InstantHandle] Action<TWrapper, TItem> action)
+        public static TWrapper ForEach<TWrapper, TItem> (
+            this TWrapper writerWrapper,
+            IEnumerable<TItem> enumerable,
+            [InstantHandle] Action<TWrapper, TItem> action)
             where TWrapper : IWriterWrapper
         {
             foreach (var item in enumerable)
@@ -15,7 +22,10 @@ namespace Nuke.ToolGenerator.Writers
             return writerWrapper;
         }
 
-        public static TWrapper ForEach<TWrapper, TItem>(this TWrapper writerWrapper, IEnumerable<TItem> enumerable, [InstantHandle] Action<TItem> action)
+        public static TWrapper ForEach<TWrapper, TItem> (
+            this TWrapper writerWrapper,
+            IEnumerable<TItem> enumerable,
+            [InstantHandle] Action<TItem> action)
             where TWrapper : IWriterWrapper
         {
             foreach (var item in enumerable)
@@ -23,7 +33,10 @@ namespace Nuke.ToolGenerator.Writers
             return writerWrapper;
         }
 
-        public static TWrapper ForEach<TWrapper, TItem>(this TWrapper writerWrapper, IEnumerable<TItem> enumerable, [InstantHandle] Action<TItem, bool> action)
+        public static TWrapper ForEach<TWrapper, TItem> (
+            this TWrapper writerWrapper,
+            IEnumerable<TItem> enumerable,
+            [InstantHandle] Action<TItem, bool> action)
             where TWrapper : IWriterWrapper
         {
             var list = enumerable.ToList();

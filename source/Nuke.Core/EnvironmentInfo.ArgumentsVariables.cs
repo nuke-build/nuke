@@ -1,6 +1,6 @@
 ﻿// Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.ComponentModel;
@@ -44,7 +44,7 @@ namespace Nuke.Core
         public static T EnsureVariable<T> (string name)
         {
             var value = EnsureVariable(name);
-            return (T) Convert<T>(value).NotNull($"Convert<{typeof (T)}>(EnsureVariable({name})) != null");
+            return (T) Convert<T>(value).NotNull($"Convert<{typeof(T)}>(EnsureVariable({name})) != null");
         }
 
 

@@ -1,6 +1,6 @@
 ﻿// Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
@@ -20,11 +20,11 @@ namespace Nuke.ToolGenerator
                 throw new Exception($"Assertion \"{text ?? "obj != null"}\" failed.");
             return obj;
         }
-        
+
         public static void ForEach<T> (this IEnumerable<T> enumerable, Action<T> action)
         {
             foreach (var item in enumerable)
-                action (item);
+                action(item);
         }
     }
 }

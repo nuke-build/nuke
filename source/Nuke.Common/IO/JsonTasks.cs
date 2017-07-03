@@ -1,6 +1,6 @@
 ﻿// Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.IO;
@@ -18,31 +18,31 @@ namespace Nuke.Common.IO
     [PublicAPI]
     public static class JsonTasks
     {
-        public static void JsonSerialize<T>(T obj, string path, Configure<JsonSerializerSettings> configurator = null)
+        public static void JsonSerialize<T> (T obj, string path, Configure<JsonSerializerSettings> configurator = null)
         {
             configurator = configurator ?? (x => x);
             var settings = new JsonSerializerSettings
-                                         {
-                                             Formatting = Formatting.Indented,
-                                             NullValueHandling = NullValueHandling.Ignore,
-                                             DefaultValueHandling = DefaultValueHandling.Ignore
-                                         };
+                           {
+                               Formatting = Formatting.Indented,
+                               NullValueHandling = NullValueHandling.Ignore,
+                               DefaultValueHandling = DefaultValueHandling.Ignore
+                           };
             configurator(settings);
-            
+
             var content = JsonConvert.SerializeObject(obj, settings);
             File.WriteAllText(path, content);
         }
-        
+
         [Pure]
-        public static T JsonDeserialize<T>(string path, Configure<JsonSerializerSettings> configurator = null)
+        public static T JsonDeserialize<T> (string path, Configure<JsonSerializerSettings> configurator = null)
         {
             configurator = configurator ?? (x => x);
             var settings = new JsonSerializerSettings
-                                         {
-                                             Formatting = Formatting.Indented,
-                                             NullValueHandling = NullValueHandling.Ignore,
-                                             DefaultValueHandling = DefaultValueHandling.Ignore
-                                         };
+                           {
+                               Formatting = Formatting.Indented,
+                               NullValueHandling = NullValueHandling.Ignore,
+                               DefaultValueHandling = DefaultValueHandling.Ignore
+                           };
             configurator(settings);
 
             var content = File.ReadAllText(path);

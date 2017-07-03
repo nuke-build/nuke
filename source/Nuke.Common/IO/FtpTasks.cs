@@ -1,6 +1,6 @@
 ﻿// Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 #if !NETCORE
 using System;
@@ -25,7 +25,7 @@ namespace Nuke.Common.IO
         public static void FtpUploadDirectoryRecursively (string directory, string hostRoot)
         {
             Logger.Info($"Uploading directory '{directory}' to '{hostRoot}'...");
-            
+
             var files = FileSystemTasks.GlobFiles(directory, "**/*").ToList();
             for (var index = 0; index < files.Count; index++)
             {

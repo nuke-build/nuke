@@ -1,6 +1,6 @@
 ﻿// Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Linq;
@@ -25,7 +25,7 @@ namespace System.Diagnostics.CodeAnalysis
 #endif
 
     [PublicAPI]
-    [AttributeUsage (AttributeTargets.Assembly)]
+    [AttributeUsage(AttributeTargets.Assembly)]
     public sealed class ExcludeAssemblyFromCodeCoverageAttribute : Attribute
     {
     }

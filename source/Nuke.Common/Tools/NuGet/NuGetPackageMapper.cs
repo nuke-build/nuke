@@ -1,6 +1,6 @@
 // Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using NuGet.Packaging;
 namespace Nuke.Common.Tools.NuGet
 {
     [PublicAPI]
-    [UsedImplicitly (ImplicitUseTargetFlags.WithMembers)]
+    [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
     public static class NuGetPackageMapper
     {
         private static readonly IMapper s_mapper;
@@ -49,12 +49,12 @@ namespace Nuke.Common.Tools.NuGet
 
         public static NuGetPackage Map (Manifest manifest)
         {
-            return s_mapper.Map<NuGetPackage> (manifest);
+            return s_mapper.Map<NuGetPackage>(manifest);
         }
 
         public static Manifest Map (NuGetPackage nuGetPackage)
         {
-            return s_mapper.Map<Manifest> (nuGetPackage);
+            return s_mapper.Map<Manifest>(nuGetPackage);
         }
 
         // TODO: naming in NuGetPackage? DefaultDependencies / DefaultDependencySet ?
@@ -73,19 +73,19 @@ namespace Nuke.Common.Tools.NuGet
 
         private static List<PackageDependencySet> GetAllDependencySets (NuGetPackage nuGetPackage)
         {
-            return new[] { new PackageDependencySet { DependenciesInternal = nuGetPackage.DefaultDependencies.ToList () } }
-                    .Concat (nuGetPackage.DependencySets)
-                    .ToList ();
+            return new[] { new PackageDependencySet { DependenciesInternal = nuGetPackage.DefaultDependencies.ToList() } }
+                    .Concat(nuGetPackage.DependencySets)
+                    .ToList();
         }
 
         private static string ToSpaceSeparated (IEnumerable<string> values)
         {
-            return string.Join (" ", values);
+            return string.Join(" ", values);
         }
 
         private static List<string> FromSpaceSeparated (string value)
         {
-            return value.Split (' ').Select (y => y.Trim ()).ToList ();
+            return value.Split(' ').Select(y => y.Trim()).ToList();
         }
     }
 }

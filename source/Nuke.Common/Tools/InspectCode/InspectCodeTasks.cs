@@ -1,6 +1,6 @@
 // Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
@@ -30,7 +30,6 @@ namespace Nuke.Common.Tools.InspectCode
             //var hashCode = installedPlugins.Select(Path.GetFileName).Aggregate(seed: 0, func: (hc, x) => hc + x.GetHashCode());
 
             //var inspectCodeDirectory = Path.GetDirectoryName(inspectCodeSettings.ToolPath).NotNull();
-
         }
 
         private static IEnumerable<string> GetInstalledPlugins (NuGetVersion waveVersion)

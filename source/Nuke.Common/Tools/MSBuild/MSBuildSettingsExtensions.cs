@@ -1,6 +1,6 @@
 // Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Linq;
@@ -22,7 +22,7 @@ namespace Nuke.Common.Tools.MSBuild
         }
 
         /// <summary>Sets the configuration in <see cref="MSBuildSettings.Properties"/>.</summary>
-        public static MSBuildSettings SetConfiguration(this MSBuildSettings msbuildSettings, string configuration)
+        public static MSBuildSettings SetConfiguration (this MSBuildSettings msbuildSettings, string configuration)
         {
             return msbuildSettings.SetProperty("configuration", configuration);
         }

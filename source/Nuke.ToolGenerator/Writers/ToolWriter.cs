@@ -1,3 +1,7 @@
+// Copyright Matthias Koch 2017.
+// Distributed under the MIT License.
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
+
 using System;
 using System.IO;
 using System.Linq;
@@ -29,7 +33,7 @@ namespace Nuke.ToolGenerator.Writers
             _streamWriter.WriteLine($"{new string(c: ' ', count: _indention * 4)}{text}");
         }
 
-        void IWriter.WriteBlock(Action action)
+        void IWriter.WriteBlock (Action action)
         {
             this.WriteLine("{");
             _indention++;

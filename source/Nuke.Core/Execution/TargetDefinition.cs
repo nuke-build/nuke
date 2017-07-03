@@ -1,6 +1,6 @@
 ﻿// Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace Nuke.Core.Execution
 {
     public class TargetDefinition : ITargetDefinition
     {
-        public static TargetDefinition Create(string name, Target factory = null)
+        public static TargetDefinition Create (string name, Target factory = null)
         {
             return new TargetDefinition(name, factory);
         }
@@ -29,8 +29,10 @@ namespace Nuke.Core.Execution
         }
 
         internal string Name { get; }
+
         [CanBeNull]
         internal Target Factory { get; }
+
         internal TimeSpan Duration { get; set; }
         internal ExecutionStatus Status { get; set; }
         internal List<Func<bool>> Conditions { get; }

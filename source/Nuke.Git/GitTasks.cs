@@ -1,6 +1,6 @@
 ﻿// Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Linq;
@@ -11,7 +11,7 @@ using Nuke.Core.Execution;
 using Nuke.Core.Tooling;
 using Nuke.Git;
 
-[assembly: IconClass (typeof (GitTasks), "git")]
+[assembly: IconClass(typeof(GitTasks), "git")]
 
 namespace Nuke.Git
 {
@@ -33,7 +33,7 @@ namespace Nuke.Git
         private static CloneOptions CloneOptions => new CloneOptions { CredentialsProvider = (url, usernameFromUrl, types) => GitCredentials };
         private static PushOptions PushOptions => new PushOptions { CredentialsProvider = (url, usernameFromUrl, types) => GitCredentials };
 
-        public static string GitClone(string sourceUrl, string workingDirectory, Configure<CloneOptions> configurator = null)
+        public static string GitClone (string sourceUrl, string workingDirectory, Configure<CloneOptions> configurator = null)
         {
             return Repository.Clone(sourceUrl, workingDirectory, configurator.InvokeSafe(CloneOptions));
         }
@@ -42,7 +42,7 @@ namespace Nuke.Git
         {
             UsingRepository(x => x.ApplyTag(tagName));
         }
-        
+
         public static void GitCommit (string message, string name, string email)
         {
             UsingRepository(x => x.Commit(message, GetSignature(name, email), GetSignature(name, email)));

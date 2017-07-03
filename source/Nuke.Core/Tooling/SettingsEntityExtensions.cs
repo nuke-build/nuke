@@ -1,12 +1,13 @@
 ﻿// Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
-// https://github.com/matkoch/Nuke/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Linq;
 #if !NETCORE
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+
 #endif
 
 namespace Nuke.Core.Tooling
@@ -19,7 +20,7 @@ namespace Nuke.Core.Tooling
 #if NETCORE
             return settingsEntity;
 #else
-            using (var memoryStream = new MemoryStream ())
+            using (var memoryStream = new MemoryStream())
             {
                 var binaryFormatter = new BinaryFormatter();
                 binaryFormatter.Serialize(memoryStream, settingsEntity);

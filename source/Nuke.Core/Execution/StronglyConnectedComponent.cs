@@ -1,3 +1,7 @@
+// Copyright Matthias Koch 2017.
+// Distributed under the MIT License.
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,12 +15,12 @@ namespace Nuke.Core.Execution
 
         public StronglyConnectedComponent ()
         {
-            _list = new LinkedList<Vertex<T>> ();
+            _list = new LinkedList<Vertex<T>>();
         }
 
         public void Add (Vertex<T> vertex)
         {
-            _list.AddLast (vertex);
+            _list.AddLast(vertex);
         }
 
         public int Count => _list.Count;
@@ -25,12 +29,12 @@ namespace Nuke.Core.Execution
 
         public IEnumerator<Vertex<T>> GetEnumerator ()
         {
-            return _list.GetEnumerator ();
+            return _list.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator ()
         {
-            return _list.GetEnumerator ();
+            return _list.GetEnumerator();
         }
     }
 }
