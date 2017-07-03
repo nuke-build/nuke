@@ -104,7 +104,7 @@ namespace Nuke.Core.Tooling
 
             ApplyEnvironmentVariables(environmentVariables, startInfo);
             PrintEnvironmentVariables(startInfo);
-            CheckPathVariables(startInfo);
+            CheckPathEnvironmentVariable(startInfo);
 
             var process = Process.Start(startInfo);
             if (process == null)
@@ -169,13 +169,13 @@ namespace Nuke.Core.Tooling
             }
         }
 
-        private static void CheckPathVariables (ProcessStartInfo startInfo)
+        private static void CheckPathEnvironmentVariable (ProcessStartInfo startInfo)
         {
             startInfo.Environment
                     .SingleOrDefault(x => x.Key.Equals("path", StringComparison.OrdinalIgnoreCase))
                     .Value.Split(';')
                     .Where(x => !Directory.Exists(x))
-                    .ForEach(x => Logger.Warn($"Path variable contains invalid path '{x}'."));
+                    .ForEach(x => Logger.Warn($"Path environment variable contains invalid or inaccessible path '{x}'."));
         }
     }
 }
