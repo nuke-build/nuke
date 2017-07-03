@@ -101,35 +101,49 @@ namespace Nuke.Core.Tooling
                                 UseShellExecute = false
                             };
 
-            if (environmentVariables != null)
-            {
-                foreach (var pair in environmentVariables)
-                    startInfo.Environment[pair.Key] = pair.Value;
-            }
+            ApplyEnvironmentVariables(environmentVariables, startInfo);
             PrintEnvironmentVariables (startInfo);
 
             var process = Process.Start(startInfo);
             if (process == null)
                 return null;
 
-            BlockingCollection<Output> output = null;
-            if (redirectOutput)
+            return new Process2(process, timeout, GetOutputSink(redirectOutput, process), outputFilter ?? (x => x));
+        }
+
+        private static void ApplyEnvironmentVariables (
+            [CanBeNull] IReadOnlyDictionary<string, string> environmentVariables,
+            ProcessStartInfo startInfo)
+        {
+            if (environmentVariables == null)
+                return;
+
+            startInfo.Environment.Clear();
+
+            foreach (var pair in environmentVariables)
+                startInfo.Environment[pair.Key] = pair.Value;
+        }
+
+        [CanBeNull]
+        private static BlockingCollection<Output> GetOutputSink (bool redirectOutput, Process process)
+        {
+            if (!redirectOutput)
+                return null;
+
+            var output = new BlockingCollection<Output>();
+
+            void AddNotNullData (DataReceivedEventArgs e, OutputType outputType)
             {
-                output = new BlockingCollection<Output>();
-
-                void AddNotNullData (DataReceivedEventArgs e, OutputType outputType)
-                {
-                    if (e.Data != null)
-                        output.Add (new Output { Text = e.Data, Type = outputType });
-                }
-
-                process.OutputDataReceived += (s, e) => AddNotNullData(e, OutputType.Std);
-                process.ErrorDataReceived += (s, e) => AddNotNullData(e, OutputType.Err);
-                process.BeginOutputReadLine();
-                process.BeginErrorReadLine();
+                if (e.Data != null)
+                    output.Add(new Output { Text = e.Data, Type = outputType });
             }
 
-            return new Process2(process, timeout, output, outputFilter ?? (x => x));
+            process.OutputDataReceived += (s, e) => AddNotNullData(e, OutputType.Std);
+            process.ErrorDataReceived += (s, e) => AddNotNullData(e, OutputType.Err);
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+                
+            return output;
         }
 
         private static void PrintEnvironmentVariables (ProcessStartInfo startInfo)
