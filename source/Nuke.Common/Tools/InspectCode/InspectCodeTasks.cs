@@ -4,9 +4,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using NuGet.Versioning;
 using Nuke.Core;
 using Nuke.Core.BuildServers;

@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 
 [assembly: IconClass(typeof(Nuke.Common.Tools.GitVersion.GitVersionTasks), "podium")]
+
 namespace Nuke.Common.Tools.GitVersion
 {
     [PublicAPI]
@@ -21,10 +22,7 @@ namespace Nuke.Common.Tools.GitVersion
     {
         static partial void PreProcess (GitVersionSettings gitVersionSettings);
         static partial void PostProcess (GitVersionSettings gitVersionSettings);
-        /// <summary>
-        /// <p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p>
-        /// <p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p>
-        /// </summary>
+        /// <summary><p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p><p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p></summary>
         public static void GitVersion (Configure<GitVersionSettings> configurator = null, ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
@@ -36,10 +34,7 @@ namespace Nuke.Common.Tools.GitVersion
             PostProcess(gitVersionSettings);
         }
     }
-    /// <summary>
-    /// <p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p>
-    /// <p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p>
-    /// </summary>
+    /// <summary><p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
@@ -58,6 +53,7 @@ namespace Nuke.Common.Tools.GitVersion
     [ExcludeFromCodeCoverage]
     public static partial class GitVersionSettingsExtensions
     {
+        /// <summary><p><i>Extension method for setting <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</i></p></summary>
         [Pure]
         public static GitVersionSettings SetUpdateAssemblyInfo(this GitVersionSettings gitVersionSettings, bool updateAssemblyInfo)
         {
@@ -65,6 +61,7 @@ namespace Nuke.Common.Tools.GitVersion
             gitVersionSettings.UpdateAssemblyInfo = updateAssemblyInfo;
             return gitVersionSettings;
         }
+        /// <summary><p><i>Extension method for enabling <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</i></p></summary>
         [Pure]
         public static GitVersionSettings EnableUpdateAssemblyInfo(this GitVersionSettings gitVersionSettings)
         {
@@ -72,6 +69,7 @@ namespace Nuke.Common.Tools.GitVersion
             gitVersionSettings.UpdateAssemblyInfo = true;
             return gitVersionSettings;
         }
+        /// <summary><p><i>Extension method for disabling <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</i></p></summary>
         [Pure]
         public static GitVersionSettings DisableUpdateAssemblyInfo(this GitVersionSettings gitVersionSettings)
         {
@@ -79,6 +77,7 @@ namespace Nuke.Common.Tools.GitVersion
             gitVersionSettings.UpdateAssemblyInfo = false;
             return gitVersionSettings;
         }
+        /// <summary><p><i>Extension method for toggling <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</i></p></summary>
         [Pure]
         public static GitVersionSettings ToggleUpdateAssemblyInfo(this GitVersionSettings gitVersionSettings)
         {

@@ -1,0 +1,182 @@
+
+          
+paket pack
+Packs all paket.template files within this repository.
+1: 
+2: 
+3: 
+4: 
+5: 
+
+paket pack [--help] output &lt;path&gt; [buildconfig &lt;config name&gt;] [buildplatform &lt;target&gt;]
+           [version &lt;version&gt;] [templatefile &lt;path&gt;] [exclude &lt;templateId&gt;]
+           [specific-version &lt;templateId&gt; &lt;version&gt;] [releaseNotes &lt;text&gt;] [lock-dependencies]
+           [minimum-from-lock-file] [pin-project-references] [symbols] [include-referenced-projects]
+           [project-url &lt;url&gt;]
+
+OPTIONS:
+ 1: 
+ 2: 
+ 3: 
+ 4: 
+ 5: 
+ 6: 
+ 7: 
+ 8: 
+ 9: 
+10: 
+11: 
+12: 
+13: 
+14: 
+15: 
+16: 
+17: 
+18: 
+19: 
+20: 
+21: 
+22: 
+23: 
+24: 
+25: 
+26: 
+27: 
+28: 
+29: 
+30: 
+31: 
+32: 
+33: 
+34: 
+
+output &lt;path&gt;         Output directory to put .nupkg files.
+buildconfig &lt;config name&gt;
+                      Optionally specify build configuration that should be packaged (defaults
+                      to Release).
+buildplatform &lt;target&gt;
+                      Optionally specify build platform that should be packaged (if not
+                      provided or empty, checks all known platform targets).
+version &lt;version&gt;     Specify version of the package.
+templatefile &lt;path&gt;   Allows to specify a single template file.
+exclude &lt;templateId&gt;  Exclude template file by id.
+specific-version &lt;templateId&gt; &lt;version&gt;
+                      Specifies a version number for template with given id.
+releaseNotes &lt;text&gt;   Specify relase notes for the package.
+lock-dependencies     Get the version requirements from paket.lock instead of
+                      paket.dependencies.
+minimum-from-lock-file
+                      Get the version requirements from paket.lock instead of
+                      paket.dependencies, and add them as a minimum version.
+                      `lock-dependencies` will over-ride this option.
+pin-project-references
+                      Pin dependencies generated from project references (=) instead of using
+                      minimum (&gt;=) for version specification.  If `lock-dependencies` is
+                      specified, project references will be pinned even if this option is not
+                      specified.
+symbols               Build symbol/source packages in addition to library/content packages.
+include-referenced-projects
+                      Include symbol/source from referenced projects.
+project-url &lt;url&gt;     Url to the projects home page.
+--verbose, -v         Enable verbose console output for the paket process.
+--log-file &lt;path&gt;     Specify a log file for the paket process.
+--silent, -s          Suppress console output for the paket process.
+--version             Display the version.
+--from-bootstrapper   Call coming from the &#39;--run&#39; feature of the bootstrapper.
+--help                display this list of options.
+
+
+
+If you add the -v flag, then Paket will run in verbose mode and show detailed information.
+With --log-file [FileName] you can trace the logged information into a file.
+Creating NuGet-Packages
+Consider the following paket.dependencies file in your project's root:
+1: 
+2: 
+3: 
+4: 
+
+source https://nuget.org/api/v2
+
+nuget Castle.Windsor ~&gt; 3.2
+nuget NUnit
+
+And one of your projects having a paket.references file like this:
+1: 
+
+Castle.Windsor
+
+Now, when you run paket install, your paket.lock file would look like this:
+1: 
+2: 
+3: 
+4: 
+5: 
+6: 
+
+NUGET
+  remote: https://nuget.org/api/v2
+    Castle.Core (3.3.3)
+    Castle.Windsor (3.3.0)
+      Castle.Core (&gt;= 3.3.0)
+    NUnit (2.6.4)
+
+Now, when you are done programming and wish to create a NuGet-Package of your project, create a paket.template file with type project and run:
+1: 
+
+paket pack output nugets version 1.0.0
+
+Or, you could run:
+1: 
+
+paket pack output nugets version 1.0.0 lock-dependencies
+
+Depending on which command you issue, Paket creates different version requirements of the packages you depend on in the resulting .nuspec file of your package:
+
+  
+    Dependency
+    Default
+    With locked dependencies
+  
+  
+    
+      Castle.Windsor
+      [3.2,4.0)
+      [3.3.0]
+    
+  
+
+As you see here, the first command (without the lock-dependencies parameter) creates version requirements as specified in your paket.dependencies file. The second command takes the currently resolved versions from your paket.lock file and "locks" them to these specific versions.
+Symbol Packages
+Visual Studio can be configured to download symbol/source versions of installed packages from a symbol server, allowing the developer to use the debugger to step into the source (see SymbolSource).
+These symbol/source packages are the same as the regular packages, but contain the source files (under src) and PDBs alongside the DLLs.
+Paket can build these symbol/source packages, in addition to the regular packages, using the symbols parameter:
+1: 
+
+paket pack output nugets symbols
+
+Including referenced projects
+Paket automatically replaces inter-project dependencies with NuGet dependencies if the dependency has it's own paket.template.
+In addition to this the switch include-referenced-projects instructs Paket to add project output to the package for inter-project dependencies that don't have a paket.template file.
+
+It recursively iterates referenced projects and adds their project output to the package
+When combined with the symbols switch, it will also include the source code of the referenced projects.  Also recursively.
+Any projects that are encountered in this search that have their own project template are ignored.
+
+Version ranges
+By default Paket uses the specified version ranges from the paket.dependencies file as version ranges for dependencies of the new NuGet package.
+by using the minimum-from-lock-file parameter the dependencies of the generated NuGet will use the versions from the paket.lock file.
+Localized Packages
+When using a .template with type project any localized satellite dlls are included in the created packages.
+The following layout is created:
+1: 
+2: 
+
+lib/net45/Foo.dll
+         /se/Foo.resources.dll
+
+
+
+
+
+        

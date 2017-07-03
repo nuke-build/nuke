@@ -12,12 +12,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+[assembly: IconClass(typeof(Nuke.Common.Tools.NuGet.NuGetTasks), "")]
+
 namespace Nuke.Common.Tools.NuGet
 {
-    /// <summary>
-    /// <p>A .nuspec file is an XML manifest that contains package metadata. This is used both to build the package and to provide information to consumers. The manifest is always included in a package.</p>
-    /// <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec">official website</a>.</p>
-    /// </summary>
+    /// <summary><p>A .nuspec file is an XML manifest that contains package metadata. This is used both to build the package and to provide information to consumers. The manifest is always included in a package.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
@@ -67,10 +66,7 @@ namespace Nuke.Common.Tools.NuGet
         public virtual IReadOnlyList<PackageDependencySet> DependencySets => DependencySetsInternal.AsReadOnly();
         internal List<PackageDependencySet> DependencySetsInternal { get; set; } = new List<PackageDependencySet>();
     }
-    /// <summary>
-    /// <p>A .nuspec file is an XML manifest that contains package metadata. This is used both to build the package and to provide information to consumers. The manifest is always included in a package.</p>
-    /// <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec">official website</a>.</p>
-    /// </summary>
+    /// <summary><p>A .nuspec file is an XML manifest that contains package metadata. This is used both to build the package and to provide information to consumers. The manifest is always included in a package.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
@@ -80,10 +76,7 @@ namespace Nuke.Common.Tools.NuGet
         public virtual string Target { get; internal set; }
         public virtual string Exclude { get; internal set; }
     }
-    /// <summary>
-    /// <p>A .nuspec file is an XML manifest that contains package metadata. This is used both to build the package and to provide information to consumers. The manifest is always included in a package.</p>
-    /// <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec">official website</a>.</p>
-    /// </summary>
+    /// <summary><p>A .nuspec file is an XML manifest that contains package metadata. This is used both to build the package and to provide information to consumers. The manifest is always included in a package.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
@@ -93,10 +86,7 @@ namespace Nuke.Common.Tools.NuGet
         public virtual IReadOnlyList<PackageDependency> Dependencies => DependenciesInternal.AsReadOnly();
         internal List<PackageDependency> DependenciesInternal { get; set; } = new List<PackageDependency>();
     }
-    /// <summary>
-    /// <p>A .nuspec file is an XML manifest that contains package metadata. This is used both to build the package and to provide information to consumers. The manifest is always included in a package.</p>
-    /// <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec">official website</a>.</p>
-    /// </summary>
+    /// <summary><p>A .nuspec file is an XML manifest that contains package metadata. This is used both to build the package and to provide information to consumers. The manifest is always included in a package.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
@@ -111,10 +101,7 @@ namespace Nuke.Common.Tools.NuGet
     [ExcludeFromCodeCoverage]
     public static partial class NuGetPackageExtensions
     {
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackage.Id"/>.</i></p>
-        /// <p>The case-insensitive package identifier, which must be unique across nuget.org or whatever gallery the package will reside in. IDs may not contain spaces or characters that are not valid for a URL, and generally follow .NET namespace rules. See <a href="https://docs.microsoft.com/en-us/nuget/create-packages/creating-a-package#choosing-a-unique-package-identifier-and-setting-the-version-number">Choosing a unique package identifier</a> for guidance.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.Id"/>.</i></p><p>The case-insensitive package identifier, which must be unique across nuget.org or whatever gallery the package will reside in. IDs may not contain spaces or characters that are not valid for a URL, and generally follow .NET namespace rules. See <a href="https://docs.microsoft.com/en-us/nuget/create-packages/creating-a-package#choosing-a-unique-package-identifier-and-setting-the-version-number">Choosing a unique package identifier</a> for guidance.</p></summary>
         [Pure]
         public static NuGetPackage SetId(this NuGetPackage nuGetPackage, string id)
         {
@@ -122,10 +109,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.Id = id;
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackage.Version"/>.</i></p>
-        /// <p>The version of the package, following the <c>major.minor.patch</c> pattern. Version numbers may include a pre-release suffix as described in <a href="https://docs.microsoft.com/en-us/nuget/create-packages/prerelease-packages#semantic-versioning">Prerelease Packages</a>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.Version"/>.</i></p><p>The version of the package, following the <c>major.minor.patch</c> pattern. Version numbers may include a pre-release suffix as described in <a href="https://docs.microsoft.com/en-us/nuget/create-packages/prerelease-packages#semantic-versioning">Prerelease Packages</a>.</p></summary>
         [Pure]
         public static NuGetPackage SetVersion(this NuGetPackage nuGetPackage, string version)
         {
@@ -133,10 +117,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.Version = version;
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackage.Description"/>.</i></p>
-        /// <p>A long description of the package for UI display.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.Description"/>.</i></p><p>A long description of the package for UI display.</p></summary>
         [Pure]
         public static NuGetPackage SetDescription(this NuGetPackage nuGetPackage, string description)
         {
@@ -144,10 +125,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.Description = description;
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackage.Authors"/> to a new list.</i></p>
-        /// <p>A comma-separated list of packages authors, matching the profile names on nuget.org. These are displayed in the NuGet Gallery on nuget.org and are used to cross-reference packages by the same authors.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.Authors"/> to a new list.</i></p><p>A comma-separated list of packages authors, matching the profile names on nuget.org. These are displayed in the NuGet Gallery on nuget.org and are used to cross-reference packages by the same authors.</p></summary>
         [Pure]
         public static NuGetPackage SetAuthors(this NuGetPackage nuGetPackage, params string[] authors)
         {
@@ -155,10 +133,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.AuthorsInternal = authors.ToList();
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackage.Authors"/> to a new list.</i></p>
-        /// <p>A comma-separated list of packages authors, matching the profile names on nuget.org. These are displayed in the NuGet Gallery on nuget.org and are used to cross-reference packages by the same authors.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.Authors"/> to a new list.</i></p><p>A comma-separated list of packages authors, matching the profile names on nuget.org. These are displayed in the NuGet Gallery on nuget.org and are used to cross-reference packages by the same authors.</p></summary>
         [Pure]
         public static NuGetPackage SetAuthors(this NuGetPackage nuGetPackage, IEnumerable<string> authors)
         {
@@ -166,10 +141,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.AuthorsInternal = authors.ToList();
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for adding new authors to the existing <see cref="NuGetPackage.Authors"/>.</i></p>
-        /// <p>A comma-separated list of packages authors, matching the profile names on nuget.org. These are displayed in the NuGet Gallery on nuget.org and are used to cross-reference packages by the same authors.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for adding new authors to the existing <see cref="NuGetPackage.Authors"/>.</i></p><p>A comma-separated list of packages authors, matching the profile names on nuget.org. These are displayed in the NuGet Gallery on nuget.org and are used to cross-reference packages by the same authors.</p></summary>
         [Pure]
         public static NuGetPackage AddAuthors(this NuGetPackage nuGetPackage, params string[] authors)
         {
@@ -177,10 +149,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.AuthorsInternal.AddRange(authors);
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for adding new authors to the existing <see cref="NuGetPackage.Authors"/>.</i></p>
-        /// <p>A comma-separated list of packages authors, matching the profile names on nuget.org. These are displayed in the NuGet Gallery on nuget.org and are used to cross-reference packages by the same authors.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for adding new authors to the existing <see cref="NuGetPackage.Authors"/>.</i></p><p>A comma-separated list of packages authors, matching the profile names on nuget.org. These are displayed in the NuGet Gallery on nuget.org and are used to cross-reference packages by the same authors.</p></summary>
         [Pure]
         public static NuGetPackage AddAuthors(this NuGetPackage nuGetPackage, IEnumerable<string> authors)
         {
@@ -188,10 +157,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.AuthorsInternal.AddRange(authors);
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for clearing <see cref="NuGetPackage.Authors"/>.</i></p>
-        /// <p>A comma-separated list of packages authors, matching the profile names on nuget.org. These are displayed in the NuGet Gallery on nuget.org and are used to cross-reference packages by the same authors.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for clearing <see cref="NuGetPackage.Authors"/>.</i></p><p>A comma-separated list of packages authors, matching the profile names on nuget.org. These are displayed in the NuGet Gallery on nuget.org and are used to cross-reference packages by the same authors.</p></summary>
         [Pure]
         public static NuGetPackage ClearAuthors(this NuGetPackage nuGetPackage)
         {
@@ -199,10 +165,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.AuthorsInternal.Clear();
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for adding a single author to <see cref="NuGetPackage.Authors"/>.</i></p>
-        /// <p>A comma-separated list of packages authors, matching the profile names on nuget.org. These are displayed in the NuGet Gallery on nuget.org and are used to cross-reference packages by the same authors.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for adding a single author to <see cref="NuGetPackage.Authors"/>.</i></p><p>A comma-separated list of packages authors, matching the profile names on nuget.org. These are displayed in the NuGet Gallery on nuget.org and are used to cross-reference packages by the same authors.</p></summary>
         [Pure]
         public static NuGetPackage AddAuthor(this NuGetPackage nuGetPackage, string author)
         {
@@ -210,10 +173,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.AuthorsInternal.Add(author);
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for removing a single author from <see cref="NuGetPackage.Authors"/>.</i></p>
-        /// <p>A comma-separated list of packages authors, matching the profile names on nuget.org. These are displayed in the NuGet Gallery on nuget.org and are used to cross-reference packages by the same authors.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for removing a single author from <see cref="NuGetPackage.Authors"/>.</i></p><p>A comma-separated list of packages authors, matching the profile names on nuget.org. These are displayed in the NuGet Gallery on nuget.org and are used to cross-reference packages by the same authors.</p></summary>
         [Pure]
         public static NuGetPackage RemoveAuthor(this NuGetPackage nuGetPackage, string author)
         {
@@ -221,10 +181,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.AuthorsInternal.Remove(author);
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackage.Title"/>.</i></p>
-        /// <p>A human-friendly title of the package, typically used in UI displays as on nuget.org and the Package Manager in Visual Studio. If not specified, the package ID is used instead.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.Title"/>.</i></p><p>A human-friendly title of the package, typically used in UI displays as on nuget.org and the Package Manager in Visual Studio. If not specified, the package ID is used instead.</p></summary>
         [Pure]
         public static NuGetPackage SetTitle(this NuGetPackage nuGetPackage, string title)
         {
@@ -232,10 +189,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.Title = title;
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackage.Owners"/> to a new list.</i></p>
-        /// <p>A comma-separated list of the package creators using profile names on nuget.org. This is often the same list as in authors, and is ignored when uploading the package to nuget.org. See <a href="https://docs.microsoft.com/en-us/nuget/create-packages/publish-a-package#managing-package-owners-on-nugetorg">Managing package owners on nuget.org</a>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.Owners"/> to a new list.</i></p><p>A comma-separated list of the package creators using profile names on nuget.org. This is often the same list as in authors, and is ignored when uploading the package to nuget.org. See <a href="https://docs.microsoft.com/en-us/nuget/create-packages/publish-a-package#managing-package-owners-on-nugetorg">Managing package owners on nuget.org</a>.</p></summary>
         [Pure]
         public static NuGetPackage SetOwners(this NuGetPackage nuGetPackage, params string[] owners)
         {
@@ -243,10 +197,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.OwnersInternal = owners.ToList();
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackage.Owners"/> to a new list.</i></p>
-        /// <p>A comma-separated list of the package creators using profile names on nuget.org. This is often the same list as in authors, and is ignored when uploading the package to nuget.org. See <a href="https://docs.microsoft.com/en-us/nuget/create-packages/publish-a-package#managing-package-owners-on-nugetorg">Managing package owners on nuget.org</a>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.Owners"/> to a new list.</i></p><p>A comma-separated list of the package creators using profile names on nuget.org. This is often the same list as in authors, and is ignored when uploading the package to nuget.org. See <a href="https://docs.microsoft.com/en-us/nuget/create-packages/publish-a-package#managing-package-owners-on-nugetorg">Managing package owners on nuget.org</a>.</p></summary>
         [Pure]
         public static NuGetPackage SetOwners(this NuGetPackage nuGetPackage, IEnumerable<string> owners)
         {
@@ -254,10 +205,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.OwnersInternal = owners.ToList();
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for adding new owners to the existing <see cref="NuGetPackage.Owners"/>.</i></p>
-        /// <p>A comma-separated list of the package creators using profile names on nuget.org. This is often the same list as in authors, and is ignored when uploading the package to nuget.org. See <a href="https://docs.microsoft.com/en-us/nuget/create-packages/publish-a-package#managing-package-owners-on-nugetorg">Managing package owners on nuget.org</a>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for adding new owners to the existing <see cref="NuGetPackage.Owners"/>.</i></p><p>A comma-separated list of the package creators using profile names on nuget.org. This is often the same list as in authors, and is ignored when uploading the package to nuget.org. See <a href="https://docs.microsoft.com/en-us/nuget/create-packages/publish-a-package#managing-package-owners-on-nugetorg">Managing package owners on nuget.org</a>.</p></summary>
         [Pure]
         public static NuGetPackage AddOwners(this NuGetPackage nuGetPackage, params string[] owners)
         {
@@ -265,10 +213,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.OwnersInternal.AddRange(owners);
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for adding new owners to the existing <see cref="NuGetPackage.Owners"/>.</i></p>
-        /// <p>A comma-separated list of the package creators using profile names on nuget.org. This is often the same list as in authors, and is ignored when uploading the package to nuget.org. See <a href="https://docs.microsoft.com/en-us/nuget/create-packages/publish-a-package#managing-package-owners-on-nugetorg">Managing package owners on nuget.org</a>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for adding new owners to the existing <see cref="NuGetPackage.Owners"/>.</i></p><p>A comma-separated list of the package creators using profile names on nuget.org. This is often the same list as in authors, and is ignored when uploading the package to nuget.org. See <a href="https://docs.microsoft.com/en-us/nuget/create-packages/publish-a-package#managing-package-owners-on-nugetorg">Managing package owners on nuget.org</a>.</p></summary>
         [Pure]
         public static NuGetPackage AddOwners(this NuGetPackage nuGetPackage, IEnumerable<string> owners)
         {
@@ -276,10 +221,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.OwnersInternal.AddRange(owners);
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for clearing <see cref="NuGetPackage.Owners"/>.</i></p>
-        /// <p>A comma-separated list of the package creators using profile names on nuget.org. This is often the same list as in authors, and is ignored when uploading the package to nuget.org. See <a href="https://docs.microsoft.com/en-us/nuget/create-packages/publish-a-package#managing-package-owners-on-nugetorg">Managing package owners on nuget.org</a>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for clearing <see cref="NuGetPackage.Owners"/>.</i></p><p>A comma-separated list of the package creators using profile names on nuget.org. This is often the same list as in authors, and is ignored when uploading the package to nuget.org. See <a href="https://docs.microsoft.com/en-us/nuget/create-packages/publish-a-package#managing-package-owners-on-nugetorg">Managing package owners on nuget.org</a>.</p></summary>
         [Pure]
         public static NuGetPackage ClearOwners(this NuGetPackage nuGetPackage)
         {
@@ -287,10 +229,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.OwnersInternal.Clear();
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for adding a single owner to <see cref="NuGetPackage.Owners"/>.</i></p>
-        /// <p>A comma-separated list of the package creators using profile names on nuget.org. This is often the same list as in authors, and is ignored when uploading the package to nuget.org. See <a href="https://docs.microsoft.com/en-us/nuget/create-packages/publish-a-package#managing-package-owners-on-nugetorg">Managing package owners on nuget.org</a>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for adding a single owner to <see cref="NuGetPackage.Owners"/>.</i></p><p>A comma-separated list of the package creators using profile names on nuget.org. This is often the same list as in authors, and is ignored when uploading the package to nuget.org. See <a href="https://docs.microsoft.com/en-us/nuget/create-packages/publish-a-package#managing-package-owners-on-nugetorg">Managing package owners on nuget.org</a>.</p></summary>
         [Pure]
         public static NuGetPackage AddOwner(this NuGetPackage nuGetPackage, string owner)
         {
@@ -298,10 +237,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.OwnersInternal.Add(owner);
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for removing a single owner from <see cref="NuGetPackage.Owners"/>.</i></p>
-        /// <p>A comma-separated list of the package creators using profile names on nuget.org. This is often the same list as in authors, and is ignored when uploading the package to nuget.org. See <a href="https://docs.microsoft.com/en-us/nuget/create-packages/publish-a-package#managing-package-owners-on-nugetorg">Managing package owners on nuget.org</a>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for removing a single owner from <see cref="NuGetPackage.Owners"/>.</i></p><p>A comma-separated list of the package creators using profile names on nuget.org. This is often the same list as in authors, and is ignored when uploading the package to nuget.org. See <a href="https://docs.microsoft.com/en-us/nuget/create-packages/publish-a-package#managing-package-owners-on-nugetorg">Managing package owners on nuget.org</a>.</p></summary>
         [Pure]
         public static NuGetPackage RemoveOwner(this NuGetPackage nuGetPackage, string owner)
         {
@@ -309,10 +245,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.OwnersInternal.Remove(owner);
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackage.ProjectUrl"/>.</i></p>
-        /// <p>A URL for the package's home page, often shown in UI displays as well as nuget.org.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.ProjectUrl"/>.</i></p><p>A URL for the package's home page, often shown in UI displays as well as nuget.org.</p></summary>
         [Pure]
         public static NuGetPackage SetProjectUrl(this NuGetPackage nuGetPackage, string projectUrl)
         {
@@ -320,10 +253,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.ProjectUrl = projectUrl;
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackage.LicenseUrl"/>.</i></p>
-        /// <p>A URL for the package's license, often shown in UI displays as well as nuget.org.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.LicenseUrl"/>.</i></p><p>A URL for the package's license, often shown in UI displays as well as nuget.org.</p></summary>
         [Pure]
         public static NuGetPackage SetLicenseUrl(this NuGetPackage nuGetPackage, string licenseUrl)
         {
@@ -331,10 +261,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.LicenseUrl = licenseUrl;
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackage.IconUrl"/>.</i></p>
-        /// <p>A URL for a 64x64 image with transparenty background to use as the icon for the package in UI display.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.IconUrl"/>.</i></p><p>A URL for a 64x64 image with transparenty background to use as the icon for the package in UI display.</p></summary>
         [Pure]
         public static NuGetPackage SetIconUrl(this NuGetPackage nuGetPackage, string iconUrl)
         {
@@ -342,10 +269,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.IconUrl = iconUrl;
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackage.RequireLicenseAcceptance"/>.</i></p>
-        /// <p>A Boolean value specifying whether the client must prompt the consumer to accept the package license before installing the package.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.RequireLicenseAcceptance"/>.</i></p><p>A Boolean value specifying whether the client must prompt the consumer to accept the package license before installing the package.</p></summary>
         [Pure]
         public static NuGetPackage SetRequireLicenseAcceptance(this NuGetPackage nuGetPackage, bool requireLicenseAcceptance)
         {
@@ -353,10 +277,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.RequireLicenseAcceptance = requireLicenseAcceptance;
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for enabling <see cref="NuGetPackage.RequireLicenseAcceptance"/>.</i></p>
-        /// <p>A Boolean value specifying whether the client must prompt the consumer to accept the package license before installing the package.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for enabling <see cref="NuGetPackage.RequireLicenseAcceptance"/>.</i></p><p>A Boolean value specifying whether the client must prompt the consumer to accept the package license before installing the package.</p></summary>
         [Pure]
         public static NuGetPackage EnableRequireLicenseAcceptance(this NuGetPackage nuGetPackage)
         {
@@ -364,10 +285,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.RequireLicenseAcceptance = true;
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for disabling <see cref="NuGetPackage.RequireLicenseAcceptance"/>.</i></p>
-        /// <p>A Boolean value specifying whether the client must prompt the consumer to accept the package license before installing the package.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for disabling <see cref="NuGetPackage.RequireLicenseAcceptance"/>.</i></p><p>A Boolean value specifying whether the client must prompt the consumer to accept the package license before installing the package.</p></summary>
         [Pure]
         public static NuGetPackage DisableRequireLicenseAcceptance(this NuGetPackage nuGetPackage)
         {
@@ -375,10 +293,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.RequireLicenseAcceptance = false;
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for toggling <see cref="NuGetPackage.RequireLicenseAcceptance"/>.</i></p>
-        /// <p>A Boolean value specifying whether the client must prompt the consumer to accept the package license before installing the package.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for toggling <see cref="NuGetPackage.RequireLicenseAcceptance"/>.</i></p><p>A Boolean value specifying whether the client must prompt the consumer to accept the package license before installing the package.</p></summary>
         [Pure]
         public static NuGetPackage ToggleRequireLicenseAcceptance(this NuGetPackage nuGetPackage)
         {
@@ -386,10 +301,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.RequireLicenseAcceptance = !nuGetPackage.RequireLicenseAcceptance;
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackage.DevelopmentDependency"/>.</i></p>
-        /// <p><i>(2.8+)</i>  A Boolean value specifying whether the package will be marked as a development-only-dependency, which prevents the package from being included as a dependency in other packages.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.DevelopmentDependency"/>.</i></p><p><i>(2.8+)</i>  A Boolean value specifying whether the package will be marked as a development-only-dependency, which prevents the package from being included as a dependency in other packages.</p></summary>
         [Pure]
         public static NuGetPackage SetDevelopmentDependency(this NuGetPackage nuGetPackage, bool developmentDependency)
         {
@@ -397,10 +309,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.DevelopmentDependency = developmentDependency;
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for enabling <see cref="NuGetPackage.DevelopmentDependency"/>.</i></p>
-        /// <p><i>(2.8+)</i>  A Boolean value specifying whether the package will be marked as a development-only-dependency, which prevents the package from being included as a dependency in other packages.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for enabling <see cref="NuGetPackage.DevelopmentDependency"/>.</i></p><p><i>(2.8+)</i>  A Boolean value specifying whether the package will be marked as a development-only-dependency, which prevents the package from being included as a dependency in other packages.</p></summary>
         [Pure]
         public static NuGetPackage EnableDevelopmentDependency(this NuGetPackage nuGetPackage)
         {
@@ -408,10 +317,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.DevelopmentDependency = true;
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for disabling <see cref="NuGetPackage.DevelopmentDependency"/>.</i></p>
-        /// <p><i>(2.8+)</i>  A Boolean value specifying whether the package will be marked as a development-only-dependency, which prevents the package from being included as a dependency in other packages.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for disabling <see cref="NuGetPackage.DevelopmentDependency"/>.</i></p><p><i>(2.8+)</i>  A Boolean value specifying whether the package will be marked as a development-only-dependency, which prevents the package from being included as a dependency in other packages.</p></summary>
         [Pure]
         public static NuGetPackage DisableDevelopmentDependency(this NuGetPackage nuGetPackage)
         {
@@ -419,10 +325,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.DevelopmentDependency = false;
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for toggling <see cref="NuGetPackage.DevelopmentDependency"/>.</i></p>
-        /// <p><i>(2.8+)</i>  A Boolean value specifying whether the package will be marked as a development-only-dependency, which prevents the package from being included as a dependency in other packages.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for toggling <see cref="NuGetPackage.DevelopmentDependency"/>.</i></p><p><i>(2.8+)</i>  A Boolean value specifying whether the package will be marked as a development-only-dependency, which prevents the package from being included as a dependency in other packages.</p></summary>
         [Pure]
         public static NuGetPackage ToggleDevelopmentDependency(this NuGetPackage nuGetPackage)
         {
@@ -430,10 +333,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.DevelopmentDependency = !nuGetPackage.DevelopmentDependency;
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackage.Summary"/>.</i></p>
-        /// <p>A short description of the package for UI display. If omitted, a truncated version of the <see cref="NuGetPackage.Description"/> is used.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.Summary"/>.</i></p><p>A short description of the package for UI display. If omitted, a truncated version of the <see cref="NuGetPackage.Description"/> is used.</p></summary>
         [Pure]
         public static NuGetPackage SetSummary(this NuGetPackage nuGetPackage, string summary)
         {
@@ -441,10 +341,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.Summary = summary;
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackage.ReleaseNotes"/>.</i></p>
-        /// <p><i>(1.5+)</i> A description of the changes made in this release of the package, often used in UI like the Updates tab of the Visual Studio Package Manager in place of the package description.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.ReleaseNotes"/>.</i></p><p><i>(1.5+)</i> A description of the changes made in this release of the package, often used in UI like the Updates tab of the Visual Studio Package Manager in place of the package description.</p></summary>
         [Pure]
         public static NuGetPackage SetReleaseNotes(this NuGetPackage nuGetPackage, string releaseNotes)
         {
@@ -452,10 +349,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.ReleaseNotes = releaseNotes;
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackage.Copyright"/>.</i></p>
-        /// <p><i>(1.5+)</i> Copyright details for the package.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.Copyright"/>.</i></p><p><i>(1.5+)</i> Copyright details for the package.</p></summary>
         [Pure]
         public static NuGetPackage SetCopyright(this NuGetPackage nuGetPackage, string copyright)
         {
@@ -463,10 +357,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.Copyright = copyright;
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackage.Language"/>.</i></p>
-        /// <p>The locale ID for the package. See <a href="https://docs.microsoft.com/en-us/nuget/create-packages/creating-localized-packages">Creating localized packages</a>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.Language"/>.</i></p><p>The locale ID for the package. See <a href="https://docs.microsoft.com/en-us/nuget/create-packages/creating-localized-packages">Creating localized packages</a>.</p></summary>
         [Pure]
         public static NuGetPackage SetLanguage(this NuGetPackage nuGetPackage, string language)
         {
@@ -474,10 +365,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.Language = language;
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackage.Tags"/> to a new list.</i></p>
-        /// <p>A space-delimited list of tags and keywords that describe the package and aid discoverability of packages through search and filtering mechanisms.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.Tags"/> to a new list.</i></p><p>A space-delimited list of tags and keywords that describe the package and aid discoverability of packages through search and filtering mechanisms.</p></summary>
         [Pure]
         public static NuGetPackage SetTags(this NuGetPackage nuGetPackage, params string[] tags)
         {
@@ -485,10 +373,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.TagsInternal = tags.ToList();
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackage.Tags"/> to a new list.</i></p>
-        /// <p>A space-delimited list of tags and keywords that describe the package and aid discoverability of packages through search and filtering mechanisms.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.Tags"/> to a new list.</i></p><p>A space-delimited list of tags and keywords that describe the package and aid discoverability of packages through search and filtering mechanisms.</p></summary>
         [Pure]
         public static NuGetPackage SetTags(this NuGetPackage nuGetPackage, IEnumerable<string> tags)
         {
@@ -496,10 +381,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.TagsInternal = tags.ToList();
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for adding new tags to the existing <see cref="NuGetPackage.Tags"/>.</i></p>
-        /// <p>A space-delimited list of tags and keywords that describe the package and aid discoverability of packages through search and filtering mechanisms.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for adding new tags to the existing <see cref="NuGetPackage.Tags"/>.</i></p><p>A space-delimited list of tags and keywords that describe the package and aid discoverability of packages through search and filtering mechanisms.</p></summary>
         [Pure]
         public static NuGetPackage AddTags(this NuGetPackage nuGetPackage, params string[] tags)
         {
@@ -507,10 +389,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.TagsInternal.AddRange(tags);
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for adding new tags to the existing <see cref="NuGetPackage.Tags"/>.</i></p>
-        /// <p>A space-delimited list of tags and keywords that describe the package and aid discoverability of packages through search and filtering mechanisms.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for adding new tags to the existing <see cref="NuGetPackage.Tags"/>.</i></p><p>A space-delimited list of tags and keywords that describe the package and aid discoverability of packages through search and filtering mechanisms.</p></summary>
         [Pure]
         public static NuGetPackage AddTags(this NuGetPackage nuGetPackage, IEnumerable<string> tags)
         {
@@ -518,10 +397,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.TagsInternal.AddRange(tags);
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for clearing <see cref="NuGetPackage.Tags"/>.</i></p>
-        /// <p>A space-delimited list of tags and keywords that describe the package and aid discoverability of packages through search and filtering mechanisms.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for clearing <see cref="NuGetPackage.Tags"/>.</i></p><p>A space-delimited list of tags and keywords that describe the package and aid discoverability of packages through search and filtering mechanisms.</p></summary>
         [Pure]
         public static NuGetPackage ClearTags(this NuGetPackage nuGetPackage)
         {
@@ -529,10 +405,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.TagsInternal.Clear();
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for adding a single tag to <see cref="NuGetPackage.Tags"/>.</i></p>
-        /// <p>A space-delimited list of tags and keywords that describe the package and aid discoverability of packages through search and filtering mechanisms.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for adding a single tag to <see cref="NuGetPackage.Tags"/>.</i></p><p>A space-delimited list of tags and keywords that describe the package and aid discoverability of packages through search and filtering mechanisms.</p></summary>
         [Pure]
         public static NuGetPackage AddTag(this NuGetPackage nuGetPackage, string tag)
         {
@@ -540,10 +413,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.TagsInternal.Add(tag);
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for removing a single tag from <see cref="NuGetPackage.Tags"/>.</i></p>
-        /// <p>A space-delimited list of tags and keywords that describe the package and aid discoverability of packages through search and filtering mechanisms.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for removing a single tag from <see cref="NuGetPackage.Tags"/>.</i></p><p>A space-delimited list of tags and keywords that describe the package and aid discoverability of packages through search and filtering mechanisms.</p></summary>
         [Pure]
         public static NuGetPackage RemoveTag(this NuGetPackage nuGetPackage, string tag)
         {
@@ -551,10 +421,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.TagsInternal.Remove(tag);
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackage.ContentFiles"/> to a new list.</i></p>
-        /// <p><i>(3.3+)</i> A collection of &lt;files&gt; elements that identify content files that should be include in the consuming project. These files are specified with a set of attributes that describe how they should be used within the project system. See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#specifying-files-to-include-in-the-package">Specifying files to include in the package</a>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.ContentFiles"/> to a new list.</i></p><p><i>(3.3+)</i> A collection of &lt;files&gt; elements that identify content files that should be include in the consuming project. These files are specified with a set of attributes that describe how they should be used within the project system. See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#specifying-files-to-include-in-the-package">Specifying files to include in the package</a>.</p></summary>
         [Pure]
         public static NuGetPackage SetContentFiles(this NuGetPackage nuGetPackage, params PackageContentFile[] contentFiles)
         {
@@ -562,10 +429,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.ContentFilesInternal = contentFiles.ToList();
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackage.ContentFiles"/> to a new list.</i></p>
-        /// <p><i>(3.3+)</i> A collection of &lt;files&gt; elements that identify content files that should be include in the consuming project. These files are specified with a set of attributes that describe how they should be used within the project system. See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#specifying-files-to-include-in-the-package">Specifying files to include in the package</a>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.ContentFiles"/> to a new list.</i></p><p><i>(3.3+)</i> A collection of &lt;files&gt; elements that identify content files that should be include in the consuming project. These files are specified with a set of attributes that describe how they should be used within the project system. See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#specifying-files-to-include-in-the-package">Specifying files to include in the package</a>.</p></summary>
         [Pure]
         public static NuGetPackage SetContentFiles(this NuGetPackage nuGetPackage, IEnumerable<PackageContentFile> contentFiles)
         {
@@ -573,10 +437,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.ContentFilesInternal = contentFiles.ToList();
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for adding new contentFiles to the existing <see cref="NuGetPackage.ContentFiles"/>.</i></p>
-        /// <p><i>(3.3+)</i> A collection of &lt;files&gt; elements that identify content files that should be include in the consuming project. These files are specified with a set of attributes that describe how they should be used within the project system. See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#specifying-files-to-include-in-the-package">Specifying files to include in the package</a>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for adding new contentFiles to the existing <see cref="NuGetPackage.ContentFiles"/>.</i></p><p><i>(3.3+)</i> A collection of &lt;files&gt; elements that identify content files that should be include in the consuming project. These files are specified with a set of attributes that describe how they should be used within the project system. See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#specifying-files-to-include-in-the-package">Specifying files to include in the package</a>.</p></summary>
         [Pure]
         public static NuGetPackage AddContentFiles(this NuGetPackage nuGetPackage, params PackageContentFile[] contentFiles)
         {
@@ -584,10 +445,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.ContentFilesInternal.AddRange(contentFiles);
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for adding new contentFiles to the existing <see cref="NuGetPackage.ContentFiles"/>.</i></p>
-        /// <p><i>(3.3+)</i> A collection of &lt;files&gt; elements that identify content files that should be include in the consuming project. These files are specified with a set of attributes that describe how they should be used within the project system. See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#specifying-files-to-include-in-the-package">Specifying files to include in the package</a>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for adding new contentFiles to the existing <see cref="NuGetPackage.ContentFiles"/>.</i></p><p><i>(3.3+)</i> A collection of &lt;files&gt; elements that identify content files that should be include in the consuming project. These files are specified with a set of attributes that describe how they should be used within the project system. See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#specifying-files-to-include-in-the-package">Specifying files to include in the package</a>.</p></summary>
         [Pure]
         public static NuGetPackage AddContentFiles(this NuGetPackage nuGetPackage, IEnumerable<PackageContentFile> contentFiles)
         {
@@ -595,10 +453,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.ContentFilesInternal.AddRange(contentFiles);
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for clearing <see cref="NuGetPackage.ContentFiles"/>.</i></p>
-        /// <p><i>(3.3+)</i> A collection of &lt;files&gt; elements that identify content files that should be include in the consuming project. These files are specified with a set of attributes that describe how they should be used within the project system. See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#specifying-files-to-include-in-the-package">Specifying files to include in the package</a>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for clearing <see cref="NuGetPackage.ContentFiles"/>.</i></p><p><i>(3.3+)</i> A collection of &lt;files&gt; elements that identify content files that should be include in the consuming project. These files are specified with a set of attributes that describe how they should be used within the project system. See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#specifying-files-to-include-in-the-package">Specifying files to include in the package</a>.</p></summary>
         [Pure]
         public static NuGetPackage ClearContentFiles(this NuGetPackage nuGetPackage)
         {
@@ -606,10 +461,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.ContentFilesInternal.Clear();
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for adding a single contentFile to <see cref="NuGetPackage.ContentFiles"/>.</i></p>
-        /// <p><i>(3.3+)</i> A collection of &lt;files&gt; elements that identify content files that should be include in the consuming project. These files are specified with a set of attributes that describe how they should be used within the project system. See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#specifying-files-to-include-in-the-package">Specifying files to include in the package</a>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for adding a single contentFile to <see cref="NuGetPackage.ContentFiles"/>.</i></p><p><i>(3.3+)</i> A collection of &lt;files&gt; elements that identify content files that should be include in the consuming project. These files are specified with a set of attributes that describe how they should be used within the project system. See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#specifying-files-to-include-in-the-package">Specifying files to include in the package</a>.</p></summary>
         [Pure]
         public static NuGetPackage AddContentFile(this NuGetPackage nuGetPackage, PackageContentFile contentFile)
         {
@@ -617,10 +469,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.ContentFilesInternal.Add(contentFile);
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for removing a single contentFile from <see cref="NuGetPackage.ContentFiles"/>.</i></p>
-        /// <p><i>(3.3+)</i> A collection of &lt;files&gt; elements that identify content files that should be include in the consuming project. These files are specified with a set of attributes that describe how they should be used within the project system. See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#specifying-files-to-include-in-the-package">Specifying files to include in the package</a>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for removing a single contentFile from <see cref="NuGetPackage.ContentFiles"/>.</i></p><p><i>(3.3+)</i> A collection of &lt;files&gt; elements that identify content files that should be include in the consuming project. These files are specified with a set of attributes that describe how they should be used within the project system. See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#specifying-files-to-include-in-the-package">Specifying files to include in the package</a>.</p></summary>
         [Pure]
         public static NuGetPackage RemoveContentFile(this NuGetPackage nuGetPackage, PackageContentFile contentFile)
         {
@@ -628,6 +477,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.ContentFilesInternal.Remove(contentFile);
             return nuGetPackage;
         }
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.DefaultDependencies"/> to a new list.</i></p></summary>
         [Pure]
         public static NuGetPackage SetDefaultDependencies(this NuGetPackage nuGetPackage, params PackageDependency[] defaultDependencies)
         {
@@ -635,6 +485,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.DefaultDependenciesInternal = defaultDependencies.ToList();
             return nuGetPackage;
         }
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.DefaultDependencies"/> to a new list.</i></p></summary>
         [Pure]
         public static NuGetPackage SetDefaultDependencies(this NuGetPackage nuGetPackage, IEnumerable<PackageDependency> defaultDependencies)
         {
@@ -642,6 +493,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.DefaultDependenciesInternal = defaultDependencies.ToList();
             return nuGetPackage;
         }
+        /// <summary><p><i>Extension method for adding new defaultDependencies to the existing <see cref="NuGetPackage.DefaultDependencies"/>.</i></p></summary>
         [Pure]
         public static NuGetPackage AddDefaultDependencies(this NuGetPackage nuGetPackage, params PackageDependency[] defaultDependencies)
         {
@@ -649,6 +501,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.DefaultDependenciesInternal.AddRange(defaultDependencies);
             return nuGetPackage;
         }
+        /// <summary><p><i>Extension method for adding new defaultDependencies to the existing <see cref="NuGetPackage.DefaultDependencies"/>.</i></p></summary>
         [Pure]
         public static NuGetPackage AddDefaultDependencies(this NuGetPackage nuGetPackage, IEnumerable<PackageDependency> defaultDependencies)
         {
@@ -656,6 +509,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.DefaultDependenciesInternal.AddRange(defaultDependencies);
             return nuGetPackage;
         }
+        /// <summary><p><i>Extension method for clearing <see cref="NuGetPackage.DefaultDependencies"/>.</i></p></summary>
         [Pure]
         public static NuGetPackage ClearDefaultDependencies(this NuGetPackage nuGetPackage)
         {
@@ -663,6 +517,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.DefaultDependenciesInternal.Clear();
             return nuGetPackage;
         }
+        /// <summary><p><i>Extension method for adding a single defaultDependency to <see cref="NuGetPackage.DefaultDependencies"/>.</i></p></summary>
         [Pure]
         public static NuGetPackage AddDefaultDependency(this NuGetPackage nuGetPackage, PackageDependency defaultDependency)
         {
@@ -670,6 +525,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.DefaultDependenciesInternal.Add(defaultDependency);
             return nuGetPackage;
         }
+        /// <summary><p><i>Extension method for removing a single defaultDependency from <see cref="NuGetPackage.DefaultDependencies"/>.</i></p></summary>
         [Pure]
         public static NuGetPackage RemoveDefaultDependency(this NuGetPackage nuGetPackage, PackageDependency defaultDependency)
         {
@@ -677,10 +533,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.DefaultDependenciesInternal.Remove(defaultDependency);
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackage.DependencySets"/> to a new list.</i></p>
-        /// <p>A collection of zero or more &lt;dependency&gt; elements specifying the dependencies for the package. Each dependency has attributes of <i>id</i>, <i>version</i>, <i>include</i> (3.x+), and <i>exclude</i> (3.x+). See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#dependencies">Dependencies</a>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.DependencySets"/> to a new list.</i></p><p>A collection of zero or more &lt;dependency&gt; elements specifying the dependencies for the package. Each dependency has attributes of <i>id</i>, <i>version</i>, <i>include</i> (3.x+), and <i>exclude</i> (3.x+). See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#dependencies">Dependencies</a>.</p></summary>
         [Pure]
         public static NuGetPackage SetDependencySets(this NuGetPackage nuGetPackage, params PackageDependencySet[] dependencySets)
         {
@@ -688,10 +541,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.DependencySetsInternal = dependencySets.ToList();
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="NuGetPackage.DependencySets"/> to a new list.</i></p>
-        /// <p>A collection of zero or more &lt;dependency&gt; elements specifying the dependencies for the package. Each dependency has attributes of <i>id</i>, <i>version</i>, <i>include</i> (3.x+), and <i>exclude</i> (3.x+). See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#dependencies">Dependencies</a>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="NuGetPackage.DependencySets"/> to a new list.</i></p><p>A collection of zero or more &lt;dependency&gt; elements specifying the dependencies for the package. Each dependency has attributes of <i>id</i>, <i>version</i>, <i>include</i> (3.x+), and <i>exclude</i> (3.x+). See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#dependencies">Dependencies</a>.</p></summary>
         [Pure]
         public static NuGetPackage SetDependencySets(this NuGetPackage nuGetPackage, IEnumerable<PackageDependencySet> dependencySets)
         {
@@ -699,10 +549,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.DependencySetsInternal = dependencySets.ToList();
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for adding new dependencySets to the existing <see cref="NuGetPackage.DependencySets"/>.</i></p>
-        /// <p>A collection of zero or more &lt;dependency&gt; elements specifying the dependencies for the package. Each dependency has attributes of <i>id</i>, <i>version</i>, <i>include</i> (3.x+), and <i>exclude</i> (3.x+). See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#dependencies">Dependencies</a>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for adding new dependencySets to the existing <see cref="NuGetPackage.DependencySets"/>.</i></p><p>A collection of zero or more &lt;dependency&gt; elements specifying the dependencies for the package. Each dependency has attributes of <i>id</i>, <i>version</i>, <i>include</i> (3.x+), and <i>exclude</i> (3.x+). See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#dependencies">Dependencies</a>.</p></summary>
         [Pure]
         public static NuGetPackage AddDependencySets(this NuGetPackage nuGetPackage, params PackageDependencySet[] dependencySets)
         {
@@ -710,10 +557,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.DependencySetsInternal.AddRange(dependencySets);
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for adding new dependencySets to the existing <see cref="NuGetPackage.DependencySets"/>.</i></p>
-        /// <p>A collection of zero or more &lt;dependency&gt; elements specifying the dependencies for the package. Each dependency has attributes of <i>id</i>, <i>version</i>, <i>include</i> (3.x+), and <i>exclude</i> (3.x+). See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#dependencies">Dependencies</a>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for adding new dependencySets to the existing <see cref="NuGetPackage.DependencySets"/>.</i></p><p>A collection of zero or more &lt;dependency&gt; elements specifying the dependencies for the package. Each dependency has attributes of <i>id</i>, <i>version</i>, <i>include</i> (3.x+), and <i>exclude</i> (3.x+). See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#dependencies">Dependencies</a>.</p></summary>
         [Pure]
         public static NuGetPackage AddDependencySets(this NuGetPackage nuGetPackage, IEnumerable<PackageDependencySet> dependencySets)
         {
@@ -721,10 +565,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.DependencySetsInternal.AddRange(dependencySets);
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for clearing <see cref="NuGetPackage.DependencySets"/>.</i></p>
-        /// <p>A collection of zero or more &lt;dependency&gt; elements specifying the dependencies for the package. Each dependency has attributes of <i>id</i>, <i>version</i>, <i>include</i> (3.x+), and <i>exclude</i> (3.x+). See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#dependencies">Dependencies</a>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for clearing <see cref="NuGetPackage.DependencySets"/>.</i></p><p>A collection of zero or more &lt;dependency&gt; elements specifying the dependencies for the package. Each dependency has attributes of <i>id</i>, <i>version</i>, <i>include</i> (3.x+), and <i>exclude</i> (3.x+). See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#dependencies">Dependencies</a>.</p></summary>
         [Pure]
         public static NuGetPackage ClearDependencySets(this NuGetPackage nuGetPackage)
         {
@@ -732,10 +573,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.DependencySetsInternal.Clear();
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for adding a single dependencySet to <see cref="NuGetPackage.DependencySets"/>.</i></p>
-        /// <p>A collection of zero or more &lt;dependency&gt; elements specifying the dependencies for the package. Each dependency has attributes of <i>id</i>, <i>version</i>, <i>include</i> (3.x+), and <i>exclude</i> (3.x+). See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#dependencies">Dependencies</a>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for adding a single dependencySet to <see cref="NuGetPackage.DependencySets"/>.</i></p><p>A collection of zero or more &lt;dependency&gt; elements specifying the dependencies for the package. Each dependency has attributes of <i>id</i>, <i>version</i>, <i>include</i> (3.x+), and <i>exclude</i> (3.x+). See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#dependencies">Dependencies</a>.</p></summary>
         [Pure]
         public static NuGetPackage AddDependencySet(this NuGetPackage nuGetPackage, PackageDependencySet dependencySet)
         {
@@ -743,10 +581,7 @@ namespace Nuke.Common.Tools.NuGet
             nuGetPackage.DependencySetsInternal.Add(dependencySet);
             return nuGetPackage;
         }
-        /// <summary>
-        /// <p><i>Extension method for removing a single dependencySet from <see cref="NuGetPackage.DependencySets"/>.</i></p>
-        /// <p>A collection of zero or more &lt;dependency&gt; elements specifying the dependencies for the package. Each dependency has attributes of <i>id</i>, <i>version</i>, <i>include</i> (3.x+), and <i>exclude</i> (3.x+). See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#dependencies">Dependencies</a>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for removing a single dependencySet from <see cref="NuGetPackage.DependencySets"/>.</i></p><p>A collection of zero or more &lt;dependency&gt; elements specifying the dependencies for the package. Each dependency has attributes of <i>id</i>, <i>version</i>, <i>include</i> (3.x+), and <i>exclude</i> (3.x+). See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#dependencies">Dependencies</a>.</p></summary>
         [Pure]
         public static NuGetPackage RemoveDependencySet(this NuGetPackage nuGetPackage, PackageDependencySet dependencySet)
         {

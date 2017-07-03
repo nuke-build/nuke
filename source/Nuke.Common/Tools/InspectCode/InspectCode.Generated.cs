@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 
 [assembly: IconClass(typeof(Nuke.Common.Tools.InspectCode.InspectCodeTasks), "code")]
+
 namespace Nuke.Common.Tools.InspectCode
 {
     [PublicAPI]
@@ -21,10 +22,7 @@ namespace Nuke.Common.Tools.InspectCode
     {
         static partial void PreProcess (InspectCodeSettings inspectCodeSettings);
         static partial void PostProcess (InspectCodeSettings inspectCodeSettings);
-        /// <summary>
-        /// <p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p>
-        /// <p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p>
-        /// </summary>
+        /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p><p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p></summary>
         public static void InspectCode (Configure<InspectCodeSettings> configurator = null, ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
@@ -35,29 +33,20 @@ namespace Nuke.Common.Tools.InspectCode
             process.AssertZeroExitCode();
             PostProcess(inspectCodeSettings);
         }
-        /// <summary>
-        /// <p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p>
-        /// <p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p>
-        /// </summary>
+        /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p><p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p></summary>
         public static void InspectCode (string targetPath, Configure<InspectCodeSettings> configurator = null, ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
             InspectCode(x => configurator(x).SetTargetPath(targetPath));
         }
-        /// <summary>
-        /// <p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p>
-        /// <p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p>
-        /// </summary>
+        /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p><p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p></summary>
         public static void InspectCode (string targetPath, string output, Configure<InspectCodeSettings> configurator = null, ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
             InspectCode(targetPath, x => configurator(x).SetOutput(output));
         }
     }
-    /// <summary>
-    /// <p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p>
-    /// <p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p>
-    /// </summary>
+    /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
@@ -119,10 +108,7 @@ namespace Nuke.Common.Tools.InspectCode
     [ExcludeFromCodeCoverage]
     public static partial class InspectCodeSettingsExtensions
     {
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="InspectCodeSettings.TargetPath"/>.</i></p>
-        /// <p>Target path.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="InspectCodeSettings.TargetPath"/>.</i></p><p>Target path.</p></summary>
         [Pure]
         public static InspectCodeSettings SetTargetPath(this InspectCodeSettings inspectCodeSettings, string targetPath)
         {
@@ -130,10 +116,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.TargetPath = targetPath;
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="InspectCodeSettings.Output"/>.</i></p>
-        /// <p>Lets you set the output file. By default, the output file is saved in the <i>%TEMP%</i> directory.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="InspectCodeSettings.Output"/>.</i></p><p>Lets you set the output file. By default, the output file is saved in the <i>%TEMP%</i> directory.</p></summary>
         [Pure]
         public static InspectCodeSettings SetOutput(this InspectCodeSettings inspectCodeSettings, string output)
         {
@@ -141,10 +124,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.Output = output;
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="InspectCodeSettings.NoSwea"/>.</i></p>
-        /// <p>Disables solution-wide analysis.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="InspectCodeSettings.NoSwea"/>.</i></p><p>Disables solution-wide analysis.</p></summary>
         [Pure]
         public static InspectCodeSettings SetNoSwea(this InspectCodeSettings inspectCodeSettings, bool noSwea)
         {
@@ -152,10 +132,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.NoSwea = noSwea;
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for enabling <see cref="InspectCodeSettings.NoSwea"/>.</i></p>
-        /// <p>Disables solution-wide analysis.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for enabling <see cref="InspectCodeSettings.NoSwea"/>.</i></p><p>Disables solution-wide analysis.</p></summary>
         [Pure]
         public static InspectCodeSettings EnableNoSwea(this InspectCodeSettings inspectCodeSettings)
         {
@@ -163,10 +140,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.NoSwea = true;
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for disabling <see cref="InspectCodeSettings.NoSwea"/>.</i></p>
-        /// <p>Disables solution-wide analysis.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for disabling <see cref="InspectCodeSettings.NoSwea"/>.</i></p><p>Disables solution-wide analysis.</p></summary>
         [Pure]
         public static InspectCodeSettings DisableNoSwea(this InspectCodeSettings inspectCodeSettings)
         {
@@ -174,10 +148,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.NoSwea = false;
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for toggling <see cref="InspectCodeSettings.NoSwea"/>.</i></p>
-        /// <p>Disables solution-wide analysis.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for toggling <see cref="InspectCodeSettings.NoSwea"/>.</i></p><p>Disables solution-wide analysis.</p></summary>
         [Pure]
         public static InspectCodeSettings ToggleNoSwea(this InspectCodeSettings inspectCodeSettings)
         {
@@ -185,10 +156,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.NoSwea = !inspectCodeSettings.NoSwea;
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="InspectCodeSettings.Profile"/>.</i></p>
-        /// <p>Specifies an additional .DotSettings file used for inspection settings.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="InspectCodeSettings.Profile"/>.</i></p><p>Specifies an additional .DotSettings file used for inspection settings.</p></summary>
         [Pure]
         public static InspectCodeSettings SetProfile(this InspectCodeSettings inspectCodeSettings, string profile)
         {
@@ -196,10 +164,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.Profile = profile;
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="InspectCodeSettings.Project"/>.</i></p>
-        /// <p>Allows analyzing particular project(s) instead of the whole solution. After this parameter, you can type a project name or a wildcard that matches several projects within your solution. For example, <c>--project=*Billing</c></p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="InspectCodeSettings.Project"/>.</i></p><p>Allows analyzing particular project(s) instead of the whole solution. After this parameter, you can type a project name or a wildcard that matches several projects within your solution. For example, <c>--project=*Billing</c></p></summary>
         [Pure]
         public static InspectCodeSettings SetProject(this InspectCodeSettings inspectCodeSettings, string project)
         {
@@ -207,10 +172,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.Project = project;
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="InspectCodeSettings.DisableSettingsLayers"/> to a new list.</i></p>
-        /// <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="InspectCodeSettings.DisableSettingsLayers"/> to a new list.</i></p><p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p></summary>
         [Pure]
         public static InspectCodeSettings SetDisableSettingsLayers(this InspectCodeSettings inspectCodeSettings, params InspectCodeSettingsLayers[] disableSettingsLayers)
         {
@@ -218,10 +180,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.DisableSettingsLayersInternal = disableSettingsLayers.ToList();
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="InspectCodeSettings.DisableSettingsLayers"/> to a new list.</i></p>
-        /// <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="InspectCodeSettings.DisableSettingsLayers"/> to a new list.</i></p><p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p></summary>
         [Pure]
         public static InspectCodeSettings SetDisableSettingsLayers(this InspectCodeSettings inspectCodeSettings, IEnumerable<InspectCodeSettingsLayers> disableSettingsLayers)
         {
@@ -229,10 +188,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.DisableSettingsLayersInternal = disableSettingsLayers.ToList();
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for adding new disableSettingsLayers to the existing <see cref="InspectCodeSettings.DisableSettingsLayers"/>.</i></p>
-        /// <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for adding new disableSettingsLayers to the existing <see cref="InspectCodeSettings.DisableSettingsLayers"/>.</i></p><p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p></summary>
         [Pure]
         public static InspectCodeSettings AddDisableSettingsLayers(this InspectCodeSettings inspectCodeSettings, params InspectCodeSettingsLayers[] disableSettingsLayers)
         {
@@ -240,10 +196,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.DisableSettingsLayersInternal.AddRange(disableSettingsLayers);
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for adding new disableSettingsLayers to the existing <see cref="InspectCodeSettings.DisableSettingsLayers"/>.</i></p>
-        /// <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for adding new disableSettingsLayers to the existing <see cref="InspectCodeSettings.DisableSettingsLayers"/>.</i></p><p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p></summary>
         [Pure]
         public static InspectCodeSettings AddDisableSettingsLayers(this InspectCodeSettings inspectCodeSettings, IEnumerable<InspectCodeSettingsLayers> disableSettingsLayers)
         {
@@ -251,10 +204,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.DisableSettingsLayersInternal.AddRange(disableSettingsLayers);
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for clearing <see cref="InspectCodeSettings.DisableSettingsLayers"/>.</i></p>
-        /// <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for clearing <see cref="InspectCodeSettings.DisableSettingsLayers"/>.</i></p><p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p></summary>
         [Pure]
         public static InspectCodeSettings ClearDisableSettingsLayers(this InspectCodeSettings inspectCodeSettings)
         {
@@ -262,10 +212,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.DisableSettingsLayersInternal.Clear();
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for adding a single disableSettingsLayer to <see cref="InspectCodeSettings.DisableSettingsLayers"/>.</i></p>
-        /// <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for adding a single disableSettingsLayer to <see cref="InspectCodeSettings.DisableSettingsLayers"/>.</i></p><p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p></summary>
         [Pure]
         public static InspectCodeSettings AddDisableSettingsLayer(this InspectCodeSettings inspectCodeSettings, InspectCodeSettingsLayers disableSettingsLayer)
         {
@@ -273,10 +220,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.DisableSettingsLayersInternal.Add(disableSettingsLayer);
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for removing a single disableSettingsLayer from <see cref="InspectCodeSettings.DisableSettingsLayers"/>.</i></p>
-        /// <p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for removing a single disableSettingsLayer from <see cref="InspectCodeSettings.DisableSettingsLayers"/>.</i></p><p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p></summary>
         [Pure]
         public static InspectCodeSettings RemoveDisableSettingsLayer(this InspectCodeSettings inspectCodeSettings, InspectCodeSettingsLayers disableSettingsLayer)
         {
@@ -284,10 +228,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.DisableSettingsLayersInternal.Remove(disableSettingsLayer);
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="InspectCodeSettings.NoBuiltinSettings"/>.</i></p>
-        /// <p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="InspectCodeSettings.NoBuiltinSettings"/>.</i></p><p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p></summary>
         [Pure]
         public static InspectCodeSettings SetNoBuiltinSettings(this InspectCodeSettings inspectCodeSettings, bool noBuiltinSettings)
         {
@@ -295,10 +236,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.NoBuiltinSettings = noBuiltinSettings;
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for enabling <see cref="InspectCodeSettings.NoBuiltinSettings"/>.</i></p>
-        /// <p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p>
-        /// </summary>
+        /// <summary><p><i>Extension method for enabling <see cref="InspectCodeSettings.NoBuiltinSettings"/>.</i></p><p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p></summary>
         [Pure]
         public static InspectCodeSettings EnableNoBuiltinSettings(this InspectCodeSettings inspectCodeSettings)
         {
@@ -306,10 +244,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.NoBuiltinSettings = true;
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for disabling <see cref="InspectCodeSettings.NoBuiltinSettings"/>.</i></p>
-        /// <p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p>
-        /// </summary>
+        /// <summary><p><i>Extension method for disabling <see cref="InspectCodeSettings.NoBuiltinSettings"/>.</i></p><p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p></summary>
         [Pure]
         public static InspectCodeSettings DisableNoBuiltinSettings(this InspectCodeSettings inspectCodeSettings)
         {
@@ -317,10 +252,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.NoBuiltinSettings = false;
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for toggling <see cref="InspectCodeSettings.NoBuiltinSettings"/>.</i></p>
-        /// <p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p>
-        /// </summary>
+        /// <summary><p><i>Extension method for toggling <see cref="InspectCodeSettings.NoBuiltinSettings"/>.</i></p><p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p></summary>
         [Pure]
         public static InspectCodeSettings ToggleNoBuiltinSettings(this InspectCodeSettings inspectCodeSettings)
         {
@@ -328,10 +260,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.NoBuiltinSettings = !inspectCodeSettings.NoBuiltinSettings;
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="InspectCodeSettings.CachesHome"/>.</i></p>
-        /// <p>Lets you specify a custom location for the data that InspectCode caches. By default, the <i>%LOCALAPPDATA%</i> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="InspectCodeSettings.CachesHome"/>.</i></p><p>Lets you specify a custom location for the data that InspectCode caches. By default, the <i>%LOCALAPPDATA%</i> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.</p></summary>
         [Pure]
         public static InspectCodeSettings SetCachesHome(this InspectCodeSettings inspectCodeSettings, string cachesHome)
         {
@@ -339,10 +268,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.CachesHome = cachesHome;
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="InspectCodeSettings.Extensions"/> to a new list.</i></p>
-        /// <p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="InspectCodeSettings.Extensions"/> to a new list.</i></p><p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p></summary>
         [Pure]
         public static InspectCodeSettings SetExtensions(this InspectCodeSettings inspectCodeSettings, params string[] extensions)
         {
@@ -350,10 +276,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.ExtensionsInternal = extensions.ToList();
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="InspectCodeSettings.Extensions"/> to a new list.</i></p>
-        /// <p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="InspectCodeSettings.Extensions"/> to a new list.</i></p><p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p></summary>
         [Pure]
         public static InspectCodeSettings SetExtensions(this InspectCodeSettings inspectCodeSettings, IEnumerable<string> extensions)
         {
@@ -361,10 +284,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.ExtensionsInternal = extensions.ToList();
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for adding new extensions to the existing <see cref="InspectCodeSettings.Extensions"/>.</i></p>
-        /// <p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for adding new extensions to the existing <see cref="InspectCodeSettings.Extensions"/>.</i></p><p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p></summary>
         [Pure]
         public static InspectCodeSettings AddExtensions(this InspectCodeSettings inspectCodeSettings, params string[] extensions)
         {
@@ -372,10 +292,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.ExtensionsInternal.AddRange(extensions);
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for adding new extensions to the existing <see cref="InspectCodeSettings.Extensions"/>.</i></p>
-        /// <p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for adding new extensions to the existing <see cref="InspectCodeSettings.Extensions"/>.</i></p><p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p></summary>
         [Pure]
         public static InspectCodeSettings AddExtensions(this InspectCodeSettings inspectCodeSettings, IEnumerable<string> extensions)
         {
@@ -383,10 +300,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.ExtensionsInternal.AddRange(extensions);
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for clearing <see cref="InspectCodeSettings.Extensions"/>.</i></p>
-        /// <p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for clearing <see cref="InspectCodeSettings.Extensions"/>.</i></p><p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p></summary>
         [Pure]
         public static InspectCodeSettings ClearExtensions(this InspectCodeSettings inspectCodeSettings)
         {
@@ -394,10 +308,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.ExtensionsInternal.Clear();
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for adding a single extension to <see cref="InspectCodeSettings.Extensions"/>.</i></p>
-        /// <p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for adding a single extension to <see cref="InspectCodeSettings.Extensions"/>.</i></p><p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p></summary>
         [Pure]
         public static InspectCodeSettings AddExtension(this InspectCodeSettings inspectCodeSettings, string extension)
         {
@@ -405,10 +316,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.ExtensionsInternal.Add(extension);
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for removing a single extension from <see cref="InspectCodeSettings.Extensions"/>.</i></p>
-        /// <p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for removing a single extension from <see cref="InspectCodeSettings.Extensions"/>.</i></p><p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p></summary>
         [Pure]
         public static InspectCodeSettings RemoveExtension(this InspectCodeSettings inspectCodeSettings, string extension)
         {
@@ -416,10 +324,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.ExtensionsInternal.Remove(extension);
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="InspectCodeSettings.Properties"/> to a new dictionary.</i></p>
-        /// <p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="InspectCodeSettings.Properties"/> to a new dictionary.</i></p><p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p></summary>
         [Pure]
         public static InspectCodeSettings SetProperties(this InspectCodeSettings inspectCodeSettings, IDictionary<string, string> properties)
         {
@@ -427,10 +332,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for clearing <see cref="InspectCodeSettings.Properties"/>.</i></p>
-        /// <p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for clearing <see cref="InspectCodeSettings.Properties"/>.</i></p><p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p></summary>
         [Pure]
         public static InspectCodeSettings ClearProperties(this InspectCodeSettings inspectCodeSettings)
         {
@@ -438,10 +340,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.PropertiesInternal.Clear();
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for adding a property to <see cref="InspectCodeSettings.Properties"/>.</i></p>
-        /// <p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for adding a property to <see cref="InspectCodeSettings.Properties"/>.</i></p><p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p></summary>
         [Pure]
         public static InspectCodeSettings AddProperty(this InspectCodeSettings inspectCodeSettings, string propertyKey, string propertyValue)
         {
@@ -449,10 +348,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.PropertiesInternal.Add(propertyKey, propertyValue);
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for removing a property from <see cref="InspectCodeSettings.Properties"/>.</i></p>
-        /// <p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for removing a property from <see cref="InspectCodeSettings.Properties"/>.</i></p><p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p></summary>
         [Pure]
         public static InspectCodeSettings RemoveProperty(this InspectCodeSettings inspectCodeSettings, string propertyKey)
         {
@@ -460,10 +356,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.PropertiesInternal.Remove(propertyKey);
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting a property in <see cref="InspectCodeSettings.Properties"/>.</i></p>
-        /// <p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting a property in <see cref="InspectCodeSettings.Properties"/>.</i></p><p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p></summary>
         [Pure]
         public static InspectCodeSettings SetProperty(this InspectCodeSettings inspectCodeSettings, string propertyKey, string propertyValue)
         {
@@ -471,10 +364,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.PropertiesInternal[propertyKey] = propertyValue;
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="InspectCodeSettings.DumpIssuesTypes"/>.</i></p>
-        /// <p>Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="InspectCodeSettings.DumpIssuesTypes"/>.</i></p><p>Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.</p></summary>
         [Pure]
         public static InspectCodeSettings SetDumpIssuesTypes(this InspectCodeSettings inspectCodeSettings, bool dumpIssuesTypes)
         {
@@ -482,10 +372,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.DumpIssuesTypes = dumpIssuesTypes;
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for enabling <see cref="InspectCodeSettings.DumpIssuesTypes"/>.</i></p>
-        /// <p>Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for enabling <see cref="InspectCodeSettings.DumpIssuesTypes"/>.</i></p><p>Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.</p></summary>
         [Pure]
         public static InspectCodeSettings EnableDumpIssuesTypes(this InspectCodeSettings inspectCodeSettings)
         {
@@ -493,10 +380,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.DumpIssuesTypes = true;
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for disabling <see cref="InspectCodeSettings.DumpIssuesTypes"/>.</i></p>
-        /// <p>Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for disabling <see cref="InspectCodeSettings.DumpIssuesTypes"/>.</i></p><p>Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.</p></summary>
         [Pure]
         public static InspectCodeSettings DisableDumpIssuesTypes(this InspectCodeSettings inspectCodeSettings)
         {
@@ -504,10 +388,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.DumpIssuesTypes = false;
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for toggling <see cref="InspectCodeSettings.DumpIssuesTypes"/>.</i></p>
-        /// <p>Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for toggling <see cref="InspectCodeSettings.DumpIssuesTypes"/>.</i></p><p>Use this option to dump all existing <a href="https://www.jetbrains.com/help/resharper/Code_Analysis__Code_Inspections.html">code inspections</a> to the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html#output">output</a>. This option should be used separately from actual analysis, i.e. without the solution argument.</p></summary>
         [Pure]
         public static InspectCodeSettings ToggleDumpIssuesTypes(this InspectCodeSettings inspectCodeSettings)
         {
@@ -515,10 +396,7 @@ namespace Nuke.Common.Tools.InspectCode
             inspectCodeSettings.DumpIssuesTypes = !inspectCodeSettings.DumpIssuesTypes;
             return inspectCodeSettings;
         }
-        /// <summary>
-        /// <p><i>Extension method for setting <see cref="InspectCodeSettings.Toolset"/>.</i></p>
-        /// <p>Explicitly specified MsBuild Toolset version (12.0, 14.0, 15.0). For example, <c>--toolset=12.0</c>.</p>
-        /// </summary>
+        /// <summary><p><i>Extension method for setting <see cref="InspectCodeSettings.Toolset"/>.</i></p><p>Explicitly specified MsBuild Toolset version (12.0, 14.0, 15.0). For example, <c>--toolset=12.0</c>.</p></summary>
         [Pure]
         public static InspectCodeSettings SetToolset(this InspectCodeSettings inspectCodeSettings, string toolset)
         {
@@ -527,10 +405,7 @@ namespace Nuke.Common.Tools.InspectCode
             return inspectCodeSettings;
         }
     }
-    /// <summary>
-    /// <p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p>
-    /// <p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p>
-    /// </summary>
+    /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p></summary>
     [PublicAPI]
     public enum InspectCodeSettingsLayers
     {

@@ -1,0 +1,62 @@
+
+          
+paket restore
+Download the dependencies specified by the paket.lock file into the packages/ directory.
+1: 
+2: 
+3: 
+
+paket restore [--help] [--force] [--only-referenced] [--touch-affected-refs] [--ignore-checks]
+              [--fail-on-checks] [group &lt;name&gt;] [--project &lt;file name&gt;]
+              [--references-files [&lt;file name&gt;...]] [--target-framework &lt;target framework&gt;]
+
+If you add the -v flag, then Paket will run in verbose mode and show detailed information.
+With --log-file [FileName] you can trace the logged information into a file.
+paket restore fails with an error if the paket.lock file does not exist.
+No packages are downloaded in that case. Please see paket install and paket update to learn how to create the paket.lock file.
+OPTIONS:
+ 1: 
+ 2: 
+ 3: 
+ 4: 
+ 5: 
+ 6: 
+ 7: 
+ 8: 
+ 9: 
+10: 
+11: 
+12: 
+13: 
+14: 
+15: 
+16: 
+17: 
+18: 
+19: 
+
+--force, -f           Forces the download of all packages.
+--only-referenced     Allows to restore packages that are referenced in paket.references files,
+                      instead of all packages in paket.dependencies.
+--touch-affected-refs Touches project files referencing packages which are being restored, to
+                      help incremental build tools detecting the change.
+--ignore-checks       Skips the test if paket.dependencies and paket.lock are in sync.
+--fail-on-checks      Causes the restore to fail if any of the checks fail.
+group &lt;name&gt;          Allows to restore a single group.
+--project &lt;file name&gt; Allows to restore dependencies for a project.
+--references-files [&lt;file name&gt;]
+                      Allows to restore all packages from the given paket.references files.
+--target-framework &lt;target framework&gt;
+                      Allows to restore only for a specified target framework.
+--verbose, -v         Enable verbose console output for the paket process.
+--log-file &lt;path&gt;     Specify a log file for the paket process.
+--silent, -s          Suppress console output for the paket process.
+--version             Display the version.
+--from-bootstrapper   Call coming from the &#39;--run&#39; feature of the bootstrapper.
+--help                display this list of options.
+
+
+
+
+
+        

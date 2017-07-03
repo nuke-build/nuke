@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using Nuke.Common;
-using Nuke.Common.IO;
 using Nuke.Common.Tools.DocFx;
 using Nuke.Common.Tools.GitLink;
 using Nuke.Common.Tools.MSBuild;

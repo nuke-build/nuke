@@ -8,9 +8,9 @@ using System.Linq;
 using Nuke.Core;
 using Nuke.Core.Tooling;
 
-namespace Nuke.Common.Tools.Xunit
+namespace Nuke.Common.Tools.Xunit2
 {
-    public static partial class XunitTasks
+    public static partial class Xunit2Tasks
     {
         public static void Xunit2 (
             IEnumerable<string> assemblyFiles,

@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Nuke.Common.Tools.Xunit
+namespace Nuke.Common.Tools.Xunit2
 {
     partial class Xunit2SettingsExtensions
     {
