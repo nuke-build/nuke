@@ -14,7 +14,7 @@ namespace Nuke.Common.Tools.GitVersion
         public static GitVersion GitVersion (GitVersionSettings gitVersionSettings = null)
         {
             gitVersionSettings = gitVersionSettings ?? new GitVersionSettings();
-            var processSettings = ProcessSettings.EmptyEnvironmentVariables.EnableRedirectOutput();
+            var processSettings = new ProcessSettings().EnableRedirectOutput();
 
             var process = ProcessTasks.StartProcess(gitVersionSettings, processSettings);
             process.AssertWaitForExit();

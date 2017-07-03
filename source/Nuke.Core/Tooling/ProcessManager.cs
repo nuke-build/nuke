@@ -45,7 +45,7 @@ namespace Nuke.Core.Tooling
             ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
             OutputSink.Info($"> {toolPath.DoubleQuoteIfNeeded()} {arguments.RenderForOutput()}");
 
-            processSettings = processSettings ?? ProcessSettings.Default;
+            processSettings = processSettings ?? new ProcessSettings();
             return StartProcessInternal(
                 toolPath,
                 arguments.RenderForExecution(),
@@ -100,48 +100,36 @@ namespace Nuke.Core.Tooling
                                 RedirectStandardError = redirectOutput,
                                 UseShellExecute = false
                             };
-            ApplyEnvironmentVariables(environmentVariables, startInfo);
+
+            if (environmentVariables != null)
+            {
+                foreach (var pair in environmentVariables)
+                    startInfo.Environment[pair.Key] = pair.Value;
+            }
+            PrintEnvironmentVariables (startInfo);
 
             var process = Process.Start(startInfo);
             if (process == null)
                 return null;
 
-            return new Process2(process, timeout, GetOutputSink(redirectOutput, process), outputFilter ?? (x => x));
-        }
-
-        private static void ApplyEnvironmentVariables (
-            [CanBeNull] IReadOnlyDictionary<string, string> environmentVariables,
-            ProcessStartInfo startInfo)
-        {
-            if (environmentVariables != null)
+            BlockingCollection<Output> output = null;
+            if (redirectOutput)
             {
-                startInfo.Environment.Clear();
+                output = new BlockingCollection<Output>();
 
-                foreach (var pair in environmentVariables)
-                    startInfo.Environment[pair.Key] = pair.Value;
+                void AddNotNullData (DataReceivedEventArgs e, OutputType outputType)
+                {
+                    if (e.Data != null)
+                        output.Add (new Output { Text = e.Data, Type = outputType });
+                }
+
+                process.OutputDataReceived += (s, e) => AddNotNullData(e, OutputType.Std);
+                process.ErrorDataReceived += (s, e) => AddNotNullData(e, OutputType.Err);
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
             }
 
-            PrintEnvironmentVariables(startInfo);
-        }
-
-        [CanBeNull]
-        private static BlockingCollection<Output> GetOutputSink (bool redirectOutput, Process process)
-        {
-            if (!redirectOutput)
-                return null;
-
-            var output = new BlockingCollection<Output>();
-            void AddNotNullData (DataReceivedEventArgs e, OutputType outputType)
-            {
-                if (e.Data != null)
-                    output.Add(new Output { Text = e.Data, Type = outputType });
-            }
-
-            process.OutputDataReceived += (s, e) => AddNotNullData(e, OutputType.Std);
-            process.ErrorDataReceived += (s, e) => AddNotNullData(e, OutputType.Err);
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
-            return output;
+            return new Process2(process, timeout, output, outputFilter ?? (x => x));
         }
 
         private static void PrintEnvironmentVariables (ProcessStartInfo startInfo)
