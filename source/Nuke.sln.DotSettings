@@ -6,7 +6,7 @@
 	<s:String x:Key="/Default/CodeInspection/XmlDocInspections/TypeMemberAccessibility/@EntryValue">Public</s:String>
 	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">Copyright Matthias Koch 2017.&#xD;
 Distributed under the MIT License.&#xD;
-https://github.com/matkoch/Nuke/blob/master/LICENSE</s:String>
+https://github.com/nuke-build/nuke/blob/master/LICENSE</s:String>
 	<s:String x:Key="/Default/Environment/Hierarchy/Build/SolBuilderDuo/UseMsbuildSolutionBuilder/@EntryValue">NewVersion</s:String>
 	
 	
