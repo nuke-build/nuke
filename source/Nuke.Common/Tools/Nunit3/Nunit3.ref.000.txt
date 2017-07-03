@@ -1,1543 +1,220 @@
 
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-  <link rel="dns-prefetch" href="https://assets-cdn.github.com">
-  <link rel="dns-prefetch" href="https://avatars0.githubusercontent.com">
-  <link rel="dns-prefetch" href="https://avatars1.githubusercontent.com">
-  <link rel="dns-prefetch" href="https://avatars2.githubusercontent.com">
-  <link rel="dns-prefetch" href="https://avatars3.githubusercontent.com">
-  <link rel="dns-prefetch" href="https://github-cloud.s3.amazonaws.com">
-  <link rel="dns-prefetch" href="https://user-images.githubusercontent.com/">
-
-
-
-  <link crossorigin="anonymous" href="https://assets-cdn.github.com/assets/frameworks-e04a23d39bf81b7db3c635177756ef51bc171feb440be9e174933c6eb56382da.css" media="all" rel="stylesheet" />
-  <link crossorigin="anonymous" href="https://assets-cdn.github.com/assets/github-3dc65358913934c77ed38ef6979525393a285062908a13a901527639c133c821.css" media="all" rel="stylesheet" />
-  
-  
-  <link crossorigin="anonymous" href="https://assets-cdn.github.com/assets/site-0985c539aa8585eaf2bfff13b4cbb98befa6556d244e6cd5cf4ce0a57700d11e.css" media="all" rel="stylesheet" />
-  
-
-  <meta name="viewport" content="width=device-width">
-  
-  <title>Console Command Line · nunit/docs Wiki · GitHub</title>
-  <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub">
-  <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
-  <meta property="fb:app_id" content="1401488693436528">
-
-    
-    <meta content="https://avatars0.githubusercontent.com/u/2678858?v=3&amp;s=400" property="og:image" /><meta content="GitHub" property="og:site_name" /><meta content="object" property="og:type" /><meta content="nunit/docs" property="og:title" /><meta content="https://github.com/nunit/docs" property="og:url" /><meta content="docs - Documentation for all active NUnit projects" property="og:description" />
-
-  <link rel="assets" href="https://assets-cdn.github.com/">
-  
-  <meta name="pjax-timeout" content="1000">
-  
-  <meta name="request-id" content="CBD9:12269:268CFE2:3A9D182:59599281" data-pjax-transient>
-  
-
-  <meta name="selected-link" value="repo_wiki" data-pjax-transient>
-
-  <meta name="google-site-verification" content="KT5gs8h0wvaagLKAVWq8bbeNwnZZK1r1XQysX3xurLU">
-<meta name="google-site-verification" content="ZzhVyEFwb7w3e0-uOTltm8Jsck2F5StVihD0exw2fsA">
-    <meta name="google-analytics" content="UA-3769691-2">
-
-<meta content="collector.githubapp.com" name="octolytics-host" /><meta content="github" name="octolytics-app-id" /><meta content="https://collector.githubapp.com/github-external/browser_event" name="octolytics-event-url" /><meta content="CBD9:12269:268CFE2:3A9D182:59599281" name="octolytics-dimension-request_id" /><meta content="iad" name="octolytics-dimension-region_edge" /><meta content="iad" name="octolytics-dimension-region_render" />
-<meta content="/&lt;user-name&gt;/&lt;repo-name&gt;/wiki/show" data-pjax-transient="true" name="analytics-location" />
-
-
-
-
-  <meta class="js-ga-set" name="dimension1" content="Logged Out">
-
-
-  
-
-      <meta name="hostname" content="github.com">
-  <meta name="user-login" content="">
-
-      <meta name="expected-hostname" content="github.com">
-    <meta name="js-proxy-site-detection-payload" content="YWJjMGZhODQ2YzliM2VhY2EyZDI3MGFhODJiZGMxZGVjOWRjYTdmOGViZTE4MDlhY2I5ZjgwNDBjMzE3MzgyYXx7InJlbW90ZV9hZGRyZXNzIjoiMTg4LjE5My43Mi4xMCIsInJlcXVlc3RfaWQiOiJDQkQ5OjEyMjY5OjI2OENGRTI6M0E5RDE4Mjo1OTU5OTI4MSIsInRpbWVzdGFtcCI6MTQ5OTA0MjQzMywiaG9zdCI6ImdpdGh1Yi5jb20ifQ==">
-
-
-  <meta name="html-safe-nonce" content="614172767d8efe30029d212dda9cc7835693085e">
-
-  <meta http-equiv="x-pjax-version" content="e87457103958760f131cc966530f53fd">
-  
-
-      <link href="https://github.com/nunit/docs/commits/master.atom" rel="alternate" title="Recent Commits to docs:master" type="application/atom+xml">
-
-  <meta name="description" content="docs - Documentation for all active NUnit projects">
-  <meta name="go-import" content="github.com/nunit/docs git https://github.com/nunit/docs.git">
-
-  <meta content="2678858" name="octolytics-dimension-user_id" /><meta content="nunit" name="octolytics-dimension-user_login" /><meta content="50743570" name="octolytics-dimension-repository_id" /><meta content="nunit/docs" name="octolytics-dimension-repository_nwo" /><meta content="true" name="octolytics-dimension-repository_public" /><meta content="false" name="octolytics-dimension-repository_is_fork" /><meta content="50743570" name="octolytics-dimension-repository_network_root_id" /><meta content="nunit/docs" name="octolytics-dimension-repository_network_root_nwo" /><meta content="false" name="octolytics-dimension-repository_explore_github_marketplace_ci_cta_shown" />
-
-
-
-
-  <meta name="browser-stats-url" content="https://api.github.com/_private/browser/stats">
-
-  <meta name="browser-errors-url" content="https://api.github.com/_private/browser/errors">
-
-  <link rel="mask-icon" href="https://assets-cdn.github.com/pinned-octocat.svg" color="#000000">
-  <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
-
-<meta name="theme-color" content="#1e2327">
-
-
-
-  </head>
-
-  <body class="logged-out env-production">
-    
-
-
-
-  <div class="position-relative js-header-wrapper ">
-    <a href="#start-of-content" tabindex="1" class="px-2 py-4 show-on-focus js-skip-to-content">Skip to content</a>
-    <div id="js-pjax-loader-bar" class="pjax-loader-bar"><div class="progress"></div></div>
-
-    
-    
-    
-
-
-
-          <header class="site-header js-details-container Details" role="banner">
-  <div class="site-nav-container">
-    <a class="header-logo-invertocat" href="https://github.com/" aria-label="Homepage" data-ga-click="(Logged out) Header, go to homepage, icon:logo-wordmark">
-      <svg aria-hidden="true" class="octicon octicon-mark-github" height="32" version="1.1" viewBox="0 0 16 16" width="32"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-    </a>
-
-    <button class="btn-link float-right site-header-toggle js-details-target" type="button" aria-label="Toggle navigation" aria-expanded="false">
-      <svg aria-hidden="true" class="octicon octicon-three-bars" height="24" version="1.1" viewBox="0 0 12 16" width="18"><path fill-rule="evenodd" d="M11.41 9H.59C0 9 0 8.59 0 8c0-.59 0-1 .59-1H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1h.01zm0-4H.59C0 5 0 4.59 0 4c0-.59 0-1 .59-1H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1h.01zM.59 11H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1H.59C0 13 0 12.59 0 12c0-.59 0-1 .59-1z"/></svg>
-    </button>
-
-    <div class="site-header-menu">
-      <nav class="site-header-nav">
-        <a href="/features" class="js-selected-navigation-item nav-item" data-ga-click="Header, click, Nav menu - item:features" data-selected-links="/features /features/code-review /features/project-management /features/integrations /features">
-          Features
-</a>        <a href="/business" class="js-selected-navigation-item nav-item" data-ga-click="Header, click, Nav menu - item:business" data-selected-links="/business /business/security /business/customers /business">
-          Business
-</a>        <a href="/explore" class="js-selected-navigation-item nav-item" data-ga-click="Header, click, Nav menu - item:explore" data-selected-links="/explore /trending /trending/developers /stars /integrations /integrations/feature/code /integrations/feature/collaborate /integrations/feature/ship showcases showcases_search showcases_landing /explore">
-          Explore
-</a>            <a href="/marketplace" class="js-selected-navigation-item nav-item" data-ga-click="Header, click, Nav menu - item:marketplace" data-selected-links=" /marketplace">
-              Marketplace
-</a>        <a href="/pricing" class="js-selected-navigation-item nav-item" data-ga-click="Header, click, Nav menu - item:pricing" data-selected-links="/pricing /pricing/developer /pricing/team /pricing/business-hosted /pricing/business-enterprise /pricing">
-          Pricing
-</a>      </nav>
-
-      <div class="site-header-actions">
-          <div class="header-search scoped-search site-scoped-search js-site-search" role="search">
-  <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/nunit/docs/search" class="js-site-search-form" data-scoped-search-url="/nunit/docs/search" data-unscoped-search-url="/search" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
-    <label class="form-control header-search-wrapper js-chromeless-input-container">
-        <a href="/nunit/docs/wiki/Console-Command-Line" class="header-search-scope no-underline">This repository</a>
-      <input type="text"
-        class="form-control header-search-input js-site-search-focus js-site-search-field is-clearable"
-        data-hotkey="s"
-        name="q"
-        value=""
-        placeholder="Search"
-        aria-label="Search this repository"
-        data-unscoped-placeholder="Search GitHub"
-        data-scoped-placeholder="Search"
-        autocapitalize="off">
-        <input type="hidden" class="js-site-search-type-field" name="type" >
-    </label>
-</form></div>
-
-
-          <a class="text-bold site-header-link" href="/login?return_to=%2Fnunit%2Fdocs%2Fwiki%2FConsole-Command-Line" data-ga-click="(Logged out) Header, clicked Sign in, text:sign-in">Sign in</a>
-            <span class="text-gray">or</span>
-            <a class="text-bold site-header-link" href="/join?source=header-repo" data-ga-click="(Logged out) Header, clicked Sign up, text:sign-up">Sign up</a>
-      </div>
-    </div>
-  </div>
-</header>
-
-
-  </div>
-
-  <div id="start-of-content" class="show-on-focus"></div>
-
-    <div id="js-flash-container">
-</div>
-
-
-
-  <div role="main">
-        <div itemscope itemtype="http://schema.org/SoftwareSourceCode">
-    <div id="js-repo-pjax-container" data-pjax-container>
-      
-
-
-
-  
-
-
-    <div class="pagehead repohead instapaper_ignore readability-menu experiment-repo-nav">
-      <div class="container repohead-details-container">
-
-        <ul class="pagehead-actions">
-  <li>
-      <a href="/login?return_to=%2Fnunit%2Fdocs"
-    class="btn btn-sm btn-with-count tooltipped tooltipped-n"
-    aria-label="You must be signed in to watch a repository" rel="nofollow">
-    <svg aria-hidden="true" class="octicon octicon-eye" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M8.06 2C3 2 0 8 0 8s3 6 8.06 6C13 14 16 8 16 8s-3-6-7.94-6zM8 12c-2.2 0-4-1.78-4-4 0-2.2 1.8-4 4-4 2.22 0 4 1.8 4 4 0 2.22-1.78 4-4 4zm2-4c0 1.11-.89 2-2 2-1.11 0-2-.89-2-2 0-1.11.89-2 2-2 1.11 0 2 .89 2 2z"/></svg>
-    Watch
-  </a>
-  <a class="social-count" href="/nunit/docs/watchers"
-     aria-label="60 users are watching this repository">
-    60
-  </a>
-
-  </li>
-
-  <li>
-      <a href="/login?return_to=%2Fnunit%2Fdocs"
-    class="btn btn-sm btn-with-count tooltipped tooltipped-n"
-    aria-label="You must be signed in to star a repository" rel="nofollow">
-    <svg aria-hidden="true" class="octicon octicon-star" height="16" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74z"/></svg>
-    Star
-  </a>
-
-    <a class="social-count js-social-count" href="/nunit/docs/stargazers"
-      aria-label="161 users starred this repository">
-      161
-    </a>
-
-  </li>
-
-  <li>
-      <a href="/login?return_to=%2Fnunit%2Fdocs"
-        class="btn btn-sm btn-with-count tooltipped tooltipped-n"
-        aria-label="You must be signed in to fork a repository" rel="nofollow">
-        <svg aria-hidden="true" class="octicon octicon-repo-forked" height="16" version="1.1" viewBox="0 0 10 16" width="10"><path fill-rule="evenodd" d="M8 1a1.993 1.993 0 0 0-1 3.72V6L5 8 3 6V4.72A1.993 1.993 0 0 0 2 1a1.993 1.993 0 0 0-1 3.72V6.5l3 3v1.78A1.993 1.993 0 0 0 5 15a1.993 1.993 0 0 0 1-3.72V9.5l3-3V4.72A1.993 1.993 0 0 0 8 1zM2 4.2C1.34 4.2.8 3.65.8 3c0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zm3 10c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zm3-10c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2z"/></svg>
-        Fork
-      </a>
-
-    <a href="/nunit/docs/network" class="social-count"
-       aria-label="41 users forked this repository">
-      41
-    </a>
-  </li>
-</ul>
-
-        <h1 class="public ">
-  <svg aria-hidden="true" class="octicon octicon-repo" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z"/></svg>
-  <span class="author" itemprop="author"><a href="/nunit" class="url fn" rel="author">nunit</a></span><!--
---><span class="path-divider">/</span><!--
---><strong itemprop="name"><a href="/nunit/docs" data-pjax="#js-repo-pjax-container">docs</a></strong>
-
-</h1>
-
-      </div>
-      <div class="container">
         
-<nav class="reponav js-repo-nav js-sidenav-container-pjax"
-     itemscope
-     itemtype="http://schema.org/BreadcrumbList"
-     role="navigation"
-     data-pjax="#js-repo-pjax-container">
+          The console interface runner is invoked by a command in the form
+    NUNIT3-CONSOLE [inputfiles] [options]
 
-  <span itemscope itemtype="http://schema.org/ListItem" itemprop="itemListElement">
-    <a href="/nunit/docs" class="js-selected-navigation-item reponav-item" data-hotkey="g c" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches /nunit/docs" itemprop="url">
-      <svg aria-hidden="true" class="octicon octicon-code" height="16" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M9.5 3L8 4.5 11.5 8 8 11.5 9.5 13 14 8 9.5 3zm-5 0L0 8l4.5 5L6 11.5 2.5 8 6 4.5 4.5 3z"/></svg>
-      <span itemprop="name">Code</span>
-      <meta itemprop="position" content="1">
-</a>  </span>
+where inputfiles is one or more assemblies or test projects of
+a type that NUnit can process and options is zero or more options.
+Input files and options may be mixed in any order.
 
-    <span itemscope itemtype="http://schema.org/ListItem" itemprop="itemListElement">
-      <a href="/nunit/docs/issues" class="js-selected-navigation-item reponav-item" data-hotkey="g i" data-selected-links="repo_issues repo_labels repo_milestones /nunit/docs/issues" itemprop="url">
-        <svg aria-hidden="true" class="octicon octicon-issue-opened" height="16" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"/></svg>
-        <span itemprop="name">Issues</span>
-        <span class="Counter">62</span>
-        <meta itemprop="position" content="2">
-</a>    </span>
-
-  <span itemscope itemtype="http://schema.org/ListItem" itemprop="itemListElement">
-    <a href="/nunit/docs/pulls" class="js-selected-navigation-item reponav-item" data-hotkey="g p" data-selected-links="repo_pulls /nunit/docs/pulls" itemprop="url">
-      <svg aria-hidden="true" class="octicon octicon-git-pull-request" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M11 11.28V5c-.03-.78-.34-1.47-.94-2.06C9.46 2.35 8.78 2.03 8 2H7V0L4 3l3 3V4h1c.27.02.48.11.69.31.21.2.3.42.31.69v6.28A1.993 1.993 0 0 0 10 15a1.993 1.993 0 0 0 1-3.72zm-1 2.92c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zM4 3c0-1.11-.89-2-2-2a1.993 1.993 0 0 0-1 3.72v6.56A1.993 1.993 0 0 0 2 15a1.993 1.993 0 0 0 1-3.72V4.72c.59-.34 1-.98 1-1.72zm-.8 10c0 .66-.55 1.2-1.2 1.2-.65 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2zM2 4.2C1.34 4.2.8 3.65.8 3c0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2z"/></svg>
-      <span itemprop="name">Pull requests</span>
-      <span class="Counter">0</span>
-      <meta itemprop="position" content="3">
-</a>  </span>
-
-    <a href="/nunit/docs/projects" class="js-selected-navigation-item reponav-item" data-selected-links="repo_projects new_repo_project repo_project /nunit/docs/projects">
-      <svg aria-hidden="true" class="octicon octicon-project" height="16" version="1.1" viewBox="0 0 15 16" width="15"><path fill-rule="evenodd" d="M10 12h3V2h-3v10zm-4-2h3V2H6v8zm-4 4h3V2H2v12zm-1 1h13V1H1v14zM14 0H1a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1z"/></svg>
-      Projects
-      <span class="Counter" >0</span>
-</a>
-    <a href="/nunit/docs/wiki" class="js-selected-navigation-item selected reponav-item" data-hotkey="g w" data-selected-links="repo_wiki /nunit/docs/wiki">
-      <svg aria-hidden="true" class="octicon octicon-book" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M3 5h4v1H3V5zm0 3h4V7H3v1zm0 2h4V9H3v1zm11-5h-4v1h4V5zm0 2h-4v1h4V7zm0 2h-4v1h4V9zm2-6v9c0 .55-.45 1-1 1H9.5l-1 1-1-1H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h5.5l1 1 1-1H15c.55 0 1 .45 1 1zm-8 .5L7.5 3H2v9h6V3.5zm7-.5H9.5l-.5.5V12h6V3z"/></svg>
-      Wiki
-</a>
-
-    <div class="reponav-dropdown js-menu-container">
-      <button type="button" class="btn-link reponav-item reponav-dropdown js-menu-target " data-no-toggle aria-expanded="false" aria-haspopup="true">
-        Insights
-        <svg aria-hidden="true" class="octicon octicon-triangle-down v-align-middle text-gray" height="11" version="1.1" viewBox="0 0 12 16" width="8"><path fill-rule="evenodd" d="M0 5l6 6 6-6z"/></svg>
-      </button>
-      <div class="dropdown-menu-content js-menu-content">
-        <div class="dropdown-menu dropdown-menu-sw">
-          <a class="dropdown-item" href="/nunit/docs/pulse" data-skip-pjax>
-            <svg aria-hidden="true" class="octicon octicon-pulse" height="16" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M11.5 8L8.8 5.4 6.6 8.5 5.5 1.6 2.38 8H0v2h3.6l.9-1.8.9 5.4L9 8.5l1.6 1.5H14V8z"/></svg>
-            Pulse
-          </a>
-          <a class="dropdown-item" href="/nunit/docs/graphs" data-skip-pjax>
-            <svg aria-hidden="true" class="octicon octicon-graph" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M16 14v1H0V0h1v14h15zM5 13H3V8h2v5zm4 0H7V3h2v10zm4 0h-2V6h2v7z"/></svg>
-            Graphs
-          </a>
-        </div>
-      </div>
-    </div>
-</nav>
-
-      </div>
-    </div>
-
-<div class="container new-discussion-timeline experiment-repo-nav">
-  <div class="repository-content">
-
-    
-  <div id="wiki-wrapper" class="wiki-wrapper page">
-  <div class="gh-header">
-    <div class="gh-header-show">
-      <h1 class="gh-header-title instapaper_title">Console Command Line</h1>
-        <div class="gh-header-meta">
-          Chris Maddock edited this page <relative-time datetime="2017-06-15T18:07:10Z">Jun 15, 2017</relative-time>
-          &middot;
-          <a href="/nunit/docs/wiki/Console-Command-Line/_history" class="history">
-            19 revisions
-          </a>
-        </div>
-    </div>
-  </div>
-  <div id="wiki-content" class="wiki-content">
-    <div class="has-rightbar">
-
-    <div id="wiki-rightbar" class="wiki-rightbar">
-      <div class="wiki-pages-box readability-sidebar boxed-group flush js-wiki-pages-box collapsed" role="navigation">
-        
-<h3 class="js-wiki-toggle-collapse wiki-auxiliary-content">
-  <svg aria-hidden="true" class="octicon octicon-triangle-down caret-expanded" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M0 5l6 6 6-6z"/></svg>
-  <svg aria-hidden="true" class="octicon octicon-triangle-right caret-collapsed" height="16" version="1.1" viewBox="0 0 6 16" width="6"><path fill-rule="evenodd" d="M0 14l6-6-6-6z"/></svg>
-  Pages <span class="Counter">263</span>
-</h3>
-<div class="boxed-group-inner wiki-auxiliary-content wiki-auxiliary-content-no-bg">
-    <div class="filter-bar">
-      <input type="text" id="wiki-pages-filter" class="form-control input-sm input-block js-filterable-field" placeholder="Find a Page…" aria-label="Find a Page…" tabindex="2">
-    </div>
-
-  <ul class="wiki-pages" data-filterable-for="wiki-pages-filter" data-filterable-type="substring">
-    <li>
-      <strong><a href="/nunit/docs/wiki" class="wiki-page-link">Home</a></strong>
-    </li>
-    <li>
-      <strong><a href="/nunit/docs/wiki/Action-Attributes" class="wiki-page-link">Action Attributes</a></strong>
-    </li>
-    <li>
-      <strong><a href="/nunit/docs/wiki/Active-Attributes" class="wiki-page-link">Active Attributes</a></strong>
-    </li>
-    <li>
-      <strong><a href="/nunit/docs/wiki/Adapter-Installation" class="wiki-page-link">Adapter Installation</a></strong>
-    </li>
-    <li>
-      <strong><a href="/nunit/docs/wiki/Adapter-License" class="wiki-page-link">Adapter License</a></strong>
-    </li>
-    <li>
-      <strong><a href="/nunit/docs/wiki/Adapter-Release-Notes" class="wiki-page-link">Adapter Release Notes</a></strong>
-    </li>
-    <li>
-      <strong><a href="/nunit/docs/wiki/Adapter-Roadmap" class="wiki-page-link">Adapter Roadmap</a></strong>
-    </li>
-    <li>
-      <strong><a href="/nunit/docs/wiki/AdapterV2-Release-Notes" class="wiki-page-link">AdapterV2 Release Notes</a></strong>
-    </li>
-    <li>
-      <strong><a href="/nunit/docs/wiki/Addin-Replacement-in-the-Framework" class="wiki-page-link">Addin Replacement in the Framework</a></strong>
-    </li>
-    <li>
-      <strong><a href="/nunit/docs/wiki/Adding-New-Projects" class="wiki-page-link">Adding New Projects</a></strong>
-    </li>
-    <li>
-      <strong><a href="/nunit/docs/wiki/AllItemsConstraint" class="wiki-page-link">AllItemsConstraint</a></strong>
-    </li>
-    <li>
-      <strong><a href="/nunit/docs/wiki/AndConstraint" class="wiki-page-link">AndConstraint</a></strong>
-    </li>
-    <li>
-      <strong><a href="/nunit/docs/wiki/Apartment-Attribute" class="wiki-page-link">Apartment Attribute</a></strong>
-    </li>
-    <li>
-      <strong><a href="/nunit/docs/wiki/Architectural-Overview" class="wiki-page-link">Architectural Overview</a></strong>
-    </li>
-    <li>
-      <strong><a href="/nunit/docs/wiki/Assembly-Isolation" class="wiki-page-link">Assembly Isolation</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.AreEqual" class="wiki-page-link">Assert.AreEqual</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.AreNotEqual" class="wiki-page-link">Assert.AreNotEqual</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.AreNotSame" class="wiki-page-link">Assert.AreNotSame</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.AreSame" class="wiki-page-link">Assert.AreSame</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.Catch" class="wiki-page-link">Assert.Catch</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.CatchAsync" class="wiki-page-link">Assert.CatchAsync</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.Contains" class="wiki-page-link">Assert.Contains</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.DoesNotThrow" class="wiki-page-link">Assert.DoesNotThrow</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.DoesNotThrowAsync" class="wiki-page-link">Assert.DoesNotThrowAsync</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.Fail" class="wiki-page-link">Assert.Fail</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.False" class="wiki-page-link">Assert.False</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.Greater" class="wiki-page-link">Assert.Greater</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.GreaterOrEqual" class="wiki-page-link">Assert.GreaterOrEqual</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.Ignore" class="wiki-page-link">Assert.Ignore</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.Inconclusive" class="wiki-page-link">Assert.Inconclusive</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.IsAssignableFrom" class="wiki-page-link">Assert.IsAssignableFrom</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.IsEmpty" class="wiki-page-link">Assert.IsEmpty</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.IsInstanceOf" class="wiki-page-link">Assert.IsInstanceOf</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.IsNaN" class="wiki-page-link">Assert.IsNaN</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.IsNotAssignableFrom" class="wiki-page-link">Assert.IsNotAssignableFrom</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.IsNotEmpty" class="wiki-page-link">Assert.IsNotEmpty</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.IsNotInstanceOf" class="wiki-page-link">Assert.IsNotInstanceOf</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.Less" class="wiki-page-link">Assert.Less</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.LessOrEqual" class="wiki-page-link">Assert.LessOrEqual</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.Negative" class="wiki-page-link">Assert.Negative</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.NotNull" class="wiki-page-link">Assert.NotNull</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.NotZero" class="wiki-page-link">Assert.NotZero</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.Null" class="wiki-page-link">Assert.Null</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.Pass" class="wiki-page-link">Assert.Pass</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.Positive" class="wiki-page-link">Assert.Positive</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.Throws" class="wiki-page-link">Assert.Throws</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.ThrowsAsync" class="wiki-page-link">Assert.ThrowsAsync</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.True" class="wiki-page-link">Assert.True</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assert.Zero" class="wiki-page-link">Assert.Zero</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/AssertionHelper" class="wiki-page-link">AssertionHelper</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assertions" class="wiki-page-link">Assertions</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/AssignableFromConstraint" class="wiki-page-link">AssignableFromConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/AssignableToConstraint" class="wiki-page-link">AssignableToConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Assumptions" class="wiki-page-link">Assumptions</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Attribute-Hierarchy" class="wiki-page-link">Attribute Hierarchy</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/AttributeConstraint" class="wiki-page-link">AttributeConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/AttributeExistsConstraint" class="wiki-page-link">AttributeExistsConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Attributes" class="wiki-page-link">Attributes</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Author-Attribute" class="wiki-page-link">Author Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Best-practices-for-XML-documentation" class="wiki-page-link">Best practices for XML documentation</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/BinarySerializableConstraint" class="wiki-page-link">BinarySerializableConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Breaking-Changes" class="wiki-page-link">Breaking Changes</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Category-Attribute" class="wiki-page-link">Category Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Classic-Model" class="wiki-page-link">Classic Model</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Coding-Standards" class="wiki-page-link">Coding Standards</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Collection-Assert" class="wiki-page-link">Collection Assert</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/CollectionContainsConstraint" class="wiki-page-link">CollectionContainsConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/CollectionEquivalentConstraint" class="wiki-page-link">CollectionEquivalentConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/CollectionOrderedConstraint" class="wiki-page-link">CollectionOrderedConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/CollectionSubsetConstraint" class="wiki-page-link">CollectionSubsetConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/CollectionSupersetConstraint" class="wiki-page-link">CollectionSupersetConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Combinatorial-Attribute" class="wiki-page-link">Combinatorial Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Configuration-Files" class="wiki-page-link">Configuration Files</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Console-Command-Line" class="wiki-page-link">Console Command Line</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Console-Release-Notes" class="wiki-page-link">Console Release Notes</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Console-Runner" class="wiki-page-link">Console Runner</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Constraint-Model" class="wiki-page-link">Constraint Model</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Constraints" class="wiki-page-link">Constraints</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Contributions" class="wiki-page-link">Contributions</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Counting-Tests" class="wiki-page-link">Counting Tests</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Culture-Attribute" class="wiki-page-link">Culture Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Custom-Asserts" class="wiki-page-link">Custom Asserts</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Custom-Attributes" class="wiki-page-link">Custom Attributes</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Custom-Constraints" class="wiki-page-link">Custom Constraints</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Datapoint-Attribute" class="wiki-page-link">Datapoint Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/DatapointSource-Attribute" class="wiki-page-link">DatapointSource Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/DelayedConstraint" class="wiki-page-link">DelayedConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Description-Attribute" class="wiki-page-link">Description Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Directory-Assert" class="wiki-page-link">Directory Assert</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Dynamic-Test-Cases-Spec" class="wiki-page-link">Dynamic Test Cases Spec</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/EmptyCollectionConstraint" class="wiki-page-link">EmptyCollectionConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/EmptyConstraint" class="wiki-page-link">EmptyConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/EmptyDirectoryConstraint" class="wiki-page-link">EmptyDirectoryConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/EmptyStringConstraint" class="wiki-page-link">EmptyStringConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/EndsWithConstraint" class="wiki-page-link">EndsWithConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Engine-Addins-Spec" class="wiki-page-link">Engine Addins Spec</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Engine-Driver-Api" class="wiki-page-link">Engine Driver Api</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Engine-Extensibility" class="wiki-page-link">Engine Extensibility</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Engine-Parallel-Test-Execution" class="wiki-page-link">Engine Parallel Test Execution</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/EqualConstraint" class="wiki-page-link">EqualConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Event-Listeners" class="wiki-page-link">Event Listeners</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/ExactCountConstraint" class="wiki-page-link">ExactCountConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/ExactTypeConstraint" class="wiki-page-link">ExactTypeConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Explicit-Attribute" class="wiki-page-link">Explicit Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Extended-Constraint-Syntax-Spec" class="wiki-page-link">Extended Constraint Syntax Spec</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Extending-NUnit" class="wiki-page-link">Extending NUnit</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/FalseConstraint" class="wiki-page-link">FalseConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/File-Assert" class="wiki-page-link">File Assert</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/FileOrDirectoryExistsConstraint" class="wiki-page-link">FileOrDirectoryExistsConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Framework-Api" class="wiki-page-link">Framework Api</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Framework-Design" class="wiki-page-link">Framework Design</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Framework-Drivers" class="wiki-page-link">Framework Drivers</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Framework-Extensibility" class="wiki-page-link">Framework Extensibility</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Framework-Parallel-Test-Execution" class="wiki-page-link">Framework Parallel Test Execution</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Framework-Release-Notes" class="wiki-page-link">Framework Release Notes</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Generation-of-Test-Names-Spec" class="wiki-page-link">Generation of Test Names Spec</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Getting-Started-in-Visual-Studio" class="wiki-page-link">Getting Started in Visual Studio</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Getting-Started-in-Visual-Studio-for-Mac" class="wiki-page-link">Getting Started in Visual Studio for Mac</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/GreaterThanConstraint" class="wiki-page-link">GreaterThanConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/GreaterThanOrEqualConstraint" class="wiki-page-link">GreaterThanOrEqualConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/IApplyToContext-Interface" class="wiki-page-link">IApplyToContext Interface</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/IApplyToTest-Interface" class="wiki-page-link">IApplyToTest Interface</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/ICommandWrapper-Interface" class="wiki-page-link">ICommandWrapper Interface</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/IFixtureBuilder-Interface" class="wiki-page-link">IFixtureBuilder Interface</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Ignore-Attribute" class="wiki-page-link">Ignore Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/IImplyFixture-Interface" class="wiki-page-link">IImplyFixture Interface</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Include-and-Exclude-Attributes-(Alternatives)" class="wiki-page-link">Include and Exclude Attributes (Alternatives)</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Include-and-Exclude-Attributes-Spec" class="wiki-page-link">Include and Exclude Attributes Spec</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Installation" class="wiki-page-link">Installation</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/InstanceOfTypeConstraint" class="wiki-page-link">InstanceOfTypeConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Internal-Trace" class="wiki-page-link">Internal Trace</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/IParameterDataSource-Interface" class="wiki-page-link">IParameterDataSource Interface</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/ISimpleTestBuilder-Interface" class="wiki-page-link">ISimpleTestBuilder Interface</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Issue-Tracking" class="wiki-page-link">Issue Tracking</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/ITestBuilder-Interface" class="wiki-page-link">ITestBuilder Interface</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Known-Problems" class="wiki-page-link">Known Problems</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/LessThanConstraint" class="wiki-page-link">LessThanConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/LessThanOrEqualConstraint" class="wiki-page-link">LessThanOrEqualConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/LevelOfParallelism-Attribute" class="wiki-page-link">LevelOfParallelism Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/License" class="wiki-page-link">License</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/ListMapper" class="wiki-page-link">ListMapper</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/MaxTime-Attribute" class="wiki-page-link">MaxTime Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Multiple-Asserts" class="wiki-page-link">Multiple Asserts</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/NaNConstraint" class="wiki-page-link">NaNConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/NoItemConstraint" class="wiki-page-link">NoItemConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/NonParallelizable-Attribute" class="wiki-page-link">NonParallelizable Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/NotConstraint" class="wiki-page-link">NotConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Notes-Toward-NUnit-4.0" class="wiki-page-link">Notes Toward NUnit 4.0</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/NullConstraint" class="wiki-page-link">NullConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/NUnit-3.0-Architecture-(2009)" class="wiki-page-link">NUnit 3.0 Architecture (2009)</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/NUnit-Agent" class="wiki-page-link">NUnit Agent</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/NUnit-APIs" class="wiki-page-link">NUnit APIs</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/NUnit-Copyright-Notice" class="wiki-page-link">NUnit Copyright Notice</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/NUnit-Documentation" class="wiki-page-link">NUnit Documentation</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/NUnit-Internals" class="wiki-page-link">NUnit Internals</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/NUnit-Project-XML-Format" class="wiki-page-link">NUnit Project XML Format</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/NUnit-Test-Projects" class="wiki-page-link">NUnit Test Projects</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/NUnit-V2-Action-Attributes" class="wiki-page-link">NUnit V2 Action Attributes</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/NUnit-Xamarin-Runners" class="wiki-page-link">NUnit Xamarin Runners</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/NUnitLite-Options" class="wiki-page-link">NUnitLite Options</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/NUnitLite-Runner" class="wiki-page-link">NUnitLite Runner</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/OneTimeSetUp-Attribute" class="wiki-page-link">OneTimeSetUp Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/OneTimeTearDown-Attribute" class="wiki-page-link">OneTimeTearDown Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/OrConstraint" class="wiki-page-link">OrConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Order-Attribute" class="wiki-page-link">Order Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Packaging-Extensions" class="wiki-page-link">Packaging Extensions</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Packaging-the-Console-and-Engine" class="wiki-page-link">Packaging the Console and Engine</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Packaging-the-Framework" class="wiki-page-link">Packaging the Framework</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Packaging-the-Installer" class="wiki-page-link">Packaging the Installer</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Packaging-the-V2-Adapter" class="wiki-page-link">Packaging the V2 Adapter</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Packaging-the-V3-Adapter" class="wiki-page-link">Packaging the V3 Adapter</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Pairwise-Attribute" class="wiki-page-link">Pairwise Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Parallelizable-Attribute" class="wiki-page-link">Parallelizable Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Parallelizable-Attribute-(New)" class="wiki-page-link">Parallelizable Attribute (New)</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Parameterized-Test-Fixtures-Spec" class="wiki-page-link">Parameterized Test Fixtures Spec</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Parameterized-Tests" class="wiki-page-link">Parameterized Tests</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Platform-Attribute" class="wiki-page-link">Platform Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Platform-Selection" class="wiki-page-link">Platform Selection</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Pre-3.5-Release-Notes" class="wiki-page-link">Pre 3.5 Release Notes</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Project-Loaders" class="wiki-page-link">Project Loaders</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Property-Attribute" class="wiki-page-link">Property Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/PropertyConstraint" class="wiki-page-link">PropertyConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/PropertyExistsConstraint" class="wiki-page-link">PropertyExistsConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Quick-Start-Source-Code" class="wiki-page-link">Quick Start Source Code</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Random-Attribute" class="wiki-page-link">Random Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Randomizer-Methods" class="wiki-page-link">Randomizer Methods</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Range-Attribute" class="wiki-page-link">Range Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/RangeConstraint" class="wiki-page-link">RangeConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/RegexConstraint" class="wiki-page-link">RegexConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Release-Notes" class="wiki-page-link">Release Notes</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Repeat-Attribute" class="wiki-page-link">Repeat Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/RequiresThread-Attribute" class="wiki-page-link">RequiresThread Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Resources" class="wiki-page-link">Resources</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Result-Writers" class="wiki-page-link">Result Writers</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Retry-Attribute" class="wiki-page-link">Retry Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/ReusableConstraint" class="wiki-page-link">ReusableConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Running-Tests" class="wiki-page-link">Running Tests</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Runtime-Selection" class="wiki-page-link">Runtime Selection</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/SameAsConstraint" class="wiki-page-link">SameAsConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/SamePathConstraint" class="wiki-page-link">SamePathConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/SamePathOrUnderConstraint" class="wiki-page-link">SamePathOrUnderConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Samples" class="wiki-page-link">Samples</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Sequential-Attribute" class="wiki-page-link">Sequential Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/SetCulture-Attribute" class="wiki-page-link">SetCulture Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/SetUICulture-Attribute" class="wiki-page-link">SetUICulture Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/SetUp-and-TearDown-Changes" class="wiki-page-link">SetUp and TearDown Changes</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/SetUp-Attribute" class="wiki-page-link">SetUp Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/SetUpFixture-Attribute" class="wiki-page-link">SetUpFixture Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/SingleThreaded-Attribute" class="wiki-page-link">SingleThreaded Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/SomeItemsConstraint" class="wiki-page-link">SomeItemsConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Specifications" class="wiki-page-link">Specifications</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Standard-Defines" class="wiki-page-link">Standard Defines</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/StartsWithConstraint" class="wiki-page-link">StartsWithConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/String-Assert" class="wiki-page-link">String Assert</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/SubPathConstraint" class="wiki-page-link">SubPathConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/SubstringConstraint" class="wiki-page-link">SubstringConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Summary-Under-Development" class="wiki-page-link">Summary Under Development</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Team-Practices" class="wiki-page-link">Team Practices</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/TearDown-Attribute" class="wiki-page-link">TearDown Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Template-Based-Test-Naming" class="wiki-page-link">Template Based Test Naming</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Test-Attribute" class="wiki-page-link">Test Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Test-Dependency-Attribute-Spec" class="wiki-page-link">Test Dependency Attribute Spec</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Test-Discovery-And-Execution" class="wiki-page-link">Test Discovery And Execution</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Test-Engine-API" class="wiki-page-link">Test Engine API</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Test-Filters" class="wiki-page-link">Test Filters</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Test-Result-XML-Format" class="wiki-page-link">Test Result XML Format</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Test-Selection-Language" class="wiki-page-link">Test Selection Language</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/TestCase-Attribute" class="wiki-page-link">TestCase Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/TestCaseData" class="wiki-page-link">TestCaseData</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/TestCaseSource-Attribute" class="wiki-page-link">TestCaseSource Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/TestContext" class="wiki-page-link">TestContext</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/TestFixture-Attribute" class="wiki-page-link">TestFixture Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/TestFixtureData" class="wiki-page-link">TestFixtureData</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/TestFixtureSetUp-Attribute" class="wiki-page-link">TestFixtureSetUp Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/TestFixtureSource-Attribute" class="wiki-page-link">TestFixtureSource Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/TestFixtureTearDown-Attribute" class="wiki-page-link">TestFixtureTearDown Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/TestGenerator-Installation" class="wiki-page-link">TestGenerator Installation</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/TestGenerator-Release-Notes" class="wiki-page-link">TestGenerator Release Notes</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/TestGenerator-Release-Notes-VS2015" class="wiki-page-link">TestGenerator Release Notes VS2015</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/TestOf-Attribute" class="wiki-page-link">TestOf Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Text-Output-from-Tests-Spec" class="wiki-page-link">Text Output from Tests Spec</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Theory-Attribute" class="wiki-page-link">Theory Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/ThrowsConstraint" class="wiki-page-link">ThrowsConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/ThrowsNothingConstraint" class="wiki-page-link">ThrowsNothingConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Timeout-Attribute" class="wiki-page-link">Timeout Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Tips-And-Tricks" class="wiki-page-link">Tips And Tricks</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/TrueConstraint" class="wiki-page-link">TrueConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/UniqueItemsConstraint" class="wiki-page-link">UniqueItemsConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Upgrading" class="wiki-page-link">Upgrading</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Usage" class="wiki-page-link">Usage</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Usage-Notes" class="wiki-page-link">Usage Notes</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Usage-of-Labels" class="wiki-page-link">Usage of Labels</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Values-Attribute" class="wiki-page-link">Values Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/ValueSource-Attribute" class="wiki-page-link">ValueSource Attribute</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Visual-Studio-Support" class="wiki-page-link">Visual Studio Support</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Visual-Studio-Test-Adapter" class="wiki-page-link">Visual Studio Test Adapter</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Visual-Studio-Test-Generator" class="wiki-page-link">Visual Studio Test Generator</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/VS-Adapter" class="wiki-page-link">VS Adapter</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/VS-Integration" class="wiki-page-link">VS Integration</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Warnings" class="wiki-page-link">Warnings</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/Writing-Engine-Extensions" class="wiki-page-link">Writing Engine Extensions</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/XML-Formats" class="wiki-page-link">XML Formats</a></strong>
-    </li>
-    <li class="wiki-more-pages">
-      <strong><a href="/nunit/docs/wiki/XmlSerializableConstraint" class="wiki-page-link">XmlSerializableConstraint</a></strong>
-    </li>
-    <li class="wiki-more-pages-link">
-      <a href="#" class="js-wiki-more-pages-link">
-        Show 248 more pages…
-      </a>
-    </li>
-  </ul>
-</div>
-
-      </div>
-
-        <div class="gollum-markdown-content readability-sidebar box box-small">
-          <div class="wiki-custom-sidebar  markdown-body">
-            <h3>
-<a id="user-content-nunit-project-docs" class="anchor" href="#nunit-project-docs" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>NUnit Project Docs</h3>
-<ul>
-<li>
-<strong><a class="internal present" href="/nunit/docs/wiki/NUnit-Documentation">NUnit</a></strong>
-<ul>
-<li>
-<strong>Release Notes</strong><br>
-<ul>
-<li><a class="internal present" href="/nunit/docs/wiki/Framework-Release-Notes">Framework</a></li>
-<li><a class="internal present" href="/nunit/docs/wiki/Console-Release-Notes">Console and Engine</a></li>
-</ul>
-</li>
-<li>
-<strong><a class="internal present" href="/nunit/docs/wiki/License">License</a></strong><br>
-</li>
-<li>
-<strong>Getting Started</strong>
-<ul>
-<li><a class="internal present" href="/nunit/docs/wiki/Installation">Installation</a></li>
-<li><a class="internal present" href="/nunit/docs/wiki/Upgrading">Upgrading</a></li>
-<li><a class="internal present" href="/nunit/docs/wiki/Samples">Samples</a></li>
-<li><a class="internal present" href="/nunit/docs/wiki/Breaking-Changes">Breaking Changes</a></li>
-</ul>
-</li>
-<li>
-<strong>Writing Tests</strong>
-<ul>
-<li><a class="internal present" href="/nunit/docs/wiki/Attributes">Attributes</a></li>
-<li>
-<a class="internal present" href="/nunit/docs/wiki/Assertions">Assertions</a>
-<ul>
-<li><a class="internal present" href="/nunit/docs/wiki/Multiple-Asserts">Multiple Asserts</a></li>
-</ul>
-</li>
-<li><a class="internal present" href="/nunit/docs/wiki/Assumptions">Assumptions</a></li>
-<li><a class="internal present" href="/nunit/docs/wiki/Warnings">Warnings</a></li>
-<li><a class="internal present" href="/nunit/docs/wiki/Constraints">Constraints</a></li>
-<li><a class="internal present" href="/nunit/docs/wiki/TestCaseData">TestCaseData</a></li>
-<li><a class="internal present" href="/nunit/docs/wiki/TestFixtureData">TestFixtureData</a></li>
-<li><a class="internal present" href="/nunit/docs/wiki/TestContext">TestContext</a></li>
-<li><a class="internal present" href="/nunit/docs/wiki/AssertionHelper">AssertionHelper</a></li>
-<li><a class="internal present" href="/nunit/docs/wiki/ListMapper">ListMapper</a></li>
-</ul>
-</li>
-<li>
-<strong>Running Tests</strong>
-<ul>
-<li><a class="internal present" href="/nunit/docs/wiki/Console-Runner">Console Runner</a></li>
-<li><a class="internal present" href="/nunit/docs/wiki/Console-Command-Line">Console Command Line</a></li>
-<li><a class="internal present" href="/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a></li>
-<li><a class="internal present" href="/nunit/docs/wiki/NUnitLite-Runner">NUnitLite Runner</a></li>
-</ul>
-</li>
-<li>
-<strong>Extending NUnit</strong>
-<ul>
-<li><a class="internal present" href="/nunit/docs/wiki/Framework-Extensibility">Framework Extensibility</a></li>
-<li><a class="internal present" href="/nunit/docs/wiki/Writing-Engine-Extensions">Writing Engine Extensions</a></li>
-</ul>
-</li>
-<li>
-<strong>Technical Notes</strong>
-<ul>
-<li><a class="internal present" href="/nunit/docs/wiki/Usage-Notes">Usage Notes</a></li>
-<li><a class="internal present" href="/nunit/docs/wiki/NUnit-Internals">NUnit Internals</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong><a class="internal present" href="/nunit/docs/wiki/NUnit-Xamarin-Runners">NUnit Xamarin Runners</a></strong></li>
-<li><strong><a class="internal present" href="/nunit/docs/wiki/Visual-Studio-Test-Adapter">VS Test Adapter</a></strong></li>
-<li><strong><a class="internal present" href="/nunit/docs/wiki/Visual-Studio-Test-Generator">VS Test Generator</a></strong></li>
-</ul>
-<h3>
-<a id="user-content-related-project-links" class="anchor" href="#related-project-links" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Related Project Links</h3>
-<ul>
-<li><strong><a href="https://github.com/CharliePoole/nunit-gui/wiki">NUnit Gui</a></strong></li>
-<li><strong><a href="https://github.com/CharliePoole/nunit-project-editor/wiki/Project-Editor">NUnit Project Editor</a></strong></li>
-</ul>
-<h3>
-<a id="user-content-developer-info" class="anchor" href="#developer-info" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Developer Info</h3>
-<ul>
-<li><strong><a class="internal present" href="/nunit/docs/wiki/Team-Practices">Team Practices</a></strong></li>
-<li><strong><a class="internal present" href="/nunit/docs/wiki/Specifications">Specifications</a></strong></li>
-</ul>
-
-          </div>
-        </div>
-
-      <div class="clone-url">
-        <h5>Clone this wiki locally</h5>
-        <div class="input-group js-zeroclipboard-container">
-          <input type="text" class="form-control input-sm text-small text-gray input-monospace js-url-field js-zeroclipboard-target" aria-label="Clone URL for this wiki"
-                 value="https://github.com/nunit/docs.wiki.git" readonly="readonly">
-          <span class="input-group-button">
-            <button aria-label="Copy to clipboard" class="js-zeroclipboard btn btn-sm zeroclipboard-button tooltipped tooltipped-s" data-copied-hint="Copied!" type="button"><svg aria-hidden="true" class="octicon octicon-clippy" height="16" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M2 13h4v1H2v-1zm5-6H2v1h5V7zm2 3V8l-3 3 3 3v-2h5v-2H9zM4.5 9H2v1h2.5V9zM2 12h2.5v-1H2v1zm9 1h1v2c-.02.28-.11.52-.3.7-.19.18-.42.28-.7.3H1c-.55 0-1-.45-1-1V4c0-.55.45-1 1-1h3c0-1.11.89-2 2-2 1.11 0 2 .89 2 2h3c.55 0 1 .45 1 1v5h-1V6H1v9h10v-2zM2 5h8c0-.55-.45-1-1-1H8c-.55 0-1-.45-1-1s-.45-1-1-1-1 .45-1 1-.45 1-1 1H3c-.55 0-1 .45-1 1z"/></svg></button>
-          </span>
-        </div>
-
-
-      </div>
-    </div>
-
-    <div id="wiki-body" class="wiki-body gollum-markdown-content instapaper_body">
-        <div class="markdown-body">
-          <p>The console interface runner is invoked by a command in the form</p>
-<pre><code>    NUNIT3-CONSOLE [inputfiles] [options]
-</code></pre>
-<p>where <strong>inputfiles</strong> is one or more assemblies or test projects of
-a type that NUnit can process and <strong>options</strong> is zero or more options.
-Input files and options may be mixed in any order.</p>
-<h3>
-<a id="user-content-input-files" class="anchor" href="#input-files" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Input Files</h3>
-<p>The console program must always have an assembly or project specified.
+Input Files
+The console program must always have an assembly or project specified.
 Assemblies are specified by file name or path, which may be absolute or
-relative. Relative paths are interpreted based on the current directory.</p>
-<p>In addition to assemblies, you may specify any project type that is
+relative. Relative paths are interpreted based on the current directory.
+In addition to assemblies, you may specify any project type that is
 understood by NUnit. Out of the box, this includes various
 Visual Studio project types as well as NUnit (.nunit) test projects (see
-<a class="internal present" href="/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p>
-<p>If the NUnit V2 framework driver is installed, test assemblies may
+NUnit Test Projects for a description of NUnit test projects).
+If the NUnit V2 framework driver is installed, test assemblies may
 be run based on any version of the NUnit framework beginning with 2.0.
-Without the V2 driver, only version 3.0 and higher tests may be run.</p>
-<h3>
-<a id="user-content-options" class="anchor" href="#options" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Options</h3>
-<table>
-<tr>
-<th>@FILE</th>
-    <td>Specifies the name (or path) of a FILE containing additional command-line arguments to be interpolated at the point where the @FILE expression appears. Each line in the file represents a separate command-line argument.
-</td>
-</tr>
-<tr>
-<th>--test=NAMES</th>
-    <td>Comma-separated list of NAMES of tests to run or explore. This option may be repeated. Note that this option is retained for backward compatibility. The --where option can now be used instead.</td>
-</tr>
-<tr>
-<th>--testlist=FILE</th>
-    <td>The name (or path) of a FILE containing a list of tests to run or explore, one per line.</td>
-</tr>
-<tr>
-<th>--where=EXPRESSION</th>
-    <td>An expression indicating which tests to run. It may specify test names, classes, methods, categories or properties comparing them to actual values with the operators ==, !=, =~ and !~. See <a class="internal present" href="/nunit/docs/wiki/Test-Selection-Language">Test Selection Language</a> for a full description of the syntax.</td>
-</tr>
-<tr>
-<th>--params|p=PARAMETER</th>
-    <td>A test PARAMETER specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the --params option multiple times.</td>
-</tr>
-<tr>
-<th>--config=NAME</th>
-    <td>NAME of a project configuration to load (e.g.: Debug).</td>
-</tr>
-<tr>
-<th>--process=PROCESS</th>
-    <td>PROCESS isolation for test assemblies. Values: Single, Separate, Multiple. If not specified, defaults to Separate for a single assembly or Multiple for more than one. By default, processes are run in parallel.</td>
-</tr>
-<tr>
-<th>--inprocess</th>
-    <td>This option is a synonym for --process=Single</td>
-</tr>
-<tr>
-<th>--agents=NUMBER</th>
-    <td>NUMBER of agents that may be allowed to run simultaneously assuming you are not running inprocess. If not specified, all agent processes run tests at the same time, whatever the number of assemblies. This setting is used to control running your assemblies in parallel.</td>
-</tr>
-<tr>
-<th>--domain=DOMAIN</th>
-    <td>DOMAIN isolation for test assemblies.  Values: None, Single, Multiple. If not specified, defaults to Single for a single assembly or Multiple for more than one.</td>
-</tr>
-<tr>
-<th>--framework=FRAMEWORK</th>
-    <td>FRAMEWORK type/version to use for tests. Examples: mono, net-4.5, v4.0, 2.0, mono-4.0</td>
-</tr>
-<tr>
-<th>--x86</th>
-    <td>Run tests in a 32-bit process on 64-bit systems.</td>
-</tr>
-<tr>
-<th>--dispose-runners</th>
-    <td>Dispose each test runner after it has finished running its tests</td>
-</tr>
-<tr>
-<th>--timeout=MILLISECONDS</th>
-    <td>Set timeout for each test case in MILLISECONDS.</td>
-</tr>
-<tr>
-<th>--seed=SEED</th>
-    <td>Set the random SEED used to generate test cases.</td>
-</tr>
-<tr>
-<th>--workers=NUMBER</th>
-    <td>Specify the NUMBER of worker threads to be used in running tests. This setting is used to control running your tests in parallel and is used in conjunction with the <a class="internal present" href="/nunit/docs/wiki/Parallelizable-Attribute">Parallelizable Attribute</a>. If not specified, workers defaults to the number of processors on the machine, or 2, whichever is greater.</td>
-</tr>
-<tr>
-<th>--stoponerror</th>
-    <td>Stop run immediately upon any test failure or error.</td>
-</tr>
-<tr>
-<th>--skipnontestassemblies</th>
-    <td>Skip any non-test assemblies specified, without error.</td>
-</tr>
-<tr>
-<th>--debug</th>
-    <td>Causes NUnit to break into the debugger immediately before it executes your tests. This is particularly useful when the tests are running in a separate process to which you would otherwise have to attach.</td>
-</tr>
-<tr>
-<th>--debug-agent</th>
-    <td>Available only in debug builds of NUnit, this option is for use by developers in debugging the nunit-agent itself. It breaks in the agent code immediately upon entry of the process.</td>
-</tr>
-<tr>
-<th>--pause</th>
-    <td>Causes NUnit to immediately open a message box, allowing you to attach a debugger. For cases where --debug does not work.</td>
-</tr>
-<tr>
-<th>--wait</th>
-    <td>Wait for input before closing console window.</td>
-</tr>
-<tr>
-<th>--work=PATH</th>
-    <td>PATH of the directory to use for output files.</td>
-</tr>
-<tr>
-<th>--output, --out=PATH</th>
-    <td>File PATH to contain text output from the tests.</td>
-</tr>
-<tr>
-<th>--err=PATH</th>
-    <td>File PATH to contain error output from the tests.</td>
-</tr>
-<tr>
-<th>--result=SPEC</th>
-    <td>An output SPEC for saving the test results. This option may be repeated.</td>
-</tr>
-<tr>
-<th>--explore[=SPEC]</th>
-    <td>Display or save test info rather than running tests. Optionally provide an output SPEC for saving the test info. This option may be repeated.</td>
-</tr>
-<tr>
-<th>--noresult</th>
-    <td>Don't save any test results.</td>
-</tr>
-<tr>
-<th>--labels=VALUE</th>
-    <td>Specify whether to write test case names to the output. Values: Off, On, All</td>
-</tr>
-<tr>
-<th>--trace=LEVEL</th>
-    <td>Set internal trace LEVEL. Values: Off, Error, Warning, Info, Verbose (Debug)</td>
-</tr>
-<tr>
-<th>--encoding=CODEPAGE</th>
-    <td>Specify the Console CODEPAGE, such as utf-8, ascii, etc. This option is not normally needed unless your output includes special characters. The page specified must be available on the system.</td>
-</tr>
-<tr>
-<th>--shadowcopy</th>
-    <td>Tells .NET to copy loaded assemblies to the shadowcopy directory.</td>
-</tr>
-<tr>
-<th>--teamcity</th>
-    <td>Turns on use of TeamCity service messages.</td>
-</tr>
-<tr>
-<th>--loaduserprofile</th>
-    <td>Causes the user profile to be loaded in any separate test processes.</td>
-</tr>
-<tr>
-<th>--list-extensions</th>
-    <td>Lists all extension points and the extensions installed on each of them.</td>
-</tr>
-<tr>
-<th>--set-principal-policy=POLICY</th>
-    <td>Set the principal policy for the test domain to POLICY. Values: UnauthenticatedPrincipal, NoPrincipal, WindowsPrincipal</td>
-</tr>
-<tr>
-<th>--noheader, --noh</th>
-    <td>Suppress display of program information at start of run.</td>
-</tr>
-<tr>
-<th>--nocolor, --noc</th>
-    <td>Displays console output without color.</td>
-</tr>
-<tr>
-<th>--help, -h</th>
-    <td>Display this message and exit.</td>
-</tr>
-</table>
-<h3>
-<a id="user-content-description" class="anchor" href="#description" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Description</h3>
-<p>By default, this command runs the tests contained in the
-assemblies and projects specified. If the <strong>--explore</strong> option
+Without the V2 driver, only version 3.0 and higher tests may be run.
+
+Options
+
+
+@FILE
+    Specifies the name (or path) of a FILE containing additional command-line arguments to be interpolated at the point where the @FILE expression appears. Each line in the file represents a separate command-line argument.
+
+
+
+--test=NAMES
+    Comma-separated list of NAMES of tests to run or explore. This option may be repeated. Note that this option is retained for backward compatibility. The --where option can now be used instead.
+
+
+--testlist=FILE
+    The name (or path) of a FILE containing a list of tests to run or explore, one per line.
+
+
+--where=EXPRESSION
+    An expression indicating which tests to run. It may specify test names, classes, methods, categories or properties comparing them to actual values with the operators ==, !=, =~ and !~. See Test Selection Language for a full description of the syntax.
+
+
+--params|p=PARAMETER
+    A test PARAMETER specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the --params option multiple times.
+
+
+--config=NAME
+    NAME of a project configuration to load (e.g.: Debug).
+
+
+--process=PROCESS
+    PROCESS isolation for test assemblies. Values: Single, Separate, Multiple. If not specified, defaults to Separate for a single assembly or Multiple for more than one. By default, processes are run in parallel.
+
+
+--inprocess
+    This option is a synonym for --process=Single
+
+
+--agents=NUMBER
+    NUMBER of agents that may be allowed to run simultaneously assuming you are not running inprocess. If not specified, all agent processes run tests at the same time, whatever the number of assemblies. This setting is used to control running your assemblies in parallel.
+
+
+--domain=DOMAIN
+    DOMAIN isolation for test assemblies.  Values: None, Single, Multiple. If not specified, defaults to Single for a single assembly or Multiple for more than one.
+
+
+--framework=FRAMEWORK
+    FRAMEWORK type/version to use for tests. Examples: mono, net-4.5, v4.0, 2.0, mono-4.0
+
+
+--x86
+    Run tests in a 32-bit process on 64-bit systems.
+
+
+--dispose-runners
+    Dispose each test runner after it has finished running its tests
+
+
+--timeout=MILLISECONDS
+    Set timeout for each test case in MILLISECONDS.
+
+
+--seed=SEED
+    Set the random SEED used to generate test cases.
+
+
+--workers=NUMBER
+    Specify the NUMBER of worker threads to be used in running tests. This setting is used to control running your tests in parallel and is used in conjunction with the Parallelizable Attribute. If not specified, workers defaults to the number of processors on the machine, or 2, whichever is greater.
+
+
+--stoponerror
+    Stop run immediately upon any test failure or error.
+
+
+--skipnontestassemblies
+    Skip any non-test assemblies specified, without error.
+
+
+--debug
+    Causes NUnit to break into the debugger immediately before it executes your tests. This is particularly useful when the tests are running in a separate process to which you would otherwise have to attach.
+
+
+--debug-agent
+    Available only in debug builds of NUnit, this option is for use by developers in debugging the nunit-agent itself. It breaks in the agent code immediately upon entry of the process.
+
+
+--pause
+    Causes NUnit to immediately open a message box, allowing you to attach a debugger. For cases where --debug does not work.
+
+
+--wait
+    Wait for input before closing console window.
+
+
+--work=PATH
+    PATH of the directory to use for output files.
+
+
+--output, --out=PATH
+    File PATH to contain text output from the tests.
+
+
+--err=PATH
+    File PATH to contain error output from the tests.
+
+
+--result=SPEC
+    An output SPEC for saving the test results. This option may be repeated.
+
+
+--explore[=SPEC]
+    Display or save test info rather than running tests. Optionally provide an output SPEC for saving the test info. This option may be repeated.
+
+
+--noresult
+    Don't save any test results.
+
+
+--labels=VALUE
+    Specify whether to write test case names to the output. Values: Off, On, All
+
+
+--trace=LEVEL
+    Set internal trace LEVEL. Values: Off, Error, Warning, Info, Verbose (Debug)
+
+
+--encoding=CODEPAGE
+    Specify the Console CODEPAGE, such as utf-8, ascii, etc. This option is not normally needed unless your output includes special characters. The page specified must be available on the system.
+
+
+--shadowcopy
+    Tells .NET to copy loaded assemblies to the shadowcopy directory.
+
+
+--teamcity
+    Turns on use of TeamCity service messages.
+
+
+--loaduserprofile
+    Causes the user profile to be loaded in any separate test processes.
+
+
+--list-extensions
+    Lists all extension points and the extensions installed on each of them.
+
+
+--set-principal-policy=POLICY
+    Set the principal policy for the test domain to POLICY. Values: UnauthenticatedPrincipal, NoPrincipal, WindowsPrincipal
+
+
+--noheader, --noh
+    Suppress display of program information at start of run.
+
+
+--nocolor, --noc
+    Displays console output without color.
+
+
+--help, -h
+    Display this message and exit.
+
+
+
+Description
+By default, this command runs the tests contained in the
+assemblies and projects specified. If the --explore option
 is used, no tests are executed but a description of the tests
-is saved in the specified or default format.</p>
-<p>Several options that specify processing of XML output take
+is saved in the specified or default format.
+Several options that specify processing of XML output take
 an output specification as a value. A SPEC may take one of
-the following forms:</p>
-<ul>
-<li>--OPTION:filename</li>
-<li>--OPTION:filename;format=formatname</li>
-<li>--OPTION:filename;transform=xsltfile</li>
-</ul>
-<p>The --result option may use any of the following formats:</p>
-<ul>
-<li>nunit3 - the native XML format for NUnit 3</li>
-<li>nunit2 - legacy XML format used by earlier releases of NUnit</li>
-</ul>
-<p>The --explore option may use any of the following formats:</p>
-<ul>
-<li>nunit3 - the native XML format for NUnit 3</li>
-<li>cases  - a text file listing the full names of all test cases.</li>
-</ul>
-<p>If --explore is used without any specification following, a list of
-test cases is output to the console.</p>
-<p>If neither --result nor --explore is used,
-NUnit saves the results to TestResult.xml in nunit3 format.</p>
-<p>Any transforms provided must handle input in the native nunit3 format.</p>
+the following forms:
 
-        </div>
+--OPTION:filename
+--OPTION:filename;format=formatname
+--OPTION:filename;transform=xsltfile
 
-        <div id="wiki-footer" class="wiki-footer gollum-markdown-content boxed-group">
-          <div class="boxed-group-inner wiki-auxiliary-content  markdown-body">
-            <p align="center">Copyright © 2017 NUnit Software</p>
+The --result option may use any of the following formats:
 
-          </div>
-        </div>
-    </div>
-    </div>
-  </div>
-  </div>
+nunit3 - the native XML format for NUnit 3
+nunit2 - legacy XML format used by earlier releases of NUnit
 
-  </div>
-  <div class="modal-backdrop js-touch-events"></div>
-</div>
+The --explore option may use any of the following formats:
 
+nunit3 - the native XML format for NUnit 3
+cases  - a text file listing the full names of all test cases.
 
-    </div>
-  </div>
+If --explore is used without any specification following, a list of
+test cases is output to the console.
+If neither --result nor --explore is used,
+NUnit saves the results to TestResult.xml in nunit3 format.
+Any transforms provided must handle input in the native nunit3 format.
 
-  </div>
+        
 
-      
-<div class="container site-footer-container">
-  <div class="site-footer " role="contentinfo">
-    <ul class="site-footer-links float-right">
-        <li><a href="https://github.com/contact" data-ga-click="Footer, go to contact, text:contact">Contact GitHub</a></li>
-      <li><a href="https://developer.github.com" data-ga-click="Footer, go to api, text:api">API</a></li>
-      <li><a href="https://training.github.com" data-ga-click="Footer, go to training, text:training">Training</a></li>
-      <li><a href="https://shop.github.com" data-ga-click="Footer, go to shop, text:shop">Shop</a></li>
-        <li><a href="https://github.com/blog" data-ga-click="Footer, go to blog, text:blog">Blog</a></li>
-        <li><a href="https://github.com/about" data-ga-click="Footer, go to about, text:about">About</a></li>
+        
+          
+            Copyright © 2017 NUnit Software
 
-    </ul>
-
-    <a href="https://github.com" aria-label="Homepage" class="site-footer-mark" title="GitHub">
-      <svg aria-hidden="true" class="octicon octicon-mark-github" height="24" version="1.1" viewBox="0 0 16 16" width="24"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-</a>
-    <ul class="site-footer-links">
-      <li>&copy; 2017 <span title="0.22178s from unicorn-1426527468-n4fl2">GitHub</span>, Inc.</li>
-        <li><a href="https://github.com/site/terms" data-ga-click="Footer, go to terms, text:terms">Terms</a></li>
-        <li><a href="https://github.com/site/privacy" data-ga-click="Footer, go to privacy, text:privacy">Privacy</a></li>
-        <li><a href="https://github.com/security" data-ga-click="Footer, go to security, text:security">Security</a></li>
-        <li><a href="https://status.github.com/" data-ga-click="Footer, go to status, text:status">Status</a></li>
-        <li><a href="https://help.github.com" data-ga-click="Footer, go to help, text:help">Help</a></li>
-    </ul>
-  </div>
-</div>
-
-
-
-  <div id="ajax-error-message" class="ajax-error-message flash flash-error">
-    <svg aria-hidden="true" class="octicon octicon-alert" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M8.865 1.52c-.18-.31-.51-.5-.87-.5s-.69.19-.87.5L.275 13.5c-.18.31-.18.69 0 1 .19.31.52.5.87.5h13.7c.36 0 .69-.19.86-.5.17-.31.18-.69.01-1L8.865 1.52zM8.995 13h-2v-2h2v2zm0-3h-2V6h2v4z"/></svg>
-    <button type="button" class="flash-close js-flash-close js-ajax-error-dismiss" aria-label="Dismiss error">
-      <svg aria-hidden="true" class="octicon octicon-x" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"/></svg>
-    </button>
-    You can't perform that action at this time.
-  </div>
-
-
-    <script crossorigin="anonymous" src="https://assets-cdn.github.com/assets/compat-91f98c37fc84eac24836eec2567e9912742094369a04c4eba6e3cd1fa18902d9.js"></script>
-    <script crossorigin="anonymous" src="https://assets-cdn.github.com/assets/frameworks-9cbd03ea56461e84ab8956bf7799a977d6cc8a1f984c71b5ecb2edfdba3d773f.js"></script>
+          
+        
     
-    <script async="async" crossorigin="anonymous" src="https://assets-cdn.github.com/assets/github-329544b3a5787c85107e0303910bbb2f67822ceff7fc9fe9b5795a9900d01302.js"></script>
-    
-    
-      <script crossorigin="anonymous" src="https://assets-cdn.github.com/assets/wiki-8e564a96e69e1bf4add0615581a4a6e6e030c29edb6bf1cb3a5888c5b918e8f7.js"></script>
-
-    
-  <div class="js-stale-session-flash stale-session-flash flash flash-warn flash-banner d-none">
-    <svg aria-hidden="true" class="octicon octicon-alert" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M8.865 1.52c-.18-.31-.51-.5-.87-.5s-.69.19-.87.5L.275 13.5c-.18.31-.18.69 0 1 .19.31.52.5.87.5h13.7c.36 0 .69-.19.86-.5.17-.31.18-.69.01-1L8.865 1.52zM8.995 13h-2v-2h2v2zm0-3h-2V6h2v4z"/></svg>
-    <span class="signed-in-tab-flash">You signed in with another tab or window. <a href="">Reload</a> to refresh your session.</span>
-    <span class="signed-out-tab-flash">You signed out in another tab or window. <a href="">Reload</a> to refresh your session.</span>
-  </div>
-  <div class="facebox" id="facebox" style="display:none;">
-  <div class="facebox-popup">
-    <div class="facebox-content" role="dialog" aria-labelledby="facebox-header" aria-describedby="facebox-description">
-    </div>
-    <button type="button" class="facebox-close js-facebox-close" aria-label="Close modal">
-      <svg aria-hidden="true" class="octicon octicon-x" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"/></svg>
-    </button>
-  </div>
-</div>
-
-
-  </body>
-</html>
-

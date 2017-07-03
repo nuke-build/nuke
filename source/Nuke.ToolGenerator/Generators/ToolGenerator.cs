@@ -35,7 +35,7 @@ namespace Nuke.ToolGenerator.Generators
         [CanBeNull]
         private static string GetIconClassAttribute (Tool tool)
         {
-            if (tool.IconClass == null && tool.Tasks.Count > 0)
+            if (tool.IconClass == null || tool.Tasks.Count == 0)
                 return null;
 
             return $"[assembly: IconClass(typeof({tool.GetNamespace()}.{tool.GetClassName()}), \"{tool.IconClass}\")]"
