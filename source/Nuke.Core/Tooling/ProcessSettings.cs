@@ -16,15 +16,33 @@ namespace Nuke.Core.Tooling
     [ExcludeFromCodeCoverage]
     public sealed class ProcessSettings : ISettingsEntity
     {
-        public ProcessSettings ()
+        public static ProcessSettings EmptyEnvironmentVariables => new ProcessSettings();
+
+        public static ProcessSettings Default
         {
-            var environmentVariables = Environment.GetEnvironmentVariables();
-            EnvironmentVariablesInternal = environmentVariables.Keys.Cast<string>()
-                    .ToDictionary(x => x, x => (string) environmentVariables[x], StringComparer.OrdinalIgnoreCase);
+            get
+            {
+                var environmentVariables = Environment.GetEnvironmentVariables();
+                return new ProcessSettings
+                       {
+                           EnvironmentVariablesInternal =
+                                   environmentVariables.Keys.Cast<string>()
+                                           .ToDictionary(
+                                               x => x,
+                                               x => (string) environmentVariables[x],
+                                               StringComparer.OrdinalIgnoreCase)
+                       };
+            }
+        }
+
+        private ProcessSettings ()
+        {
         }
 
         public IReadOnlyDictionary<string, string> EnvironmentVariables => EnvironmentVariablesInternal.AsReadOnly();
-        internal Dictionary<string, string> EnvironmentVariablesInternal { get; set; }
+
+        internal Dictionary<string, string> EnvironmentVariablesInternal { get; set; } =
+            new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         public int? ExecutionTimeout { get; internal set; }
         public bool RedirectOutput { get; internal set; }
