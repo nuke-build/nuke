@@ -5,12 +5,19 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Nuke.Core.Tooling
 {
-    [SuppressMessage("ReSharper", "VirtualMemberNeverOverridden.Global")]
-    partial class ToolSettings
+    [PublicAPI]
+    [Serializable]
+    [ExcludeFromCodeCoverage]
+    public class ToolSettings : ISettingsEntity
     {
+        public virtual string ToolPath { get; internal set; }
+        public virtual string WorkingDirectory { get; internal set; }
+        public virtual Func<Arguments, Arguments> ArgumentConfigurator { get; internal set; } = x => x;
+
         public virtual IArguments GetArguments ()
         {
             AssertValid();
