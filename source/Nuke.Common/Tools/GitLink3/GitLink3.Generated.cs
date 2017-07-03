@@ -12,6 +12,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+[assembly: IconClass(typeof(Nuke.Common.Tools.GitLink3.GitLink3Tasks), "link")]
+
 namespace Nuke.Common.Tools.GitLink3
 {
     [PublicAPI]
