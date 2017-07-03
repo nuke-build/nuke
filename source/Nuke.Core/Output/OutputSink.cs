@@ -23,7 +23,7 @@ namespace Nuke.Core.Output
 
     internal static class OutputSink
     {
-        private static readonly List<string> s_warnings = new List<string>();
+        private static readonly HashSet<string> s_warnings = new HashSet<string>();
 
         public static IOutputSink Instance =>
                 TeamCityOutputSink.Instance
@@ -67,7 +67,7 @@ namespace Nuke.Core.Output
 
         public static void WriteSummary (IReadOnlyCollection<TargetDefinition> executionList)
         {
-            s_warnings.ForEach(x => Instance.Warn(x));
+            s_warnings.ToList().ForEach(x => Instance.Warn(x));
             Instance.WriteSummary(executionList);
         }
     }
