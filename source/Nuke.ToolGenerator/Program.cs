@@ -92,7 +92,12 @@ namespace Nuke.ToolGenerator
                     NullValueHandling = NullValueHandling.Ignore,
                     DefaultValueHandling = DefaultValueHandling.Ignore
                 });
-            File.WriteAllText(tool.DefinitionFile, content);
+
+            var originalLineCount = File.ReadAllLines(tool.DefinitionFile).Length;
+            var serializationLineCount = content.Split(new[] { Environment.NewLine }, StringSplitOptions.None).Length;
+            var postfix = originalLineCount != serializationLineCount ? ".new" : string.Empty;
+
+            File.WriteAllText(tool.DefinitionFile + postfix, content);
         }
 
         private static string GetReferenceContent (string reference)
