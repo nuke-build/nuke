@@ -3,7 +3,7 @@ using System.Linq;
 using Nuke.Common;
 using Nuke.Common.Tools.MSBuild;
 using Nuke.Core;
-using static Nuke.Common.FileSystem.FileSystemTasks;
+using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 using static Nuke.Common.Tools.NuGet.NuGetTasks;
