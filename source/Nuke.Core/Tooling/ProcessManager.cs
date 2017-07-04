@@ -173,6 +173,9 @@ namespace Nuke.Core.Tooling
 
         private static void CheckPathEnvironmentVariable (ProcessStartInfo startInfo)
         {
+            if (EnvironmentInfo.ArgumentSwitch("nopathcheck"))
+                return;
+
             startInfo.Environment
                     .SingleOrDefault(x => x.Key.Equals("path", StringComparison.OrdinalIgnoreCase))
                     .Value.Split(';')
