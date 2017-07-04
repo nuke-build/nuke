@@ -150,6 +150,8 @@ namespace Nuke.Core.Tooling
 
         private static void PrintEnvironmentVariables (ProcessStartInfo startInfo)
         {
+            void TraceItem (string key, string value) => Logger.Trace($"  - {key} = {value}");
+
             Logger.Trace("Environment variables:");
 
             foreach (var pair in startInfo.Environment.OrderBy(x => x.Key, StringComparer.OrdinalIgnoreCase))
@@ -160,11 +162,11 @@ namespace Nuke.Core.Tooling
                     var padding = (int) Math.Floor(Math.Log10(paths.Length) + 1);
 
                     for (var i = 0; i < paths.Length; i++)
-                        Logger.Trace($"  - {pair.Key}[{i.ToString().PadLeft(padding, paddingChar: '0')}] = {paths[i]}");
+                        TraceItem($"{pair.Key}[{i.ToString().PadLeft(padding, paddingChar: '0')}]", paths[i]);
                 }
                 else
                 {
-                    Logger.Trace($"  - {pair.Key} = {pair.Value}");
+                    TraceItem(pair.Key, pair.Value);
                 }
             }
         }
