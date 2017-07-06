@@ -126,7 +126,7 @@ namespace Nuke.ToolGenerator
                 property.ShouldSerialize = x =>
                 {
                     var propertyInfo = member as PropertyInfo;
-                    return propertyInfo == null || propertyInfo.GetSetMethod() != null;
+                    return propertyInfo == null || propertyInfo.GetSetMethod(nonPublic: true) != null;
                 };
                 return property;
             }

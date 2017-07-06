@@ -15,6 +15,14 @@ namespace Nuke.ToolGenerator.Model
     [DebuggerDisplay("{" + nameof(DefinitionFile) + "}")]
     public class Tool
     {
+        [JsonProperty]
+        private string[] License { get; set; } =
+            {
+                "Copyright Matthias Koch 2017.",
+                "Distributed under the MIT License.",
+                "https://github.com/nuke-build/tools/blob/master/LICENSE"
+            };
+
         [JsonIgnore]
         public string DefinitionFile { get; set; }
 
