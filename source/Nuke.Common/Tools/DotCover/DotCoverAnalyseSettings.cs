@@ -6,7 +6,7 @@ using System;
 
 namespace Nuke.Common.Tools.DotCover
 {
-    public partial class DotCoverSettings
+    public partial class DotCoverAnalyseSettings
     {
         private string GetPackageExecutable ()
         {

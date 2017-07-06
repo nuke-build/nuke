@@ -10,7 +10,7 @@ namespace Nuke.Common.Tools.DotCover
 {
     public static partial class DotCoverTasks
     {
-        private static IProcess StartProcess (DotCoverSettings dotCoverSettings, ProcessSettings processSettings)
+        private static IProcess StartProcess (DotCoverAnalyseSettings dotCoverSettings, ProcessSettings processSettings)
         {
             throw new NotImplementedException();
         }
