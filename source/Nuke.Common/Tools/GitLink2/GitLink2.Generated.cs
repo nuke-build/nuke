@@ -31,9 +31,7 @@ namespace Nuke.Common.Tools.GitLink2
         /// <summary><p>GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.</p><p>For more details, visit the <a href="https://github.com/GitTools/GitLink/">official website</a>.</p></summary>
         public static void GitLink2 (Configure<GitLink2Settings> configurator = null, ProcessSettings processSettings = null)
         {
-            configurator = configurator ?? (x => x);
-            var gitLink2Settings = new GitLink2Settings();
-            gitLink2Settings = configurator(gitLink2Settings);
+            var gitLink2Settings = configurator.InvokeSafe(new GitLink2Settings());
             PreProcess(gitLink2Settings);
             var process = ProcessTasks.StartProcess(gitLink2Settings, processSettings);
             process.AssertZeroExitCode();

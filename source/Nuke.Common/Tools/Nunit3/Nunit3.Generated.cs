@@ -31,9 +31,7 @@ namespace Nuke.Common.Tools.Nunit3
         /// <summary><p>NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href="http://www.junit.org/">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.</p><p>For more details, visit the <a href="https://www.nunit.org/">official website</a>.</p></summary>
         public static void Nunit3 (Configure<Nunit3Settings> configurator = null, ProcessSettings processSettings = null)
         {
-            configurator = configurator ?? (x => x);
-            var nunit3Settings = new Nunit3Settings();
-            nunit3Settings = configurator(nunit3Settings);
+            var nunit3Settings = configurator.InvokeSafe(new Nunit3Settings());
             PreProcess(nunit3Settings);
             var process = ProcessTasks.StartProcess(nunit3Settings, processSettings);
             process.AssertZeroExitCode();

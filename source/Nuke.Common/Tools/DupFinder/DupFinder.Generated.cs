@@ -31,9 +31,7 @@ namespace Nuke.Common.Tools.DupFinder
         /// <summary><p>dupFinder is a free command line tool that finds duplicates in C# and Visual Basic .NET code - no more, no less. But being a JetBrains tool, dupFinder does it in a smart way. By default, it considers code fragments as duplicates not only if they are identical, but also if they are structurally similar, even if they contain different variables, fields, methods, types or literals. Of course, you can configure the allowed similarity as well as the minimum relative size of duplicated fragments.</p><p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/dupFinder.html">official website</a>.</p></summary>
         public static void DupFinder (Configure<DupFinderSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            configurator = configurator ?? (x => x);
-            var dupFinderSettings = new DupFinderSettings();
-            dupFinderSettings = configurator(dupFinderSettings);
+            var dupFinderSettings = configurator.InvokeSafe(new DupFinderSettings());
             PreProcess(dupFinderSettings);
             var process = ProcessTasks.StartProcess(dupFinderSettings, processSettings);
             process.AssertZeroExitCode();

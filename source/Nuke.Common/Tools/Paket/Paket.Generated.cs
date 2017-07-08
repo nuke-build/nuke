@@ -31,9 +31,7 @@ namespace Nuke.Common.Tools.Paket
         /// <summary><p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href="https://www.nuget.org/">NuGet</a> packages and also enables referencing files directly from <a href="https://fsprojects.github.io/Paket/git-dependencies.html">Git repositories</a> or any <a href="https://fsprojects.github.io/Paket/http-dependencies.html">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href="https://fsprojects.github.io/Paket/getting-started.html"><i>Getting started</i> tutorial</a> and take a look at the <a href="https://fsprojects.github.io/Paket/faq.html">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href="https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion">convert from NuGet</a> section.</p><p>For more details, visit the <a href="https://fsprojects.github.io/paket">official website</a>.</p></summary>
         public static void PaketUpdate (Configure<PaketUpdateSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            configurator = configurator ?? (x => x);
-            var paketUpdateSettings = new PaketUpdateSettings();
-            paketUpdateSettings = configurator(paketUpdateSettings);
+            var paketUpdateSettings = configurator.InvokeSafe(new PaketUpdateSettings());
             PreProcess(paketUpdateSettings);
             var process = ProcessTasks.StartProcess(paketUpdateSettings, processSettings);
             process.AssertZeroExitCode();
@@ -44,9 +42,7 @@ namespace Nuke.Common.Tools.Paket
         /// <summary><p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href="https://www.nuget.org/">NuGet</a> packages and also enables referencing files directly from <a href="https://fsprojects.github.io/Paket/git-dependencies.html">Git repositories</a> or any <a href="https://fsprojects.github.io/Paket/http-dependencies.html">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href="https://fsprojects.github.io/Paket/getting-started.html"><i>Getting started</i> tutorial</a> and take a look at the <a href="https://fsprojects.github.io/Paket/faq.html">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href="https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion">convert from NuGet</a> section.</p><p>For more details, visit the <a href="https://fsprojects.github.io/paket">official website</a>.</p></summary>
         public static void PaketRestore (Configure<PaketRestoreSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            configurator = configurator ?? (x => x);
-            var paketRestoreSettings = new PaketRestoreSettings();
-            paketRestoreSettings = configurator(paketRestoreSettings);
+            var paketRestoreSettings = configurator.InvokeSafe(new PaketRestoreSettings());
             PreProcess(paketRestoreSettings);
             var process = ProcessTasks.StartProcess(paketRestoreSettings, processSettings);
             process.AssertZeroExitCode();
@@ -57,9 +53,7 @@ namespace Nuke.Common.Tools.Paket
         /// <summary><p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href="https://www.nuget.org/">NuGet</a> packages and also enables referencing files directly from <a href="https://fsprojects.github.io/Paket/git-dependencies.html">Git repositories</a> or any <a href="https://fsprojects.github.io/Paket/http-dependencies.html">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href="https://fsprojects.github.io/Paket/getting-started.html"><i>Getting started</i> tutorial</a> and take a look at the <a href="https://fsprojects.github.io/Paket/faq.html">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href="https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion">convert from NuGet</a> section.</p><p>For more details, visit the <a href="https://fsprojects.github.io/paket">official website</a>.</p></summary>
         public static void PaketPush (Configure<PaketPushSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            configurator = configurator ?? (x => x);
-            var paketPushSettings = new PaketPushSettings();
-            paketPushSettings = configurator(paketPushSettings);
+            var paketPushSettings = configurator.InvokeSafe(new PaketPushSettings());
             PreProcess(paketPushSettings);
             var process = ProcessTasks.StartProcess(paketPushSettings, processSettings);
             process.AssertZeroExitCode();
@@ -70,9 +64,7 @@ namespace Nuke.Common.Tools.Paket
         /// <summary><p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href="https://www.nuget.org/">NuGet</a> packages and also enables referencing files directly from <a href="https://fsprojects.github.io/Paket/git-dependencies.html">Git repositories</a> or any <a href="https://fsprojects.github.io/Paket/http-dependencies.html">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href="https://fsprojects.github.io/Paket/getting-started.html"><i>Getting started</i> tutorial</a> and take a look at the <a href="https://fsprojects.github.io/Paket/faq.html">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href="https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion">convert from NuGet</a> section.</p><p>For more details, visit the <a href="https://fsprojects.github.io/paket">official website</a>.</p></summary>
         public static void PaketPack (Configure<PaketPackSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            configurator = configurator ?? (x => x);
-            var paketPackSettings = new PaketPackSettings();
-            paketPackSettings = configurator(paketPackSettings);
+            var paketPackSettings = configurator.InvokeSafe(new PaketPackSettings());
             PreProcess(paketPackSettings);
             var process = ProcessTasks.StartProcess(paketPackSettings, processSettings);
             process.AssertZeroExitCode();

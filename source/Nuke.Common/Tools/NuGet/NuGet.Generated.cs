@@ -31,9 +31,7 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
         public static void NuGetPush (Configure<NuGetPushSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            configurator = configurator ?? (x => x);
-            var nuGetPushSettings = new NuGetPushSettings();
-            nuGetPushSettings = configurator(nuGetPushSettings);
+            var nuGetPushSettings = configurator.InvokeSafe(new NuGetPushSettings());
             PreProcess(nuGetPushSettings);
             var process = ProcessTasks.StartProcess(nuGetPushSettings, processSettings);
             process.AssertZeroExitCode();
@@ -44,9 +42,7 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
         public static void NuGetPack (Configure<NuGetPackSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            configurator = configurator ?? (x => x);
-            var nuGetPackSettings = new NuGetPackSettings();
-            nuGetPackSettings = configurator(nuGetPackSettings);
+            var nuGetPackSettings = configurator.InvokeSafe(new NuGetPackSettings());
             PreProcess(nuGetPackSettings);
             var process = ProcessTasks.StartProcess(nuGetPackSettings, processSettings);
             process.AssertZeroExitCode();
@@ -69,9 +65,7 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
         public static void NuGetRestore (Configure<NuGetRestoreSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            configurator = configurator ?? (x => x);
-            var nuGetRestoreSettings = new NuGetRestoreSettings();
-            nuGetRestoreSettings = configurator(nuGetRestoreSettings);
+            var nuGetRestoreSettings = configurator.InvokeSafe(new NuGetRestoreSettings());
             PreProcess(nuGetRestoreSettings);
             var process = ProcessTasks.StartProcess(nuGetRestoreSettings, processSettings);
             process.AssertZeroExitCode();
