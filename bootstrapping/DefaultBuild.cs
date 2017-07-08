@@ -29,10 +29,10 @@ class DefaultBuild : GitHubBuild
 
                 DotNetRestore(SolutionDirectory);
 
-                NuGetRestore(SolutionFile);
-
                 if (MSBuildVersion == Nuke.Common.Tools.MSBuild.MSBuildVersion.VS2017)
                     MSBuild(s => DefaultSettings.MSBuildRestore);
+
+                NuGetRestore(SolutionFile);
             });
 
     Target Compile => _ => _
