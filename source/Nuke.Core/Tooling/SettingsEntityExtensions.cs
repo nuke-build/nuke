@@ -25,7 +25,11 @@ namespace Nuke.Core.Tooling
                 var binaryFormatter = new BinaryFormatter();
                 binaryFormatter.Serialize(memoryStream, settingsEntity);
                 memoryStream.Seek(offset: 0, loc: SeekOrigin.Begin);
-                return (T) binaryFormatter.Deserialize(memoryStream);
+                var newInstance = (T) binaryFormatter.Deserialize(memoryStream);
+                var toolSettings = newInstance as ToolSettings;
+                if (toolSettings != null)
+                    toolSettings.ArgumentConfigurator = ((ToolSettings) (object) settingsEntity).ArgumentConfigurator;
+                return newInstance;
             }
 #endif
         }

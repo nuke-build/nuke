@@ -16,7 +16,14 @@ namespace Nuke.Core.Tooling
     {
         public virtual string ToolPath { get; internal set; }
         public virtual string WorkingDirectory { get; internal set; }
-        public virtual Func<Arguments, Arguments> ArgumentConfigurator { get; internal set; } = x => x;
+
+        [NonSerialized]
+        private Func<Arguments, Arguments> _argumentConfigurator = x => x;
+        public virtual Func<Arguments, Arguments> ArgumentConfigurator
+        {
+            get => _argumentConfigurator;
+            internal set => _argumentConfigurator = value;
+        }
 
         public virtual IArguments GetArguments ()
         {
