@@ -33,39 +33,36 @@ namespace Nuke.Common.IO
                 var relativePath = FileSystemTasks.GetRelativePath(directory, file);
                 var hostPath = $"{hostRoot}/{relativePath}";
 
-                FtpUploadFileInternal(file, hostPath, info: false, prefix: $"[{index + 1}/{files.Count}] ");
+                FtpUploadFileInternal(file, hostPath, prefix: $"[{index + 1}/{files.Count}] ");
             }
         }
 
         public static void FtpUploadFile (string file, string hostDestination)
         {
-            FtpUploadFileInternal(file, hostDestination, info: true);
+            FtpUploadFileInternal(file, hostDestination);
         }
 
-        private static void FtpUploadFileInternal (string file, string hostDestination, bool info, string prefix = null)
+        private static void FtpUploadFileInternal (string file, string hostDestination, string prefix = null)
         {
-            if (info)
-                Logger.Info($"{prefix}Uploading to '{hostDestination}'...");
-            else
-                Logger.Trace($"{prefix}Uploading to '{hostDestination}'...");
+            Logger.Info($"{prefix}Uploading to '{hostDestination}'...");
 
-            FtpMakeDirectory(GetParentPath(hostDestination));
-
-            var request = WebRequest.Create(hostDestination);
-            request.Credentials = FtpCredentials;
-            request.Method = WebRequestMethods.Ftp.UploadFile;
-
-            var content = File.ReadAllBytes(file);
-            request.ContentLength = content.Length;
-
-            using (var requestStream = request.GetRequestStream())
+            ControlFlow.ExecuteWithRetry(() =>
             {
-                requestStream.Write(content, offset: 0, count: content.Length);
-                requestStream.Close();
-                // TODO: check response
-                //var response = (FtpWebResponse) request.GetResponse ();
-                //response.Close ();
-            }
+                FtpMakeDirectory(GetParentPath(hostDestination));
+                var request = WebRequest.Create(hostDestination);
+                request.Credentials = FtpCredentials;
+                request.Method = WebRequestMethods.Ftp.UploadFile;
+                var content = File.ReadAllBytes(file);
+                request.ContentLength = content.Length;
+                using (var requestStream = request.GetRequestStream())
+                {
+                    requestStream.Write(content, offset: 0, count: content.Length);
+                    requestStream.Close();
+                    // TODO: check response
+                    //var response = (FtpWebResponse) request.GetResponse ();
+                    //response.Close ();
+                }
+            });
         }
 
         public static void FtpMakeDirectory (string path)
