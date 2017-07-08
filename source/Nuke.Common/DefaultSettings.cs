@@ -65,7 +65,8 @@ namespace Nuke.Common
                 .SetVersion(GitHubBuild.Instance?.GitVersion?.NuGetVersionV2);
 
         public static NuGetRestoreSettings NuGetRestore => new NuGetRestoreSettings()
-                .SetWorkingDirectory(Build.Instance.RootDirectory.NotNull("Build.Instance.RootDirectory != null"));
+                .SetWorkingDirectory(Build.Instance.RootDirectory.NotNull("Build.Instance.RootDirectory != null"))
+                .SetTargetPath(Build.Instance.SolutionFile);
 
         public static InspectCodeSettings InspectCode => new InspectCodeSettings()
                 .SetWorkingDirectory(Build.Instance.RootDirectory.NotNull("Build.Instance.RootDirectory != null"))
