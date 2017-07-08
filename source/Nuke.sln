@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Common.Tests", "Nuke.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.MSBuildLocator", "Nuke.MSBuildLocator\Nuke.MSBuildLocator.csproj", "{656F585C-0B2D-429D-95A7-226EF59DAB79}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Git", "Nuke.Git\Nuke.Git.csproj", "{5AFEA642-5CC1-4F19-A74D-95CA1A7F830D}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bootstrapping", "bootstrapping", "{76BF44AE-484F-4441-BC36-B498F44E4F94}"
 	ProjectSection(SolutionItems) = preProject
 		..\bootstrapping\.build.csproj.DotSettings = ..\bootstrapping\.build.csproj.DotSettings
@@ -73,10 +71,6 @@ Global
 		{656F585C-0B2D-429D-95A7-226EF59DAB79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{656F585C-0B2D-429D-95A7-226EF59DAB79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{656F585C-0B2D-429D-95A7-226EF59DAB79}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5AFEA642-5CC1-4F19-A74D-95CA1A7F830D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5AFEA642-5CC1-4F19-A74D-95CA1A7F830D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5AFEA642-5CC1-4F19-A74D-95CA1A7F830D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5AFEA642-5CC1-4F19-A74D-95CA1A7F830D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
