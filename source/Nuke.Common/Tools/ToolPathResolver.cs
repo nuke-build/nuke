@@ -44,7 +44,7 @@ namespace Nuke.Common.Tools
             {
                 ControlFlow.Assert(packageId != null && packageExecutable != null, "packageId != null && packageExecutable != null");
                 var packagesConfigFile = NuGetPackageResolver.GetBuildPackagesConfigFile();
-                var installedPackage = NuGetPackageResolver.GetLocalInstalledPackage(packagesConfigFile, packageId)
+                var installedPackage = NuGetPackageResolver.GetLocalInstalledPackage(packageId, packagesConfigFile)
                         .NotNull($"Could not find package '{packageId}' via '{packagesConfigFile}'.");
                 var packageDirectory = Path.GetDirectoryName(installedPackage.FileName).NotNull("packageDirectory != null");
                 return Directory.GetFiles(packageDirectory, packageExecutable, SearchOption.AllDirectories)

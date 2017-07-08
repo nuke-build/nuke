@@ -18,10 +18,6 @@
 
   <ItemGroup>
     <PackageReference Include="Nuke.Common" Version="*" />
-    
-    <PackageReference Include="docfx.console" Version="2.17.5">
-      <ExcludeAssets>build</ExcludeAssets>
-    </PackageReference>
 
     <!-- TODO: throws exception in mono -->
     <!--<PackageReference Include="EtherealCode.ReSpeller" Version="4.5.8.12" />-->

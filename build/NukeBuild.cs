@@ -3,20 +3,14 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.IO;
 using System.Linq;
-using System.Net;
 using Nuke.Common;
-using Nuke.Common.Tools.DocFx;
 using Nuke.Common.Tools.GitLink3;
 using Nuke.Common.Tools.MSBuild;
 using Nuke.Common.Tools.NuGet;
 using Nuke.Core;
 using Nuke.Core.Utilities.Collections;
-using static Documentation;
 using static Nuke.Common.IO.FileSystemTasks;
-using static Nuke.Common.IO.FtpTasks;
-using static Nuke.Common.Tools.DocFx.DocFxTasks;
 using static Nuke.Common.Tools.GitLink3.GitLink3Tasks;
 using static Nuke.Common.Tools.InspectCode.InspectCodeTasks;
 using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
@@ -57,7 +51,7 @@ class NukeBuild : GitHubBuild
             .DependsOn(Restore, Link)
             .Executes(() => MSBuild(s => DefaultSettings.MSBuildPack));
 
-    Target Publish => _ => _
+    Target Push => _ => _
             .DependsOn(Pack)
             .Executes(() => GlobFiles(OutputDirectory, "*.nupkg")
                     .Where(x => !x.EndsWith("symbols.nupkg"))
@@ -72,28 +66,10 @@ class NukeBuild : GitHubBuild
             .DependsOn(Restore)
             .Executes(() => InspectCode(s => DefaultSettings.InspectCode));
 
-    string DocsDirectory => Path.Combine(RootDirectory, "docs");
-    string DocFxJsonFile => Path.Combine(DocsDirectory, "docfx.json");
-
-    Target GenerateDocs => _ => _
-            .DependsOn(Compile)
-            .Executes(
-                () => DocFxMetadata(DocFxJsonFile, s => s.EnableForce()),
-                () => WriteCustomToc(Path.Combine(DocsDirectory, "api", "toc.yml"),
-                    GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/*/Nuke.*.dll")),
-                () => DocFxBuild(DocFxJsonFile, s => s.EnableForce()));
-
-    Target UploadDocs => _ => _
-            .DependsOn(GenerateDocs)
-            .Executes(() => FtpCredentials = new NetworkCredential(EnsureVariable("FTP_USERNAME"), EnsureVariable("FTP_PASSWORD")))
-            .Executes(() => FtpUploadDirectoryRecursively(
-                Path.Combine(RootDirectory, "docs", "_site"),
-                "ftp://www58.world4you.com"));
-
     Target Test => _ => _
             .DependsOn(Compile)
             .Executes(() => Xunit2(GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/net4*/Nuke.*.Tests.dll")));
 
     Target Full => _ => _
-            .DependsOn(Compile, Test, Analysis, Publish, UploadDocs);
+            .DependsOn(Compile, Test, Analysis, Push);
 }
