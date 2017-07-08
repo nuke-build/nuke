@@ -82,9 +82,7 @@ namespace Nuke.ToolGenerator.Generators
             var settingsClassInstance = settingsClass.ToInstance();
 
             writer
-                    .WriteLine("configurator = configurator ?? (x => x);")
-                    .WriteLine($"var {settingsClassInstance} = new {settingsClass}();")
-                    .WriteLine($"{settingsClassInstance} = configurator({settingsClassInstance});")
+                    .WriteLine($"var {settingsClassInstance} = configurator.InvokeSafe(new {settingsClass}());")
                     .WriteLine($"PreProcess({settingsClassInstance});")
                     .WriteLine($"var process = {GetProcessStart(writer.Task)};")
                     .WriteLine(GetProcessAssertion(writer.Task))
