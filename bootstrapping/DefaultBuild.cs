@@ -13,7 +13,7 @@ class DefaultBuild : GitHubBuild
 {
     // This is the application entry point for the build.
     // It also defines the default target to execute.
-    public static void Main () => Execute<DefaultBuild>(x => x.Compile);
+    public static int Main () => Execute<DefaultBuild>(x => x.Compile);
 
     Target Clean => _ => _
             // Disabled for safety.
