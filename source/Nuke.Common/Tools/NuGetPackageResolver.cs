@@ -18,19 +18,8 @@ namespace Nuke.Common.Tools
     // TODO: add File/Directory.Exists assertions
     public static class NuGetPackageResolver
     {
-        public static string GetToolPath (string packageId, string executableName, string packagesConfigFile = null)
-        {
-            packagesConfigFile = packagesConfigFile ?? GetBuildPackagesConfigFile();
-            var installedPackage = GetLocalInstalledPackage(packagesConfigFile, packageId)
-                    .NotNull($"Could not find package '{packageId}' via '{packagesConfigFile}'.");
-            var packageDirectory = Path.GetDirectoryName(installedPackage.FileName).NotNull("packageDirectory != null");
-            return Directory.GetFiles(packageDirectory, executableName, SearchOption.AllDirectories)
-                    .SingleOrDefault()
-                    .NotNull($"Could not find '{executableName}' inside '{packageDirectory}'.");
-        }
-
         [CanBeNull]
-        public static InstalledPackage GetLocalInstalledPackage (string packagesConfigFile, string packageId)
+        public static InstalledPackage GetLocalInstalledPackage (string packageId, string packagesConfigFile = null)
         {
             return GetLocalInstalledPackages(packagesConfigFile)
                     .FirstOrDefault(x => x.Id.Equals(packageId, StringComparison.OrdinalIgnoreCase));
