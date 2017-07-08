@@ -1,3 +1,9 @@
+// Copyright Matthias Koch 2017.
+// Distributed under the MIT License.
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
+
+// Auto-generated with Nuke.ToolGenerator.
+
 using JetBrains.Annotations;
 using Nuke.Common.Tools;
 using Nuke.Core;
