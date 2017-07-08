@@ -157,6 +157,12 @@ namespace Nuke.Common.IO
             return Uri.UnescapeDataString(new Uri($@"{basePath}\").MakeRelativeUri(new Uri(destinationPath)).ToString());
         }
 
+        [Pure]
+        public static string GetAbsolutePath(string path)
+        {
+            return Path.GetFullPath(path);
+        }
+
         public static void Touch (string path, DateTime? time = null)
         {
             Logger.Info($"Touching file '{path}'...");
