@@ -16,8 +16,15 @@ using Nuke.Core.Utilities.Collections;
 namespace Nuke.Common.Tools
 {
     // TODO: add File/Directory.Exists assertions
+    [PublicAPI]
     public static class NuGetPackageResolver
     {
+        [CanBeNull]
+        public static string GetLocalInstalledPackageDirectory(string packageId, string packagesConfigFile = null)
+        {
+            return Path.GetDirectoryName(GetLocalInstalledPackage(packageId, packagesConfigFile)?.FileName);
+        }
+
         [CanBeNull]
         public static InstalledPackage GetLocalInstalledPackage (string packageId, string packagesConfigFile = null)
         {
