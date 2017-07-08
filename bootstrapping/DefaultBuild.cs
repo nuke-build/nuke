@@ -15,10 +15,17 @@ class DefaultBuild : GitHubBuild
     // It also defines the default target to execute.
     public static void Main () => Execute<DefaultBuild>(x => x.Compile);
 
+    Target Clean => _ => _
+            // Disabled for safety.
+            .OnlyWhen(() => false)
+            .Executes(() => DeleteDirectories(GlobDirectories(SolutionDirectory, "**/bin", "**/obj")))
+            .Executes(() => PrepareCleanDirectory(OutputDirectory));
+
     Target Restore => _ => _
+            .DependsOn(Clean)
             .Executes(() =>
             {
-                // Remove restore tasks as needed. They exist for compatibility.
+                // Remove tasks as needed. They exist for compatibility.
 
                 DotNetRestore(SolutionDirectory);
 
@@ -33,7 +40,7 @@ class DefaultBuild : GitHubBuild
             .Executes(() => MSBuild(s => DefaultSettings.MSBuildCompile
                     .SetMSBuildVersion(MSBuildVersion)));
 
-    // If you have xproj-based projects, you need to downgrade to VS2015.
+    // When having xproj-based projects, using VS2015 is necessary.
     MSBuildVersion? MSBuildVersion =>
             !IsUnix
                 ? GlobFiles(SolutionDirectory, "*.xproj").Any()
