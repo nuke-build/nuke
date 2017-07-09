@@ -19,25 +19,35 @@ namespace Nuke.Common.IO
     [PublicAPI]
     public class YamlTasks
     {
-        public static void YamlSerialize<T> (T obj, string path, Configure<SerializerBuilder> configurator = null)
+        public static void YamlSerializeToFile (object obj, string path, Configure<SerializerBuilder> configurator = null)
+        {
+            File.WriteAllText(path, YamlSerialize(obj, configurator));
+        }
+
+        [Pure]
+        public static T YamlDeserializeFromFile<T> (string path, Configure<DeserializerBuilder> configurator = null)
+        {
+            return YamlDeserialize<T>(File.ReadAllText(path), configurator);
+        }
+
+        [Pure]
+        public static string YamlSerialize (object obj, Configure<SerializerBuilder> configurator = null)
         {
             var builder = new SerializerBuilder()
                     .WithNamingConvention(new CamelCaseNamingConvention());
             builder = configurator.InvokeSafe(builder);
 
             var serializer = builder.Build();
-            var content = serializer.Serialize(obj);
-            File.WriteAllText(path, content);
+            return serializer.Serialize(obj);
         }
 
         [Pure]
-        public static T YamlDeserialize<T> (string path, Configure<DeserializerBuilder> configurator = null)
+        public static T YamlDeserialize<T> (string content, Configure<DeserializerBuilder> configurator = null)
         {
             var builder = new DeserializerBuilder()
                     .WithNamingConvention(new CamelCaseNamingConvention());
             builder = configurator.InvokeSafe(builder);
 
-            var content = File.ReadAllText(path);
             var deserializer = builder.Build();
             return deserializer.Deserialize<T>(content);
         }
