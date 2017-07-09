@@ -30,7 +30,14 @@ namespace Nuke.Common
             Initialize();
         }
 
+        /// <summary>
+        /// The <see cref="Git.GitRepository"/> associated with the build.
+        /// </summary>
         public GitRepository GitRepository { get; protected set; }
+
+        /// <summary>
+        /// The <see cref="Tools.GitVersion.GitVersion"/> based on the commit history for the build.
+        /// </summary>
         public GitVersion GitVersion { get; protected set; }
 
         // ReSharper disable once VirtualMemberNeverOverridden.Global

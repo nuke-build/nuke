@@ -23,8 +23,26 @@ using Nuke.Core.Tooling;
 namespace Nuke.Common
 {
     /// <summary>
-    /// Provides a variety of best-practice settings. For more details we recommend to check the actual source code.
+    /// Variety of default settings, pre-filled with <see cref="Build.Instance"/> properties
+    /// (e.g., <see cref="Build.SolutionFile"/> or <see cref="GitHubBuild.GitVersion"/> and
+    /// best-practice values (e.g., excluding test attributes from coverage analysis).
+    /// For more details it's recommended to browse the actual source code.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// Target Restore =&gt; _ =&gt; _
+    ///         .DependsOn(Clean)
+    ///         .Executes(() =&gt; NuGetRestore(s =&gt; DefaultSettings.NuGetRestore));
+    /// 
+    /// Target Compile =&gt; _ =&gt; _
+    ///         .DependsOn(Restore)
+    ///         .Executes(() =&gt; MSBuild(s =&gt; DefaultSettings.MSBuildCompile));
+    /// 
+    /// Target Pack =&gt; _ =&gt; _
+    ///         .DependsOn(Compile)
+    ///         .Executes(() =&gt; MSBuild(s =&gt; DefaultSettings.MSBuildPack));
+    /// </code>
+    /// </example>
     [PublicAPI]
     public class DefaultSettings
     {
@@ -56,25 +74,25 @@ namespace Nuke.Common
 
 
         public static GitVersionSettings GitVersion => new GitVersionSettings()
-                .SetWorkingDirectory(Build.Instance.RootDirectory.NotNull("Build.Instance.RootDirectory != null"));
+                .SetWorkingDirectory(Build.Instance.RootDirectory);
 
         public static NuGetPackSettings NuGetPack => new NuGetPackSettings()
-                .SetWorkingDirectory(Build.Instance.RootDirectory.NotNull("Build.Instance.RootDirectory != null"))
+                .SetWorkingDirectory(Build.Instance.RootDirectory)
                 .SetOutputDirectory(Build.Instance.OutputDirectory)
                 .SetConfiguration(Build.Instance.Configuration)
                 .SetVersion(GitHubBuild.Instance?.GitVersion?.NuGetVersionV2);
 
         public static NuGetRestoreSettings NuGetRestore => new NuGetRestoreSettings()
-                .SetWorkingDirectory(Build.Instance.RootDirectory.NotNull("Build.Instance.RootDirectory != null"))
+                .SetWorkingDirectory(Build.Instance.RootDirectory)
                 .SetTargetPath(Build.Instance.SolutionFile);
 
         public static InspectCodeSettings InspectCode => new InspectCodeSettings()
-                .SetWorkingDirectory(Build.Instance.RootDirectory.NotNull("Build.Instance.RootDirectory != null"))
+                .SetWorkingDirectory(Build.Instance.RootDirectory)
                 .SetTargetPath(Build.Instance.SolutionFile)
                 .SetOutput(Path.Combine(Build.Instance.OutputDirectory, "inspectCode.xml"));
 
         public static OpenCoverSettings OpenCover => new OpenCoverSettings()
-                .SetWorkingDirectory(Build.Instance.RootDirectory.NotNull("Build.Instance.RootDirectory != null"))
+                .SetWorkingDirectory(Build.Instance.RootDirectory)
                 .SetRegistration(RegistrationType.User)
                 .SetTargetExitCodeOffset(targetExitCodeOffset: 0)
                 .SetFilters(
@@ -94,15 +112,15 @@ namespace Nuke.Common
                     "*/*.g.i.cs");
 
         public static GitLink2Settings GitLink2 => new GitLink2Settings()
-                .SetWorkingDirectory(Build.Instance.RootDirectory.NotNull("Build.Instance.RootDirectory != null"))
-                .SetSolutionDirectory(Build.Instance.SolutionDirectory.NotNull("Build.Instance.SolutionDirectory != null"))
+                .SetWorkingDirectory(Build.Instance.RootDirectory)
+                .SetSolutionDirectory(Build.Instance.SolutionDirectory)
                 .SetConfiguration(Build.Instance.Configuration)
-                .SetBranchName(GitHubBuild.Instance.GitVersion.NotNull("GitHubBuild.Instance.GitVersion != null").BranchName)
-                .SetRepositoryUrl(GitHubBuild.Instance.GitRepository.NotNull("GitHubBuild.Instance.GitRepositoryUrl != null").SvnUrl);
+                .SetBranchName(GitHubBuild.Instance?.GitVersion.BranchName)
+                .SetRepositoryUrl(GitHubBuild.Instance?.GitRepository.SvnUrl);
 
         public static GitLink3Settings GitLink3 => new GitLink3Settings()
-                .SetWorkingDirectory(Build.Instance.RootDirectory.NotNull("Build.Instance.RootDirectory != null"))
-                .SetBaseDirectory(Build.Instance.RootDirectory.NotNull("Build.Instance.RootDirectory != null"))
-                .SetRepositoryUrl(GitHubBuild.Instance.GitRepository.NotNull("GitHubBuild.Instance.GitRepositoryUrl != null").SvnUrl);
+                .SetWorkingDirectory(Build.Instance.RootDirectory)
+                .SetBaseDirectory(Build.Instance.RootDirectory)
+                .SetRepositoryUrl(GitHubBuild.Instance?.GitRepository.SvnUrl);
     }
 }

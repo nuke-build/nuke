@@ -113,7 +113,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Throws an exception if <see cref="Build.LogLevel"/> is equal to <see cref="LogLevel.Failure"/>.
+        /// Throws an exception.
         /// </summary>
         [StringFormatMethod("format")]
         [ContractAnnotation("=> halt")]
@@ -123,7 +123,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Throws an exception if <see cref="Build.LogLevel"/> is equal to <see cref="LogLevel.Failure"/>.
+        /// Throws an exception.
         /// </summary>
         [ContractAnnotation("=> halt")]
         public static void Fail (object value)
@@ -132,7 +132,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Throws an exception if <see cref="Build.LogLevel"/> is equal to <see cref="LogLevel.Failure"/>.
+        /// Throws an exception.
         /// </summary>
         [ContractAnnotation("=> halt")]
         public static void Fail (string text)

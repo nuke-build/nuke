@@ -8,7 +8,7 @@ using System.Linq;
 namespace Nuke.Core
 {
     /// <summary>
-    /// Initializes a target.
+    /// Defines a target.
     /// </summary>
     /// <example>
     /// <code>

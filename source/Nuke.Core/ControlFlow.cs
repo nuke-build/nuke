@@ -20,6 +20,9 @@ namespace Nuke.Core
     [DebuggerStepThrough]
     public static class ControlFlow
     {
+        /// <summary>
+        /// Throws an exception.
+        /// </summary>
         [StringFormatMethod("format")]
         [ContractAnnotation("=> halt")]
         public static void Fail (string format, params object[] args)
@@ -27,13 +30,19 @@ namespace Nuke.Core
             Logger.Fail(format, args);
         }
 
-        [ContractAnnotation("=> halt")]
+        /// <summary>
+        /// Throws an exception.
+        /// </summary>
+        [ContractAnnotation ("=> halt")]
         public static void Fail (object value)
         {
             Logger.Fail(value);
         }
 
-        [ContractAnnotation("=> halt")]
+        /// <summary>
+        /// Throws an exception.
+        /// </summary>
+        [ContractAnnotation ("=> halt")]
         public static void Fail (string text)
         {
             Logger.Fail(text);
@@ -119,6 +128,11 @@ namespace Nuke.Core
         /// <summary>
         /// Executes a given action and suppresses all errors while delegating them to <see cref="Logger.Warn(string)"/>.
         /// </summary>
+        /// <example>
+        /// <code>
+        /// var author = SuppressErrors(GetAuthor, defaultValue: "John Doe");
+        /// </code>
+        /// </example>
         [ContractAnnotation("defaultValue: notnull => notnull")]
         [CanBeNull]
         public static T SuppressErrors<T> (Func<T> action, T defaultValue = default(T))
@@ -132,6 +146,12 @@ namespace Nuke.Core
         /// <returns>
         /// Returns an empty collection for convenience.
         /// </returns>
+        /// <example>
+        /// <code>
+        /// // Won't throw NRE if GetAuthors throws
+        /// var authorsCount = SuppressErrors(GetAuthors).Length;
+        /// </code>
+        /// </example>
         public static IEnumerable<T> SuppressErrors<T> (Func<IEnumerable<T>> action)
         {
             return SuppressErrors<IEnumerable<T>>(action) ?? Enumerable.Empty<T>();
@@ -173,6 +193,14 @@ namespace Nuke.Core
             }
         }
 
+        /// <summary>
+        /// Executes a given action under retry-policy. After reaching the specified amount of attempts, the actions fails permanently.
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// ExecuteWithRetry(() => NuGetRestore(SolutionFile), waitInSeconds: 30);
+        /// </code>
+        /// </example>
         public static void ExecuteWithRetry (
             [InstantHandle] Action action,
             [InstantHandle] Action cleanup = null,
