@@ -95,5 +95,12 @@ namespace Nuke.Core
         }
 
         public virtual string OutputDirectory => Path.Combine(RootDirectory, "output");
+        public virtual string ArtifactsDirectory => Path.Combine(RootDirectory, "artifacts");
+
+        [CanBeNull]
+        public virtual string SourceDirectory
+            => new[] { "src", "source" }
+                    .SelectMany(x => Directory.GetDirectories(RootDirectory, x))
+                    .FirstOrDefault();
     }
 }
