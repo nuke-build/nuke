@@ -19,6 +19,23 @@ namespace Nuke.Core
     [DebuggerStepThrough]
     public static partial class EnvironmentInfo
     {
+        /// <summary>
+        /// Provides access to a command-line argument or environment variable.
+        /// </summary>
+        [CanBeNull]
+        public static string ArgumentOrVariable(string name)
+        {
+            return Argument(name) ?? Variable(name);
+        }
+
+        /// <summary>
+        /// Provides access to a command-line argument or environment variable using <see cref="ControlFlow.NotNull{T}"/>.
+        /// </summary>
+        public static string EnsureArgumentOrVariable(string name)
+        {
+            return ArgumentOrVariable(name).NotNull($"ArgumentOrVariable({name}) != null");
+        }
+
         /// Provides access to an environment variable.
         [CanBeNull]
         public static string Variable (string name)
@@ -40,7 +57,7 @@ namespace Nuke.Core
             return Variable(name).NotNull($"Variable({name}) != null");
         }
 
-        /// Provides access to a converted variable using <see cref="ControlFlow.NotNull{T}"/>.
+        /// Provides access to a converted environment variable using <see cref="ControlFlow.NotNull{T}"/>.
         public static T EnsureVariable<T> (string name)
         {
             var value = EnsureVariable(name);
@@ -48,7 +65,7 @@ namespace Nuke.Core
         }
 
 
-        /// Provides access to a command line argument.
+        /// Provides access to a command-line argument.
         [CanBeNull]
         public static string Argument (string name)
         {
@@ -59,7 +76,7 @@ namespace Nuke.Core
             return !string.IsNullOrWhiteSpace(split?[1]) ? split[1] : null;
         }
 
-        /// Provides access to a converted command line argument.
+        /// Provides access to a converted command-line argument.
         [CanBeNull]
         public static T Argument<T> (string name)
         {
@@ -67,13 +84,13 @@ namespace Nuke.Core
             return (T) (Convert<T>(value) ?? default(T));
         }
 
-        /// Provides access to a command line argument using <see cref="ControlFlow.NotNull{T}"/>.
+        /// Provides access to a command-line argument using <see cref="ControlFlow.NotNull{T}"/>.
         public static string EnsureArgument (string name)
         {
             return Argument(name).NotNull($"Argument({name}) != null");
         }
 
-        /// Checks if the specified switch was passed.
+        /// Checks if the specified command-line switch was passed.
         public static bool ArgumentSwitch (string name)
         {
             return Environment.GetCommandLineArgs()
@@ -81,7 +98,7 @@ namespace Nuke.Core
                               || x.Equals($"-{name}", StringComparison.OrdinalIgnoreCase));
         }
 
-        /// Provides access to a converted command line argument using <see cref="ControlFlow.NotNull{T}"/>.
+        /// Provides access to a converted command-line argument using <see cref="ControlFlow.NotNull{T}"/>.
         public static T EnsureArgument<T> (string name)
         {
             var value = EnsureArgument(name);
