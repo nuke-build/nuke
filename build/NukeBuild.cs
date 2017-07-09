@@ -55,13 +55,12 @@ class NukeBuild : GitHubBuild
             .DependsOn(Pack)
             .Executes(() => GlobFiles(OutputDirectory, "*.nupkg")
                     .Where(x => !x.EndsWith("symbols.nupkg"))
-                    .ForEach(x => SuppressErrors(() =>
-                        NuGetPush(s => s
-                                .SetVerbosity(NuGetVerbosity.Detailed)
-                                .SetTargetPath(x)
-                                .SetApiKey(EnsureVariable("MYGET_API_KEY"))
-                                .SetSource("https://www.myget.org/F/nukebuild/api/v2/package")))));
-
+                    .ForEach(x => NuGetPush(s => s
+                            .SetTargetPath(x)
+                            .SetSource("https://www.myget.org/F/nukebuild/api/v2/package")
+                            .SetApiKey(EnsureArgumentOrVariable("MYGET_API_KEY"))
+                            .SetVerbosity(NuGetVerbosity.Detailed))));
+    
     Target Analysis => _ => _
             .DependsOn(Restore)
             .Executes(() => InspectCode(s => DefaultSettings.InspectCode));
