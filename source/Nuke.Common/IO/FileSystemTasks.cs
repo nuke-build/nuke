@@ -17,17 +17,17 @@ using Nuke.Core.Utilities.Collections;
 
 namespace Nuke.Common.IO
 {
-    public enum FileExistsPolicy
-    {
-        Fail,
-        Skip,
-        Overwrite,
-        OverwriteIfNewer
-    }
-
     [PublicAPI]
-    public static class FileSystemTasks
+    public static partial class FileSystemTasks
     {
+        public enum FileExistsPolicy
+        {
+            Fail,
+            Skip,
+            Overwrite,
+            OverwriteIfNewer
+        }
+
         public static void PrepareCleanDirectory (string directory)
         {
             if (!Directory.Exists(directory))
@@ -151,6 +151,7 @@ namespace Nuke.Common.IO
             return globPatterns.SelectMany(x => directoryInfo.GlobDirectories(x)).Select(x => x.FullName);
         }
 
+        // TODO: check usages
         [Pure]
         public static string GetRelativePath (string basePath, string destinationPath)
         {
