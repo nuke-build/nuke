@@ -159,7 +159,7 @@ namespace Nuke.Core.Tooling
                 if (pair.Key.Equals("path", StringComparison.OrdinalIgnoreCase))
                 {
                     var paths = pair.Value.Split(';');
-                    var padding = (int) Math.Floor(Math.Log10(paths.Length) + 1);
+                    var padding = paths.Length.ToString().Length;
 
                     for (var i = 0; i < paths.Length; i++)
                         TraceItem($"{pair.Key}[{i.ToString().PadLeft(padding, paddingChar: '0')}]", paths[i]);
