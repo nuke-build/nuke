@@ -178,7 +178,7 @@ namespace Nuke.Core.Tooling
 
             startInfo.Environment
                     .SingleOrDefault(x => x.Key.Equals("path", StringComparison.OrdinalIgnoreCase))
-                    .Value.Split(';')
+                    .Value.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
                     .Where(x => !Directory.Exists(x))
                     .ForEach(x => Logger.Warn($"Path environment variable contains invalid or inaccessible path '{x}'."));
         }
