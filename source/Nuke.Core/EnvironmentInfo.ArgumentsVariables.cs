@@ -70,8 +70,8 @@ namespace Nuke.Core
         public static string Argument (string name, bool allowEmptyString = false)
         {
             var argument = Environment.GetCommandLineArgs()
-                    .SingleOrDefault(x => x.StartsWith($"--{name}", StringComparison.OrdinalIgnoreCase)
-                                          || x.StartsWith($"-{name}", StringComparison.OrdinalIgnoreCase));
+                    .SingleOrDefault(x => x.StartsWith($"--{name}=", StringComparison.OrdinalIgnoreCase)
+                                          || x.StartsWith($"-{name}=", StringComparison.OrdinalIgnoreCase));
             var split = argument?.Split(new[] { '=' }, count: 2);
             return allowEmptyString || !string.IsNullOrWhiteSpace(split?[1]) ? split?[1] : null;
         }
