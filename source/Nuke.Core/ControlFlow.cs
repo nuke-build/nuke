@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Nuke.Core;
 using Nuke.Core.Execution;
+using Nuke.Core.OutputSinks;
 
 [assembly: IconClass(typeof(ControlFlow), "footprint")]
 
@@ -20,10 +21,12 @@ namespace Nuke.Core
     [DebuggerStepThrough]
     public static class ControlFlow
     {
+        internal static bool IsPreparing;
+
         /// <summary>
-        /// Throws an exception.
+        /// Logs a message as failure. Halts execution.
         /// </summary>
-        [StringFormatMethod("format")]
+        [StringFormatMethod ("format")]
         [ContractAnnotation("=> halt")]
         public static void Fail (string format, params object[] args)
         {
@@ -31,7 +34,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Throws an exception.
+        /// Logs a message as failure. Halts execution.
         /// </summary>
         [ContractAnnotation ("=> halt")]
         public static void Fail (object value)
@@ -40,12 +43,20 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Throws an exception.
+        /// Logs a message as failure. Halts execution.
         /// </summary>
         [ContractAnnotation ("=> halt")]
         public static void Fail (string text)
         {
-            Logger.Fail(text);
+            if (IsPreparing)
+            {
+                OutputSink.Fail(text);
+                Environment.Exit(-text.GetHashCode());
+            }
+            else
+            {
+                throw new Exception(text);
+            }
         }
 
         /// <summary>

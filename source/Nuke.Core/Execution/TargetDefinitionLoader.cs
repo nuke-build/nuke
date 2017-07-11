@@ -36,19 +36,20 @@ namespace Nuke.Core.Execution
 
         private static TargetDefinition GetTargetByName (string targetName, Target defaultTarget, Dictionary<string, TargetDefinition> nameDictionary)
         {
-            if (nameDictionary.TryGetValue(targetName, out var targetDefinition))
-                return targetDefinition;
+            if (!nameDictionary.TryGetValue(targetName, out var targetDefinition))
+            {
+                var stringBuilder = new StringBuilder()
+                        .AppendLine($"Target with name '{targetName}' does not exist.")
+                        .AppendLine("Available targets are:");
+                nameDictionary
+                        .Where(x => !x.Key.Equals("default", StringComparison.OrdinalIgnoreCase))
+                        .OrderBy(x => x.Key, StringComparer.OrdinalIgnoreCase)
+                        .ForEach(x => stringBuilder.AppendLine($"  - {x.Key}{(x.Value.Factory == defaultTarget ? " (default)" : string.Empty)}"));
 
-            var stringBuilder = new StringBuilder()
-                    .AppendLine($"Target with name '{targetName}' does not exist.")
-                    .AppendLine("Available targets are:");
-            nameDictionary
-                    .Where(x => !x.Key.Equals("default", StringComparison.OrdinalIgnoreCase))
-                    .OrderBy(x => x.Key, StringComparer.OrdinalIgnoreCase)
-                    .ForEach(x => stringBuilder.AppendLine($"  - {x.Key}{(x.Value.Factory == defaultTarget ? " (default)" : string.Empty)}"));
+                ControlFlow.Fail(stringBuilder.ToString());
+            }
 
-            ControlFlow.Fail(stringBuilder.ToString());
-            throw new Exception("Not reachable.");
+            return targetDefinition;
         }
 
         private TargetDefinition LoadTargetDefinition (Build build, PropertyInfo property)

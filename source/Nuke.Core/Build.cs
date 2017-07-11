@@ -10,6 +10,7 @@ using System.Linq.Expressions;
 using JetBrains.Annotations;
 using Nuke.Core.Execution;
 using Nuke.Core.OutputSinks;
+using Nuke.Core.Utilities;
 using static Nuke.Core.EnvironmentInfo;
 
 namespace Nuke.Core
@@ -54,17 +55,28 @@ namespace Nuke.Core
         protected static int Execute<T> (Expression<Func<T, Target>> defaultTargetExpression)
             where T : Build
         {
-            var build = Activator.CreateInstance<T>();
-
-            var defaultTarget = defaultTargetExpression.Compile ().Invoke (build);
-            var executionList = new TargetDefinitionLoader ().GetExecutionList (build, defaultTarget);
-
-            var parameterInjectionService = new ParameterInjectionService();
-            parameterInjectionService.InjectParameters(build);
-            parameterInjectionService.ValidateParameters(executionList);
-
-            
+            var executionList = PrepareBuild(defaultTargetExpression);
             return new ExecutionListRunner().Run(executionList);
+        }
+
+        private static IReadOnlyCollection<TargetDefinition> PrepareBuild<T> (Expression<Func<T, Target>> defaultTargetExpression)
+            where T : Build
+        {
+            using (DelegateDisposable.CreateBracket(
+                () => ControlFlow.IsPreparing = true,
+                () => ControlFlow.IsPreparing = false))
+            {
+                var build = Activator.CreateInstance<T>();
+
+                var defaultTarget = defaultTargetExpression.Compile().Invoke(build);
+                var executionList = new TargetDefinitionLoader().GetExecutionList(build, defaultTarget);
+
+                var parameterInjectionService = new ParameterInjectionService();
+                parameterInjectionService.InjectParameters(build);
+                parameterInjectionService.ValidateParameters(executionList);
+
+                return executionList;
+            }
         }
 
         protected Build ()

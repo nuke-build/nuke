@@ -40,7 +40,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Logs a message if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Trace"/>.
+        /// Logs a message as trace if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Trace"/>.
         /// </summary>
         [StringFormatMethod("format")]
         public static void Trace (string format, params object[] args)
@@ -49,7 +49,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Logs a message if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Trace"/>.
+        /// Logs a message as trace if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Trace"/>.
         /// </summary>
         public static void Trace (object value)
         {
@@ -57,7 +57,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Logs a message if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Trace"/>.
+        /// Logs a message as trace if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Trace"/>.
         /// </summary>
         public static void Trace (string text)
         {
@@ -65,7 +65,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Logs a message if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Information"/>.
+        /// Logs a message as information if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Information"/>.
         /// </summary>
         [StringFormatMethod("format")]
         public static void Info (string format, params object[] args)
@@ -74,7 +74,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Logs a message if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Information"/>.
+        /// Logs a message as information if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Information"/>.
         /// </summary>
         public static void Info (object value)
         {
@@ -82,7 +82,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Logs a message if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Information"/>.
+        /// Logs a message as information if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Information"/>.
         /// </summary>
         public static void Info (string text)
         {
@@ -90,7 +90,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Logs a message if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Warning"/>.
+        /// Logs a message as warning if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Warning"/>.
         /// </summary>
         [StringFormatMethod("format")]
         public static void Warn (string format, params object[] args)
@@ -99,7 +99,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Logs a message if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Warning"/>.
+        /// Logs a message as warning if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Warning"/>.
         /// </summary>
         public static void Warn (object value)
         {
@@ -107,7 +107,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Logs a message if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Warning"/>.
+        /// Logs a message as warning if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Warning"/>.
         /// </summary>
         public static void Warn (string text)
         {
@@ -115,7 +115,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Throws an exception.
+        /// Logs a message as failure. Halts execution.
         /// </summary>
         [StringFormatMethod("format")]
         [ContractAnnotation("=> halt")]
@@ -125,7 +125,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Throws an exception.
+        /// Logs a message as failure. Halts execution.
         /// </summary>
         [ContractAnnotation("=> halt")]
         public static void Fail (object value)
@@ -134,20 +134,12 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Throws an exception.
+        /// Logs a message as failure. Halts execution.
         /// </summary>
         [ContractAnnotation("=> halt")]
         public static void Fail (string text)
         {
-            if (Build.Instance == null)
-            {
-                OutputSink.Fail(text);
-                Environment.Exit(-text.GetHashCode());
-            }
-            else
-            {
-                throw new Exception(text);
-            }
+            ControlFlow.Fail(text);
         }
     }
 }
