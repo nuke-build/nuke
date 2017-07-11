@@ -40,6 +40,7 @@ namespace Nuke.Core.OutputSinks
         public override void Fail (string text, string details = null)
         {
             _teamCity.WriteError(text, details);
+            _teamCity.AddBuildProblem(text);
         }
 
         public override IDisposable WriteBlock (string text)
