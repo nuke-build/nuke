@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using JetBrains.Annotations;
 
 namespace Nuke.Core.Execution
@@ -24,6 +25,7 @@ namespace Nuke.Core.Execution
             DependentShadowTargets = new List<string>();
             Actions = new List<Action>();
             Conditions = new List<Func<bool>>();
+            RequiredParameters = new List<LambdaExpression>();
 
             factory?.Invoke(this);
         }
@@ -36,6 +38,7 @@ namespace Nuke.Core.Execution
         internal TimeSpan Duration { get; set; }
         internal ExecutionStatus Status { get; set; }
         internal List<Func<bool>> Conditions { get; }
+        internal List<LambdaExpression> RequiredParameters { get; }
         internal List<Target> DependentTargets { get; }
         internal List<string> DependentShadowTargets { get; }
         internal List<Action> Actions { get; }
@@ -66,6 +69,20 @@ namespace Nuke.Core.Execution
         public ITargetDefinition OnlyWhen (params Func<bool>[] conditions)
         {
             Conditions.AddRange(conditions);
+            return this;
+        }
+
+        public ITargetDefinition RequiresParameters<T> (params Expression<Func<T>>[] parameterProviders)
+            where T : class
+        {
+            RequiredParameters.AddRange(parameterProviders);
+            return this;
+        }
+
+        public ITargetDefinition RequiresParameters<T> (params Expression<Func<T?>>[] parameterProviders)
+            where T : struct
+        {
+            RequiredParameters.AddRange(parameterProviders);
             return this;
         }
 

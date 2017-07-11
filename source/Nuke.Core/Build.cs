@@ -55,8 +55,14 @@ namespace Nuke.Core
             where T : Build
         {
             var build = Activator.CreateInstance<T>();
-            var defaultTarget = defaultTargetExpression.Compile().Invoke(build);
-            var executionList = new TargetDefinitionLoader().GetExecutionList(build, defaultTarget);
+
+            var defaultTarget = defaultTargetExpression.Compile ().Invoke (build);
+            var executionList = new TargetDefinitionLoader ().GetExecutionList (build, defaultTarget);
+
+            var parameterInjectionService = new ParameterInjectionService();
+            parameterInjectionService.InjectParameters(build);
+            parameterInjectionService.ValidateParameters(executionList);
+
             
             return new ExecutionListRunner().Run(executionList);
         }

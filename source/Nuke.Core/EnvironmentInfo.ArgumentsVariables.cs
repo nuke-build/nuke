@@ -105,14 +105,20 @@ namespace Nuke.Core
             return (T) Convert<T>(value).NotNull($"Convert<{typeof(T)}>(EnsureArgument({name})) != null");
         }
 
+        // TODO: move to own class?
+        [CanBeNull]
+        internal static object Convert<T> ([CanBeNull] string value)
+        {
+            return Convert(value, typeof(T));
+        }
 
         [CanBeNull]
-        private static object Convert<T> ([CanBeNull] string value)
+        internal static object Convert ([CanBeNull] string value, Type component)
         {
             if (value == null)
                 return null;
 
-            var typeConverter = TypeDescriptor.GetConverter(typeof(T));
+            var typeConverter = TypeDescriptor.GetConverter(component);
             return typeConverter.ConvertFromInvariantString(value);
         }
     }
