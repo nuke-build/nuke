@@ -11,6 +11,7 @@ using JetBrains.Annotations;
 using Nuke.Common.IO;
 using Nuke.Core;
 using Nuke.Core.Execution;
+using Nuke.Core.IO;
 
 [assembly: IconClass(typeof(FtpTasks), "earth")]
 
@@ -26,11 +27,11 @@ namespace Nuke.Common.IO
         {
             Logger.Info($"Uploading directory '{directory}' to '{hostRoot}'...");
 
-            var files = FileSystemTasks.GlobFiles(directory, "**/*").ToList();
+            var files = PathConstruction.GlobFiles(directory, "**/*").ToList();
             for (var index = 0; index < files.Count; index++)
             {
                 var file = files[index];
-                var relativePath = FileSystemTasks.GetRelativePath(directory, file);
+                var relativePath = PathConstruction.GetRelativePath(directory, file);
                 var hostPath = $"{hostRoot}/{relativePath}";
 
                 FtpUploadFileInternal(file, hostPath, prefix: $"[{index + 1}/{files.Count}] ");

@@ -11,7 +11,7 @@ using Colorful;
 using Nuke.Core.Execution;
 using Nuke.Core.Utilities;
 
-namespace Nuke.Core.Output
+namespace Nuke.Core.OutputSinks
 {
     public class ConsoleOutputSink : IOutputSink
     {
@@ -21,7 +21,7 @@ namespace Nuke.Core.Output
 
         protected ConsoleOutputSink ()
         {
-            SetFont("Nuke.Core.Output.Fonts.cybermedium.flf");
+            SetFont("Nuke.Core.OutputSinks.Fonts.cybermedium.flf");
         }
 
         public virtual void Trace (string text)

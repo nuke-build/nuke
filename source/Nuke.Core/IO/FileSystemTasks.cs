@@ -6,19 +6,17 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Glob;
 using JetBrains.Annotations;
-using Nuke.Common.IO;
-using Nuke.Core;
 using Nuke.Core.Execution;
+using Nuke.Core.IO;
 using Nuke.Core.Utilities.Collections;
 
 [assembly: IconClass(typeof(FileSystemTasks), "folder-open")]
 
-namespace Nuke.Common.IO
+namespace Nuke.Core.IO
 {
     [PublicAPI]
-    public static partial class FileSystemTasks
+    public static class FileSystemTasks
     {
         public enum FileExistsPolicy
         {
@@ -28,12 +26,30 @@ namespace Nuke.Common.IO
             OverwriteIfNewer
         }
 
-        public static void PrepareCleanDirectory (string directory)
+        public static void EnsureExistingParentDirectory (string file)
+        {
+            EnsureExistingDirectory(Path.GetDirectoryName(file));
+        }
+
+        public static void EnsureExistingDirectory (string directory)
+        {
+            if (Directory.Exists(directory))
+                return;
+
+            Logger.Info($"Creating directory '{directory}'...");
+            Directory.CreateDirectory(directory);
+        }
+
+        public static void EnsureExistingDirectories(IEnumerable<string> directories)
+        {
+            directories.ForEach(EnsureExistingDirectory);
+        }
+
+        public static void EnsureCleanDirectory (string directory)
         {
             if (!Directory.Exists(directory))
             {
-                Logger.Info($"Creating directory '{directory}'...");
-                EnsureDirectoryExists(directory);
+                EnsureExistingDirectory(directory);
             }
             else
             {
@@ -43,9 +59,9 @@ namespace Nuke.Common.IO
             }
         }
 
-        public static void PrepareCleanDirectories (IEnumerable<string> directories)
+        public static void EnsureCleanDirectories (IEnumerable<string> directories)
         {
-            directories.ForEach(PrepareCleanDirectory);
+            directories.ForEach(EnsureCleanDirectory);
         }
 
         public static void DeleteDirectory (string directory)
@@ -109,7 +125,7 @@ namespace Nuke.Common.IO
         private static void CopyRecursivelyInternal (string source, string target, FileExistsPolicy policy)
         {
             string GetDestinationPath (string path)
-                => Path.Combine(target, GetRelativePath(source, path));
+                => Path.Combine(target, PathConstruction.GetRelativePath(source, path));
 
             Directory.CreateDirectory(target);
             Directory.GetDirectories(source).ForEach(x => CopyRecursively(x, GetDestinationPath(x), policy));
@@ -137,49 +153,16 @@ namespace Nuke.Common.IO
         //    return Directory.GetFiles (directory, filePattern, includeSubDirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
         //}
 
-        [Pure]
-        public static IEnumerable<string> GlobFiles (string directory, params string[] globPatterns)
-        {
-            var directoryInfo = new DirectoryInfo(directory);
-            return globPatterns.SelectMany(x => directoryInfo.GlobFiles(x)).Select(x => x.FullName);
-        }
-
-        [Pure]
-        public static IEnumerable<string> GlobDirectories (string directory, params string[] globPatterns)
-        {
-            var directoryInfo = new DirectoryInfo(directory);
-            return globPatterns.SelectMany(x => directoryInfo.GlobDirectories(x)).Select(x => x.FullName);
-        }
-
-        // TODO: check usages
-        [Pure]
-        public static string GetRelativePath (string basePath, string destinationPath)
-        {
-            return Uri.UnescapeDataString(new Uri($@"{basePath}\").MakeRelativeUri(new Uri(destinationPath)).ToString());
-        }
-
-        [Pure]
-        public static string GetAbsolutePath(string path)
-        {
-            return Path.GetFullPath(path);
-        }
-
         public static void Touch (string path, DateTime? time = null)
         {
             Logger.Info($"Touching file '{path}'...");
 
-            EnsureDirectoryExists(path);
+            EnsureExistingParentDirectory(path);
 
             if (!File.Exists(path))
-                TextTasks.WriteAllBytes(path, new byte[0]);
+                File.WriteAllBytes(path, new byte[0]);
             else
                 File.SetLastWriteTime(path, time ?? DateTime.UtcNow);
-        }
-
-        internal static void EnsureDirectoryExists (string path)
-        {
-            var directoryName = Path.GetDirectoryName(path).NotNull();
-            Directory.CreateDirectory(directoryName);
         }
 
         private static void EnsureFileAttributes (string file)

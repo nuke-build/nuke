@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Core.Output;
+using Nuke.Core.OutputSinks;
 using Nuke.Core.Utilities;
 using Nuke.Core.Utilities.Collections;
 

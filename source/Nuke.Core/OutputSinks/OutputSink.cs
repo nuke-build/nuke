@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Nuke.Core.Execution;
 
-namespace Nuke.Core.Output
+namespace Nuke.Core.OutputSinks
 {
     public interface IOutputSink
     {

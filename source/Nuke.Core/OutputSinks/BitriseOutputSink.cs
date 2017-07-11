@@ -5,7 +5,7 @@
 using System;
 using System.Linq;
 
-namespace Nuke.Core.Output
+namespace Nuke.Core.OutputSinks
 {
     public class BitriseOutputSink : ConsoleOutputSink
     {

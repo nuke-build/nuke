@@ -9,7 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
 using Nuke.Core.Execution;
-using Nuke.Core.Output;
+using Nuke.Core.OutputSinks;
 using static Nuke.Core.EnvironmentInfo;
 
 namespace Nuke.Core
@@ -29,7 +29,7 @@ namespace Nuke.Core
     ///     public static int Main () => Execute&lt;DefaultBuild&gt;(x => x.Compile);
     /// 
     ///     Target Clean =&gt; _ =&gt; _
-    ///             .Executes(() =&gt; PrepareCleanDirectory(OutputDirectory));
+    ///             .Executes(() =&gt; EnsureCleanDirectory(OutputDirectory));
     /// 
     ///     Target Compile =&gt; _ =&gt; _
     ///             .DependsOn(Clean)
@@ -57,6 +57,7 @@ namespace Nuke.Core
             var build = Activator.CreateInstance<T>();
             var defaultTarget = defaultTargetExpression.Compile().Invoke(build);
             var executionList = new TargetDefinitionLoader().GetExecutionList(build, defaultTarget);
+            
             return new ExecutionListRunner().Run(executionList);
         }
 

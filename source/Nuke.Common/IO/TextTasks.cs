@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using Nuke.Common.IO;
 using Nuke.Core;
 using Nuke.Core.Execution;
+using Nuke.Core.IO;
 
 [assembly: IconClass(typeof(TextTasks), "file-text3")]
 
@@ -27,13 +28,13 @@ namespace Nuke.Common.IO
 
         public static void WriteAllText (string path, string content, Encoding encoding = null)
         {
-            FileSystemTasks.EnsureDirectoryExists(path);
+            FileSystemTasks.EnsureExistingParentDirectory(path);
             File.WriteAllText(path, content, encoding ?? UTF8NoBom);
         }
 
         public static void WriteAllBytes (string path, byte[] bytes)
         {
-            FileSystemTasks.EnsureDirectoryExists(path);
+            FileSystemTasks.EnsureExistingParentDirectory(path);
             File.WriteAllBytes(path, bytes);
         }
 

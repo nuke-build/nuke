@@ -7,7 +7,7 @@ using System.Linq;
 using Nuke.Core.BuildServers;
 using Nuke.Core.Utilities;
 
-namespace Nuke.Core.Output
+namespace Nuke.Core.OutputSinks
 {
     public class TeamCityOutputSink : ConsoleOutputSink
     {

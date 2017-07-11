@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Nuke.Core.Output;
+using Nuke.Core.OutputSinks;
 
 namespace Nuke.Core.Execution
 {

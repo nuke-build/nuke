@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 using Nuke.Core;
 using Nuke.Core.BuildServers;
 using Nuke.Core.Execution;
-using Nuke.Core.Output;
+using Nuke.Core.OutputSinks;
 
 [assembly: IconClass(typeof(Logger), "quill4")]
 
