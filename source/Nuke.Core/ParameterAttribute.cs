@@ -39,17 +39,17 @@ namespace Nuke.Core
     [MeansImplicitUse(ImplicitUseKindFlags.Assign)]
     public class ParameterAttribute : Attribute
     {
-        public ParameterAttribute (string description = null, string name = null)
+        public ParameterAttribute (string description = null)
         {
             Description = description;
-            Name = name;
         }
 
         [CanBeNull]
         public string Description { get; }
 
         [CanBeNull]
-        public string Name { get; }
+        public string Name { get; set; }
 
+        public bool AllowEmptyString { get; set; }
     }
 }

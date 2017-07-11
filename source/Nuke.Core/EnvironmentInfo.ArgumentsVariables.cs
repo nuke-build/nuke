@@ -67,13 +67,13 @@ namespace Nuke.Core
 
         /// Provides access to a command-line argument.
         [CanBeNull]
-        public static string Argument (string name)
+        public static string Argument (string name, bool allowEmptyString = false)
         {
             var argument = Environment.GetCommandLineArgs()
                     .SingleOrDefault(x => x.StartsWith($"--{name}", StringComparison.OrdinalIgnoreCase)
                                           || x.StartsWith($"-{name}", StringComparison.OrdinalIgnoreCase));
             var split = argument?.Split(new[] { '=' }, count: 2);
-            return !string.IsNullOrWhiteSpace(split?[1]) ? split[1] : null;
+            return allowEmptyString || !string.IsNullOrWhiteSpace(split?[1]) ? split?[1] : null;
         }
 
         /// Provides access to a converted command-line argument.

@@ -36,9 +36,11 @@ namespace Nuke.Core.Execution
         [CanBeNull]
         private static string GetStringValue (FieldInfo parameterField)
         {
-            var name = parameterField.GetCustomAttribute<ParameterAttribute>().Name ?? parameterField.Name;
-            return EnvironmentInfo.Argument(name) ?? EnvironmentInfo.Variable(name) ??
-                   (parameterField.FieldType == typeof(bool)
+            var attributes = parameterField.GetCustomAttribute<ParameterAttribute>();
+            var name = attributes.Name ?? parameterField.Name;
+            return EnvironmentInfo.Argument(name, attributes.AllowEmptyString)
+                   ?? EnvironmentInfo.Variable(name)
+                   ?? (parameterField.FieldType == typeof(bool)
                        ? EnvironmentInfo.ArgumentSwitch(name).ToString()
                        : null);
         }
