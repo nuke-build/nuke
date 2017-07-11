@@ -21,7 +21,7 @@ namespace Nuke.Core.OutputSinks
 
         protected ConsoleOutputSink ()
         {
-            SetFont("Nuke.Core.OutputSinks.Fonts.cybermedium.flf");
+            SetFont("cybermedium");
         }
 
         public virtual void Trace (string text)
@@ -103,10 +103,11 @@ namespace Nuke.Core.OutputSinks
             }
         }
 
-        protected void SetFont (string resourceName)
+        protected void SetFont (string fontName)
         {
+            var fullResourceName = $"{typeof(OutputSink).Namespace}.Fonts.{fontName}.flf";
             var assembly = GetType().GetTypeInfo().Assembly;
-            var resourceStream = assembly.GetManifestResourceStream(resourceName);
+            var resourceStream = assembly.GetManifestResourceStream (fullResourceName);
             _figlet = new Figlet(FigletFont.Load(resourceStream));
         }
 

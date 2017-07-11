@@ -13,7 +13,7 @@ namespace Nuke.Core.OutputSinks
 
         public BitriseOutputSink ()
         {
-            SetFont("Nuke.Core.Output.Fonts.ansi-shadow.flf");
+            SetFont("ansi-shadow");
         }
     }
 }
