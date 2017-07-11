@@ -21,6 +21,8 @@ using static Nuke.Core.EnvironmentInfo;
 
 class NukeBuild : GitHubBuild
 {
+    [Parameter] readonly string MyGetApiKey;
+
     public static int Main () => Execute<NukeBuild>(x => x.Pack);
 
     Target Clean => _ => _
@@ -55,12 +57,13 @@ class NukeBuild : GitHubBuild
 
     Target Push => _ => _
             .DependsOn(Pack)
-            .Executes(() => GlobFiles(OutputDirectory, "*.nupkg")
+            .RequiresParameters(() => MyGetApiKey)
+            .Executes(() => GlobFiles (OutputDirectory, "*.nupkg")
                     .Where(x => !x.EndsWith("symbols.nupkg"))
                     .ForEach(x => NuGetPush(s => s
                             .SetTargetPath(x)
                             .SetSource("https://www.myget.org/F/nukebuild/api/v2/package")
-                            .SetApiKey(EnsureArgumentOrVariable("MYGET_API_KEY"))
+                            .SetApiKey(MyGetApiKey)
                             .SetVerbosity(NuGetVerbosity.Detailed))));
     
     Target Analysis => _ => _
