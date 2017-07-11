@@ -46,7 +46,7 @@ namespace Nuke.Core.Execution
                     .OrderBy(x => x.Key, StringComparer.OrdinalIgnoreCase)
                     .ForEach(x => stringBuilder.AppendLine($"  - {x.Key}{(x.Value.Factory == defaultTarget ? " (default)" : string.Empty)}"));
 
-            throw new LoaderException(stringBuilder.ToString());
+            throw new ExecutionException(stringBuilder.ToString());
         }
 
         private TargetDefinition LoadTargetDefinition (Build build, PropertyInfo property)
@@ -83,7 +83,7 @@ namespace Nuke.Core.Execution
                 var independents = graphAsList.Where(x => !graphAsList.Any(y => y.Dependencies.Contains(x))).ToList();
                 if (EnvironmentInfo.ArgumentSwitch("strict") && independents.Count > 1)
                 {
-                    throw new LoaderException(
+                    throw new ExecutionException(
                         "Incomplete target definition order.",
                         string.Join(EnvironmentInfo.NewLine, independents.Select(x => $"  - {x.Value.Name}")));
                 }
@@ -96,7 +96,7 @@ namespace Nuke.Core.Execution
                             .Cycles()
                             .Select(x => string.Join(" -> ", x.Select(y => y.Value.Name)));
 
-                    throw new LoaderException(
+                    throw new ExecutionException(
                         "Circular dependencies between target definitions.",
                         string.Join(EnvironmentInfo.NewLine, $"  - {cycles}"));
                 }

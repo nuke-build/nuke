@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using Nuke.Core.Utilities;
+
 #if !NETCORE
 using System.Runtime.Serialization;
 
@@ -12,10 +13,11 @@ using System.Runtime.Serialization;
 
 namespace Nuke.Core.Execution
 {
+    // TODO: use logger/controlFlow instead with check for Build.Instance != null ?
     [Serializable]
-    public class LoaderException : Exception
+    public class ExecutionException : Exception
     {
-        public LoaderException (params string[] message)
+        public ExecutionException (params string[] message)
         {
             var color = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Red;
@@ -25,7 +27,7 @@ namespace Nuke.Core.Execution
         }
 
 #if !NETCORE
-        protected LoaderException (SerializationInfo info, StreamingContext context)
+        protected ExecutionException (SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }

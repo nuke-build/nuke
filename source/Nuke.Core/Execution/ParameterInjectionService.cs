@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using JetBrains.Annotations;
+using Nuke.Core.OutputSinks;
 
 namespace Nuke.Core.Execution
 {
@@ -25,8 +26,9 @@ namespace Nuke.Core.Execution
                 }
                 catch (FormatException)
                 {
-                    ControlFlow.Fail($"Value '{stringValue}' for parameter '{GetParameterFullName(parameterField)}' "
-                                     + $"could not be converted to type '{parameterField.FieldType.FullName}'.");
+                    throw new ExecutionException(
+                        $"Value '{stringValue}' for parameter '{parameterField.Name}' " +
+                        $"could not be converted to type '{parameterField.FieldType.FullName}'.");
                 }
             }
         }
@@ -50,14 +52,11 @@ namespace Nuke.Core.Execution
                                        ?? (MemberExpression) ((UnaryExpression) requiredParameter.Body).Operand;
                 var parameterField = (FieldInfo) memberExpression.Member;
 
-                ControlFlow.Assert(GetStringValue(parameterField) != null,
-                    $"Parameter '{GetParameterFullName(parameterField)}' required by target '{target.Name}' could not be resolved.");
+                if (GetStringValue(parameterField) == null)
+                    throw new ExecutionException(
+                        $"Parameter '{parameterField.Name}' required by " +
+                        $"target '{target.Name}' could not be resolved.");
             }
-        }
-
-        private static string GetParameterFullName (FieldInfo parameterField)
-        {
-            return $"{parameterField.DeclaringType.Name}.{parameterField.Name}";
         }
 
         private IEnumerable<FieldInfo> GetParameterFields (Build build)
