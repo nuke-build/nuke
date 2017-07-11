@@ -37,7 +37,9 @@ class NukeBuild : GitHubBuild
                 (IsWin
                     ? DefaultSettings.MSBuildCompileWithAssemblyInfo
                     : DefaultSettings.MSBuildCompile)
-                // TODO: AddLogger(Variable("ija"), ifNotNull: true)));
+                // TODO UB: overload with 'onlyIfNotNull = false'
+                // DefaultSettings.MSBuild would then use TEAMCITY_LOGGER by default
+                // and only if applied from outside, adding it (and not null)
                 .AddLoggers(new[] { Variable("CUSTOM_LOGGER") }.WhereNotNull())));
 
     Target Link => _ => _

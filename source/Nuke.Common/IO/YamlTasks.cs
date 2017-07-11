@@ -16,6 +16,7 @@ using YamlDotNet.Serialization.NamingConventions;
 
 namespace Nuke.Common.IO
 {
+    // TODO UB: naming, prefix, common SerializationTasks ? include YAML in Common?
     [PublicAPI]
     public class YamlTasks
     {

@@ -52,7 +52,7 @@ namespace Nuke.Common.Tools
                         .NotNull($"Could not find '{packageExecutable}' inside '{packageDirectory}'.");
             }
 
-            // TODO: move to Core and call ProcessManager.Instance ?
+            // TODO UB: move to Core and call ProcessManager.Instance ? would require moving NuGetPackageResolver too and reference NuGet packages
             var locateExecutable = EnvironmentInfo.IsWin
                 ? @"C:\Windows\System32\where.exe"
                 : "/usr/bin/which";

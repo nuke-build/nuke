@@ -15,6 +15,8 @@ using Nuke.Core.Output;
 
 namespace Nuke.Core
 {
+// TODO UB: As extension methods for inline logging?
+// XmlPoke("...", XmlPeek("...").Info(x => $"Wave version is {x}"));
     [PublicAPI]
     [DebuggerNonUserCode]
     [DebuggerStepThrough]
