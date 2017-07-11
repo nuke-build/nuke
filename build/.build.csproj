@@ -35,9 +35,8 @@
   </ItemGroup>
 
   <!--<ItemGroup>
-    <ProjectReference Include="..\source\Nuke.Git\Nuke.Git.csproj" />
-    <ProjectReference Include="..\source\Nuke.Common\Nuke.Common.csproj" />
     <ProjectReference Include="..\source\Nuke.Core\Nuke.Core.csproj" />
+    <ProjectReference Include="..\source\Nuke.Common\Nuke.Common.csproj" />
   </ItemGroup>-->
 
 </Project>
