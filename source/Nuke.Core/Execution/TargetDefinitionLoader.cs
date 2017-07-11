@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Nuke.Core.Utilities;
 using Nuke.Core.Utilities.Collections;
 
 namespace Nuke.Core.Execution
@@ -46,7 +47,8 @@ namespace Nuke.Core.Execution
                     .OrderBy(x => x.Key, StringComparer.OrdinalIgnoreCase)
                     .ForEach(x => stringBuilder.AppendLine($"  - {x.Key}{(x.Value.Factory == defaultTarget ? " (default)" : string.Empty)}"));
 
-            throw new ExecutionException(stringBuilder.ToString());
+            ControlFlow.Fail(stringBuilder.ToString());
+            throw new Exception("Not reachable.");
         }
 
         private TargetDefinition LoadTargetDefinition (Build build, PropertyInfo property)
@@ -83,9 +85,10 @@ namespace Nuke.Core.Execution
                 var independents = graphAsList.Where(x => !graphAsList.Any(y => y.Dependencies.Contains(x))).ToList();
                 if (EnvironmentInfo.ArgumentSwitch("strict") && independents.Count > 1)
                 {
-                    throw new ExecutionException(
-                        "Incomplete target definition order.",
-                        string.Join(EnvironmentInfo.NewLine, independents.Select(x => $"  - {x.Value.Name}")));
+                    ControlFlow.Fail(
+                        new[] { "Incomplete target definition order." }
+                                .Concat(independents.Select(x => $"  - {x.Value.Name}"))
+                                .Join(Environment.NewLine));
                 }
 
                 var independent = independents.FirstOrDefault();
@@ -96,9 +99,10 @@ namespace Nuke.Core.Execution
                             .Cycles()
                             .Select(x => string.Join(" -> ", x.Select(y => y.Value.Name)));
 
-                    throw new ExecutionException(
-                        "Circular dependencies between target definitions.",
-                        string.Join(EnvironmentInfo.NewLine, $"  - {cycles}"));
+                    ControlFlow.Fail(
+                        new[] { "Circular dependencies between target definitions." }
+                                .Concat(independents.Select(x => $"  - {cycles}"))
+                                .Join(Environment.NewLine));
                 }
 
                 graphAsList.Remove(independent);

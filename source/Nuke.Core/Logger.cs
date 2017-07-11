@@ -139,7 +139,15 @@ namespace Nuke.Core
         [ContractAnnotation("=> halt")]
         public static void Fail (string text)
         {
-            throw new Exception(text);
+            if (Build.Instance == null)
+            {
+                OutputSink.Fail(text);
+                Environment.Exit(-text.GetHashCode());
+            }
+            else
+            {
+                throw new Exception(text);
+            }
         }
     }
 }

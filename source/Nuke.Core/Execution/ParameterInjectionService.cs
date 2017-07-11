@@ -26,7 +26,7 @@ namespace Nuke.Core.Execution
                 }
                 catch (FormatException)
                 {
-                    throw new ExecutionException(
+                    ControlFlow.Fail(
                         $"Value '{stringValue}' for parameter '{parameterField.Name}' " +
                         $"could not be converted to type '{parameterField.FieldType.FullName}'.");
                 }
@@ -54,10 +54,8 @@ namespace Nuke.Core.Execution
                                        ?? (MemberExpression) ((UnaryExpression) requiredParameter.Body).Operand;
                 var parameterField = (FieldInfo) memberExpression.Member;
 
-                if (GetStringValue(parameterField) == null)
-                    throw new ExecutionException(
-                        $"Parameter '{parameterField.Name}' required by " +
-                        $"target '{target.Name}' could not be resolved.");
+                ControlFlow.Assert(GetStringValue(parameterField) != null,
+                    $"Parameter '{parameterField.Name}' required by target '{target.Name}' could not be resolved.");
             }
         }
 
