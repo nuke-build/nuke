@@ -13,7 +13,7 @@ using Nuke.Core.Utilities.Collections;
 namespace Nuke.Core.BuildServers
 {
     /// <summary>
-    /// Interface according to the <a href="https://confluence.jetbrains.com/display/TCDL/TeamCity+Documentation">official website</a>.
+    /// Interface according to the <a href="https://confluence.jetbrains.com/display/TCDL/Build+Script+Interaction+with+TeamCity">official website</a>.
     /// </summary>
     [PublicAPI]
     [BuildServer]
