@@ -13,48 +13,160 @@ namespace Nuke.Common.Tests
 {
     public class PathConstructionTest
     {
-        [Fact]
-        public void Test ()
+        [Theory]
+        [InlineData("\\\\server", "\\\\server")]
+        [InlineData("\\\\server\\", "\\\\server")]
+        [InlineData("\\\\server\\foo\\bar", "\\\\server")]
+        [InlineData("/", "/")]
+        [InlineData("/bin/usr", "/")]
+        [InlineData("C:\\", "C:")]
+        [InlineData("C:\\foo\\bar", "C:")]
+        public void TestGetPathRoot (string input, string expected)
         {
-            void AssertPath (string actualPath, string expectedWindowsPath, string expectedUnixPath)
-                => actualPath.Should().BeEquivalentTo(
-                    EnvironmentInfo.IsWin
-                        ? expectedWindowsPath
-                        : expectedUnixPath);
+            GetPathRoot(input).Should().Be(expected);
+        }
 
-            var programFiles = EnvironmentInfo.SpecialFolder(SpecialFolders.ProgramFilesX86);
-            var system = EnvironmentInfo.SpecialFolder(SpecialFolders.System);
+        [Theory]
+        [InlineData("\\\\server")]
+        [InlineData("\\\\server\\foo\\bar")]
+        [InlineData("/")]
+        [InlineData("/bin/usr")]
+        [InlineData("C:\\")]
+        [InlineData("C:\\foo\\bar")]
+        public void TestHasPathRoot_True (string input)
+        {
+            HasPathRoot(input).Should().BeTrue();
+        }
 
-            AssertPath(
-                (RelPath) "foo" / "bar",
-                @"foo\bar",
-                "foo/bar");
+        [Theory]
+        [InlineData("foo")]
+        [InlineData("foo\\bar")]
+        [InlineData(".\\foo\\bar")]
+        [InlineData("./foo/bar")]
+        public void TestHasPathRoot_False (string input)
+        {
+            HasPathRoot(input).Should().BeFalse();
+        }
 
-            AssertPath(
-                (RelPath) programFiles / "foo" / "bar",
-                @"C:\Program Files (x86)\foo\bar",
-                "/user/bin/foo/bar");
 
-            AssertPath(
-                (RelPath) "foo" / null / "." / string.Empty / ".." / "bar",
-                @"foo\.\..\bar",
-                "foo/./../bar");
+        [Theory]
+        [InlineData("foo", "bar", '/', "foo/bar")]
+        [InlineData("foo", "bar", '\\', "foo\\bar")]
+        [InlineData("C:", null, null, "C:\\")]
+        [InlineData("C:\\", null, null, "C:\\")]
+        [InlineData("C:\\", "foo", null, "C:\\foo")]
+        [InlineData("C:", "foo", null, "C:\\foo")]
+        [InlineData("C:\\foo", "bar", null, "C:\\foo\\bar")]
+        [InlineData("/", null, null, "/")]
+        [InlineData("/", "foo", null, "/foo")]
+        [InlineData("/foo", "bar", null, "/foo/bar")]
+        [InlineData("\\\\server", null, null, "\\\\server")]
+        [InlineData("\\\\server", "foo", null, "\\\\server\\foo")]
+        [InlineData("\\\\server\\foo", "bar", null, "\\\\server\\foo\\bar")]
+        public void TestCombine (string path1, string path2, char? separator, string expected)
+        {
+            Combine(path1, path2, separator).Should().Be(expected);
+        }
 
-            AssertPath(
-                (RelPath) system / "foo" / ".." / "bar",
-                @"C:\WINDOWS\system32\bar",
-                "/bin/bar");
+        [Theory]
+        // TODO: Add tests for combining two roots
+        [InlineData("C:", "foo", '/', "For Windows-rooted paths the separator must be '\\'.")]
+        [InlineData("\\\\server", "foo", '/', "For UNC-rooted paths the separator must be '\\'.")]
+        [InlineData("/", "foo", '\\', "For Unix-rooted paths the separator must be '/'.")]
+        public void TestCombine_Throws (string path1, string path2, char? separator, string expected)
+        {
+            Assert.Throws<Exception>(() => Combine(path1, path2, separator)).Message.Should().Be($"Assertion failed: {expected}");
+        }
 
-            AssertPath(
-                (AbsPath) system / "foo" / "bar",
-                $@"{system}\foo\bar",
-                $"{system}/foo/bar");
 
-            var exception1 = Assert.Throws<Exception>(() => (RelPath) system / programFiles);
-            exception1.Message.Should().Be($"Assertion failed: Path '{programFiles}' must not be rooted.");
+        [Theory]
+        [InlineData(null, null, "")]
+        [InlineData("", null, "")]
+        [InlineData("foo", null, "foo")]
+        [InlineData("foo/", null, "foo")]
+        [InlineData("./foo", null, "foo")]
+        [InlineData("foo/bar", '/', "foo/bar")]
+        [InlineData("../../bar", '/', "../../bar")]
+        //[InlineData(@"C:", null, @"C:\")]
+        [InlineData("C:", null, "C:\\")]
+        [InlineData("C:\\foo/bar", null, "C:\\foo\\bar")]
+        [InlineData("/", null, "/")] // Unix rooted
+        [InlineData("/bin\\foo/bar", null, "/bin/foo/bar")]
+        [InlineData("/bin/foo/.././/bar", null, "/bin/bar")]
+        [InlineData("C:\\/foo/../.\\/bar", null, "C:\\bar")]
+        public void TestNormalizePath (string input, char? separator, string expected)
+        {
+            NormalizePath(input, separator).Should().Be(expected);
+        }
 
-            var exception2 = Assert.Throws<Exception>(() => (AbsPath) "foo" / "bar");
-            exception2.Message.Should().Be("Assertion failed: Path 'foo' must be rooted.");
+        [Theory]
+        [InlineData("C:\\..", null, "Cannot normalize 'C:\\..' beyond path root.")]
+        [InlineData("\\\\server\\..", null, "Cannot normalize '\\\\server\\..' beyond path root.")]
+        [InlineData("/bin/../..", null, "Cannot normalize '/bin/../..' beyond path root.")]
+        [InlineData("C:\\foo", '/', "For Windows-rooted paths the separator must be '\\'.")]
+        [InlineData("\\\\server\\foo", '/', "For UNC-rooted paths the separator must be '\\'.")]
+        [InlineData("/bin/foo/bar", '\\', "For Unix-rooted paths the separator must be '/'.")]
+        public void TestNormalizePath_Throws (string input, char? separator, string message)
+        {
+            Assert.Throws<Exception>(() => NormalizePath(input, separator)).Message.Should().Be($"Assertion failed: {message}");
+        }
+
+
+        [Theory]
+        [InlineData(new object[] { "foo", "bar" }, "foo\\bar", "foo/bar")]
+        [InlineData(new object[] { "./foo", "bar" }, "foo\\bar", "foo/bar")]
+        [InlineData(new object[] { "foo", "..", ".", "", null, "bar", "foo" }, "bar\\foo", "bar/foo")]
+        [InlineData(new object[] { "..", ".", "..", "foo" }, "..\\..\\foo", "../../foo")]
+        public void RelativePath (object[] parts, string expectedWindows, string expectedUnix)
+        {
+            ParseRelativePath(parts).Should().Be(EnvironmentInfo.IsWin ? expectedWindows : expectedUnix);
+        }
+
+        [Theory]
+        [InlineData(new object[] { "/bin", "foo", "..", "bar" }, "/bin/bar")]
+        [InlineData(new object[] { "C:", "windows", "foo", "..", "bar" }, "C:\\windows\\bar")]
+        [InlineData(new object[] { "\\\\server", "foo", "..", "bar" }, "\\\\server\\bar")]
+        public void RelativePath_AsAbsolute (object[] parts, string expected)
+        {
+            ParseRelativePath(parts).Should().Be(expected);
+        }
+
+        [Theory]
+        [InlineData(new object[] { "/bin", "foo", "..", "bar" }, "/bin/bar")]
+        [InlineData(new object[] { "C:", "windows", "foo", "..", "bar" }, "C:\\windows\\bar")]
+        [InlineData(new object[] { "C:" }, "C:\\")]
+        [InlineData(new object[] { "C:\\", "windows" }, "C:\\windows")]
+        [InlineData(new object[] { "\\\\server", "foo", "..", "bar" }, "\\\\server\\bar")]
+        public void AbsolutePath (object[] parts, string expected)
+        {
+            ParseAbsolutePath(parts).Should().Be(expected);
+        }
+
+        [Theory]
+        [InlineData(new object[] { "C:", "", "..", "bar" }, "Cannot normalize 'C:\\..' beyond path root.")]
+        [InlineData(new object[] { "/", "", "..", "bar" }, "Cannot normalize '/..' beyond path root.")]
+        [InlineData(new object[] { "\\\\server", "", "..", "bar" }, "Cannot normalize '\\\\server\\..' beyond path root.")]
+        [InlineData(new object[] { "foo", "bar" }, "Path 'foo' must be rooted.")]
+        public void AbsolutePath_Throws (object[] parts, string expected)
+        {
+            Assert.Throws<Exception>(() => ParseAbsolutePath(parts)).Message.Should().Be($"Assertion failed: {expected}");
+        }
+
+        [Fact]
+        public void RelativePath_Specific()
+        {
+            ((string) ((UnixRelative) "foo" / "bar")).Should().Be("foo/bar");
+            ((string) ((WinRelative) "foo" / "bar")).Should().Be("foo\\bar");
+        }
+
+        private static string ParseRelativePath (object[] parts)
+        {
+            return parts.Skip(count: 1).Aggregate((Relative) (string) parts[0], (rp, p) => rp / (string) p);
+        }
+
+        private static string ParseAbsolutePath (object[] parts)
+        {
+            return parts.Skip(count: 1).Aggregate((Absolute) (string) parts[0], (rp, p) => rp / (string) p);
         }
     }
 }

@@ -20,6 +20,7 @@ namespace Nuke.Core
         Failure
     }
 
+    // TODO: introduce Verbosity enum; move LogLevel to Logger
     public class LogLevelTypeConverter : TypeConverter
     {
         private readonly Dictionary<string, LogLevel> _logLevelDictionary
