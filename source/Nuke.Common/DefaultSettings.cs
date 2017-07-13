@@ -46,16 +46,17 @@ namespace Nuke.Common
     [PublicAPI]
     public class DefaultSettings
     {
-        public static MSBuildSettings MSBuildRestore => new MSBuildSettings()
+        public static MSBuildSettings MSBuildCommon => new MSBuildSettings()
                 .SetWorkingDirectory(Build.Instance.SolutionDirectory)
                 .SetSolutionFile(Build.Instance.SolutionFile)
+                .SetConfiguration(Build.Instance.Configuration)
+                .AddLogger(EnvironmentInfo.Variable("TEAMCITY_MSBUILD_LOGGER"), evenIfNull: false);
+
+        public static MSBuildSettings MSBuildRestore => MSBuildCommon
                 .SetTargets("Restore");
 
-        public static MSBuildSettings MSBuildCompile => new MSBuildSettings()
-                .SetWorkingDirectory(Build.Instance.SolutionDirectory)
-                .SetSolutionFile(Build.Instance.SolutionFile)
+        public static MSBuildSettings MSBuildCompile => MSBuildCommon
                 .SetTargets("Rebuild")
-                .SetConfiguration(Build.Instance.Configuration)
                 .SetMaxCpuCount(Environment.ProcessorCount);
 
         public static MSBuildSettings MSBuildCompileWithAssemblyInfo => MSBuildCompile
@@ -63,11 +64,8 @@ namespace Nuke.Common
                 .SetProperty("FileVersion", GitHubBuild.Instance.GitVersion.AssemblySemVer)
                 .SetProperty("InformationalVersion", GitHubBuild.Instance.GitVersion.InformationalVersion);
 
-        public static MSBuildSettings MSBuildPack => new MSBuildSettings()
-                .SetWorkingDirectory(Build.Instance.SolutionDirectory)
-                .SetSolutionFile(Build.Instance.SolutionFile)
+        public static MSBuildSettings MSBuildPack => MSBuildCommon
                 .SetTargets("Restore", "Pack")
-                .SetConfiguration(Build.Instance.Configuration)
                 .SetProperty("PackageOutputPath", Build.Instance.OutputDirectory)
                 .SetProperty("IncludeSymbols", "True")
                 .SetProperty("PackageVersion", GitHubBuild.Instance?.GitVersion?.NuGetVersionV2);

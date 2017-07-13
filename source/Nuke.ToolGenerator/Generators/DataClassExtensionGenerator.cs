@@ -78,9 +78,7 @@ namespace Nuke.ToolGenerator.Generators
                         .WriteMethod($"Clear{property.Name}",
                             $"toolSettings.{propertyInternal}.Clear();")
                         .WriteSummaryExtension($"adding a single {propertySingularInstance} to {reference}", property)
-                        .WriteMethod($"Add{propertySingular}",
-                            $"{valueType} {propertySingularInstance}",
-                            $"toolSettings.{propertyInternal}.Add({propertySingularInstance});")
+                        .WriteListAddMethod(propertySingular, propertySingularInstance, valueType, propertyInternal)
                         .WriteSummaryExtension($"removing a single {propertySingularInstance} from {reference}", property)
                         .WriteMethod($"Remove{propertySingular}",
                             $"{valueType} {propertySingularInstance}",
@@ -146,9 +144,26 @@ namespace Nuke.ToolGenerator.Generators
             }
         }
 
+        private static DataClassWriter WriteListAddMethod (
+            this DataClassWriter writer,
+            string propertySingular,
+            string propertySingularInstance,
+            string valueType,
+            string propertyInternal)
+        {
+            return writer.DataClass.Tool.Enumerations.Select(x => x.Name).Concat(
+                new[] { "int", "bool" }).Contains(valueType)
+                ? writer.WriteMethod($"Add{propertySingular}",
+                    $"{valueType} {propertySingularInstance}",
+                    $"toolSettings.{propertyInternal}.Add({propertySingularInstance});")
+                : writer.WriteMethod($"Add{propertySingular}",
+                    $"{valueType} {propertySingularInstance}, bool evenIfNull = true",
+                    $"if ({propertySingularInstance} != null || evenIfNull) toolSettings.{propertyInternal}.Add({propertySingularInstance});");
+        }
+
         private static DataClassWriter WriteMethod (this DataClassWriter writer, string name, Property property, string modification)
         {
-            return WriteMethod(writer, name, $"{property.GetNullabilityAttribute()}{property.Type} {property.Name.ToInstance()}", modification);
+            return writer.WriteMethod(name, $"{property.GetNullabilityAttribute()}{property.Type} {property.Name.ToInstance()}", modification);
         }
 
         private static DataClassWriter WriteMethod (this DataClassWriter writer, string name, string additionalParameter, string modification)
