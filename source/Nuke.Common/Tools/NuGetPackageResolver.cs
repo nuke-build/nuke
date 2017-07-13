@@ -32,6 +32,7 @@ namespace Nuke.Common.Tools
                     .FirstOrDefault(x => x.Id.Equals(packageId, StringComparison.OrdinalIgnoreCase));
         }
 
+        // TODO: add HasLocalInstalledPackage() ?
         public static IEnumerable<InstalledPackage> GetLocalInstalledPackages (
             string packagesConfigFile = null,
             bool includeDependencies = true)

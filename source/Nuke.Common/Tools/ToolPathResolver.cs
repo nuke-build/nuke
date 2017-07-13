@@ -24,7 +24,8 @@ namespace Nuke.Common.Tools
             if (environmentExecutable != null)
             {
                 var environmentExecutablePath = EnvironmentInfo.EnsureVariable(environmentExecutable);
-                ControlFlow.Assert(File.Exists(environmentExecutablePath), "File.Exists(environmentExecutablePath)");
+                ControlFlow.Assert(File.Exists(environmentExecutablePath),
+                    $"Path '{environmentExecutablePath}' from environment variable '{environmentExecutable}' does not exist.");
                 return environmentExecutablePath;
             }
 
@@ -35,7 +36,7 @@ namespace Nuke.Common.Tools
                 if (environmentExecutablePath != null)
                 {
                     ControlFlow.Assert(File.Exists(environmentExecutablePath),
-                        $"Path for '{packageExecutable}' was set through environment variable '{environmentVariableFriendly}', but does not exist.");
+                        $"Path for '{packageExecutable}' was set via environment variable '{environmentVariableFriendly}' but does not exist.");
                     return environmentExecutablePath;
                 }
             }
@@ -65,7 +66,7 @@ namespace Nuke.Common.Tools
             return locateProcess.Output
                     .Select(x => x.Text)
                     .FirstOrDefault(File.Exists)
-                    .NotNull($"Could not find '{pathExecutable}' via '{locateProcess}'.");
+                    .NotNull($"Could not find '{pathExecutable}' via '{locateExecutable}'.");
         }
     }
 }
