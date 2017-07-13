@@ -60,7 +60,7 @@ namespace Nuke.Common.Tools.InspectCode
         public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetToolPath(packageId: $"JetBrains.ReSharper.CommandLineTools", packageExecutable: $"{GetPackageExecutable()}");
         /// <summary><p>Target path.</p></summary>
         public virtual string TargetPath { get; internal set; }
-        /// <summary><p>Lets you set the output file. By default, the output file is saved in the <i>%TEMP%</i> directory.</p></summary>
+        /// <summary><p>Lets you set the output file. By default, the output file is saved in the <em>%TEMP%</em> directory.</p></summary>
         public virtual string Output { get; internal set; }
         /// <summary><p>Disables solution-wide analysis.</p></summary>
         public virtual bool NoSwea { get; internal set; }
@@ -73,7 +73,7 @@ namespace Nuke.Common.Tools.InspectCode
         internal List<InspectCodeSettingsLayers> DisableSettingsLayersInternal { get; set; } = new List<InspectCodeSettingsLayers>();
         /// <summary><p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p></summary>
         public virtual bool NoBuiltinSettings { get; internal set; }
-        /// <summary><p>Lets you specify a custom location for the data that InspectCode caches. By default, the <i>%LOCALAPPDATA%</i> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.</p></summary>
+        /// <summary><p>Lets you specify a custom location for the data that InspectCode caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.</p></summary>
         public virtual string CachesHome { get; internal set; }
         /// <summary><p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p></summary>
         public virtual IReadOnlyList<string> Extensions => ExtensionsInternal.AsReadOnly();
@@ -120,7 +120,7 @@ namespace Nuke.Common.Tools.InspectCode
             toolSettings.TargetPath = targetPath;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="InspectCodeSettings.Output"/>.</i></p><p>Lets you set the output file. By default, the output file is saved in the <i>%TEMP%</i> directory.</p></summary>
+        /// <summary><p><i>Extension method for setting <see cref="InspectCodeSettings.Output"/>.</i></p><p>Lets you set the output file. By default, the output file is saved in the <em>%TEMP%</em> directory.</p></summary>
         [Pure]
         public static InspectCodeSettings SetOutput(this InspectCodeSettings toolSettings, string output)
         {
@@ -264,7 +264,7 @@ namespace Nuke.Common.Tools.InspectCode
             toolSettings.NoBuiltinSettings = !toolSettings.NoBuiltinSettings;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="InspectCodeSettings.CachesHome"/>.</i></p><p>Lets you specify a custom location for the data that InspectCode caches. By default, the <i>%LOCALAPPDATA%</i> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.</p></summary>
+        /// <summary><p><i>Extension method for setting <see cref="InspectCodeSettings.CachesHome"/>.</i></p><p>Lets you specify a custom location for the data that InspectCode caches. By default, the <em>%LOCALAPPDATA%</em> directory is used, unless there are settings files, in which case the one specified there is used. This parameter can be helpful if you want to use a fast SSD disk for the cache or if you want to store all your build processing data in a single place.</p></summary>
         [Pure]
         public static InspectCodeSettings SetCachesHome(this InspectCodeSettings toolSettings, string cachesHome)
         {

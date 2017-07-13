@@ -9,19 +9,19 @@ namespace Nuke.Common.Tools.MSBuild
 {
     public static partial class MSBuildSettingsExtensions
     {
-        /// <summary>Sets <see cref="MSBuildSettings.TargetPath" />.</summary>
+        /// <summary><em>Sets <see cref="MSBuildSettings.TargetPath" />.</em></summary>
         public static MSBuildSettings SetSolutionFile (this MSBuildSettings toolSettings, string solutionFile)
         {
             return toolSettings.SetTargetPath(solutionFile);
         }
 
-        /// <summary>Sets <see cref="MSBuildSettings.TargetPath" />.</summary>
+        /// <summary><em>Sets <see cref="MSBuildSettings.TargetPath" />.</em></summary>
         public static MSBuildSettings SetProjectFile (this MSBuildSettings toolSettings, string projectFile)
         {
             return toolSettings.SetTargetPath(projectFile);
         }
 
-        /// <summary>Sets the configuration in <see cref="MSBuildSettings.Properties"/>.</summary>
+        /// <summary><em>Sets the <c>configuration</c> in <see cref="MSBuildSettings.Properties"/>.</em></summary>
         public static MSBuildSettings SetConfiguration (this MSBuildSettings toolSettings, string configuration)
         {
             return toolSettings.SetProperty("configuration", configuration);

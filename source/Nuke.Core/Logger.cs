@@ -25,9 +25,9 @@ namespace Nuke.Core
         /// <summary>
         /// Provides a logging block for better readability. The actual output is dependent on the executing environment.
         /// <ul>
-        ///   <li><b>Console:</b> calls <see cref="Info(string)"/> with figlet font <i>cybermedium</i></li>
+        ///   <li><b>Console:</b> calls <see cref="Info(string)"/> with figlet font <em>cybermedium</em></li>
         ///   <li><b>TeamCity:</b> calls <see cref="TeamCity.OpenBlock"/> and <see cref="TeamCity.CloseBlock"/></li>
-        ///   <li><b>Bitrise:</b> calls <see cref="Info(string)"/> with figlet font <i>ansi-shadow</i></li>
+        ///   <li><b>Bitrise:</b> calls <see cref="Info(string)"/> with figlet font <em>ansi-shadow</em></li>
         /// </ul>
         /// </summary>
         /// <returns>

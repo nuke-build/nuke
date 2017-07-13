@@ -81,7 +81,7 @@ namespace Nuke.Common.Tools.DotCover
         internal List<string> AttributeFiltersInternal { get; set; } = new List<string>();
         /// <summary><p>Disables default (automatically added) filters.</p></summary>
         public virtual bool DisableDefaultFilters { get; internal set; }
-        /// <summary><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <i>srv*</i> prefix) are supported here.</p></summary>
+        /// <summary><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p></summary>
         public virtual IReadOnlyList<string> SymbolSearchPaths => SymbolSearchPathsInternal.AsReadOnly();
         internal List<string> SymbolSearchPathsInternal { get; set; } = new List<string>();
         /// <summary><p>Allows dotCover to search for PDB files on a symbol server.</p></summary>
@@ -440,7 +440,7 @@ namespace Nuke.Common.Tools.DotCover
             toolSettings.DisableDefaultFilters = !toolSettings.DisableDefaultFilters;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/> to a new list.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <i>srv*</i> prefix) are supported here.</p></summary>
+        /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/> to a new list.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p></summary>
         [Pure]
         public static DotCoverAnalyseSettings SetSymbolSearchPaths(this DotCoverAnalyseSettings toolSettings, params string[] symbolSearchPaths)
         {
@@ -448,7 +448,7 @@ namespace Nuke.Common.Tools.DotCover
             toolSettings.SymbolSearchPathsInternal = symbolSearchPaths.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/> to a new list.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <i>srv*</i> prefix) are supported here.</p></summary>
+        /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/> to a new list.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p></summary>
         [Pure]
         public static DotCoverAnalyseSettings SetSymbolSearchPaths(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> symbolSearchPaths)
         {
@@ -456,7 +456,7 @@ namespace Nuke.Common.Tools.DotCover
             toolSettings.SymbolSearchPathsInternal = symbolSearchPaths.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding new symbolSearchPaths to the existing <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <i>srv*</i> prefix) are supported here.</p></summary>
+        /// <summary><p><i>Extension method for adding new symbolSearchPaths to the existing <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p></summary>
         [Pure]
         public static DotCoverAnalyseSettings AddSymbolSearchPaths(this DotCoverAnalyseSettings toolSettings, params string[] symbolSearchPaths)
         {
@@ -464,7 +464,7 @@ namespace Nuke.Common.Tools.DotCover
             toolSettings.SymbolSearchPathsInternal.AddRange(symbolSearchPaths);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding new symbolSearchPaths to the existing <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <i>srv*</i> prefix) are supported here.</p></summary>
+        /// <summary><p><i>Extension method for adding new symbolSearchPaths to the existing <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p></summary>
         [Pure]
         public static DotCoverAnalyseSettings AddSymbolSearchPaths(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> symbolSearchPaths)
         {
@@ -472,7 +472,7 @@ namespace Nuke.Common.Tools.DotCover
             toolSettings.SymbolSearchPathsInternal.AddRange(symbolSearchPaths);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for clearing <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <i>srv*</i> prefix) are supported here.</p></summary>
+        /// <summary><p><i>Extension method for clearing <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p></summary>
         [Pure]
         public static DotCoverAnalyseSettings ClearSymbolSearchPaths(this DotCoverAnalyseSettings toolSettings)
         {
@@ -480,7 +480,7 @@ namespace Nuke.Common.Tools.DotCover
             toolSettings.SymbolSearchPathsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding a single symbolSearchPath to <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <i>srv*</i> prefix) are supported here.</p></summary>
+        /// <summary><p><i>Extension method for adding a single symbolSearchPath to <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p></summary>
         [Pure]
         public static DotCoverAnalyseSettings AddSymbolSearchPath(this DotCoverAnalyseSettings toolSettings, string symbolSearchPath, bool evenIfNull = true)
         {
@@ -488,7 +488,7 @@ namespace Nuke.Common.Tools.DotCover
             if (symbolSearchPath != null || evenIfNull) toolSettings.SymbolSearchPathsInternal.Add(symbolSearchPath);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for removing a single symbolSearchPath from <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <i>srv*</i> prefix) are supported here.</p></summary>
+        /// <summary><p><i>Extension method for removing a single symbolSearchPath from <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p></summary>
         [Pure]
         public static DotCoverAnalyseSettings RemoveSymbolSearchPath(this DotCoverAnalyseSettings toolSettings, string symbolSearchPath)
         {

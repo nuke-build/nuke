@@ -66,7 +66,7 @@ https://github.com/nuke-build/nuke/blob/master/LICENSE</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B31B5F32051E5C4F8BA7A5587A419DB5/Reformat/@EntryValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B31B5F32051E5C4F8BA7A5587A419DB5/Scope/=139FF4CE89E7094686FDA7BF5FFBBE92/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B31B5F32051E5C4F8BA7A5587A419DB5/Scope/=139FF4CE89E7094686FDA7BF5FFBBE92/Type/@EntryValue">Everywhere</s:String>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B31B5F32051E5C4F8BA7A5587A419DB5/Shortcut/@EntryValue">bold</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B31B5F32051E5C4F8BA7A5587A419DB5/Shortcut/@EntryValue">strong</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B31B5F32051E5C4F8BA7A5587A419DB5/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B31B5F32051E5C4F8BA7A5587A419DB5/Text/@EntryValue">&lt;b&gt;$SELECTION$&lt;/b&gt;</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B65C29820F310446A0A7BA945EE1D666/@KeyIndexDefined">True</s:Boolean>
@@ -74,9 +74,9 @@ https://github.com/nuke-build/nuke/blob/master/LICENSE</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B65C29820F310446A0A7BA945EE1D666/Reformat/@EntryValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B65C29820F310446A0A7BA945EE1D666/Scope/=139FF4CE89E7094686FDA7BF5FFBBE92/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B65C29820F310446A0A7BA945EE1D666/Scope/=139FF4CE89E7094686FDA7BF5FFBBE92/Type/@EntryValue">Everywhere</s:String>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B65C29820F310446A0A7BA945EE1D666/Shortcut/@EntryValue">italic</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B65C29820F310446A0A7BA945EE1D666/Shortcut/@EntryValue">em</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B65C29820F310446A0A7BA945EE1D666/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B65C29820F310446A0A7BA945EE1D666/Text/@EntryValue">&lt;i&gt;$SELECTION$&lt;/i&gt;</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=B65C29820F310446A0A7BA945EE1D666/Text/@EntryValue">&lt;em&gt;$SELECTION$&lt;/em&gt;</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FF67E9E6779AD044ACE2AD7401A333BF/@KeyIndexDefined">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FF67E9E6779AD044ACE2AD7401A333BF/Applicability/=Surround/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=FF67E9E6779AD044ACE2AD7401A333BF/Reformat/@EntryValue">True</s:Boolean>

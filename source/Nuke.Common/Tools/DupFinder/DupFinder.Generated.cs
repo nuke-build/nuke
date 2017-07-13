@@ -56,7 +56,7 @@ namespace Nuke.Common.Tools.DupFinder
         /// <summary><p>Allows excluding files that have a matching substrings in the opening comments.</p></summary>
         public virtual IReadOnlyList<string> ExcludeComments => ExcludeCommentsInternal.AsReadOnly();
         internal List<string> ExcludeCommentsInternal { get; set; } = new List<string>();
-        /// <summary><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <i>generated code</i> will exclude regions containing <i>Windows Form Designer generated code</i>).</p></summary>
+        /// <summary><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <em>generated code</em> will exclude regions containing <em>Windows Form Designer generated code</em>).</p></summary>
         public virtual IReadOnlyList<string> ExcludeCodeRegions => ExcludeCodeRegionsInternal.AsReadOnly();
         internal List<string> ExcludeCodeRegionsInternal { get; set; } = new List<string>();
         /// <summary><p>Whether to consider similar fragments as duplicates if they have different fields. The default value is <c>false</c>.</p></summary>
@@ -232,7 +232,7 @@ namespace Nuke.Common.Tools.DupFinder
             toolSettings.ExcludeCommentsInternal.Remove(excludeComment);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="DupFinderSettings.ExcludeCodeRegions"/> to a new list.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <i>generated code</i> will exclude regions containing <i>Windows Form Designer generated code</i>).</p></summary>
+        /// <summary><p><i>Extension method for setting <see cref="DupFinderSettings.ExcludeCodeRegions"/> to a new list.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <em>generated code</em> will exclude regions containing <em>Windows Form Designer generated code</em>).</p></summary>
         [Pure]
         public static DupFinderSettings SetExcludeCodeRegions(this DupFinderSettings toolSettings, params string[] excludeCodeRegions)
         {
@@ -240,7 +240,7 @@ namespace Nuke.Common.Tools.DupFinder
             toolSettings.ExcludeCodeRegionsInternal = excludeCodeRegions.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="DupFinderSettings.ExcludeCodeRegions"/> to a new list.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <i>generated code</i> will exclude regions containing <i>Windows Form Designer generated code</i>).</p></summary>
+        /// <summary><p><i>Extension method for setting <see cref="DupFinderSettings.ExcludeCodeRegions"/> to a new list.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <em>generated code</em> will exclude regions containing <em>Windows Form Designer generated code</em>).</p></summary>
         [Pure]
         public static DupFinderSettings SetExcludeCodeRegions(this DupFinderSettings toolSettings, IEnumerable<string> excludeCodeRegions)
         {
@@ -248,7 +248,7 @@ namespace Nuke.Common.Tools.DupFinder
             toolSettings.ExcludeCodeRegionsInternal = excludeCodeRegions.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding new excludeCodeRegions to the existing <see cref="DupFinderSettings.ExcludeCodeRegions"/>.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <i>generated code</i> will exclude regions containing <i>Windows Form Designer generated code</i>).</p></summary>
+        /// <summary><p><i>Extension method for adding new excludeCodeRegions to the existing <see cref="DupFinderSettings.ExcludeCodeRegions"/>.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <em>generated code</em> will exclude regions containing <em>Windows Form Designer generated code</em>).</p></summary>
         [Pure]
         public static DupFinderSettings AddExcludeCodeRegions(this DupFinderSettings toolSettings, params string[] excludeCodeRegions)
         {
@@ -256,7 +256,7 @@ namespace Nuke.Common.Tools.DupFinder
             toolSettings.ExcludeCodeRegionsInternal.AddRange(excludeCodeRegions);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding new excludeCodeRegions to the existing <see cref="DupFinderSettings.ExcludeCodeRegions"/>.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <i>generated code</i> will exclude regions containing <i>Windows Form Designer generated code</i>).</p></summary>
+        /// <summary><p><i>Extension method for adding new excludeCodeRegions to the existing <see cref="DupFinderSettings.ExcludeCodeRegions"/>.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <em>generated code</em> will exclude regions containing <em>Windows Form Designer generated code</em>).</p></summary>
         [Pure]
         public static DupFinderSettings AddExcludeCodeRegions(this DupFinderSettings toolSettings, IEnumerable<string> excludeCodeRegions)
         {
@@ -264,7 +264,7 @@ namespace Nuke.Common.Tools.DupFinder
             toolSettings.ExcludeCodeRegionsInternal.AddRange(excludeCodeRegions);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for clearing <see cref="DupFinderSettings.ExcludeCodeRegions"/>.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <i>generated code</i> will exclude regions containing <i>Windows Form Designer generated code</i>).</p></summary>
+        /// <summary><p><i>Extension method for clearing <see cref="DupFinderSettings.ExcludeCodeRegions"/>.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <em>generated code</em> will exclude regions containing <em>Windows Form Designer generated code</em>).</p></summary>
         [Pure]
         public static DupFinderSettings ClearExcludeCodeRegions(this DupFinderSettings toolSettings)
         {
@@ -272,7 +272,7 @@ namespace Nuke.Common.Tools.DupFinder
             toolSettings.ExcludeCodeRegionsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding a single excludeCodeRegion to <see cref="DupFinderSettings.ExcludeCodeRegions"/>.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <i>generated code</i> will exclude regions containing <i>Windows Form Designer generated code</i>).</p></summary>
+        /// <summary><p><i>Extension method for adding a single excludeCodeRegion to <see cref="DupFinderSettings.ExcludeCodeRegions"/>.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <em>generated code</em> will exclude regions containing <em>Windows Form Designer generated code</em>).</p></summary>
         [Pure]
         public static DupFinderSettings AddExcludeCodeRegion(this DupFinderSettings toolSettings, string excludeCodeRegion, bool evenIfNull = true)
         {
@@ -280,7 +280,7 @@ namespace Nuke.Common.Tools.DupFinder
             if (excludeCodeRegion != null || evenIfNull) toolSettings.ExcludeCodeRegionsInternal.Add(excludeCodeRegion);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for removing a single excludeCodeRegion from <see cref="DupFinderSettings.ExcludeCodeRegions"/>.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <i>generated code</i> will exclude regions containing <i>Windows Form Designer generated code</i>).</p></summary>
+        /// <summary><p><i>Extension method for removing a single excludeCodeRegion from <see cref="DupFinderSettings.ExcludeCodeRegions"/>.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <em>generated code</em> will exclude regions containing <em>Windows Form Designer generated code</em>).</p></summary>
         [Pure]
         public static DupFinderSettings RemoveExcludeCodeRegion(this DupFinderSettings toolSettings, string excludeCodeRegion)
         {
