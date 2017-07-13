@@ -39,7 +39,7 @@ namespace Nuke.ToolGenerator.Generators
         public static T WriteSummaryExtension<T> (this T writerWrapper, string actionText, Property property)
             where T : IWriterWrapper
         {
-            return WriteSummary(writerWrapper, $"<p><i>Extension method for {actionText}.</i></p>{property.Help.Paragraph()}", url: null);
+            return WriteSummary(writerWrapper, $"<p><i>{actionText}.</i></p>{property.Help.Paragraph()}", url: null);
         }
 
         private static T WriteSummary<T> (T writerWrapper, [CanBeNull] string help, [CanBeNull] string url)
