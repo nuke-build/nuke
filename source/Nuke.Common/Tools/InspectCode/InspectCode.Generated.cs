@@ -229,7 +229,7 @@ namespace Nuke.Common.Tools.InspectCode
         public static InspectCodeSettings RemoveDisableSettingsLayer(this InspectCodeSettings toolSettings, InspectCodeSettingsLayers disableSettingsLayer)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DisableSettingsLayersInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == disableSettingsLayer).ToList();
+            toolSettings.DisableSettingsLayersInternal = toolSettings.DisableSettingsLayers.Where(x => x == disableSettingsLayer).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="InspectCodeSettings.NoBuiltinSettings"/>.</i></p><p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p></summary>
@@ -325,7 +325,7 @@ namespace Nuke.Common.Tools.InspectCode
         public static InspectCodeSettings RemoveExtension(this InspectCodeSettings toolSettings, string extension)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExtensionsInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == extension).ToList();
+            toolSettings.ExtensionsInternal = toolSettings.Extensions.Where(x => x == extension).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="InspectCodeSettings.Properties"/> to a new dictionary.</i></p><p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p></summary>

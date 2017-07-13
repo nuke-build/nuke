@@ -182,7 +182,7 @@ namespace Nuke.Common.Tools.NuGet
         public static NuGetPackage RemoveAuthor(this NuGetPackage toolSettings, string author)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AuthorsInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == author).ToList();
+            toolSettings.AuthorsInternal = toolSettings.Authors.Where(x => x == author).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="NuGetPackage.Title"/>.</i></p><p>A human-friendly title of the package, typically used in UI displays as on nuget.org and the Package Manager in Visual Studio. If not specified, the package ID is used instead.</p></summary>
@@ -246,7 +246,7 @@ namespace Nuke.Common.Tools.NuGet
         public static NuGetPackage RemoveOwner(this NuGetPackage toolSettings, string owner)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.OwnersInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == owner).ToList();
+            toolSettings.OwnersInternal = toolSettings.Owners.Where(x => x == owner).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="NuGetPackage.ProjectUrl"/>.</i></p><p>A URL for the package's home page, often shown in UI displays as well as nuget.org.</p></summary>
@@ -422,7 +422,7 @@ namespace Nuke.Common.Tools.NuGet
         public static NuGetPackage RemoveTag(this NuGetPackage toolSettings, string tag)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TagsInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == tag).ToList();
+            toolSettings.TagsInternal = toolSettings.Tags.Where(x => x == tag).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="NuGetPackage.ContentFiles"/> to a new list.</i></p><p><em>(3.3+)</em> A collection of &lt;files&gt; elements that identify content files that should be include in the consuming project. These files are specified with a set of attributes that describe how they should be used within the project system. See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#specifying-files-to-include-in-the-package">Specifying files to include in the package</a>.</p></summary>
@@ -478,7 +478,7 @@ namespace Nuke.Common.Tools.NuGet
         public static NuGetPackage RemoveContentFile(this NuGetPackage toolSettings, PackageContentFile contentFile)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ContentFilesInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == contentFile).ToList();
+            toolSettings.ContentFilesInternal = toolSettings.ContentFiles.Where(x => x == contentFile).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="NuGetPackage.DefaultDependencies"/> to a new list.</i></p></summary>
@@ -534,7 +534,7 @@ namespace Nuke.Common.Tools.NuGet
         public static NuGetPackage RemoveDefaultDependency(this NuGetPackage toolSettings, PackageDependency defaultDependency)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DefaultDependenciesInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == defaultDependency).ToList();
+            toolSettings.DefaultDependenciesInternal = toolSettings.DefaultDependencies.Where(x => x == defaultDependency).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="NuGetPackage.DependencySets"/> to a new list.</i></p><p>A collection of zero or more &lt;dependency&gt; elements specifying the dependencies for the package. Each dependency has attributes of <em>id</em>, <em>version</em>, <em>include</em> (3.x+), and <em>exclude</em> (3.x+). See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#dependencies">Dependencies</a>.</p></summary>
@@ -590,7 +590,7 @@ namespace Nuke.Common.Tools.NuGet
         public static NuGetPackage RemoveDependencySet(this NuGetPackage toolSettings, PackageDependencySet dependencySet)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DependencySetsInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == dependencySet).ToList();
+            toolSettings.DependencySetsInternal = toolSettings.DependencySets.Where(x => x == dependencySet).ToList();
             return toolSettings;
         }
     }

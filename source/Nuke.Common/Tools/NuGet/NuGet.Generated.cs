@@ -1020,7 +1020,7 @@ namespace Nuke.Common.Tools.NuGet
         public static NuGetRestoreSettings RemoveFallbackSource(this NuGetRestoreSettings toolSettings, string fallbackSource)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.FallbackSourceInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == fallbackSource).ToList();
+            toolSettings.FallbackSourceInternal = toolSettings.FallbackSource.Where(x => x == fallbackSource).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.ForceEnglishOutput"/>.</i></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
@@ -1292,7 +1292,7 @@ namespace Nuke.Common.Tools.NuGet
         public static NuGetRestoreSettings RemoveSource(this NuGetRestoreSettings toolSettings, string source)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.SourceInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == source).ToList();
+            toolSettings.SourceInternal = toolSettings.Source.Where(x => x == source).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.Verbosity"/>.</i></p><p><em>(2.5+)</em> Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>

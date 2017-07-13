@@ -585,7 +585,7 @@ namespace Nuke.Common.Tools.Xunit2
         public static Xunit2Settings RemoveMethod(this Xunit2Settings toolSettings, string method)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MethodsInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == method).ToList();
+            toolSettings.MethodsInternal = toolSettings.Methods.Where(x => x == method).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="Xunit2Settings.Classes"/> to a new list.</i></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
@@ -641,7 +641,7 @@ namespace Nuke.Common.Tools.Xunit2
         public static Xunit2Settings RemoveClasse(this Xunit2Settings toolSettings, string classe)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ClassesInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == classe).ToList();
+            toolSettings.ClassesInternal = toolSettings.Classes.Where(x => x == classe).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="Xunit2Settings.Namespaces"/> to a new list.</i></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
@@ -697,7 +697,7 @@ namespace Nuke.Common.Tools.Xunit2
         public static Xunit2Settings RemoveNamespace(this Xunit2Settings toolSettings, string ns)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NamespacesInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == ns).ToList();
+            toolSettings.NamespacesInternal = toolSettings.Namespaces.Where(x => x == ns).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="Xunit2Settings.NoAutoReporters"/>.</i></p><p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p></summary>

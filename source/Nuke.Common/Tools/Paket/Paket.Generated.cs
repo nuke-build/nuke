@@ -1026,7 +1026,7 @@ namespace Nuke.Common.Tools.Paket
         public static PaketRestoreSettings RemoveReferencesFile(this PaketRestoreSettings toolSettings, string referencesFile)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ReferencesFilesInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == referencesFile).ToList();
+            toolSettings.ReferencesFilesInternal = toolSettings.ReferencesFiles.Where(x => x == referencesFile).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="PaketRestoreSettings.TargetFramework"/>.</i></p><p>Allows to restore only for a specified target framework.</p></summary>

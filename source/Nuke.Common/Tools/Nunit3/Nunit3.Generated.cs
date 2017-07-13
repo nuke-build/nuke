@@ -233,7 +233,7 @@ namespace Nuke.Common.Tools.Nunit3
         public static Nunit3Settings RemoveInputFile(this Nunit3Settings toolSettings, string inputFile)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.InputFilesInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == inputFile).ToList();
+            toolSettings.InputFilesInternal = toolSettings.InputFiles.Where(x => x == inputFile).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="Nunit3Settings.Tests"/> to a new list.</i></p><p>Comma-separated list of names of tests to run or explore. This option may be repeated. Note that this option is retained for backward compatibility. The --where option can now be used instead.</p></summary>
@@ -289,7 +289,7 @@ namespace Nuke.Common.Tools.Nunit3
         public static Nunit3Settings RemoveTest(this Nunit3Settings toolSettings, string test)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TestsInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == test).ToList();
+            toolSettings.TestsInternal = toolSettings.Tests.Where(x => x == test).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="Nunit3Settings.TestListFile"/>.</i></p><p>The name (or path) of a file containing a list of tests to run or explore, one per line.</p></summary>
@@ -777,7 +777,7 @@ namespace Nuke.Common.Tools.Nunit3
         public static Nunit3Settings RemoveResult(this Nunit3Settings toolSettings, string result)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ResultsInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == result).ToList();
+            toolSettings.ResultsInternal = toolSettings.Results.Where(x => x == result).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="Nunit3Settings.Explores"/> to a new list.</i></p><p>Display or save test info rather than running tests. Optionally provide an output spec for saving the test info. This option may be repeated.</p></summary>
@@ -833,7 +833,7 @@ namespace Nuke.Common.Tools.Nunit3
         public static Nunit3Settings RemoveExplore(this Nunit3Settings toolSettings, string explore)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExploresInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == explore).ToList();
+            toolSettings.ExploresInternal = toolSettings.Explores.Where(x => x == explore).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="Nunit3Settings.NoResults"/>.</i></p><p>Don't save any test results.</p></summary>

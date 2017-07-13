@@ -293,7 +293,7 @@ namespace Nuke.Common.Tools.DotCover
         public static DotCoverAnalyseSettings RemoveScope(this DotCoverAnalyseSettings toolSettings, string scope)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ScopeInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == scope).ToList();
+            toolSettings.ScopeInternal = toolSettings.Scope.Where(x => x == scope).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="DotCoverAnalyseSettings.Filters"/> to a new list.</i></p><p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p></summary>
@@ -349,7 +349,7 @@ namespace Nuke.Common.Tools.DotCover
         public static DotCoverAnalyseSettings RemoveFilter(this DotCoverAnalyseSettings toolSettings, string filter)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.FiltersInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == filter).ToList();
+            toolSettings.FiltersInternal = toolSettings.Filters.Where(x => x == filter).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="DotCoverAnalyseSettings.AttributeFilters"/> to a new list.</i></p><p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p></summary>
@@ -405,7 +405,7 @@ namespace Nuke.Common.Tools.DotCover
         public static DotCoverAnalyseSettings RemoveAttributeFilter(this DotCoverAnalyseSettings toolSettings, string attributeFilter)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AttributeFiltersInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == attributeFilter).ToList();
+            toolSettings.AttributeFiltersInternal = toolSettings.AttributeFilters.Where(x => x == attributeFilter).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/>.</i></p><p>Disables default (automatically added) filters.</p></summary>
@@ -493,7 +493,7 @@ namespace Nuke.Common.Tools.DotCover
         public static DotCoverAnalyseSettings RemoveSymbolSearchPath(this DotCoverAnalyseSettings toolSettings, string symbolSearchPath)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.SymbolSearchPathsInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == symbolSearchPath).ToList();
+            toolSettings.SymbolSearchPathsInternal = toolSettings.SymbolSearchPaths.Where(x => x == symbolSearchPath).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/>.</i></p><p>Allows dotCover to search for PDB files on a symbol server.</p></summary>
@@ -613,7 +613,7 @@ namespace Nuke.Common.Tools.DotCover
         public static DotCoverAnalyseSettings RemoveProcessFilter(this DotCoverAnalyseSettings toolSettings, string processFilter)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ProcessFiltersInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == processFilter).ToList();
+            toolSettings.ProcessFiltersInternal = toolSettings.ProcessFilters.Where(x => x == processFilter).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="DotCoverAnalyseSettings.HideAutoProperties"/>.</i></p><p>Remove auto-implemented properties from report.</p></summary>

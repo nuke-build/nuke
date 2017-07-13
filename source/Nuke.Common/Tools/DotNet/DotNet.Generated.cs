@@ -536,7 +536,7 @@ namespace Nuke.Common.Tools.DotNet
         public static DotNetRestoreSettings RemoveRuntime(this DotNetRestoreSettings toolSettings, string runtime)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RuntimesInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == runtime).ToList();
+            toolSettings.RuntimesInternal = toolSettings.Runtimes.Where(x => x == runtime).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="DotNetRestoreSettings.PackageDirectory"/>.</i></p><p>Specifies the directory for restored packages.</p></summary>

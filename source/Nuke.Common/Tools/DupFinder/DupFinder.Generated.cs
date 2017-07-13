@@ -173,7 +173,7 @@ namespace Nuke.Common.Tools.DupFinder
         public static DupFinderSettings RemoveExcludeFile(this DupFinderSettings toolSettings, string excludeFile)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludeFilesInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == excludeFile).ToList();
+            toolSettings.ExcludeFilesInternal = toolSettings.ExcludeFiles.Where(x => x == excludeFile).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="DupFinderSettings.ExcludeComments"/> to a new list.</i></p><p>Allows excluding files that have a matching substrings in the opening comments.</p></summary>
@@ -229,7 +229,7 @@ namespace Nuke.Common.Tools.DupFinder
         public static DupFinderSettings RemoveExcludeComment(this DupFinderSettings toolSettings, string excludeComment)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludeCommentsInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == excludeComment).ToList();
+            toolSettings.ExcludeCommentsInternal = toolSettings.ExcludeComments.Where(x => x == excludeComment).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="DupFinderSettings.ExcludeCodeRegions"/> to a new list.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <em>generated code</em> will exclude regions containing <em>Windows Form Designer generated code</em>).</p></summary>
@@ -285,7 +285,7 @@ namespace Nuke.Common.Tools.DupFinder
         public static DupFinderSettings RemoveExcludeCodeRegion(this DupFinderSettings toolSettings, string excludeCodeRegion)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludeCodeRegionsInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == excludeCodeRegion).ToList();
+            toolSettings.ExcludeCodeRegionsInternal = toolSettings.ExcludeCodeRegions.Where(x => x == excludeCodeRegion).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="DupFinderSettings.DiscardFields"/>.</i></p><p>Whether to consider similar fragments as duplicates if they have different fields. The default value is <c>false</c>.</p></summary>

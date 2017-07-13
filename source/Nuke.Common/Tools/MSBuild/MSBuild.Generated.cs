@@ -323,7 +323,7 @@ namespace Nuke.Common.Tools.MSBuild
         public static MSBuildSettings RemoveTarget(this MSBuildSettings toolSettings, string target)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TargetsInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == target).ToList();
+            toolSettings.TargetsInternal = toolSettings.Targets.Where(x => x == target).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="MSBuildSettings.ToolsVersion"/>.</i></p><p>Specifies the version of the Toolset to use to build the project, as the following example shows: <c>/toolsversion:3.5</c></p><p>By using this switch, you can build a project and specify a version that differs from the version that's specified in the <a href="https://msdn.microsoft.com/en-us/library/bcxfsh87.aspx">Project Element (MSBuild)</a>. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb383985.aspx">Overriding ToolsVersion Settings</a>.</p><p>For MSBuild 4.5, you can specify the following values for version: 2.0, 3.5, and 4.0. If you specify 4.0, the VisualStudioVersion build property specifies which sub-toolset to use. For more information, see the Sub-toolsets section of <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>.</p><p>A Toolset consists of tasks, targets, and tools that are used to build an application. The tools include compilers such as csc.exe and vbc.exe. For more information about Toolsets, see <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>, <a href="https://msdn.microsoft.com/en-us/library/bb397428.aspx">Standard and Custom Toolset Configurations</a>, and <a href="https://msdn.microsoft.com/en-us/library/hh264223.aspx">Multitargeting</a>. Note: The toolset version isn't the same as the target framework, which is the version of the .NET Framework on which a project is built to run. For more information, see <a href="https://msdn.microsoft.com/en-us/library/hh264221.aspx">Target Framework and Target Platform</a>.</p></summary>
@@ -411,7 +411,7 @@ namespace Nuke.Common.Tools.MSBuild
         public static MSBuildSettings RemoveLogger(this MSBuildSettings toolSettings, string logger)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.LoggersInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == logger).ToList();
+            toolSettings.LoggersInternal = toolSettings.Loggers.Where(x => x == logger).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="MSBuildSettings.NoConsoleLogger"/>.</i></p><p>Disable the default console logger, and don't log events to the console.</p></summary>

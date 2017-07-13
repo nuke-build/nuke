@@ -136,7 +136,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         public static ReportGeneratorSettings RemoveReport(this ReportGeneratorSettings toolSettings, string report)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ReportsInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == report).ToList();
+            toolSettings.ReportsInternal = toolSettings.Reports.Where(x => x == report).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="ReportGeneratorSettings.TargetDirectory"/>.</i></p><p>The directory where the generated report should be saved.</p></summary>
@@ -208,7 +208,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         public static ReportGeneratorSettings RemoveSourceDirectory(this ReportGeneratorSettings toolSettings, string sourceDirectory)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.SourceDirectoriesInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == sourceDirectory).ToList();
+            toolSettings.SourceDirectoriesInternal = toolSettings.SourceDirectories.Where(x => x == sourceDirectory).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="ReportGeneratorSettings.HistoryDirectory"/>.</i></p><p>Optional directory for storing persistent coverage information. Can be used in future reports to show coverage evolution.</p></summary>
@@ -272,7 +272,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         public static ReportGeneratorSettings RemoveAssemblyFilter(this ReportGeneratorSettings toolSettings, string assemblyFilter)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AssemblyFiltersInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == assemblyFilter).ToList();
+            toolSettings.AssemblyFiltersInternal = toolSettings.AssemblyFilters.Where(x => x == assemblyFilter).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="ReportGeneratorSettings.ClassFilters"/> to a new list.</i></p><p>Optional list of classes that should be included or excluded in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
@@ -328,7 +328,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         public static ReportGeneratorSettings RemoveClassFilter(this ReportGeneratorSettings toolSettings, string classFilter)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ClassFiltersInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == classFilter).ToList();
+            toolSettings.ClassFiltersInternal = toolSettings.ClassFilters.Where(x => x == classFilter).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="ReportGeneratorSettings.Verbosity"/>.</i></p><p>The verbosity level of the log messages. Default is Verbose.</p></summary>
