@@ -53,7 +53,8 @@ namespace Nuke.Core.Tooling
                 if (secret)
                     _secrets.Add(value.ToString());
 
-                _arguments.Add(Tuple.Create(argumentFormat.Replace("{value}", "{0}"), value.ToString()));
+                var valueString = value is Enum enumValue ? enumValue.ToFriendlyString() : value.ToString();
+                _arguments.Add(Tuple.Create(argumentFormat.Replace("{value}", "{0}"), valueString));
             }
             return this;
         }
@@ -117,12 +118,14 @@ namespace Nuke.Core.Tooling
 
         private string Render (bool forOutput)
         {
+            string Format (Tuple<string, string> argument)
+                => !_secrets.Contains(argument.Item2) || !forOutput
+                    ? argument.Item2.Trim().DoubleQuoteIfNeeded()
+                    : HiddenString;
+
             return _arguments.Aggregate(
                 new StringBuilder(),
-                (sb, a) => sb.AppendFormat(
-                            a.Item1,
-                            forOutput && _secrets.Contains(a.Item2) ? HiddenString : a.Item2.Trim().DoubleQuoteIfNeeded())
-                        .Append(value: ' '),
+                (sb, a) => sb.AppendFormat(a.Item1, Format(a)).Append(value: ' '),
                 sb => sb.ToString().TrimEnd(' '));
         }
 

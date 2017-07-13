@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using System.Text;
 using Nuke.ToolGenerator.Model;
 using Nuke.ToolGenerator.Writers;
 
@@ -22,7 +23,20 @@ namespace Nuke.ToolGenerator.Generators
                     .WriteLine("[PublicAPI]")
                     .WriteLineIfTrue(enumeration.IsFlags, "[Flags]")
                     .WriteLine($"public enum {enumeration.Name}")
-                    .WriteBlock(w => values.ForEach(x => w.WriteLine(x)));
+                    .WriteBlock(w => w.ForEach(enumeration.Values, WriteValue));
+        }
+
+        private static void WriteValue (ToolWriter writer, string value)
+        {
+            var escapedValue = value.Aggregate(
+                new StringBuilder(!char.IsLetter(value[index: 0]) ? "_" : string.Empty),
+                (sb, c) => sb.Append(char.IsLetterOrDigit(c) ? c : '_'),
+                sb => sb.ToString());
+
+            if (escapedValue != value)
+                writer.WriteLine($"[FriendlyString(\"{value}\")]");
+
+            writer.WriteLine($"{escapedValue},");
         }
     }
 }

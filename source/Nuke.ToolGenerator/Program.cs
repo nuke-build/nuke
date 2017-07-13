@@ -22,7 +22,7 @@ namespace Nuke.ToolGenerator
     {
         private static void Main (string[] args)
         {
-            var files = Directory.GetFiles(args[0], "*.td", SearchOption.TopDirectoryOnly);
+            var files = Directory.GetFiles(args[0], "*.json", SearchOption.TopDirectoryOnly);
 
             foreach (var file in files)
             {
