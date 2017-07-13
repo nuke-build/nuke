@@ -21,7 +21,7 @@ namespace Nuke.ToolGenerator.Generators
             using (var writer = new ToolWriter(tool, streamWriter))
             {
                 writer
-                        // TODO: extract license from dotsettings file
+                        // TODO [3]: extract license from dotsettings file
                         .WriteLine("// Copyright Matthias Koch 2017.")
                         .WriteLine("// Distributed under the MIT License.")
                         .WriteLine("// https://github.com/nuke-build/nuke/blob/master/LICENSE")

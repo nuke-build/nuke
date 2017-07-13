@@ -33,7 +33,6 @@ namespace Nuke.Core
     ///         .Executes() => { /* ... */ });
     /// </code>
     /// </example>
-    // TODO: strict mode for value-types?
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Field)]
     [MeansImplicitUse(ImplicitUseKindFlags.Assign)]

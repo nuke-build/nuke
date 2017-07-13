@@ -28,7 +28,6 @@ namespace Nuke.Core.Tooling
         public virtual IArguments GetArguments ()
         {
             AssertValid();
-            // TODO: ArgumentConfigurator can't be serialized!
             return ArgumentConfigurator(GetArgumentsInternal());
         }
 

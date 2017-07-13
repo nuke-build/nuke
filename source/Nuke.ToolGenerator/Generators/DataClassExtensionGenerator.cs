@@ -24,7 +24,7 @@ namespace Nuke.ToolGenerator.Generators
                     .WriteBlock(w => w.ForEach(dataClass.Properties, WriteMethods));
         }
 
-        // TODO: less naming? -> value
+        // TODO [3]: less naming? -> value
         private static void WriteMethods (DataClassWriter writer, Property property)
         {
             var reference = $"{writer.DataClass.Name}.{property.Name}".ToSeeCref();
@@ -48,7 +48,7 @@ namespace Nuke.ToolGenerator.Generators
                         .WriteSummaryExtension($"Toggles {reference}", property)
                         .WriteMethod($"Toggle{property.Name}", $"toolSettings.{property.Name} = !toolSettings.{property.Name};");
 
-                // TODO: negate for 'skip', 'no', 'disable'
+                // TODO [4]: negate for 'skip', 'no', 'disable'
             }
             else if (property.IsList())
             {
@@ -83,7 +83,7 @@ namespace Nuke.ToolGenerator.Generators
                         .WriteSummaryExtension($"Removes a single {propertySingularInstance} from {reference}", property)
                         .WriteMethod($"Remove{propertySingular}",
                             $"{valueType} {propertySingularInstance}",
-                            $"toolSettings.{propertyInternal} = toolSettings.{property}.Where(x => x == {propertySingularInstance}).ToList();");
+                            $"toolSettings.{propertyInternal} = toolSettings.{property.Name}.Where(x => x == {propertySingularInstance}).ToList();");
             }
             else if (property.IsDictionary())
             {
