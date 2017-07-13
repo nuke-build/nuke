@@ -26,16 +26,16 @@ namespace Nuke.Common.Tools.OpenCover
     [ExcludeFromCodeCoverage]
     public static partial class OpenCoverTasks
     {
-        static partial void PreProcess (OpenCoverSettings openCoverSettings);
-        static partial void PostProcess (OpenCoverSettings openCoverSettings);
+        static partial void PreProcess (OpenCoverSettings toolSettings);
+        static partial void PostProcess (OpenCoverSettings toolSettings);
         /// <summary><p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p><p>For more details, visit the <a href="https://github.com/OpenCover/opencover">official website</a>.</p></summary>
         public static void OpenCover (Configure<OpenCoverSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            var openCoverSettings = configurator.InvokeSafe(new OpenCoverSettings());
-            PreProcess(openCoverSettings);
-            var process = StartProcess(openCoverSettings, processSettings);
+            var toolSettings = configurator.InvokeSafe(new OpenCoverSettings());
+            PreProcess(toolSettings);
+            var process = StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(openCoverSettings);
+            PostProcess(toolSettings);
         }
         /// <summary><p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p><p>For more details, visit the <a href="https://github.com/OpenCover/opencover">official website</a>.</p></summary>
         public static void OpenCover (Action testAction, Configure<OpenCoverSettings> configurator = null, ProcessSettings processSettings = null)
@@ -84,7 +84,8 @@ namespace Nuke.Common.Tools.OpenCover
         public virtual IReadOnlyList<string> Filters => FiltersInternal.AsReadOnly();
         internal List<string> FiltersInternal { get; set; } = new List<string>();
         /// <summary><p>Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c></p></summary>
-        public virtual OpenCoverSkipping? HideSkipped { get; internal set; }
+        public virtual IReadOnlyList<OpenCoverSkipping> HideSkippedKinds => HideSkippedKindsInternal.AsReadOnly();
+        internal List<OpenCoverSkipping> HideSkippedKindsInternal { get; set; } = new List<OpenCoverSkipping>();
         /// <summary><p>Change the logging level, default is set to Info. Logging is based on log4net logging levels and appenders.</p></summary>
         public virtual OpenCoverVerbosity? Verbosity { get; internal set; }
         /// <summary><p>Under some scenarios e.g. using MSTest, an assembly may be loaded many times from different locations. This option is used to merge the coverage results for an assembly regardless of where it was loaded assuming the assembly has the same file-hash in each location.</p></summary>
@@ -133,7 +134,7 @@ namespace Nuke.Common.Tools.OpenCover
               .Add("-excludebyfile:{value}", ExcludeByFile, mainSeparator: $";")
               .Add("-excludedirs:{value}", ExcludeDirectories, mainSeparator: $";")
               .Add("-filter:{value}", Filters, mainSeparator: $" ")
-              .Add("-hideskipped:{value}", HideSkipped)
+              .Add("-hideskipped:{value}", HideSkippedKinds, mainSeparator: $";")
               .Add("-log:{value}", Verbosity)
               .Add("-mergebyhash", MergeByHash)
               .Add("-mergeoutput", MergeOutput)
@@ -156,707 +157,755 @@ namespace Nuke.Common.Tools.OpenCover
     {
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.TestAction"/>.</i></p><p>The action that executes tests.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetTestAction(this OpenCoverSettings openCoverSettings, Action testAction)
+        public static OpenCoverSettings SetTestAction(this OpenCoverSettings toolSettings, Action testAction)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.TestAction = testAction;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TestAction = testAction;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.TargetPath"/>.</i></p><p>The name of the target application or service that will be started; this can also be a path to the target application.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetTargetPath(this OpenCoverSettings openCoverSettings, string targetPath)
+        public static OpenCoverSettings SetTargetPath(this OpenCoverSettings toolSettings, string targetPath)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.TargetPath = targetPath;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetPath = targetPath;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.TargetArguments"/>.</i></p><p>Arguments to be passed to the target process.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetTargetArguments(this OpenCoverSettings openCoverSettings, string targetArguments)
+        public static OpenCoverSettings SetTargetArguments(this OpenCoverSettings toolSettings, string targetArguments)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.TargetArguments = targetArguments;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetArguments = targetArguments;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.TargetDirectory"/>.</i></p><p>The path to the target directory; if the target argument already contains a path then this argument can be used to provide an alternate path where PDB files may be found.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetTargetDirectory(this OpenCoverSettings openCoverSettings, string targetDirectory)
+        public static OpenCoverSettings SetTargetDirectory(this OpenCoverSettings toolSettings, string targetDirectory)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.TargetDirectory = targetDirectory;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetDirectory = targetDirectory;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.CoverByTests"/> to a new list.</i></p><p>Gather coverage by test by analyzing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request - please raise support request on GitHub.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetCoverByTests(this OpenCoverSettings openCoverSettings, params string[] coverByTests)
+        public static OpenCoverSettings SetCoverByTests(this OpenCoverSettings toolSettings, params string[] coverByTests)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.CoverByTestsInternal = coverByTests.ToList();
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CoverByTestsInternal = coverByTests.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.CoverByTests"/> to a new list.</i></p><p>Gather coverage by test by analyzing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request - please raise support request on GitHub.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetCoverByTests(this OpenCoverSettings openCoverSettings, IEnumerable<string> coverByTests)
+        public static OpenCoverSettings SetCoverByTests(this OpenCoverSettings toolSettings, IEnumerable<string> coverByTests)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.CoverByTestsInternal = coverByTests.ToList();
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CoverByTestsInternal = coverByTests.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new coverByTests to the existing <see cref="OpenCoverSettings.CoverByTests"/>.</i></p><p>Gather coverage by test by analyzing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request - please raise support request on GitHub.</p></summary>
         [Pure]
-        public static OpenCoverSettings AddCoverByTests(this OpenCoverSettings openCoverSettings, params string[] coverByTests)
+        public static OpenCoverSettings AddCoverByTests(this OpenCoverSettings toolSettings, params string[] coverByTests)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.CoverByTestsInternal.AddRange(coverByTests);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CoverByTestsInternal.AddRange(coverByTests);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new coverByTests to the existing <see cref="OpenCoverSettings.CoverByTests"/>.</i></p><p>Gather coverage by test by analyzing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request - please raise support request on GitHub.</p></summary>
         [Pure]
-        public static OpenCoverSettings AddCoverByTests(this OpenCoverSettings openCoverSettings, IEnumerable<string> coverByTests)
+        public static OpenCoverSettings AddCoverByTests(this OpenCoverSettings toolSettings, IEnumerable<string> coverByTests)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.CoverByTestsInternal.AddRange(coverByTests);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CoverByTestsInternal.AddRange(coverByTests);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for clearing <see cref="OpenCoverSettings.CoverByTests"/>.</i></p><p>Gather coverage by test by analyzing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request - please raise support request on GitHub.</p></summary>
         [Pure]
-        public static OpenCoverSettings ClearCoverByTests(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings ClearCoverByTests(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.CoverByTestsInternal.Clear();
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CoverByTestsInternal.Clear();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding a single coverByTest to <see cref="OpenCoverSettings.CoverByTests"/>.</i></p><p>Gather coverage by test by analyzing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request - please raise support request on GitHub.</p></summary>
         [Pure]
-        public static OpenCoverSettings AddCoverByTest(this OpenCoverSettings openCoverSettings, string coverByTest)
+        public static OpenCoverSettings AddCoverByTest(this OpenCoverSettings toolSettings, string coverByTest, bool evenIfNull = true)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.CoverByTestsInternal.Add(coverByTest);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            if (coverByTest != null || evenIfNull) toolSettings.CoverByTestsInternal.Add(coverByTest);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for removing a single coverByTest from <see cref="OpenCoverSettings.CoverByTests"/>.</i></p><p>Gather coverage by test by analyzing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request - please raise support request on GitHub.</p></summary>
         [Pure]
-        public static OpenCoverSettings RemoveCoverByTest(this OpenCoverSettings openCoverSettings, string coverByTest)
+        public static OpenCoverSettings RemoveCoverByTest(this OpenCoverSettings toolSettings, string coverByTest)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.CoverByTestsInternal.Remove(coverByTest);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CoverByTestsInternal.Remove(coverByTest);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.PerformanceCounters"/>.</i></p><p><i>Administrator</i> privileges required. Allows the monitoring in <i>Performance Monitor</i> of the following values (they are usually cleared at the end of a performance run):<ul><li>messages remaining on the queue</li><li>number of messages processed</li></ul></p></summary>
         [Pure]
-        public static OpenCoverSettings SetPerformanceCounters(this OpenCoverSettings openCoverSettings, bool performanceCounters)
+        public static OpenCoverSettings SetPerformanceCounters(this OpenCoverSettings toolSettings, bool performanceCounters)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.PerformanceCounters = performanceCounters;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PerformanceCounters = performanceCounters;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="OpenCoverSettings.PerformanceCounters"/>.</i></p><p><i>Administrator</i> privileges required. Allows the monitoring in <i>Performance Monitor</i> of the following values (they are usually cleared at the end of a performance run):<ul><li>messages remaining on the queue</li><li>number of messages processed</li></ul></p></summary>
         [Pure]
-        public static OpenCoverSettings EnablePerformanceCounters(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings EnablePerformanceCounters(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.PerformanceCounters = true;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PerformanceCounters = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="OpenCoverSettings.PerformanceCounters"/>.</i></p><p><i>Administrator</i> privileges required. Allows the monitoring in <i>Performance Monitor</i> of the following values (they are usually cleared at the end of a performance run):<ul><li>messages remaining on the queue</li><li>number of messages processed</li></ul></p></summary>
         [Pure]
-        public static OpenCoverSettings DisablePerformanceCounters(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings DisablePerformanceCounters(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.PerformanceCounters = false;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PerformanceCounters = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="OpenCoverSettings.PerformanceCounters"/>.</i></p><p><i>Administrator</i> privileges required. Allows the monitoring in <i>Performance Monitor</i> of the following values (they are usually cleared at the end of a performance run):<ul><li>messages remaining on the queue</li><li>number of messages processed</li></ul></p></summary>
         [Pure]
-        public static OpenCoverSettings TogglePerformanceCounters(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings TogglePerformanceCounters(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.PerformanceCounters = !openCoverSettings.PerformanceCounters;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PerformanceCounters = !toolSettings.PerformanceCounters;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.ExcludeByAttributes"/> to a new list.</i></p><p>Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetExcludeByAttributes(this OpenCoverSettings openCoverSettings, params string[] excludeByAttributes)
+        public static OpenCoverSettings SetExcludeByAttributes(this OpenCoverSettings toolSettings, params string[] excludeByAttributes)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ExcludeByAttributesInternal = excludeByAttributes.ToList();
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeByAttributesInternal = excludeByAttributes.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.ExcludeByAttributes"/> to a new list.</i></p><p>Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetExcludeByAttributes(this OpenCoverSettings openCoverSettings, IEnumerable<string> excludeByAttributes)
+        public static OpenCoverSettings SetExcludeByAttributes(this OpenCoverSettings toolSettings, IEnumerable<string> excludeByAttributes)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ExcludeByAttributesInternal = excludeByAttributes.ToList();
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeByAttributesInternal = excludeByAttributes.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new excludeByAttributes to the existing <see cref="OpenCoverSettings.ExcludeByAttributes"/>.</i></p><p>Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
-        public static OpenCoverSettings AddExcludeByAttributes(this OpenCoverSettings openCoverSettings, params string[] excludeByAttributes)
+        public static OpenCoverSettings AddExcludeByAttributes(this OpenCoverSettings toolSettings, params string[] excludeByAttributes)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ExcludeByAttributesInternal.AddRange(excludeByAttributes);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeByAttributesInternal.AddRange(excludeByAttributes);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new excludeByAttributes to the existing <see cref="OpenCoverSettings.ExcludeByAttributes"/>.</i></p><p>Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
-        public static OpenCoverSettings AddExcludeByAttributes(this OpenCoverSettings openCoverSettings, IEnumerable<string> excludeByAttributes)
+        public static OpenCoverSettings AddExcludeByAttributes(this OpenCoverSettings toolSettings, IEnumerable<string> excludeByAttributes)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ExcludeByAttributesInternal.AddRange(excludeByAttributes);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeByAttributesInternal.AddRange(excludeByAttributes);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for clearing <see cref="OpenCoverSettings.ExcludeByAttributes"/>.</i></p><p>Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
-        public static OpenCoverSettings ClearExcludeByAttributes(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings ClearExcludeByAttributes(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ExcludeByAttributesInternal.Clear();
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeByAttributesInternal.Clear();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding a single excludeByAttribute to <see cref="OpenCoverSettings.ExcludeByAttributes"/>.</i></p><p>Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
-        public static OpenCoverSettings AddExcludeByAttribute(this OpenCoverSettings openCoverSettings, string excludeByAttribute)
+        public static OpenCoverSettings AddExcludeByAttribute(this OpenCoverSettings toolSettings, string excludeByAttribute, bool evenIfNull = true)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ExcludeByAttributesInternal.Add(excludeByAttribute);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            if (excludeByAttribute != null || evenIfNull) toolSettings.ExcludeByAttributesInternal.Add(excludeByAttribute);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for removing a single excludeByAttribute from <see cref="OpenCoverSettings.ExcludeByAttributes"/>.</i></p><p>Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
-        public static OpenCoverSettings RemoveExcludeByAttribute(this OpenCoverSettings openCoverSettings, string excludeByAttribute)
+        public static OpenCoverSettings RemoveExcludeByAttribute(this OpenCoverSettings toolSettings, string excludeByAttribute)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ExcludeByAttributesInternal.Remove(excludeByAttribute);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeByAttributesInternal.Remove(excludeByAttribute);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.ExcludeByFile"/> to a new list.</i></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetExcludeByFile(this OpenCoverSettings openCoverSettings, params string[] excludeByFile)
+        public static OpenCoverSettings SetExcludeByFile(this OpenCoverSettings toolSettings, params string[] excludeByFile)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ExcludeByFileInternal = excludeByFile.ToList();
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeByFileInternal = excludeByFile.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.ExcludeByFile"/> to a new list.</i></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetExcludeByFile(this OpenCoverSettings openCoverSettings, IEnumerable<string> excludeByFile)
+        public static OpenCoverSettings SetExcludeByFile(this OpenCoverSettings toolSettings, IEnumerable<string> excludeByFile)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ExcludeByFileInternal = excludeByFile.ToList();
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeByFileInternal = excludeByFile.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new excludeByFile to the existing <see cref="OpenCoverSettings.ExcludeByFile"/>.</i></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
-        public static OpenCoverSettings AddExcludeByFile(this OpenCoverSettings openCoverSettings, params string[] excludeByFile)
+        public static OpenCoverSettings AddExcludeByFile(this OpenCoverSettings toolSettings, params string[] excludeByFile)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ExcludeByFileInternal.AddRange(excludeByFile);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeByFileInternal.AddRange(excludeByFile);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new excludeByFile to the existing <see cref="OpenCoverSettings.ExcludeByFile"/>.</i></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
-        public static OpenCoverSettings AddExcludeByFile(this OpenCoverSettings openCoverSettings, IEnumerable<string> excludeByFile)
+        public static OpenCoverSettings AddExcludeByFile(this OpenCoverSettings toolSettings, IEnumerable<string> excludeByFile)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ExcludeByFileInternal.AddRange(excludeByFile);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeByFileInternal.AddRange(excludeByFile);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for clearing <see cref="OpenCoverSettings.ExcludeByFile"/>.</i></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
-        public static OpenCoverSettings ClearExcludeByFile(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings ClearExcludeByFile(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ExcludeByFileInternal.Clear();
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeByFileInternal.Clear();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding a single excludeByFile to <see cref="OpenCoverSettings.ExcludeByFile"/>.</i></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
-        public static OpenCoverSettings AddExcludeByFile(this OpenCoverSettings openCoverSettings, string excludeByFile)
+        public static OpenCoverSettings AddExcludeByFile(this OpenCoverSettings toolSettings, string excludeByFile, bool evenIfNull = true)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ExcludeByFileInternal.Add(excludeByFile);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            if (excludeByFile != null || evenIfNull) toolSettings.ExcludeByFileInternal.Add(excludeByFile);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for removing a single excludeByFile from <see cref="OpenCoverSettings.ExcludeByFile"/>.</i></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
-        public static OpenCoverSettings RemoveExcludeByFile(this OpenCoverSettings openCoverSettings, string excludeByFile)
+        public static OpenCoverSettings RemoveExcludeByFile(this OpenCoverSettings toolSettings, string excludeByFile)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ExcludeByFileInternal.Remove(excludeByFile);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeByFileInternal.Remove(excludeByFile);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.ExcludeDirectories"/> to a new list.</i></p><p>Assemblies being loaded from these locations will be ignored.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetExcludeDirectories(this OpenCoverSettings openCoverSettings, params string[] excludeDirectories)
+        public static OpenCoverSettings SetExcludeDirectories(this OpenCoverSettings toolSettings, params string[] excludeDirectories)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ExcludeDirectoriesInternal = excludeDirectories.ToList();
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeDirectoriesInternal = excludeDirectories.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.ExcludeDirectories"/> to a new list.</i></p><p>Assemblies being loaded from these locations will be ignored.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetExcludeDirectories(this OpenCoverSettings openCoverSettings, IEnumerable<string> excludeDirectories)
+        public static OpenCoverSettings SetExcludeDirectories(this OpenCoverSettings toolSettings, IEnumerable<string> excludeDirectories)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ExcludeDirectoriesInternal = excludeDirectories.ToList();
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeDirectoriesInternal = excludeDirectories.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new excludeDirectories to the existing <see cref="OpenCoverSettings.ExcludeDirectories"/>.</i></p><p>Assemblies being loaded from these locations will be ignored.</p></summary>
         [Pure]
-        public static OpenCoverSettings AddExcludeDirectories(this OpenCoverSettings openCoverSettings, params string[] excludeDirectories)
+        public static OpenCoverSettings AddExcludeDirectories(this OpenCoverSettings toolSettings, params string[] excludeDirectories)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ExcludeDirectoriesInternal.AddRange(excludeDirectories);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeDirectoriesInternal.AddRange(excludeDirectories);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new excludeDirectories to the existing <see cref="OpenCoverSettings.ExcludeDirectories"/>.</i></p><p>Assemblies being loaded from these locations will be ignored.</p></summary>
         [Pure]
-        public static OpenCoverSettings AddExcludeDirectories(this OpenCoverSettings openCoverSettings, IEnumerable<string> excludeDirectories)
+        public static OpenCoverSettings AddExcludeDirectories(this OpenCoverSettings toolSettings, IEnumerable<string> excludeDirectories)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ExcludeDirectoriesInternal.AddRange(excludeDirectories);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeDirectoriesInternal.AddRange(excludeDirectories);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for clearing <see cref="OpenCoverSettings.ExcludeDirectories"/>.</i></p><p>Assemblies being loaded from these locations will be ignored.</p></summary>
         [Pure]
-        public static OpenCoverSettings ClearExcludeDirectories(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings ClearExcludeDirectories(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ExcludeDirectoriesInternal.Clear();
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeDirectoriesInternal.Clear();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding a single excludeDirectory to <see cref="OpenCoverSettings.ExcludeDirectories"/>.</i></p><p>Assemblies being loaded from these locations will be ignored.</p></summary>
         [Pure]
-        public static OpenCoverSettings AddExcludeDirectory(this OpenCoverSettings openCoverSettings, string excludeDirectory)
+        public static OpenCoverSettings AddExcludeDirectory(this OpenCoverSettings toolSettings, string excludeDirectory, bool evenIfNull = true)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ExcludeDirectoriesInternal.Add(excludeDirectory);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            if (excludeDirectory != null || evenIfNull) toolSettings.ExcludeDirectoriesInternal.Add(excludeDirectory);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for removing a single excludeDirectory from <see cref="OpenCoverSettings.ExcludeDirectories"/>.</i></p><p>Assemblies being loaded from these locations will be ignored.</p></summary>
         [Pure]
-        public static OpenCoverSettings RemoveExcludeDirectory(this OpenCoverSettings openCoverSettings, string excludeDirectory)
+        public static OpenCoverSettings RemoveExcludeDirectory(this OpenCoverSettings toolSettings, string excludeDirectory)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ExcludeDirectoriesInternal.Remove(excludeDirectory);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeDirectoriesInternal.Remove(excludeDirectory);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.Filters"/> to a new list.</i></p><p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where <c>(+|-)[Assembly-Filter]Type-Filter</c>. For example <c>+[Open*]*</c> includes all types in assemblies starting with <i>Open</i>, <c>-[*]Core.*</c> exclude all types in the <i>Core</i> namespace regardless of the assembly. If no filters are supplied then the default inclusive filter <c>+[*]*</c> is applied automatically. See Understanding Filters for more information.</p><ul><li>NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: <c>-filter:"+[*]* -[A*]Name.*"</c></li><li>NOTE: Exclusion filters take precedence over inclusion filters.</li></ul></summary>
         [Pure]
-        public static OpenCoverSettings SetFilters(this OpenCoverSettings openCoverSettings, params string[] filters)
+        public static OpenCoverSettings SetFilters(this OpenCoverSettings toolSettings, params string[] filters)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.FiltersInternal = filters.ToList();
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FiltersInternal = filters.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.Filters"/> to a new list.</i></p><p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where <c>(+|-)[Assembly-Filter]Type-Filter</c>. For example <c>+[Open*]*</c> includes all types in assemblies starting with <i>Open</i>, <c>-[*]Core.*</c> exclude all types in the <i>Core</i> namespace regardless of the assembly. If no filters are supplied then the default inclusive filter <c>+[*]*</c> is applied automatically. See Understanding Filters for more information.</p><ul><li>NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: <c>-filter:"+[*]* -[A*]Name.*"</c></li><li>NOTE: Exclusion filters take precedence over inclusion filters.</li></ul></summary>
         [Pure]
-        public static OpenCoverSettings SetFilters(this OpenCoverSettings openCoverSettings, IEnumerable<string> filters)
+        public static OpenCoverSettings SetFilters(this OpenCoverSettings toolSettings, IEnumerable<string> filters)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.FiltersInternal = filters.ToList();
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FiltersInternal = filters.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new filters to the existing <see cref="OpenCoverSettings.Filters"/>.</i></p><p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where <c>(+|-)[Assembly-Filter]Type-Filter</c>. For example <c>+[Open*]*</c> includes all types in assemblies starting with <i>Open</i>, <c>-[*]Core.*</c> exclude all types in the <i>Core</i> namespace regardless of the assembly. If no filters are supplied then the default inclusive filter <c>+[*]*</c> is applied automatically. See Understanding Filters for more information.</p><ul><li>NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: <c>-filter:"+[*]* -[A*]Name.*"</c></li><li>NOTE: Exclusion filters take precedence over inclusion filters.</li></ul></summary>
         [Pure]
-        public static OpenCoverSettings AddFilters(this OpenCoverSettings openCoverSettings, params string[] filters)
+        public static OpenCoverSettings AddFilters(this OpenCoverSettings toolSettings, params string[] filters)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.FiltersInternal.AddRange(filters);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FiltersInternal.AddRange(filters);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new filters to the existing <see cref="OpenCoverSettings.Filters"/>.</i></p><p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where <c>(+|-)[Assembly-Filter]Type-Filter</c>. For example <c>+[Open*]*</c> includes all types in assemblies starting with <i>Open</i>, <c>-[*]Core.*</c> exclude all types in the <i>Core</i> namespace regardless of the assembly. If no filters are supplied then the default inclusive filter <c>+[*]*</c> is applied automatically. See Understanding Filters for more information.</p><ul><li>NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: <c>-filter:"+[*]* -[A*]Name.*"</c></li><li>NOTE: Exclusion filters take precedence over inclusion filters.</li></ul></summary>
         [Pure]
-        public static OpenCoverSettings AddFilters(this OpenCoverSettings openCoverSettings, IEnumerable<string> filters)
+        public static OpenCoverSettings AddFilters(this OpenCoverSettings toolSettings, IEnumerable<string> filters)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.FiltersInternal.AddRange(filters);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FiltersInternal.AddRange(filters);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for clearing <see cref="OpenCoverSettings.Filters"/>.</i></p><p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where <c>(+|-)[Assembly-Filter]Type-Filter</c>. For example <c>+[Open*]*</c> includes all types in assemblies starting with <i>Open</i>, <c>-[*]Core.*</c> exclude all types in the <i>Core</i> namespace regardless of the assembly. If no filters are supplied then the default inclusive filter <c>+[*]*</c> is applied automatically. See Understanding Filters for more information.</p><ul><li>NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: <c>-filter:"+[*]* -[A*]Name.*"</c></li><li>NOTE: Exclusion filters take precedence over inclusion filters.</li></ul></summary>
         [Pure]
-        public static OpenCoverSettings ClearFilters(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings ClearFilters(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.FiltersInternal.Clear();
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FiltersInternal.Clear();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding a single filter to <see cref="OpenCoverSettings.Filters"/>.</i></p><p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where <c>(+|-)[Assembly-Filter]Type-Filter</c>. For example <c>+[Open*]*</c> includes all types in assemblies starting with <i>Open</i>, <c>-[*]Core.*</c> exclude all types in the <i>Core</i> namespace regardless of the assembly. If no filters are supplied then the default inclusive filter <c>+[*]*</c> is applied automatically. See Understanding Filters for more information.</p><ul><li>NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: <c>-filter:"+[*]* -[A*]Name.*"</c></li><li>NOTE: Exclusion filters take precedence over inclusion filters.</li></ul></summary>
         [Pure]
-        public static OpenCoverSettings AddFilter(this OpenCoverSettings openCoverSettings, string filter)
+        public static OpenCoverSettings AddFilter(this OpenCoverSettings toolSettings, string filter, bool evenIfNull = true)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.FiltersInternal.Add(filter);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            if (filter != null || evenIfNull) toolSettings.FiltersInternal.Add(filter);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for removing a single filter from <see cref="OpenCoverSettings.Filters"/>.</i></p><p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where <c>(+|-)[Assembly-Filter]Type-Filter</c>. For example <c>+[Open*]*</c> includes all types in assemblies starting with <i>Open</i>, <c>-[*]Core.*</c> exclude all types in the <i>Core</i> namespace regardless of the assembly. If no filters are supplied then the default inclusive filter <c>+[*]*</c> is applied automatically. See Understanding Filters for more information.</p><ul><li>NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: <c>-filter:"+[*]* -[A*]Name.*"</c></li><li>NOTE: Exclusion filters take precedence over inclusion filters.</li></ul></summary>
         [Pure]
-        public static OpenCoverSettings RemoveFilter(this OpenCoverSettings openCoverSettings, string filter)
+        public static OpenCoverSettings RemoveFilter(this OpenCoverSettings toolSettings, string filter)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.FiltersInternal.Remove(filter);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FiltersInternal.Remove(filter);
+            return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.HideSkipped"/>.</i></p><p>Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c></p></summary>
+        /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.HideSkippedKinds"/> to a new list.</i></p><p>Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c></p></summary>
         [Pure]
-        public static OpenCoverSettings SetHideSkipped(this OpenCoverSettings openCoverSettings, OpenCoverSkipping? hideSkipped)
+        public static OpenCoverSettings SetHideSkippedKinds(this OpenCoverSettings toolSettings, params OpenCoverSkipping[] hideSkippedKinds)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.HideSkipped = hideSkipped;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HideSkippedKindsInternal = hideSkippedKinds.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.HideSkippedKinds"/> to a new list.</i></p><p>Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c></p></summary>
+        [Pure]
+        public static OpenCoverSettings SetHideSkippedKinds(this OpenCoverSettings toolSettings, IEnumerable<OpenCoverSkipping> hideSkippedKinds)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HideSkippedKindsInternal = hideSkippedKinds.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><i>Extension method for adding new hideSkippedKinds to the existing <see cref="OpenCoverSettings.HideSkippedKinds"/>.</i></p><p>Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c></p></summary>
+        [Pure]
+        public static OpenCoverSettings AddHideSkippedKinds(this OpenCoverSettings toolSettings, params OpenCoverSkipping[] hideSkippedKinds)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HideSkippedKindsInternal.AddRange(hideSkippedKinds);
+            return toolSettings;
+        }
+        /// <summary><p><i>Extension method for adding new hideSkippedKinds to the existing <see cref="OpenCoverSettings.HideSkippedKinds"/>.</i></p><p>Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c></p></summary>
+        [Pure]
+        public static OpenCoverSettings AddHideSkippedKinds(this OpenCoverSettings toolSettings, IEnumerable<OpenCoverSkipping> hideSkippedKinds)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HideSkippedKindsInternal.AddRange(hideSkippedKinds);
+            return toolSettings;
+        }
+        /// <summary><p><i>Extension method for clearing <see cref="OpenCoverSettings.HideSkippedKinds"/>.</i></p><p>Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c></p></summary>
+        [Pure]
+        public static OpenCoverSettings ClearHideSkippedKinds(this OpenCoverSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HideSkippedKindsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><i>Extension method for adding a single hideSkippedKind to <see cref="OpenCoverSettings.HideSkippedKinds"/>.</i></p><p>Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c></p></summary>
+        [Pure]
+        public static OpenCoverSettings AddHideSkippedKind(this OpenCoverSettings toolSettings, OpenCoverSkipping hideSkippedKind)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HideSkippedKindsInternal.Add(hideSkippedKind);
+            return toolSettings;
+        }
+        /// <summary><p><i>Extension method for removing a single hideSkippedKind from <see cref="OpenCoverSettings.HideSkippedKinds"/>.</i></p><p>Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c></p></summary>
+        [Pure]
+        public static OpenCoverSettings RemoveHideSkippedKind(this OpenCoverSettings toolSettings, OpenCoverSkipping hideSkippedKind)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HideSkippedKindsInternal.Remove(hideSkippedKind);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.Verbosity"/>.</i></p><p>Change the logging level, default is set to Info. Logging is based on log4net logging levels and appenders.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetVerbosity(this OpenCoverSettings openCoverSettings, OpenCoverVerbosity? verbosity)
+        public static OpenCoverSettings SetVerbosity(this OpenCoverSettings toolSettings, OpenCoverVerbosity? verbosity)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.Verbosity = verbosity;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = verbosity;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.MergeByHash"/>.</i></p><p>Under some scenarios e.g. using MSTest, an assembly may be loaded many times from different locations. This option is used to merge the coverage results for an assembly regardless of where it was loaded assuming the assembly has the same file-hash in each location.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetMergeByHash(this OpenCoverSettings openCoverSettings, bool mergeByHash)
+        public static OpenCoverSettings SetMergeByHash(this OpenCoverSettings toolSettings, bool mergeByHash)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.MergeByHash = mergeByHash;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MergeByHash = mergeByHash;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="OpenCoverSettings.MergeByHash"/>.</i></p><p>Under some scenarios e.g. using MSTest, an assembly may be loaded many times from different locations. This option is used to merge the coverage results for an assembly regardless of where it was loaded assuming the assembly has the same file-hash in each location.</p></summary>
         [Pure]
-        public static OpenCoverSettings EnableMergeByHash(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings EnableMergeByHash(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.MergeByHash = true;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MergeByHash = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="OpenCoverSettings.MergeByHash"/>.</i></p><p>Under some scenarios e.g. using MSTest, an assembly may be loaded many times from different locations. This option is used to merge the coverage results for an assembly regardless of where it was loaded assuming the assembly has the same file-hash in each location.</p></summary>
         [Pure]
-        public static OpenCoverSettings DisableMergeByHash(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings DisableMergeByHash(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.MergeByHash = false;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MergeByHash = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="OpenCoverSettings.MergeByHash"/>.</i></p><p>Under some scenarios e.g. using MSTest, an assembly may be loaded many times from different locations. This option is used to merge the coverage results for an assembly regardless of where it was loaded assuming the assembly has the same file-hash in each location.</p></summary>
         [Pure]
-        public static OpenCoverSettings ToggleMergeByHash(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings ToggleMergeByHash(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.MergeByHash = !openCoverSettings.MergeByHash;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MergeByHash = !toolSettings.MergeByHash;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.MergeOutput"/>.</i></p><p>Allow to merge the results with an existing file (specified by <c>-output</c> option). So the coverage from the output file will be loaded first (if exists).</p></summary>
         [Pure]
-        public static OpenCoverSettings SetMergeOutput(this OpenCoverSettings openCoverSettings, bool mergeOutput)
+        public static OpenCoverSettings SetMergeOutput(this OpenCoverSettings toolSettings, bool mergeOutput)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.MergeOutput = mergeOutput;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MergeOutput = mergeOutput;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="OpenCoverSettings.MergeOutput"/>.</i></p><p>Allow to merge the results with an existing file (specified by <c>-output</c> option). So the coverage from the output file will be loaded first (if exists).</p></summary>
         [Pure]
-        public static OpenCoverSettings EnableMergeOutput(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings EnableMergeOutput(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.MergeOutput = true;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MergeOutput = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="OpenCoverSettings.MergeOutput"/>.</i></p><p>Allow to merge the results with an existing file (specified by <c>-output</c> option). So the coverage from the output file will be loaded first (if exists).</p></summary>
         [Pure]
-        public static OpenCoverSettings DisableMergeOutput(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings DisableMergeOutput(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.MergeOutput = false;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MergeOutput = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="OpenCoverSettings.MergeOutput"/>.</i></p><p>Allow to merge the results with an existing file (specified by <c>-output</c> option). So the coverage from the output file will be loaded first (if exists).</p></summary>
         [Pure]
-        public static OpenCoverSettings ToggleMergeOutput(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings ToggleMergeOutput(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.MergeOutput = !openCoverSettings.MergeOutput;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MergeOutput = !toolSettings.MergeOutput;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.NoDefaultFilters"/>.</i></p><p>A list of default exclusion filters are usually applied, this option can be used to turn them off. The default filters are:<ul><li><c>-[System]*</c></li><li><c>-[System.*]*</c></li><li><c>-[mscorlib]*</c></li><li><c>-[mscorlib.*]*</c></li><li><c>-[Microsoft.VisualBasic]*</c></li></ul></p></summary>
         [Pure]
-        public static OpenCoverSettings SetNoDefaultFilters(this OpenCoverSettings openCoverSettings, bool noDefaultFilters)
+        public static OpenCoverSettings SetNoDefaultFilters(this OpenCoverSettings toolSettings, bool noDefaultFilters)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.NoDefaultFilters = noDefaultFilters;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDefaultFilters = noDefaultFilters;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="OpenCoverSettings.NoDefaultFilters"/>.</i></p><p>A list of default exclusion filters are usually applied, this option can be used to turn them off. The default filters are:<ul><li><c>-[System]*</c></li><li><c>-[System.*]*</c></li><li><c>-[mscorlib]*</c></li><li><c>-[mscorlib.*]*</c></li><li><c>-[Microsoft.VisualBasic]*</c></li></ul></p></summary>
         [Pure]
-        public static OpenCoverSettings EnableNoDefaultFilters(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings EnableNoDefaultFilters(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.NoDefaultFilters = true;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDefaultFilters = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="OpenCoverSettings.NoDefaultFilters"/>.</i></p><p>A list of default exclusion filters are usually applied, this option can be used to turn them off. The default filters are:<ul><li><c>-[System]*</c></li><li><c>-[System.*]*</c></li><li><c>-[mscorlib]*</c></li><li><c>-[mscorlib.*]*</c></li><li><c>-[Microsoft.VisualBasic]*</c></li></ul></p></summary>
         [Pure]
-        public static OpenCoverSettings DisableNoDefaultFilters(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings DisableNoDefaultFilters(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.NoDefaultFilters = false;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDefaultFilters = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="OpenCoverSettings.NoDefaultFilters"/>.</i></p><p>A list of default exclusion filters are usually applied, this option can be used to turn them off. The default filters are:<ul><li><c>-[System]*</c></li><li><c>-[System.*]*</c></li><li><c>-[mscorlib]*</c></li><li><c>-[mscorlib.*]*</c></li><li><c>-[Microsoft.VisualBasic]*</c></li></ul></p></summary>
         [Pure]
-        public static OpenCoverSettings ToggleNoDefaultFilters(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings ToggleNoDefaultFilters(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.NoDefaultFilters = !openCoverSettings.NoDefaultFilters;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDefaultFilters = !toolSettings.NoDefaultFilters;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.OldStyle"/>.</i></p><p>Use old style instrumentation - the instrumentation is not Silverlight friendly and is provided to support environments where mscorlib instrumentation is not working. <i>ONLY</i> use this option if you are encountering <see cref="MissingMethodException"/> like errors when the code is run under OpenCover. The issue could be down to <i>ngen /Profile</i> of the mscorlib which then interferes with the instrumentation.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetOldStyle(this OpenCoverSettings openCoverSettings, bool oldStyle)
+        public static OpenCoverSettings SetOldStyle(this OpenCoverSettings toolSettings, bool oldStyle)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.OldStyle = oldStyle;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OldStyle = oldStyle;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="OpenCoverSettings.OldStyle"/>.</i></p><p>Use old style instrumentation - the instrumentation is not Silverlight friendly and is provided to support environments where mscorlib instrumentation is not working. <i>ONLY</i> use this option if you are encountering <see cref="MissingMethodException"/> like errors when the code is run under OpenCover. The issue could be down to <i>ngen /Profile</i> of the mscorlib which then interferes with the instrumentation.</p></summary>
         [Pure]
-        public static OpenCoverSettings EnableOldStyle(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings EnableOldStyle(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.OldStyle = true;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OldStyle = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="OpenCoverSettings.OldStyle"/>.</i></p><p>Use old style instrumentation - the instrumentation is not Silverlight friendly and is provided to support environments where mscorlib instrumentation is not working. <i>ONLY</i> use this option if you are encountering <see cref="MissingMethodException"/> like errors when the code is run under OpenCover. The issue could be down to <i>ngen /Profile</i> of the mscorlib which then interferes with the instrumentation.</p></summary>
         [Pure]
-        public static OpenCoverSettings DisableOldStyle(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings DisableOldStyle(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.OldStyle = false;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OldStyle = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="OpenCoverSettings.OldStyle"/>.</i></p><p>Use old style instrumentation - the instrumentation is not Silverlight friendly and is provided to support environments where mscorlib instrumentation is not working. <i>ONLY</i> use this option if you are encountering <see cref="MissingMethodException"/> like errors when the code is run under OpenCover. The issue could be down to <i>ngen /Profile</i> of the mscorlib which then interferes with the instrumentation.</p></summary>
         [Pure]
-        public static OpenCoverSettings ToggleOldStyle(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings ToggleOldStyle(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.OldStyle = !openCoverSettings.OldStyle;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OldStyle = !toolSettings.OldStyle;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.Output"/>.</i></p><p>The location and name of the output Xml file. If no value is supplied then the current directory will be used and the output filename will be <c>results.xml</c>.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetOutput(this OpenCoverSettings openCoverSettings, string output)
+        public static OpenCoverSettings SetOutput(this OpenCoverSettings toolSettings, string output)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.Output = output;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Output = output;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.SafeMode"/>.</i></p><p>Enable or disable safemode - default is on/yes. When safemode is on OpenCover will use a common buffer for all threads in an instrumented process and this may have performance impacts depending on your code and its tests. Turning safemode off uses individual buffers for each thread but this may lead to data loss (uncovered code reported) if the runtime shuts down the instrumented process before the profiler has had time to retrieve the data and shunt it to the host for processing.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetSafeMode(this OpenCoverSettings openCoverSettings, bool safeMode)
+        public static OpenCoverSettings SetSafeMode(this OpenCoverSettings toolSettings, bool safeMode)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.SafeMode = safeMode;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SafeMode = safeMode;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="OpenCoverSettings.SafeMode"/>.</i></p><p>Enable or disable safemode - default is on/yes. When safemode is on OpenCover will use a common buffer for all threads in an instrumented process and this may have performance impacts depending on your code and its tests. Turning safemode off uses individual buffers for each thread but this may lead to data loss (uncovered code reported) if the runtime shuts down the instrumented process before the profiler has had time to retrieve the data and shunt it to the host for processing.</p></summary>
         [Pure]
-        public static OpenCoverSettings EnableSafeMode(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings EnableSafeMode(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.SafeMode = true;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SafeMode = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="OpenCoverSettings.SafeMode"/>.</i></p><p>Enable or disable safemode - default is on/yes. When safemode is on OpenCover will use a common buffer for all threads in an instrumented process and this may have performance impacts depending on your code and its tests. Turning safemode off uses individual buffers for each thread but this may lead to data loss (uncovered code reported) if the runtime shuts down the instrumented process before the profiler has had time to retrieve the data and shunt it to the host for processing.</p></summary>
         [Pure]
-        public static OpenCoverSettings DisableSafeMode(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings DisableSafeMode(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.SafeMode = false;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SafeMode = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="OpenCoverSettings.SafeMode"/>.</i></p><p>Enable or disable safemode - default is on/yes. When safemode is on OpenCover will use a common buffer for all threads in an instrumented process and this may have performance impacts depending on your code and its tests. Turning safemode off uses individual buffers for each thread but this may lead to data loss (uncovered code reported) if the runtime shuts down the instrumented process before the profiler has had time to retrieve the data and shunt it to the host for processing.</p></summary>
         [Pure]
-        public static OpenCoverSettings ToggleSafeMode(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings ToggleSafeMode(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.SafeMode = !openCoverSettings.SafeMode;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SafeMode = !toolSettings.SafeMode;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.SearchDirectories"/> to a new list.</i></p><p>Alternative locations to look for PDBs.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetSearchDirectories(this OpenCoverSettings openCoverSettings, params string[] searchDirectories)
+        public static OpenCoverSettings SetSearchDirectories(this OpenCoverSettings toolSettings, params string[] searchDirectories)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.SearchDirectoriesInternal = searchDirectories.ToList();
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SearchDirectoriesInternal = searchDirectories.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.SearchDirectories"/> to a new list.</i></p><p>Alternative locations to look for PDBs.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetSearchDirectories(this OpenCoverSettings openCoverSettings, IEnumerable<string> searchDirectories)
+        public static OpenCoverSettings SetSearchDirectories(this OpenCoverSettings toolSettings, IEnumerable<string> searchDirectories)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.SearchDirectoriesInternal = searchDirectories.ToList();
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SearchDirectoriesInternal = searchDirectories.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new searchDirectories to the existing <see cref="OpenCoverSettings.SearchDirectories"/>.</i></p><p>Alternative locations to look for PDBs.</p></summary>
         [Pure]
-        public static OpenCoverSettings AddSearchDirectories(this OpenCoverSettings openCoverSettings, params string[] searchDirectories)
+        public static OpenCoverSettings AddSearchDirectories(this OpenCoverSettings toolSettings, params string[] searchDirectories)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.SearchDirectoriesInternal.AddRange(searchDirectories);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SearchDirectoriesInternal.AddRange(searchDirectories);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new searchDirectories to the existing <see cref="OpenCoverSettings.SearchDirectories"/>.</i></p><p>Alternative locations to look for PDBs.</p></summary>
         [Pure]
-        public static OpenCoverSettings AddSearchDirectories(this OpenCoverSettings openCoverSettings, IEnumerable<string> searchDirectories)
+        public static OpenCoverSettings AddSearchDirectories(this OpenCoverSettings toolSettings, IEnumerable<string> searchDirectories)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.SearchDirectoriesInternal.AddRange(searchDirectories);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SearchDirectoriesInternal.AddRange(searchDirectories);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for clearing <see cref="OpenCoverSettings.SearchDirectories"/>.</i></p><p>Alternative locations to look for PDBs.</p></summary>
         [Pure]
-        public static OpenCoverSettings ClearSearchDirectories(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings ClearSearchDirectories(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.SearchDirectoriesInternal.Clear();
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SearchDirectoriesInternal.Clear();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding a single searchDirectory to <see cref="OpenCoverSettings.SearchDirectories"/>.</i></p><p>Alternative locations to look for PDBs.</p></summary>
         [Pure]
-        public static OpenCoverSettings AddSearchDirectory(this OpenCoverSettings openCoverSettings, string searchDirectory)
+        public static OpenCoverSettings AddSearchDirectory(this OpenCoverSettings toolSettings, string searchDirectory, bool evenIfNull = true)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.SearchDirectoriesInternal.Add(searchDirectory);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            if (searchDirectory != null || evenIfNull) toolSettings.SearchDirectoriesInternal.Add(searchDirectory);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for removing a single searchDirectory from <see cref="OpenCoverSettings.SearchDirectories"/>.</i></p><p>Alternative locations to look for PDBs.</p></summary>
         [Pure]
-        public static OpenCoverSettings RemoveSearchDirectory(this OpenCoverSettings openCoverSettings, string searchDirectory)
+        public static OpenCoverSettings RemoveSearchDirectory(this OpenCoverSettings toolSettings, string searchDirectory)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.SearchDirectoriesInternal.Remove(searchDirectory);
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SearchDirectoriesInternal.Remove(searchDirectory);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.Service"/>.</i></p><p>The value provided in the target parameter is the name of a service rather than a name of a process. <i>Administrator</i> privileges recommended.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetService(this OpenCoverSettings openCoverSettings, bool service)
+        public static OpenCoverSettings SetService(this OpenCoverSettings toolSettings, bool service)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.Service = service;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Service = service;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="OpenCoverSettings.Service"/>.</i></p><p>The value provided in the target parameter is the name of a service rather than a name of a process. <i>Administrator</i> privileges recommended.</p></summary>
         [Pure]
-        public static OpenCoverSettings EnableService(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings EnableService(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.Service = true;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Service = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="OpenCoverSettings.Service"/>.</i></p><p>The value provided in the target parameter is the name of a service rather than a name of a process. <i>Administrator</i> privileges recommended.</p></summary>
         [Pure]
-        public static OpenCoverSettings DisableService(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings DisableService(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.Service = false;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Service = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="OpenCoverSettings.Service"/>.</i></p><p>The value provided in the target parameter is the name of a service rather than a name of a process. <i>Administrator</i> privileges recommended.</p></summary>
         [Pure]
-        public static OpenCoverSettings ToggleService(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings ToggleService(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.Service = !openCoverSettings.Service;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Service = !toolSettings.Service;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.ShowUnvisited"/>.</i></p><p>Show a list of unvisited methods and classes after the coverage run is finished and the results are presented.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetShowUnvisited(this OpenCoverSettings openCoverSettings, bool showUnvisited)
+        public static OpenCoverSettings SetShowUnvisited(this OpenCoverSettings toolSettings, bool showUnvisited)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ShowUnvisited = showUnvisited;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowUnvisited = showUnvisited;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="OpenCoverSettings.ShowUnvisited"/>.</i></p><p>Show a list of unvisited methods and classes after the coverage run is finished and the results are presented.</p></summary>
         [Pure]
-        public static OpenCoverSettings EnableShowUnvisited(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings EnableShowUnvisited(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ShowUnvisited = true;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowUnvisited = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="OpenCoverSettings.ShowUnvisited"/>.</i></p><p>Show a list of unvisited methods and classes after the coverage run is finished and the results are presented.</p></summary>
         [Pure]
-        public static OpenCoverSettings DisableShowUnvisited(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings DisableShowUnvisited(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ShowUnvisited = false;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowUnvisited = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="OpenCoverSettings.ShowUnvisited"/>.</i></p><p>Show a list of unvisited methods and classes after the coverage run is finished and the results are presented.</p></summary>
         [Pure]
-        public static OpenCoverSettings ToggleShowUnvisited(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings ToggleShowUnvisited(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.ShowUnvisited = !openCoverSettings.ShowUnvisited;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowUnvisited = !toolSettings.ShowUnvisited;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.SkipAutoProperties"/>.</i></p><p>Neither track nor record auto-implemented properties. That is, skip getters and setters like these: <c>public bool Service { get; set; }</c></p></summary>
         [Pure]
-        public static OpenCoverSettings SetSkipAutoProperties(this OpenCoverSettings openCoverSettings, bool skipAutoProperties)
+        public static OpenCoverSettings SetSkipAutoProperties(this OpenCoverSettings toolSettings, bool skipAutoProperties)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.SkipAutoProperties = skipAutoProperties;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipAutoProperties = skipAutoProperties;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="OpenCoverSettings.SkipAutoProperties"/>.</i></p><p>Neither track nor record auto-implemented properties. That is, skip getters and setters like these: <c>public bool Service { get; set; }</c></p></summary>
         [Pure]
-        public static OpenCoverSettings EnableSkipAutoProperties(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings EnableSkipAutoProperties(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.SkipAutoProperties = true;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipAutoProperties = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="OpenCoverSettings.SkipAutoProperties"/>.</i></p><p>Neither track nor record auto-implemented properties. That is, skip getters and setters like these: <c>public bool Service { get; set; }</c></p></summary>
         [Pure]
-        public static OpenCoverSettings DisableSkipAutoProperties(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings DisableSkipAutoProperties(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.SkipAutoProperties = false;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipAutoProperties = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="OpenCoverSettings.SkipAutoProperties"/>.</i></p><p>Neither track nor record auto-implemented properties. That is, skip getters and setters like these: <c>public bool Service { get; set; }</c></p></summary>
         [Pure]
-        public static OpenCoverSettings ToggleSkipAutoProperties(this OpenCoverSettings openCoverSettings)
+        public static OpenCoverSettings ToggleSkipAutoProperties(this OpenCoverSettings toolSettings)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.SkipAutoProperties = !openCoverSettings.SkipAutoProperties;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipAutoProperties = !toolSettings.SkipAutoProperties;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.MaximumVisitCount"/>.</i></p><p>Limits the number of visit counts recorded/reported for an instrumentation point. May have some performance gains as it can reduce the number of messages sent from the profiler. Coverage results should not be affected but will have an obvious impact on the Visit Counts reported.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetMaximumVisitCount(this OpenCoverSettings openCoverSettings, int? maximumVisitCount)
+        public static OpenCoverSettings SetMaximumVisitCount(this OpenCoverSettings toolSettings, int? maximumVisitCount)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.MaximumVisitCount = maximumVisitCount;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MaximumVisitCount = maximumVisitCount;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.Registration"/>.</i></p><p>Use this switch to register and de-register the code coverage profiler. Alternatively use the optional user argument to do per-user registration where the user account does not have administrative permissions. Alternatively use an administrative account to register the profilers using the <i>regsvr32</i> utility. If you do not want to use the registry entries, use <c>-register:Path32</c> or <c>-register:Path64</c> to let opencover select the profiler for you. Depending on your choice it selects the <i>OpenCoverAssemblyLocation/x86/OpenCover.Profiler.dll</i> or <i>OpenCoverAssemblyLocation/x64/OpenCover.Profiler.dll</i>.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetRegistration(this OpenCoverSettings openCoverSettings, RegistrationType? registration)
+        public static OpenCoverSettings SetRegistration(this OpenCoverSettings toolSettings, RegistrationType? registration)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.Registration = registration;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Registration = registration;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="OpenCoverSettings.TargetExitCodeOffset"/>.</i></p><p>Return the target process exit code instead of the OpenCover console exit code. Use the offset to return the OpenCover console at a value outside the range returned by the target process.</p></summary>
         [Pure]
-        public static OpenCoverSettings SetTargetExitCodeOffset(this OpenCoverSettings openCoverSettings, int? targetExitCodeOffset)
+        public static OpenCoverSettings SetTargetExitCodeOffset(this OpenCoverSettings toolSettings, int? targetExitCodeOffset)
         {
-            openCoverSettings = openCoverSettings.NewInstance();
-            openCoverSettings.TargetExitCodeOffset = targetExitCodeOffset;
-            return openCoverSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetExitCodeOffset = targetExitCodeOffset;
+            return toolSettings;
         }
     }
     /// <summary><p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p></summary>
@@ -870,18 +919,16 @@ namespace Nuke.Common.Tools.OpenCover
         Info,
         Debug,
         Verbose,
-        All
+        All,
     }
     /// <summary><p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p></summary>
     [PublicAPI]
-    [Flags]
     public enum OpenCoverSkipping
     {
         File,
         Filter,
         Attribute,
         MissingPdb,
-        All = File | Filter | Attribute | MissingPdb
     }
     /// <summary><p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p></summary>
     [PublicAPI]
@@ -889,6 +936,6 @@ namespace Nuke.Common.Tools.OpenCover
     {
         User,
         Path32,
-        Path64
+        Path64,
     }
 }

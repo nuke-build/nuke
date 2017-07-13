@@ -4,15 +4,25 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
+using Nuke.Core;
 using Nuke.Core.Tooling;
 
 namespace Nuke.Common.Tools.DotCover
 {
     public static partial class DotCoverTasks
     {
-        private static IProcess StartProcess (DotCoverAnalyseSettings dotCoverSettings, ProcessSettings processSettings)
+        [CanBeNull]
+        private static IProcess StartProcess (DotCoverAnalyseSettings toolSettings, ProcessSettings processSettings)
         {
-            throw new NotImplementedException();
+            var testAction = toolSettings.TestAction.NotNull("testAction != null");
+            var capturedStartInfo = ProcessTasks.CaptureProcessStartInfo(testAction);
+            toolSettings = toolSettings
+                    .SetTargetExecutable(capturedStartInfo.ToolPath)
+                    .SetTargetArguments(capturedStartInfo.Arguments)
+                    .SetTargetWorkingDirectory(capturedStartInfo.WorkingDirectory);
+
+            return ProcessTasks.StartProcess(toolSettings, processSettings);
         }
     }
 }

@@ -10,16 +10,16 @@ namespace Nuke.Common.Tools.Xunit2
 {
     partial class Xunit2SettingsExtensions
     {
-        public static Xunit2Settings AddTargetAssemblies (this Xunit2Settings xunitSettings, IEnumerable<string> assemblyFiles)
+        public static Xunit2Settings AddTargetAssemblies (this Xunit2Settings toolSettings, IEnumerable<string> assemblyFiles)
         {
             return assemblyFiles.Aggregate(
-                xunitSettings,
+                toolSettings,
                 (current, assembly) => current.AddTargetAssemblyWithConfig(assembly, targetAssemblyWithConfigValue: null));
         }
 
-        public static Xunit2Settings AddTargetAssemblies (this Xunit2Settings xunitSettings, params string[] assemblyFiles)
+        public static Xunit2Settings AddTargetAssemblies (this Xunit2Settings toolSettings, params string[] assemblyFiles)
         {
-            return xunitSettings.AddTargetAssemblies(assemblyFiles.AsEnumerable());
+            return toolSettings.AddTargetAssemblies(assemblyFiles.AsEnumerable());
         }
     }
 }

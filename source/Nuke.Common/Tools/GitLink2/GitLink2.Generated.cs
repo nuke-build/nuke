@@ -26,16 +26,16 @@ namespace Nuke.Common.Tools.GitLink2
     [ExcludeFromCodeCoverage]
     public static partial class GitLink2Tasks
     {
-        static partial void PreProcess (GitLink2Settings gitLink2Settings);
-        static partial void PostProcess (GitLink2Settings gitLink2Settings);
+        static partial void PreProcess (GitLink2Settings toolSettings);
+        static partial void PostProcess (GitLink2Settings toolSettings);
         /// <summary><p>GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.</p><p>For more details, visit the <a href="https://github.com/GitTools/GitLink/">official website</a>.</p></summary>
         public static void GitLink2 (Configure<GitLink2Settings> configurator = null, ProcessSettings processSettings = null)
         {
-            var gitLink2Settings = configurator.InvokeSafe(new GitLink2Settings());
-            PreProcess(gitLink2Settings);
-            var process = ProcessTasks.StartProcess(gitLink2Settings, processSettings);
+            var toolSettings = configurator.InvokeSafe(new GitLink2Settings());
+            PreProcess(toolSettings);
+            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(gitLink2Settings);
+            PostProcess(toolSettings);
         }
     }
     /// <summary><p>GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.</p></summary>
@@ -96,203 +96,203 @@ namespace Nuke.Common.Tools.GitLink2
     {
         /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.SolutionDirectory"/>.</i></p><p>The directory containing the solution with the pdb files.</p></summary>
         [Pure]
-        public static GitLink2Settings SetSolutionDirectory(this GitLink2Settings gitLink2Settings, string solutionDirectory)
+        public static GitLink2Settings SetSolutionDirectory(this GitLink2Settings toolSettings, string solutionDirectory)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.SolutionDirectory = solutionDirectory;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SolutionDirectory = solutionDirectory;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.RepositoryUrl"/>.</i></p><p>Url to remote git repository.</p></summary>
         [Pure]
-        public static GitLink2Settings SetRepositoryUrl(this GitLink2Settings gitLink2Settings, string repositoryUrl)
+        public static GitLink2Settings SetRepositoryUrl(this GitLink2Settings toolSettings, string repositoryUrl)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.RepositoryUrl = repositoryUrl;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RepositoryUrl = repositoryUrl;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.File"/>.</i></p><p>Solution file name.</p></summary>
         [Pure]
-        public static GitLink2Settings SetFile(this GitLink2Settings gitLink2Settings, string file)
+        public static GitLink2Settings SetFile(this GitLink2Settings toolSettings, string file)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.File = file;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.File = file;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.Configuration"/>.</i></p><p>Name of the configuration, default value is 'Release'.</p></summary>
         [Pure]
-        public static GitLink2Settings SetConfiguration(this GitLink2Settings gitLink2Settings, string configuration)
+        public static GitLink2Settings SetConfiguration(this GitLink2Settings toolSettings, string configuration)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.Configuration = configuration;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Configuration = configuration;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.Platform"/>.</i></p><p>Name of the platform, default value is 'AnyCPU'.</p></summary>
         [Pure]
-        public static GitLink2Settings SetPlatform(this GitLink2Settings gitLink2Settings, string platform)
+        public static GitLink2Settings SetPlatform(this GitLink2Settings toolSettings, string platform)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.Platform = platform;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Platform = platform;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.BranchName"/>.</i></p><p>Name of the branch to use on the remote repository.</p></summary>
         [Pure]
-        public static GitLink2Settings SetBranchName(this GitLink2Settings gitLink2Settings, string branchName)
+        public static GitLink2Settings SetBranchName(this GitLink2Settings toolSettings, string branchName)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.BranchName = branchName;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BranchName = branchName;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.LogFile"/>.</i></p><p>The log file to write to.</p></summary>
         [Pure]
-        public static GitLink2Settings SetLogFile(this GitLink2Settings gitLink2Settings, string logFile)
+        public static GitLink2Settings SetLogFile(this GitLink2Settings toolSettings, string logFile)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.LogFile = logFile;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogFile = logFile;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.CommitSha"/>.</i></p><p>The SHA-1 hash of the commit.</p></summary>
         [Pure]
-        public static GitLink2Settings SetCommitSha(this GitLink2Settings gitLink2Settings, string commitSha)
+        public static GitLink2Settings SetCommitSha(this GitLink2Settings toolSettings, string commitSha)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.CommitSha = commitSha;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CommitSha = commitSha;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.PdbDirectory"/>.</i></p><p>The directory where pdb files exists, default value is the normal project output directory.</p></summary>
         [Pure]
-        public static GitLink2Settings SetPdbDirectory(this GitLink2Settings gitLink2Settings, string pdbDirectory)
+        public static GitLink2Settings SetPdbDirectory(this GitLink2Settings toolSettings, string pdbDirectory)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.PdbDirectory = pdbDirectory;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PdbDirectory = pdbDirectory;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.UsePowershell"/>.</i></p><p>Use an indexing strategy that won't rely on SRCSRV http support, but use a powershell command for URL download instead.</p></summary>
         [Pure]
-        public static GitLink2Settings SetUsePowershell(this GitLink2Settings gitLink2Settings, bool usePowershell)
+        public static GitLink2Settings SetUsePowershell(this GitLink2Settings toolSettings, bool usePowershell)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.UsePowershell = usePowershell;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UsePowershell = usePowershell;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="GitLink2Settings.UsePowershell"/>.</i></p><p>Use an indexing strategy that won't rely on SRCSRV http support, but use a powershell command for URL download instead.</p></summary>
         [Pure]
-        public static GitLink2Settings EnableUsePowershell(this GitLink2Settings gitLink2Settings)
+        public static GitLink2Settings EnableUsePowershell(this GitLink2Settings toolSettings)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.UsePowershell = true;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UsePowershell = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="GitLink2Settings.UsePowershell"/>.</i></p><p>Use an indexing strategy that won't rely on SRCSRV http support, but use a powershell command for URL download instead.</p></summary>
         [Pure]
-        public static GitLink2Settings DisableUsePowershell(this GitLink2Settings gitLink2Settings)
+        public static GitLink2Settings DisableUsePowershell(this GitLink2Settings toolSettings)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.UsePowershell = false;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UsePowershell = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="GitLink2Settings.UsePowershell"/>.</i></p><p>Use an indexing strategy that won't rely on SRCSRV http support, but use a powershell command for URL download instead.</p></summary>
         [Pure]
-        public static GitLink2Settings ToggleUsePowershell(this GitLink2Settings gitLink2Settings)
+        public static GitLink2Settings ToggleUsePowershell(this GitLink2Settings toolSettings)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.UsePowershell = !gitLink2Settings.UsePowershell;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UsePowershell = !toolSettings.UsePowershell;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.ErrorsAsWarnings"/>.</i></p><p>Don't fail on errors, but treat them as warnings instead.</p></summary>
         [Pure]
-        public static GitLink2Settings SetErrorsAsWarnings(this GitLink2Settings gitLink2Settings, bool errorsAsWarnings)
+        public static GitLink2Settings SetErrorsAsWarnings(this GitLink2Settings toolSettings, bool errorsAsWarnings)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.ErrorsAsWarnings = errorsAsWarnings;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ErrorsAsWarnings = errorsAsWarnings;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="GitLink2Settings.ErrorsAsWarnings"/>.</i></p><p>Don't fail on errors, but treat them as warnings instead.</p></summary>
         [Pure]
-        public static GitLink2Settings EnableErrorsAsWarnings(this GitLink2Settings gitLink2Settings)
+        public static GitLink2Settings EnableErrorsAsWarnings(this GitLink2Settings toolSettings)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.ErrorsAsWarnings = true;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ErrorsAsWarnings = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="GitLink2Settings.ErrorsAsWarnings"/>.</i></p><p>Don't fail on errors, but treat them as warnings instead.</p></summary>
         [Pure]
-        public static GitLink2Settings DisableErrorsAsWarnings(this GitLink2Settings gitLink2Settings)
+        public static GitLink2Settings DisableErrorsAsWarnings(this GitLink2Settings toolSettings)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.ErrorsAsWarnings = false;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ErrorsAsWarnings = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="GitLink2Settings.ErrorsAsWarnings"/>.</i></p><p>Don't fail on errors, but treat them as warnings instead.</p></summary>
         [Pure]
-        public static GitLink2Settings ToggleErrorsAsWarnings(this GitLink2Settings gitLink2Settings)
+        public static GitLink2Settings ToggleErrorsAsWarnings(this GitLink2Settings toolSettings)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.ErrorsAsWarnings = !gitLink2Settings.ErrorsAsWarnings;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ErrorsAsWarnings = !toolSettings.ErrorsAsWarnings;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.SkipVerification"/>.</i></p><p>Skip pdb verification in case it causes issues (it's a formality anyway)</p></summary>
         [Pure]
-        public static GitLink2Settings SetSkipVerification(this GitLink2Settings gitLink2Settings, bool skipVerification)
+        public static GitLink2Settings SetSkipVerification(this GitLink2Settings toolSettings, bool skipVerification)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.SkipVerification = skipVerification;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipVerification = skipVerification;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="GitLink2Settings.SkipVerification"/>.</i></p><p>Skip pdb verification in case it causes issues (it's a formality anyway)</p></summary>
         [Pure]
-        public static GitLink2Settings EnableSkipVerification(this GitLink2Settings gitLink2Settings)
+        public static GitLink2Settings EnableSkipVerification(this GitLink2Settings toolSettings)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.SkipVerification = true;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipVerification = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="GitLink2Settings.SkipVerification"/>.</i></p><p>Skip pdb verification in case it causes issues (it's a formality anyway)</p></summary>
         [Pure]
-        public static GitLink2Settings DisableSkipVerification(this GitLink2Settings gitLink2Settings)
+        public static GitLink2Settings DisableSkipVerification(this GitLink2Settings toolSettings)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.SkipVerification = false;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipVerification = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="GitLink2Settings.SkipVerification"/>.</i></p><p>Skip pdb verification in case it causes issues (it's a formality anyway)</p></summary>
         [Pure]
-        public static GitLink2Settings ToggleSkipVerification(this GitLink2Settings gitLink2Settings)
+        public static GitLink2Settings ToggleSkipVerification(this GitLink2Settings toolSettings)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.SkipVerification = !gitLink2Settings.SkipVerification;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipVerification = !toolSettings.SkipVerification;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.Debug"/>.</i></p><p>Enables debug mode with special dumps of msbuild.</p></summary>
         [Pure]
-        public static GitLink2Settings SetDebug(this GitLink2Settings gitLink2Settings, bool debug)
+        public static GitLink2Settings SetDebug(this GitLink2Settings toolSettings, bool debug)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.Debug = debug;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = debug;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="GitLink2Settings.Debug"/>.</i></p><p>Enables debug mode with special dumps of msbuild.</p></summary>
         [Pure]
-        public static GitLink2Settings EnableDebug(this GitLink2Settings gitLink2Settings)
+        public static GitLink2Settings EnableDebug(this GitLink2Settings toolSettings)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.Debug = true;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="GitLink2Settings.Debug"/>.</i></p><p>Enables debug mode with special dumps of msbuild.</p></summary>
         [Pure]
-        public static GitLink2Settings DisableDebug(this GitLink2Settings gitLink2Settings)
+        public static GitLink2Settings DisableDebug(this GitLink2Settings toolSettings)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.Debug = false;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="GitLink2Settings.Debug"/>.</i></p><p>Enables debug mode with special dumps of msbuild.</p></summary>
         [Pure]
-        public static GitLink2Settings ToggleDebug(this GitLink2Settings gitLink2Settings)
+        public static GitLink2Settings ToggleDebug(this GitLink2Settings toolSettings)
         {
-            gitLink2Settings = gitLink2Settings.NewInstance();
-            gitLink2Settings.Debug = !gitLink2Settings.Debug;
-            return gitLink2Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = !toolSettings.Debug;
+            return toolSettings;
         }
     }
 }

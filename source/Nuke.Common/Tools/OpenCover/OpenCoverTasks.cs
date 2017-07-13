@@ -13,16 +13,16 @@ namespace Nuke.Common.Tools.OpenCover
     public static partial class OpenCoverTasks
     {
         [CanBeNull]
-        private static IProcess StartProcess (OpenCoverSettings openCoverSettings, ProcessSettings processSettings = null)
+        private static IProcess StartProcess (OpenCoverSettings toolSettings, ProcessSettings processSettings = null)
         {
-            var testAction = openCoverSettings.TestAction.NotNull("testAction != null");
+            var testAction = toolSettings.TestAction.NotNull("testAction != null");
             var capturedStartInfo = ProcessTasks.CaptureProcessStartInfo(testAction);
-            openCoverSettings = openCoverSettings
+            toolSettings = toolSettings
                     .SetTargetPath(capturedStartInfo.ToolPath)
                     .SetTargetArguments(capturedStartInfo.Arguments)
                     .SetTargetDirectory(capturedStartInfo.WorkingDirectory);
 
-            return ProcessTasks.StartProcess(openCoverSettings, processSettings);
+            return ProcessTasks.StartProcess(toolSettings, processSettings);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Nuke.Common.Tools.Xunit2
             Xunit2(x => configurator.InvokeSafe(x).AddTargetAssemblies(assemblyFiles), processSettings);
         }
 
-        private static void AssertProcess (IProcess process, Xunit2Settings xunitSettings)
+        private static void AssertProcess (IProcess process, Xunit2Settings toolSettings)
         {
             process.AssertWaitForExit();
             switch (process.ExitCode)

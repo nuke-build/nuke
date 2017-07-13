@@ -26,49 +26,49 @@ namespace Nuke.Common.Tools.Paket
     [ExcludeFromCodeCoverage]
     public static partial class PaketTasks
     {
-        static partial void PreProcess (PaketUpdateSettings paketUpdateSettings);
-        static partial void PostProcess (PaketUpdateSettings paketUpdateSettings);
+        static partial void PreProcess (PaketUpdateSettings toolSettings);
+        static partial void PostProcess (PaketUpdateSettings toolSettings);
         /// <summary><p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href="https://www.nuget.org/">NuGet</a> packages and also enables referencing files directly from <a href="https://fsprojects.github.io/Paket/git-dependencies.html">Git repositories</a> or any <a href="https://fsprojects.github.io/Paket/http-dependencies.html">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href="https://fsprojects.github.io/Paket/getting-started.html"><i>Getting started</i> tutorial</a> and take a look at the <a href="https://fsprojects.github.io/Paket/faq.html">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href="https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion">convert from NuGet</a> section.</p><p>For more details, visit the <a href="https://fsprojects.github.io/paket">official website</a>.</p></summary>
         public static void PaketUpdate (Configure<PaketUpdateSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            var paketUpdateSettings = configurator.InvokeSafe(new PaketUpdateSettings());
-            PreProcess(paketUpdateSettings);
-            var process = ProcessTasks.StartProcess(paketUpdateSettings, processSettings);
+            var toolSettings = configurator.InvokeSafe(new PaketUpdateSettings());
+            PreProcess(toolSettings);
+            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(paketUpdateSettings);
+            PostProcess(toolSettings);
         }
-        static partial void PreProcess (PaketRestoreSettings paketRestoreSettings);
-        static partial void PostProcess (PaketRestoreSettings paketRestoreSettings);
+        static partial void PreProcess (PaketRestoreSettings toolSettings);
+        static partial void PostProcess (PaketRestoreSettings toolSettings);
         /// <summary><p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href="https://www.nuget.org/">NuGet</a> packages and also enables referencing files directly from <a href="https://fsprojects.github.io/Paket/git-dependencies.html">Git repositories</a> or any <a href="https://fsprojects.github.io/Paket/http-dependencies.html">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href="https://fsprojects.github.io/Paket/getting-started.html"><i>Getting started</i> tutorial</a> and take a look at the <a href="https://fsprojects.github.io/Paket/faq.html">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href="https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion">convert from NuGet</a> section.</p><p>For more details, visit the <a href="https://fsprojects.github.io/paket">official website</a>.</p></summary>
         public static void PaketRestore (Configure<PaketRestoreSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            var paketRestoreSettings = configurator.InvokeSafe(new PaketRestoreSettings());
-            PreProcess(paketRestoreSettings);
-            var process = ProcessTasks.StartProcess(paketRestoreSettings, processSettings);
+            var toolSettings = configurator.InvokeSafe(new PaketRestoreSettings());
+            PreProcess(toolSettings);
+            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(paketRestoreSettings);
+            PostProcess(toolSettings);
         }
-        static partial void PreProcess (PaketPushSettings paketPushSettings);
-        static partial void PostProcess (PaketPushSettings paketPushSettings);
+        static partial void PreProcess (PaketPushSettings toolSettings);
+        static partial void PostProcess (PaketPushSettings toolSettings);
         /// <summary><p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href="https://www.nuget.org/">NuGet</a> packages and also enables referencing files directly from <a href="https://fsprojects.github.io/Paket/git-dependencies.html">Git repositories</a> or any <a href="https://fsprojects.github.io/Paket/http-dependencies.html">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href="https://fsprojects.github.io/Paket/getting-started.html"><i>Getting started</i> tutorial</a> and take a look at the <a href="https://fsprojects.github.io/Paket/faq.html">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href="https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion">convert from NuGet</a> section.</p><p>For more details, visit the <a href="https://fsprojects.github.io/paket">official website</a>.</p></summary>
         public static void PaketPush (Configure<PaketPushSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            var paketPushSettings = configurator.InvokeSafe(new PaketPushSettings());
-            PreProcess(paketPushSettings);
-            var process = ProcessTasks.StartProcess(paketPushSettings, processSettings);
+            var toolSettings = configurator.InvokeSafe(new PaketPushSettings());
+            PreProcess(toolSettings);
+            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(paketPushSettings);
+            PostProcess(toolSettings);
         }
-        static partial void PreProcess (PaketPackSettings paketPackSettings);
-        static partial void PostProcess (PaketPackSettings paketPackSettings);
+        static partial void PreProcess (PaketPackSettings toolSettings);
+        static partial void PostProcess (PaketPackSettings toolSettings);
         /// <summary><p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href="https://www.nuget.org/">NuGet</a> packages and also enables referencing files directly from <a href="https://fsprojects.github.io/Paket/git-dependencies.html">Git repositories</a> or any <a href="https://fsprojects.github.io/Paket/http-dependencies.html">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href="https://fsprojects.github.io/Paket/getting-started.html"><i>Getting started</i> tutorial</a> and take a look at the <a href="https://fsprojects.github.io/Paket/faq.html">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href="https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion">convert from NuGet</a> section.</p><p>For more details, visit the <a href="https://fsprojects.github.io/paket">official website</a>.</p></summary>
         public static void PaketPack (Configure<PaketPackSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            var paketPackSettings = configurator.InvokeSafe(new PaketPackSettings());
-            PreProcess(paketPackSettings);
-            var process = ProcessTasks.StartProcess(paketPackSettings, processSettings);
+            var toolSettings = configurator.InvokeSafe(new PaketPackSettings());
+            PreProcess(toolSettings);
+            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(paketPackSettings);
+            PostProcess(toolSettings);
         }
     }
     /// <summary><p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href="https://www.nuget.org/">NuGet</a> packages and also enables referencing files directly from <a href="https://fsprojects.github.io/Paket/git-dependencies.html">Git repositories</a> or any <a href="https://fsprojects.github.io/Paket/http-dependencies.html">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href="https://fsprojects.github.io/Paket/getting-started.html"><i>Getting started</i> tutorial</a> and take a look at the <a href="https://fsprojects.github.io/Paket/faq.html">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href="https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion">convert from NuGet</a> section.</p></summary>
@@ -314,483 +314,483 @@ namespace Nuke.Common.Tools.Paket
     {
         /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.PackageId"/>.</i></p><p>NuGet package id.</p></summary>
         [Pure]
-        public static PaketUpdateSettings SetPackageId(this PaketUpdateSettings paketUpdateSettings, string packageId)
+        public static PaketUpdateSettings SetPackageId(this PaketUpdateSettings toolSettings, string packageId)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.PackageId = packageId;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageId = packageId;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.PackageVersion"/>.</i></p><p>Allows to specify version of the package.</p></summary>
         [Pure]
-        public static PaketUpdateSettings SetPackageVersion(this PaketUpdateSettings paketUpdateSettings, string packageVersion)
+        public static PaketUpdateSettings SetPackageVersion(this PaketUpdateSettings toolSettings, string packageVersion)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.PackageVersion = packageVersion;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageVersion = packageVersion;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.DependencyGroup"/>.</i></p><p>Allows to specify the dependency group.</p></summary>
         [Pure]
-        public static PaketUpdateSettings SetDependencyGroup(this PaketUpdateSettings paketUpdateSettings, string dependencyGroup)
+        public static PaketUpdateSettings SetDependencyGroup(this PaketUpdateSettings toolSettings, string dependencyGroup)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.DependencyGroup = dependencyGroup;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DependencyGroup = dependencyGroup;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.Force"/>.</i></p><p>Forces the download and reinstallation of all packages.</p></summary>
         [Pure]
-        public static PaketUpdateSettings SetForce(this PaketUpdateSettings paketUpdateSettings, bool force)
+        public static PaketUpdateSettings SetForce(this PaketUpdateSettings toolSettings, bool force)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.Force = force;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = force;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.Force"/>.</i></p><p>Forces the download and reinstallation of all packages.</p></summary>
         [Pure]
-        public static PaketUpdateSettings EnableForce(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings EnableForce(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.Force = true;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.Force"/>.</i></p><p>Forces the download and reinstallation of all packages.</p></summary>
         [Pure]
-        public static PaketUpdateSettings DisableForce(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings DisableForce(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.Force = false;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.Force"/>.</i></p><p>Forces the download and reinstallation of all packages.</p></summary>
         [Pure]
-        public static PaketUpdateSettings ToggleForce(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings ToggleForce(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.Force = !paketUpdateSettings.Force;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = !toolSettings.Force;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.Redirects"/>.</i></p><p>Creates binding redirects for the NuGet packages.</p></summary>
         [Pure]
-        public static PaketUpdateSettings SetRedirects(this PaketUpdateSettings paketUpdateSettings, bool redirects)
+        public static PaketUpdateSettings SetRedirects(this PaketUpdateSettings toolSettings, bool redirects)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.Redirects = redirects;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Redirects = redirects;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.Redirects"/>.</i></p><p>Creates binding redirects for the NuGet packages.</p></summary>
         [Pure]
-        public static PaketUpdateSettings EnableRedirects(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings EnableRedirects(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.Redirects = true;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Redirects = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.Redirects"/>.</i></p><p>Creates binding redirects for the NuGet packages.</p></summary>
         [Pure]
-        public static PaketUpdateSettings DisableRedirects(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings DisableRedirects(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.Redirects = false;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Redirects = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.Redirects"/>.</i></p><p>Creates binding redirects for the NuGet packages.</p></summary>
         [Pure]
-        public static PaketUpdateSettings ToggleRedirects(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings ToggleRedirects(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.Redirects = !paketUpdateSettings.Redirects;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Redirects = !toolSettings.Redirects;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.CreateNewBindingFiles"/>.</i></p><p>Creates binding redirect files if needed.</p></summary>
         [Pure]
-        public static PaketUpdateSettings SetCreateNewBindingFiles(this PaketUpdateSettings paketUpdateSettings, bool createNewBindingFiles)
+        public static PaketUpdateSettings SetCreateNewBindingFiles(this PaketUpdateSettings toolSettings, bool createNewBindingFiles)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.CreateNewBindingFiles = createNewBindingFiles;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CreateNewBindingFiles = createNewBindingFiles;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.CreateNewBindingFiles"/>.</i></p><p>Creates binding redirect files if needed.</p></summary>
         [Pure]
-        public static PaketUpdateSettings EnableCreateNewBindingFiles(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings EnableCreateNewBindingFiles(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.CreateNewBindingFiles = true;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CreateNewBindingFiles = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.CreateNewBindingFiles"/>.</i></p><p>Creates binding redirect files if needed.</p></summary>
         [Pure]
-        public static PaketUpdateSettings DisableCreateNewBindingFiles(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings DisableCreateNewBindingFiles(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.CreateNewBindingFiles = false;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CreateNewBindingFiles = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.CreateNewBindingFiles"/>.</i></p><p>Creates binding redirect files if needed.</p></summary>
         [Pure]
-        public static PaketUpdateSettings ToggleCreateNewBindingFiles(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings ToggleCreateNewBindingFiles(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.CreateNewBindingFiles = !paketUpdateSettings.CreateNewBindingFiles;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CreateNewBindingFiles = !toolSettings.CreateNewBindingFiles;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.CleanRedirects"/>.</i></p><p>Removes all binding redirects that are not specified by Paket.</p></summary>
         [Pure]
-        public static PaketUpdateSettings SetCleanRedirects(this PaketUpdateSettings paketUpdateSettings, bool cleanRedirects)
+        public static PaketUpdateSettings SetCleanRedirects(this PaketUpdateSettings toolSettings, bool cleanRedirects)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.CleanRedirects = cleanRedirects;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CleanRedirects = cleanRedirects;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.CleanRedirects"/>.</i></p><p>Removes all binding redirects that are not specified by Paket.</p></summary>
         [Pure]
-        public static PaketUpdateSettings EnableCleanRedirects(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings EnableCleanRedirects(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.CleanRedirects = true;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CleanRedirects = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.CleanRedirects"/>.</i></p><p>Removes all binding redirects that are not specified by Paket.</p></summary>
         [Pure]
-        public static PaketUpdateSettings DisableCleanRedirects(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings DisableCleanRedirects(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.CleanRedirects = false;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CleanRedirects = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.CleanRedirects"/>.</i></p><p>Removes all binding redirects that are not specified by Paket.</p></summary>
         [Pure]
-        public static PaketUpdateSettings ToggleCleanRedirects(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings ToggleCleanRedirects(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.CleanRedirects = !paketUpdateSettings.CleanRedirects;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CleanRedirects = !toolSettings.CleanRedirects;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.NoInstall"/>.</i></p><p>Skips paket install process (patching of csproj, fsproj, ... files) after the generation of paket.lock file.</p></summary>
         [Pure]
-        public static PaketUpdateSettings SetNoInstall(this PaketUpdateSettings paketUpdateSettings, bool noInstall)
+        public static PaketUpdateSettings SetNoInstall(this PaketUpdateSettings toolSettings, bool noInstall)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.NoInstall = noInstall;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoInstall = noInstall;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.NoInstall"/>.</i></p><p>Skips paket install process (patching of csproj, fsproj, ... files) after the generation of paket.lock file.</p></summary>
         [Pure]
-        public static PaketUpdateSettings EnableNoInstall(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings EnableNoInstall(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.NoInstall = true;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoInstall = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.NoInstall"/>.</i></p><p>Skips paket install process (patching of csproj, fsproj, ... files) after the generation of paket.lock file.</p></summary>
         [Pure]
-        public static PaketUpdateSettings DisableNoInstall(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings DisableNoInstall(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.NoInstall = false;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoInstall = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.NoInstall"/>.</i></p><p>Skips paket install process (patching of csproj, fsproj, ... files) after the generation of paket.lock file.</p></summary>
         [Pure]
-        public static PaketUpdateSettings ToggleNoInstall(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings ToggleNoInstall(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.NoInstall = !paketUpdateSettings.NoInstall;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoInstall = !toolSettings.NoInstall;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.KeepMajor"/>.</i></p><p>Allows only updates that are not changing the major version of the NuGet packages.</p></summary>
         [Pure]
-        public static PaketUpdateSettings SetKeepMajor(this PaketUpdateSettings paketUpdateSettings, bool keepMajor)
+        public static PaketUpdateSettings SetKeepMajor(this PaketUpdateSettings toolSettings, bool keepMajor)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.KeepMajor = keepMajor;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeepMajor = keepMajor;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.KeepMajor"/>.</i></p><p>Allows only updates that are not changing the major version of the NuGet packages.</p></summary>
         [Pure]
-        public static PaketUpdateSettings EnableKeepMajor(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings EnableKeepMajor(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.KeepMajor = true;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeepMajor = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.KeepMajor"/>.</i></p><p>Allows only updates that are not changing the major version of the NuGet packages.</p></summary>
         [Pure]
-        public static PaketUpdateSettings DisableKeepMajor(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings DisableKeepMajor(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.KeepMajor = false;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeepMajor = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.KeepMajor"/>.</i></p><p>Allows only updates that are not changing the major version of the NuGet packages.</p></summary>
         [Pure]
-        public static PaketUpdateSettings ToggleKeepMajor(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings ToggleKeepMajor(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.KeepMajor = !paketUpdateSettings.KeepMajor;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeepMajor = !toolSettings.KeepMajor;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.KeepMinor"/>.</i></p><p>Allows only updates that are not changing the minor version of the NuGet packages.</p></summary>
         [Pure]
-        public static PaketUpdateSettings SetKeepMinor(this PaketUpdateSettings paketUpdateSettings, bool keepMinor)
+        public static PaketUpdateSettings SetKeepMinor(this PaketUpdateSettings toolSettings, bool keepMinor)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.KeepMinor = keepMinor;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeepMinor = keepMinor;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.KeepMinor"/>.</i></p><p>Allows only updates that are not changing the minor version of the NuGet packages.</p></summary>
         [Pure]
-        public static PaketUpdateSettings EnableKeepMinor(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings EnableKeepMinor(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.KeepMinor = true;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeepMinor = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.KeepMinor"/>.</i></p><p>Allows only updates that are not changing the minor version of the NuGet packages.</p></summary>
         [Pure]
-        public static PaketUpdateSettings DisableKeepMinor(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings DisableKeepMinor(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.KeepMinor = false;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeepMinor = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.KeepMinor"/>.</i></p><p>Allows only updates that are not changing the minor version of the NuGet packages.</p></summary>
         [Pure]
-        public static PaketUpdateSettings ToggleKeepMinor(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings ToggleKeepMinor(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.KeepMinor = !paketUpdateSettings.KeepMinor;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeepMinor = !toolSettings.KeepMinor;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.KeepPatch"/>.</i></p><p>Allows only updates that are not changing the patch version of the NuGet packages.</p></summary>
         [Pure]
-        public static PaketUpdateSettings SetKeepPatch(this PaketUpdateSettings paketUpdateSettings, bool keepPatch)
+        public static PaketUpdateSettings SetKeepPatch(this PaketUpdateSettings toolSettings, bool keepPatch)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.KeepPatch = keepPatch;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeepPatch = keepPatch;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.KeepPatch"/>.</i></p><p>Allows only updates that are not changing the patch version of the NuGet packages.</p></summary>
         [Pure]
-        public static PaketUpdateSettings EnableKeepPatch(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings EnableKeepPatch(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.KeepPatch = true;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeepPatch = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.KeepPatch"/>.</i></p><p>Allows only updates that are not changing the patch version of the NuGet packages.</p></summary>
         [Pure]
-        public static PaketUpdateSettings DisableKeepPatch(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings DisableKeepPatch(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.KeepPatch = false;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeepPatch = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.KeepPatch"/>.</i></p><p>Allows only updates that are not changing the patch version of the NuGet packages.</p></summary>
         [Pure]
-        public static PaketUpdateSettings ToggleKeepPatch(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings ToggleKeepPatch(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.KeepPatch = !paketUpdateSettings.KeepPatch;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeepPatch = !toolSettings.KeepPatch;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.Filter"/>.</i></p><p>Treat the nuget parameter as a regex to filter packages rather than an exact match.</p></summary>
         [Pure]
-        public static PaketUpdateSettings SetFilter(this PaketUpdateSettings paketUpdateSettings, bool filter)
+        public static PaketUpdateSettings SetFilter(this PaketUpdateSettings toolSettings, bool filter)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.Filter = filter;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Filter = filter;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.Filter"/>.</i></p><p>Treat the nuget parameter as a regex to filter packages rather than an exact match.</p></summary>
         [Pure]
-        public static PaketUpdateSettings EnableFilter(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings EnableFilter(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.Filter = true;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Filter = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.Filter"/>.</i></p><p>Treat the nuget parameter as a regex to filter packages rather than an exact match.</p></summary>
         [Pure]
-        public static PaketUpdateSettings DisableFilter(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings DisableFilter(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.Filter = false;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Filter = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.Filter"/>.</i></p><p>Treat the nuget parameter as a regex to filter packages rather than an exact match.</p></summary>
         [Pure]
-        public static PaketUpdateSettings ToggleFilter(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings ToggleFilter(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.Filter = !paketUpdateSettings.Filter;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Filter = !toolSettings.Filter;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are affected, to help incremental build tools detecting the change.</p></summary>
         [Pure]
-        public static PaketUpdateSettings SetTouchAffectedRefs(this PaketUpdateSettings paketUpdateSettings, bool touchAffectedRefs)
+        public static PaketUpdateSettings SetTouchAffectedRefs(this PaketUpdateSettings toolSettings, bool touchAffectedRefs)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.TouchAffectedRefs = touchAffectedRefs;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TouchAffectedRefs = touchAffectedRefs;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are affected, to help incremental build tools detecting the change.</p></summary>
         [Pure]
-        public static PaketUpdateSettings EnableTouchAffectedRefs(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings EnableTouchAffectedRefs(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.TouchAffectedRefs = true;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TouchAffectedRefs = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are affected, to help incremental build tools detecting the change.</p></summary>
         [Pure]
-        public static PaketUpdateSettings DisableTouchAffectedRefs(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings DisableTouchAffectedRefs(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.TouchAffectedRefs = false;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TouchAffectedRefs = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are affected, to help incremental build tools detecting the change.</p></summary>
         [Pure]
-        public static PaketUpdateSettings ToggleTouchAffectedRefs(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings ToggleTouchAffectedRefs(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.TouchAffectedRefs = !paketUpdateSettings.TouchAffectedRefs;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TouchAffectedRefs = !toolSettings.TouchAffectedRefs;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
-        public static PaketUpdateSettings SetVerbose(this PaketUpdateSettings paketUpdateSettings, bool verbose)
+        public static PaketUpdateSettings SetVerbose(this PaketUpdateSettings toolSettings, bool verbose)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.Verbose = verbose;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbose = verbose;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
-        public static PaketUpdateSettings EnableVerbose(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings EnableVerbose(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.Verbose = true;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbose = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
-        public static PaketUpdateSettings DisableVerbose(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings DisableVerbose(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.Verbose = false;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbose = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
-        public static PaketUpdateSettings ToggleVerbose(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings ToggleVerbose(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.Verbose = !paketUpdateSettings.Verbose;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbose = !toolSettings.Verbose;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.LogFile"/>.</i></p><p>Specify a log file for the paket process.</p></summary>
         [Pure]
-        public static PaketUpdateSettings SetLogFile(this PaketUpdateSettings paketUpdateSettings, string logFile)
+        public static PaketUpdateSettings SetLogFile(this PaketUpdateSettings toolSettings, string logFile)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.LogFile = logFile;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogFile = logFile;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
-        public static PaketUpdateSettings SetSilent(this PaketUpdateSettings paketUpdateSettings, bool silent)
+        public static PaketUpdateSettings SetSilent(this PaketUpdateSettings toolSettings, bool silent)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.Silent = silent;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Silent = silent;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
-        public static PaketUpdateSettings EnableSilent(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings EnableSilent(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.Silent = true;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Silent = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
-        public static PaketUpdateSettings DisableSilent(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings DisableSilent(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.Silent = false;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Silent = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
-        public static PaketUpdateSettings ToggleSilent(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings ToggleSilent(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.Silent = !paketUpdateSettings.Silent;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Silent = !toolSettings.Silent;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
-        public static PaketUpdateSettings SetShowVersion(this PaketUpdateSettings paketUpdateSettings, bool showVersion)
+        public static PaketUpdateSettings SetShowVersion(this PaketUpdateSettings toolSettings, bool showVersion)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.ShowVersion = showVersion;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowVersion = showVersion;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
-        public static PaketUpdateSettings EnableShowVersion(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings EnableShowVersion(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.ShowVersion = true;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowVersion = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
-        public static PaketUpdateSettings DisableShowVersion(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings DisableShowVersion(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.ShowVersion = false;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowVersion = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
-        public static PaketUpdateSettings ToggleShowVersion(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings ToggleShowVersion(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.ShowVersion = !paketUpdateSettings.ShowVersion;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowVersion = !toolSettings.ShowVersion;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
-        public static PaketUpdateSettings SetFromBootstrapper(this PaketUpdateSettings paketUpdateSettings, bool fromBootstrapper)
+        public static PaketUpdateSettings SetFromBootstrapper(this PaketUpdateSettings toolSettings, bool fromBootstrapper)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.FromBootstrapper = fromBootstrapper;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FromBootstrapper = fromBootstrapper;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
-        public static PaketUpdateSettings EnableFromBootstrapper(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings EnableFromBootstrapper(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.FromBootstrapper = true;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FromBootstrapper = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
-        public static PaketUpdateSettings DisableFromBootstrapper(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings DisableFromBootstrapper(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.FromBootstrapper = false;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FromBootstrapper = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
-        public static PaketUpdateSettings ToggleFromBootstrapper(this PaketUpdateSettings paketUpdateSettings)
+        public static PaketUpdateSettings ToggleFromBootstrapper(this PaketUpdateSettings toolSettings)
         {
-            paketUpdateSettings = paketUpdateSettings.NewInstance();
-            paketUpdateSettings.FromBootstrapper = !paketUpdateSettings.FromBootstrapper;
-            return paketUpdateSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FromBootstrapper = !toolSettings.FromBootstrapper;
+            return toolSettings;
         }
     }
     [PublicAPI]
@@ -799,379 +799,379 @@ namespace Nuke.Common.Tools.Paket
     {
         /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.Force"/>.</i></p><p>Forces the download of all packages.</p></summary>
         [Pure]
-        public static PaketRestoreSettings SetForce(this PaketRestoreSettings paketRestoreSettings, bool force)
+        public static PaketRestoreSettings SetForce(this PaketRestoreSettings toolSettings, bool force)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.Force = force;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = force;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketRestoreSettings.Force"/>.</i></p><p>Forces the download of all packages.</p></summary>
         [Pure]
-        public static PaketRestoreSettings EnableForce(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings EnableForce(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.Force = true;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketRestoreSettings.Force"/>.</i></p><p>Forces the download of all packages.</p></summary>
         [Pure]
-        public static PaketRestoreSettings DisableForce(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings DisableForce(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.Force = false;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketRestoreSettings.Force"/>.</i></p><p>Forces the download of all packages.</p></summary>
         [Pure]
-        public static PaketRestoreSettings ToggleForce(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings ToggleForce(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.Force = !paketRestoreSettings.Force;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = !toolSettings.Force;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.OnlyReferenced"/>.</i></p><p>Allows to restore packages that are referenced in paket.references files, instead of all packages in paket.dependencies.</p></summary>
         [Pure]
-        public static PaketRestoreSettings SetOnlyReferenced(this PaketRestoreSettings paketRestoreSettings, bool onlyReferenced)
+        public static PaketRestoreSettings SetOnlyReferenced(this PaketRestoreSettings toolSettings, bool onlyReferenced)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.OnlyReferenced = onlyReferenced;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OnlyReferenced = onlyReferenced;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketRestoreSettings.OnlyReferenced"/>.</i></p><p>Allows to restore packages that are referenced in paket.references files, instead of all packages in paket.dependencies.</p></summary>
         [Pure]
-        public static PaketRestoreSettings EnableOnlyReferenced(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings EnableOnlyReferenced(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.OnlyReferenced = true;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OnlyReferenced = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketRestoreSettings.OnlyReferenced"/>.</i></p><p>Allows to restore packages that are referenced in paket.references files, instead of all packages in paket.dependencies.</p></summary>
         [Pure]
-        public static PaketRestoreSettings DisableOnlyReferenced(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings DisableOnlyReferenced(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.OnlyReferenced = false;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OnlyReferenced = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketRestoreSettings.OnlyReferenced"/>.</i></p><p>Allows to restore packages that are referenced in paket.references files, instead of all packages in paket.dependencies.</p></summary>
         [Pure]
-        public static PaketRestoreSettings ToggleOnlyReferenced(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings ToggleOnlyReferenced(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.OnlyReferenced = !paketRestoreSettings.OnlyReferenced;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OnlyReferenced = !toolSettings.OnlyReferenced;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are being restored, to help incremental build tools detecting the change.</p></summary>
         [Pure]
-        public static PaketRestoreSettings SetTouchAffectedRefs(this PaketRestoreSettings paketRestoreSettings, bool touchAffectedRefs)
+        public static PaketRestoreSettings SetTouchAffectedRefs(this PaketRestoreSettings toolSettings, bool touchAffectedRefs)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.TouchAffectedRefs = touchAffectedRefs;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TouchAffectedRefs = touchAffectedRefs;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketRestoreSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are being restored, to help incremental build tools detecting the change.</p></summary>
         [Pure]
-        public static PaketRestoreSettings EnableTouchAffectedRefs(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings EnableTouchAffectedRefs(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.TouchAffectedRefs = true;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TouchAffectedRefs = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketRestoreSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are being restored, to help incremental build tools detecting the change.</p></summary>
         [Pure]
-        public static PaketRestoreSettings DisableTouchAffectedRefs(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings DisableTouchAffectedRefs(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.TouchAffectedRefs = false;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TouchAffectedRefs = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketRestoreSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are being restored, to help incremental build tools detecting the change.</p></summary>
         [Pure]
-        public static PaketRestoreSettings ToggleTouchAffectedRefs(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings ToggleTouchAffectedRefs(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.TouchAffectedRefs = !paketRestoreSettings.TouchAffectedRefs;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TouchAffectedRefs = !toolSettings.TouchAffectedRefs;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.IgnoreChecks"/>.</i></p><p>Skips the test if paket.dependencies and paket.lock are in sync.</p></summary>
         [Pure]
-        public static PaketRestoreSettings SetIgnoreChecks(this PaketRestoreSettings paketRestoreSettings, bool ignoreChecks)
+        public static PaketRestoreSettings SetIgnoreChecks(this PaketRestoreSettings toolSettings, bool ignoreChecks)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.IgnoreChecks = ignoreChecks;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreChecks = ignoreChecks;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketRestoreSettings.IgnoreChecks"/>.</i></p><p>Skips the test if paket.dependencies and paket.lock are in sync.</p></summary>
         [Pure]
-        public static PaketRestoreSettings EnableIgnoreChecks(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings EnableIgnoreChecks(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.IgnoreChecks = true;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreChecks = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketRestoreSettings.IgnoreChecks"/>.</i></p><p>Skips the test if paket.dependencies and paket.lock are in sync.</p></summary>
         [Pure]
-        public static PaketRestoreSettings DisableIgnoreChecks(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings DisableIgnoreChecks(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.IgnoreChecks = false;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreChecks = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketRestoreSettings.IgnoreChecks"/>.</i></p><p>Skips the test if paket.dependencies and paket.lock are in sync.</p></summary>
         [Pure]
-        public static PaketRestoreSettings ToggleIgnoreChecks(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings ToggleIgnoreChecks(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.IgnoreChecks = !paketRestoreSettings.IgnoreChecks;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreChecks = !toolSettings.IgnoreChecks;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.FailOnChecks"/>.</i></p><p>Causes the restore to fail if any of the checks fail.</p></summary>
         [Pure]
-        public static PaketRestoreSettings SetFailOnChecks(this PaketRestoreSettings paketRestoreSettings, bool failOnChecks)
+        public static PaketRestoreSettings SetFailOnChecks(this PaketRestoreSettings toolSettings, bool failOnChecks)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.FailOnChecks = failOnChecks;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FailOnChecks = failOnChecks;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketRestoreSettings.FailOnChecks"/>.</i></p><p>Causes the restore to fail if any of the checks fail.</p></summary>
         [Pure]
-        public static PaketRestoreSettings EnableFailOnChecks(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings EnableFailOnChecks(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.FailOnChecks = true;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FailOnChecks = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketRestoreSettings.FailOnChecks"/>.</i></p><p>Causes the restore to fail if any of the checks fail.</p></summary>
         [Pure]
-        public static PaketRestoreSettings DisableFailOnChecks(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings DisableFailOnChecks(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.FailOnChecks = false;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FailOnChecks = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketRestoreSettings.FailOnChecks"/>.</i></p><p>Causes the restore to fail if any of the checks fail.</p></summary>
         [Pure]
-        public static PaketRestoreSettings ToggleFailOnChecks(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings ToggleFailOnChecks(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.FailOnChecks = !paketRestoreSettings.FailOnChecks;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FailOnChecks = !toolSettings.FailOnChecks;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.DependencyGroup"/>.</i></p><p>Allows to restore a single group.</p></summary>
         [Pure]
-        public static PaketRestoreSettings SetDependencyGroup(this PaketRestoreSettings paketRestoreSettings, string dependencyGroup)
+        public static PaketRestoreSettings SetDependencyGroup(this PaketRestoreSettings toolSettings, string dependencyGroup)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.DependencyGroup = dependencyGroup;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DependencyGroup = dependencyGroup;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.ProjectFile"/>.</i></p><p>Allows to restore dependencies for a project.</p></summary>
         [Pure]
-        public static PaketRestoreSettings SetProjectFile(this PaketRestoreSettings paketRestoreSettings, string projectFile)
+        public static PaketRestoreSettings SetProjectFile(this PaketRestoreSettings toolSettings, string projectFile)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.ProjectFile = projectFile;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProjectFile = projectFile;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.ReferencesFiles"/> to a new list.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
         [Pure]
-        public static PaketRestoreSettings SetReferencesFiles(this PaketRestoreSettings paketRestoreSettings, params string[] referencesFiles)
+        public static PaketRestoreSettings SetReferencesFiles(this PaketRestoreSettings toolSettings, params string[] referencesFiles)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.ReferencesFilesInternal = referencesFiles.ToList();
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReferencesFilesInternal = referencesFiles.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.ReferencesFiles"/> to a new list.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
         [Pure]
-        public static PaketRestoreSettings SetReferencesFiles(this PaketRestoreSettings paketRestoreSettings, IEnumerable<string> referencesFiles)
+        public static PaketRestoreSettings SetReferencesFiles(this PaketRestoreSettings toolSettings, IEnumerable<string> referencesFiles)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.ReferencesFilesInternal = referencesFiles.ToList();
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReferencesFilesInternal = referencesFiles.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new referencesFiles to the existing <see cref="PaketRestoreSettings.ReferencesFiles"/>.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
         [Pure]
-        public static PaketRestoreSettings AddReferencesFiles(this PaketRestoreSettings paketRestoreSettings, params string[] referencesFiles)
+        public static PaketRestoreSettings AddReferencesFiles(this PaketRestoreSettings toolSettings, params string[] referencesFiles)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.ReferencesFilesInternal.AddRange(referencesFiles);
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReferencesFilesInternal.AddRange(referencesFiles);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new referencesFiles to the existing <see cref="PaketRestoreSettings.ReferencesFiles"/>.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
         [Pure]
-        public static PaketRestoreSettings AddReferencesFiles(this PaketRestoreSettings paketRestoreSettings, IEnumerable<string> referencesFiles)
+        public static PaketRestoreSettings AddReferencesFiles(this PaketRestoreSettings toolSettings, IEnumerable<string> referencesFiles)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.ReferencesFilesInternal.AddRange(referencesFiles);
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReferencesFilesInternal.AddRange(referencesFiles);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for clearing <see cref="PaketRestoreSettings.ReferencesFiles"/>.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
         [Pure]
-        public static PaketRestoreSettings ClearReferencesFiles(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings ClearReferencesFiles(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.ReferencesFilesInternal.Clear();
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReferencesFilesInternal.Clear();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding a single referencesFile to <see cref="PaketRestoreSettings.ReferencesFiles"/>.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
         [Pure]
-        public static PaketRestoreSettings AddReferencesFile(this PaketRestoreSettings paketRestoreSettings, string referencesFile)
+        public static PaketRestoreSettings AddReferencesFile(this PaketRestoreSettings toolSettings, string referencesFile, bool evenIfNull = true)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.ReferencesFilesInternal.Add(referencesFile);
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            if (referencesFile != null || evenIfNull) toolSettings.ReferencesFilesInternal.Add(referencesFile);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for removing a single referencesFile from <see cref="PaketRestoreSettings.ReferencesFiles"/>.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
         [Pure]
-        public static PaketRestoreSettings RemoveReferencesFile(this PaketRestoreSettings paketRestoreSettings, string referencesFile)
+        public static PaketRestoreSettings RemoveReferencesFile(this PaketRestoreSettings toolSettings, string referencesFile)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.ReferencesFilesInternal.Remove(referencesFile);
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReferencesFilesInternal.Remove(referencesFile);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.TargetFramework"/>.</i></p><p>Allows to restore only for a specified target framework.</p></summary>
         [Pure]
-        public static PaketRestoreSettings SetTargetFramework(this PaketRestoreSettings paketRestoreSettings, string targetFramework)
+        public static PaketRestoreSettings SetTargetFramework(this PaketRestoreSettings toolSettings, string targetFramework)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.TargetFramework = targetFramework;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetFramework = targetFramework;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
-        public static PaketRestoreSettings SetVerbose(this PaketRestoreSettings paketRestoreSettings, bool verbose)
+        public static PaketRestoreSettings SetVerbose(this PaketRestoreSettings toolSettings, bool verbose)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.Verbose = verbose;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbose = verbose;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketRestoreSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
-        public static PaketRestoreSettings EnableVerbose(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings EnableVerbose(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.Verbose = true;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbose = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketRestoreSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
-        public static PaketRestoreSettings DisableVerbose(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings DisableVerbose(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.Verbose = false;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbose = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketRestoreSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
-        public static PaketRestoreSettings ToggleVerbose(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings ToggleVerbose(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.Verbose = !paketRestoreSettings.Verbose;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbose = !toolSettings.Verbose;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.LogFile"/>.</i></p><p>Specify a log file for the paket process.</p></summary>
         [Pure]
-        public static PaketRestoreSettings SetLogFile(this PaketRestoreSettings paketRestoreSettings, string logFile)
+        public static PaketRestoreSettings SetLogFile(this PaketRestoreSettings toolSettings, string logFile)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.LogFile = logFile;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogFile = logFile;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
-        public static PaketRestoreSettings SetSilent(this PaketRestoreSettings paketRestoreSettings, bool silent)
+        public static PaketRestoreSettings SetSilent(this PaketRestoreSettings toolSettings, bool silent)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.Silent = silent;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Silent = silent;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketRestoreSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
-        public static PaketRestoreSettings EnableSilent(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings EnableSilent(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.Silent = true;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Silent = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketRestoreSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
-        public static PaketRestoreSettings DisableSilent(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings DisableSilent(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.Silent = false;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Silent = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketRestoreSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
-        public static PaketRestoreSettings ToggleSilent(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings ToggleSilent(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.Silent = !paketRestoreSettings.Silent;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Silent = !toolSettings.Silent;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
-        public static PaketRestoreSettings SetShowVersion(this PaketRestoreSettings paketRestoreSettings, bool showVersion)
+        public static PaketRestoreSettings SetShowVersion(this PaketRestoreSettings toolSettings, bool showVersion)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.ShowVersion = showVersion;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowVersion = showVersion;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketRestoreSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
-        public static PaketRestoreSettings EnableShowVersion(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings EnableShowVersion(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.ShowVersion = true;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowVersion = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketRestoreSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
-        public static PaketRestoreSettings DisableShowVersion(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings DisableShowVersion(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.ShowVersion = false;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowVersion = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketRestoreSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
-        public static PaketRestoreSettings ToggleShowVersion(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings ToggleShowVersion(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.ShowVersion = !paketRestoreSettings.ShowVersion;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowVersion = !toolSettings.ShowVersion;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
-        public static PaketRestoreSettings SetFromBootstrapper(this PaketRestoreSettings paketRestoreSettings, bool fromBootstrapper)
+        public static PaketRestoreSettings SetFromBootstrapper(this PaketRestoreSettings toolSettings, bool fromBootstrapper)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.FromBootstrapper = fromBootstrapper;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FromBootstrapper = fromBootstrapper;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketRestoreSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
-        public static PaketRestoreSettings EnableFromBootstrapper(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings EnableFromBootstrapper(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.FromBootstrapper = true;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FromBootstrapper = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketRestoreSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
-        public static PaketRestoreSettings DisableFromBootstrapper(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings DisableFromBootstrapper(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.FromBootstrapper = false;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FromBootstrapper = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketRestoreSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
-        public static PaketRestoreSettings ToggleFromBootstrapper(this PaketRestoreSettings paketRestoreSettings)
+        public static PaketRestoreSettings ToggleFromBootstrapper(this PaketRestoreSettings toolSettings)
         {
-            paketRestoreSettings = paketRestoreSettings.NewInstance();
-            paketRestoreSettings.FromBootstrapper = !paketRestoreSettings.FromBootstrapper;
-            return paketRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FromBootstrapper = !toolSettings.FromBootstrapper;
+            return toolSettings;
         }
     }
     [PublicAPI]
@@ -1180,171 +1180,171 @@ namespace Nuke.Common.Tools.Paket
     {
         /// <summary><p><i>Extension method for setting <see cref="PaketPushSettings.Url"/>.</i></p><p>Url of the NuGet feed.</p></summary>
         [Pure]
-        public static PaketPushSettings SetUrl(this PaketPushSettings paketPushSettings, string url)
+        public static PaketPushSettings SetUrl(this PaketPushSettings toolSettings, string url)
         {
-            paketPushSettings = paketPushSettings.NewInstance();
-            paketPushSettings.Url = url;
-            return paketPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Url = url;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPushSettings.File"/>.</i></p><p>Path to the package.</p></summary>
         [Pure]
-        public static PaketPushSettings SetFile(this PaketPushSettings paketPushSettings, string file)
+        public static PaketPushSettings SetFile(this PaketPushSettings toolSettings, string file)
         {
-            paketPushSettings = paketPushSettings.NewInstance();
-            paketPushSettings.File = file;
-            return paketPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.File = file;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPushSettings.ApiKey"/>.</i></p><p>Optionally specify your API key on the command line. Otherwise uses the value of the `nugetkey` environment variable.</p></summary>
         [Pure]
-        public static PaketPushSettings SetApiKey(this PaketPushSettings paketPushSettings, string apiKey)
+        public static PaketPushSettings SetApiKey(this PaketPushSettings toolSettings, string apiKey)
         {
-            paketPushSettings = paketPushSettings.NewInstance();
-            paketPushSettings.ApiKey = apiKey;
-            return paketPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ApiKey = apiKey;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPushSettings.Endpoint"/>.</i></p><p>Optionally specify a custom api endpoint to push to. Defaults to `/api/v2/package`.</p></summary>
         [Pure]
-        public static PaketPushSettings SetEndpoint(this PaketPushSettings paketPushSettings, string endpoint)
+        public static PaketPushSettings SetEndpoint(this PaketPushSettings toolSettings, string endpoint)
         {
-            paketPushSettings = paketPushSettings.NewInstance();
-            paketPushSettings.Endpoint = endpoint;
-            return paketPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Endpoint = endpoint;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPushSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
-        public static PaketPushSettings SetVerbose(this PaketPushSettings paketPushSettings, bool verbose)
+        public static PaketPushSettings SetVerbose(this PaketPushSettings toolSettings, bool verbose)
         {
-            paketPushSettings = paketPushSettings.NewInstance();
-            paketPushSettings.Verbose = verbose;
-            return paketPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbose = verbose;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketPushSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
-        public static PaketPushSettings EnableVerbose(this PaketPushSettings paketPushSettings)
+        public static PaketPushSettings EnableVerbose(this PaketPushSettings toolSettings)
         {
-            paketPushSettings = paketPushSettings.NewInstance();
-            paketPushSettings.Verbose = true;
-            return paketPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbose = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketPushSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
-        public static PaketPushSettings DisableVerbose(this PaketPushSettings paketPushSettings)
+        public static PaketPushSettings DisableVerbose(this PaketPushSettings toolSettings)
         {
-            paketPushSettings = paketPushSettings.NewInstance();
-            paketPushSettings.Verbose = false;
-            return paketPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbose = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketPushSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
-        public static PaketPushSettings ToggleVerbose(this PaketPushSettings paketPushSettings)
+        public static PaketPushSettings ToggleVerbose(this PaketPushSettings toolSettings)
         {
-            paketPushSettings = paketPushSettings.NewInstance();
-            paketPushSettings.Verbose = !paketPushSettings.Verbose;
-            return paketPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbose = !toolSettings.Verbose;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPushSettings.LogFile"/>.</i></p><p>Specify a log file for the paket process.</p></summary>
         [Pure]
-        public static PaketPushSettings SetLogFile(this PaketPushSettings paketPushSettings, string logFile)
+        public static PaketPushSettings SetLogFile(this PaketPushSettings toolSettings, string logFile)
         {
-            paketPushSettings = paketPushSettings.NewInstance();
-            paketPushSettings.LogFile = logFile;
-            return paketPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogFile = logFile;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPushSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
-        public static PaketPushSettings SetSilent(this PaketPushSettings paketPushSettings, bool silent)
+        public static PaketPushSettings SetSilent(this PaketPushSettings toolSettings, bool silent)
         {
-            paketPushSettings = paketPushSettings.NewInstance();
-            paketPushSettings.Silent = silent;
-            return paketPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Silent = silent;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketPushSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
-        public static PaketPushSettings EnableSilent(this PaketPushSettings paketPushSettings)
+        public static PaketPushSettings EnableSilent(this PaketPushSettings toolSettings)
         {
-            paketPushSettings = paketPushSettings.NewInstance();
-            paketPushSettings.Silent = true;
-            return paketPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Silent = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketPushSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
-        public static PaketPushSettings DisableSilent(this PaketPushSettings paketPushSettings)
+        public static PaketPushSettings DisableSilent(this PaketPushSettings toolSettings)
         {
-            paketPushSettings = paketPushSettings.NewInstance();
-            paketPushSettings.Silent = false;
-            return paketPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Silent = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketPushSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
-        public static PaketPushSettings ToggleSilent(this PaketPushSettings paketPushSettings)
+        public static PaketPushSettings ToggleSilent(this PaketPushSettings toolSettings)
         {
-            paketPushSettings = paketPushSettings.NewInstance();
-            paketPushSettings.Silent = !paketPushSettings.Silent;
-            return paketPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Silent = !toolSettings.Silent;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPushSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
-        public static PaketPushSettings SetShowVersion(this PaketPushSettings paketPushSettings, bool showVersion)
+        public static PaketPushSettings SetShowVersion(this PaketPushSettings toolSettings, bool showVersion)
         {
-            paketPushSettings = paketPushSettings.NewInstance();
-            paketPushSettings.ShowVersion = showVersion;
-            return paketPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowVersion = showVersion;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketPushSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
-        public static PaketPushSettings EnableShowVersion(this PaketPushSettings paketPushSettings)
+        public static PaketPushSettings EnableShowVersion(this PaketPushSettings toolSettings)
         {
-            paketPushSettings = paketPushSettings.NewInstance();
-            paketPushSettings.ShowVersion = true;
-            return paketPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowVersion = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketPushSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
-        public static PaketPushSettings DisableShowVersion(this PaketPushSettings paketPushSettings)
+        public static PaketPushSettings DisableShowVersion(this PaketPushSettings toolSettings)
         {
-            paketPushSettings = paketPushSettings.NewInstance();
-            paketPushSettings.ShowVersion = false;
-            return paketPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowVersion = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketPushSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
-        public static PaketPushSettings ToggleShowVersion(this PaketPushSettings paketPushSettings)
+        public static PaketPushSettings ToggleShowVersion(this PaketPushSettings toolSettings)
         {
-            paketPushSettings = paketPushSettings.NewInstance();
-            paketPushSettings.ShowVersion = !paketPushSettings.ShowVersion;
-            return paketPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowVersion = !toolSettings.ShowVersion;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPushSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
-        public static PaketPushSettings SetFromBootstrapper(this PaketPushSettings paketPushSettings, bool fromBootstrapper)
+        public static PaketPushSettings SetFromBootstrapper(this PaketPushSettings toolSettings, bool fromBootstrapper)
         {
-            paketPushSettings = paketPushSettings.NewInstance();
-            paketPushSettings.FromBootstrapper = fromBootstrapper;
-            return paketPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FromBootstrapper = fromBootstrapper;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketPushSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
-        public static PaketPushSettings EnableFromBootstrapper(this PaketPushSettings paketPushSettings)
+        public static PaketPushSettings EnableFromBootstrapper(this PaketPushSettings toolSettings)
         {
-            paketPushSettings = paketPushSettings.NewInstance();
-            paketPushSettings.FromBootstrapper = true;
-            return paketPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FromBootstrapper = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketPushSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
-        public static PaketPushSettings DisableFromBootstrapper(this PaketPushSettings paketPushSettings)
+        public static PaketPushSettings DisableFromBootstrapper(this PaketPushSettings toolSettings)
         {
-            paketPushSettings = paketPushSettings.NewInstance();
-            paketPushSettings.FromBootstrapper = false;
-            return paketPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FromBootstrapper = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketPushSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
-        public static PaketPushSettings ToggleFromBootstrapper(this PaketPushSettings paketPushSettings)
+        public static PaketPushSettings ToggleFromBootstrapper(this PaketPushSettings toolSettings)
         {
-            paketPushSettings = paketPushSettings.NewInstance();
-            paketPushSettings.FromBootstrapper = !paketPushSettings.FromBootstrapper;
-            return paketPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FromBootstrapper = !toolSettings.FromBootstrapper;
+            return toolSettings;
         }
     }
     [PublicAPI]
@@ -1353,371 +1353,371 @@ namespace Nuke.Common.Tools.Paket
     {
         /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.OutputDirectory"/>.</i></p><p>Output directory to put .nupkg files.</p></summary>
         [Pure]
-        public static PaketPackSettings SetOutputDirectory(this PaketPackSettings paketPackSettings, string outputDirectory)
+        public static PaketPackSettings SetOutputDirectory(this PaketPackSettings toolSettings, string outputDirectory)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.OutputDirectory = outputDirectory;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OutputDirectory = outputDirectory;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.BuildConfiguration"/>.</i></p><p>Optionally specify build configuration that should be packaged (defaults to Release).</p></summary>
         [Pure]
-        public static PaketPackSettings SetBuildConfiguration(this PaketPackSettings paketPackSettings, string buildConfiguration)
+        public static PaketPackSettings SetBuildConfiguration(this PaketPackSettings toolSettings, string buildConfiguration)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.BuildConfiguration = buildConfiguration;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BuildConfiguration = buildConfiguration;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.BuildPlatform"/>.</i></p><p>Optionally specify build platform that should be packaged (if not provided or empty, checks all known platform targets).</p></summary>
         [Pure]
-        public static PaketPackSettings SetBuildPlatform(this PaketPackSettings paketPackSettings, string buildPlatform)
+        public static PaketPackSettings SetBuildPlatform(this PaketPackSettings toolSettings, string buildPlatform)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.BuildPlatform = buildPlatform;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BuildPlatform = buildPlatform;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.PackageVersion"/>.</i></p><p>Specify version of the package.</p></summary>
         [Pure]
-        public static PaketPackSettings SetPackageVersion(this PaketPackSettings paketPackSettings, string packageVersion)
+        public static PaketPackSettings SetPackageVersion(this PaketPackSettings toolSettings, string packageVersion)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.PackageVersion = packageVersion;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageVersion = packageVersion;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.TemplateFile"/>.</i></p><p>Allows to specify a single template file.</p></summary>
         [Pure]
-        public static PaketPackSettings SetTemplateFile(this PaketPackSettings paketPackSettings, string templateFile)
+        public static PaketPackSettings SetTemplateFile(this PaketPackSettings toolSettings, string templateFile)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.TemplateFile = templateFile;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TemplateFile = templateFile;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.Exclude"/>.</i></p><p>Exclude template file by id.</p></summary>
         [Pure]
-        public static PaketPackSettings SetExclude(this PaketPackSettings paketPackSettings, string exclude)
+        public static PaketPackSettings SetExclude(this PaketPackSettings toolSettings, string exclude)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.Exclude = exclude;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Exclude = exclude;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.SpecificVersion"/>.</i></p><p>Specifies a version number for template with given id.</p></summary>
         [Pure]
-        public static PaketPackSettings SetSpecificVersion(this PaketPackSettings paketPackSettings, string specificVersion)
+        public static PaketPackSettings SetSpecificVersion(this PaketPackSettings toolSettings, string specificVersion)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.SpecificVersion = specificVersion;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SpecificVersion = specificVersion;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.ReleaseNotes"/>.</i></p><p>Specify relase notes for the package.</p></summary>
         [Pure]
-        public static PaketPackSettings SetReleaseNotes(this PaketPackSettings paketPackSettings, string releaseNotes)
+        public static PaketPackSettings SetReleaseNotes(this PaketPackSettings toolSettings, string releaseNotes)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.ReleaseNotes = releaseNotes;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReleaseNotes = releaseNotes;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.LockDependencies"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies.</p></summary>
         [Pure]
-        public static PaketPackSettings SetLockDependencies(this PaketPackSettings paketPackSettings, bool lockDependencies)
+        public static PaketPackSettings SetLockDependencies(this PaketPackSettings toolSettings, bool lockDependencies)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.LockDependencies = lockDependencies;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockDependencies = lockDependencies;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketPackSettings.LockDependencies"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies.</p></summary>
         [Pure]
-        public static PaketPackSettings EnableLockDependencies(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings EnableLockDependencies(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.LockDependencies = true;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockDependencies = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketPackSettings.LockDependencies"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies.</p></summary>
         [Pure]
-        public static PaketPackSettings DisableLockDependencies(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings DisableLockDependencies(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.LockDependencies = false;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockDependencies = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketPackSettings.LockDependencies"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies.</p></summary>
         [Pure]
-        public static PaketPackSettings ToggleLockDependencies(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings ToggleLockDependencies(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.LockDependencies = !paketPackSettings.LockDependencies;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockDependencies = !toolSettings.LockDependencies;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.MinimumFromLockFile"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies, and add them as a minimum version. `lock-dependencies` will over-ride this option.</p></summary>
         [Pure]
-        public static PaketPackSettings SetMinimumFromLockFile(this PaketPackSettings paketPackSettings, bool minimumFromLockFile)
+        public static PaketPackSettings SetMinimumFromLockFile(this PaketPackSettings toolSettings, bool minimumFromLockFile)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.MinimumFromLockFile = minimumFromLockFile;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MinimumFromLockFile = minimumFromLockFile;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketPackSettings.MinimumFromLockFile"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies, and add them as a minimum version. `lock-dependencies` will over-ride this option.</p></summary>
         [Pure]
-        public static PaketPackSettings EnableMinimumFromLockFile(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings EnableMinimumFromLockFile(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.MinimumFromLockFile = true;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MinimumFromLockFile = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketPackSettings.MinimumFromLockFile"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies, and add them as a minimum version. `lock-dependencies` will over-ride this option.</p></summary>
         [Pure]
-        public static PaketPackSettings DisableMinimumFromLockFile(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings DisableMinimumFromLockFile(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.MinimumFromLockFile = false;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MinimumFromLockFile = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketPackSettings.MinimumFromLockFile"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies, and add them as a minimum version. `lock-dependencies` will over-ride this option.</p></summary>
         [Pure]
-        public static PaketPackSettings ToggleMinimumFromLockFile(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings ToggleMinimumFromLockFile(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.MinimumFromLockFile = !paketPackSettings.MinimumFromLockFile;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MinimumFromLockFile = !toolSettings.MinimumFromLockFile;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.PinProjectReferences"/>.</i></p><p>Pin dependencies generated from project references (=) instead of using minimum (>=) for version specification.  If `lock-dependencies` is specified, project references will be pinned even if this option is not specified.</p></summary>
         [Pure]
-        public static PaketPackSettings SetPinProjectReferences(this PaketPackSettings paketPackSettings, bool pinProjectReferences)
+        public static PaketPackSettings SetPinProjectReferences(this PaketPackSettings toolSettings, bool pinProjectReferences)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.PinProjectReferences = pinProjectReferences;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PinProjectReferences = pinProjectReferences;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketPackSettings.PinProjectReferences"/>.</i></p><p>Pin dependencies generated from project references (=) instead of using minimum (>=) for version specification.  If `lock-dependencies` is specified, project references will be pinned even if this option is not specified.</p></summary>
         [Pure]
-        public static PaketPackSettings EnablePinProjectReferences(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings EnablePinProjectReferences(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.PinProjectReferences = true;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PinProjectReferences = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketPackSettings.PinProjectReferences"/>.</i></p><p>Pin dependencies generated from project references (=) instead of using minimum (>=) for version specification.  If `lock-dependencies` is specified, project references will be pinned even if this option is not specified.</p></summary>
         [Pure]
-        public static PaketPackSettings DisablePinProjectReferences(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings DisablePinProjectReferences(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.PinProjectReferences = false;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PinProjectReferences = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketPackSettings.PinProjectReferences"/>.</i></p><p>Pin dependencies generated from project references (=) instead of using minimum (>=) for version specification.  If `lock-dependencies` is specified, project references will be pinned even if this option is not specified.</p></summary>
         [Pure]
-        public static PaketPackSettings TogglePinProjectReferences(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings TogglePinProjectReferences(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.PinProjectReferences = !paketPackSettings.PinProjectReferences;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PinProjectReferences = !toolSettings.PinProjectReferences;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.Symbols"/>.</i></p><p>Build symbol/source packages in addition to library/content packages.</p></summary>
         [Pure]
-        public static PaketPackSettings SetSymbols(this PaketPackSettings paketPackSettings, bool symbols)
+        public static PaketPackSettings SetSymbols(this PaketPackSettings toolSettings, bool symbols)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.Symbols = symbols;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Symbols = symbols;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketPackSettings.Symbols"/>.</i></p><p>Build symbol/source packages in addition to library/content packages.</p></summary>
         [Pure]
-        public static PaketPackSettings EnableSymbols(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings EnableSymbols(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.Symbols = true;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Symbols = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketPackSettings.Symbols"/>.</i></p><p>Build symbol/source packages in addition to library/content packages.</p></summary>
         [Pure]
-        public static PaketPackSettings DisableSymbols(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings DisableSymbols(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.Symbols = false;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Symbols = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketPackSettings.Symbols"/>.</i></p><p>Build symbol/source packages in addition to library/content packages.</p></summary>
         [Pure]
-        public static PaketPackSettings ToggleSymbols(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings ToggleSymbols(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.Symbols = !paketPackSettings.Symbols;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Symbols = !toolSettings.Symbols;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.IncludeReferencedProjects"/>.</i></p><p>Include symbol/source from referenced projects.</p></summary>
         [Pure]
-        public static PaketPackSettings SetIncludeReferencedProjects(this PaketPackSettings paketPackSettings, bool includeReferencedProjects)
+        public static PaketPackSettings SetIncludeReferencedProjects(this PaketPackSettings toolSettings, bool includeReferencedProjects)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.IncludeReferencedProjects = includeReferencedProjects;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeReferencedProjects = includeReferencedProjects;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketPackSettings.IncludeReferencedProjects"/>.</i></p><p>Include symbol/source from referenced projects.</p></summary>
         [Pure]
-        public static PaketPackSettings EnableIncludeReferencedProjects(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings EnableIncludeReferencedProjects(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.IncludeReferencedProjects = true;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeReferencedProjects = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketPackSettings.IncludeReferencedProjects"/>.</i></p><p>Include symbol/source from referenced projects.</p></summary>
         [Pure]
-        public static PaketPackSettings DisableIncludeReferencedProjects(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings DisableIncludeReferencedProjects(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.IncludeReferencedProjects = false;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeReferencedProjects = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketPackSettings.IncludeReferencedProjects"/>.</i></p><p>Include symbol/source from referenced projects.</p></summary>
         [Pure]
-        public static PaketPackSettings ToggleIncludeReferencedProjects(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings ToggleIncludeReferencedProjects(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.IncludeReferencedProjects = !paketPackSettings.IncludeReferencedProjects;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeReferencedProjects = !toolSettings.IncludeReferencedProjects;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.ProjectUrl"/>.</i></p><p>Url to the projects home page.</p></summary>
         [Pure]
-        public static PaketPackSettings SetProjectUrl(this PaketPackSettings paketPackSettings, string projectUrl)
+        public static PaketPackSettings SetProjectUrl(this PaketPackSettings toolSettings, string projectUrl)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.ProjectUrl = projectUrl;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProjectUrl = projectUrl;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
-        public static PaketPackSettings SetVerbose(this PaketPackSettings paketPackSettings, bool verbose)
+        public static PaketPackSettings SetVerbose(this PaketPackSettings toolSettings, bool verbose)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.Verbose = verbose;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbose = verbose;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketPackSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
-        public static PaketPackSettings EnableVerbose(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings EnableVerbose(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.Verbose = true;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbose = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketPackSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
-        public static PaketPackSettings DisableVerbose(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings DisableVerbose(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.Verbose = false;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbose = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketPackSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
-        public static PaketPackSettings ToggleVerbose(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings ToggleVerbose(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.Verbose = !paketPackSettings.Verbose;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbose = !toolSettings.Verbose;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.LogFile"/>.</i></p><p>Specify a log file for the paket process.</p></summary>
         [Pure]
-        public static PaketPackSettings SetLogFile(this PaketPackSettings paketPackSettings, string logFile)
+        public static PaketPackSettings SetLogFile(this PaketPackSettings toolSettings, string logFile)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.LogFile = logFile;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogFile = logFile;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
-        public static PaketPackSettings SetSilent(this PaketPackSettings paketPackSettings, bool silent)
+        public static PaketPackSettings SetSilent(this PaketPackSettings toolSettings, bool silent)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.Silent = silent;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Silent = silent;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketPackSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
-        public static PaketPackSettings EnableSilent(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings EnableSilent(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.Silent = true;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Silent = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketPackSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
-        public static PaketPackSettings DisableSilent(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings DisableSilent(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.Silent = false;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Silent = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketPackSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
-        public static PaketPackSettings ToggleSilent(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings ToggleSilent(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.Silent = !paketPackSettings.Silent;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Silent = !toolSettings.Silent;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
-        public static PaketPackSettings SetShowVersion(this PaketPackSettings paketPackSettings, bool showVersion)
+        public static PaketPackSettings SetShowVersion(this PaketPackSettings toolSettings, bool showVersion)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.ShowVersion = showVersion;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowVersion = showVersion;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketPackSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
-        public static PaketPackSettings EnableShowVersion(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings EnableShowVersion(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.ShowVersion = true;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowVersion = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketPackSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
-        public static PaketPackSettings DisableShowVersion(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings DisableShowVersion(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.ShowVersion = false;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowVersion = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketPackSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
-        public static PaketPackSettings ToggleShowVersion(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings ToggleShowVersion(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.ShowVersion = !paketPackSettings.ShowVersion;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowVersion = !toolSettings.ShowVersion;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
-        public static PaketPackSettings SetFromBootstrapper(this PaketPackSettings paketPackSettings, bool fromBootstrapper)
+        public static PaketPackSettings SetFromBootstrapper(this PaketPackSettings toolSettings, bool fromBootstrapper)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.FromBootstrapper = fromBootstrapper;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FromBootstrapper = fromBootstrapper;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="PaketPackSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
-        public static PaketPackSettings EnableFromBootstrapper(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings EnableFromBootstrapper(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.FromBootstrapper = true;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FromBootstrapper = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="PaketPackSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
-        public static PaketPackSettings DisableFromBootstrapper(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings DisableFromBootstrapper(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.FromBootstrapper = false;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FromBootstrapper = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="PaketPackSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
-        public static PaketPackSettings ToggleFromBootstrapper(this PaketPackSettings paketPackSettings)
+        public static PaketPackSettings ToggleFromBootstrapper(this PaketPackSettings toolSettings)
         {
-            paketPackSettings = paketPackSettings.NewInstance();
-            paketPackSettings.FromBootstrapper = !paketPackSettings.FromBootstrapper;
-            return paketPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FromBootstrapper = !toolSettings.FromBootstrapper;
+            return toolSettings;
         }
     }
 }

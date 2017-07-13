@@ -15,12 +15,12 @@ namespace Nuke.Common.Tools.InspectCode
     {
         private const int s_versionOffset = 100;
 
-        static partial void PreProcess (InspectCodeSettings inspectCodeSettings)
+        static partial void PreProcess (InspectCodeSettings toolSettings)
         {
             // TODO: AssertValid();
-            // inspectCodeSettings.Ass();
+            // toolSettings.Ass();
 
-            //var assembly = Assembly.ReflectionOnlyLoadFrom(inspectCodeSettings.ToolPath);
+            //var assembly = Assembly.ReflectionOnlyLoadFrom(toolSettings.ToolPath);
             //var assemblyVersion = assembly.GetName().Version;
             //var waveVersion = new NuGetVersion(assemblyVersion.Major - s_versionOffset, minor: 0, patch: 0);
             //var installedPlugins = GetInstalledPlugins(waveVersion).ToList();
@@ -29,7 +29,7 @@ namespace Nuke.Common.Tools.InspectCode
 
             //var hashCode = installedPlugins.Select(Path.GetFileName).Aggregate(seed: 0, func: (hc, x) => hc + x.GetHashCode());
 
-            //var inspectCodeDirectory = Path.GetDirectoryName(inspectCodeSettings.ToolPath).NotNull();
+            //var inspectCodeDirectory = Path.GetDirectoryName(toolSettings.ToolPath).NotNull();
         }
 
         private static IEnumerable<string> GetInstalledPlugins (NuGetVersion waveVersion)
@@ -53,9 +53,9 @@ namespace Nuke.Common.Tools.InspectCode
             }
         }
 
-        static partial void PostProcess (InspectCodeSettings inspectCodeSettings)
+        static partial void PostProcess (InspectCodeSettings toolSettings)
         {
-            TeamCity.Instance?.ImportData(TeamCityImportType.ReSharperInspectCode, inspectCodeSettings.Output);
+            TeamCity.Instance?.ImportData(TeamCityImportType.ReSharperInspectCode, toolSettings.Output);
         }
     }
 }

@@ -26,27 +26,27 @@ namespace Nuke.Common.Tools.NuGet
     [ExcludeFromCodeCoverage]
     public static partial class NuGetTasks
     {
-        static partial void PreProcess (NuGetPushSettings nuGetPushSettings);
-        static partial void PostProcess (NuGetPushSettings nuGetPushSettings);
+        static partial void PreProcess (NuGetPushSettings toolSettings);
+        static partial void PostProcess (NuGetPushSettings toolSettings);
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
         public static void NuGetPush (Configure<NuGetPushSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            var nuGetPushSettings = configurator.InvokeSafe(new NuGetPushSettings());
-            PreProcess(nuGetPushSettings);
-            var process = ProcessTasks.StartProcess(nuGetPushSettings, processSettings);
+            var toolSettings = configurator.InvokeSafe(new NuGetPushSettings());
+            PreProcess(toolSettings);
+            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(nuGetPushSettings);
+            PostProcess(toolSettings);
         }
-        static partial void PreProcess (NuGetPackSettings nuGetPackSettings);
-        static partial void PostProcess (NuGetPackSettings nuGetPackSettings);
+        static partial void PreProcess (NuGetPackSettings toolSettings);
+        static partial void PostProcess (NuGetPackSettings toolSettings);
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
         public static void NuGetPack (Configure<NuGetPackSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            var nuGetPackSettings = configurator.InvokeSafe(new NuGetPackSettings());
-            PreProcess(nuGetPackSettings);
-            var process = ProcessTasks.StartProcess(nuGetPackSettings, processSettings);
+            var toolSettings = configurator.InvokeSafe(new NuGetPackSettings());
+            PreProcess(toolSettings);
+            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(nuGetPackSettings);
+            PostProcess(toolSettings);
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
         public static void NuGetPack (string targetPath, Configure<NuGetPackSettings> configurator = null, ProcessSettings processSettings = null)
@@ -60,16 +60,16 @@ namespace Nuke.Common.Tools.NuGet
             configurator = configurator ?? (x => x);
             NuGetPack(targetPath, x => configurator(x).SetVersion(version));
         }
-        static partial void PreProcess (NuGetRestoreSettings nuGetRestoreSettings);
-        static partial void PostProcess (NuGetRestoreSettings nuGetRestoreSettings);
+        static partial void PreProcess (NuGetRestoreSettings toolSettings);
+        static partial void PostProcess (NuGetRestoreSettings toolSettings);
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
         public static void NuGetRestore (Configure<NuGetRestoreSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            var nuGetRestoreSettings = configurator.InvokeSafe(new NuGetRestoreSettings());
-            PreProcess(nuGetRestoreSettings);
-            var process = ProcessTasks.StartProcess(nuGetRestoreSettings, processSettings);
+            var toolSettings = configurator.InvokeSafe(new NuGetRestoreSettings());
+            PreProcess(toolSettings);
+            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(nuGetRestoreSettings);
+            PostProcess(toolSettings);
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
         public static void NuGetRestore (string targetPath, Configure<NuGetRestoreSettings> configurator = null, ProcessSettings processSettings = null)
@@ -158,7 +158,7 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary><p><i>(4.0+)</i> Specifies the path of MSBuild to use with the command, taking precedence over <c>-MSBuildVersion</c>.</p></summary>
         public virtual string MSBuildPath { get; internal set; }
         /// <summary><p><i>(3.2+)</i> Specifies the version of MSBuild to be used with this command. Supported values are <i>4</i>, <i>12</i>, <i>14</i>. By default the MSBuild in your path is picked, otherwise it defaults to the highest installed version of MSBuild.</p></summary>
-        public virtual Nuke.Common.Tools.MSBuild.MSBuildVersion? MSBuildVersion { get; internal set; }
+        public virtual NuGetMSBuildVersion? MSBuildVersion { get; internal set; }
         /// <summary><p>Prevents default exclusion of NuGet package files and files and folders starting with a dot, such as <i>.svn</i> and <c>.gitignore</c>.</p></summary>
         public virtual bool NoDefaultExcludes { get; internal set; }
         /// <summary><p>Specifies that pack should not run package analysis after building the package.</p></summary>
@@ -199,11 +199,11 @@ namespace Nuke.Common.Tools.NuGet
               .Add("-MinClientVersion", MinClientVersion)
               .Add("-ForceEnglishOutput", ForceEnglishOutput)
               .Add("-MSBuildPath {value}", MSBuildPath)
-              .Add("-MSBuildVersion {value}", GetMSBuildVersion())
+              .Add("-MSBuildVersion {value}", MSBuildVersion)
               .Add("-NoDefaultExcludes", NoDefaultExcludes)
               .Add("-NoPackageAnalysis", NoPackageAnalysis)
               .Add("-OutputDirectory {value}", OutputDirectory)
-              .Add("-Properties {value}", GetProperties())
+              .Add("-Properties {value}", Properties, mainSeparator: $";", keyValueSeparator: $"=")
               .Add("-Suffix {value}", Suffix)
               .Add("-Symbols", Symbols)
               .Add("-Tool", Tool)
@@ -288,195 +288,195 @@ namespace Nuke.Common.Tools.NuGet
     {
         /// <summary><p><i>Extension method for setting <see cref="NuGetPushSettings.TargetPath"/>.</i></p><p>Path of the package to push.</p></summary>
         [Pure]
-        public static NuGetPushSettings SetTargetPath(this NuGetPushSettings nuGetPushSettings, string targetPath)
+        public static NuGetPushSettings SetTargetPath(this NuGetPushSettings toolSettings, string targetPath)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.TargetPath = targetPath;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetPath = targetPath;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPushSettings.ApiKey"/>.</i></p><p>The API key for the target repository. If not present, the one specified in <i>%AppData%\NuGet\NuGet.Config</i> is used.</p></summary>
         [Pure]
-        public static NuGetPushSettings SetApiKey(this NuGetPushSettings nuGetPushSettings, string apiKey)
+        public static NuGetPushSettings SetApiKey(this NuGetPushSettings toolSettings, string apiKey)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.ApiKey = apiKey;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ApiKey = apiKey;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPushSettings.Source"/>.</i></p><p>Specifies the server URL. With NuGet 2.5+, NuGet will identify a UNC or local folder source and simply copy the file there instead of pushing it using HTTP. Also, starting with NuGet 3.4.2, this is a mandatory parameter unless the <i>NuGet.Config</i> file specifies a <i>DefaultPushSource</i> value.</p></summary>
         [Pure]
-        public static NuGetPushSettings SetSource(this NuGetPushSettings nuGetPushSettings, string source)
+        public static NuGetPushSettings SetSource(this NuGetPushSettings toolSettings, string source)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.Source = source;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Source = source;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPushSettings.SymbolSource"/>.</i></p><p><i>(3.5+)</i> Specifies the symbol server URL; nuget.smbsrc.net is used when pushing to nuget.org</p></summary>
         [Pure]
-        public static NuGetPushSettings SetSymbolSource(this NuGetPushSettings nuGetPushSettings, string symbolSource)
+        public static NuGetPushSettings SetSymbolSource(this NuGetPushSettings toolSettings, string symbolSource)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.SymbolSource = symbolSource;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SymbolSource = symbolSource;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPushSettings.SymbolApiKey"/>.</i></p><p><i>(3.5+)</i> Specifies the API key for the URL specified in <c>-SymbolSource</c>.</p></summary>
         [Pure]
-        public static NuGetPushSettings SetSymbolApiKey(this NuGetPushSettings nuGetPushSettings, string symbolApiKey)
+        public static NuGetPushSettings SetSymbolApiKey(this NuGetPushSettings toolSettings, string symbolApiKey)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.SymbolApiKey = symbolApiKey;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SymbolApiKey = symbolApiKey;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPushSettings.NoSymbols"/>.</i></p><p><i>(3.5+)</i> If a symbols package exists, it will not be pushed to a symbol server.</p></summary>
         [Pure]
-        public static NuGetPushSettings SetNoSymbols(this NuGetPushSettings nuGetPushSettings, bool noSymbols)
+        public static NuGetPushSettings SetNoSymbols(this NuGetPushSettings toolSettings, bool noSymbols)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.NoSymbols = noSymbols;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoSymbols = noSymbols;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="NuGetPushSettings.NoSymbols"/>.</i></p><p><i>(3.5+)</i> If a symbols package exists, it will not be pushed to a symbol server.</p></summary>
         [Pure]
-        public static NuGetPushSettings EnableNoSymbols(this NuGetPushSettings nuGetPushSettings)
+        public static NuGetPushSettings EnableNoSymbols(this NuGetPushSettings toolSettings)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.NoSymbols = true;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoSymbols = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="NuGetPushSettings.NoSymbols"/>.</i></p><p><i>(3.5+)</i> If a symbols package exists, it will not be pushed to a symbol server.</p></summary>
         [Pure]
-        public static NuGetPushSettings DisableNoSymbols(this NuGetPushSettings nuGetPushSettings)
+        public static NuGetPushSettings DisableNoSymbols(this NuGetPushSettings toolSettings)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.NoSymbols = false;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoSymbols = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="NuGetPushSettings.NoSymbols"/>.</i></p><p><i>(3.5+)</i> If a symbols package exists, it will not be pushed to a symbol server.</p></summary>
         [Pure]
-        public static NuGetPushSettings ToggleNoSymbols(this NuGetPushSettings nuGetPushSettings)
+        public static NuGetPushSettings ToggleNoSymbols(this NuGetPushSettings toolSettings)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.NoSymbols = !nuGetPushSettings.NoSymbols;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoSymbols = !toolSettings.NoSymbols;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPushSettings.DisableBuffering"/>.</i></p><p>Disables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.</p></summary>
         [Pure]
-        public static NuGetPushSettings SetDisableBuffering(this NuGetPushSettings nuGetPushSettings, bool disableBuffering)
+        public static NuGetPushSettings SetDisableBuffering(this NuGetPushSettings toolSettings, bool disableBuffering)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.DisableBuffering = disableBuffering;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableBuffering = disableBuffering;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="NuGetPushSettings.DisableBuffering"/>.</i></p><p>Disables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.</p></summary>
         [Pure]
-        public static NuGetPushSettings EnableDisableBuffering(this NuGetPushSettings nuGetPushSettings)
+        public static NuGetPushSettings EnableDisableBuffering(this NuGetPushSettings toolSettings)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.DisableBuffering = true;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableBuffering = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="NuGetPushSettings.DisableBuffering"/>.</i></p><p>Disables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.</p></summary>
         [Pure]
-        public static NuGetPushSettings DisableDisableBuffering(this NuGetPushSettings nuGetPushSettings)
+        public static NuGetPushSettings DisableDisableBuffering(this NuGetPushSettings toolSettings)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.DisableBuffering = false;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableBuffering = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="NuGetPushSettings.DisableBuffering"/>.</i></p><p>Disables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.</p></summary>
         [Pure]
-        public static NuGetPushSettings ToggleDisableBuffering(this NuGetPushSettings nuGetPushSettings)
+        public static NuGetPushSettings ToggleDisableBuffering(this NuGetPushSettings toolSettings)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.DisableBuffering = !nuGetPushSettings.DisableBuffering;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableBuffering = !toolSettings.DisableBuffering;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPushSettings.ConfigFile"/>.</i></p><p><i>(2.5+)</i> The NuGet configuration file to apply. If not specified, <i>%AppData%\NuGet\NuGet.Config</i> is used.</p></summary>
         [Pure]
-        public static NuGetPushSettings SetConfigFile(this NuGetPushSettings nuGetPushSettings, string configFile)
+        public static NuGetPushSettings SetConfigFile(this NuGetPushSettings toolSettings, string configFile)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.ConfigFile = configFile;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = configFile;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPushSettings.Verbosity"/>.</i></p><p><i>(2.5+)</i> Specifies the amount of details displayed in the output: <i>normal</i>, <i>quiet</i>, <i>detailed</i>.</p></summary>
         [Pure]
-        public static NuGetPushSettings SetVerbosity(this NuGetPushSettings nuGetPushSettings, NuGetVerbosity? verbosity)
+        public static NuGetPushSettings SetVerbosity(this NuGetPushSettings toolSettings, NuGetVerbosity? verbosity)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.Verbosity = verbosity;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = verbosity;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPushSettings.ForceEnglishOutput"/>.</i></p><p><i>(3.5+)</i> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
-        public static NuGetPushSettings SetForceEnglishOutput(this NuGetPushSettings nuGetPushSettings, bool forceEnglishOutput)
+        public static NuGetPushSettings SetForceEnglishOutput(this NuGetPushSettings toolSettings, bool forceEnglishOutput)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.ForceEnglishOutput = forceEnglishOutput;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = forceEnglishOutput;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="NuGetPushSettings.ForceEnglishOutput"/>.</i></p><p><i>(3.5+)</i> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
-        public static NuGetPushSettings EnableForceEnglishOutput(this NuGetPushSettings nuGetPushSettings)
+        public static NuGetPushSettings EnableForceEnglishOutput(this NuGetPushSettings toolSettings)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.ForceEnglishOutput = true;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="NuGetPushSettings.ForceEnglishOutput"/>.</i></p><p><i>(3.5+)</i> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
-        public static NuGetPushSettings DisableForceEnglishOutput(this NuGetPushSettings nuGetPushSettings)
+        public static NuGetPushSettings DisableForceEnglishOutput(this NuGetPushSettings toolSettings)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.ForceEnglishOutput = false;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="NuGetPushSettings.ForceEnglishOutput"/>.</i></p><p><i>(3.5+)</i> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
-        public static NuGetPushSettings ToggleForceEnglishOutput(this NuGetPushSettings nuGetPushSettings)
+        public static NuGetPushSettings ToggleForceEnglishOutput(this NuGetPushSettings toolSettings)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.ForceEnglishOutput = !nuGetPushSettings.ForceEnglishOutput;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = !toolSettings.ForceEnglishOutput;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPushSettings.NonInteractive"/>.</i></p><p>Suppresses prompts for user input or confirmations.</p></summary>
         [Pure]
-        public static NuGetPushSettings SetNonInteractive(this NuGetPushSettings nuGetPushSettings, bool nonInteractive)
+        public static NuGetPushSettings SetNonInteractive(this NuGetPushSettings toolSettings, bool nonInteractive)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.NonInteractive = nonInteractive;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = nonInteractive;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="NuGetPushSettings.NonInteractive"/>.</i></p><p>Suppresses prompts for user input or confirmations.</p></summary>
         [Pure]
-        public static NuGetPushSettings EnableNonInteractive(this NuGetPushSettings nuGetPushSettings)
+        public static NuGetPushSettings EnableNonInteractive(this NuGetPushSettings toolSettings)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.NonInteractive = true;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="NuGetPushSettings.NonInteractive"/>.</i></p><p>Suppresses prompts for user input or confirmations.</p></summary>
         [Pure]
-        public static NuGetPushSettings DisableNonInteractive(this NuGetPushSettings nuGetPushSettings)
+        public static NuGetPushSettings DisableNonInteractive(this NuGetPushSettings toolSettings)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.NonInteractive = false;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="NuGetPushSettings.NonInteractive"/>.</i></p><p>Suppresses prompts for user input or confirmations.</p></summary>
         [Pure]
-        public static NuGetPushSettings ToggleNonInteractive(this NuGetPushSettings nuGetPushSettings)
+        public static NuGetPushSettings ToggleNonInteractive(this NuGetPushSettings toolSettings)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.NonInteractive = !nuGetPushSettings.NonInteractive;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = !toolSettings.NonInteractive;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPushSettings.Timeout"/>.</i></p><p>Specifies the timeout, in seconds, for pushing to a server. The default is 300 seconds (5 minutes).</p></summary>
         [Pure]
-        public static NuGetPushSettings SetTimeout(this NuGetPushSettings nuGetPushSettings, int? timeout)
+        public static NuGetPushSettings SetTimeout(this NuGetPushSettings toolSettings, int? timeout)
         {
-            nuGetPushSettings = nuGetPushSettings.NewInstance();
-            nuGetPushSettings.Timeout = timeout;
-            return nuGetPushSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Timeout = timeout;
+            return toolSettings;
         }
     }
     [PublicAPI]
@@ -485,411 +485,411 @@ namespace Nuke.Common.Tools.NuGet
     {
         /// <summary><p><i>Extension method for setting <see cref="NuGetPackSettings.TargetPath"/>.</i></p><p>The <c>.nuspec</c> or <c>.csproj</c> file.</p></summary>
         [Pure]
-        public static NuGetPackSettings SetTargetPath(this NuGetPackSettings nuGetPackSettings, string targetPath)
+        public static NuGetPackSettings SetTargetPath(this NuGetPackSettings toolSettings, string targetPath)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.TargetPath = targetPath;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetPath = targetPath;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPackSettings.BasePath"/>.</i></p><p>Sets the base path of the files defined in the <c>.nuspec</c> file.</p></summary>
         [Pure]
-        public static NuGetPackSettings SetBasePath(this NuGetPackSettings nuGetPackSettings, string basePath)
+        public static NuGetPackSettings SetBasePath(this NuGetPackSettings toolSettings, string basePath)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.BasePath = basePath;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BasePath = basePath;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPackSettings.Build"/>.</i></p><p>Specifies that the project should be built before building the package.</p></summary>
         [Pure]
-        public static NuGetPackSettings SetBuild(this NuGetPackSettings nuGetPackSettings, bool build)
+        public static NuGetPackSettings SetBuild(this NuGetPackSettings toolSettings, bool build)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.Build = build;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Build = build;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="NuGetPackSettings.Build"/>.</i></p><p>Specifies that the project should be built before building the package.</p></summary>
         [Pure]
-        public static NuGetPackSettings EnableBuild(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings EnableBuild(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.Build = true;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Build = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="NuGetPackSettings.Build"/>.</i></p><p>Specifies that the project should be built before building the package.</p></summary>
         [Pure]
-        public static NuGetPackSettings DisableBuild(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings DisableBuild(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.Build = false;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Build = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="NuGetPackSettings.Build"/>.</i></p><p>Specifies that the project should be built before building the package.</p></summary>
         [Pure]
-        public static NuGetPackSettings ToggleBuild(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings ToggleBuild(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.Build = !nuGetPackSettings.Build;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Build = !toolSettings.Build;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPackSettings.Exclude"/>.</i></p><p>Specifies one or more wildcard patterns to exclude when creating a package.</p></summary>
         [Pure]
-        public static NuGetPackSettings SetExclude(this NuGetPackSettings nuGetPackSettings, string exclude)
+        public static NuGetPackSettings SetExclude(this NuGetPackSettings toolSettings, string exclude)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.Exclude = exclude;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Exclude = exclude;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPackSettings.ExcludeEmptyDirectories"/>.</i></p><p>Prevent inclusion of empty directories when building the package.</p></summary>
         [Pure]
-        public static NuGetPackSettings SetExcludeEmptyDirectories(this NuGetPackSettings nuGetPackSettings, bool excludeEmptyDirectories)
+        public static NuGetPackSettings SetExcludeEmptyDirectories(this NuGetPackSettings toolSettings, bool excludeEmptyDirectories)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.ExcludeEmptyDirectories = excludeEmptyDirectories;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeEmptyDirectories = excludeEmptyDirectories;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="NuGetPackSettings.ExcludeEmptyDirectories"/>.</i></p><p>Prevent inclusion of empty directories when building the package.</p></summary>
         [Pure]
-        public static NuGetPackSettings EnableExcludeEmptyDirectories(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings EnableExcludeEmptyDirectories(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.ExcludeEmptyDirectories = true;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeEmptyDirectories = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="NuGetPackSettings.ExcludeEmptyDirectories"/>.</i></p><p>Prevent inclusion of empty directories when building the package.</p></summary>
         [Pure]
-        public static NuGetPackSettings DisableExcludeEmptyDirectories(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings DisableExcludeEmptyDirectories(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.ExcludeEmptyDirectories = false;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeEmptyDirectories = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="NuGetPackSettings.ExcludeEmptyDirectories"/>.</i></p><p>Prevent inclusion of empty directories when building the package.</p></summary>
         [Pure]
-        public static NuGetPackSettings ToggleExcludeEmptyDirectories(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings ToggleExcludeEmptyDirectories(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.ExcludeEmptyDirectories = !nuGetPackSettings.ExcludeEmptyDirectories;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeEmptyDirectories = !toolSettings.ExcludeEmptyDirectories;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPackSettings.IncludeReferencedProjects"/>.</i></p><p>Indicates that the built package should include referenced projects either as dependencies or as part of the package. If a referenced project has a corresponding <c>.nuspec</c> file that has the same name as the project, then that referenced project is added as a dependency. Otherwise, the referenced project is added as part of the package.</p></summary>
         [Pure]
-        public static NuGetPackSettings SetIncludeReferencedProjects(this NuGetPackSettings nuGetPackSettings, bool includeReferencedProjects)
+        public static NuGetPackSettings SetIncludeReferencedProjects(this NuGetPackSettings toolSettings, bool includeReferencedProjects)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.IncludeReferencedProjects = includeReferencedProjects;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeReferencedProjects = includeReferencedProjects;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="NuGetPackSettings.IncludeReferencedProjects"/>.</i></p><p>Indicates that the built package should include referenced projects either as dependencies or as part of the package. If a referenced project has a corresponding <c>.nuspec</c> file that has the same name as the project, then that referenced project is added as a dependency. Otherwise, the referenced project is added as part of the package.</p></summary>
         [Pure]
-        public static NuGetPackSettings EnableIncludeReferencedProjects(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings EnableIncludeReferencedProjects(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.IncludeReferencedProjects = true;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeReferencedProjects = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="NuGetPackSettings.IncludeReferencedProjects"/>.</i></p><p>Indicates that the built package should include referenced projects either as dependencies or as part of the package. If a referenced project has a corresponding <c>.nuspec</c> file that has the same name as the project, then that referenced project is added as a dependency. Otherwise, the referenced project is added as part of the package.</p></summary>
         [Pure]
-        public static NuGetPackSettings DisableIncludeReferencedProjects(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings DisableIncludeReferencedProjects(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.IncludeReferencedProjects = false;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeReferencedProjects = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="NuGetPackSettings.IncludeReferencedProjects"/>.</i></p><p>Indicates that the built package should include referenced projects either as dependencies or as part of the package. If a referenced project has a corresponding <c>.nuspec</c> file that has the same name as the project, then that referenced project is added as a dependency. Otherwise, the referenced project is added as part of the package.</p></summary>
         [Pure]
-        public static NuGetPackSettings ToggleIncludeReferencedProjects(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings ToggleIncludeReferencedProjects(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.IncludeReferencedProjects = !nuGetPackSettings.IncludeReferencedProjects;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeReferencedProjects = !toolSettings.IncludeReferencedProjects;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPackSettings.MinClientVersion"/>.</i></p><p>Set the <i>minClientVersion</i> attribute for the created package. This value will override the value of the existing <i>minClientVersion</i> attribute (if any) in the <c>.nuspec</c> file.</p></summary>
         [Pure]
-        public static NuGetPackSettings SetMinClientVersion(this NuGetPackSettings nuGetPackSettings, bool minClientVersion)
+        public static NuGetPackSettings SetMinClientVersion(this NuGetPackSettings toolSettings, bool minClientVersion)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.MinClientVersion = minClientVersion;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MinClientVersion = minClientVersion;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="NuGetPackSettings.MinClientVersion"/>.</i></p><p>Set the <i>minClientVersion</i> attribute for the created package. This value will override the value of the existing <i>minClientVersion</i> attribute (if any) in the <c>.nuspec</c> file.</p></summary>
         [Pure]
-        public static NuGetPackSettings EnableMinClientVersion(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings EnableMinClientVersion(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.MinClientVersion = true;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MinClientVersion = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="NuGetPackSettings.MinClientVersion"/>.</i></p><p>Set the <i>minClientVersion</i> attribute for the created package. This value will override the value of the existing <i>minClientVersion</i> attribute (if any) in the <c>.nuspec</c> file.</p></summary>
         [Pure]
-        public static NuGetPackSettings DisableMinClientVersion(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings DisableMinClientVersion(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.MinClientVersion = false;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MinClientVersion = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="NuGetPackSettings.MinClientVersion"/>.</i></p><p>Set the <i>minClientVersion</i> attribute for the created package. This value will override the value of the existing <i>minClientVersion</i> attribute (if any) in the <c>.nuspec</c> file.</p></summary>
         [Pure]
-        public static NuGetPackSettings ToggleMinClientVersion(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings ToggleMinClientVersion(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.MinClientVersion = !nuGetPackSettings.MinClientVersion;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MinClientVersion = !toolSettings.MinClientVersion;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPackSettings.ForceEnglishOutput"/>.</i></p><p><i>(3.5+)</i> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
-        public static NuGetPackSettings SetForceEnglishOutput(this NuGetPackSettings nuGetPackSettings, bool forceEnglishOutput)
+        public static NuGetPackSettings SetForceEnglishOutput(this NuGetPackSettings toolSettings, bool forceEnglishOutput)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.ForceEnglishOutput = forceEnglishOutput;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = forceEnglishOutput;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="NuGetPackSettings.ForceEnglishOutput"/>.</i></p><p><i>(3.5+)</i> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
-        public static NuGetPackSettings EnableForceEnglishOutput(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings EnableForceEnglishOutput(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.ForceEnglishOutput = true;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="NuGetPackSettings.ForceEnglishOutput"/>.</i></p><p><i>(3.5+)</i> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
-        public static NuGetPackSettings DisableForceEnglishOutput(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings DisableForceEnglishOutput(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.ForceEnglishOutput = false;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="NuGetPackSettings.ForceEnglishOutput"/>.</i></p><p><i>(3.5+)</i> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
-        public static NuGetPackSettings ToggleForceEnglishOutput(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings ToggleForceEnglishOutput(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.ForceEnglishOutput = !nuGetPackSettings.ForceEnglishOutput;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = !toolSettings.ForceEnglishOutput;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPackSettings.MSBuildPath"/>.</i></p><p><i>(4.0+)</i> Specifies the path of MSBuild to use with the command, taking precedence over <c>-MSBuildVersion</c>.</p></summary>
         [Pure]
-        public static NuGetPackSettings SetMSBuildPath(this NuGetPackSettings nuGetPackSettings, string msbuildPath)
+        public static NuGetPackSettings SetMSBuildPath(this NuGetPackSettings toolSettings, string msbuildPath)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.MSBuildPath = msbuildPath;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MSBuildPath = msbuildPath;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPackSettings.MSBuildVersion"/>.</i></p><p><i>(3.2+)</i> Specifies the version of MSBuild to be used with this command. Supported values are <i>4</i>, <i>12</i>, <i>14</i>. By default the MSBuild in your path is picked, otherwise it defaults to the highest installed version of MSBuild.</p></summary>
         [Pure]
-        public static NuGetPackSettings SetMSBuildVersion(this NuGetPackSettings nuGetPackSettings, Nuke.Common.Tools.MSBuild.MSBuildVersion? msbuildVersion)
+        public static NuGetPackSettings SetMSBuildVersion(this NuGetPackSettings toolSettings, NuGetMSBuildVersion? msbuildVersion)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.MSBuildVersion = msbuildVersion;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MSBuildVersion = msbuildVersion;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPackSettings.NoDefaultExcludes"/>.</i></p><p>Prevents default exclusion of NuGet package files and files and folders starting with a dot, such as <i>.svn</i> and <c>.gitignore</c>.</p></summary>
         [Pure]
-        public static NuGetPackSettings SetNoDefaultExcludes(this NuGetPackSettings nuGetPackSettings, bool noDefaultExcludes)
+        public static NuGetPackSettings SetNoDefaultExcludes(this NuGetPackSettings toolSettings, bool noDefaultExcludes)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.NoDefaultExcludes = noDefaultExcludes;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDefaultExcludes = noDefaultExcludes;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="NuGetPackSettings.NoDefaultExcludes"/>.</i></p><p>Prevents default exclusion of NuGet package files and files and folders starting with a dot, such as <i>.svn</i> and <c>.gitignore</c>.</p></summary>
         [Pure]
-        public static NuGetPackSettings EnableNoDefaultExcludes(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings EnableNoDefaultExcludes(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.NoDefaultExcludes = true;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDefaultExcludes = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="NuGetPackSettings.NoDefaultExcludes"/>.</i></p><p>Prevents default exclusion of NuGet package files and files and folders starting with a dot, such as <i>.svn</i> and <c>.gitignore</c>.</p></summary>
         [Pure]
-        public static NuGetPackSettings DisableNoDefaultExcludes(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings DisableNoDefaultExcludes(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.NoDefaultExcludes = false;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDefaultExcludes = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="NuGetPackSettings.NoDefaultExcludes"/>.</i></p><p>Prevents default exclusion of NuGet package files and files and folders starting with a dot, such as <i>.svn</i> and <c>.gitignore</c>.</p></summary>
         [Pure]
-        public static NuGetPackSettings ToggleNoDefaultExcludes(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings ToggleNoDefaultExcludes(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.NoDefaultExcludes = !nuGetPackSettings.NoDefaultExcludes;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDefaultExcludes = !toolSettings.NoDefaultExcludes;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPackSettings.NoPackageAnalysis"/>.</i></p><p>Specifies that pack should not run package analysis after building the package.</p></summary>
         [Pure]
-        public static NuGetPackSettings SetNoPackageAnalysis(this NuGetPackSettings nuGetPackSettings, bool noPackageAnalysis)
+        public static NuGetPackSettings SetNoPackageAnalysis(this NuGetPackSettings toolSettings, bool noPackageAnalysis)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.NoPackageAnalysis = noPackageAnalysis;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoPackageAnalysis = noPackageAnalysis;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="NuGetPackSettings.NoPackageAnalysis"/>.</i></p><p>Specifies that pack should not run package analysis after building the package.</p></summary>
         [Pure]
-        public static NuGetPackSettings EnableNoPackageAnalysis(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings EnableNoPackageAnalysis(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.NoPackageAnalysis = true;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoPackageAnalysis = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="NuGetPackSettings.NoPackageAnalysis"/>.</i></p><p>Specifies that pack should not run package analysis after building the package.</p></summary>
         [Pure]
-        public static NuGetPackSettings DisableNoPackageAnalysis(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings DisableNoPackageAnalysis(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.NoPackageAnalysis = false;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoPackageAnalysis = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="NuGetPackSettings.NoPackageAnalysis"/>.</i></p><p>Specifies that pack should not run package analysis after building the package.</p></summary>
         [Pure]
-        public static NuGetPackSettings ToggleNoPackageAnalysis(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings ToggleNoPackageAnalysis(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.NoPackageAnalysis = !nuGetPackSettings.NoPackageAnalysis;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoPackageAnalysis = !toolSettings.NoPackageAnalysis;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPackSettings.OutputDirectory"/>.</i></p><p>Specifies the folder in which the created package is stored. If no folder is specified, the current folder is used.</p></summary>
         [Pure]
-        public static NuGetPackSettings SetOutputDirectory(this NuGetPackSettings nuGetPackSettings, string outputDirectory)
+        public static NuGetPackSettings SetOutputDirectory(this NuGetPackSettings toolSettings, string outputDirectory)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.OutputDirectory = outputDirectory;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OutputDirectory = outputDirectory;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPackSettings.Properties"/> to a new dictionary.</i></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
         [Pure]
-        public static NuGetPackSettings SetProperties(this NuGetPackSettings nuGetPackSettings, IDictionary<string, string> properties)
+        public static NuGetPackSettings SetProperties(this NuGetPackSettings toolSettings, IDictionary<string, string> properties)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for clearing <see cref="NuGetPackSettings.Properties"/>.</i></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
         [Pure]
-        public static NuGetPackSettings ClearProperties(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings ClearProperties(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.PropertiesInternal.Clear();
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Clear();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding a property to <see cref="NuGetPackSettings.Properties"/>.</i></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
         [Pure]
-        public static NuGetPackSettings AddProperty(this NuGetPackSettings nuGetPackSettings, string propertyKey, string propertyValue)
+        public static NuGetPackSettings AddProperty(this NuGetPackSettings toolSettings, string propertyKey, string propertyValue)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.PropertiesInternal.Add(propertyKey, propertyValue);
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for removing a property from <see cref="NuGetPackSettings.Properties"/>.</i></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
         [Pure]
-        public static NuGetPackSettings RemoveProperty(this NuGetPackSettings nuGetPackSettings, string propertyKey)
+        public static NuGetPackSettings RemoveProperty(this NuGetPackSettings toolSettings, string propertyKey)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.PropertiesInternal.Remove(propertyKey);
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove(propertyKey);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting a property in <see cref="NuGetPackSettings.Properties"/>.</i></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
         [Pure]
-        public static NuGetPackSettings SetProperty(this NuGetPackSettings nuGetPackSettings, string propertyKey, string propertyValue)
+        public static NuGetPackSettings SetProperty(this NuGetPackSettings toolSettings, string propertyKey, string propertyValue)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.PropertiesInternal[propertyKey] = propertyValue;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal[propertyKey] = propertyValue;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPackSettings.Suffix"/>.</i></p><p><i>(3.4.4+)</i> Appends a suffix to the internally generated version number, typically used for appending build or other pre-release identifiers. For example, using <c>-suffix nightly</c> will create a package with a version number like <c>1.2.3-nightly</c>. Suffixes must start with a letter to avoid warnings, errors, and potential incompatibilities with different versions of NuGet and the NuGet Package Manager.</p></summary>
         [Pure]
-        public static NuGetPackSettings SetSuffix(this NuGetPackSettings nuGetPackSettings, string suffix)
+        public static NuGetPackSettings SetSuffix(this NuGetPackSettings toolSettings, string suffix)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.Suffix = suffix;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Suffix = suffix;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPackSettings.Symbols"/>.</i></p><p>Specifies that the package contains sources and symbols. When used with a <c>.nuspec</c> file, this creates a regular NuGet package file and the corresponding symbols package.</p></summary>
         [Pure]
-        public static NuGetPackSettings SetSymbols(this NuGetPackSettings nuGetPackSettings, bool symbols)
+        public static NuGetPackSettings SetSymbols(this NuGetPackSettings toolSettings, bool symbols)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.Symbols = symbols;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Symbols = symbols;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="NuGetPackSettings.Symbols"/>.</i></p><p>Specifies that the package contains sources and symbols. When used with a <c>.nuspec</c> file, this creates a regular NuGet package file and the corresponding symbols package.</p></summary>
         [Pure]
-        public static NuGetPackSettings EnableSymbols(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings EnableSymbols(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.Symbols = true;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Symbols = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="NuGetPackSettings.Symbols"/>.</i></p><p>Specifies that the package contains sources and symbols. When used with a <c>.nuspec</c> file, this creates a regular NuGet package file and the corresponding symbols package.</p></summary>
         [Pure]
-        public static NuGetPackSettings DisableSymbols(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings DisableSymbols(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.Symbols = false;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Symbols = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="NuGetPackSettings.Symbols"/>.</i></p><p>Specifies that the package contains sources and symbols. When used with a <c>.nuspec</c> file, this creates a regular NuGet package file and the corresponding symbols package.</p></summary>
         [Pure]
-        public static NuGetPackSettings ToggleSymbols(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings ToggleSymbols(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.Symbols = !nuGetPackSettings.Symbols;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Symbols = !toolSettings.Symbols;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPackSettings.Tool"/>.</i></p><p>Specifies that the output files of the project should be placed in the <c>tool</c> folder.</p></summary>
         [Pure]
-        public static NuGetPackSettings SetTool(this NuGetPackSettings nuGetPackSettings, bool tool)
+        public static NuGetPackSettings SetTool(this NuGetPackSettings toolSettings, bool tool)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.Tool = tool;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Tool = tool;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="NuGetPackSettings.Tool"/>.</i></p><p>Specifies that the output files of the project should be placed in the <c>tool</c> folder.</p></summary>
         [Pure]
-        public static NuGetPackSettings EnableTool(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings EnableTool(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.Tool = true;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Tool = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="NuGetPackSettings.Tool"/>.</i></p><p>Specifies that the output files of the project should be placed in the <c>tool</c> folder.</p></summary>
         [Pure]
-        public static NuGetPackSettings DisableTool(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings DisableTool(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.Tool = false;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Tool = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="NuGetPackSettings.Tool"/>.</i></p><p>Specifies that the output files of the project should be placed in the <c>tool</c> folder.</p></summary>
         [Pure]
-        public static NuGetPackSettings ToggleTool(this NuGetPackSettings nuGetPackSettings)
+        public static NuGetPackSettings ToggleTool(this NuGetPackSettings toolSettings)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.Tool = !nuGetPackSettings.Tool;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Tool = !toolSettings.Tool;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPackSettings.Verbosity"/>.</i></p><p><i>(2.5+)</i> Specifies the amount of details displayed in the output: <i>normal</i>, <i>quiet</i>, <i>detailed</i>.</p></summary>
         [Pure]
-        public static NuGetPackSettings SetVerbosity(this NuGetPackSettings nuGetPackSettings, NuGetVerbosity? verbosity)
+        public static NuGetPackSettings SetVerbosity(this NuGetPackSettings toolSettings, NuGetVerbosity? verbosity)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.Verbosity = verbosity;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = verbosity;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPackSettings.Version"/>.</i></p><p>Overrides the version number from the <c>.nuspec</c> file.</p></summary>
         [Pure]
-        public static NuGetPackSettings SetVersion(this NuGetPackSettings nuGetPackSettings, string version)
+        public static NuGetPackSettings SetVersion(this NuGetPackSettings toolSettings, string version)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.Version = version;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Version = version;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetPackSettings.Configuration"/>.</i></p></summary>
         [Pure]
-        public static NuGetPackSettings SetConfiguration(this NuGetPackSettings nuGetPackSettings, string configuration)
+        public static NuGetPackSettings SetConfiguration(this NuGetPackSettings toolSettings, string configuration)
         {
-            nuGetPackSettings = nuGetPackSettings.NewInstance();
-            nuGetPackSettings.Configuration = configuration;
-            return nuGetPackSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Configuration = configuration;
+            return toolSettings;
         }
     }
     [PublicAPI]
@@ -898,419 +898,419 @@ namespace Nuke.Common.Tools.NuGet
     {
         /// <summary><p><i>Extension method for setting <see cref="NuGetRestoreSettings.TargetPath"/>.</i></p><p>Defines the project to restore. I.e., the location of a solution file, a <c>packages.config</c>, or a <c>project.json</c> file.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings SetTargetPath(this NuGetRestoreSettings nuGetRestoreSettings, string targetPath)
+        public static NuGetRestoreSettings SetTargetPath(this NuGetRestoreSettings toolSettings, string targetPath)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.TargetPath = targetPath;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetPath = targetPath;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetRestoreSettings.ConfigFile"/>.</i></p><p>The NuGet configuration file to apply. If not specified, <i>%AppData%\NuGet\NuGet.Config</i> is used.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings SetConfigFile(this NuGetRestoreSettings nuGetRestoreSettings, string configFile)
+        public static NuGetRestoreSettings SetConfigFile(this NuGetRestoreSettings toolSettings, string configFile)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.ConfigFile = configFile;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = configFile;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetRestoreSettings.DirectDownload"/>.</i></p><p><i>(4.0+)</i> Downloads packages directly without populating caches with any binaries or metadata.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings SetDirectDownload(this NuGetRestoreSettings nuGetRestoreSettings, bool directDownload)
+        public static NuGetRestoreSettings SetDirectDownload(this NuGetRestoreSettings toolSettings, bool directDownload)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.DirectDownload = directDownload;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DirectDownload = directDownload;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="NuGetRestoreSettings.DirectDownload"/>.</i></p><p><i>(4.0+)</i> Downloads packages directly without populating caches with any binaries or metadata.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings EnableDirectDownload(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings EnableDirectDownload(this NuGetRestoreSettings toolSettings)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.DirectDownload = true;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DirectDownload = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="NuGetRestoreSettings.DirectDownload"/>.</i></p><p><i>(4.0+)</i> Downloads packages directly without populating caches with any binaries or metadata.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings DisableDirectDownload(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings DisableDirectDownload(this NuGetRestoreSettings toolSettings)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.DirectDownload = false;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DirectDownload = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="NuGetRestoreSettings.DirectDownload"/>.</i></p><p><i>(4.0+)</i> Downloads packages directly without populating caches with any binaries or metadata.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings ToggleDirectDownload(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings ToggleDirectDownload(this NuGetRestoreSettings toolSettings)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.DirectDownload = !nuGetRestoreSettings.DirectDownload;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DirectDownload = !toolSettings.DirectDownload;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetRestoreSettings.DisableParallelProcessing"/>.</i></p><p>Disables restoring multiple packages in parallel.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings SetDisableParallelProcessing(this NuGetRestoreSettings nuGetRestoreSettings, bool disableParallelProcessing)
+        public static NuGetRestoreSettings SetDisableParallelProcessing(this NuGetRestoreSettings toolSettings, bool disableParallelProcessing)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.DisableParallelProcessing = disableParallelProcessing;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallelProcessing = disableParallelProcessing;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="NuGetRestoreSettings.DisableParallelProcessing"/>.</i></p><p>Disables restoring multiple packages in parallel.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings EnableDisableParallelProcessing(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings EnableDisableParallelProcessing(this NuGetRestoreSettings toolSettings)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.DisableParallelProcessing = true;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallelProcessing = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="NuGetRestoreSettings.DisableParallelProcessing"/>.</i></p><p>Disables restoring multiple packages in parallel.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings DisableDisableParallelProcessing(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings DisableDisableParallelProcessing(this NuGetRestoreSettings toolSettings)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.DisableParallelProcessing = false;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallelProcessing = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="NuGetRestoreSettings.DisableParallelProcessing"/>.</i></p><p>Disables restoring multiple packages in parallel.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings ToggleDisableParallelProcessing(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings ToggleDisableParallelProcessing(this NuGetRestoreSettings toolSettings)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.DisableParallelProcessing = !nuGetRestoreSettings.DisableParallelProcessing;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallelProcessing = !toolSettings.DisableParallelProcessing;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetRestoreSettings.FallbackSource"/> to a new list.</i></p><p><i>(3.2+)</i> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings SetFallbackSource(this NuGetRestoreSettings nuGetRestoreSettings, params string[] fallbackSource)
+        public static NuGetRestoreSettings SetFallbackSource(this NuGetRestoreSettings toolSettings, params string[] fallbackSource)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.FallbackSourceInternal = fallbackSource.ToList();
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FallbackSourceInternal = fallbackSource.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetRestoreSettings.FallbackSource"/> to a new list.</i></p><p><i>(3.2+)</i> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings SetFallbackSource(this NuGetRestoreSettings nuGetRestoreSettings, IEnumerable<string> fallbackSource)
+        public static NuGetRestoreSettings SetFallbackSource(this NuGetRestoreSettings toolSettings, IEnumerable<string> fallbackSource)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.FallbackSourceInternal = fallbackSource.ToList();
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FallbackSourceInternal = fallbackSource.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new fallbackSource to the existing <see cref="NuGetRestoreSettings.FallbackSource"/>.</i></p><p><i>(3.2+)</i> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings AddFallbackSource(this NuGetRestoreSettings nuGetRestoreSettings, params string[] fallbackSource)
+        public static NuGetRestoreSettings AddFallbackSource(this NuGetRestoreSettings toolSettings, params string[] fallbackSource)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.FallbackSourceInternal.AddRange(fallbackSource);
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FallbackSourceInternal.AddRange(fallbackSource);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new fallbackSource to the existing <see cref="NuGetRestoreSettings.FallbackSource"/>.</i></p><p><i>(3.2+)</i> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings AddFallbackSource(this NuGetRestoreSettings nuGetRestoreSettings, IEnumerable<string> fallbackSource)
+        public static NuGetRestoreSettings AddFallbackSource(this NuGetRestoreSettings toolSettings, IEnumerable<string> fallbackSource)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.FallbackSourceInternal.AddRange(fallbackSource);
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FallbackSourceInternal.AddRange(fallbackSource);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for clearing <see cref="NuGetRestoreSettings.FallbackSource"/>.</i></p><p><i>(3.2+)</i> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings ClearFallbackSource(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings ClearFallbackSource(this NuGetRestoreSettings toolSettings)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.FallbackSourceInternal.Clear();
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FallbackSourceInternal.Clear();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding a single fallbackSource to <see cref="NuGetRestoreSettings.FallbackSource"/>.</i></p><p><i>(3.2+)</i> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings AddFallbackSource(this NuGetRestoreSettings nuGetRestoreSettings, string fallbackSource)
+        public static NuGetRestoreSettings AddFallbackSource(this NuGetRestoreSettings toolSettings, string fallbackSource, bool evenIfNull = true)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.FallbackSourceInternal.Add(fallbackSource);
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            if (fallbackSource != null || evenIfNull) toolSettings.FallbackSourceInternal.Add(fallbackSource);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for removing a single fallbackSource from <see cref="NuGetRestoreSettings.FallbackSource"/>.</i></p><p><i>(3.2+)</i> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings RemoveFallbackSource(this NuGetRestoreSettings nuGetRestoreSettings, string fallbackSource)
+        public static NuGetRestoreSettings RemoveFallbackSource(this NuGetRestoreSettings toolSettings, string fallbackSource)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.FallbackSourceInternal.Remove(fallbackSource);
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FallbackSourceInternal.Remove(fallbackSource);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetRestoreSettings.ForceEnglishOutput"/>.</i></p><p><i>(3.5+)</i> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings SetForceEnglishOutput(this NuGetRestoreSettings nuGetRestoreSettings, bool forceEnglishOutput)
+        public static NuGetRestoreSettings SetForceEnglishOutput(this NuGetRestoreSettings toolSettings, bool forceEnglishOutput)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.ForceEnglishOutput = forceEnglishOutput;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = forceEnglishOutput;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="NuGetRestoreSettings.ForceEnglishOutput"/>.</i></p><p><i>(3.5+)</i> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings EnableForceEnglishOutput(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings EnableForceEnglishOutput(this NuGetRestoreSettings toolSettings)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.ForceEnglishOutput = true;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="NuGetRestoreSettings.ForceEnglishOutput"/>.</i></p><p><i>(3.5+)</i> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings DisableForceEnglishOutput(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings DisableForceEnglishOutput(this NuGetRestoreSettings toolSettings)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.ForceEnglishOutput = false;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="NuGetRestoreSettings.ForceEnglishOutput"/>.</i></p><p><i>(3.5+)</i> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings ToggleForceEnglishOutput(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings ToggleForceEnglishOutput(this NuGetRestoreSettings toolSettings)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.ForceEnglishOutput = !nuGetRestoreSettings.ForceEnglishOutput;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = !toolSettings.ForceEnglishOutput;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetRestoreSettings.MSBuildPath"/>.</i></p><p><i>(4.0+)</i> Specifies the path of MSBuild to use with the command, taking precedence over <c>-MSBuildVersion</c>.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings SetMSBuildPath(this NuGetRestoreSettings nuGetRestoreSettings, string msbuildPath)
+        public static NuGetRestoreSettings SetMSBuildPath(this NuGetRestoreSettings toolSettings, string msbuildPath)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.MSBuildPath = msbuildPath;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MSBuildPath = msbuildPath;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetRestoreSettings.MSBuildVersion"/>.</i></p><p><i>(3.2+)</i> Specifies the version of MSBuild to be used with this command. Supported values are <i>4</i>, <i>12</i>, <i>14</i>, <i>15</i>. By default the MSBuild in your path is picked, otherwise it defaults to the highest installed version of MSBuild.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings SetMSBuildVersion(this NuGetRestoreSettings nuGetRestoreSettings, Nuke.Common.Tools.MSBuild.MSBuildVersion? msbuildVersion)
+        public static NuGetRestoreSettings SetMSBuildVersion(this NuGetRestoreSettings toolSettings, Nuke.Common.Tools.MSBuild.MSBuildVersion? msbuildVersion)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.MSBuildVersion = msbuildVersion;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MSBuildVersion = msbuildVersion;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetRestoreSettings.NoCache"/>.</i></p><p>Prevents NuGet from using packages from local machine caches.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings SetNoCache(this NuGetRestoreSettings nuGetRestoreSettings, bool noCache)
+        public static NuGetRestoreSettings SetNoCache(this NuGetRestoreSettings toolSettings, bool noCache)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.NoCache = noCache;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = noCache;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="NuGetRestoreSettings.NoCache"/>.</i></p><p>Prevents NuGet from using packages from local machine caches.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings EnableNoCache(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings EnableNoCache(this NuGetRestoreSettings toolSettings)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.NoCache = true;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="NuGetRestoreSettings.NoCache"/>.</i></p><p>Prevents NuGet from using packages from local machine caches.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings DisableNoCache(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings DisableNoCache(this NuGetRestoreSettings toolSettings)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.NoCache = false;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="NuGetRestoreSettings.NoCache"/>.</i></p><p>Prevents NuGet from using packages from local machine caches.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings ToggleNoCache(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings ToggleNoCache(this NuGetRestoreSettings toolSettings)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.NoCache = !nuGetRestoreSettings.NoCache;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = !toolSettings.NoCache;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetRestoreSettings.NonInteractive"/>.</i></p><p>Suppresses prompts for user input or confirmations.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings SetNonInteractive(this NuGetRestoreSettings nuGetRestoreSettings, bool nonInteractive)
+        public static NuGetRestoreSettings SetNonInteractive(this NuGetRestoreSettings toolSettings, bool nonInteractive)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.NonInteractive = nonInteractive;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = nonInteractive;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="NuGetRestoreSettings.NonInteractive"/>.</i></p><p>Suppresses prompts for user input or confirmations.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings EnableNonInteractive(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings EnableNonInteractive(this NuGetRestoreSettings toolSettings)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.NonInteractive = true;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="NuGetRestoreSettings.NonInteractive"/>.</i></p><p>Suppresses prompts for user input or confirmations.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings DisableNonInteractive(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings DisableNonInteractive(this NuGetRestoreSettings toolSettings)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.NonInteractive = false;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="NuGetRestoreSettings.NonInteractive"/>.</i></p><p>Suppresses prompts for user input or confirmations.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings ToggleNonInteractive(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings ToggleNonInteractive(this NuGetRestoreSettings toolSettings)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.NonInteractive = !nuGetRestoreSettings.NonInteractive;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = !toolSettings.NonInteractive;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetRestoreSettings.OutputDirectory"/>.</i></p><p>Specifies the folder in which packages are installed. If no folder is specified, the current folder is used.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings SetOutputDirectory(this NuGetRestoreSettings nuGetRestoreSettings, string outputDirectory)
+        public static NuGetRestoreSettings SetOutputDirectory(this NuGetRestoreSettings toolSettings, string outputDirectory)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.OutputDirectory = outputDirectory;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OutputDirectory = outputDirectory;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetRestoreSettings.PackageSaveMode"/>.</i></p><p>Specifies the types of files to save after package installation: one of <c>nuspec</c>, <c>nupkg</c>, or <c>nuspec;nupkg</c>.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings SetPackageSaveMode(this NuGetRestoreSettings nuGetRestoreSettings, PackageSaveMode? packageSaveMode)
+        public static NuGetRestoreSettings SetPackageSaveMode(this NuGetRestoreSettings toolSettings, PackageSaveMode? packageSaveMode)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.PackageSaveMode = packageSaveMode;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageSaveMode = packageSaveMode;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetRestoreSettings.PackagesDirectory"/>.</i></p><p>Same as <c>OutputDirectory</c>.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings SetPackagesDirectory(this NuGetRestoreSettings nuGetRestoreSettings, string packagesDirectory)
+        public static NuGetRestoreSettings SetPackagesDirectory(this NuGetRestoreSettings toolSettings, string packagesDirectory)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.PackagesDirectory = packagesDirectory;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackagesDirectory = packagesDirectory;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetRestoreSettings.Project2ProjectTimeOut"/>.</i></p><p>Timeout in seconds for resolving project-to-project references.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings SetProject2ProjectTimeOut(this NuGetRestoreSettings nuGetRestoreSettings, int? project2ProjectTimeOut)
+        public static NuGetRestoreSettings SetProject2ProjectTimeOut(this NuGetRestoreSettings toolSettings, int? project2ProjectTimeOut)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.Project2ProjectTimeOut = project2ProjectTimeOut;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Project2ProjectTimeOut = project2ProjectTimeOut;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetRestoreSettings.Recursive"/>.</i></p><p><i>(4.0+)</i> Restores all references projects for UWP and .NET Core projects. Does not apply to projects using <c>packages.config</c>.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings SetRecursive(this NuGetRestoreSettings nuGetRestoreSettings, bool recursive)
+        public static NuGetRestoreSettings SetRecursive(this NuGetRestoreSettings toolSettings, bool recursive)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.Recursive = recursive;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Recursive = recursive;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="NuGetRestoreSettings.Recursive"/>.</i></p><p><i>(4.0+)</i> Restores all references projects for UWP and .NET Core projects. Does not apply to projects using <c>packages.config</c>.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings EnableRecursive(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings EnableRecursive(this NuGetRestoreSettings toolSettings)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.Recursive = true;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Recursive = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="NuGetRestoreSettings.Recursive"/>.</i></p><p><i>(4.0+)</i> Restores all references projects for UWP and .NET Core projects. Does not apply to projects using <c>packages.config</c>.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings DisableRecursive(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings DisableRecursive(this NuGetRestoreSettings toolSettings)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.Recursive = false;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Recursive = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="NuGetRestoreSettings.Recursive"/>.</i></p><p><i>(4.0+)</i> Restores all references projects for UWP and .NET Core projects. Does not apply to projects using <c>packages.config</c>.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings ToggleRecursive(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings ToggleRecursive(this NuGetRestoreSettings toolSettings)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.Recursive = !nuGetRestoreSettings.Recursive;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Recursive = !toolSettings.Recursive;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetRestoreSettings.RequireConsent"/>.</i></p><p>Verifies that restoring packages is enabled before downloading and installing the packages. For details, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore">Package Restore</a>.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings SetRequireConsent(this NuGetRestoreSettings nuGetRestoreSettings, bool requireConsent)
+        public static NuGetRestoreSettings SetRequireConsent(this NuGetRestoreSettings toolSettings, bool requireConsent)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.RequireConsent = requireConsent;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequireConsent = requireConsent;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="NuGetRestoreSettings.RequireConsent"/>.</i></p><p>Verifies that restoring packages is enabled before downloading and installing the packages. For details, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore">Package Restore</a>.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings EnableRequireConsent(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings EnableRequireConsent(this NuGetRestoreSettings toolSettings)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.RequireConsent = true;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequireConsent = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="NuGetRestoreSettings.RequireConsent"/>.</i></p><p>Verifies that restoring packages is enabled before downloading and installing the packages. For details, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore">Package Restore</a>.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings DisableRequireConsent(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings DisableRequireConsent(this NuGetRestoreSettings toolSettings)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.RequireConsent = false;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequireConsent = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="NuGetRestoreSettings.RequireConsent"/>.</i></p><p>Verifies that restoring packages is enabled before downloading and installing the packages. For details, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore">Package Restore</a>.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings ToggleRequireConsent(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings ToggleRequireConsent(this NuGetRestoreSettings toolSettings)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.RequireConsent = !nuGetRestoreSettings.RequireConsent;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequireConsent = !toolSettings.RequireConsent;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetRestoreSettings.SolutionDirectory"/>.</i></p><p>Specifies the solution folder. Not valid when restoring packages for a solution.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings SetSolutionDirectory(this NuGetRestoreSettings nuGetRestoreSettings, string solutionDirectory)
+        public static NuGetRestoreSettings SetSolutionDirectory(this NuGetRestoreSettings toolSettings, string solutionDirectory)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.SolutionDirectory = solutionDirectory;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SolutionDirectory = solutionDirectory;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetRestoreSettings.Source"/> to a new list.</i></p><p>Specifies list of package sources to use for the restore.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings SetSource(this NuGetRestoreSettings nuGetRestoreSettings, params string[] source)
+        public static NuGetRestoreSettings SetSource(this NuGetRestoreSettings toolSettings, params string[] source)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.SourceInternal = source.ToList();
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceInternal = source.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetRestoreSettings.Source"/> to a new list.</i></p><p>Specifies list of package sources to use for the restore.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings SetSource(this NuGetRestoreSettings nuGetRestoreSettings, IEnumerable<string> source)
+        public static NuGetRestoreSettings SetSource(this NuGetRestoreSettings toolSettings, IEnumerable<string> source)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.SourceInternal = source.ToList();
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceInternal = source.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new source to the existing <see cref="NuGetRestoreSettings.Source"/>.</i></p><p>Specifies list of package sources to use for the restore.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings AddSource(this NuGetRestoreSettings nuGetRestoreSettings, params string[] source)
+        public static NuGetRestoreSettings AddSource(this NuGetRestoreSettings toolSettings, params string[] source)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.SourceInternal.AddRange(source);
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceInternal.AddRange(source);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new source to the existing <see cref="NuGetRestoreSettings.Source"/>.</i></p><p>Specifies list of package sources to use for the restore.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings AddSource(this NuGetRestoreSettings nuGetRestoreSettings, IEnumerable<string> source)
+        public static NuGetRestoreSettings AddSource(this NuGetRestoreSettings toolSettings, IEnumerable<string> source)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.SourceInternal.AddRange(source);
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceInternal.AddRange(source);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for clearing <see cref="NuGetRestoreSettings.Source"/>.</i></p><p>Specifies list of package sources to use for the restore.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings ClearSource(this NuGetRestoreSettings nuGetRestoreSettings)
+        public static NuGetRestoreSettings ClearSource(this NuGetRestoreSettings toolSettings)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.SourceInternal.Clear();
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceInternal.Clear();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding a single source to <see cref="NuGetRestoreSettings.Source"/>.</i></p><p>Specifies list of package sources to use for the restore.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings AddSource(this NuGetRestoreSettings nuGetRestoreSettings, string source)
+        public static NuGetRestoreSettings AddSource(this NuGetRestoreSettings toolSettings, string source, bool evenIfNull = true)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.SourceInternal.Add(source);
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            if (source != null || evenIfNull) toolSettings.SourceInternal.Add(source);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for removing a single source from <see cref="NuGetRestoreSettings.Source"/>.</i></p><p>Specifies list of package sources to use for the restore.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings RemoveSource(this NuGetRestoreSettings nuGetRestoreSettings, string source)
+        public static NuGetRestoreSettings RemoveSource(this NuGetRestoreSettings toolSettings, string source)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.SourceInternal.Remove(source);
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceInternal.Remove(source);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="NuGetRestoreSettings.Verbosity"/>.</i></p><p><i>(2.5+)</i> Specifies the amount of detail displayed in the output: <i>normal</i>, <i>quiet</i>, <i>detailed</i>.</p></summary>
         [Pure]
-        public static NuGetRestoreSettings SetVerbosity(this NuGetRestoreSettings nuGetRestoreSettings, NuGetVerbosity? verbosity)
+        public static NuGetRestoreSettings SetVerbosity(this NuGetRestoreSettings toolSettings, NuGetVerbosity? verbosity)
         {
-            nuGetRestoreSettings = nuGetRestoreSettings.NewInstance();
-            nuGetRestoreSettings.Verbosity = verbosity;
-            return nuGetRestoreSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = verbosity;
+            return toolSettings;
         }
     }
     /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p></summary>
@@ -1319,7 +1319,7 @@ namespace Nuke.Common.Tools.NuGet
     {
         Normal,
         Quiet,
-        Detailed
+        Detailed,
     }
     /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p></summary>
     [PublicAPI]
@@ -1327,6 +1327,17 @@ namespace Nuke.Common.Tools.NuGet
     {
         Nuspec,
         Nupkg,
-        NuspecAndNupkg
+        NuspecAndNupkg,
+    }
+    /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p></summary>
+    [PublicAPI]
+    public enum NuGetMSBuildVersion
+    {
+        [FriendlyString("4")]
+        _4,
+        [FriendlyString("12")]
+        _12,
+        [FriendlyString("14")]
+        _14,
     }
 }

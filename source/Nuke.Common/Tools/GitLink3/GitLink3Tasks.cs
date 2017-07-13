@@ -10,9 +10,9 @@ namespace Nuke.Common.Tools.GitLink3
 {
     public static partial class GitLink3Tasks
     {
-        static partial void PreProcess (GitLink3Settings gitLink3Settings)
+        static partial void PreProcess (GitLink3Settings toolSettings)
         {
-            ControlFlow.AssertWarn(gitLink3Settings.ToolPath.Contains("gitlink\\3"), "gitLink3Settings.ToolPath.Contains('gitlink\\3')");
+            ControlFlow.AssertWarn(toolSettings.ToolPath.Contains("gitlink\\3"), "toolSettings.ToolPath.Contains('gitlink\\3')");
         }
     }
 }

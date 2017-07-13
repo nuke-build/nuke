@@ -23,20 +23,21 @@ namespace Nuke.ToolGenerator.Generators
                     .WriteLine("[PublicAPI]")
                     .WriteLineIfTrue(enumeration.IsFlags, "[Flags]")
                     .WriteLine($"public enum {enumeration.Name}")
-                    .WriteBlock(w => w.ForEach(enumeration.Values, WriteValue));
+                    .WriteBlock(w => w.ForEach(enumeration.Values,
+                        x => WriteValue(w, x, enumeration.IsFlags)));
         }
 
-        private static void WriteValue (ToolWriter writer, string value)
+        private static void WriteValue (ToolWriter writer, string value, bool isFlags)
         {
             var escapedValue = value.Aggregate(
                 new StringBuilder(!char.IsLetter(value[index: 0]) ? "_" : string.Empty),
                 (sb, c) => sb.Append(char.IsLetterOrDigit(c) ? c : '_'),
                 sb => sb.ToString());
 
-            if (escapedValue != value)
+            if (!isFlags && escapedValue != value)
                 writer.WriteLine($"[FriendlyString(\"{value}\")]");
 
-            writer.WriteLine($"{escapedValue},");
+            writer.WriteLine($"{(isFlags ? value : escapedValue)},");
         }
     }
 }

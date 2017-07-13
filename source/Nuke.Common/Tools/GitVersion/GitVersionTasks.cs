@@ -11,15 +11,15 @@ namespace Nuke.Common.Tools.GitVersion
 {
     partial class GitVersionTasks
     {
-        public static GitVersion GitVersion (GitVersionSettings gitVersionSettings = null)
+        public static GitVersion GitVersion (Configure<GitVersionSettings> configurator = null)
         {
-            gitVersionSettings = gitVersionSettings ?? new GitVersionSettings();
+            var toolSettings = configurator.InvokeSafe(new GitVersionSettings());
             var processSettings = new ProcessSettings().EnableRedirectOutput();
 
-            var process = ProcessTasks.StartProcess(gitVersionSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertWaitForExit();
             if (process.ExitCode != 0)
-                ProcessTasks.StartProcess(gitVersionSettings, processSettings.DisableRedirectOutput()).AssertZeroExitCode();
+                ProcessTasks.StartProcess(toolSettings, processSettings.DisableRedirectOutput()).AssertZeroExitCode();
 
             var output = process.Output.EnsureOnlyStd().Select(x => x.Text);
             return JsonConvert.DeserializeObject<GitVersion>(string.Join("\r\n", output));

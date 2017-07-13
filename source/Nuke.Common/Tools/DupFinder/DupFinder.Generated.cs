@@ -26,16 +26,16 @@ namespace Nuke.Common.Tools.DupFinder
     [ExcludeFromCodeCoverage]
     public static partial class DupFinderTasks
     {
-        static partial void PreProcess (DupFinderSettings dupFinderSettings);
-        static partial void PostProcess (DupFinderSettings dupFinderSettings);
+        static partial void PreProcess (DupFinderSettings toolSettings);
+        static partial void PostProcess (DupFinderSettings toolSettings);
         /// <summary><p>dupFinder is a free command line tool that finds duplicates in C# and Visual Basic .NET code - no more, no less. But being a JetBrains tool, dupFinder does it in a smart way. By default, it considers code fragments as duplicates not only if they are identical, but also if they are structurally similar, even if they contain different variables, fields, methods, types or literals. Of course, you can configure the allowed similarity as well as the minimum relative size of duplicated fragments.</p><p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/dupFinder.html">official website</a>.</p></summary>
         public static void DupFinder (Configure<DupFinderSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            var dupFinderSettings = configurator.InvokeSafe(new DupFinderSettings());
-            PreProcess(dupFinderSettings);
-            var process = ProcessTasks.StartProcess(dupFinderSettings, processSettings);
+            var toolSettings = configurator.InvokeSafe(new DupFinderSettings());
+            PreProcess(toolSettings);
+            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(dupFinderSettings);
+            PostProcess(toolSettings);
         }
     }
     /// <summary><p>dupFinder is a free command line tool that finds duplicates in C# and Visual Basic .NET code - no more, no less. But being a JetBrains tool, dupFinder does it in a smart way. By default, it considers code fragments as duplicates not only if they are identical, but also if they are structurally similar, even if they contain different variables, fields, methods, types or literals. Of course, you can configure the allowed similarity as well as the minimum relative size of duplicated fragments.</p></summary>
@@ -106,467 +106,467 @@ namespace Nuke.Common.Tools.DupFinder
     {
         /// <summary><p><i>Extension method for setting <see cref="DupFinderSettings.Source"/>.</i></p><p>Defines files included into the duplicates search. Use Visual Studio solution or project files, Ant-like wildcards or specific source file and folder names. Paths should be either absolute or relative to the working directory.</p></summary>
         [Pure]
-        public static DupFinderSettings SetSource(this DupFinderSettings dupFinderSettings, string source)
+        public static DupFinderSettings SetSource(this DupFinderSettings toolSettings, string source)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.Source = source;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Source = source;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DupFinderSettings.OutputFile"/>.</i></p><p>Lets you set the output file.</p></summary>
         [Pure]
-        public static DupFinderSettings SetOutputFile(this DupFinderSettings dupFinderSettings, string outputFile)
+        public static DupFinderSettings SetOutputFile(this DupFinderSettings toolSettings, string outputFile)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.OutputFile = outputFile;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OutputFile = outputFile;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DupFinderSettings.ExcludeFiles"/> to a new list.</i></p><p>Allows excluding files from the duplicates search. Wildcards can be used; for example, <c>*Generated.cs</c>. Note that the paths should be either absolute or relative to the working directory.</p></summary>
         [Pure]
-        public static DupFinderSettings SetExcludeFiles(this DupFinderSettings dupFinderSettings, params string[] excludeFiles)
+        public static DupFinderSettings SetExcludeFiles(this DupFinderSettings toolSettings, params string[] excludeFiles)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ExcludeFilesInternal = excludeFiles.ToList();
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeFilesInternal = excludeFiles.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DupFinderSettings.ExcludeFiles"/> to a new list.</i></p><p>Allows excluding files from the duplicates search. Wildcards can be used; for example, <c>*Generated.cs</c>. Note that the paths should be either absolute or relative to the working directory.</p></summary>
         [Pure]
-        public static DupFinderSettings SetExcludeFiles(this DupFinderSettings dupFinderSettings, IEnumerable<string> excludeFiles)
+        public static DupFinderSettings SetExcludeFiles(this DupFinderSettings toolSettings, IEnumerable<string> excludeFiles)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ExcludeFilesInternal = excludeFiles.ToList();
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeFilesInternal = excludeFiles.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new excludeFiles to the existing <see cref="DupFinderSettings.ExcludeFiles"/>.</i></p><p>Allows excluding files from the duplicates search. Wildcards can be used; for example, <c>*Generated.cs</c>. Note that the paths should be either absolute or relative to the working directory.</p></summary>
         [Pure]
-        public static DupFinderSettings AddExcludeFiles(this DupFinderSettings dupFinderSettings, params string[] excludeFiles)
+        public static DupFinderSettings AddExcludeFiles(this DupFinderSettings toolSettings, params string[] excludeFiles)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ExcludeFilesInternal.AddRange(excludeFiles);
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeFilesInternal.AddRange(excludeFiles);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new excludeFiles to the existing <see cref="DupFinderSettings.ExcludeFiles"/>.</i></p><p>Allows excluding files from the duplicates search. Wildcards can be used; for example, <c>*Generated.cs</c>. Note that the paths should be either absolute or relative to the working directory.</p></summary>
         [Pure]
-        public static DupFinderSettings AddExcludeFiles(this DupFinderSettings dupFinderSettings, IEnumerable<string> excludeFiles)
+        public static DupFinderSettings AddExcludeFiles(this DupFinderSettings toolSettings, IEnumerable<string> excludeFiles)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ExcludeFilesInternal.AddRange(excludeFiles);
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeFilesInternal.AddRange(excludeFiles);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for clearing <see cref="DupFinderSettings.ExcludeFiles"/>.</i></p><p>Allows excluding files from the duplicates search. Wildcards can be used; for example, <c>*Generated.cs</c>. Note that the paths should be either absolute or relative to the working directory.</p></summary>
         [Pure]
-        public static DupFinderSettings ClearExcludeFiles(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings ClearExcludeFiles(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ExcludeFilesInternal.Clear();
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeFilesInternal.Clear();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding a single excludeFile to <see cref="DupFinderSettings.ExcludeFiles"/>.</i></p><p>Allows excluding files from the duplicates search. Wildcards can be used; for example, <c>*Generated.cs</c>. Note that the paths should be either absolute or relative to the working directory.</p></summary>
         [Pure]
-        public static DupFinderSettings AddExcludeFile(this DupFinderSettings dupFinderSettings, string excludeFile)
+        public static DupFinderSettings AddExcludeFile(this DupFinderSettings toolSettings, string excludeFile, bool evenIfNull = true)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ExcludeFilesInternal.Add(excludeFile);
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            if (excludeFile != null || evenIfNull) toolSettings.ExcludeFilesInternal.Add(excludeFile);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for removing a single excludeFile from <see cref="DupFinderSettings.ExcludeFiles"/>.</i></p><p>Allows excluding files from the duplicates search. Wildcards can be used; for example, <c>*Generated.cs</c>. Note that the paths should be either absolute or relative to the working directory.</p></summary>
         [Pure]
-        public static DupFinderSettings RemoveExcludeFile(this DupFinderSettings dupFinderSettings, string excludeFile)
+        public static DupFinderSettings RemoveExcludeFile(this DupFinderSettings toolSettings, string excludeFile)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ExcludeFilesInternal.Remove(excludeFile);
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeFilesInternal.Remove(excludeFile);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DupFinderSettings.ExcludeComments"/> to a new list.</i></p><p>Allows excluding files that have a matching substrings in the opening comments.</p></summary>
         [Pure]
-        public static DupFinderSettings SetExcludeComments(this DupFinderSettings dupFinderSettings, params string[] excludeComments)
+        public static DupFinderSettings SetExcludeComments(this DupFinderSettings toolSettings, params string[] excludeComments)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ExcludeCommentsInternal = excludeComments.ToList();
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeCommentsInternal = excludeComments.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DupFinderSettings.ExcludeComments"/> to a new list.</i></p><p>Allows excluding files that have a matching substrings in the opening comments.</p></summary>
         [Pure]
-        public static DupFinderSettings SetExcludeComments(this DupFinderSettings dupFinderSettings, IEnumerable<string> excludeComments)
+        public static DupFinderSettings SetExcludeComments(this DupFinderSettings toolSettings, IEnumerable<string> excludeComments)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ExcludeCommentsInternal = excludeComments.ToList();
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeCommentsInternal = excludeComments.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new excludeComments to the existing <see cref="DupFinderSettings.ExcludeComments"/>.</i></p><p>Allows excluding files that have a matching substrings in the opening comments.</p></summary>
         [Pure]
-        public static DupFinderSettings AddExcludeComments(this DupFinderSettings dupFinderSettings, params string[] excludeComments)
+        public static DupFinderSettings AddExcludeComments(this DupFinderSettings toolSettings, params string[] excludeComments)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ExcludeCommentsInternal.AddRange(excludeComments);
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeCommentsInternal.AddRange(excludeComments);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new excludeComments to the existing <see cref="DupFinderSettings.ExcludeComments"/>.</i></p><p>Allows excluding files that have a matching substrings in the opening comments.</p></summary>
         [Pure]
-        public static DupFinderSettings AddExcludeComments(this DupFinderSettings dupFinderSettings, IEnumerable<string> excludeComments)
+        public static DupFinderSettings AddExcludeComments(this DupFinderSettings toolSettings, IEnumerable<string> excludeComments)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ExcludeCommentsInternal.AddRange(excludeComments);
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeCommentsInternal.AddRange(excludeComments);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for clearing <see cref="DupFinderSettings.ExcludeComments"/>.</i></p><p>Allows excluding files that have a matching substrings in the opening comments.</p></summary>
         [Pure]
-        public static DupFinderSettings ClearExcludeComments(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings ClearExcludeComments(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ExcludeCommentsInternal.Clear();
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeCommentsInternal.Clear();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding a single excludeComment to <see cref="DupFinderSettings.ExcludeComments"/>.</i></p><p>Allows excluding files that have a matching substrings in the opening comments.</p></summary>
         [Pure]
-        public static DupFinderSettings AddExcludeComment(this DupFinderSettings dupFinderSettings, string excludeComment)
+        public static DupFinderSettings AddExcludeComment(this DupFinderSettings toolSettings, string excludeComment, bool evenIfNull = true)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ExcludeCommentsInternal.Add(excludeComment);
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            if (excludeComment != null || evenIfNull) toolSettings.ExcludeCommentsInternal.Add(excludeComment);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for removing a single excludeComment from <see cref="DupFinderSettings.ExcludeComments"/>.</i></p><p>Allows excluding files that have a matching substrings in the opening comments.</p></summary>
         [Pure]
-        public static DupFinderSettings RemoveExcludeComment(this DupFinderSettings dupFinderSettings, string excludeComment)
+        public static DupFinderSettings RemoveExcludeComment(this DupFinderSettings toolSettings, string excludeComment)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ExcludeCommentsInternal.Remove(excludeComment);
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeCommentsInternal.Remove(excludeComment);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DupFinderSettings.ExcludeCodeRegions"/> to a new list.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <i>generated code</i> will exclude regions containing <i>Windows Form Designer generated code</i>).</p></summary>
         [Pure]
-        public static DupFinderSettings SetExcludeCodeRegions(this DupFinderSettings dupFinderSettings, params string[] excludeCodeRegions)
+        public static DupFinderSettings SetExcludeCodeRegions(this DupFinderSettings toolSettings, params string[] excludeCodeRegions)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ExcludeCodeRegionsInternal = excludeCodeRegions.ToList();
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeCodeRegionsInternal = excludeCodeRegions.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DupFinderSettings.ExcludeCodeRegions"/> to a new list.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <i>generated code</i> will exclude regions containing <i>Windows Form Designer generated code</i>).</p></summary>
         [Pure]
-        public static DupFinderSettings SetExcludeCodeRegions(this DupFinderSettings dupFinderSettings, IEnumerable<string> excludeCodeRegions)
+        public static DupFinderSettings SetExcludeCodeRegions(this DupFinderSettings toolSettings, IEnumerable<string> excludeCodeRegions)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ExcludeCodeRegionsInternal = excludeCodeRegions.ToList();
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeCodeRegionsInternal = excludeCodeRegions.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new excludeCodeRegions to the existing <see cref="DupFinderSettings.ExcludeCodeRegions"/>.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <i>generated code</i> will exclude regions containing <i>Windows Form Designer generated code</i>).</p></summary>
         [Pure]
-        public static DupFinderSettings AddExcludeCodeRegions(this DupFinderSettings dupFinderSettings, params string[] excludeCodeRegions)
+        public static DupFinderSettings AddExcludeCodeRegions(this DupFinderSettings toolSettings, params string[] excludeCodeRegions)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ExcludeCodeRegionsInternal.AddRange(excludeCodeRegions);
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeCodeRegionsInternal.AddRange(excludeCodeRegions);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new excludeCodeRegions to the existing <see cref="DupFinderSettings.ExcludeCodeRegions"/>.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <i>generated code</i> will exclude regions containing <i>Windows Form Designer generated code</i>).</p></summary>
         [Pure]
-        public static DupFinderSettings AddExcludeCodeRegions(this DupFinderSettings dupFinderSettings, IEnumerable<string> excludeCodeRegions)
+        public static DupFinderSettings AddExcludeCodeRegions(this DupFinderSettings toolSettings, IEnumerable<string> excludeCodeRegions)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ExcludeCodeRegionsInternal.AddRange(excludeCodeRegions);
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeCodeRegionsInternal.AddRange(excludeCodeRegions);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for clearing <see cref="DupFinderSettings.ExcludeCodeRegions"/>.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <i>generated code</i> will exclude regions containing <i>Windows Form Designer generated code</i>).</p></summary>
         [Pure]
-        public static DupFinderSettings ClearExcludeCodeRegions(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings ClearExcludeCodeRegions(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ExcludeCodeRegionsInternal.Clear();
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeCodeRegionsInternal.Clear();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding a single excludeCodeRegion to <see cref="DupFinderSettings.ExcludeCodeRegions"/>.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <i>generated code</i> will exclude regions containing <i>Windows Form Designer generated code</i>).</p></summary>
         [Pure]
-        public static DupFinderSettings AddExcludeCodeRegion(this DupFinderSettings dupFinderSettings, string excludeCodeRegion)
+        public static DupFinderSettings AddExcludeCodeRegion(this DupFinderSettings toolSettings, string excludeCodeRegion, bool evenIfNull = true)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ExcludeCodeRegionsInternal.Add(excludeCodeRegion);
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            if (excludeCodeRegion != null || evenIfNull) toolSettings.ExcludeCodeRegionsInternal.Add(excludeCodeRegion);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for removing a single excludeCodeRegion from <see cref="DupFinderSettings.ExcludeCodeRegions"/>.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <i>generated code</i> will exclude regions containing <i>Windows Form Designer generated code</i>).</p></summary>
         [Pure]
-        public static DupFinderSettings RemoveExcludeCodeRegion(this DupFinderSettings dupFinderSettings, string excludeCodeRegion)
+        public static DupFinderSettings RemoveExcludeCodeRegion(this DupFinderSettings toolSettings, string excludeCodeRegion)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ExcludeCodeRegionsInternal.Remove(excludeCodeRegion);
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeCodeRegionsInternal.Remove(excludeCodeRegion);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DupFinderSettings.DiscardFields"/>.</i></p><p>Whether to consider similar fragments as duplicates if they have different fields. The default value is <c>false</c>.</p></summary>
         [Pure]
-        public static DupFinderSettings SetDiscardFields(this DupFinderSettings dupFinderSettings, bool discardFields)
+        public static DupFinderSettings SetDiscardFields(this DupFinderSettings toolSettings, bool discardFields)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.DiscardFields = discardFields;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DiscardFields = discardFields;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="DupFinderSettings.DiscardFields"/>.</i></p><p>Whether to consider similar fragments as duplicates if they have different fields. The default value is <c>false</c>.</p></summary>
         [Pure]
-        public static DupFinderSettings EnableDiscardFields(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings EnableDiscardFields(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.DiscardFields = true;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DiscardFields = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="DupFinderSettings.DiscardFields"/>.</i></p><p>Whether to consider similar fragments as duplicates if they have different fields. The default value is <c>false</c>.</p></summary>
         [Pure]
-        public static DupFinderSettings DisableDiscardFields(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings DisableDiscardFields(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.DiscardFields = false;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DiscardFields = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="DupFinderSettings.DiscardFields"/>.</i></p><p>Whether to consider similar fragments as duplicates if they have different fields. The default value is <c>false</c>.</p></summary>
         [Pure]
-        public static DupFinderSettings ToggleDiscardFields(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings ToggleDiscardFields(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.DiscardFields = !dupFinderSettings.DiscardFields;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DiscardFields = !toolSettings.DiscardFields;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DupFinderSettings.DiscardLiterals"/>.</i></p><p>Whether to consider similar fragments as duplicates if they have different literals. The default value is <c>false</c>.</p></summary>
         [Pure]
-        public static DupFinderSettings SetDiscardLiterals(this DupFinderSettings dupFinderSettings, bool discardLiterals)
+        public static DupFinderSettings SetDiscardLiterals(this DupFinderSettings toolSettings, bool discardLiterals)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.DiscardLiterals = discardLiterals;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DiscardLiterals = discardLiterals;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="DupFinderSettings.DiscardLiterals"/>.</i></p><p>Whether to consider similar fragments as duplicates if they have different literals. The default value is <c>false</c>.</p></summary>
         [Pure]
-        public static DupFinderSettings EnableDiscardLiterals(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings EnableDiscardLiterals(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.DiscardLiterals = true;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DiscardLiterals = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="DupFinderSettings.DiscardLiterals"/>.</i></p><p>Whether to consider similar fragments as duplicates if they have different literals. The default value is <c>false</c>.</p></summary>
         [Pure]
-        public static DupFinderSettings DisableDiscardLiterals(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings DisableDiscardLiterals(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.DiscardLiterals = false;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DiscardLiterals = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="DupFinderSettings.DiscardLiterals"/>.</i></p><p>Whether to consider similar fragments as duplicates if they have different literals. The default value is <c>false</c>.</p></summary>
         [Pure]
-        public static DupFinderSettings ToggleDiscardLiterals(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings ToggleDiscardLiterals(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.DiscardLiterals = !dupFinderSettings.DiscardLiterals;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DiscardLiterals = !toolSettings.DiscardLiterals;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DupFinderSettings.DiscardLocalVars"/>.</i></p><p>Whether to consider similar fragments as duplicates if they have different local variables. The default value is <c>false</c>.</p></summary>
         [Pure]
-        public static DupFinderSettings SetDiscardLocalVars(this DupFinderSettings dupFinderSettings, bool discardLocalVars)
+        public static DupFinderSettings SetDiscardLocalVars(this DupFinderSettings toolSettings, bool discardLocalVars)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.DiscardLocalVars = discardLocalVars;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DiscardLocalVars = discardLocalVars;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="DupFinderSettings.DiscardLocalVars"/>.</i></p><p>Whether to consider similar fragments as duplicates if they have different local variables. The default value is <c>false</c>.</p></summary>
         [Pure]
-        public static DupFinderSettings EnableDiscardLocalVars(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings EnableDiscardLocalVars(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.DiscardLocalVars = true;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DiscardLocalVars = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="DupFinderSettings.DiscardLocalVars"/>.</i></p><p>Whether to consider similar fragments as duplicates if they have different local variables. The default value is <c>false</c>.</p></summary>
         [Pure]
-        public static DupFinderSettings DisableDiscardLocalVars(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings DisableDiscardLocalVars(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.DiscardLocalVars = false;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DiscardLocalVars = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="DupFinderSettings.DiscardLocalVars"/>.</i></p><p>Whether to consider similar fragments as duplicates if they have different local variables. The default value is <c>false</c>.</p></summary>
         [Pure]
-        public static DupFinderSettings ToggleDiscardLocalVars(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings ToggleDiscardLocalVars(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.DiscardLocalVars = !dupFinderSettings.DiscardLocalVars;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DiscardLocalVars = !toolSettings.DiscardLocalVars;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DupFinderSettings.DiscardTypes"/>.</i></p><p>Whether to consider similar fragments as duplicates if they have different types. The default value is <c>false</c>.</p></summary>
         [Pure]
-        public static DupFinderSettings SetDiscardTypes(this DupFinderSettings dupFinderSettings, bool discardTypes)
+        public static DupFinderSettings SetDiscardTypes(this DupFinderSettings toolSettings, bool discardTypes)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.DiscardTypes = discardTypes;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DiscardTypes = discardTypes;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="DupFinderSettings.DiscardTypes"/>.</i></p><p>Whether to consider similar fragments as duplicates if they have different types. The default value is <c>false</c>.</p></summary>
         [Pure]
-        public static DupFinderSettings EnableDiscardTypes(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings EnableDiscardTypes(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.DiscardTypes = true;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DiscardTypes = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="DupFinderSettings.DiscardTypes"/>.</i></p><p>Whether to consider similar fragments as duplicates if they have different types. The default value is <c>false</c>.</p></summary>
         [Pure]
-        public static DupFinderSettings DisableDiscardTypes(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings DisableDiscardTypes(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.DiscardTypes = false;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DiscardTypes = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="DupFinderSettings.DiscardTypes"/>.</i></p><p>Whether to consider similar fragments as duplicates if they have different types. The default value is <c>false</c>.</p></summary>
         [Pure]
-        public static DupFinderSettings ToggleDiscardTypes(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings ToggleDiscardTypes(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.DiscardTypes = !dupFinderSettings.DiscardTypes;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DiscardTypes = !toolSettings.DiscardTypes;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DupFinderSettings.DiscardCost"/>.</i></p><p>Allows setting a threshold for code complexity of the duplicated fragments. The fragments with lower complexity are discarded as non-duplicates. The value for this option is provided in relative units. Using this option, you can filter out equal code fragments that present no semantic duplication. E.g. you can often have the following statements in tests: <c>Assert.AreEqual(gold, result);</c>. If the <c>discard-cost</c> value is less than 10, statements like that will appear as duplicates, which is obviously unhelpful. You'll need to play a bit with this value to find a balance between avoiding false positives and missing real duplicates. The proper values will differ for different codebases.</p></summary>
         [Pure]
-        public static DupFinderSettings SetDiscardCost(this DupFinderSettings dupFinderSettings, bool discardCost)
+        public static DupFinderSettings SetDiscardCost(this DupFinderSettings toolSettings, bool discardCost)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.DiscardCost = discardCost;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DiscardCost = discardCost;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="DupFinderSettings.DiscardCost"/>.</i></p><p>Allows setting a threshold for code complexity of the duplicated fragments. The fragments with lower complexity are discarded as non-duplicates. The value for this option is provided in relative units. Using this option, you can filter out equal code fragments that present no semantic duplication. E.g. you can often have the following statements in tests: <c>Assert.AreEqual(gold, result);</c>. If the <c>discard-cost</c> value is less than 10, statements like that will appear as duplicates, which is obviously unhelpful. You'll need to play a bit with this value to find a balance between avoiding false positives and missing real duplicates. The proper values will differ for different codebases.</p></summary>
         [Pure]
-        public static DupFinderSettings EnableDiscardCost(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings EnableDiscardCost(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.DiscardCost = true;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DiscardCost = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="DupFinderSettings.DiscardCost"/>.</i></p><p>Allows setting a threshold for code complexity of the duplicated fragments. The fragments with lower complexity are discarded as non-duplicates. The value for this option is provided in relative units. Using this option, you can filter out equal code fragments that present no semantic duplication. E.g. you can often have the following statements in tests: <c>Assert.AreEqual(gold, result);</c>. If the <c>discard-cost</c> value is less than 10, statements like that will appear as duplicates, which is obviously unhelpful. You'll need to play a bit with this value to find a balance between avoiding false positives and missing real duplicates. The proper values will differ for different codebases.</p></summary>
         [Pure]
-        public static DupFinderSettings DisableDiscardCost(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings DisableDiscardCost(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.DiscardCost = false;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DiscardCost = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="DupFinderSettings.DiscardCost"/>.</i></p><p>Allows setting a threshold for code complexity of the duplicated fragments. The fragments with lower complexity are discarded as non-duplicates. The value for this option is provided in relative units. Using this option, you can filter out equal code fragments that present no semantic duplication. E.g. you can often have the following statements in tests: <c>Assert.AreEqual(gold, result);</c>. If the <c>discard-cost</c> value is less than 10, statements like that will appear as duplicates, which is obviously unhelpful. You'll need to play a bit with this value to find a balance between avoiding false positives and missing real duplicates. The proper values will differ for different codebases.</p></summary>
         [Pure]
-        public static DupFinderSettings ToggleDiscardCost(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings ToggleDiscardCost(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.DiscardCost = !dupFinderSettings.DiscardCost;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DiscardCost = !toolSettings.DiscardCost;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DupFinderSettings.Properties"/> to a new dictionary.</i></p><p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p></summary>
         [Pure]
-        public static DupFinderSettings SetProperties(this DupFinderSettings dupFinderSettings, IDictionary<string, string> properties)
+        public static DupFinderSettings SetProperties(this DupFinderSettings toolSettings, IDictionary<string, string> properties)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for clearing <see cref="DupFinderSettings.Properties"/>.</i></p><p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p></summary>
         [Pure]
-        public static DupFinderSettings ClearProperties(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings ClearProperties(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.PropertiesInternal.Clear();
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Clear();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding a property to <see cref="DupFinderSettings.Properties"/>.</i></p><p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p></summary>
         [Pure]
-        public static DupFinderSettings AddProperty(this DupFinderSettings dupFinderSettings, string propertyKey, string propertyValue)
+        public static DupFinderSettings AddProperty(this DupFinderSettings toolSettings, string propertyKey, string propertyValue)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.PropertiesInternal.Add(propertyKey, propertyValue);
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for removing a property from <see cref="DupFinderSettings.Properties"/>.</i></p><p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p></summary>
         [Pure]
-        public static DupFinderSettings RemoveProperty(this DupFinderSettings dupFinderSettings, string propertyKey)
+        public static DupFinderSettings RemoveProperty(this DupFinderSettings toolSettings, string propertyKey)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.PropertiesInternal.Remove(propertyKey);
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove(propertyKey);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting a property in <see cref="DupFinderSettings.Properties"/>.</i></p><p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p></summary>
         [Pure]
-        public static DupFinderSettings SetProperty(this DupFinderSettings dupFinderSettings, string propertyKey, string propertyValue)
+        public static DupFinderSettings SetProperty(this DupFinderSettings toolSettings, string propertyKey, string propertyValue)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.PropertiesInternal[propertyKey] = propertyValue;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal[propertyKey] = propertyValue;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DupFinderSettings.NormalizeTypes"/>.</i></p><p>Allows normalizing type names to the last subtype in the output (default: <c>false</c>).</p></summary>
         [Pure]
-        public static DupFinderSettings SetNormalizeTypes(this DupFinderSettings dupFinderSettings, bool normalizeTypes)
+        public static DupFinderSettings SetNormalizeTypes(this DupFinderSettings toolSettings, bool normalizeTypes)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.NormalizeTypes = normalizeTypes;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NormalizeTypes = normalizeTypes;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="DupFinderSettings.NormalizeTypes"/>.</i></p><p>Allows normalizing type names to the last subtype in the output (default: <c>false</c>).</p></summary>
         [Pure]
-        public static DupFinderSettings EnableNormalizeTypes(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings EnableNormalizeTypes(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.NormalizeTypes = true;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NormalizeTypes = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="DupFinderSettings.NormalizeTypes"/>.</i></p><p>Allows normalizing type names to the last subtype in the output (default: <c>false</c>).</p></summary>
         [Pure]
-        public static DupFinderSettings DisableNormalizeTypes(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings DisableNormalizeTypes(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.NormalizeTypes = false;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NormalizeTypes = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="DupFinderSettings.NormalizeTypes"/>.</i></p><p>Allows normalizing type names to the last subtype in the output (default: <c>false</c>).</p></summary>
         [Pure]
-        public static DupFinderSettings ToggleNormalizeTypes(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings ToggleNormalizeTypes(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.NormalizeTypes = !dupFinderSettings.NormalizeTypes;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NormalizeTypes = !toolSettings.NormalizeTypes;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DupFinderSettings.ShowText"/>.</i></p><p>If you use this parameter, the detected duplicate fragments will be embedded into the report.</p></summary>
         [Pure]
-        public static DupFinderSettings SetShowText(this DupFinderSettings dupFinderSettings, bool showText)
+        public static DupFinderSettings SetShowText(this DupFinderSettings toolSettings, bool showText)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ShowText = showText;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowText = showText;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="DupFinderSettings.ShowText"/>.</i></p><p>If you use this parameter, the detected duplicate fragments will be embedded into the report.</p></summary>
         [Pure]
-        public static DupFinderSettings EnableShowText(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings EnableShowText(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ShowText = true;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowText = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="DupFinderSettings.ShowText"/>.</i></p><p>If you use this parameter, the detected duplicate fragments will be embedded into the report.</p></summary>
         [Pure]
-        public static DupFinderSettings DisableShowText(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings DisableShowText(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ShowText = false;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowText = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="DupFinderSettings.ShowText"/>.</i></p><p>If you use this parameter, the detected duplicate fragments will be embedded into the report.</p></summary>
         [Pure]
-        public static DupFinderSettings ToggleShowText(this DupFinderSettings dupFinderSettings)
+        public static DupFinderSettings ToggleShowText(this DupFinderSettings toolSettings)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ShowText = !dupFinderSettings.ShowText;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShowText = !toolSettings.ShowText;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DupFinderSettings.CreateConfigFile"/>.</i></p><p>Used to save the current parameters to a configuration file.</p></summary>
         [Pure]
-        public static DupFinderSettings SetCreateConfigFile(this DupFinderSettings dupFinderSettings, string createConfigFile)
+        public static DupFinderSettings SetCreateConfigFile(this DupFinderSettings toolSettings, string createConfigFile)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.CreateConfigFile = createConfigFile;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CreateConfigFile = createConfigFile;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DupFinderSettings.ConfigFile"/>.</i></p><p>Used to load the parameters described above from a configuration file.</p></summary>
         [Pure]
-        public static DupFinderSettings SetConfigFile(this DupFinderSettings dupFinderSettings, string configFile)
+        public static DupFinderSettings SetConfigFile(this DupFinderSettings toolSettings, string configFile)
         {
-            dupFinderSettings = dupFinderSettings.NewInstance();
-            dupFinderSettings.ConfigFile = configFile;
-            return dupFinderSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = configFile;
+            return toolSettings;
         }
     }
 }

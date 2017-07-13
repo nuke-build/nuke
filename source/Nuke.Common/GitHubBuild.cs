@@ -71,7 +71,7 @@ namespace Nuke.Common
         public virtual GitVersion GetGitVersion ([CanBeNull] string rootDirectory)
         {
             return EnvironmentInfo.IsWin && rootDirectory != null && File.Exists(DefaultSettings.GitVersion.ToolPath)
-                ? GitVersionTasks.GitVersion(DefaultSettings.GitVersion)
+                ? GitVersionTasks.GitVersion(s => DefaultSettings.GitVersion)
                 : null;
         }
     }

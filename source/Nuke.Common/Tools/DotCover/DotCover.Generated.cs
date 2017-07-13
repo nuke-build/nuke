@@ -26,16 +26,16 @@ namespace Nuke.Common.Tools.DotCover
     [ExcludeFromCodeCoverage]
     public static partial class DotCoverTasks
     {
-        static partial void PreProcess (DotCoverAnalyseSettings dotCoverAnalyseSettings);
-        static partial void PostProcess (DotCoverAnalyseSettings dotCoverAnalyseSettings);
+        static partial void PreProcess (DotCoverAnalyseSettings toolSettings);
+        static partial void PostProcess (DotCoverAnalyseSettings toolSettings);
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
         public static void DotCoverAnalyse (Configure<DotCoverAnalyseSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            var dotCoverAnalyseSettings = configurator.InvokeSafe(new DotCoverAnalyseSettings());
-            PreProcess(dotCoverAnalyseSettings);
-            var process = StartProcess(dotCoverAnalyseSettings, processSettings);
+            var toolSettings = configurator.InvokeSafe(new DotCoverAnalyseSettings());
+            PreProcess(toolSettings);
+            var process = StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(dotCoverAnalyseSettings);
+            PostProcess(toolSettings);
         }
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
         public static void DotCoverAnalyse (Action testAction, Configure<DotCoverAnalyseSettings> configurator = null, ProcessSettings processSettings = null)
@@ -122,531 +122,531 @@ namespace Nuke.Common.Tools.DotCover
     {
         /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.TestAction"/>.</i></p><p>The action that executes tests.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetTestAction(this DotCoverAnalyseSettings dotCoverAnalyseSettings, Action testAction)
+        public static DotCoverAnalyseSettings SetTestAction(this DotCoverAnalyseSettings toolSettings, Action testAction)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.TestAction = testAction;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TestAction = testAction;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.TargetExecutable"/>.</i></p><p>File name of the program to analyse.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetTargetExecutable(this DotCoverAnalyseSettings dotCoverAnalyseSettings, string targetExecutable)
+        public static DotCoverAnalyseSettings SetTargetExecutable(this DotCoverAnalyseSettings toolSettings, string targetExecutable)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.TargetExecutable = targetExecutable;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetExecutable = targetExecutable;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.TargetArguments"/>.</i></p><p>Program arguments.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetTargetArguments(this DotCoverAnalyseSettings dotCoverAnalyseSettings, string targetArguments)
+        public static DotCoverAnalyseSettings SetTargetArguments(this DotCoverAnalyseSettings toolSettings, string targetArguments)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.TargetArguments = targetArguments;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetArguments = targetArguments;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.TargetWorkingDirectory"/>.</i></p><p>Program working directory.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetTargetWorkingDirectory(this DotCoverAnalyseSettings dotCoverAnalyseSettings, string targetWorkingDirectory)
+        public static DotCoverAnalyseSettings SetTargetWorkingDirectory(this DotCoverAnalyseSettings toolSettings, string targetWorkingDirectory)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.TargetWorkingDirectory = targetWorkingDirectory;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetWorkingDirectory = targetWorkingDirectory;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.TempDirectory"/>.</i></p><p>Directory for auxiliary files. Set to the system temp by default.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetTempDirectory(this DotCoverAnalyseSettings dotCoverAnalyseSettings, string tempDirectory)
+        public static DotCoverAnalyseSettings SetTempDirectory(this DotCoverAnalyseSettings toolSettings, string tempDirectory)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.TempDirectory = tempDirectory;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TempDirectory = tempDirectory;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.ReportType"/>.</i></p><p>A type of the report. XML by default.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetReportType(this DotCoverAnalyseSettings dotCoverAnalyseSettings, string reportType)
+        public static DotCoverAnalyseSettings SetReportType(this DotCoverAnalyseSettings toolSettings, string reportType)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.ReportType = reportType;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReportType = reportType;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.OutputFile"/>.</i></p><p>Resulting report file name.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetOutputFile(this DotCoverAnalyseSettings dotCoverAnalyseSettings, string outputFile)
+        public static DotCoverAnalyseSettings SetOutputFile(this DotCoverAnalyseSettings toolSettings, string outputFile)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.OutputFile = outputFile;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OutputFile = outputFile;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.InheritConsole"/>.</i></p><p>Lets the analysed application to inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetInheritConsole(this DotCoverAnalyseSettings dotCoverAnalyseSettings, bool inheritConsole)
+        public static DotCoverAnalyseSettings SetInheritConsole(this DotCoverAnalyseSettings toolSettings, bool inheritConsole)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.InheritConsole = inheritConsole;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.InheritConsole = inheritConsole;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="DotCoverAnalyseSettings.InheritConsole"/>.</i></p><p>Lets the analysed application to inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings EnableInheritConsole(this DotCoverAnalyseSettings dotCoverAnalyseSettings)
+        public static DotCoverAnalyseSettings EnableInheritConsole(this DotCoverAnalyseSettings toolSettings)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.InheritConsole = true;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.InheritConsole = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="DotCoverAnalyseSettings.InheritConsole"/>.</i></p><p>Lets the analysed application to inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings DisableInheritConsole(this DotCoverAnalyseSettings dotCoverAnalyseSettings)
+        public static DotCoverAnalyseSettings DisableInheritConsole(this DotCoverAnalyseSettings toolSettings)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.InheritConsole = false;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.InheritConsole = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="DotCoverAnalyseSettings.InheritConsole"/>.</i></p><p>Lets the analysed application to inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings ToggleInheritConsole(this DotCoverAnalyseSettings dotCoverAnalyseSettings)
+        public static DotCoverAnalyseSettings ToggleInheritConsole(this DotCoverAnalyseSettings toolSettings)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.InheritConsole = !dotCoverAnalyseSettings.InheritConsole;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.InheritConsole = !toolSettings.InheritConsole;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/>.</i></p><p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetAnalyseTargetArguments(this DotCoverAnalyseSettings dotCoverAnalyseSettings, bool analyseTargetArguments)
+        public static DotCoverAnalyseSettings SetAnalyseTargetArguments(this DotCoverAnalyseSettings toolSettings, bool analyseTargetArguments)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.AnalyseTargetArguments = analyseTargetArguments;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AnalyseTargetArguments = analyseTargetArguments;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/>.</i></p><p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings EnableAnalyseTargetArguments(this DotCoverAnalyseSettings dotCoverAnalyseSettings)
+        public static DotCoverAnalyseSettings EnableAnalyseTargetArguments(this DotCoverAnalyseSettings toolSettings)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.AnalyseTargetArguments = true;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AnalyseTargetArguments = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/>.</i></p><p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings DisableAnalyseTargetArguments(this DotCoverAnalyseSettings dotCoverAnalyseSettings)
+        public static DotCoverAnalyseSettings DisableAnalyseTargetArguments(this DotCoverAnalyseSettings toolSettings)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.AnalyseTargetArguments = false;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AnalyseTargetArguments = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/>.</i></p><p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings ToggleAnalyseTargetArguments(this DotCoverAnalyseSettings dotCoverAnalyseSettings)
+        public static DotCoverAnalyseSettings ToggleAnalyseTargetArguments(this DotCoverAnalyseSettings toolSettings)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.AnalyseTargetArguments = !dotCoverAnalyseSettings.AnalyseTargetArguments;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AnalyseTargetArguments = !toolSettings.AnalyseTargetArguments;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.Scope"/> to a new list.</i></p><p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetScope(this DotCoverAnalyseSettings dotCoverAnalyseSettings, params string[] scope)
+        public static DotCoverAnalyseSettings SetScope(this DotCoverAnalyseSettings toolSettings, params string[] scope)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.ScopeInternal = scope.ToList();
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScopeInternal = scope.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.Scope"/> to a new list.</i></p><p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetScope(this DotCoverAnalyseSettings dotCoverAnalyseSettings, IEnumerable<string> scope)
+        public static DotCoverAnalyseSettings SetScope(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> scope)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.ScopeInternal = scope.ToList();
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScopeInternal = scope.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new scope to the existing <see cref="DotCoverAnalyseSettings.Scope"/>.</i></p><p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddScope(this DotCoverAnalyseSettings dotCoverAnalyseSettings, params string[] scope)
+        public static DotCoverAnalyseSettings AddScope(this DotCoverAnalyseSettings toolSettings, params string[] scope)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.ScopeInternal.AddRange(scope);
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScopeInternal.AddRange(scope);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new scope to the existing <see cref="DotCoverAnalyseSettings.Scope"/>.</i></p><p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddScope(this DotCoverAnalyseSettings dotCoverAnalyseSettings, IEnumerable<string> scope)
+        public static DotCoverAnalyseSettings AddScope(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> scope)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.ScopeInternal.AddRange(scope);
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScopeInternal.AddRange(scope);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for clearing <see cref="DotCoverAnalyseSettings.Scope"/>.</i></p><p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings ClearScope(this DotCoverAnalyseSettings dotCoverAnalyseSettings)
+        public static DotCoverAnalyseSettings ClearScope(this DotCoverAnalyseSettings toolSettings)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.ScopeInternal.Clear();
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScopeInternal.Clear();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding a single scope to <see cref="DotCoverAnalyseSettings.Scope"/>.</i></p><p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddScope(this DotCoverAnalyseSettings dotCoverAnalyseSettings, string scope)
+        public static DotCoverAnalyseSettings AddScope(this DotCoverAnalyseSettings toolSettings, string scope, bool evenIfNull = true)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.ScopeInternal.Add(scope);
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            if (scope != null || evenIfNull) toolSettings.ScopeInternal.Add(scope);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for removing a single scope from <see cref="DotCoverAnalyseSettings.Scope"/>.</i></p><p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings RemoveScope(this DotCoverAnalyseSettings dotCoverAnalyseSettings, string scope)
+        public static DotCoverAnalyseSettings RemoveScope(this DotCoverAnalyseSettings toolSettings, string scope)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.ScopeInternal.Remove(scope);
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScopeInternal.Remove(scope);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.Filters"/> to a new list.</i></p><p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetFilters(this DotCoverAnalyseSettings dotCoverAnalyseSettings, params string[] filters)
+        public static DotCoverAnalyseSettings SetFilters(this DotCoverAnalyseSettings toolSettings, params string[] filters)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.FiltersInternal = filters.ToList();
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FiltersInternal = filters.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.Filters"/> to a new list.</i></p><p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetFilters(this DotCoverAnalyseSettings dotCoverAnalyseSettings, IEnumerable<string> filters)
+        public static DotCoverAnalyseSettings SetFilters(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> filters)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.FiltersInternal = filters.ToList();
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FiltersInternal = filters.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new filters to the existing <see cref="DotCoverAnalyseSettings.Filters"/>.</i></p><p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddFilters(this DotCoverAnalyseSettings dotCoverAnalyseSettings, params string[] filters)
+        public static DotCoverAnalyseSettings AddFilters(this DotCoverAnalyseSettings toolSettings, params string[] filters)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.FiltersInternal.AddRange(filters);
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FiltersInternal.AddRange(filters);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new filters to the existing <see cref="DotCoverAnalyseSettings.Filters"/>.</i></p><p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddFilters(this DotCoverAnalyseSettings dotCoverAnalyseSettings, IEnumerable<string> filters)
+        public static DotCoverAnalyseSettings AddFilters(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> filters)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.FiltersInternal.AddRange(filters);
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FiltersInternal.AddRange(filters);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for clearing <see cref="DotCoverAnalyseSettings.Filters"/>.</i></p><p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings ClearFilters(this DotCoverAnalyseSettings dotCoverAnalyseSettings)
+        public static DotCoverAnalyseSettings ClearFilters(this DotCoverAnalyseSettings toolSettings)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.FiltersInternal.Clear();
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FiltersInternal.Clear();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding a single filter to <see cref="DotCoverAnalyseSettings.Filters"/>.</i></p><p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddFilter(this DotCoverAnalyseSettings dotCoverAnalyseSettings, string filter)
+        public static DotCoverAnalyseSettings AddFilter(this DotCoverAnalyseSettings toolSettings, string filter, bool evenIfNull = true)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.FiltersInternal.Add(filter);
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            if (filter != null || evenIfNull) toolSettings.FiltersInternal.Add(filter);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for removing a single filter from <see cref="DotCoverAnalyseSettings.Filters"/>.</i></p><p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings RemoveFilter(this DotCoverAnalyseSettings dotCoverAnalyseSettings, string filter)
+        public static DotCoverAnalyseSettings RemoveFilter(this DotCoverAnalyseSettings toolSettings, string filter)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.FiltersInternal.Remove(filter);
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FiltersInternal.Remove(filter);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.AttributeFilters"/> to a new list.</i></p><p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetAttributeFilters(this DotCoverAnalyseSettings dotCoverAnalyseSettings, params string[] attributeFilters)
+        public static DotCoverAnalyseSettings SetAttributeFilters(this DotCoverAnalyseSettings toolSettings, params string[] attributeFilters)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.AttributeFiltersInternal = attributeFilters.ToList();
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AttributeFiltersInternal = attributeFilters.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.AttributeFilters"/> to a new list.</i></p><p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetAttributeFilters(this DotCoverAnalyseSettings dotCoverAnalyseSettings, IEnumerable<string> attributeFilters)
+        public static DotCoverAnalyseSettings SetAttributeFilters(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> attributeFilters)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.AttributeFiltersInternal = attributeFilters.ToList();
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AttributeFiltersInternal = attributeFilters.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new attributeFilters to the existing <see cref="DotCoverAnalyseSettings.AttributeFilters"/>.</i></p><p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddAttributeFilters(this DotCoverAnalyseSettings dotCoverAnalyseSettings, params string[] attributeFilters)
+        public static DotCoverAnalyseSettings AddAttributeFilters(this DotCoverAnalyseSettings toolSettings, params string[] attributeFilters)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.AttributeFiltersInternal.AddRange(attributeFilters);
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AttributeFiltersInternal.AddRange(attributeFilters);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new attributeFilters to the existing <see cref="DotCoverAnalyseSettings.AttributeFilters"/>.</i></p><p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddAttributeFilters(this DotCoverAnalyseSettings dotCoverAnalyseSettings, IEnumerable<string> attributeFilters)
+        public static DotCoverAnalyseSettings AddAttributeFilters(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> attributeFilters)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.AttributeFiltersInternal.AddRange(attributeFilters);
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AttributeFiltersInternal.AddRange(attributeFilters);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for clearing <see cref="DotCoverAnalyseSettings.AttributeFilters"/>.</i></p><p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings ClearAttributeFilters(this DotCoverAnalyseSettings dotCoverAnalyseSettings)
+        public static DotCoverAnalyseSettings ClearAttributeFilters(this DotCoverAnalyseSettings toolSettings)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.AttributeFiltersInternal.Clear();
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AttributeFiltersInternal.Clear();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding a single attributeFilter to <see cref="DotCoverAnalyseSettings.AttributeFilters"/>.</i></p><p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddAttributeFilter(this DotCoverAnalyseSettings dotCoverAnalyseSettings, string attributeFilter)
+        public static DotCoverAnalyseSettings AddAttributeFilter(this DotCoverAnalyseSettings toolSettings, string attributeFilter, bool evenIfNull = true)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.AttributeFiltersInternal.Add(attributeFilter);
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            if (attributeFilter != null || evenIfNull) toolSettings.AttributeFiltersInternal.Add(attributeFilter);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for removing a single attributeFilter from <see cref="DotCoverAnalyseSettings.AttributeFilters"/>.</i></p><p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings RemoveAttributeFilter(this DotCoverAnalyseSettings dotCoverAnalyseSettings, string attributeFilter)
+        public static DotCoverAnalyseSettings RemoveAttributeFilter(this DotCoverAnalyseSettings toolSettings, string attributeFilter)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.AttributeFiltersInternal.Remove(attributeFilter);
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AttributeFiltersInternal.Remove(attributeFilter);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/>.</i></p><p>Disables default (automatically added) filters.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetDisableDefaultFilters(this DotCoverAnalyseSettings dotCoverAnalyseSettings, bool disableDefaultFilters)
+        public static DotCoverAnalyseSettings SetDisableDefaultFilters(this DotCoverAnalyseSettings toolSettings, bool disableDefaultFilters)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.DisableDefaultFilters = disableDefaultFilters;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableDefaultFilters = disableDefaultFilters;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/>.</i></p><p>Disables default (automatically added) filters.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings EnableDisableDefaultFilters(this DotCoverAnalyseSettings dotCoverAnalyseSettings)
+        public static DotCoverAnalyseSettings EnableDisableDefaultFilters(this DotCoverAnalyseSettings toolSettings)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.DisableDefaultFilters = true;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableDefaultFilters = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/>.</i></p><p>Disables default (automatically added) filters.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings DisableDisableDefaultFilters(this DotCoverAnalyseSettings dotCoverAnalyseSettings)
+        public static DotCoverAnalyseSettings DisableDisableDefaultFilters(this DotCoverAnalyseSettings toolSettings)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.DisableDefaultFilters = false;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableDefaultFilters = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/>.</i></p><p>Disables default (automatically added) filters.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings ToggleDisableDefaultFilters(this DotCoverAnalyseSettings dotCoverAnalyseSettings)
+        public static DotCoverAnalyseSettings ToggleDisableDefaultFilters(this DotCoverAnalyseSettings toolSettings)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.DisableDefaultFilters = !dotCoverAnalyseSettings.DisableDefaultFilters;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableDefaultFilters = !toolSettings.DisableDefaultFilters;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/> to a new list.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <i>srv*</i> prefix) are supported here.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetSymbolSearchPaths(this DotCoverAnalyseSettings dotCoverAnalyseSettings, params string[] symbolSearchPaths)
+        public static DotCoverAnalyseSettings SetSymbolSearchPaths(this DotCoverAnalyseSettings toolSettings, params string[] symbolSearchPaths)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.SymbolSearchPathsInternal = symbolSearchPaths.ToList();
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SymbolSearchPathsInternal = symbolSearchPaths.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/> to a new list.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <i>srv*</i> prefix) are supported here.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetSymbolSearchPaths(this DotCoverAnalyseSettings dotCoverAnalyseSettings, IEnumerable<string> symbolSearchPaths)
+        public static DotCoverAnalyseSettings SetSymbolSearchPaths(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> symbolSearchPaths)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.SymbolSearchPathsInternal = symbolSearchPaths.ToList();
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SymbolSearchPathsInternal = symbolSearchPaths.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new symbolSearchPaths to the existing <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <i>srv*</i> prefix) are supported here.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddSymbolSearchPaths(this DotCoverAnalyseSettings dotCoverAnalyseSettings, params string[] symbolSearchPaths)
+        public static DotCoverAnalyseSettings AddSymbolSearchPaths(this DotCoverAnalyseSettings toolSettings, params string[] symbolSearchPaths)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.SymbolSearchPathsInternal.AddRange(symbolSearchPaths);
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SymbolSearchPathsInternal.AddRange(symbolSearchPaths);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new symbolSearchPaths to the existing <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <i>srv*</i> prefix) are supported here.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddSymbolSearchPaths(this DotCoverAnalyseSettings dotCoverAnalyseSettings, IEnumerable<string> symbolSearchPaths)
+        public static DotCoverAnalyseSettings AddSymbolSearchPaths(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> symbolSearchPaths)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.SymbolSearchPathsInternal.AddRange(symbolSearchPaths);
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SymbolSearchPathsInternal.AddRange(symbolSearchPaths);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for clearing <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <i>srv*</i> prefix) are supported here.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings ClearSymbolSearchPaths(this DotCoverAnalyseSettings dotCoverAnalyseSettings)
+        public static DotCoverAnalyseSettings ClearSymbolSearchPaths(this DotCoverAnalyseSettings toolSettings)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.SymbolSearchPathsInternal.Clear();
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SymbolSearchPathsInternal.Clear();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding a single symbolSearchPath to <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <i>srv*</i> prefix) are supported here.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddSymbolSearchPath(this DotCoverAnalyseSettings dotCoverAnalyseSettings, string symbolSearchPath)
+        public static DotCoverAnalyseSettings AddSymbolSearchPath(this DotCoverAnalyseSettings toolSettings, string symbolSearchPath, bool evenIfNull = true)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.SymbolSearchPathsInternal.Add(symbolSearchPath);
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            if (symbolSearchPath != null || evenIfNull) toolSettings.SymbolSearchPathsInternal.Add(symbolSearchPath);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for removing a single symbolSearchPath from <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <i>srv*</i> prefix) are supported here.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings RemoveSymbolSearchPath(this DotCoverAnalyseSettings dotCoverAnalyseSettings, string symbolSearchPath)
+        public static DotCoverAnalyseSettings RemoveSymbolSearchPath(this DotCoverAnalyseSettings toolSettings, string symbolSearchPath)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.SymbolSearchPathsInternal.Remove(symbolSearchPath);
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SymbolSearchPathsInternal.Remove(symbolSearchPath);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/>.</i></p><p>Allows dotCover to search for PDB files on a symbol server.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetAllowSymbolServerAccess(this DotCoverAnalyseSettings dotCoverAnalyseSettings, bool allowSymbolServerAccess)
+        public static DotCoverAnalyseSettings SetAllowSymbolServerAccess(this DotCoverAnalyseSettings toolSettings, bool allowSymbolServerAccess)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.AllowSymbolServerAccess = allowSymbolServerAccess;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowSymbolServerAccess = allowSymbolServerAccess;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/>.</i></p><p>Allows dotCover to search for PDB files on a symbol server.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings EnableAllowSymbolServerAccess(this DotCoverAnalyseSettings dotCoverAnalyseSettings)
+        public static DotCoverAnalyseSettings EnableAllowSymbolServerAccess(this DotCoverAnalyseSettings toolSettings)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.AllowSymbolServerAccess = true;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowSymbolServerAccess = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/>.</i></p><p>Allows dotCover to search for PDB files on a symbol server.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings DisableAllowSymbolServerAccess(this DotCoverAnalyseSettings dotCoverAnalyseSettings)
+        public static DotCoverAnalyseSettings DisableAllowSymbolServerAccess(this DotCoverAnalyseSettings toolSettings)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.AllowSymbolServerAccess = false;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowSymbolServerAccess = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/>.</i></p><p>Allows dotCover to search for PDB files on a symbol server.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings ToggleAllowSymbolServerAccess(this DotCoverAnalyseSettings dotCoverAnalyseSettings)
+        public static DotCoverAnalyseSettings ToggleAllowSymbolServerAccess(this DotCoverAnalyseSettings toolSettings)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.AllowSymbolServerAccess = !dotCoverAnalyseSettings.AllowSymbolServerAccess;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowSymbolServerAccess = !toolSettings.AllowSymbolServerAccess;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/>.</i></p><p>Returns the exit code of the target executable in case coverage analysis succeeded.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetReturnTargetExitCode(this DotCoverAnalyseSettings dotCoverAnalyseSettings, bool returnTargetExitCode)
+        public static DotCoverAnalyseSettings SetReturnTargetExitCode(this DotCoverAnalyseSettings toolSettings, bool returnTargetExitCode)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.ReturnTargetExitCode = returnTargetExitCode;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReturnTargetExitCode = returnTargetExitCode;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/>.</i></p><p>Returns the exit code of the target executable in case coverage analysis succeeded.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings EnableReturnTargetExitCode(this DotCoverAnalyseSettings dotCoverAnalyseSettings)
+        public static DotCoverAnalyseSettings EnableReturnTargetExitCode(this DotCoverAnalyseSettings toolSettings)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.ReturnTargetExitCode = true;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReturnTargetExitCode = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/>.</i></p><p>Returns the exit code of the target executable in case coverage analysis succeeded.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings DisableReturnTargetExitCode(this DotCoverAnalyseSettings dotCoverAnalyseSettings)
+        public static DotCoverAnalyseSettings DisableReturnTargetExitCode(this DotCoverAnalyseSettings toolSettings)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.ReturnTargetExitCode = false;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReturnTargetExitCode = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/>.</i></p><p>Returns the exit code of the target executable in case coverage analysis succeeded.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings ToggleReturnTargetExitCode(this DotCoverAnalyseSettings dotCoverAnalyseSettings)
+        public static DotCoverAnalyseSettings ToggleReturnTargetExitCode(this DotCoverAnalyseSettings toolSettings)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.ReturnTargetExitCode = !dotCoverAnalyseSettings.ReturnTargetExitCode;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReturnTargetExitCode = !toolSettings.ReturnTargetExitCode;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.ProcessFilters"/> to a new list.</i></p><p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetProcessFilters(this DotCoverAnalyseSettings dotCoverAnalyseSettings, params string[] processFilters)
+        public static DotCoverAnalyseSettings SetProcessFilters(this DotCoverAnalyseSettings toolSettings, params string[] processFilters)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.ProcessFiltersInternal = processFilters.ToList();
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProcessFiltersInternal = processFilters.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.ProcessFilters"/> to a new list.</i></p><p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetProcessFilters(this DotCoverAnalyseSettings dotCoverAnalyseSettings, IEnumerable<string> processFilters)
+        public static DotCoverAnalyseSettings SetProcessFilters(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> processFilters)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.ProcessFiltersInternal = processFilters.ToList();
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProcessFiltersInternal = processFilters.ToList();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new processFilters to the existing <see cref="DotCoverAnalyseSettings.ProcessFilters"/>.</i></p><p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddProcessFilters(this DotCoverAnalyseSettings dotCoverAnalyseSettings, params string[] processFilters)
+        public static DotCoverAnalyseSettings AddProcessFilters(this DotCoverAnalyseSettings toolSettings, params string[] processFilters)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.ProcessFiltersInternal.AddRange(processFilters);
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProcessFiltersInternal.AddRange(processFilters);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding new processFilters to the existing <see cref="DotCoverAnalyseSettings.ProcessFilters"/>.</i></p><p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddProcessFilters(this DotCoverAnalyseSettings dotCoverAnalyseSettings, IEnumerable<string> processFilters)
+        public static DotCoverAnalyseSettings AddProcessFilters(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> processFilters)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.ProcessFiltersInternal.AddRange(processFilters);
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProcessFiltersInternal.AddRange(processFilters);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for clearing <see cref="DotCoverAnalyseSettings.ProcessFilters"/>.</i></p><p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings ClearProcessFilters(this DotCoverAnalyseSettings dotCoverAnalyseSettings)
+        public static DotCoverAnalyseSettings ClearProcessFilters(this DotCoverAnalyseSettings toolSettings)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.ProcessFiltersInternal.Clear();
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProcessFiltersInternal.Clear();
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for adding a single processFilter to <see cref="DotCoverAnalyseSettings.ProcessFilters"/>.</i></p><p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings AddProcessFilter(this DotCoverAnalyseSettings dotCoverAnalyseSettings, string processFilter)
+        public static DotCoverAnalyseSettings AddProcessFilter(this DotCoverAnalyseSettings toolSettings, string processFilter, bool evenIfNull = true)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.ProcessFiltersInternal.Add(processFilter);
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            if (processFilter != null || evenIfNull) toolSettings.ProcessFiltersInternal.Add(processFilter);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for removing a single processFilter from <see cref="DotCoverAnalyseSettings.ProcessFilters"/>.</i></p><p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings RemoveProcessFilter(this DotCoverAnalyseSettings dotCoverAnalyseSettings, string processFilter)
+        public static DotCoverAnalyseSettings RemoveProcessFilter(this DotCoverAnalyseSettings toolSettings, string processFilter)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.ProcessFiltersInternal.Remove(processFilter);
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProcessFiltersInternal.Remove(processFilter);
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="DotCoverAnalyseSettings.HideAutoProperties"/>.</i></p><p>Remove auto-implemented properties from report.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings SetHideAutoProperties(this DotCoverAnalyseSettings dotCoverAnalyseSettings, bool hideAutoProperties)
+        public static DotCoverAnalyseSettings SetHideAutoProperties(this DotCoverAnalyseSettings toolSettings, bool hideAutoProperties)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.HideAutoProperties = hideAutoProperties;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HideAutoProperties = hideAutoProperties;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="DotCoverAnalyseSettings.HideAutoProperties"/>.</i></p><p>Remove auto-implemented properties from report.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings EnableHideAutoProperties(this DotCoverAnalyseSettings dotCoverAnalyseSettings)
+        public static DotCoverAnalyseSettings EnableHideAutoProperties(this DotCoverAnalyseSettings toolSettings)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.HideAutoProperties = true;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HideAutoProperties = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="DotCoverAnalyseSettings.HideAutoProperties"/>.</i></p><p>Remove auto-implemented properties from report.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings DisableHideAutoProperties(this DotCoverAnalyseSettings dotCoverAnalyseSettings)
+        public static DotCoverAnalyseSettings DisableHideAutoProperties(this DotCoverAnalyseSettings toolSettings)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.HideAutoProperties = false;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HideAutoProperties = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="DotCoverAnalyseSettings.HideAutoProperties"/>.</i></p><p>Remove auto-implemented properties from report.</p></summary>
         [Pure]
-        public static DotCoverAnalyseSettings ToggleHideAutoProperties(this DotCoverAnalyseSettings dotCoverAnalyseSettings)
+        public static DotCoverAnalyseSettings ToggleHideAutoProperties(this DotCoverAnalyseSettings toolSettings)
         {
-            dotCoverAnalyseSettings = dotCoverAnalyseSettings.NewInstance();
-            dotCoverAnalyseSettings.HideAutoProperties = !dotCoverAnalyseSettings.HideAutoProperties;
-            return dotCoverAnalyseSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HideAutoProperties = !toolSettings.HideAutoProperties;
+            return toolSettings;
         }
     }
     /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p></summary>
@@ -656,6 +656,6 @@ namespace Nuke.Common.Tools.DotCover
         Html,
         Json,
         Xml,
-        DetailedXml
+        DetailedXml,
     }
 }

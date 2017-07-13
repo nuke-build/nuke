@@ -26,16 +26,16 @@ namespace Nuke.Common.Tools.GitLink3
     [ExcludeFromCodeCoverage]
     public static partial class GitLink3Tasks
     {
-        static partial void PreProcess (GitLink3Settings gitLink3Settings);
-        static partial void PostProcess (GitLink3Settings gitLink3Settings);
+        static partial void PreProcess (GitLink3Settings toolSettings);
+        static partial void PostProcess (GitLink3Settings toolSettings);
         /// <summary><p>GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.</p><p>For more details, visit the <a href="https://github.com/GitTools/GitLink/">official website</a>.</p></summary>
         public static void GitLink3 (Configure<GitLink3Settings> configurator = null, ProcessSettings processSettings = null)
         {
-            var gitLink3Settings = configurator.InvokeSafe(new GitLink3Settings());
-            PreProcess(gitLink3Settings);
-            var process = ProcessTasks.StartProcess(gitLink3Settings, processSettings);
+            var toolSettings = configurator.InvokeSafe(new GitLink3Settings());
+            PreProcess(toolSettings);
+            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(gitLink3Settings);
+            PostProcess(toolSettings);
         }
     }
     /// <summary><p>GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.</p></summary>
@@ -75,75 +75,75 @@ namespace Nuke.Common.Tools.GitLink3
     {
         /// <summary><p><i>Extension method for setting <see cref="GitLink3Settings.PdbFile"/>.</i></p><p>The PDB to add source indexing to.</p></summary>
         [Pure]
-        public static GitLink3Settings SetPdbFile(this GitLink3Settings gitLink3Settings, string pdbFile)
+        public static GitLink3Settings SetPdbFile(this GitLink3Settings toolSettings, string pdbFile)
         {
-            gitLink3Settings = gitLink3Settings.NewInstance();
-            gitLink3Settings.PdbFile = pdbFile;
-            return gitLink3Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PdbFile = pdbFile;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="GitLink3Settings.Method"/>.</i></p><p>The method for SRCSRV to retrieve source code. One of &lt;Http|Powershell&gt;. Default is Http.</p></summary>
         [Pure]
-        public static GitLink3Settings SetMethod(this GitLink3Settings gitLink3Settings, GitLinkSourceCodeRetrieval? method)
+        public static GitLink3Settings SetMethod(this GitLink3Settings toolSettings, GitLinkSourceCodeRetrieval? method)
         {
-            gitLink3Settings = gitLink3Settings.NewInstance();
-            gitLink3Settings.Method = method;
-            return gitLink3Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Method = method;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="GitLink3Settings.RepositoryUrl"/>.</i></p><p>Url to remote git repository.</p></summary>
         [Pure]
-        public static GitLink3Settings SetRepositoryUrl(this GitLink3Settings gitLink3Settings, string repositoryUrl)
+        public static GitLink3Settings SetRepositoryUrl(this GitLink3Settings toolSettings, string repositoryUrl)
         {
-            gitLink3Settings = gitLink3Settings.NewInstance();
-            gitLink3Settings.RepositoryUrl = repositoryUrl;
-            return gitLink3Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RepositoryUrl = repositoryUrl;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="GitLink3Settings.CommitSha"/>.</i></p><p>The git ref to assume all the source code belongs to.</p></summary>
         [Pure]
-        public static GitLink3Settings SetCommitSha(this GitLink3Settings gitLink3Settings, string commitSha)
+        public static GitLink3Settings SetCommitSha(this GitLink3Settings toolSettings, string commitSha)
         {
-            gitLink3Settings = gitLink3Settings.NewInstance();
-            gitLink3Settings.CommitSha = commitSha;
-            return gitLink3Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CommitSha = commitSha;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="GitLink3Settings.BaseDirectory"/>.</i></p><p>The path to the root of the git repo.</p></summary>
         [Pure]
-        public static GitLink3Settings SetBaseDirectory(this GitLink3Settings gitLink3Settings, string baseDirectory)
+        public static GitLink3Settings SetBaseDirectory(this GitLink3Settings toolSettings, string baseDirectory)
         {
-            gitLink3Settings = gitLink3Settings.NewInstance();
-            gitLink3Settings.BaseDirectory = baseDirectory;
-            return gitLink3Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BaseDirectory = baseDirectory;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for setting <see cref="GitLink3Settings.SkipVerification"/>.</i></p><p>Skip verification that all source files are available in source control.</p></summary>
         [Pure]
-        public static GitLink3Settings SetSkipVerification(this GitLink3Settings gitLink3Settings, bool skipVerification)
+        public static GitLink3Settings SetSkipVerification(this GitLink3Settings toolSettings, bool skipVerification)
         {
-            gitLink3Settings = gitLink3Settings.NewInstance();
-            gitLink3Settings.SkipVerification = skipVerification;
-            return gitLink3Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipVerification = skipVerification;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="GitLink3Settings.SkipVerification"/>.</i></p><p>Skip verification that all source files are available in source control.</p></summary>
         [Pure]
-        public static GitLink3Settings EnableSkipVerification(this GitLink3Settings gitLink3Settings)
+        public static GitLink3Settings EnableSkipVerification(this GitLink3Settings toolSettings)
         {
-            gitLink3Settings = gitLink3Settings.NewInstance();
-            gitLink3Settings.SkipVerification = true;
-            return gitLink3Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipVerification = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="GitLink3Settings.SkipVerification"/>.</i></p><p>Skip verification that all source files are available in source control.</p></summary>
         [Pure]
-        public static GitLink3Settings DisableSkipVerification(this GitLink3Settings gitLink3Settings)
+        public static GitLink3Settings DisableSkipVerification(this GitLink3Settings toolSettings)
         {
-            gitLink3Settings = gitLink3Settings.NewInstance();
-            gitLink3Settings.SkipVerification = false;
-            return gitLink3Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipVerification = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="GitLink3Settings.SkipVerification"/>.</i></p><p>Skip verification that all source files are available in source control.</p></summary>
         [Pure]
-        public static GitLink3Settings ToggleSkipVerification(this GitLink3Settings gitLink3Settings)
+        public static GitLink3Settings ToggleSkipVerification(this GitLink3Settings toolSettings)
         {
-            gitLink3Settings = gitLink3Settings.NewInstance();
-            gitLink3Settings.SkipVerification = !gitLink3Settings.SkipVerification;
-            return gitLink3Settings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipVerification = !toolSettings.SkipVerification;
+            return toolSettings;
         }
     }
     /// <summary><p>GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.</p></summary>
@@ -151,6 +151,6 @@ namespace Nuke.Common.Tools.GitLink3
     public enum GitLinkSourceCodeRetrieval
     {
         Http,
-        Powershell
+        Powershell,
     }
 }

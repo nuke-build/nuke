@@ -26,16 +26,16 @@ namespace Nuke.Common.Tools.GitVersion
     [ExcludeFromCodeCoverage]
     public static partial class GitVersionTasks
     {
-        static partial void PreProcess (GitVersionSettings gitVersionSettings);
-        static partial void PostProcess (GitVersionSettings gitVersionSettings);
+        static partial void PreProcess (GitVersionSettings toolSettings);
+        static partial void PostProcess (GitVersionSettings toolSettings);
         /// <summary><p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p><p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p></summary>
         public static void GitVersion (Configure<GitVersionSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            var gitVersionSettings = configurator.InvokeSafe(new GitVersionSettings());
-            PreProcess(gitVersionSettings);
-            var process = ProcessTasks.StartProcess(gitVersionSettings, processSettings);
+            var toolSettings = configurator.InvokeSafe(new GitVersionSettings());
+            PreProcess(toolSettings);
+            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(gitVersionSettings);
+            PostProcess(toolSettings);
         }
     }
     /// <summary><p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p></summary>
@@ -59,35 +59,35 @@ namespace Nuke.Common.Tools.GitVersion
     {
         /// <summary><p><i>Extension method for setting <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</i></p></summary>
         [Pure]
-        public static GitVersionSettings SetUpdateAssemblyInfo(this GitVersionSettings gitVersionSettings, bool updateAssemblyInfo)
+        public static GitVersionSettings SetUpdateAssemblyInfo(this GitVersionSettings toolSettings, bool updateAssemblyInfo)
         {
-            gitVersionSettings = gitVersionSettings.NewInstance();
-            gitVersionSettings.UpdateAssemblyInfo = updateAssemblyInfo;
-            return gitVersionSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UpdateAssemblyInfo = updateAssemblyInfo;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for enabling <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</i></p></summary>
         [Pure]
-        public static GitVersionSettings EnableUpdateAssemblyInfo(this GitVersionSettings gitVersionSettings)
+        public static GitVersionSettings EnableUpdateAssemblyInfo(this GitVersionSettings toolSettings)
         {
-            gitVersionSettings = gitVersionSettings.NewInstance();
-            gitVersionSettings.UpdateAssemblyInfo = true;
-            return gitVersionSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UpdateAssemblyInfo = true;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for disabling <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</i></p></summary>
         [Pure]
-        public static GitVersionSettings DisableUpdateAssemblyInfo(this GitVersionSettings gitVersionSettings)
+        public static GitVersionSettings DisableUpdateAssemblyInfo(this GitVersionSettings toolSettings)
         {
-            gitVersionSettings = gitVersionSettings.NewInstance();
-            gitVersionSettings.UpdateAssemblyInfo = false;
-            return gitVersionSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UpdateAssemblyInfo = false;
+            return toolSettings;
         }
         /// <summary><p><i>Extension method for toggling <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</i></p></summary>
         [Pure]
-        public static GitVersionSettings ToggleUpdateAssemblyInfo(this GitVersionSettings gitVersionSettings)
+        public static GitVersionSettings ToggleUpdateAssemblyInfo(this GitVersionSettings toolSettings)
         {
-            gitVersionSettings = gitVersionSettings.NewInstance();
-            gitVersionSettings.UpdateAssemblyInfo = !gitVersionSettings.UpdateAssemblyInfo;
-            return gitVersionSettings;
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UpdateAssemblyInfo = !toolSettings.UpdateAssemblyInfo;
+            return toolSettings;
         }
     }
 }

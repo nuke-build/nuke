@@ -27,21 +27,5 @@ namespace Nuke.Common.Tools.NuGet
                 ? string.Join(";", properties.Select(x => $"{x.Key}={x.Value}"))
                 : null;
         }
-
-        [CanBeNull]
-        private string GetMSBuildVersion ()
-        {
-            switch (MSBuildVersion)
-            {
-                case null:
-                    return null;
-                case MSBuild.MSBuildVersion.VS2015:
-                    return "14.0";
-                case MSBuild.MSBuildVersion.VS2013:
-                    return "12.0";
-                default:
-                    throw new NotSupportedException();
-            }
-        }
     }
 }
