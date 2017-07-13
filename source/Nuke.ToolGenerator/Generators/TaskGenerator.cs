@@ -64,12 +64,11 @@ namespace Nuke.ToolGenerator.Generators
 
         private static string GetTaskSignature (Task task, IEnumerable<string> additionalParameterDeclarations = null)
         {
-            var className = task.SettingsClass.Name;
             var parameterDeclarations =
                     (additionalParameterDeclarations ?? Enumerable.Empty<string>())
                     .Concat(new[]
                             {
-                                $"Configure<{className}> configurator = null",
+                                $"Configure<{task.SettingsClass.Name}> configurator = null",
                                 "ProcessSettings processSettings = null"
                             });
 
@@ -78,37 +77,34 @@ namespace Nuke.ToolGenerator.Generators
 
         private static void WriteMainTaskBlock (TaskWriter writer)
         {
-            var settingsClass = writer.Task.SettingsClass.Name;
-            var settingsClassInstance = settingsClass.ToInstance();
-
             writer
-                    .WriteLine($"var {settingsClassInstance} = configurator.InvokeSafe(new {settingsClass}());")
-                    .WriteLine($"PreProcess({settingsClassInstance});")
+                    .WriteLine($"var toolSettings = configurator.InvokeSafe(new {writer.Task.SettingsClass.Name}());")
+                    .WriteLine($"PreProcess(toolSettings);")
                     .WriteLine($"var process = {GetProcessStart(writer.Task)};")
                     .WriteLine(GetProcessAssertion(writer.Task))
-                    .WriteLine($"PostProcess({settingsClassInstance});");
+                    .WriteLine($"PostProcess(toolSettings);");
         }
 
-        public static string GetProcessStart (Task task)
+        private static string GetProcessStart (Task task)
         {
             return !task.CustomStart
-                ? $"ProcessTasks.StartProcess({task.SettingsClass.Name.ToInstance()}, processSettings)"
-                : $"StartProcess({task.SettingsClass.Name.ToInstance()}, processSettings)";
+                ? "ProcessTasks.StartProcess(toolSettings, processSettings)"
+                : "StartProcess(toolSettings, processSettings)";
         }
 
-        public static string GetProcessAssertion (Task task)
+        private static string GetProcessAssertion (Task task)
         {
             return !task.CustomAssertion
                 ? "process.AssertZeroExitCode();"
-                : $"AssertProcess(process, {task.SettingsClass.Name.ToInstance()});";
+                : "AssertProcess(process, toolSettings);";
         }
 
         private static TaskWriter WritePreAndPostProcess (this TaskWriter writer)
         {
             var settingsClass = writer.Task.SettingsClass.Name;
             return writer
-                    .WriteLine($"static partial void PreProcess ({settingsClass} {settingsClass.ToInstance()});")
-                    .WriteLine($"static partial void PostProcess ({settingsClass} {settingsClass.ToInstance()});");
+                    .WriteLine($"static partial void PreProcess ({settingsClass} toolSettings);")
+                    .WriteLine($"static partial void PostProcess ({settingsClass} toolSettings);");
         }
     }
 }

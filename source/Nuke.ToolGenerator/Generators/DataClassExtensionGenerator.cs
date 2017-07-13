@@ -27,7 +27,6 @@ namespace Nuke.ToolGenerator.Generators
         private static void WriteMethods (DataClassWriter writer, Property property)
         {
             var reference = $"{writer.DataClass.Name}.{property.Name}".ToSeeCref();
-            var instanceName = writer.DataClass.Name.ToInstance();
             var propertyInstance = property.Name.ToInstance();
 
             if (!property.IsList() && !property.IsDictionary() && !property.IsLookupTable())
@@ -36,17 +35,17 @@ namespace Nuke.ToolGenerator.Generators
                         .WriteMethod(
                             $"Set{property.Name}",
                             property,
-                            $"{instanceName}.{property.Name} = {property.Name.ToInstance()};");
+                            $"toolSettings.{property.Name} = {property.Name.ToInstance()};");
 
             if (property.IsBoolean())
             {
                 writer
                         .WriteSummaryExtension($"enabling {reference}", property)
-                        .WriteMethod($"Enable{property.Name}", $"{instanceName}.{property.Name} = true;")
+                        .WriteMethod($"Enable{property.Name}", $"toolSettings.{property.Name} = true;")
                         .WriteSummaryExtension($"disabling {reference}", property)
-                        .WriteMethod($"Disable{property.Name}", $"{instanceName}.{property.Name} = false;")
+                        .WriteMethod($"Disable{property.Name}", $"toolSettings.{property.Name} = false;")
                         .WriteSummaryExtension($"toggling {reference}", property)
-                        .WriteMethod($"Toggle{property.Name}", $"{instanceName}.{property.Name} = !{instanceName}.{property.Name};");
+                        .WriteMethod($"Toggle{property.Name}", $"toolSettings.{property.Name} = !toolSettings.{property.Name};");
 
                 // TODO: negate for 'skip', 'no', 'disable'
             }
@@ -62,30 +61,30 @@ namespace Nuke.ToolGenerator.Generators
                         .WriteSummaryExtension($"setting {reference} to a new list", property)
                         .WriteMethod($"Set{property.Name}",
                             $"params {valueType}[] {propertyInstance}",
-                            $"{instanceName}.{propertyInternal} = {propertyInstance}.ToList();")
+                            $"toolSettings.{propertyInternal} = {propertyInstance}.ToList();")
                         .WriteSummaryExtension($"setting {reference} to a new list", property)
                         .WriteMethod($"Set{property.Name}",
                             $"IEnumerable<{valueType}> {propertyInstance}",
-                            $"{instanceName}.{propertyInternal} = {propertyInstance}.ToList();")
+                            $"toolSettings.{propertyInternal} = {propertyInstance}.ToList();")
                         .WriteSummaryExtension($"adding new {propertyInstance} to the existing {reference}", property)
                         .WriteMethod($"Add{property.Name}",
                             $"params {valueType}[] {propertyInstance}",
-                            $"{instanceName}.{propertyInternal}.AddRange({propertyInstance});")
+                            $"toolSettings.{propertyInternal}.AddRange({propertyInstance});")
                         .WriteSummaryExtension($"adding new {propertyInstance} to the existing {reference}", property)
                         .WriteMethod($"Add{property.Name}",
                             $"IEnumerable<{valueType}> {propertyInstance}",
-                            $"{instanceName}.{propertyInternal}.AddRange({propertyInstance});")
+                            $"toolSettings.{propertyInternal}.AddRange({propertyInstance});")
                         .WriteSummaryExtension($"clearing {reference}", property)
                         .WriteMethod($"Clear{property.Name}",
-                            $"{instanceName}.{propertyInternal}.Clear();")
+                            $"toolSettings.{propertyInternal}.Clear();")
                         .WriteSummaryExtension($"adding a single {propertySingularInstance} to {reference}", property)
                         .WriteMethod($"Add{propertySingular}",
                             $"{valueType} {propertySingularInstance}",
-                            $"{instanceName}.{propertyInternal}.Add({propertySingularInstance});")
+                            $"toolSettings.{propertyInternal}.Add({propertySingularInstance});")
                         .WriteSummaryExtension($"removing a single {propertySingularInstance} from {reference}", property)
                         .WriteMethod($"Remove{propertySingular}",
                             $"{valueType} {propertySingularInstance}",
-                            $"{instanceName}.{propertyInternal}.Remove({propertySingularInstance});");
+                            $"toolSettings.{propertyInternal}.Remove({propertySingularInstance});");
             }
             else if (property.IsDictionary())
             {
@@ -101,22 +100,22 @@ namespace Nuke.ToolGenerator.Generators
                         .WriteSummaryExtension($"setting {reference} to a new dictionary", property)
                         .WriteMethod($"Set{property.Name}",
                             $"IDictionary<{keyType}, {valueType}> {propertyInstance}",
-                            $"{instanceName}.{propertyInternal} = {propertyInstance}.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);")
+                            $"toolSettings.{propertyInternal} = {propertyInstance}.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);")
                         .WriteSummaryExtension($"clearing {reference}", property)
                         .WriteMethod($"Clear{property.Name}",
-                            $"{instanceName}.{propertyInternal}.Clear();")
+                            $"toolSettings.{propertyInternal}.Clear();")
                         .WriteSummaryExtension($"adding a {propertySingularInstance} to {reference}", property)
                         .WriteMethod($"Add{propertySingular}",
                             new[] { $"{keyType} {keyInstance}", $"{valueType} {valueInstance}" },
-                            $"{instanceName}.{propertyInternal}.Add({keyInstance}, {valueInstance});")
+                            $"toolSettings.{propertyInternal}.Add({keyInstance}, {valueInstance});")
                         .WriteSummaryExtension($"removing a {propertySingularInstance} from {reference}", property)
                         .WriteMethod($"Remove{propertySingular}",
                             $"{keyType} {keyInstance}",
-                            $"{instanceName}.{propertyInternal}.Remove({keyInstance});")
+                            $"toolSettings.{propertyInternal}.Remove({keyInstance});")
                         .WriteSummaryExtension($"setting a {propertySingularInstance} in {reference}", property)
                         .WriteMethod($"Set{propertySingular}",
                             new[] { $"{keyType} {keyInstance}", $"{valueType} {valueInstance}" },
-                            $"{instanceName}.{propertyInternal}[{keyInstance}] = {valueInstance};");
+                            $"toolSettings.{propertyInternal}[{keyInstance}] = {valueInstance};");
             }
             else if (property.IsLookupTable())
             {
@@ -132,18 +131,18 @@ namespace Nuke.ToolGenerator.Generators
                         .WriteSummaryExtension($"setting {reference} to a new lookup table", property)
                         .WriteMethod($"Set{property.Name}",
                             $"ILookup<{keyType}, {valueType}> {propertyInstance}",
-                            $"{instanceName}.{propertyInternal} = {propertyInstance}.ToLookupTable(StringComparer.OrdinalIgnoreCase);")
+                            $"toolSettings.{propertyInternal} = {propertyInstance}.ToLookupTable(StringComparer.OrdinalIgnoreCase);")
                         .WriteSummaryExtension($"clearing {reference}", property)
                         .WriteMethod($"Clear{property.Name}",
-                            $"{instanceName}.{propertyInternal}.Clear();")
+                            $"toolSettings.{propertyInternal}.Clear();")
                         .WriteSummaryExtension($"adding a {propertySingularInstance} to {reference}", property)
                         .WriteMethod($"Add{propertySingular}",
                             new[] { $"{keyType} {keyInstance}", $"{valueType} {valueInstance}" },
-                            $"{instanceName}.{propertyInternal}.Add({keyInstance}, {valueInstance});")
+                            $"toolSettings.{propertyInternal}.Add({keyInstance}, {valueInstance});")
                         .WriteSummaryExtension($"removing a single {propertySingularInstance} entry from {reference}", property)
                         .WriteMethod($"Remove{propertySingular}",
                             new[] { $"{keyType} {keyInstance}", $"{valueType} {valueInstance}" },
-                            $"{instanceName}.{propertyInternal}.Remove({keyInstance}, {valueInstance});");
+                            $"toolSettings.{propertyInternal}.Remove({keyInstance}, {valueInstance});");
             }
         }
 
@@ -168,15 +167,14 @@ namespace Nuke.ToolGenerator.Generators
             IEnumerable<string> additionalParameters,
             string modification)
         {
-            var instanceName = writer.DataClass.Name.ToInstance();
-            var parameters = new[] { $"this {writer.DataClass.Name} {instanceName}" }.Concat(additionalParameters);
+            var parameters = new[] { $"this {writer.DataClass.Name} toolSettings" }.Concat(additionalParameters);
             return writer
                     .WriteLine("[Pure]")
                     .WriteLine($"public static {writer.DataClass.Name} {name}({parameters.Join()})")
                     .WriteBlock(w => w
-                            .WriteLine($"{instanceName} = {instanceName}.NewInstance();")
+                            .WriteLine("toolSettings = toolSettings.NewInstance();")
                             .WriteLine(modification)
-                            .WriteLine($"return {instanceName};"));
+                            .WriteLine("return toolSettings;"));
         }
     }
 }
