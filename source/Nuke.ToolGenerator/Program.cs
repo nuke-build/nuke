@@ -36,6 +36,8 @@ namespace Nuke.ToolGenerator
                 UpdateReferences(tool);
                 Save(tool);
             }
+
+            Console.ReadKey();
         }
 
         private static Tool Load (string file)

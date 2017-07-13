@@ -31,6 +31,8 @@ namespace Nuke.ToolGenerator.Model
         /// </summary>
         public bool SkipExtensionMethods { get; set; }
 
+        public bool NoArguments { get; set; }
+
         /// <summary>
         /// The list of properties.
         /// </summary>

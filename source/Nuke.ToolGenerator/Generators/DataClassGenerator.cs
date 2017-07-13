@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.ToolGenerator.Model;
@@ -17,6 +18,23 @@ namespace Nuke.ToolGenerator.Generators
     {
         public static void Run (DataClass dataClass, ToolWriter toolWriter)
         {
+            if (!dataClass.NoArguments)
+            {
+                foreach (var property in dataClass.Properties)
+                {
+                    if (property.NoArgument)
+                        continue;
+
+                    if (new[] { "int", "bool" }.Contains(property.Type))
+                        continue;
+
+                    if (property.Format != null && property.Format.Contains("{value}"))
+                        continue;
+
+                    Console.WriteLine($"Format for '{dataClass.Name}.{property.Name}' doesn't contain '{{value}}'.");
+                }
+            }
+
             var writer = new DataClassWriter(dataClass, toolWriter);
             var baseType = dataClass.BaseClass ?? (dataClass.Name.EndsWith("Settings") ? "ToolSettings" : "ISettingsEntity");
 

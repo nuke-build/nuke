@@ -32,7 +32,10 @@ namespace Nuke.ToolGenerator.Model
         /// <summary>
         /// The format how the property is rendered.
         /// </summary>
+        [CanBeNull]
         public string Format { get; set; }
+
+        public bool NoArgument { get; set; }
 
         /// <summary>
         /// Defines the separator between items of lists or dictionaries.
