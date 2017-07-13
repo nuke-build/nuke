@@ -57,7 +57,7 @@ namespace Nuke.Common.Tools.GitVersion
     [ExcludeFromCodeCoverage]
     public static partial class GitVersionSettingsExtensions
     {
-        /// <summary><p><i>Extension method for setting <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</i></p></summary>
+        /// <summary><p><i>Sets <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</i></p></summary>
         [Pure]
         public static GitVersionSettings SetUpdateAssemblyInfo(this GitVersionSettings toolSettings, bool updateAssemblyInfo)
         {
@@ -65,7 +65,7 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.UpdateAssemblyInfo = updateAssemblyInfo;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</i></p></summary>
+        /// <summary><p><i>Enables <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</i></p></summary>
         [Pure]
         public static GitVersionSettings EnableUpdateAssemblyInfo(this GitVersionSettings toolSettings)
         {
@@ -73,7 +73,7 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.UpdateAssemblyInfo = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</i></p></summary>
+        /// <summary><p><i>Disables <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</i></p></summary>
         [Pure]
         public static GitVersionSettings DisableUpdateAssemblyInfo(this GitVersionSettings toolSettings)
         {
@@ -81,7 +81,7 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.UpdateAssemblyInfo = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</i></p></summary>
+        /// <summary><p><i>Toggles <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</i></p></summary>
         [Pure]
         public static GitVersionSettings ToggleUpdateAssemblyInfo(this GitVersionSettings toolSettings)
         {

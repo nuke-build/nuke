@@ -312,7 +312,7 @@ namespace Nuke.Common.Tools.Paket
     [ExcludeFromCodeCoverage]
     public static partial class PaketUpdateSettingsExtensions
     {
-        /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.PackageId"/>.</i></p><p>NuGet package id.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketUpdateSettings.PackageId"/>.</i></p><p>NuGet package id.</p></summary>
         [Pure]
         public static PaketUpdateSettings SetPackageId(this PaketUpdateSettings toolSettings, string packageId)
         {
@@ -320,7 +320,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.PackageId = packageId;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.PackageVersion"/>.</i></p><p>Allows to specify version of the package.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketUpdateSettings.PackageVersion"/>.</i></p><p>Allows to specify version of the package.</p></summary>
         [Pure]
         public static PaketUpdateSettings SetPackageVersion(this PaketUpdateSettings toolSettings, string packageVersion)
         {
@@ -328,7 +328,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.PackageVersion = packageVersion;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.DependencyGroup"/>.</i></p><p>Allows to specify the dependency group.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketUpdateSettings.DependencyGroup"/>.</i></p><p>Allows to specify the dependency group.</p></summary>
         [Pure]
         public static PaketUpdateSettings SetDependencyGroup(this PaketUpdateSettings toolSettings, string dependencyGroup)
         {
@@ -336,7 +336,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.DependencyGroup = dependencyGroup;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.Force"/>.</i></p><p>Forces the download and reinstallation of all packages.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketUpdateSettings.Force"/>.</i></p><p>Forces the download and reinstallation of all packages.</p></summary>
         [Pure]
         public static PaketUpdateSettings SetForce(this PaketUpdateSettings toolSettings, bool force)
         {
@@ -344,7 +344,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Force = force;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.Force"/>.</i></p><p>Forces the download and reinstallation of all packages.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketUpdateSettings.Force"/>.</i></p><p>Forces the download and reinstallation of all packages.</p></summary>
         [Pure]
         public static PaketUpdateSettings EnableForce(this PaketUpdateSettings toolSettings)
         {
@@ -352,7 +352,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Force = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.Force"/>.</i></p><p>Forces the download and reinstallation of all packages.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketUpdateSettings.Force"/>.</i></p><p>Forces the download and reinstallation of all packages.</p></summary>
         [Pure]
         public static PaketUpdateSettings DisableForce(this PaketUpdateSettings toolSettings)
         {
@@ -360,7 +360,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Force = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.Force"/>.</i></p><p>Forces the download and reinstallation of all packages.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketUpdateSettings.Force"/>.</i></p><p>Forces the download and reinstallation of all packages.</p></summary>
         [Pure]
         public static PaketUpdateSettings ToggleForce(this PaketUpdateSettings toolSettings)
         {
@@ -368,7 +368,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Force = !toolSettings.Force;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.Redirects"/>.</i></p><p>Creates binding redirects for the NuGet packages.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketUpdateSettings.Redirects"/>.</i></p><p>Creates binding redirects for the NuGet packages.</p></summary>
         [Pure]
         public static PaketUpdateSettings SetRedirects(this PaketUpdateSettings toolSettings, bool redirects)
         {
@@ -376,7 +376,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Redirects = redirects;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.Redirects"/>.</i></p><p>Creates binding redirects for the NuGet packages.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketUpdateSettings.Redirects"/>.</i></p><p>Creates binding redirects for the NuGet packages.</p></summary>
         [Pure]
         public static PaketUpdateSettings EnableRedirects(this PaketUpdateSettings toolSettings)
         {
@@ -384,7 +384,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Redirects = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.Redirects"/>.</i></p><p>Creates binding redirects for the NuGet packages.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketUpdateSettings.Redirects"/>.</i></p><p>Creates binding redirects for the NuGet packages.</p></summary>
         [Pure]
         public static PaketUpdateSettings DisableRedirects(this PaketUpdateSettings toolSettings)
         {
@@ -392,7 +392,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Redirects = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.Redirects"/>.</i></p><p>Creates binding redirects for the NuGet packages.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketUpdateSettings.Redirects"/>.</i></p><p>Creates binding redirects for the NuGet packages.</p></summary>
         [Pure]
         public static PaketUpdateSettings ToggleRedirects(this PaketUpdateSettings toolSettings)
         {
@@ -400,7 +400,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Redirects = !toolSettings.Redirects;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.CreateNewBindingFiles"/>.</i></p><p>Creates binding redirect files if needed.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketUpdateSettings.CreateNewBindingFiles"/>.</i></p><p>Creates binding redirect files if needed.</p></summary>
         [Pure]
         public static PaketUpdateSettings SetCreateNewBindingFiles(this PaketUpdateSettings toolSettings, bool createNewBindingFiles)
         {
@@ -408,7 +408,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.CreateNewBindingFiles = createNewBindingFiles;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.CreateNewBindingFiles"/>.</i></p><p>Creates binding redirect files if needed.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketUpdateSettings.CreateNewBindingFiles"/>.</i></p><p>Creates binding redirect files if needed.</p></summary>
         [Pure]
         public static PaketUpdateSettings EnableCreateNewBindingFiles(this PaketUpdateSettings toolSettings)
         {
@@ -416,7 +416,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.CreateNewBindingFiles = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.CreateNewBindingFiles"/>.</i></p><p>Creates binding redirect files if needed.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketUpdateSettings.CreateNewBindingFiles"/>.</i></p><p>Creates binding redirect files if needed.</p></summary>
         [Pure]
         public static PaketUpdateSettings DisableCreateNewBindingFiles(this PaketUpdateSettings toolSettings)
         {
@@ -424,7 +424,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.CreateNewBindingFiles = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.CreateNewBindingFiles"/>.</i></p><p>Creates binding redirect files if needed.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketUpdateSettings.CreateNewBindingFiles"/>.</i></p><p>Creates binding redirect files if needed.</p></summary>
         [Pure]
         public static PaketUpdateSettings ToggleCreateNewBindingFiles(this PaketUpdateSettings toolSettings)
         {
@@ -432,7 +432,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.CreateNewBindingFiles = !toolSettings.CreateNewBindingFiles;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.CleanRedirects"/>.</i></p><p>Removes all binding redirects that are not specified by Paket.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketUpdateSettings.CleanRedirects"/>.</i></p><p>Removes all binding redirects that are not specified by Paket.</p></summary>
         [Pure]
         public static PaketUpdateSettings SetCleanRedirects(this PaketUpdateSettings toolSettings, bool cleanRedirects)
         {
@@ -440,7 +440,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.CleanRedirects = cleanRedirects;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.CleanRedirects"/>.</i></p><p>Removes all binding redirects that are not specified by Paket.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketUpdateSettings.CleanRedirects"/>.</i></p><p>Removes all binding redirects that are not specified by Paket.</p></summary>
         [Pure]
         public static PaketUpdateSettings EnableCleanRedirects(this PaketUpdateSettings toolSettings)
         {
@@ -448,7 +448,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.CleanRedirects = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.CleanRedirects"/>.</i></p><p>Removes all binding redirects that are not specified by Paket.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketUpdateSettings.CleanRedirects"/>.</i></p><p>Removes all binding redirects that are not specified by Paket.</p></summary>
         [Pure]
         public static PaketUpdateSettings DisableCleanRedirects(this PaketUpdateSettings toolSettings)
         {
@@ -456,7 +456,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.CleanRedirects = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.CleanRedirects"/>.</i></p><p>Removes all binding redirects that are not specified by Paket.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketUpdateSettings.CleanRedirects"/>.</i></p><p>Removes all binding redirects that are not specified by Paket.</p></summary>
         [Pure]
         public static PaketUpdateSettings ToggleCleanRedirects(this PaketUpdateSettings toolSettings)
         {
@@ -464,7 +464,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.CleanRedirects = !toolSettings.CleanRedirects;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.NoInstall"/>.</i></p><p>Skips paket install process (patching of csproj, fsproj, ... files) after the generation of paket.lock file.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketUpdateSettings.NoInstall"/>.</i></p><p>Skips paket install process (patching of csproj, fsproj, ... files) after the generation of paket.lock file.</p></summary>
         [Pure]
         public static PaketUpdateSettings SetNoInstall(this PaketUpdateSettings toolSettings, bool noInstall)
         {
@@ -472,7 +472,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.NoInstall = noInstall;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.NoInstall"/>.</i></p><p>Skips paket install process (patching of csproj, fsproj, ... files) after the generation of paket.lock file.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketUpdateSettings.NoInstall"/>.</i></p><p>Skips paket install process (patching of csproj, fsproj, ... files) after the generation of paket.lock file.</p></summary>
         [Pure]
         public static PaketUpdateSettings EnableNoInstall(this PaketUpdateSettings toolSettings)
         {
@@ -480,7 +480,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.NoInstall = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.NoInstall"/>.</i></p><p>Skips paket install process (patching of csproj, fsproj, ... files) after the generation of paket.lock file.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketUpdateSettings.NoInstall"/>.</i></p><p>Skips paket install process (patching of csproj, fsproj, ... files) after the generation of paket.lock file.</p></summary>
         [Pure]
         public static PaketUpdateSettings DisableNoInstall(this PaketUpdateSettings toolSettings)
         {
@@ -488,7 +488,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.NoInstall = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.NoInstall"/>.</i></p><p>Skips paket install process (patching of csproj, fsproj, ... files) after the generation of paket.lock file.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketUpdateSettings.NoInstall"/>.</i></p><p>Skips paket install process (patching of csproj, fsproj, ... files) after the generation of paket.lock file.</p></summary>
         [Pure]
         public static PaketUpdateSettings ToggleNoInstall(this PaketUpdateSettings toolSettings)
         {
@@ -496,7 +496,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.NoInstall = !toolSettings.NoInstall;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.KeepMajor"/>.</i></p><p>Allows only updates that are not changing the major version of the NuGet packages.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketUpdateSettings.KeepMajor"/>.</i></p><p>Allows only updates that are not changing the major version of the NuGet packages.</p></summary>
         [Pure]
         public static PaketUpdateSettings SetKeepMajor(this PaketUpdateSettings toolSettings, bool keepMajor)
         {
@@ -504,7 +504,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.KeepMajor = keepMajor;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.KeepMajor"/>.</i></p><p>Allows only updates that are not changing the major version of the NuGet packages.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketUpdateSettings.KeepMajor"/>.</i></p><p>Allows only updates that are not changing the major version of the NuGet packages.</p></summary>
         [Pure]
         public static PaketUpdateSettings EnableKeepMajor(this PaketUpdateSettings toolSettings)
         {
@@ -512,7 +512,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.KeepMajor = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.KeepMajor"/>.</i></p><p>Allows only updates that are not changing the major version of the NuGet packages.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketUpdateSettings.KeepMajor"/>.</i></p><p>Allows only updates that are not changing the major version of the NuGet packages.</p></summary>
         [Pure]
         public static PaketUpdateSettings DisableKeepMajor(this PaketUpdateSettings toolSettings)
         {
@@ -520,7 +520,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.KeepMajor = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.KeepMajor"/>.</i></p><p>Allows only updates that are not changing the major version of the NuGet packages.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketUpdateSettings.KeepMajor"/>.</i></p><p>Allows only updates that are not changing the major version of the NuGet packages.</p></summary>
         [Pure]
         public static PaketUpdateSettings ToggleKeepMajor(this PaketUpdateSettings toolSettings)
         {
@@ -528,7 +528,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.KeepMajor = !toolSettings.KeepMajor;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.KeepMinor"/>.</i></p><p>Allows only updates that are not changing the minor version of the NuGet packages.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketUpdateSettings.KeepMinor"/>.</i></p><p>Allows only updates that are not changing the minor version of the NuGet packages.</p></summary>
         [Pure]
         public static PaketUpdateSettings SetKeepMinor(this PaketUpdateSettings toolSettings, bool keepMinor)
         {
@@ -536,7 +536,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.KeepMinor = keepMinor;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.KeepMinor"/>.</i></p><p>Allows only updates that are not changing the minor version of the NuGet packages.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketUpdateSettings.KeepMinor"/>.</i></p><p>Allows only updates that are not changing the minor version of the NuGet packages.</p></summary>
         [Pure]
         public static PaketUpdateSettings EnableKeepMinor(this PaketUpdateSettings toolSettings)
         {
@@ -544,7 +544,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.KeepMinor = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.KeepMinor"/>.</i></p><p>Allows only updates that are not changing the minor version of the NuGet packages.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketUpdateSettings.KeepMinor"/>.</i></p><p>Allows only updates that are not changing the minor version of the NuGet packages.</p></summary>
         [Pure]
         public static PaketUpdateSettings DisableKeepMinor(this PaketUpdateSettings toolSettings)
         {
@@ -552,7 +552,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.KeepMinor = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.KeepMinor"/>.</i></p><p>Allows only updates that are not changing the minor version of the NuGet packages.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketUpdateSettings.KeepMinor"/>.</i></p><p>Allows only updates that are not changing the minor version of the NuGet packages.</p></summary>
         [Pure]
         public static PaketUpdateSettings ToggleKeepMinor(this PaketUpdateSettings toolSettings)
         {
@@ -560,7 +560,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.KeepMinor = !toolSettings.KeepMinor;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.KeepPatch"/>.</i></p><p>Allows only updates that are not changing the patch version of the NuGet packages.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketUpdateSettings.KeepPatch"/>.</i></p><p>Allows only updates that are not changing the patch version of the NuGet packages.</p></summary>
         [Pure]
         public static PaketUpdateSettings SetKeepPatch(this PaketUpdateSettings toolSettings, bool keepPatch)
         {
@@ -568,7 +568,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.KeepPatch = keepPatch;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.KeepPatch"/>.</i></p><p>Allows only updates that are not changing the patch version of the NuGet packages.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketUpdateSettings.KeepPatch"/>.</i></p><p>Allows only updates that are not changing the patch version of the NuGet packages.</p></summary>
         [Pure]
         public static PaketUpdateSettings EnableKeepPatch(this PaketUpdateSettings toolSettings)
         {
@@ -576,7 +576,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.KeepPatch = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.KeepPatch"/>.</i></p><p>Allows only updates that are not changing the patch version of the NuGet packages.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketUpdateSettings.KeepPatch"/>.</i></p><p>Allows only updates that are not changing the patch version of the NuGet packages.</p></summary>
         [Pure]
         public static PaketUpdateSettings DisableKeepPatch(this PaketUpdateSettings toolSettings)
         {
@@ -584,7 +584,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.KeepPatch = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.KeepPatch"/>.</i></p><p>Allows only updates that are not changing the patch version of the NuGet packages.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketUpdateSettings.KeepPatch"/>.</i></p><p>Allows only updates that are not changing the patch version of the NuGet packages.</p></summary>
         [Pure]
         public static PaketUpdateSettings ToggleKeepPatch(this PaketUpdateSettings toolSettings)
         {
@@ -592,7 +592,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.KeepPatch = !toolSettings.KeepPatch;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.Filter"/>.</i></p><p>Treat the nuget parameter as a regex to filter packages rather than an exact match.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketUpdateSettings.Filter"/>.</i></p><p>Treat the nuget parameter as a regex to filter packages rather than an exact match.</p></summary>
         [Pure]
         public static PaketUpdateSettings SetFilter(this PaketUpdateSettings toolSettings, bool filter)
         {
@@ -600,7 +600,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Filter = filter;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.Filter"/>.</i></p><p>Treat the nuget parameter as a regex to filter packages rather than an exact match.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketUpdateSettings.Filter"/>.</i></p><p>Treat the nuget parameter as a regex to filter packages rather than an exact match.</p></summary>
         [Pure]
         public static PaketUpdateSettings EnableFilter(this PaketUpdateSettings toolSettings)
         {
@@ -608,7 +608,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Filter = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.Filter"/>.</i></p><p>Treat the nuget parameter as a regex to filter packages rather than an exact match.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketUpdateSettings.Filter"/>.</i></p><p>Treat the nuget parameter as a regex to filter packages rather than an exact match.</p></summary>
         [Pure]
         public static PaketUpdateSettings DisableFilter(this PaketUpdateSettings toolSettings)
         {
@@ -616,7 +616,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Filter = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.Filter"/>.</i></p><p>Treat the nuget parameter as a regex to filter packages rather than an exact match.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketUpdateSettings.Filter"/>.</i></p><p>Treat the nuget parameter as a regex to filter packages rather than an exact match.</p></summary>
         [Pure]
         public static PaketUpdateSettings ToggleFilter(this PaketUpdateSettings toolSettings)
         {
@@ -624,7 +624,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Filter = !toolSettings.Filter;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are affected, to help incremental build tools detecting the change.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketUpdateSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are affected, to help incremental build tools detecting the change.</p></summary>
         [Pure]
         public static PaketUpdateSettings SetTouchAffectedRefs(this PaketUpdateSettings toolSettings, bool touchAffectedRefs)
         {
@@ -632,7 +632,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.TouchAffectedRefs = touchAffectedRefs;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are affected, to help incremental build tools detecting the change.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketUpdateSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are affected, to help incremental build tools detecting the change.</p></summary>
         [Pure]
         public static PaketUpdateSettings EnableTouchAffectedRefs(this PaketUpdateSettings toolSettings)
         {
@@ -640,7 +640,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.TouchAffectedRefs = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are affected, to help incremental build tools detecting the change.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketUpdateSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are affected, to help incremental build tools detecting the change.</p></summary>
         [Pure]
         public static PaketUpdateSettings DisableTouchAffectedRefs(this PaketUpdateSettings toolSettings)
         {
@@ -648,7 +648,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.TouchAffectedRefs = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are affected, to help incremental build tools detecting the change.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketUpdateSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are affected, to help incremental build tools detecting the change.</p></summary>
         [Pure]
         public static PaketUpdateSettings ToggleTouchAffectedRefs(this PaketUpdateSettings toolSettings)
         {
@@ -656,7 +656,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.TouchAffectedRefs = !toolSettings.TouchAffectedRefs;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketUpdateSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
         public static PaketUpdateSettings SetVerbose(this PaketUpdateSettings toolSettings, bool verbose)
         {
@@ -664,7 +664,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Verbose = verbose;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketUpdateSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
         public static PaketUpdateSettings EnableVerbose(this PaketUpdateSettings toolSettings)
         {
@@ -672,7 +672,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Verbose = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketUpdateSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
         public static PaketUpdateSettings DisableVerbose(this PaketUpdateSettings toolSettings)
         {
@@ -680,7 +680,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Verbose = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketUpdateSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
         public static PaketUpdateSettings ToggleVerbose(this PaketUpdateSettings toolSettings)
         {
@@ -688,7 +688,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Verbose = !toolSettings.Verbose;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.LogFile"/>.</i></p><p>Specify a log file for the paket process.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketUpdateSettings.LogFile"/>.</i></p><p>Specify a log file for the paket process.</p></summary>
         [Pure]
         public static PaketUpdateSettings SetLogFile(this PaketUpdateSettings toolSettings, string logFile)
         {
@@ -696,7 +696,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.LogFile = logFile;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketUpdateSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
         public static PaketUpdateSettings SetSilent(this PaketUpdateSettings toolSettings, bool silent)
         {
@@ -704,7 +704,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Silent = silent;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketUpdateSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
         public static PaketUpdateSettings EnableSilent(this PaketUpdateSettings toolSettings)
         {
@@ -712,7 +712,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Silent = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketUpdateSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
         public static PaketUpdateSettings DisableSilent(this PaketUpdateSettings toolSettings)
         {
@@ -720,7 +720,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Silent = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketUpdateSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
         public static PaketUpdateSettings ToggleSilent(this PaketUpdateSettings toolSettings)
         {
@@ -728,7 +728,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Silent = !toolSettings.Silent;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketUpdateSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
         public static PaketUpdateSettings SetShowVersion(this PaketUpdateSettings toolSettings, bool showVersion)
         {
@@ -736,7 +736,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ShowVersion = showVersion;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketUpdateSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
         public static PaketUpdateSettings EnableShowVersion(this PaketUpdateSettings toolSettings)
         {
@@ -744,7 +744,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ShowVersion = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketUpdateSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
         public static PaketUpdateSettings DisableShowVersion(this PaketUpdateSettings toolSettings)
         {
@@ -752,7 +752,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ShowVersion = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketUpdateSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
         public static PaketUpdateSettings ToggleShowVersion(this PaketUpdateSettings toolSettings)
         {
@@ -760,7 +760,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ShowVersion = !toolSettings.ShowVersion;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketUpdateSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketUpdateSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
         public static PaketUpdateSettings SetFromBootstrapper(this PaketUpdateSettings toolSettings, bool fromBootstrapper)
         {
@@ -768,7 +768,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.FromBootstrapper = fromBootstrapper;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketUpdateSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketUpdateSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
         public static PaketUpdateSettings EnableFromBootstrapper(this PaketUpdateSettings toolSettings)
         {
@@ -776,7 +776,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.FromBootstrapper = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketUpdateSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketUpdateSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
         public static PaketUpdateSettings DisableFromBootstrapper(this PaketUpdateSettings toolSettings)
         {
@@ -784,7 +784,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.FromBootstrapper = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketUpdateSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketUpdateSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
         public static PaketUpdateSettings ToggleFromBootstrapper(this PaketUpdateSettings toolSettings)
         {
@@ -797,7 +797,7 @@ namespace Nuke.Common.Tools.Paket
     [ExcludeFromCodeCoverage]
     public static partial class PaketRestoreSettingsExtensions
     {
-        /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.Force"/>.</i></p><p>Forces the download of all packages.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketRestoreSettings.Force"/>.</i></p><p>Forces the download of all packages.</p></summary>
         [Pure]
         public static PaketRestoreSettings SetForce(this PaketRestoreSettings toolSettings, bool force)
         {
@@ -805,7 +805,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Force = force;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketRestoreSettings.Force"/>.</i></p><p>Forces the download of all packages.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketRestoreSettings.Force"/>.</i></p><p>Forces the download of all packages.</p></summary>
         [Pure]
         public static PaketRestoreSettings EnableForce(this PaketRestoreSettings toolSettings)
         {
@@ -813,7 +813,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Force = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketRestoreSettings.Force"/>.</i></p><p>Forces the download of all packages.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketRestoreSettings.Force"/>.</i></p><p>Forces the download of all packages.</p></summary>
         [Pure]
         public static PaketRestoreSettings DisableForce(this PaketRestoreSettings toolSettings)
         {
@@ -821,7 +821,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Force = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketRestoreSettings.Force"/>.</i></p><p>Forces the download of all packages.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketRestoreSettings.Force"/>.</i></p><p>Forces the download of all packages.</p></summary>
         [Pure]
         public static PaketRestoreSettings ToggleForce(this PaketRestoreSettings toolSettings)
         {
@@ -829,7 +829,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Force = !toolSettings.Force;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.OnlyReferenced"/>.</i></p><p>Allows to restore packages that are referenced in paket.references files, instead of all packages in paket.dependencies.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketRestoreSettings.OnlyReferenced"/>.</i></p><p>Allows to restore packages that are referenced in paket.references files, instead of all packages in paket.dependencies.</p></summary>
         [Pure]
         public static PaketRestoreSettings SetOnlyReferenced(this PaketRestoreSettings toolSettings, bool onlyReferenced)
         {
@@ -837,7 +837,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.OnlyReferenced = onlyReferenced;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketRestoreSettings.OnlyReferenced"/>.</i></p><p>Allows to restore packages that are referenced in paket.references files, instead of all packages in paket.dependencies.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketRestoreSettings.OnlyReferenced"/>.</i></p><p>Allows to restore packages that are referenced in paket.references files, instead of all packages in paket.dependencies.</p></summary>
         [Pure]
         public static PaketRestoreSettings EnableOnlyReferenced(this PaketRestoreSettings toolSettings)
         {
@@ -845,7 +845,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.OnlyReferenced = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketRestoreSettings.OnlyReferenced"/>.</i></p><p>Allows to restore packages that are referenced in paket.references files, instead of all packages in paket.dependencies.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketRestoreSettings.OnlyReferenced"/>.</i></p><p>Allows to restore packages that are referenced in paket.references files, instead of all packages in paket.dependencies.</p></summary>
         [Pure]
         public static PaketRestoreSettings DisableOnlyReferenced(this PaketRestoreSettings toolSettings)
         {
@@ -853,7 +853,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.OnlyReferenced = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketRestoreSettings.OnlyReferenced"/>.</i></p><p>Allows to restore packages that are referenced in paket.references files, instead of all packages in paket.dependencies.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketRestoreSettings.OnlyReferenced"/>.</i></p><p>Allows to restore packages that are referenced in paket.references files, instead of all packages in paket.dependencies.</p></summary>
         [Pure]
         public static PaketRestoreSettings ToggleOnlyReferenced(this PaketRestoreSettings toolSettings)
         {
@@ -861,7 +861,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.OnlyReferenced = !toolSettings.OnlyReferenced;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are being restored, to help incremental build tools detecting the change.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketRestoreSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are being restored, to help incremental build tools detecting the change.</p></summary>
         [Pure]
         public static PaketRestoreSettings SetTouchAffectedRefs(this PaketRestoreSettings toolSettings, bool touchAffectedRefs)
         {
@@ -869,7 +869,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.TouchAffectedRefs = touchAffectedRefs;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketRestoreSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are being restored, to help incremental build tools detecting the change.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketRestoreSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are being restored, to help incremental build tools detecting the change.</p></summary>
         [Pure]
         public static PaketRestoreSettings EnableTouchAffectedRefs(this PaketRestoreSettings toolSettings)
         {
@@ -877,7 +877,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.TouchAffectedRefs = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketRestoreSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are being restored, to help incremental build tools detecting the change.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketRestoreSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are being restored, to help incremental build tools detecting the change.</p></summary>
         [Pure]
         public static PaketRestoreSettings DisableTouchAffectedRefs(this PaketRestoreSettings toolSettings)
         {
@@ -885,7 +885,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.TouchAffectedRefs = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketRestoreSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are being restored, to help incremental build tools detecting the change.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketRestoreSettings.TouchAffectedRefs"/>.</i></p><p>Touches project files referencing packages which are being restored, to help incremental build tools detecting the change.</p></summary>
         [Pure]
         public static PaketRestoreSettings ToggleTouchAffectedRefs(this PaketRestoreSettings toolSettings)
         {
@@ -893,7 +893,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.TouchAffectedRefs = !toolSettings.TouchAffectedRefs;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.IgnoreChecks"/>.</i></p><p>Skips the test if paket.dependencies and paket.lock are in sync.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketRestoreSettings.IgnoreChecks"/>.</i></p><p>Skips the test if paket.dependencies and paket.lock are in sync.</p></summary>
         [Pure]
         public static PaketRestoreSettings SetIgnoreChecks(this PaketRestoreSettings toolSettings, bool ignoreChecks)
         {
@@ -901,7 +901,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.IgnoreChecks = ignoreChecks;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketRestoreSettings.IgnoreChecks"/>.</i></p><p>Skips the test if paket.dependencies and paket.lock are in sync.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketRestoreSettings.IgnoreChecks"/>.</i></p><p>Skips the test if paket.dependencies and paket.lock are in sync.</p></summary>
         [Pure]
         public static PaketRestoreSettings EnableIgnoreChecks(this PaketRestoreSettings toolSettings)
         {
@@ -909,7 +909,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.IgnoreChecks = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketRestoreSettings.IgnoreChecks"/>.</i></p><p>Skips the test if paket.dependencies and paket.lock are in sync.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketRestoreSettings.IgnoreChecks"/>.</i></p><p>Skips the test if paket.dependencies and paket.lock are in sync.</p></summary>
         [Pure]
         public static PaketRestoreSettings DisableIgnoreChecks(this PaketRestoreSettings toolSettings)
         {
@@ -917,7 +917,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.IgnoreChecks = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketRestoreSettings.IgnoreChecks"/>.</i></p><p>Skips the test if paket.dependencies and paket.lock are in sync.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketRestoreSettings.IgnoreChecks"/>.</i></p><p>Skips the test if paket.dependencies and paket.lock are in sync.</p></summary>
         [Pure]
         public static PaketRestoreSettings ToggleIgnoreChecks(this PaketRestoreSettings toolSettings)
         {
@@ -925,7 +925,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.IgnoreChecks = !toolSettings.IgnoreChecks;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.FailOnChecks"/>.</i></p><p>Causes the restore to fail if any of the checks fail.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketRestoreSettings.FailOnChecks"/>.</i></p><p>Causes the restore to fail if any of the checks fail.</p></summary>
         [Pure]
         public static PaketRestoreSettings SetFailOnChecks(this PaketRestoreSettings toolSettings, bool failOnChecks)
         {
@@ -933,7 +933,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.FailOnChecks = failOnChecks;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketRestoreSettings.FailOnChecks"/>.</i></p><p>Causes the restore to fail if any of the checks fail.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketRestoreSettings.FailOnChecks"/>.</i></p><p>Causes the restore to fail if any of the checks fail.</p></summary>
         [Pure]
         public static PaketRestoreSettings EnableFailOnChecks(this PaketRestoreSettings toolSettings)
         {
@@ -941,7 +941,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.FailOnChecks = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketRestoreSettings.FailOnChecks"/>.</i></p><p>Causes the restore to fail if any of the checks fail.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketRestoreSettings.FailOnChecks"/>.</i></p><p>Causes the restore to fail if any of the checks fail.</p></summary>
         [Pure]
         public static PaketRestoreSettings DisableFailOnChecks(this PaketRestoreSettings toolSettings)
         {
@@ -949,7 +949,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.FailOnChecks = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketRestoreSettings.FailOnChecks"/>.</i></p><p>Causes the restore to fail if any of the checks fail.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketRestoreSettings.FailOnChecks"/>.</i></p><p>Causes the restore to fail if any of the checks fail.</p></summary>
         [Pure]
         public static PaketRestoreSettings ToggleFailOnChecks(this PaketRestoreSettings toolSettings)
         {
@@ -957,7 +957,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.FailOnChecks = !toolSettings.FailOnChecks;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.DependencyGroup"/>.</i></p><p>Allows to restore a single group.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketRestoreSettings.DependencyGroup"/>.</i></p><p>Allows to restore a single group.</p></summary>
         [Pure]
         public static PaketRestoreSettings SetDependencyGroup(this PaketRestoreSettings toolSettings, string dependencyGroup)
         {
@@ -965,7 +965,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.DependencyGroup = dependencyGroup;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.ProjectFile"/>.</i></p><p>Allows to restore dependencies for a project.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketRestoreSettings.ProjectFile"/>.</i></p><p>Allows to restore dependencies for a project.</p></summary>
         [Pure]
         public static PaketRestoreSettings SetProjectFile(this PaketRestoreSettings toolSettings, string projectFile)
         {
@@ -973,7 +973,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ProjectFile = projectFile;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.ReferencesFiles"/> to a new list.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketRestoreSettings.ReferencesFiles"/> to a new list.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
         [Pure]
         public static PaketRestoreSettings SetReferencesFiles(this PaketRestoreSettings toolSettings, params string[] referencesFiles)
         {
@@ -981,7 +981,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ReferencesFilesInternal = referencesFiles.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.ReferencesFiles"/> to a new list.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketRestoreSettings.ReferencesFiles"/> to a new list.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
         [Pure]
         public static PaketRestoreSettings SetReferencesFiles(this PaketRestoreSettings toolSettings, IEnumerable<string> referencesFiles)
         {
@@ -989,7 +989,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ReferencesFilesInternal = referencesFiles.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding new referencesFiles to the existing <see cref="PaketRestoreSettings.ReferencesFiles"/>.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
+        /// <summary><p><i>Adds new referencesFiles to the existing <see cref="PaketRestoreSettings.ReferencesFiles"/>.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
         [Pure]
         public static PaketRestoreSettings AddReferencesFiles(this PaketRestoreSettings toolSettings, params string[] referencesFiles)
         {
@@ -997,7 +997,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ReferencesFilesInternal.AddRange(referencesFiles);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding new referencesFiles to the existing <see cref="PaketRestoreSettings.ReferencesFiles"/>.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
+        /// <summary><p><i>Adds new referencesFiles to the existing <see cref="PaketRestoreSettings.ReferencesFiles"/>.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
         [Pure]
         public static PaketRestoreSettings AddReferencesFiles(this PaketRestoreSettings toolSettings, IEnumerable<string> referencesFiles)
         {
@@ -1005,7 +1005,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ReferencesFilesInternal.AddRange(referencesFiles);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for clearing <see cref="PaketRestoreSettings.ReferencesFiles"/>.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
+        /// <summary><p><i>Clears <see cref="PaketRestoreSettings.ReferencesFiles"/>.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
         [Pure]
         public static PaketRestoreSettings ClearReferencesFiles(this PaketRestoreSettings toolSettings)
         {
@@ -1013,7 +1013,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ReferencesFilesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding a single referencesFile to <see cref="PaketRestoreSettings.ReferencesFiles"/>.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
+        /// <summary><p><i>Adds a single referencesFile to <see cref="PaketRestoreSettings.ReferencesFiles"/>.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
         [Pure]
         public static PaketRestoreSettings AddReferencesFile(this PaketRestoreSettings toolSettings, string referencesFile, bool evenIfNull = true)
         {
@@ -1021,7 +1021,7 @@ namespace Nuke.Common.Tools.Paket
             if (referencesFile != null || evenIfNull) toolSettings.ReferencesFilesInternal.Add(referencesFile);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for removing a single referencesFile from <see cref="PaketRestoreSettings.ReferencesFiles"/>.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
+        /// <summary><p><i>Removes a single referencesFile from <see cref="PaketRestoreSettings.ReferencesFiles"/>.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
         [Pure]
         public static PaketRestoreSettings RemoveReferencesFile(this PaketRestoreSettings toolSettings, string referencesFile)
         {
@@ -1029,7 +1029,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ReferencesFilesInternal.Remove(referencesFile);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.TargetFramework"/>.</i></p><p>Allows to restore only for a specified target framework.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketRestoreSettings.TargetFramework"/>.</i></p><p>Allows to restore only for a specified target framework.</p></summary>
         [Pure]
         public static PaketRestoreSettings SetTargetFramework(this PaketRestoreSettings toolSettings, string targetFramework)
         {
@@ -1037,7 +1037,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.TargetFramework = targetFramework;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketRestoreSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
         public static PaketRestoreSettings SetVerbose(this PaketRestoreSettings toolSettings, bool verbose)
         {
@@ -1045,7 +1045,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Verbose = verbose;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketRestoreSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketRestoreSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
         public static PaketRestoreSettings EnableVerbose(this PaketRestoreSettings toolSettings)
         {
@@ -1053,7 +1053,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Verbose = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketRestoreSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketRestoreSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
         public static PaketRestoreSettings DisableVerbose(this PaketRestoreSettings toolSettings)
         {
@@ -1061,7 +1061,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Verbose = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketRestoreSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketRestoreSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
         public static PaketRestoreSettings ToggleVerbose(this PaketRestoreSettings toolSettings)
         {
@@ -1069,7 +1069,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Verbose = !toolSettings.Verbose;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.LogFile"/>.</i></p><p>Specify a log file for the paket process.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketRestoreSettings.LogFile"/>.</i></p><p>Specify a log file for the paket process.</p></summary>
         [Pure]
         public static PaketRestoreSettings SetLogFile(this PaketRestoreSettings toolSettings, string logFile)
         {
@@ -1077,7 +1077,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.LogFile = logFile;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketRestoreSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
         public static PaketRestoreSettings SetSilent(this PaketRestoreSettings toolSettings, bool silent)
         {
@@ -1085,7 +1085,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Silent = silent;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketRestoreSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketRestoreSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
         public static PaketRestoreSettings EnableSilent(this PaketRestoreSettings toolSettings)
         {
@@ -1093,7 +1093,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Silent = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketRestoreSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketRestoreSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
         public static PaketRestoreSettings DisableSilent(this PaketRestoreSettings toolSettings)
         {
@@ -1101,7 +1101,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Silent = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketRestoreSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketRestoreSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
         public static PaketRestoreSettings ToggleSilent(this PaketRestoreSettings toolSettings)
         {
@@ -1109,7 +1109,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Silent = !toolSettings.Silent;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketRestoreSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
         public static PaketRestoreSettings SetShowVersion(this PaketRestoreSettings toolSettings, bool showVersion)
         {
@@ -1117,7 +1117,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ShowVersion = showVersion;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketRestoreSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketRestoreSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
         public static PaketRestoreSettings EnableShowVersion(this PaketRestoreSettings toolSettings)
         {
@@ -1125,7 +1125,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ShowVersion = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketRestoreSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketRestoreSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
         public static PaketRestoreSettings DisableShowVersion(this PaketRestoreSettings toolSettings)
         {
@@ -1133,7 +1133,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ShowVersion = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketRestoreSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketRestoreSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
         public static PaketRestoreSettings ToggleShowVersion(this PaketRestoreSettings toolSettings)
         {
@@ -1141,7 +1141,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ShowVersion = !toolSettings.ShowVersion;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketRestoreSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketRestoreSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
         public static PaketRestoreSettings SetFromBootstrapper(this PaketRestoreSettings toolSettings, bool fromBootstrapper)
         {
@@ -1149,7 +1149,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.FromBootstrapper = fromBootstrapper;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketRestoreSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketRestoreSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
         public static PaketRestoreSettings EnableFromBootstrapper(this PaketRestoreSettings toolSettings)
         {
@@ -1157,7 +1157,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.FromBootstrapper = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketRestoreSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketRestoreSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
         public static PaketRestoreSettings DisableFromBootstrapper(this PaketRestoreSettings toolSettings)
         {
@@ -1165,7 +1165,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.FromBootstrapper = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketRestoreSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketRestoreSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
         public static PaketRestoreSettings ToggleFromBootstrapper(this PaketRestoreSettings toolSettings)
         {
@@ -1178,7 +1178,7 @@ namespace Nuke.Common.Tools.Paket
     [ExcludeFromCodeCoverage]
     public static partial class PaketPushSettingsExtensions
     {
-        /// <summary><p><i>Extension method for setting <see cref="PaketPushSettings.Url"/>.</i></p><p>Url of the NuGet feed.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPushSettings.Url"/>.</i></p><p>Url of the NuGet feed.</p></summary>
         [Pure]
         public static PaketPushSettings SetUrl(this PaketPushSettings toolSettings, string url)
         {
@@ -1186,7 +1186,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Url = url;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPushSettings.File"/>.</i></p><p>Path to the package.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPushSettings.File"/>.</i></p><p>Path to the package.</p></summary>
         [Pure]
         public static PaketPushSettings SetFile(this PaketPushSettings toolSettings, string file)
         {
@@ -1194,7 +1194,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.File = file;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPushSettings.ApiKey"/>.</i></p><p>Optionally specify your API key on the command line. Otherwise uses the value of the `nugetkey` environment variable.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPushSettings.ApiKey"/>.</i></p><p>Optionally specify your API key on the command line. Otherwise uses the value of the `nugetkey` environment variable.</p></summary>
         [Pure]
         public static PaketPushSettings SetApiKey(this PaketPushSettings toolSettings, string apiKey)
         {
@@ -1202,7 +1202,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ApiKey = apiKey;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPushSettings.Endpoint"/>.</i></p><p>Optionally specify a custom api endpoint to push to. Defaults to `/api/v2/package`.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPushSettings.Endpoint"/>.</i></p><p>Optionally specify a custom api endpoint to push to. Defaults to `/api/v2/package`.</p></summary>
         [Pure]
         public static PaketPushSettings SetEndpoint(this PaketPushSettings toolSettings, string endpoint)
         {
@@ -1210,7 +1210,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Endpoint = endpoint;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPushSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPushSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
         public static PaketPushSettings SetVerbose(this PaketPushSettings toolSettings, bool verbose)
         {
@@ -1218,7 +1218,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Verbose = verbose;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketPushSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketPushSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
         public static PaketPushSettings EnableVerbose(this PaketPushSettings toolSettings)
         {
@@ -1226,7 +1226,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Verbose = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketPushSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketPushSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
         public static PaketPushSettings DisableVerbose(this PaketPushSettings toolSettings)
         {
@@ -1234,7 +1234,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Verbose = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketPushSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketPushSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
         public static PaketPushSettings ToggleVerbose(this PaketPushSettings toolSettings)
         {
@@ -1242,7 +1242,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Verbose = !toolSettings.Verbose;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPushSettings.LogFile"/>.</i></p><p>Specify a log file for the paket process.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPushSettings.LogFile"/>.</i></p><p>Specify a log file for the paket process.</p></summary>
         [Pure]
         public static PaketPushSettings SetLogFile(this PaketPushSettings toolSettings, string logFile)
         {
@@ -1250,7 +1250,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.LogFile = logFile;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPushSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPushSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
         public static PaketPushSettings SetSilent(this PaketPushSettings toolSettings, bool silent)
         {
@@ -1258,7 +1258,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Silent = silent;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketPushSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketPushSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
         public static PaketPushSettings EnableSilent(this PaketPushSettings toolSettings)
         {
@@ -1266,7 +1266,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Silent = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketPushSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketPushSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
         public static PaketPushSettings DisableSilent(this PaketPushSettings toolSettings)
         {
@@ -1274,7 +1274,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Silent = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketPushSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketPushSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
         public static PaketPushSettings ToggleSilent(this PaketPushSettings toolSettings)
         {
@@ -1282,7 +1282,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Silent = !toolSettings.Silent;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPushSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPushSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
         public static PaketPushSettings SetShowVersion(this PaketPushSettings toolSettings, bool showVersion)
         {
@@ -1290,7 +1290,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ShowVersion = showVersion;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketPushSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketPushSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
         public static PaketPushSettings EnableShowVersion(this PaketPushSettings toolSettings)
         {
@@ -1298,7 +1298,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ShowVersion = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketPushSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketPushSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
         public static PaketPushSettings DisableShowVersion(this PaketPushSettings toolSettings)
         {
@@ -1306,7 +1306,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ShowVersion = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketPushSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketPushSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
         public static PaketPushSettings ToggleShowVersion(this PaketPushSettings toolSettings)
         {
@@ -1314,7 +1314,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ShowVersion = !toolSettings.ShowVersion;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPushSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPushSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
         public static PaketPushSettings SetFromBootstrapper(this PaketPushSettings toolSettings, bool fromBootstrapper)
         {
@@ -1322,7 +1322,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.FromBootstrapper = fromBootstrapper;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketPushSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketPushSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
         public static PaketPushSettings EnableFromBootstrapper(this PaketPushSettings toolSettings)
         {
@@ -1330,7 +1330,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.FromBootstrapper = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketPushSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketPushSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
         public static PaketPushSettings DisableFromBootstrapper(this PaketPushSettings toolSettings)
         {
@@ -1338,7 +1338,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.FromBootstrapper = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketPushSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketPushSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
         public static PaketPushSettings ToggleFromBootstrapper(this PaketPushSettings toolSettings)
         {
@@ -1351,7 +1351,7 @@ namespace Nuke.Common.Tools.Paket
     [ExcludeFromCodeCoverage]
     public static partial class PaketPackSettingsExtensions
     {
-        /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.OutputDirectory"/>.</i></p><p>Output directory to put .nupkg files.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPackSettings.OutputDirectory"/>.</i></p><p>Output directory to put .nupkg files.</p></summary>
         [Pure]
         public static PaketPackSettings SetOutputDirectory(this PaketPackSettings toolSettings, string outputDirectory)
         {
@@ -1359,7 +1359,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.OutputDirectory = outputDirectory;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.BuildConfiguration"/>.</i></p><p>Optionally specify build configuration that should be packaged (defaults to Release).</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPackSettings.BuildConfiguration"/>.</i></p><p>Optionally specify build configuration that should be packaged (defaults to Release).</p></summary>
         [Pure]
         public static PaketPackSettings SetBuildConfiguration(this PaketPackSettings toolSettings, string buildConfiguration)
         {
@@ -1367,7 +1367,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.BuildConfiguration = buildConfiguration;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.BuildPlatform"/>.</i></p><p>Optionally specify build platform that should be packaged (if not provided or empty, checks all known platform targets).</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPackSettings.BuildPlatform"/>.</i></p><p>Optionally specify build platform that should be packaged (if not provided or empty, checks all known platform targets).</p></summary>
         [Pure]
         public static PaketPackSettings SetBuildPlatform(this PaketPackSettings toolSettings, string buildPlatform)
         {
@@ -1375,7 +1375,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.BuildPlatform = buildPlatform;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.PackageVersion"/>.</i></p><p>Specify version of the package.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPackSettings.PackageVersion"/>.</i></p><p>Specify version of the package.</p></summary>
         [Pure]
         public static PaketPackSettings SetPackageVersion(this PaketPackSettings toolSettings, string packageVersion)
         {
@@ -1383,7 +1383,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.PackageVersion = packageVersion;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.TemplateFile"/>.</i></p><p>Allows to specify a single template file.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPackSettings.TemplateFile"/>.</i></p><p>Allows to specify a single template file.</p></summary>
         [Pure]
         public static PaketPackSettings SetTemplateFile(this PaketPackSettings toolSettings, string templateFile)
         {
@@ -1391,7 +1391,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.TemplateFile = templateFile;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.Exclude"/>.</i></p><p>Exclude template file by id.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPackSettings.Exclude"/>.</i></p><p>Exclude template file by id.</p></summary>
         [Pure]
         public static PaketPackSettings SetExclude(this PaketPackSettings toolSettings, string exclude)
         {
@@ -1399,7 +1399,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Exclude = exclude;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.SpecificVersion"/>.</i></p><p>Specifies a version number for template with given id.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPackSettings.SpecificVersion"/>.</i></p><p>Specifies a version number for template with given id.</p></summary>
         [Pure]
         public static PaketPackSettings SetSpecificVersion(this PaketPackSettings toolSettings, string specificVersion)
         {
@@ -1407,7 +1407,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.SpecificVersion = specificVersion;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.ReleaseNotes"/>.</i></p><p>Specify relase notes for the package.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPackSettings.ReleaseNotes"/>.</i></p><p>Specify relase notes for the package.</p></summary>
         [Pure]
         public static PaketPackSettings SetReleaseNotes(this PaketPackSettings toolSettings, string releaseNotes)
         {
@@ -1415,7 +1415,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ReleaseNotes = releaseNotes;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.LockDependencies"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPackSettings.LockDependencies"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies.</p></summary>
         [Pure]
         public static PaketPackSettings SetLockDependencies(this PaketPackSettings toolSettings, bool lockDependencies)
         {
@@ -1423,7 +1423,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.LockDependencies = lockDependencies;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketPackSettings.LockDependencies"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketPackSettings.LockDependencies"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies.</p></summary>
         [Pure]
         public static PaketPackSettings EnableLockDependencies(this PaketPackSettings toolSettings)
         {
@@ -1431,7 +1431,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.LockDependencies = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketPackSettings.LockDependencies"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketPackSettings.LockDependencies"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies.</p></summary>
         [Pure]
         public static PaketPackSettings DisableLockDependencies(this PaketPackSettings toolSettings)
         {
@@ -1439,7 +1439,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.LockDependencies = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketPackSettings.LockDependencies"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketPackSettings.LockDependencies"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies.</p></summary>
         [Pure]
         public static PaketPackSettings ToggleLockDependencies(this PaketPackSettings toolSettings)
         {
@@ -1447,7 +1447,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.LockDependencies = !toolSettings.LockDependencies;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.MinimumFromLockFile"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies, and add them as a minimum version. `lock-dependencies` will over-ride this option.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPackSettings.MinimumFromLockFile"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies, and add them as a minimum version. `lock-dependencies` will over-ride this option.</p></summary>
         [Pure]
         public static PaketPackSettings SetMinimumFromLockFile(this PaketPackSettings toolSettings, bool minimumFromLockFile)
         {
@@ -1455,7 +1455,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.MinimumFromLockFile = minimumFromLockFile;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketPackSettings.MinimumFromLockFile"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies, and add them as a minimum version. `lock-dependencies` will over-ride this option.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketPackSettings.MinimumFromLockFile"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies, and add them as a minimum version. `lock-dependencies` will over-ride this option.</p></summary>
         [Pure]
         public static PaketPackSettings EnableMinimumFromLockFile(this PaketPackSettings toolSettings)
         {
@@ -1463,7 +1463,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.MinimumFromLockFile = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketPackSettings.MinimumFromLockFile"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies, and add them as a minimum version. `lock-dependencies` will over-ride this option.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketPackSettings.MinimumFromLockFile"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies, and add them as a minimum version. `lock-dependencies` will over-ride this option.</p></summary>
         [Pure]
         public static PaketPackSettings DisableMinimumFromLockFile(this PaketPackSettings toolSettings)
         {
@@ -1471,7 +1471,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.MinimumFromLockFile = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketPackSettings.MinimumFromLockFile"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies, and add them as a minimum version. `lock-dependencies` will over-ride this option.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketPackSettings.MinimumFromLockFile"/>.</i></p><p>Get the version requirements from paket.lock instead of paket.dependencies, and add them as a minimum version. `lock-dependencies` will over-ride this option.</p></summary>
         [Pure]
         public static PaketPackSettings ToggleMinimumFromLockFile(this PaketPackSettings toolSettings)
         {
@@ -1479,7 +1479,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.MinimumFromLockFile = !toolSettings.MinimumFromLockFile;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.PinProjectReferences"/>.</i></p><p>Pin dependencies generated from project references (=) instead of using minimum (>=) for version specification.  If `lock-dependencies` is specified, project references will be pinned even if this option is not specified.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPackSettings.PinProjectReferences"/>.</i></p><p>Pin dependencies generated from project references (=) instead of using minimum (>=) for version specification.  If `lock-dependencies` is specified, project references will be pinned even if this option is not specified.</p></summary>
         [Pure]
         public static PaketPackSettings SetPinProjectReferences(this PaketPackSettings toolSettings, bool pinProjectReferences)
         {
@@ -1487,7 +1487,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.PinProjectReferences = pinProjectReferences;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketPackSettings.PinProjectReferences"/>.</i></p><p>Pin dependencies generated from project references (=) instead of using minimum (>=) for version specification.  If `lock-dependencies` is specified, project references will be pinned even if this option is not specified.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketPackSettings.PinProjectReferences"/>.</i></p><p>Pin dependencies generated from project references (=) instead of using minimum (>=) for version specification.  If `lock-dependencies` is specified, project references will be pinned even if this option is not specified.</p></summary>
         [Pure]
         public static PaketPackSettings EnablePinProjectReferences(this PaketPackSettings toolSettings)
         {
@@ -1495,7 +1495,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.PinProjectReferences = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketPackSettings.PinProjectReferences"/>.</i></p><p>Pin dependencies generated from project references (=) instead of using minimum (>=) for version specification.  If `lock-dependencies` is specified, project references will be pinned even if this option is not specified.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketPackSettings.PinProjectReferences"/>.</i></p><p>Pin dependencies generated from project references (=) instead of using minimum (>=) for version specification.  If `lock-dependencies` is specified, project references will be pinned even if this option is not specified.</p></summary>
         [Pure]
         public static PaketPackSettings DisablePinProjectReferences(this PaketPackSettings toolSettings)
         {
@@ -1503,7 +1503,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.PinProjectReferences = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketPackSettings.PinProjectReferences"/>.</i></p><p>Pin dependencies generated from project references (=) instead of using minimum (>=) for version specification.  If `lock-dependencies` is specified, project references will be pinned even if this option is not specified.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketPackSettings.PinProjectReferences"/>.</i></p><p>Pin dependencies generated from project references (=) instead of using minimum (>=) for version specification.  If `lock-dependencies` is specified, project references will be pinned even if this option is not specified.</p></summary>
         [Pure]
         public static PaketPackSettings TogglePinProjectReferences(this PaketPackSettings toolSettings)
         {
@@ -1511,7 +1511,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.PinProjectReferences = !toolSettings.PinProjectReferences;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.Symbols"/>.</i></p><p>Build symbol/source packages in addition to library/content packages.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPackSettings.Symbols"/>.</i></p><p>Build symbol/source packages in addition to library/content packages.</p></summary>
         [Pure]
         public static PaketPackSettings SetSymbols(this PaketPackSettings toolSettings, bool symbols)
         {
@@ -1519,7 +1519,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Symbols = symbols;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketPackSettings.Symbols"/>.</i></p><p>Build symbol/source packages in addition to library/content packages.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketPackSettings.Symbols"/>.</i></p><p>Build symbol/source packages in addition to library/content packages.</p></summary>
         [Pure]
         public static PaketPackSettings EnableSymbols(this PaketPackSettings toolSettings)
         {
@@ -1527,7 +1527,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Symbols = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketPackSettings.Symbols"/>.</i></p><p>Build symbol/source packages in addition to library/content packages.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketPackSettings.Symbols"/>.</i></p><p>Build symbol/source packages in addition to library/content packages.</p></summary>
         [Pure]
         public static PaketPackSettings DisableSymbols(this PaketPackSettings toolSettings)
         {
@@ -1535,7 +1535,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Symbols = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketPackSettings.Symbols"/>.</i></p><p>Build symbol/source packages in addition to library/content packages.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketPackSettings.Symbols"/>.</i></p><p>Build symbol/source packages in addition to library/content packages.</p></summary>
         [Pure]
         public static PaketPackSettings ToggleSymbols(this PaketPackSettings toolSettings)
         {
@@ -1543,7 +1543,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Symbols = !toolSettings.Symbols;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.IncludeReferencedProjects"/>.</i></p><p>Include symbol/source from referenced projects.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPackSettings.IncludeReferencedProjects"/>.</i></p><p>Include symbol/source from referenced projects.</p></summary>
         [Pure]
         public static PaketPackSettings SetIncludeReferencedProjects(this PaketPackSettings toolSettings, bool includeReferencedProjects)
         {
@@ -1551,7 +1551,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.IncludeReferencedProjects = includeReferencedProjects;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketPackSettings.IncludeReferencedProjects"/>.</i></p><p>Include symbol/source from referenced projects.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketPackSettings.IncludeReferencedProjects"/>.</i></p><p>Include symbol/source from referenced projects.</p></summary>
         [Pure]
         public static PaketPackSettings EnableIncludeReferencedProjects(this PaketPackSettings toolSettings)
         {
@@ -1559,7 +1559,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.IncludeReferencedProjects = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketPackSettings.IncludeReferencedProjects"/>.</i></p><p>Include symbol/source from referenced projects.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketPackSettings.IncludeReferencedProjects"/>.</i></p><p>Include symbol/source from referenced projects.</p></summary>
         [Pure]
         public static PaketPackSettings DisableIncludeReferencedProjects(this PaketPackSettings toolSettings)
         {
@@ -1567,7 +1567,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.IncludeReferencedProjects = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketPackSettings.IncludeReferencedProjects"/>.</i></p><p>Include symbol/source from referenced projects.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketPackSettings.IncludeReferencedProjects"/>.</i></p><p>Include symbol/source from referenced projects.</p></summary>
         [Pure]
         public static PaketPackSettings ToggleIncludeReferencedProjects(this PaketPackSettings toolSettings)
         {
@@ -1575,7 +1575,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.IncludeReferencedProjects = !toolSettings.IncludeReferencedProjects;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.ProjectUrl"/>.</i></p><p>Url to the projects home page.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPackSettings.ProjectUrl"/>.</i></p><p>Url to the projects home page.</p></summary>
         [Pure]
         public static PaketPackSettings SetProjectUrl(this PaketPackSettings toolSettings, string projectUrl)
         {
@@ -1583,7 +1583,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ProjectUrl = projectUrl;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPackSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
         public static PaketPackSettings SetVerbose(this PaketPackSettings toolSettings, bool verbose)
         {
@@ -1591,7 +1591,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Verbose = verbose;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketPackSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketPackSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
         public static PaketPackSettings EnableVerbose(this PaketPackSettings toolSettings)
         {
@@ -1599,7 +1599,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Verbose = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketPackSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketPackSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
         public static PaketPackSettings DisableVerbose(this PaketPackSettings toolSettings)
         {
@@ -1607,7 +1607,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Verbose = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketPackSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketPackSettings.Verbose"/>.</i></p><p>Enable verbose console output for the paket process.</p></summary>
         [Pure]
         public static PaketPackSettings ToggleVerbose(this PaketPackSettings toolSettings)
         {
@@ -1615,7 +1615,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Verbose = !toolSettings.Verbose;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.LogFile"/>.</i></p><p>Specify a log file for the paket process.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPackSettings.LogFile"/>.</i></p><p>Specify a log file for the paket process.</p></summary>
         [Pure]
         public static PaketPackSettings SetLogFile(this PaketPackSettings toolSettings, string logFile)
         {
@@ -1623,7 +1623,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.LogFile = logFile;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPackSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
         public static PaketPackSettings SetSilent(this PaketPackSettings toolSettings, bool silent)
         {
@@ -1631,7 +1631,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Silent = silent;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketPackSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketPackSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
         public static PaketPackSettings EnableSilent(this PaketPackSettings toolSettings)
         {
@@ -1639,7 +1639,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Silent = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketPackSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketPackSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
         public static PaketPackSettings DisableSilent(this PaketPackSettings toolSettings)
         {
@@ -1647,7 +1647,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Silent = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketPackSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketPackSettings.Silent"/>.</i></p><p>Suppress console output for the paket process.</p></summary>
         [Pure]
         public static PaketPackSettings ToggleSilent(this PaketPackSettings toolSettings)
         {
@@ -1655,7 +1655,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.Silent = !toolSettings.Silent;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPackSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
         public static PaketPackSettings SetShowVersion(this PaketPackSettings toolSettings, bool showVersion)
         {
@@ -1663,7 +1663,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ShowVersion = showVersion;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketPackSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketPackSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
         public static PaketPackSettings EnableShowVersion(this PaketPackSettings toolSettings)
         {
@@ -1671,7 +1671,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ShowVersion = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketPackSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketPackSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
         public static PaketPackSettings DisableShowVersion(this PaketPackSettings toolSettings)
         {
@@ -1679,7 +1679,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ShowVersion = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketPackSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketPackSettings.ShowVersion"/>.</i></p><p>Display the version.</p></summary>
         [Pure]
         public static PaketPackSettings ToggleShowVersion(this PaketPackSettings toolSettings)
         {
@@ -1687,7 +1687,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ShowVersion = !toolSettings.ShowVersion;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="PaketPackSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
+        /// <summary><p><i>Sets <see cref="PaketPackSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
         public static PaketPackSettings SetFromBootstrapper(this PaketPackSettings toolSettings, bool fromBootstrapper)
         {
@@ -1695,7 +1695,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.FromBootstrapper = fromBootstrapper;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="PaketPackSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
+        /// <summary><p><i>Enables <see cref="PaketPackSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
         public static PaketPackSettings EnableFromBootstrapper(this PaketPackSettings toolSettings)
         {
@@ -1703,7 +1703,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.FromBootstrapper = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="PaketPackSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
+        /// <summary><p><i>Disables <see cref="PaketPackSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
         public static PaketPackSettings DisableFromBootstrapper(this PaketPackSettings toolSettings)
         {
@@ -1711,7 +1711,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.FromBootstrapper = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="PaketPackSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
+        /// <summary><p><i>Toggles <see cref="PaketPackSettings.FromBootstrapper"/>.</i></p><p>Call coming from the '--run' feature of the bootstrapper.</p></summary>
         [Pure]
         public static PaketPackSettings ToggleFromBootstrapper(this PaketPackSettings toolSettings)
         {

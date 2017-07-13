@@ -94,7 +94,7 @@ namespace Nuke.Common.Tools.GitLink2
     [ExcludeFromCodeCoverage]
     public static partial class GitLink2SettingsExtensions
     {
-        /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.SolutionDirectory"/>.</i></p><p>The directory containing the solution with the pdb files.</p></summary>
+        /// <summary><p><i>Sets <see cref="GitLink2Settings.SolutionDirectory"/>.</i></p><p>The directory containing the solution with the pdb files.</p></summary>
         [Pure]
         public static GitLink2Settings SetSolutionDirectory(this GitLink2Settings toolSettings, string solutionDirectory)
         {
@@ -102,7 +102,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.SolutionDirectory = solutionDirectory;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.RepositoryUrl"/>.</i></p><p>Url to remote git repository.</p></summary>
+        /// <summary><p><i>Sets <see cref="GitLink2Settings.RepositoryUrl"/>.</i></p><p>Url to remote git repository.</p></summary>
         [Pure]
         public static GitLink2Settings SetRepositoryUrl(this GitLink2Settings toolSettings, string repositoryUrl)
         {
@@ -110,7 +110,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.RepositoryUrl = repositoryUrl;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.File"/>.</i></p><p>Solution file name.</p></summary>
+        /// <summary><p><i>Sets <see cref="GitLink2Settings.File"/>.</i></p><p>Solution file name.</p></summary>
         [Pure]
         public static GitLink2Settings SetFile(this GitLink2Settings toolSettings, string file)
         {
@@ -118,7 +118,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.File = file;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.Configuration"/>.</i></p><p>Name of the configuration, default value is 'Release'.</p></summary>
+        /// <summary><p><i>Sets <see cref="GitLink2Settings.Configuration"/>.</i></p><p>Name of the configuration, default value is 'Release'.</p></summary>
         [Pure]
         public static GitLink2Settings SetConfiguration(this GitLink2Settings toolSettings, string configuration)
         {
@@ -126,7 +126,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.Configuration = configuration;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.Platform"/>.</i></p><p>Name of the platform, default value is 'AnyCPU'.</p></summary>
+        /// <summary><p><i>Sets <see cref="GitLink2Settings.Platform"/>.</i></p><p>Name of the platform, default value is 'AnyCPU'.</p></summary>
         [Pure]
         public static GitLink2Settings SetPlatform(this GitLink2Settings toolSettings, string platform)
         {
@@ -134,7 +134,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.Platform = platform;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.BranchName"/>.</i></p><p>Name of the branch to use on the remote repository.</p></summary>
+        /// <summary><p><i>Sets <see cref="GitLink2Settings.BranchName"/>.</i></p><p>Name of the branch to use on the remote repository.</p></summary>
         [Pure]
         public static GitLink2Settings SetBranchName(this GitLink2Settings toolSettings, string branchName)
         {
@@ -142,7 +142,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.BranchName = branchName;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.LogFile"/>.</i></p><p>The log file to write to.</p></summary>
+        /// <summary><p><i>Sets <see cref="GitLink2Settings.LogFile"/>.</i></p><p>The log file to write to.</p></summary>
         [Pure]
         public static GitLink2Settings SetLogFile(this GitLink2Settings toolSettings, string logFile)
         {
@@ -150,7 +150,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.LogFile = logFile;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.CommitSha"/>.</i></p><p>The SHA-1 hash of the commit.</p></summary>
+        /// <summary><p><i>Sets <see cref="GitLink2Settings.CommitSha"/>.</i></p><p>The SHA-1 hash of the commit.</p></summary>
         [Pure]
         public static GitLink2Settings SetCommitSha(this GitLink2Settings toolSettings, string commitSha)
         {
@@ -158,7 +158,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.CommitSha = commitSha;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.PdbDirectory"/>.</i></p><p>The directory where pdb files exists, default value is the normal project output directory.</p></summary>
+        /// <summary><p><i>Sets <see cref="GitLink2Settings.PdbDirectory"/>.</i></p><p>The directory where pdb files exists, default value is the normal project output directory.</p></summary>
         [Pure]
         public static GitLink2Settings SetPdbDirectory(this GitLink2Settings toolSettings, string pdbDirectory)
         {
@@ -166,7 +166,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.PdbDirectory = pdbDirectory;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.UsePowershell"/>.</i></p><p>Use an indexing strategy that won't rely on SRCSRV http support, but use a powershell command for URL download instead.</p></summary>
+        /// <summary><p><i>Sets <see cref="GitLink2Settings.UsePowershell"/>.</i></p><p>Use an indexing strategy that won't rely on SRCSRV http support, but use a powershell command for URL download instead.</p></summary>
         [Pure]
         public static GitLink2Settings SetUsePowershell(this GitLink2Settings toolSettings, bool usePowershell)
         {
@@ -174,7 +174,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.UsePowershell = usePowershell;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="GitLink2Settings.UsePowershell"/>.</i></p><p>Use an indexing strategy that won't rely on SRCSRV http support, but use a powershell command for URL download instead.</p></summary>
+        /// <summary><p><i>Enables <see cref="GitLink2Settings.UsePowershell"/>.</i></p><p>Use an indexing strategy that won't rely on SRCSRV http support, but use a powershell command for URL download instead.</p></summary>
         [Pure]
         public static GitLink2Settings EnableUsePowershell(this GitLink2Settings toolSettings)
         {
@@ -182,7 +182,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.UsePowershell = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="GitLink2Settings.UsePowershell"/>.</i></p><p>Use an indexing strategy that won't rely on SRCSRV http support, but use a powershell command for URL download instead.</p></summary>
+        /// <summary><p><i>Disables <see cref="GitLink2Settings.UsePowershell"/>.</i></p><p>Use an indexing strategy that won't rely on SRCSRV http support, but use a powershell command for URL download instead.</p></summary>
         [Pure]
         public static GitLink2Settings DisableUsePowershell(this GitLink2Settings toolSettings)
         {
@@ -190,7 +190,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.UsePowershell = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="GitLink2Settings.UsePowershell"/>.</i></p><p>Use an indexing strategy that won't rely on SRCSRV http support, but use a powershell command for URL download instead.</p></summary>
+        /// <summary><p><i>Toggles <see cref="GitLink2Settings.UsePowershell"/>.</i></p><p>Use an indexing strategy that won't rely on SRCSRV http support, but use a powershell command for URL download instead.</p></summary>
         [Pure]
         public static GitLink2Settings ToggleUsePowershell(this GitLink2Settings toolSettings)
         {
@@ -198,7 +198,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.UsePowershell = !toolSettings.UsePowershell;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.ErrorsAsWarnings"/>.</i></p><p>Don't fail on errors, but treat them as warnings instead.</p></summary>
+        /// <summary><p><i>Sets <see cref="GitLink2Settings.ErrorsAsWarnings"/>.</i></p><p>Don't fail on errors, but treat them as warnings instead.</p></summary>
         [Pure]
         public static GitLink2Settings SetErrorsAsWarnings(this GitLink2Settings toolSettings, bool errorsAsWarnings)
         {
@@ -206,7 +206,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.ErrorsAsWarnings = errorsAsWarnings;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="GitLink2Settings.ErrorsAsWarnings"/>.</i></p><p>Don't fail on errors, but treat them as warnings instead.</p></summary>
+        /// <summary><p><i>Enables <see cref="GitLink2Settings.ErrorsAsWarnings"/>.</i></p><p>Don't fail on errors, but treat them as warnings instead.</p></summary>
         [Pure]
         public static GitLink2Settings EnableErrorsAsWarnings(this GitLink2Settings toolSettings)
         {
@@ -214,7 +214,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.ErrorsAsWarnings = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="GitLink2Settings.ErrorsAsWarnings"/>.</i></p><p>Don't fail on errors, but treat them as warnings instead.</p></summary>
+        /// <summary><p><i>Disables <see cref="GitLink2Settings.ErrorsAsWarnings"/>.</i></p><p>Don't fail on errors, but treat them as warnings instead.</p></summary>
         [Pure]
         public static GitLink2Settings DisableErrorsAsWarnings(this GitLink2Settings toolSettings)
         {
@@ -222,7 +222,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.ErrorsAsWarnings = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="GitLink2Settings.ErrorsAsWarnings"/>.</i></p><p>Don't fail on errors, but treat them as warnings instead.</p></summary>
+        /// <summary><p><i>Toggles <see cref="GitLink2Settings.ErrorsAsWarnings"/>.</i></p><p>Don't fail on errors, but treat them as warnings instead.</p></summary>
         [Pure]
         public static GitLink2Settings ToggleErrorsAsWarnings(this GitLink2Settings toolSettings)
         {
@@ -230,7 +230,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.ErrorsAsWarnings = !toolSettings.ErrorsAsWarnings;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.SkipVerification"/>.</i></p><p>Skip pdb verification in case it causes issues (it's a formality anyway)</p></summary>
+        /// <summary><p><i>Sets <see cref="GitLink2Settings.SkipVerification"/>.</i></p><p>Skip pdb verification in case it causes issues (it's a formality anyway)</p></summary>
         [Pure]
         public static GitLink2Settings SetSkipVerification(this GitLink2Settings toolSettings, bool skipVerification)
         {
@@ -238,7 +238,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.SkipVerification = skipVerification;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="GitLink2Settings.SkipVerification"/>.</i></p><p>Skip pdb verification in case it causes issues (it's a formality anyway)</p></summary>
+        /// <summary><p><i>Enables <see cref="GitLink2Settings.SkipVerification"/>.</i></p><p>Skip pdb verification in case it causes issues (it's a formality anyway)</p></summary>
         [Pure]
         public static GitLink2Settings EnableSkipVerification(this GitLink2Settings toolSettings)
         {
@@ -246,7 +246,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.SkipVerification = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="GitLink2Settings.SkipVerification"/>.</i></p><p>Skip pdb verification in case it causes issues (it's a formality anyway)</p></summary>
+        /// <summary><p><i>Disables <see cref="GitLink2Settings.SkipVerification"/>.</i></p><p>Skip pdb verification in case it causes issues (it's a formality anyway)</p></summary>
         [Pure]
         public static GitLink2Settings DisableSkipVerification(this GitLink2Settings toolSettings)
         {
@@ -254,7 +254,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.SkipVerification = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="GitLink2Settings.SkipVerification"/>.</i></p><p>Skip pdb verification in case it causes issues (it's a formality anyway)</p></summary>
+        /// <summary><p><i>Toggles <see cref="GitLink2Settings.SkipVerification"/>.</i></p><p>Skip pdb verification in case it causes issues (it's a formality anyway)</p></summary>
         [Pure]
         public static GitLink2Settings ToggleSkipVerification(this GitLink2Settings toolSettings)
         {
@@ -262,7 +262,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.SkipVerification = !toolSettings.SkipVerification;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="GitLink2Settings.Debug"/>.</i></p><p>Enables debug mode with special dumps of msbuild.</p></summary>
+        /// <summary><p><i>Sets <see cref="GitLink2Settings.Debug"/>.</i></p><p>Enables debug mode with special dumps of msbuild.</p></summary>
         [Pure]
         public static GitLink2Settings SetDebug(this GitLink2Settings toolSettings, bool debug)
         {
@@ -270,7 +270,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.Debug = debug;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="GitLink2Settings.Debug"/>.</i></p><p>Enables debug mode with special dumps of msbuild.</p></summary>
+        /// <summary><p><i>Enables <see cref="GitLink2Settings.Debug"/>.</i></p><p>Enables debug mode with special dumps of msbuild.</p></summary>
         [Pure]
         public static GitLink2Settings EnableDebug(this GitLink2Settings toolSettings)
         {
@@ -278,7 +278,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.Debug = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="GitLink2Settings.Debug"/>.</i></p><p>Enables debug mode with special dumps of msbuild.</p></summary>
+        /// <summary><p><i>Disables <see cref="GitLink2Settings.Debug"/>.</i></p><p>Enables debug mode with special dumps of msbuild.</p></summary>
         [Pure]
         public static GitLink2Settings DisableDebug(this GitLink2Settings toolSettings)
         {
@@ -286,7 +286,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.Debug = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="GitLink2Settings.Debug"/>.</i></p><p>Enables debug mode with special dumps of msbuild.</p></summary>
+        /// <summary><p><i>Toggles <see cref="GitLink2Settings.Debug"/>.</i></p><p>Enables debug mode with special dumps of msbuild.</p></summary>
         [Pure]
         public static GitLink2Settings ToggleDebug(this GitLink2Settings toolSettings)
         {

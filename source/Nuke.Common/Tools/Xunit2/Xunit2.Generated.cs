@@ -124,7 +124,7 @@ namespace Nuke.Common.Tools.Xunit2
     [ExcludeFromCodeCoverage]
     public static partial class Xunit2SettingsExtensions
     {
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/> to a new lookup table.</i></p><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/> to a new lookup table.</i></p><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
         [Pure]
         public static Xunit2Settings SetTargetAssemblyWithConfigs(this Xunit2Settings toolSettings, ILookup<string, string> targetAssemblyWithConfigs)
         {
@@ -132,7 +132,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.TargetAssemblyWithConfigsInternal = targetAssemblyWithConfigs.ToLookupTable(StringComparer.OrdinalIgnoreCase);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for clearing <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/>.</i></p><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
+        /// <summary><p><i>Clears <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/>.</i></p><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
         [Pure]
         public static Xunit2Settings ClearTargetAssemblyWithConfigs(this Xunit2Settings toolSettings)
         {
@@ -140,7 +140,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.TargetAssemblyWithConfigsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding a targetAssemblyWithConfig to <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/>.</i></p><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
+        /// <summary><p><i>Adds a targetAssemblyWithConfig to <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/>.</i></p><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
         [Pure]
         public static Xunit2Settings AddTargetAssemblyWithConfig(this Xunit2Settings toolSettings, string targetAssemblyWithConfigKey, string targetAssemblyWithConfigValue)
         {
@@ -148,7 +148,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.TargetAssemblyWithConfigsInternal.Add(targetAssemblyWithConfigKey, targetAssemblyWithConfigValue);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for removing a single targetAssemblyWithConfig entry from <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/>.</i></p><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
+        /// <summary><p><i>Removes a single targetAssemblyWithConfig entry from <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/>.</i></p><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
         [Pure]
         public static Xunit2Settings RemoveTargetAssemblyWithConfig(this Xunit2Settings toolSettings, string targetAssemblyWithConfigKey, string targetAssemblyWithConfigValue)
         {
@@ -156,7 +156,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.TargetAssemblyWithConfigsInternal.Remove(targetAssemblyWithConfigKey, targetAssemblyWithConfigValue);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.OutputPath"/>.</i></p><p>The report file output path.</p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.OutputPath"/>.</i></p><p>The report file output path.</p></summary>
         [Pure]
         public static Xunit2Settings SetOutputPath(this Xunit2Settings toolSettings, string outputPath)
         {
@@ -164,7 +164,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.OutputPath = outputPath;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.NoLogo"/>.</i></p><p>Do not show the copyright message.</p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.NoLogo"/>.</i></p><p>Do not show the copyright message.</p></summary>
         [Pure]
         public static Xunit2Settings SetNoLogo(this Xunit2Settings toolSettings, bool noLogo)
         {
@@ -172,7 +172,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NoLogo = noLogo;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="Xunit2Settings.NoLogo"/>.</i></p><p>Do not show the copyright message.</p></summary>
+        /// <summary><p><i>Enables <see cref="Xunit2Settings.NoLogo"/>.</i></p><p>Do not show the copyright message.</p></summary>
         [Pure]
         public static Xunit2Settings EnableNoLogo(this Xunit2Settings toolSettings)
         {
@@ -180,7 +180,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NoLogo = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="Xunit2Settings.NoLogo"/>.</i></p><p>Do not show the copyright message.</p></summary>
+        /// <summary><p><i>Disables <see cref="Xunit2Settings.NoLogo"/>.</i></p><p>Do not show the copyright message.</p></summary>
         [Pure]
         public static Xunit2Settings DisableNoLogo(this Xunit2Settings toolSettings)
         {
@@ -188,7 +188,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NoLogo = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="Xunit2Settings.NoLogo"/>.</i></p><p>Do not show the copyright message.</p></summary>
+        /// <summary><p><i>Toggles <see cref="Xunit2Settings.NoLogo"/>.</i></p><p>Do not show the copyright message.</p></summary>
         [Pure]
         public static Xunit2Settings ToggleNoLogo(this Xunit2Settings toolSettings)
         {
@@ -196,7 +196,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NoLogo = !toolSettings.NoLogo;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.NoColor"/>.</i></p><p>Do not output results with colors.</p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.NoColor"/>.</i></p><p>Do not output results with colors.</p></summary>
         [Pure]
         public static Xunit2Settings SetNoColor(this Xunit2Settings toolSettings, bool noColor)
         {
@@ -204,7 +204,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NoColor = noColor;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="Xunit2Settings.NoColor"/>.</i></p><p>Do not output results with colors.</p></summary>
+        /// <summary><p><i>Enables <see cref="Xunit2Settings.NoColor"/>.</i></p><p>Do not output results with colors.</p></summary>
         [Pure]
         public static Xunit2Settings EnableNoColor(this Xunit2Settings toolSettings)
         {
@@ -212,7 +212,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NoColor = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="Xunit2Settings.NoColor"/>.</i></p><p>Do not output results with colors.</p></summary>
+        /// <summary><p><i>Disables <see cref="Xunit2Settings.NoColor"/>.</i></p><p>Do not output results with colors.</p></summary>
         [Pure]
         public static Xunit2Settings DisableNoColor(this Xunit2Settings toolSettings)
         {
@@ -220,7 +220,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NoColor = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="Xunit2Settings.NoColor"/>.</i></p><p>Do not output results with colors.</p></summary>
+        /// <summary><p><i>Toggles <see cref="Xunit2Settings.NoColor"/>.</i></p><p>Do not output results with colors.</p></summary>
         [Pure]
         public static Xunit2Settings ToggleNoColor(this Xunit2Settings toolSettings)
         {
@@ -228,7 +228,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NoColor = !toolSettings.NoColor;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.NoAppDomain"/>.</i></p><p>Do not use app domains to run test code.</p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.NoAppDomain"/>.</i></p><p>Do not use app domains to run test code.</p></summary>
         [Pure]
         public static Xunit2Settings SetNoAppDomain(this Xunit2Settings toolSettings, bool noAppDomain)
         {
@@ -236,7 +236,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NoAppDomain = noAppDomain;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="Xunit2Settings.NoAppDomain"/>.</i></p><p>Do not use app domains to run test code.</p></summary>
+        /// <summary><p><i>Enables <see cref="Xunit2Settings.NoAppDomain"/>.</i></p><p>Do not use app domains to run test code.</p></summary>
         [Pure]
         public static Xunit2Settings EnableNoAppDomain(this Xunit2Settings toolSettings)
         {
@@ -244,7 +244,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NoAppDomain = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="Xunit2Settings.NoAppDomain"/>.</i></p><p>Do not use app domains to run test code.</p></summary>
+        /// <summary><p><i>Disables <see cref="Xunit2Settings.NoAppDomain"/>.</i></p><p>Do not use app domains to run test code.</p></summary>
         [Pure]
         public static Xunit2Settings DisableNoAppDomain(this Xunit2Settings toolSettings)
         {
@@ -252,7 +252,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NoAppDomain = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="Xunit2Settings.NoAppDomain"/>.</i></p><p>Do not use app domains to run test code.</p></summary>
+        /// <summary><p><i>Toggles <see cref="Xunit2Settings.NoAppDomain"/>.</i></p><p>Do not use app domains to run test code.</p></summary>
         [Pure]
         public static Xunit2Settings ToggleNoAppDomain(this Xunit2Settings toolSettings)
         {
@@ -260,7 +260,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NoAppDomain = !toolSettings.NoAppDomain;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.FailSkips"/>.</i></p><p>Convert skipped tests into failures.</p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.FailSkips"/>.</i></p><p>Convert skipped tests into failures.</p></summary>
         [Pure]
         public static Xunit2Settings SetFailSkips(this Xunit2Settings toolSettings, bool failSkips)
         {
@@ -268,7 +268,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.FailSkips = failSkips;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="Xunit2Settings.FailSkips"/>.</i></p><p>Convert skipped tests into failures.</p></summary>
+        /// <summary><p><i>Enables <see cref="Xunit2Settings.FailSkips"/>.</i></p><p>Convert skipped tests into failures.</p></summary>
         [Pure]
         public static Xunit2Settings EnableFailSkips(this Xunit2Settings toolSettings)
         {
@@ -276,7 +276,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.FailSkips = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="Xunit2Settings.FailSkips"/>.</i></p><p>Convert skipped tests into failures.</p></summary>
+        /// <summary><p><i>Disables <see cref="Xunit2Settings.FailSkips"/>.</i></p><p>Convert skipped tests into failures.</p></summary>
         [Pure]
         public static Xunit2Settings DisableFailSkips(this Xunit2Settings toolSettings)
         {
@@ -284,7 +284,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.FailSkips = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="Xunit2Settings.FailSkips"/>.</i></p><p>Convert skipped tests into failures.</p></summary>
+        /// <summary><p><i>Toggles <see cref="Xunit2Settings.FailSkips"/>.</i></p><p>Convert skipped tests into failures.</p></summary>
         [Pure]
         public static Xunit2Settings ToggleFailSkips(this Xunit2Settings toolSettings)
         {
@@ -292,7 +292,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.FailSkips = !toolSettings.FailSkips;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.Parallel"/>.</i></p><p>Set parallelization based on option:<ul><li><b>none:</b> turn off all parallelization</li><li><b>collections:</b> only parallelize collections</li><li><b>assemblies:</b> only parallelize assemblies</li><li><b>all:</b> parallelize assemblies &amp; collections</li></ul></p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.Parallel"/>.</i></p><p>Set parallelization based on option:<ul><li><b>none:</b> turn off all parallelization</li><li><b>collections:</b> only parallelize collections</li><li><b>assemblies:</b> only parallelize assemblies</li><li><b>all:</b> parallelize assemblies &amp; collections</li></ul></p></summary>
         [Pure]
         public static Xunit2Settings SetParallel(this Xunit2Settings toolSettings, ParallelOption? parallel)
         {
@@ -300,7 +300,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.Parallel = parallel;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.MaxThreads"/>.</i></p><p>Maximum thread count for collection parallelization:<br/><ul><li><b>default:</b> run with default (1 thread per CPU thread)</li><li><b>unlimited:</b> run with unbounded thread count</li><li><b>(number):</b> limit task thread pool size to 'count'</li></ul></p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.MaxThreads"/>.</i></p><p>Maximum thread count for collection parallelization:<br/><ul><li><b>default:</b> run with default (1 thread per CPU thread)</li><li><b>unlimited:</b> run with unbounded thread count</li><li><b>(number):</b> limit task thread pool size to 'count'</li></ul></p></summary>
         [Pure]
         public static Xunit2Settings SetMaxThreads(this Xunit2Settings toolSettings, int? maxThreads)
         {
@@ -308,7 +308,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.MaxThreads = maxThreads;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.NoShadowCopying"/>.</i></p><p>Do not shadow copy assemblies.</p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.NoShadowCopying"/>.</i></p><p>Do not shadow copy assemblies.</p></summary>
         [Pure]
         public static Xunit2Settings SetNoShadowCopying(this Xunit2Settings toolSettings, bool noShadowCopying)
         {
@@ -316,7 +316,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NoShadowCopying = noShadowCopying;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="Xunit2Settings.NoShadowCopying"/>.</i></p><p>Do not shadow copy assemblies.</p></summary>
+        /// <summary><p><i>Enables <see cref="Xunit2Settings.NoShadowCopying"/>.</i></p><p>Do not shadow copy assemblies.</p></summary>
         [Pure]
         public static Xunit2Settings EnableNoShadowCopying(this Xunit2Settings toolSettings)
         {
@@ -324,7 +324,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NoShadowCopying = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="Xunit2Settings.NoShadowCopying"/>.</i></p><p>Do not shadow copy assemblies.</p></summary>
+        /// <summary><p><i>Disables <see cref="Xunit2Settings.NoShadowCopying"/>.</i></p><p>Do not shadow copy assemblies.</p></summary>
         [Pure]
         public static Xunit2Settings DisableNoShadowCopying(this Xunit2Settings toolSettings)
         {
@@ -332,7 +332,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NoShadowCopying = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="Xunit2Settings.NoShadowCopying"/>.</i></p><p>Do not shadow copy assemblies.</p></summary>
+        /// <summary><p><i>Toggles <see cref="Xunit2Settings.NoShadowCopying"/>.</i></p><p>Do not shadow copy assemblies.</p></summary>
         [Pure]
         public static Xunit2Settings ToggleNoShadowCopying(this Xunit2Settings toolSettings)
         {
@@ -340,7 +340,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NoShadowCopying = !toolSettings.NoShadowCopying;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.Wait"/>.</i></p><p>Wait for input after completion.</p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.Wait"/>.</i></p><p>Wait for input after completion.</p></summary>
         [Pure]
         public static Xunit2Settings SetWait(this Xunit2Settings toolSettings, bool wait)
         {
@@ -348,7 +348,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.Wait = wait;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="Xunit2Settings.Wait"/>.</i></p><p>Wait for input after completion.</p></summary>
+        /// <summary><p><i>Enables <see cref="Xunit2Settings.Wait"/>.</i></p><p>Wait for input after completion.</p></summary>
         [Pure]
         public static Xunit2Settings EnableWait(this Xunit2Settings toolSettings)
         {
@@ -356,7 +356,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.Wait = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="Xunit2Settings.Wait"/>.</i></p><p>Wait for input after completion.</p></summary>
+        /// <summary><p><i>Disables <see cref="Xunit2Settings.Wait"/>.</i></p><p>Wait for input after completion.</p></summary>
         [Pure]
         public static Xunit2Settings DisableWait(this Xunit2Settings toolSettings)
         {
@@ -364,7 +364,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.Wait = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="Xunit2Settings.Wait"/>.</i></p><p>Wait for input after completion.</p></summary>
+        /// <summary><p><i>Toggles <see cref="Xunit2Settings.Wait"/>.</i></p><p>Wait for input after completion.</p></summary>
         [Pure]
         public static Xunit2Settings ToggleWait(this Xunit2Settings toolSettings)
         {
@@ -372,7 +372,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.Wait = !toolSettings.Wait;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.Diagnostics"/>.</i></p><p>Enable diagnostics messages for all test assemblies.</p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.Diagnostics"/>.</i></p><p>Enable diagnostics messages for all test assemblies.</p></summary>
         [Pure]
         public static Xunit2Settings SetDiagnostics(this Xunit2Settings toolSettings, bool diagnostics)
         {
@@ -380,7 +380,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.Diagnostics = diagnostics;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="Xunit2Settings.Diagnostics"/>.</i></p><p>Enable diagnostics messages for all test assemblies.</p></summary>
+        /// <summary><p><i>Enables <see cref="Xunit2Settings.Diagnostics"/>.</i></p><p>Enable diagnostics messages for all test assemblies.</p></summary>
         [Pure]
         public static Xunit2Settings EnableDiagnostics(this Xunit2Settings toolSettings)
         {
@@ -388,7 +388,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.Diagnostics = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="Xunit2Settings.Diagnostics"/>.</i></p><p>Enable diagnostics messages for all test assemblies.</p></summary>
+        /// <summary><p><i>Disables <see cref="Xunit2Settings.Diagnostics"/>.</i></p><p>Enable diagnostics messages for all test assemblies.</p></summary>
         [Pure]
         public static Xunit2Settings DisableDiagnostics(this Xunit2Settings toolSettings)
         {
@@ -396,7 +396,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.Diagnostics = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="Xunit2Settings.Diagnostics"/>.</i></p><p>Enable diagnostics messages for all test assemblies.</p></summary>
+        /// <summary><p><i>Toggles <see cref="Xunit2Settings.Diagnostics"/>.</i></p><p>Enable diagnostics messages for all test assemblies.</p></summary>
         [Pure]
         public static Xunit2Settings ToggleDiagnostics(this Xunit2Settings toolSettings)
         {
@@ -404,7 +404,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.Diagnostics = !toolSettings.Diagnostics;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.Debug"/>.</i></p><p>Launch the debugger to debug the tests.</p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.Debug"/>.</i></p><p>Launch the debugger to debug the tests.</p></summary>
         [Pure]
         public static Xunit2Settings SetDebug(this Xunit2Settings toolSettings, bool debug)
         {
@@ -412,7 +412,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.Debug = debug;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="Xunit2Settings.Debug"/>.</i></p><p>Launch the debugger to debug the tests.</p></summary>
+        /// <summary><p><i>Enables <see cref="Xunit2Settings.Debug"/>.</i></p><p>Launch the debugger to debug the tests.</p></summary>
         [Pure]
         public static Xunit2Settings EnableDebug(this Xunit2Settings toolSettings)
         {
@@ -420,7 +420,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.Debug = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="Xunit2Settings.Debug"/>.</i></p><p>Launch the debugger to debug the tests.</p></summary>
+        /// <summary><p><i>Disables <see cref="Xunit2Settings.Debug"/>.</i></p><p>Launch the debugger to debug the tests.</p></summary>
         [Pure]
         public static Xunit2Settings DisableDebug(this Xunit2Settings toolSettings)
         {
@@ -428,7 +428,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.Debug = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="Xunit2Settings.Debug"/>.</i></p><p>Launch the debugger to debug the tests.</p></summary>
+        /// <summary><p><i>Toggles <see cref="Xunit2Settings.Debug"/>.</i></p><p>Launch the debugger to debug the tests.</p></summary>
         [Pure]
         public static Xunit2Settings ToggleDebug(this Xunit2Settings toolSettings)
         {
@@ -436,7 +436,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.Debug = !toolSettings.Debug;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.Serialization"/>.</i></p><p>Serialize all test cases (for diagnostic purposes only).</p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.Serialization"/>.</i></p><p>Serialize all test cases (for diagnostic purposes only).</p></summary>
         [Pure]
         public static Xunit2Settings SetSerialization(this Xunit2Settings toolSettings, bool serialization)
         {
@@ -444,7 +444,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.Serialization = serialization;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="Xunit2Settings.Serialization"/>.</i></p><p>Serialize all test cases (for diagnostic purposes only).</p></summary>
+        /// <summary><p><i>Enables <see cref="Xunit2Settings.Serialization"/>.</i></p><p>Serialize all test cases (for diagnostic purposes only).</p></summary>
         [Pure]
         public static Xunit2Settings EnableSerialization(this Xunit2Settings toolSettings)
         {
@@ -452,7 +452,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.Serialization = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="Xunit2Settings.Serialization"/>.</i></p><p>Serialize all test cases (for diagnostic purposes only).</p></summary>
+        /// <summary><p><i>Disables <see cref="Xunit2Settings.Serialization"/>.</i></p><p>Serialize all test cases (for diagnostic purposes only).</p></summary>
         [Pure]
         public static Xunit2Settings DisableSerialization(this Xunit2Settings toolSettings)
         {
@@ -460,7 +460,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.Serialization = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="Xunit2Settings.Serialization"/>.</i></p><p>Serialize all test cases (for diagnostic purposes only).</p></summary>
+        /// <summary><p><i>Toggles <see cref="Xunit2Settings.Serialization"/>.</i></p><p>Serialize all test cases (for diagnostic purposes only).</p></summary>
         [Pure]
         public static Xunit2Settings ToggleSerialization(this Xunit2Settings toolSettings)
         {
@@ -468,7 +468,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.Serialization = !toolSettings.Serialization;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.Traits"/> to a new lookup table.</i></p><p>Only run tests with matching name/value traits.</p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.Traits"/> to a new lookup table.</i></p><p>Only run tests with matching name/value traits.</p></summary>
         [Pure]
         public static Xunit2Settings SetTraits(this Xunit2Settings toolSettings, ILookup<string, string> traits)
         {
@@ -476,7 +476,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.TraitsInternal = traits.ToLookupTable(StringComparer.OrdinalIgnoreCase);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for clearing <see cref="Xunit2Settings.Traits"/>.</i></p><p>Only run tests with matching name/value traits.</p></summary>
+        /// <summary><p><i>Clears <see cref="Xunit2Settings.Traits"/>.</i></p><p>Only run tests with matching name/value traits.</p></summary>
         [Pure]
         public static Xunit2Settings ClearTraits(this Xunit2Settings toolSettings)
         {
@@ -484,7 +484,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.TraitsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding a trait to <see cref="Xunit2Settings.Traits"/>.</i></p><p>Only run tests with matching name/value traits.</p></summary>
+        /// <summary><p><i>Adds a trait to <see cref="Xunit2Settings.Traits"/>.</i></p><p>Only run tests with matching name/value traits.</p></summary>
         [Pure]
         public static Xunit2Settings AddTrait(this Xunit2Settings toolSettings, string traitKey, string traitValue)
         {
@@ -492,7 +492,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.TraitsInternal.Add(traitKey, traitValue);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for removing a single trait entry from <see cref="Xunit2Settings.Traits"/>.</i></p><p>Only run tests with matching name/value traits.</p></summary>
+        /// <summary><p><i>Removes a single trait entry from <see cref="Xunit2Settings.Traits"/>.</i></p><p>Only run tests with matching name/value traits.</p></summary>
         [Pure]
         public static Xunit2Settings RemoveTrait(this Xunit2Settings toolSettings, string traitKey, string traitValue)
         {
@@ -500,7 +500,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.TraitsInternal.Remove(traitKey, traitValue);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.ExcludedTraits"/> to a new lookup table.</i></p><p>Do not run tests with matching name/value traits.</p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.ExcludedTraits"/> to a new lookup table.</i></p><p>Do not run tests with matching name/value traits.</p></summary>
         [Pure]
         public static Xunit2Settings SetExcludedTraits(this Xunit2Settings toolSettings, ILookup<string, string> excludedTraits)
         {
@@ -508,7 +508,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.ExcludedTraitsInternal = excludedTraits.ToLookupTable(StringComparer.OrdinalIgnoreCase);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for clearing <see cref="Xunit2Settings.ExcludedTraits"/>.</i></p><p>Do not run tests with matching name/value traits.</p></summary>
+        /// <summary><p><i>Clears <see cref="Xunit2Settings.ExcludedTraits"/>.</i></p><p>Do not run tests with matching name/value traits.</p></summary>
         [Pure]
         public static Xunit2Settings ClearExcludedTraits(this Xunit2Settings toolSettings)
         {
@@ -516,7 +516,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.ExcludedTraitsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding a excludedTrait to <see cref="Xunit2Settings.ExcludedTraits"/>.</i></p><p>Do not run tests with matching name/value traits.</p></summary>
+        /// <summary><p><i>Adds a excludedTrait to <see cref="Xunit2Settings.ExcludedTraits"/>.</i></p><p>Do not run tests with matching name/value traits.</p></summary>
         [Pure]
         public static Xunit2Settings AddExcludedTrait(this Xunit2Settings toolSettings, string excludedTraitKey, string excludedTraitValue)
         {
@@ -524,7 +524,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.ExcludedTraitsInternal.Add(excludedTraitKey, excludedTraitValue);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for removing a single excludedTrait entry from <see cref="Xunit2Settings.ExcludedTraits"/>.</i></p><p>Do not run tests with matching name/value traits.</p></summary>
+        /// <summary><p><i>Removes a single excludedTrait entry from <see cref="Xunit2Settings.ExcludedTraits"/>.</i></p><p>Do not run tests with matching name/value traits.</p></summary>
         [Pure]
         public static Xunit2Settings RemoveExcludedTrait(this Xunit2Settings toolSettings, string excludedTraitKey, string excludedTraitValue)
         {
@@ -532,7 +532,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.ExcludedTraitsInternal.Remove(excludedTraitKey, excludedTraitValue);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.Methods"/> to a new list.</i></p><p>Run a given test method (should be fully specified; i.e., 'MyNamespace.MyClass.MyTestMethod').</p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.Methods"/> to a new list.</i></p><p>Run a given test method (should be fully specified; i.e., 'MyNamespace.MyClass.MyTestMethod').</p></summary>
         [Pure]
         public static Xunit2Settings SetMethods(this Xunit2Settings toolSettings, params string[] methods)
         {
@@ -540,7 +540,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.MethodsInternal = methods.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.Methods"/> to a new list.</i></p><p>Run a given test method (should be fully specified; i.e., 'MyNamespace.MyClass.MyTestMethod').</p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.Methods"/> to a new list.</i></p><p>Run a given test method (should be fully specified; i.e., 'MyNamespace.MyClass.MyTestMethod').</p></summary>
         [Pure]
         public static Xunit2Settings SetMethods(this Xunit2Settings toolSettings, IEnumerable<string> methods)
         {
@@ -548,7 +548,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.MethodsInternal = methods.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding new methods to the existing <see cref="Xunit2Settings.Methods"/>.</i></p><p>Run a given test method (should be fully specified; i.e., 'MyNamespace.MyClass.MyTestMethod').</p></summary>
+        /// <summary><p><i>Adds new methods to the existing <see cref="Xunit2Settings.Methods"/>.</i></p><p>Run a given test method (should be fully specified; i.e., 'MyNamespace.MyClass.MyTestMethod').</p></summary>
         [Pure]
         public static Xunit2Settings AddMethods(this Xunit2Settings toolSettings, params string[] methods)
         {
@@ -556,7 +556,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.MethodsInternal.AddRange(methods);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding new methods to the existing <see cref="Xunit2Settings.Methods"/>.</i></p><p>Run a given test method (should be fully specified; i.e., 'MyNamespace.MyClass.MyTestMethod').</p></summary>
+        /// <summary><p><i>Adds new methods to the existing <see cref="Xunit2Settings.Methods"/>.</i></p><p>Run a given test method (should be fully specified; i.e., 'MyNamespace.MyClass.MyTestMethod').</p></summary>
         [Pure]
         public static Xunit2Settings AddMethods(this Xunit2Settings toolSettings, IEnumerable<string> methods)
         {
@@ -564,7 +564,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.MethodsInternal.AddRange(methods);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for clearing <see cref="Xunit2Settings.Methods"/>.</i></p><p>Run a given test method (should be fully specified; i.e., 'MyNamespace.MyClass.MyTestMethod').</p></summary>
+        /// <summary><p><i>Clears <see cref="Xunit2Settings.Methods"/>.</i></p><p>Run a given test method (should be fully specified; i.e., 'MyNamespace.MyClass.MyTestMethod').</p></summary>
         [Pure]
         public static Xunit2Settings ClearMethods(this Xunit2Settings toolSettings)
         {
@@ -572,7 +572,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.MethodsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding a single method to <see cref="Xunit2Settings.Methods"/>.</i></p><p>Run a given test method (should be fully specified; i.e., 'MyNamespace.MyClass.MyTestMethod').</p></summary>
+        /// <summary><p><i>Adds a single method to <see cref="Xunit2Settings.Methods"/>.</i></p><p>Run a given test method (should be fully specified; i.e., 'MyNamespace.MyClass.MyTestMethod').</p></summary>
         [Pure]
         public static Xunit2Settings AddMethod(this Xunit2Settings toolSettings, string method, bool evenIfNull = true)
         {
@@ -580,7 +580,7 @@ namespace Nuke.Common.Tools.Xunit2
             if (method != null || evenIfNull) toolSettings.MethodsInternal.Add(method);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for removing a single method from <see cref="Xunit2Settings.Methods"/>.</i></p><p>Run a given test method (should be fully specified; i.e., 'MyNamespace.MyClass.MyTestMethod').</p></summary>
+        /// <summary><p><i>Removes a single method from <see cref="Xunit2Settings.Methods"/>.</i></p><p>Run a given test method (should be fully specified; i.e., 'MyNamespace.MyClass.MyTestMethod').</p></summary>
         [Pure]
         public static Xunit2Settings RemoveMethod(this Xunit2Settings toolSettings, string method)
         {
@@ -588,7 +588,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.MethodsInternal.Remove(method);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.Classes"/> to a new list.</i></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.Classes"/> to a new list.</i></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
         [Pure]
         public static Xunit2Settings SetClasses(this Xunit2Settings toolSettings, params string[] classes)
         {
@@ -596,7 +596,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.ClassesInternal = classes.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.Classes"/> to a new list.</i></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.Classes"/> to a new list.</i></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
         [Pure]
         public static Xunit2Settings SetClasses(this Xunit2Settings toolSettings, IEnumerable<string> classes)
         {
@@ -604,7 +604,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.ClassesInternal = classes.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding new classes to the existing <see cref="Xunit2Settings.Classes"/>.</i></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
+        /// <summary><p><i>Adds new classes to the existing <see cref="Xunit2Settings.Classes"/>.</i></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
         [Pure]
         public static Xunit2Settings AddClasses(this Xunit2Settings toolSettings, params string[] classes)
         {
@@ -612,7 +612,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.ClassesInternal.AddRange(classes);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding new classes to the existing <see cref="Xunit2Settings.Classes"/>.</i></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
+        /// <summary><p><i>Adds new classes to the existing <see cref="Xunit2Settings.Classes"/>.</i></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
         [Pure]
         public static Xunit2Settings AddClasses(this Xunit2Settings toolSettings, IEnumerable<string> classes)
         {
@@ -620,7 +620,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.ClassesInternal.AddRange(classes);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for clearing <see cref="Xunit2Settings.Classes"/>.</i></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
+        /// <summary><p><i>Clears <see cref="Xunit2Settings.Classes"/>.</i></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
         [Pure]
         public static Xunit2Settings ClearClasses(this Xunit2Settings toolSettings)
         {
@@ -628,7 +628,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.ClassesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding a single classe to <see cref="Xunit2Settings.Classes"/>.</i></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
+        /// <summary><p><i>Adds a single classe to <see cref="Xunit2Settings.Classes"/>.</i></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
         [Pure]
         public static Xunit2Settings AddClasse(this Xunit2Settings toolSettings, string classe, bool evenIfNull = true)
         {
@@ -636,7 +636,7 @@ namespace Nuke.Common.Tools.Xunit2
             if (classe != null || evenIfNull) toolSettings.ClassesInternal.Add(classe);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for removing a single classe from <see cref="Xunit2Settings.Classes"/>.</i></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
+        /// <summary><p><i>Removes a single classe from <see cref="Xunit2Settings.Classes"/>.</i></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
         [Pure]
         public static Xunit2Settings RemoveClasse(this Xunit2Settings toolSettings, string classe)
         {
@@ -644,7 +644,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.ClassesInternal.Remove(classe);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.Namespaces"/> to a new list.</i></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.Namespaces"/> to a new list.</i></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
         [Pure]
         public static Xunit2Settings SetNamespaces(this Xunit2Settings toolSettings, params string[] nss)
         {
@@ -652,7 +652,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NamespacesInternal = nss.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.Namespaces"/> to a new list.</i></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.Namespaces"/> to a new list.</i></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
         [Pure]
         public static Xunit2Settings SetNamespaces(this Xunit2Settings toolSettings, IEnumerable<string> nss)
         {
@@ -660,7 +660,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NamespacesInternal = nss.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding new nss to the existing <see cref="Xunit2Settings.Namespaces"/>.</i></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
+        /// <summary><p><i>Adds new nss to the existing <see cref="Xunit2Settings.Namespaces"/>.</i></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
         [Pure]
         public static Xunit2Settings AddNamespaces(this Xunit2Settings toolSettings, params string[] nss)
         {
@@ -668,7 +668,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NamespacesInternal.AddRange(nss);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding new nss to the existing <see cref="Xunit2Settings.Namespaces"/>.</i></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
+        /// <summary><p><i>Adds new nss to the existing <see cref="Xunit2Settings.Namespaces"/>.</i></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
         [Pure]
         public static Xunit2Settings AddNamespaces(this Xunit2Settings toolSettings, IEnumerable<string> nss)
         {
@@ -676,7 +676,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NamespacesInternal.AddRange(nss);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for clearing <see cref="Xunit2Settings.Namespaces"/>.</i></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
+        /// <summary><p><i>Clears <see cref="Xunit2Settings.Namespaces"/>.</i></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
         [Pure]
         public static Xunit2Settings ClearNamespaces(this Xunit2Settings toolSettings)
         {
@@ -684,7 +684,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NamespacesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding a single ns to <see cref="Xunit2Settings.Namespaces"/>.</i></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
+        /// <summary><p><i>Adds a single ns to <see cref="Xunit2Settings.Namespaces"/>.</i></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
         [Pure]
         public static Xunit2Settings AddNamespace(this Xunit2Settings toolSettings, string ns, bool evenIfNull = true)
         {
@@ -692,7 +692,7 @@ namespace Nuke.Common.Tools.Xunit2
             if (ns != null || evenIfNull) toolSettings.NamespacesInternal.Add(ns);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for removing a single ns from <see cref="Xunit2Settings.Namespaces"/>.</i></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
+        /// <summary><p><i>Removes a single ns from <see cref="Xunit2Settings.Namespaces"/>.</i></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
         [Pure]
         public static Xunit2Settings RemoveNamespace(this Xunit2Settings toolSettings, string ns)
         {
@@ -700,7 +700,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NamespacesInternal.Remove(ns);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.NoAutoReporters"/>.</i></p><p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.NoAutoReporters"/>.</i></p><p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p></summary>
         [Pure]
         public static Xunit2Settings SetNoAutoReporters(this Xunit2Settings toolSettings, bool noAutoReporters)
         {
@@ -708,7 +708,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NoAutoReporters = noAutoReporters;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="Xunit2Settings.NoAutoReporters"/>.</i></p><p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p></summary>
+        /// <summary><p><i>Enables <see cref="Xunit2Settings.NoAutoReporters"/>.</i></p><p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p></summary>
         [Pure]
         public static Xunit2Settings EnableNoAutoReporters(this Xunit2Settings toolSettings)
         {
@@ -716,7 +716,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NoAutoReporters = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="Xunit2Settings.NoAutoReporters"/>.</i></p><p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p></summary>
+        /// <summary><p><i>Disables <see cref="Xunit2Settings.NoAutoReporters"/>.</i></p><p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p></summary>
         [Pure]
         public static Xunit2Settings DisableNoAutoReporters(this Xunit2Settings toolSettings)
         {
@@ -724,7 +724,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NoAutoReporters = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="Xunit2Settings.NoAutoReporters"/>.</i></p><p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p></summary>
+        /// <summary><p><i>Toggles <see cref="Xunit2Settings.NoAutoReporters"/>.</i></p><p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p></summary>
         [Pure]
         public static Xunit2Settings ToggleNoAutoReporters(this Xunit2Settings toolSettings)
         {
@@ -732,7 +732,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NoAutoReporters = !toolSettings.NoAutoReporters;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.Reporter"/>.</i></p><p>Reporters:<ul><li><c>-appveyor</c>: forces AppVeyor CI mode (normally auto-detected)</li><li><c>-json</c>: show progress messages in JSON format</li><li><c>-quiet</c>: do not show progress messages</li><li><c>-teamcity</c>: forces TeamCity mode (normally auto-detected)</li><li><c>-verbose</c>: show verbose progress messages</li></ul></p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.Reporter"/>.</i></p><p>Reporters:<ul><li><c>-appveyor</c>: forces AppVeyor CI mode (normally auto-detected)</li><li><c>-json</c>: show progress messages in JSON format</li><li><c>-quiet</c>: do not show progress messages</li><li><c>-teamcity</c>: forces TeamCity mode (normally auto-detected)</li><li><c>-verbose</c>: show verbose progress messages</li></ul></p></summary>
         [Pure]
         public static Xunit2Settings SetReporter(this Xunit2Settings toolSettings, ReporterType? reporter)
         {
@@ -740,7 +740,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.Reporter = reporter;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="Xunit2Settings.ResultFormat"/>.</i></p><p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p></summary>
+        /// <summary><p><i>Sets <see cref="Xunit2Settings.ResultFormat"/>.</i></p><p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p></summary>
         [Pure]
         public static Xunit2Settings SetResultFormat(this Xunit2Settings toolSettings, ResultFormat? resultFormat)
         {

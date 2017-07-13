@@ -110,7 +110,7 @@ namespace Nuke.Common.Tools.MSBuild
     [ExcludeFromCodeCoverage]
     public static partial class MSBuildSettingsExtensions
     {
-        /// <summary><p><i>Extension method for setting <see cref="MSBuildSettings.TargetPath"/>.</i></p><p>The solution or project file on which MSBuild is executed.</p></summary>
+        /// <summary><p><i>Sets <see cref="MSBuildSettings.TargetPath"/>.</i></p><p>The solution or project file on which MSBuild is executed.</p></summary>
         [Pure]
         public static MSBuildSettings SetTargetPath(this MSBuildSettings toolSettings, string targetPath)
         {
@@ -118,7 +118,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.TargetPath = targetPath;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="MSBuildSettings.DetailedSummary"/>.</i></p><p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p></summary>
+        /// <summary><p><i>Sets <see cref="MSBuildSettings.DetailedSummary"/>.</i></p><p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p></summary>
         [Pure]
         public static MSBuildSettings SetDetailedSummary(this MSBuildSettings toolSettings, bool detailedSummary)
         {
@@ -126,7 +126,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.DetailedSummary = detailedSummary;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="MSBuildSettings.DetailedSummary"/>.</i></p><p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p></summary>
+        /// <summary><p><i>Enables <see cref="MSBuildSettings.DetailedSummary"/>.</i></p><p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p></summary>
         [Pure]
         public static MSBuildSettings EnableDetailedSummary(this MSBuildSettings toolSettings)
         {
@@ -134,7 +134,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.DetailedSummary = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="MSBuildSettings.DetailedSummary"/>.</i></p><p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p></summary>
+        /// <summary><p><i>Disables <see cref="MSBuildSettings.DetailedSummary"/>.</i></p><p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p></summary>
         [Pure]
         public static MSBuildSettings DisableDetailedSummary(this MSBuildSettings toolSettings)
         {
@@ -142,7 +142,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.DetailedSummary = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="MSBuildSettings.DetailedSummary"/>.</i></p><p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p></summary>
+        /// <summary><p><i>Toggles <see cref="MSBuildSettings.DetailedSummary"/>.</i></p><p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p></summary>
         [Pure]
         public static MSBuildSettings ToggleDetailedSummary(this MSBuildSettings toolSettings)
         {
@@ -150,7 +150,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.DetailedSummary = !toolSettings.DetailedSummary;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="MSBuildSettings.MaxCpuCount"/>.</i></p><p>Specifies the maximum number of concurrent processes to use when building. If you don't include this switch, the default value is 1. If you include this switch without specifying a value, MSBuild will use up to the number of processors in the computer. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb651793.aspx">Building Multiple Projects in Parallel</a>.</p><p>The following example instructs MSBuild to build using three MSBuild processes, which allows three projects to build at the same time:</p><p><c>msbuild myproject.proj /maxcpucount:3</c></p></summary>
+        /// <summary><p><i>Sets <see cref="MSBuildSettings.MaxCpuCount"/>.</i></p><p>Specifies the maximum number of concurrent processes to use when building. If you don't include this switch, the default value is 1. If you include this switch without specifying a value, MSBuild will use up to the number of processors in the computer. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb651793.aspx">Building Multiple Projects in Parallel</a>.</p><p>The following example instructs MSBuild to build using three MSBuild processes, which allows three projects to build at the same time:</p><p><c>msbuild myproject.proj /maxcpucount:3</c></p></summary>
         [Pure]
         public static MSBuildSettings SetMaxCpuCount(this MSBuildSettings toolSettings, int? maxCpuCount)
         {
@@ -158,7 +158,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.MaxCpuCount = maxCpuCount;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="MSBuildSettings.NodeReuse"/>.</i></p><p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p></summary>
+        /// <summary><p><i>Sets <see cref="MSBuildSettings.NodeReuse"/>.</i></p><p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p></summary>
         [Pure]
         public static MSBuildSettings SetNodeReuse(this MSBuildSettings toolSettings, bool? nodeReuse)
         {
@@ -166,7 +166,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.NodeReuse = nodeReuse;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="MSBuildSettings.NodeReuse"/>.</i></p><p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p></summary>
+        /// <summary><p><i>Enables <see cref="MSBuildSettings.NodeReuse"/>.</i></p><p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p></summary>
         [Pure]
         public static MSBuildSettings EnableNodeReuse(this MSBuildSettings toolSettings)
         {
@@ -174,7 +174,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.NodeReuse = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="MSBuildSettings.NodeReuse"/>.</i></p><p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p></summary>
+        /// <summary><p><i>Disables <see cref="MSBuildSettings.NodeReuse"/>.</i></p><p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p></summary>
         [Pure]
         public static MSBuildSettings DisableNodeReuse(this MSBuildSettings toolSettings)
         {
@@ -182,7 +182,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.NodeReuse = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="MSBuildSettings.NodeReuse"/>.</i></p><p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p></summary>
+        /// <summary><p><i>Toggles <see cref="MSBuildSettings.NodeReuse"/>.</i></p><p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p></summary>
         [Pure]
         public static MSBuildSettings ToggleNodeReuse(this MSBuildSettings toolSettings)
         {
@@ -190,7 +190,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.NodeReuse = !toolSettings.NodeReuse;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="MSBuildSettings.NoLogo"/>.</i></p><p>Don't display the startup banner or the copyright message.</p></summary>
+        /// <summary><p><i>Sets <see cref="MSBuildSettings.NoLogo"/>.</i></p><p>Don't display the startup banner or the copyright message.</p></summary>
         [Pure]
         public static MSBuildSettings SetNoLogo(this MSBuildSettings toolSettings, bool noLogo)
         {
@@ -198,7 +198,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.NoLogo = noLogo;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="MSBuildSettings.NoLogo"/>.</i></p><p>Don't display the startup banner or the copyright message.</p></summary>
+        /// <summary><p><i>Enables <see cref="MSBuildSettings.NoLogo"/>.</i></p><p>Don't display the startup banner or the copyright message.</p></summary>
         [Pure]
         public static MSBuildSettings EnableNoLogo(this MSBuildSettings toolSettings)
         {
@@ -206,7 +206,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.NoLogo = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="MSBuildSettings.NoLogo"/>.</i></p><p>Don't display the startup banner or the copyright message.</p></summary>
+        /// <summary><p><i>Disables <see cref="MSBuildSettings.NoLogo"/>.</i></p><p>Don't display the startup banner or the copyright message.</p></summary>
         [Pure]
         public static MSBuildSettings DisableNoLogo(this MSBuildSettings toolSettings)
         {
@@ -214,7 +214,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.NoLogo = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="MSBuildSettings.NoLogo"/>.</i></p><p>Don't display the startup banner or the copyright message.</p></summary>
+        /// <summary><p><i>Toggles <see cref="MSBuildSettings.NoLogo"/>.</i></p><p>Don't display the startup banner or the copyright message.</p></summary>
         [Pure]
         public static MSBuildSettings ToggleNoLogo(this MSBuildSettings toolSettings)
         {
@@ -222,7 +222,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.NoLogo = !toolSettings.NoLogo;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="MSBuildSettings.TargetPlatform"/>.</i></p><p>The target platform for which the project is built to run on.</p></summary>
+        /// <summary><p><i>Sets <see cref="MSBuildSettings.TargetPlatform"/>.</i></p><p>The target platform for which the project is built to run on.</p></summary>
         [Pure]
         public static MSBuildSettings SetTargetPlatform(this MSBuildSettings toolSettings, MSBuildTargetPlatform? targetPlatform)
         {
@@ -230,7 +230,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.TargetPlatform = targetPlatform;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="MSBuildSettings.Properties"/> to a new dictionary.</i></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary><p><i>Sets <see cref="MSBuildSettings.Properties"/> to a new dictionary.</i></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
         [Pure]
         public static MSBuildSettings SetProperties(this MSBuildSettings toolSettings, IDictionary<string, string> properties)
         {
@@ -238,7 +238,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for clearing <see cref="MSBuildSettings.Properties"/>.</i></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary><p><i>Clears <see cref="MSBuildSettings.Properties"/>.</i></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
         [Pure]
         public static MSBuildSettings ClearProperties(this MSBuildSettings toolSettings)
         {
@@ -246,7 +246,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding a property to <see cref="MSBuildSettings.Properties"/>.</i></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary><p><i>Adds a property to <see cref="MSBuildSettings.Properties"/>.</i></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
         [Pure]
         public static MSBuildSettings AddProperty(this MSBuildSettings toolSettings, string propertyKey, string propertyValue)
         {
@@ -254,7 +254,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for removing a property from <see cref="MSBuildSettings.Properties"/>.</i></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary><p><i>Removes a property from <see cref="MSBuildSettings.Properties"/>.</i></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
         [Pure]
         public static MSBuildSettings RemoveProperty(this MSBuildSettings toolSettings, string propertyKey)
         {
@@ -262,7 +262,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal.Remove(propertyKey);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting a property in <see cref="MSBuildSettings.Properties"/>.</i></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary><p><i>Sets a property in <see cref="MSBuildSettings.Properties"/>.</i></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
         [Pure]
         public static MSBuildSettings SetProperty(this MSBuildSettings toolSettings, string propertyKey, string propertyValue)
         {
@@ -270,7 +270,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal[propertyKey] = propertyValue;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="MSBuildSettings.Targets"/> to a new list.</i></p><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
+        /// <summary><p><i>Sets <see cref="MSBuildSettings.Targets"/> to a new list.</i></p><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
         [Pure]
         public static MSBuildSettings SetTargets(this MSBuildSettings toolSettings, params string[] targets)
         {
@@ -278,7 +278,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.TargetsInternal = targets.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="MSBuildSettings.Targets"/> to a new list.</i></p><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
+        /// <summary><p><i>Sets <see cref="MSBuildSettings.Targets"/> to a new list.</i></p><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
         [Pure]
         public static MSBuildSettings SetTargets(this MSBuildSettings toolSettings, IEnumerable<string> targets)
         {
@@ -286,7 +286,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.TargetsInternal = targets.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding new targets to the existing <see cref="MSBuildSettings.Targets"/>.</i></p><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
+        /// <summary><p><i>Adds new targets to the existing <see cref="MSBuildSettings.Targets"/>.</i></p><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
         [Pure]
         public static MSBuildSettings AddTargets(this MSBuildSettings toolSettings, params string[] targets)
         {
@@ -294,7 +294,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.TargetsInternal.AddRange(targets);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding new targets to the existing <see cref="MSBuildSettings.Targets"/>.</i></p><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
+        /// <summary><p><i>Adds new targets to the existing <see cref="MSBuildSettings.Targets"/>.</i></p><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
         [Pure]
         public static MSBuildSettings AddTargets(this MSBuildSettings toolSettings, IEnumerable<string> targets)
         {
@@ -302,7 +302,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.TargetsInternal.AddRange(targets);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for clearing <see cref="MSBuildSettings.Targets"/>.</i></p><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
+        /// <summary><p><i>Clears <see cref="MSBuildSettings.Targets"/>.</i></p><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
         [Pure]
         public static MSBuildSettings ClearTargets(this MSBuildSettings toolSettings)
         {
@@ -310,7 +310,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.TargetsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding a single target to <see cref="MSBuildSettings.Targets"/>.</i></p><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
+        /// <summary><p><i>Adds a single target to <see cref="MSBuildSettings.Targets"/>.</i></p><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
         [Pure]
         public static MSBuildSettings AddTarget(this MSBuildSettings toolSettings, string target, bool evenIfNull = true)
         {
@@ -318,7 +318,7 @@ namespace Nuke.Common.Tools.MSBuild
             if (target != null || evenIfNull) toolSettings.TargetsInternal.Add(target);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for removing a single target from <see cref="MSBuildSettings.Targets"/>.</i></p><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
+        /// <summary><p><i>Removes a single target from <see cref="MSBuildSettings.Targets"/>.</i></p><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
         [Pure]
         public static MSBuildSettings RemoveTarget(this MSBuildSettings toolSettings, string target)
         {
@@ -326,7 +326,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.TargetsInternal.Remove(target);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="MSBuildSettings.ToolsVersion"/>.</i></p><p>Specifies the version of the Toolset to use to build the project, as the following example shows: <c>/toolsversion:3.5</c></p><p>By using this switch, you can build a project and specify a version that differs from the version that's specified in the <a href="https://msdn.microsoft.com/en-us/library/bcxfsh87.aspx">Project Element (MSBuild)</a>. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb383985.aspx">Overriding ToolsVersion Settings</a>.</p><p>For MSBuild 4.5, you can specify the following values for version: 2.0, 3.5, and 4.0. If you specify 4.0, the VisualStudioVersion build property specifies which sub-toolset to use. For more information, see the Sub-toolsets section of <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>.</p><p>A Toolset consists of tasks, targets, and tools that are used to build an application. The tools include compilers such as csc.exe and vbc.exe. For more information about Toolsets, see <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>, <a href="https://msdn.microsoft.com/en-us/library/bb397428.aspx">Standard and Custom Toolset Configurations</a>, and <a href="https://msdn.microsoft.com/en-us/library/hh264223.aspx">Multitargeting</a>. Note: The toolset version isn't the same as the target framework, which is the version of the .NET Framework on which a project is built to run. For more information, see <a href="https://msdn.microsoft.com/en-us/library/hh264221.aspx">Target Framework and Target Platform</a>.</p></summary>
+        /// <summary><p><i>Sets <see cref="MSBuildSettings.ToolsVersion"/>.</i></p><p>Specifies the version of the Toolset to use to build the project, as the following example shows: <c>/toolsversion:3.5</c></p><p>By using this switch, you can build a project and specify a version that differs from the version that's specified in the <a href="https://msdn.microsoft.com/en-us/library/bcxfsh87.aspx">Project Element (MSBuild)</a>. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb383985.aspx">Overriding ToolsVersion Settings</a>.</p><p>For MSBuild 4.5, you can specify the following values for version: 2.0, 3.5, and 4.0. If you specify 4.0, the VisualStudioVersion build property specifies which sub-toolset to use. For more information, see the Sub-toolsets section of <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>.</p><p>A Toolset consists of tasks, targets, and tools that are used to build an application. The tools include compilers such as csc.exe and vbc.exe. For more information about Toolsets, see <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>, <a href="https://msdn.microsoft.com/en-us/library/bb397428.aspx">Standard and Custom Toolset Configurations</a>, and <a href="https://msdn.microsoft.com/en-us/library/hh264223.aspx">Multitargeting</a>. Note: The toolset version isn't the same as the target framework, which is the version of the .NET Framework on which a project is built to run. For more information, see <a href="https://msdn.microsoft.com/en-us/library/hh264221.aspx">Target Framework and Target Platform</a>.</p></summary>
         [Pure]
         public static MSBuildSettings SetToolsVersion(this MSBuildSettings toolSettings, MSBuildToolsVersion? toolsVersion)
         {
@@ -334,7 +334,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.ToolsVersion = toolsVersion;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="MSBuildSettings.MSBuildVersion"/>.</i></p><p>Specifies the version of MSBuild for building.</p></summary>
+        /// <summary><p><i>Sets <see cref="MSBuildSettings.MSBuildVersion"/>.</i></p><p>Specifies the version of MSBuild for building.</p></summary>
         [Pure]
         public static MSBuildSettings SetMSBuildVersion(this MSBuildSettings toolSettings, MSBuildVersion? msbuildVersion)
         {
@@ -342,7 +342,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.MSBuildVersion = msbuildVersion;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="MSBuildSettings.Verbosity"/>.</i></p><p>Specifies the amount of information to display in the build log. Each logger displays events based on the verbosity level that you set for that logger.</p><p>You can specify the following verbosity levels: <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p><p>The following setting is an example: <c>/verbosity:quiet</c></p></summary>
+        /// <summary><p><i>Sets <see cref="MSBuildSettings.Verbosity"/>.</i></p><p>Specifies the amount of information to display in the build log. Each logger displays events based on the verbosity level that you set for that logger.</p><p>You can specify the following verbosity levels: <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p><p>The following setting is an example: <c>/verbosity:quiet</c></p></summary>
         [Pure]
         public static MSBuildSettings SetVerbosity(this MSBuildSettings toolSettings, MSBuildVerbosity? verbosity)
         {
@@ -350,7 +350,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.Verbosity = verbosity;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="MSBuildSettings.MSBuildPlatform"/>.</i></p><p>Specifies the platform to use when building.</p></summary>
+        /// <summary><p><i>Sets <see cref="MSBuildSettings.MSBuildPlatform"/>.</i></p><p>Specifies the platform to use when building.</p></summary>
         [Pure]
         public static MSBuildSettings SetMSBuildPlatform(this MSBuildSettings toolSettings, MSBuildPlatform? msbuildPlatform)
         {
@@ -358,7 +358,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.MSBuildPlatform = msbuildPlatform;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="MSBuildSettings.Loggers"/> to a new list.</i></p><p>Specifies the loggers to use to log events from MSBuild.</p></summary>
+        /// <summary><p><i>Sets <see cref="MSBuildSettings.Loggers"/> to a new list.</i></p><p>Specifies the loggers to use to log events from MSBuild.</p></summary>
         [Pure]
         public static MSBuildSettings SetLoggers(this MSBuildSettings toolSettings, params string[] loggers)
         {
@@ -366,7 +366,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.LoggersInternal = loggers.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="MSBuildSettings.Loggers"/> to a new list.</i></p><p>Specifies the loggers to use to log events from MSBuild.</p></summary>
+        /// <summary><p><i>Sets <see cref="MSBuildSettings.Loggers"/> to a new list.</i></p><p>Specifies the loggers to use to log events from MSBuild.</p></summary>
         [Pure]
         public static MSBuildSettings SetLoggers(this MSBuildSettings toolSettings, IEnumerable<string> loggers)
         {
@@ -374,7 +374,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.LoggersInternal = loggers.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding new loggers to the existing <see cref="MSBuildSettings.Loggers"/>.</i></p><p>Specifies the loggers to use to log events from MSBuild.</p></summary>
+        /// <summary><p><i>Adds new loggers to the existing <see cref="MSBuildSettings.Loggers"/>.</i></p><p>Specifies the loggers to use to log events from MSBuild.</p></summary>
         [Pure]
         public static MSBuildSettings AddLoggers(this MSBuildSettings toolSettings, params string[] loggers)
         {
@@ -382,7 +382,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.LoggersInternal.AddRange(loggers);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding new loggers to the existing <see cref="MSBuildSettings.Loggers"/>.</i></p><p>Specifies the loggers to use to log events from MSBuild.</p></summary>
+        /// <summary><p><i>Adds new loggers to the existing <see cref="MSBuildSettings.Loggers"/>.</i></p><p>Specifies the loggers to use to log events from MSBuild.</p></summary>
         [Pure]
         public static MSBuildSettings AddLoggers(this MSBuildSettings toolSettings, IEnumerable<string> loggers)
         {
@@ -390,7 +390,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.LoggersInternal.AddRange(loggers);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for clearing <see cref="MSBuildSettings.Loggers"/>.</i></p><p>Specifies the loggers to use to log events from MSBuild.</p></summary>
+        /// <summary><p><i>Clears <see cref="MSBuildSettings.Loggers"/>.</i></p><p>Specifies the loggers to use to log events from MSBuild.</p></summary>
         [Pure]
         public static MSBuildSettings ClearLoggers(this MSBuildSettings toolSettings)
         {
@@ -398,7 +398,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.LoggersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for adding a single logger to <see cref="MSBuildSettings.Loggers"/>.</i></p><p>Specifies the loggers to use to log events from MSBuild.</p></summary>
+        /// <summary><p><i>Adds a single logger to <see cref="MSBuildSettings.Loggers"/>.</i></p><p>Specifies the loggers to use to log events from MSBuild.</p></summary>
         [Pure]
         public static MSBuildSettings AddLogger(this MSBuildSettings toolSettings, string logger, bool evenIfNull = true)
         {
@@ -406,7 +406,7 @@ namespace Nuke.Common.Tools.MSBuild
             if (logger != null || evenIfNull) toolSettings.LoggersInternal.Add(logger);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for removing a single logger from <see cref="MSBuildSettings.Loggers"/>.</i></p><p>Specifies the loggers to use to log events from MSBuild.</p></summary>
+        /// <summary><p><i>Removes a single logger from <see cref="MSBuildSettings.Loggers"/>.</i></p><p>Specifies the loggers to use to log events from MSBuild.</p></summary>
         [Pure]
         public static MSBuildSettings RemoveLogger(this MSBuildSettings toolSettings, string logger)
         {
@@ -414,7 +414,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.LoggersInternal.Remove(logger);
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="MSBuildSettings.NoConsoleLogger"/>.</i></p><p>Disable the default console logger, and don't log events to the console.</p></summary>
+        /// <summary><p><i>Sets <see cref="MSBuildSettings.NoConsoleLogger"/>.</i></p><p>Disable the default console logger, and don't log events to the console.</p></summary>
         [Pure]
         public static MSBuildSettings SetNoConsoleLogger(this MSBuildSettings toolSettings, bool noConsoleLogger)
         {
@@ -422,7 +422,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.NoConsoleLogger = noConsoleLogger;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="MSBuildSettings.NoConsoleLogger"/>.</i></p><p>Disable the default console logger, and don't log events to the console.</p></summary>
+        /// <summary><p><i>Enables <see cref="MSBuildSettings.NoConsoleLogger"/>.</i></p><p>Disable the default console logger, and don't log events to the console.</p></summary>
         [Pure]
         public static MSBuildSettings EnableNoConsoleLogger(this MSBuildSettings toolSettings)
         {
@@ -430,7 +430,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.NoConsoleLogger = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="MSBuildSettings.NoConsoleLogger"/>.</i></p><p>Disable the default console logger, and don't log events to the console.</p></summary>
+        /// <summary><p><i>Disables <see cref="MSBuildSettings.NoConsoleLogger"/>.</i></p><p>Disable the default console logger, and don't log events to the console.</p></summary>
         [Pure]
         public static MSBuildSettings DisableNoConsoleLogger(this MSBuildSettings toolSettings)
         {
@@ -438,7 +438,7 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.NoConsoleLogger = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="MSBuildSettings.NoConsoleLogger"/>.</i></p><p>Disable the default console logger, and don't log events to the console.</p></summary>
+        /// <summary><p><i>Toggles <see cref="MSBuildSettings.NoConsoleLogger"/>.</i></p><p>Disable the default console logger, and don't log events to the console.</p></summary>
         [Pure]
         public static MSBuildSettings ToggleNoConsoleLogger(this MSBuildSettings toolSettings)
         {

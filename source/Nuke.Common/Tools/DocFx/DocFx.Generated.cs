@@ -141,7 +141,7 @@ namespace Nuke.Common.Tools.DocFx
     [ExcludeFromCodeCoverage]
     public static partial class DocFxMetadataSettingsExtensions
     {
-        /// <summary><p><i>Extension method for setting <see cref="DocFxMetadataSettings.ConfigPath"/>.</i></p><p>Path to the docfx.json configuration file.</p></summary>
+        /// <summary><p><i>Sets <see cref="DocFxMetadataSettings.ConfigPath"/>.</i></p><p>Path to the docfx.json configuration file.</p></summary>
         [Pure]
         public static DocFxMetadataSettings SetConfigPath(this DocFxMetadataSettings toolSettings, string configPath)
         {
@@ -149,7 +149,7 @@ namespace Nuke.Common.Tools.DocFx
             toolSettings.ConfigPath = configPath;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="DocFxMetadataSettings.Force"/>.</i></p><p>Force re-generate all the metadata.</p></summary>
+        /// <summary><p><i>Sets <see cref="DocFxMetadataSettings.Force"/>.</i></p><p>Force re-generate all the metadata.</p></summary>
         [Pure]
         public static DocFxMetadataSettings SetForce(this DocFxMetadataSettings toolSettings, bool force)
         {
@@ -157,7 +157,7 @@ namespace Nuke.Common.Tools.DocFx
             toolSettings.Force = force;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="DocFxMetadataSettings.Force"/>.</i></p><p>Force re-generate all the metadata.</p></summary>
+        /// <summary><p><i>Enables <see cref="DocFxMetadataSettings.Force"/>.</i></p><p>Force re-generate all the metadata.</p></summary>
         [Pure]
         public static DocFxMetadataSettings EnableForce(this DocFxMetadataSettings toolSettings)
         {
@@ -165,7 +165,7 @@ namespace Nuke.Common.Tools.DocFx
             toolSettings.Force = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="DocFxMetadataSettings.Force"/>.</i></p><p>Force re-generate all the metadata.</p></summary>
+        /// <summary><p><i>Disables <see cref="DocFxMetadataSettings.Force"/>.</i></p><p>Force re-generate all the metadata.</p></summary>
         [Pure]
         public static DocFxMetadataSettings DisableForce(this DocFxMetadataSettings toolSettings)
         {
@@ -173,7 +173,7 @@ namespace Nuke.Common.Tools.DocFx
             toolSettings.Force = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="DocFxMetadataSettings.Force"/>.</i></p><p>Force re-generate all the metadata.</p></summary>
+        /// <summary><p><i>Toggles <see cref="DocFxMetadataSettings.Force"/>.</i></p><p>Force re-generate all the metadata.</p></summary>
         [Pure]
         public static DocFxMetadataSettings ToggleForce(this DocFxMetadataSettings toolSettings)
         {
@@ -181,7 +181,7 @@ namespace Nuke.Common.Tools.DocFx
             toolSettings.Force = !toolSettings.Force;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="DocFxMetadataSettings.RepositoryRoot"/>.</i></p><p>Specify the GIT repository root folder.</p></summary>
+        /// <summary><p><i>Sets <see cref="DocFxMetadataSettings.RepositoryRoot"/>.</i></p><p>Specify the GIT repository root folder.</p></summary>
         [Pure]
         public static DocFxMetadataSettings SetRepositoryRoot(this DocFxMetadataSettings toolSettings, string repositoryRoot)
         {
@@ -189,7 +189,7 @@ namespace Nuke.Common.Tools.DocFx
             toolSettings.RepositoryRoot = repositoryRoot;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="DocFxMetadataSettings.LogFile"/>.</i></p><p>Specify the file name to save processing log.</p></summary>
+        /// <summary><p><i>Sets <see cref="DocFxMetadataSettings.LogFile"/>.</i></p><p>Specify the file name to save processing log.</p></summary>
         [Pure]
         public static DocFxMetadataSettings SetLogFile(this DocFxMetadataSettings toolSettings, string logFile)
         {
@@ -197,7 +197,7 @@ namespace Nuke.Common.Tools.DocFx
             toolSettings.LogFile = logFile;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="DocFxMetadataSettings.LogLevel"/>.</i></p><p>Specify to which log level will be logged. By default log level &gt;= Info will be logged. The acceptable value could be Verbose, Info, Warning, Error.</p></summary>
+        /// <summary><p><i>Sets <see cref="DocFxMetadataSettings.LogLevel"/>.</i></p><p>Specify to which log level will be logged. By default log level &gt;= Info will be logged. The acceptable value could be Verbose, Info, Warning, Error.</p></summary>
         [Pure]
         public static DocFxMetadataSettings SetLogLevel(this DocFxMetadataSettings toolSettings, DocFxLogLevel? logLevel)
         {
@@ -210,7 +210,7 @@ namespace Nuke.Common.Tools.DocFx
     [ExcludeFromCodeCoverage]
     public static partial class DocFxBuildSettingsExtensions
     {
-        /// <summary><p><i>Extension method for setting <see cref="DocFxBuildSettings.ConfigPath"/>.</i></p><p>Path to the docfx.json configuration file.</p></summary>
+        /// <summary><p><i>Sets <see cref="DocFxBuildSettings.ConfigPath"/>.</i></p><p>Path to the docfx.json configuration file.</p></summary>
         [Pure]
         public static DocFxBuildSettings SetConfigPath(this DocFxBuildSettings toolSettings, string configPath)
         {
@@ -218,7 +218,7 @@ namespace Nuke.Common.Tools.DocFx
             toolSettings.ConfigPath = configPath;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="DocFxBuildSettings.Force"/>.</i></p><p>Force re-generate all the metadata.</p></summary>
+        /// <summary><p><i>Sets <see cref="DocFxBuildSettings.Force"/>.</i></p><p>Force re-generate all the metadata.</p></summary>
         [Pure]
         public static DocFxBuildSettings SetForce(this DocFxBuildSettings toolSettings, bool force)
         {
@@ -226,7 +226,7 @@ namespace Nuke.Common.Tools.DocFx
             toolSettings.Force = force;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for enabling <see cref="DocFxBuildSettings.Force"/>.</i></p><p>Force re-generate all the metadata.</p></summary>
+        /// <summary><p><i>Enables <see cref="DocFxBuildSettings.Force"/>.</i></p><p>Force re-generate all the metadata.</p></summary>
         [Pure]
         public static DocFxBuildSettings EnableForce(this DocFxBuildSettings toolSettings)
         {
@@ -234,7 +234,7 @@ namespace Nuke.Common.Tools.DocFx
             toolSettings.Force = true;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for disabling <see cref="DocFxBuildSettings.Force"/>.</i></p><p>Force re-generate all the metadata.</p></summary>
+        /// <summary><p><i>Disables <see cref="DocFxBuildSettings.Force"/>.</i></p><p>Force re-generate all the metadata.</p></summary>
         [Pure]
         public static DocFxBuildSettings DisableForce(this DocFxBuildSettings toolSettings)
         {
@@ -242,7 +242,7 @@ namespace Nuke.Common.Tools.DocFx
             toolSettings.Force = false;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for toggling <see cref="DocFxBuildSettings.Force"/>.</i></p><p>Force re-generate all the metadata.</p></summary>
+        /// <summary><p><i>Toggles <see cref="DocFxBuildSettings.Force"/>.</i></p><p>Force re-generate all the metadata.</p></summary>
         [Pure]
         public static DocFxBuildSettings ToggleForce(this DocFxBuildSettings toolSettings)
         {
@@ -250,7 +250,7 @@ namespace Nuke.Common.Tools.DocFx
             toolSettings.Force = !toolSettings.Force;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="DocFxBuildSettings.RepositoryRoot"/>.</i></p><p>Specify the GIT repository root folder.</p></summary>
+        /// <summary><p><i>Sets <see cref="DocFxBuildSettings.RepositoryRoot"/>.</i></p><p>Specify the GIT repository root folder.</p></summary>
         [Pure]
         public static DocFxBuildSettings SetRepositoryRoot(this DocFxBuildSettings toolSettings, string repositoryRoot)
         {
@@ -258,7 +258,7 @@ namespace Nuke.Common.Tools.DocFx
             toolSettings.RepositoryRoot = repositoryRoot;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="DocFxBuildSettings.Theme"/>.</i></p><p>Specify which theme to use. By default 'default' theme is offered.</p></summary>
+        /// <summary><p><i>Sets <see cref="DocFxBuildSettings.Theme"/>.</i></p><p>Specify which theme to use. By default 'default' theme is offered.</p></summary>
         [Pure]
         public static DocFxBuildSettings SetTheme(this DocFxBuildSettings toolSettings, string theme)
         {
@@ -266,7 +266,7 @@ namespace Nuke.Common.Tools.DocFx
             toolSettings.Theme = theme;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="DocFxBuildSettings.LogFile"/>.</i></p><p>Specify the file name to save processing log.</p></summary>
+        /// <summary><p><i>Sets <see cref="DocFxBuildSettings.LogFile"/>.</i></p><p>Specify the file name to save processing log.</p></summary>
         [Pure]
         public static DocFxBuildSettings SetLogFile(this DocFxBuildSettings toolSettings, string logFile)
         {
@@ -274,7 +274,7 @@ namespace Nuke.Common.Tools.DocFx
             toolSettings.LogFile = logFile;
             return toolSettings;
         }
-        /// <summary><p><i>Extension method for setting <see cref="DocFxBuildSettings.LogLevel"/>.</i></p><p>Specify to which log level will be logged. By default log level &gt;= Info will be logged. The acceptable value could be Verbose, Info, Warning, Error.</p></summary>
+        /// <summary><p><i>Sets <see cref="DocFxBuildSettings.LogLevel"/>.</i></p><p>Specify to which log level will be logged. By default log level &gt;= Info will be logged. The acceptable value could be Verbose, Info, Warning, Error.</p></summary>
         [Pure]
         public static DocFxBuildSettings SetLogLevel(this DocFxBuildSettings toolSettings, DocFxLogLevel? logLevel)
         {
