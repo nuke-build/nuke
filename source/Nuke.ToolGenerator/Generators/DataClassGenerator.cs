@@ -33,6 +33,7 @@ namespace Nuke.ToolGenerator.Generators
                             .WriteGetArgumentsInternal());
         }
 
+        // ReSharper disable once CyclomaticComplexity
         private static DataClassWriter WriteToolPath (this DataClassWriter writer)
         {
             var settingsClass = writer.DataClass as SettingsClass;

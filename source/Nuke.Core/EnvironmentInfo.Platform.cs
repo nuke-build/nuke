@@ -22,11 +22,11 @@ namespace Nuke.Core
         /// <summary>
         /// Returns whether the operating system is x64 or not.
         /// </summary>
-        public static bool Is64Bit =>
+        public static bool Is64Bit
 #if NETCORE
-                RuntimeInformation.OSArchitecture == Architecture.X64 || RuntimeInformation.OSArchitecture == Architecture.Arm64;
+            => RuntimeInformation.OSArchitecture == Architecture.X64 || RuntimeInformation.OSArchitecture == Architecture.Arm64;
 #else
-                Environment.Is64BitOperatingSystem;
+            => Environment.Is64BitOperatingSystem;
 #endif
 
         /// <summary>
@@ -47,11 +47,11 @@ namespace Nuke.Core
         /// <summary>
         /// Returns the framework the build is running on.
         /// </summary>
-        public static FrameworkName Framework =>
+        public static FrameworkName Framework
 #if NETCORE
-                new FrameworkName(".NETStandard,Version=v1.6");
+            => new FrameworkName(".NETStandard,Version=v1.6");
 #else
-                new FrameworkName(".NETFramework,Version=v4.6");
+            => new FrameworkName(".NETFramework,Version=v4.6");
 #endif
 
         /// <summary>
@@ -59,6 +59,7 @@ namespace Nuke.Core
         /// </summary>
         public static PlatformFamily Platform
         {
+            // ReSharper disable once CyclomaticComplexity
             get
             {
 #if NETCORE
@@ -99,6 +100,7 @@ namespace Nuke.Core
             [DllImport("libc")]
             private static extern int uname (IntPtr buf);
 
+            // ReSharper disable once CyclomaticComplexity
             public static bool IsRunningOnMac ()
             {
                 try

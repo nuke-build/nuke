@@ -6,13 +6,12 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Core.Tooling;
 
 namespace Nuke.Core.Tooling
 {
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class ToolSettingsExtensions
+    public static class ToolSettingsExtensions
     {
         ///<summary>Sets <see cref="ToolSettings.ToolPath"/> -- <inheritdoc cref="ToolSettings.ToolPath" /></summary>
         [Pure]

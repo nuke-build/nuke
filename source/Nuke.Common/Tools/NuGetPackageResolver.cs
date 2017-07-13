@@ -33,6 +33,7 @@ namespace Nuke.Common.Tools
         }
 
         // TODO: add HasLocalInstalledPackage() ?
+        // ReSharper disable once CyclomaticComplexity
         public static IEnumerable<InstalledPackage> GetLocalInstalledPackages (
             string packagesConfigFile = null,
             bool includeDependencies = true)

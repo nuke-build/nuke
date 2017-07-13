@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Glob;
 using JetBrains.Annotations;
 using Nuke.Core.Execution;
@@ -152,6 +151,7 @@ namespace Nuke.Core.IO
             return $"{path1}{separator}{path2}";
         }
 
+        // ReSharper disable once CyclomaticComplexity
         public static string NormalizePath ([CanBeNull] string path, char? separator = null)
         {
             AssertSeparatorChoice (path, separator);
@@ -167,15 +167,10 @@ namespace Nuke.Core.IO
                 var part = tailParts[i];
                 if (IsUpwardsDirectory(part))
                 {
-                    if (i == 0)
-                    {
-                        ControlFlow.Assert(root == null, $"Cannot normalize '{path}' beyond path root.");
-                        i++;
-                        continue;
-                    }
-
+                    // TODO: merge ifs
                     if (tailParts.Take(i).All(IsUpwardsDirectory))
                     {
+                        ControlFlow.Assert(i > 0 || root == null, $"Cannot normalize '{path}' beyond path root.");
                         i++;
                         continue;
                     }

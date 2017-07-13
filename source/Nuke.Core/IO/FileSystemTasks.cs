@@ -110,6 +110,7 @@ namespace Nuke.Core.IO
             {
                 case FileExistsPolicy.Fail:
                     ControlFlow.Fail($"File '{targetFile}' already exists.");
+                    // ReSharper disable once HeuristicUnreachableCode
                     return false;
                 case FileExistsPolicy.Skip:
                     return false;

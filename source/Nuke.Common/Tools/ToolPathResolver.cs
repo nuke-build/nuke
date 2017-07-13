@@ -12,13 +12,14 @@ namespace Nuke.Common.Tools
 {
     public static class ToolPathResolver
     {
+        // ReSharper disable once CyclomaticComplexity
         public static string GetToolPath (
             string packageId = null,
             string packageExecutable = null,
             string environmentExecutable = null,
             string pathExecutable = null)
         {
-            ControlFlow.Assert((packageId != null && packageExecutable != null) || environmentExecutable != null || pathExecutable != null,
+            ControlFlow.Assert(packageId != null && packageExecutable != null || environmentExecutable != null || pathExecutable != null,
                 "(packageId != null && packageExecutable != null) || environmentExecutable != null || pathExecutable != null");
 
             if (environmentExecutable != null)

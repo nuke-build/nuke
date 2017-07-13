@@ -112,6 +112,7 @@ namespace Nuke.Core
             private static extern IntPtr getenv ([MarshalAs(UnmanagedType.LPStr)] string name);
 
             [CanBeNull]
+            // ReSharper disable once CyclomaticComplexity
             public static string GetFolder (SpecialFolders folder)
             {
                 switch (folder)

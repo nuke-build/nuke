@@ -8,7 +8,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using JetBrains.Annotations;
-using Nuke.Core.OutputSinks;
 
 namespace Nuke.Core.Execution
 {
