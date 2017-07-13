@@ -136,7 +136,7 @@ namespace Nuke.Common.Tools.DupFinder
             toolSettings.ExcludeFilesInternal = excludeFiles.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new excludeFiles to the existing <see cref="DupFinderSettings.ExcludeFiles"/>.</i></p><p>Allows excluding files from the duplicates search. Wildcards can be used; for example, <c>*Generated.cs</c>. Note that the paths should be either absolute or relative to the working directory.</p></summary>
+        /// <summary><p><i>Adds a excludeFiles to the existing <see cref="DupFinderSettings.ExcludeFiles"/>.</i></p><p>Allows excluding files from the duplicates search. Wildcards can be used; for example, <c>*Generated.cs</c>. Note that the paths should be either absolute or relative to the working directory.</p></summary>
         [Pure]
         public static DupFinderSettings AddExcludeFiles(this DupFinderSettings toolSettings, params string[] excludeFiles)
         {
@@ -144,7 +144,7 @@ namespace Nuke.Common.Tools.DupFinder
             toolSettings.ExcludeFilesInternal.AddRange(excludeFiles);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new excludeFiles to the existing <see cref="DupFinderSettings.ExcludeFiles"/>.</i></p><p>Allows excluding files from the duplicates search. Wildcards can be used; for example, <c>*Generated.cs</c>. Note that the paths should be either absolute or relative to the working directory.</p></summary>
+        /// <summary><p><i>Adds a excludeFiles to the existing <see cref="DupFinderSettings.ExcludeFiles"/>.</i></p><p>Allows excluding files from the duplicates search. Wildcards can be used; for example, <c>*Generated.cs</c>. Note that the paths should be either absolute or relative to the working directory.</p></summary>
         [Pure]
         public static DupFinderSettings AddExcludeFiles(this DupFinderSettings toolSettings, IEnumerable<string> excludeFiles)
         {
@@ -173,7 +173,7 @@ namespace Nuke.Common.Tools.DupFinder
         public static DupFinderSettings RemoveExcludeFile(this DupFinderSettings toolSettings, string excludeFile)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludeFilesInternal.Remove(excludeFile);
+            toolSettings.ExcludeFilesInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == excludeFile).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="DupFinderSettings.ExcludeComments"/> to a new list.</i></p><p>Allows excluding files that have a matching substrings in the opening comments.</p></summary>
@@ -192,7 +192,7 @@ namespace Nuke.Common.Tools.DupFinder
             toolSettings.ExcludeCommentsInternal = excludeComments.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new excludeComments to the existing <see cref="DupFinderSettings.ExcludeComments"/>.</i></p><p>Allows excluding files that have a matching substrings in the opening comments.</p></summary>
+        /// <summary><p><i>Adds a excludeComments to the existing <see cref="DupFinderSettings.ExcludeComments"/>.</i></p><p>Allows excluding files that have a matching substrings in the opening comments.</p></summary>
         [Pure]
         public static DupFinderSettings AddExcludeComments(this DupFinderSettings toolSettings, params string[] excludeComments)
         {
@@ -200,7 +200,7 @@ namespace Nuke.Common.Tools.DupFinder
             toolSettings.ExcludeCommentsInternal.AddRange(excludeComments);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new excludeComments to the existing <see cref="DupFinderSettings.ExcludeComments"/>.</i></p><p>Allows excluding files that have a matching substrings in the opening comments.</p></summary>
+        /// <summary><p><i>Adds a excludeComments to the existing <see cref="DupFinderSettings.ExcludeComments"/>.</i></p><p>Allows excluding files that have a matching substrings in the opening comments.</p></summary>
         [Pure]
         public static DupFinderSettings AddExcludeComments(this DupFinderSettings toolSettings, IEnumerable<string> excludeComments)
         {
@@ -229,7 +229,7 @@ namespace Nuke.Common.Tools.DupFinder
         public static DupFinderSettings RemoveExcludeComment(this DupFinderSettings toolSettings, string excludeComment)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludeCommentsInternal.Remove(excludeComment);
+            toolSettings.ExcludeCommentsInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == excludeComment).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="DupFinderSettings.ExcludeCodeRegions"/> to a new list.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <em>generated code</em> will exclude regions containing <em>Windows Form Designer generated code</em>).</p></summary>
@@ -248,7 +248,7 @@ namespace Nuke.Common.Tools.DupFinder
             toolSettings.ExcludeCodeRegionsInternal = excludeCodeRegions.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new excludeCodeRegions to the existing <see cref="DupFinderSettings.ExcludeCodeRegions"/>.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <em>generated code</em> will exclude regions containing <em>Windows Form Designer generated code</em>).</p></summary>
+        /// <summary><p><i>Adds a excludeCodeRegions to the existing <see cref="DupFinderSettings.ExcludeCodeRegions"/>.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <em>generated code</em> will exclude regions containing <em>Windows Form Designer generated code</em>).</p></summary>
         [Pure]
         public static DupFinderSettings AddExcludeCodeRegions(this DupFinderSettings toolSettings, params string[] excludeCodeRegions)
         {
@@ -256,7 +256,7 @@ namespace Nuke.Common.Tools.DupFinder
             toolSettings.ExcludeCodeRegionsInternal.AddRange(excludeCodeRegions);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new excludeCodeRegions to the existing <see cref="DupFinderSettings.ExcludeCodeRegions"/>.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <em>generated code</em> will exclude regions containing <em>Windows Form Designer generated code</em>).</p></summary>
+        /// <summary><p><i>Adds a excludeCodeRegions to the existing <see cref="DupFinderSettings.ExcludeCodeRegions"/>.</i></p><p>Allows excluding code regions that have a matching substrings in their names. (e.g. <em>generated code</em> will exclude regions containing <em>Windows Form Designer generated code</em>).</p></summary>
         [Pure]
         public static DupFinderSettings AddExcludeCodeRegions(this DupFinderSettings toolSettings, IEnumerable<string> excludeCodeRegions)
         {
@@ -285,7 +285,7 @@ namespace Nuke.Common.Tools.DupFinder
         public static DupFinderSettings RemoveExcludeCodeRegion(this DupFinderSettings toolSettings, string excludeCodeRegion)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludeCodeRegionsInternal.Remove(excludeCodeRegion);
+            toolSettings.ExcludeCodeRegionsInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == excludeCodeRegion).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="DupFinderSettings.DiscardFields"/>.</i></p><p>Whether to consider similar fragments as duplicates if they have different fields. The default value is <c>false</c>.</p></summary>
@@ -464,7 +464,7 @@ namespace Nuke.Common.Tools.DupFinder
             toolSettings.PropertiesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a property to <see cref="DupFinderSettings.Properties"/>.</i></p><p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p></summary>
+        /// <summary><p><i>Adds a property to the existing <see cref="DupFinderSettings.Properties"/>.</i></p><p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p></summary>
         [Pure]
         public static DupFinderSettings AddProperty(this DupFinderSettings toolSettings, string propertyKey, string propertyValue)
         {
@@ -472,7 +472,7 @@ namespace Nuke.Common.Tools.DupFinder
             toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
             return toolSettings;
         }
-        /// <summary><p><i>Removes a property from <see cref="DupFinderSettings.Properties"/>.</i></p><p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p></summary>
+        /// <summary><p><i>Removes a single property from <see cref="DupFinderSettings.Properties"/>.</i></p><p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p></summary>
         [Pure]
         public static DupFinderSettings RemoveProperty(this DupFinderSettings toolSettings, string propertyKey)
         {

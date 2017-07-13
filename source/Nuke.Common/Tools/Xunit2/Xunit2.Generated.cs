@@ -140,7 +140,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.TargetAssemblyWithConfigsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a targetAssemblyWithConfig to <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/>.</i></p><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
+        /// <summary><p><i>Adds a targetAssemblyWithConfig to the existing <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/>.</i></p><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
         [Pure]
         public static Xunit2Settings AddTargetAssemblyWithConfig(this Xunit2Settings toolSettings, string targetAssemblyWithConfigKey, string targetAssemblyWithConfigValue)
         {
@@ -148,7 +148,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.TargetAssemblyWithConfigsInternal.Add(targetAssemblyWithConfigKey, targetAssemblyWithConfigValue);
             return toolSettings;
         }
-        /// <summary><p><i>Removes a single targetAssemblyWithConfig entry from <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/>.</i></p><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
+        /// <summary><p><i>Removes a single targetAssemblyWithConfig from <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/>.</i></p><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
         [Pure]
         public static Xunit2Settings RemoveTargetAssemblyWithConfig(this Xunit2Settings toolSettings, string targetAssemblyWithConfigKey, string targetAssemblyWithConfigValue)
         {
@@ -484,7 +484,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.TraitsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a trait to <see cref="Xunit2Settings.Traits"/>.</i></p><p>Only run tests with matching name/value traits.</p></summary>
+        /// <summary><p><i>Adds a trait to the existing <see cref="Xunit2Settings.Traits"/>.</i></p><p>Only run tests with matching name/value traits.</p></summary>
         [Pure]
         public static Xunit2Settings AddTrait(this Xunit2Settings toolSettings, string traitKey, string traitValue)
         {
@@ -492,7 +492,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.TraitsInternal.Add(traitKey, traitValue);
             return toolSettings;
         }
-        /// <summary><p><i>Removes a single trait entry from <see cref="Xunit2Settings.Traits"/>.</i></p><p>Only run tests with matching name/value traits.</p></summary>
+        /// <summary><p><i>Removes a single trait from <see cref="Xunit2Settings.Traits"/>.</i></p><p>Only run tests with matching name/value traits.</p></summary>
         [Pure]
         public static Xunit2Settings RemoveTrait(this Xunit2Settings toolSettings, string traitKey, string traitValue)
         {
@@ -516,7 +516,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.ExcludedTraitsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a excludedTrait to <see cref="Xunit2Settings.ExcludedTraits"/>.</i></p><p>Do not run tests with matching name/value traits.</p></summary>
+        /// <summary><p><i>Adds a excludedTrait to the existing <see cref="Xunit2Settings.ExcludedTraits"/>.</i></p><p>Do not run tests with matching name/value traits.</p></summary>
         [Pure]
         public static Xunit2Settings AddExcludedTrait(this Xunit2Settings toolSettings, string excludedTraitKey, string excludedTraitValue)
         {
@@ -524,7 +524,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.ExcludedTraitsInternal.Add(excludedTraitKey, excludedTraitValue);
             return toolSettings;
         }
-        /// <summary><p><i>Removes a single excludedTrait entry from <see cref="Xunit2Settings.ExcludedTraits"/>.</i></p><p>Do not run tests with matching name/value traits.</p></summary>
+        /// <summary><p><i>Removes a single excludedTrait from <see cref="Xunit2Settings.ExcludedTraits"/>.</i></p><p>Do not run tests with matching name/value traits.</p></summary>
         [Pure]
         public static Xunit2Settings RemoveExcludedTrait(this Xunit2Settings toolSettings, string excludedTraitKey, string excludedTraitValue)
         {
@@ -548,7 +548,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.MethodsInternal = methods.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new methods to the existing <see cref="Xunit2Settings.Methods"/>.</i></p><p>Run a given test method (should be fully specified; i.e., 'MyNamespace.MyClass.MyTestMethod').</p></summary>
+        /// <summary><p><i>Adds a methods to the existing <see cref="Xunit2Settings.Methods"/>.</i></p><p>Run a given test method (should be fully specified; i.e., 'MyNamespace.MyClass.MyTestMethod').</p></summary>
         [Pure]
         public static Xunit2Settings AddMethods(this Xunit2Settings toolSettings, params string[] methods)
         {
@@ -556,7 +556,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.MethodsInternal.AddRange(methods);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new methods to the existing <see cref="Xunit2Settings.Methods"/>.</i></p><p>Run a given test method (should be fully specified; i.e., 'MyNamespace.MyClass.MyTestMethod').</p></summary>
+        /// <summary><p><i>Adds a methods to the existing <see cref="Xunit2Settings.Methods"/>.</i></p><p>Run a given test method (should be fully specified; i.e., 'MyNamespace.MyClass.MyTestMethod').</p></summary>
         [Pure]
         public static Xunit2Settings AddMethods(this Xunit2Settings toolSettings, IEnumerable<string> methods)
         {
@@ -585,7 +585,7 @@ namespace Nuke.Common.Tools.Xunit2
         public static Xunit2Settings RemoveMethod(this Xunit2Settings toolSettings, string method)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MethodsInternal.Remove(method);
+            toolSettings.MethodsInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == method).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="Xunit2Settings.Classes"/> to a new list.</i></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
@@ -604,7 +604,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.ClassesInternal = classes.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new classes to the existing <see cref="Xunit2Settings.Classes"/>.</i></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
+        /// <summary><p><i>Adds a classes to the existing <see cref="Xunit2Settings.Classes"/>.</i></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
         [Pure]
         public static Xunit2Settings AddClasses(this Xunit2Settings toolSettings, params string[] classes)
         {
@@ -612,7 +612,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.ClassesInternal.AddRange(classes);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new classes to the existing <see cref="Xunit2Settings.Classes"/>.</i></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
+        /// <summary><p><i>Adds a classes to the existing <see cref="Xunit2Settings.Classes"/>.</i></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
         [Pure]
         public static Xunit2Settings AddClasses(this Xunit2Settings toolSettings, IEnumerable<string> classes)
         {
@@ -641,7 +641,7 @@ namespace Nuke.Common.Tools.Xunit2
         public static Xunit2Settings RemoveClasse(this Xunit2Settings toolSettings, string classe)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ClassesInternal.Remove(classe);
+            toolSettings.ClassesInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == classe).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="Xunit2Settings.Namespaces"/> to a new list.</i></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
@@ -660,7 +660,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NamespacesInternal = nss.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new nss to the existing <see cref="Xunit2Settings.Namespaces"/>.</i></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
+        /// <summary><p><i>Adds a nss to the existing <see cref="Xunit2Settings.Namespaces"/>.</i></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
         [Pure]
         public static Xunit2Settings AddNamespaces(this Xunit2Settings toolSettings, params string[] nss)
         {
@@ -668,7 +668,7 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.NamespacesInternal.AddRange(nss);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new nss to the existing <see cref="Xunit2Settings.Namespaces"/>.</i></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
+        /// <summary><p><i>Adds a nss to the existing <see cref="Xunit2Settings.Namespaces"/>.</i></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
         [Pure]
         public static Xunit2Settings AddNamespaces(this Xunit2Settings toolSettings, IEnumerable<string> nss)
         {
@@ -697,7 +697,7 @@ namespace Nuke.Common.Tools.Xunit2
         public static Xunit2Settings RemoveNamespace(this Xunit2Settings toolSettings, string ns)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NamespacesInternal.Remove(ns);
+            toolSettings.NamespacesInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == ns).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="Xunit2Settings.NoAutoReporters"/>.</i></p><p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p></summary>

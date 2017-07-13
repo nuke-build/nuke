@@ -770,7 +770,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.PropertiesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a property to <see cref="NuGetPackSettings.Properties"/>.</i></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
+        /// <summary><p><i>Adds a property to the existing <see cref="NuGetPackSettings.Properties"/>.</i></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
         [Pure]
         public static NuGetPackSettings AddProperty(this NuGetPackSettings toolSettings, string propertyKey, string propertyValue)
         {
@@ -778,7 +778,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
             return toolSettings;
         }
-        /// <summary><p><i>Removes a property from <see cref="NuGetPackSettings.Properties"/>.</i></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
+        /// <summary><p><i>Removes a single property from <see cref="NuGetPackSettings.Properties"/>.</i></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
         [Pure]
         public static NuGetPackSettings RemoveProperty(this NuGetPackSettings toolSettings, string propertyKey)
         {
@@ -983,7 +983,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.FallbackSourceInternal = fallbackSource.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new fallbackSource to the existing <see cref="NuGetRestoreSettings.FallbackSource"/>.</i></p><p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
+        /// <summary><p><i>Adds a fallbackSource to the existing <see cref="NuGetRestoreSettings.FallbackSource"/>.</i></p><p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
         [Pure]
         public static NuGetRestoreSettings AddFallbackSource(this NuGetRestoreSettings toolSettings, params string[] fallbackSource)
         {
@@ -991,7 +991,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.FallbackSourceInternal.AddRange(fallbackSource);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new fallbackSource to the existing <see cref="NuGetRestoreSettings.FallbackSource"/>.</i></p><p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
+        /// <summary><p><i>Adds a fallbackSource to the existing <see cref="NuGetRestoreSettings.FallbackSource"/>.</i></p><p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
         [Pure]
         public static NuGetRestoreSettings AddFallbackSource(this NuGetRestoreSettings toolSettings, IEnumerable<string> fallbackSource)
         {
@@ -1020,7 +1020,7 @@ namespace Nuke.Common.Tools.NuGet
         public static NuGetRestoreSettings RemoveFallbackSource(this NuGetRestoreSettings toolSettings, string fallbackSource)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.FallbackSourceInternal.Remove(fallbackSource);
+            toolSettings.FallbackSourceInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == fallbackSource).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.ForceEnglishOutput"/>.</i></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
@@ -1255,7 +1255,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.SourceInternal = source.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new source to the existing <see cref="NuGetRestoreSettings.Source"/>.</i></p><p>Specifies list of package sources to use for the restore.</p></summary>
+        /// <summary><p><i>Adds a source to the existing <see cref="NuGetRestoreSettings.Source"/>.</i></p><p>Specifies list of package sources to use for the restore.</p></summary>
         [Pure]
         public static NuGetRestoreSettings AddSource(this NuGetRestoreSettings toolSettings, params string[] source)
         {
@@ -1263,7 +1263,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.SourceInternal.AddRange(source);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new source to the existing <see cref="NuGetRestoreSettings.Source"/>.</i></p><p>Specifies list of package sources to use for the restore.</p></summary>
+        /// <summary><p><i>Adds a source to the existing <see cref="NuGetRestoreSettings.Source"/>.</i></p><p>Specifies list of package sources to use for the restore.</p></summary>
         [Pure]
         public static NuGetRestoreSettings AddSource(this NuGetRestoreSettings toolSettings, IEnumerable<string> source)
         {
@@ -1292,7 +1292,7 @@ namespace Nuke.Common.Tools.NuGet
         public static NuGetRestoreSettings RemoveSource(this NuGetRestoreSettings toolSettings, string source)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.SourceInternal.Remove(source);
+            toolSettings.SourceInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == source).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.Verbosity"/>.</i></p><p><em>(2.5+)</em> Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>

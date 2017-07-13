@@ -499,7 +499,7 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.RuntimesInternal = runtimes.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new runtimes to the existing <see cref="DotNetRestoreSettings.Runtimes"/>.</i></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
+        /// <summary><p><i>Adds a runtimes to the existing <see cref="DotNetRestoreSettings.Runtimes"/>.</i></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
         [Pure]
         public static DotNetRestoreSettings AddRuntimes(this DotNetRestoreSettings toolSettings, params string[] runtimes)
         {
@@ -507,7 +507,7 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.RuntimesInternal.AddRange(runtimes);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new runtimes to the existing <see cref="DotNetRestoreSettings.Runtimes"/>.</i></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
+        /// <summary><p><i>Adds a runtimes to the existing <see cref="DotNetRestoreSettings.Runtimes"/>.</i></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
         [Pure]
         public static DotNetRestoreSettings AddRuntimes(this DotNetRestoreSettings toolSettings, IEnumerable<string> runtimes)
         {
@@ -536,7 +536,7 @@ namespace Nuke.Common.Tools.DotNet
         public static DotNetRestoreSettings RemoveRuntime(this DotNetRestoreSettings toolSettings, string runtime)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RuntimesInternal.Remove(runtime);
+            toolSettings.RuntimesInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == runtime).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="DotNetRestoreSettings.PackageDirectory"/>.</i></p><p>Specifies the directory for restored packages.</p></summary>

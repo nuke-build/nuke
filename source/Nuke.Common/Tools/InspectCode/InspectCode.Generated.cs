@@ -192,7 +192,7 @@ namespace Nuke.Common.Tools.InspectCode
             toolSettings.DisableSettingsLayersInternal = disableSettingsLayers.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new disableSettingsLayers to the existing <see cref="InspectCodeSettings.DisableSettingsLayers"/>.</i></p><p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p></summary>
+        /// <summary><p><i>Adds a disableSettingsLayers to the existing <see cref="InspectCodeSettings.DisableSettingsLayers"/>.</i></p><p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p></summary>
         [Pure]
         public static InspectCodeSettings AddDisableSettingsLayers(this InspectCodeSettings toolSettings, params InspectCodeSettingsLayers[] disableSettingsLayers)
         {
@@ -200,7 +200,7 @@ namespace Nuke.Common.Tools.InspectCode
             toolSettings.DisableSettingsLayersInternal.AddRange(disableSettingsLayers);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new disableSettingsLayers to the existing <see cref="InspectCodeSettings.DisableSettingsLayers"/>.</i></p><p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p></summary>
+        /// <summary><p><i>Adds a disableSettingsLayers to the existing <see cref="InspectCodeSettings.DisableSettingsLayers"/>.</i></p><p>Disables specified <a href="https://www.jetbrains.com/help/resharper/Sharing_Configuration_Options.html#layers">settings layers</a>. Accepted values: <c>GlobalAll</c>, <c>GlobalPerProduct</c>, <c>SolutionShared</c>, <c>SolutionPersonal</c>.</p></summary>
         [Pure]
         public static InspectCodeSettings AddDisableSettingsLayers(this InspectCodeSettings toolSettings, IEnumerable<InspectCodeSettingsLayers> disableSettingsLayers)
         {
@@ -229,7 +229,7 @@ namespace Nuke.Common.Tools.InspectCode
         public static InspectCodeSettings RemoveDisableSettingsLayer(this InspectCodeSettings toolSettings, InspectCodeSettingsLayers disableSettingsLayer)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DisableSettingsLayersInternal.Remove(disableSettingsLayer);
+            toolSettings.DisableSettingsLayersInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == disableSettingsLayer).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="InspectCodeSettings.NoBuiltinSettings"/>.</i></p><p>Suppresses global, solution and project settings profile usage. Equivalent to using <c>--disable-settings-layers: GlobalAll; GlobalPerProduct; SolutionShared; SolutionPersonal; ProjectShared; ProjectPersonal</c></p></summary>
@@ -288,7 +288,7 @@ namespace Nuke.Common.Tools.InspectCode
             toolSettings.ExtensionsInternal = extensions.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new extensions to the existing <see cref="InspectCodeSettings.Extensions"/>.</i></p><p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p></summary>
+        /// <summary><p><i>Adds a extensions to the existing <see cref="InspectCodeSettings.Extensions"/>.</i></p><p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p></summary>
         [Pure]
         public static InspectCodeSettings AddExtensions(this InspectCodeSettings toolSettings, params string[] extensions)
         {
@@ -296,7 +296,7 @@ namespace Nuke.Common.Tools.InspectCode
             toolSettings.ExtensionsInternal.AddRange(extensions);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new extensions to the existing <see cref="InspectCodeSettings.Extensions"/>.</i></p><p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p></summary>
+        /// <summary><p><i>Adds a extensions to the existing <see cref="InspectCodeSettings.Extensions"/>.</i></p><p>Allows using ReSharper extensions that affect code analysis. To use an extension, specify its ID, which you can find by opening the extension package page in the <a href="http://resharper-plugins.jetbrains.com/">ReSharper Gallery</a>, and then the Package Statistics page. Multiple values are separated with the semicolon.</p></summary>
         [Pure]
         public static InspectCodeSettings AddExtensions(this InspectCodeSettings toolSettings, IEnumerable<string> extensions)
         {
@@ -325,7 +325,7 @@ namespace Nuke.Common.Tools.InspectCode
         public static InspectCodeSettings RemoveExtension(this InspectCodeSettings toolSettings, string extension)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExtensionsInternal.Remove(extension);
+            toolSettings.ExtensionsInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == extension).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="InspectCodeSettings.Properties"/> to a new dictionary.</i></p><p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p></summary>
@@ -344,7 +344,7 @@ namespace Nuke.Common.Tools.InspectCode
             toolSettings.PropertiesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a property to <see cref="InspectCodeSettings.Properties"/>.</i></p><p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p></summary>
+        /// <summary><p><i>Adds a property to the existing <see cref="InspectCodeSettings.Properties"/>.</i></p><p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p></summary>
         [Pure]
         public static InspectCodeSettings AddProperty(this InspectCodeSettings toolSettings, string propertyKey, string propertyValue)
         {
@@ -352,7 +352,7 @@ namespace Nuke.Common.Tools.InspectCode
             toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
             return toolSettings;
         }
-        /// <summary><p><i>Removes a property from <see cref="InspectCodeSettings.Properties"/>.</i></p><p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p></summary>
+        /// <summary><p><i>Removes a single property from <see cref="InspectCodeSettings.Properties"/>.</i></p><p>Lets you override MSBuild properties. The specified properties are applied to all analyzed projects. Currently, there is no direct way to set a property to a specific project only. The workaround is to create a custom property in this project and assign it to the desired property, then use the custom property in dupFinder parameters.</p></summary>
         [Pure]
         public static InspectCodeSettings RemoveProperty(this InspectCodeSettings toolSettings, string propertyKey)
         {

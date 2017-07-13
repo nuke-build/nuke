@@ -145,7 +145,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.AuthorsInternal = authors.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new authors to the existing <see cref="NuGetPackage.Authors"/>.</i></p><p>A comma-separated list of packages authors, matching the profile names on nuget.org. These are displayed in the NuGet Gallery on nuget.org and are used to cross-reference packages by the same authors.</p></summary>
+        /// <summary><p><i>Adds a authors to the existing <see cref="NuGetPackage.Authors"/>.</i></p><p>A comma-separated list of packages authors, matching the profile names on nuget.org. These are displayed in the NuGet Gallery on nuget.org and are used to cross-reference packages by the same authors.</p></summary>
         [Pure]
         public static NuGetPackage AddAuthors(this NuGetPackage toolSettings, params string[] authors)
         {
@@ -153,7 +153,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.AuthorsInternal.AddRange(authors);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new authors to the existing <see cref="NuGetPackage.Authors"/>.</i></p><p>A comma-separated list of packages authors, matching the profile names on nuget.org. These are displayed in the NuGet Gallery on nuget.org and are used to cross-reference packages by the same authors.</p></summary>
+        /// <summary><p><i>Adds a authors to the existing <see cref="NuGetPackage.Authors"/>.</i></p><p>A comma-separated list of packages authors, matching the profile names on nuget.org. These are displayed in the NuGet Gallery on nuget.org and are used to cross-reference packages by the same authors.</p></summary>
         [Pure]
         public static NuGetPackage AddAuthors(this NuGetPackage toolSettings, IEnumerable<string> authors)
         {
@@ -182,7 +182,7 @@ namespace Nuke.Common.Tools.NuGet
         public static NuGetPackage RemoveAuthor(this NuGetPackage toolSettings, string author)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AuthorsInternal.Remove(author);
+            toolSettings.AuthorsInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == author).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="NuGetPackage.Title"/>.</i></p><p>A human-friendly title of the package, typically used in UI displays as on nuget.org and the Package Manager in Visual Studio. If not specified, the package ID is used instead.</p></summary>
@@ -209,7 +209,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.OwnersInternal = owners.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new owners to the existing <see cref="NuGetPackage.Owners"/>.</i></p><p>A comma-separated list of the package creators using profile names on nuget.org. This is often the same list as in authors, and is ignored when uploading the package to nuget.org. See <a href="https://docs.microsoft.com/en-us/nuget/create-packages/publish-a-package#managing-package-owners-on-nugetorg">Managing package owners on nuget.org</a>.</p></summary>
+        /// <summary><p><i>Adds a owners to the existing <see cref="NuGetPackage.Owners"/>.</i></p><p>A comma-separated list of the package creators using profile names on nuget.org. This is often the same list as in authors, and is ignored when uploading the package to nuget.org. See <a href="https://docs.microsoft.com/en-us/nuget/create-packages/publish-a-package#managing-package-owners-on-nugetorg">Managing package owners on nuget.org</a>.</p></summary>
         [Pure]
         public static NuGetPackage AddOwners(this NuGetPackage toolSettings, params string[] owners)
         {
@@ -217,7 +217,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.OwnersInternal.AddRange(owners);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new owners to the existing <see cref="NuGetPackage.Owners"/>.</i></p><p>A comma-separated list of the package creators using profile names on nuget.org. This is often the same list as in authors, and is ignored when uploading the package to nuget.org. See <a href="https://docs.microsoft.com/en-us/nuget/create-packages/publish-a-package#managing-package-owners-on-nugetorg">Managing package owners on nuget.org</a>.</p></summary>
+        /// <summary><p><i>Adds a owners to the existing <see cref="NuGetPackage.Owners"/>.</i></p><p>A comma-separated list of the package creators using profile names on nuget.org. This is often the same list as in authors, and is ignored when uploading the package to nuget.org. See <a href="https://docs.microsoft.com/en-us/nuget/create-packages/publish-a-package#managing-package-owners-on-nugetorg">Managing package owners on nuget.org</a>.</p></summary>
         [Pure]
         public static NuGetPackage AddOwners(this NuGetPackage toolSettings, IEnumerable<string> owners)
         {
@@ -246,7 +246,7 @@ namespace Nuke.Common.Tools.NuGet
         public static NuGetPackage RemoveOwner(this NuGetPackage toolSettings, string owner)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.OwnersInternal.Remove(owner);
+            toolSettings.OwnersInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == owner).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="NuGetPackage.ProjectUrl"/>.</i></p><p>A URL for the package's home page, often shown in UI displays as well as nuget.org.</p></summary>
@@ -385,7 +385,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.TagsInternal = tags.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new tags to the existing <see cref="NuGetPackage.Tags"/>.</i></p><p>A space-delimited list of tags and keywords that describe the package and aid discoverability of packages through search and filtering mechanisms.</p></summary>
+        /// <summary><p><i>Adds a tags to the existing <see cref="NuGetPackage.Tags"/>.</i></p><p>A space-delimited list of tags and keywords that describe the package and aid discoverability of packages through search and filtering mechanisms.</p></summary>
         [Pure]
         public static NuGetPackage AddTags(this NuGetPackage toolSettings, params string[] tags)
         {
@@ -393,7 +393,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.TagsInternal.AddRange(tags);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new tags to the existing <see cref="NuGetPackage.Tags"/>.</i></p><p>A space-delimited list of tags and keywords that describe the package and aid discoverability of packages through search and filtering mechanisms.</p></summary>
+        /// <summary><p><i>Adds a tags to the existing <see cref="NuGetPackage.Tags"/>.</i></p><p>A space-delimited list of tags and keywords that describe the package and aid discoverability of packages through search and filtering mechanisms.</p></summary>
         [Pure]
         public static NuGetPackage AddTags(this NuGetPackage toolSettings, IEnumerable<string> tags)
         {
@@ -422,7 +422,7 @@ namespace Nuke.Common.Tools.NuGet
         public static NuGetPackage RemoveTag(this NuGetPackage toolSettings, string tag)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TagsInternal.Remove(tag);
+            toolSettings.TagsInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == tag).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="NuGetPackage.ContentFiles"/> to a new list.</i></p><p><em>(3.3+)</em> A collection of &lt;files&gt; elements that identify content files that should be include in the consuming project. These files are specified with a set of attributes that describe how they should be used within the project system. See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#specifying-files-to-include-in-the-package">Specifying files to include in the package</a>.</p></summary>
@@ -441,7 +441,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.ContentFilesInternal = contentFiles.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new contentFiles to the existing <see cref="NuGetPackage.ContentFiles"/>.</i></p><p><em>(3.3+)</em> A collection of &lt;files&gt; elements that identify content files that should be include in the consuming project. These files are specified with a set of attributes that describe how they should be used within the project system. See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#specifying-files-to-include-in-the-package">Specifying files to include in the package</a>.</p></summary>
+        /// <summary><p><i>Adds a contentFiles to the existing <see cref="NuGetPackage.ContentFiles"/>.</i></p><p><em>(3.3+)</em> A collection of &lt;files&gt; elements that identify content files that should be include in the consuming project. These files are specified with a set of attributes that describe how they should be used within the project system. See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#specifying-files-to-include-in-the-package">Specifying files to include in the package</a>.</p></summary>
         [Pure]
         public static NuGetPackage AddContentFiles(this NuGetPackage toolSettings, params PackageContentFile[] contentFiles)
         {
@@ -449,7 +449,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.ContentFilesInternal.AddRange(contentFiles);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new contentFiles to the existing <see cref="NuGetPackage.ContentFiles"/>.</i></p><p><em>(3.3+)</em> A collection of &lt;files&gt; elements that identify content files that should be include in the consuming project. These files are specified with a set of attributes that describe how they should be used within the project system. See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#specifying-files-to-include-in-the-package">Specifying files to include in the package</a>.</p></summary>
+        /// <summary><p><i>Adds a contentFiles to the existing <see cref="NuGetPackage.ContentFiles"/>.</i></p><p><em>(3.3+)</em> A collection of &lt;files&gt; elements that identify content files that should be include in the consuming project. These files are specified with a set of attributes that describe how they should be used within the project system. See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#specifying-files-to-include-in-the-package">Specifying files to include in the package</a>.</p></summary>
         [Pure]
         public static NuGetPackage AddContentFiles(this NuGetPackage toolSettings, IEnumerable<PackageContentFile> contentFiles)
         {
@@ -478,7 +478,7 @@ namespace Nuke.Common.Tools.NuGet
         public static NuGetPackage RemoveContentFile(this NuGetPackage toolSettings, PackageContentFile contentFile)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ContentFilesInternal.Remove(contentFile);
+            toolSettings.ContentFilesInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == contentFile).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="NuGetPackage.DefaultDependencies"/> to a new list.</i></p></summary>
@@ -497,7 +497,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.DefaultDependenciesInternal = defaultDependencies.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new defaultDependencies to the existing <see cref="NuGetPackage.DefaultDependencies"/>.</i></p></summary>
+        /// <summary><p><i>Adds a defaultDependencies to the existing <see cref="NuGetPackage.DefaultDependencies"/>.</i></p></summary>
         [Pure]
         public static NuGetPackage AddDefaultDependencies(this NuGetPackage toolSettings, params PackageDependency[] defaultDependencies)
         {
@@ -505,7 +505,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.DefaultDependenciesInternal.AddRange(defaultDependencies);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new defaultDependencies to the existing <see cref="NuGetPackage.DefaultDependencies"/>.</i></p></summary>
+        /// <summary><p><i>Adds a defaultDependencies to the existing <see cref="NuGetPackage.DefaultDependencies"/>.</i></p></summary>
         [Pure]
         public static NuGetPackage AddDefaultDependencies(this NuGetPackage toolSettings, IEnumerable<PackageDependency> defaultDependencies)
         {
@@ -534,7 +534,7 @@ namespace Nuke.Common.Tools.NuGet
         public static NuGetPackage RemoveDefaultDependency(this NuGetPackage toolSettings, PackageDependency defaultDependency)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DefaultDependenciesInternal.Remove(defaultDependency);
+            toolSettings.DefaultDependenciesInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == defaultDependency).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="NuGetPackage.DependencySets"/> to a new list.</i></p><p>A collection of zero or more &lt;dependency&gt; elements specifying the dependencies for the package. Each dependency has attributes of <em>id</em>, <em>version</em>, <em>include</em> (3.x+), and <em>exclude</em> (3.x+). See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#dependencies">Dependencies</a>.</p></summary>
@@ -553,7 +553,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.DependencySetsInternal = dependencySets.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new dependencySets to the existing <see cref="NuGetPackage.DependencySets"/>.</i></p><p>A collection of zero or more &lt;dependency&gt; elements specifying the dependencies for the package. Each dependency has attributes of <em>id</em>, <em>version</em>, <em>include</em> (3.x+), and <em>exclude</em> (3.x+). See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#dependencies">Dependencies</a>.</p></summary>
+        /// <summary><p><i>Adds a dependencySets to the existing <see cref="NuGetPackage.DependencySets"/>.</i></p><p>A collection of zero or more &lt;dependency&gt; elements specifying the dependencies for the package. Each dependency has attributes of <em>id</em>, <em>version</em>, <em>include</em> (3.x+), and <em>exclude</em> (3.x+). See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#dependencies">Dependencies</a>.</p></summary>
         [Pure]
         public static NuGetPackage AddDependencySets(this NuGetPackage toolSettings, params PackageDependencySet[] dependencySets)
         {
@@ -561,7 +561,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.DependencySetsInternal.AddRange(dependencySets);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new dependencySets to the existing <see cref="NuGetPackage.DependencySets"/>.</i></p><p>A collection of zero or more &lt;dependency&gt; elements specifying the dependencies for the package. Each dependency has attributes of <em>id</em>, <em>version</em>, <em>include</em> (3.x+), and <em>exclude</em> (3.x+). See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#dependencies">Dependencies</a>.</p></summary>
+        /// <summary><p><i>Adds a dependencySets to the existing <see cref="NuGetPackage.DependencySets"/>.</i></p><p>A collection of zero or more &lt;dependency&gt; elements specifying the dependencies for the package. Each dependency has attributes of <em>id</em>, <em>version</em>, <em>include</em> (3.x+), and <em>exclude</em> (3.x+). See <a href="https://docs.microsoft.com/en-us/nuget/schema/nuspec#dependencies">Dependencies</a>.</p></summary>
         [Pure]
         public static NuGetPackage AddDependencySets(this NuGetPackage toolSettings, IEnumerable<PackageDependencySet> dependencySets)
         {
@@ -590,7 +590,7 @@ namespace Nuke.Common.Tools.NuGet
         public static NuGetPackage RemoveDependencySet(this NuGetPackage toolSettings, PackageDependencySet dependencySet)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DependencySetsInternal.Remove(dependencySet);
+            toolSettings.DependencySetsInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == dependencySet).ToList();
             return toolSettings;
         }
     }

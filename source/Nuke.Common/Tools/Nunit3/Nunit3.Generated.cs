@@ -196,7 +196,7 @@ namespace Nuke.Common.Tools.Nunit3
             toolSettings.InputFilesInternal = inputFiles.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new inputFiles to the existing <see cref="Nunit3Settings.InputFiles"/>.</i></p><p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (.nunit) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p></summary>
+        /// <summary><p><i>Adds a inputFiles to the existing <see cref="Nunit3Settings.InputFiles"/>.</i></p><p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (.nunit) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p></summary>
         [Pure]
         public static Nunit3Settings AddInputFiles(this Nunit3Settings toolSettings, params string[] inputFiles)
         {
@@ -204,7 +204,7 @@ namespace Nuke.Common.Tools.Nunit3
             toolSettings.InputFilesInternal.AddRange(inputFiles);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new inputFiles to the existing <see cref="Nunit3Settings.InputFiles"/>.</i></p><p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (.nunit) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p></summary>
+        /// <summary><p><i>Adds a inputFiles to the existing <see cref="Nunit3Settings.InputFiles"/>.</i></p><p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (.nunit) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p></summary>
         [Pure]
         public static Nunit3Settings AddInputFiles(this Nunit3Settings toolSettings, IEnumerable<string> inputFiles)
         {
@@ -233,7 +233,7 @@ namespace Nuke.Common.Tools.Nunit3
         public static Nunit3Settings RemoveInputFile(this Nunit3Settings toolSettings, string inputFile)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.InputFilesInternal.Remove(inputFile);
+            toolSettings.InputFilesInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == inputFile).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="Nunit3Settings.Tests"/> to a new list.</i></p><p>Comma-separated list of names of tests to run or explore. This option may be repeated. Note that this option is retained for backward compatibility. The --where option can now be used instead.</p></summary>
@@ -252,7 +252,7 @@ namespace Nuke.Common.Tools.Nunit3
             toolSettings.TestsInternal = tests.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new tests to the existing <see cref="Nunit3Settings.Tests"/>.</i></p><p>Comma-separated list of names of tests to run or explore. This option may be repeated. Note that this option is retained for backward compatibility. The --where option can now be used instead.</p></summary>
+        /// <summary><p><i>Adds a tests to the existing <see cref="Nunit3Settings.Tests"/>.</i></p><p>Comma-separated list of names of tests to run or explore. This option may be repeated. Note that this option is retained for backward compatibility. The --where option can now be used instead.</p></summary>
         [Pure]
         public static Nunit3Settings AddTests(this Nunit3Settings toolSettings, params string[] tests)
         {
@@ -260,7 +260,7 @@ namespace Nuke.Common.Tools.Nunit3
             toolSettings.TestsInternal.AddRange(tests);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new tests to the existing <see cref="Nunit3Settings.Tests"/>.</i></p><p>Comma-separated list of names of tests to run or explore. This option may be repeated. Note that this option is retained for backward compatibility. The --where option can now be used instead.</p></summary>
+        /// <summary><p><i>Adds a tests to the existing <see cref="Nunit3Settings.Tests"/>.</i></p><p>Comma-separated list of names of tests to run or explore. This option may be repeated. Note that this option is retained for backward compatibility. The --where option can now be used instead.</p></summary>
         [Pure]
         public static Nunit3Settings AddTests(this Nunit3Settings toolSettings, IEnumerable<string> tests)
         {
@@ -289,7 +289,7 @@ namespace Nuke.Common.Tools.Nunit3
         public static Nunit3Settings RemoveTest(this Nunit3Settings toolSettings, string test)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TestsInternal.Remove(test);
+            toolSettings.TestsInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == test).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="Nunit3Settings.TestListFile"/>.</i></p><p>The name (or path) of a file containing a list of tests to run or explore, one per line.</p></summary>
@@ -324,7 +324,7 @@ namespace Nuke.Common.Tools.Nunit3
             toolSettings.ParametersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a parameter to <see cref="Nunit3Settings.Parameters"/>.</i></p><p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the --params option multiple times.</p></summary>
+        /// <summary><p><i>Adds a parameter to the existing <see cref="Nunit3Settings.Parameters"/>.</i></p><p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the --params option multiple times.</p></summary>
         [Pure]
         public static Nunit3Settings AddParameter(this Nunit3Settings toolSettings, string parameterKey, string parameterValue)
         {
@@ -332,7 +332,7 @@ namespace Nuke.Common.Tools.Nunit3
             toolSettings.ParametersInternal.Add(parameterKey, parameterValue);
             return toolSettings;
         }
-        /// <summary><p><i>Removes a parameter from <see cref="Nunit3Settings.Parameters"/>.</i></p><p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the --params option multiple times.</p></summary>
+        /// <summary><p><i>Removes a single parameter from <see cref="Nunit3Settings.Parameters"/>.</i></p><p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the --params option multiple times.</p></summary>
         [Pure]
         public static Nunit3Settings RemoveParameter(this Nunit3Settings toolSettings, string parameterKey)
         {
@@ -740,7 +740,7 @@ namespace Nuke.Common.Tools.Nunit3
             toolSettings.ResultsInternal = results.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new results to the existing <see cref="Nunit3Settings.Results"/>.</i></p><p>An output spec for saving the test results. This option may be repeated.</p></summary>
+        /// <summary><p><i>Adds a results to the existing <see cref="Nunit3Settings.Results"/>.</i></p><p>An output spec for saving the test results. This option may be repeated.</p></summary>
         [Pure]
         public static Nunit3Settings AddResults(this Nunit3Settings toolSettings, params string[] results)
         {
@@ -748,7 +748,7 @@ namespace Nuke.Common.Tools.Nunit3
             toolSettings.ResultsInternal.AddRange(results);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new results to the existing <see cref="Nunit3Settings.Results"/>.</i></p><p>An output spec for saving the test results. This option may be repeated.</p></summary>
+        /// <summary><p><i>Adds a results to the existing <see cref="Nunit3Settings.Results"/>.</i></p><p>An output spec for saving the test results. This option may be repeated.</p></summary>
         [Pure]
         public static Nunit3Settings AddResults(this Nunit3Settings toolSettings, IEnumerable<string> results)
         {
@@ -777,7 +777,7 @@ namespace Nuke.Common.Tools.Nunit3
         public static Nunit3Settings RemoveResult(this Nunit3Settings toolSettings, string result)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ResultsInternal.Remove(result);
+            toolSettings.ResultsInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == result).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="Nunit3Settings.Explores"/> to a new list.</i></p><p>Display or save test info rather than running tests. Optionally provide an output spec for saving the test info. This option may be repeated.</p></summary>
@@ -796,7 +796,7 @@ namespace Nuke.Common.Tools.Nunit3
             toolSettings.ExploresInternal = explores.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new explores to the existing <see cref="Nunit3Settings.Explores"/>.</i></p><p>Display or save test info rather than running tests. Optionally provide an output spec for saving the test info. This option may be repeated.</p></summary>
+        /// <summary><p><i>Adds a explores to the existing <see cref="Nunit3Settings.Explores"/>.</i></p><p>Display or save test info rather than running tests. Optionally provide an output spec for saving the test info. This option may be repeated.</p></summary>
         [Pure]
         public static Nunit3Settings AddExplores(this Nunit3Settings toolSettings, params string[] explores)
         {
@@ -804,7 +804,7 @@ namespace Nuke.Common.Tools.Nunit3
             toolSettings.ExploresInternal.AddRange(explores);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new explores to the existing <see cref="Nunit3Settings.Explores"/>.</i></p><p>Display or save test info rather than running tests. Optionally provide an output spec for saving the test info. This option may be repeated.</p></summary>
+        /// <summary><p><i>Adds a explores to the existing <see cref="Nunit3Settings.Explores"/>.</i></p><p>Display or save test info rather than running tests. Optionally provide an output spec for saving the test info. This option may be repeated.</p></summary>
         [Pure]
         public static Nunit3Settings AddExplores(this Nunit3Settings toolSettings, IEnumerable<string> explores)
         {
@@ -833,7 +833,7 @@ namespace Nuke.Common.Tools.Nunit3
         public static Nunit3Settings RemoveExplore(this Nunit3Settings toolSettings, string explore)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExploresInternal.Remove(explore);
+            toolSettings.ExploresInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == explore).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="Nunit3Settings.NoResults"/>.</i></p><p>Don't save any test results.</p></summary>

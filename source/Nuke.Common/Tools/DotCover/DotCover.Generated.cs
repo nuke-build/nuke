@@ -256,7 +256,7 @@ namespace Nuke.Common.Tools.DotCover
             toolSettings.ScopeInternal = scope.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new scope to the existing <see cref="DotCoverAnalyseSettings.Scope"/>.</i></p><p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p></summary>
+        /// <summary><p><i>Adds a scope to the existing <see cref="DotCoverAnalyseSettings.Scope"/>.</i></p><p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p></summary>
         [Pure]
         public static DotCoverAnalyseSettings AddScope(this DotCoverAnalyseSettings toolSettings, params string[] scope)
         {
@@ -264,7 +264,7 @@ namespace Nuke.Common.Tools.DotCover
             toolSettings.ScopeInternal.AddRange(scope);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new scope to the existing <see cref="DotCoverAnalyseSettings.Scope"/>.</i></p><p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p></summary>
+        /// <summary><p><i>Adds a scope to the existing <see cref="DotCoverAnalyseSettings.Scope"/>.</i></p><p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p></summary>
         [Pure]
         public static DotCoverAnalyseSettings AddScope(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> scope)
         {
@@ -293,7 +293,7 @@ namespace Nuke.Common.Tools.DotCover
         public static DotCoverAnalyseSettings RemoveScope(this DotCoverAnalyseSettings toolSettings, string scope)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ScopeInternal.Remove(scope);
+            toolSettings.ScopeInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == scope).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="DotCoverAnalyseSettings.Filters"/> to a new list.</i></p><p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p></summary>
@@ -312,7 +312,7 @@ namespace Nuke.Common.Tools.DotCover
             toolSettings.FiltersInternal = filters.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new filters to the existing <see cref="DotCoverAnalyseSettings.Filters"/>.</i></p><p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p></summary>
+        /// <summary><p><i>Adds a filters to the existing <see cref="DotCoverAnalyseSettings.Filters"/>.</i></p><p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p></summary>
         [Pure]
         public static DotCoverAnalyseSettings AddFilters(this DotCoverAnalyseSettings toolSettings, params string[] filters)
         {
@@ -320,7 +320,7 @@ namespace Nuke.Common.Tools.DotCover
             toolSettings.FiltersInternal.AddRange(filters);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new filters to the existing <see cref="DotCoverAnalyseSettings.Filters"/>.</i></p><p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p></summary>
+        /// <summary><p><i>Adds a filters to the existing <see cref="DotCoverAnalyseSettings.Filters"/>.</i></p><p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p></summary>
         [Pure]
         public static DotCoverAnalyseSettings AddFilters(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> filters)
         {
@@ -349,7 +349,7 @@ namespace Nuke.Common.Tools.DotCover
         public static DotCoverAnalyseSettings RemoveFilter(this DotCoverAnalyseSettings toolSettings, string filter)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.FiltersInternal.Remove(filter);
+            toolSettings.FiltersInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == filter).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="DotCoverAnalyseSettings.AttributeFilters"/> to a new list.</i></p><p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p></summary>
@@ -368,7 +368,7 @@ namespace Nuke.Common.Tools.DotCover
             toolSettings.AttributeFiltersInternal = attributeFilters.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new attributeFilters to the existing <see cref="DotCoverAnalyseSettings.AttributeFilters"/>.</i></p><p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p></summary>
+        /// <summary><p><i>Adds a attributeFilters to the existing <see cref="DotCoverAnalyseSettings.AttributeFilters"/>.</i></p><p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p></summary>
         [Pure]
         public static DotCoverAnalyseSettings AddAttributeFilters(this DotCoverAnalyseSettings toolSettings, params string[] attributeFilters)
         {
@@ -376,7 +376,7 @@ namespace Nuke.Common.Tools.DotCover
             toolSettings.AttributeFiltersInternal.AddRange(attributeFilters);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new attributeFilters to the existing <see cref="DotCoverAnalyseSettings.AttributeFilters"/>.</i></p><p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p></summary>
+        /// <summary><p><i>Adds a attributeFilters to the existing <see cref="DotCoverAnalyseSettings.AttributeFilters"/>.</i></p><p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p></summary>
         [Pure]
         public static DotCoverAnalyseSettings AddAttributeFilters(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> attributeFilters)
         {
@@ -405,7 +405,7 @@ namespace Nuke.Common.Tools.DotCover
         public static DotCoverAnalyseSettings RemoveAttributeFilter(this DotCoverAnalyseSettings toolSettings, string attributeFilter)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AttributeFiltersInternal.Remove(attributeFilter);
+            toolSettings.AttributeFiltersInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == attributeFilter).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/>.</i></p><p>Disables default (automatically added) filters.</p></summary>
@@ -456,7 +456,7 @@ namespace Nuke.Common.Tools.DotCover
             toolSettings.SymbolSearchPathsInternal = symbolSearchPaths.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new symbolSearchPaths to the existing <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p></summary>
+        /// <summary><p><i>Adds a symbolSearchPaths to the existing <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p></summary>
         [Pure]
         public static DotCoverAnalyseSettings AddSymbolSearchPaths(this DotCoverAnalyseSettings toolSettings, params string[] symbolSearchPaths)
         {
@@ -464,7 +464,7 @@ namespace Nuke.Common.Tools.DotCover
             toolSettings.SymbolSearchPathsInternal.AddRange(symbolSearchPaths);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new symbolSearchPaths to the existing <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p></summary>
+        /// <summary><p><i>Adds a symbolSearchPaths to the existing <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>.</i></p><p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p></summary>
         [Pure]
         public static DotCoverAnalyseSettings AddSymbolSearchPaths(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> symbolSearchPaths)
         {
@@ -493,7 +493,7 @@ namespace Nuke.Common.Tools.DotCover
         public static DotCoverAnalyseSettings RemoveSymbolSearchPath(this DotCoverAnalyseSettings toolSettings, string symbolSearchPath)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.SymbolSearchPathsInternal.Remove(symbolSearchPath);
+            toolSettings.SymbolSearchPathsInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == symbolSearchPath).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/>.</i></p><p>Allows dotCover to search for PDB files on a symbol server.</p></summary>
@@ -576,7 +576,7 @@ namespace Nuke.Common.Tools.DotCover
             toolSettings.ProcessFiltersInternal = processFilters.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new processFilters to the existing <see cref="DotCoverAnalyseSettings.ProcessFilters"/>.</i></p><p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p></summary>
+        /// <summary><p><i>Adds a processFilters to the existing <see cref="DotCoverAnalyseSettings.ProcessFilters"/>.</i></p><p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p></summary>
         [Pure]
         public static DotCoverAnalyseSettings AddProcessFilters(this DotCoverAnalyseSettings toolSettings, params string[] processFilters)
         {
@@ -584,7 +584,7 @@ namespace Nuke.Common.Tools.DotCover
             toolSettings.ProcessFiltersInternal.AddRange(processFilters);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new processFilters to the existing <see cref="DotCoverAnalyseSettings.ProcessFilters"/>.</i></p><p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p></summary>
+        /// <summary><p><i>Adds a processFilters to the existing <see cref="DotCoverAnalyseSettings.ProcessFilters"/>.</i></p><p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p></summary>
         [Pure]
         public static DotCoverAnalyseSettings AddProcessFilters(this DotCoverAnalyseSettings toolSettings, IEnumerable<string> processFilters)
         {
@@ -613,7 +613,7 @@ namespace Nuke.Common.Tools.DotCover
         public static DotCoverAnalyseSettings RemoveProcessFilter(this DotCoverAnalyseSettings toolSettings, string processFilter)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ProcessFiltersInternal.Remove(processFilter);
+            toolSettings.ProcessFiltersInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == processFilter).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="DotCoverAnalyseSettings.HideAutoProperties"/>.</i></p><p>Remove auto-implemented properties from report.</p></summary>

@@ -989,7 +989,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ReferencesFilesInternal = referencesFiles.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds new referencesFiles to the existing <see cref="PaketRestoreSettings.ReferencesFiles"/>.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
+        /// <summary><p><i>Adds a referencesFiles to the existing <see cref="PaketRestoreSettings.ReferencesFiles"/>.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
         [Pure]
         public static PaketRestoreSettings AddReferencesFiles(this PaketRestoreSettings toolSettings, params string[] referencesFiles)
         {
@@ -997,7 +997,7 @@ namespace Nuke.Common.Tools.Paket
             toolSettings.ReferencesFilesInternal.AddRange(referencesFiles);
             return toolSettings;
         }
-        /// <summary><p><i>Adds new referencesFiles to the existing <see cref="PaketRestoreSettings.ReferencesFiles"/>.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
+        /// <summary><p><i>Adds a referencesFiles to the existing <see cref="PaketRestoreSettings.ReferencesFiles"/>.</i></p><p>Allows to restore all packages from the given paket.references files.</p></summary>
         [Pure]
         public static PaketRestoreSettings AddReferencesFiles(this PaketRestoreSettings toolSettings, IEnumerable<string> referencesFiles)
         {
@@ -1026,7 +1026,7 @@ namespace Nuke.Common.Tools.Paket
         public static PaketRestoreSettings RemoveReferencesFile(this PaketRestoreSettings toolSettings, string referencesFile)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ReferencesFilesInternal.Remove(referencesFile);
+            toolSettings.ReferencesFilesInternal = toolSettings.Nuke.ToolGenerator.Model.Property.Where(x => x == referencesFile).ToList();
             return toolSettings;
         }
         /// <summary><p><i>Sets <see cref="PaketRestoreSettings.TargetFramework"/>.</i></p><p>Allows to restore only for a specified target framework.</p></summary>
