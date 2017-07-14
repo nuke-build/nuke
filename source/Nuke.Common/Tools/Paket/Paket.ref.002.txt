@@ -1,12 +1,7 @@
 
           
 paket push
-Pushes the given .nupkg file.
-1: 
-
-paket push [--help] url &lt;url&gt; file &lt;path&gt; [apikey &lt;key&gt;] [endpoint &lt;path&gt;]
-
-OPTIONS:
+Push a NuGet package.
  1: 
  2: 
  3: 
@@ -19,24 +14,30 @@ OPTIONS:
 10: 
 11: 
 12: 
+13: 
+14: 
+15: 
+16: 
 
-url &lt;url&gt;             Url of the NuGet feed.
-file &lt;path&gt;           Path to the package.
-apikey &lt;key&gt;          Optionally specify your API key on the command line. Otherwise uses the
-                      value of the `nugetkey` environment variable.
-endpoint &lt;path&gt;       Optionally specify a custom api endpoint to push to. Defaults to
-                      `/api/v2/package`.
---verbose, -v         Enable verbose console output for the paket process.
---log-file &lt;path&gt;     Specify a log file for the paket process.
---silent, -s          Suppress console output for the paket process.
---version             Display the version.
---from-bootstrapper   Call coming from the &#39;--run&#39; feature of the bootstrapper.
---help                display this list of options.
+paket push [--help] [--url &lt;url&gt;] [--api-key &lt;key&gt;] [--endpoint &lt;path&gt;] &lt;path&gt;
 
+PACKAGE:
 
+    &lt;path&gt;                path to the .nupkg file
 
-If you add the -v flag, then Paket will run in verbose mode and show detailed information.
-With --log-file [FileName] you can trace the logged information into a file.
+OPTIONS:
+
+    --url &lt;url&gt;           URL of the NuGet feed
+    --api-key &lt;key&gt;       API key for the URL (default: value of the NUGET_KEY environment variable)
+    --endpoint &lt;path&gt;     API endpoint to push to (default: /api/v2/package)
+    --silent, -s          suppress console output
+    --verbose, -v         print detailed information to the console
+    --log-file &lt;path&gt;     print output to a file
+    --from-bootstrapper   call coming from the '--run' feature of the bootstrapper
+    --help                display this list of options.
+
+If you add the --verbose flag Paket will run in verbose mode and show detailed information.
+With --log-file [path] you can trace the logged information into a file.
 
 
         

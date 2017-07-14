@@ -56,7 +56,7 @@ namespace Nuke.Common.Tools.OpenCover
     [Serializable]
     public partial class OpenCoverSettings : ToolSettings
     {
-        /// <inheritdoc />
+        /// <summary>Path of the executable to be invoked.</summary>
         public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetToolPath(packageId: $"OpenCover", packageExecutable: $"OpenCover.Console.exe");
         /// <summary><p>The action that executes tests.</p></summary>
         public virtual Action TestAction { get; internal set; }
@@ -115,7 +115,7 @@ namespace Nuke.Common.Tools.OpenCover
         public virtual RegistrationType? Registration { get; internal set; }
         /// <summary><p>Return the target process exit code instead of the OpenCover console exit code. Use the offset to return the OpenCover console at a value outside the range returned by the target process.</p></summary>
         public virtual int? TargetExitCodeOffset { get; internal set; }
-        /// <inheritdoc />
+        /// <summary>Path of the executable to be invoked.</summary>
         protected override void AssertValid()
         {
             base.AssertValid();
@@ -155,7 +155,7 @@ namespace Nuke.Common.Tools.OpenCover
     [ExcludeFromCodeCoverage]
     public static partial class OpenCoverSettingsExtensions
     {
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.TestAction"/>.</i></p><p>The action that executes tests.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.TestAction"/>.</em></p><p>The action that executes tests.</p></summary>
         [Pure]
         public static OpenCoverSettings SetTestAction(this OpenCoverSettings toolSettings, Action testAction)
         {
@@ -163,7 +163,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.TestAction = testAction;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.TargetPath"/>.</i></p><p>The name of the target application or service that will be started; this can also be a path to the target application.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.TargetPath"/>.</em></p><p>The name of the target application or service that will be started; this can also be a path to the target application.</p></summary>
         [Pure]
         public static OpenCoverSettings SetTargetPath(this OpenCoverSettings toolSettings, string targetPath)
         {
@@ -171,7 +171,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.TargetPath = targetPath;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.TargetArguments"/>.</i></p><p>Arguments to be passed to the target process.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.TargetArguments"/>.</em></p><p>Arguments to be passed to the target process.</p></summary>
         [Pure]
         public static OpenCoverSettings SetTargetArguments(this OpenCoverSettings toolSettings, string targetArguments)
         {
@@ -179,7 +179,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.TargetArguments = targetArguments;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.TargetDirectory"/>.</i></p><p>The path to the target directory; if the target argument already contains a path then this argument can be used to provide an alternate path where PDB files may be found.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.TargetDirectory"/>.</em></p><p>The path to the target directory; if the target argument already contains a path then this argument can be used to provide an alternate path where PDB files may be found.</p></summary>
         [Pure]
         public static OpenCoverSettings SetTargetDirectory(this OpenCoverSettings toolSettings, string targetDirectory)
         {
@@ -187,7 +187,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.TargetDirectory = targetDirectory;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.CoverByTests"/> to a new list.</i></p><p>Gather coverage by test by analyzing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request - please raise support request on GitHub.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.CoverByTests"/> to a new list.</em></p><p>Gather coverage by test by analyzing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request - please raise support request on GitHub.</p></summary>
         [Pure]
         public static OpenCoverSettings SetCoverByTests(this OpenCoverSettings toolSettings, params string[] coverByTests)
         {
@@ -195,7 +195,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.CoverByTestsInternal = coverByTests.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.CoverByTests"/> to a new list.</i></p><p>Gather coverage by test by analyzing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request - please raise support request on GitHub.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.CoverByTests"/> to a new list.</em></p><p>Gather coverage by test by analyzing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request - please raise support request on GitHub.</p></summary>
         [Pure]
         public static OpenCoverSettings SetCoverByTests(this OpenCoverSettings toolSettings, IEnumerable<string> coverByTests)
         {
@@ -203,7 +203,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.CoverByTestsInternal = coverByTests.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a coverByTests to the existing <see cref="OpenCoverSettings.CoverByTests"/>.</i></p><p>Gather coverage by test by analyzing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request - please raise support request on GitHub.</p></summary>
+        /// <summary><p><em>Adds a coverByTests to the existing <see cref="OpenCoverSettings.CoverByTests"/>.</em></p><p>Gather coverage by test by analyzing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request - please raise support request on GitHub.</p></summary>
         [Pure]
         public static OpenCoverSettings AddCoverByTests(this OpenCoverSettings toolSettings, params string[] coverByTests)
         {
@@ -211,7 +211,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.CoverByTestsInternal.AddRange(coverByTests);
             return toolSettings;
         }
-        /// <summary><p><i>Adds a coverByTests to the existing <see cref="OpenCoverSettings.CoverByTests"/>.</i></p><p>Gather coverage by test by analyzing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request - please raise support request on GitHub.</p></summary>
+        /// <summary><p><em>Adds a coverByTests to the existing <see cref="OpenCoverSettings.CoverByTests"/>.</em></p><p>Gather coverage by test by analyzing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request - please raise support request on GitHub.</p></summary>
         [Pure]
         public static OpenCoverSettings AddCoverByTests(this OpenCoverSettings toolSettings, IEnumerable<string> coverByTests)
         {
@@ -219,7 +219,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.CoverByTestsInternal.AddRange(coverByTests);
             return toolSettings;
         }
-        /// <summary><p><i>Clears <see cref="OpenCoverSettings.CoverByTests"/>.</i></p><p>Gather coverage by test by analyzing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request - please raise support request on GitHub.</p></summary>
+        /// <summary><p><em>Clears <see cref="OpenCoverSettings.CoverByTests"/>.</em></p><p>Gather coverage by test by analyzing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request - please raise support request on GitHub.</p></summary>
         [Pure]
         public static OpenCoverSettings ClearCoverByTests(this OpenCoverSettings toolSettings)
         {
@@ -227,7 +227,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.CoverByTestsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a single coverByTest to <see cref="OpenCoverSettings.CoverByTests"/>.</i></p><p>Gather coverage by test by analyzing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request - please raise support request on GitHub.</p></summary>
+        /// <summary><p><em>Adds a single coverByTest to <see cref="OpenCoverSettings.CoverByTests"/>.</em></p><p>Gather coverage by test by analyzing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request - please raise support request on GitHub.</p></summary>
         [Pure]
         public static OpenCoverSettings AddCoverByTest(this OpenCoverSettings toolSettings, string coverByTest, bool evenIfNull = true)
         {
@@ -235,7 +235,7 @@ namespace Nuke.Common.Tools.OpenCover
             if (coverByTest != null || evenIfNull) toolSettings.CoverByTestsInternal.Add(coverByTest);
             return toolSettings;
         }
-        /// <summary><p><i>Removes a single coverByTest from <see cref="OpenCoverSettings.CoverByTests"/>.</i></p><p>Gather coverage by test by analyzing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request - please raise support request on GitHub.</p></summary>
+        /// <summary><p><em>Removes a single coverByTest from <see cref="OpenCoverSettings.CoverByTests"/>.</em></p><p>Gather coverage by test by analyzing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request - please raise support request on GitHub.</p></summary>
         [Pure]
         public static OpenCoverSettings RemoveCoverByTest(this OpenCoverSettings toolSettings, string coverByTest)
         {
@@ -243,7 +243,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.CoverByTestsInternal = toolSettings.CoverByTests.Where(x => x == coverByTest).ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.PerformanceCounters"/>.</i></p><p><em>Administrator</em> privileges required. Allows the monitoring in <em>Performance Monitor</em> of the following values (they are usually cleared at the end of a performance run):<ul><li>messages remaining on the queue</li><li>number of messages processed</li></ul></p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.PerformanceCounters"/>.</em></p><p><em>Administrator</em> privileges required. Allows the monitoring in <em>Performance Monitor</em> of the following values (they are usually cleared at the end of a performance run):<ul><li>messages remaining on the queue</li><li>number of messages processed</li></ul></p></summary>
         [Pure]
         public static OpenCoverSettings SetPerformanceCounters(this OpenCoverSettings toolSettings, bool performanceCounters)
         {
@@ -251,7 +251,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.PerformanceCounters = performanceCounters;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="OpenCoverSettings.PerformanceCounters"/>.</i></p><p><em>Administrator</em> privileges required. Allows the monitoring in <em>Performance Monitor</em> of the following values (they are usually cleared at the end of a performance run):<ul><li>messages remaining on the queue</li><li>number of messages processed</li></ul></p></summary>
+        /// <summary><p><em>Enables <see cref="OpenCoverSettings.PerformanceCounters"/>.</em></p><p><em>Administrator</em> privileges required. Allows the monitoring in <em>Performance Monitor</em> of the following values (they are usually cleared at the end of a performance run):<ul><li>messages remaining on the queue</li><li>number of messages processed</li></ul></p></summary>
         [Pure]
         public static OpenCoverSettings EnablePerformanceCounters(this OpenCoverSettings toolSettings)
         {
@@ -259,7 +259,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.PerformanceCounters = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="OpenCoverSettings.PerformanceCounters"/>.</i></p><p><em>Administrator</em> privileges required. Allows the monitoring in <em>Performance Monitor</em> of the following values (they are usually cleared at the end of a performance run):<ul><li>messages remaining on the queue</li><li>number of messages processed</li></ul></p></summary>
+        /// <summary><p><em>Disables <see cref="OpenCoverSettings.PerformanceCounters"/>.</em></p><p><em>Administrator</em> privileges required. Allows the monitoring in <em>Performance Monitor</em> of the following values (they are usually cleared at the end of a performance run):<ul><li>messages remaining on the queue</li><li>number of messages processed</li></ul></p></summary>
         [Pure]
         public static OpenCoverSettings DisablePerformanceCounters(this OpenCoverSettings toolSettings)
         {
@@ -267,7 +267,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.PerformanceCounters = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="OpenCoverSettings.PerformanceCounters"/>.</i></p><p><em>Administrator</em> privileges required. Allows the monitoring in <em>Performance Monitor</em> of the following values (they are usually cleared at the end of a performance run):<ul><li>messages remaining on the queue</li><li>number of messages processed</li></ul></p></summary>
+        /// <summary><p><em>Toggles <see cref="OpenCoverSettings.PerformanceCounters"/>.</em></p><p><em>Administrator</em> privileges required. Allows the monitoring in <em>Performance Monitor</em> of the following values (they are usually cleared at the end of a performance run):<ul><li>messages remaining on the queue</li><li>number of messages processed</li></ul></p></summary>
         [Pure]
         public static OpenCoverSettings TogglePerformanceCounters(this OpenCoverSettings toolSettings)
         {
@@ -275,7 +275,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.PerformanceCounters = !toolSettings.PerformanceCounters;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.ExcludeByAttributes"/> to a new list.</i></p><p>Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.ExcludeByAttributes"/> to a new list.</em></p><p>Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
         public static OpenCoverSettings SetExcludeByAttributes(this OpenCoverSettings toolSettings, params string[] excludeByAttributes)
         {
@@ -283,7 +283,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeByAttributesInternal = excludeByAttributes.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.ExcludeByAttributes"/> to a new list.</i></p><p>Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.ExcludeByAttributes"/> to a new list.</em></p><p>Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
         public static OpenCoverSettings SetExcludeByAttributes(this OpenCoverSettings toolSettings, IEnumerable<string> excludeByAttributes)
         {
@@ -291,7 +291,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeByAttributesInternal = excludeByAttributes.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a excludeByAttributes to the existing <see cref="OpenCoverSettings.ExcludeByAttributes"/>.</i></p><p>Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard.</p></summary>
+        /// <summary><p><em>Adds a excludeByAttributes to the existing <see cref="OpenCoverSettings.ExcludeByAttributes"/>.</em></p><p>Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
         public static OpenCoverSettings AddExcludeByAttributes(this OpenCoverSettings toolSettings, params string[] excludeByAttributes)
         {
@@ -299,7 +299,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeByAttributesInternal.AddRange(excludeByAttributes);
             return toolSettings;
         }
-        /// <summary><p><i>Adds a excludeByAttributes to the existing <see cref="OpenCoverSettings.ExcludeByAttributes"/>.</i></p><p>Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard.</p></summary>
+        /// <summary><p><em>Adds a excludeByAttributes to the existing <see cref="OpenCoverSettings.ExcludeByAttributes"/>.</em></p><p>Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
         public static OpenCoverSettings AddExcludeByAttributes(this OpenCoverSettings toolSettings, IEnumerable<string> excludeByAttributes)
         {
@@ -307,7 +307,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeByAttributesInternal.AddRange(excludeByAttributes);
             return toolSettings;
         }
-        /// <summary><p><i>Clears <see cref="OpenCoverSettings.ExcludeByAttributes"/>.</i></p><p>Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard.</p></summary>
+        /// <summary><p><em>Clears <see cref="OpenCoverSettings.ExcludeByAttributes"/>.</em></p><p>Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
         public static OpenCoverSettings ClearExcludeByAttributes(this OpenCoverSettings toolSettings)
         {
@@ -315,7 +315,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeByAttributesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a single excludeByAttribute to <see cref="OpenCoverSettings.ExcludeByAttributes"/>.</i></p><p>Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard.</p></summary>
+        /// <summary><p><em>Adds a single excludeByAttribute to <see cref="OpenCoverSettings.ExcludeByAttributes"/>.</em></p><p>Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
         public static OpenCoverSettings AddExcludeByAttribute(this OpenCoverSettings toolSettings, string excludeByAttribute, bool evenIfNull = true)
         {
@@ -323,7 +323,7 @@ namespace Nuke.Common.Tools.OpenCover
             if (excludeByAttribute != null || evenIfNull) toolSettings.ExcludeByAttributesInternal.Add(excludeByAttribute);
             return toolSettings;
         }
-        /// <summary><p><i>Removes a single excludeByAttribute from <see cref="OpenCoverSettings.ExcludeByAttributes"/>.</i></p><p>Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard.</p></summary>
+        /// <summary><p><em>Removes a single excludeByAttribute from <see cref="OpenCoverSettings.ExcludeByAttributes"/>.</em></p><p>Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
         public static OpenCoverSettings RemoveExcludeByAttribute(this OpenCoverSettings toolSettings, string excludeByAttribute)
         {
@@ -331,7 +331,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeByAttributesInternal = toolSettings.ExcludeByAttributes.Where(x => x == excludeByAttribute).ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.ExcludeByFile"/> to a new list.</i></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.ExcludeByFile"/> to a new list.</em></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
         public static OpenCoverSettings SetExcludeByFile(this OpenCoverSettings toolSettings, params string[] excludeByFile)
         {
@@ -339,7 +339,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeByFileInternal = excludeByFile.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.ExcludeByFile"/> to a new list.</i></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.ExcludeByFile"/> to a new list.</em></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
         public static OpenCoverSettings SetExcludeByFile(this OpenCoverSettings toolSettings, IEnumerable<string> excludeByFile)
         {
@@ -347,7 +347,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeByFileInternal = excludeByFile.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a excludeByFile to the existing <see cref="OpenCoverSettings.ExcludeByFile"/>.</i></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
+        /// <summary><p><em>Adds a excludeByFile to the existing <see cref="OpenCoverSettings.ExcludeByFile"/>.</em></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
         public static OpenCoverSettings AddExcludeByFile(this OpenCoverSettings toolSettings, params string[] excludeByFile)
         {
@@ -355,7 +355,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeByFileInternal.AddRange(excludeByFile);
             return toolSettings;
         }
-        /// <summary><p><i>Adds a excludeByFile to the existing <see cref="OpenCoverSettings.ExcludeByFile"/>.</i></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
+        /// <summary><p><em>Adds a excludeByFile to the existing <see cref="OpenCoverSettings.ExcludeByFile"/>.</em></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
         public static OpenCoverSettings AddExcludeByFile(this OpenCoverSettings toolSettings, IEnumerable<string> excludeByFile)
         {
@@ -363,7 +363,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeByFileInternal.AddRange(excludeByFile);
             return toolSettings;
         }
-        /// <summary><p><i>Clears <see cref="OpenCoverSettings.ExcludeByFile"/>.</i></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
+        /// <summary><p><em>Clears <see cref="OpenCoverSettings.ExcludeByFile"/>.</em></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
         public static OpenCoverSettings ClearExcludeByFile(this OpenCoverSettings toolSettings)
         {
@@ -371,7 +371,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeByFileInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a single excludeByFile to <see cref="OpenCoverSettings.ExcludeByFile"/>.</i></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
+        /// <summary><p><em>Adds a single excludeByFile to <see cref="OpenCoverSettings.ExcludeByFile"/>.</em></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
         public static OpenCoverSettings AddExcludeByFile(this OpenCoverSettings toolSettings, string excludeByFile, bool evenIfNull = true)
         {
@@ -379,7 +379,7 @@ namespace Nuke.Common.Tools.OpenCover
             if (excludeByFile != null || evenIfNull) toolSettings.ExcludeByFileInternal.Add(excludeByFile);
             return toolSettings;
         }
-        /// <summary><p><i>Removes a single excludeByFile from <see cref="OpenCoverSettings.ExcludeByFile"/>.</i></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
+        /// <summary><p><em>Removes a single excludeByFile from <see cref="OpenCoverSettings.ExcludeByFile"/>.</em></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
         public static OpenCoverSettings RemoveExcludeByFile(this OpenCoverSettings toolSettings, string excludeByFile)
         {
@@ -387,7 +387,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeByFileInternal = toolSettings.ExcludeByFile.Where(x => x == excludeByFile).ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.ExcludeDirectories"/> to a new list.</i></p><p>Assemblies being loaded from these locations will be ignored.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.ExcludeDirectories"/> to a new list.</em></p><p>Assemblies being loaded from these locations will be ignored.</p></summary>
         [Pure]
         public static OpenCoverSettings SetExcludeDirectories(this OpenCoverSettings toolSettings, params string[] excludeDirectories)
         {
@@ -395,7 +395,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeDirectoriesInternal = excludeDirectories.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.ExcludeDirectories"/> to a new list.</i></p><p>Assemblies being loaded from these locations will be ignored.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.ExcludeDirectories"/> to a new list.</em></p><p>Assemblies being loaded from these locations will be ignored.</p></summary>
         [Pure]
         public static OpenCoverSettings SetExcludeDirectories(this OpenCoverSettings toolSettings, IEnumerable<string> excludeDirectories)
         {
@@ -403,7 +403,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeDirectoriesInternal = excludeDirectories.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a excludeDirectories to the existing <see cref="OpenCoverSettings.ExcludeDirectories"/>.</i></p><p>Assemblies being loaded from these locations will be ignored.</p></summary>
+        /// <summary><p><em>Adds a excludeDirectories to the existing <see cref="OpenCoverSettings.ExcludeDirectories"/>.</em></p><p>Assemblies being loaded from these locations will be ignored.</p></summary>
         [Pure]
         public static OpenCoverSettings AddExcludeDirectories(this OpenCoverSettings toolSettings, params string[] excludeDirectories)
         {
@@ -411,7 +411,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeDirectoriesInternal.AddRange(excludeDirectories);
             return toolSettings;
         }
-        /// <summary><p><i>Adds a excludeDirectories to the existing <see cref="OpenCoverSettings.ExcludeDirectories"/>.</i></p><p>Assemblies being loaded from these locations will be ignored.</p></summary>
+        /// <summary><p><em>Adds a excludeDirectories to the existing <see cref="OpenCoverSettings.ExcludeDirectories"/>.</em></p><p>Assemblies being loaded from these locations will be ignored.</p></summary>
         [Pure]
         public static OpenCoverSettings AddExcludeDirectories(this OpenCoverSettings toolSettings, IEnumerable<string> excludeDirectories)
         {
@@ -419,7 +419,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeDirectoriesInternal.AddRange(excludeDirectories);
             return toolSettings;
         }
-        /// <summary><p><i>Clears <see cref="OpenCoverSettings.ExcludeDirectories"/>.</i></p><p>Assemblies being loaded from these locations will be ignored.</p></summary>
+        /// <summary><p><em>Clears <see cref="OpenCoverSettings.ExcludeDirectories"/>.</em></p><p>Assemblies being loaded from these locations will be ignored.</p></summary>
         [Pure]
         public static OpenCoverSettings ClearExcludeDirectories(this OpenCoverSettings toolSettings)
         {
@@ -427,7 +427,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeDirectoriesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a single excludeDirectory to <see cref="OpenCoverSettings.ExcludeDirectories"/>.</i></p><p>Assemblies being loaded from these locations will be ignored.</p></summary>
+        /// <summary><p><em>Adds a single excludeDirectory to <see cref="OpenCoverSettings.ExcludeDirectories"/>.</em></p><p>Assemblies being loaded from these locations will be ignored.</p></summary>
         [Pure]
         public static OpenCoverSettings AddExcludeDirectory(this OpenCoverSettings toolSettings, string excludeDirectory, bool evenIfNull = true)
         {
@@ -435,7 +435,7 @@ namespace Nuke.Common.Tools.OpenCover
             if (excludeDirectory != null || evenIfNull) toolSettings.ExcludeDirectoriesInternal.Add(excludeDirectory);
             return toolSettings;
         }
-        /// <summary><p><i>Removes a single excludeDirectory from <see cref="OpenCoverSettings.ExcludeDirectories"/>.</i></p><p>Assemblies being loaded from these locations will be ignored.</p></summary>
+        /// <summary><p><em>Removes a single excludeDirectory from <see cref="OpenCoverSettings.ExcludeDirectories"/>.</em></p><p>Assemblies being loaded from these locations will be ignored.</p></summary>
         [Pure]
         public static OpenCoverSettings RemoveExcludeDirectory(this OpenCoverSettings toolSettings, string excludeDirectory)
         {
@@ -443,7 +443,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeDirectoriesInternal = toolSettings.ExcludeDirectories.Where(x => x == excludeDirectory).ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.Filters"/> to a new list.</i></p><p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where <c>(+|-)[Assembly-Filter]Type-Filter</c>. For example <c>+[Open*]*</c> includes all types in assemblies starting with <em>Open</em>, <c>-[*]Core.*</c> exclude all types in the <em>Core</em> namespace regardless of the assembly. If no filters are supplied then the default inclusive filter <c>+[*]*</c> is applied automatically. See Understanding Filters for more information.</p><ul><li>NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: <c>-filter:"+[*]* -[A*]Name.*"</c></li><li>NOTE: Exclusion filters take precedence over inclusion filters.</li></ul></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.Filters"/> to a new list.</em></p><p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where <c>(+|-)[Assembly-Filter]Type-Filter</c>. For example <c>+[Open*]*</c> includes all types in assemblies starting with <em>Open</em>, <c>-[*]Core.*</c> exclude all types in the <em>Core</em> namespace regardless of the assembly. If no filters are supplied then the default inclusive filter <c>+[*]*</c> is applied automatically. See Understanding Filters for more information.</p><ul><li>NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: <c>-filter:"+[*]* -[A*]Name.*"</c></li><li>NOTE: Exclusion filters take precedence over inclusion filters.</li></ul></summary>
         [Pure]
         public static OpenCoverSettings SetFilters(this OpenCoverSettings toolSettings, params string[] filters)
         {
@@ -451,7 +451,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.FiltersInternal = filters.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.Filters"/> to a new list.</i></p><p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where <c>(+|-)[Assembly-Filter]Type-Filter</c>. For example <c>+[Open*]*</c> includes all types in assemblies starting with <em>Open</em>, <c>-[*]Core.*</c> exclude all types in the <em>Core</em> namespace regardless of the assembly. If no filters are supplied then the default inclusive filter <c>+[*]*</c> is applied automatically. See Understanding Filters for more information.</p><ul><li>NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: <c>-filter:"+[*]* -[A*]Name.*"</c></li><li>NOTE: Exclusion filters take precedence over inclusion filters.</li></ul></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.Filters"/> to a new list.</em></p><p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where <c>(+|-)[Assembly-Filter]Type-Filter</c>. For example <c>+[Open*]*</c> includes all types in assemblies starting with <em>Open</em>, <c>-[*]Core.*</c> exclude all types in the <em>Core</em> namespace regardless of the assembly. If no filters are supplied then the default inclusive filter <c>+[*]*</c> is applied automatically. See Understanding Filters for more information.</p><ul><li>NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: <c>-filter:"+[*]* -[A*]Name.*"</c></li><li>NOTE: Exclusion filters take precedence over inclusion filters.</li></ul></summary>
         [Pure]
         public static OpenCoverSettings SetFilters(this OpenCoverSettings toolSettings, IEnumerable<string> filters)
         {
@@ -459,7 +459,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.FiltersInternal = filters.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a filters to the existing <see cref="OpenCoverSettings.Filters"/>.</i></p><p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where <c>(+|-)[Assembly-Filter]Type-Filter</c>. For example <c>+[Open*]*</c> includes all types in assemblies starting with <em>Open</em>, <c>-[*]Core.*</c> exclude all types in the <em>Core</em> namespace regardless of the assembly. If no filters are supplied then the default inclusive filter <c>+[*]*</c> is applied automatically. See Understanding Filters for more information.</p><ul><li>NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: <c>-filter:"+[*]* -[A*]Name.*"</c></li><li>NOTE: Exclusion filters take precedence over inclusion filters.</li></ul></summary>
+        /// <summary><p><em>Adds a filters to the existing <see cref="OpenCoverSettings.Filters"/>.</em></p><p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where <c>(+|-)[Assembly-Filter]Type-Filter</c>. For example <c>+[Open*]*</c> includes all types in assemblies starting with <em>Open</em>, <c>-[*]Core.*</c> exclude all types in the <em>Core</em> namespace regardless of the assembly. If no filters are supplied then the default inclusive filter <c>+[*]*</c> is applied automatically. See Understanding Filters for more information.</p><ul><li>NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: <c>-filter:"+[*]* -[A*]Name.*"</c></li><li>NOTE: Exclusion filters take precedence over inclusion filters.</li></ul></summary>
         [Pure]
         public static OpenCoverSettings AddFilters(this OpenCoverSettings toolSettings, params string[] filters)
         {
@@ -467,7 +467,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.FiltersInternal.AddRange(filters);
             return toolSettings;
         }
-        /// <summary><p><i>Adds a filters to the existing <see cref="OpenCoverSettings.Filters"/>.</i></p><p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where <c>(+|-)[Assembly-Filter]Type-Filter</c>. For example <c>+[Open*]*</c> includes all types in assemblies starting with <em>Open</em>, <c>-[*]Core.*</c> exclude all types in the <em>Core</em> namespace regardless of the assembly. If no filters are supplied then the default inclusive filter <c>+[*]*</c> is applied automatically. See Understanding Filters for more information.</p><ul><li>NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: <c>-filter:"+[*]* -[A*]Name.*"</c></li><li>NOTE: Exclusion filters take precedence over inclusion filters.</li></ul></summary>
+        /// <summary><p><em>Adds a filters to the existing <see cref="OpenCoverSettings.Filters"/>.</em></p><p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where <c>(+|-)[Assembly-Filter]Type-Filter</c>. For example <c>+[Open*]*</c> includes all types in assemblies starting with <em>Open</em>, <c>-[*]Core.*</c> exclude all types in the <em>Core</em> namespace regardless of the assembly. If no filters are supplied then the default inclusive filter <c>+[*]*</c> is applied automatically. See Understanding Filters for more information.</p><ul><li>NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: <c>-filter:"+[*]* -[A*]Name.*"</c></li><li>NOTE: Exclusion filters take precedence over inclusion filters.</li></ul></summary>
         [Pure]
         public static OpenCoverSettings AddFilters(this OpenCoverSettings toolSettings, IEnumerable<string> filters)
         {
@@ -475,7 +475,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.FiltersInternal.AddRange(filters);
             return toolSettings;
         }
-        /// <summary><p><i>Clears <see cref="OpenCoverSettings.Filters"/>.</i></p><p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where <c>(+|-)[Assembly-Filter]Type-Filter</c>. For example <c>+[Open*]*</c> includes all types in assemblies starting with <em>Open</em>, <c>-[*]Core.*</c> exclude all types in the <em>Core</em> namespace regardless of the assembly. If no filters are supplied then the default inclusive filter <c>+[*]*</c> is applied automatically. See Understanding Filters for more information.</p><ul><li>NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: <c>-filter:"+[*]* -[A*]Name.*"</c></li><li>NOTE: Exclusion filters take precedence over inclusion filters.</li></ul></summary>
+        /// <summary><p><em>Clears <see cref="OpenCoverSettings.Filters"/>.</em></p><p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where <c>(+|-)[Assembly-Filter]Type-Filter</c>. For example <c>+[Open*]*</c> includes all types in assemblies starting with <em>Open</em>, <c>-[*]Core.*</c> exclude all types in the <em>Core</em> namespace regardless of the assembly. If no filters are supplied then the default inclusive filter <c>+[*]*</c> is applied automatically. See Understanding Filters for more information.</p><ul><li>NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: <c>-filter:"+[*]* -[A*]Name.*"</c></li><li>NOTE: Exclusion filters take precedence over inclusion filters.</li></ul></summary>
         [Pure]
         public static OpenCoverSettings ClearFilters(this OpenCoverSettings toolSettings)
         {
@@ -483,7 +483,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.FiltersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a single filter to <see cref="OpenCoverSettings.Filters"/>.</i></p><p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where <c>(+|-)[Assembly-Filter]Type-Filter</c>. For example <c>+[Open*]*</c> includes all types in assemblies starting with <em>Open</em>, <c>-[*]Core.*</c> exclude all types in the <em>Core</em> namespace regardless of the assembly. If no filters are supplied then the default inclusive filter <c>+[*]*</c> is applied automatically. See Understanding Filters for more information.</p><ul><li>NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: <c>-filter:"+[*]* -[A*]Name.*"</c></li><li>NOTE: Exclusion filters take precedence over inclusion filters.</li></ul></summary>
+        /// <summary><p><em>Adds a single filter to <see cref="OpenCoverSettings.Filters"/>.</em></p><p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where <c>(+|-)[Assembly-Filter]Type-Filter</c>. For example <c>+[Open*]*</c> includes all types in assemblies starting with <em>Open</em>, <c>-[*]Core.*</c> exclude all types in the <em>Core</em> namespace regardless of the assembly. If no filters are supplied then the default inclusive filter <c>+[*]*</c> is applied automatically. See Understanding Filters for more information.</p><ul><li>NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: <c>-filter:"+[*]* -[A*]Name.*"</c></li><li>NOTE: Exclusion filters take precedence over inclusion filters.</li></ul></summary>
         [Pure]
         public static OpenCoverSettings AddFilter(this OpenCoverSettings toolSettings, string filter, bool evenIfNull = true)
         {
@@ -491,7 +491,7 @@ namespace Nuke.Common.Tools.OpenCover
             if (filter != null || evenIfNull) toolSettings.FiltersInternal.Add(filter);
             return toolSettings;
         }
-        /// <summary><p><i>Removes a single filter from <see cref="OpenCoverSettings.Filters"/>.</i></p><p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where <c>(+|-)[Assembly-Filter]Type-Filter</c>. For example <c>+[Open*]*</c> includes all types in assemblies starting with <em>Open</em>, <c>-[*]Core.*</c> exclude all types in the <em>Core</em> namespace regardless of the assembly. If no filters are supplied then the default inclusive filter <c>+[*]*</c> is applied automatically. See Understanding Filters for more information.</p><ul><li>NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: <c>-filter:"+[*]* -[A*]Name.*"</c></li><li>NOTE: Exclusion filters take precedence over inclusion filters.</li></ul></summary>
+        /// <summary><p><em>Removes a single filter from <see cref="OpenCoverSettings.Filters"/>.</em></p><p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where <c>(+|-)[Assembly-Filter]Type-Filter</c>. For example <c>+[Open*]*</c> includes all types in assemblies starting with <em>Open</em>, <c>-[*]Core.*</c> exclude all types in the <em>Core</em> namespace regardless of the assembly. If no filters are supplied then the default inclusive filter <c>+[*]*</c> is applied automatically. See Understanding Filters for more information.</p><ul><li>NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: <c>-filter:"+[*]* -[A*]Name.*"</c></li><li>NOTE: Exclusion filters take precedence over inclusion filters.</li></ul></summary>
         [Pure]
         public static OpenCoverSettings RemoveFilter(this OpenCoverSettings toolSettings, string filter)
         {
@@ -499,7 +499,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.FiltersInternal = toolSettings.Filters.Where(x => x == filter).ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.HideSkippedKinds"/> to a new list.</i></p><p>Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c></p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.HideSkippedKinds"/> to a new list.</em></p><p>Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c></p></summary>
         [Pure]
         public static OpenCoverSettings SetHideSkippedKinds(this OpenCoverSettings toolSettings, params OpenCoverSkipping[] hideSkippedKinds)
         {
@@ -507,7 +507,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.HideSkippedKindsInternal = hideSkippedKinds.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.HideSkippedKinds"/> to a new list.</i></p><p>Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c></p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.HideSkippedKinds"/> to a new list.</em></p><p>Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c></p></summary>
         [Pure]
         public static OpenCoverSettings SetHideSkippedKinds(this OpenCoverSettings toolSettings, IEnumerable<OpenCoverSkipping> hideSkippedKinds)
         {
@@ -515,7 +515,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.HideSkippedKindsInternal = hideSkippedKinds.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a hideSkippedKinds to the existing <see cref="OpenCoverSettings.HideSkippedKinds"/>.</i></p><p>Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c></p></summary>
+        /// <summary><p><em>Adds a hideSkippedKinds to the existing <see cref="OpenCoverSettings.HideSkippedKinds"/>.</em></p><p>Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c></p></summary>
         [Pure]
         public static OpenCoverSettings AddHideSkippedKinds(this OpenCoverSettings toolSettings, params OpenCoverSkipping[] hideSkippedKinds)
         {
@@ -523,7 +523,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.HideSkippedKindsInternal.AddRange(hideSkippedKinds);
             return toolSettings;
         }
-        /// <summary><p><i>Adds a hideSkippedKinds to the existing <see cref="OpenCoverSettings.HideSkippedKinds"/>.</i></p><p>Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c></p></summary>
+        /// <summary><p><em>Adds a hideSkippedKinds to the existing <see cref="OpenCoverSettings.HideSkippedKinds"/>.</em></p><p>Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c></p></summary>
         [Pure]
         public static OpenCoverSettings AddHideSkippedKinds(this OpenCoverSettings toolSettings, IEnumerable<OpenCoverSkipping> hideSkippedKinds)
         {
@@ -531,7 +531,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.HideSkippedKindsInternal.AddRange(hideSkippedKinds);
             return toolSettings;
         }
-        /// <summary><p><i>Clears <see cref="OpenCoverSettings.HideSkippedKinds"/>.</i></p><p>Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c></p></summary>
+        /// <summary><p><em>Clears <see cref="OpenCoverSettings.HideSkippedKinds"/>.</em></p><p>Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c></p></summary>
         [Pure]
         public static OpenCoverSettings ClearHideSkippedKinds(this OpenCoverSettings toolSettings)
         {
@@ -539,7 +539,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.HideSkippedKindsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a single hideSkippedKind to <see cref="OpenCoverSettings.HideSkippedKinds"/>.</i></p><p>Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c></p></summary>
+        /// <summary><p><em>Adds a single hideSkippedKind to <see cref="OpenCoverSettings.HideSkippedKinds"/>.</em></p><p>Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c></p></summary>
         [Pure]
         public static OpenCoverSettings AddHideSkippedKind(this OpenCoverSettings toolSettings, OpenCoverSkipping hideSkippedKind)
         {
@@ -547,7 +547,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.HideSkippedKindsInternal.Add(hideSkippedKind);
             return toolSettings;
         }
-        /// <summary><p><i>Removes a single hideSkippedKind from <see cref="OpenCoverSettings.HideSkippedKinds"/>.</i></p><p>Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c></p></summary>
+        /// <summary><p><em>Removes a single hideSkippedKind from <see cref="OpenCoverSettings.HideSkippedKinds"/>.</em></p><p>Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c></p></summary>
         [Pure]
         public static OpenCoverSettings RemoveHideSkippedKind(this OpenCoverSettings toolSettings, OpenCoverSkipping hideSkippedKind)
         {
@@ -555,7 +555,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.HideSkippedKindsInternal = toolSettings.HideSkippedKinds.Where(x => x == hideSkippedKind).ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.Verbosity"/>.</i></p><p>Change the logging level, default is set to Info. Logging is based on log4net logging levels and appenders.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.Verbosity"/>.</em></p><p>Change the logging level, default is set to Info. Logging is based on log4net logging levels and appenders.</p></summary>
         [Pure]
         public static OpenCoverSettings SetVerbosity(this OpenCoverSettings toolSettings, OpenCoverVerbosity? verbosity)
         {
@@ -563,7 +563,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.Verbosity = verbosity;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.MergeByHash"/>.</i></p><p>Under some scenarios e.g. using MSTest, an assembly may be loaded many times from different locations. This option is used to merge the coverage results for an assembly regardless of where it was loaded assuming the assembly has the same file-hash in each location.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.MergeByHash"/>.</em></p><p>Under some scenarios e.g. using MSTest, an assembly may be loaded many times from different locations. This option is used to merge the coverage results for an assembly regardless of where it was loaded assuming the assembly has the same file-hash in each location.</p></summary>
         [Pure]
         public static OpenCoverSettings SetMergeByHash(this OpenCoverSettings toolSettings, bool mergeByHash)
         {
@@ -571,7 +571,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.MergeByHash = mergeByHash;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="OpenCoverSettings.MergeByHash"/>.</i></p><p>Under some scenarios e.g. using MSTest, an assembly may be loaded many times from different locations. This option is used to merge the coverage results for an assembly regardless of where it was loaded assuming the assembly has the same file-hash in each location.</p></summary>
+        /// <summary><p><em>Enables <see cref="OpenCoverSettings.MergeByHash"/>.</em></p><p>Under some scenarios e.g. using MSTest, an assembly may be loaded many times from different locations. This option is used to merge the coverage results for an assembly regardless of where it was loaded assuming the assembly has the same file-hash in each location.</p></summary>
         [Pure]
         public static OpenCoverSettings EnableMergeByHash(this OpenCoverSettings toolSettings)
         {
@@ -579,7 +579,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.MergeByHash = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="OpenCoverSettings.MergeByHash"/>.</i></p><p>Under some scenarios e.g. using MSTest, an assembly may be loaded many times from different locations. This option is used to merge the coverage results for an assembly regardless of where it was loaded assuming the assembly has the same file-hash in each location.</p></summary>
+        /// <summary><p><em>Disables <see cref="OpenCoverSettings.MergeByHash"/>.</em></p><p>Under some scenarios e.g. using MSTest, an assembly may be loaded many times from different locations. This option is used to merge the coverage results for an assembly regardless of where it was loaded assuming the assembly has the same file-hash in each location.</p></summary>
         [Pure]
         public static OpenCoverSettings DisableMergeByHash(this OpenCoverSettings toolSettings)
         {
@@ -587,7 +587,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.MergeByHash = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="OpenCoverSettings.MergeByHash"/>.</i></p><p>Under some scenarios e.g. using MSTest, an assembly may be loaded many times from different locations. This option is used to merge the coverage results for an assembly regardless of where it was loaded assuming the assembly has the same file-hash in each location.</p></summary>
+        /// <summary><p><em>Toggles <see cref="OpenCoverSettings.MergeByHash"/>.</em></p><p>Under some scenarios e.g. using MSTest, an assembly may be loaded many times from different locations. This option is used to merge the coverage results for an assembly regardless of where it was loaded assuming the assembly has the same file-hash in each location.</p></summary>
         [Pure]
         public static OpenCoverSettings ToggleMergeByHash(this OpenCoverSettings toolSettings)
         {
@@ -595,7 +595,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.MergeByHash = !toolSettings.MergeByHash;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.MergeOutput"/>.</i></p><p>Allow to merge the results with an existing file (specified by <c>-output</c> option). So the coverage from the output file will be loaded first (if exists).</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.MergeOutput"/>.</em></p><p>Allow to merge the results with an existing file (specified by <c>-output</c> option). So the coverage from the output file will be loaded first (if exists).</p></summary>
         [Pure]
         public static OpenCoverSettings SetMergeOutput(this OpenCoverSettings toolSettings, bool mergeOutput)
         {
@@ -603,7 +603,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.MergeOutput = mergeOutput;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="OpenCoverSettings.MergeOutput"/>.</i></p><p>Allow to merge the results with an existing file (specified by <c>-output</c> option). So the coverage from the output file will be loaded first (if exists).</p></summary>
+        /// <summary><p><em>Enables <see cref="OpenCoverSettings.MergeOutput"/>.</em></p><p>Allow to merge the results with an existing file (specified by <c>-output</c> option). So the coverage from the output file will be loaded first (if exists).</p></summary>
         [Pure]
         public static OpenCoverSettings EnableMergeOutput(this OpenCoverSettings toolSettings)
         {
@@ -611,7 +611,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.MergeOutput = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="OpenCoverSettings.MergeOutput"/>.</i></p><p>Allow to merge the results with an existing file (specified by <c>-output</c> option). So the coverage from the output file will be loaded first (if exists).</p></summary>
+        /// <summary><p><em>Disables <see cref="OpenCoverSettings.MergeOutput"/>.</em></p><p>Allow to merge the results with an existing file (specified by <c>-output</c> option). So the coverage from the output file will be loaded first (if exists).</p></summary>
         [Pure]
         public static OpenCoverSettings DisableMergeOutput(this OpenCoverSettings toolSettings)
         {
@@ -619,7 +619,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.MergeOutput = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="OpenCoverSettings.MergeOutput"/>.</i></p><p>Allow to merge the results with an existing file (specified by <c>-output</c> option). So the coverage from the output file will be loaded first (if exists).</p></summary>
+        /// <summary><p><em>Toggles <see cref="OpenCoverSettings.MergeOutput"/>.</em></p><p>Allow to merge the results with an existing file (specified by <c>-output</c> option). So the coverage from the output file will be loaded first (if exists).</p></summary>
         [Pure]
         public static OpenCoverSettings ToggleMergeOutput(this OpenCoverSettings toolSettings)
         {
@@ -627,7 +627,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.MergeOutput = !toolSettings.MergeOutput;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.NoDefaultFilters"/>.</i></p><p>A list of default exclusion filters are usually applied, this option can be used to turn them off. The default filters are:<ul><li><c>-[System]*</c></li><li><c>-[System.*]*</c></li><li><c>-[mscorlib]*</c></li><li><c>-[mscorlib.*]*</c></li><li><c>-[Microsoft.VisualBasic]*</c></li></ul></p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.NoDefaultFilters"/>.</em></p><p>A list of default exclusion filters are usually applied, this option can be used to turn them off. The default filters are:<ul><li><c>-[System]*</c></li><li><c>-[System.*]*</c></li><li><c>-[mscorlib]*</c></li><li><c>-[mscorlib.*]*</c></li><li><c>-[Microsoft.VisualBasic]*</c></li></ul></p></summary>
         [Pure]
         public static OpenCoverSettings SetNoDefaultFilters(this OpenCoverSettings toolSettings, bool noDefaultFilters)
         {
@@ -635,7 +635,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.NoDefaultFilters = noDefaultFilters;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="OpenCoverSettings.NoDefaultFilters"/>.</i></p><p>A list of default exclusion filters are usually applied, this option can be used to turn them off. The default filters are:<ul><li><c>-[System]*</c></li><li><c>-[System.*]*</c></li><li><c>-[mscorlib]*</c></li><li><c>-[mscorlib.*]*</c></li><li><c>-[Microsoft.VisualBasic]*</c></li></ul></p></summary>
+        /// <summary><p><em>Enables <see cref="OpenCoverSettings.NoDefaultFilters"/>.</em></p><p>A list of default exclusion filters are usually applied, this option can be used to turn them off. The default filters are:<ul><li><c>-[System]*</c></li><li><c>-[System.*]*</c></li><li><c>-[mscorlib]*</c></li><li><c>-[mscorlib.*]*</c></li><li><c>-[Microsoft.VisualBasic]*</c></li></ul></p></summary>
         [Pure]
         public static OpenCoverSettings EnableNoDefaultFilters(this OpenCoverSettings toolSettings)
         {
@@ -643,7 +643,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.NoDefaultFilters = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="OpenCoverSettings.NoDefaultFilters"/>.</i></p><p>A list of default exclusion filters are usually applied, this option can be used to turn them off. The default filters are:<ul><li><c>-[System]*</c></li><li><c>-[System.*]*</c></li><li><c>-[mscorlib]*</c></li><li><c>-[mscorlib.*]*</c></li><li><c>-[Microsoft.VisualBasic]*</c></li></ul></p></summary>
+        /// <summary><p><em>Disables <see cref="OpenCoverSettings.NoDefaultFilters"/>.</em></p><p>A list of default exclusion filters are usually applied, this option can be used to turn them off. The default filters are:<ul><li><c>-[System]*</c></li><li><c>-[System.*]*</c></li><li><c>-[mscorlib]*</c></li><li><c>-[mscorlib.*]*</c></li><li><c>-[Microsoft.VisualBasic]*</c></li></ul></p></summary>
         [Pure]
         public static OpenCoverSettings DisableNoDefaultFilters(this OpenCoverSettings toolSettings)
         {
@@ -651,7 +651,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.NoDefaultFilters = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="OpenCoverSettings.NoDefaultFilters"/>.</i></p><p>A list of default exclusion filters are usually applied, this option can be used to turn them off. The default filters are:<ul><li><c>-[System]*</c></li><li><c>-[System.*]*</c></li><li><c>-[mscorlib]*</c></li><li><c>-[mscorlib.*]*</c></li><li><c>-[Microsoft.VisualBasic]*</c></li></ul></p></summary>
+        /// <summary><p><em>Toggles <see cref="OpenCoverSettings.NoDefaultFilters"/>.</em></p><p>A list of default exclusion filters are usually applied, this option can be used to turn them off. The default filters are:<ul><li><c>-[System]*</c></li><li><c>-[System.*]*</c></li><li><c>-[mscorlib]*</c></li><li><c>-[mscorlib.*]*</c></li><li><c>-[Microsoft.VisualBasic]*</c></li></ul></p></summary>
         [Pure]
         public static OpenCoverSettings ToggleNoDefaultFilters(this OpenCoverSettings toolSettings)
         {
@@ -659,7 +659,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.NoDefaultFilters = !toolSettings.NoDefaultFilters;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.OldStyle"/>.</i></p><p>Use old style instrumentation - the instrumentation is not Silverlight friendly and is provided to support environments where mscorlib instrumentation is not working. <em>ONLY</em> use this option if you are encountering <see cref="MissingMethodException"/> like errors when the code is run under OpenCover. The issue could be down to <em>ngen /Profile</em> of the mscorlib which then interferes with the instrumentation.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.OldStyle"/>.</em></p><p>Use old style instrumentation - the instrumentation is not Silverlight friendly and is provided to support environments where mscorlib instrumentation is not working. <em>ONLY</em> use this option if you are encountering <see cref="MissingMethodException"/> like errors when the code is run under OpenCover. The issue could be down to <em>ngen /Profile</em> of the mscorlib which then interferes with the instrumentation.</p></summary>
         [Pure]
         public static OpenCoverSettings SetOldStyle(this OpenCoverSettings toolSettings, bool oldStyle)
         {
@@ -667,7 +667,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.OldStyle = oldStyle;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="OpenCoverSettings.OldStyle"/>.</i></p><p>Use old style instrumentation - the instrumentation is not Silverlight friendly and is provided to support environments where mscorlib instrumentation is not working. <em>ONLY</em> use this option if you are encountering <see cref="MissingMethodException"/> like errors when the code is run under OpenCover. The issue could be down to <em>ngen /Profile</em> of the mscorlib which then interferes with the instrumentation.</p></summary>
+        /// <summary><p><em>Enables <see cref="OpenCoverSettings.OldStyle"/>.</em></p><p>Use old style instrumentation - the instrumentation is not Silverlight friendly and is provided to support environments where mscorlib instrumentation is not working. <em>ONLY</em> use this option if you are encountering <see cref="MissingMethodException"/> like errors when the code is run under OpenCover. The issue could be down to <em>ngen /Profile</em> of the mscorlib which then interferes with the instrumentation.</p></summary>
         [Pure]
         public static OpenCoverSettings EnableOldStyle(this OpenCoverSettings toolSettings)
         {
@@ -675,7 +675,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.OldStyle = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="OpenCoverSettings.OldStyle"/>.</i></p><p>Use old style instrumentation - the instrumentation is not Silverlight friendly and is provided to support environments where mscorlib instrumentation is not working. <em>ONLY</em> use this option if you are encountering <see cref="MissingMethodException"/> like errors when the code is run under OpenCover. The issue could be down to <em>ngen /Profile</em> of the mscorlib which then interferes with the instrumentation.</p></summary>
+        /// <summary><p><em>Disables <see cref="OpenCoverSettings.OldStyle"/>.</em></p><p>Use old style instrumentation - the instrumentation is not Silverlight friendly and is provided to support environments where mscorlib instrumentation is not working. <em>ONLY</em> use this option if you are encountering <see cref="MissingMethodException"/> like errors when the code is run under OpenCover. The issue could be down to <em>ngen /Profile</em> of the mscorlib which then interferes with the instrumentation.</p></summary>
         [Pure]
         public static OpenCoverSettings DisableOldStyle(this OpenCoverSettings toolSettings)
         {
@@ -683,7 +683,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.OldStyle = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="OpenCoverSettings.OldStyle"/>.</i></p><p>Use old style instrumentation - the instrumentation is not Silverlight friendly and is provided to support environments where mscorlib instrumentation is not working. <em>ONLY</em> use this option if you are encountering <see cref="MissingMethodException"/> like errors when the code is run under OpenCover. The issue could be down to <em>ngen /Profile</em> of the mscorlib which then interferes with the instrumentation.</p></summary>
+        /// <summary><p><em>Toggles <see cref="OpenCoverSettings.OldStyle"/>.</em></p><p>Use old style instrumentation - the instrumentation is not Silverlight friendly and is provided to support environments where mscorlib instrumentation is not working. <em>ONLY</em> use this option if you are encountering <see cref="MissingMethodException"/> like errors when the code is run under OpenCover. The issue could be down to <em>ngen /Profile</em> of the mscorlib which then interferes with the instrumentation.</p></summary>
         [Pure]
         public static OpenCoverSettings ToggleOldStyle(this OpenCoverSettings toolSettings)
         {
@@ -691,7 +691,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.OldStyle = !toolSettings.OldStyle;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.Output"/>.</i></p><p>The location and name of the output Xml file. If no value is supplied then the current directory will be used and the output filename will be <c>results.xml</c>.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.Output"/>.</em></p><p>The location and name of the output Xml file. If no value is supplied then the current directory will be used and the output filename will be <c>results.xml</c>.</p></summary>
         [Pure]
         public static OpenCoverSettings SetOutput(this OpenCoverSettings toolSettings, string output)
         {
@@ -699,7 +699,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.Output = output;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.SafeMode"/>.</i></p><p>Enable or disable safemode - default is on/yes. When safemode is on OpenCover will use a common buffer for all threads in an instrumented process and this may have performance impacts depending on your code and its tests. Turning safemode off uses individual buffers for each thread but this may lead to data loss (uncovered code reported) if the runtime shuts down the instrumented process before the profiler has had time to retrieve the data and shunt it to the host for processing.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.SafeMode"/>.</em></p><p>Enable or disable safemode - default is on/yes. When safemode is on OpenCover will use a common buffer for all threads in an instrumented process and this may have performance impacts depending on your code and its tests. Turning safemode off uses individual buffers for each thread but this may lead to data loss (uncovered code reported) if the runtime shuts down the instrumented process before the profiler has had time to retrieve the data and shunt it to the host for processing.</p></summary>
         [Pure]
         public static OpenCoverSettings SetSafeMode(this OpenCoverSettings toolSettings, bool safeMode)
         {
@@ -707,7 +707,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.SafeMode = safeMode;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="OpenCoverSettings.SafeMode"/>.</i></p><p>Enable or disable safemode - default is on/yes. When safemode is on OpenCover will use a common buffer for all threads in an instrumented process and this may have performance impacts depending on your code and its tests. Turning safemode off uses individual buffers for each thread but this may lead to data loss (uncovered code reported) if the runtime shuts down the instrumented process before the profiler has had time to retrieve the data and shunt it to the host for processing.</p></summary>
+        /// <summary><p><em>Enables <see cref="OpenCoverSettings.SafeMode"/>.</em></p><p>Enable or disable safemode - default is on/yes. When safemode is on OpenCover will use a common buffer for all threads in an instrumented process and this may have performance impacts depending on your code and its tests. Turning safemode off uses individual buffers for each thread but this may lead to data loss (uncovered code reported) if the runtime shuts down the instrumented process before the profiler has had time to retrieve the data and shunt it to the host for processing.</p></summary>
         [Pure]
         public static OpenCoverSettings EnableSafeMode(this OpenCoverSettings toolSettings)
         {
@@ -715,7 +715,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.SafeMode = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="OpenCoverSettings.SafeMode"/>.</i></p><p>Enable or disable safemode - default is on/yes. When safemode is on OpenCover will use a common buffer for all threads in an instrumented process and this may have performance impacts depending on your code and its tests. Turning safemode off uses individual buffers for each thread but this may lead to data loss (uncovered code reported) if the runtime shuts down the instrumented process before the profiler has had time to retrieve the data and shunt it to the host for processing.</p></summary>
+        /// <summary><p><em>Disables <see cref="OpenCoverSettings.SafeMode"/>.</em></p><p>Enable or disable safemode - default is on/yes. When safemode is on OpenCover will use a common buffer for all threads in an instrumented process and this may have performance impacts depending on your code and its tests. Turning safemode off uses individual buffers for each thread but this may lead to data loss (uncovered code reported) if the runtime shuts down the instrumented process before the profiler has had time to retrieve the data and shunt it to the host for processing.</p></summary>
         [Pure]
         public static OpenCoverSettings DisableSafeMode(this OpenCoverSettings toolSettings)
         {
@@ -723,7 +723,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.SafeMode = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="OpenCoverSettings.SafeMode"/>.</i></p><p>Enable or disable safemode - default is on/yes. When safemode is on OpenCover will use a common buffer for all threads in an instrumented process and this may have performance impacts depending on your code and its tests. Turning safemode off uses individual buffers for each thread but this may lead to data loss (uncovered code reported) if the runtime shuts down the instrumented process before the profiler has had time to retrieve the data and shunt it to the host for processing.</p></summary>
+        /// <summary><p><em>Toggles <see cref="OpenCoverSettings.SafeMode"/>.</em></p><p>Enable or disable safemode - default is on/yes. When safemode is on OpenCover will use a common buffer for all threads in an instrumented process and this may have performance impacts depending on your code and its tests. Turning safemode off uses individual buffers for each thread but this may lead to data loss (uncovered code reported) if the runtime shuts down the instrumented process before the profiler has had time to retrieve the data and shunt it to the host for processing.</p></summary>
         [Pure]
         public static OpenCoverSettings ToggleSafeMode(this OpenCoverSettings toolSettings)
         {
@@ -731,7 +731,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.SafeMode = !toolSettings.SafeMode;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.SearchDirectories"/> to a new list.</i></p><p>Alternative locations to look for PDBs.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.SearchDirectories"/> to a new list.</em></p><p>Alternative locations to look for PDBs.</p></summary>
         [Pure]
         public static OpenCoverSettings SetSearchDirectories(this OpenCoverSettings toolSettings, params string[] searchDirectories)
         {
@@ -739,7 +739,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.SearchDirectoriesInternal = searchDirectories.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.SearchDirectories"/> to a new list.</i></p><p>Alternative locations to look for PDBs.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.SearchDirectories"/> to a new list.</em></p><p>Alternative locations to look for PDBs.</p></summary>
         [Pure]
         public static OpenCoverSettings SetSearchDirectories(this OpenCoverSettings toolSettings, IEnumerable<string> searchDirectories)
         {
@@ -747,7 +747,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.SearchDirectoriesInternal = searchDirectories.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a searchDirectories to the existing <see cref="OpenCoverSettings.SearchDirectories"/>.</i></p><p>Alternative locations to look for PDBs.</p></summary>
+        /// <summary><p><em>Adds a searchDirectories to the existing <see cref="OpenCoverSettings.SearchDirectories"/>.</em></p><p>Alternative locations to look for PDBs.</p></summary>
         [Pure]
         public static OpenCoverSettings AddSearchDirectories(this OpenCoverSettings toolSettings, params string[] searchDirectories)
         {
@@ -755,7 +755,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.SearchDirectoriesInternal.AddRange(searchDirectories);
             return toolSettings;
         }
-        /// <summary><p><i>Adds a searchDirectories to the existing <see cref="OpenCoverSettings.SearchDirectories"/>.</i></p><p>Alternative locations to look for PDBs.</p></summary>
+        /// <summary><p><em>Adds a searchDirectories to the existing <see cref="OpenCoverSettings.SearchDirectories"/>.</em></p><p>Alternative locations to look for PDBs.</p></summary>
         [Pure]
         public static OpenCoverSettings AddSearchDirectories(this OpenCoverSettings toolSettings, IEnumerable<string> searchDirectories)
         {
@@ -763,7 +763,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.SearchDirectoriesInternal.AddRange(searchDirectories);
             return toolSettings;
         }
-        /// <summary><p><i>Clears <see cref="OpenCoverSettings.SearchDirectories"/>.</i></p><p>Alternative locations to look for PDBs.</p></summary>
+        /// <summary><p><em>Clears <see cref="OpenCoverSettings.SearchDirectories"/>.</em></p><p>Alternative locations to look for PDBs.</p></summary>
         [Pure]
         public static OpenCoverSettings ClearSearchDirectories(this OpenCoverSettings toolSettings)
         {
@@ -771,7 +771,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.SearchDirectoriesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a single searchDirectory to <see cref="OpenCoverSettings.SearchDirectories"/>.</i></p><p>Alternative locations to look for PDBs.</p></summary>
+        /// <summary><p><em>Adds a single searchDirectory to <see cref="OpenCoverSettings.SearchDirectories"/>.</em></p><p>Alternative locations to look for PDBs.</p></summary>
         [Pure]
         public static OpenCoverSettings AddSearchDirectory(this OpenCoverSettings toolSettings, string searchDirectory, bool evenIfNull = true)
         {
@@ -779,7 +779,7 @@ namespace Nuke.Common.Tools.OpenCover
             if (searchDirectory != null || evenIfNull) toolSettings.SearchDirectoriesInternal.Add(searchDirectory);
             return toolSettings;
         }
-        /// <summary><p><i>Removes a single searchDirectory from <see cref="OpenCoverSettings.SearchDirectories"/>.</i></p><p>Alternative locations to look for PDBs.</p></summary>
+        /// <summary><p><em>Removes a single searchDirectory from <see cref="OpenCoverSettings.SearchDirectories"/>.</em></p><p>Alternative locations to look for PDBs.</p></summary>
         [Pure]
         public static OpenCoverSettings RemoveSearchDirectory(this OpenCoverSettings toolSettings, string searchDirectory)
         {
@@ -787,7 +787,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.SearchDirectoriesInternal = toolSettings.SearchDirectories.Where(x => x == searchDirectory).ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.Service"/>.</i></p><p>The value provided in the target parameter is the name of a service rather than a name of a process. <em>Administrator</em> privileges recommended.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.Service"/>.</em></p><p>The value provided in the target parameter is the name of a service rather than a name of a process. <em>Administrator</em> privileges recommended.</p></summary>
         [Pure]
         public static OpenCoverSettings SetService(this OpenCoverSettings toolSettings, bool service)
         {
@@ -795,7 +795,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.Service = service;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="OpenCoverSettings.Service"/>.</i></p><p>The value provided in the target parameter is the name of a service rather than a name of a process. <em>Administrator</em> privileges recommended.</p></summary>
+        /// <summary><p><em>Enables <see cref="OpenCoverSettings.Service"/>.</em></p><p>The value provided in the target parameter is the name of a service rather than a name of a process. <em>Administrator</em> privileges recommended.</p></summary>
         [Pure]
         public static OpenCoverSettings EnableService(this OpenCoverSettings toolSettings)
         {
@@ -803,7 +803,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.Service = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="OpenCoverSettings.Service"/>.</i></p><p>The value provided in the target parameter is the name of a service rather than a name of a process. <em>Administrator</em> privileges recommended.</p></summary>
+        /// <summary><p><em>Disables <see cref="OpenCoverSettings.Service"/>.</em></p><p>The value provided in the target parameter is the name of a service rather than a name of a process. <em>Administrator</em> privileges recommended.</p></summary>
         [Pure]
         public static OpenCoverSettings DisableService(this OpenCoverSettings toolSettings)
         {
@@ -811,7 +811,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.Service = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="OpenCoverSettings.Service"/>.</i></p><p>The value provided in the target parameter is the name of a service rather than a name of a process. <em>Administrator</em> privileges recommended.</p></summary>
+        /// <summary><p><em>Toggles <see cref="OpenCoverSettings.Service"/>.</em></p><p>The value provided in the target parameter is the name of a service rather than a name of a process. <em>Administrator</em> privileges recommended.</p></summary>
         [Pure]
         public static OpenCoverSettings ToggleService(this OpenCoverSettings toolSettings)
         {
@@ -819,7 +819,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.Service = !toolSettings.Service;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.ShowUnvisited"/>.</i></p><p>Show a list of unvisited methods and classes after the coverage run is finished and the results are presented.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.ShowUnvisited"/>.</em></p><p>Show a list of unvisited methods and classes after the coverage run is finished and the results are presented.</p></summary>
         [Pure]
         public static OpenCoverSettings SetShowUnvisited(this OpenCoverSettings toolSettings, bool showUnvisited)
         {
@@ -827,7 +827,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ShowUnvisited = showUnvisited;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="OpenCoverSettings.ShowUnvisited"/>.</i></p><p>Show a list of unvisited methods and classes after the coverage run is finished and the results are presented.</p></summary>
+        /// <summary><p><em>Enables <see cref="OpenCoverSettings.ShowUnvisited"/>.</em></p><p>Show a list of unvisited methods and classes after the coverage run is finished and the results are presented.</p></summary>
         [Pure]
         public static OpenCoverSettings EnableShowUnvisited(this OpenCoverSettings toolSettings)
         {
@@ -835,7 +835,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ShowUnvisited = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="OpenCoverSettings.ShowUnvisited"/>.</i></p><p>Show a list of unvisited methods and classes after the coverage run is finished and the results are presented.</p></summary>
+        /// <summary><p><em>Disables <see cref="OpenCoverSettings.ShowUnvisited"/>.</em></p><p>Show a list of unvisited methods and classes after the coverage run is finished and the results are presented.</p></summary>
         [Pure]
         public static OpenCoverSettings DisableShowUnvisited(this OpenCoverSettings toolSettings)
         {
@@ -843,7 +843,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ShowUnvisited = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="OpenCoverSettings.ShowUnvisited"/>.</i></p><p>Show a list of unvisited methods and classes after the coverage run is finished and the results are presented.</p></summary>
+        /// <summary><p><em>Toggles <see cref="OpenCoverSettings.ShowUnvisited"/>.</em></p><p>Show a list of unvisited methods and classes after the coverage run is finished and the results are presented.</p></summary>
         [Pure]
         public static OpenCoverSettings ToggleShowUnvisited(this OpenCoverSettings toolSettings)
         {
@@ -851,7 +851,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ShowUnvisited = !toolSettings.ShowUnvisited;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.SkipAutoProperties"/>.</i></p><p>Neither track nor record auto-implemented properties. That is, skip getters and setters like these: <c>public bool Service { get; set; }</c></p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.SkipAutoProperties"/>.</em></p><p>Neither track nor record auto-implemented properties. That is, skip getters and setters like these: <c>public bool Service { get; set; }</c></p></summary>
         [Pure]
         public static OpenCoverSettings SetSkipAutoProperties(this OpenCoverSettings toolSettings, bool skipAutoProperties)
         {
@@ -859,7 +859,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.SkipAutoProperties = skipAutoProperties;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="OpenCoverSettings.SkipAutoProperties"/>.</i></p><p>Neither track nor record auto-implemented properties. That is, skip getters and setters like these: <c>public bool Service { get; set; }</c></p></summary>
+        /// <summary><p><em>Enables <see cref="OpenCoverSettings.SkipAutoProperties"/>.</em></p><p>Neither track nor record auto-implemented properties. That is, skip getters and setters like these: <c>public bool Service { get; set; }</c></p></summary>
         [Pure]
         public static OpenCoverSettings EnableSkipAutoProperties(this OpenCoverSettings toolSettings)
         {
@@ -867,7 +867,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.SkipAutoProperties = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="OpenCoverSettings.SkipAutoProperties"/>.</i></p><p>Neither track nor record auto-implemented properties. That is, skip getters and setters like these: <c>public bool Service { get; set; }</c></p></summary>
+        /// <summary><p><em>Disables <see cref="OpenCoverSettings.SkipAutoProperties"/>.</em></p><p>Neither track nor record auto-implemented properties. That is, skip getters and setters like these: <c>public bool Service { get; set; }</c></p></summary>
         [Pure]
         public static OpenCoverSettings DisableSkipAutoProperties(this OpenCoverSettings toolSettings)
         {
@@ -875,7 +875,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.SkipAutoProperties = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="OpenCoverSettings.SkipAutoProperties"/>.</i></p><p>Neither track nor record auto-implemented properties. That is, skip getters and setters like these: <c>public bool Service { get; set; }</c></p></summary>
+        /// <summary><p><em>Toggles <see cref="OpenCoverSettings.SkipAutoProperties"/>.</em></p><p>Neither track nor record auto-implemented properties. That is, skip getters and setters like these: <c>public bool Service { get; set; }</c></p></summary>
         [Pure]
         public static OpenCoverSettings ToggleSkipAutoProperties(this OpenCoverSettings toolSettings)
         {
@@ -883,7 +883,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.SkipAutoProperties = !toolSettings.SkipAutoProperties;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.MaximumVisitCount"/>.</i></p><p>Limits the number of visit counts recorded/reported for an instrumentation point. May have some performance gains as it can reduce the number of messages sent from the profiler. Coverage results should not be affected but will have an obvious impact on the Visit Counts reported.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.MaximumVisitCount"/>.</em></p><p>Limits the number of visit counts recorded/reported for an instrumentation point. May have some performance gains as it can reduce the number of messages sent from the profiler. Coverage results should not be affected but will have an obvious impact on the Visit Counts reported.</p></summary>
         [Pure]
         public static OpenCoverSettings SetMaximumVisitCount(this OpenCoverSettings toolSettings, int? maximumVisitCount)
         {
@@ -891,7 +891,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.MaximumVisitCount = maximumVisitCount;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.Registration"/>.</i></p><p>Use this switch to register and de-register the code coverage profiler. Alternatively use the optional user argument to do per-user registration where the user account does not have administrative permissions. Alternatively use an administrative account to register the profilers using the <em>regsvr32</em> utility. If you do not want to use the registry entries, use <c>-register:Path32</c> or <c>-register:Path64</c> to let opencover select the profiler for you. Depending on your choice it selects the <em>OpenCoverAssemblyLocation/x86/OpenCover.Profiler.dll</em> or <em>OpenCoverAssemblyLocation/x64/OpenCover.Profiler.dll</em>.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.Registration"/>.</em></p><p>Use this switch to register and de-register the code coverage profiler. Alternatively use the optional user argument to do per-user registration where the user account does not have administrative permissions. Alternatively use an administrative account to register the profilers using the <em>regsvr32</em> utility. If you do not want to use the registry entries, use <c>-register:Path32</c> or <c>-register:Path64</c> to let opencover select the profiler for you. Depending on your choice it selects the <em>OpenCoverAssemblyLocation/x86/OpenCover.Profiler.dll</em> or <em>OpenCoverAssemblyLocation/x64/OpenCover.Profiler.dll</em>.</p></summary>
         [Pure]
         public static OpenCoverSettings SetRegistration(this OpenCoverSettings toolSettings, RegistrationType? registration)
         {
@@ -899,7 +899,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.Registration = registration;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="OpenCoverSettings.TargetExitCodeOffset"/>.</i></p><p>Return the target process exit code instead of the OpenCover console exit code. Use the offset to return the OpenCover console at a value outside the range returned by the target process.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.TargetExitCodeOffset"/>.</em></p><p>Return the target process exit code instead of the OpenCover console exit code. Use the offset to return the OpenCover console at a value outside the range returned by the target process.</p></summary>
         [Pure]
         public static OpenCoverSettings SetTargetExitCodeOffset(this OpenCoverSettings toolSettings, int? targetExitCodeOffset)
         {

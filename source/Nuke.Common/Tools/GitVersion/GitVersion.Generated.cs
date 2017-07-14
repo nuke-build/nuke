@@ -44,7 +44,7 @@ namespace Nuke.Common.Tools.GitVersion
     [Serializable]
     public partial class GitVersionSettings : ToolSettings
     {
-        /// <inheritdoc />
+        /// <summary>Path of the executable to be invoked.</summary>
         public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetToolPath(packageId: $"GitVersion.CommandLine", packageExecutable: $"GitVersion.exe");
         public virtual bool UpdateAssemblyInfo { get; internal set; }
         protected override Arguments GetArgumentsInternal()
@@ -57,7 +57,7 @@ namespace Nuke.Common.Tools.GitVersion
     [ExcludeFromCodeCoverage]
     public static partial class GitVersionSettingsExtensions
     {
-        /// <summary><p><i>Sets <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</i></p></summary>
+        /// <summary><p><em>Sets <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</em></p></summary>
         [Pure]
         public static GitVersionSettings SetUpdateAssemblyInfo(this GitVersionSettings toolSettings, bool updateAssemblyInfo)
         {
@@ -65,7 +65,7 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.UpdateAssemblyInfo = updateAssemblyInfo;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</i></p></summary>
+        /// <summary><p><em>Enables <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</em></p></summary>
         [Pure]
         public static GitVersionSettings EnableUpdateAssemblyInfo(this GitVersionSettings toolSettings)
         {
@@ -73,7 +73,7 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.UpdateAssemblyInfo = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</i></p></summary>
+        /// <summary><p><em>Disables <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</em></p></summary>
         [Pure]
         public static GitVersionSettings DisableUpdateAssemblyInfo(this GitVersionSettings toolSettings)
         {
@@ -81,7 +81,7 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.UpdateAssemblyInfo = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</i></p></summary>
+        /// <summary><p><em>Toggles <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</em></p></summary>
         [Pure]
         public static GitVersionSettings ToggleUpdateAssemblyInfo(this GitVersionSettings toolSettings)
         {

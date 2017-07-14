@@ -108,7 +108,7 @@ namespace Nuke.Common.Tools.NuGet
         public virtual bool NonInteractive { get; internal set; }
         /// <summary><p>Specifies the timeout, in seconds, for pushing to a server. The default is 300 seconds (5 minutes).</p></summary>
         public virtual int? Timeout { get; internal set; }
-        /// <inheritdoc />
+        /// <summary>Path of the executable to be invoked.</summary>
         protected override void AssertValid()
         {
             base.AssertValid();
@@ -178,7 +178,7 @@ namespace Nuke.Common.Tools.NuGet
         public virtual NuGetVerbosity? Verbosity { get; internal set; }
         /// <summary><p>Overrides the version number from the <c>.nuspec</c> file.</p></summary>
         public virtual string Version { get; internal set; }
-        /// <inheritdoc />
+        /// <summary>Path of the executable to be invoked.</summary>
         protected override void AssertValid()
         {
             base.AssertValid();
@@ -285,7 +285,7 @@ namespace Nuke.Common.Tools.NuGet
     [ExcludeFromCodeCoverage]
     public static partial class NuGetPushSettingsExtensions
     {
-        /// <summary><p><i>Sets <see cref="NuGetPushSettings.TargetPath"/>.</i></p><p>Path of the package to push.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPushSettings.TargetPath"/>.</em></p><p>Path of the package to push.</p></summary>
         [Pure]
         public static NuGetPushSettings SetTargetPath(this NuGetPushSettings toolSettings, string targetPath)
         {
@@ -293,7 +293,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.TargetPath = targetPath;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPushSettings.ApiKey"/>.</i></p><p>The API key for the target repository. If not present, the one specified in <em>%AppData%\NuGet\NuGet.Config</em> is used.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPushSettings.ApiKey"/>.</em></p><p>The API key for the target repository. If not present, the one specified in <em>%AppData%\NuGet\NuGet.Config</em> is used.</p></summary>
         [Pure]
         public static NuGetPushSettings SetApiKey(this NuGetPushSettings toolSettings, string apiKey)
         {
@@ -301,7 +301,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.ApiKey = apiKey;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPushSettings.Source"/>.</i></p><p>Specifies the server URL. With NuGet 2.5+, NuGet will identify a UNC or local folder source and simply copy the file there instead of pushing it using HTTP. Also, starting with NuGet 3.4.2, this is a mandatory parameter unless the <em>NuGet.Config</em> file specifies a <em>DefaultPushSource</em> value.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPushSettings.Source"/>.</em></p><p>Specifies the server URL. With NuGet 2.5+, NuGet will identify a UNC or local folder source and simply copy the file there instead of pushing it using HTTP. Also, starting with NuGet 3.4.2, this is a mandatory parameter unless the <em>NuGet.Config</em> file specifies a <em>DefaultPushSource</em> value.</p></summary>
         [Pure]
         public static NuGetPushSettings SetSource(this NuGetPushSettings toolSettings, string source)
         {
@@ -309,7 +309,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Source = source;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPushSettings.SymbolSource"/>.</i></p><p><em>(3.5+)</em> Specifies the symbol server URL; nuget.smbsrc.net is used when pushing to nuget.org</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPushSettings.SymbolSource"/>.</em></p><p><em>(3.5+)</em> Specifies the symbol server URL; nuget.smbsrc.net is used when pushing to nuget.org</p></summary>
         [Pure]
         public static NuGetPushSettings SetSymbolSource(this NuGetPushSettings toolSettings, string symbolSource)
         {
@@ -317,7 +317,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.SymbolSource = symbolSource;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPushSettings.SymbolApiKey"/>.</i></p><p><em>(3.5+)</em> Specifies the API key for the URL specified in <c>-SymbolSource</c>.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPushSettings.SymbolApiKey"/>.</em></p><p><em>(3.5+)</em> Specifies the API key for the URL specified in <c>-SymbolSource</c>.</p></summary>
         [Pure]
         public static NuGetPushSettings SetSymbolApiKey(this NuGetPushSettings toolSettings, string symbolApiKey)
         {
@@ -325,7 +325,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.SymbolApiKey = symbolApiKey;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPushSettings.NoSymbols"/>.</i></p><p><em>(3.5+)</em> If a symbols package exists, it will not be pushed to a symbol server.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPushSettings.NoSymbols"/>.</em></p><p><em>(3.5+)</em> If a symbols package exists, it will not be pushed to a symbol server.</p></summary>
         [Pure]
         public static NuGetPushSettings SetNoSymbols(this NuGetPushSettings toolSettings, bool noSymbols)
         {
@@ -333,7 +333,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NoSymbols = noSymbols;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="NuGetPushSettings.NoSymbols"/>.</i></p><p><em>(3.5+)</em> If a symbols package exists, it will not be pushed to a symbol server.</p></summary>
+        /// <summary><p><em>Enables <see cref="NuGetPushSettings.NoSymbols"/>.</em></p><p><em>(3.5+)</em> If a symbols package exists, it will not be pushed to a symbol server.</p></summary>
         [Pure]
         public static NuGetPushSettings EnableNoSymbols(this NuGetPushSettings toolSettings)
         {
@@ -341,7 +341,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NoSymbols = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="NuGetPushSettings.NoSymbols"/>.</i></p><p><em>(3.5+)</em> If a symbols package exists, it will not be pushed to a symbol server.</p></summary>
+        /// <summary><p><em>Disables <see cref="NuGetPushSettings.NoSymbols"/>.</em></p><p><em>(3.5+)</em> If a symbols package exists, it will not be pushed to a symbol server.</p></summary>
         [Pure]
         public static NuGetPushSettings DisableNoSymbols(this NuGetPushSettings toolSettings)
         {
@@ -349,7 +349,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NoSymbols = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="NuGetPushSettings.NoSymbols"/>.</i></p><p><em>(3.5+)</em> If a symbols package exists, it will not be pushed to a symbol server.</p></summary>
+        /// <summary><p><em>Toggles <see cref="NuGetPushSettings.NoSymbols"/>.</em></p><p><em>(3.5+)</em> If a symbols package exists, it will not be pushed to a symbol server.</p></summary>
         [Pure]
         public static NuGetPushSettings ToggleNoSymbols(this NuGetPushSettings toolSettings)
         {
@@ -357,7 +357,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NoSymbols = !toolSettings.NoSymbols;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPushSettings.DisableBuffering"/>.</i></p><p>Disables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPushSettings.DisableBuffering"/>.</em></p><p>Disables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.</p></summary>
         [Pure]
         public static NuGetPushSettings SetDisableBuffering(this NuGetPushSettings toolSettings, bool disableBuffering)
         {
@@ -365,7 +365,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.DisableBuffering = disableBuffering;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="NuGetPushSettings.DisableBuffering"/>.</i></p><p>Disables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.</p></summary>
+        /// <summary><p><em>Enables <see cref="NuGetPushSettings.DisableBuffering"/>.</em></p><p>Disables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.</p></summary>
         [Pure]
         public static NuGetPushSettings EnableDisableBuffering(this NuGetPushSettings toolSettings)
         {
@@ -373,7 +373,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.DisableBuffering = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="NuGetPushSettings.DisableBuffering"/>.</i></p><p>Disables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.</p></summary>
+        /// <summary><p><em>Disables <see cref="NuGetPushSettings.DisableBuffering"/>.</em></p><p>Disables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.</p></summary>
         [Pure]
         public static NuGetPushSettings DisableDisableBuffering(this NuGetPushSettings toolSettings)
         {
@@ -381,7 +381,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.DisableBuffering = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="NuGetPushSettings.DisableBuffering"/>.</i></p><p>Disables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.</p></summary>
+        /// <summary><p><em>Toggles <see cref="NuGetPushSettings.DisableBuffering"/>.</em></p><p>Disables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.</p></summary>
         [Pure]
         public static NuGetPushSettings ToggleDisableBuffering(this NuGetPushSettings toolSettings)
         {
@@ -389,7 +389,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.DisableBuffering = !toolSettings.DisableBuffering;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPushSettings.ConfigFile"/>.</i></p><p><em>(2.5+)</em> The NuGet configuration file to apply. If not specified, <em>%AppData%\NuGet\NuGet.Config</em> is used.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPushSettings.ConfigFile"/>.</em></p><p><em>(2.5+)</em> The NuGet configuration file to apply. If not specified, <em>%AppData%\NuGet\NuGet.Config</em> is used.</p></summary>
         [Pure]
         public static NuGetPushSettings SetConfigFile(this NuGetPushSettings toolSettings, string configFile)
         {
@@ -397,7 +397,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.ConfigFile = configFile;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPushSettings.Verbosity"/>.</i></p><p><em>(2.5+)</em> Specifies the amount of details displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPushSettings.Verbosity"/>.</em></p><p><em>(2.5+)</em> Specifies the amount of details displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
         [Pure]
         public static NuGetPushSettings SetVerbosity(this NuGetPushSettings toolSettings, NuGetVerbosity? verbosity)
         {
@@ -405,7 +405,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Verbosity = verbosity;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPushSettings.ForceEnglishOutput"/>.</i></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPushSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
         public static NuGetPushSettings SetForceEnglishOutput(this NuGetPushSettings toolSettings, bool forceEnglishOutput)
         {
@@ -413,7 +413,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.ForceEnglishOutput = forceEnglishOutput;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="NuGetPushSettings.ForceEnglishOutput"/>.</i></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        /// <summary><p><em>Enables <see cref="NuGetPushSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
         public static NuGetPushSettings EnableForceEnglishOutput(this NuGetPushSettings toolSettings)
         {
@@ -421,7 +421,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.ForceEnglishOutput = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="NuGetPushSettings.ForceEnglishOutput"/>.</i></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        /// <summary><p><em>Disables <see cref="NuGetPushSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
         public static NuGetPushSettings DisableForceEnglishOutput(this NuGetPushSettings toolSettings)
         {
@@ -429,7 +429,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.ForceEnglishOutput = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="NuGetPushSettings.ForceEnglishOutput"/>.</i></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        /// <summary><p><em>Toggles <see cref="NuGetPushSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
         public static NuGetPushSettings ToggleForceEnglishOutput(this NuGetPushSettings toolSettings)
         {
@@ -437,7 +437,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.ForceEnglishOutput = !toolSettings.ForceEnglishOutput;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPushSettings.NonInteractive"/>.</i></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPushSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
         [Pure]
         public static NuGetPushSettings SetNonInteractive(this NuGetPushSettings toolSettings, bool nonInteractive)
         {
@@ -445,7 +445,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NonInteractive = nonInteractive;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="NuGetPushSettings.NonInteractive"/>.</i></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        /// <summary><p><em>Enables <see cref="NuGetPushSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
         [Pure]
         public static NuGetPushSettings EnableNonInteractive(this NuGetPushSettings toolSettings)
         {
@@ -453,7 +453,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NonInteractive = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="NuGetPushSettings.NonInteractive"/>.</i></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        /// <summary><p><em>Disables <see cref="NuGetPushSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
         [Pure]
         public static NuGetPushSettings DisableNonInteractive(this NuGetPushSettings toolSettings)
         {
@@ -461,7 +461,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NonInteractive = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="NuGetPushSettings.NonInteractive"/>.</i></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        /// <summary><p><em>Toggles <see cref="NuGetPushSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
         [Pure]
         public static NuGetPushSettings ToggleNonInteractive(this NuGetPushSettings toolSettings)
         {
@@ -469,7 +469,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NonInteractive = !toolSettings.NonInteractive;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPushSettings.Timeout"/>.</i></p><p>Specifies the timeout, in seconds, for pushing to a server. The default is 300 seconds (5 minutes).</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPushSettings.Timeout"/>.</em></p><p>Specifies the timeout, in seconds, for pushing to a server. The default is 300 seconds (5 minutes).</p></summary>
         [Pure]
         public static NuGetPushSettings SetTimeout(this NuGetPushSettings toolSettings, int? timeout)
         {
@@ -482,7 +482,7 @@ namespace Nuke.Common.Tools.NuGet
     [ExcludeFromCodeCoverage]
     public static partial class NuGetPackSettingsExtensions
     {
-        /// <summary><p><i>Sets <see cref="NuGetPackSettings.TargetPath"/>.</i></p><p>The <c>.nuspec</c> or <c>.csproj</c> file.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPackSettings.TargetPath"/>.</em></p><p>The <c>.nuspec</c> or <c>.csproj</c> file.</p></summary>
         [Pure]
         public static NuGetPackSettings SetTargetPath(this NuGetPackSettings toolSettings, string targetPath)
         {
@@ -490,7 +490,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.TargetPath = targetPath;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPackSettings.BasePath"/>.</i></p><p>Sets the base path of the files defined in the <c>.nuspec</c> file.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPackSettings.BasePath"/>.</em></p><p>Sets the base path of the files defined in the <c>.nuspec</c> file.</p></summary>
         [Pure]
         public static NuGetPackSettings SetBasePath(this NuGetPackSettings toolSettings, string basePath)
         {
@@ -498,7 +498,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.BasePath = basePath;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPackSettings.Build"/>.</i></p><p>Specifies that the project should be built before building the package.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPackSettings.Build"/>.</em></p><p>Specifies that the project should be built before building the package.</p></summary>
         [Pure]
         public static NuGetPackSettings SetBuild(this NuGetPackSettings toolSettings, bool build)
         {
@@ -506,7 +506,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Build = build;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="NuGetPackSettings.Build"/>.</i></p><p>Specifies that the project should be built before building the package.</p></summary>
+        /// <summary><p><em>Enables <see cref="NuGetPackSettings.Build"/>.</em></p><p>Specifies that the project should be built before building the package.</p></summary>
         [Pure]
         public static NuGetPackSettings EnableBuild(this NuGetPackSettings toolSettings)
         {
@@ -514,7 +514,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Build = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="NuGetPackSettings.Build"/>.</i></p><p>Specifies that the project should be built before building the package.</p></summary>
+        /// <summary><p><em>Disables <see cref="NuGetPackSettings.Build"/>.</em></p><p>Specifies that the project should be built before building the package.</p></summary>
         [Pure]
         public static NuGetPackSettings DisableBuild(this NuGetPackSettings toolSettings)
         {
@@ -522,7 +522,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Build = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="NuGetPackSettings.Build"/>.</i></p><p>Specifies that the project should be built before building the package.</p></summary>
+        /// <summary><p><em>Toggles <see cref="NuGetPackSettings.Build"/>.</em></p><p>Specifies that the project should be built before building the package.</p></summary>
         [Pure]
         public static NuGetPackSettings ToggleBuild(this NuGetPackSettings toolSettings)
         {
@@ -530,7 +530,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Build = !toolSettings.Build;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPackSettings.Exclude"/>.</i></p><p>Specifies one or more wildcard patterns to exclude when creating a package.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPackSettings.Exclude"/>.</em></p><p>Specifies one or more wildcard patterns to exclude when creating a package.</p></summary>
         [Pure]
         public static NuGetPackSettings SetExclude(this NuGetPackSettings toolSettings, string exclude)
         {
@@ -538,7 +538,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Exclude = exclude;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPackSettings.ExcludeEmptyDirectories"/>.</i></p><p>Prevent inclusion of empty directories when building the package.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPackSettings.ExcludeEmptyDirectories"/>.</em></p><p>Prevent inclusion of empty directories when building the package.</p></summary>
         [Pure]
         public static NuGetPackSettings SetExcludeEmptyDirectories(this NuGetPackSettings toolSettings, bool excludeEmptyDirectories)
         {
@@ -546,7 +546,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.ExcludeEmptyDirectories = excludeEmptyDirectories;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="NuGetPackSettings.ExcludeEmptyDirectories"/>.</i></p><p>Prevent inclusion of empty directories when building the package.</p></summary>
+        /// <summary><p><em>Enables <see cref="NuGetPackSettings.ExcludeEmptyDirectories"/>.</em></p><p>Prevent inclusion of empty directories when building the package.</p></summary>
         [Pure]
         public static NuGetPackSettings EnableExcludeEmptyDirectories(this NuGetPackSettings toolSettings)
         {
@@ -554,7 +554,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.ExcludeEmptyDirectories = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="NuGetPackSettings.ExcludeEmptyDirectories"/>.</i></p><p>Prevent inclusion of empty directories when building the package.</p></summary>
+        /// <summary><p><em>Disables <see cref="NuGetPackSettings.ExcludeEmptyDirectories"/>.</em></p><p>Prevent inclusion of empty directories when building the package.</p></summary>
         [Pure]
         public static NuGetPackSettings DisableExcludeEmptyDirectories(this NuGetPackSettings toolSettings)
         {
@@ -562,7 +562,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.ExcludeEmptyDirectories = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="NuGetPackSettings.ExcludeEmptyDirectories"/>.</i></p><p>Prevent inclusion of empty directories when building the package.</p></summary>
+        /// <summary><p><em>Toggles <see cref="NuGetPackSettings.ExcludeEmptyDirectories"/>.</em></p><p>Prevent inclusion of empty directories when building the package.</p></summary>
         [Pure]
         public static NuGetPackSettings ToggleExcludeEmptyDirectories(this NuGetPackSettings toolSettings)
         {
@@ -570,7 +570,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.ExcludeEmptyDirectories = !toolSettings.ExcludeEmptyDirectories;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPackSettings.IncludeReferencedProjects"/>.</i></p><p>Indicates that the built package should include referenced projects either as dependencies or as part of the package. If a referenced project has a corresponding <c>.nuspec</c> file that has the same name as the project, then that referenced project is added as a dependency. Otherwise, the referenced project is added as part of the package.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPackSettings.IncludeReferencedProjects"/>.</em></p><p>Indicates that the built package should include referenced projects either as dependencies or as part of the package. If a referenced project has a corresponding <c>.nuspec</c> file that has the same name as the project, then that referenced project is added as a dependency. Otherwise, the referenced project is added as part of the package.</p></summary>
         [Pure]
         public static NuGetPackSettings SetIncludeReferencedProjects(this NuGetPackSettings toolSettings, bool includeReferencedProjects)
         {
@@ -578,7 +578,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.IncludeReferencedProjects = includeReferencedProjects;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="NuGetPackSettings.IncludeReferencedProjects"/>.</i></p><p>Indicates that the built package should include referenced projects either as dependencies or as part of the package. If a referenced project has a corresponding <c>.nuspec</c> file that has the same name as the project, then that referenced project is added as a dependency. Otherwise, the referenced project is added as part of the package.</p></summary>
+        /// <summary><p><em>Enables <see cref="NuGetPackSettings.IncludeReferencedProjects"/>.</em></p><p>Indicates that the built package should include referenced projects either as dependencies or as part of the package. If a referenced project has a corresponding <c>.nuspec</c> file that has the same name as the project, then that referenced project is added as a dependency. Otherwise, the referenced project is added as part of the package.</p></summary>
         [Pure]
         public static NuGetPackSettings EnableIncludeReferencedProjects(this NuGetPackSettings toolSettings)
         {
@@ -586,7 +586,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.IncludeReferencedProjects = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="NuGetPackSettings.IncludeReferencedProjects"/>.</i></p><p>Indicates that the built package should include referenced projects either as dependencies or as part of the package. If a referenced project has a corresponding <c>.nuspec</c> file that has the same name as the project, then that referenced project is added as a dependency. Otherwise, the referenced project is added as part of the package.</p></summary>
+        /// <summary><p><em>Disables <see cref="NuGetPackSettings.IncludeReferencedProjects"/>.</em></p><p>Indicates that the built package should include referenced projects either as dependencies or as part of the package. If a referenced project has a corresponding <c>.nuspec</c> file that has the same name as the project, then that referenced project is added as a dependency. Otherwise, the referenced project is added as part of the package.</p></summary>
         [Pure]
         public static NuGetPackSettings DisableIncludeReferencedProjects(this NuGetPackSettings toolSettings)
         {
@@ -594,7 +594,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.IncludeReferencedProjects = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="NuGetPackSettings.IncludeReferencedProjects"/>.</i></p><p>Indicates that the built package should include referenced projects either as dependencies or as part of the package. If a referenced project has a corresponding <c>.nuspec</c> file that has the same name as the project, then that referenced project is added as a dependency. Otherwise, the referenced project is added as part of the package.</p></summary>
+        /// <summary><p><em>Toggles <see cref="NuGetPackSettings.IncludeReferencedProjects"/>.</em></p><p>Indicates that the built package should include referenced projects either as dependencies or as part of the package. If a referenced project has a corresponding <c>.nuspec</c> file that has the same name as the project, then that referenced project is added as a dependency. Otherwise, the referenced project is added as part of the package.</p></summary>
         [Pure]
         public static NuGetPackSettings ToggleIncludeReferencedProjects(this NuGetPackSettings toolSettings)
         {
@@ -602,7 +602,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.IncludeReferencedProjects = !toolSettings.IncludeReferencedProjects;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPackSettings.MinClientVersion"/>.</i></p><p>Set the <em>minClientVersion</em> attribute for the created package. This value will override the value of the existing <em>minClientVersion</em> attribute (if any) in the <c>.nuspec</c> file.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPackSettings.MinClientVersion"/>.</em></p><p>Set the <em>minClientVersion</em> attribute for the created package. This value will override the value of the existing <em>minClientVersion</em> attribute (if any) in the <c>.nuspec</c> file.</p></summary>
         [Pure]
         public static NuGetPackSettings SetMinClientVersion(this NuGetPackSettings toolSettings, bool minClientVersion)
         {
@@ -610,7 +610,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.MinClientVersion = minClientVersion;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="NuGetPackSettings.MinClientVersion"/>.</i></p><p>Set the <em>minClientVersion</em> attribute for the created package. This value will override the value of the existing <em>minClientVersion</em> attribute (if any) in the <c>.nuspec</c> file.</p></summary>
+        /// <summary><p><em>Enables <see cref="NuGetPackSettings.MinClientVersion"/>.</em></p><p>Set the <em>minClientVersion</em> attribute for the created package. This value will override the value of the existing <em>minClientVersion</em> attribute (if any) in the <c>.nuspec</c> file.</p></summary>
         [Pure]
         public static NuGetPackSettings EnableMinClientVersion(this NuGetPackSettings toolSettings)
         {
@@ -618,7 +618,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.MinClientVersion = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="NuGetPackSettings.MinClientVersion"/>.</i></p><p>Set the <em>minClientVersion</em> attribute for the created package. This value will override the value of the existing <em>minClientVersion</em> attribute (if any) in the <c>.nuspec</c> file.</p></summary>
+        /// <summary><p><em>Disables <see cref="NuGetPackSettings.MinClientVersion"/>.</em></p><p>Set the <em>minClientVersion</em> attribute for the created package. This value will override the value of the existing <em>minClientVersion</em> attribute (if any) in the <c>.nuspec</c> file.</p></summary>
         [Pure]
         public static NuGetPackSettings DisableMinClientVersion(this NuGetPackSettings toolSettings)
         {
@@ -626,7 +626,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.MinClientVersion = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="NuGetPackSettings.MinClientVersion"/>.</i></p><p>Set the <em>minClientVersion</em> attribute for the created package. This value will override the value of the existing <em>minClientVersion</em> attribute (if any) in the <c>.nuspec</c> file.</p></summary>
+        /// <summary><p><em>Toggles <see cref="NuGetPackSettings.MinClientVersion"/>.</em></p><p>Set the <em>minClientVersion</em> attribute for the created package. This value will override the value of the existing <em>minClientVersion</em> attribute (if any) in the <c>.nuspec</c> file.</p></summary>
         [Pure]
         public static NuGetPackSettings ToggleMinClientVersion(this NuGetPackSettings toolSettings)
         {
@@ -634,7 +634,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.MinClientVersion = !toolSettings.MinClientVersion;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPackSettings.ForceEnglishOutput"/>.</i></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPackSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
         public static NuGetPackSettings SetForceEnglishOutput(this NuGetPackSettings toolSettings, bool forceEnglishOutput)
         {
@@ -642,7 +642,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.ForceEnglishOutput = forceEnglishOutput;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="NuGetPackSettings.ForceEnglishOutput"/>.</i></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        /// <summary><p><em>Enables <see cref="NuGetPackSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
         public static NuGetPackSettings EnableForceEnglishOutput(this NuGetPackSettings toolSettings)
         {
@@ -650,7 +650,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.ForceEnglishOutput = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="NuGetPackSettings.ForceEnglishOutput"/>.</i></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        /// <summary><p><em>Disables <see cref="NuGetPackSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
         public static NuGetPackSettings DisableForceEnglishOutput(this NuGetPackSettings toolSettings)
         {
@@ -658,7 +658,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.ForceEnglishOutput = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="NuGetPackSettings.ForceEnglishOutput"/>.</i></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        /// <summary><p><em>Toggles <see cref="NuGetPackSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
         public static NuGetPackSettings ToggleForceEnglishOutput(this NuGetPackSettings toolSettings)
         {
@@ -666,7 +666,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.ForceEnglishOutput = !toolSettings.ForceEnglishOutput;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPackSettings.MSBuildPath"/>.</i></p><p><em>(4.0+)</em> Specifies the path of MSBuild to use with the command, taking precedence over <c>-MSBuildVersion</c>.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPackSettings.MSBuildPath"/>.</em></p><p><em>(4.0+)</em> Specifies the path of MSBuild to use with the command, taking precedence over <c>-MSBuildVersion</c>.</p></summary>
         [Pure]
         public static NuGetPackSettings SetMSBuildPath(this NuGetPackSettings toolSettings, string msbuildPath)
         {
@@ -674,7 +674,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.MSBuildPath = msbuildPath;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPackSettings.MSBuildVersion"/>.</i></p><p><em>(3.2+)</em> Specifies the version of MSBuild to be used with this command. Supported values are <em>4</em>, <em>12</em>, <em>14</em>. By default the MSBuild in your path is picked, otherwise it defaults to the highest installed version of MSBuild.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPackSettings.MSBuildVersion"/>.</em></p><p><em>(3.2+)</em> Specifies the version of MSBuild to be used with this command. Supported values are <em>4</em>, <em>12</em>, <em>14</em>. By default the MSBuild in your path is picked, otherwise it defaults to the highest installed version of MSBuild.</p></summary>
         [Pure]
         public static NuGetPackSettings SetMSBuildVersion(this NuGetPackSettings toolSettings, NuGetMSBuildVersion? msbuildVersion)
         {
@@ -682,7 +682,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.MSBuildVersion = msbuildVersion;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPackSettings.NoDefaultExcludes"/>.</i></p><p>Prevents default exclusion of NuGet package files and files and folders starting with a dot, such as <em>.svn</em> and <c>.gitignore</c>.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPackSettings.NoDefaultExcludes"/>.</em></p><p>Prevents default exclusion of NuGet package files and files and folders starting with a dot, such as <em>.svn</em> and <c>.gitignore</c>.</p></summary>
         [Pure]
         public static NuGetPackSettings SetNoDefaultExcludes(this NuGetPackSettings toolSettings, bool noDefaultExcludes)
         {
@@ -690,7 +690,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NoDefaultExcludes = noDefaultExcludes;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="NuGetPackSettings.NoDefaultExcludes"/>.</i></p><p>Prevents default exclusion of NuGet package files and files and folders starting with a dot, such as <em>.svn</em> and <c>.gitignore</c>.</p></summary>
+        /// <summary><p><em>Enables <see cref="NuGetPackSettings.NoDefaultExcludes"/>.</em></p><p>Prevents default exclusion of NuGet package files and files and folders starting with a dot, such as <em>.svn</em> and <c>.gitignore</c>.</p></summary>
         [Pure]
         public static NuGetPackSettings EnableNoDefaultExcludes(this NuGetPackSettings toolSettings)
         {
@@ -698,7 +698,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NoDefaultExcludes = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="NuGetPackSettings.NoDefaultExcludes"/>.</i></p><p>Prevents default exclusion of NuGet package files and files and folders starting with a dot, such as <em>.svn</em> and <c>.gitignore</c>.</p></summary>
+        /// <summary><p><em>Disables <see cref="NuGetPackSettings.NoDefaultExcludes"/>.</em></p><p>Prevents default exclusion of NuGet package files and files and folders starting with a dot, such as <em>.svn</em> and <c>.gitignore</c>.</p></summary>
         [Pure]
         public static NuGetPackSettings DisableNoDefaultExcludes(this NuGetPackSettings toolSettings)
         {
@@ -706,7 +706,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NoDefaultExcludes = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="NuGetPackSettings.NoDefaultExcludes"/>.</i></p><p>Prevents default exclusion of NuGet package files and files and folders starting with a dot, such as <em>.svn</em> and <c>.gitignore</c>.</p></summary>
+        /// <summary><p><em>Toggles <see cref="NuGetPackSettings.NoDefaultExcludes"/>.</em></p><p>Prevents default exclusion of NuGet package files and files and folders starting with a dot, such as <em>.svn</em> and <c>.gitignore</c>.</p></summary>
         [Pure]
         public static NuGetPackSettings ToggleNoDefaultExcludes(this NuGetPackSettings toolSettings)
         {
@@ -714,7 +714,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NoDefaultExcludes = !toolSettings.NoDefaultExcludes;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPackSettings.NoPackageAnalysis"/>.</i></p><p>Specifies that pack should not run package analysis after building the package.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPackSettings.NoPackageAnalysis"/>.</em></p><p>Specifies that pack should not run package analysis after building the package.</p></summary>
         [Pure]
         public static NuGetPackSettings SetNoPackageAnalysis(this NuGetPackSettings toolSettings, bool noPackageAnalysis)
         {
@@ -722,7 +722,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NoPackageAnalysis = noPackageAnalysis;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="NuGetPackSettings.NoPackageAnalysis"/>.</i></p><p>Specifies that pack should not run package analysis after building the package.</p></summary>
+        /// <summary><p><em>Enables <see cref="NuGetPackSettings.NoPackageAnalysis"/>.</em></p><p>Specifies that pack should not run package analysis after building the package.</p></summary>
         [Pure]
         public static NuGetPackSettings EnableNoPackageAnalysis(this NuGetPackSettings toolSettings)
         {
@@ -730,7 +730,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NoPackageAnalysis = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="NuGetPackSettings.NoPackageAnalysis"/>.</i></p><p>Specifies that pack should not run package analysis after building the package.</p></summary>
+        /// <summary><p><em>Disables <see cref="NuGetPackSettings.NoPackageAnalysis"/>.</em></p><p>Specifies that pack should not run package analysis after building the package.</p></summary>
         [Pure]
         public static NuGetPackSettings DisableNoPackageAnalysis(this NuGetPackSettings toolSettings)
         {
@@ -738,7 +738,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NoPackageAnalysis = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="NuGetPackSettings.NoPackageAnalysis"/>.</i></p><p>Specifies that pack should not run package analysis after building the package.</p></summary>
+        /// <summary><p><em>Toggles <see cref="NuGetPackSettings.NoPackageAnalysis"/>.</em></p><p>Specifies that pack should not run package analysis after building the package.</p></summary>
         [Pure]
         public static NuGetPackSettings ToggleNoPackageAnalysis(this NuGetPackSettings toolSettings)
         {
@@ -746,7 +746,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NoPackageAnalysis = !toolSettings.NoPackageAnalysis;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPackSettings.OutputDirectory"/>.</i></p><p>Specifies the folder in which the created package is stored. If no folder is specified, the current folder is used.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPackSettings.OutputDirectory"/>.</em></p><p>Specifies the folder in which the created package is stored. If no folder is specified, the current folder is used.</p></summary>
         [Pure]
         public static NuGetPackSettings SetOutputDirectory(this NuGetPackSettings toolSettings, string outputDirectory)
         {
@@ -754,7 +754,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.OutputDirectory = outputDirectory;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPackSettings.Properties"/> to a new dictionary.</i></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPackSettings.Properties"/> to a new dictionary.</em></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
         [Pure]
         public static NuGetPackSettings SetProperties(this NuGetPackSettings toolSettings, IDictionary<string, string> properties)
         {
@@ -762,7 +762,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
             return toolSettings;
         }
-        /// <summary><p><i>Clears <see cref="NuGetPackSettings.Properties"/>.</i></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
+        /// <summary><p><em>Clears <see cref="NuGetPackSettings.Properties"/>.</em></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
         [Pure]
         public static NuGetPackSettings ClearProperties(this NuGetPackSettings toolSettings)
         {
@@ -770,7 +770,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.PropertiesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a property to the existing <see cref="NuGetPackSettings.Properties"/>.</i></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
+        /// <summary><p><em>Adds a property to the existing <see cref="NuGetPackSettings.Properties"/>.</em></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
         [Pure]
         public static NuGetPackSettings AddProperty(this NuGetPackSettings toolSettings, string propertyKey, string propertyValue)
         {
@@ -778,7 +778,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
             return toolSettings;
         }
-        /// <summary><p><i>Removes a single property from <see cref="NuGetPackSettings.Properties"/>.</i></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
+        /// <summary><p><em>Removes a single property from <see cref="NuGetPackSettings.Properties"/>.</em></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
         [Pure]
         public static NuGetPackSettings RemoveProperty(this NuGetPackSettings toolSettings, string propertyKey)
         {
@@ -786,7 +786,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.PropertiesInternal.Remove(propertyKey);
             return toolSettings;
         }
-        /// <summary><p><i>Sets a property in <see cref="NuGetPackSettings.Properties"/>.</i></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
+        /// <summary><p><em>Sets a property in <see cref="NuGetPackSettings.Properties"/>.</em></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
         [Pure]
         public static NuGetPackSettings SetProperty(this NuGetPackSettings toolSettings, string propertyKey, string propertyValue)
         {
@@ -794,7 +794,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.PropertiesInternal[propertyKey] = propertyValue;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPackSettings.Suffix"/>.</i></p><p><em>(3.4.4+)</em> Appends a suffix to the internally generated version number, typically used for appending build or other pre-release identifiers. For example, using <c>-suffix nightly</c> will create a package with a version number like <c>1.2.3-nightly</c>. Suffixes must start with a letter to avoid warnings, errors, and potential incompatibilities with different versions of NuGet and the NuGet Package Manager.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPackSettings.Suffix"/>.</em></p><p><em>(3.4.4+)</em> Appends a suffix to the internally generated version number, typically used for appending build or other pre-release identifiers. For example, using <c>-suffix nightly</c> will create a package with a version number like <c>1.2.3-nightly</c>. Suffixes must start with a letter to avoid warnings, errors, and potential incompatibilities with different versions of NuGet and the NuGet Package Manager.</p></summary>
         [Pure]
         public static NuGetPackSettings SetSuffix(this NuGetPackSettings toolSettings, string suffix)
         {
@@ -802,7 +802,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Suffix = suffix;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPackSettings.Symbols"/>.</i></p><p>Specifies that the package contains sources and symbols. When used with a <c>.nuspec</c> file, this creates a regular NuGet package file and the corresponding symbols package.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPackSettings.Symbols"/>.</em></p><p>Specifies that the package contains sources and symbols. When used with a <c>.nuspec</c> file, this creates a regular NuGet package file and the corresponding symbols package.</p></summary>
         [Pure]
         public static NuGetPackSettings SetSymbols(this NuGetPackSettings toolSettings, bool symbols)
         {
@@ -810,7 +810,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Symbols = symbols;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="NuGetPackSettings.Symbols"/>.</i></p><p>Specifies that the package contains sources and symbols. When used with a <c>.nuspec</c> file, this creates a regular NuGet package file and the corresponding symbols package.</p></summary>
+        /// <summary><p><em>Enables <see cref="NuGetPackSettings.Symbols"/>.</em></p><p>Specifies that the package contains sources and symbols. When used with a <c>.nuspec</c> file, this creates a regular NuGet package file and the corresponding symbols package.</p></summary>
         [Pure]
         public static NuGetPackSettings EnableSymbols(this NuGetPackSettings toolSettings)
         {
@@ -818,7 +818,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Symbols = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="NuGetPackSettings.Symbols"/>.</i></p><p>Specifies that the package contains sources and symbols. When used with a <c>.nuspec</c> file, this creates a regular NuGet package file and the corresponding symbols package.</p></summary>
+        /// <summary><p><em>Disables <see cref="NuGetPackSettings.Symbols"/>.</em></p><p>Specifies that the package contains sources and symbols. When used with a <c>.nuspec</c> file, this creates a regular NuGet package file and the corresponding symbols package.</p></summary>
         [Pure]
         public static NuGetPackSettings DisableSymbols(this NuGetPackSettings toolSettings)
         {
@@ -826,7 +826,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Symbols = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="NuGetPackSettings.Symbols"/>.</i></p><p>Specifies that the package contains sources and symbols. When used with a <c>.nuspec</c> file, this creates a regular NuGet package file and the corresponding symbols package.</p></summary>
+        /// <summary><p><em>Toggles <see cref="NuGetPackSettings.Symbols"/>.</em></p><p>Specifies that the package contains sources and symbols. When used with a <c>.nuspec</c> file, this creates a regular NuGet package file and the corresponding symbols package.</p></summary>
         [Pure]
         public static NuGetPackSettings ToggleSymbols(this NuGetPackSettings toolSettings)
         {
@@ -834,7 +834,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Symbols = !toolSettings.Symbols;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPackSettings.Tool"/>.</i></p><p>Specifies that the output files of the project should be placed in the <c>tool</c> folder.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPackSettings.Tool"/>.</em></p><p>Specifies that the output files of the project should be placed in the <c>tool</c> folder.</p></summary>
         [Pure]
         public static NuGetPackSettings SetTool(this NuGetPackSettings toolSettings, bool tool)
         {
@@ -842,7 +842,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Tool = tool;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="NuGetPackSettings.Tool"/>.</i></p><p>Specifies that the output files of the project should be placed in the <c>tool</c> folder.</p></summary>
+        /// <summary><p><em>Enables <see cref="NuGetPackSettings.Tool"/>.</em></p><p>Specifies that the output files of the project should be placed in the <c>tool</c> folder.</p></summary>
         [Pure]
         public static NuGetPackSettings EnableTool(this NuGetPackSettings toolSettings)
         {
@@ -850,7 +850,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Tool = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="NuGetPackSettings.Tool"/>.</i></p><p>Specifies that the output files of the project should be placed in the <c>tool</c> folder.</p></summary>
+        /// <summary><p><em>Disables <see cref="NuGetPackSettings.Tool"/>.</em></p><p>Specifies that the output files of the project should be placed in the <c>tool</c> folder.</p></summary>
         [Pure]
         public static NuGetPackSettings DisableTool(this NuGetPackSettings toolSettings)
         {
@@ -858,7 +858,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Tool = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="NuGetPackSettings.Tool"/>.</i></p><p>Specifies that the output files of the project should be placed in the <c>tool</c> folder.</p></summary>
+        /// <summary><p><em>Toggles <see cref="NuGetPackSettings.Tool"/>.</em></p><p>Specifies that the output files of the project should be placed in the <c>tool</c> folder.</p></summary>
         [Pure]
         public static NuGetPackSettings ToggleTool(this NuGetPackSettings toolSettings)
         {
@@ -866,7 +866,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Tool = !toolSettings.Tool;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPackSettings.Verbosity"/>.</i></p><p><em>(2.5+)</em> Specifies the amount of details displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPackSettings.Verbosity"/>.</em></p><p><em>(2.5+)</em> Specifies the amount of details displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
         [Pure]
         public static NuGetPackSettings SetVerbosity(this NuGetPackSettings toolSettings, NuGetVerbosity? verbosity)
         {
@@ -874,7 +874,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Verbosity = verbosity;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetPackSettings.Version"/>.</i></p><p>Overrides the version number from the <c>.nuspec</c> file.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPackSettings.Version"/>.</em></p><p>Overrides the version number from the <c>.nuspec</c> file.</p></summary>
         [Pure]
         public static NuGetPackSettings SetVersion(this NuGetPackSettings toolSettings, string version)
         {
@@ -887,7 +887,7 @@ namespace Nuke.Common.Tools.NuGet
     [ExcludeFromCodeCoverage]
     public static partial class NuGetRestoreSettingsExtensions
     {
-        /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.TargetPath"/>.</i></p><p>Defines the project to restore. I.e., the location of a solution file, a <c>packages.config</c>, or a <c>project.json</c> file.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.TargetPath"/>.</em></p><p>Defines the project to restore. I.e., the location of a solution file, a <c>packages.config</c>, or a <c>project.json</c> file.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetTargetPath(this NuGetRestoreSettings toolSettings, string targetPath)
         {
@@ -895,7 +895,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.TargetPath = targetPath;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.ConfigFile"/>.</i></p><p>The NuGet configuration file to apply. If not specified, <em>%AppData%\NuGet\NuGet.Config</em> is used.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.ConfigFile"/>.</em></p><p>The NuGet configuration file to apply. If not specified, <em>%AppData%\NuGet\NuGet.Config</em> is used.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetConfigFile(this NuGetRestoreSettings toolSettings, string configFile)
         {
@@ -903,7 +903,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.ConfigFile = configFile;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.DirectDownload"/>.</i></p><p><em>(4.0+)</em> Downloads packages directly without populating caches with any binaries or metadata.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.DirectDownload"/>.</em></p><p><em>(4.0+)</em> Downloads packages directly without populating caches with any binaries or metadata.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetDirectDownload(this NuGetRestoreSettings toolSettings, bool directDownload)
         {
@@ -911,7 +911,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.DirectDownload = directDownload;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="NuGetRestoreSettings.DirectDownload"/>.</i></p><p><em>(4.0+)</em> Downloads packages directly without populating caches with any binaries or metadata.</p></summary>
+        /// <summary><p><em>Enables <see cref="NuGetRestoreSettings.DirectDownload"/>.</em></p><p><em>(4.0+)</em> Downloads packages directly without populating caches with any binaries or metadata.</p></summary>
         [Pure]
         public static NuGetRestoreSettings EnableDirectDownload(this NuGetRestoreSettings toolSettings)
         {
@@ -919,7 +919,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.DirectDownload = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="NuGetRestoreSettings.DirectDownload"/>.</i></p><p><em>(4.0+)</em> Downloads packages directly without populating caches with any binaries or metadata.</p></summary>
+        /// <summary><p><em>Disables <see cref="NuGetRestoreSettings.DirectDownload"/>.</em></p><p><em>(4.0+)</em> Downloads packages directly without populating caches with any binaries or metadata.</p></summary>
         [Pure]
         public static NuGetRestoreSettings DisableDirectDownload(this NuGetRestoreSettings toolSettings)
         {
@@ -927,7 +927,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.DirectDownload = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="NuGetRestoreSettings.DirectDownload"/>.</i></p><p><em>(4.0+)</em> Downloads packages directly without populating caches with any binaries or metadata.</p></summary>
+        /// <summary><p><em>Toggles <see cref="NuGetRestoreSettings.DirectDownload"/>.</em></p><p><em>(4.0+)</em> Downloads packages directly without populating caches with any binaries or metadata.</p></summary>
         [Pure]
         public static NuGetRestoreSettings ToggleDirectDownload(this NuGetRestoreSettings toolSettings)
         {
@@ -935,7 +935,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.DirectDownload = !toolSettings.DirectDownload;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.DisableParallelProcessing"/>.</i></p><p>Disables restoring multiple packages in parallel.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.DisableParallelProcessing"/>.</em></p><p>Disables restoring multiple packages in parallel.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetDisableParallelProcessing(this NuGetRestoreSettings toolSettings, bool disableParallelProcessing)
         {
@@ -943,7 +943,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.DisableParallelProcessing = disableParallelProcessing;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="NuGetRestoreSettings.DisableParallelProcessing"/>.</i></p><p>Disables restoring multiple packages in parallel.</p></summary>
+        /// <summary><p><em>Enables <see cref="NuGetRestoreSettings.DisableParallelProcessing"/>.</em></p><p>Disables restoring multiple packages in parallel.</p></summary>
         [Pure]
         public static NuGetRestoreSettings EnableDisableParallelProcessing(this NuGetRestoreSettings toolSettings)
         {
@@ -951,7 +951,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.DisableParallelProcessing = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="NuGetRestoreSettings.DisableParallelProcessing"/>.</i></p><p>Disables restoring multiple packages in parallel.</p></summary>
+        /// <summary><p><em>Disables <see cref="NuGetRestoreSettings.DisableParallelProcessing"/>.</em></p><p>Disables restoring multiple packages in parallel.</p></summary>
         [Pure]
         public static NuGetRestoreSettings DisableDisableParallelProcessing(this NuGetRestoreSettings toolSettings)
         {
@@ -959,7 +959,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.DisableParallelProcessing = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="NuGetRestoreSettings.DisableParallelProcessing"/>.</i></p><p>Disables restoring multiple packages in parallel.</p></summary>
+        /// <summary><p><em>Toggles <see cref="NuGetRestoreSettings.DisableParallelProcessing"/>.</em></p><p>Disables restoring multiple packages in parallel.</p></summary>
         [Pure]
         public static NuGetRestoreSettings ToggleDisableParallelProcessing(this NuGetRestoreSettings toolSettings)
         {
@@ -967,7 +967,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.DisableParallelProcessing = !toolSettings.DisableParallelProcessing;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.FallbackSource"/> to a new list.</i></p><p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.FallbackSource"/> to a new list.</em></p><p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetFallbackSource(this NuGetRestoreSettings toolSettings, params string[] fallbackSource)
         {
@@ -975,7 +975,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.FallbackSourceInternal = fallbackSource.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.FallbackSource"/> to a new list.</i></p><p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.FallbackSource"/> to a new list.</em></p><p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetFallbackSource(this NuGetRestoreSettings toolSettings, IEnumerable<string> fallbackSource)
         {
@@ -983,7 +983,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.FallbackSourceInternal = fallbackSource.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a fallbackSource to the existing <see cref="NuGetRestoreSettings.FallbackSource"/>.</i></p><p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
+        /// <summary><p><em>Adds a fallbackSource to the existing <see cref="NuGetRestoreSettings.FallbackSource"/>.</em></p><p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
         [Pure]
         public static NuGetRestoreSettings AddFallbackSource(this NuGetRestoreSettings toolSettings, params string[] fallbackSource)
         {
@@ -991,7 +991,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.FallbackSourceInternal.AddRange(fallbackSource);
             return toolSettings;
         }
-        /// <summary><p><i>Adds a fallbackSource to the existing <see cref="NuGetRestoreSettings.FallbackSource"/>.</i></p><p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
+        /// <summary><p><em>Adds a fallbackSource to the existing <see cref="NuGetRestoreSettings.FallbackSource"/>.</em></p><p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
         [Pure]
         public static NuGetRestoreSettings AddFallbackSource(this NuGetRestoreSettings toolSettings, IEnumerable<string> fallbackSource)
         {
@@ -999,7 +999,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.FallbackSourceInternal.AddRange(fallbackSource);
             return toolSettings;
         }
-        /// <summary><p><i>Clears <see cref="NuGetRestoreSettings.FallbackSource"/>.</i></p><p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
+        /// <summary><p><em>Clears <see cref="NuGetRestoreSettings.FallbackSource"/>.</em></p><p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
         [Pure]
         public static NuGetRestoreSettings ClearFallbackSource(this NuGetRestoreSettings toolSettings)
         {
@@ -1007,7 +1007,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.FallbackSourceInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a single fallbackSource to <see cref="NuGetRestoreSettings.FallbackSource"/>.</i></p><p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
+        /// <summary><p><em>Adds a single fallbackSource to <see cref="NuGetRestoreSettings.FallbackSource"/>.</em></p><p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
         [Pure]
         public static NuGetRestoreSettings AddFallbackSource(this NuGetRestoreSettings toolSettings, string fallbackSource, bool evenIfNull = true)
         {
@@ -1015,7 +1015,7 @@ namespace Nuke.Common.Tools.NuGet
             if (fallbackSource != null || evenIfNull) toolSettings.FallbackSourceInternal.Add(fallbackSource);
             return toolSettings;
         }
-        /// <summary><p><i>Removes a single fallbackSource from <see cref="NuGetRestoreSettings.FallbackSource"/>.</i></p><p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
+        /// <summary><p><em>Removes a single fallbackSource from <see cref="NuGetRestoreSettings.FallbackSource"/>.</em></p><p><em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source.</p></summary>
         [Pure]
         public static NuGetRestoreSettings RemoveFallbackSource(this NuGetRestoreSettings toolSettings, string fallbackSource)
         {
@@ -1023,7 +1023,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.FallbackSourceInternal = toolSettings.FallbackSource.Where(x => x == fallbackSource).ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.ForceEnglishOutput"/>.</i></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetForceEnglishOutput(this NuGetRestoreSettings toolSettings, bool forceEnglishOutput)
         {
@@ -1031,7 +1031,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.ForceEnglishOutput = forceEnglishOutput;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="NuGetRestoreSettings.ForceEnglishOutput"/>.</i></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        /// <summary><p><em>Enables <see cref="NuGetRestoreSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
         public static NuGetRestoreSettings EnableForceEnglishOutput(this NuGetRestoreSettings toolSettings)
         {
@@ -1039,7 +1039,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.ForceEnglishOutput = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="NuGetRestoreSettings.ForceEnglishOutput"/>.</i></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        /// <summary><p><em>Disables <see cref="NuGetRestoreSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
         public static NuGetRestoreSettings DisableForceEnglishOutput(this NuGetRestoreSettings toolSettings)
         {
@@ -1047,7 +1047,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.ForceEnglishOutput = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="NuGetRestoreSettings.ForceEnglishOutput"/>.</i></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        /// <summary><p><em>Toggles <see cref="NuGetRestoreSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         [Pure]
         public static NuGetRestoreSettings ToggleForceEnglishOutput(this NuGetRestoreSettings toolSettings)
         {
@@ -1055,7 +1055,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.ForceEnglishOutput = !toolSettings.ForceEnglishOutput;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.MSBuildPath"/>.</i></p><p><em>(4.0+)</em> Specifies the path of MSBuild to use with the command, taking precedence over <c>-MSBuildVersion</c>.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.MSBuildPath"/>.</em></p><p><em>(4.0+)</em> Specifies the path of MSBuild to use with the command, taking precedence over <c>-MSBuildVersion</c>.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetMSBuildPath(this NuGetRestoreSettings toolSettings, string msbuildPath)
         {
@@ -1063,7 +1063,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.MSBuildPath = msbuildPath;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.MSBuildVersion"/>.</i></p><p><em>(3.2+)</em> Specifies the version of MSBuild to be used with this command. Supported values are <em>4</em>, <em>12</em>, <em>14</em>, <em>15</em>. By default the MSBuild in your path is picked, otherwise it defaults to the highest installed version of MSBuild.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.MSBuildVersion"/>.</em></p><p><em>(3.2+)</em> Specifies the version of MSBuild to be used with this command. Supported values are <em>4</em>, <em>12</em>, <em>14</em>, <em>15</em>. By default the MSBuild in your path is picked, otherwise it defaults to the highest installed version of MSBuild.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetMSBuildVersion(this NuGetRestoreSettings toolSettings, Nuke.Common.Tools.MSBuild.MSBuildVersion? msbuildVersion)
         {
@@ -1071,7 +1071,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.MSBuildVersion = msbuildVersion;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.NoCache"/>.</i></p><p>Prevents NuGet from using packages from local machine caches.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.NoCache"/>.</em></p><p>Prevents NuGet from using packages from local machine caches.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetNoCache(this NuGetRestoreSettings toolSettings, bool noCache)
         {
@@ -1079,7 +1079,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NoCache = noCache;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="NuGetRestoreSettings.NoCache"/>.</i></p><p>Prevents NuGet from using packages from local machine caches.</p></summary>
+        /// <summary><p><em>Enables <see cref="NuGetRestoreSettings.NoCache"/>.</em></p><p>Prevents NuGet from using packages from local machine caches.</p></summary>
         [Pure]
         public static NuGetRestoreSettings EnableNoCache(this NuGetRestoreSettings toolSettings)
         {
@@ -1087,7 +1087,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NoCache = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="NuGetRestoreSettings.NoCache"/>.</i></p><p>Prevents NuGet from using packages from local machine caches.</p></summary>
+        /// <summary><p><em>Disables <see cref="NuGetRestoreSettings.NoCache"/>.</em></p><p>Prevents NuGet from using packages from local machine caches.</p></summary>
         [Pure]
         public static NuGetRestoreSettings DisableNoCache(this NuGetRestoreSettings toolSettings)
         {
@@ -1095,7 +1095,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NoCache = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="NuGetRestoreSettings.NoCache"/>.</i></p><p>Prevents NuGet from using packages from local machine caches.</p></summary>
+        /// <summary><p><em>Toggles <see cref="NuGetRestoreSettings.NoCache"/>.</em></p><p>Prevents NuGet from using packages from local machine caches.</p></summary>
         [Pure]
         public static NuGetRestoreSettings ToggleNoCache(this NuGetRestoreSettings toolSettings)
         {
@@ -1103,7 +1103,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NoCache = !toolSettings.NoCache;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.NonInteractive"/>.</i></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetNonInteractive(this NuGetRestoreSettings toolSettings, bool nonInteractive)
         {
@@ -1111,7 +1111,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NonInteractive = nonInteractive;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="NuGetRestoreSettings.NonInteractive"/>.</i></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        /// <summary><p><em>Enables <see cref="NuGetRestoreSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
         [Pure]
         public static NuGetRestoreSettings EnableNonInteractive(this NuGetRestoreSettings toolSettings)
         {
@@ -1119,7 +1119,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NonInteractive = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="NuGetRestoreSettings.NonInteractive"/>.</i></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        /// <summary><p><em>Disables <see cref="NuGetRestoreSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
         [Pure]
         public static NuGetRestoreSettings DisableNonInteractive(this NuGetRestoreSettings toolSettings)
         {
@@ -1127,7 +1127,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NonInteractive = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="NuGetRestoreSettings.NonInteractive"/>.</i></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        /// <summary><p><em>Toggles <see cref="NuGetRestoreSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
         [Pure]
         public static NuGetRestoreSettings ToggleNonInteractive(this NuGetRestoreSettings toolSettings)
         {
@@ -1135,7 +1135,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.NonInteractive = !toolSettings.NonInteractive;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.OutputDirectory"/>.</i></p><p>Specifies the folder in which packages are installed. If no folder is specified, the current folder is used.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.OutputDirectory"/>.</em></p><p>Specifies the folder in which packages are installed. If no folder is specified, the current folder is used.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetOutputDirectory(this NuGetRestoreSettings toolSettings, string outputDirectory)
         {
@@ -1143,7 +1143,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.OutputDirectory = outputDirectory;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.PackageSaveMode"/>.</i></p><p>Specifies the types of files to save after package installation: one of <c>nuspec</c>, <c>nupkg</c>, or <c>nuspec;nupkg</c>.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.PackageSaveMode"/>.</em></p><p>Specifies the types of files to save after package installation: one of <c>nuspec</c>, <c>nupkg</c>, or <c>nuspec;nupkg</c>.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetPackageSaveMode(this NuGetRestoreSettings toolSettings, PackageSaveMode? packageSaveMode)
         {
@@ -1151,7 +1151,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.PackageSaveMode = packageSaveMode;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.PackagesDirectory"/>.</i></p><p>Same as <c>OutputDirectory</c>.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.PackagesDirectory"/>.</em></p><p>Same as <c>OutputDirectory</c>.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetPackagesDirectory(this NuGetRestoreSettings toolSettings, string packagesDirectory)
         {
@@ -1159,7 +1159,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.PackagesDirectory = packagesDirectory;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.Project2ProjectTimeOut"/>.</i></p><p>Timeout in seconds for resolving project-to-project references.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.Project2ProjectTimeOut"/>.</em></p><p>Timeout in seconds for resolving project-to-project references.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetProject2ProjectTimeOut(this NuGetRestoreSettings toolSettings, int? project2ProjectTimeOut)
         {
@@ -1167,7 +1167,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Project2ProjectTimeOut = project2ProjectTimeOut;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.Recursive"/>.</i></p><p><em>(4.0+)</em> Restores all references projects for UWP and .NET Core projects. Does not apply to projects using <c>packages.config</c>.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.Recursive"/>.</em></p><p><em>(4.0+)</em> Restores all references projects for UWP and .NET Core projects. Does not apply to projects using <c>packages.config</c>.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetRecursive(this NuGetRestoreSettings toolSettings, bool recursive)
         {
@@ -1175,7 +1175,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Recursive = recursive;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="NuGetRestoreSettings.Recursive"/>.</i></p><p><em>(4.0+)</em> Restores all references projects for UWP and .NET Core projects. Does not apply to projects using <c>packages.config</c>.</p></summary>
+        /// <summary><p><em>Enables <see cref="NuGetRestoreSettings.Recursive"/>.</em></p><p><em>(4.0+)</em> Restores all references projects for UWP and .NET Core projects. Does not apply to projects using <c>packages.config</c>.</p></summary>
         [Pure]
         public static NuGetRestoreSettings EnableRecursive(this NuGetRestoreSettings toolSettings)
         {
@@ -1183,7 +1183,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Recursive = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="NuGetRestoreSettings.Recursive"/>.</i></p><p><em>(4.0+)</em> Restores all references projects for UWP and .NET Core projects. Does not apply to projects using <c>packages.config</c>.</p></summary>
+        /// <summary><p><em>Disables <see cref="NuGetRestoreSettings.Recursive"/>.</em></p><p><em>(4.0+)</em> Restores all references projects for UWP and .NET Core projects. Does not apply to projects using <c>packages.config</c>.</p></summary>
         [Pure]
         public static NuGetRestoreSettings DisableRecursive(this NuGetRestoreSettings toolSettings)
         {
@@ -1191,7 +1191,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Recursive = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="NuGetRestoreSettings.Recursive"/>.</i></p><p><em>(4.0+)</em> Restores all references projects for UWP and .NET Core projects. Does not apply to projects using <c>packages.config</c>.</p></summary>
+        /// <summary><p><em>Toggles <see cref="NuGetRestoreSettings.Recursive"/>.</em></p><p><em>(4.0+)</em> Restores all references projects for UWP and .NET Core projects. Does not apply to projects using <c>packages.config</c>.</p></summary>
         [Pure]
         public static NuGetRestoreSettings ToggleRecursive(this NuGetRestoreSettings toolSettings)
         {
@@ -1199,7 +1199,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Recursive = !toolSettings.Recursive;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.RequireConsent"/>.</i></p><p>Verifies that restoring packages is enabled before downloading and installing the packages. For details, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore">Package Restore</a>.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.RequireConsent"/>.</em></p><p>Verifies that restoring packages is enabled before downloading and installing the packages. For details, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore">Package Restore</a>.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetRequireConsent(this NuGetRestoreSettings toolSettings, bool requireConsent)
         {
@@ -1207,7 +1207,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.RequireConsent = requireConsent;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="NuGetRestoreSettings.RequireConsent"/>.</i></p><p>Verifies that restoring packages is enabled before downloading and installing the packages. For details, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore">Package Restore</a>.</p></summary>
+        /// <summary><p><em>Enables <see cref="NuGetRestoreSettings.RequireConsent"/>.</em></p><p>Verifies that restoring packages is enabled before downloading and installing the packages. For details, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore">Package Restore</a>.</p></summary>
         [Pure]
         public static NuGetRestoreSettings EnableRequireConsent(this NuGetRestoreSettings toolSettings)
         {
@@ -1215,7 +1215,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.RequireConsent = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="NuGetRestoreSettings.RequireConsent"/>.</i></p><p>Verifies that restoring packages is enabled before downloading and installing the packages. For details, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore">Package Restore</a>.</p></summary>
+        /// <summary><p><em>Disables <see cref="NuGetRestoreSettings.RequireConsent"/>.</em></p><p>Verifies that restoring packages is enabled before downloading and installing the packages. For details, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore">Package Restore</a>.</p></summary>
         [Pure]
         public static NuGetRestoreSettings DisableRequireConsent(this NuGetRestoreSettings toolSettings)
         {
@@ -1223,7 +1223,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.RequireConsent = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="NuGetRestoreSettings.RequireConsent"/>.</i></p><p>Verifies that restoring packages is enabled before downloading and installing the packages. For details, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore">Package Restore</a>.</p></summary>
+        /// <summary><p><em>Toggles <see cref="NuGetRestoreSettings.RequireConsent"/>.</em></p><p>Verifies that restoring packages is enabled before downloading and installing the packages. For details, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore">Package Restore</a>.</p></summary>
         [Pure]
         public static NuGetRestoreSettings ToggleRequireConsent(this NuGetRestoreSettings toolSettings)
         {
@@ -1231,7 +1231,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.RequireConsent = !toolSettings.RequireConsent;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.SolutionDirectory"/>.</i></p><p>Specifies the solution folder. Not valid when restoring packages for a solution.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.SolutionDirectory"/>.</em></p><p>Specifies the solution folder. Not valid when restoring packages for a solution.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetSolutionDirectory(this NuGetRestoreSettings toolSettings, string solutionDirectory)
         {
@@ -1239,7 +1239,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.SolutionDirectory = solutionDirectory;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.Source"/> to a new list.</i></p><p>Specifies list of package sources to use for the restore.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.Source"/> to a new list.</em></p><p>Specifies list of package sources to use for the restore.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetSource(this NuGetRestoreSettings toolSettings, params string[] source)
         {
@@ -1247,7 +1247,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.SourceInternal = source.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.Source"/> to a new list.</i></p><p>Specifies list of package sources to use for the restore.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.Source"/> to a new list.</em></p><p>Specifies list of package sources to use for the restore.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetSource(this NuGetRestoreSettings toolSettings, IEnumerable<string> source)
         {
@@ -1255,7 +1255,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.SourceInternal = source.ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a source to the existing <see cref="NuGetRestoreSettings.Source"/>.</i></p><p>Specifies list of package sources to use for the restore.</p></summary>
+        /// <summary><p><em>Adds a source to the existing <see cref="NuGetRestoreSettings.Source"/>.</em></p><p>Specifies list of package sources to use for the restore.</p></summary>
         [Pure]
         public static NuGetRestoreSettings AddSource(this NuGetRestoreSettings toolSettings, params string[] source)
         {
@@ -1263,7 +1263,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.SourceInternal.AddRange(source);
             return toolSettings;
         }
-        /// <summary><p><i>Adds a source to the existing <see cref="NuGetRestoreSettings.Source"/>.</i></p><p>Specifies list of package sources to use for the restore.</p></summary>
+        /// <summary><p><em>Adds a source to the existing <see cref="NuGetRestoreSettings.Source"/>.</em></p><p>Specifies list of package sources to use for the restore.</p></summary>
         [Pure]
         public static NuGetRestoreSettings AddSource(this NuGetRestoreSettings toolSettings, IEnumerable<string> source)
         {
@@ -1271,7 +1271,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.SourceInternal.AddRange(source);
             return toolSettings;
         }
-        /// <summary><p><i>Clears <see cref="NuGetRestoreSettings.Source"/>.</i></p><p>Specifies list of package sources to use for the restore.</p></summary>
+        /// <summary><p><em>Clears <see cref="NuGetRestoreSettings.Source"/>.</em></p><p>Specifies list of package sources to use for the restore.</p></summary>
         [Pure]
         public static NuGetRestoreSettings ClearSource(this NuGetRestoreSettings toolSettings)
         {
@@ -1279,7 +1279,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.SourceInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><i>Adds a single source to <see cref="NuGetRestoreSettings.Source"/>.</i></p><p>Specifies list of package sources to use for the restore.</p></summary>
+        /// <summary><p><em>Adds a single source to <see cref="NuGetRestoreSettings.Source"/>.</em></p><p>Specifies list of package sources to use for the restore.</p></summary>
         [Pure]
         public static NuGetRestoreSettings AddSource(this NuGetRestoreSettings toolSettings, string source, bool evenIfNull = true)
         {
@@ -1287,7 +1287,7 @@ namespace Nuke.Common.Tools.NuGet
             if (source != null || evenIfNull) toolSettings.SourceInternal.Add(source);
             return toolSettings;
         }
-        /// <summary><p><i>Removes a single source from <see cref="NuGetRestoreSettings.Source"/>.</i></p><p>Specifies list of package sources to use for the restore.</p></summary>
+        /// <summary><p><em>Removes a single source from <see cref="NuGetRestoreSettings.Source"/>.</em></p><p>Specifies list of package sources to use for the restore.</p></summary>
         [Pure]
         public static NuGetRestoreSettings RemoveSource(this NuGetRestoreSettings toolSettings, string source)
         {
@@ -1295,7 +1295,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.SourceInternal = toolSettings.Source.Where(x => x == source).ToList();
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="NuGetRestoreSettings.Verbosity"/>.</i></p><p><em>(2.5+)</em> Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.Verbosity"/>.</em></p><p><em>(2.5+)</em> Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetVerbosity(this NuGetRestoreSettings toolSettings, NuGetVerbosity? verbosity)
         {

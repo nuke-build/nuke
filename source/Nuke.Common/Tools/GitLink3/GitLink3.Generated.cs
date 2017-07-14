@@ -44,7 +44,7 @@ namespace Nuke.Common.Tools.GitLink3
     [Serializable]
     public partial class GitLink3Settings : ToolSettings
     {
-        /// <inheritdoc />
+        /// <summary>Path of the executable to be invoked.</summary>
         public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetToolPath(packageId: $"gitlink", packageExecutable: $"GitLink.exe");
         /// <summary><p>The PDB to add source indexing to.</p></summary>
         public virtual string PdbFile { get; internal set; }
@@ -73,7 +73,7 @@ namespace Nuke.Common.Tools.GitLink3
     [ExcludeFromCodeCoverage]
     public static partial class GitLink3SettingsExtensions
     {
-        /// <summary><p><i>Sets <see cref="GitLink3Settings.PdbFile"/>.</i></p><p>The PDB to add source indexing to.</p></summary>
+        /// <summary><p><em>Sets <see cref="GitLink3Settings.PdbFile"/>.</em></p><p>The PDB to add source indexing to.</p></summary>
         [Pure]
         public static GitLink3Settings SetPdbFile(this GitLink3Settings toolSettings, string pdbFile)
         {
@@ -81,7 +81,7 @@ namespace Nuke.Common.Tools.GitLink3
             toolSettings.PdbFile = pdbFile;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="GitLink3Settings.Method"/>.</i></p><p>The method for SRCSRV to retrieve source code. One of &lt;Http|Powershell&gt;. Default is Http.</p></summary>
+        /// <summary><p><em>Sets <see cref="GitLink3Settings.Method"/>.</em></p><p>The method for SRCSRV to retrieve source code. One of &lt;Http|Powershell&gt;. Default is Http.</p></summary>
         [Pure]
         public static GitLink3Settings SetMethod(this GitLink3Settings toolSettings, GitLinkSourceCodeRetrieval? method)
         {
@@ -89,7 +89,7 @@ namespace Nuke.Common.Tools.GitLink3
             toolSettings.Method = method;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="GitLink3Settings.RepositoryUrl"/>.</i></p><p>Url to remote git repository.</p></summary>
+        /// <summary><p><em>Sets <see cref="GitLink3Settings.RepositoryUrl"/>.</em></p><p>Url to remote git repository.</p></summary>
         [Pure]
         public static GitLink3Settings SetRepositoryUrl(this GitLink3Settings toolSettings, string repositoryUrl)
         {
@@ -97,7 +97,7 @@ namespace Nuke.Common.Tools.GitLink3
             toolSettings.RepositoryUrl = repositoryUrl;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="GitLink3Settings.CommitSha"/>.</i></p><p>The git ref to assume all the source code belongs to.</p></summary>
+        /// <summary><p><em>Sets <see cref="GitLink3Settings.CommitSha"/>.</em></p><p>The git ref to assume all the source code belongs to.</p></summary>
         [Pure]
         public static GitLink3Settings SetCommitSha(this GitLink3Settings toolSettings, string commitSha)
         {
@@ -105,7 +105,7 @@ namespace Nuke.Common.Tools.GitLink3
             toolSettings.CommitSha = commitSha;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="GitLink3Settings.BaseDirectory"/>.</i></p><p>The path to the root of the git repo.</p></summary>
+        /// <summary><p><em>Sets <see cref="GitLink3Settings.BaseDirectory"/>.</em></p><p>The path to the root of the git repo.</p></summary>
         [Pure]
         public static GitLink3Settings SetBaseDirectory(this GitLink3Settings toolSettings, string baseDirectory)
         {
@@ -113,7 +113,7 @@ namespace Nuke.Common.Tools.GitLink3
             toolSettings.BaseDirectory = baseDirectory;
             return toolSettings;
         }
-        /// <summary><p><i>Sets <see cref="GitLink3Settings.SkipVerification"/>.</i></p><p>Skip verification that all source files are available in source control.</p></summary>
+        /// <summary><p><em>Sets <see cref="GitLink3Settings.SkipVerification"/>.</em></p><p>Skip verification that all source files are available in source control.</p></summary>
         [Pure]
         public static GitLink3Settings SetSkipVerification(this GitLink3Settings toolSettings, bool skipVerification)
         {
@@ -121,7 +121,7 @@ namespace Nuke.Common.Tools.GitLink3
             toolSettings.SkipVerification = skipVerification;
             return toolSettings;
         }
-        /// <summary><p><i>Enables <see cref="GitLink3Settings.SkipVerification"/>.</i></p><p>Skip verification that all source files are available in source control.</p></summary>
+        /// <summary><p><em>Enables <see cref="GitLink3Settings.SkipVerification"/>.</em></p><p>Skip verification that all source files are available in source control.</p></summary>
         [Pure]
         public static GitLink3Settings EnableSkipVerification(this GitLink3Settings toolSettings)
         {
@@ -129,7 +129,7 @@ namespace Nuke.Common.Tools.GitLink3
             toolSettings.SkipVerification = true;
             return toolSettings;
         }
-        /// <summary><p><i>Disables <see cref="GitLink3Settings.SkipVerification"/>.</i></p><p>Skip verification that all source files are available in source control.</p></summary>
+        /// <summary><p><em>Disables <see cref="GitLink3Settings.SkipVerification"/>.</em></p><p>Skip verification that all source files are available in source control.</p></summary>
         [Pure]
         public static GitLink3Settings DisableSkipVerification(this GitLink3Settings toolSettings)
         {
@@ -137,7 +137,7 @@ namespace Nuke.Common.Tools.GitLink3
             toolSettings.SkipVerification = false;
             return toolSettings;
         }
-        /// <summary><p><i>Toggles <see cref="GitLink3Settings.SkipVerification"/>.</i></p><p>Skip verification that all source files are available in source control.</p></summary>
+        /// <summary><p><em>Toggles <see cref="GitLink3Settings.SkipVerification"/>.</em></p><p>Skip verification that all source files are available in source control.</p></summary>
         [Pure]
         public static GitLink3Settings ToggleSkipVerification(this GitLink3Settings toolSettings)
         {
