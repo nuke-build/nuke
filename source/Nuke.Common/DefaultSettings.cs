@@ -33,11 +33,13 @@ namespace Nuke.Common
     /// Target Restore =&gt; _ =&gt; _
     ///         .DependsOn(Clean)
     ///         .Executes(() =&gt; NuGetRestore(s =&gt; DefaultSettings.NuGetRestore));
-    /// 
+    /// </code>
+    /// <code>
     /// Target Compile =&gt; _ =&gt; _
     ///         .DependsOn(Restore)
     ///         .Executes(() =&gt; MSBuild(s =&gt; DefaultSettings.MSBuildCompile));
-    /// 
+    /// </code>
+    /// <code>
     /// Target Pack =&gt; _ =&gt; _
     ///         .DependsOn(Compile)
     ///         .Executes(() =&gt; MSBuild(s =&gt; DefaultSettings.MSBuildPack));
@@ -46,11 +48,24 @@ namespace Nuke.Common
     [PublicAPI]
     public class DefaultSettings
     {
-        public static MSBuildSettings MSBuildCommon => new MSBuildSettings()
-                .SetWorkingDirectory(Build.Instance.SolutionDirectory)
-                .SetSolutionFile(Build.Instance.SolutionFile)
-                .SetConfiguration(Build.Instance.Configuration)
-                .AddLogger(EnvironmentInfo.Variable("TEAMCITY_MSBUILD_LOGGER"), evenIfNull: false);
+        public static MSBuildSettings MSBuildCommon
+        {
+            get
+            {
+                var toolSettings = new MSBuildSettings()
+                        .SetWorkingDirectory(Build.Instance.SolutionDirectory)
+                        .SetSolutionFile(Build.Instance.SolutionFile)
+                        .SetConfiguration(Build.Instance.Configuration);
+
+                var teamCityLogger = EnvironmentInfo.Variable("TEAMCITY_MSBUILD_LOGGER");
+                if (!string.IsNullOrWhiteSpace(teamCityLogger))
+                    toolSettings = toolSettings
+                            .AddLogger(teamCityLogger, evenIfNull: false)
+                            .EnableNoConsoleLogger();
+
+                return toolSettings;
+            }
+        }
 
         public static MSBuildSettings MSBuildRestore => MSBuildCommon
                 .SetTargets("Restore");
