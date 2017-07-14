@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!--<PackageReference Include="Nuke.Common" Version="*" />-->
+    <PackageReference Include="Nuke.Common" Version="*" />
 
     <PackageReference Include="gitlink" Version="3.0.0-unstable0090" />
     <PackageReference Include="GitVersion.CommandLine" Version="4.0.0-beta0011" />
@@ -27,9 +27,9 @@
     <PackageReference Include="xunit.runner.console" Version="2.2.0" />
   </ItemGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <ProjectReference Include="..\source\Nuke.Core\Nuke.Core.csproj" />
     <ProjectReference Include="..\source\Nuke.Common\Nuke.Common.csproj" />
-  </ItemGroup>
+  </ItemGroup>-->
 
 </Project>
