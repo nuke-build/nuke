@@ -36,14 +36,9 @@ class NukeBuild : GitHubBuild
 
     Target Compile => _ => _
             .DependsOn(Restore)
-            .Executes(() => MSBuild(s =>
-                (IsWin
-                    ? DefaultSettings.MSBuildCompileWithAssemblyInfo
-                    : DefaultSettings.MSBuildCompile)
-                // TODO UB: overload with 'onlyIfNotNull = false'
-                // DefaultSettings.MSBuild would then use TEAMCITY_LOGGER by default
-                // and only if applied from outside, adding it (and not null)
-                .AddLoggers(new[] { Variable("CUSTOM_LOGGER") }.WhereNotNull())));
+            .Executes(() => MSBuild(s => IsWin
+                ? DefaultSettings.MSBuildCompileWithAssemblyInfo
+                : DefaultSettings.MSBuildCompile));
 
     Target Link => _ => _
             .OnlyWhen(() => false)

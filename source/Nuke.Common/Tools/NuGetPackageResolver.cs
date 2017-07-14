@@ -15,7 +15,6 @@ using Nuke.Core.Utilities.Collections;
 
 namespace Nuke.Common.Tools
 {
-    // TODO: add File/Directory.Exists assertions
     [PublicAPI]
     public static class NuGetPackageResolver
     {
