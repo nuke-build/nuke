@@ -5,14 +5,17 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Colorful;
+using JetBrains.Annotations;
 using Nuke.Core.Execution;
 using Nuke.Core.Utilities;
 
 namespace Nuke.Core.OutputSinks
 {
+    [PublicAPI]
     public class ConsoleOutputSink : IOutputSink
     {
         public static IOutputSink Instance { get; } = new ConsoleOutputSink();
@@ -103,12 +106,22 @@ namespace Nuke.Core.OutputSinks
             }
         }
 
-        protected void SetFont (string fontName)
+        protected void SetFont (string integratedFontName)
         {
-            var fullResourceName = $"{typeof(OutputSink).Namespace}.Fonts.{fontName}.flf";
+            var fullResourceName = $"{typeof(OutputSink).Namespace}.Fonts.{integratedFontName}.flf";
             var assembly = GetType().GetTypeInfo().Assembly;
-            var resourceStream = assembly.GetManifestResourceStream (fullResourceName);
-            _figlet = new Figlet(FigletFont.Load(resourceStream));
+            var resourceStream = assembly.GetManifestResourceStream(fullResourceName);
+            SetFontFromStream(resourceStream.NotNull());
+        }
+
+        protected void SetFontFromStream (Stream stream)
+        {
+            _figlet = new Figlet(FigletFont.Load(stream));
+        }
+
+        protected void SetFontFromFile (string path)
+        {
+            _figlet = new Figlet(FigletFont.Load(path));
         }
 
         protected string GetAscii (string text)
