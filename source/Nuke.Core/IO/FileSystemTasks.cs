@@ -129,7 +129,7 @@ namespace Nuke.Core.IO
                 => Path.Combine(target, PathConstruction.GetRelativePath(source, path));
 
             Directory.CreateDirectory(target);
-            Directory.GetDirectories(source).ForEach(x => CopyRecursively(x, GetDestinationPath(x), policy));
+            Directory.GetDirectories(source).ForEach(x => CopyRecursivelyInternal(x, GetDestinationPath(x), policy));
 
             foreach (var sourceFile in Directory.GetFiles(source))
             {
