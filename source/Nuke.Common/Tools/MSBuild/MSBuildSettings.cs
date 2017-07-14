@@ -4,20 +4,25 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Core.Utilities;
 
 namespace Nuke.Common.Tools.MSBuild
 {
     partial class MSBuildSettings
     {
+        [CanBeNull]
         private string GetTargetPlatform ()
         {
+            if (TargetPlatform == null)
+                return null;
+
             if (TargetPlatform == MSBuildTargetPlatform.MSIL)
-                return TargetPath == null || TargetPath.EndsWith (".sln", StringComparison.OrdinalIgnoreCase)
+                return TargetPath == null || TargetPath.EndsWith(".sln", StringComparison.OrdinalIgnoreCase)
                     ? "Any CPU".DoubleQuote()
                     : "AnyCPU";
 
-            return TargetPlatform.ToString ();
+            return TargetPlatform.ToString();
         }
     }
 }

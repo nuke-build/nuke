@@ -190,7 +190,7 @@ namespace Nuke.Common.Tools
             return IsLegacyFile(packagesConfigFile);
         }
 
-
+        // TODO: move out of class
         public class InstalledPackage
         {
             public sealed class Comparer : IEqualityComparer<InstalledPackage>
