@@ -10,7 +10,7 @@ namespace Nuke.Common.Tools.InspectCode
 {
     partial class InspectCodeSettings
     {
-        private string GetPackageExecutable ()
+        internal string GetPackageExecutable ()
         {
             return EnvironmentInfo.Is64Bit ? "inspectcode.exe" : "inspectcode.x86.exe";
         }

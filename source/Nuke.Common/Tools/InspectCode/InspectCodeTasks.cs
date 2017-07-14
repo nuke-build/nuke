@@ -4,58 +4,85 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using NuGet.Versioning;
+using JetBrains.Annotations;
 using Nuke.Core;
 using Nuke.Core.BuildServers;
+using Nuke.Core.IO;
+using Nuke.Core.Tooling;
+using Nuke.Core.Utilities.Collections;
+#if !NETCORE
+using Nuke.Common.IO;
+#endif
 
 namespace Nuke.Common.Tools.InspectCode
 {
     public static partial class InspectCodeTasks
     {
-        private const int s_versionOffset = 100;
-
         static partial void PreProcess (InspectCodeSettings toolSettings)
         {
-            // TODO: AssertValid();
-            // toolSettings.Ass();
+            var installedPlugins = GetInstalledPlugins();
+            if (installedPlugins.Count == 0 && toolSettings.Extensions.Count == 0)
+                return;
 
-            //var assembly = Assembly.ReflectionOnlyLoadFrom(toolSettings.ToolPath);
-            //var assemblyVersion = assembly.GetName().Version;
-            //var waveVersion = new NuGetVersion(assemblyVersion.Major - s_versionOffset, minor: 0, patch: 0);
-            //var installedPlugins = GetInstalledPlugins(waveVersion).ToList();
-            //if (installedPlugins.Count == 0)
-            //    return;
+            var shadowDirectory = GetShadowDirectory(toolSettings, installedPlugins);
 
-            //var hashCode = installedPlugins.Select(Path.GetFileName).Aggregate(seed: 0, func: (hc, x) => hc + x.GetHashCode());
+            FileSystemTasks.CopyRecursively(
+                Path.GetDirectoryName(toolSettings.ToolPath),
+                shadowDirectory,
+                FileSystemTasks.FileExistsPolicy.OverwriteIfNewer);
 
-            //var inspectCodeDirectory = Path.GetDirectoryName(toolSettings.ToolPath).NotNull();
+            installedPlugins.Select(x => x.FileName)
+                    .ForEach(x => File.Copy(x, Path.Combine(shadowDirectory, Path.GetFileName(x)), overwrite: true));
+
+#if !NETCORE
+            toolSettings.Extensions.ForEach(x => HttpTasks.HttpDownloadFile(
+                $"https://resharper-plugins.jetbrains.com/api/v2/package/{x}",
+                Path.Combine(shadowDirectory, $"{x}.nupkg")));
+#else
+            ControlFlow.Assert(toolSettings.Extensions.Count == 0,
+                "InspectCodeSettings.Extensions is currently not supported on .NET Core. However, after adding the ReSharper gallery feed " +
+                "(https://resharper-plugins.jetbrains.com/api/v2), you can reference them as normal NuGet packages in your project file.");
+#endif
         }
 
-        private static IEnumerable<string> GetInstalledPlugins (NuGetVersion waveVersion)
+        [CanBeNull]
+        private static IProcess StartProcess(InspectCodeSettings toolSettings, ProcessSettings processSettings)
         {
-            foreach (var installedPackage in NuGetPackageResolver.GetLocalInstalledPackages())
+            var installedPackages = GetInstalledPlugins();
+            if (toolSettings.Extensions.Count > 0 || installedPackages.Count > 0)
             {
-                var zipPackage = installedPackage.Metadata;
-                var waveDependency = zipPackage.GetDependencyGroups().SelectMany(x => x.Packages).SingleOrDefault(x => x.Id == "Wave");
-                if (waveDependency == null)
-                    continue;
-
-                if (!waveDependency.VersionRange.Satisfies(waveVersion))
-                {
-                    // TODO: ToNormalizedString
-                    Logger.Warn(
-                        $"Plugin '{installedPackage.Id}' (v{installedPackage.Version}) is not compatible with InspectCode.exe (v{waveVersion}).");
-                    continue;
-                }
-
-                yield return installedPackage.FileName;
+                toolSettings = toolSettings.SetToolPath(
+                    Path.Combine(
+                        GetShadowDirectory(toolSettings, installedPackages),
+                        toolSettings.GetPackageExecutable()));
             }
+
+            return ProcessTasks.StartProcess(toolSettings, processSettings);
         }
 
         static partial void PostProcess (InspectCodeSettings toolSettings)
         {
             TeamCity.Instance?.ImportData(TeamCityImportType.ReSharperInspectCode, toolSettings.Output);
+        }
+
+        // TODO [3]: validation of wave version?
+        private static IReadOnlyCollection<NuGetPackageResolver.InstalledPackage> GetInstalledPlugins ()
+        {
+            return NuGetPackageResolver.GetLocalInstalledPackages()
+                    .Where(x => x.Metadata.GetDependencyGroups().SelectMany(y => y.Packages).Any(y => y.Id == "Wave"))
+                    .ToList();
+        }
+
+        private static string GetShadowDirectory (
+            InspectCodeSettings toolSettings,
+            IReadOnlyCollection<NuGetPackageResolver.InstalledPackage> installedPlugins)
+        {
+            var hashCode = Math.Abs(installedPlugins.Select(x => x.Id).Concat(toolSettings.Extensions)
+                    .Aggregate(seed: 0, func: (hc, x) => hc + x.GetHashCode()));
+            var hashCodeString = hashCode.ToString().Substring(startIndex: 0, length: 4);
+            return Path.Combine(Build.Instance.TemporaryDirectory, $"InspectCode-{hashCodeString}");
         }
     }
 }

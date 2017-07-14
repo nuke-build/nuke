@@ -33,7 +33,7 @@ namespace Nuke.Common.Tools.InspectCode
         {
             var toolSettings = configurator.InvokeSafe(new InspectCodeSettings());
             PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
         }
