@@ -13,16 +13,14 @@ using Nuke.Core.OutputSinks;
 using Nuke.Core.Utilities;
 using static Nuke.Core.EnvironmentInfo;
 
+// ReSharper disable VirtualMemberNeverOverridden.Global
+
 namespace Nuke.Core
 {
     /// <summary>
-    /// Base class for build definitions. Use <see cref="Target"/> properties to automate tasks.
+    /// Base class for build definitions. Derived types must declare <c>static Main</c> which calls
+    /// <see cref="Execute{T}"/> for the exit code.
     /// </summary>
-    /// <remarks>
-    /// Must declare a <c>public static Main</c> which calls <see cref="Execute{T}"/> for the exit code.
-    /// 
-    /// Task classes are usually statically imported, to provide a cleaner authoring.
-    /// </remarks>
     /// <example>
     /// <code>
     /// class DefaultBuild : Build
