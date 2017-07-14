@@ -133,6 +133,8 @@ namespace Nuke.Core.IO
             path1 = Trim(path1);
             path2 = Trim(path2);
 
+            ControlFlow.Assert(!HasPathRoot(path2), "Second path must not be rooted.");
+
             if (string.IsNullOrWhiteSpace(path1))
                 return path2;
             if (string.IsNullOrWhiteSpace(path2))

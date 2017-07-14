@@ -73,6 +73,9 @@ namespace Nuke.Common.Tests
         [InlineData("C:", "foo", '/', "For Windows-rooted paths the separator must be '\\'.")]
         [InlineData("\\\\server", "foo", '/', "For UNC-rooted paths the separator must be '\\'.")]
         [InlineData("/", "foo", '\\', "For Unix-rooted paths the separator must be '/'.")]
+        [InlineData("C:\\", "C:\\", '\\', "Second path must not be rooted.")]
+        [InlineData("\\\\server", "\\\\server\\", '\\', "Second path must not be rooted.")]
+        [InlineData("/", "/", '/', "Second path must not be rooted.")]
         public void TestCombine_Throws (string path1, string path2, char? separator, string expected)
         {
             Assert.Throws<Exception>(() => Combine(path1, path2, separator)).Message.Should().Be($"Assertion failed: {expected}");
