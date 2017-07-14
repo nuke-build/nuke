@@ -23,17 +23,22 @@ namespace Nuke.Common.Tools.MSBuild
 
         public static string Resolve (MSBuildVersion? msBuildVersion = null, MSBuildPlatform? msBuildPlatform = null)
         {
+            return ResolveInternal(msBuildVersion, msBuildPlatform).FirstOrDefault()
+                    .NotNull("Could not find a suitable MSBuild instance.");
+        }
+
+        private static IEnumerable<string> ResolveInternal (MSBuildVersion? msBuildVersion = null, MSBuildPlatform? msBuildPlatform = null)
+        {
             if (EnvironmentInfo.IsUnix)
             {
                 ControlFlow.Assert(msBuildVersion == null, "MSBuildVersion cannot be specified on UNIX systems.");
                 ControlFlow.Assert(msBuildPlatform == null, "MSBuildPlatform cannot be specified on UNIX systems.");
 
-                // TODO: if not?
                 return new[]
                        {
                            "/usr/bin/msbuild",
                            "/Library/Frameworks/Mono.framework/Versions/Current/Commands/msbuild"
-                       }.First(File.Exists);
+                       }.Where(File.Exists);
             }
 
             var instances = new List<Instance>();
@@ -57,8 +62,7 @@ namespace Nuke.Common.Tools.MSBuild
                     .ThenByDescending(x => x.Platform == preferedPlatform)
                     .ToList();
 
-            ControlFlow.Assert(filteredInstances.Count > 0, "No suitable MSBuild instances found.");
-            return filteredInstances.First().ToolPath;
+            return filteredInstances.Select(x => x.ToolPath);
         }
 
         private static Instance GetVs2017Instance (MSBuildPlatform platform, string vs2017Edition)
