@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Core;
@@ -15,8 +16,6 @@ using Nuke.Core.OutputSinks;
 
 namespace Nuke.Core
 {
-// TODO UB: As extension methods for inline logging?
-// XmlPoke("...", XmlPeek("...").Info(x => $"Wave version is {x}"));
     [PublicAPI]
     [DebuggerNonUserCode]
     [DebuggerStepThrough]
@@ -38,6 +37,8 @@ namespace Nuke.Core
         {
             return OutputSink.WriteBlock(text);
         }
+
+        #region Trace
 
         /// <summary>
         /// Logs a message as trace if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Trace"/>.
@@ -65,6 +66,20 @@ namespace Nuke.Core
         }
 
         /// <summary>
+        /// Logs a message as trace if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Trace"/>.
+        /// </summary>
+        public static T Trace<T> (this T obj, Func<T, string> text)
+        {
+            Trace(text(obj));
+            return obj;
+        }
+
+        #endregion
+        
+
+        #region Info
+
+        /// <summary>
         /// Logs a message as information if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Information"/>.
         /// </summary>
         [StringFormatMethod("format")]
@@ -90,6 +105,19 @@ namespace Nuke.Core
         }
 
         /// <summary>
+        /// Logs a message as information if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Information"/>.
+        /// </summary>
+        public static T Info<T> (this T obj, Func<T, string> text)
+        {
+            Info(text(obj));
+            return obj;
+        }
+
+        #endregion
+
+        #region Warn
+
+        /// <summary>
         /// Logs a message as warning if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Warning"/>.
         /// </summary>
         [StringFormatMethod("format")]
@@ -113,6 +141,19 @@ namespace Nuke.Core
         {
             OutputSink.Warn(text);
         }
+        
+        /// <summary>
+        /// Logs a message as warning if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Warning"/>.
+        /// </summary>
+        public static T Warn<T> (this T obj, Func<T, string> text)
+        {
+            Warn(text(obj));
+            return obj;
+        }
+
+        #endregion
+
+        #region Fail
 
         /// <summary>
         /// Logs a message as failure. Halts execution.
@@ -141,5 +182,7 @@ namespace Nuke.Core
         {
             ControlFlow.Fail(text);
         }
+
+        #endregion
     }
 }
