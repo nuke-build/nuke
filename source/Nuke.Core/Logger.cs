@@ -4,8 +4,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Core;
 using Nuke.Core.BuildServers;

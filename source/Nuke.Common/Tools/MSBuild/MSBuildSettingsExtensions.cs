@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Nuke.Core.Utilities;
 using Nuke.Core.Utilities.Collections;
 
 namespace Nuke.Common.Tools.MSBuild

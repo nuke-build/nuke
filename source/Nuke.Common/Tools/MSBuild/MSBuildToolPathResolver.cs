@@ -8,11 +8,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Nuke.Core;
-#if !LOCATOR
 
-#else
+#if LOCATOR
 using Nuke.MSBuildLocator;
-
 #endif
 
 namespace Nuke.Common.Tools.MSBuild

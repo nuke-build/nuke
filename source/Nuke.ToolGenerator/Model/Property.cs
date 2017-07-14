@@ -32,7 +32,6 @@ namespace Nuke.ToolGenerator.Model
         /// <summary>
         /// The format how the property is rendered.
         /// </summary>
-        [CanBeNull]
         public string Format { get; set; }
 
         public bool NoArgument { get; set; }
