@@ -167,7 +167,6 @@ namespace Nuke.Core.IO
                 var part = tailParts[i];
                 if (IsUpwardsDirectory(part))
                 {
-                    // TODO: merge ifs
                     if (tailParts.Take(i).All(IsUpwardsDirectory))
                     {
                         ControlFlow.Assert(i > 0 || root == null, $"Cannot normalize '{path}' beyond path root.");
