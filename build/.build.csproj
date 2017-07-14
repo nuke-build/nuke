@@ -19,16 +19,9 @@
   <ItemGroup>
     <!--<PackageReference Include="Nuke.Common" Version="*" />-->
 
-    <!-- TODO: throws exception in mono -->
-    <!--<PackageReference Include="EtherealCode.ReSpeller" Version="4.5.8.12" />-->
-    <!--<PackageReference Include="PowerToys.CyclomaticComplexity" Version="2017.1.0" />
-    <PackageReference Include="ReSharper.ImplicitNullability" Version="3.6.0.20171" />
-    <PackageReference Include="ReSharper.SerializationInspections" Version="1.7.0.20171" />
-    <PackageReference Include="ReSharper.XmlDocInspections" Version="1.8.0.20171" />-->
-    
     <PackageReference Include="gitlink" Version="3.0.0-unstable0090" />
     <PackageReference Include="GitVersion.CommandLine" Version="4.0.0-beta0011" />
-    <PackageReference Include="JetBrains.ReSharper.CommandLineTools" Version="2017.1.20170407.131846" />
+    <PackageReference Include="JetBrains.ReSharper.CommandLineTools" Version="2017.1.20170613.162720" />
     <PackageReference Include="OpenCover" Version="4.6.519" />
     <PackageReference Include="ReportGenerator" Version="2.5.6" />
     <PackageReference Include="xunit.runner.console" Version="2.2.0" />

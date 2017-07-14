@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using Nuke.Common;
 using Nuke.Common.Tools.GitLink3;
+using Nuke.Common.Tools.InspectCode;
 using Nuke.Common.Tools.MSBuild;
 using Nuke.Common.Tools.NuGet;
 using Nuke.Core;
@@ -68,7 +69,13 @@ class NukeBuild : GitHubBuild
     
     Target Analysis => _ => _
             .DependsOn(Restore)
-            .Executes(() => InspectCode(s => DefaultSettings.InspectCode));
+            .Executes(() => InspectCode(s => DefaultSettings.InspectCode
+                    .AddExtensions(
+                        "EtherealCode.ReSpeller",
+                        "PowerToys.CyclomaticComplexity",
+                        "ReSharper.ImplicitNullability",
+                        "ReSharper.SerializationInspections",
+                        "ReSharper.XmlDocInspections")));
 
     Target Test => _ => _
             .DependsOn(Compile)
