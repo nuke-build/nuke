@@ -10,7 +10,7 @@ namespace Nuke.Common.Tools.NuGet
 {
     public static partial class NuGetPackSettingsExtensions
     {
-        /// <summary><p><i>Extension method for setting 'configuration' in <see cref="NuGetPackSettings.Properties"/>.</i></p></summary>
+        /// <summary><p><em>Extension method for setting 'configuration' in <see cref="NuGetPackSettings.Properties"/>.</em></p></summary>
         [Pure]
         public static NuGetPackSettings SetConfiguration(this NuGetPackSettings toolSettings, string configuration)
         {

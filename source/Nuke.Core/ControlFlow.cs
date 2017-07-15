@@ -117,7 +117,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Asserts a collection to contain only <i>non-null</i> elements, calling <see cref="Logger.Fail(string)"/> otherwise.
+        /// Asserts a collection to contain only <em>non-null</em> elements, calling <see cref="Logger.Fail(string)"/> otherwise.
         /// </summary>
         [ContractAnnotation("enumerable: null => halt")]
         public static IReadOnlyCollection<T> NoNullItems<T> ([CanBeNull] this IEnumerable<T> enumerable)

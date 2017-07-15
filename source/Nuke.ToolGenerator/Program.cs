@@ -26,7 +26,7 @@ namespace Nuke.ToolGenerator
 
             foreach (var file in files)
             {
-                Console.WriteLine($"Processing {file}...");
+                Console.WriteLine($"Processing {Path.GetFileName(file)}...");
 
                 var tool = Load(file);
                 using (var streamWriter = new StreamWriter(File.Open(tool.GenerationFileBase + ".Generated.cs", FileMode.Create)))
@@ -37,6 +37,7 @@ namespace Nuke.ToolGenerator
                 Save(tool);
             }
 
+            Console.WriteLine("Finished generation. Press any key to exit...");
             Console.ReadKey();
         }
 

@@ -39,7 +39,7 @@ namespace Nuke.Common.Git
                    };
         }
 
-        /// <summary>The endpoint for the repository. For instance <i>github.com</i>.</summary>
+        /// <summary>The endpoint for the repository. For instance <em>github.com</em>.</summary>
         public string Endpoint { get; set; }
 
         /// <summary>The owner of the repository.</summary>
