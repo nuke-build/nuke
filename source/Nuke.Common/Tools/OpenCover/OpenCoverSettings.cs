@@ -3,19 +3,15 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Linq;
 
-namespace Nuke.Common.Tools.DotCover
+namespace Nuke.Common.Tools.OpenCover
 {
-    public partial class DotCoverAnalyseSettings
+    partial class OpenCoverSettings
     {
         [NonSerialized]
         internal Action _testAction;
 
         public Action TestAction => _testAction;
-
-        private string GetPackageExecutable ()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

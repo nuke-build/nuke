@@ -10,7 +10,7 @@ using Nuke.Core.Tooling;
 
 namespace Nuke.Common.Tools.OpenCover
 {
-    public static partial class OpenCoverTasks
+    partial class OpenCoverTasks
     {
         [CanBeNull]
         private static IProcess StartProcess (OpenCoverSettings toolSettings, ProcessSettings processSettings = null)

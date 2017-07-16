@@ -52,8 +52,6 @@ namespace Nuke.Common.Tools.DotCover
     {
         /// <summary>Path of the executable to be invoked.</summary>
         public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetToolPath(packageId: $"JetBrains.dotCover.CommandLineTools", packageExecutable: $"{GetPackageExecutable()}");
-        /// <summary><p>The action that executes tests.</p></summary>
-        public virtual Action TestAction { get; internal set; }
         /// <summary><p>File name of the program to analyse.</p></summary>
         public virtual string TargetExecutable { get; internal set; }
         /// <summary><p>Program arguments.</p></summary>
@@ -120,14 +118,6 @@ namespace Nuke.Common.Tools.DotCover
     [ExcludeFromCodeCoverage]
     public static partial class DotCoverAnalyseSettingsExtensions
     {
-        /// <summary><p><em>Sets <see cref="DotCoverAnalyseSettings.TestAction"/>.</em></p><p>The action that executes tests.</p></summary>
-        [Pure]
-        public static DotCoverAnalyseSettings SetTestAction(this DotCoverAnalyseSettings toolSettings, Action testAction)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TestAction = testAction;
-            return toolSettings;
-        }
         /// <summary><p><em>Sets <see cref="DotCoverAnalyseSettings.TargetExecutable"/>.</em></p><p>File name of the program to analyse.</p></summary>
         [Pure]
         public static DotCoverAnalyseSettings SetTargetExecutable(this DotCoverAnalyseSettings toolSettings, string targetExecutable)

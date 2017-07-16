@@ -58,8 +58,6 @@ namespace Nuke.Common.Tools.OpenCover
     {
         /// <summary>Path of the executable to be invoked.</summary>
         public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetToolPath(packageId: $"OpenCover", packageExecutable: $"OpenCover.Console.exe");
-        /// <summary><p>The action that executes tests.</p></summary>
-        public virtual Action TestAction { get; internal set; }
         /// <summary><p>The name of the target application or service that will be started; this can also be a path to the target application.</p></summary>
         public virtual string TargetPath { get; internal set; }
         /// <summary><p>Arguments to be passed to the target process.</p></summary>
@@ -155,14 +153,6 @@ namespace Nuke.Common.Tools.OpenCover
     [ExcludeFromCodeCoverage]
     public static partial class OpenCoverSettingsExtensions
     {
-        /// <summary><p><em>Sets <see cref="OpenCoverSettings.TestAction"/>.</em></p><p>The action that executes tests.</p></summary>
-        [Pure]
-        public static OpenCoverSettings SetTestAction(this OpenCoverSettings toolSettings, Action testAction)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TestAction = testAction;
-            return toolSettings;
-        }
         /// <summary><p><em>Sets <see cref="OpenCoverSettings.TargetPath"/>.</em></p><p>The name of the target application or service that will be started; this can also be a path to the target application.</p></summary>
         [Pure]
         public static OpenCoverSettings SetTargetPath(this OpenCoverSettings toolSettings, string targetPath)
