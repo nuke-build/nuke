@@ -64,6 +64,47 @@ namespace Nuke.Common.Tools.MSBuild
 
         #endregion
 
+        #region WarningsAsErrors
+
+        private const string c_warningsAsErrors = "WarningsAsErrors";
+
+        /// <summary><em>Sets <c>WarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/> to a new list.</em></summary>
+        public static MSBuildSettings SetWarningsAsErrors(this MSBuildSettings toolSettings, params int[] codes)
+        {
+            return toolSettings.SetWarningsAsErrors(codes.AsEnumerable());
+        }
+
+        /// <summary><em>Sets <c>WarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/> to a new list.</em></summary>
+        public static MSBuildSettings SetWarningsAsErrors(this MSBuildSettings toolSettings, IEnumerable<int> codes)
+        {
+            return toolSettings.SetProperty(c_warningsAsErrors, string.Join(";", codes));
+        }
+
+        /// <summary><em>Clears <c>WarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/>.</em></summary>
+        public static MSBuildSettings ClearWarningsAsErrors(this MSBuildSettings toolSettings)
+        {
+            return toolSettings.RemoveProperty(c_warningsAsErrors);
+        }
+
+        /// <summary><em>Adds a value to <c>WarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/>.</em></summary>
+        public static MSBuildSettings AddWarningAsError(this MSBuildSettings toolSettings, IEnumerable<int> codes)
+        {
+            return toolSettings.SetWarningsAsErrors(
+                toolSettings.Properties.TryGetValue(c_warningsAsErrors, out var existingCodes)
+                    ? existingCodes.Split(';').Select(int.Parse).Concat(codes)
+                    : codes);
+        }
+        
+        /// <summary><em>Removes a single value in <c>WarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/>.</em></summary>
+        public static MSBuildSettings RemoveWarningAsError(this MSBuildSettings toolSettings, int code)
+        {
+            return toolSettings.Properties.TryGetValue(c_warningsAsErrors, out var existingCodes)
+                ? toolSettings.SetWarningsAsErrors(existingCodes.Split(';').Select(int.Parse).Where(x => x != code).ToList())
+                : toolSettings.ClearWarningsAsErrors();
+        }
+
+        #endregion
+
         #region WarningLevel
         
         private const string c_warningLevel = "WarningLevel";
@@ -175,7 +216,5 @@ namespace Nuke.Common.Tools.MSBuild
         }
 
         #endregion
-
-        // TODO: WarningsAsErrors
     }
 }
