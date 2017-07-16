@@ -3,10 +3,11 @@ using System.Linq;
 using Nuke.Common;
 using Nuke.Common.Tools.MSBuild;
 using Nuke.Core;
-using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 using static Nuke.Common.Tools.NuGet.NuGetTasks;
+using static Nuke.Core.IO.FileSystemTasks;
+using static Nuke.Core.IO.PathConstruction;
 using static Nuke.Core.EnvironmentInfo;
 
 class DefaultBuild : GitHubBuild
@@ -19,7 +20,7 @@ class DefaultBuild : GitHubBuild
             // Disabled for safety.
             .OnlyWhen(() => false)
             .Executes(() => DeleteDirectories(GlobDirectories(SolutionDirectory, "**/bin", "**/obj")))
-            .Executes(() => PrepareCleanDirectory(OutputDirectory));
+            .Executes(() => EnsureCleanDirectory(OutputDirectory));
 
     Target Restore => _ => _
             .DependsOn(Clean)
