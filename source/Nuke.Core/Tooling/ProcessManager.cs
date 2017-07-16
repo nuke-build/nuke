@@ -36,13 +36,12 @@ namespace Nuke.Core.Tooling
         }
 
         [CanBeNull]
-        public IProcess StartProcess (ToolSettings toolSettings, ProcessSettings processSettings = null)
+        public virtual IProcess StartProcess (ToolSettings toolSettings, ProcessSettings processSettings = null)
         {
             var toolPath = toolSettings.ToolPath;
             var arguments = toolSettings.GetArguments();
 
-            ControlFlow.Assert(toolPath != null,
-                $"ToolPath could not be resolved automatically. Please set it manually using '{toolSettings.GetType().Name}.SetToolPath()'.");
+            ControlFlow.Assert(toolPath != null, "ToolPath was not set.");
             ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
             OutputSink.Info($"> {Path.GetFullPath(toolPath).DoubleQuoteIfNeeded()} {arguments.RenderForOutput()}");
 
@@ -67,6 +66,7 @@ namespace Nuke.Core.Tooling
             bool redirectOutput = false,
             Func<string, string> outputFilter = null)
         {
+            ControlFlow.Assert(toolPath != null, "ToolPath was not set.");
             ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
             OutputSink.Info($"> {Path.GetFullPath(toolPath).DoubleQuoteIfNeeded()} {arguments}");
 

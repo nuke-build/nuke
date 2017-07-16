@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 
@@ -13,7 +14,27 @@ namespace Nuke.Core.Tooling
     {
         public CapturedProcessStartInfo CapturedProcessStartInfo { get; private set; }
 
-        [CanBeNull]
+        [NotNull]
+        public override IProcess StartProcess (ToolSettings toolSettings, ProcessSettings processSettings = null)
+        {
+            var toolPath = toolSettings.ToolPath;
+            var arguments = toolSettings.GetArguments();
+            
+            ControlFlow.Assert(toolPath != null, "ToolPath was not set.");
+            ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
+
+            processSettings = processSettings ?? new ProcessSettings();
+            return StartProcess(
+                toolPath,
+                arguments.RenderForExecution(),
+                toolSettings.WorkingDirectory,
+                processSettings.EnvironmentVariables,
+                processSettings.ExecutionTimeout,
+                processSettings.RedirectOutput,
+                processSettings.RedirectOutput ? new Func<string, string>(arguments.Filter) : null);
+        }
+
+        [NotNull]
         public override IProcess StartProcess (
             string toolPath,
             string arguments = null,
@@ -23,7 +44,8 @@ namespace Nuke.Core.Tooling
             bool redirectOutput = false,
             Func<string, string> outputFilter = null)
         {
-            ControlFlow.Assert(environmentVariables == null, "environmentVariables == null");
+            // TODO: check environment variables
+            //ControlFlow.Assert(environmentVariables == null, "environmentVariables == null");
             ControlFlow.Assert(timeout == null, "timeout == null");
             ControlFlow.Assert(!redirectOutput, "!redirectOutput");
             ControlFlow.Assert(outputFilter == null, "outputFilter == null");
