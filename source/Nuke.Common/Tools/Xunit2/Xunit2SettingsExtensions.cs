@@ -5,6 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
+using Nuke.Core.Tooling;
 
 namespace Nuke.Common.Tools.Xunit2
 {
@@ -20,6 +22,20 @@ namespace Nuke.Common.Tools.Xunit2
         public static Xunit2Settings AddTargetAssemblies (this Xunit2Settings toolSettings, params string[] assemblyFiles)
         {
             return toolSettings.AddTargetAssemblies(assemblyFiles.AsEnumerable());
+        }
+
+        public static Xunit2Settings SetResultPath (
+            this Xunit2Settings toolSettings,
+            [CanBeNull] string resultPath,
+            ResultFormat? resultFormat = ResultFormat.Xml)
+        {
+            if (resultPath == null)
+                resultFormat = null;
+
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResultFormat = resultFormat;
+            toolSettings.ResultPath = resultPath;
+            return toolSettings;
         }
     }
 }

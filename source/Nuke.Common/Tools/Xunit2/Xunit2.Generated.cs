@@ -49,8 +49,6 @@ namespace Nuke.Common.Tools.Xunit2
         /// <summary><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
         public virtual ILookup<string, string> TargetAssemblyWithConfigs => TargetAssemblyWithConfigsInternal.AsReadOnly();
         internal LookupTable<string, string> TargetAssemblyWithConfigsInternal { get; set; } = new LookupTable<string, string>(StringComparer.OrdinalIgnoreCase);
-        /// <summary><p>The report file output path.</p></summary>
-        public virtual string OutputPath { get; internal set; }
         /// <summary><p>Do not show the copyright message.</p></summary>
         public virtual bool NoLogo { get; internal set; }
         /// <summary><p>Do not output results with colors.</p></summary>
@@ -94,11 +92,12 @@ namespace Nuke.Common.Tools.Xunit2
         public virtual ReporterType? Reporter { get; internal set; }
         /// <summary><p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p></summary>
         public virtual ResultFormat? ResultFormat { get; internal set; }
+        /// <summary><p>The result file output path.</p></summary>
+        public virtual string ResultPath { get; internal set; }
         protected override Arguments GetArgumentsInternal()
         {
             return base.GetArgumentsInternal()
               .Add("{value}", TargetAssemblyWithConfigs, keyValueSeparator: $" ")
-              .Add("{value}", OutputPath)
               .Add("-nologo", NoLogo)
               .Add("-nocolor", NoColor)
               .Add("-noappdomain", NoAppDomain)
@@ -117,7 +116,8 @@ namespace Nuke.Common.Tools.Xunit2
               .Add("-namespace {value}", Namespaces)
               .Add("-noautoreporters", NoAutoReporters)
               .Add("-{value}", Reporter)
-              .Add("-{value}", ResultFormat);
+              .Add("-{value}", ResultFormat)
+              .Add("{value}", ResultPath);
         }
     }
     [PublicAPI]
@@ -154,14 +154,6 @@ namespace Nuke.Common.Tools.Xunit2
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TargetAssemblyWithConfigsInternal.Remove(targetAssemblyWithConfigKey, targetAssemblyWithConfigValue);
-            return toolSettings;
-        }
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.OutputPath"/>.</em></p><p>The report file output path.</p></summary>
-        [Pure]
-        public static Xunit2Settings SetOutputPath(this Xunit2Settings toolSettings, string outputPath)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.OutputPath = outputPath;
             return toolSettings;
         }
         /// <summary><p><em>Sets <see cref="Xunit2Settings.NoLogo"/>.</em></p><p>Do not show the copyright message.</p></summary>
@@ -738,14 +730,6 @@ namespace Nuke.Common.Tools.Xunit2
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Reporter = reporter;
-            return toolSettings;
-        }
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.ResultFormat"/>.</em></p><p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p></summary>
-        [Pure]
-        public static Xunit2Settings SetResultFormat(this Xunit2Settings toolSettings, ResultFormat? resultFormat)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ResultFormat = resultFormat;
             return toolSettings;
         }
     }
