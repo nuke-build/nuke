@@ -81,6 +81,9 @@ namespace Nuke.ToolGenerator.Generators
 
         private static void WritePropertyDeclaration (DataClassWriter writer, Property property)
         {
+            if (property.CustomImpl)
+                return;
+
             writer
                     .WriteSummary(property)
                     .WriteLine(GetPublicPropertyDeclaration(property))

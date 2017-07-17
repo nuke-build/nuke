@@ -33,8 +33,21 @@ namespace Nuke.ToolGenerator.Model
         /// The format how the property is rendered.
         /// </summary>
         public string Format { get; set; }
-
+        
+        /// <summary>
+        /// If set to <c>true</c>, null-check for <see cref="Format"/> will be skipped.
+        /// </summary>
         public bool NoArgument { get; set; }
+        
+        /// <summary>
+        /// If set to <c>true</c>, no property declaration will be generated.
+        /// </summary>
+        public bool CustomImpl { get; set; }
+        
+        /// <summary>
+        /// If set to <c>true</c>, no extension methods will be generated.
+        /// </summary>
+        public bool NoExtensionMethod { get; set; }
 
         /// <summary>
         /// Defines the separator between items of lists or dictionaries.

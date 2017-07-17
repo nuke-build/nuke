@@ -27,6 +27,9 @@ namespace Nuke.ToolGenerator.Generators
         // TODO [3]: less naming? -> value
         private static void WriteMethods (DataClassWriter writer, Property property)
         {
+            if (property.CustomImpl || property.NoExtensionMethod)
+                return;
+
             var reference = $"{writer.DataClass.Name}.{property.Name}".ToSeeCref();
             var propertyInstance = property.Name.ToInstance();
 

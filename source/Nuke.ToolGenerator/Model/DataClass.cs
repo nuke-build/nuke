@@ -29,7 +29,7 @@ namespace Nuke.ToolGenerator.Model
         /// <summary>
         /// If set to <c>true</c>, no extension methods will be generated.
         /// </summary>
-        public bool SkipExtensionMethods { get; set; }
+        public bool NoExtensionMethods { get; set; }
 
         public bool NoArguments { get; set; }
 
