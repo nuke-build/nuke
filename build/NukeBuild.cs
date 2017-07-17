@@ -8,12 +8,15 @@ using Nuke.Common;
 using Nuke.Common.Tools.GitLink3;
 using Nuke.Common.Tools.InspectCode;
 using Nuke.Common.Tools.NuGet;
+using Nuke.Common.Tools.OpenCover;
+using Nuke.Common.Tools.Xunit2;
 using Nuke.Core;
 using Nuke.Core.Utilities.Collections;
 using static Nuke.Common.Tools.GitLink3.GitLink3Tasks;
 using static Nuke.Common.Tools.InspectCode.InspectCodeTasks;
 using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 using static Nuke.Common.Tools.NuGet.NuGetTasks;
+using static Nuke.Common.Tools.OpenCover.OpenCoverTasks;
 using static Nuke.Common.Tools.Xunit2.Xunit2Tasks;
 using static Nuke.Core.IO.FileSystemTasks;
 using static Nuke.Core.IO.PathConstruction;
@@ -73,7 +76,10 @@ class NukeBuild : GitHubBuild
 
     Target Test => _ => _
             .DependsOn(Compile)
-            .Executes(() => Xunit2(GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/net4*/Nuke.*.Tests.dll")));
+            .Executes(() => OpenCover(() =>
+                    Xunit2(GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/net4*/Nuke.*.Tests.dll"),
+                        s => s.SetResultPath(OutputDirectory / "tests.xml")),
+                s => DefaultSettings.OpenCover.SetOutput(OutputDirectory / "coverage.xml")));
 
     Target Full => _ => _
             .DependsOn(Compile, Test, Analysis, Push);
