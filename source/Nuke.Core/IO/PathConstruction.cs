@@ -22,15 +22,15 @@ namespace Nuke.Core.IO
     /// <p>Provides an abstraction for generating Windows/Unix/UNC-compliant
     /// file-system paths independently of the underlying operating system. Usages should be restricted to the moment
     /// of construction, i.e., avoid using it as part of an API.</p>
-    /// <p>Casting a string with <c>(Relative)</c> will construct any intermediate part of a path using the specific separators
-    /// for the currently running operating-system. By using <c>(WinRelative)</c> and <c>(UnixRelative)</c> other separators can be 
-    /// used intentionally. Casting with <c>(Absolute)</c> ensures that the path is rooted as Windows/Unix/UNC-path. The operators
+    /// <p>Casting a string with <c>(RelativePath)</c> will construct any intermediate part of a path using the specific separators
+    /// for the currently running operating-system. By using <c>(WinRelativePath)</c> and <c>(UnixRelativePath)</c> other separators can be 
+    /// used intentionally. Casting with <c>(AbsolutePath)</c> ensures that the path is rooted as Windows/Unix/UNC-path. The operators
     /// <c>/</c> and <c>+</c> allow to append sub-directories.</p>
     /// <p>Resulting paths are automatically normalized if possible. So <c>C:\foo\..\bar\.</c> will become <c>C:\bar</c>.</p>
     /// </summary>
     /// <example>
     /// <code>
-    /// string relativePath = (Relative) "foo" / "bar";
+    /// string relativePath = (RelativePath) "foo" / "bar";
     /// // On Windows:   relativePath == "foo\bar"
     /// // On Unix:      relativePath == "foo/bar"
     /// </code>
@@ -39,8 +39,8 @@ namespace Nuke.Core.IO
     /// string unixPath = (UnixPath) "foo" / "bar";   // "foo/bar";
     /// </code>
     /// <code>
-    /// string absolutePath1 = (Absolute) RootDirectory / "foo" / "bar";
-    /// string absolutePath2 = (Absolute) "foo" / "bar"  // Throws exception
+    /// string absolutePath1 = (AbsolutePath) RootDirectory / "foo" / "bar";
+    /// string absolutePath2 = (AbsolutePath) "foo" / "bar"  // Throws exception
     /// </code>
     /// </example>
     [PublicAPI]
@@ -240,92 +240,92 @@ namespace Nuke.Core.IO
         
 
         [DebuggerDisplay("{" + nameof(_path) + "}")]
-        public class Relative
+        public class RelativePath
         {
             private readonly string _path;
             private readonly char? _separator;
 
-            protected Relative (string path, char? separator = null)
+            protected RelativePath (string path, char? separator = null)
             {
                 _path = path;
                 _separator = separator;
             }
 
-            public static explicit operator Relative ([CanBeNull] string path)
+            public static explicit operator RelativePath ([CanBeNull] string path)
             {
-                return new Relative(NormalizePath(path));
+                return new RelativePath(NormalizePath(path));
             }
 
-            public static implicit operator string (Relative path)
+            public static implicit operator string (RelativePath path)
             {
                 return path._path;
             }
 
-            public static Relative operator / (Relative path1, string path2)
+            public static RelativePath operator / (RelativePath path1, string path2)
             {
                 var separator = path1._separator;
-                return new Relative(NormalizePath(Combine(path1, (Relative) path2, separator), separator), separator);
+                return new RelativePath(NormalizePath(Combine(path1, (RelativePath) path2, separator), separator), separator);
             }
 
-            public static Relative operator + (Relative path1, string path2)
+            public static RelativePath operator + (RelativePath path1, string path2)
             {
                 return path1 / path2;
             }
         }
 
-        public class UnixRelative : Relative
+        public class UnixRelativePath : RelativePath
         {
-            protected UnixRelative (string path, char? separator)
+            protected UnixRelativePath (string path, char? separator)
                 : base(path, separator)
             {
             }
 
-            public static explicit operator UnixRelative ([CanBeNull] string path)
+            public static explicit operator UnixRelativePath ([CanBeNull] string path)
             {
-                return new UnixRelative(NormalizePath(path), UnixSeparator);
+                return new UnixRelativePath(NormalizePath(path), UnixSeparator);
             }
         }
 
-        public class WinRelative : Relative
+        public class WinRelativePath : RelativePath
         {
-            protected WinRelative (string path, char? separator)
+            protected WinRelativePath (string path, char? separator)
                 : base(path, separator)
             {
             }
 
-            public static explicit operator WinRelative ([CanBeNull] string path)
+            public static explicit operator WinRelativePath ([CanBeNull] string path)
             {
-                return new WinRelative(NormalizePath(path), WinSeparator);
+                return new WinRelativePath(NormalizePath(path), WinSeparator);
             }
         }
 
         [DebuggerDisplay("{" + nameof(_path) + "}")]
-        public class Absolute
+        public class AbsolutePath
         {
             private readonly string _path;
 
-            private Absolute (string path)
+            private AbsolutePath (string path)
             {
                 _path = path;
             }
 
-            public static explicit operator Absolute ([CanBeNull] string path)
+            public static explicit operator AbsolutePath ([CanBeNull] string path)
             {
                 ControlFlow.Assert(HasPathRoot(path), $"Path '{path}' must be rooted.");
-                return new Absolute(NormalizePath(path));
+                return new AbsolutePath(NormalizePath(path));
             }
 
-            public static implicit operator string (Absolute path)
+            public static implicit operator string (AbsolutePath path)
             {
                 return NormalizePath(path._path);
             }
 
-            public static Absolute operator / (Absolute path1, string path2)
+            public static AbsolutePath operator / (AbsolutePath path1, string path2)
             {
-                return new Absolute(Combine(path1, path2));
+                return new AbsolutePath(Combine(path1, path2));
             }
 
-            public static Absolute operator + (Absolute path1, string path2)
+            public static AbsolutePath operator + (AbsolutePath path1, string path2)
             {
                 return path1 / path2;
             }

@@ -7,7 +7,6 @@ using System.Linq;
 using Nuke.Common;
 using Nuke.Common.Tools.GitLink3;
 using Nuke.Common.Tools.InspectCode;
-using Nuke.Common.Tools.MSBuild;
 using Nuke.Common.Tools.NuGet;
 using Nuke.Core;
 using Nuke.Core.Utilities.Collections;

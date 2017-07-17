@@ -158,18 +158,18 @@ namespace Nuke.Common.Tests
         [Fact]
         public void RelativePath_Specific()
         {
-            ((string) ((UnixRelative) "foo" / "bar")).Should().Be("foo/bar");
-            ((string) ((WinRelative) "foo" / "bar")).Should().Be("foo\\bar");
+            ((string) ((UnixRelativePath) "foo" / "bar")).Should().Be("foo/bar");
+            ((string) ((WinRelativePath) "foo" / "bar")).Should().Be("foo\\bar");
         }
 
         private static string ParseRelativePath (object[] parts)
         {
-            return parts.Skip(count: 1).Aggregate((Relative) (string) parts[0], (rp, p) => rp / (string) p);
+            return parts.Skip(count: 1).Aggregate((RelativePath) (string) parts[0], (rp, p) => rp / (string) p);
         }
 
         private static string ParseAbsolutePath (object[] parts)
         {
-            return parts.Skip(count: 1).Aggregate((Absolute) (string) parts[0], (rp, p) => rp / (string) p);
+            return parts.Skip(count: 1).Aggregate((AbsolutePath) (string) parts[0], (rp, p) => rp / (string) p);
         }
     }
 }

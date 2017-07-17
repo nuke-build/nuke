@@ -9,6 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
 using Nuke.Core.Execution;
+using Nuke.Core.IO;
 using Nuke.Core.OutputSinks;
 using Nuke.Core.Utilities;
 using static Nuke.Core.EnvironmentInfo;
@@ -103,7 +104,7 @@ namespace Nuke.Core
         /// <summary>
         /// The root directory where the <c>.nuke</c> file is located. By convention also the root for the repository.
         /// </summary>
-        public virtual string RootDirectory
+        public virtual PathConstruction.AbsolutePath RootDirectory
         {
             get
             {
@@ -115,7 +116,7 @@ namespace Nuke.Core
                     rootDirectory = rootDirectory.Parent;
                 }
 
-                return rootDirectory?.FullName.NotNull(
+                return (PathConstruction.AbsolutePath) rootDirectory?.FullName.NotNull(
                     $"Could not locate {c_configFile} file while traversing up from {buildAssemblyLocation}.");
             }
         }
@@ -123,7 +124,7 @@ namespace Nuke.Core
         /// <summary>
         /// The solution file that is referenced in the <c>.nuke</c> file.
         /// </summary>
-        public virtual string SolutionFile
+        public virtual PathConstruction.AbsolutePath SolutionFile
         {
             get
             {
@@ -136,43 +137,43 @@ namespace Nuke.Core
                 var solutionFile = Path.GetFullPath(Path.Combine(RootDirectory, solutionFileRelative));
                 ControlFlow.Assert(File.Exists(solutionFile), "File.Exists(solutionFile)");
 
-                return solutionFile;
+                return (PathConstruction.AbsolutePath) solutionFile;
             }
         }
 
         /// <summary>
         /// The solution directory derived from the solution file specified in the <c>.nuke</c> file.
         /// </summary>
-        public virtual string SolutionDirectory => Path.GetDirectoryName(SolutionFile);
+        public virtual PathConstruction.AbsolutePath SolutionDirectory => (PathConstruction.AbsolutePath) Path.GetDirectoryName(SolutionFile);
 
         /// <summary>
         /// The <c>.tmp</c> directory that is located under the <see cref="RootDirectory"/>.
         /// </summary>
-        public virtual string TemporaryDirectory
+        public virtual PathConstruction.AbsolutePath TemporaryDirectory
         {
             get
             {
                 var temporaryDirectory = Path.Combine(RootDirectory, ".tmp");
                 ControlFlow.Assert(Directory.Exists(temporaryDirectory), $"Directory.Exists({temporaryDirectory})");
-                return temporaryDirectory;
+                return (PathConstruction.AbsolutePath) temporaryDirectory;
             }
         }
 
         /// <summary>
         /// The <c>output</c> directory that is located under the <see cref="RootDirectory"/>.
         /// </summary>
-        public virtual string OutputDirectory => Path.Combine(RootDirectory, "output");
+        public virtual PathConstruction.AbsolutePath OutputDirectory => (PathConstruction.AbsolutePath) Path.Combine(RootDirectory, "output");
 
         /// <summary>
         /// The <c>artifacts</c> directory that is located under the <see cref="RootDirectory"/>.
         /// </summary>
-        public virtual string ArtifactsDirectory => Path.Combine(RootDirectory, "artifacts");
+        public virtual PathConstruction.AbsolutePath ArtifactsDirectory => (PathConstruction.AbsolutePath) Path.Combine(RootDirectory, "artifacts");
 
         /// <summary>
         /// The <c>src</c> or <c>source</c> directory that is located under the <see cref="RootDirectory"/>.
         /// </summary>
-        public virtual string SourceDirectory
-            => new[] { "src", "source" }
+        public virtual PathConstruction.AbsolutePath SourceDirectory
+            => (PathConstruction.AbsolutePath) new[] { "src", "source" }
                     .SelectMany(x => Directory.GetDirectories(RootDirectory, x))
                     .SingleOrDefault().NotNull("Could not locate single source directory.");
     }
