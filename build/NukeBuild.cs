@@ -76,10 +76,18 @@ class NukeBuild : GitHubBuild
 
     Target Test => _ => _
             .DependsOn(Compile)
-            .Executes(() => OpenCover(() =>
-                    Xunit2(GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/net4*/Nuke.*.Tests.dll"),
-                        s => s.SetResultPath(OutputDirectory / "tests.xml")),
-                s => DefaultSettings.OpenCover.SetOutput(OutputDirectory / "coverage.xml")));
+            .Executes(() =>
+            {
+                void TestXunit ()
+                    => Xunit2(GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/net4*/Nuke.*.Tests.dll"),
+                        s => s.SetResultPath(OutputDirectory / "tests.xml"));
+
+                if (IsWin)
+                    OpenCover(TestXunit, s => DefaultSettings.OpenCover
+                                .SetOutput(OutputDirectory / "coverage.xml"));
+                else
+                    TestXunit();
+            });
 
     Target Full => _ => _
             .DependsOn(Compile, Test, Analysis, Push);
