@@ -15,34 +15,34 @@ namespace Nuke.ToolGenerator.Generators
         public static T WriteSummary<T> (this T writerWrapper, Task task)
             where T : IWriterWrapper
         {
-            return WriteSummary(writerWrapper, task.Help ?? task.Tool.Help, task.Tool.OfficialUrl);
+            return writerWrapper.WriteSummary(task.Help ?? task.Tool.Help, task.Tool.OfficialUrl);
         }
 
         public static T WriteSummary<T> (this T writerWrapper, Property property)
             where T : IWriterWrapper
         {
-            return WriteSummary(writerWrapper, property.Help, url: null);
+            return writerWrapper.WriteSummary(property.Help);
         }
 
         public static T WriteSummary<T> (this T writerWrapper, DataClass dataClass)
             where T : IWriterWrapper
         {
-            return WriteSummary(writerWrapper, dataClass.Tool.Help, url: null);
+            return writerWrapper.WriteSummary(dataClass.Tool.Help);
         }
 
         public static T WriteSummary<T> (this T writerWrapper, Enumeration enumeration)
             where T : IWriterWrapper
         {
-            return WriteSummary(writerWrapper, enumeration.Tool.Help, url: null);
+            return writerWrapper.WriteSummary(enumeration.Tool.Help);
         }
 
         public static T WriteSummaryExtension<T> (this T writerWrapper, string actionText, Property property)
             where T : IWriterWrapper
         {
-            return WriteSummary(writerWrapper, $"<p><em>{actionText}.</em></p>{property.Help.Paragraph()}", url: null);
+            return writerWrapper.WriteSummary($"<p><em>{actionText}.</em></p>{property.Help.Paragraph()}");
         }
 
-        private static T WriteSummary<T> (T writerWrapper, [CanBeNull] string help, [CanBeNull] string url)
+        public static T WriteSummary<T> (this T writerWrapper, [CanBeNull] string help, string url = null)
             where T : IWriterWrapper
         {
             if (help == null)
@@ -54,12 +54,6 @@ namespace Nuke.ToolGenerator.Generators
 
             writerWrapper.WriteLine($"/// <summary>{help.Paragraph()}{officialUrlParagraph}</summary>");
             return writerWrapper;
-        }
-
-        public static T WriteSummaryInherit<T> (this T writerWrapper)
-            where T : IWriterWrapper
-        {
-            return writerWrapper.WriteLine($"/// <summary>Path of the executable to be invoked.</summary>");
         }
     }
 }

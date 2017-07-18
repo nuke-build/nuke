@@ -75,7 +75,7 @@ namespace Nuke.ToolGenerator.Generators
             var toolPathResolver = tool.CustomExecutable ?? $"ToolPathResolver.GetToolPath({arguments.Join()})";
 
             return writer
-                    .WriteSummaryInherit()
+                    .WriteSummary($"Path to the {tool.Name} executable.")
                     .WriteLine($"public override string ToolPath => base.ToolPath ?? {toolPathResolver};");
         }
 
@@ -158,7 +158,6 @@ namespace Nuke.ToolGenerator.Generators
                 return writer;
 
             return writer
-                    .WriteSummaryInherit()
                     .WriteLine("protected override void AssertValid()")
                     .WriteBlock(w => w
                             .WriteLine("base.AssertValid();")
