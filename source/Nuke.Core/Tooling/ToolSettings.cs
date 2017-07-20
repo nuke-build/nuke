@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 
@@ -29,6 +30,19 @@ namespace Nuke.Core.Tooling
         {
             AssertValid();
             return ArgumentConfigurator(GetArgumentsInternal());
+        }
+
+        public bool HasValidToolPath()
+        {
+            try
+            {
+                ControlFlow.Assert(File.Exists(ToolPath), "File.Exists(ToolPath)");
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         protected virtual Arguments GetArgumentsInternal ()
