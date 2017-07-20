@@ -9,7 +9,6 @@ SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 
 BOOTSTRAPPING_URL="https://raw.githubusercontent.com/nuke-build/nuke/master/bootstrapping"
 DEFAULT_NUGET_URL="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
-DEFAULT_SOURCE_URL="https://www.myget.org/F/nukebuild/api/v3/index.json"
 DEFAULT_BUILD_DIRECTORY_NAME="./build"
 DEFAULT_BUILD_PROJECT_NAME=".build"
 
@@ -102,24 +101,12 @@ sed -e 's~_NUGET_URL_~'"$NUGET_URL"'~g' \
     > build.ps1
 
 ###########################################################################
-# DOWNLOAD NUGET.EXE AND ADD FEED
+# DOWNLOAD NUGET.EXE
 ###########################################################################
 
 echo "Downloading nuget.exe..."
 NUGET_FILE="$ROOT_DIRECTORY/.tmp/nuget.exe"
 Download $NUGET_URL $NUGET_FILE
-
-NUGET_CONFIG_FILE="$SOLUTION_DIRECTORY/.nuget/NuGet.config"
-if [ ! -f $NUGET_CONFIG_FILE ]; then
-    mkdir -p $(dirname $NUGET_CONFIG_FILE)
-    echo -n '<?xml version="1.0" encoding="utf-8"?><configuration></configuration>' > $NUGET_CONFIG_FILE
-fi
-
-if ! grep -q "NukeBuild" $NUGET_CONFIG_FILE; then
-    SOURCE_URL=$(ReadWithDefault "NukeBuild source url" $DEFAULT_SOURCE_URL)
-    echo "Adding MyGet feed to NuGet.config..."
-    mono $NUGET_FILE sources Add -Name "NukeBuild" -Source "$SOURCE_URL" -ConfigFile "$NUGET_CONFIG_FILE"
-fi
 
 ###########################################################################
 # GENERATE TEMPLATE FILES

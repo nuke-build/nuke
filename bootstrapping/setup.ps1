@@ -10,7 +10,6 @@ $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 
 $BootstrappingUrl = "https://raw.githubusercontent.com/nuke-build/nuke/master/bootstrapping"
 $DefaultNuGetUrl = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
-$DefaultSourceUrl = "https://www.myget.org/F/nukebuild/api/v3/index.json"
 $DefaultBuildDirectoryName = ".\build"
 $DefaultBuildProjectName = ".build"
 
@@ -93,24 +92,12 @@ Set-Content "build.sh" ((New-Object System.Net.WebClient).DownloadString("$Boots
     -replace "_ROOT_DIRECTORY_",((GetRelative $PSScriptRoot $RootDirectory) -replace "\\","/"))
 
 ###########################################################################
-# DOWNLOAD NUGET.EXE AND ADD FEED
+# DOWNLOAD NUGET.EXE
 ###########################################################################
 
 Write-Host "Downloading nuget.exe..."
 $NuGetFile = "$RootDirectory\.tmp\nuget.exe"
 Download $NuGetUrl $NuGetFile
-
-$NuGetConfigFile = "$SolutionDirectory\.nuget\NuGet.config"
-if (!(Test-Path $NuGetConfigFile)) {
-    md -force (Split-Path $NuGetConfigFile -Parent) > $null
-    "<?xml version=`"1.0`" encoding=`"utf-8`"?><configuration></configuration>" | Out-File $NuGetConfigFile -NoNewline -Encoding ascii
-}
-
-if (!((Get-Content $NuGetConfigFile) -match "NukeBuild")) {
-    $SourceUrl = (ReadWithDefault "NukeBuild source url" $DefaultSourceUrl)
-    Write-Host "Adding MyGet feed to NuGet.config..."
-    & $NuGetFile sources Add -Name "NukeBuild" -Source "$SourceUrl" -ConfigFile "$NuGetConfigFile"
-}
 
 ###########################################################################
 # GENERATE TEMPLATE FILES
