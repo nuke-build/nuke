@@ -5,7 +5,9 @@
 using System;
 using System.Linq;
 using Nuke.Common;
+using Nuke.Common.Git;
 using Nuke.Common.Tools.GitLink3;
+using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.InspectCode;
 using Nuke.Common.Tools.NuGet;
 using Nuke.Common.Tools.OpenCover;
@@ -25,6 +27,8 @@ using static Nuke.Core.EnvironmentInfo;
 class NukeBuild : GitHubBuild
 {
     [Parameter] readonly string MyGetApiKey;
+    [GitVersion] readonly GitVersion GitVersion;
+    [GitRepository] readonly GitRepository GitRepository;
 
     public static int Main () => Execute<NukeBuild>(x => x.Pack);
 
@@ -39,7 +43,7 @@ class NukeBuild : GitHubBuild
     Target Compile => _ => _
             .DependsOn(Restore)
             .Executes(() => MSBuild(s => IsWin
-                ? DefaultSettings.MSBuildCompileWithAssemblyInfo
+                ? DefaultSettings.MSBuildCompileWithGitVersion
                 : DefaultSettings.MSBuildCompile));
 
     Target Link => _ => _

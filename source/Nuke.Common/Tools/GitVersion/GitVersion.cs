@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Core.Injection;
 using Nuke.Core.Tooling;
 
 namespace Nuke.Common.Tools.GitVersion
@@ -16,6 +17,8 @@ namespace Nuke.Common.Tools.GitVersion
     [ExcludeFromCodeCoverage]
     public class GitVersion : ISettingsEntity
     {
+        public static InjectionKey<GitVersion, GitVersionAttribute> InjectionKey;
+
         public virtual int Major { get; set; }
         public virtual int Minor { get; set; }
         public virtual int Patch { get; set; }

@@ -1,11 +1,12 @@
-﻿// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Linq;
-using System.Linq.Expressions;
+using System.Reflection;
 using JetBrains.Annotations;
+using Nuke.Core.Injection;
 
 namespace Nuke.Core
 {
@@ -23,8 +24,8 @@ namespace Nuke.Core
     ///     For value-types, there is a distinction between pure value-types, and their null-able
     ///     counterparts. For instance, <c>int</c> will have its default value <c>0</c> even if it wasn't
     ///     supplied via command-line or environment variable, and therefore also can't be used in
-    ///     <see cref="ITargetDefinition.RequiresParameters{T}(Expression{Func{T}}[])"/>. Declaring
-    ///     the field as <c>int?</c> however, will enable validation and setting the requirement.
+    ///     <see cref="ITargetDefinition.RequiresParameters{T}(System.Linq.Expressions.Expression{System.Func{T}}[])"/>.
+    ///     Declaring the field as <c>int?</c> however, will enable validation and setting the requirement.
     /// </summary>
     /// <example>
     ///     <code>
@@ -35,21 +36,46 @@ namespace Nuke.Core
     ///     </code>
     /// </example>
     [PublicAPI]
-    [AttributeUsage(AttributeTargets.Field)]
-    [MeansImplicitUse(ImplicitUseKindFlags.Assign)]
-    public class ParameterAttribute : Attribute
+    public class ParameterAttribute : InjectionAttributeBase
     {
         public ParameterAttribute (string description = null)
         {
-            Description = description;
+        }
+
+        public string Name { get; set; }
+        public bool AllowEmptyString { get; set; }
+
+        public override Type InjectionType => null;
+
+        [CanBeNull]
+        protected override object GetValue (FieldInfo field, Build buildInstance)
+        {
+            var attribute = field.GetCustomAttribute<ParameterAttribute>().NotNull("attribute != null");
+            var stringValue = GetStringValue(field, attribute);
+            if (stringValue == null)
+                return null;
+
+            try
+            {
+                return EnvironmentInfo.Convert(stringValue, field.FieldType);
+            }
+            catch
+            {
+                ControlFlow.Fail(
+                    $"Value '{stringValue}' for parameter '{field.Name}' could not be converted to type '{field.FieldType.FullName}'.");
+                return null;
+            }
         }
 
         [CanBeNull]
-        public string Description { get; }
-
-        [CanBeNull]
-        public string Name { get; set; }
-
-        public bool AllowEmptyString { get; set; }
+        private static string GetStringValue (FieldInfo field, ParameterAttribute attribute)
+        {
+            var name = attribute.Name ?? field.Name;
+            return EnvironmentInfo.Argument(name, attribute.AllowEmptyString)
+                   ?? EnvironmentInfo.Variable(name)
+                   ?? (field.FieldType == typeof(bool)
+                       ? EnvironmentInfo.ArgumentSwitch(name).ToString()
+                       : null);
+        }
     }
 }

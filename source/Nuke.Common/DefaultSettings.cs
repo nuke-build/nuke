@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common;
+using Nuke.Common.Git;
 using Nuke.Common.Tools.GitLink2;
 using Nuke.Common.Tools.GitLink3;
 using Nuke.Common.Tools.GitVersion;
@@ -16,6 +17,7 @@ using Nuke.Common.Tools.NuGet;
 using Nuke.Common.Tools.OpenCover;
 using Nuke.Core;
 using Nuke.Core.Execution;
+using Nuke.Core.Injection;
 using Nuke.Core.Tooling;
 
 [assembly: IconClass(typeof(DefaultSettings), "equalizer")]
@@ -24,7 +26,7 @@ namespace Nuke.Common
 {
     /// <summary>
     /// Variety of default settings, pre-filled with <see cref="Build.Instance"/> properties
-    /// (e.g., <see cref="Build.SolutionFile"/> or <see cref="GitHubBuild.GitVersion"/> and
+    /// (e.g., <see cref="Build.SolutionFile"/> and inject values (e.g., <see cref="GitRepository"/> and
     /// best-practice values (e.g., excluding test attributes from coverage analysis).
     /// For more details it's recommended to browse the actual source code.
     /// </summary>
@@ -48,6 +50,9 @@ namespace Nuke.Common
     [PublicAPI]
     public class DefaultSettings
     {
+        private static InjectionKey<GitVersion, GitVersionAttribute> GitVersionKey { get; }
+        private static InjectionKey<GitRepository, GitRepositoryAttribute> GitRepositoryKey { get; }
+
         public static MSBuildSettings MSBuildCommon
         {
             get
@@ -74,16 +79,24 @@ namespace Nuke.Common
                 .SetTargets("Rebuild")
                 .SetMaxCpuCount(Environment.ProcessorCount);
 
-        public static MSBuildSettings MSBuildCompileWithAssemblyInfo => MSBuildCompile
-                .SetProperty("AssemblyVersion", GitHubBuild.Instance.GitVersion.AssemblySemVer)
-                .SetProperty("FileVersion", GitHubBuild.Instance.GitVersion.AssemblySemVer)
-                .SetProperty("InformationalVersion", GitHubBuild.Instance.GitVersion.InformationalVersion);
+        public static MSBuildSettings MSBuildCompileWithGitVersion
+        {
+            get
+            {
+                var gitVersion = InjectedValueProvider.GetNonNullValue(GitVersionKey);
+                return MSBuildCompile
+                        .SetProperty("AssemblyVersion", gitVersion.AssemblySemVer)
+                        .SetProperty("FileVersion", gitVersion.AssemblySemVer)
+                        .SetProperty("InformationalVersion", gitVersion.InformationalVersion);
+            }
+        }
 
         public static MSBuildSettings MSBuildPack => MSBuildCommon
                 .SetTargets("Restore", "Pack")
                 .SetProperty("PackageOutputPath", Build.Instance.OutputDirectory)
                 .SetProperty("IncludeSymbols", "True")
-                .SetProperty("PackageVersion", GitHubBuild.Instance?.GitVersion?.NuGetVersionV2);
+            // TODO: evenIfNull for dictionary
+                .SetProperty("PackageVersion", InjectedValueProvider.GetValue(GitVersionKey)?.NuGetVersionV2);
 
 
         public static GitVersionSettings GitVersion => new GitVersionSettings()
@@ -93,7 +106,7 @@ namespace Nuke.Common
                 .SetWorkingDirectory(Build.Instance.RootDirectory)
                 .SetOutputDirectory(Build.Instance.OutputDirectory)
                 .SetConfiguration(Build.Instance.Configuration)
-                .SetVersion(GitHubBuild.Instance?.GitVersion?.NuGetVersionV2);
+                .SetVersion(InjectedValueProvider.GetValue(GitVersionKey)?.NuGetVersionV2);
 
         public static NuGetRestoreSettings NuGetRestore => new NuGetRestoreSettings()
                 .SetWorkingDirectory(Build.Instance.RootDirectory)
@@ -128,12 +141,12 @@ namespace Nuke.Common
                 .SetWorkingDirectory(Build.Instance.RootDirectory)
                 .SetSolutionDirectory(Build.Instance.SolutionDirectory)
                 .SetConfiguration(Build.Instance.Configuration)
-                .SetBranchName(GitHubBuild.Instance?.GitVersion.BranchName)
-                .SetRepositoryUrl(GitHubBuild.Instance?.GitRepository.SvnUrl);
+                .SetBranchName(InjectedValueProvider.GetValue(GitVersionKey)?.BranchName)
+                .SetRepositoryUrl(InjectedValueProvider.GetValue(GitRepositoryKey)?.SvnUrl);
 
         public static GitLink3Settings GitLink3 => new GitLink3Settings()
                 .SetWorkingDirectory(Build.Instance.RootDirectory)
                 .SetBaseDirectory(Build.Instance.RootDirectory)
-                .SetRepositoryUrl(GitHubBuild.Instance?.GitRepository.SvnUrl);
+                .SetRepositoryUrl(InjectedValueProvider.GetValue(GitRepositoryKey)?.SvnUrl);
     }
 }
