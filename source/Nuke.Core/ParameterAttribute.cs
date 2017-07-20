@@ -48,7 +48,7 @@ namespace Nuke.Core
         public override Type InjectionType => null;
 
         [CanBeNull]
-        protected override object GetValue (FieldInfo field, Build buildInstance)
+        protected override object GetValue (FieldInfo field, NukeBuild buildInstance)
         {
             var attribute = field.GetCustomAttribute<ParameterAttribute>().NotNull("attribute != null");
             var stringValue = GetStringValue(field, attribute);

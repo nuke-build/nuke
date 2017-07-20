@@ -17,9 +17,9 @@ namespace Nuke.Core.Injection
         public abstract Type InjectionType { get; }
 
         [CanBeNull]
-        protected abstract object GetValue (FieldInfo field, Build buildInstance);
+        protected abstract object GetValue (FieldInfo field, NukeBuild buildInstance);
 
-        internal void InjectValue (FieldInfo field, Build buildInstance)
+        internal void InjectValue (FieldInfo field, NukeBuild buildInstance)
         {
             var value = GetValue(field, buildInstance);
             if (value == null)
@@ -32,7 +32,7 @@ namespace Nuke.Core.Injection
                     $"Value returned from '{GetType().Name}' must be of type '{InjectionType.Name}' but '{valueType.Name}'.");
             }
 
-            field.SetValue(Build.Instance, value);
+            field.SetValue(NukeBuild.Instance, value);
         }
     }
 }

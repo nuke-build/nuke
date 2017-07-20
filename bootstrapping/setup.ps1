@@ -116,7 +116,7 @@ Write-Host "Generating template files..."
 
 $BuildProjectUrl = @("$BootstrappingUrl/.build.legacy.csproj", "$BootstrappingUrl/.build.sdk.csproj")[$FormatSelection]
 $DotSettingsUrl = "$BootstrappingUrl/.build.csproj.DotSettings"
-$DefaultBuildUrl = "$BootstrappingUrl/DefaultBuild.cs"
+$DefaultBuildUrl = "$BootstrappingUrl/Build.cs"
 
 $BuildDirectory = "$PSScriptRoot\$BuildDirectoryName"
 $BuildProjectFile = "$BuildDirectory\$BuildProjectName.csproj"
@@ -124,7 +124,7 @@ md -force $BuildDirectory > $null
 
 Download $BuildProjectUrl "$BuildProjectFile"
 Download $DotSettingsUrl "$BuildProjectFile.dotsettings"
-Download $DefaultBuildUrl "$BuildDirectory\DefaultBuild.cs"
+Download $DefaultBuildUrl "$BuildDirectory\Build.cs"
 
 $ProjectGuid = [guid]::NewGuid().ToString().ToUpper()
 $ProjectKindGuid = @("FAE04EC0-301F-11D3-BF4B-00C04F79EFBC", "9A19103F-16F7-4668-BE54-9A1E7A4F7556")[$FormatSelection]

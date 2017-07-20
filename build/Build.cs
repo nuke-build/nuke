@@ -24,13 +24,13 @@ using static Nuke.Core.IO.FileSystemTasks;
 using static Nuke.Core.IO.PathConstruction;
 using static Nuke.Core.EnvironmentInfo;
 
-class NukeBuild : GitHubBuild
+class Build : NukeBuild
 {
     [Parameter] readonly string MyGetApiKey;
     [GitVersion] readonly GitVersion GitVersion;
     [GitRepository] readonly GitRepository GitRepository;
 
-    public static int Main () => Execute<NukeBuild>(x => x.Pack);
+    public static int Main () => Execute<Build>(x => x.Pack);
 
     Target Clean => _ => _
             .Executes(() => DeleteDirectories(GlobDirectories(SolutionDirectory, "*/bin", "*/obj")))

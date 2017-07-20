@@ -38,7 +38,7 @@ namespace Nuke.Core.Injection
         public static TValue GetValue<TValue, TAttribute> ()
             where TAttribute : InjectionAttributeBase
         {
-            var buildInstance = Build.Instance;
+            var buildInstance = NukeBuild.Instance;
 
             var buildType = buildInstance.GetType();
             var attributeType = typeof(TAttribute);

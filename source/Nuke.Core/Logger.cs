@@ -39,7 +39,7 @@ namespace Nuke.Core
         #region Trace
 
         /// <summary>
-        /// Logs a message as trace if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Trace"/>.
+        /// Logs a message as trace if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Trace"/>.
         /// </summary>
         [StringFormatMethod("format")]
         public static void Trace (string format, params object[] args)
@@ -48,7 +48,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Logs a message as trace if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Trace"/>.
+        /// Logs a message as trace if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Trace"/>.
         /// </summary>
         public static void Trace (object value)
         {
@@ -56,7 +56,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Logs a message as trace if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Trace"/>.
+        /// Logs a message as trace if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Trace"/>.
         /// </summary>
         public static void Trace (string text)
         {
@@ -64,7 +64,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Logs a message as trace if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Trace"/>.
+        /// Logs a message as trace if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Trace"/>.
         /// </summary>
         public static T Trace<T> (this T obj, Func<T, string> text)
         {
@@ -78,7 +78,7 @@ namespace Nuke.Core
         #region Info
 
         /// <summary>
-        /// Logs a message as information if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Information"/>.
+        /// Logs a message as information if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Information"/>.
         /// </summary>
         [StringFormatMethod("format")]
         public static void Info (string format, params object[] args)
@@ -87,7 +87,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Logs a message as information if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Information"/>.
+        /// Logs a message as information if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Information"/>.
         /// </summary>
         public static void Info (object value)
         {
@@ -95,7 +95,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Logs a message as information if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Information"/>.
+        /// Logs a message as information if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Information"/>.
         /// </summary>
         public static void Info (string text)
         {
@@ -103,7 +103,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Logs a message as information if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Information"/>.
+        /// Logs a message as information if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Information"/>.
         /// </summary>
         public static T Info<T> (this T obj, Func<T, string> text)
         {
@@ -116,7 +116,7 @@ namespace Nuke.Core
         #region Warn
 
         /// <summary>
-        /// Logs a message as warning if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Warning"/>.
+        /// Logs a message as warning if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Warning"/>.
         /// </summary>
         [StringFormatMethod("format")]
         public static void Warn (string format, params object[] args)
@@ -125,7 +125,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Logs a message as warning if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Warning"/>.
+        /// Logs a message as warning if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Warning"/>.
         /// </summary>
         public static void Warn (object value)
         {
@@ -133,7 +133,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Logs a message as warning if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Warning"/>.
+        /// Logs a message as warning if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Warning"/>.
         /// </summary>
         public static void Warn (string text)
         {
@@ -141,7 +141,7 @@ namespace Nuke.Core
         }
         
         /// <summary>
-        /// Logs a message as warning if <see cref="Build.LogLevel"/> is greater or equal to <see cref="LogLevel.Warning"/>.
+        /// Logs a message as warning if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Warning"/>.
         /// </summary>
         public static T Warn<T> (this T obj, Func<T, string> text)
         {

@@ -13,7 +13,7 @@ namespace Nuke.Core.Execution
 {
     internal class InjectionService
     {
-        public void InjectParameters (Build build)
+        public void InjectParameters (NukeBuild build)
         {
             foreach (var field in build.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
             {
@@ -27,7 +27,7 @@ namespace Nuke.Core.Execution
             }
         }
 
-        public void ValidateParameters (IReadOnlyCollection<TargetDefinition> executionList, Build buildInstance)
+        public void ValidateParameters (IReadOnlyCollection<TargetDefinition> executionList, NukeBuild buildInstance)
         {
             foreach (var target in executionList)
             foreach (var requiredParameter in target.RequiredParameters)

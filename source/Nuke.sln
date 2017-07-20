@@ -21,10 +21,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bootstrapping", "bootstrapp
 		..\bootstrapping\.build.legacy.csproj = ..\bootstrapping\.build.legacy.csproj
 		..\bootstrapping\.build.legacy.packages.config = ..\bootstrapping\.build.legacy.packages.config
 		..\bootstrapping\.build.sdk.csproj = ..\bootstrapping\.build.sdk.csproj
+		..\bootstrapping\Build.cs = ..\bootstrapping\Build.cs
 		..\bootstrapping\build.dotnet.ps1 = ..\bootstrapping\build.dotnet.ps1
 		..\bootstrapping\build.ps1 = ..\bootstrapping\build.ps1
 		..\bootstrapping\build.sh = ..\bootstrapping\build.sh
-		..\bootstrapping\DefaultBuild.cs = ..\bootstrapping\DefaultBuild.cs
 		..\bootstrapping\setup.ps1 = ..\bootstrapping\setup.ps1
 		..\bootstrapping\setup.sh = ..\bootstrapping\setup.sh
 	EndProjectSection

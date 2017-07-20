@@ -8,11 +8,14 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
+using Nuke.Core;
 using Nuke.Core.Execution;
 using Nuke.Core.IO;
 using Nuke.Core.OutputSinks;
 using Nuke.Core.Utilities;
 using static Nuke.Core.EnvironmentInfo;
+
+[assembly: IconClass(typeof(NukeBuild), "star-full")]
 
 // ReSharper disable VirtualMemberNeverOverridden.Global
 
@@ -24,7 +27,7 @@ namespace Nuke.Core
     /// </summary>
     /// <example>
     /// <code>
-    /// class DefaultBuild : Build
+    /// class DefaultBuild : NukeBuild
     /// {
     ///     public static int Main () => Execute&lt;DefaultBuild&gt;(x => x.Compile);
     /// 
@@ -38,28 +41,28 @@ namespace Nuke.Core
     /// </code>
     /// </example>
     [PublicAPI]
-    public abstract class Build
+    public abstract class NukeBuild
     {
         private const string c_configFile = ".nuke";
 
         /// <summary>
         /// The currently running build instance. Mostly useful for default settings.
         /// </summary>
-        public static Build Instance { get; private set; }
+        public static NukeBuild Instance { get; private set; }
 
         /// <summary>
         /// Executes the build. The provided expression defines the <em>default</em> target that is invoked,
         /// if no targets have been specified on the command line.
         /// </summary>
         protected static int Execute<T> (Expression<Func<T, Target>> defaultTargetExpression)
-            where T : Build
+            where T : NukeBuild
         {
             var executionList = PrepareBuild(defaultTargetExpression);
             return new ExecutionListRunner().Run(executionList);
         }
 
         private static IReadOnlyCollection<TargetDefinition> PrepareBuild<T> (Expression<Func<T, Target>> defaultTargetExpression)
-            where T : Build
+            where T : NukeBuild
         {
             using (DelegateDisposable.CreateBracket(
                 () => ControlFlow.IsPreparing = true,
@@ -78,7 +81,7 @@ namespace Nuke.Core
             }
         }
 
-        protected Build ()
+        protected NukeBuild ()
         {
             Instance = this;
         }

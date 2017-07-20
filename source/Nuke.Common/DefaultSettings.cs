@@ -25,8 +25,8 @@ using Nuke.Core.Tooling;
 namespace Nuke.Common
 {
     /// <summary>
-    /// Variety of default settings, pre-filled with <see cref="Build.Instance"/> properties
-    /// (e.g., <see cref="Build.SolutionFile"/> and inject values (e.g., <see cref="GitRepository"/> and
+    /// Variety of default settings, pre-filled with <see cref="NukeBuild.Instance"/> properties
+    /// (e.g., <see cref="NukeBuild.SolutionFile"/> and inject values (e.g., <see cref="GitRepository"/> and
     /// best-practice values (e.g., excluding test attributes from coverage analysis).
     /// For more details it's recommended to browse the actual source code.
     /// </summary>
@@ -58,9 +58,9 @@ namespace Nuke.Common
             get
             {
                 var toolSettings = new MSBuildSettings()
-                        .SetWorkingDirectory(Build.Instance.SolutionDirectory)
-                        .SetSolutionFile(Build.Instance.SolutionFile)
-                        .SetConfiguration(Build.Instance.Configuration);
+                        .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
+                        .SetSolutionFile(NukeBuild.Instance.SolutionFile)
+                        .SetConfiguration(NukeBuild.Instance.Configuration);
 
                 var teamCityLogger = EnvironmentInfo.Variable("TEAMCITY_MSBUILD_LOGGER");
                 if (!string.IsNullOrWhiteSpace(teamCityLogger))
@@ -93,32 +93,32 @@ namespace Nuke.Common
 
         public static MSBuildSettings MSBuildPack => MSBuildCommon
                 .SetTargets("Restore", "Pack")
-                .SetProperty("PackageOutputPath", Build.Instance.OutputDirectory)
+                .SetProperty("PackageOutputPath", NukeBuild.Instance.OutputDirectory)
                 .SetProperty("IncludeSymbols", "True")
             // TODO: evenIfNull for dictionary
                 .SetProperty("PackageVersion", InjectedValueProvider.GetValue(GitVersionKey)?.NuGetVersionV2);
 
 
         public static GitVersionSettings GitVersion => new GitVersionSettings()
-                .SetWorkingDirectory(Build.Instance.RootDirectory);
+                .SetWorkingDirectory(NukeBuild.Instance.RootDirectory);
 
         public static NuGetPackSettings NuGetPack => new NuGetPackSettings()
-                .SetWorkingDirectory(Build.Instance.RootDirectory)
-                .SetOutputDirectory(Build.Instance.OutputDirectory)
-                .SetConfiguration(Build.Instance.Configuration)
+                .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
+                .SetOutputDirectory(NukeBuild.Instance.OutputDirectory)
+                .SetConfiguration(NukeBuild.Instance.Configuration)
                 .SetVersion(InjectedValueProvider.GetValue(GitVersionKey)?.NuGetVersionV2);
 
         public static NuGetRestoreSettings NuGetRestore => new NuGetRestoreSettings()
-                .SetWorkingDirectory(Build.Instance.RootDirectory)
-                .SetTargetPath(Build.Instance.SolutionFile);
+                .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
+                .SetTargetPath(NukeBuild.Instance.SolutionFile);
 
         public static InspectCodeSettings InspectCode => new InspectCodeSettings()
-                .SetWorkingDirectory(Build.Instance.RootDirectory)
-                .SetTargetPath(Build.Instance.SolutionFile)
-                .SetOutput(Path.Combine(Build.Instance.OutputDirectory, "inspectCode.xml"));
+                .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
+                .SetTargetPath(NukeBuild.Instance.SolutionFile)
+                .SetOutput(Path.Combine(NukeBuild.Instance.OutputDirectory, "inspectCode.xml"));
 
         public static OpenCoverSettings OpenCover => new OpenCoverSettings()
-                .SetWorkingDirectory(Build.Instance.RootDirectory)
+                .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
                 .SetRegistration(RegistrationType.User)
                 .SetTargetExitCodeOffset(targetExitCodeOffset: 0)
                 .SetFilters(
@@ -138,15 +138,15 @@ namespace Nuke.Common
                     "*/*.g.i.cs");
 
         public static GitLink2Settings GitLink2 => new GitLink2Settings()
-                .SetWorkingDirectory(Build.Instance.RootDirectory)
-                .SetSolutionDirectory(Build.Instance.SolutionDirectory)
-                .SetConfiguration(Build.Instance.Configuration)
+                .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
+                .SetSolutionDirectory(NukeBuild.Instance.SolutionDirectory)
+                .SetConfiguration(NukeBuild.Instance.Configuration)
                 .SetBranchName(InjectedValueProvider.GetValue(GitVersionKey)?.BranchName)
                 .SetRepositoryUrl(InjectedValueProvider.GetValue(GitRepositoryKey)?.SvnUrl);
 
         public static GitLink3Settings GitLink3 => new GitLink3Settings()
-                .SetWorkingDirectory(Build.Instance.RootDirectory)
-                .SetBaseDirectory(Build.Instance.RootDirectory)
+                .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
+                .SetBaseDirectory(NukeBuild.Instance.RootDirectory)
                 .SetRepositoryUrl(InjectedValueProvider.GetValue(GitRepositoryKey)?.SvnUrl);
     }
 }

@@ -18,7 +18,7 @@ namespace Nuke.Common.Git
         public override Type InjectionType => typeof(GitRepository);
 
         [CanBeNull]
-        protected override object GetValue (FieldInfo field, Build buildInstance)
+        protected override object GetValue (FieldInfo field, NukeBuild buildInstance)
         {
             var gitConfig = Path.Combine(buildInstance.RootDirectory, ".git", "config");
             var configContent = File.ReadAllLines(gitConfig);

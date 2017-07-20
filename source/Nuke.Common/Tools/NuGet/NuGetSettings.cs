@@ -15,6 +15,6 @@ namespace Nuke.Common.Tools.NuGet
     {
         public override string ToolPath =>
                 EnvironmentInfo.Variable("NUGET_EXE")
-                ?? Path.Combine(Build.Instance.TemporaryDirectory, "nuget.exe");
+                ?? Path.Combine(NukeBuild.Instance.TemporaryDirectory, "nuget.exe");
     }
 }

@@ -17,7 +17,7 @@ namespace Nuke.Common.Tools.GitVersion
         public override Type InjectionType => typeof(GitVersion);
 
         [CanBeNull]
-        protected override object GetValue (FieldInfo field, Build buildInstance)
+        protected override object GetValue (FieldInfo field, NukeBuild buildInstance)
         {
             return EnvironmentInfo.IsWin && DefaultSettings.GitVersion.HasValidToolPath()
                 ? GitVersionTasks.GitVersion(s => DefaultSettings.GitVersion)

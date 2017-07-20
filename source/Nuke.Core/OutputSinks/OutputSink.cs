@@ -32,7 +32,7 @@ namespace Nuke.Core.OutputSinks
 
         public static void Trace (string text)
         {
-            if (Build.Instance?.LogLevel > LogLevel.Trace)
+            if (NukeBuild.Instance?.LogLevel > LogLevel.Trace)
                 return;
 
             Instance.Trace(text);
@@ -40,7 +40,7 @@ namespace Nuke.Core.OutputSinks
 
         public static void Info (string text)
         {
-            if (Build.Instance?.LogLevel > LogLevel.Information)
+            if (NukeBuild.Instance?.LogLevel > LogLevel.Information)
                 return;
 
             Instance.Info(text);
@@ -48,7 +48,7 @@ namespace Nuke.Core.OutputSinks
 
         public static void Warn (string text, string details = null)
         {
-            if (Build.Instance?.LogLevel > LogLevel.Warning)
+            if (NukeBuild.Instance?.LogLevel > LogLevel.Warning)
                 return;
 
             s_warnings.Add(text);

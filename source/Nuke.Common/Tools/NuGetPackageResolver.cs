@@ -158,8 +158,8 @@ namespace Nuke.Common.Tools
                     ".nuget",
                     "packages");
 
-            if (Build.Instance != null)
-                return Path.Combine(Path.GetDirectoryName(Build.Instance.SolutionFile).NotNull(), "packages");
+            if (NukeBuild.Instance != null)
+                return Path.Combine(Path.GetDirectoryName(NukeBuild.Instance.SolutionFile).NotNull(), "packages");
 
             var packagesDirectory = new FileInfo(packagesConfigFile).Directory.NotNull()
                     .DescendantsAndSelf(x => x.Parent)

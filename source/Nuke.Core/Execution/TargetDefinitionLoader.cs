@@ -14,7 +14,7 @@ namespace Nuke.Core.Execution
 {
     internal class TargetDefinitionLoader
     {
-        public IReadOnlyCollection<TargetDefinition> GetExecutionList (Build build, Target defaultTarget)
+        public IReadOnlyCollection<TargetDefinition> GetExecutionList (NukeBuild build, Target defaultTarget)
         {
             var targetDefinitions = build.GetType()
                     .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
@@ -52,7 +52,7 @@ namespace Nuke.Core.Execution
             return targetDefinition;
         }
 
-        private TargetDefinition LoadTargetDefinition (Build build, PropertyInfo property)
+        private TargetDefinition LoadTargetDefinition (NukeBuild build, PropertyInfo property)
         {
             var targetFactory = (Target) property.GetValue(build);
             return TargetDefinition.Create(property.Name, targetFactory);
