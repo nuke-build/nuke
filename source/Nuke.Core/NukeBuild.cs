@@ -15,7 +15,7 @@ using Nuke.Core.OutputSinks;
 using Nuke.Core.Utilities;
 using static Nuke.Core.EnvironmentInfo;
 
-[assembly: IconClass(typeof(NukeBuild), "star-full")]
+[assembly: IconClass(typeof(NukeBuild), "heart3")]
 
 // ReSharper disable VirtualMemberNeverOverridden.Global
 
