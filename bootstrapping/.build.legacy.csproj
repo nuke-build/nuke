@@ -81,11 +81,11 @@
     <Reference Include="NuGet.Versioning, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>_SOLUTION_DIRECTORY_\packages\NuGet.Versioning.4.0.0\lib\net45\NuGet.Versioning.dll</HintPath>
     </Reference>
-    <Reference Include="Nuke.Common, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>_SOLUTION_DIRECTORY_\packages\Nuke.Common.0.1.0\lib\net46\Nuke.Common.dll</HintPath>
+    <Reference Include="Nuke.Common, Version=0.1.189.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>_SOLUTION_DIRECTORY_\packages\Nuke.Common.0.1.189\lib\net46\Nuke.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Nuke.Core, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>_SOLUTION_DIRECTORY_\packages\Nuke.Core.0.1.0\lib\net46\Nuke.Core.dll</HintPath>
+    <Reference Include="Nuke.Core, Version=0.1.189.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>_SOLUTION_DIRECTORY_\packages\Nuke.Core.0.1.189\lib\net46\Nuke.Core.dll</HintPath>
     </Reference>
     <Reference Include="Octokit, Version=0.24.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>_SOLUTION_DIRECTORY_\packages\Octokit.0.24.0\lib\net45\Octokit.dll</HintPath>
