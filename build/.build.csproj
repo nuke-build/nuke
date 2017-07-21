@@ -5,6 +5,7 @@
     <TargetFramework>net46</TargetFramework>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <RootNamespace></RootNamespace>
+    <ReferenceLocal>False</ReferenceLocal>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -17,8 +18,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!--<PackageReference Include="Nuke.Common" Version="*" />-->
-
     <PackageReference Include="gitlink" Version="3.0.0-unstable0090" />
     <PackageReference Include="GitVersion.CommandLine" Version="4.0.0-beta0011" />
     <PackageReference Include="JetBrains.ReSharper.CommandLineTools" Version="2017.1.20170613.162720" />
@@ -27,7 +26,11 @@
     <PackageReference Include="xunit.runner.console" Version="2.2.0" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(ReferenceLocal)'!='True'">
+    <PackageReference Include="Nuke.Common" Version="*" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(ReferenceLocal)'=='True'">
     <ProjectReference Include="..\source\Nuke.Core\Nuke.Core.csproj" />
     <ProjectReference Include="..\source\Nuke.Common\Nuke.Common.csproj" />
   </ItemGroup>

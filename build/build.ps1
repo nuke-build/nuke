@@ -6,6 +6,7 @@ Param(
     [string]$Configuration,
     [ValidateSet("Quiet", "Minimal", "Normal", "Verbose")]
     [string]$Verbosity,
+    [switch]$RefLocal,
     [Parameter(Position=0,Mandatory=$false,ValueFromRemainingArguments=$true)]
     [string[]]$ScriptArgs
 )
@@ -42,12 +43,11 @@ if (!$NoInit) {
     if (!(Test-Path $NuGetFile)) { (New-Object System.Net.WebClient).DownloadFile($NuGetUrl, $NuGetFile) }
     elseif ($NuGetUrl.Contains("latest")) { & $NuGetFile update -Self }
 
-    ExecSafe { & $NuGetFile restore $BuildProjectFile -SolutionDirectory $SolutionDirectory -NoCache }
     ExecSafe { & $NuGetFile install Nuke.MSBuildLocator -ExcludeVersion -OutputDirectory $TempDirectory -SolutionDirectory $SolutionDirectory }
 }
 
 $MSBuildFile = & "$TempDirectory\Nuke.MSBuildLocator\tools\Nuke.MSBuildLocator.exe"
-ExecSafe { & $MSBuildFile $BuildProjectFile }
+ExecSafe { & $MSBuildFile $BuildProjectFile /target:"Restore;Build" /property:ReferenceLocal=$RefLocal }
 
 Write-Host "##teamcity[blockClosed name='Prepare']"
 
