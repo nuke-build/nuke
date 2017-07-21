@@ -2,27 +2,9 @@
 
   <PropertyGroup>
     <TargetFrameworks>net46;netcoreapp1.1</TargetFrameworks>
-    <IsPackable>False</IsPackable>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DebugType>full</DebugType>
-    <DebugSymbols>True</DebugSymbols>
-    <DefineConstants>DEBUG;JETBRAINS_ANNOTATIONS</DefineConstants>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DebugType>pdbonly</DebugType>
-    <DebugSymbols>True</DebugSymbols>
-    <DefineConstants>RELEASE;JETBRAINS_ANNOTATIONS</DefineConstants>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <Optimize>True</Optimize>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">
-    <DefineConstants>$(DefineConstants);NETCORE</DefineConstants>
-  </PropertyGroup>
+  <Import Project="..\..\shared\Configuration.props" />
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="4.19.2" />

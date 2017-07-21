@@ -33,7 +33,7 @@ class Build : NukeBuild
     public static int Main () => Execute<Build>(x => x.Pack);
 
     Target Clean => _ => _
-            .Executes(() => DeleteDirectories(GlobDirectories(SolutionDirectory, "*/bin", "*/obj")))
+            .Executes(() => DeleteDirectories(GlobDirectories(SourceDirectory, "*/bin", "*/obj")))
             .Executes(() => EnsureCleanDirectory(OutputDirectory));
 
     Target Restore => _ => _
