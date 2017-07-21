@@ -11,6 +11,7 @@ using Nuke.Core.Injection;
 
 namespace Nuke.Common.Tools.GitVersion
 {
+    /// <inheritdoc/>
     [PublicAPI]
     public class GitVersionAttribute : InjectionAttributeBase
     {

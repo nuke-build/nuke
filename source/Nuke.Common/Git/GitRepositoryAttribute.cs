@@ -12,6 +12,7 @@ using Nuke.Core.Injection;
 
 namespace Nuke.Common.Git
 {
+    /// <inheritdoc/>
     [PublicAPI]
     public class GitRepositoryAttribute : InjectionAttributeBase
     {

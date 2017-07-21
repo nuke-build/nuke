@@ -50,75 +50,74 @@ namespace Nuke.Common
     [PublicAPI]
     public class DefaultSettings
     {
-        private static InjectionKey<GitVersion, GitVersionAttribute> GitVersionKey { get; }
-        private static InjectionKey<GitRepository, GitRepositoryAttribute> GitRepositoryKey { get; }
+        private static NukeBuild Build => NukeBuild.Instance;
+
+        private static GitVersion GitVersionValue
+            => InjectedValueProvider.GetValue<GitVersion, GitVersionAttribute>();
+
+        private static GitRepository GitRepositoryValue
+            => InjectedValueProvider.GetValue<GitRepository, GitRepositoryAttribute>();
 
         public static MSBuildSettings MSBuildCommon
         {
             get
             {
                 var toolSettings = new MSBuildSettings()
-                        .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
-                        .SetSolutionFile(NukeBuild.Instance.SolutionFile)
-                        .SetConfiguration(NukeBuild.Instance.Configuration);
+                        .SetWorkingDirectory(Build.SolutionDirectory)
+                        .SetSolutionFile(Build.SolutionFile)
+                        .SetMaxCpuCount(Environment.ProcessorCount)
+                        .SetConfiguration(Build.Configuration);
 
                 var teamCityLogger = EnvironmentInfo.Variable("TEAMCITY_MSBUILD_LOGGER");
                 if (!string.IsNullOrWhiteSpace(teamCityLogger))
                     toolSettings = toolSettings
-                            .AddLogger(teamCityLogger, evenIfNull: false)
+                            .AddLogger(teamCityLogger)
                             .EnableNoConsoleLogger();
 
                 return toolSettings;
             }
         }
 
+
         public static MSBuildSettings MSBuildRestore => MSBuildCommon
                 .SetTargets("Restore");
 
         public static MSBuildSettings MSBuildCompile => MSBuildCommon
-                .SetTargets("Rebuild")
-                .SetMaxCpuCount(Environment.ProcessorCount);
+                .SetTargets("Rebuild");
 
-        public static MSBuildSettings MSBuildCompileWithGitVersion
-        {
-            get
-            {
-                var gitVersion = InjectedValueProvider.GetNonNullValue(GitVersionKey);
-                return MSBuildCompile
-                        .SetProperty("AssemblyVersion", gitVersion.AssemblySemVer)
-                        .SetProperty("FileVersion", gitVersion.AssemblySemVer)
-                        .SetProperty("InformationalVersion", gitVersion.InformationalVersion);
-            }
-        }
+        public static MSBuildSettings MSBuildCompileWithVersion => MSBuildCompile
+                .SetProperty("AssemblyVersion", GitVersionValue?.AssemblySemVer)
+                .SetProperty("FileVersion", GitVersionValue?.AssemblySemVer)
+                .SetProperty("InformationalVersion", GitVersionValue?.InformationalVersion);
 
         public static MSBuildSettings MSBuildPack => MSBuildCommon
                 .SetTargets("Restore", "Pack")
-                .SetProperty("PackageOutputPath", NukeBuild.Instance.OutputDirectory)
+                .SetProperty("PackageOutputPath", Build.OutputDirectory)
                 .SetProperty("IncludeSymbols", "True")
             // TODO: evenIfNull for dictionary
-                .SetProperty("PackageVersion", InjectedValueProvider.GetValue(GitVersionKey)?.NuGetVersionV2);
+                .SetProperty("PackageVersion", GitVersionValue?.NuGetVersionV2);
 
 
         public static GitVersionSettings GitVersion => new GitVersionSettings()
-                .SetWorkingDirectory(NukeBuild.Instance.RootDirectory);
+                .SetWorkingDirectory(Build.RootDirectory);
 
         public static NuGetPackSettings NuGetPack => new NuGetPackSettings()
-                .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
-                .SetOutputDirectory(NukeBuild.Instance.OutputDirectory)
-                .SetConfiguration(NukeBuild.Instance.Configuration)
-                .SetVersion(InjectedValueProvider.GetValue(GitVersionKey)?.NuGetVersionV2);
+                .SetWorkingDirectory(Build.RootDirectory)
+                .SetOutputDirectory(Build.OutputDirectory)
+                .SetConfiguration(Build.Configuration)
+                .SetVersion(GitVersionValue?.NuGetVersionV2);
 
         public static NuGetRestoreSettings NuGetRestore => new NuGetRestoreSettings()
-                .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
-                .SetTargetPath(NukeBuild.Instance.SolutionFile);
+                .SetWorkingDirectory(Build.RootDirectory)
+                .SetTargetPath(Build.SolutionFile);
 
         public static InspectCodeSettings InspectCode => new InspectCodeSettings()
-                .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
-                .SetTargetPath(NukeBuild.Instance.SolutionFile)
-                .SetOutput(Path.Combine(NukeBuild.Instance.OutputDirectory, "inspectCode.xml"));
+                .SetWorkingDirectory(Build.RootDirectory)
+                .SetTargetPath(Build.SolutionFile)
+                .SetOutput(Path.Combine(Build.OutputDirectory, "inspectCode.xml"));
 
         public static OpenCoverSettings OpenCover => new OpenCoverSettings()
-                .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
+                .SetWorkingDirectory(Build.RootDirectory)
                 .SetRegistration(RegistrationType.User)
                 .SetTargetExitCodeOffset(targetExitCodeOffset: 0)
                 .SetFilters(
@@ -138,15 +137,15 @@ namespace Nuke.Common
                     "*/*.g.i.cs");
 
         public static GitLink2Settings GitLink2 => new GitLink2Settings()
-                .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
-                .SetSolutionDirectory(NukeBuild.Instance.SolutionDirectory)
-                .SetConfiguration(NukeBuild.Instance.Configuration)
-                .SetBranchName(InjectedValueProvider.GetValue(GitVersionKey)?.BranchName)
-                .SetRepositoryUrl(InjectedValueProvider.GetValue(GitRepositoryKey)?.SvnUrl);
+                .SetWorkingDirectory(Build.RootDirectory)
+                .SetSolutionDirectory(Build.SolutionDirectory)
+                .SetConfiguration(Build.Configuration)
+                .SetBranchName(GitVersionValue?.BranchName)
+                .SetRepositoryUrl(GitRepositoryValue?.SvnUrl);
 
         public static GitLink3Settings GitLink3 => new GitLink3Settings()
-                .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
-                .SetBaseDirectory(NukeBuild.Instance.RootDirectory)
-                .SetRepositoryUrl(InjectedValueProvider.GetValue(GitRepositoryKey)?.SvnUrl);
+                .SetWorkingDirectory(Build.RootDirectory)
+                .SetBaseDirectory(Build.RootDirectory)
+                .SetRepositoryUrl(GitRepositoryValue?.SvnUrl);
     }
 }

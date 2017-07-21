@@ -42,15 +42,20 @@ namespace Nuke.Core
         ITargetDefinition OnlyWhen (params Func<bool>[] conditions);
 
         /// <summary>
-        ///   Adds a set of required parameters that will be checked for application prior to build execution.
+        ///   Adds a required parameter that will be checked prior to build execution.
         /// </summary>
-        ITargetDefinition RequiresParameters<T> (params Expression<Func<T>>[] parameterProviders)
+        ITargetDefinition Requires<T> (params Expression<Func<T>>[] parameterRequirement)
             where T : class;
 
         /// <summary>
-        ///   Adds a set of required parameters that will be checked for application prior to build execution.
+        ///   Adds a required parameter that will be checked prior to build execution.
         /// </summary>
-        ITargetDefinition RequiresParameters<T> (params Expression<Func<T?>>[] parameterProviders)
+        ITargetDefinition Requires<T> (params Expression<Func<T?>>[] parameterRequirement)
             where T : struct;
+
+        /// <summary>
+        ///   Adds a requirement that will be checked prior to build execution.
+        /// </summary>
+        ITargetDefinition Requires (params Expression<Func<bool>>[] requirement);
     }
 }

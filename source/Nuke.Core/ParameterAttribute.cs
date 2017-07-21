@@ -4,27 +4,25 @@
 
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Core.Injection;
 
 namespace Nuke.Core
 {
+    /// <inheritdoc/>
     /// <summary>
-    ///     Marks a field for automatic parameter injection prior to build execution. Fields marked
-    ///     with the attribute can be declared as <em>required</em> for any <see cref="Target" />
-    ///     definitions and will therefore be subject for validation at execution start.
-    ///     <para/>
+    ///     <inheritdoc/><para/>
     ///     Parameters are resolved case-insensitively in the following order:
     ///     <ul>
     ///         <li>From command-line arguments (e.g., <c>--myArgument=value</c>)</li>
     ///         <li>From environment variables (e.g., <c>MyArgument=value</c>)</li>
     ///     </ul>
     ///     <para/>
-    ///     For value-types, there is a distinction between pure value-types, and their null-able
+    ///     For value-types, there is a distinction between pure value-types, and their <em>nullable</em>
     ///     counterparts. For instance, <c>int</c> will have its default value <c>0</c> even if it wasn't
-    ///     supplied via command-line or environment variable, and therefore also can't be used in
-    ///     <see cref="ITargetDefinition.RequiresParameters{T}(System.Linq.Expressions.Expression{System.Func{T}}[])"/>.
+    ///     supplied via command-line or environment variable, and therefore also can't be used as requirements.
     ///     Declaring the field as <c>int?</c> however, will enable validation and setting the requirement.
     /// </summary>
     /// <example>

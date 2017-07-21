@@ -25,7 +25,7 @@ namespace Nuke.Core.Execution
             DependentShadowTargets = new List<string>();
             Actions = new List<Action>();
             Conditions = new List<Func<bool>>();
-            RequiredParameters = new List<LambdaExpression>();
+            Requirements = new List<LambdaExpression>();
 
             factory?.Invoke(this);
         }
@@ -38,7 +38,7 @@ namespace Nuke.Core.Execution
         internal TimeSpan Duration { get; set; }
         internal ExecutionStatus Status { get; set; }
         internal List<Func<bool>> Conditions { get; }
-        internal List<LambdaExpression> RequiredParameters { get; }
+        internal List<LambdaExpression> Requirements { get; }
         internal List<Target> DependentTargets { get; }
         internal List<string> DependentShadowTargets { get; }
         internal List<Action> Actions { get; }
@@ -72,17 +72,23 @@ namespace Nuke.Core.Execution
             return this;
         }
 
-        public ITargetDefinition RequiresParameters<T> (params Expression<Func<T>>[] parameterProviders)
+        public ITargetDefinition Requires<T> (params Expression<Func<T>>[] parameterRequirement)
             where T : class
         {
-            RequiredParameters.AddRange(parameterProviders);
+            Requirements.AddRange(parameterRequirement);
             return this;
         }
 
-        public ITargetDefinition RequiresParameters<T> (params Expression<Func<T?>>[] parameterProviders)
+        public ITargetDefinition Requires<T> (params Expression<Func<T?>>[] parameterRequirement)
             where T : struct
         {
-            RequiredParameters.AddRange(parameterProviders);
+            Requirements.AddRange(parameterRequirement);
+            return this;
+        }
+
+        public ITargetDefinition Requires (params Expression<Func<bool>>[] requirement)
+        {
+            Requirements.AddRange(requirement);
             return this;
         }
 

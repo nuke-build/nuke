@@ -73,9 +73,8 @@ namespace Nuke.Core
                 var defaultTarget = defaultTargetExpression.Compile().Invoke(build);
                 var executionList = new TargetDefinitionLoader().GetExecutionList(build, defaultTarget);
 
-                var parameterInjectionService = new InjectionService();
-                parameterInjectionService.InjectParameters(build);
-                parameterInjectionService.ValidateParameters(executionList, build);
+                InjectionService.InjectValues(build);
+                RequirementService.ValidateRequirements(executionList, build);
 
                 return executionList;
             }

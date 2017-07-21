@@ -42,8 +42,9 @@ class Build : NukeBuild
 
     Target Compile => _ => _
             .DependsOn(Restore)
+            .Requires(() => IsUnix || GitVersion != null)
             .Executes(() => MSBuild(s => IsWin
-                ? DefaultSettings.MSBuildCompileWithGitVersion
+                ? DefaultSettings.MSBuildCompileWithVersion
                 : DefaultSettings.MSBuildCompile));
 
     Target Link => _ => _
@@ -59,7 +60,7 @@ class Build : NukeBuild
 
     Target Push => _ => _
             .DependsOn(Pack)
-            .RequiresParameters(() => MyGetApiKey)
+            .Requires(() => MyGetApiKey)
             .Executes(() => GlobFiles (OutputDirectory, "*.nupkg")
                     .Where(x => !x.EndsWith("symbols.nupkg"))
                     .ForEach(x => NuGetPush(s => s
