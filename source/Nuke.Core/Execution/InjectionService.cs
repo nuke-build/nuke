@@ -20,7 +20,7 @@ namespace Nuke.Core.Execution
                     continue;
                 ControlFlow.Assert(attributes.Count == 1, $"Field '{field.Name}' has multiple injection attributes applied.");
 
-                Logger.Info($"Injecting value for '{field.Name}'...");
+                Logger.Info($"Handling value injection for '{field.Name}'...");
 
                 var attribute = attributes.Single();
                 attribute.InjectValue(field, build);
