@@ -45,6 +45,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{B43B0E45-8
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Core.Tests", "source\Nuke.Core.Tests\Nuke.Core.Tests.csproj", "{FBC3039F-9793-4ECD-9A63-DB5B8BDDBA53}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{656F585C-0B2D-429D-95A7-226EF59DAB79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{656F585C-0B2D-429D-95A7-226EF59DAB79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{656F585C-0B2D-429D-95A7-226EF59DAB79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBC3039F-9793-4ECD-9A63-DB5B8BDDBA53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBC3039F-9793-4ECD-9A63-DB5B8BDDBA53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBC3039F-9793-4ECD-9A63-DB5B8BDDBA53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBC3039F-9793-4ECD-9A63-DB5B8BDDBA53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

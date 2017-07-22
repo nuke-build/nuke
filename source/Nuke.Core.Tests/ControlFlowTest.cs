@@ -5,12 +5,11 @@
 using System;
 using System.Linq;
 using FluentAssertions;
-using Nuke.Core;
 using Xunit;
 
 // ReSharper disable ArgumentsStyleLiteral
 
-namespace Nuke.Common.Tests
+namespace Nuke.Core.Tests
 {
     public class ControlFlowTest
     {

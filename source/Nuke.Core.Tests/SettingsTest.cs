@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 using Nuke.Core.Tooling;
 using Xunit;
 
-namespace Nuke.Common.Tests
+namespace Nuke.Core.Tests
 {
     public class SettingsTest
     {

@@ -10,7 +10,7 @@ using Xunit;
 
 // ReSharper disable ArgumentsStyleLiteral
 
-namespace Nuke.Common.Tests
+namespace Nuke.Core.Tests
 {
     public class LookupTableTest
     {
