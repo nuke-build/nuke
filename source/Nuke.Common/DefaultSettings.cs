@@ -129,7 +129,7 @@ namespace Nuke.Common
                 .SetExcludeByAttributes(
                     "*.Explicit*",
                     "*.Ignore*",
-                    "*. *")
+                    "System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute")
                 .SetExcludeByFile(
                     "*/*.Generated.cs",
                     "*/*.Designer.cs",
