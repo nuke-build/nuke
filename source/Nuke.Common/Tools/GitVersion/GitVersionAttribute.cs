@@ -4,7 +4,6 @@
 
 using System;
 using System.Linq;
-using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Core;
 using Nuke.Core.Injection;
@@ -13,16 +12,20 @@ namespace Nuke.Common.Tools.GitVersion
 {
     /// <inheritdoc/>
     [PublicAPI]
-    public class GitVersionAttribute : InjectionAttributeBase
+    [UsedImplicitly(ImplicitUseKindFlags.Default)]
+    public class GitVersionAttribute : StaticInjectionAttributeBase
     {
+        private static Lazy<GitVersion> s_value = new Lazy<GitVersion>(() =>
+            EnvironmentInfo.IsWin && DefaultSettings.GitVersion.HasValidToolPath()
+                ? GitVersionTasks.GitVersion(s => DefaultSettings.GitVersion)
+                : null);
+
         public override Type InjectionType => typeof(GitVersion);
 
         [CanBeNull]
-        protected override object GetValue (FieldInfo field, NukeBuild buildInstance)
+        public override object GetStaticValue ()
         {
-            return EnvironmentInfo.IsWin && DefaultSettings.GitVersion.HasValidToolPath()
-                ? GitVersionTasks.GitVersion(s => DefaultSettings.GitVersion)
-                : null;
+            return s_value.Value;
         }
     }
 }

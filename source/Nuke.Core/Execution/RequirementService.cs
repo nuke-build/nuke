@@ -30,7 +30,7 @@ namespace Nuke.Core.Execution
                     var field = (FieldInfo) memberExpression.Member;
 
                     ControlFlow.Assert(field.GetValue(buildInstance) != null,
-                        $"Field '{field.Name}' was null but is required for target '{target.Name}'.");
+                        $"Field '{field.Name}' was 'null' but is required for target '{target.Name}'.");
                 }
             }
         }

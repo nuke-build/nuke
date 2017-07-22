@@ -6,55 +6,33 @@ using System;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
+using Nuke.Core.Utilities;
 
 namespace Nuke.Core.Injection
 {
     [PublicAPI]
     public static class InjectedValueProvider
     {
-        [CanBeNull]
-        public static TValue GetValue<TValue, TAttribute> (InjectionKey<TValue, TAttribute> key)
-            where TAttribute : InjectionAttributeBase
-        {
-            return GetValue<TValue, TAttribute>();
-        }
-
-        public static TValue GetNonNullValue<TValue, TAttribute> (InjectionKey<TValue, TAttribute> key)
-            where TValue : class
-            where TAttribute : InjectionAttributeBase
-        {
-            return GetNonNullValue<TValue, TAttribute>();
-        }
-
-        public static TValue GetNonNullValue<TValue, TAttribute>()
-            where TValue : class
-            where TAttribute : InjectionAttributeBase
-        {
-            return GetValue<TValue, TAttribute>()
-                    .NotNull($"Value for '{typeof(TValue).Name}' provided from '{typeof(TAttribute).Name}' was never injected");
-        }
+        private const BindingFlags c_bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
 
         [CanBeNull]
-        public static TValue GetValue<TValue, TAttribute> ()
-            where TAttribute : InjectionAttributeBase
+        public static T GetStaticValue<T> ()
         {
-            var buildInstance = NukeBuild.Instance;
+            var fieldsWithAttributes = (
+                from field in NukeBuild.Instance.GetType().GetFields(c_bindingFlags)
+                from attribute in field.GetCustomAttributes<StaticInjectionAttributeBase>()
+                where attribute.InjectionType == typeof(T)
+                select new { Field = field, Attribute = attribute }).ToList();
 
-            var buildType = buildInstance.GetType();
-            var attributeType = typeof(TAttribute);
+            if (fieldsWithAttributes.Count == 0)
+                return default(T);
+            ControlFlow.Assert(fieldsWithAttributes.Count == 1,
+                new[] { $"Requested value of type '{typeof(T).Name}' has multiple matching fields:" }
+                        .Concat(fieldsWithAttributes.Select(x => $"  - {x.Field.Name} ({x.Attribute.GetType().Name})"))
+                        .Join(Environment.NewLine));
 
-            var fields = buildType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-                    .Where(x => x.GetCustomAttribute(attributeType) != null).ToList();
-            if (fields.Count == 0)
-                return default(TValue);
-            ControlFlow.Assert(fields.Count == 1, $"Multiple fields are injected from '{attributeType.Name}'.");
-
-            var field = fields.Single();
-            var injectionType = field.GetCustomAttribute<InjectionAttributeBase>().InjectionType;
-            ControlFlow.Assert(injectionType == typeof(TValue),
-                $"Field '{field.Name}' must have type '{injectionType.Name}' to be valid for injection from '{attributeType.Name}'.");
-
-            return (TValue) field.GetValue(buildInstance);
+            var fieldWithAttribute = fieldsWithAttributes.Single();
+            return (T) fieldWithAttribute.Attribute.GetStaticValue();
         }
     }
 }

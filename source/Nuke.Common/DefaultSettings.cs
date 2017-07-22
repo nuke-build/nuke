@@ -52,11 +52,11 @@ namespace Nuke.Common
     {
         private static NukeBuild Build => NukeBuild.Instance;
 
-        private static GitVersion GitVersionValue
-            => InjectedValueProvider.GetValue<GitVersion, GitVersionAttribute>();
+        [CanBeNull]
+        private static GitVersion GitVersionValue => InjectedValueProvider.GetStaticValue<GitVersion>();
 
-        private static GitRepository GitRepositoryValue
-            => InjectedValueProvider.GetValue<GitRepository, GitRepositoryAttribute>();
+        [CanBeNull]
+        private static GitRepository GitRepositoryValue => InjectedValueProvider.GetStaticValue<GitRepository>();
 
         public static MSBuildSettings MSBuildCommon
         {

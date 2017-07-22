@@ -34,6 +34,7 @@ namespace Nuke.Core
     ///     </code>
     /// </example>
     [PublicAPI]
+    [UsedImplicitly(ImplicitUseKindFlags.Assign)]
     public class ParameterAttribute : InjectionAttributeBase
     {
         public ParameterAttribute (string description = null)
@@ -46,10 +47,10 @@ namespace Nuke.Core
         public override Type InjectionType => null;
 
         [CanBeNull]
-        protected override object GetValue (FieldInfo field, NukeBuild buildInstance)
+        public override object GetValue ([CanBeNull] FieldInfo field, NukeBuild build)
         {
             var attribute = field.GetCustomAttribute<ParameterAttribute>().NotNull("attribute != null");
-            var stringValue = GetStringValue(field, attribute);
+            var stringValue = GetStringValue(field.NotNull("field != null"), attribute);
             if (stringValue == null)
                 return null;
 
