@@ -115,7 +115,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DefaultBuild.cs" />
+    <Compile Include="Build.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
