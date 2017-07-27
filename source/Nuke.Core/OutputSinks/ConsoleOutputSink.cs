@@ -126,10 +126,13 @@ namespace Nuke.Core.OutputSinks
 
         protected string GetAscii (string text)
         {
-            var textWithFont = _figlet.ToAscii(text).ToString();
-            return string.Join(
-                EnvironmentInfo.NewLine,
-                textWithFont.Split(new[] { EnvironmentInfo.NewLine }, StringSplitOptions.RemoveEmptyEntries));
+            var textWithFont = _figlet.ToAscii(text).ToString()
+                    .Split(new[] { EnvironmentInfo.NewLine }, StringSplitOptions.RemoveEmptyEntries)
+                    .Where(x => !string.IsNullOrWhiteSpace(x));
+
+            return EnvironmentInfo.NewLine +
+                   textWithFont.Join(EnvironmentInfo.NewLine) +
+                   EnvironmentInfo.NewLine;
         }
     }
 }
