@@ -24,7 +24,7 @@ class Build : NukeBuild
     Target Clean => _ => _
             // Disabled for safety.
             .OnlyWhen(() => false)
-            .Executes(() => DeleteDirectories(GlobDirectories(SolutionDirectory, "**/bin", "**/obj")))
+            .Executes(() => DeleteDirectories(GlobDirectories(SourceDirectory, "**/bin", "**/obj")))
             .Executes(() => EnsureCleanDirectory(OutputDirectory));
 
     Target Restore => _ => _
