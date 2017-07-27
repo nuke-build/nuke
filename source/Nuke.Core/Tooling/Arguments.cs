@@ -70,7 +70,7 @@ namespace Nuke.Core.Tooling
                 return this;
 
             if (mainSeparator != null)
-                Add(argumentFormat, string.Join(mainSeparator, list.Select(x => x.ToString())), secret);
+                Add(argumentFormat, list.Select(x => x.ToString()).Join(mainSeparator), secret);
             else
                 list.ForEach(x => Add(argumentFormat, x, secret));
 
@@ -88,7 +88,7 @@ namespace Nuke.Core.Tooling
                 return this;
 
             if (mainSeparator != null)
-                Add(argumentFormat, string.Join(mainSeparator, dictionary.Select(x => $"{x.Key}{keyValueSeparator}{x.Value}")), secret);
+                Add(argumentFormat, dictionary.Select(x => $"{x.Key}{keyValueSeparator}{x.Value}").Join(mainSeparator), secret);
             else
                 dictionary.ForEach(x => Add(argumentFormat, $"{x.Key}{keyValueSeparator}{x.Value}", secret));
 
