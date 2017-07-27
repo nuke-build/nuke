@@ -118,8 +118,9 @@ namespace Nuke.Core
                     rootDirectory = rootDirectory.Parent;
                 }
 
-                return (PathConstruction.AbsolutePath) rootDirectory?.FullName.NotNull(
-                    $"Could not locate {c_configFile} file while traversing up from {buildAssemblyLocation}.");
+                return (PathConstruction.AbsolutePath) rootDirectory
+                        .NotNull($"Could not locate '{c_configFile}' file while traversing up from '{buildAssemblyLocation}'.")
+                        .FullName;
             }
         }
 
@@ -177,6 +178,6 @@ namespace Nuke.Core
         public virtual PathConstruction.AbsolutePath SourceDirectory
             => (PathConstruction.AbsolutePath) new[] { "src", "source" }
                     .SelectMany(x => Directory.GetDirectories(RootDirectory, x))
-                    .SingleOrDefault().NotNull("Could not locate single source directory.");
+                    .SingleOrDefault().NotNull("Could not locate a single source directory. Candidates are '\\src' and '\\source'.");
     }
 }
