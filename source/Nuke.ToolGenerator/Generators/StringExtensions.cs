@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Humanizer;
 using JetBrains.Annotations;
 
 namespace Nuke.ToolGenerator.Generators
@@ -36,13 +37,7 @@ namespace Nuke.ToolGenerator.Generators
 
         public static string ToSingular (this string name)
         {
-            if (name.EndsWith("ies"))
-                return name.Substring(startIndex: 0, length: name.Length - 3) + "y";
-
-            if (name.EndsWith("s"))
-                return name.Substring(startIndex: 0, length: name.Length - 1);
-
-            return name;
+            return name.Singularize() ?? name;
         }
 
         public static string Quote (this string text, bool interpolation = true)
