@@ -3,12 +3,14 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using HtmlAgilityPack;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -24,10 +26,8 @@ namespace Nuke.ToolGenerator
         {
             var files = Directory.GetFiles(args[0], "*.json", SearchOption.TopDirectoryOnly);
 
-            foreach (var file in files)
+            files.AsParallel().ForAll(file =>
             {
-                Console.WriteLine($"Processing {Path.GetFileName(file)}...");
-
                 var tool = Load(file);
                 using (var streamWriter = new StreamWriter(File.Open(tool.GenerationFileBase + ".Generated.cs", FileMode.Create)))
                 {
@@ -35,7 +35,9 @@ namespace Nuke.ToolGenerator
                 }
                 UpdateReferences(tool);
                 Save(tool);
-            }
+
+                Console.WriteLine($"Processed {Path.GetFileName(file)}.");
+            });
 
             Console.WriteLine("Finished generation. Press any key to exit...");
             Console.ReadKey();
@@ -69,20 +71,22 @@ namespace Nuke.ToolGenerator
 
         private static void UpdateReferences (Tool tool)
         {
-            for (var i = 0; i < tool.References.Count; i++)
-            {
-                try
+            Parallel.For(0, tool.References.Count,
+                async i =>
                 {
-                    File.WriteAllText(
-                        $"{tool.GenerationFileBase}.ref.{i.ToString().PadLeft(totalWidth: 3, paddingChar: '0')}.txt",
-                        GetReferenceContent(tool.References[i]));
-                }
-                catch (Exception exception)
-                {
-                    Console.Error.WriteLine($"Couldn't update reference #{i} for {Path.GetFileName(tool.DefinitionFile)}:");
-                    Console.Error.WriteLine(exception.Message);
-                }
-            }
+                    try
+                    {
+                        var referenceContent = await GetReferenceContent(tool.References[i]);
+                        File.WriteAllText(
+                            $"{tool.GenerationFileBase}.ref.{i.ToString().PadLeft(totalWidth: 3, paddingChar: '0')}.txt",
+                            referenceContent);
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.Error.WriteLine($"Couldn't update reference #{i} for {Path.GetFileName(tool.DefinitionFile)}:");
+                        Console.Error.WriteLine(exception.Message);
+                    }
+                });
         }
 
         private static void Save (Tool tool)
@@ -104,14 +108,14 @@ namespace Nuke.ToolGenerator
             File.WriteAllText(tool.DefinitionFile + postfix, content);
         }
 
-        private static string GetReferenceContent (string reference)
+        private static async Task<string> GetReferenceContent (string reference)
         {
             var referenceValues = reference.Split('#');
 
             var tempFile = Path.GetTempFileName();
             using (var webClient = new WebClient())
             {
-                webClient.DownloadFile(referenceValues[0], tempFile);
+                await webClient.DownloadFileTaskAsync(referenceValues[0], tempFile);
             }
 
             if (referenceValues.Length == 1)
