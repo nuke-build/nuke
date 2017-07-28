@@ -129,8 +129,15 @@ namespace Nuke.ToolGenerator
                 var property = base.CreateProperty(member, memberSerialization);
                 property.ShouldSerialize = x =>
                 {
-                    var propertyInfo = member as PropertyInfo;
-                    return propertyInfo == null || propertyInfo.GetSetMethod(nonPublic: true) != null;
+                    var propertyInfo = (PropertyInfo) member;
+
+                    if (propertyInfo.GetSetMethod(nonPublic: true) == null)
+                        return false;
+
+                    if (typeof(IEnumerable).IsAssignableFrom(property.PropertyType) && property.PropertyType != typeof(string))
+                        return ((IEnumerable) propertyInfo.GetValue(x)).GetEnumerator().MoveNext();
+
+                    return true;
                 };
                 return property;
             }
