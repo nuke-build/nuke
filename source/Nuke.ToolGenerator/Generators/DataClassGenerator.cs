@@ -159,7 +159,7 @@ namespace Nuke.ToolGenerator.Generators
                 return $"ILookup<{keyType}, {valueType}>";
             }
 
-            return property.Type;
+            return property.GetNullableType();
         }
 
 

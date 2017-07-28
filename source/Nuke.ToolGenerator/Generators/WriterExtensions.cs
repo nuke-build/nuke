@@ -27,19 +27,19 @@ namespace Nuke.ToolGenerator.Generators
         public static T WriteSummary<T> (this T writerWrapper, DataClass dataClass)
             where T : IWriterWrapper
         {
-            return writerWrapper.WriteSummary(dataClass.Tool.Help);
+            return writerWrapper.WriteSummary($"Used within <see cref={dataClass.Tool.GetClassName().DoubleQuote()}/>.");
         }
 
         public static T WriteSummary<T> (this T writerWrapper, Enumeration enumeration)
             where T : IWriterWrapper
         {
-            return writerWrapper.WriteSummary(enumeration.Tool.Help);
+            return writerWrapper.WriteSummary($"Used within <see cref={enumeration.Tool.GetClassName().DoubleQuote()}/>.");
         }
 
-        public static T WriteSummaryExtension<T> (this T writerWrapper, string actionText, Property property)
+        public static T WriteSummaryExtension<T> (this T writerWrapper, string actionText, Property property, Property alternativeProperty = null)
             where T : IWriterWrapper
         {
-            return writerWrapper.WriteSummary($"<p><em>{actionText}.</em></p>{property.Help.Paragraph()}");
+            return writerWrapper.WriteSummary($"<p><em>{actionText}.</em></p>{(property.Help ?? alternativeProperty?.Help).Paragraph()}");
         }
 
         public static T WriteSummary<T> (this T writerWrapper, [CanBeNull] string help, string url = null)

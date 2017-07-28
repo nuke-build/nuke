@@ -4,8 +4,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using Humanizer;
 using JetBrains.Annotations;
 
@@ -16,9 +18,13 @@ namespace Nuke.ToolGenerator.Generators
         public static string ToInstance (this string text)
         {
             var firstLowerCaseIndex = text.TakeWhile(char.IsUpper).Count();
-            return (text.Substring(startIndex: 0, length: firstLowerCaseIndex).ToLower(CultureInfo.InvariantCulture) +
-                    text.Substring(firstLowerCaseIndex))
-                    .Replace("namespace", "ns");
+            return text.Substring(startIndex: 0, length: firstLowerCaseIndex).ToLower(CultureInfo.InvariantCulture) +
+                   text.Substring(firstLowerCaseIndex);
+        }
+
+        public static string Escape(this string text)
+        {
+            return new[] { "namespace", "class" }.Contains(text) ? "@" + text : text;
         }
 
         public static string ToMember (this string text)

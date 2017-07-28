@@ -28,6 +28,21 @@ namespace Nuke.ToolGenerator.Generators
             return string.Join(".", namespaces);
         }
 
+        public static bool IsValueType(this Property property)
+        {
+            return new[] { "int", "bool" }.Contains(property.Type);
+        }
+
+        public static string GetNullableType(this Property property)
+        {
+            return property.IsValueType() ? property.Type + "?" : property.Type;
+        }
+        
+        public static string GetCrefTag (this Property property)
+        {
+            return $"<see cref={$"{property.DataClass.Name}.{property.Name}".DoubleQuote()}/>";
+        }
+
         public static string GetListValueType (this Property property)
         {
             return GetGenerics(property).Single();
