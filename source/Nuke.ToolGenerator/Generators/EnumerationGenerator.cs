@@ -19,12 +19,14 @@ namespace Nuke.ToolGenerator.Generators
                 values[i] += ",";
 
             toolWriter
+                    .WriteLine($"#region {enumeration.Name}")
                     .WriteSummary(enumeration)
                     .WriteLine("[PublicAPI]")
                     .WriteLineIfTrue(enumeration.IsFlags, "[Flags]")
                     .WriteLine($"public enum {enumeration.Name}")
                     .WriteBlock(w => w.ForEach(enumeration.Values,
-                        x => WriteValue(w, x, enumeration.IsFlags)));
+                        x => WriteValue(w, x, enumeration.IsFlags)))
+                    .WriteLine("#endregion");
         }
 
         private static void WriteValue (ToolWriter writer, string value, bool isFlags)

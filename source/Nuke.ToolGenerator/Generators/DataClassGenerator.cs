@@ -38,6 +38,7 @@ namespace Nuke.ToolGenerator.Generators
             var baseType = dataClass.BaseClass ?? (dataClass.Name.EndsWith("Settings") ? "ToolSettings" : "ISettingsEntity");
 
             writer
+                    .WriteLine($"#region {dataClass.Name}")
                     .WriteSummary(dataClass)
                     .WriteLine("[PublicAPI]")
                     .WriteLine("[ExcludeFromCodeCoverage]")
@@ -47,7 +48,8 @@ namespace Nuke.ToolGenerator.Generators
                             .WriteToolPath()
                             .ForEach(dataClass.Properties, WritePropertyDeclaration)
                             .WriteAssertValid()
-                            .WriteGetArgumentsInternal());
+                            .WriteGetArgumentsInternal())
+                    .WriteLine("#endregion");
         }
 
         // ReSharper disable once CyclomaticComplexity

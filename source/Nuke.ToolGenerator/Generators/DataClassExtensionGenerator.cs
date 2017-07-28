@@ -18,10 +18,12 @@ namespace Nuke.ToolGenerator.Generators
         {
             var writer = new DataClassWriter(dataClass, toolWriter);
             writer
+                    .WriteLine($"#region {dataClass.Name}Extensions")
                     .WriteLine("[PublicAPI]")
                     .WriteLine("[ExcludeFromCodeCoverage]")
                     .WriteLine($"public static partial class {dataClass.Name}Extensions")
-                    .WriteBlock(w => w.ForEach(dataClass.Properties, WriteMethods));
+                    .WriteBlock(w => w.ForEach(dataClass.Properties, WriteMethods))
+                    .WriteLine("#endregion");
         }
 
         // TODO [3]: less naming? -> value
@@ -29,6 +31,8 @@ namespace Nuke.ToolGenerator.Generators
         {
             if (property.CustomImpl || property.NoExtensionMethod)
                 return;
+
+            writer.WriteLine($"#region {property.Name}");
 
             var reference = $"{writer.DataClass.Name}.{property.Name}".ToSeeCref();
             var propertyInstance = property.Name.ToInstance();
@@ -146,6 +150,8 @@ namespace Nuke.ToolGenerator.Generators
                             new[] { $"{keyType} {keyInstance}", $"{valueType} {valueInstance}" },
                             $"toolSettings.{propertyInternal}.Remove({keyInstance}, {valueInstance});");
             }
+
+            writer.WriteLine("#endregion");
         }
 
         private static DataClassWriter WriteListAddMethod (
