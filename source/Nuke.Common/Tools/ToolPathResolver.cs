@@ -5,55 +5,41 @@
 using System;
 using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
+using Nuke.Common.Tools;
 using Nuke.Core;
+using Nuke.Core.Execution;
 using Nuke.Core.Tooling;
+
+[assembly: IconClass(typeof(ToolPathResolver), "search3")]
 
 namespace Nuke.Common.Tools
 {
+    [PublicAPI]
     public static class ToolPathResolver
     {
-        // ReSharper disable once CyclomaticComplexity
-        public static string GetToolPath (
-            string packageId = null,
-            string packageExecutable = null,
-            string environmentExecutable = null,
-            string pathExecutable = null)
+        public static string GetEnvironmentExecutable(string environmentExecutable)
         {
-            ControlFlow.Assert(packageId != null && packageExecutable != null || environmentExecutable != null || pathExecutable != null,
-                "(packageId != null && packageExecutable != null) || environmentExecutable != null || pathExecutable != null");
+            var environmentExecutablePath = EnvironmentInfo.EnsureVariable(environmentExecutable);
+            ControlFlow.Assert(File.Exists(environmentExecutablePath),
+                $"Path '{environmentExecutablePath}' from environment variable '{environmentExecutable}' does not exist.");
+            return environmentExecutablePath;
+        }
 
-            if (environmentExecutable != null)
-            {
-                var environmentExecutablePath = EnvironmentInfo.EnsureVariable(environmentExecutable);
-                ControlFlow.Assert(File.Exists(environmentExecutablePath),
-                    $"Path '{environmentExecutablePath}' from environment variable '{environmentExecutable}' does not exist.");
-                return environmentExecutablePath;
-            }
+        public static string GetPackageExecutable(string packageId, string packageExecutable)
+        {
+            ControlFlow.Assert(packageId != null && packageExecutable != null, "packageId != null && packageExecutable != null");
+            var packagesConfigFile = NuGetPackageResolver.GetBuildPackagesConfigFile();
+            var installedPackage = NuGetPackageResolver.GetLocalInstalledPackage(packageId, packagesConfigFile)
+                    .NotNull($"Could not find package '{packageId}' via '{packagesConfigFile}'.");
+            var packageDirectory = Path.GetDirectoryName(installedPackage.FileName).NotNull("packageDirectory != null");
+            return Directory.GetFiles(packageDirectory, packageExecutable, SearchOption.AllDirectories)
+                    .SingleOrDefault()
+                    .NotNull($"Could not find '{packageExecutable}' inside '{packageDirectory}'.");
+        }
 
-            if (packageExecutable != null)
-            {
-                var environmentVariableFriendly = packageExecutable.Replace(oldChar: '.', newChar: '_').ToUpperInvariant();
-                var environmentExecutablePath = EnvironmentInfo.Variable(environmentVariableFriendly);
-                if (environmentExecutablePath != null)
-                {
-                    ControlFlow.Assert(File.Exists(environmentExecutablePath),
-                        $"Path for '{packageExecutable}' was set via environment variable '{environmentVariableFriendly}' but does not exist.");
-                    return environmentExecutablePath;
-                }
-            }
-
-            if (packageId != null || packageExecutable != null)
-            {
-                ControlFlow.Assert(packageId != null && packageExecutable != null, "packageId != null && packageExecutable != null");
-                var packagesConfigFile = NuGetPackageResolver.GetBuildPackagesConfigFile();
-                var installedPackage = NuGetPackageResolver.GetLocalInstalledPackage(packageId, packagesConfigFile)
-                        .NotNull($"Could not find package '{packageId}' via '{packagesConfigFile}'.");
-                var packageDirectory = Path.GetDirectoryName(installedPackage.FileName).NotNull("packageDirectory != null");
-                return Directory.GetFiles(packageDirectory, packageExecutable, SearchOption.AllDirectories)
-                        .SingleOrDefault()
-                        .NotNull($"Could not find '{packageExecutable}' inside '{packageDirectory}'.");
-            }
-
+        public static string GetPathExecutable(string pathExecutable)
+        {
             // TODO UB: move to Core and call ProcessManager.Instance ? would require moving NuGetPackageResolver too and reference NuGet packages
             var locateExecutable = EnvironmentInfo.IsWin
                 ? @"C:\Windows\System32\where.exe"

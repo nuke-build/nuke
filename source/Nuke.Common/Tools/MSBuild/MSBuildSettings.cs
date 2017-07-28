@@ -24,5 +24,10 @@ namespace Nuke.Common.Tools.MSBuild
 
             return TargetPlatform.ToString();
         }
+
+        private string GetToolPath ()
+        {
+            return MSBuildToolPathResolver.Resolve(MSBuildVersion, MSBuildPlatform);
+        }
     }
 }

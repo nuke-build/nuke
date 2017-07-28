@@ -82,9 +82,9 @@ namespace Nuke.ToolGenerator.Model
         public string PathExecutable { get; set; }
 
         /// <summary>
-        /// Custom expression that returns the executable.
+        /// If set to <c>true</c>, will call a custom executable provider method.
         /// </summary>
-        public string CustomExecutable { get; set; }
+        public bool CustomExecutable { get; set; }
 
         [CanBeNull]
         public string IconClass { get; set; }

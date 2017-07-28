@@ -60,25 +60,35 @@ namespace Nuke.ToolGenerator.Generators
                 return writer;
 
             var tool = settingsClass.Tool.NotNull();
-            var arguments = new List<string>();
+            var resolvers = new List<string> { "base.ToolPath" };
+
+            if (tool.CustomExecutable)
+            {
+                resolvers.Add("{GetToolPath()}".DoubleQuoteInterpolated());
+            }
             if (tool.PackageId != null)
             {
-                arguments.Add($"packageId: {tool.PackageId.Quote()}");
-                arguments.Add($"packageExecutable: {(tool.PackageExecutable ?? "{GetPackageExecutable()}").Quote()}");
+                resolvers.Add("ToolPathResolver.GetPackageExecutable(" +
+                              $"{tool.PackageId.DoubleQuoteInterpolated()}, " +
+                              $"{(tool.PackageExecutable ?? "{GetPackageExecutable()}").DoubleQuoteInterpolated()})");
             }
             if (tool.EnvironmentExecutable != null)
-                arguments.Add($"environmentExecutable: {tool.EnvironmentExecutable.Quote()}");
+            {
+                resolvers.Add("ToolPathResolver.GetEnvironmentExecutable(" +
+                              $"{tool.EnvironmentExecutable.DoubleQuoteInterpolated()})");
+            }
             if (tool.PathExecutable != null)
-                arguments.Add($"pathExecutable: {tool.PathExecutable.Quote()}");
+            {
+                resolvers.Add("ToolPathResolver.GetPathExecutable(" +
+                              $"{tool.PathExecutable.DoubleQuoteInterpolated()})");
+            }
 
-            if (arguments.Count == 0 && tool.CustomExecutable == null)
+            if (resolvers.Count == 1)
                 return writer;
-
-            var toolPathResolver = tool.CustomExecutable ?? $"ToolPathResolver.GetToolPath({arguments.Join()})";
 
             return writer
                     .WriteSummary($"Path to the {tool.Name} executable.")
-                    .WriteLine($"public override string ToolPath => base.ToolPath ?? {toolPathResolver};");
+                    .WriteLine($"public override string ToolPath => {resolvers.Join(" ?? ")};");
         }
 
         private static void WritePropertyDeclaration (DataClassWriter writer, Property property)

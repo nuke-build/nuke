@@ -10,6 +10,6 @@ namespace Nuke.Common.Tools.DotNet
     [Serializable]
     public class DotNetSettings : ToolSettings
     {
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetToolPath(pathExecutable: "dotnet");
+        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPathExecutable("dotnet");
     }
 }
