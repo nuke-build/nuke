@@ -36,19 +36,26 @@ namespace Nuke.Core.Tests
             Assert(x => x.Add("-arg {value}", "secret", secret: true).RenderForOutput(), "-arg [hidden]");
             Assert(x => x.Add("-arg {value}", "secret", secret: true).RenderForExecution(), "-arg secret");
 
-            Assert(x => x.Add("-arg {value}", new[] { 1, 2, 3 }, mainSeparator: ":"), "-arg 1:2:3");
+            Assert(x => x.Add("-arg {value}", new[] { 1, 2, 3 }, mainSeparator: ':'), "-arg 1:2:3");
             Assert(x => x.Add("-arg {value}", new[] { 1, 2, 3 }), "-arg 1 -arg 2 -arg 3");
-            // TODO: trim collection values
-            Assert(x => x.Add("-arg {value}", new[] { " foo ", " bar " }, mainSeparator: ":"), "-arg \"foo : bar\"");
+            Assert(x => x.Add("-arg {value}", new[] { " foo \"mega\" bar", " bar foo " }, mainSeparator: ':'), "-arg \"foo \\\"mega\\\" bar:bar foo\"");
+
             Assert(x => x.Add("-arg {value}",
-                    new Dictionary<string, string> { { "a", "b" }, { "c", null } },
-                    mainSeparator: ";",
-                    keyValueSeparator: "="),
-                "-arg a=b;c=");
+                    new Dictionary<string, string> { { "a", "b" }, { "c", null }, { "d", "1;2;3" }, { "e", "1,2,3" } },
+                    mainSeparator: ';',
+                    keyValueSeparator: '='),
+                "-arg a=b;d=\"1;2;3\";e=1,2,3");
+
             Assert(x => x.Add("-arg {value}",
                     new[] { 1, 2, 3, 4 }.ToLookup(y => y % 2 == 0, y => y),
-                    keyValueSeparator: "="),
+                    keyValueSeparator: '='),
                 "-arg False=1 -arg False=3 -arg True=2 -arg True=4");
+
+            Assert(x => x.Add("-arg {value}",
+                    new[] { 1, 2, 3, 4 }.ToLookup(y => y % 2 == 0, y => y),
+                    keyValueSeparator: '=',
+                    mainSeparator: ','),
+                "-arg False=1,3 -arg True=2,4");
 
             Assert(x => x.Add("-arg {value}", "secret", secret: true).Filter("foosecretbar"), "foo[hidden]bar");
         }

@@ -165,7 +165,7 @@ namespace Nuke.ToolGenerator.Generators
                             .WriteLine("base.AssertValid();")
                             .ForEach(
                                 validatedProperties.Select(GetAssertion),
-                                assertion => w.WriteLine($"ControlFlow.Assert({assertion}, {assertion.Quote()});"))
+                                assertion => w.WriteLine($"ControlFlow.Assert({assertion}, {assertion.DoubleQuote()});"))
                     );
         }
 
@@ -211,7 +211,7 @@ namespace Nuke.ToolGenerator.Generators
         {
             var settingsClass = dataClass as SettingsClass;
             return settingsClass?.Task.DefiniteArgument != null
-                ? $"  .Add({settingsClass.Task.DefiniteArgument.Quote(interpolation: false)})"
+                ? $"  .Add({settingsClass.Task.DefiniteArgument.DoubleQuote()})"
                 : null;
         }
 
@@ -219,13 +219,15 @@ namespace Nuke.ToolGenerator.Generators
         {
             var arguments = new List<string>
                             {
-                                property.Format.Quote(interpolation: false),
+                                property.Format.DoubleQuote(),
                                 property.CustomValue ? $"Get{property.Name}()" : property.Name
                             };
-            if (property.MainSeparator != null)
-                arguments.Add($"mainSeparator: {property.MainSeparator.Quote()}");
-            if (property.KeyValueSeparator != null)
-                arguments.Add($"keyValueSeparator: {property.KeyValueSeparator.Quote()}");
+            if (property.MainSeparator.HasValue)
+                arguments.Add($"mainSeparator: {property.MainSeparator.SingleQuote()}");
+            if (property.KeyValueSeparator.HasValue)
+                arguments.Add($"keyValueSeparator: {property.KeyValueSeparator.SingleQuote()}");
+            if (property.DisallowedCharacter.HasValue)
+                arguments.Add($"disallowed: {property.DisallowedCharacter.SingleQuote()}");
             if (property.Secret)
                 arguments.Add($"secret: true");
 

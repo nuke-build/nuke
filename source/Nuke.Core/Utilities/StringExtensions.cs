@@ -15,6 +15,14 @@ namespace Nuke.Core.Utilities
     [DebuggerStepThrough]
     public static class StringExtensions
     {
+        public static string TrimAndDoubleQuoteIfNeeded([CanBeNull] this string str, params char?[] disallowed)
+        {
+            if (string.IsNullOrWhiteSpace(str))
+                return string.Empty;
+
+            return str.Trim().DoubleQuoteIfNeeded(disallowed);
+        }
+
         public static string EscapeBraces ([CanBeNull] this string str)
         {
             if (string.IsNullOrWhiteSpace(str))
@@ -23,12 +31,18 @@ namespace Nuke.Core.Utilities
             return str.Replace("{", "{{").Replace("}", "}}");
         }
 
-        public static string DoubleQuoteIfNeeded ([CanBeNull] this string str)
+        public static string DoubleQuoteIfNeeded ([CanBeNull] this string str, params char?[] disallowed)
         {
             if (string.IsNullOrWhiteSpace(str))
                 return string.Empty;
 
-            return str.Contains(" ") ? str.DoubleQuote() : str;
+            //if (str.IsDoubleQuoted())
+            //    return str;
+
+            if (!str.Contains(disallowed))
+                return str;
+
+            return str.DoubleQuote();
         }
 
         public static string DoubleQuote ([CanBeNull] this string str)
@@ -39,12 +53,18 @@ namespace Nuke.Core.Utilities
             return $"\"{str.Replace("\"", "\\\"")}\"";
         }
 
-        public static string SingleQuoteIfNeeded ([CanBeNull] this string str)
+        public static string SingleQuoteIfNeeded ([CanBeNull] this string str, params char?[] disallowed)
         {
             if (string.IsNullOrWhiteSpace(str))
                 return string.Empty;
 
-            return str.Contains(" ") ? str.SingleQuote() : str;
+            //if (str.IsSingleQuoted())
+            //    return str;
+
+            if (!str.Contains(disallowed))
+                return str;
+
+            return str.SingleQuote();
         }
 
         public static string SingleQuote ([CanBeNull] this string str)
@@ -55,9 +75,29 @@ namespace Nuke.Core.Utilities
             return $"'{str.Replace("'", "\\'")}'";
         }
 
+        public static bool IsDoubleQuoted(this string str)
+        {
+            return str.StartsWith("\"") && str.EndsWith("\"");
+        }
+
+        public static bool IsSingleQuoted(this string str)
+        {
+            return str.StartsWith("'") && str.EndsWith("'");
+        }
+
+        private static bool Contains(this string str, char?[] chars)
+        {
+            return chars.Any(x => x.HasValue && str.IndexOf(x.Value) != -1);
+        }
+
         public static string Join (this IEnumerable<string> enumerable, string separator)
         {
             return string.Join(separator, enumerable);
+        }
+
+        public static string Join (this IEnumerable<string> enumerable, char separator)
+        {
+            return enumerable.Join(separator.ToString());
         }
     }
 }

@@ -37,12 +37,28 @@ namespace Nuke.ToolGenerator.Generators
 
         public static string ToSingular (this string name)
         {
-            return name.Singularize() ?? name;
+            return name.Singularize(inputIsKnownToBePlural: false);
         }
 
-        public static string Quote (this string text, bool interpolation = true)
+        public static string ToPlural (this string name)
         {
-            return $"{(interpolation ? "$" : null)}\"{text}\"";
+            return name.Pluralize(inputIsKnownToBeSingular: false);
+        }
+
+        public static string DoubleQuote (this string text)
+        {
+            return $"\"{text}\"";
+        }
+
+        public static string DoubleQuoteInterpolated (this string text)
+        {
+            return $"${text.DoubleQuote()}";
+        }
+
+        public static string SingleQuote (this char? text)
+        {
+            Trace.Assert(text.HasValue, "text.HasValue");
+            return $"\'{text.Value}\'";
         }
 
         public static string Join (this IEnumerable<string> values, string separator = ", ")
@@ -52,7 +68,7 @@ namespace Nuke.ToolGenerator.Generators
 
         public static string ToSeeCref (this string reference)
         {
-            return $"<see cref={reference.Quote(interpolation: false)}/>";
+            return $"<see cref={reference.DoubleQuote()}/>";
         }
     }
 }

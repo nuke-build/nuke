@@ -52,12 +52,17 @@ namespace Nuke.ToolGenerator.Model
         /// <summary>
         /// Defines the separator between items of lists or dictionaries.
         /// </summary>
-        public string MainSeparator { get; set; }
+        public char? MainSeparator { get; set; }
 
         /// <summary>
         /// Defines the separator for key-value pairs.
         /// </summary>
-        public string KeyValueSeparator { get; set; }
+        public char? KeyValueSeparator { get; set; }
+
+        /// <summary>
+        /// Defines a disallowed character.
+        /// </summary>
+        public char? DisallowedCharacter { get; set; }
 
         /// <summary>
         /// Defines the default value.
@@ -83,5 +88,7 @@ namespace Nuke.ToolGenerator.Model
         /// The help text.
         /// </summary>
         public string Help { get; set; }
+
+        public List<Property> Delegates { get; set; } = new List<Property>();
     }
 }

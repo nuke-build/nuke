@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
 using Nuke.Core.Utilities;
-using Nuke.Core.Utilities.Collections;
 
 namespace Nuke.Core.Tooling
 {
@@ -19,60 +18,60 @@ namespace Nuke.Core.Tooling
         string RenderForOutput ();
     }
 
-    public class Arguments : IArguments
+    public sealed class Arguments : IArguments
     {
         public const string HiddenString = "[hidden]";
+        private const char c_space = ' ';
 
         private readonly List<string> _secrets = new List<string>();
         private readonly List<Tuple<string, string>> _arguments = new List<Tuple<string, string>>();
 
         public Arguments Add (string argument, bool condition = true)
         {
-            return condition
-                ? Add(argument, new object())
-                : this;
+            return Add(argument, condition ? new object() : null);
         }
 
-        public Arguments Add<T> (string argumentFormat, T? value, bool secret = false)
+        public Arguments Add<T> (string argumentFormat, T? value, char? disallowed = null, bool secret = false)
             where T : struct
         {
-            return value.HasValue
-                ? Add(argumentFormat, value.Value, secret)
-                : this;
+            return Add(argumentFormat, value.HasValue ? (object) value.Value : null, disallowed, secret);
         }
 
-        public Arguments Add (string argumentFormat, [CanBeNull] string value, bool secret = false)
+        public Arguments Add (string argumentFormat, [CanBeNull] object value, char? disallowed = null, bool secret = false)
         {
-            return Add(argumentFormat, (object) value, secret);
+            return Add(argumentFormat, value?.ToString(), disallowed, secret);
         }
 
-        public Arguments Add (string argumentFormat, [CanBeNull] object value, bool secret = false)
+        public Arguments Add (string argumentFormat, [CanBeNull] string value, char? disallowed = null, bool secret = false)
         {
-            if (value != null)
-            {
-                if (secret)
-                    _secrets.Add(value.ToString());
+            if (string.IsNullOrWhiteSpace(value))
+                return this;
 
-                var valueString = value is Enum enumValue ? enumValue.ToFriendlyString() : value.ToString();
-                _arguments.Add(Tuple.Create(argumentFormat.Replace("{value}", "{0}"), valueString));
-            }
+            if (secret)
+                _secrets.Add(value);
+
+            _arguments.Add(Tuple.Create(argumentFormat.Replace("{value}", "{0}"), value.TrimAndDoubleQuoteIfNeeded(disallowed, c_space)));
+
             return this;
         }
 
         public Arguments Add<T> (
             string argumentFormat,
             [CanBeNull] IEnumerable<T> enumerable,
-            string mainSeparator = null,
+            char? mainSeparator = null,
+            char? disallowed = null,
             bool secret = false)
         {
             var list = enumerable?.ToList();
             if (list == null || list.Count <= 0)
                 return this;
 
-            if (mainSeparator != null)
-                Add(argumentFormat, list.Select(x => x.ToString()).Join(mainSeparator), secret);
+            string Format (T value) => value.ToString().TrimAndDoubleQuoteIfNeeded(mainSeparator, disallowed);
+
+            if (mainSeparator.HasValue)
+                Add(argumentFormat, list.Select(Format).Join(mainSeparator.Value), secret: secret);
             else
-                list.ForEach(x => Add(argumentFormat, x, secret));
+                list.ForEach(x => Add(argumentFormat, x, disallowed, secret));
 
             return this;
         }
@@ -80,17 +79,22 @@ namespace Nuke.Core.Tooling
         public Arguments Add<TKey, TValue> (
             string argumentFormat,
             [CanBeNull] IReadOnlyDictionary<TKey, TValue> dictionary,
-            string keyValueSeparator,
-            string mainSeparator = null,
+            char keyValueSeparator,
+            char? mainSeparator = null,
+            char? disallowed = null,
             bool secret = false)
+            where TValue : class
         {
             if (dictionary == null || dictionary.Count <= 0)
                 return this;
 
-            if (mainSeparator != null)
-                Add(argumentFormat, dictionary.Select(x => $"{x.Key}{keyValueSeparator}{x.Value}").Join(mainSeparator), secret);
+            string Format (TValue value) => value.ToString().TrimAndDoubleQuoteIfNeeded(mainSeparator, keyValueSeparator, disallowed);
+            var pairs = dictionary.Where(x => x.Value.NotNullWarn($"Omitting '{x.Key}' because it is set to 'null'.") != null).ToList();
+
+            if (mainSeparator.HasValue)
+                Add(argumentFormat, pairs.Select(x => $"{x.Key}{keyValueSeparator}{Format(x.Value)}").Join(mainSeparator.Value), secret: secret);
             else
-                dictionary.ForEach(x => Add(argumentFormat, $"{x.Key}{keyValueSeparator}{x.Value}", secret));
+                pairs.ForEach(x => Add(argumentFormat, $"{x.Key}{keyValueSeparator}{Format(x.Value)}", secret: secret));
 
             return this;
         }
@@ -98,15 +102,27 @@ namespace Nuke.Core.Tooling
         public Arguments Add<TKey, TValue> (
             string argumentFormat,
             [CanBeNull] ILookup<TKey, TValue> lookup,
-            string keyValueSeparator,
+            char keyValueSeparator,
+            char? mainSeparator = null,
+            char? disallowed = null,
             bool secret = false)
         {
             if (lookup == null || lookup.Count <= 0)
                 return this;
 
-            foreach (var grouping in lookup)
-            foreach (var value in grouping)
-                Add(argumentFormat, $"{grouping.Key}{keyValueSeparator}{value}", secret);
+            string Format (TValue value) => value?.ToString().TrimAndDoubleQuoteIfNeeded(keyValueSeparator, disallowed);
+
+            if (mainSeparator.HasValue)
+            {
+                foreach (var grouping in lookup)
+                    Add(argumentFormat, $"{grouping.Key}{keyValueSeparator}{grouping.Select(Format).Join(mainSeparator.Value)}", secret: secret);
+            }
+            else
+            {
+                foreach (var grouping in lookup)
+                foreach (var value in grouping)
+                    Add(argumentFormat, $"{grouping.Key}{keyValueSeparator}{Format(value)}", secret: secret);
+            }
 
             return this;
         }
@@ -120,13 +136,13 @@ namespace Nuke.Core.Tooling
         {
             string Format (Tuple<string, string> argument)
                 => !_secrets.Contains(argument.Item2) || !forOutput
-                    ? argument.Item2.Trim().DoubleQuoteIfNeeded()
+                    ? argument.Item2
                     : HiddenString;
 
             return _arguments.Aggregate(
                 new StringBuilder(),
-                (sb, a) => sb.AppendFormat(a.Item1, Format(a)).Append(value: ' '),
-                sb => sb.ToString().TrimEnd(' '));
+                (sb, a) => sb.AppendFormat(a.Item1, Format(a)).Append(value: c_space),
+                sb => sb.ToString().TrimEnd(c_space));
         }
 
         public string RenderForExecution ()
