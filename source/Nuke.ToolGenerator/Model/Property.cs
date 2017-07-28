@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -13,6 +14,9 @@ namespace Nuke.ToolGenerator.Model
     [UsedImplicitly(ImplicitUseKindFlags.Assign, ImplicitUseTargetFlags.WithMembers)]
     public class Property
     {
+        [JsonIgnore]
+        public DataClass DataClass { get; set; }
+
         /// <summary>
         /// The name of the property.
         /// </summary>

@@ -60,9 +60,23 @@ namespace Nuke.ToolGenerator
                 task.Tool = tool;
                 task.SettingsClass.Tool = tool;
                 task.SettingsClass.Task = task;
+                foreach (var property in task.SettingsClass.Properties)
+                {
+                    property.DataClass = task.SettingsClass;
+                    foreach (var delegateProperty in property.Delegates)
+                        delegateProperty.DataClass = task.SettingsClass;
+                }
             }
             foreach (var dataClass in tool.DataClasses)
+            {
                 dataClass.Tool = tool;
+                foreach (var property in dataClass.Properties)
+                {
+                    property.DataClass = dataClass;
+                    foreach (var delegateProperty in property.Delegates)
+                        delegateProperty.DataClass = dataClass;
+                }
+            }
             foreach (var enumeration in tool.Enumerations)
                 enumeration.Tool = tool;
 
