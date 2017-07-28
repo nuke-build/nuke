@@ -22,11 +22,6 @@ namespace Nuke.ToolGenerator.Model
         public string Name { get; set; }
 
         /// <summary>
-        /// Defines whether the enumeration is a flag-enum.
-        /// </summary>
-        public bool IsFlags { get; set; }
-
-        /// <summary>
         /// The list of values defined.
         /// </summary>
         /// <remarks>

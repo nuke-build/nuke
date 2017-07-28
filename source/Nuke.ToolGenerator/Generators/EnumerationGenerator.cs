@@ -18,28 +18,22 @@ namespace Nuke.ToolGenerator.Generators
             for (var i = 0; i + 1 < values.Length; i++)
                 values[i] += ",";
 
+            string GetIdentifier (string value)
+                => value.Aggregate(
+                    new StringBuilder(!char.IsLetter(value[index: 0]) ? "_" : string.Empty),
+                    (sb, c) => sb.Append(char.IsLetterOrDigit(c) ? c : '_'),
+                    sb => sb.ToString());
+
             toolWriter
                     .WriteLine($"#region {enumeration.Name}")
                     .WriteSummary(enumeration)
                     .WriteLine("[PublicAPI]")
-                    .WriteLineIfTrue(enumeration.IsFlags, "[Flags]")
-                    .WriteLine($"public enum {enumeration.Name}")
+                    .WriteLine("[Serializable]")
+                    .WriteLine($"public partial class {enumeration.Name} : Enumeration")
                     .WriteBlock(w => w.ForEach(enumeration.Values,
-                        x => WriteValue(w, x, enumeration.IsFlags)))
+                        x => w.WriteLine(
+                            $"public static {enumeration.Name} {GetIdentifier(x)} = new {enumeration.Name} {{ Value = {x.DoubleQuote()} }};")))
                     .WriteLine("#endregion");
-        }
-
-        private static void WriteValue (ToolWriter writer, string value, bool isFlags)
-        {
-            var escapedValue = value.Aggregate(
-                new StringBuilder(!char.IsLetter(value[index: 0]) ? "_" : string.Empty),
-                (sb, c) => sb.Append(char.IsLetterOrDigit(c) ? c : '_'),
-                sb => sb.ToString());
-
-            if (!isFlags && escapedValue != value)
-                writer.WriteLine($"[FriendlyString(\"{value}\")]");
-
-            writer.WriteLine($"{(isFlags ? value : escapedValue)},");
         }
     }
 }

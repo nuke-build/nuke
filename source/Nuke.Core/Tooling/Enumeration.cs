@@ -8,15 +8,15 @@ using JetBrains.Annotations;
 
 namespace Nuke.Core.Tooling
 {
+    [Serializable]
     [PublicAPI]
-    [AttributeUsage(AttributeTargets.Field)]
-    public sealed class FriendlyStringAttribute : Attribute
+    public abstract class Enumeration
     {
-        public FriendlyStringAttribute (string friendlyString)
-        {
-            FriendlyString = friendlyString;
-        }
+        protected string Value { get; set; }
 
-        public string FriendlyString { get; }
+        public override string ToString ()
+        {
+            return Value.NotNull("Value != null");
+        }
     }
 }
