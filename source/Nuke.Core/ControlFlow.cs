@@ -62,6 +62,7 @@ namespace Nuke.Core
         /// <summary>
         /// Asserts a condition to be true, calling <see cref="Logger.Warn(string)"/> otherwise.
         /// </summary>
+        [AssertionMethod]
         public static void AssertWarn (bool condition, string text)
         {
             if (!condition)
@@ -96,6 +97,7 @@ namespace Nuke.Core
         /// Checks an object to be not null, calling <see cref="Logger.Warn(string)"/> otherwise.
         /// </summary>
         [CanBeNull]
+        [AssertionMethod]
         public static T NotNullWarn<T> ([CanBeNull] this T obj, string text = null)
             where T : class
         {
