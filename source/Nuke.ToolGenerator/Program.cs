@@ -51,6 +51,7 @@ namespace Nuke.ToolGenerator
 
             tool.DefinitionFile = file;
             tool.GenerationFileBase = Path.Combine(directory, Path.GetFileNameWithoutExtension(file));
+            tool.RepositoryUrl = $"https://github.com/nuke-build/tools/blob/master/{Path.GetFileName(file)}";
 
             foreach (var task in tool.Tasks)
             {

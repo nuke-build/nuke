@@ -29,6 +29,9 @@ namespace Nuke.ToolGenerator.Model
         [JsonIgnore]
         public string GenerationFileBase { get; set; }
 
+        [JsonIgnore]
+        public string RepositoryUrl { get; set; }
+
         public List<string> References { get; set; } = new List<string>();
 
         /// <summary>

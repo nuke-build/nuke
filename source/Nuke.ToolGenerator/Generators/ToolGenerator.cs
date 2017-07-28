@@ -26,7 +26,7 @@ namespace Nuke.ToolGenerator.Generators
                         .WriteLine("// Distributed under the MIT License.")
                         .WriteLine("// https://github.com/nuke-build/nuke/blob/master/LICENSE")
                         .WriteLine(string.Empty)
-                        .WriteLine("// Auto-generated with Nuke.ToolGenerator.")
+                        .WriteLine($"// Generated from {tool.RepositoryUrl} with Nuke.ToolGenerator.")
                         .WriteLine(string.Empty)
                         .ForEach(GetNamespaceImports(), x => writer.WriteLine($"using {x};"))
                         .WriteLine(string.Empty)
