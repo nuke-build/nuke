@@ -3,12 +3,15 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Core;
 using Nuke.Core.Execution;
+using Nuke.Core.Utilities;
 
 [assembly: IconClass(typeof(EnvironmentInfo), "chip")]
 
@@ -19,6 +22,16 @@ namespace Nuke.Core
     [DebuggerStepThrough]
     public static partial class EnvironmentInfo
     {
+        public static void SetVariable(string name, string value)
+        {
+            Environment.SetEnvironmentVariable(name, value);
+        }
+
+        public static void SetVariables<T>(string name, IEnumerable<T> values, char separator)
+        {
+            SetVariable(name, values.Select(x => x.ToString()).Join(separator));
+        }
+
         /// <summary>
         /// Provides access to a command-line argument or environment variable.
         /// </summary>
@@ -64,7 +77,6 @@ namespace Nuke.Core
             return (T) Convert<T>(value).NotNull($"Convert<{typeof(T)}>(EnsureVariable({name})) != null");
         }
 
-
         /// Provides access to a command-line argument.
         [CanBeNull]
         public static string Argument (string name, bool allowEmptyString = false)
@@ -82,6 +94,20 @@ namespace Nuke.Core
         {
             var value = Argument(name);
             return (T) (Convert<T>(value) ?? default(T));
+        }
+
+        /// Provides access to a command-line argument.
+        [CanBeNull]
+        public static ICollection<string> Arguments (string name, char separator)
+        {
+            return Argument(name).SplitAndPurge(separator);
+        }
+
+        /// Provides access to a converted command-line argument.
+        [CanBeNull]
+        public static ICollection<T> Arguments<T> (string name, char separator)
+        {
+            return Arguments(name, separator)?.Select(Convert<T>).OfType<T>().ToList();
         }
 
         /// Provides access to a command-line argument using <see cref="ControlFlow.NotNull{T}"/>.
@@ -120,6 +146,12 @@ namespace Nuke.Core
 
             var typeConverter = TypeDescriptor.GetConverter(component);
             return typeConverter.ConvertFromInvariantString(value);
+        }
+
+        [ContractAnnotation("value: null => null; value: notnull => notnull")]
+        private static string[] SplitAndPurge([CanBeNull] this string value, char separator)
+        {
+            return value?.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);
         }
     }
 }

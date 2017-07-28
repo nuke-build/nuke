@@ -93,12 +93,12 @@ namespace Nuke.Core
         /// <summary>
         /// The specified targets to run. Default is <em>Default</em>, which falls back to the target specified in the <c>Main</c> method via <see cref="Execute{T}"/>.
         /// </summary>
-        public virtual IEnumerable<string> Targets => (Argument("target") ?? "Default").Split(new[] { '+' }, StringSplitOptions.RemoveEmptyEntries);
+        public virtual ICollection<string> Targets => Arguments("target", separator: '+') ?? new[] { "Default" };
 
         /// <summary>
         /// The specified configuration to build. Default is <em>Debug</em>.
         /// </summary>
-        public virtual string Configuration => Argument("configuration") ?? "Debug";
+        public virtual string Configuration => Argument("configuration") ?? (IsServerBuild ? "Release" : "Debug");
 
         public static bool IsLocalBuild => OutputSink.Instance is ConsoleOutputSink;
         public static bool IsServerBuild => !IsLocalBuild;
