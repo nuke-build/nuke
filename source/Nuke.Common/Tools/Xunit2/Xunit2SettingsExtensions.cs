@@ -27,8 +27,10 @@ namespace Nuke.Common.Tools.Xunit2
         public static Xunit2Settings SetResultPath (
             this Xunit2Settings toolSettings,
             [CanBeNull] string resultPath,
-            ResultFormat? resultFormat = ResultFormat.Xml)
+            ResultFormat resultFormat = null)
         {
+            resultFormat = resultFormat ?? ResultFormat.Xml;
+
             if (resultPath == null)
                 resultFormat = null;
 

@@ -24,7 +24,54 @@ You have a valuable piece of code and want to share it with the community? Don't
 
 If you want to contribute, please first get personal with us about your intentions in [our Gitter channel](https://gitter.im/nuke-build/nuke). This helps us establishing a clean and meaningful design of new features, improvements or bug fixes. At the same time it reduces the chances of duplicated work.
 
-Adding support for third party executables is very easy. You just need to generate a _tool.td_ file ([schema](https://github.com/nuke-build/nuke/tree/master/source/Nuke.ToolGenerator/Model) and [examples](https://github.com/nuke-build/nuke/search?q=extension%3Atd)) for it, and execute the `Nuke.ToolGenerator` executable in its folder. It will generate a static _entry class_ `<tool>Tasks`, a _settings class_ `<tool>Settings` derived from `ToolSettings` along with extension methods for manipulation.
+Adding support for third party executables is very simple. You just need to generate a language-agnostic _tool.json_ file with all the metadata ([schema](https://github.com/nuke-build/nuke/tree/master/source/Nuke.ToolGenerator/Model) and [examples](https://github.com/nuke-build/nuke/search?q=extension%3Atd)). The actual implementation is generated via the `Nuke.ToolGenerator` executable. It will generate:
+
+- Entry methods:
+  - Execution `PreProcess` as extension point
+  - Logging of process start info (executable and arguments)
+  - Start of the process (customizable)
+  - Assertion of the exitcode via exitcode table
+  - Execution of `PostProcess` as extension point
+- Data classes:
+  - Declaration of all properties
+  - Implementation of `GetArguments` with support for:
+    - Primitive types (`string`, `int`, `bool`, etc.)
+    - Lists (w/ or w/o separator)
+    - Dictionaries (w/ key-value-separator; w/ or w/o pair-separator)
+    - Lookups (w/ key-value-separator; w/ or w/o value-separator)
+  - Argument validation with extension point
+  - Marked with `[Serializable]`
+- Extension methods:
+  - Implementation of the builder pattern
+  - For all types (except collections):
+    - `SetMaxCpuCount<T>(this T settings, int? maxCpuCount)`
+    - `ResetMaxCpuCount<T>(this T settings)`
+  - For booleans:
+    - `EnableRunCodeAnalysis<T>(this T settings)`
+    - `DisableRunCodeAnalysis<T>(this T settings)`
+    - `ToggleRunCodeAnalysis<T>(this T settings)`
+  - For lists _[n]_:
+    - `SetTargets<T>(this T settings, params string[] targets)`
+    - `SetTargets<T>(this T settings, IEnumerable<string> targets)`
+    - `AddTargets<T>(this T settings, params string[] targets)`
+    - `AddTargets<T>(this T settings, IEnumerable<string> targets)`
+    - `RemoveTargets<T>(this T settings, params string[] targets)`
+    - `RemoveTargets<T>(this T settings, IEnumerable<string> targets)`
+    - `ClearTargets<T>(this T settings)`
+  - For dictionaries _[n->n]_:
+    - `SetProperties<T>(this T settings, IDictionary<string, string> properties)`
+    - `SetProperty<T>(this T settings, string key, string value)`
+    - `AddProperty<T>(this T settings, string key, string value)`
+    - `RemoveProperty<T>(this T settings, string key)`
+    - `ClearProperties<T>(this T settings)`
+  - For lookups _[n->m*]_:
+    - `SetTraits<T>(this T settings, ILookup<string, string> traits)`
+    - `AddTraits<T>(this T settings, string key, params string[] values)`
+    - `AddTraits<T>(this T settings, string key, IEnumerable<string> values)`
+    - `RemoveTraits<T>(this T settings, string key, params string[] values)`
+    - `RemoveTraits<T>(this T settings, string key, IEnumerable<string> values)`
+    - `RemoveTraits<T>(this T settings, string key)`
+    - `ClearTraits<T>(this T settings)`
 
 ## License
 

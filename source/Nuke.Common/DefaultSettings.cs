@@ -58,6 +58,12 @@ namespace Nuke.Common
         [CanBeNull]
         private static GitRepository GitRepositoryValue => InjectedValueProvider.GetStaticValue<GitRepository>();
 
+        [CanBeNull]
+        private static string VersionArugmentOrVariable => EnvironmentInfo.ArgumentOrVariable("version");
+
+        [CanBeNull]
+        public static string Version => VersionArugmentOrVariable ?? GitVersionValue?.AssemblySemVer;
+
         public static MSBuildSettings MSBuildCommon
         {
             get
@@ -71,7 +77,7 @@ namespace Nuke.Common
                 var teamCityLogger = EnvironmentInfo.Variable("TEAMCITY_MSBUILD_LOGGER");
                 if (!string.IsNullOrWhiteSpace(teamCityLogger))
                     toolSettings = toolSettings
-                            .AddLogger(teamCityLogger)
+                            .AddLoggers(teamCityLogger)
                             .EnableNoConsoleLogger();
 
                 return toolSettings;
@@ -86,16 +92,16 @@ namespace Nuke.Common
                 .SetTargets("Rebuild");
 
         public static MSBuildSettings MSBuildCompileWithVersion => MSBuildCompile
-                .SetProperty("AssemblyVersion", GitVersionValue?.AssemblySemVer)
-                .SetProperty("FileVersion", GitVersionValue?.AssemblySemVer)
-                .SetProperty("InformationalVersion", GitVersionValue?.InformationalVersion);
+                .SetAssemblyVersion(GitVersionValue?.AssemblySemVer)
+                .SetFileVersion(GitVersionValue?.AssemblySemVer)
+                .SetInformationalVersion(GitVersionValue?.InformationalVersion);
 
+        // TODO: evenIfNull for dictionary ?
         public static MSBuildSettings MSBuildPack => MSBuildCommon
                 .SetTargets("Restore", "Pack")
-                .SetProperty("PackageOutputPath", Build.OutputDirectory)
-                .SetProperty("IncludeSymbols", "True")
-            // TODO: evenIfNull for dictionary
-                .SetProperty("PackageVersion", GitVersionValue?.NuGetVersionV2);
+                .EnableIncludeSymbols()
+                .SetPackageOutputPath(Build.OutputDirectory)
+                .SetPackageVersion(VersionArugmentOrVariable ?? GitVersionValue?.NuGetVersionV2);
 
 
         public static GitVersionSettings GitVersion => new GitVersionSettings()

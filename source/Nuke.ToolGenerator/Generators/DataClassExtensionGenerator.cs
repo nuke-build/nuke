@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Humanizer;
 using Nuke.ToolGenerator.Model;
 using Nuke.ToolGenerator.Writers;
 
@@ -19,6 +20,7 @@ namespace Nuke.ToolGenerator.Generators
             var writer = new DataClassWriter(dataClass, toolWriter);
             writer
                     .WriteLine($"#region {dataClass.Name}Extensions")
+                    .WriteSummary(dataClass)
                     .WriteLine("[PublicAPI]")
                     .WriteLine("[ExcludeFromCodeCoverage]")
                     .WriteLine($"public static partial class {dataClass.Name}Extensions")
@@ -34,163 +36,264 @@ namespace Nuke.ToolGenerator.Generators
 
             writer.WriteLine($"#region {property.Name}");
 
-            var reference = $"{writer.DataClass.Name}.{property.Name}".ToSeeCref();
-            var propertyInstance = property.Name.ToInstance();
-
             if (!property.IsList() && !property.IsDictionary() && !property.IsLookupTable())
                 writer
-                        .WriteSummaryExtension($"Sets {reference}", property)
+                        .WriteSummaryExtension($"Sets {property.GetCrefTag()}", property)
                         .WriteMethod(
                             $"Set{property.Name}",
                             property,
-                            $"toolSettings.{property.Name} = {property.Name.ToInstance()};");
+                            $"toolSettings.{property.Name} = {property.Name.ToInstance()};")
+                        .WriteSummaryExtension($"Resets {property.GetCrefTag()}", property)
+                        .WriteMethod(
+                            $"Reset{property.Name}",
+                            $"toolSettings.{property.Name} = null;");
 
             if (property.IsBoolean())
-            {
-                writer
-                        .WriteSummaryExtension($"Enables {reference}", property)
-                        .WriteMethod($"Enable{property.Name}", $"toolSettings.{property.Name} = true;")
-                        .WriteSummaryExtension($"Disables {reference}", property)
-                        .WriteMethod($"Disable{property.Name}", $"toolSettings.{property.Name} = false;")
-                        .WriteSummaryExtension($"Toggles {reference}", property)
-                        .WriteMethod($"Toggle{property.Name}", $"toolSettings.{property.Name} = !toolSettings.{property.Name};");
-
-                // TODO [4]: negate for 'skip', 'no', 'disable'
-            }
+                WriteBooleanExtensions(writer, property);
             else if (property.IsList())
-            {
-                var propertyInternal = $"{property.Name}Internal";
-
-                var valueType = property.GetListValueType();
-                var propertySingular = property.Name.ToSingular();
-                var propertySingularInstance = property.Name.ToSingular().ToInstance();
-
-                writer
-                        .WriteSummaryExtension($"Sets {reference} to a new list", property)
-                        .WriteMethod($"Set{property.Name}",
-                            $"params {valueType}[] {propertyInstance}",
-                            $"toolSettings.{propertyInternal} = {propertyInstance}.ToList();")
-                        .WriteSummaryExtension($"Sets {reference} to a new list", property)
-                        .WriteMethod($"Set{property.Name}",
-                            $"IEnumerable<{valueType}> {propertyInstance}",
-                            $"toolSettings.{propertyInternal} = {propertyInstance}.ToList();")
-                        .WriteSummaryExtension($"Adds a {propertyInstance} to the existing {reference}", property)
-                        .WriteMethod($"Add{property.Name}",
-                            $"params {valueType}[] {propertyInstance}",
-                            $"toolSettings.{propertyInternal}.AddRange({propertyInstance});")
-                        .WriteSummaryExtension($"Adds a {propertyInstance} to the existing {reference}", property)
-                        .WriteMethod($"Add{property.Name}",
-                            $"IEnumerable<{valueType}> {propertyInstance}",
-                            $"toolSettings.{propertyInternal}.AddRange({propertyInstance});")
-                        .WriteSummaryExtension($"Clears {reference}", property)
-                        .WriteMethod($"Clear{property.Name}",
-                            $"toolSettings.{propertyInternal}.Clear();")
-                        .WriteSummaryExtension($"Adds a single {propertySingularInstance} to {reference}", property)
-                        .WriteListAddMethod(propertySingular, propertySingularInstance, valueType, propertyInternal)
-                        .WriteSummaryExtension($"Removes a single {propertySingularInstance} from {reference}", property)
-                        .WriteMethod($"Remove{propertySingular}",
-                            $"{valueType} {propertySingularInstance}",
-                            $"toolSettings.{propertyInternal} = toolSettings.{property.Name}.Where(x => x == {propertySingularInstance}).ToList();");
-            }
+                WriteListExtensions(writer, property);
             else if (property.IsDictionary())
-            {
-                var propertyInternal = $"{property.Name}Internal";
-
-                var (keyType, valueType) = property.GetDictionaryKeyValueTypes();
-                var propertySingular = property.Name.ToSingular();
-                var propertySingularInstance = property.Name.ToSingular().ToInstance();
-                var keyInstance = $"{propertySingularInstance}Key";
-                var valueInstance = $"{propertySingularInstance}Value";
-
-                writer
-                        .WriteSummaryExtension($"Sets {reference} to a new dictionary", property)
-                        .WriteMethod($"Set{property.Name}",
-                            $"IDictionary<{keyType}, {valueType}> {propertyInstance}",
-                            $"toolSettings.{propertyInternal} = {propertyInstance}.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);")
-                        .WriteSummaryExtension($"Clears {reference}", property)
-                        .WriteMethod($"Clear{property.Name}",
-                            $"toolSettings.{propertyInternal}.Clear();")
-                        .WriteSummaryExtension($"Adds a {propertySingularInstance} to the existing {reference}", property)
-                        .WriteMethod($"Add{propertySingular}",
-                            new[] { $"{keyType} {keyInstance}", $"{valueType} {valueInstance}" },
-                            $"toolSettings.{propertyInternal}.Add({keyInstance}, {valueInstance});")
-                        .WriteSummaryExtension($"Removes a single {propertySingularInstance} from {reference}", property)
-                        .WriteMethod($"Remove{propertySingular}",
-                            $"{keyType} {keyInstance}",
-                            $"toolSettings.{propertyInternal}.Remove({keyInstance});")
-                        .WriteSummaryExtension($"Sets a {propertySingularInstance} in {reference}", property)
-                        .WriteMethod($"Set{propertySingular}",
-                            new[] { $"{keyType} {keyInstance}", $"{valueType} {valueInstance}" },
-                            $"toolSettings.{propertyInternal}[{keyInstance}] = {valueInstance};");
-            }
+                WriteDictionaryExtensions(writer, property);
             else if (property.IsLookupTable())
-            {
-                var propertyInternal = $"{property.Name}Internal";
+                WriteLookupExtensions(writer, property);
 
-                var (keyType, valueType) = property.GetLookupTableKeyValueTypes();
-                var propertySingular = property.Name.ToSingular();
-                var propertySingularInstance = property.Name.ToSingular().ToInstance();
-                var keyInstance = $"{propertySingularInstance}Key";
-                var valueInstance = $"{propertySingularInstance}Value";
+            writer.WriteLine("#endregion");
+        }
+
+        private static void WriteBooleanExtensions (DataClassWriter writer, Property property)
+        {
+            var propertyAccess = $"toolSettings.{property.Name}";
+
+            writer
+                    .WriteSummaryExtension($"Enables {property.GetCrefTag()}", property)
+                    .WriteMethod($"Enable{property.Name}", $"{propertyAccess} = true;")
+                    .WriteSummaryExtension($"Disables {property.GetCrefTag()}", property)
+                    .WriteMethod($"Disable{property.Name}", $"{propertyAccess} = false;")
+                    .WriteSummaryExtension($"Toggles {property.GetCrefTag()}", property)
+                    .WriteMethod($"Toggle{property.Name}", $"{propertyAccess} = !{propertyAccess};");
+
+            // TODO [4]: negate for 'skip', 'no', 'disable'
+        }
+
+        private static void WriteListExtensions (DataClassWriter writer, Property property)
+        {
+            var propertyInternal = $"{property.Name}Internal";
+            var propertyInstance = property.Name.ToInstance();
+            var valueType = property.GetListValueType();
+            var propertyAccess = $"toolSettings.{propertyInternal}";
+
+            writer
+                    .WriteSummaryExtension($"Sets {property.GetCrefTag()} to a new list", property)
+                    .WriteMethod($"Set{property.Name}",
+                        $"params {valueType}[] {propertyInstance}",
+                        $"{propertyAccess} = {propertyInstance}.ToList();")
+                    .WriteSummaryExtension($"Sets {property.GetCrefTag()} to a new list", property)
+                    .WriteMethod($"Set{property.Name}",
+                        $"IEnumerable<{valueType}> {propertyInstance}",
+                        $"{propertyAccess} = {propertyInstance}.ToList();")
+                    .WriteSummaryExtension($"Adds values to {property.GetCrefTag()}", property)
+                    .WriteMethod($"Add{property.Name}",
+                        $"params {valueType}[] {propertyInstance}",
+                        $"{propertyAccess}.AddRange({propertyInstance});")
+                    .WriteSummaryExtension($"Adds values to {property.GetCrefTag()}", property)
+                    .WriteMethod($"Add{property.Name}",
+                        $"IEnumerable<{valueType}> {propertyInstance}",
+                        $"{propertyAccess}.AddRange({propertyInstance});")
+                    .WriteSummaryExtension($"Clears {property.GetCrefTag()}", property)
+                    .WriteMethod($"Clear{property.Name}",
+                        $"{propertyAccess}.Clear();")
+                    //.WriteSummaryExtension($"Adds a single {propertySingularInstance} to {property.GetCrefTag()}", property)
+                    //.WriteListAddMethod(propertySingular, propertySingularInstanceEscaped, valueType, propertyInternal)
+                    .WriteSummaryExtension($"Removes values from {property.GetCrefTag()}", property)
+                    .WriteMethod($"Remove{property.Name}",
+                        $"params {valueType}[] {propertyInstance}",
+                        $"var hashSet = new HashSet<{valueType}>({propertyInstance});",
+                        $"{propertyAccess}.RemoveAll(x => hashSet.Contains(x));")
+                    .WriteSummaryExtension($"Removes values from {property.GetCrefTag()}", property)
+                    .WriteMethod($"Remove{property.Name}",
+                        $"IEnumerable<{valueType}> {propertyInstance}",
+                        $"var hashSet = new HashSet<{valueType}>({propertyInstance});",
+                        $"{propertyAccess}.RemoveAll(x => hashSet.Contains(x));");
+        }
+
+        private static void WriteDictionaryExtensions (DataClassWriter writer, Property property)
+        {
+            var propertyInstance = property.Name.ToInstance();
+            var (keyType, valueType) = property.GetDictionaryKeyValueTypes();
+            var propertySingular = property.Name.ToSingular();
+            var propertySingularInstance = property.Name.ToSingular().ToInstance();
+            var keyInstance = $"{propertySingularInstance}Key";
+            var valueInstance = $"{propertySingularInstance}Value";
+            var propertyAccess = $"toolSettings.{property.Name}Internal";
+
+            writer
+                    .WriteSummaryExtension($"Sets {property.GetCrefTag()} to a new dictionary", property)
+                    .WriteMethod($"Set{property.Name}",
+                        $"IDictionary<{keyType}, {valueType}> {propertyInstance}",
+                        $"{propertyAccess} = {propertyInstance}.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);")
+                    .WriteSummaryExtension($"Clears {property.GetCrefTag()}", property)
+                    .WriteMethod($"Clear{property.Name}",
+                        $"{propertyAccess}.Clear();")
+                    .WriteSummaryExtension($"Adds a new key-value-pair {property.GetCrefTag()}", property)
+                    .WriteMethod($"Add{propertySingular}",
+                        new[] { $"{keyType} {keyInstance}", $"{valueType} {valueInstance}" },
+                        $"{propertyAccess}.Add({keyInstance}, {valueInstance});")
+                    .WriteSummaryExtension($"Removes a key-value-pair from {property.GetCrefTag()}", property)
+                    .WriteMethod($"Remove{propertySingular}",
+                        $"{keyType} {keyInstance}",
+                        $"{propertyAccess}.Remove({keyInstance});")
+                    .WriteSummaryExtension($"Sets a key-value-pair in {property.GetCrefTag()}", property)
+                    .WriteMethod($"Set{propertySingular}",
+                        new[] { $"{keyType} {keyInstance}", $"{valueType} {valueInstance}" },
+                        $"{propertyAccess}[{keyInstance}] = {valueInstance};");
+
+            writer.ForEach(property.Delegates, x => WriteDictionaryDelegateExtensions(writer, property, x));
+        }
+
+        private static void WriteDictionaryDelegateExtensions (DataClassWriter writer, Property property, Property delegateProperty)
+        {
+            writer.WriteLine($"#region {delegateProperty.Name}");
+
+            var propertyAccess = $"toolSettings.{property.Name}Internal";
+            var reference = $"<c>{delegateProperty.Name}</c>";
+
+            string GetModification (string newValue) => $"{propertyAccess}[{delegateProperty.Name.DoubleQuote()}] = {newValue};";
+
+            if (!delegateProperty.IsList())
+                writer
+                        .WriteSummaryExtension($"Sets {reference} in {property.GetCrefTag()}", delegateProperty, property)
+                        .WriteMethod(
+                            $"Set{delegateProperty.Name}",
+                            delegateProperty,
+                            GetModification(delegateProperty.Name.ToInstance()))
+                        .WriteSummaryExtension($"Resets {reference} in {property.GetCrefTag()}", delegateProperty, property)
+                        .WriteMethod(
+                            $"Reset{delegateProperty.Name}",
+                            $"{propertyAccess}.Remove({delegateProperty.Name.DoubleQuote()});");
+
+            if (delegateProperty.IsBoolean())
+            {
+                writer
+                        .WriteSummaryExtension($"Enables {reference} in {property.GetCrefTag()}", property)
+                        .WriteMethod($"Enable{delegateProperty.Name}", GetModification("true"))
+                        .WriteSummaryExtension($"Disables {reference} in {property.GetCrefTag()}", property)
+                        .WriteMethod($"Disable{delegateProperty.Name}", GetModification("false"))
+                        .WriteSummaryExtension($"Toggles {reference} in {property.GetCrefTag()}", property)
+                        .WriteMethod($"Toggle{delegateProperty.Name}",
+                            $"ExtensionHelper.ToggleBoolean({propertyAccess}, {delegateProperty.Name.DoubleQuote()});");
+            }
+
+            if (delegateProperty.IsList())
+            {
+                var propertyInstance = delegateProperty.Name.ToInstance();
+                var valueType = delegateProperty.GetListValueType();
+                var propertyPlural = delegateProperty.Name.ToPlural();
 
                 writer
-                        .WriteSummaryExtension($"Sets {reference} to a new lookup table", property)
-                        .WriteMethod($"Set{property.Name}",
-                            $"ILookup<{keyType}, {valueType}> {propertyInstance}",
-                            $"toolSettings.{propertyInternal} = {propertyInstance}.ToLookupTable(StringComparer.OrdinalIgnoreCase);")
-                        .WriteSummaryExtension($"Clears {reference}", property)
-                        .WriteMethod($"Clear{property.Name}",
-                            $"toolSettings.{propertyInternal}.Clear();")
-                        .WriteSummaryExtension($"Adds a {propertySingularInstance} to the existing {reference}", property)
-                        .WriteMethod($"Add{propertySingular}",
-                            new[] { $"{keyType} {keyInstance}", $"{valueType} {valueInstance}" },
-                            $"toolSettings.{propertyInternal}.Add({keyInstance}, {valueInstance});")
-                        .WriteSummaryExtension($"Removes a single {propertySingularInstance} from {reference}", property)
-                        .WriteMethod($"Remove{propertySingular}",
-                            new[] { $"{keyType} {keyInstance}", $"{valueType} {valueInstance}" },
-                            $"toolSettings.{propertyInternal}.Remove({keyInstance}, {valueInstance});");
+                        .WriteSummaryExtension($"Sets {reference} in {property.GetCrefTag()} to a new collection", delegateProperty, property)
+                        .WriteMethod($"Set{propertyPlural}",
+                            $"params {valueType}[] {propertyInstance}",
+                            $"ExtensionHelper.SetCollection({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.MainSeparator.SingleQuote()});")
+                        .WriteSummaryExtension($"Sets {reference} in {property.GetCrefTag()} to a new collection", delegateProperty, property)
+                        .WriteMethod($"Set{propertyPlural}",
+                            $"IEnumerable<{valueType}> {propertyInstance}",
+                            $"ExtensionHelper.SetCollection({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.MainSeparator.SingleQuote()});")
+                        .WriteSummaryExtension($"Adds values to {reference} in {property.GetCrefTag()}", delegateProperty, property)
+                        .WriteMethod($"Add{propertyPlural}",
+                            $"params {valueType}[] {propertyInstance}",
+                            $"ExtensionHelper.AddItems({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.MainSeparator.SingleQuote()});")
+                        .WriteSummaryExtension($"Adds values to {reference} in existing {property.GetCrefTag()}", delegateProperty, property)
+                        .WriteMethod($"Add{propertyPlural}",
+                            $"IEnumerable<{valueType}> {propertyInstance}",
+                            $"ExtensionHelper.AddItems({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.MainSeparator.SingleQuote()});")
+                        .WriteSummaryExtension($"Clears {reference} in {property.GetCrefTag()}", delegateProperty, property)
+                        .WriteMethod($"Clear{propertyPlural}",
+                            $"{propertyAccess}.Remove({delegateProperty.Name.DoubleQuote()});")
+                        .WriteSummaryExtension($"Removes values from {reference} in {property.GetCrefTag()}", delegateProperty, property)
+                        .WriteMethod($"Remove{propertyPlural}",
+                            $"params {valueType}[] {propertyInstance}",
+                            $"ExtensionHelper.RemoveItems({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.MainSeparator.SingleQuote()});")
+                        .WriteSummaryExtension($"Removes values from {reference} in {property.GetCrefTag()}", delegateProperty, property)
+                        .WriteMethod($"Remove{propertyPlural}",
+                            $"IEnumerable<{valueType}> {propertyInstance}",
+                            $"ExtensionHelper.RemoveItems({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.MainSeparator.SingleQuote()});");
             }
 
             writer.WriteLine("#endregion");
         }
 
+        private static void WriteLookupExtensions (DataClassWriter writer, Property property)
+        {
+            var propertyInstance = property.Name.ToInstance();
+            var (keyType, valueType) = property.GetLookupTableKeyValueTypes();
+            var propertySingular = property.Name.ToSingular();
+            var propertySingularInstance = property.Name.ToSingular().ToInstance();
+            var keyInstance = $"{propertySingularInstance}Key";
+            var valueInstance = $"{propertySingularInstance}Value";
+            var propertyAccess = $"toolSettings.{property.Name}Internal";
+
+            // TODO: params
+            // TODO: remove by key
+            writer
+                    .WriteSummaryExtension($"Sets {property.GetCrefTag()} to a new lookup table", property)
+                    .WriteMethod($"Set{property.Name}",
+                        $"ILookup<{keyType}, {valueType}> {propertyInstance}",
+                        $"{propertyAccess} = {propertyInstance}.ToLookupTable(StringComparer.OrdinalIgnoreCase);")
+                    .WriteSummaryExtension($"Clears {property.GetCrefTag()}", property)
+                    .WriteMethod($"Clear{property.Name}",
+                        $"{propertyAccess}.Clear();")
+                    .WriteSummaryExtension($"Adds a {propertySingularInstance} to the existing {property.GetCrefTag()}", property)
+                    .WriteMethod($"Add{propertySingular}",
+                        new[] { $"{keyType} {keyInstance}", $"{valueType} {valueInstance}" },
+                        $"{propertyAccess}.Add({keyInstance}, {valueInstance});")
+                    .WriteSummaryExtension($"Removes a single {propertySingularInstance} from {property.GetCrefTag()}", property)
+                    .WriteMethod($"Remove{propertySingular}",
+                        new[] { $"{keyType} {keyInstance}", $"{valueType} {valueInstance}" },
+                        $"{propertyAccess}.Remove({keyInstance}, {valueInstance});");
+        }
+
         private static DataClassWriter WriteListAddMethod (
             this DataClassWriter writer,
             string propertySingular,
-            string propertySingularInstance,
+            string propertySingularInstanceEscaped,
             string valueType,
             string propertyInternal)
         {
             return writer.DataClass.Tool.Enumerations.Select(x => x.Name).Concat(
                 new[] { "int", "bool" }).Contains(valueType)
                 ? writer.WriteMethod($"Add{propertySingular}",
-                    $"{valueType} {propertySingularInstance}",
-                    $"toolSettings.{propertyInternal}.Add({propertySingularInstance});")
+                    $"{valueType} {propertySingularInstanceEscaped}",
+                    $"toolSettings.{propertyInternal}.Add({propertySingularInstanceEscaped});")
                 : writer.WriteMethod($"Add{propertySingular}",
-                    $"{valueType} {propertySingularInstance}, bool evenIfNull = true",
-                    $"if ({propertySingularInstance} != null || evenIfNull) toolSettings.{propertyInternal}.Add({propertySingularInstance});");
+                    $"{valueType} {propertySingularInstanceEscaped}, bool evenIfNull = true",
+                    $"if ({propertySingularInstanceEscaped} != null || evenIfNull) toolSettings.{propertyInternal}.Add({propertySingularInstanceEscaped});");
         }
 
         private static DataClassWriter WriteMethod (this DataClassWriter writer, string name, Property property, string modification)
         {
-            return writer.WriteMethod(name, $"{property.GetNullabilityAttribute()}{property.Type} {property.Name.ToInstance()}", modification);
+            return writer.WriteMethod(name, $"{property.GetNullabilityAttribute()}{property.GetNullableType()} {property.Name.ToInstance()}", modification);
         }
 
-        private static DataClassWriter WriteMethod (this DataClassWriter writer, string name, string additionalParameter, string modification)
+        private static DataClassWriter WriteMethod (this DataClassWriter writer, string name, string additionalParameter, params string[] modifications)
         {
-            return writer.WriteMethod(name, new[] { additionalParameter }, modification);
+            return writer.WriteMethod(name, new[] { additionalParameter }, modifications);
         }
 
         private static DataClassWriter WriteMethod (this DataClassWriter writer, string name, string modification)
         {
-            return writer.WriteMethod(name, new string[0], modification);
+            return writer.WriteMethod(name, new[] { modification });
+        }
+
+        private static DataClassWriter WriteMethod (this DataClassWriter writer, string name, string[] modifications)
+        {
+            return writer.WriteMethod(name, new string[0], modifications);
         }
 
         private static DataClassWriter WriteMethod (
             this DataClassWriter writer,
             string name,
             IEnumerable<string> additionalParameters,
-            string modification)
+            params string[] modifications)
         {
             var parameters = new[] { $"this {writer.DataClass.Name} toolSettings" }.Concat(additionalParameters);
             return writer
@@ -198,7 +301,7 @@ namespace Nuke.ToolGenerator.Generators
                     .WriteLine($"public static {writer.DataClass.Name} {name}({parameters.Join()})")
                     .WriteBlock(w => w
                             .WriteLine("toolSettings = toolSettings.NewInstance();")
-                            .WriteLine(modification)
+                            .ForEachWriteLine(modifications)
                             .WriteLine("return toolSettings;"));
         }
     }
