@@ -18,21 +18,21 @@ namespace Nuke.Core.Tests
         [MemberData(nameof(Properties), typeof(Bitrise))]
         public void TestBitrise(PropertyInfo property)
         {
-            AssertDoesNotThrows(Bitrise.Instance.NotNull(), property);
+            AssertProperty(Bitrise.Instance.NotNull(), property);
         }
 
         [BuildServerTheory(typeof(TeamCity))]
         [MemberData(nameof(Properties), typeof(TeamCity))]
         public void TestTeamCity(PropertyInfo property)
         {
-            AssertDoesNotThrows(TeamCity.Instance.NotNull(), property);
+            AssertProperty(TeamCity.Instance.NotNull(), property);
         }
 
         [BuildServerTheory(typeof(TeamFoundationServer))]
         [MemberData(nameof(Properties), typeof(TeamFoundationServer))]
         public void TestTeamFoundationServer(PropertyInfo property)
         {
-            AssertDoesNotThrows(TeamFoundationServer.Instance.NotNull(), property);
+            AssertProperty(TeamFoundationServer.Instance.NotNull(), property);
         }
 
         public static IEnumerable<object[]> Properties(Type type)
@@ -41,10 +41,18 @@ namespace Nuke.Core.Tests
                     .Select(x => new object[] { x }).ToArray();
         }
 
-        private static void AssertDoesNotThrows (object instance, PropertyInfo property)
+        private static void AssertProperty (object instance, PropertyInfo property)
         {
             Action act = () => property.GetValue(instance);
             act.ShouldNotThrow<Exception>();
+
+            var value = property.GetValue(instance);
+            if (!(value is string strValue))
+                return;
+
+            bool.TryParse(strValue, out var _).Should().BeFalse();
+            int.TryParse(strValue, out var _).Should().BeFalse();
+            float.TryParse(strValue, out var _).Should().BeFalse();
         }
 
         internal class BuildServerTheoryAttribute : TheoryAttribute
