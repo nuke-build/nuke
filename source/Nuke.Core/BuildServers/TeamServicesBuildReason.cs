@@ -9,12 +9,14 @@ using JetBrains.Annotations;
 namespace Nuke.Core.BuildServers
 {
     [PublicAPI]
-    public enum TeamFoundationServerRepositoryType
+    public enum TeamServicesBuildReason
     {
-        TfsGit,
-        TfsVersionControl,
-        Git,
-        GitHub,
-        Svn
+        Manual,
+        IndividualCI,
+        BatchedCI,
+        Schedule,
+        ValidateShelveset,
+        CheckInShelveset,
+        PullRequest
     }
 }

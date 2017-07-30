@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 namespace Nuke.Core.BuildServers
 {
     [PublicAPI]
-    public enum TeamFoundationServerJobStatus
+    public enum TeamServicesJobStatus
     {
         Canceled,
         Failed,

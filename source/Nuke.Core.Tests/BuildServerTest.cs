@@ -29,11 +29,11 @@ namespace Nuke.Core.Tests
             AssertProperty(TeamCity.Instance.NotNull(), property);
         }
 
-        [BuildServerTheory(typeof(TeamFoundationServer))]
-        [MemberData(nameof(Properties), typeof(TeamFoundationServer))]
+        [BuildServerTheory(typeof(TeamServices))]
+        [MemberData(nameof(Properties), typeof(TeamServices))]
         public void TestTeamFoundationServer(PropertyInfo property)
         {
-            AssertProperty(TeamFoundationServer.Instance.NotNull(), property);
+            AssertProperty(TeamServices.Instance.NotNull(), property);
         }
 
         public static IEnumerable<object[]> Properties(Type type)

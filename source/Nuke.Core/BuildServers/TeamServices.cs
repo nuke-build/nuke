@@ -14,21 +14,21 @@ namespace Nuke.Core.BuildServers
     /// </summary>
     [PublicAPI]
     [BuildServer]
-    public class TeamFoundationServer
+    public class TeamServices
     {
-        public static TeamFoundationServer Instance { get; } =
+        public static TeamServices Instance { get; } =
             Variable("SYSTEM_TEAMPROJECTID") != null
-                ? new TeamFoundationServer()
+                ? new TeamServices()
                 : null;
 
-        private TeamFoundationServer ()
+        private TeamServices ()
         {
         }
 
         public string AgentBuildDirectory => EnsureVariable("AGENT_BUILDDIRECTORY");
         public string AgentHomeDirectory => EnsureVariable("AGENT_HOMEDIRECTORY");
         public long AgentId => EnsureVariable<long>("AGENT_ID");
-        public TeamFoundationServerJobStatus AgentJobStatus => EnsureVariable<TeamFoundationServerJobStatus>("AGENT_JOBSTATUS");
+        public TeamServicesJobStatus AgentJobStatus => EnsureVariable<TeamServicesJobStatus>("AGENT_JOBSTATUS");
         public string AgentMachineName => EnsureVariable("AGENT_MACHINENAME");
         public string AgentName => EnsureVariable("AGENT_NAME");
         public string AgentWorkFolder => EnsureVariable("AGENT_WORKFOLDER");
@@ -41,11 +41,11 @@ namespace Nuke.Core.BuildServers
         public long DefinitionVersion => EnsureVariable<long>("BUILD_DEFINITIONVERSION");
         public string QueuedBy => EnsureVariable("BUILD_QUEUEDBY");
         public Guid QueuedById => EnsureVariable<Guid>("BUILD_QUEUEDBYID");
-        public TeamFoundationServerBuildReason BuildReason => EnsureVariable<TeamFoundationServerBuildReason>("BUILD_REASON");
+        public TeamServicesBuildReason BuildReason => EnsureVariable<TeamServicesBuildReason>("BUILD_REASON");
         public bool RepositoryClean => EnsureVariable<bool>("BUILD_REPOSITORY_CLEAN");
         public string RepositoryLocalPath => EnsureVariable("BUILD_REPOSITORY_LOCALPATH");
         public string RepositoryName => EnsureVariable("BUILD_REPOSITORY_NAME");
-        public TeamFoundationServerRepositoryType RepositoryProvider => EnsureVariable<TeamFoundationServerRepositoryType>("BUILD_REPOSITORY_PROVIDER");
+        public TeamServicesRepositoryType RepositoryProvider => EnsureVariable<TeamServicesRepositoryType>("BUILD_REPOSITORY_PROVIDER");
         public string RepositoryTfvcWorkspace => Variable("BUILD_REPOSITORY_TFVC_WORKSPACE");
         public string RepositoryUri => EnsureVariable("BUILD_REPOSITORY_URI");
         public string RequestedFor => EnsureVariable("BUILD_REQUESTEDFOR");
@@ -57,15 +57,15 @@ namespace Nuke.Core.BuildServers
         public string SourceVersion => EnsureVariable("BUILD_SOURCEVERSION");
         public string StagingDirectory => EnsureVariable("BUILD_STAGINGDIRECTORY");
         public bool RepositoryGitSubmoduleCheckout => EnsureVariable<bool>("BUILD_REPOSITORY_GIT_SUBMODULECHECKOUT");
-        public string SourceTfvcShelveset => Variable("BUILD_SOURCETFVCSHELVESET");
+        [CanBeNull] public string SourceTfvcShelveset => Variable("BUILD_SOURCETFVCSHELVESET");
         public string TestResultsDirectory => EnsureVariable("COMMON_TESTRESULTSDIRECTORY");
-        public string AccessToken => Variable("SYSTEM_ACCESSTOKEN");
+        [CanBeNull] public string AccessToken => Variable("SYSTEM_ACCESSTOKEN");
         public Guid CollectionId => EnsureVariable<Guid>("SYSTEM_COLLECTIONID");
         public string DefaultWorkingDirectory => EnsureVariable("SYSTEM_DEFAULTWORKINGDIRECTORY");
         public long DefinitionId => EnsureVariable<long>("SYSTEM_DEFINITIONID");
-        public string PullRequestId => Variable("SYSTEM_PULLREQUEST_PULLREQUESTID");
-        public string PullRequestSourceBranch => Variable("SYSTEM_PULLREQUEST_SOURCEBRANCH");
-        public string PullRequestTargetBranch => Variable("SYSTEM_PULLREQUEST_TARGETBRANCH");
+        [CanBeNull] public string PullRequestId => Variable("SYSTEM_PULLREQUEST_PULLREQUESTID");
+        [CanBeNull] public string PullRequestSourceBranch => Variable("SYSTEM_PULLREQUEST_SOURCEBRANCH");
+        [CanBeNull] public string PullRequestTargetBranch => Variable("SYSTEM_PULLREQUEST_TARGETBRANCH");
         public string TeamFoundationCollectionUri => EnsureVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI");
         public string TeamProject => EnsureVariable("SYSTEM_TEAMPROJECT");
         public Guid TeamProjectId => EnsureVariable<Guid>("SYSTEM_TEAMPROJECTID");
