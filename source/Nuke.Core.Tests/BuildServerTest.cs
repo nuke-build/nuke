@@ -62,6 +62,7 @@ namespace Nuke.Core.Tests
             decimal.TryParse(strValue, out var _).Should().BeFalse("decimal");
             DateTime.TryParse(strValue, out var _).Should().BeFalse("DateTime");
             TimeSpan.TryParse(strValue, out var _).Should().BeFalse("TimeSpan");
+            Guid.TryParse(strValue, out var _).Should().BeFalse("Guid");
         }
 
         internal class BuildServerTheoryAttribute : TheoryAttribute
