@@ -18,20 +18,33 @@ namespace Nuke.Core.Tests
         [MemberData(nameof(Properties), typeof(Bitrise))]
         public void TestBitrise(PropertyInfo property)
         {
-            property.GetValue(Bitrise.Instance).Should().NotBeNull();
+            AssertDoesNotThrows(Bitrise.Instance.NotNull(), property);
         }
 
         [BuildServerTheory(typeof(TeamCity))]
         [MemberData(nameof(Properties), typeof(TeamCity))]
         public void TestTeamCity(PropertyInfo property)
         {
-            property.GetValue(TeamCity.Instance).Should().NotBeNull();
+            AssertDoesNotThrows(TeamCity.Instance.NotNull(), property);
+        }
+
+        [BuildServerTheory(typeof(TeamFoundationServer))]
+        [MemberData(nameof(Properties), typeof(TeamFoundationServer))]
+        public void TestTeamFoundationServer(PropertyInfo property)
+        {
+            AssertDoesNotThrows(TeamFoundationServer.Instance.NotNull(), property);
         }
 
         public static IEnumerable<object[]> Properties(Type type)
         {
             return type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
                     .Select(x => new object[] { x }).ToArray();
+        }
+
+        private static void AssertDoesNotThrows (object instance, PropertyInfo property)
+        {
+            Action act = () => property.GetValue(instance);
+            act.ShouldNotThrow<Exception>();
         }
 
         internal class BuildServerTheoryAttribute : TheoryAttribute
@@ -51,6 +64,5 @@ namespace Nuke.Core.Tests
                 return property.GetValue(obj: null) == null;
             }
         }
-
     }
 }

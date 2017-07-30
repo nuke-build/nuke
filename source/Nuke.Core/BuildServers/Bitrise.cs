@@ -31,10 +31,10 @@ namespace Nuke.Core.BuildServers
         public string BuildTriggerTimestamp => EnvironmentInfo.EnsureVariable("BITRISE_BUILD_TRIGGER_TIMESTAMP");
         public string RepositoryUrl => EnvironmentInfo.EnsureVariable("GIT_REPOSITORY_URL");
         public string GitBranch => EnvironmentInfo.EnsureVariable("BITRISE_GIT_BRANCH");
-        public string GitTag => EnvironmentInfo.EnsureVariable("BITRISE_GIT_TAG");
+        [CanBeNull] public string GitTag => EnvironmentInfo.Variable("BITRISE_GIT_TAG");
         public string GitCommit => EnvironmentInfo.EnsureVariable("BITRISE_GIT_COMMIT");
         public string GitMessage => EnvironmentInfo.EnsureVariable("BITRISE_GIT_MESSAGE");
-        public string PullRequest => EnvironmentInfo.EnsureVariable("BITRISE_PULL_REQUEST");
+        [CanBeNull] public string PullRequest => EnvironmentInfo.Variable("BITRISE_PULL_REQUEST");
         public string ProvisionUrl => EnvironmentInfo.EnsureVariable("BITRISE_PROVISION_URL");
         public string CertificateUrl => EnvironmentInfo.EnsureVariable("BITRISE_CERTIFICATE_URL");
         public string CertificatePassphrase => EnvironmentInfo.EnsureVariable("BITRISE_CERTIFICATE_PASSPHRASE");
