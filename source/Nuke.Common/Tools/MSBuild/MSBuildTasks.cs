@@ -18,6 +18,8 @@ namespace Nuke.Common.Tools.MSBuild
         /// </summary>
         public static MSBuildProject MSBuildParse(string projectFile, Configure<MSBuildSettings> configurator = null)
         {
+            ControlFlow.Assert(EnvironmentInfo.IsWin, "Currently only supported on Windows.");
+
             var content = TextTasks.ReadAllText(projectFile);
             var isSdkProject = content.Contains("Sdk=\"Microsoft.NET.Sdk\"");
             var isLegacyProject = content.Contains("http://schemas.microsoft.com/developer/msbuild/2003");

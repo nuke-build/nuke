@@ -8,13 +8,12 @@ using System.Linq;
 using FluentAssertions;
 using Nuke.Common.Tools.MSBuild;
 using Nuke.Core.IO;
-using Xunit;
 
 namespace Nuke.Common.Tests
 {
     public class MSBuildParseTest
     {
-        [Fact]
+        [WindowsFact]
         public void Test ()
         {
             var currentDirectory = (PathConstruction.AbsolutePath) Directory.GetCurrentDirectory();
