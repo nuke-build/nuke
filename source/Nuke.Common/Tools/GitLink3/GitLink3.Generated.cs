@@ -2,7 +2,7 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-// Auto-generated with Nuke.ToolGenerator.
+// Generated from https://github.com/nuke-build/tools/blob/master/GitLink3.json with Nuke.ToolGenerator.
 
 using JetBrains.Annotations;
 using Nuke.Common.Tools;
@@ -38,18 +38,19 @@ namespace Nuke.Common.Tools.GitLink3
             PostProcess(toolSettings);
         }
     }
-    /// <summary><p>GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.</p></summary>
+    #region GitLink3Settings
+    /// <summary><p>Used within <see cref="GitLink3Tasks"/>.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
     public partial class GitLink3Settings : ToolSettings
     {
-        /// <summary>Path of the executable to be invoked.</summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetToolPath(packageId: $"gitlink", packageExecutable: $"GitLink.exe");
+        /// <summary><p>Path to the GitLink3 executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"gitlink", $"GitLink.exe");
         /// <summary><p>The PDB to add source indexing to.</p></summary>
         public virtual string PdbFile { get; internal set; }
         /// <summary><p>The method for SRCSRV to retrieve source code. One of &lt;Http|Powershell&gt;. Default is Http.</p></summary>
-        public virtual GitLinkSourceCodeRetrieval? Method { get; internal set; }
+        public virtual GitLinkSourceCodeRetrieval Method { get; internal set; }
         /// <summary><p>Url to remote git repository.</p></summary>
         public virtual string RepositoryUrl { get; internal set; }
         /// <summary><p>The git ref to assume all the source code belongs to.</p></summary>
@@ -57,7 +58,7 @@ namespace Nuke.Common.Tools.GitLink3
         /// <summary><p>The path to the root of the git repo.</p></summary>
         public virtual string BaseDirectory { get; internal set; }
         /// <summary><p>Skip verification that all source files are available in source control.</p></summary>
-        public virtual bool SkipVerification { get; internal set; }
+        public virtual bool? SkipVerification { get; internal set; }
         protected override Arguments GetArgumentsInternal()
         {
             return base.GetArgumentsInternal()
@@ -69,10 +70,14 @@ namespace Nuke.Common.Tools.GitLink3
               .Add("--skipVerify", SkipVerification);
         }
     }
+    #endregion
+    #region GitLink3SettingsExtensions
+    /// <summary><p>Used within <see cref="GitLink3Tasks"/>.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class GitLink3SettingsExtensions
     {
+        #region PdbFile
         /// <summary><p><em>Sets <see cref="GitLink3Settings.PdbFile"/>.</em></p><p>The PDB to add source indexing to.</p></summary>
         [Pure]
         public static GitLink3Settings SetPdbFile(this GitLink3Settings toolSettings, string pdbFile)
@@ -81,14 +86,34 @@ namespace Nuke.Common.Tools.GitLink3
             toolSettings.PdbFile = pdbFile;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="GitLink3Settings.PdbFile"/>.</em></p><p>The PDB to add source indexing to.</p></summary>
+        [Pure]
+        public static GitLink3Settings ResetPdbFile(this GitLink3Settings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PdbFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Method
         /// <summary><p><em>Sets <see cref="GitLink3Settings.Method"/>.</em></p><p>The method for SRCSRV to retrieve source code. One of &lt;Http|Powershell&gt;. Default is Http.</p></summary>
         [Pure]
-        public static GitLink3Settings SetMethod(this GitLink3Settings toolSettings, GitLinkSourceCodeRetrieval? method)
+        public static GitLink3Settings SetMethod(this GitLink3Settings toolSettings, GitLinkSourceCodeRetrieval method)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Method = method;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="GitLink3Settings.Method"/>.</em></p><p>The method for SRCSRV to retrieve source code. One of &lt;Http|Powershell&gt;. Default is Http.</p></summary>
+        [Pure]
+        public static GitLink3Settings ResetMethod(this GitLink3Settings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Method = null;
+            return toolSettings;
+        }
+        #endregion
+        #region RepositoryUrl
         /// <summary><p><em>Sets <see cref="GitLink3Settings.RepositoryUrl"/>.</em></p><p>Url to remote git repository.</p></summary>
         [Pure]
         public static GitLink3Settings SetRepositoryUrl(this GitLink3Settings toolSettings, string repositoryUrl)
@@ -97,6 +122,16 @@ namespace Nuke.Common.Tools.GitLink3
             toolSettings.RepositoryUrl = repositoryUrl;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="GitLink3Settings.RepositoryUrl"/>.</em></p><p>Url to remote git repository.</p></summary>
+        [Pure]
+        public static GitLink3Settings ResetRepositoryUrl(this GitLink3Settings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RepositoryUrl = null;
+            return toolSettings;
+        }
+        #endregion
+        #region CommitSha
         /// <summary><p><em>Sets <see cref="GitLink3Settings.CommitSha"/>.</em></p><p>The git ref to assume all the source code belongs to.</p></summary>
         [Pure]
         public static GitLink3Settings SetCommitSha(this GitLink3Settings toolSettings, string commitSha)
@@ -105,6 +140,16 @@ namespace Nuke.Common.Tools.GitLink3
             toolSettings.CommitSha = commitSha;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="GitLink3Settings.CommitSha"/>.</em></p><p>The git ref to assume all the source code belongs to.</p></summary>
+        [Pure]
+        public static GitLink3Settings ResetCommitSha(this GitLink3Settings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CommitSha = null;
+            return toolSettings;
+        }
+        #endregion
+        #region BaseDirectory
         /// <summary><p><em>Sets <see cref="GitLink3Settings.BaseDirectory"/>.</em></p><p>The path to the root of the git repo.</p></summary>
         [Pure]
         public static GitLink3Settings SetBaseDirectory(this GitLink3Settings toolSettings, string baseDirectory)
@@ -113,12 +158,30 @@ namespace Nuke.Common.Tools.GitLink3
             toolSettings.BaseDirectory = baseDirectory;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="GitLink3Settings.BaseDirectory"/>.</em></p><p>The path to the root of the git repo.</p></summary>
+        [Pure]
+        public static GitLink3Settings ResetBaseDirectory(this GitLink3Settings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BaseDirectory = null;
+            return toolSettings;
+        }
+        #endregion
+        #region SkipVerification
         /// <summary><p><em>Sets <see cref="GitLink3Settings.SkipVerification"/>.</em></p><p>Skip verification that all source files are available in source control.</p></summary>
         [Pure]
-        public static GitLink3Settings SetSkipVerification(this GitLink3Settings toolSettings, bool skipVerification)
+        public static GitLink3Settings SetSkipVerification(this GitLink3Settings toolSettings, bool? skipVerification)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipVerification = skipVerification;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="GitLink3Settings.SkipVerification"/>.</em></p><p>Skip verification that all source files are available in source control.</p></summary>
+        [Pure]
+        public static GitLink3Settings ResetSkipVerification(this GitLink3Settings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipVerification = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="GitLink3Settings.SkipVerification"/>.</em></p><p>Skip verification that all source files are available in source control.</p></summary>
@@ -145,12 +208,17 @@ namespace Nuke.Common.Tools.GitLink3
             toolSettings.SkipVerification = !toolSettings.SkipVerification;
             return toolSettings;
         }
+        #endregion
     }
-    /// <summary><p>GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.</p></summary>
+    #endregion
+    #region GitLinkSourceCodeRetrieval
+    /// <summary><p>Used within <see cref="GitLink3Tasks"/>.</p></summary>
     [PublicAPI]
-    public enum GitLinkSourceCodeRetrieval
+    [Serializable]
+    public partial class GitLinkSourceCodeRetrieval : Enumeration
     {
-        Http,
-        Powershell,
+        public static GitLinkSourceCodeRetrieval Http = new GitLinkSourceCodeRetrieval { Value = "Http" };
+        public static GitLinkSourceCodeRetrieval Powershell = new GitLinkSourceCodeRetrieval { Value = "Powershell" };
     }
+    #endregion
 }

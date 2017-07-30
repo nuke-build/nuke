@@ -2,7 +2,7 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-// Auto-generated with Nuke.ToolGenerator.
+// Generated from https://github.com/nuke-build/tools/blob/master/DotNet.json with Nuke.ToolGenerator.
 
 using JetBrains.Annotations;
 using Nuke.Common.Tools;
@@ -100,6 +100,8 @@ namespace Nuke.Common.Tools.DotNet
             DotNetBuild(x => configurator(x).SetProjectFile(projectFile));
         }
     }
+    #region DotNetTestSettings
+    /// <summary><p>Used within <see cref="DotNetTasks"/>.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
@@ -110,7 +112,7 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary><p>Settings to use when running tests.</p></summary>
         public virtual string SettingsFile { get; internal set; }
         /// <summary><p>List all of the discovered tests in the current project.</p></summary>
-        public virtual bool ListTests { get; internal set; }
+        public virtual bool? ListTests { get; internal set; }
         /// <summary><p>Filters out tests in the current project using the given expression. For more information, see the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-test#filter-option-details">Filter option details</a> section. For additional information and examples on how to use selective unit test filtering, see <a href="https://docs.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests">Running selective unit tests</a>.</p></summary>
         public virtual string Filter { get; internal set; }
         /// <summary><p>Use the custom test adapters from the specified path in the test run.</p></summary>
@@ -126,9 +128,9 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary><p>Enables diagnostic mode for the test platform and write diagnostic messages to the specified file.</p></summary>
         public virtual string DiagnosticsFile { get; internal set; }
         /// <summary><p>Does not build the test project prior to running it.</p></summary>
-        public virtual bool NoBuild { get; internal set; }
+        public virtual bool? NoBuild { get; internal set; }
         /// <summary><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
-        public virtual DotNetVerbosity? Verbosity { get; internal set; }
+        public virtual DotNetVerbosity Verbosity { get; internal set; }
         protected override Arguments GetArgumentsInternal()
         {
             return base.GetArgumentsInternal()
@@ -147,6 +149,9 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--verbosity {value}", Verbosity);
         }
     }
+    #endregion
+    #region DotNetRunSettings
+    /// <summary><p>Used within <see cref="DotNetTasks"/>.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
@@ -167,6 +172,9 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--project {value}", ProjectFile);
         }
     }
+    #endregion
+    #region DotNetRestoreSettings
+    /// <summary><p>Used within <see cref="DotNetTasks"/>.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
@@ -182,17 +190,17 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary><p>Specifies the directory for restored packages.</p></summary>
         public virtual string PackageDirectory { get; internal set; }
         /// <summary><p>Disables restoring multiple projects in parallel.</p></summary>
-        public virtual bool DisableParallel { get; internal set; }
+        public virtual bool? DisableParallel { get; internal set; }
         /// <summary><p>Specifies to not cache packages and HTTP requests.</p></summary>
-        public virtual bool NoCache { get; internal set; }
+        public virtual bool? NoCache { get; internal set; }
         /// <summary><p>The NuGet configuration file (<em>NuGet.config</em>) to use for the restore operation.</p></summary>
         public virtual string ConfigFile { get; internal set; }
         /// <summary><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
-        public virtual bool IgnoreFailedSources { get; internal set; }
+        public virtual bool? IgnoreFailedSources { get; internal set; }
         /// <summary><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
-        public virtual bool NoDependencies { get; internal set; }
+        public virtual bool? NoDependencies { get; internal set; }
         /// <summary><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
-        public virtual DotNetVerbosity? Verbosity { get; internal set; }
+        public virtual DotNetVerbosity Verbosity { get; internal set; }
         protected override Arguments GetArgumentsInternal()
         {
             return base.GetArgumentsInternal()
@@ -209,6 +217,9 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--verbosity {value}", Verbosity);
         }
     }
+    #endregion
+    #region DotNetPackSettings
+    /// <summary><p>Used within <see cref="DotNetTasks"/>.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
@@ -219,19 +230,19 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary><p>Places the built packages in the directory specified.</p></summary>
         public virtual string OutputDirectory { get; internal set; }
         /// <summary><p>Don't build the project before packing.</p></summary>
-        public virtual bool NoBuild { get; internal set; }
+        public virtual bool? NoBuild { get; internal set; }
         /// <summary><p>Generates the symbols <c>nupkg</c>.</p></summary>
-        public virtual bool IncludeSymbols { get; internal set; }
+        public virtual bool? IncludeSymbols { get; internal set; }
         /// <summary><p>Includes the source files in the NuGet package. The sources files are included in the <c>src</c> folder within the <c>nupkg</c>.</p></summary>
-        public virtual bool IncludeSource { get; internal set; }
+        public virtual bool? IncludeSource { get; internal set; }
         /// <summary><p>Configuration to use when building the project. If not specified, configuration defaults to <c>Debug</c>.</p></summary>
         public virtual string Configuration { get; internal set; }
         /// <summary><p>Defines the value for the <c>$(VersionSuffix)</c> MSBuild property in the project.</p></summary>
         public virtual string VersionSuffix { get; internal set; }
         /// <summary><p>Sets the serviceable flag in the package. For more information, see <a href="https://aka.ms/nupkgservicing">.NET Blog: .NET 4.5.1 Supports Microsoft Security Updates for .NET NuGet Libraries</a>.</p></summary>
-        public virtual bool Serviceable { get; internal set; }
+        public virtual bool? Serviceable { get; internal set; }
         /// <summary><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
-        public virtual DotNetVerbosity? Verbostiy { get; internal set; }
+        public virtual DotNetVerbosity Verbostiy { get; internal set; }
         protected override Arguments GetArgumentsInternal()
         {
             return base.GetArgumentsInternal()
@@ -247,6 +258,9 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--verbosity {value}", Verbostiy);
         }
     }
+    #endregion
+    #region DotNetBuildSettings
+    /// <summary><p>Used within <see cref="DotNetTasks"/>.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
@@ -265,11 +279,11 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary><p>Defines the version suffix for an asterisk (<c>*</c>) in the version field of the project file. The format follows NuGet's version guidelines.</p></summary>
         public virtual string VersionSuffix { get; internal set; }
         /// <summary><p>Marks the build as unsafe for incremental build. This turns off incremental compilation and forces a clean rebuild of the project's dependency graph.</p></summary>
-        public virtual bool NoIncremental { get; internal set; }
+        public virtual bool? NoIncremental { get; internal set; }
         /// <summary><p>Ignores project-to-project (P2P) references and only builds the root project specified to build.</p></summary>
-        public virtual bool NoDependencies { get; internal set; }
+        public virtual bool? NoDependencies { get; internal set; }
         /// <summary><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
-        public virtual DotNetVerbosity? Verbosity { get; internal set; }
+        public virtual DotNetVerbosity Verbosity { get; internal set; }
         protected override Arguments GetArgumentsInternal()
         {
             return base.GetArgumentsInternal()
@@ -285,10 +299,14 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--verbosity {value}", Verbosity);
         }
     }
+    #endregion
+    #region DotNetTestSettingsExtensions
+    /// <summary><p>Used within <see cref="DotNetTasks"/>.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class DotNetTestSettingsExtensions
     {
+        #region ProjectFile
         /// <summary><p><em>Sets <see cref="DotNetTestSettings.ProjectFile"/>.</em></p><p>Specifies a path to the test project. If omitted, it defaults to current directory.</p></summary>
         [Pure]
         public static DotNetTestSettings SetProjectFile(this DotNetTestSettings toolSettings, string projectFile)
@@ -297,6 +315,16 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.ProjectFile = projectFile;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetTestSettings.ProjectFile"/>.</em></p><p>Specifies a path to the test project. If omitted, it defaults to current directory.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetProjectFile(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProjectFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region SettingsFile
         /// <summary><p><em>Sets <see cref="DotNetTestSettings.SettingsFile"/>.</em></p><p>Settings to use when running tests.</p></summary>
         [Pure]
         public static DotNetTestSettings SetSettingsFile(this DotNetTestSettings toolSettings, string settingsFile)
@@ -305,12 +333,30 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.SettingsFile = settingsFile;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetTestSettings.SettingsFile"/>.</em></p><p>Settings to use when running tests.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetSettingsFile(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SettingsFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ListTests
         /// <summary><p><em>Sets <see cref="DotNetTestSettings.ListTests"/>.</em></p><p>List all of the discovered tests in the current project.</p></summary>
         [Pure]
-        public static DotNetTestSettings SetListTests(this DotNetTestSettings toolSettings, bool listTests)
+        public static DotNetTestSettings SetListTests(this DotNetTestSettings toolSettings, bool? listTests)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ListTests = listTests;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetTestSettings.ListTests"/>.</em></p><p>List all of the discovered tests in the current project.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetListTests(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ListTests = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DotNetTestSettings.ListTests"/>.</em></p><p>List all of the discovered tests in the current project.</p></summary>
@@ -337,6 +383,8 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.ListTests = !toolSettings.ListTests;
             return toolSettings;
         }
+        #endregion
+        #region Filter
         /// <summary><p><em>Sets <see cref="DotNetTestSettings.Filter"/>.</em></p><p>Filters out tests in the current project using the given expression. For more information, see the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-test#filter-option-details">Filter option details</a> section. For additional information and examples on how to use selective unit test filtering, see <a href="https://docs.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests">Running selective unit tests</a>.</p></summary>
         [Pure]
         public static DotNetTestSettings SetFilter(this DotNetTestSettings toolSettings, string filter)
@@ -345,6 +393,16 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.Filter = filter;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetTestSettings.Filter"/>.</em></p><p>Filters out tests in the current project using the given expression. For more information, see the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-test#filter-option-details">Filter option details</a> section. For additional information and examples on how to use selective unit test filtering, see <a href="https://docs.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests">Running selective unit tests</a>.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetFilter(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Filter = null;
+            return toolSettings;
+        }
+        #endregion
+        #region TestAdapterPath
         /// <summary><p><em>Sets <see cref="DotNetTestSettings.TestAdapterPath"/>.</em></p><p>Use the custom test adapters from the specified path in the test run.</p></summary>
         [Pure]
         public static DotNetTestSettings SetTestAdapterPath(this DotNetTestSettings toolSettings, string testAdapterPath)
@@ -353,6 +411,16 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.TestAdapterPath = testAdapterPath;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetTestSettings.TestAdapterPath"/>.</em></p><p>Use the custom test adapters from the specified path in the test run.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetTestAdapterPath(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TestAdapterPath = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Logger
         /// <summary><p><em>Sets <see cref="DotNetTestSettings.Logger"/>.</em></p><p>Specifies a logger for test results.</p></summary>
         [Pure]
         public static DotNetTestSettings SetLogger(this DotNetTestSettings toolSettings, string logger)
@@ -361,6 +429,16 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.Logger = logger;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetTestSettings.Logger"/>.</em></p><p>Specifies a logger for test results.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetLogger(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Logger = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Configuration
         /// <summary><p><em>Sets <see cref="DotNetTestSettings.Configuration"/>.</em></p><p>Configuration under which to build. The default value is <c>Debug</c>, but your project's configuration could override this default SDK setting.</p></summary>
         [Pure]
         public static DotNetTestSettings SetConfiguration(this DotNetTestSettings toolSettings, string configuration)
@@ -369,6 +447,16 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.Configuration = configuration;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetTestSettings.Configuration"/>.</em></p><p>Configuration under which to build. The default value is <c>Debug</c>, but your project's configuration could override this default SDK setting.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetConfiguration(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Configuration = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Framework
         /// <summary><p><em>Sets <see cref="DotNetTestSettings.Framework"/>.</em></p><p>Looks for test binaries for a specific <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">framework</a>.</p></summary>
         [Pure]
         public static DotNetTestSettings SetFramework(this DotNetTestSettings toolSettings, string framework)
@@ -377,6 +465,16 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.Framework = framework;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetTestSettings.Framework"/>.</em></p><p>Looks for test binaries for a specific <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">framework</a>.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetFramework(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Output
         /// <summary><p><em>Sets <see cref="DotNetTestSettings.Output"/>.</em></p><p>Directory in which to find the binaries to run.</p></summary>
         [Pure]
         public static DotNetTestSettings SetOutput(this DotNetTestSettings toolSettings, string output)
@@ -385,6 +483,16 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.Output = output;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetTestSettings.Output"/>.</em></p><p>Directory in which to find the binaries to run.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetOutput(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Output = null;
+            return toolSettings;
+        }
+        #endregion
+        #region DiagnosticsFile
         /// <summary><p><em>Sets <see cref="DotNetTestSettings.DiagnosticsFile"/>.</em></p><p>Enables diagnostic mode for the test platform and write diagnostic messages to the specified file.</p></summary>
         [Pure]
         public static DotNetTestSettings SetDiagnosticsFile(this DotNetTestSettings toolSettings, string diagnosticsFile)
@@ -393,12 +501,30 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.DiagnosticsFile = diagnosticsFile;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetTestSettings.DiagnosticsFile"/>.</em></p><p>Enables diagnostic mode for the test platform and write diagnostic messages to the specified file.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetDiagnosticsFile(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DiagnosticsFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region NoBuild
         /// <summary><p><em>Sets <see cref="DotNetTestSettings.NoBuild"/>.</em></p><p>Does not build the test project prior to running it.</p></summary>
         [Pure]
-        public static DotNetTestSettings SetNoBuild(this DotNetTestSettings toolSettings, bool noBuild)
+        public static DotNetTestSettings SetNoBuild(this DotNetTestSettings toolSettings, bool? noBuild)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = noBuild;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetTestSettings.NoBuild"/>.</em></p><p>Does not build the test project prior to running it.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetNoBuild(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DotNetTestSettings.NoBuild"/>.</em></p><p>Does not build the test project prior to running it.</p></summary>
@@ -425,19 +551,34 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.NoBuild = !toolSettings.NoBuild;
             return toolSettings;
         }
+        #endregion
+        #region Verbosity
         /// <summary><p><em>Sets <see cref="DotNetTestSettings.Verbosity"/>.</em></p><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
         [Pure]
-        public static DotNetTestSettings SetVerbosity(this DotNetTestSettings toolSettings, DotNetVerbosity? verbosity)
+        public static DotNetTestSettings SetVerbosity(this DotNetTestSettings toolSettings, DotNetVerbosity verbosity)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = verbosity;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetTestSettings.Verbosity"/>.</em></p><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetVerbosity(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = null;
+            return toolSettings;
+        }
+        #endregion
     }
+    #endregion
+    #region DotNetRunSettingsExtensions
+    /// <summary><p>Used within <see cref="DotNetTasks"/>.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class DotNetRunSettingsExtensions
     {
+        #region Configuration
         /// <summary><p><em>Sets <see cref="DotNetRunSettings.Configuration"/>.</em></p><p>Configuration to use for building the project. The default value is Debug.</p></summary>
         [Pure]
         public static DotNetRunSettings SetConfiguration(this DotNetRunSettings toolSettings, string configuration)
@@ -446,6 +587,16 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.Configuration = configuration;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetRunSettings.Configuration"/>.</em></p><p>Configuration to use for building the project. The default value is Debug.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ResetConfiguration(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Configuration = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Framework
         /// <summary><p><em>Sets <see cref="DotNetRunSettings.Framework"/>.</em></p><p>Builds and runs the app using the specified framework. The framework must be specified in the project file.</p></summary>
         [Pure]
         public static DotNetRunSettings SetFramework(this DotNetRunSettings toolSettings, string framework)
@@ -454,6 +605,16 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.Framework = framework;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetRunSettings.Framework"/>.</em></p><p>Builds and runs the app using the specified framework. The framework must be specified in the project file.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ResetFramework(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ProjectFile
         /// <summary><p><em>Sets <see cref="DotNetRunSettings.ProjectFile"/>.</em></p><p>Specifies the path and name of the project file. (See the NOTE.) It defaults to the current directory if not specified.</p></summary>
         [Pure]
         public static DotNetRunSettings SetProjectFile(this DotNetRunSettings toolSettings, string projectFile)
@@ -462,11 +623,24 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.ProjectFile = projectFile;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetRunSettings.ProjectFile"/>.</em></p><p>Specifies the path and name of the project file. (See the NOTE.) It defaults to the current directory if not specified.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ResetProjectFile(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProjectFile = null;
+            return toolSettings;
+        }
+        #endregion
     }
+    #endregion
+    #region DotNetRestoreSettingsExtensions
+    /// <summary><p>Used within <see cref="DotNetTasks"/>.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class DotNetRestoreSettingsExtensions
     {
+        #region ProjectFile
         /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.ProjectFile"/>.</em></p><p>Optional path to the project file to restore.</p></summary>
         [Pure]
         public static DotNetRestoreSettings SetProjectFile(this DotNetRestoreSettings toolSettings, string projectFile)
@@ -475,6 +649,16 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.ProjectFile = projectFile;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetRestoreSettings.ProjectFile"/>.</em></p><p>Optional path to the project file to restore.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings ResetProjectFile(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProjectFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Source
         /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.Source"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
         [Pure]
         public static DotNetRestoreSettings SetSource(this DotNetRestoreSettings toolSettings, string source)
@@ -483,6 +667,16 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.Source = source;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetRestoreSettings.Source"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings ResetSource(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Source = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Runtimes
         /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.Runtimes"/> to a new list.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
         [Pure]
         public static DotNetRestoreSettings SetRuntimes(this DotNetRestoreSettings toolSettings, params string[] runtimes)
@@ -499,7 +693,7 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.RuntimesInternal = runtimes.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds a runtimes to the existing <see cref="DotNetRestoreSettings.Runtimes"/>.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DotNetRestoreSettings.Runtimes"/>.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
         [Pure]
         public static DotNetRestoreSettings AddRuntimes(this DotNetRestoreSettings toolSettings, params string[] runtimes)
         {
@@ -507,7 +701,7 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.RuntimesInternal.AddRange(runtimes);
             return toolSettings;
         }
-        /// <summary><p><em>Adds a runtimes to the existing <see cref="DotNetRestoreSettings.Runtimes"/>.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
+        /// <summary><p><em>Adds values to <see cref="DotNetRestoreSettings.Runtimes"/>.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
         [Pure]
         public static DotNetRestoreSettings AddRuntimes(this DotNetRestoreSettings toolSettings, IEnumerable<string> runtimes)
         {
@@ -523,22 +717,26 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.RuntimesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Adds a single runtime to <see cref="DotNetRestoreSettings.Runtimes"/>.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DotNetRestoreSettings.Runtimes"/>.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
         [Pure]
-        public static DotNetRestoreSettings AddRuntime(this DotNetRestoreSettings toolSettings, string runtime, bool evenIfNull = true)
+        public static DotNetRestoreSettings RemoveRuntimes(this DotNetRestoreSettings toolSettings, params string[] runtimes)
         {
             toolSettings = toolSettings.NewInstance();
-            if (runtime != null || evenIfNull) toolSettings.RuntimesInternal.Add(runtime);
+            var hashSet = new HashSet<string>(runtimes);
+            toolSettings.RuntimesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes a single runtime from <see cref="DotNetRestoreSettings.Runtimes"/>.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
+        /// <summary><p><em>Removes values from <see cref="DotNetRestoreSettings.Runtimes"/>.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
         [Pure]
-        public static DotNetRestoreSettings RemoveRuntime(this DotNetRestoreSettings toolSettings, string runtime)
+        public static DotNetRestoreSettings RemoveRuntimes(this DotNetRestoreSettings toolSettings, IEnumerable<string> runtimes)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RuntimesInternal = toolSettings.Runtimes.Where(x => x == runtime).ToList();
+            var hashSet = new HashSet<string>(runtimes);
+            toolSettings.RuntimesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
+        #endregion
+        #region PackageDirectory
         /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.PackageDirectory"/>.</em></p><p>Specifies the directory for restored packages.</p></summary>
         [Pure]
         public static DotNetRestoreSettings SetPackageDirectory(this DotNetRestoreSettings toolSettings, string packageDirectory)
@@ -547,12 +745,30 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.PackageDirectory = packageDirectory;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetRestoreSettings.PackageDirectory"/>.</em></p><p>Specifies the directory for restored packages.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings ResetPackageDirectory(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageDirectory = null;
+            return toolSettings;
+        }
+        #endregion
+        #region DisableParallel
         /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
         [Pure]
-        public static DotNetRestoreSettings SetDisableParallel(this DotNetRestoreSettings toolSettings, bool disableParallel)
+        public static DotNetRestoreSettings SetDisableParallel(this DotNetRestoreSettings toolSettings, bool? disableParallel)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DisableParallel = disableParallel;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetRestoreSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings ResetDisableParallel(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DotNetRestoreSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
@@ -579,12 +795,22 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.DisableParallel = !toolSettings.DisableParallel;
             return toolSettings;
         }
+        #endregion
+        #region NoCache
         /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
         [Pure]
-        public static DotNetRestoreSettings SetNoCache(this DotNetRestoreSettings toolSettings, bool noCache)
+        public static DotNetRestoreSettings SetNoCache(this DotNetRestoreSettings toolSettings, bool? noCache)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoCache = noCache;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetRestoreSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings ResetNoCache(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DotNetRestoreSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
@@ -611,6 +837,8 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.NoCache = !toolSettings.NoCache;
             return toolSettings;
         }
+        #endregion
+        #region ConfigFile
         /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.ConfigFile"/>.</em></p><p>The NuGet configuration file (<em>NuGet.config</em>) to use for the restore operation.</p></summary>
         [Pure]
         public static DotNetRestoreSettings SetConfigFile(this DotNetRestoreSettings toolSettings, string configFile)
@@ -619,12 +847,30 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.ConfigFile = configFile;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetRestoreSettings.ConfigFile"/>.</em></p><p>The NuGet configuration file (<em>NuGet.config</em>) to use for the restore operation.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings ResetConfigFile(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region IgnoreFailedSources
         /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
         [Pure]
-        public static DotNetRestoreSettings SetIgnoreFailedSources(this DotNetRestoreSettings toolSettings, bool ignoreFailedSources)
+        public static DotNetRestoreSettings SetIgnoreFailedSources(this DotNetRestoreSettings toolSettings, bool? ignoreFailedSources)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IgnoreFailedSources = ignoreFailedSources;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetRestoreSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings ResetIgnoreFailedSources(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DotNetRestoreSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
@@ -651,12 +897,22 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.IgnoreFailedSources = !toolSettings.IgnoreFailedSources;
             return toolSettings;
         }
+        #endregion
+        #region NoDependencies
         /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
         [Pure]
-        public static DotNetRestoreSettings SetNoDependencies(this DotNetRestoreSettings toolSettings, bool noDependencies)
+        public static DotNetRestoreSettings SetNoDependencies(this DotNetRestoreSettings toolSettings, bool? noDependencies)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = noDependencies;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetRestoreSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings ResetNoDependencies(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DotNetRestoreSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
@@ -683,19 +939,34 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.NoDependencies = !toolSettings.NoDependencies;
             return toolSettings;
         }
+        #endregion
+        #region Verbosity
         /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.Verbosity"/>.</em></p><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
         [Pure]
-        public static DotNetRestoreSettings SetVerbosity(this DotNetRestoreSettings toolSettings, DotNetVerbosity? verbosity)
+        public static DotNetRestoreSettings SetVerbosity(this DotNetRestoreSettings toolSettings, DotNetVerbosity verbosity)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = verbosity;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetRestoreSettings.Verbosity"/>.</em></p><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings ResetVerbosity(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = null;
+            return toolSettings;
+        }
+        #endregion
     }
+    #endregion
+    #region DotNetPackSettingsExtensions
+    /// <summary><p>Used within <see cref="DotNetTasks"/>.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class DotNetPackSettingsExtensions
     {
+        #region Project
         /// <summary><p><em>Sets <see cref="DotNetPackSettings.Project"/>.</em></p><p>The project to pack. It's either a path to a csproj file or to a directory. If omitted, it defaults to the current directory.</p></summary>
         [Pure]
         public static DotNetPackSettings SetProject(this DotNetPackSettings toolSettings, string project)
@@ -704,6 +975,16 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.Project = project;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetPackSettings.Project"/>.</em></p><p>The project to pack. It's either a path to a csproj file or to a directory. If omitted, it defaults to the current directory.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetProject(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Project = null;
+            return toolSettings;
+        }
+        #endregion
+        #region OutputDirectory
         /// <summary><p><em>Sets <see cref="DotNetPackSettings.OutputDirectory"/>.</em></p><p>Places the built packages in the directory specified.</p></summary>
         [Pure]
         public static DotNetPackSettings SetOutputDirectory(this DotNetPackSettings toolSettings, string outputDirectory)
@@ -712,12 +993,30 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.OutputDirectory = outputDirectory;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetPackSettings.OutputDirectory"/>.</em></p><p>Places the built packages in the directory specified.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetOutputDirectory(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OutputDirectory = null;
+            return toolSettings;
+        }
+        #endregion
+        #region NoBuild
         /// <summary><p><em>Sets <see cref="DotNetPackSettings.NoBuild"/>.</em></p><p>Don't build the project before packing.</p></summary>
         [Pure]
-        public static DotNetPackSettings SetNoBuild(this DotNetPackSettings toolSettings, bool noBuild)
+        public static DotNetPackSettings SetNoBuild(this DotNetPackSettings toolSettings, bool? noBuild)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = noBuild;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPackSettings.NoBuild"/>.</em></p><p>Don't build the project before packing.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetNoBuild(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DotNetPackSettings.NoBuild"/>.</em></p><p>Don't build the project before packing.</p></summary>
@@ -744,12 +1043,22 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.NoBuild = !toolSettings.NoBuild;
             return toolSettings;
         }
+        #endregion
+        #region IncludeSymbols
         /// <summary><p><em>Sets <see cref="DotNetPackSettings.IncludeSymbols"/>.</em></p><p>Generates the symbols <c>nupkg</c>.</p></summary>
         [Pure]
-        public static DotNetPackSettings SetIncludeSymbols(this DotNetPackSettings toolSettings, bool includeSymbols)
+        public static DotNetPackSettings SetIncludeSymbols(this DotNetPackSettings toolSettings, bool? includeSymbols)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeSymbols = includeSymbols;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPackSettings.IncludeSymbols"/>.</em></p><p>Generates the symbols <c>nupkg</c>.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetIncludeSymbols(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeSymbols = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DotNetPackSettings.IncludeSymbols"/>.</em></p><p>Generates the symbols <c>nupkg</c>.</p></summary>
@@ -776,12 +1085,22 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.IncludeSymbols = !toolSettings.IncludeSymbols;
             return toolSettings;
         }
+        #endregion
+        #region IncludeSource
         /// <summary><p><em>Sets <see cref="DotNetPackSettings.IncludeSource"/>.</em></p><p>Includes the source files in the NuGet package. The sources files are included in the <c>src</c> folder within the <c>nupkg</c>.</p></summary>
         [Pure]
-        public static DotNetPackSettings SetIncludeSource(this DotNetPackSettings toolSettings, bool includeSource)
+        public static DotNetPackSettings SetIncludeSource(this DotNetPackSettings toolSettings, bool? includeSource)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.IncludeSource = includeSource;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPackSettings.IncludeSource"/>.</em></p><p>Includes the source files in the NuGet package. The sources files are included in the <c>src</c> folder within the <c>nupkg</c>.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetIncludeSource(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeSource = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DotNetPackSettings.IncludeSource"/>.</em></p><p>Includes the source files in the NuGet package. The sources files are included in the <c>src</c> folder within the <c>nupkg</c>.</p></summary>
@@ -808,6 +1127,8 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.IncludeSource = !toolSettings.IncludeSource;
             return toolSettings;
         }
+        #endregion
+        #region Configuration
         /// <summary><p><em>Sets <see cref="DotNetPackSettings.Configuration"/>.</em></p><p>Configuration to use when building the project. If not specified, configuration defaults to <c>Debug</c>.</p></summary>
         [Pure]
         public static DotNetPackSettings SetConfiguration(this DotNetPackSettings toolSettings, string configuration)
@@ -816,6 +1137,16 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.Configuration = configuration;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetPackSettings.Configuration"/>.</em></p><p>Configuration to use when building the project. If not specified, configuration defaults to <c>Debug</c>.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetConfiguration(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Configuration = null;
+            return toolSettings;
+        }
+        #endregion
+        #region VersionSuffix
         /// <summary><p><em>Sets <see cref="DotNetPackSettings.VersionSuffix"/>.</em></p><p>Defines the value for the <c>$(VersionSuffix)</c> MSBuild property in the project.</p></summary>
         [Pure]
         public static DotNetPackSettings SetVersionSuffix(this DotNetPackSettings toolSettings, string versionSuffix)
@@ -824,12 +1155,30 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.VersionSuffix = versionSuffix;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetPackSettings.VersionSuffix"/>.</em></p><p>Defines the value for the <c>$(VersionSuffix)</c> MSBuild property in the project.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetVersionSuffix(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.VersionSuffix = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Serviceable
         /// <summary><p><em>Sets <see cref="DotNetPackSettings.Serviceable"/>.</em></p><p>Sets the serviceable flag in the package. For more information, see <a href="https://aka.ms/nupkgservicing">.NET Blog: .NET 4.5.1 Supports Microsoft Security Updates for .NET NuGet Libraries</a>.</p></summary>
         [Pure]
-        public static DotNetPackSettings SetServiceable(this DotNetPackSettings toolSettings, bool serviceable)
+        public static DotNetPackSettings SetServiceable(this DotNetPackSettings toolSettings, bool? serviceable)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serviceable = serviceable;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPackSettings.Serviceable"/>.</em></p><p>Sets the serviceable flag in the package. For more information, see <a href="https://aka.ms/nupkgservicing">.NET Blog: .NET 4.5.1 Supports Microsoft Security Updates for .NET NuGet Libraries</a>.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetServiceable(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Serviceable = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DotNetPackSettings.Serviceable"/>.</em></p><p>Sets the serviceable flag in the package. For more information, see <a href="https://aka.ms/nupkgservicing">.NET Blog: .NET 4.5.1 Supports Microsoft Security Updates for .NET NuGet Libraries</a>.</p></summary>
@@ -856,19 +1205,34 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.Serviceable = !toolSettings.Serviceable;
             return toolSettings;
         }
+        #endregion
+        #region Verbostiy
         /// <summary><p><em>Sets <see cref="DotNetPackSettings.Verbostiy"/>.</em></p><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
         [Pure]
-        public static DotNetPackSettings SetVerbostiy(this DotNetPackSettings toolSettings, DotNetVerbosity? verbostiy)
+        public static DotNetPackSettings SetVerbostiy(this DotNetPackSettings toolSettings, DotNetVerbosity verbostiy)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbostiy = verbostiy;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetPackSettings.Verbostiy"/>.</em></p><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetVerbostiy(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbostiy = null;
+            return toolSettings;
+        }
+        #endregion
     }
+    #endregion
+    #region DotNetBuildSettingsExtensions
+    /// <summary><p>Used within <see cref="DotNetTasks"/>.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class DotNetBuildSettingsExtensions
     {
+        #region ProjectFile
         /// <summary><p><em>Sets <see cref="DotNetBuildSettings.ProjectFile"/>.</em></p><p>The project file to build. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in proj and uses that file.</p></summary>
         [Pure]
         public static DotNetBuildSettings SetProjectFile(this DotNetBuildSettings toolSettings, string projectFile)
@@ -877,6 +1241,16 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.ProjectFile = projectFile;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetBuildSettings.ProjectFile"/>.</em></p><p>The project file to build. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in proj and uses that file.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetProjectFile(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProjectFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region OutputDirectory
         /// <summary><p><em>Sets <see cref="DotNetBuildSettings.OutputDirectory"/>.</em></p><p>Directory in which to place the built binaries. You also need to define <c>--framework</c> when you specify this option.</p></summary>
         [Pure]
         public static DotNetBuildSettings SetOutputDirectory(this DotNetBuildSettings toolSettings, string outputDirectory)
@@ -885,6 +1259,16 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.OutputDirectory = outputDirectory;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetBuildSettings.OutputDirectory"/>.</em></p><p>Directory in which to place the built binaries. You also need to define <c>--framework</c> when you specify this option.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetOutputDirectory(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OutputDirectory = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Framework
         /// <summary><p><em>Sets <see cref="DotNetBuildSettings.Framework"/>.</em></p><p>Compiles for a specific <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">framework</a>. The framework must be defined in the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/csproj">project file</a>.</p></summary>
         [Pure]
         public static DotNetBuildSettings SetFramework(this DotNetBuildSettings toolSettings, string framework)
@@ -893,6 +1277,16 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.Framework = framework;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetBuildSettings.Framework"/>.</em></p><p>Compiles for a specific <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">framework</a>. The framework must be defined in the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/csproj">project file</a>.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetFramework(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Configuration
         /// <summary><p><em>Sets <see cref="DotNetBuildSettings.Configuration"/>.</em></p><p>Defines the build configuration. If omitted, the build configuration defaults to <c>Debug</c>. Use <c>Release</c> build a Release configuration.</p></summary>
         [Pure]
         public static DotNetBuildSettings SetConfiguration(this DotNetBuildSettings toolSettings, string configuration)
@@ -901,6 +1295,16 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.Configuration = configuration;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetBuildSettings.Configuration"/>.</em></p><p>Defines the build configuration. If omitted, the build configuration defaults to <c>Debug</c>. Use <c>Release</c> build a Release configuration.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetConfiguration(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Configuration = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Runtime
         /// <summary><p><em>Sets <see cref="DotNetBuildSettings.Runtime"/>.</em></p><p>Specifies the target runtime. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p></summary>
         [Pure]
         public static DotNetBuildSettings SetRuntime(this DotNetBuildSettings toolSettings, string runtime)
@@ -909,6 +1313,16 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.Runtime = runtime;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetBuildSettings.Runtime"/>.</em></p><p>Specifies the target runtime. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetRuntime(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Runtime = null;
+            return toolSettings;
+        }
+        #endregion
+        #region VersionSuffix
         /// <summary><p><em>Sets <see cref="DotNetBuildSettings.VersionSuffix"/>.</em></p><p>Defines the version suffix for an asterisk (<c>*</c>) in the version field of the project file. The format follows NuGet's version guidelines.</p></summary>
         [Pure]
         public static DotNetBuildSettings SetVersionSuffix(this DotNetBuildSettings toolSettings, string versionSuffix)
@@ -917,12 +1331,30 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.VersionSuffix = versionSuffix;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetBuildSettings.VersionSuffix"/>.</em></p><p>Defines the version suffix for an asterisk (<c>*</c>) in the version field of the project file. The format follows NuGet's version guidelines.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetVersionSuffix(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.VersionSuffix = null;
+            return toolSettings;
+        }
+        #endregion
+        #region NoIncremental
         /// <summary><p><em>Sets <see cref="DotNetBuildSettings.NoIncremental"/>.</em></p><p>Marks the build as unsafe for incremental build. This turns off incremental compilation and forces a clean rebuild of the project's dependency graph.</p></summary>
         [Pure]
-        public static DotNetBuildSettings SetNoIncremental(this DotNetBuildSettings toolSettings, bool noIncremental)
+        public static DotNetBuildSettings SetNoIncremental(this DotNetBuildSettings toolSettings, bool? noIncremental)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoIncremental = noIncremental;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetBuildSettings.NoIncremental"/>.</em></p><p>Marks the build as unsafe for incremental build. This turns off incremental compilation and forces a clean rebuild of the project's dependency graph.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetNoIncremental(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoIncremental = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DotNetBuildSettings.NoIncremental"/>.</em></p><p>Marks the build as unsafe for incremental build. This turns off incremental compilation and forces a clean rebuild of the project's dependency graph.</p></summary>
@@ -949,12 +1381,22 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.NoIncremental = !toolSettings.NoIncremental;
             return toolSettings;
         }
+        #endregion
+        #region NoDependencies
         /// <summary><p><em>Sets <see cref="DotNetBuildSettings.NoDependencies"/>.</em></p><p>Ignores project-to-project (P2P) references and only builds the root project specified to build.</p></summary>
         [Pure]
-        public static DotNetBuildSettings SetNoDependencies(this DotNetBuildSettings toolSettings, bool noDependencies)
+        public static DotNetBuildSettings SetNoDependencies(this DotNetBuildSettings toolSettings, bool? noDependencies)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDependencies = noDependencies;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetBuildSettings.NoDependencies"/>.</em></p><p>Ignores project-to-project (P2P) references and only builds the root project specified to build.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetNoDependencies(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="DotNetBuildSettings.NoDependencies"/>.</em></p><p>Ignores project-to-project (P2P) references and only builds the root project specified to build.</p></summary>
@@ -981,22 +1423,38 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.NoDependencies = !toolSettings.NoDependencies;
             return toolSettings;
         }
+        #endregion
+        #region Verbosity
         /// <summary><p><em>Sets <see cref="DotNetBuildSettings.Verbosity"/>.</em></p><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
         [Pure]
-        public static DotNetBuildSettings SetVerbosity(this DotNetBuildSettings toolSettings, DotNetVerbosity? verbosity)
+        public static DotNetBuildSettings SetVerbosity(this DotNetBuildSettings toolSettings, DotNetVerbosity verbosity)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbosity = verbosity;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="DotNetBuildSettings.Verbosity"/>.</em></p><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetVerbosity(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = null;
+            return toolSettings;
+        }
+        #endregion
     }
+    #endregion
+    #region DotNetVerbosity
+    /// <summary><p>Used within <see cref="DotNetTasks"/>.</p></summary>
     [PublicAPI]
-    public enum DotNetVerbosity
+    [Serializable]
+    public partial class DotNetVerbosity : Enumeration
     {
-        Quiet,
-        Minimal,
-        Normal,
-        Detailed,
-        Diagnostic,
+        public static DotNetVerbosity Quiet = new DotNetVerbosity { Value = "Quiet" };
+        public static DotNetVerbosity Minimal = new DotNetVerbosity { Value = "Minimal" };
+        public static DotNetVerbosity Normal = new DotNetVerbosity { Value = "Normal" };
+        public static DotNetVerbosity Detailed = new DotNetVerbosity { Value = "Detailed" };
+        public static DotNetVerbosity Diagnostic = new DotNetVerbosity { Value = "Diagnostic" };
     }
+    #endregion
 }

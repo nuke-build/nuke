@@ -2,7 +2,7 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-// Auto-generated with Nuke.ToolGenerator.
+// Generated from https://github.com/nuke-build/tools/blob/master/GitLink2.json with Nuke.ToolGenerator.
 
 using JetBrains.Annotations;
 using Nuke.Common.Tools;
@@ -38,14 +38,15 @@ namespace Nuke.Common.Tools.GitLink2
             PostProcess(toolSettings);
         }
     }
-    /// <summary><p>GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.</p></summary>
+    #region GitLink2Settings
+    /// <summary><p>Used within <see cref="GitLink2Tasks"/>.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
     public partial class GitLink2Settings : ToolSettings
     {
-        /// <summary>Path of the executable to be invoked.</summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetToolPath(packageId: $"gitlink", packageExecutable: $"GitLink.exe");
+        /// <summary><p>Path to the GitLink2 executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"gitlink", $"GitLink.exe");
         /// <summary><p>The directory containing the solution with the pdb files.</p></summary>
         public virtual string SolutionDirectory { get; internal set; }
         /// <summary><p>Url to remote git repository.</p></summary>
@@ -65,13 +66,13 @@ namespace Nuke.Common.Tools.GitLink2
         /// <summary><p>The directory where pdb files exists, default value is the normal project output directory.</p></summary>
         public virtual string PdbDirectory { get; internal set; }
         /// <summary><p>Use an indexing strategy that won't rely on SRCSRV http support, but use a powershell command for URL download instead.</p></summary>
-        public virtual bool UsePowershell { get; internal set; }
+        public virtual bool? UsePowershell { get; internal set; }
         /// <summary><p>Don't fail on errors, but treat them as warnings instead.</p></summary>
-        public virtual bool ErrorsAsWarnings { get; internal set; }
+        public virtual bool? ErrorsAsWarnings { get; internal set; }
         /// <summary><p>Skip pdb verification in case it causes issues (it's a formality anyway)</p></summary>
-        public virtual bool SkipVerification { get; internal set; }
+        public virtual bool? SkipVerification { get; internal set; }
         /// <summary><p>Enables debug mode with special dumps of msbuild.</p></summary>
-        public virtual bool Debug { get; internal set; }
+        public virtual bool? Debug { get; internal set; }
         protected override Arguments GetArgumentsInternal()
         {
             return base.GetArgumentsInternal()
@@ -90,10 +91,14 @@ namespace Nuke.Common.Tools.GitLink2
               .Add("-debug", Debug);
         }
     }
+    #endregion
+    #region GitLink2SettingsExtensions
+    /// <summary><p>Used within <see cref="GitLink2Tasks"/>.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class GitLink2SettingsExtensions
     {
+        #region SolutionDirectory
         /// <summary><p><em>Sets <see cref="GitLink2Settings.SolutionDirectory"/>.</em></p><p>The directory containing the solution with the pdb files.</p></summary>
         [Pure]
         public static GitLink2Settings SetSolutionDirectory(this GitLink2Settings toolSettings, string solutionDirectory)
@@ -102,6 +107,16 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.SolutionDirectory = solutionDirectory;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="GitLink2Settings.SolutionDirectory"/>.</em></p><p>The directory containing the solution with the pdb files.</p></summary>
+        [Pure]
+        public static GitLink2Settings ResetSolutionDirectory(this GitLink2Settings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SolutionDirectory = null;
+            return toolSettings;
+        }
+        #endregion
+        #region RepositoryUrl
         /// <summary><p><em>Sets <see cref="GitLink2Settings.RepositoryUrl"/>.</em></p><p>Url to remote git repository.</p></summary>
         [Pure]
         public static GitLink2Settings SetRepositoryUrl(this GitLink2Settings toolSettings, string repositoryUrl)
@@ -110,6 +125,16 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.RepositoryUrl = repositoryUrl;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="GitLink2Settings.RepositoryUrl"/>.</em></p><p>Url to remote git repository.</p></summary>
+        [Pure]
+        public static GitLink2Settings ResetRepositoryUrl(this GitLink2Settings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RepositoryUrl = null;
+            return toolSettings;
+        }
+        #endregion
+        #region File
         /// <summary><p><em>Sets <see cref="GitLink2Settings.File"/>.</em></p><p>Solution file name.</p></summary>
         [Pure]
         public static GitLink2Settings SetFile(this GitLink2Settings toolSettings, string file)
@@ -118,6 +143,16 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.File = file;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="GitLink2Settings.File"/>.</em></p><p>Solution file name.</p></summary>
+        [Pure]
+        public static GitLink2Settings ResetFile(this GitLink2Settings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.File = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Configuration
         /// <summary><p><em>Sets <see cref="GitLink2Settings.Configuration"/>.</em></p><p>Name of the configuration, default value is 'Release'.</p></summary>
         [Pure]
         public static GitLink2Settings SetConfiguration(this GitLink2Settings toolSettings, string configuration)
@@ -126,6 +161,16 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.Configuration = configuration;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="GitLink2Settings.Configuration"/>.</em></p><p>Name of the configuration, default value is 'Release'.</p></summary>
+        [Pure]
+        public static GitLink2Settings ResetConfiguration(this GitLink2Settings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Configuration = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Platform
         /// <summary><p><em>Sets <see cref="GitLink2Settings.Platform"/>.</em></p><p>Name of the platform, default value is 'AnyCPU'.</p></summary>
         [Pure]
         public static GitLink2Settings SetPlatform(this GitLink2Settings toolSettings, string platform)
@@ -134,6 +179,16 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.Platform = platform;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="GitLink2Settings.Platform"/>.</em></p><p>Name of the platform, default value is 'AnyCPU'.</p></summary>
+        [Pure]
+        public static GitLink2Settings ResetPlatform(this GitLink2Settings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Platform = null;
+            return toolSettings;
+        }
+        #endregion
+        #region BranchName
         /// <summary><p><em>Sets <see cref="GitLink2Settings.BranchName"/>.</em></p><p>Name of the branch to use on the remote repository.</p></summary>
         [Pure]
         public static GitLink2Settings SetBranchName(this GitLink2Settings toolSettings, string branchName)
@@ -142,6 +197,16 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.BranchName = branchName;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="GitLink2Settings.BranchName"/>.</em></p><p>Name of the branch to use on the remote repository.</p></summary>
+        [Pure]
+        public static GitLink2Settings ResetBranchName(this GitLink2Settings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BranchName = null;
+            return toolSettings;
+        }
+        #endregion
+        #region LogFile
         /// <summary><p><em>Sets <see cref="GitLink2Settings.LogFile"/>.</em></p><p>The log file to write to.</p></summary>
         [Pure]
         public static GitLink2Settings SetLogFile(this GitLink2Settings toolSettings, string logFile)
@@ -150,6 +215,16 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.LogFile = logFile;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="GitLink2Settings.LogFile"/>.</em></p><p>The log file to write to.</p></summary>
+        [Pure]
+        public static GitLink2Settings ResetLogFile(this GitLink2Settings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region CommitSha
         /// <summary><p><em>Sets <see cref="GitLink2Settings.CommitSha"/>.</em></p><p>The SHA-1 hash of the commit.</p></summary>
         [Pure]
         public static GitLink2Settings SetCommitSha(this GitLink2Settings toolSettings, string commitSha)
@@ -158,6 +233,16 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.CommitSha = commitSha;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="GitLink2Settings.CommitSha"/>.</em></p><p>The SHA-1 hash of the commit.</p></summary>
+        [Pure]
+        public static GitLink2Settings ResetCommitSha(this GitLink2Settings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CommitSha = null;
+            return toolSettings;
+        }
+        #endregion
+        #region PdbDirectory
         /// <summary><p><em>Sets <see cref="GitLink2Settings.PdbDirectory"/>.</em></p><p>The directory where pdb files exists, default value is the normal project output directory.</p></summary>
         [Pure]
         public static GitLink2Settings SetPdbDirectory(this GitLink2Settings toolSettings, string pdbDirectory)
@@ -166,12 +251,30 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.PdbDirectory = pdbDirectory;
             return toolSettings;
         }
+        /// <summary><p><em>Resets <see cref="GitLink2Settings.PdbDirectory"/>.</em></p><p>The directory where pdb files exists, default value is the normal project output directory.</p></summary>
+        [Pure]
+        public static GitLink2Settings ResetPdbDirectory(this GitLink2Settings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PdbDirectory = null;
+            return toolSettings;
+        }
+        #endregion
+        #region UsePowershell
         /// <summary><p><em>Sets <see cref="GitLink2Settings.UsePowershell"/>.</em></p><p>Use an indexing strategy that won't rely on SRCSRV http support, but use a powershell command for URL download instead.</p></summary>
         [Pure]
-        public static GitLink2Settings SetUsePowershell(this GitLink2Settings toolSettings, bool usePowershell)
+        public static GitLink2Settings SetUsePowershell(this GitLink2Settings toolSettings, bool? usePowershell)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.UsePowershell = usePowershell;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="GitLink2Settings.UsePowershell"/>.</em></p><p>Use an indexing strategy that won't rely on SRCSRV http support, but use a powershell command for URL download instead.</p></summary>
+        [Pure]
+        public static GitLink2Settings ResetUsePowershell(this GitLink2Settings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UsePowershell = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="GitLink2Settings.UsePowershell"/>.</em></p><p>Use an indexing strategy that won't rely on SRCSRV http support, but use a powershell command for URL download instead.</p></summary>
@@ -198,12 +301,22 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.UsePowershell = !toolSettings.UsePowershell;
             return toolSettings;
         }
+        #endregion
+        #region ErrorsAsWarnings
         /// <summary><p><em>Sets <see cref="GitLink2Settings.ErrorsAsWarnings"/>.</em></p><p>Don't fail on errors, but treat them as warnings instead.</p></summary>
         [Pure]
-        public static GitLink2Settings SetErrorsAsWarnings(this GitLink2Settings toolSettings, bool errorsAsWarnings)
+        public static GitLink2Settings SetErrorsAsWarnings(this GitLink2Settings toolSettings, bool? errorsAsWarnings)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ErrorsAsWarnings = errorsAsWarnings;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="GitLink2Settings.ErrorsAsWarnings"/>.</em></p><p>Don't fail on errors, but treat them as warnings instead.</p></summary>
+        [Pure]
+        public static GitLink2Settings ResetErrorsAsWarnings(this GitLink2Settings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ErrorsAsWarnings = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="GitLink2Settings.ErrorsAsWarnings"/>.</em></p><p>Don't fail on errors, but treat them as warnings instead.</p></summary>
@@ -230,12 +343,22 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.ErrorsAsWarnings = !toolSettings.ErrorsAsWarnings;
             return toolSettings;
         }
+        #endregion
+        #region SkipVerification
         /// <summary><p><em>Sets <see cref="GitLink2Settings.SkipVerification"/>.</em></p><p>Skip pdb verification in case it causes issues (it's a formality anyway)</p></summary>
         [Pure]
-        public static GitLink2Settings SetSkipVerification(this GitLink2Settings toolSettings, bool skipVerification)
+        public static GitLink2Settings SetSkipVerification(this GitLink2Settings toolSettings, bool? skipVerification)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SkipVerification = skipVerification;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="GitLink2Settings.SkipVerification"/>.</em></p><p>Skip pdb verification in case it causes issues (it's a formality anyway)</p></summary>
+        [Pure]
+        public static GitLink2Settings ResetSkipVerification(this GitLink2Settings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipVerification = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="GitLink2Settings.SkipVerification"/>.</em></p><p>Skip pdb verification in case it causes issues (it's a formality anyway)</p></summary>
@@ -262,12 +385,22 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.SkipVerification = !toolSettings.SkipVerification;
             return toolSettings;
         }
+        #endregion
+        #region Debug
         /// <summary><p><em>Sets <see cref="GitLink2Settings.Debug"/>.</em></p><p>Enables debug mode with special dumps of msbuild.</p></summary>
         [Pure]
-        public static GitLink2Settings SetDebug(this GitLink2Settings toolSettings, bool debug)
+        public static GitLink2Settings SetDebug(this GitLink2Settings toolSettings, bool? debug)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Debug = debug;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="GitLink2Settings.Debug"/>.</em></p><p>Enables debug mode with special dumps of msbuild.</p></summary>
+        [Pure]
+        public static GitLink2Settings ResetDebug(this GitLink2Settings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = null;
             return toolSettings;
         }
         /// <summary><p><em>Enables <see cref="GitLink2Settings.Debug"/>.</em></p><p>Enables debug mode with special dumps of msbuild.</p></summary>
@@ -294,5 +427,7 @@ namespace Nuke.Common.Tools.GitLink2
             toolSettings.Debug = !toolSettings.Debug;
             return toolSettings;
         }
+        #endregion
     }
+    #endregion
 }
