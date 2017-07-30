@@ -8,23 +8,24 @@ using System.Linq;
 using FluentAssertions;
 using Nuke.Common.Tools.MSBuild;
 using Nuke.Core.IO;
+using Xunit;
 
 namespace Nuke.Common.Tests
 {
-    public class MSBuildParseTest
+    public class MSBuildParseProjectTest
     {
-        [WindowsFact]
+        [Fact]
         public void Test ()
         {
             var currentDirectory = (PathConstruction.AbsolutePath) Directory.GetCurrentDirectory();
             var projectFile = currentDirectory / ".." / ".." / ".." / ".." / "Nuke.Common" / "Nuke.Common.csproj";
 
-            var project = MSBuildTasks.MSBuildParse(projectFile, x => x.SetProperty("TargetFramework", "netstandard1.6"));
+            var project = MSBuildTasks.MSBuildParseProject(projectFile, x => x.SetProperty("TargetFramework", "netstandard1.6"));
             project.IsSdkProject.Should().BeTrue();
             project.Properties["Configuration"].Should().Be("Debug");
             project.ItemGroups["PackageReference"].Should().NotContain("Octokit");
 
-            project = MSBuildTasks.MSBuildParse(projectFile, x => x.SetProperty("TargetFramework", "net46").SetConfiguration("Release"));
+            project = MSBuildTasks.MSBuildParseProject(projectFile, x => x.SetProperty("TargetFramework", "net46").SetConfiguration("Release"));
             project.Properties["Configuration"].Should().Be("Release");
             project.ItemGroups["PackageReference"].Should().Contain("Octokit");
         }

@@ -16,9 +16,9 @@ namespace Nuke.Common.Tools.MSBuild
         /// <summary>
         /// Parses MSBuild project file.
         /// </summary>
-        public static MSBuildProject MSBuildParse(string projectFile, Configure<MSBuildSettings> configurator = null)
+        public static MSBuildProject MSBuildParseProject(string projectFile, Configure<MSBuildSettings> configurator = null)
         {
-            ControlFlow.Assert(EnvironmentInfo.IsWin, "Currently only supported on Windows.");
+            Logger.Trace($"Parsing project file '{projectFile}'...");
 
             var content = TextTasks.ReadAllText(projectFile);
             var isSdkProject = content.Contains("Sdk=\"Microsoft.NET.Sdk\"");
@@ -35,21 +35,10 @@ namespace Nuke.Common.Tools.MSBuild
             process.AssertWaitForExit();
 
             var lines = process.Output.Select(x => x.Text).ToArray();
-            var environmentVariables = ParseEnvironmentVariables(lines);
             var properties = ParseProperties(lines);
             var itemGroups = ParseItemGroups(lines);
 
-            return new MSBuildProject(isSdkProject, environmentVariables, properties, itemGroups);
-        }
-
-        private static Dictionary<string, string> ParseEnvironmentVariables (string[] lines)
-        {
-            return lines
-                    .SkipWhile(x => x != "Environment at start of build:").Skip(count: 1)
-                    .TakeWhile(x => !string.IsNullOrWhiteSpace(x))
-                    .ToDictionary(
-                        x => x.Substring(startIndex: 0, length: x.IndexOf(value: '=') - 1),
-                        x => x.Substring(x.IndexOf(value: '=') + 1));
+            return new MSBuildProject(isSdkProject, properties, itemGroups);
         }
 
         private static Dictionary<string, string> ParseProperties (string[] lines)
@@ -63,12 +52,20 @@ namespace Nuke.Common.Tools.MSBuild
             {
                 var line = propertyLines[i];
                 var equalIndex = line.IndexOf(value: '=');
+                if (equalIndex <= 1)
+                {
+                    Logger.Warn($"Could not parse line '{line}'.");
+                    continue;
+                }
+
                 var property = line.Substring(startIndex: 0, length: equalIndex - 1);
                 var value = line.Substring(equalIndex + 2);
 
-                while (i < propertyLines.Count - 2 &&
-                       char.IsWhiteSpace(propertyLines[i + 1], index: 0))
+                while (i < propertyLines.Count - 2)
                 {
+                    if (propertyLines[i + 1].IndexOf(value: '=') > 1)
+                        break;
+
                     if (!string.IsNullOrWhiteSpace(propertyLines[i + 1]))
                         value += propertyLines[i + 1].Trim();
 
@@ -84,7 +81,7 @@ namespace Nuke.Common.Tools.MSBuild
         private static ILookup<string, string> ParseItemGroups (string[] lines)
         {
             var itemGroupLines = lines
-                    .SkipWhile(x => x != "Initial Items:").Skip(1)
+                    .SkipWhile(x => x != "Initial Items:").Skip(count: 1)
                     .TakeWhile(x => !string.IsNullOrWhiteSpace(x)).ToList();
 
             var lookup = new LookupTable<string, string>(EqualityComparer<string>.Default);
