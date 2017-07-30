@@ -12,6 +12,6 @@ namespace Nuke.Common.Tests
     [AttributeUsage(AttributeTargets.Method)]
     public class WindowsFactAttribute : FactAttribute
     {
-        public override string Skip => !EnvironmentInfo.IsWin ? "Only applying to Windows." : null;
+        public override string Skip => !EnvironmentInfo.IsWin ? "Only applies to Windows." : null;
     }
 }
