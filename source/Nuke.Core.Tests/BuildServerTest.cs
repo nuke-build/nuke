@@ -52,8 +52,8 @@ namespace Nuke.Core.Tests
                 return;
 
             bool.TryParse(strValue, out var _).Should().BeFalse("boolean");
-            int.TryParse(strValue, out var _).Should().BeFalse("integer");
-            float.TryParse(strValue, out var _).Should().BeFalse("float");
+            long.TryParse(strValue, out var _).Should().BeFalse("long");
+            decimal.TryParse(strValue, out var _).Should().BeFalse("decimal");
             DateTime.TryParse(strValue, out var _).Should().BeFalse("DateTime");
             TimeSpan.TryParse(strValue, out var _).Should().BeFalse("TimeSpan");
         }

@@ -9,6 +9,7 @@ using System.Text;
 using JetBrains.Annotations;
 using Nuke.Core.Utilities;
 using Nuke.Core.Utilities.Collections;
+using static Nuke.Core.EnvironmentInfo;
 
 namespace Nuke.Core.BuildServers
 {
@@ -19,9 +20,10 @@ namespace Nuke.Core.BuildServers
     [BuildServer]
     public class TeamCity
     {
-        public static TeamCity Instance { get; } = EnvironmentInfo.Variable("TEAMCITY_VERSION") != null
-            ? new TeamCity(Console.WriteLine)
-            : null;
+        public static TeamCity Instance { get; } =
+            Variable("TEAMCITY_VERSION") != null
+                ? new TeamCity(Console.WriteLine)
+                : null;
 
         private readonly Action<string> _messageSink;
 
@@ -30,10 +32,10 @@ namespace Nuke.Core.BuildServers
             _messageSink = messageSink;
         }
 
-        public string BuildConfiguration => EnvironmentInfo.EnsureVariable("TEAMCITY_BUILDCONF_NAME");
-        [NoConvert] public string BuildNumber => EnvironmentInfo.EnsureVariable("BUILD_NUMBER");
-        public string Version => EnvironmentInfo.EnsureVariable("TEAMCITY_VERSION");
-        public string ProjectName => EnvironmentInfo.EnsureVariable("TEAMCITY_PROJECT_NAME");
+        public string BuildConfiguration => EnsureVariable("TEAMCITY_BUILDCONF_NAME");
+        [NoConvert] public string BuildNumber => EnsureVariable("BUILD_NUMBER");
+        public string Version => EnsureVariable("TEAMCITY_VERSION");
+        public string ProjectName => EnsureVariable("TEAMCITY_PROJECT_NAME");
 
         public void DisableServiceMessages ()
         {
