@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using FluentAssertions;
@@ -47,12 +48,14 @@ namespace Nuke.Core.Tests
             act.ShouldNotThrow<Exception>();
 
             var value = property.GetValue(instance);
-            if (!(value is string strValue))
+            if (!(value is string strValue) || property.GetCustomAttribute<NoConvertAttribute>() != null)
                 return;
 
-            bool.TryParse(strValue, out var _).Should().BeFalse();
-            int.TryParse(strValue, out var _).Should().BeFalse();
-            float.TryParse(strValue, out var _).Should().BeFalse();
+            bool.TryParse(strValue, out var _).Should().BeFalse("boolean");
+            int.TryParse(strValue, out var _).Should().BeFalse("integer");
+            float.TryParse(strValue, out var _).Should().BeFalse("float");
+            DateTime.TryParse(strValue, out var _).Should().BeFalse("DateTime");
+            TimeSpan.TryParse(strValue, out var _).Should().BeFalse("TimeSpan");
         }
 
         internal class BuildServerTheoryAttribute : TheoryAttribute

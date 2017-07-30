@@ -31,7 +31,7 @@ namespace Nuke.Core.BuildServers
         }
 
         public string BuildConfiguration => EnvironmentInfo.EnsureVariable("TEAMCITY_BUILDCONF_NAME");
-        public string BuildNumber => EnvironmentInfo.EnsureVariable("BUILD_NUMBER");
+        [NoConvert] public string BuildNumber => EnvironmentInfo.EnsureVariable("BUILD_NUMBER");
         public string Version => EnvironmentInfo.EnsureVariable("TEAMCITY_VERSION");
         public string ProjectName => EnvironmentInfo.EnsureVariable("TEAMCITY_PROJECT_NAME");
 
