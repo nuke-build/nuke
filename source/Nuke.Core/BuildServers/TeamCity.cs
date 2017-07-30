@@ -34,7 +34,6 @@ namespace Nuke.Core.BuildServers
         public string BuildNumber => EnvironmentInfo.EnsureVariable("BUILD_NUMBER");
         public string Version => EnvironmentInfo.EnsureVariable("TEAMCITY_VERSION");
         public string ProjectName => EnvironmentInfo.EnsureVariable("TEAMCITY_PROJECT_NAME");
-        public string AgentName => EnvironmentInfo.EnsureVariable("TEAMCITY_AGENT_NAME");
 
         public void DisableServiceMessages ()
         {
