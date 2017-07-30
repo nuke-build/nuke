@@ -44,10 +44,16 @@ namespace Nuke.Core.Tests
 
         private static void AssertProperty (object instance, PropertyInfo property)
         {
-            Action act = () => property.GetValue(instance);
-            act.ShouldNotThrow<Exception>();
+            object value;
+            try
+            {
+                value = property.GetValue(instance);
+            }
+            catch (Exception exception)
+            {
+                throw exception.InnerException;
+            }
 
-            var value = property.GetValue(instance);
             if (!(value is string strValue) || property.GetCustomAttribute<NoConvertAttribute>() != null)
                 return;
 
@@ -67,7 +73,7 @@ namespace Nuke.Core.Tests
                 _type = type;
             }
 
-            public override string Skip => HasNoInstance() ? $"Only applies to {_type.Name}." : null;
+            public override string Skip => HasNoInstance () ? $"Only applies to {_type.Name}." : null;
 
             private bool HasNoInstance()
             {
