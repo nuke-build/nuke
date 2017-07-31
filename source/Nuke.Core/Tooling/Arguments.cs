@@ -89,7 +89,7 @@ namespace Nuke.Core.Tooling
                 return this;
 
             string Format (TValue value) => value.ToString().TrimAndDoubleQuoteIfNeeded(mainSeparator, keyValueSeparator, disallowed);
-            var pairs = dictionary.Where(x => x.Value.NotNullWarn($"Omitting '{x.Key}' because it is set to 'null'.") != null).ToList();
+            var pairs = dictionary.Where(x => x.Value.NotNullWarn($"Value for '{x.Key}' is 'null', omitting...") != null).ToList();
 
             if (mainSeparator.HasValue)
                 Add(argumentFormat, pairs.Select(x => $"{x.Key}{keyValueSeparator}{Format(x.Value)}").Join(mainSeparator.Value), secret: secret);

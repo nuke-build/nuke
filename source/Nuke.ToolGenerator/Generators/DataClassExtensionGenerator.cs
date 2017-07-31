@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Humanizer;
 using Nuke.ToolGenerator.Model;
 using Nuke.ToolGenerator.Writers;
 
@@ -250,23 +249,6 @@ namespace Nuke.ToolGenerator.Generators
                     .WriteMethod($"Remove{propertySingular}",
                         new[] { $"{keyType} {keyInstance}", $"{valueType} {valueInstance}" },
                         $"{propertyAccess}.Remove({keyInstance}, {valueInstance});");
-        }
-
-        private static DataClassWriter WriteListAddMethod (
-            this DataClassWriter writer,
-            string propertySingular,
-            string propertySingularInstanceEscaped,
-            string valueType,
-            string propertyInternal)
-        {
-            return writer.DataClass.Tool.Enumerations.Select(x => x.Name).Concat(
-                new[] { "int", "bool" }).Contains(valueType)
-                ? writer.WriteMethod($"Add{propertySingular}",
-                    $"{valueType} {propertySingularInstanceEscaped}",
-                    $"toolSettings.{propertyInternal}.Add({propertySingularInstanceEscaped});")
-                : writer.WriteMethod($"Add{propertySingular}",
-                    $"{valueType} {propertySingularInstanceEscaped}, bool evenIfNull = true",
-                    $"if ({propertySingularInstanceEscaped} != null || evenIfNull) toolSettings.{propertyInternal}.Add({propertySingularInstanceEscaped});");
         }
 
         private static DataClassWriter WriteMethod (this DataClassWriter writer, string name, Property property, string modification)

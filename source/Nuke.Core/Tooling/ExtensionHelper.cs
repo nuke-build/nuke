@@ -47,7 +47,7 @@ namespace Nuke.Core.Tooling
             return (dictionary.Contains(key)
                         ? ((string) dictionary[key]).Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries)
                         : new string[0])
-                    .Select(Convert<TValue>).ToList<TValue>();
+                    .Select(Convert<TValue>).ToList();
         }
 
         public static string CollectionToString<T> (IEnumerable<T> collection, char separator)

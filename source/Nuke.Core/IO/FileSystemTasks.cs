@@ -28,7 +28,7 @@ namespace Nuke.Core.IO
 
         public static void EnsureExistingParentDirectory (string file)
         {
-            EnsureExistingDirectory(Path.GetDirectoryName(file));
+            EnsureExistingDirectory(Path.GetDirectoryName(file).NotNull($"Path.GetDirectoryName({file}) != null"));
         }
 
         public static void EnsureExistingDirectory (string directory)

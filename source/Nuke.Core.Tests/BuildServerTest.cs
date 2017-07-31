@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using FluentAssertions;
@@ -49,9 +48,9 @@ namespace Nuke.Core.Tests
             {
                 value = property.GetValue(instance);
             }
-            catch (Exception exception)
+            catch (TargetInvocationException exception)
             {
-                throw exception.InnerException;
+                throw exception.InnerException.NotNull();
             }
 
             if (!(value is string strValue) || property.GetCustomAttribute<NoConvertAttribute>() != null)
