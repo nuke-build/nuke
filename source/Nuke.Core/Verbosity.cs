@@ -9,11 +9,11 @@ using JetBrains.Annotations;
 namespace Nuke.Core
 {
     [PublicAPI]
-    public enum LogLevel
+    public enum Verbosity
     {
-        Trace,
-        Information,
-        Warning,
-        Failure
+        Verbose,
+        Normal,
+        Minimal,
+        Quiet
     }
 }

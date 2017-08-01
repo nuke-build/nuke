@@ -42,38 +42,54 @@ namespace Nuke.Core
 
         public string Name { get; set; }
         public bool AllowEmptyString { get; set; }
+        public string Separator { get; set; }
 
         public override Type InjectionType => null;
 
         [CanBeNull]
-        public override object GetValue ([CanBeNull] FieldInfo field, NukeBuild build)
+        public override object GetValue (string memberName, Type memberType, NukeBuild build)
         {
-            var attribute = field.GetCustomAttribute<ParameterAttribute>().NotNull("attribute != null");
-            var stringValue = GetStringValue(field.NotNull("field != null"), attribute);
+            var stringValue = GetStringValue(memberName, memberType);
             if (stringValue == null)
                 return null;
 
+            if (memberType == typeof(string[]))
+            {
+                ControlFlow.Assert(Separator != null, "Separator != null");
+                return stringValue.Split(new[] { Separator },
+                    AllowEmptyString ? StringSplitOptions.None : StringSplitOptions.RemoveEmptyEntries);
+            }
+
+            var conversionType = GetConversionType(memberType);
             try
             {
-                return EnvironmentInfo.Convert(stringValue, field.FieldType);
+                return EnvironmentInfo.Convert(stringValue, conversionType);
             }
             catch
             {
                 ControlFlow.Fail(
-                    $"Value '{stringValue}' for parameter '{field.Name}' could not be converted to type '{field.FieldType.FullName}'.");
+                    $"Value '{stringValue}' for parameter '{memberName}' could not be converted to type '{conversionType.FullName}'.");
                 return null;
             }
         }
 
         [CanBeNull]
-        private static string GetStringValue (FieldInfo field, ParameterAttribute attribute)
+        private string GetStringValue (string memberName, Type memberType)
         {
-            var name = attribute.Name ?? field.Name;
-            return EnvironmentInfo.Argument(name, attribute.AllowEmptyString)
+            var name = Name ?? memberName;
+            return EnvironmentInfo.Argument(name, AllowEmptyString)
                    ?? EnvironmentInfo.Variable(name)
-                   ?? (field.FieldType == typeof(bool)
+                   ?? (memberType == typeof(bool)
                        ? EnvironmentInfo.ArgumentSwitch(name).ToString()
                        : null);
+        }
+
+        private static Type GetConversionType (Type memberType)
+        {
+            if (memberType != typeof(string) && !memberType.IsArray && Nullable.GetUnderlyingType(memberType) == null)
+                return typeof(Nullable<>).MakeGenericType(memberType);
+
+            return memberType;
         }
     }
 }

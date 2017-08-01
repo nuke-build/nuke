@@ -26,7 +26,7 @@ namespace Nuke.Core.Execution
 
             ControlFlow.Assert(!nameDictionary.ContainsKey("default"), "Don't use 'default' as a target identifier.");
             nameDictionary.Add("default", nameDictionary.Values.Single(x => x.Factory == defaultTarget));
-            var targetTargets = build.Targets.Select(x => GetTargetByName(x, defaultTarget, nameDictionary)).ToList();
+            var targetTargets = build.Target.Select(x => GetTargetByName(x, defaultTarget, nameDictionary)).ToList();
 
             var targetDependencies = targetDefinitions.ToDictionary(
                 x => x,

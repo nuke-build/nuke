@@ -70,10 +70,11 @@ namespace Nuke.Core
             {
                 var build = Activator.CreateInstance<T>();
 
+                InjectionService.InjectValues(build);
+
                 var defaultTarget = defaultTargetExpression.Compile().Invoke(build);
                 var executionList = new TargetDefinitionLoader().GetExecutionList(build, defaultTarget);
 
-                InjectionService.InjectValues(build);
                 RequirementService.ValidateRequirements(executionList, build);
 
                 return executionList;
@@ -86,22 +87,30 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// The specified log level for the build. Default is <see cref="Core.LogLevel.Information"/>.
+        /// Verbosity with that the build is run. Default is <see cref="Core.Verbosity.Normal"/>.
         /// </summary>
-        public virtual LogLevel LogLevel => Argument<LogLevel?>("verbosity") ?? LogLevel.Information;
+        [Parameter("Verbosity with that the build is run. Default is 'Normal'.")]
+        public Verbosity Verbosity { get; } = Verbosity.Normal;
 
         /// <summary>
-        /// The specified targets to run. Default is <em>Default</em>, which falls back to the target specified in the <c>Main</c> method via <see cref="Execute{T}"/>.
+        /// Targets to run. Default is <em>Default</em>, which falls back to the target specified in <c>Main</c> with <see cref="Execute{T}"/>.
         /// </summary>
-        public virtual ICollection<string> Targets => Arguments("target", separator: '+') ?? new[] { "Default" };
+        [Parameter("Target(s) to run. Default is 'Default', which falls back to the target specified in 'Main' with 'Execute'.", Separator = "+")]
+        public virtual string[] Target { get; set; } = { "Default" };
 
         /// <summary>
-        /// The specified configuration to build. Default is <em>Debug</em>.
+        /// Configuration to build. Default is <c>IsServerBuild ? "Release" : "Debug"</c>.
         /// </summary>
-        public virtual string Configuration => Argument("configuration") ?? (IsServerBuild ? "Release" : "Debug");
+        [Parameter("Configuration to build. Default is 'IsServerBuild ? Release : Debug'.")]
+        public virtual string Configuration { get; set; } = IsServerBuild ? "Release" : "Debug";
+
+        [Parameter(Name = "nodeps")]
+        public virtual bool NoDependencies { get; set; }
 
         public static bool IsLocalBuild => OutputSink.Instance is ConsoleOutputSink;
         public static bool IsServerBuild => !IsLocalBuild;
+
+        public virtual LogLevel LogLevel => (LogLevel) Verbosity;
 
         /// <summary>
         /// The root directory where the <c>.nuke</c> file is located. By convention also the root for the repository.

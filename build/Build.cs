@@ -26,7 +26,8 @@ using static Nuke.Core.EnvironmentInfo;
 
 class Build : NukeBuild
 {
-    [Parameter] readonly string MyGetApiKey;
+    [Parameter("ApiKey for the MyGet source.")] readonly string MyGetApiKey;
+
     [GitVersion] readonly GitVersion GitVersion;
     [GitRepository] readonly GitRepository GitRepository;
 

@@ -17,7 +17,7 @@ namespace Nuke.Core.Injection
         public abstract object GetStaticValue ();
 
         [CanBeNull]
-        public override object GetValue (FieldInfo field, NukeBuild build)
+        public override object GetValue (string memberName, Type memberType, NukeBuild build)
         {
             return GetStaticValue();
         }

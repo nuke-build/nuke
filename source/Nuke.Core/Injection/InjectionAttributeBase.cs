@@ -18,7 +18,7 @@ namespace Nuke.Core.Injection
     ///     and will therefore be subject for validation at execution start.
     /// </summary>
     [PublicAPI]
-    [AttributeUsage(AttributeTargets.Field)]
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     [MeansImplicitUse(ImplicitUseKindFlags.Default)]
     public abstract class InjectionAttributeBase : Attribute
     {
@@ -26,6 +26,6 @@ namespace Nuke.Core.Injection
         public virtual Type InjectionType => null;
 
         [CanBeNull]
-        public abstract object GetValue (FieldInfo field, NukeBuild build);
+        public abstract object GetValue (string memberName, Type memberType, NukeBuild build);
     }
 }

@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Nuke.Core.Injection;
@@ -15,25 +16,39 @@ namespace Nuke.Core.Execution
 
         public static void InjectValues (NukeBuild build)
         {
-            foreach (var field in build.GetType().GetFields(c_bindingFlags))
+            foreach (var member in build.GetType().GetMembers(c_bindingFlags))
             {
-                var attributes = field.GetCustomAttributes().OfType<InjectionAttributeBase>().ToList();
+                var attributes = member.GetCustomAttributes().OfType<InjectionAttributeBase>().ToList();
                 if (attributes.Count == 0)
                     continue;
-                ControlFlow.Assert(attributes.Count == 1, $"Field '{field.Name}' has multiple injection attributes applied.");
+                ControlFlow.Assert(attributes.Count == 1, $"Member '{member.Name}' has multiple injection attributes applied.");
 
-                Logger.Info($"Handling value injection for '{field.Name}'...");
+                Logger.Info($"Handling value injection for '{member.Name}'...");
 
                 var attribute = attributes.Single();
-                var value = attribute.GetValue(field, build);
+                var memberType = (member as FieldInfo)?.FieldType ?? ((PropertyInfo) member).PropertyType;
+                var value = attribute.GetValue(member.Name, memberType, build);
                 if (value == null)
                     continue;
 
                 var valueType = value.GetType();
-                ControlFlow.Assert(field.FieldType.IsAssignableFrom(valueType),
-                    $"Field '{field.Name}' must be of type '{valueType.Name}' to get its valued injected from '{attribute.GetType().Name}'.");
+                ControlFlow.Assert(memberType.IsAssignableFrom(valueType),
+                    $"Field '{member.Name}' must be of type '{valueType.Name}' to get its valued injected from '{attribute.GetType().Name}'.");
 
-                field.SetValue(build, value);
+                SetValue(build, member, value);
+            }
+        }
+
+        private static void SetValue (NukeBuild build, MemberInfo member, object value)
+        {
+            if (member is FieldInfo fieldInfo)
+            {
+                fieldInfo.SetValue(build, value);
+            }
+            else if (member is PropertyInfo propertyInfo)
+            {
+                ControlFlow.Assert (propertyInfo.SetMethod != null, $"Member '{member.Name}' is not settable.");
+                propertyInfo.SetValue (build, value);
             }
         }
     }
