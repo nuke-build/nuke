@@ -1,18 +1,20 @@
 #!/usr/bin/env bash
 
+NOINIT=0
 SCRIPT_ARGUMENTS=()
 for i in "$@"; do
-    case $1 in
-        -n|--noinit) NOINIT=1; shift;;
-        -t|--target) TARGET="$2"; shift ;;
-        -c|--configuration) CONFIGURATION="$2"; shift ;;
-        -v|--verbosity) VERBOSITY="$2"; shift ;;
-        --) shift; SCRIPT_ARGUMENTS+=("$@"); break ;;
+    case ${1,,} in
+        -noinit) NOINIT=1;;
+        -target) TARGET="$2"; shift ;;
+        -configuration) CONFIGURATION="$2"; shift ;;
+        -verbosity) VERBOSITY="$2"; shift ;;
+        -) shift; SCRIPT_ARGUMENTS+=("$@"); break ;;
         *) SCRIPT_ARGUMENTS+=("$1") ;;
     esac
     shift
 done
 
+set -eo pipefail
 SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 
 ###########################################################################
