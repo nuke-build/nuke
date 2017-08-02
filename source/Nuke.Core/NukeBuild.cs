@@ -90,7 +90,7 @@ namespace Nuke.Core
         /// Verbosity with that the build is run. Default is <see cref="Core.Verbosity.Normal"/>.
         /// </summary>
         [Parameter("Verbosity with that the build is run. Default is 'Normal'.")]
-        public Verbosity Verbosity { get; } = Verbosity.Normal;
+        public Verbosity Verbosity { get; set; } = Verbosity.Normal;
 
         /// <summary>
         /// Targets to run. Default is <em>Default</em>, which falls back to the target specified in <c>Main</c> with <see cref="Execute{T}"/>.
