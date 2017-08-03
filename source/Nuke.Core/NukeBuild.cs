@@ -57,28 +57,7 @@ namespace Nuke.Core
         protected static int Execute<T> (Expression<Func<T, Target>> defaultTargetExpression)
             where T : NukeBuild
         {
-            var executionList = PrepareBuild(defaultTargetExpression);
-            return new ExecutionListRunner().Run(executionList);
-        }
-
-        private static IReadOnlyCollection<TargetDefinition> PrepareBuild<T> (Expression<Func<T, Target>> defaultTargetExpression)
-            where T : NukeBuild
-        {
-            using (DelegateDisposable.CreateBracket(
-                () => ControlFlow.IsPreparing = true,
-                () => ControlFlow.IsPreparing = false))
-            {
-                var build = Activator.CreateInstance<T>();
-
-                InjectionService.InjectValues(build);
-
-                var defaultTarget = defaultTargetExpression.Compile().Invoke(build);
-                var executionList = new TargetDefinitionLoader().GetExecutionList(build, defaultTarget);
-
-                RequirementService.ValidateRequirements(executionList, build);
-
-                return executionList;
-            }
+            return BuildExecutor.Execute(defaultTargetExpression);
         }
 
         protected NukeBuild ()

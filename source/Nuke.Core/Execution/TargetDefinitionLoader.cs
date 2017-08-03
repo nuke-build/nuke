@@ -12,71 +12,46 @@ using Nuke.Core.Utilities.Collections;
 
 namespace Nuke.Core.Execution
 {
-    internal class TargetDefinitionLoader
+    internal static class TargetDefinitionLoader
     {
-        public IReadOnlyCollection<TargetDefinition> GetExecutionList (NukeBuild build, Target defaultTarget)
+        public static IReadOnlyCollection<TargetDefinition> GetExecutionList (IBuild build, Target defaultTarget)
         {
-            var targetDefinitions = build.GetType()
-                    .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-                    .Where(x => x.PropertyType == typeof(Target))
-                    .Select(x => LoadTargetDefinition(build, x))
-                    .ToList();
-            var nameDictionary = targetDefinitions.ToDictionary(x => x.Name, x => x, StringComparer.OrdinalIgnoreCase);
-            var factoryDictionary = targetDefinitions.ToDictionary(x => x.Factory, x => x);
+            var allTargets = build.GetTargetDefinitions();
 
-            ControlFlow.Assert(!nameDictionary.ContainsKey("default"), "Don't use 'default' as a target identifier.");
-            nameDictionary.Add("default", nameDictionary.Values.Single(x => x.Factory == defaultTarget));
-            var targetTargets = build.Target.Select(x => GetTargetByName(x, defaultTarget, nameDictionary)).ToList();
+            ControlFlow.Assert(allTargets.All(x => x.Name != "default"), "The name 'default' cannot be used as target identifier.");
+            var specifiedTargets = build.Target.Select(x => GetTargetByName(x, defaultTarget, allTargets)).ToList();
 
-            var targetDependencies = targetDefinitions.ToDictionary(
-                x => x,
-                x => GetDependencies(x, nameDictionary, factoryDictionary).ToList());
-            return GetSortedList(targetTargets, targetDependencies);
+            return GetSortedList(specifiedTargets, allTargets);
         }
 
-        private static TargetDefinition GetTargetByName (string targetName, Target defaultTarget, Dictionary<string, TargetDefinition> nameDictionary)
+        private static TargetDefinition GetTargetByName (string targetName, Target defaultTarget, IReadOnlyCollection<TargetDefinition> targetDefinitions)
         {
-            if (!nameDictionary.TryGetValue(targetName, out var targetDefinition))
+            if (targetName == "default")
+                return targetDefinitions.Single(x => x.Factory == defaultTarget);
+
+            var targetDefinition = targetDefinitions.SingleOrDefault(x => x.Name.Equals(targetName, StringComparison.OrdinalIgnoreCase));
+            if (targetDefinition == null)
             {
                 var stringBuilder = new StringBuilder()
                         .AppendLine($"Target with name '{targetName}' does not exist.")
                         .AppendLine("Available targets are:");
-                nameDictionary
-                        .Where(x => !x.Key.Equals("default", StringComparison.OrdinalIgnoreCase))
-                        .OrderBy(x => x.Key, StringComparer.OrdinalIgnoreCase)
-                        .ForEach(x => stringBuilder.AppendLine($"  - {x.Key}{(x.Value.Factory == defaultTarget ? " (default)" : string.Empty)}"));
+                targetDefinitions
+                        .OrderBy(x => x.Name, StringComparer.OrdinalIgnoreCase)
+                        .ForEach(x => stringBuilder.AppendLine($"  - {x.Name}{(x.Factory == defaultTarget ? " (default)" : string.Empty)}"));
 
                 ControlFlow.Fail(stringBuilder.ToString());
             }
 
             return targetDefinition;
         }
-
-        private TargetDefinition LoadTargetDefinition (NukeBuild build, PropertyInfo property)
+        
+        private static List<TargetDefinition> GetSortedList (
+            IReadOnlyCollection<TargetDefinition> specifiedTargets,
+            IReadOnlyCollection<TargetDefinition> allTargets)
         {
-            var targetFactory = (Target) property.GetValue(build);
-            return TargetDefinition.Create(property.Name, targetFactory);
-        }
-
-        private IEnumerable<TargetDefinition> GetDependencies (
-            TargetDefinition targetDefinition,
-            Dictionary<string, TargetDefinition> nameDictionary,
-            Dictionary<Target, TargetDefinition> factoryDictionary)
-        {
-            return targetDefinition.DependentShadowTargets
-                    .Select(shadowTargetName => nameDictionary.TryGetValue(shadowTargetName, out var shadowTarget)
-                        ? shadowTarget
-                        : TargetDefinition.Create(shadowTargetName))
-                    .Concat(targetDefinition.DependentTargets.Select(x => factoryDictionary[x]));
-        }
-
-        private List<TargetDefinition> GetSortedList (
-            ICollection<TargetDefinition> targetTargets,
-            Dictionary<TargetDefinition, List<TargetDefinition>> targetDependencies)
-        {
-            var vertexDictionary = targetDependencies.ToDictionary(x => x.Key, x => new Vertex<TargetDefinition>(x.Key));
+            var vertexDictionary = allTargets.ToDictionary(x => x, x => new Vertex<TargetDefinition>(x));
             foreach (var pair in vertexDictionary)
-                pair.Value.Dependencies = targetDependencies[pair.Key].Select(x => vertexDictionary[x]).ToList();
+                pair.Value.Dependencies = pair.Key.TargetDefinitionDependencies.Select(x => vertexDictionary[x]).ToList();
 
             var graphAsList = vertexDictionary.Values.ToList();
             var result = new List<TargetDefinition>();
@@ -109,9 +84,9 @@ namespace Nuke.Core.Execution
                 graphAsList.Remove(independent);
 
                 var targetDefinition = independent.Value;
-                var executableDependency = result.SelectMany(x => targetDependencies[x]).Contains(targetDefinition)
+                var executableDependency = result.SelectMany(x => x.TargetDefinitionDependencies).Contains(targetDefinition)
                                            && !EnvironmentInfo.ArgumentSwitch("nodeps");
-                if (targetTargets.Contains(targetDefinition) || executableDependency)
+                if (specifiedTargets.Contains(targetDefinition) || executableDependency)
                     result.Add(targetDefinition);
             }
 
