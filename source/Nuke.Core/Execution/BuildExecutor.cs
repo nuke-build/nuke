@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Nuke.Core.OutputSinks;
+using System.Reflection;
 using Nuke.Core.Utilities;
 using static Nuke.Core.EnvironmentInfo;
 
@@ -17,22 +17,28 @@ namespace Nuke.Core.Execution
         public static int Execute<T> (Expression<Func<T, Target>> defaultTargetExpression)
             where T : IBuild
         {
-            var build = Activator.CreateInstance<T>();
-            var defaultTargetName = ((MemberExpression) defaultTargetExpression.Body).Member.Name;
-            var defaultTargetFactory = defaultTargetExpression.Compile().Invoke(build);
-            
-            if (ArgumentSwitch ("help"))
-            {
-                PrintHelp(build, defaultTargetName);
-                return 0;
-            }
-
             IReadOnlyCollection<TargetDefinition> executionList;
             using (DelegateDisposable.CreateBracket(
                 () => ControlFlow.IsPreparing = true,
                 () => ControlFlow.IsPreparing = false))
             {
+                var build = Activator.CreateInstance<T>();
+                var defaultTargetName = ((MemberExpression) defaultTargetExpression.Body).Member.Name;
+                var defaultTargetFactory = defaultTargetExpression.Compile().Invoke(build);
+            
                 InjectionService.InjectValues(build);
+
+                if (!build.NoLogo)
+                {
+                    PrintLogo();
+                }
+
+                if (build.Help)
+                {
+                    PrintHelp(build, defaultTargetName);
+                    return 0;
+                }
+
                 executionList = TargetDefinitionLoader.GetExecutionList(build, defaultTargetFactory);
                 RequirementService.ValidateRequirements(executionList, build);
             }
@@ -41,17 +47,20 @@ namespace Nuke.Core.Execution
             
         }
 
-        private static void PrintHelp<T> (T build, string defaultTargetName)
-            where T : IBuild
+        private static void PrintLogo()
         {
             Logger.Block("NUKE");
             Logger.Info($"Version: {BuildAssembly.GetName().Version}");
             Logger.Info(string.Empty);
+        }
 
+        private static void PrintHelp<T> (T build, string defaultTargetName)
+            where T : IBuild
+        {
             var targetDefinitions = build.GetTargetDefinitions();
-            var longestName = targetDefinitions.Select(x => x.Name.Length).OrderByDescending(x => x).First();
-            var padRight = Math.Max(longestName, val2: 15);
-            Logger.Info("Targets");
+            var longestTargetName = targetDefinitions.Select(x => x.Name.Length).OrderByDescending(x => x).First();
+            var padRightTargets = Math.Max(longestTargetName, val2: 20);
+            Logger.Info("  Targets:");
             Logger.Info();
             foreach (var target in targetDefinitions)
             {
@@ -59,9 +68,22 @@ namespace Nuke.Core.Execution
                 var dependencies = target.TargetDefinitionDependencies.Count > 0
                     ? $" -> {target.TargetDefinitionDependencies.Select(x => x.Name).Join(", ")}"
                     : string.Empty;
-                Logger.Info($"  {(target.Name + defaultMarker).PadRight(padRight)}{dependencies}");
+                Logger.Info($"    {(target.Name + defaultMarker).PadRight(padRightTargets)}{dependencies}");
                 if (!string.IsNullOrWhiteSpace(target.Description))
-                    Logger.Info($"    {target.Description}");
+                    Logger.Info($"      {target.Description}");
+            }
+
+            Logger.Info();
+
+            var parameters = build.GetParameterMembers();
+            var longestParameterName = parameters.Select(x => x.Name.Length).OrderByDescending(x => x).First();
+            var padRightParameter = Math.Max(longestParameterName, val2: 18);
+            Logger.Info("  Parameters:");
+            Logger.Info();
+            foreach (var parameter in parameters)
+            {
+                var attribute = parameter.GetCustomAttribute<ParameterAttribute>();
+                Logger.Info($"    -{(attribute.Name ?? parameter.Name).PadRight(padRightParameter)}  {attribute.Description}");
             }
         }
     }

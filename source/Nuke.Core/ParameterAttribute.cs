@@ -4,7 +4,6 @@
 
 using System;
 using System.Linq;
-using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Core.Injection;
 
@@ -38,7 +37,10 @@ namespace Nuke.Core
     {
         public ParameterAttribute (string description = null)
         {
+            Description = description;
         }
+
+        public string Description { get; }
 
         public string Name { get; set; }
         public bool AllowEmptyString { get; set; }

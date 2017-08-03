@@ -3,7 +3,6 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -12,7 +11,6 @@ using Nuke.Core;
 using Nuke.Core.Execution;
 using Nuke.Core.IO;
 using Nuke.Core.OutputSinks;
-using Nuke.Core.Utilities;
 using static Nuke.Core.EnvironmentInfo;
 
 [assembly: IconClass(typeof(NukeBuild), "heart3")]
@@ -72,24 +70,30 @@ namespace Nuke.Core
         public Verbosity Verbosity { get; set; } = Verbosity.Normal;
 
         /// <summary>
-        /// Targets to run. Default is <em>Default</em>, which falls back to the target specified in <c>Main</c> with <see cref="Execute{T}"/>.
+        /// Targets to run. Default is <em>Default</em>, which falls back to the target specified in <c>static int Main</c> with <see cref="Execute{T}"/>.
         /// </summary>
-        [Parameter("Target(s) to run. Default is 'Default', which falls back to the target specified in 'Main' with 'Execute'.", Separator = "+")]
-        public virtual string[] Target { get; set; } = { "Default" };
+        [Parameter("Target(s) to run. Default is specified in 'static int Main' via 'Execute'.", Separator = "+")]
+        public string[] Target { get; set; } = { "Default" };
 
         /// <summary>
         /// Configuration to build. Default is <em>Debug</em> for local and <em>Release</em> for server builds.
         /// </summary>
-        [Parameter("Configuration to build. Default is 'IsServerBuild ? Release : Debug'.")]
-        public virtual string Configuration { get; set; } = IsServerBuild ? "Release" : "Debug";
+        [Parameter("Configuration to build. Default is 'Debug' for local and 'Release' for server builds.")]
+        public string Configuration { get; set; } = IsServerBuild ? "Release" : "Debug";
 
-        [Parameter(Name = "nodeps")]
-        public virtual bool NoDependencies { get; set; }
+        [Parameter("Specifies that no dependencies should be executed. Default is 'false'.", Name = "NoDeps")]
+        public bool NoDependencies { get; set; }
+
+        [Parameter("Specifies that no logo should be printed. Default is is 'false'.")]
+        public bool NoLogo { get; set; }
+
+        [Parameter("Shows the help text for this build assembly.")]
+        public bool Help { get; set; }
 
         public static bool IsLocalBuild => OutputSink.Instance is ConsoleOutputSink;
         public static bool IsServerBuild => !IsLocalBuild;
 
-        public virtual LogLevel LogLevel => (LogLevel) Verbosity;
+        public LogLevel LogLevel => (LogLevel) Verbosity;
 
         /// <summary>
         /// The root directory where the <c>.nuke</c> file is located. By convention also the root for the repository.

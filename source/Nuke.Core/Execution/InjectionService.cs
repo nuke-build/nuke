@@ -3,7 +3,6 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Nuke.Core.Injection;
@@ -23,7 +22,7 @@ namespace Nuke.Core.Execution
                     continue;
                 ControlFlow.Assert(attributes.Count == 1, $"Member '{member.Name}' has multiple injection attributes applied.");
 
-                Logger.Info($"Handling value injection for '{member.Name}'...");
+                Logger.Trace($"Handling value injection for '{member.Name}'...");
 
                 var attribute = attributes.Single();
                 var memberType = (member as FieldInfo)?.FieldType ?? ((PropertyInfo) member).PropertyType;

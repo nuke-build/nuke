@@ -12,5 +12,7 @@ namespace Nuke.Core.Execution
         string[] Target { get; set; }
 
         bool NoDependencies { get; set; }
+        bool NoLogo { get; set; }
+        bool Help { get; set; }
     }
 }
