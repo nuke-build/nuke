@@ -58,9 +58,9 @@ namespace Nuke.Core
         /// <summary>
         /// Logs a message as trace if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Trace"/>.
         /// </summary>
-        public static void Trace (string text)
+        public static void Trace (string text = null)
         {
-            OutputSink.Trace(text);
+            OutputSink.Trace(text ?? string.Empty);
         }
 
         /// <summary>
@@ -73,7 +73,6 @@ namespace Nuke.Core
         }
 
         #endregion
-        
 
         #region Info
 
@@ -97,9 +96,9 @@ namespace Nuke.Core
         /// <summary>
         /// Logs a message as information if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Information"/>.
         /// </summary>
-        public static void Info (string text)
+        public static void Info (string text = null)
         {
-            OutputSink.Info(text);
+            OutputSink.Info(text ?? string.Empty);
         }
 
         /// <summary>
@@ -135,9 +134,9 @@ namespace Nuke.Core
         /// <summary>
         /// Logs a message as warning if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Warning"/>.
         /// </summary>
-        public static void Warn (string text)
+        public static void Warn (string text = null)
         {
-            OutputSink.Warn(text);
+            OutputSink.Warn(text ?? string.Empty);
         }
         
         /// <summary>
@@ -176,9 +175,9 @@ namespace Nuke.Core
         /// Logs a message as failure. Halts execution.
         /// </summary>
         [ContractAnnotation("=> halt")]
-        public static void Fail (string text)
+        public static void Fail (string text = null)
         {
-            ControlFlow.Fail(text);
+            ControlFlow.Fail(text ?? string.Empty);
         }
 
         #endregion
