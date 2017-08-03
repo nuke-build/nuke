@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Nuke.Core.Tooling
@@ -13,6 +14,8 @@ namespace Nuke.Core.Tooling
         public void Dispose ()
         {
         }
+
+        public ProcessStartInfo StartInfo => throw new NotSupportedException();
 
         public IEnumerable<Output> Output => Enumerable.Empty<Output>();
 

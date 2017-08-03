@@ -5,8 +5,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Core.Utilities;
 
 namespace Nuke.Core.Tooling
 {
@@ -25,7 +27,12 @@ namespace Nuke.Core.Tooling
         public static void AssertZeroExitCode ([AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull] this IProcess process)
         {
             process.AssertWaitForExit();
-            ControlFlow.Assert(process.ExitCode == 0, "process.ExitCode == 0");
+            ControlFlow.Assert(process.ExitCode == 0,
+                new[]
+                {
+                    $"Process '{Path.GetFileName(process.StartInfo.FileName)}' exited with code {process.ExitCode}. Please verify the invocation:",
+                    $"> {process.StartInfo.FileName.DoubleQuoteIfNeeded()} {process.StartInfo.Arguments}"
+                }.Join(EnvironmentInfo.NewLine));
         }
 
         public static IEnumerable<Output> EnsureOnlyStd (this IEnumerable<Output> output)

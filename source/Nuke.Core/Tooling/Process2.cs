@@ -29,6 +29,8 @@ namespace Nuke.Core.Tooling
             _outputFilter = outputFilter;
         }
 
+        public ProcessStartInfo StartInfo => _process.StartInfo;
+
         public IEnumerable<Output> Output
         {
             get

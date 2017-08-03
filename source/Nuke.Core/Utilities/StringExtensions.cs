@@ -31,6 +31,11 @@ namespace Nuke.Core.Utilities
             return str.Replace("{", "{{").Replace("}", "}}");
         }
 
+        public static string DoubleQuoteIfNeeded ([CanBeNull] this string str)
+        {
+            return str.DoubleQuoteIfNeeded(' ');
+        }
+
         public static string DoubleQuoteIfNeeded ([CanBeNull] this string str, params char?[] disallowed)
         {
             if (string.IsNullOrWhiteSpace(str))
@@ -51,6 +56,11 @@ namespace Nuke.Core.Utilities
                 return string.Empty;
 
             return $"\"{str.Replace("\"", "\\\"")}\"";
+        }
+
+        public static string SingleQuoteIfNeeded ([CanBeNull] this string str)
+        {
+            return str.SingleQuoteIfNeeded(' ');
         }
 
         public static string SingleQuoteIfNeeded ([CanBeNull] this string str, params char?[] disallowed)

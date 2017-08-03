@@ -16,6 +16,8 @@ namespace Nuke.Core.Tooling
     [PublicAPI]
     public interface IProcess : IDisposable
     {
+        ProcessStartInfo StartInfo { get; }
+
         /// <summary>
         /// Contains the output of the process execution.
         /// </summary>
