@@ -15,14 +15,6 @@ namespace Nuke.Core.Utilities
     [DebuggerStepThrough]
     public static class StringExtensions
     {
-        public static string TrimAndDoubleQuoteIfNeeded([CanBeNull] this string str, params char?[] disallowed)
-        {
-            if (string.IsNullOrWhiteSpace(str))
-                return string.Empty;
-
-            return str.Trim().DoubleQuoteIfNeeded(disallowed);
-        }
-
         public static string EscapeBraces ([CanBeNull] this string str)
         {
             if (string.IsNullOrWhiteSpace(str))

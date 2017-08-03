@@ -20,7 +20,7 @@ namespace Nuke.Core.Tooling
 
     public sealed class Arguments : IArguments
     {
-        public const string HiddenString = "[hidden]";
+        private const string c_hiddenString = "[hidden]";
         private const char c_space = ' ';
 
         private readonly List<string> _secrets = new List<string>();
@@ -50,7 +50,7 @@ namespace Nuke.Core.Tooling
             if (secret)
                 _secrets.Add(value);
 
-            _arguments.Add(Tuple.Create(argumentFormat.Replace("{value}", "{0}"), value.TrimAndDoubleQuoteIfNeeded(disallowed, c_space)));
+            _arguments.Add(Tuple.Create(argumentFormat.Replace("{value}", "{0}"), value.Trim().DoubleQuoteIfNeeded(disallowed, c_space)));
 
             return this;
         }
@@ -66,7 +66,7 @@ namespace Nuke.Core.Tooling
             if (list == null || list.Count <= 0)
                 return this;
 
-            string Format (T value) => value.ToString().TrimAndDoubleQuoteIfNeeded(mainSeparator, disallowed);
+            string Format (T value) => value.ToString().Trim().DoubleQuoteIfNeeded(mainSeparator, disallowed);
 
             if (mainSeparator.HasValue)
                 Add(argumentFormat, list.Select(Format).Join(mainSeparator.Value), secret: secret);
@@ -88,7 +88,7 @@ namespace Nuke.Core.Tooling
             if (dictionary == null || dictionary.Count <= 0)
                 return this;
 
-            string Format (TValue value) => value.ToString().TrimAndDoubleQuoteIfNeeded(mainSeparator, keyValueSeparator, disallowed);
+            string Format (TValue value) => value.ToString().Trim().DoubleQuoteIfNeeded(mainSeparator, keyValueSeparator, disallowed);
             var pairs = dictionary.Where(x => x.Value.NotNullWarn($"Value for '{x.Key}' is 'null', omitting...") != null).ToList();
 
             if (mainSeparator.HasValue)
@@ -110,7 +110,7 @@ namespace Nuke.Core.Tooling
             if (lookup == null || lookup.Count <= 0)
                 return this;
 
-            string Format (TValue value) => value?.ToString().TrimAndDoubleQuoteIfNeeded(keyValueSeparator, disallowed);
+            string Format (TValue value) => value?.ToString().Trim().DoubleQuoteIfNeeded(keyValueSeparator, disallowed);
 
             if (mainSeparator.HasValue)
             {
@@ -129,7 +129,7 @@ namespace Nuke.Core.Tooling
 
         public string Filter (string text)
         {
-            return _secrets.Aggregate(text, (str, s) => str.Replace(s, HiddenString));
+            return _secrets.Aggregate(text, (str, s) => str.Replace(s, c_hiddenString));
         }
 
         private string Render (bool forOutput)
@@ -137,7 +137,7 @@ namespace Nuke.Core.Tooling
             string Format (Tuple<string, string> argument)
                 => !_secrets.Contains(argument.Item2) || !forOutput
                     ? argument.Item2
-                    : HiddenString;
+                    : c_hiddenString;
 
             return _arguments.Aggregate(
                 new StringBuilder(),
