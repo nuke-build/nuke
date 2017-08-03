@@ -36,6 +36,7 @@ namespace Nuke.Core.Execution
         [CanBeNull]
         internal Target Factory { get; }
 
+        internal string Description { get; set; }
         internal TimeSpan Duration { get; set; }
         internal ExecutionStatus Status { get; set; }
         internal List<Func<bool>> Conditions { get; }
@@ -44,6 +45,12 @@ namespace Nuke.Core.Execution
         internal List<string> ShadowTargetDependencies { get; }
         internal List<TargetDefinition> TargetDefinitionDependencies { get; }
         internal List<Action> Actions { get; }
+
+        ITargetDefinition ITargetDefinition.Description (string description)
+        {
+            Description = description;
+            return this;
+        }
 
         public ITargetDefinition Executes (params Action[] actions)
         {

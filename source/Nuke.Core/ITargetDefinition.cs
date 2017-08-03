@@ -16,6 +16,11 @@ namespace Nuke.Core
     public interface ITargetDefinition
     {
         /// <summary>
+        ///   Adds a description for this target.
+        /// </summary>
+        ITargetDefinition Description (string description);
+
+        /// <summary>
         ///   Adds a set of actions that will be executed for this target.
         /// </summary>
         ITargetDefinition Executes (params Action[] actions);
