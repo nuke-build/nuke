@@ -26,6 +26,6 @@ namespace Nuke.Core.Injection
         public virtual Type InjectionType => null;
 
         [CanBeNull]
-        public abstract object GetValue (string memberName, Type memberType, NukeBuild build);
+        public abstract object GetValue (string memberName, Type memberType);
     }
 }

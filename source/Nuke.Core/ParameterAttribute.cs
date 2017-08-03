@@ -47,7 +47,7 @@ namespace Nuke.Core
         public override Type InjectionType => null;
 
         [CanBeNull]
-        public override object GetValue (string memberName, Type memberType, NukeBuild build)
+        public override object GetValue (string memberName, Type memberType)
         {
             var stringValue = GetStringValue(memberName, memberType);
             if (stringValue == null)

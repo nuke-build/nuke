@@ -12,7 +12,7 @@ namespace Nuke.Core.Execution
 {
     internal static class RequirementService
     {
-        public static void ValidateRequirements (IReadOnlyCollection<TargetDefinition> executionList, NukeBuild buildInstance)
+        public static void ValidateRequirements (IReadOnlyCollection<TargetDefinition> executionList, IBuild build)
         {
             foreach (var target in executionList)
             foreach (var requirement in target.Requirements)
@@ -29,7 +29,7 @@ namespace Nuke.Core.Execution
                         : (MemberExpression) ((UnaryExpression) requirement.Body).Operand;
                     var field = (FieldInfo) memberExpression.Member;
 
-                    ControlFlow.Assert(field.GetValue(buildInstance) != null,
+                    ControlFlow.Assert(field.GetValue(build) != null,
                         $"Field '{field.Name}' was 'null' but is required for target '{target.Name}'.");
                 }
             }

@@ -21,11 +21,12 @@ namespace Nuke.Core.Execution
         {
             Name = name;
             Factory = factory;
-            DependentTargets = new List<Target>();
-            DependentShadowTargets = new List<string>();
+            TargetDependencies = new List<Target>();
+            ShadowTargetDependencies = new List<string>();
             Actions = new List<Action>();
             Conditions = new List<Func<bool>>();
             Requirements = new List<LambdaExpression>();
+            TargetDefinitionDependencies = new List<TargetDefinition>();
 
             factory?.Invoke(this);
         }
@@ -39,8 +40,9 @@ namespace Nuke.Core.Execution
         internal ExecutionStatus Status { get; set; }
         internal List<Func<bool>> Conditions { get; }
         internal List<LambdaExpression> Requirements { get; }
-        internal List<Target> DependentTargets { get; }
-        internal List<string> DependentShadowTargets { get; }
+        internal List<Target> TargetDependencies { get; }
+        internal List<string> ShadowTargetDependencies { get; }
+        internal List<TargetDefinition> TargetDefinitionDependencies { get; }
         internal List<Action> Actions { get; }
 
         public ITargetDefinition Executes (params Action[] actions)
@@ -56,13 +58,13 @@ namespace Nuke.Core.Execution
 
         public ITargetDefinition DependsOn (params Target[] targets)
         {
-            DependentTargets.AddRange(targets);
+            TargetDependencies.AddRange(targets);
             return this;
         }
 
         public ITargetDefinition DependsOn (params string[] shadowTargets)
         {
-            DependentShadowTargets.AddRange(shadowTargets);
+            ShadowTargetDependencies.AddRange(shadowTargets);
             return this;
         }
 

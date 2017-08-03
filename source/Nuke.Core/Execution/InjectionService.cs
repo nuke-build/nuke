@@ -14,7 +14,7 @@ namespace Nuke.Core.Execution
     {
         private const BindingFlags c_bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
 
-        public static void InjectValues (NukeBuild build)
+        public static void InjectValues (IBuild build)
         {
             foreach (var member in build.GetType().GetMembers(c_bindingFlags))
             {
@@ -27,7 +27,7 @@ namespace Nuke.Core.Execution
 
                 var attribute = attributes.Single();
                 var memberType = (member as FieldInfo)?.FieldType ?? ((PropertyInfo) member).PropertyType;
-                var value = attribute.GetValue(member.Name, memberType, build);
+                var value = attribute.GetValue(member.Name, memberType);
                 if (value == null)
                     continue;
 
@@ -39,7 +39,7 @@ namespace Nuke.Core.Execution
             }
         }
 
-        private static void SetValue (NukeBuild build, MemberInfo member, object value)
+        private static void SetValue (IBuild build, MemberInfo member, object value)
         {
             if (member is FieldInfo fieldInfo)
             {

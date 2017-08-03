@@ -22,7 +22,7 @@ using static Nuke.Core.EnvironmentInfo;
 namespace Nuke.Core
 {
     /// <summary>
-    /// Base class for build definitions. Derived types must declare <c>static Main</c> which calls
+    /// Base class for build definitions. Derived types must declare <c>static int Main</c> which calls
     /// <see cref="Execute{T}"/> for the exit code.
     /// </summary>
     /// <example>
@@ -41,7 +41,7 @@ namespace Nuke.Core
     /// </code>
     /// </example>
     [PublicAPI]
-    public abstract class NukeBuild
+    public abstract class NukeBuild : IBuild
     {
         private const string c_configFile = ".nuke";
 
@@ -99,7 +99,7 @@ namespace Nuke.Core
         public virtual string[] Target { get; set; } = { "Default" };
 
         /// <summary>
-        /// Configuration to build. Default is <c>IsServerBuild ? "Release" : "Debug"</c>.
+        /// Configuration to build. Default is <em>Debug</em> for local and <em>Release</em> for server builds.
         /// </summary>
         [Parameter("Configuration to build. Default is 'IsServerBuild ? Release : Debug'.")]
         public virtual string Configuration { get; set; } = IsServerBuild ? "Release" : "Debug";
