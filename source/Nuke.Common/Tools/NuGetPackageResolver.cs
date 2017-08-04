@@ -35,12 +35,11 @@ namespace Nuke.Common.Tools
         // ReSharper disable once CyclomaticComplexity
         public static IEnumerable<InstalledPackage> GetLocalInstalledPackages (
             string packagesConfigFile = null,
-            bool includeDependencies = true)
+            bool includeDependencies = false)
         {
             packagesConfigFile = packagesConfigFile ?? GetBuildPackagesConfigFile();
-            ControlFlow.Assert(
-                includeDependencies || IncludesDependencies(packagesConfigFile),
-                $"includeDependencies || IncludesDependencies({packagesConfigFile})");
+            ControlFlow.Assert(!IncludesDependencies(packagesConfigFile) || includeDependencies,
+                $"!IncludesDependencies({packagesConfigFile}) || includeDependencies");
             var packagesDirectory = GetPackagesDirectory(packagesConfigFile);
 
             var packageIds = XmlTasks.XmlPeek(
