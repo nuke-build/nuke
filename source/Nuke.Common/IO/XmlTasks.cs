@@ -24,7 +24,7 @@ namespace Nuke.Common.IO
         public static IEnumerable<string> XmlPeek (string path, string xpath)
         {
             var (elements, attributes) = GetObjects(XDocument.Load(path), xpath);
-            ControlFlow.Assert(!(elements.Count != 0 && attributes.Count != 0), "!(elements.Count != 0 && attributes.Count != 0)");
+            ControlFlow.Assert(elements.Count == 0 || attributes.Count == 0, "elements.Count == 0 || attributes.Count == 0");
 
             return elements.Count != 0 ? elements.Select(x => x.Value) : attributes.Select(x => x.Value);
         }
@@ -41,8 +41,8 @@ namespace Nuke.Common.IO
         {
             var (elements, attributes) = GetObjects(XDocument.Load(path), xpath);
 
-            ControlFlow.Assert(elements.Count == 1 || attributes.Count == 1, "elements.Count == 1 || attributes.Count == 1");
-            ControlFlow.Assert(elements.Count == 0 || attributes.Count == 0, "elements.Count == 0 || attributes.Count == 0");
+            ControlFlow.Assert((elements.Count == 1 || attributes.Count == 1) && !(elements.Count == 0 && attributes.Count == 0),
+                "(elements.Count == 1 || attributes.Count == 1) && !(elements.Count == 0 && attributes.Count == 0)");
 
             elements.SingleOrDefault()?.SetValue(value);
             attributes.SingleOrDefault()?.SetValue(value);
