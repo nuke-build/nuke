@@ -7,12 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
-using Nuke.Common.IO;
 using Nuke.Core;
-using Nuke.Core.Execution;
 using Nuke.Core.IO;
-
-[assembly: IconClass(typeof(TextTasks), "file-text3")]
 
 namespace Nuke.Common.IO
 {

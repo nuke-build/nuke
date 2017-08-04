@@ -18,8 +18,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-[assembly: IconClass(typeof(Nuke.Common.Tools.GitVersion.GitVersionTasks), "podium")]
-
 namespace Nuke.Common.Tools.GitVersion
 {
     [PublicAPI]

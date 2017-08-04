@@ -7,10 +7,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Core.Execution;
-using Nuke.Core.Tooling;
-
-[assembly: IconClass(typeof(ProcessTasks), "terminal")]
 
 namespace Nuke.Core.Tooling
 {

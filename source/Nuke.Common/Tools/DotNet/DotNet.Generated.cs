@@ -18,8 +18,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-[assembly: IconClass(typeof(Nuke.Common.Tools.DotNet.DotNetTasks), "fire")]
-
 namespace Nuke.Common.Tools.DotNet
 {
     [PublicAPI]

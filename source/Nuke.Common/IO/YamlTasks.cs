@@ -6,13 +6,9 @@ using System;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Common.IO;
-using Nuke.Core.Execution;
 using Nuke.Core.Tooling;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
-
-[assembly: IconClass(typeof(YamlTasks), "file-empty2")]
 
 namespace Nuke.Common.IO
 {

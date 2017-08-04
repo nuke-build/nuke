@@ -6,7 +6,6 @@ using System;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Common;
 using Nuke.Common.Git;
 using Nuke.Common.Tools.GitLink2;
 using Nuke.Common.Tools.GitLink3;
@@ -16,11 +15,8 @@ using Nuke.Common.Tools.MSBuild;
 using Nuke.Common.Tools.NuGet;
 using Nuke.Common.Tools.OpenCover;
 using Nuke.Core;
-using Nuke.Core.Execution;
 using Nuke.Core.Injection;
 using Nuke.Core.Tooling;
-
-[assembly: IconClass(typeof(DefaultSettings), "equalizer")]
 
 namespace Nuke.Common
 {

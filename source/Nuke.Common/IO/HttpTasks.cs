@@ -7,11 +7,7 @@ using System;
 using System.Linq;
 using System.Net;
 using JetBrains.Annotations;
-using Nuke.Common.IO;
-using Nuke.Core.Execution;
 using Nuke.Core.Tooling;
-
-[assembly: IconClass(typeof(HttpTasks), "earth")]
 
 namespace Nuke.Common.IO
 {

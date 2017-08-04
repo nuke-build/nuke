@@ -18,8 +18,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-[assembly: IconClass(typeof(Nuke.Common.Tools.DotCover.DotCoverTasks), "shield2")]
-
 namespace Nuke.Common.Tools.DotCover
 {
     [PublicAPI]

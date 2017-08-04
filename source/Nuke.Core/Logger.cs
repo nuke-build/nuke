@@ -5,12 +5,8 @@
 using System;
 using System.Diagnostics;
 using JetBrains.Annotations;
-using Nuke.Core;
 using Nuke.Core.BuildServers;
-using Nuke.Core.Execution;
 using Nuke.Core.OutputSinks;
-
-[assembly: IconClass(typeof(Logger), "quill4")]
 
 namespace Nuke.Core
 {

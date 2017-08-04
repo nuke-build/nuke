@@ -18,8 +18,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-[assembly: IconClass(typeof(Nuke.Common.Tools.GitLink2.GitLink2Tasks), "link")]
-
 namespace Nuke.Common.Tools.GitLink2
 {
     [PublicAPI]

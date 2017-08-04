@@ -10,13 +10,10 @@ namespace Nuke.Core.Execution
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public class IconClassAttribute : Attribute
     {
+        // ReSharper disable UnusedParameter.Local
         public IconClassAttribute (Type type, string iconClass)
+                // ReSharper restore UnusedParameter.Local
         {
-            Type = type;
-            IconClass = iconClass;
         }
-
-        public Type Type { get; }
-        public string IconClass { get; }
     }
 }

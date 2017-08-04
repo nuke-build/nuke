@@ -18,8 +18,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-[assembly: IconClass(typeof(Nuke.Common.Tools.Xunit2.Xunit2Tasks), "bug2")]
-
 namespace Nuke.Common.Tools.Xunit2
 {
     [PublicAPI]

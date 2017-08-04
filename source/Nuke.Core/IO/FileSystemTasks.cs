@@ -7,11 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Core.Execution;
-using Nuke.Core.IO;
 using Nuke.Core.Utilities.Collections;
-
-[assembly: IconClass(typeof(FileSystemTasks), "folder-open")]
 
 namespace Nuke.Core.IO
 {
@@ -40,7 +36,7 @@ namespace Nuke.Core.IO
             Directory.CreateDirectory(directory);
         }
 
-        public static void EnsureExistingDirectories(IEnumerable<string> directories)
+        public static void EnsureExistingDirectories (IEnumerable<string> directories)
         {
             directories.ForEach(EnsureExistingDirectory);
         }

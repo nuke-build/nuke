@@ -8,11 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Nuke.Core;
-using Nuke.Core.Execution;
 using Nuke.Core.OutputSinks;
-
-[assembly: IconClass(typeof(ControlFlow), "footprint")]
 
 namespace Nuke.Core
 {

@@ -30,23 +30,12 @@ namespace Nuke.ToolGenerator.Generators
                         .WriteLine(string.Empty)
                         .ForEach(GetNamespaceImports(), x => writer.WriteLine($"using {x};"))
                         .WriteLine(string.Empty)
-                        .WriteLine(GetIconClassAttribute(tool))
                         .WriteLine($"namespace {tool.GetNamespace()}")
                         .WriteBlock(w => w
                                 .WriteAlias()
                                 .WriteDataClasses()
                                 .WriteEnumerations());
             }
-        }
-
-        [CanBeNull]
-        private static string GetIconClassAttribute (Tool tool)
-        {
-            if (tool.IconClass == null || tool.Tasks.Count == 0)
-                return null;
-
-            return $"[assembly: IconClass(typeof({tool.GetNamespace()}.{tool.GetClassName()}), \"{tool.IconClass}\")]"
-                   + Environment.NewLine;
         }
 
         private static ToolWriter WriteAlias (this ToolWriter writer)

@@ -8,11 +8,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Core;
-using Nuke.Core.Execution;
 using Nuke.Core.Utilities;
-
-[assembly: IconClass(typeof(EnvironmentInfo), "chip")]
 
 namespace Nuke.Core
 {

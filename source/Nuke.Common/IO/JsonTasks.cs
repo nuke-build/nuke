@@ -7,11 +7,7 @@ using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
-using Nuke.Common.IO;
-using Nuke.Core.Execution;
 using Nuke.Core.Tooling;
-
-[assembly: IconClass(typeof(JsonTasks), "file-empty2")]
 
 namespace Nuke.Common.IO
 {

@@ -8,12 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using JetBrains.Annotations;
-using Nuke.Common.IO;
 using Nuke.Core;
-using Nuke.Core.Execution;
 using Nuke.Core.IO;
-
-[assembly: IconClass(typeof(FtpTasks), "earth")]
 
 namespace Nuke.Common.IO
 {

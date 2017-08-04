@@ -18,8 +18,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-[assembly: IconClass(typeof(Nuke.Common.Tools.NuGet.NuGetTasks), "box")]
-
 namespace Nuke.Common.Tools.NuGet
 {
     [PublicAPI]

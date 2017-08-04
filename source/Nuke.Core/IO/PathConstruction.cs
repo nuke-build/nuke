@@ -9,12 +9,9 @@ using System.IO;
 using System.Linq;
 using Glob;
 using JetBrains.Annotations;
-using Nuke.Core.Execution;
-using Nuke.Core.IO;
 using Nuke.Core.Utilities;
-// ReSharper disable ArrangeMethodOrOperatorBody
 
-[assembly: IconClass (typeof (PathConstruction), "price-tag2")]
+// ReSharper disable ArrangeMethodOrOperatorBody
 
 namespace Nuke.Core.IO
 {
@@ -46,26 +43,25 @@ namespace Nuke.Core.IO
     [PublicAPI]
     public static class PathConstruction
     {
-
         // TODO: check usages
         [Pure]
         public static string GetRelativePath (string basePath, string destinationPath)
         {
-            return Uri.UnescapeDataString (new Uri ($@"{basePath}\").MakeRelativeUri (new Uri (destinationPath)).ToString ());
+            return Uri.UnescapeDataString(new Uri($@"{basePath}\").MakeRelativeUri(new Uri(destinationPath)).ToString());
         }
 
         [Pure]
         public static IEnumerable<string> GlobFiles (string directory, params string[] globPatterns)
         {
-            var directoryInfo = new DirectoryInfo (directory);
-            return globPatterns.SelectMany (x => directoryInfo.GlobFiles (x)).Select (x => x.FullName);
+            var directoryInfo = new DirectoryInfo(directory);
+            return globPatterns.SelectMany(x => directoryInfo.GlobFiles(x)).Select(x => x.FullName);
         }
 
         [Pure]
         public static IEnumerable<string> GlobDirectories (string directory, params string[] globPatterns)
         {
-            var directoryInfo = new DirectoryInfo (directory);
-            return globPatterns.SelectMany (x => directoryInfo.GlobDirectories (x)).Select (x => x.FullName);
+            var directoryInfo = new DirectoryInfo(directory);
+            return globPatterns.SelectMany(x => directoryInfo.GlobDirectories(x)).Select(x => x.FullName);
         }
 
 
@@ -156,7 +152,7 @@ namespace Nuke.Core.IO
         // ReSharper disable once CyclomaticComplexity
         public static string NormalizePath ([CanBeNull] string path, char? separator = null)
         {
-            AssertSeparatorChoice (path, separator);
+            AssertSeparatorChoice(path, separator);
 
             path = path ?? string.Empty;
             separator = separator ?? GetSeparator(path);
@@ -228,7 +224,7 @@ namespace Nuke.Core.IO
         }
 
         [ContractAnnotation("null => null; notnull => notnull")]
-        private static string Trim([CanBeNull] string path)
+        private static string Trim ([CanBeNull] string path)
         {
             if (path == null)
                 return null;
@@ -237,7 +233,7 @@ namespace Nuke.Core.IO
                 ? path
                 : path.TrimEnd(WinSeparator, UnixSeparator, UncSeparator);
         }
-        
+
 
         [DebuggerDisplay("{" + nameof(_path) + "}")]
         public class RelativePath

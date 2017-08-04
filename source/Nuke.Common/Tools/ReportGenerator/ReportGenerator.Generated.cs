@@ -18,8 +18,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-[assembly: IconClass(typeof(Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks), "flag3")]
-
 namespace Nuke.Common.Tools.ReportGenerator
 {
     [PublicAPI]

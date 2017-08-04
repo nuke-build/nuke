@@ -18,8 +18,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-[assembly: IconClass(typeof(Nuke.Common.Tools.MSBuild.MSBuildTasks), "download2")]
-
 namespace Nuke.Common.Tools.MSBuild
 {
     [PublicAPI]
@@ -1634,7 +1632,7 @@ namespace Nuke.Common.Tools.MSBuild
     public partial class MSBuildToolsVersion : Enumeration
     {
         public static MSBuildToolsVersion _2_0 = new MSBuildToolsVersion { Value = "2.0" };
-        public static MSBuildToolsVersion _3_5_ = new MSBuildToolsVersion { Value = "3.5," };
+        public static MSBuildToolsVersion _3_5 = new MSBuildToolsVersion { Value = "3.5" };
         public static MSBuildToolsVersion _4_0 = new MSBuildToolsVersion { Value = "4.0" };
         public static MSBuildToolsVersion _12_0 = new MSBuildToolsVersion { Value = "12.0" };
         public static MSBuildToolsVersion _14_0 = new MSBuildToolsVersion { Value = "14.0" };
