@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
 using JetBrains.Annotations;
 using Nuke.Core;
@@ -20,29 +21,6 @@ namespace Nuke.Common.IO
     [PublicAPI]
     public static class XmlTasks
     {
-#if !NETCORE
-        public static void XmlSerialize<T> (T obj, string path)
-        {
-            var xmlSerializer = new XmlSerializer(typeof(T));
-            using (var memoryStream = new MemoryStream())
-            {
-                xmlSerializer.Serialize(memoryStream, obj);
-                File.WriteAllBytes(path, memoryStream.GetBuffer());
-            }
-        }
-
-        [Pure]
-        public static T XmlDeserialize<T> (string path)
-        {
-            var xmlSerializer = new XmlSerializer(typeof(T));
-            var bytes = File.ReadAllBytes(path);
-            using (var memoryStream = new MemoryStream(bytes))
-            {
-                return (T) xmlSerializer.Deserialize(memoryStream);
-            }
-        }
-#endif
-
         public static IEnumerable<string> XmlPeek (string path, string xpath)
         {
             var (elements, attributes) = GetObjects(XDocument.Load(path), xpath);

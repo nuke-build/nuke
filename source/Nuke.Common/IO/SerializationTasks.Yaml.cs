@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2017.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -12,9 +12,7 @@ using YamlDotNet.Serialization.NamingConventions;
 
 namespace Nuke.Common.IO
 {
-    // TODO UB: naming, prefix, common SerializationTasks ? include YAML in Common?
-    [PublicAPI]
-    public class YamlTasks
+    public static partial class SerializationTasks
     {
         public static void YamlSerializeToFile (object obj, string path, Configure<SerializerBuilder> configurator = null)
         {
