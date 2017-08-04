@@ -15,7 +15,7 @@ namespace Nuke.Core.Execution
     internal static class BuildExecutor
     {
         public static int Execute<T> (Expression<Func<T, Target>> defaultTargetExpression)
-            where T : IBuild
+            where T : NukeBuild
         {
             IReadOnlyCollection<TargetDefinition> executionList;
             using (DelegateDisposable.CreateBracket(
@@ -28,10 +28,7 @@ namespace Nuke.Core.Execution
             
                 InjectionService.InjectValues(build);
 
-                if (!build.NoLogo)
-                {
-                    PrintLogo();
-                }
+                PrintLogo();
 
                 if (build.Help)
                 {
@@ -55,7 +52,7 @@ namespace Nuke.Core.Execution
         }
 
         private static void PrintHelp<T> (T build, string defaultTargetName)
-            where T : IBuild
+            where T : NukeBuild
         {
             var targetDefinitions = build.GetTargetDefinitions();
             var longestTargetName = targetDefinitions.Select(x => x.Name.Length).OrderByDescending(x => x).First();
@@ -83,7 +80,7 @@ namespace Nuke.Core.Execution
             foreach (var parameter in parameters)
             {
                 var attribute = parameter.GetCustomAttribute<ParameterAttribute>();
-                Logger.Info($"    -{(attribute.Name ?? parameter.Name).PadRight(padRightParameter)}  {attribute.Description}");
+                Logger.Info($"    -{(attribute.Name ?? parameter.Name).ToLowerInvariant().PadRight(padRightParameter)}  {attribute.Description}");
             }
         }
     }

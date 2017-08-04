@@ -13,7 +13,7 @@ namespace Nuke.Core.Execution
 {
     internal static class TargetDefinitionLoader
     {
-        public static IReadOnlyCollection<TargetDefinition> GetExecutionList (IBuild build, Target defaultTarget)
+        public static IReadOnlyCollection<TargetDefinition> GetExecutionList (NukeBuild build, Target defaultTarget)
         {
             var allTargets = build.GetTargetDefinitions();
 

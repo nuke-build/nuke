@@ -12,7 +12,7 @@ namespace Nuke.Core.Execution
 {
     internal static class RequirementService
     {
-        public static void ValidateRequirements (IReadOnlyCollection<TargetDefinition> executionList, IBuild build)
+        public static void ValidateRequirements (IReadOnlyCollection<TargetDefinition> executionList, NukeBuild build)
         {
             foreach (var target in executionList)
             foreach (var requirement in target.Requirements)

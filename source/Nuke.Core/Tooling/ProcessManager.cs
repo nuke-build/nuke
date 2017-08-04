@@ -103,8 +103,11 @@ namespace Nuke.Core.Tooling
                             };
 
             ApplyEnvironmentVariables(environmentVariables, startInfo);
-            PrintEnvironmentVariables(startInfo);
-            CheckPathEnvironmentVariable(startInfo);
+            if (NukeBuild.Instance.CheckPath)
+            {
+                PrintEnvironmentVariables(startInfo);
+                CheckPathEnvironmentVariable(startInfo);
+            }
 
             var process = Process.Start(startInfo);
             if (process == null)
@@ -173,9 +176,6 @@ namespace Nuke.Core.Tooling
 
         private static void CheckPathEnvironmentVariable (ProcessStartInfo startInfo)
         {
-            if (EnvironmentInfo.ArgumentSwitch("nopathcheck"))
-                return;
-
             startInfo.Environment
                     .SingleOrDefault(x => x.Key.Equals("path", StringComparison.OrdinalIgnoreCase))
                     .Value.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)

@@ -12,7 +12,7 @@ namespace Nuke.Core.Execution
     internal static class BuildExtensions
     {
         public static IReadOnlyCollection<TargetDefinition> GetTargetDefinitions<T> (this T build)
-            where T : IBuild
+            where T : NukeBuild
         {
             var targetDefinitions = build.GetType()
                     .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
@@ -27,7 +27,7 @@ namespace Nuke.Core.Execution
             return targetDefinitions;
         }
 
-        private static TargetDefinition LoadTargetDefinition (IBuild build, PropertyInfo property)
+        private static TargetDefinition LoadTargetDefinition (NukeBuild build, PropertyInfo property)
         {
             var targetFactory = (Target) property.GetValue(build);
             return TargetDefinition.Create(property.Name, targetFactory);

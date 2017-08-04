@@ -39,7 +39,7 @@ namespace Nuke.Core
     /// </code>
     /// </example>
     [PublicAPI]
-    public abstract class NukeBuild : IBuild
+    public abstract class NukeBuild
     {
         private const string c_configFile = ".nuke";
 
@@ -81,13 +81,25 @@ namespace Nuke.Core
         [Parameter("Configuration to build. Default is 'Debug' for local and 'Release' for server builds.")]
         public string Configuration { get; set; } = IsServerBuild ? "Release" : "Debug";
 
-        [Parameter("Specifies that no dependencies should be executed. Default is 'false'.", Name = "NoDeps")]
+        /// <summary>
+        /// Specifies that no dependencies should be executed. Default is <c>false</c>.
+        /// </summary>
+        [Parameter("Specifies that no dependencies should be executed. Default is 'false'.", Name = "no-deps")]
         public bool NoDependencies { get; set; }
 
-        [Parameter("Specifies that no logo should be printed. Default is is 'false'.")]
-        public bool NoLogo { get; set; }
+        //[Parameter("Specifies that no logo should be printed. Default is is 'false'.")]
+        //public bool NoLogo { get; set; }
 
-        [Parameter("Shows the help text for this build assembly.")]
+        /// <summary>
+        /// Enables additional checks for the <c>PATH</c> environment variable.
+        /// </summary>
+        [Parameter("Enables additional checks for the 'PATH' environment variable.")]
+        public bool CheckPath { get; set; }
+
+        /// <summary>
+        /// Shows the help text for this build assembly if supplied.
+        /// </summary>
+        [Parameter("Shows the help text for this build assembly if supplied.")]
         public bool Help { get; set; }
 
         public static bool IsLocalBuild => OutputSink.Instance is ConsoleOutputSink;
