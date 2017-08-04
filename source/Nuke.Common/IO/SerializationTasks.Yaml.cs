@@ -28,9 +28,8 @@ namespace Nuke.Common.IO
         [Pure]
         public static string YamlSerialize (object obj, Configure<SerializerBuilder> configurator = null)
         {
-            var builder = new SerializerBuilder()
-                    .WithNamingConvention(new CamelCaseNamingConvention());
-            builder = configurator.InvokeSafe(builder);
+            var builder = configurator.InvokeSafe(new SerializerBuilder()
+                    .WithNamingConvention(new CamelCaseNamingConvention()));
 
             var serializer = builder.Build();
             return serializer.Serialize(obj);
@@ -39,9 +38,8 @@ namespace Nuke.Common.IO
         [Pure]
         public static T YamlDeserialize<T> (string content, Configure<DeserializerBuilder> configurator = null)
         {
-            var builder = new DeserializerBuilder()
-                    .WithNamingConvention(new CamelCaseNamingConvention());
-            builder = configurator.InvokeSafe(builder);
+            var builder = configurator.InvokeSafe(new DeserializerBuilder()
+                    .WithNamingConvention(new CamelCaseNamingConvention()));
 
             var deserializer = builder.Build();
             return deserializer.Deserialize<T>(content);

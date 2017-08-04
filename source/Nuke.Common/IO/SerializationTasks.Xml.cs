@@ -8,9 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using JetBrains.Annotations;
-using Nuke.Core.Tooling;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
 
 namespace Nuke.Common.IO
 {
