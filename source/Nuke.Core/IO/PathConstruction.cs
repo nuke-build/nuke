@@ -267,6 +267,11 @@ namespace Nuke.Core.IO
             {
                 return path1 / path2;
             }
+
+            public override string ToString ()
+            {
+                return _path;
+            }
         }
 
         public class UnixRelativePath : RelativePath
@@ -324,6 +329,11 @@ namespace Nuke.Core.IO
             public static AbsolutePath operator + (AbsolutePath path1, string path2)
             {
                 return path1 / path2;
+            }
+
+            public override string ToString ()
+            {
+                return _path;
             }
         }
     }
