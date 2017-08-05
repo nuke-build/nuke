@@ -17,7 +17,7 @@ namespace Nuke.Common.Tools.MSBuild
             if (TargetPlatform == null)
                 return null;
 
-            if (TargetPlatform == MSBuildTargetPlatform.MSIL)
+            if (Equals(TargetPlatform, MSBuildTargetPlatform.MSIL))
                 return TargetPath == null || TargetPath.EndsWithOrdinalIgnoreCase(".sln")
                     ? "Any CPU".DoubleQuote()
                     : "AnyCPU";
