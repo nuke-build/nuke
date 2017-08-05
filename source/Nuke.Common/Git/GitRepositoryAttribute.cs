@@ -8,6 +8,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Core;
 using Nuke.Core.Injection;
+using Nuke.Core.Utilities;
 
 namespace Nuke.Common.Git
 {
@@ -25,7 +26,7 @@ namespace Nuke.Common.Git
                     .SkipWhile(x => x != "[remote \"origin\"]")
                     .Skip(count: 1)
                     .TakeWhile(x => !x.StartsWith("["))
-                    .Single(x => x.StartsWith("url = ", StringComparison.OrdinalIgnoreCase))
+                    .Single(x => x.StartsWithOrdinalIgnoreCase("url = "))
                     .Split('=')[1];
 
             return GitRepository.TryParse(url);

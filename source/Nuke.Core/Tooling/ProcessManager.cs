@@ -159,7 +159,7 @@ namespace Nuke.Core.Tooling
 
             foreach (var pair in startInfo.Environment.OrderBy(x => x.Key, StringComparer.OrdinalIgnoreCase))
             {
-                if (pair.Key.Equals("path", StringComparison.OrdinalIgnoreCase))
+                if (pair.Key.EqualsOrdinalIgnoreCase("path"))
                 {
                     var paths = pair.Value.Split(';');
                     var padding = paths.Length.ToString().Length;
@@ -177,7 +177,7 @@ namespace Nuke.Core.Tooling
         private static void CheckPathEnvironmentVariable (ProcessStartInfo startInfo)
         {
             startInfo.Environment
-                    .SingleOrDefault(x => x.Key.Equals("path", StringComparison.OrdinalIgnoreCase))
+                    .SingleOrDefault(x => x.Key.EqualsOrdinalIgnoreCase("path"))
                     .Value.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
                     .Where(x => !Directory.Exists(x))
                     .ForEach(x => Logger.Warn($"Path environment variable contains invalid or inaccessible path '{x}'."));

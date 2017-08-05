@@ -77,8 +77,8 @@ namespace Nuke.Core
         public static string Argument (string name, bool allowEmptyString = false)
         {
             var argument = Environment.GetCommandLineArgs()
-                    .SingleOrDefault(x => x.StartsWith($"--{name}=", StringComparison.OrdinalIgnoreCase)
-                                          || x.StartsWith($"-{name}=", StringComparison.OrdinalIgnoreCase));
+                    .SingleOrDefault(x => x.StartsWithOrdinalIgnoreCase($"--{name}=")
+                                          || x.StartsWithOrdinalIgnoreCase($"-{name}="));
             var split = argument?.Split(new[] { '=' }, count: 2);
             return allowEmptyString || !string.IsNullOrWhiteSpace(split?[1]) ? split?[1] : null;
         }
@@ -115,8 +115,8 @@ namespace Nuke.Core
         public static bool ArgumentSwitch (string name)
         {
             return Environment.GetCommandLineArgs()
-                    .Any(x => x.Equals($"--{name}", StringComparison.OrdinalIgnoreCase)
-                              || x.Equals($"-{name}", StringComparison.OrdinalIgnoreCase));
+                    .Any(x => x.EqualsOrdinalIgnoreCase($"--{name}")
+                              || x.EqualsOrdinalIgnoreCase($"-{name}"));
         }
 
         /// Provides access to a converted command-line argument using <see cref="ControlFlow.NotNull{T}"/>.

@@ -11,6 +11,7 @@ using NuGet.Packaging;
 using NuGet.Versioning;
 using Nuke.Common.IO;
 using Nuke.Core;
+using Nuke.Core.Utilities;
 using Nuke.Core.Utilities.Collections;
 
 namespace Nuke.Common.Tools
@@ -28,7 +29,7 @@ namespace Nuke.Common.Tools
         public static InstalledPackage GetLocalInstalledPackage (string packageId, string packagesConfigFile = null)
         {
             return GetLocalInstalledPackages(packagesConfigFile)
-                    .FirstOrDefault(x => x.Id.Equals(packageId, StringComparison.OrdinalIgnoreCase));
+                    .FirstOrDefault(x => x.Id.EqualsOrdinalIgnoreCase(packageId));
         }
 
         // TODO: add HasLocalInstalledPackage() ?
@@ -126,7 +127,7 @@ namespace Nuke.Common.Tools
                     .Select(x => x.FullName);
 
             var candidatePackages = packageFiles.Select(x => new InstalledPackage(x))
-                    .Where(x => x.Id.Equals(packageId, StringComparison.OrdinalIgnoreCase)) // packageFiles can contain wrong packages
+                    .Where(x => x.Id.EqualsOrdinalIgnoreCase(packageId)) // packageFiles can contain wrong packages
                     .Where(x => !x.Version.IsPrerelease || !includePrereleases.HasValue || includePrereleases.Value)
                     .OrderByDescending(x => x.Version)
                     .ToList();

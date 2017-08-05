@@ -15,6 +15,21 @@ namespace Nuke.Core.Utilities
     [DebuggerStepThrough]
     public static class StringExtensions
     {
+        public static bool EqualsOrdinalIgnoreCase(this string str, string other)
+        {
+            return str.Equals(other, StringComparison.OrdinalIgnoreCase);
+        }
+
+        public static bool StartsWithOrdinalIgnoreCase(this string str, string other)
+        {
+            return str.StartsWith(other, StringComparison.OrdinalIgnoreCase);
+        }
+
+        public static bool EndsWithOrdinalIgnoreCase(this string str, string other)
+        {
+            return str.EndsWith(other, StringComparison.OrdinalIgnoreCase);
+        }
+
         public static string EscapeBraces ([CanBeNull] this string str)
         {
             if (string.IsNullOrWhiteSpace(str))

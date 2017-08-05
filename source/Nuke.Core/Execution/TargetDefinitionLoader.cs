@@ -32,7 +32,7 @@ namespace Nuke.Core.Execution
             if (targetName == "default")
                 return targetDefinitions.Single(x => x.IsDefault);
 
-            var targetDefinition = targetDefinitions.SingleOrDefault(x => x.Name.Equals(targetName, StringComparison.OrdinalIgnoreCase));
+            var targetDefinition = targetDefinitions.SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(targetName));
             if (targetDefinition == null)
             {
                 var stringBuilder = new StringBuilder()
