@@ -192,30 +192,30 @@ namespace Nuke.ToolGenerator.Generators
                         .WriteSummaryExtension($"Sets {reference} in {property.GetCrefTag()} to a new collection", delegateProperty, property)
                         .WriteMethod($"Set{propertyPlural}",
                             $"params {valueType}[] {propertyInstance}",
-                            $"ExtensionHelper.SetCollection({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.MainSeparator.SingleQuote()});")
+                            $"ExtensionHelper.SetCollection({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.Separator.SingleQuote()});")
                         .WriteSummaryExtension($"Sets {reference} in {property.GetCrefTag()} to a new collection", delegateProperty, property)
                         .WriteMethod($"Set{propertyPlural}",
                             $"IEnumerable<{valueType}> {propertyInstance}",
-                            $"ExtensionHelper.SetCollection({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.MainSeparator.SingleQuote()});")
+                            $"ExtensionHelper.SetCollection({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.Separator.SingleQuote()});")
                         .WriteSummaryExtension($"Adds values to {reference} in {property.GetCrefTag()}", delegateProperty, property)
                         .WriteMethod($"Add{propertyPlural}",
                             $"params {valueType}[] {propertyInstance}",
-                            $"ExtensionHelper.AddItems({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.MainSeparator.SingleQuote()});")
+                            $"ExtensionHelper.AddItems({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.Separator.SingleQuote()});")
                         .WriteSummaryExtension($"Adds values to {reference} in existing {property.GetCrefTag()}", delegateProperty, property)
                         .WriteMethod($"Add{propertyPlural}",
                             $"IEnumerable<{valueType}> {propertyInstance}",
-                            $"ExtensionHelper.AddItems({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.MainSeparator.SingleQuote()});")
+                            $"ExtensionHelper.AddItems({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.Separator.SingleQuote()});")
                         .WriteSummaryExtension($"Clears {reference} in {property.GetCrefTag()}", delegateProperty, property)
                         .WriteMethod($"Clear{propertyPlural}",
                             $"{propertyAccess}.Remove({delegateProperty.Name.DoubleQuote()});")
                         .WriteSummaryExtension($"Removes values from {reference} in {property.GetCrefTag()}", delegateProperty, property)
                         .WriteMethod($"Remove{propertyPlural}",
                             $"params {valueType}[] {propertyInstance}",
-                            $"ExtensionHelper.RemoveItems({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.MainSeparator.SingleQuote()});")
+                            $"ExtensionHelper.RemoveItems({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.Separator.SingleQuote()});")
                         .WriteSummaryExtension($"Removes values from {reference} in {property.GetCrefTag()}", delegateProperty, property)
                         .WriteMethod($"Remove{propertyPlural}",
                             $"IEnumerable<{valueType}> {propertyInstance}",
-                            $"ExtensionHelper.RemoveItems({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.MainSeparator.SingleQuote()});");
+                            $"ExtensionHelper.RemoveItems({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.Separator.SingleQuote()});");
             }
 
             writer.WriteLine("#endregion");

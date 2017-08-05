@@ -232,14 +232,18 @@ namespace Nuke.ToolGenerator.Generators
                                 property.Format.DoubleQuote(),
                                 property.CustomValue ? $"Get{property.Name}()" : property.Name
                             };
-            if (property.MainSeparator.HasValue)
-                arguments.Add($"mainSeparator: {property.MainSeparator.SingleQuote()}");
-            if (property.KeyValueSeparator.HasValue)
-                arguments.Add($"keyValueSeparator: {property.KeyValueSeparator.SingleQuote()}");
+            if (property.IsDictionary() || property.IsLookupTable())
+                arguments.Add(property.ItemFormat.NotNull($"{property.Name}.ItemFormat != null").DoubleQuote());
+            if (property.Separator.HasValue)
+                arguments.Add($"separator: {property.Separator.SingleQuote()}");
             if (property.DisallowedCharacter.HasValue)
                 arguments.Add($"disallowed: {property.DisallowedCharacter.SingleQuote()}");
+            if (property.QuoteMultiple)
+                arguments.Add("quoteMultiple: true");
+            if (property.CustomValue)
+                arguments.Add("customValue: true");
             if (property.Secret)
-                arguments.Add($"secret: true");
+                arguments.Add("secret: true");
 
             return $"  .Add({arguments.Join()})";
         }

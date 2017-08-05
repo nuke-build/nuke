@@ -48,8 +48,8 @@ namespace Nuke.Core.Utilities
             if (string.IsNullOrWhiteSpace(str))
                 return string.Empty;
 
-            //if (str.IsDoubleQuoted())
-            //    return str;
+            if (str.IsDoubleQuoted ())
+                return str;
 
             if (!str.Contains(disallowed))
                 return str;
@@ -75,8 +75,8 @@ namespace Nuke.Core.Utilities
             if (string.IsNullOrWhiteSpace(str))
                 return string.Empty;
 
-            //if (str.IsSingleQuoted())
-            //    return str;
+            if (str.IsSingleQuoted ())
+                return str;
 
             if (!str.Contains(disallowed))
                 return str;

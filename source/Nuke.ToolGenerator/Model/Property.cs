@@ -37,6 +37,11 @@ namespace Nuke.ToolGenerator.Model
         /// The format how the property is rendered.
         /// </summary>
         public string Format { get; set; }
+
+        /// <summary>
+        /// The format how items of dictionaries and lookups are rendered.
+        /// </summary>
+        public string ItemFormat { get; set; }
         
         /// <summary>
         /// If set to <c>true</c>, null-check for <see cref="Format"/> will be skipped.
@@ -54,19 +59,19 @@ namespace Nuke.ToolGenerator.Model
         public bool NoExtensionMethod { get; set; }
 
         /// <summary>
-        /// Defines the separator between items of lists or dictionaries.
+        /// Defines the separator between items of lists, dictionaries or lookups.
         /// </summary>
-        public char? MainSeparator { get; set; }
-
-        /// <summary>
-        /// Defines the separator for key-value pairs.
-        /// </summary>
-        public char? KeyValueSeparator { get; set; }
+        public char? Separator { get; set; }
 
         /// <summary>
         /// Defines a disallowed character.
         /// </summary>
         public char? DisallowedCharacter { get; set; }
+
+        /// <summary>
+        /// Enables double-quoting for items of lists, dictionaries and lookups.
+        /// </summary>
+        public bool QuoteMultiple { get; set; }
 
         /// <summary>
         /// Defines the default value.

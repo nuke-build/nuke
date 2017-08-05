@@ -24,7 +24,7 @@ namespace Nuke.Core.Tooling
         private const char c_space = ' ';
 
         private readonly List<string> _secrets = new List<string>();
-        private readonly List<Tuple<string, string>> _arguments = new List<Tuple<string, string>>();
+        private readonly LookupTable<string, string> _arguments = new LookupTable<string, string>(StringComparer.OrdinalIgnoreCase);
 
         public Arguments Add (string argument, bool condition = true)
         {
@@ -42,7 +42,12 @@ namespace Nuke.Core.Tooling
             return Add(argumentFormat, value?.ToString(), disallowed, secret);
         }
 
-        public Arguments Add (string argumentFormat, [CanBeNull] string value, char? disallowed = null, bool secret = false)
+        public Arguments Add (
+            string argumentFormat,
+            [CanBeNull] string value,
+            char? disallowed = null,
+            bool customValue = false,
+            bool secret = false)
         {
             if (string.IsNullOrWhiteSpace(value))
                 return this;
@@ -50,28 +55,31 @@ namespace Nuke.Core.Tooling
             if (secret)
                 _secrets.Add(value);
 
-            _arguments.Add(Tuple.Create(argumentFormat.Replace("{value}", "{0}"), value.Trim().DoubleQuoteIfNeeded(disallowed, c_space)));
+            argumentFormat = argumentFormat.Replace("{value}", "{0}");
+            _arguments.Add(argumentFormat, customValue ? value : value.DoubleQuoteIfNeeded(disallowed, c_space));
 
             return this;
         }
 
         public Arguments Add<T> (
             string argumentFormat,
-            [CanBeNull] IEnumerable<T> enumerable,
-            char? mainSeparator = null,
+            [CanBeNull] IEnumerable<T> values,
+            char? separator = null,
             char? disallowed = null,
-            bool secret = false)
+            bool quoteMultiple = false)
         {
-            var list = enumerable?.ToList();
-            if (list == null || list.Count <= 0)
+            var list = values?.ToList();
+            if (list == null || list.Count == 0)
                 return this;
 
-            string Format (T value) => value.ToString().Trim().DoubleQuoteIfNeeded(mainSeparator, disallowed);
+            argumentFormat = argumentFormat.Replace("{value}", "{0}");
 
-            if (mainSeparator.HasValue)
-                Add(argumentFormat, list.Select(Format).Join(mainSeparator.Value), secret: secret);
+            string Format (T value) => value.ToString().DoubleQuoteIfNeeded(separator, disallowed, c_space);
+
+            if (separator.HasValue)
+                _arguments.Add(argumentFormat, FormatMultiple(list, Format, separator.Value, quoteMultiple));
             else
-                list.ForEach(x => Add(argumentFormat, x, disallowed, secret));
+                _arguments.AddRange(argumentFormat, list.Select(Format));
 
             return this;
         }
@@ -79,22 +87,31 @@ namespace Nuke.Core.Tooling
         public Arguments Add<TKey, TValue> (
             string argumentFormat,
             [CanBeNull] IReadOnlyDictionary<TKey, TValue> dictionary,
-            char keyValueSeparator,
-            char? mainSeparator = null,
+            string itemFormat,
+            char? separator = null,
             char? disallowed = null,
-            bool secret = false)
+            bool quoteMultiple = false)
             where TValue : class
         {
-            if (dictionary == null || dictionary.Count <= 0)
+            if (dictionary == null || dictionary.Count == 0)
                 return this;
 
-            string Format (TValue value) => value.ToString().Trim().DoubleQuoteIfNeeded(mainSeparator, keyValueSeparator, disallowed);
-            var pairs = dictionary.Where(x => x.Value.NotNullWarn($"Value for '{x.Key}' is 'null', omitting...") != null).ToList();
+            argumentFormat = argumentFormat.Replace("{value}", "{0}");
+            var keyValueSeparator = itemFormat.Replace("{key}", string.Empty).Replace("{value}", string.Empty);
+            ControlFlow.Assert(keyValueSeparator.Length == 1, "keyValueSeparator.Length == 1");
 
-            if (mainSeparator.HasValue)
-                Add(argumentFormat, pairs.Select(x => $"{x.Key}{keyValueSeparator}{Format(x.Value)}").Join(mainSeparator.Value), secret: secret);
+            string Format (object value) => value.ToString().DoubleQuoteIfNeeded(separator, keyValueSeparator.Single(), disallowed, c_space);
+
+            string FormatPair (KeyValuePair<TKey, TValue> pair)
+                => itemFormat
+                        .Replace("{key}", Format(pair.Key))
+                        .Replace("{value}", Format(pair.Value));
+
+            var pairs = dictionary.Where(x => x.Value.NotNullWarn($"Value for '{x.Key}' is 'null', omitting...") != null).ToList();
+            if (separator.HasValue)
+                _arguments.Add(argumentFormat, FormatMultiple(pairs, FormatPair, separator.Value, quoteMultiple));
             else
-                pairs.ForEach(x => Add(argumentFormat, $"{x.Key}{keyValueSeparator}{Format(x.Value)}", secret: secret));
+                _arguments.AddRange(argumentFormat, pairs.Select(FormatPair));
 
             return this;
         }
@@ -102,29 +119,41 @@ namespace Nuke.Core.Tooling
         public Arguments Add<TKey, TValue> (
             string argumentFormat,
             [CanBeNull] ILookup<TKey, TValue> lookup,
-            char keyValueSeparator,
-            char? mainSeparator = null,
+            string itemFormat,
+            char? separator = null,
             char? disallowed = null,
-            bool secret = false)
+            bool quoteMultiple = false)
         {
-            if (lookup == null || lookup.Count <= 0)
+            if (lookup == null || lookup.Count == 0)
                 return this;
 
-            string Format (TValue value) => value?.ToString().Trim().DoubleQuoteIfNeeded(keyValueSeparator, disallowed);
+            argumentFormat = argumentFormat.Replace("{value}", "{0}");
+            var listSeparator = itemFormat.Replace("{key}", string.Empty).Replace("{value}", string.Empty);
+            ControlFlow.Assert(listSeparator.Length == 1, "listSeparator.Length == 1");
 
-            if (mainSeparator.HasValue)
-            {
-                foreach (var grouping in lookup)
-                    Add(argumentFormat, $"{grouping.Key}{keyValueSeparator}{grouping.Select(Format).Join(mainSeparator.Value)}", secret: secret);
-            }
+            string Format (object value) => value?.ToString().DoubleQuoteIfNeeded(separator, listSeparator.Single(), disallowed, c_space);
+
+            string FormatLookup (TKey key, string values)
+                => itemFormat
+                        .Replace("{key}", Format(key))
+                        .Replace("{value}", values);
+
+            if (separator.HasValue)
+                foreach (var list in lookup)
+                    _arguments.Add(argumentFormat, FormatLookup(list.Key, FormatMultiple(list, x => Format(x), separator.Value, quoteMultiple)));
             else
-            {
-                foreach (var grouping in lookup)
-                foreach (var value in grouping)
-                    Add(argumentFormat, $"{grouping.Key}{keyValueSeparator}{Format(value)}", secret: secret);
-            }
+                foreach (var list in lookup)
+                    _arguments.AddRange(argumentFormat, list.Select(x => FormatLookup(list.Key, Format(x))));
 
             return this;
+        }
+
+        private string FormatMultiple<T>(IEnumerable<T> items, Func<T, string> format, char separator, bool quoteMultiple)
+        {
+            var values = items.Select(x => format(x)).Join(separator);
+            return !quoteMultiple
+                ? values
+                : values.DoubleQuoteIfNeeded();
         }
 
         public string Filter (string text)
@@ -134,15 +163,17 @@ namespace Nuke.Core.Tooling
 
         private string Render (bool forOutput)
         {
-            string Format (Tuple<string, string> argument)
-                => !_secrets.Contains(argument.Item2) || !forOutput
-                    ? argument.Item2
+            string Format (string argument)
+                => !_secrets.Contains(argument) || !forOutput
+                    ? argument
                     : c_hiddenString;
 
-            return _arguments.Aggregate(
-                new StringBuilder(),
-                (sb, a) => sb.AppendFormat(a.Item1, Format(a)).Append(value: c_space),
-                sb => sb.ToString().TrimEnd(c_space));
+            var builder = new StringBuilder();
+            foreach (var argumentPair in _arguments)
+            foreach (var argument in argumentPair)
+                builder.AppendFormat(argumentPair.Key, Format(argument)).Append(c_space);
+
+            return builder.ToString().TrimEnd();
         }
 
         public string RenderForExecution ()
