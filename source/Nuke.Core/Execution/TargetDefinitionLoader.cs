@@ -15,28 +15,29 @@ namespace Nuke.Core.Execution
     {
         public static IReadOnlyCollection<TargetDefinition> GetExecutionList (NukeBuild build, Target defaultTarget)
         {
-            var allTargets = build.GetTargetDefinitions();
+            var allTargets = build.GetTargetDefinitions(defaultTarget);
 
             ControlFlow.Assert(allTargets.All(x => x.Name != "default"), "The name 'default' cannot be used as target identifier.");
-            var specifiedTargets = build.Target.Select(x => GetTargetByName(x, defaultTarget, allTargets)).ToList();
+            var specifiedTargets = build.Target.Select(x => GetTargetByName(x, defaultTarget, allTargets, build)).ToList();
 
             return GetSortedList(specifiedTargets, allTargets);
         }
 
-        private static TargetDefinition GetTargetByName (string targetName, Target defaultTarget, IReadOnlyCollection<TargetDefinition> targetDefinitions)
+        private static TargetDefinition GetTargetByName (
+            string targetName,
+            Target defaultTarget,
+            IReadOnlyCollection<TargetDefinition> targetDefinitions,
+            NukeBuild build)
         {
             if (targetName == "default")
-                return targetDefinitions.Single(x => x.Factory == defaultTarget);
+                return targetDefinitions.Single(x => x.IsDefault);
 
             var targetDefinition = targetDefinitions.SingleOrDefault(x => x.Name.Equals(targetName, StringComparison.OrdinalIgnoreCase));
             if (targetDefinition == null)
             {
                 var stringBuilder = new StringBuilder()
-                        .AppendLine($"Target with name '{targetName}' does not exist.")
-                        .AppendLine("Available targets are:");
-                targetDefinitions
-                        .OrderBy(x => x.Name, StringComparer.OrdinalIgnoreCase)
-                        .ForEach(x => stringBuilder.AppendLine($"  - {x.Name}{(x.Factory == defaultTarget ? " (default)" : string.Empty)}"));
+                        .AppendLine(BuildExecutor.GetTargetsText(build, defaultTarget))
+                        .AppendLine($"Target with name '{targetName}' is not available.");
 
                 ControlFlow.Fail(stringBuilder.ToString());
             }

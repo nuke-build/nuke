@@ -37,6 +37,7 @@ namespace Nuke.Core.Execution
         internal Target Factory { get; }
 
         internal string Description { get; set; }
+        internal bool IsDefault { get; set; }
         internal TimeSpan Duration { get; set; }
         internal ExecutionStatus Status { get; set; }
         internal List<Func<bool>> Conditions { get; }

@@ -11,7 +11,7 @@ namespace Nuke.Core.Execution
 {
     internal static class BuildExtensions
     {
-        public static IReadOnlyCollection<TargetDefinition> GetTargetDefinitions<T> (this T build)
+        public static IReadOnlyCollection<TargetDefinition> GetTargetDefinitions<T> (this T build, Target defaultTarget)
             where T : NukeBuild
         {
             var targetDefinitions = build.GetType()
@@ -22,7 +22,12 @@ namespace Nuke.Core.Execution
             var nameDictionary = targetDefinitions.ToDictionary(x => x.Name, x => x, StringComparer.OrdinalIgnoreCase);
             var factoryDictionary = targetDefinitions.ToDictionary(x => x.Factory, x => x);
 
-            targetDefinitions.ForEach(x => x.TargetDefinitionDependencies.AddRange(GetDependencies(x, nameDictionary, factoryDictionary)));
+            foreach (var targetDefinition in targetDefinitions)
+            {
+                var dependencies = GetDependencies(targetDefinition, nameDictionary, factoryDictionary);
+                targetDefinition.TargetDefinitionDependencies.AddRange(dependencies);
+                targetDefinition.IsDefault = targetDefinition.Factory == defaultTarget;
+            }
 
             return targetDefinitions;
         }
