@@ -11,12 +11,13 @@ namespace Nuke.Core.OutputSinks
 {
     public interface IOutputSink
     {
+        void Write (string text);
+        IDisposable WriteBlock (string text);
+
         void Trace (string text);
         void Info (string text);
         void Warn (string text, string details = null);
         void Fail (string text, string details = null);
-
-        IDisposable WriteBlock (string text);
 
         void WriteSummary (IReadOnlyCollection<TargetDefinition> executionList);
     }
@@ -29,6 +30,16 @@ namespace Nuke.Core.OutputSinks
                 TeamCityOutputSink.Instance
                 ?? BitriseOutputSink.Instance
                 ?? ConsoleOutputSink.Instance;
+        
+        public static void Write(string text)
+        {
+            Instance.Write(text);
+        }
+
+        public static IDisposable WriteBlock (string text)
+        {
+            return Instance.WriteBlock(text);
+        }
 
         public static void Trace (string text)
         {
@@ -58,11 +69,6 @@ namespace Nuke.Core.OutputSinks
         public static void Fail (string text, string details = null)
         {
             Instance.Fail(text, details);
-        }
-
-        public static IDisposable WriteBlock (string text)
-        {
-            return Instance.WriteBlock(text);
         }
 
         public static void WriteSummary (IReadOnlyCollection<TargetDefinition> executionList)

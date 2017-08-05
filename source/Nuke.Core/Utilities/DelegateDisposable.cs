@@ -4,27 +4,29 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Nuke.Core.Utilities
 {
     internal class DelegateDisposable : IDisposable
     {
-        public static IDisposable CreateBracket (Action setup, Action cleanup)
+        public static IDisposable CreateBracket (Action setup = null, Action cleanup = null)
         {
-            setup();
+            setup?.Invoke();
             return new DelegateDisposable(cleanup);
         }
 
+        [CanBeNull]
         private readonly Action _cleanup;
 
-        public DelegateDisposable (Action cleanup)
+        private DelegateDisposable ([CanBeNull] Action cleanup)
         {
             _cleanup = cleanup;
         }
 
         public void Dispose ()
         {
-            _cleanup();
+            _cleanup?.Invoke();
         }
     }
 }

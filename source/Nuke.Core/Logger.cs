@@ -15,6 +15,17 @@ namespace Nuke.Core
     [DebuggerStepThrough]
     public static class Logger
     {
+        public static void Log(string text = null)
+        {
+            OutputSink.Write(text ?? string.Empty);
+        }
+        
+        public static T Log<T> (this T obj, Func<T, string> text)
+        {
+            Log(text(obj));
+            return obj;
+        }
+
         /// <summary>
         /// Provides a logging block for better readability. The actual output is dependent on the executing environment.
         /// <ul>

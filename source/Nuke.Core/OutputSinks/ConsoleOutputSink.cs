@@ -5,13 +5,11 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using Colorful;
 using JetBrains.Annotations;
 using Nuke.Core.Execution;
 using Nuke.Core.Utilities;
+using Console = System.Console;
 
 namespace Nuke.Core.OutputSinks
 {
@@ -19,12 +17,19 @@ namespace Nuke.Core.OutputSinks
     public class ConsoleOutputSink : IOutputSink
     {
         public static IOutputSink Instance { get; } = new ConsoleOutputSink();
-
-        private Figlet _figlet;
-
-        protected ConsoleOutputSink ()
+        
+        public virtual void Write (string text)
         {
-            SetFont("cybermedium");
+            WriteWithColors(text, ConsoleColor.White, ConsoleColor.Black);
+        }
+
+        public virtual IDisposable WriteBlock (string text)
+        {
+            Info(FigletTransform.GetText(text));
+
+            return DelegateDisposable.CreateBracket(
+                () => Console.Title = $"Executing: {text}",
+                () => Console.Title = $"Finished: {text}");
         }
 
         public virtual void Trace (string text)
@@ -51,15 +56,6 @@ namespace Nuke.Core.OutputSinks
                 WriteWithColors(details, ConsoleColor.Red, ConsoleColor.DarkRed);
         }
 
-        public virtual IDisposable WriteBlock (string text)
-        {
-            Info(GetAscii(text));
-
-            return DelegateDisposable.CreateBracket(
-                () => System.Console.Title = $"Executing: {text}",
-                () => System.Console.Title = $"Finished: {text}");
-        }
-
         public virtual void WriteSummary (IReadOnlyCollection<TargetDefinition> executionList)
         {
             var longestName = executionList.Select(x => x.Name.Length).OrderByDescending(x => x).First();
@@ -77,62 +73,33 @@ namespace Nuke.Core.OutputSinks
             string ToMinutesAndSeconds (TimeSpan duration)
                 => $"{(int) duration.TotalMinutes}:{duration:ss}";
 
-            OutputSink.Info(string.Empty);
-            OutputSink.Info(new string(c: '=', count: allColumns));
-            OutputSink.Info(CreateLine("Target", "Status", "Duration"));
-            OutputSink.Info(new string(c: '-', count: allColumns));
+            Logger.Log();
+            Logger.Log(new string(c: '=', count: allColumns));
+            Logger.Log(CreateLine("Target", "Status", "Duration"));
+            Logger.Log(new string(c: '-', count: allColumns));
             foreach (var target in executionList.TakeWhile(x => x.Status != ExecutionStatus.None))
-                OutputSink.Info(CreateLine(target.Name, target.Status.ToString(), ToMinutesAndSeconds(target.Duration)));
-            OutputSink.Info(new string(c: '-', count: allColumns));
-            OutputSink.Info(CreateLine("Total", "", ToMinutesAndSeconds(totalDuration)));
-            OutputSink.Info(new string(c: '=', count: allColumns));
-            OutputSink.Info(string.Empty);
-            OutputSink.Info($"Finished build on {DateTime.Now.ToString(CultureInfo.InvariantCulture)}.");
-            OutputSink.Info(string.Empty);
+                Logger.Log(CreateLine(target.Name, target.Status.ToString(), ToMinutesAndSeconds(target.Duration)));
+            Logger.Log(new string(c: '-', count: allColumns));
+            Logger.Log(CreateLine("Total", "", ToMinutesAndSeconds(totalDuration)));
+            Logger.Log(new string(c: '=', count: allColumns));
+            Logger.Log();
+            Logger.Log($"Finished build on {DateTime.Now.ToString(CultureInfo.InvariantCulture)}.");
+            Logger.Log();
         }
 
         private void WriteWithColors (string text, ConsoleColor brightForeground, ConsoleColor darkForeground)
         {
-            var previousForeground = System.Console.ForegroundColor;
-            var backgroundColor = System.Console.BackgroundColor;
+            var previousForeground = Console.ForegroundColor;
+            var backgroundColor = Console.BackgroundColor;
 
             var hasDarkBackground = backgroundColor == ConsoleColor.Black || backgroundColor.ToString().StartsWith("Dark");
 
             using (DelegateDisposable.CreateBracket(
-                () => System.Console.ForegroundColor = hasDarkBackground ? brightForeground : darkForeground,
-                () => System.Console.ForegroundColor = previousForeground))
+                () => Console.ForegroundColor = hasDarkBackground ? brightForeground : darkForeground,
+                () => Console.ForegroundColor = previousForeground))
             {
-                System.Console.WriteLine(text);
+                Console.WriteLine(text);
             }
-        }
-
-        protected void SetFont (string integratedFontName)
-        {
-            var fullResourceName = $"{typeof(OutputSink).Namespace}.Fonts.{integratedFontName}.flf";
-            var assembly = GetType().GetTypeInfo().Assembly;
-            var resourceStream = assembly.GetManifestResourceStream(fullResourceName);
-            SetFontFromStream(resourceStream.NotNull());
-        }
-
-        protected void SetFontFromStream (Stream stream)
-        {
-            _figlet = new Figlet(FigletFont.Load(stream));
-        }
-
-        protected void SetFontFromFile (string path)
-        {
-            _figlet = new Figlet(FigletFont.Load(path));
-        }
-
-        protected string GetAscii (string text)
-        {
-            var textWithFont = _figlet.ToAscii(text).ToString()
-                    .Split(new[] { EnvironmentInfo.NewLine }, StringSplitOptions.RemoveEmptyEntries)
-                    .Where(x => !string.IsNullOrWhiteSpace(x));
-
-            return EnvironmentInfo.NewLine +
-                   textWithFont.Join(EnvironmentInfo.NewLine) +
-                   EnvironmentInfo.NewLine;
         }
     }
 }

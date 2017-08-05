@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using Nuke.Core.Utilities;
 
 namespace Nuke.Core.OutputSinks
 {
@@ -11,9 +12,10 @@ namespace Nuke.Core.OutputSinks
     {
         public new static IOutputSink Instance { get; } = BuildServers.Bitrise.Instance != null ? new BitriseOutputSink() : null;
 
-        public BitriseOutputSink ()
+        public override IDisposable WriteBlock (string text)
         {
-            SetFont("ansi-shadow");
+            Info(FigletTransform.GetText(text, "ansi-shadow"));
+            return DelegateDisposable.CreateBracket();
         }
     }
 }

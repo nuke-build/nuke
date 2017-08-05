@@ -20,6 +20,18 @@ namespace Nuke.Core.OutputSinks
             _teamCity = teamCity;
         }
 
+        public override void Write (string text)
+        {
+            _teamCity.WriteMessage(text);
+        }
+
+        public override IDisposable WriteBlock (string text)
+        {
+            return DelegateDisposable.CreateBracket(
+                () => _teamCity.OpenBlock(text),
+                () => _teamCity.CloseBlock(text));
+        }
+
         public override void Trace (string text)
         {
             _teamCity.WriteMessage(text);
@@ -41,13 +53,6 @@ namespace Nuke.Core.OutputSinks
         {
             _teamCity.WriteError(text, details);
             _teamCity.AddBuildProblem(text);
-        }
-
-        public override IDisposable WriteBlock (string text)
-        {
-            return DelegateDisposable.CreateBracket(
-                () => _teamCity.OpenBlock(text),
-                () => _teamCity.CloseBlock(text));
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Nuke.Core.Execution
                     continue;
                 }
 
-                using (OutputSink.WriteBlock(target.Name))
+                using (Logger.Block(target.Name))
                 {
                     var stopwatch = Stopwatch.StartNew();
                     try

@@ -84,7 +84,7 @@ namespace Nuke.Core
         /// <summary>
         /// Specifies that no dependencies should be executed. Default is <c>false</c>.
         /// </summary>
-        [Parameter("Specifies that no dependencies should be executed. Default is 'false'.", Name = "no-deps")]
+        [Parameter("Specifies that no dependencies should be executed. Default is 'false'.", Name = "NoDeps")]
         public bool NoDependencies { get; set; }
 
         //[Parameter("Specifies that no logo should be printed. Default is is 'false'.")]

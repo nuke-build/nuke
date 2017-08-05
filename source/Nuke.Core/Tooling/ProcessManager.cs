@@ -43,7 +43,7 @@ namespace Nuke.Core.Tooling
 
             ControlFlow.Assert(toolPath != null, "ToolPath was not set.");
             ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
-            OutputSink.Info($"> {Path.GetFullPath(toolPath).DoubleQuoteIfNeeded()} {arguments.RenderForOutput()}");
+            Logger.Info($"> {Path.GetFullPath(toolPath).DoubleQuoteIfNeeded()} {arguments.RenderForOutput()}");
 
             processSettings = processSettings ?? new ProcessSettings();
             return StartProcessInternal(
@@ -68,7 +68,7 @@ namespace Nuke.Core.Tooling
         {
             ControlFlow.Assert(toolPath != null, "ToolPath was not set.");
             ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
-            OutputSink.Info($"> {Path.GetFullPath(toolPath).DoubleQuoteIfNeeded()} {arguments}");
+            Logger.Info($"> {Path.GetFullPath(toolPath).DoubleQuoteIfNeeded()} {arguments}");
 
             return StartProcessInternal(toolPath,
                 arguments,
