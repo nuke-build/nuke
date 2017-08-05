@@ -108,7 +108,7 @@ namespace Nuke.Common.Tools.Xunit2
               .Add("-diagnostics", Diagnostics)
               .Add("-debug", Debug)
               .Add("-serialize", Serialization)
-              .Add("-trait {value}", Traits, "{key}={values}")
+              .Add("-trait {value}", Traits, "{key}={value}")
               .Add("-notrait {value}", ExcludedTraits, "{key}={value}")
               .Add("-method {value}", Methods)
               .Add("-class {value}", Classes)
@@ -142,20 +142,28 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.TargetAssemblyWithConfigsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Adds a targetAssemblyWithConfig to the existing <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/>.</em></p><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
+        /// <summary><p><em>Adds new values for the given key to <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/>.</em></p><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
         [Pure]
-        public static Xunit2Settings AddTargetAssemblyWithConfig(this Xunit2Settings toolSettings, string targetAssemblyWithConfigKey, string targetAssemblyWithConfigValue)
+        public static Xunit2Settings AddTargetAssemblyWithConfigs(this Xunit2Settings toolSettings, string targetAssemblyWithConfigsKey, params string[] targetAssemblyWithConfigsValues)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TargetAssemblyWithConfigsInternal.Add(targetAssemblyWithConfigKey, targetAssemblyWithConfigValue);
+            toolSettings.TargetAssemblyWithConfigsInternal.AddRange(targetAssemblyWithConfigsKey, targetAssemblyWithConfigsValues);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds new values for the given key to <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/>.</em></p><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
+        [Pure]
+        public static Xunit2Settings AddTargetAssemblyWithConfigs(this Xunit2Settings toolSettings, string targetAssemblyWithConfigsKey, IEnumerable<string> targetAssemblyWithConfigsValues)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetAssemblyWithConfigsInternal.AddRange(targetAssemblyWithConfigsKey, targetAssemblyWithConfigsValues);
             return toolSettings;
         }
         /// <summary><p><em>Removes a single targetAssemblyWithConfig from <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/>.</em></p><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
         [Pure]
-        public static Xunit2Settings RemoveTargetAssemblyWithConfig(this Xunit2Settings toolSettings, string targetAssemblyWithConfigKey, string targetAssemblyWithConfigValue)
+        public static Xunit2Settings RemoveTargetAssemblyWithConfig(this Xunit2Settings toolSettings, string targetAssemblyWithConfigsKey, string targetAssemblyWithConfigsValue)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TargetAssemblyWithConfigsInternal.Remove(targetAssemblyWithConfigKey, targetAssemblyWithConfigValue);
+            toolSettings.TargetAssemblyWithConfigsInternal.Remove(targetAssemblyWithConfigsKey, targetAssemblyWithConfigsValue);
             return toolSettings;
         }
         #endregion
@@ -590,20 +598,28 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.TraitsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Adds a trait to the existing <see cref="Xunit2Settings.Traits"/>.</em></p><p>Only run tests with matching name/value traits.</p></summary>
+        /// <summary><p><em>Adds new values for the given key to <see cref="Xunit2Settings.Traits"/>.</em></p><p>Only run tests with matching name/value traits.</p></summary>
         [Pure]
-        public static Xunit2Settings AddTrait(this Xunit2Settings toolSettings, string traitKey, string traitValue)
+        public static Xunit2Settings AddTraits(this Xunit2Settings toolSettings, string traitsKey, params string[] traitsValues)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TraitsInternal.Add(traitKey, traitValue);
+            toolSettings.TraitsInternal.AddRange(traitsKey, traitsValues);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds new values for the given key to <see cref="Xunit2Settings.Traits"/>.</em></p><p>Only run tests with matching name/value traits.</p></summary>
+        [Pure]
+        public static Xunit2Settings AddTraits(this Xunit2Settings toolSettings, string traitsKey, IEnumerable<string> traitsValues)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TraitsInternal.AddRange(traitsKey, traitsValues);
             return toolSettings;
         }
         /// <summary><p><em>Removes a single trait from <see cref="Xunit2Settings.Traits"/>.</em></p><p>Only run tests with matching name/value traits.</p></summary>
         [Pure]
-        public static Xunit2Settings RemoveTrait(this Xunit2Settings toolSettings, string traitKey, string traitValue)
+        public static Xunit2Settings RemoveTrait(this Xunit2Settings toolSettings, string traitsKey, string traitsValue)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TraitsInternal.Remove(traitKey, traitValue);
+            toolSettings.TraitsInternal.Remove(traitsKey, traitsValue);
             return toolSettings;
         }
         #endregion
@@ -624,20 +640,28 @@ namespace Nuke.Common.Tools.Xunit2
             toolSettings.ExcludedTraitsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Adds a excludedTrait to the existing <see cref="Xunit2Settings.ExcludedTraits"/>.</em></p><p>Do not run tests with matching name/value traits.</p></summary>
+        /// <summary><p><em>Adds new values for the given key to <see cref="Xunit2Settings.ExcludedTraits"/>.</em></p><p>Do not run tests with matching name/value traits.</p></summary>
         [Pure]
-        public static Xunit2Settings AddExcludedTrait(this Xunit2Settings toolSettings, string excludedTraitKey, string excludedTraitValue)
+        public static Xunit2Settings AddExcludedTraits(this Xunit2Settings toolSettings, string excludedTraitsKey, params string[] excludedTraitsValues)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludedTraitsInternal.Add(excludedTraitKey, excludedTraitValue);
+            toolSettings.ExcludedTraitsInternal.AddRange(excludedTraitsKey, excludedTraitsValues);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds new values for the given key to <see cref="Xunit2Settings.ExcludedTraits"/>.</em></p><p>Do not run tests with matching name/value traits.</p></summary>
+        [Pure]
+        public static Xunit2Settings AddExcludedTraits(this Xunit2Settings toolSettings, string excludedTraitsKey, IEnumerable<string> excludedTraitsValues)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludedTraitsInternal.AddRange(excludedTraitsKey, excludedTraitsValues);
             return toolSettings;
         }
         /// <summary><p><em>Removes a single excludedTrait from <see cref="Xunit2Settings.ExcludedTraits"/>.</em></p><p>Do not run tests with matching name/value traits.</p></summary>
         [Pure]
-        public static Xunit2Settings RemoveExcludedTrait(this Xunit2Settings toolSettings, string excludedTraitKey, string excludedTraitValue)
+        public static Xunit2Settings RemoveExcludedTrait(this Xunit2Settings toolSettings, string excludedTraitsKey, string excludedTraitsValue)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludedTraitsInternal.Remove(excludedTraitKey, excludedTraitValue);
+            toolSettings.ExcludedTraitsInternal.Remove(excludedTraitsKey, excludedTraitsValue);
             return toolSettings;
         }
         #endregion

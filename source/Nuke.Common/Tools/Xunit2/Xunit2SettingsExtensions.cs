@@ -16,7 +16,7 @@ namespace Nuke.Common.Tools.Xunit2
         {
             return assemblyFiles.Aggregate(
                 toolSettings,
-                (current, assembly) => current.AddTargetAssemblyWithConfig(assembly, targetAssemblyWithConfigValue: null));
+                (current, assembly) => current.AddTargetAssemblyWithConfigs(assembly, string.Empty));
         }
 
         public static Xunit2Settings AddTargetAssemblies (this Xunit2Settings toolSettings, params string[] assemblyFiles)

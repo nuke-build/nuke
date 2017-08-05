@@ -227,8 +227,9 @@ namespace Nuke.ToolGenerator.Generators
             var (keyType, valueType) = property.GetLookupTableKeyValueTypes();
             var propertySingular = property.Name.ToSingular();
             var propertySingularInstance = property.Name.ToSingular().ToInstance();
-            var keyInstance = $"{propertySingularInstance}Key";
-            var valueInstance = $"{propertySingularInstance}Value";
+            var keyInstance = $"{propertyInstance}Key";
+            var valueInstance = $"{propertyInstance}Value";
+            var valueInstances = $"{propertyInstance}Values";
             var propertyAccess = $"toolSettings.{property.Name}Internal";
 
             // TODO: params
@@ -241,10 +242,14 @@ namespace Nuke.ToolGenerator.Generators
                     .WriteSummaryExtension($"Clears {property.GetCrefTag()}", property)
                     .WriteMethod($"Clear{property.Name}",
                         $"{propertyAccess}.Clear();")
-                    .WriteSummaryExtension($"Adds a {propertySingularInstance} to the existing {property.GetCrefTag()}", property)
-                    .WriteMethod($"Add{propertySingular}",
-                        new[] { $"{keyType} {keyInstance}", $"{valueType} {valueInstance}" },
-                        $"{propertyAccess}.Add({keyInstance}, {valueInstance});")
+                    .WriteSummaryExtension($"Adds new values for the given key to {property.GetCrefTag()}", property)
+                    .WriteMethod($"Add{property.Name}",
+                        new[] { $"{keyType} {keyInstance}", $"params {valueType}[] {valueInstances}" },
+                        $"{propertyAccess}.AddRange({keyInstance}, {valueInstances});")
+                    .WriteSummaryExtension($"Adds new values for the given key to {property.GetCrefTag()}", property)
+                    .WriteMethod($"Add{property.Name}",
+                        new[] { $"{keyType} {keyInstance}", $"IEnumerable<{valueType}> {valueInstances}" },
+                        $"{propertyAccess}.AddRange({keyInstance}, {valueInstances});")
                     .WriteSummaryExtension($"Removes a single {propertySingularInstance} from {property.GetCrefTag()}", property)
                     .WriteMethod($"Remove{propertySingular}",
                         new[] { $"{keyType} {keyInstance}", $"{valueType} {valueInstance}" },
