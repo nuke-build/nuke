@@ -69,13 +69,13 @@ namespace Nuke.Common.Tools.ReportGenerator
         protected override Arguments GetArgumentsInternal()
         {
             return base.GetArgumentsInternal()
-              .Add("-reports:{value}", Reports, mainSeparator: ';')
+              .Add("-reports:{value}", Reports, separator: ';')
               .Add("-targetdir:{value}", TargetDirectory)
-              .Add("-reporttypes:{value}", ReportTypes, mainSeparator: ';')
-              .Add("-sourcedirs:{value}", SourceDirectories, mainSeparator: ';')
+              .Add("-reporttypes:{value}", ReportTypes, separator: ';')
+              .Add("-sourcedirs:{value}", SourceDirectories, separator: ';')
               .Add("-historydir:{value}", HistoryDirectory)
-              .Add("-assemblyfilters:{value}", AssemblyFilters, mainSeparator: ' ')
-              .Add("-classfilters:{value}", ClassFilters, mainSeparator: ' ')
+              .Add("-assemblyfilters:{value}", AssemblyFilters, separator: ' ', quoteMultiple: true)
+              .Add("-classfilters:{value}", ClassFilters, separator: ' ', quoteMultiple: true)
               .Add("-verbosity:{value}", Verbosity);
         }
     }

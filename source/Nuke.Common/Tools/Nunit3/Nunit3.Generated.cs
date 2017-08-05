@@ -136,10 +136,10 @@ namespace Nuke.Common.Tools.Nunit3
         {
             return base.GetArgumentsInternal()
               .Add("{value}", InputFiles)
-              .Add("--test={value}", Tests, mainSeparator: ',')
+              .Add("--test={value}", Tests, separator: ',')
               .Add("--testlist={value}", TestListFile)
               .Add("--where={value}", WhereExpression)
-              .Add("--params={value}", Parameters, keyValueSeparator: '=')
+              .Add("--params={value}", Parameters, "{key}={value}")
               .Add("--config={value}", Configuration)
               .Add("--process={value}", Process)
               .Add("--inprocess", InProcess)

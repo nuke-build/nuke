@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using Nuke.Core;
+using Nuke.Core.Utilities;
 
 namespace Nuke.Common.Tools.Xunit2
 {
@@ -13,6 +14,11 @@ namespace Nuke.Common.Tools.Xunit2
         private string GetPackageExecutable ()
         {
             return EnvironmentInfo.Is64Bit ? "xunit.console.exe" : "xunit.console.x86.exe";
+        }
+
+        private string GetResultPath ()
+        {
+            return $"{ResultFormat} {ResultPath.DoubleQuoteIfNeeded()}";
         }
     }
 }

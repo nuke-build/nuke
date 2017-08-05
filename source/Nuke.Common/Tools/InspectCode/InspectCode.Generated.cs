@@ -98,10 +98,10 @@ namespace Nuke.Common.Tools.InspectCode
               .Add("--no-swea", NoSwea)
               .Add("--profile={value}", Profile)
               .Add("--project={value}", Project)
-              .Add("--disable-settings-layers={value}", DisableSettingsLayers, mainSeparator: ';')
+              .Add("--disable-settings-layers={value}", DisableSettingsLayers, separator: ';')
               .Add("--no-buildin-settings", NoBuiltinSettings)
               .Add("--caches-home={value}", CachesHome)
-              .Add("--properties={value}", Properties, mainSeparator: ';', keyValueSeparator: '=')
+              .Add("--properties={value}", Properties, "{key}={value}")
               .Add("--dumpIssuesTypes", DumpIssuesTypes)
               .Add("--toolset={value}", Toolset);
         }

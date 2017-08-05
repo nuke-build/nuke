@@ -139,7 +139,7 @@ namespace Nuke.Common.Tools.DocFx
               .Add("--theme {value}", Theme)
               .Add("--log {value}", LogFile)
               .Add("--logLevel {value}", LogLevel)
-              .Add("--xref {value}", XRefMaps, mainSeparator: ',')
+              .Add("--xref {value}", XRefMaps, separator: ',')
               .Add("--serve", Serve);
         }
     }

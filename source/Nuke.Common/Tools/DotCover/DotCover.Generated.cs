@@ -102,14 +102,14 @@ namespace Nuke.Common.Tools.DotCover
               .Add("/Output={value}", OutputFile)
               .Add("/InheritConsole={value}", InheritConsole)
               .Add("/AnalyseTargetArguments={value}", AnalyseTargetArguments)
-              .Add("/Scope={value}", Scope, mainSeparator: ';')
-              .Add("/Filters={value}", Filters, mainSeparator: ';')
-              .Add("/AttributeFilters={value}", AttributeFilters, mainSeparator: ';')
+              .Add("/Scope={value}", Scope, separator: ';')
+              .Add("/Filters={value}", Filters, separator: ';')
+              .Add("/AttributeFilters={value}", AttributeFilters, separator: ';')
               .Add("/DisableDefaultFilters", DisableDefaultFilters)
-              .Add("/SymbolSearchPaths={value}", SymbolSearchPaths, mainSeparator: ';')
+              .Add("/SymbolSearchPaths={value}", SymbolSearchPaths, separator: ';')
               .Add("/AllowSymbolServerAccess", AllowSymbolServerAccess)
               .Add("/ReturnTargetExitCode", ReturnTargetExitCode)
-              .Add("/ProcessFilters={value}", ProcessFilters, mainSeparator: ';')
+              .Add("/ProcessFilters={value}", ProcessFilters, separator: ';')
               .Add("/HideAutoProperties", HideAutoProperties);
         }
     }

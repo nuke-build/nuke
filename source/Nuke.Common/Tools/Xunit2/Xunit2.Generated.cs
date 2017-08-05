@@ -96,7 +96,7 @@ namespace Nuke.Common.Tools.Xunit2
         protected override Arguments GetArgumentsInternal()
         {
             return base.GetArgumentsInternal()
-              .Add("{value}", TargetAssemblyWithConfigs, keyValueSeparator: ' ')
+              .Add("{value}", TargetAssemblyWithConfigs, "{key} {value}")
               .Add("-nologo", NoLogo)
               .Add("-nocolor", NoColor)
               .Add("-noappdomain", NoAppDomain)
@@ -108,15 +108,14 @@ namespace Nuke.Common.Tools.Xunit2
               .Add("-diagnostics", Diagnostics)
               .Add("-debug", Debug)
               .Add("-serialize", Serialization)
-              .Add("-trait {value}", Traits, keyValueSeparator: '=')
-              .Add("-notrait {value}", ExcludedTraits, keyValueSeparator: '=')
+              .Add("-trait {value}", Traits, "{key}={values}")
+              .Add("-notrait {value}", ExcludedTraits, "{key}={value}")
               .Add("-method {value}", Methods)
               .Add("-class {value}", Classes)
               .Add("-namespace {value}", Namespaces)
               .Add("-noautoreporters", NoAutoReporters)
               .Add("-{value}", Reporter)
-              .Add("-{value}", ResultFormat)
-              .Add("{value}", ResultPath);
+              .Add("-{value}", GetResultPath(), customValue: true);
         }
     }
     #endregion
