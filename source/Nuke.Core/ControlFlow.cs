@@ -26,7 +26,7 @@ namespace Nuke.Core
         [ContractAnnotation("=> halt")]
         public static void Fail (string format, params object[] args)
         {
-            Logger.Fail(format, args);
+            Fail(string.Format(format, args));
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Nuke.Core
         [ContractAnnotation ("=> halt")]
         public static void Fail (object value)
         {
-            Logger.Fail(value);
+            Fail(value.ToString());
         }
 
         /// <summary>
@@ -66,18 +66,18 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Asserts a condition to be true, calling <see cref="Logger.Fail(string)"/> otherwise.
+        /// Asserts a condition to be true, halts otherwise.
         /// </summary>
         [AssertionMethod]
         [ContractAnnotation("condition: false => halt")]
         public static void Assert ([AssertionCondition(AssertionConditionType.IS_TRUE)] bool condition, string text)
         {
             if (!condition)
-                Logger.Fail($"Assertion failed: {text}");
+                Fail($"Assertion failed: {text}");
         }
 
         /// <summary>
-        /// Asserts an object to be not null, calling <see cref="Logger.Fail(string)"/> otherwise.
+        /// Asserts an object to be not null, halts otherwise.
         /// </summary>
         [AssertionMethod]
         [ContractAnnotation("obj: null => halt")]
@@ -85,7 +85,7 @@ namespace Nuke.Core
             where T : class
         {
             if (obj == null)
-                Logger.Fail($"Assertion failed: {text ?? "obj != null"}");
+                Fail($"Assertion failed: {text ?? "obj != null"}");
             return obj;
         }
 
@@ -103,7 +103,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Asserts a collection to be not empty, calling <see cref="Logger.Fail(string)"/> otherwise.
+        /// Asserts a collection to be not empty, halts otherwise.
         /// </summary>
         [ContractAnnotation("enumerable: null => halt")]
         public static IReadOnlyCollection<T> NotEmpty<T> ([CanBeNull] this IEnumerable<T> enumerable)
@@ -115,7 +115,7 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Asserts a collection to contain only <em>non-null</em> elements, calling <see cref="Logger.Fail(string)"/> otherwise.
+        /// Asserts a collection to contain only <em>non-null</em> elements, halts otherwise.
         /// </summary>
         [ContractAnnotation("enumerable: null => halt")]
         public static IReadOnlyCollection<T> NoNullItems<T> ([CanBeNull] this IEnumerable<T> enumerable)
@@ -238,7 +238,7 @@ namespace Nuke.Core
                 }
             }
 
-            Logger.Fail($"Executing failed permanently after {retryAttempts} attempts.");
+            Fail($"Executing failed permanently after {retryAttempts} attempts.");
         }
     }
 }

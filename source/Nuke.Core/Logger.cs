@@ -156,37 +156,5 @@ namespace Nuke.Core
         }
 
         #endregion
-
-        #region Fail
-
-        /// <summary>
-        /// Logs a message as failure. Halts execution.
-        /// </summary>
-        [StringFormatMethod("format")]
-        [ContractAnnotation("=> halt")]
-        public static void Fail (string format, params object[] args)
-        {
-            Fail(string.Format(format, args));
-        }
-
-        /// <summary>
-        /// Logs a message as failure. Halts execution.
-        /// </summary>
-        [ContractAnnotation("=> halt")]
-        public static void Fail (object value)
-        {
-            Fail(value.ToString());
-        }
-
-        /// <summary>
-        /// Logs a message as failure. Halts execution.
-        /// </summary>
-        [ContractAnnotation("=> halt")]
-        public static void Fail (string text = null)
-        {
-            ControlFlow.Fail(text ?? string.Empty);
-        }
-
-        #endregion
     }
 }
