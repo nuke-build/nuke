@@ -15,14 +15,16 @@ namespace Nuke.Core.Execution
 
         public static void InjectValues (NukeBuild build)
         {
-            foreach (var member in build.GetType().GetMembers(c_bindingFlags))
+            var injectionMembers = build.GetType()
+                    .GetMembers(c_bindingFlags)
+                    .Where(x => x.GetCustomAttributes<InjectionAttributeBase>().Any()).ToList();
+
+            foreach (var member in injectionMembers)
             {
                 var attributes = member.GetCustomAttributes().OfType<InjectionAttributeBase>().ToList();
                 if (attributes.Count == 0)
                     continue;
                 ControlFlow.Assert(attributes.Count == 1, $"Member '{member.Name}' has multiple injection attributes applied.");
-
-                Logger.Trace($"Handling value injection for '{member.Name}'...");
 
                 var attribute = attributes.Single();
                 var memberType = (member as FieldInfo)?.FieldType ?? ((PropertyInfo) member).PropertyType;
@@ -33,7 +35,6 @@ namespace Nuke.Core.Execution
                 var valueType = value.GetType();
                 ControlFlow.Assert(memberType.IsAssignableFrom(valueType),
                     $"Field '{member.Name}' must be of type '{valueType.Name}' to get its valued injected from '{attribute.GetType().Name}'.");
-
                 SetValue(build, member, value);
             }
         }
@@ -46,8 +47,8 @@ namespace Nuke.Core.Execution
             }
             else if (member is PropertyInfo propertyInfo)
             {
-                ControlFlow.Assert (propertyInfo.SetMethod != null, $"Member '{member.Name}' is not settable.");
-                propertyInfo.SetValue (build, value);
+                ControlFlow.Assert(propertyInfo.SetMethod != null, $"Member '{member.Name}' is not settable.");
+                propertyInfo.SetValue(build, value);
             }
         }
     }

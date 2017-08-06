@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using JetBrains.Annotations;
 using Nuke.Core.Execution;
 using Nuke.Core.Injection;
@@ -51,6 +52,11 @@ namespace Nuke.Core
         [CanBeNull]
         public override object GetValue (string memberName, Type memberType)
         {
+            memberType = Nullable.GetUnderlyingType(memberType) == null
+                         && memberType != typeof(string)
+                         && !memberType.IsArray
+                ? typeof(Nullable<>).MakeGenericType(memberType)
+                : memberType;
             return ParameterService.GetParameter(memberName, memberType, (Separator ?? string.Empty).SingleOrDefault());
         }
     }

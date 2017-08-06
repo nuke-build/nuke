@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Core.Utilities;
 using Nuke.Core.Utilities.Collections;
@@ -55,7 +56,22 @@ namespace Nuke.Core.Execution
             var values = args.Skip(index + 1).TakeWhile(x => !x.StartsWith("-")).ToArray();
             ControlFlow.Assert(values.Length == 1 || !separator.HasValue || values.All(x => !x.Contains(separator.Value)),
                 $"Command-line argument '{argumentName}' with value [ {values.Join(", ")} ] cannot be split with separator '{separator}'.");
-            return ConvertValues(argumentName, separator.HasValue ? values.Single().Split(separator.Value) : values, destinationType);
+            values = separator.HasValue && values.Any(x => x.Contains(separator.Value))
+                ? values.SingleOrDefault()?.Split(separator.Value) ?? new string[0]
+                : values;
+
+            try
+            {
+                return ConvertValues(argumentName, values, destinationType);
+            }
+            catch (Exception ex)
+            {
+                ControlFlow.Fail(
+                    new[] { ex.Message, "Command-line arguments were:" }
+                            .Concat(args.Select((x, i) => $"  [{i}] = {x}"))
+                            .Join(Environment.NewLine));
+                return null;
+            }
         }
 
         private static bool HasCommandLineArgument (string argumentName)
@@ -72,7 +88,15 @@ namespace Nuke.Core.Execution
             if (value == null)
                 return GetDefaultValue(destinationType);
 
-            return ConvertValues(variableName, separator.HasValue ? value.Split(separator.Value) : new[] { value }, destinationType);
+            try
+            {
+                return ConvertValues(variableName, separator.HasValue ? value.Split(separator.Value) : new[] { value }, destinationType);
+            }
+            catch (Exception ex)
+            {
+                ControlFlow.Fail(new[] { ex.Message, "Environment variable was:", value }.Join(Environment.NewLine));
+                return null;
+            }
         }
 
         [CanBeNull]
@@ -87,50 +111,72 @@ namespace Nuke.Core.Execution
             return null;
         }
 
+        [CanBeNull]
         private static object ConvertValues (string parameterName, IReadOnlyCollection<string> values, Type destinationType)
         {
             try
             {
                 return ConvertValues(values, destinationType);
             }
-            catch
+            catch (Exception ex)
             {
-                ControlFlow.Fail(
-                    $"Parameter '{parameterName}' with value [ {values.Join(", ")} ] could not be converted to '{destinationType.Name}'.");
+                ControlFlow.Fail(new[] { $"Resolving parameter '{parameterName}' failed.", ex.Message }.Join(Environment.NewLine));
                 return null;
             }
         }
 
-        public static object ConvertValues (IReadOnlyCollection<string> values, Type destinationType)
+        [CanBeNull]
+        private static object ConvertValues (IReadOnlyCollection<string> values, Type destinationType)
         {
+            ControlFlow.Assert(!destinationType.IsArray || destinationType.GetArrayRank() == 1, "Arrays must have a rank of 1.");
             var elementType = destinationType.IsArray ? destinationType.GetElementType() : destinationType;
             ControlFlow.Assert(values.Count < 2 || elementType != null, "values.Count < 2 || elementType != null");
 
-            if (values.Count == 0 && destinationType == typeof(bool))
-                return true;
+            if (values.Count == 0)
+            {
+                if (destinationType == typeof(bool) || destinationType == typeof(bool?))
+                    return true;
+                if (elementType == typeof(string) || Nullable.GetUnderlyingType(elementType) != null)
+                    return null;
+            }
 
             var convertedValues = values.Select(x => Convert(x, elementType)).ToList();
-            if (convertedValues.Count == 1)
+            if (!destinationType.IsArray)
+            {
+                ControlFlow.Assert(convertedValues.Count == 1, $"Value [ {values.Join(", ")} ] cannot be assigned to '{GetName(destinationType)}'.");
                 return convertedValues.Single();
+            }
 
             var array = Array.CreateInstance(elementType, convertedValues.Count);
             convertedValues.ForEach((x, i) => array.SetValue(x, i));
+            ControlFlow.Assert(destinationType.IsInstanceOfType(array),
+                $"Type '{GetName(array.GetType())}' is not an instance of '{GetName(destinationType)}'.");
+
             return array;
         }
 
         [CanBeNull]
-        public static object Convert (string value, Type destinationType)
+        private static object Convert (string value, Type destinationType)
         {
             try
             {
                 var typeConverter = TypeDescriptor.GetConverter(destinationType);
                 return typeConverter.ConvertFromInvariantString(value);
             }
-            catch (FormatException)
+            catch
             {
-                ControlFlow.Fail($"Value '{value}' could not be converted to '{destinationType.Name}'.");
+                ControlFlow.Fail($"Value '{value}' could not be converted to '{GetName(destinationType)}'.");
                 return null;
             }
+        }
+
+        private static string GetName(Type type)
+        {
+            if (type.IsArray)
+                return $"{type.GetElementType().Name}[]";
+            if (Nullable.GetUnderlyingType(type) != null)
+                return Nullable.GetUnderlyingType(type).Name + "?";
+            return type.Name;
         }
     }
 }

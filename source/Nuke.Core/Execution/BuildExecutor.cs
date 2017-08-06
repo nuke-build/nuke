@@ -19,33 +19,46 @@ namespace Nuke.Core.Execution
         public static int Execute<T> (Expression<Func<T, Target>> defaultTargetExpression)
             where T : NukeBuild
         {
-            IReadOnlyCollection<TargetDefinition> executionList;
-            using (DelegateDisposable.CreateBracket(
-                () => ControlFlow.IsPreparing = true,
-                () => ControlFlow.IsPreparing = false))
+            try
             {
-                var build = Activator.CreateInstance<T>();
-                var defaultTargetName = ((MemberExpression) defaultTargetExpression.Body).Member.Name;
-                var defaultTargetFactory = defaultTargetExpression.Compile().Invoke(build);
-            
-                InjectionService.InjectValues(build);
+                var executionList = Setup(defaultTargetExpression);
+                return new ExecutionListRunner().Run(executionList);
+            }
+            catch (Exception ex)
+            {
+                OutputSink.Fail(ex.Message, ex.StackTrace);
+                return -ex.Message.GetHashCode();
+            }
+        }
 
-                PrintLogo();
+        private static IReadOnlyCollection<TargetDefinition> Setup<T> (Expression<Func<T, Target>> defaultTargetExpression)
+            where T : NukeBuild
+        {
+            var build = Activator.CreateInstance<T>();
+            var defaultTargetFactory = defaultTargetExpression.Compile().Invoke(build);
 
-                if (build.Help)
-                {
-                    Logger.Log(GetTargetsText(build, defaultTargetFactory));
-                    Logger.Log();
-                    Logger.Log(GetParametersText(build));
-                    return 0;
-                }
+            InjectionService.InjectValues(build);
 
-                executionList = TargetDefinitionLoader.GetExecutionList(build, defaultTargetFactory);
-                RequirementService.ValidateRequirements(executionList, build);
+            //{
+            //    Console.WriteLine($"Target: {build.Target.Join(", ")}");
+            //    Console.WriteLine($"Verbosity: {build.Verbosity}");
+            //    Console.WriteLine($"LogLevel: {build.LogLevel}");
+            //    Console.WriteLine($"NoDependencies: {build.NoDependencies}");
+            //    Console.WriteLine($"Configuration: {build.Configuration}");
+            //}
+
+            PrintLogo();
+
+            if (build.Help)
+            {
+                Logger.Log(GetTargetsText(build, defaultTargetFactory));
+                Logger.Log(GetParametersText(build));
+                Environment.Exit(exitCode: 0);
             }
 
-            return new ExecutionListRunner().Run(executionList);
-            
+            var executionList = TargetDefinitionLoader.GetExecutionList(build, defaultTargetFactory);
+            RequirementService.ValidateRequirements(executionList, build);
+            return executionList;
         }
 
         private static void PrintLogo()

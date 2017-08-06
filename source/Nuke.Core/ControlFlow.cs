@@ -8,7 +8,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Nuke.Core.OutputSinks;
+
+// ReSharper disable CompareNonConstrainedGenericWithNull
 
 namespace Nuke.Core
 {
@@ -17,8 +18,6 @@ namespace Nuke.Core
     [DebuggerStepThrough]
     public static class ControlFlow
     {
-        internal static bool IsPreparing;
-
         /// <summary>
         /// Logs a message as failure. Halts execution.
         /// </summary>
@@ -44,15 +43,7 @@ namespace Nuke.Core
         [ContractAnnotation("=> halt")]
         public static void Fail (string text)
         {
-            if (IsPreparing)
-            {
-                OutputSink.Fail(text);
-                Environment.Exit(-text.GetHashCode());
-            }
-            else
-            {
-                throw new Exception(text);
-            }
+            throw new Exception(text);
         }
 
         /// <summary>
