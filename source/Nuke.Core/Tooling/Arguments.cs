@@ -150,7 +150,7 @@ namespace Nuke.Core.Tooling
 
         private string FormatMultiple<T>(IEnumerable<T> items, Func<T, string> format, char separator, bool quoteMultiple)
         {
-            var values = items.Select(x => format(x)).Join(separator);
+            var values = items.Select(format).Join(separator);
             return !quoteMultiple
                 ? values
                 : values.DoubleQuoteIfNeeded();

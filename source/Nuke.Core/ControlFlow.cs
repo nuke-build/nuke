@@ -22,7 +22,7 @@ namespace Nuke.Core
         /// <summary>
         /// Logs a message as failure. Halts execution.
         /// </summary>
-        [StringFormatMethod ("format")]
+        [StringFormatMethod("format")]
         [ContractAnnotation("=> halt")]
         public static void Fail (string format, params object[] args)
         {
@@ -32,7 +32,7 @@ namespace Nuke.Core
         /// <summary>
         /// Logs a message as failure. Halts execution.
         /// </summary>
-        [ContractAnnotation ("=> halt")]
+        [ContractAnnotation("=> halt")]
         public static void Fail (object value)
         {
             Fail(value.ToString());
@@ -41,7 +41,7 @@ namespace Nuke.Core
         /// <summary>
         /// Logs a message as failure. Halts execution.
         /// </summary>
-        [ContractAnnotation ("=> halt")]
+        [ContractAnnotation("=> halt")]
         public static void Fail (string text)
         {
             if (IsPreparing)

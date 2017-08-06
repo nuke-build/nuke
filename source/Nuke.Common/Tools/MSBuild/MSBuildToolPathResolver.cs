@@ -95,10 +95,14 @@ namespace Nuke.Common.Tools.MSBuild
         {
             switch (version)
             {
-                case MSBuildVersion.VS2017: return "15.0";
-                case MSBuildVersion.VS2015: return "14.0";
-                case MSBuildVersion.VS2013: return "12.0";
-                default: throw new Exception();
+                case MSBuildVersion.VS2017:
+                    return "15.0";
+                case MSBuildVersion.VS2015:
+                    return "14.0";
+                case MSBuildVersion.VS2013:
+                    return "12.0";
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(version), version, message: null);
             }
         }
 
