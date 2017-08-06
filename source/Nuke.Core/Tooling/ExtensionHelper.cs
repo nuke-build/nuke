@@ -50,12 +50,12 @@ namespace Nuke.Core.Tooling
                     .Select(Convert<TValue>).ToList();
         }
 
-        public static string CollectionToString<T> (IEnumerable<T> collection, char separator)
+        private static string CollectionToString<T> (IEnumerable<T> collection, char separator)
         {
             return collection.Select(x => x.ToString()).Join(separator);
         }
 
-        public static T Convert<T> (object value)
+        private static T Convert<T> (object value)
         {
             var typeConverter = TypeDescriptor.GetConverter(typeof(T));
             return (T) typeConverter.ConvertFromInvariantString(value.ToString());

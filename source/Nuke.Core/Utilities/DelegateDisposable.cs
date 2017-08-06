@@ -8,9 +8,9 @@ using JetBrains.Annotations;
 
 namespace Nuke.Core.Utilities
 {
-    internal class DelegateDisposable : IDisposable
+    public class DelegateDisposable : IDisposable
     {
-        public static IDisposable CreateBracket (Action setup = null, Action cleanup = null)
+        public static IDisposable CreateBracket ([InstantHandle] Action setup = null, [InstantHandle] Action cleanup = null)
         {
             setup?.Invoke();
             return new DelegateDisposable(cleanup);

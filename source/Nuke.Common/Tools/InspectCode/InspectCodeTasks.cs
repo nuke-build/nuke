@@ -29,12 +29,12 @@ namespace Nuke.Common.Tools.InspectCode
             var shadowDirectory = GetShadowDirectory(toolSettings, installedPlugins);
 
             FileSystemTasks.CopyRecursively(
-                Path.GetDirectoryName(toolSettings.ToolPath),
+                Path.GetDirectoryName(toolSettings.ToolPath).NotNull(),
                 shadowDirectory,
                 FileSystemTasks.FileExistsPolicy.OverwriteIfNewer);
 
             installedPlugins.Select(x => x.FileName)
-                    .ForEach(x => File.Copy(x, Path.Combine(shadowDirectory, Path.GetFileName(x)), overwrite: true));
+                    .ForEach(x => File.Copy(x, Path.Combine(shadowDirectory, Path.GetFileName(x).NotNull()), overwrite: true));
 
 #if !NETCORE
             toolSettings.Extensions.ForEach(x => HttpTasks.HttpDownloadFile(

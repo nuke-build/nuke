@@ -32,7 +32,6 @@ namespace Nuke.Core
         /// <summary>
         /// Provides access to a command-line argument or environment variable switch.
         /// </summary>
-        [CanBeNull]
         public static bool ParameterSwitch(string name)
         {
             return ParameterService.GetParameter<bool>(name);

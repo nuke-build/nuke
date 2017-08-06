@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using JetBrains.Annotations;
 using Nuke.ToolGenerator.Model;
 using Nuke.ToolGenerator.Writers;
 

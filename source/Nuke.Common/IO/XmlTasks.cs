@@ -5,14 +5,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml;
 using System.Xml.Linq;
 using JetBrains.Annotations;
 using Nuke.Core;
 #if !NETCORE
 using System.Collections;
-using System.IO;
-using System.Xml.Serialization;
 using System.Xml.XPath;
 #endif
 

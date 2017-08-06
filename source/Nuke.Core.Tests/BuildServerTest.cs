@@ -64,7 +64,7 @@ namespace Nuke.Core.Tests
             Guid.TryParse(strValue, out var _).Should().BeFalse("Guid");
         }
 
-        internal class BuildServerTheoryAttribute : TheoryAttribute
+        private class BuildServerTheoryAttribute : TheoryAttribute
         {
             private readonly Type _type;
 

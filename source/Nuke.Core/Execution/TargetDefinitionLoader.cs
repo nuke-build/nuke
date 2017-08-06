@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Nuke.Core.Utilities;
-using Nuke.Core.Utilities.Collections;
 
 namespace Nuke.Core.Execution
 {
