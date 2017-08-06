@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Core.Execution;
 using Nuke.Core.Injection;
 
 namespace Nuke.Core
@@ -14,12 +15,12 @@ namespace Nuke.Core
     ///     <inheritdoc/><para/>
     ///     Parameters are resolved case-insensitively in the following order:
     ///     <ul>
-    ///         <li>From command-line arguments (e.g., <c>--myArgument=value</c>)</li>
-    ///         <li>From environment variables (e.g., <c>MyArgument=value</c>)</li>
+    ///         <li>From command-line arguments (e.g., <c>-arg value</c>)</li>
+    ///         <li>From environment variables (e.g., <c>Arg=value</c>)</li>
     ///     </ul>
     ///     <para/>
     ///     For value-types, there is a distinction between pure value-types, and their <em>nullable</em>
-    ///     counterparts. For instance, <c>int</c> will have its default value <c>0</c> even if it wasn't
+    ///     counterparts. For instance, <c>int</c> will have its default value <c>0</c> even when it's not
     ///     supplied via command-line or environment variable, and therefore also can't be used as requirements.
     ///     Declaring the field as <c>int?</c> however, will enable validation and setting the requirement.
     /// </summary>
@@ -43,7 +44,6 @@ namespace Nuke.Core
         public string Description { get; }
 
         public string Name { get; set; }
-        public bool AllowEmptyString { get; set; }
         public string Separator { get; set; }
 
         public override Type InjectionType => null;
@@ -51,47 +51,7 @@ namespace Nuke.Core
         [CanBeNull]
         public override object GetValue (string memberName, Type memberType)
         {
-            var stringValue = GetStringValue(memberName, memberType);
-            if (stringValue == null)
-                return null;
-
-            if (memberType == typeof(string[]))
-            {
-                ControlFlow.Assert(Separator != null, "Separator != null");
-                return stringValue.Split(new[] { Separator },
-                    AllowEmptyString ? StringSplitOptions.None : StringSplitOptions.RemoveEmptyEntries);
-            }
-
-            var conversionType = GetConversionType(memberType);
-            try
-            {
-                return EnvironmentInfo.Convert(stringValue, conversionType);
-            }
-            catch
-            {
-                ControlFlow.Fail(
-                    $"Value '{stringValue}' for parameter '{memberName}' could not be converted to type '{conversionType.FullName}'.");
-                return null;
-            }
-        }
-
-        [CanBeNull]
-        private string GetStringValue (string memberName, Type memberType)
-        {
-            var name = Name ?? memberName;
-            return EnvironmentInfo.Argument(name, AllowEmptyString)
-                   ?? EnvironmentInfo.Variable(name)
-                   ?? (memberType == typeof(bool)
-                       ? EnvironmentInfo.ArgumentSwitch(name).ToString()
-                       : null);
-        }
-
-        private static Type GetConversionType (Type memberType)
-        {
-            if (memberType != typeof(string) && !memberType.IsArray && Nullable.GetUnderlyingType(memberType) == null)
-                return typeof(Nullable<>).MakeGenericType(memberType);
-
-            return memberType;
+            return ParameterService.GetParameter(memberName, memberType, (Separator ?? string.Empty).SingleOrDefault());
         }
     }
 }

@@ -4,10 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Core.Execution;
 using Nuke.Core.Utilities;
 
 namespace Nuke.Core
@@ -27,126 +27,168 @@ namespace Nuke.Core
             SetVariable(name, values.Select(x => x.ToString()).Join(separator));
         }
 
+        #region Parameter
+
+        /// <summary>
+        /// Provides access to a command-line argument or environment variable switch.
+        /// </summary>
+        [CanBeNull]
+        public static bool ParameterSwitch(string name)
+        {
+            return ParameterService.GetParameter<bool>(name);
+        }
+
         /// <summary>
         /// Provides access to a command-line argument or environment variable.
         /// </summary>
         [CanBeNull]
-        public static string ArgumentOrVariable(string name)
+        public static string Parameter(string name)
         {
-            return Argument(name) ?? Variable(name);
+            return ParameterService.GetParameter<string>(name);
         }
 
         /// <summary>
-        /// Provides access to a command-line argument or environment variable using <see cref="ControlFlow.NotNull{T}"/>.
+        /// Provides access to a converted command-line argument or environment variable.
         /// </summary>
-        public static string EnsureArgumentOrVariable(string name)
+        [CanBeNull]
+        public static T Parameter<T>(string name)
         {
-            return ArgumentOrVariable(name).NotNull($"ArgumentOrVariable({name}) != null");
+            return ParameterService.GetParameter<T>(name);
         }
 
+        /// <summary>
+        /// Provides ensured access to a command-line argument or environment variable.
+        /// </summary>
+        public static string EnsureParameter(string name)
+        {
+            return Parameter(name).NotNull($"Parameter('{name}') != null");
+        }
+
+        /// <summary>
+        /// Provides ensured access to a converted command-line argument or environment variable.
+        /// </summary>
+        [CanBeNull]
+        public static T EnsureParameter<T> (string name)
+        {
+            return Parameter<T>(name).NotNull($"Parameter<{typeof(T).Name}>('{name}') != null");
+        }
+
+        /// <summary>
+        /// Provides access to command-line arguments or environment variables.
+        /// </summary>
+        public static T[] Parameters<T>(string name, char? separator = null)
+        {
+            return ParameterService.GetParameter<T[]>(name, separator).NotNull();
+        }
+
+        #endregion
+
+        #region Variable
+
+        /// <summary>
+        /// Provides access to an environment variable switch.
+        /// </summary>
+        public static bool VariableSwitch (string name)
+        {
+            return ParameterService.GetEnvironmentVariable<bool>(name);
+        }
+
+        /// <summary>
         /// Provides access to an environment variable.
+        /// </summary>
         [CanBeNull]
         public static string Variable (string name)
         {
-            return Environment.GetEnvironmentVariable(name);
+            return ParameterService.GetEnvironmentVariable<string>(name);
         }
 
+        /// <summary>
         /// Provides access to a converted environment variable.
+        /// </summary>
         [CanBeNull]
         public static T Variable<T> (string name)
         {
-            var value = Variable(name);
-            return (T) (Convert<T>(value) ?? default(T));
+            return ParameterService.GetEnvironmentVariable<T>(name);
         }
 
-        /// Provides access to an environment variable using <see cref="ControlFlow.NotNull{T}"/>.
+        /// <summary>
+        /// Provides ensured access to an environment variable.
+        /// </summary>
         public static string EnsureVariable (string name)
         {
-            return Variable(name).NotNull($"Variable({name}) != null");
+            return Variable(name).NotNull($"Variable('{name}') != null");
         }
 
-        /// Provides access to a converted environment variable using <see cref="ControlFlow.NotNull{T}"/>.
+        /// <summary>
+        /// Provides ensured access to a converted environment variable.
+        /// </summary>
         public static T EnsureVariable<T> (string name)
         {
-            var value = EnsureVariable(name);
-            return (T) Convert<T>(value).NotNull($"Convert<{typeof(T)}>(EnsureVariable({name})) != null");
+            return Variable<T>(name).NotNull($"Variable<{typeof(T).Name}>('{name}') != null");
         }
 
-        /// Provides access to a command-line argument.
-        [CanBeNull]
-        public static string Argument (string name, bool allowEmptyString = false)
+        /// <summary>
+        /// Provides access to environment variables.
+        /// </summary>
+        public static T[] Variables<T>(string name, char? separator = null)
         {
-            var argument = Environment.GetCommandLineArgs()
-                    .SingleOrDefault(x => x.StartsWithOrdinalIgnoreCase($"--{name}=")
-                                          || x.StartsWithOrdinalIgnoreCase($"-{name}="));
-            var split = argument?.Split(new[] { '=' }, count: 2);
-            return allowEmptyString || !string.IsNullOrWhiteSpace(split?[1]) ? split?[1] : null;
+            return ParameterService.GetEnvironmentVariable<T[]>(name, separator).NotNull();
         }
 
+        #endregion
+
+        #region Argument
+
+        /// <summary>
+        /// Provides access to a command-line argument switch.
+        /// </summary>
+        public static bool ArgumentSwitch (string name)
+        {
+            return ParameterService.GetCommandLineArgument<bool>(name);
+        }
+
+        /// <summary>
+        /// Provides access to a command-line argument.
+        /// </summary>
+        [CanBeNull]
+        public static string Argument (string name)
+        {
+            return ParameterService.GetCommandLineArgument<string>(name);
+        }
+
+        /// <summary>
         /// Provides access to a converted command-line argument.
+        /// </summary>
         [CanBeNull]
         public static T Argument<T> (string name)
         {
-            var value = Argument(name);
-            return (T) (Convert<T>(value) ?? default(T));
+            return ParameterService.GetCommandLineArgument<T>(name);
         }
 
-        /// Provides access to a command-line argument.
-        [CanBeNull]
-        public static ICollection<string> Arguments (string name, char separator)
-        {
-            return Argument(name).SplitAndPurge(separator);
-        }
-
-        /// Provides access to a converted command-line argument.
-        [CanBeNull]
-        public static ICollection<T> Arguments<T> (string name, char separator)
-        {
-            return Arguments(name, separator)?.Select(Convert<T>).OfType<T>().ToList();
-        }
-
-        /// Provides access to a command-line argument using <see cref="ControlFlow.NotNull{T}"/>.
+        /// <summary>
+        /// Provides ensured access to a command-line argument.
+        /// </summary>
         public static string EnsureArgument (string name)
         {
-            return Argument(name).NotNull($"Argument({name}) != null");
+            return Argument(name).NotNull($"Argument('{name}') != null");
         }
 
-        /// Checks if the specified command-line switch was passed.
-        public static bool ArgumentSwitch (string name)
-        {
-            return Environment.GetCommandLineArgs()
-                    .Any(x => x.EqualsOrdinalIgnoreCase($"--{name}")
-                              || x.EqualsOrdinalIgnoreCase($"-{name}"));
-        }
-
-        /// Provides access to a converted command-line argument using <see cref="ControlFlow.NotNull{T}"/>.
+        /// <summary>
+        /// Provides ensured access to a converted command-line argument.
+        /// </summary>
         public static T EnsureArgument<T> (string name)
         {
-            var value = EnsureArgument(name);
-            return (T) Convert<T>(value).NotNull($"Convert<{typeof(T)}>(EnsureArgument({name})) != null");
+            return Argument<T>(name).NotNull($"Argument<{typeof(T).Name}>('{name}') != null");
         }
 
-        // TODO: move to own class?
-        [CanBeNull]
-        internal static object Convert<T> ([CanBeNull] string value)
+        /// <summary>
+        /// Provides access to command-line arguments.
+        /// </summary>
+        public static T[] Arguments<T>(string name, char? separator = null)
         {
-            return Convert(value, typeof(T));
+            return ParameterService.GetCommandLineArgument<T[]>(name, separator).NotNull();
         }
 
-        [CanBeNull]
-        internal static object Convert ([CanBeNull] string value, Type component)
-        {
-            if (value == null)
-                return null;
-
-            var typeConverter = TypeDescriptor.GetConverter(component);
-            return typeConverter.ConvertFromInvariantString(value);
-        }
-
-        [ContractAnnotation("value: null => null; value: notnull => notnull")]
-        private static string[] SplitAndPurge([CanBeNull] this string value, char separator)
-        {
-            return value?.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);
-        }
+        #endregion
     }
 }

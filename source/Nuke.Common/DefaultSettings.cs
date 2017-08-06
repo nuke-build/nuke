@@ -55,10 +55,10 @@ namespace Nuke.Common
         private static GitRepository GitRepositoryValue => InjectedValueProvider.GetStaticValue<GitRepository>();
 
         [CanBeNull]
-        private static string VersionArugmentOrVariable => EnvironmentInfo.ArgumentOrVariable("version");
+        private static string VersionParameter => EnvironmentInfo.Parameter("version");
 
         [CanBeNull]
-        public static string Version => VersionArugmentOrVariable ?? GitVersionValue?.AssemblySemVer;
+        public static string Version => VersionParameter ?? GitVersionValue?.AssemblySemVer;
 
         public static MSBuildSettings MSBuildCommon
         {
@@ -97,7 +97,7 @@ namespace Nuke.Common
                 .SetTargets("Restore", "Pack")
                 .EnableIncludeSymbols()
                 .SetPackageOutputPath(Build.OutputDirectory)
-                .SetPackageVersion(VersionArugmentOrVariable ?? GitVersionValue?.NuGetVersionV2);
+                .SetPackageVersion(VersionParameter ?? GitVersionValue?.NuGetVersionV2);
 
 
         public static GitVersionSettings GitVersion => new GitVersionSettings()
