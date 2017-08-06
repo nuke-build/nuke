@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using Nuke.Core.Injection;
+using Nuke.Core.Utilities.Collections;
 
 namespace Nuke.Core.Execution
 {
@@ -41,14 +42,25 @@ namespace Nuke.Core.Execution
 
         private static void SetValue (NukeBuild build, MemberInfo member, object value)
         {
-            if (member is FieldInfo fieldInfo)
+            if (member is FieldInfo field)
             {
-                fieldInfo.SetValue(build, value);
+                field.SetValue(build, value);
             }
-            else if (member is PropertyInfo propertyInfo)
+            else if (member is PropertyInfo property)
             {
-                ControlFlow.Assert(propertyInfo.SetMethod != null, $"Member '{member.Name}' is not settable.");
-                propertyInfo.SetValue(build, value);
+                var backingField = build.GetType().DescendantsAndSelf(x => x.GetTypeInfo().BaseType)
+                    .SelectMany(x => x.GetFields(BindingFlags.NonPublic | BindingFlags.Public |BindingFlags.Instance))
+                    .SingleOrDefault(x => x.Name.StartsWith($"<{member.Name}>"));
+
+                if (backingField != null)
+                {
+                    backingField.SetValue(build, value);
+                }
+                else
+                {
+                    ControlFlow.Assert(property.SetMethod != null, $"Property '{member.Name}' is not settable.");
+                    property.SetValue(build, value);
+                }
             }
         }
     }

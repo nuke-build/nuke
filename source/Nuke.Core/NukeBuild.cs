@@ -73,19 +73,19 @@ namespace Nuke.Core
         /// Targets to run. Default is <em>Default</em>, which falls back to the target specified in <c>static int Main</c> with <see cref="Execute{T}"/>.
         /// </summary>
         [Parameter("Target(s) to run. Default is specified in 'static int Main' via 'Execute'.", Separator = "+")]
-        public string[] Target { get; set; } = { "Default" };
+        public string[] Target { get; } = { "Default" };
 
         /// <summary>
         /// Configuration to build. Default is <em>Debug</em> for local and <em>Release</em> for server builds.
         /// </summary>
         [Parameter("Configuration to build. Default is 'Debug' for local and 'Release' for server builds.")]
-        public string Configuration { get; set; } = IsServerBuild ? "Release" : "Debug";
+        public string Configuration { get; } = IsServerBuild ? "Release" : "Debug";
 
         /// <summary>
         /// Specifies that no dependencies should be executed. Default is <c>false</c>.
         /// </summary>
         [Parameter("Specifies that no dependencies should be executed. Default is 'false'.", Name = "NoDeps")]
-        public bool NoDependencies { get; set; }
+        public bool NoDependencies { get; }
 
         //[Parameter("Specifies that no logo should be printed. Default is is 'false'.")]
         //public bool NoLogo { get; set; }
@@ -94,13 +94,13 @@ namespace Nuke.Core
         /// Enables additional checks for the <c>PATH</c> environment variable.
         /// </summary>
         [Parameter("Enables additional checks for the 'PATH' environment variable.")]
-        public bool CheckPath { get; set; }
+        public bool CheckPath { get; }
 
         /// <summary>
         /// Shows the help text for this build assembly if supplied.
         /// </summary>
         [Parameter("Shows the help text for this build assembly if supplied.")]
-        public bool Help { get; set; }
+        public bool Help { get; }
 
         public static bool IsLocalBuild => OutputSink.Instance is ConsoleOutputSink;
         public static bool IsServerBuild => !IsLocalBuild;
