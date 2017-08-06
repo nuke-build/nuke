@@ -1,7 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
 
@@ -28,6 +27,7 @@
     <DebugSymbols>True</DebugSymbols>
     <DefineConstants>$(DefineConstants);RELEASE;JETBRAINS_ANNOTATIONS</DefineConstants>
     <Optimize>True</Optimize>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
 
 </Project>
