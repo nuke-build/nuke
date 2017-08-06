@@ -58,8 +58,7 @@ namespace Nuke.Core.OutputSinks
 
         public virtual void WriteSummary (IReadOnlyCollection<TargetDefinition> executionList)
         {
-            var longestName = executionList.Select(x => x.Name.Length).OrderByDescending(x => x).First();
-            var firstColumn = Math.Max(longestName + 4, val2: 20);
+            var firstColumn = Math.Max(executionList.Max(x => x.Name.Length) + 4, val2: 20);
             var secondColumn = 10;
             var thirdColumn = 10;
             var allColumns = firstColumn + secondColumn + thirdColumn;

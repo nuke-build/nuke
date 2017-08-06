@@ -85,8 +85,7 @@ namespace Nuke.Core.Execution
             var builder = new StringBuilder();
 
             var parameters = build.GetParameterMembers().OrderBy(x => x.Name).ToList();
-            var longestParameterName = parameters.Select(x => x.Name.Length).OrderByDescending(x => x).First();
-            var padRightParameter = Math.Max(longestParameterName, val2: 17);
+            var padRightParameter = Math.Max(parameters.Max(x => x.Name.Length), val2: 17);
 
             void PrintParameter (MemberInfo parameter)
             {
