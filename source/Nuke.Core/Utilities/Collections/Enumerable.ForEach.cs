@@ -17,6 +17,11 @@ namespace Nuke.Core.Utilities.Collections
                 action(item);
         }
 
+        public static void ForEach<T> (this IEnumerable<T> enumerable, [InstantHandle] Action<T, int> action)
+        {
+            enumerable.Select((x, i) => new { x, i }).ForEach(x => action(x.x, x.i));
+        }
+
         public static IEnumerable<T> ForEachLazy<T> (this IEnumerable<T> enumerable, [InstantHandle] Action<T> action)
         {
             foreach (var item in enumerable)
