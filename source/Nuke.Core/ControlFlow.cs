@@ -82,7 +82,6 @@ namespace Nuke.Core
         [AssertionMethod]
         [ContractAnnotation("obj: null => halt")]
         public static T NotNull<T> ([AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull] this T obj, string text = null)
-            where T : class
         {
             if (obj == null)
                 Fail($"Assertion failed: {text ?? "obj != null"}");
@@ -95,7 +94,6 @@ namespace Nuke.Core
         [CanBeNull]
         [AssertionMethod]
         public static T NotNullWarn<T> ([CanBeNull] this T obj, string text = null)
-            where T : class
         {
             if (obj == null)
                 Logger.Warn($"Check failed: {text ?? "obj != null"}");
@@ -107,7 +105,6 @@ namespace Nuke.Core
         /// </summary>
         [ContractAnnotation("enumerable: null => halt")]
         public static IReadOnlyCollection<T> NotEmpty<T> ([CanBeNull] this IEnumerable<T> enumerable)
-            where T : class
         {
             var collection = enumerable.NotNull("enumerable != null").ToList().AsReadOnly();
             Assert(collection.Count > 0, "collection.Count > 0");
@@ -119,7 +116,6 @@ namespace Nuke.Core
         /// </summary>
         [ContractAnnotation("enumerable: null => halt")]
         public static IReadOnlyCollection<T> NoNullItems<T> ([CanBeNull] this IEnumerable<T> enumerable)
-            where T : class
         {
             var collection = enumerable.NotNull("enumerable != null").ToList().AsReadOnly();
             Assert(collection.All(x => x != null), "collection.All(x => x != null)");
