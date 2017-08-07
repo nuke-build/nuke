@@ -1,15 +1,11 @@
 #!/usr/bin/env bash
 
 NOINIT=0
-SCRIPT_ARGUMENTS=()
+BUILD_ARGUMENTS=()
 for i in "$@"; do
     case ${1,,} in
         -noinit) NOINIT=1;;
-        -target) TARGET="$2"; shift ;;
-        -configuration) CONFIGURATION="$2"; shift ;;
-        -verbosity) VERBOSITY="$2"; shift ;;
-        -) shift; SCRIPT_ARGUMENTS+=("$@"); break ;;
-        *) SCRIPT_ARGUMENTS+=("$1") ;;
+        *) BUILD_ARGUMENTS+=("$1") ;;
     esac
     shift
 done
@@ -48,4 +44,4 @@ msbuild $BUILD_PROJECT_FILE
 # EXECUTE BUILD
 ###########################################################################
 
-mono $BUILD_EXE_FILE --verbosity=$VERBOSITY --configuration=$CONFIGURATION --target=$TARGET $DRYRUN "${SCRIPT_ARGUMENTS[@]}"
+mono $BUILD_EXE_FILE ${BUILD_ARGUMENTS[@]}

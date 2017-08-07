@@ -1,13 +1,8 @@
 [CmdletBinding()]
 Param(
     [switch]$NoInit,
-    [string]$Target,
-    [ValidateSet("Release", "Debug")]
-    [string]$Configuration,
-    [ValidateSet("Quiet", "Minimal", "Normal", "Verbose")]
-    [string]$Verbosity,
     [Parameter(Position=0,Mandatory=$false,ValueFromRemainingArguments=$true)]
-    [string[]]$ScriptArgs
+    [string[]]$BuildArguments
 )
 
 Set-StrictMode -Version 2.0; $ErrorActionPreference = "Stop"; $ConfirmPreference = "None"; trap { $host.SetShouldExit(1) }
@@ -51,4 +46,4 @@ ExecSafe { & $MSBuildFile $BuildProjectFile }
 # EXECUTE BUILD
 ###########################################################################
 
-ExecSafe { & $BuildExeFile "-Target=$Target" "-Configuration=$Configuration" "-Verbosity=$Verbosity" $ScriptArgs }
+ExecSafe { & $BuildExeFile $BuildArguments }
