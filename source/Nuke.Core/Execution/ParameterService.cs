@@ -102,10 +102,7 @@ namespace Nuke.Core.Execution
         [CanBeNull]
         private static object GetDefaultValue (Type type)
         {
-            if (type.IsArray)
-                return Array.CreateInstance(type.GetElementType(), length: 0);
-
-            if (Nullable.GetUnderlyingType(type) == null && type != typeof(string))
+            if (Nullable.GetUnderlyingType(type) == null && type != typeof(string) && !type.IsArray)
                 return Activator.CreateInstance(type);
 
             return null;
