@@ -28,7 +28,7 @@ namespace Nuke.Core.Execution
             IReadOnlyCollection<TargetDefinition> targetDefinitions,
             NukeBuild build)
         {
-            if (targetName == "default")
+            if (targetName.EqualsOrdinalIgnoreCase("default"))
                 return targetDefinitions.Single(x => x.IsDefault);
 
             var targetDefinition = targetDefinitions.SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(targetName));
