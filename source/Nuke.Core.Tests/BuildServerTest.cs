@@ -30,7 +30,7 @@ namespace Nuke.Core.Tests
 
         [BuildServerTheory(typeof(TeamServices))]
         [MemberData(nameof(Properties), typeof(TeamServices))]
-        public void TestTeamFoundationServer(PropertyInfo property)
+        public void TestTeamServices(PropertyInfo property)
         {
             AssertProperty(TeamServices.Instance.NotNull(), property);
         }
