@@ -131,8 +131,12 @@ namespace Nuke.Core.Execution
 
             if (values.Count == 0)
             {
+                if (destinationType.IsArray)
+                    return Array.CreateInstance(destinationType.GetElementType(), length: 0);
+
                 if (destinationType == typeof(bool) || destinationType == typeof(bool?))
                     return true;
+
                 if (elementType == typeof(string) || Nullable.GetUnderlyingType(elementType) != null)
                     return null;
             }
