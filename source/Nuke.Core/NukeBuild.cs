@@ -103,7 +103,7 @@ namespace Nuke.Core
         /// Shows the help text for this build assembly if supplied.
         /// </summary>
         [Parameter("Shows the help text for this build assembly if supplied.")]
-        public bool Help { get; }
+        public string[] Help { get; }
 
         public static bool IsLocalBuild => OutputSink.Instance is ConsoleOutputSink;
         public static bool IsServerBuild => !IsLocalBuild;

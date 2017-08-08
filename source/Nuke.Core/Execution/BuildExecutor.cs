@@ -49,9 +49,11 @@ namespace Nuke.Core.Execution
 
             PrintLogo();
 
-            if (build.Help)
+            if (build.Help != null)
             {
-                Logger.Log(GetTargetsText(build, defaultTargetFactory));
+                if (build.Help.Length == 0 || build.Help.Any(x => "targets".StartsWithOrdinalIgnoreCase(x)))
+                    Logger.Log(GetTargetsText(build, defaultTargetFactory));
+                if (build.Help.Length == 0 || build.Help.Any(x => "parameters".StartsWithOrdinalIgnoreCase(x)))
                 Logger.Log(GetParametersText(build));
                 Environment.Exit(exitCode: 0);
             }
@@ -76,15 +78,14 @@ namespace Nuke.Core.Execution
             var targetDefinitions = build.GetTargetDefinitions(defaultTargetFactory);
             var longestTargetName = targetDefinitions.Select(x => x.Name.Length).OrderByDescending(x => x).First();
             var padRightTargets = Math.Max(longestTargetName, val2: 20);
-            builder.AppendLine("  Targets:");
+            builder.AppendLine($"  Targets:");
             builder.AppendLine();
             foreach (var target in targetDefinitions)
             {
-                var defaultMarker = target.IsDefault ? " (default)" : string.Empty;
                 var dependencies = target.TargetDefinitionDependencies.Count > 0
                     ? $" -> {target.TargetDefinitionDependencies.Select(x => x.Name).Join(", ")}"
                     : string.Empty;
-                builder.AppendLine($"    {(target.Name + defaultMarker).PadRight(padRightTargets)}{dependencies}");
+                builder.AppendLine($"  {(target.IsDefault ? ">" : " ")} {target.Name.PadRight(padRightTargets)}{dependencies}");
                 if (!string.IsNullOrWhiteSpace(target.Description))
                     builder.AppendLine($"      {target.Description}");
             }
@@ -110,15 +111,17 @@ namespace Nuke.Core.Execution
             }
 
             builder.AppendLine("  Parameters:");
-            builder.AppendLine();
-            var inheritedParameters = parameters.Where(x => x.DeclaringType == typeof(NukeBuild));
-            foreach (var parameter in inheritedParameters)
-                PrintParameter(parameter);
 
             var customParameters = parameters.Where(x => x.DeclaringType != typeof(NukeBuild)).ToList();
             if (customParameters.Count > 0)
                 builder.AppendLine();
             foreach (var parameter in customParameters)
+                PrintParameter(parameter);
+            
+            builder.AppendLine();
+
+            var inheritedParameters = parameters.Where(x => x.DeclaringType == typeof(NukeBuild));
+            foreach (var parameter in inheritedParameters)
                 PrintParameter(parameter);
 
             return builder.ToString();
@@ -130,7 +133,7 @@ namespace Nuke.Core.Execution
             var lines = new List<string> { string.Empty };
             foreach (var word in words)
             {
-                if (lines.Last().Length + word.Length > 40)
+                if (lines.Last().Length + word.Length > 100)
                     lines.Add(string.Empty);
 
                 lines[lines.Count - 1] = $"{lines.Last()} {word}";
