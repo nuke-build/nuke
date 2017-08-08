@@ -84,6 +84,12 @@ namespace Nuke.Core
         [Parameter("Specifies that no dependencies should be executed. Default is 'false'.", Name = "NoDeps")]
         public bool NoDependencies { get; }
 
+        /// <summary>
+        /// Specifies that the bootstrapper should skip initialization. By default this includes updating NuGet.exe and restoring the build project. Default is <c>false</c>.
+        /// </summary>
+        [Parameter("Specifies that the bootstrapper should skip initialization. By default this includes updating NuGet.exe and restoring the build project. Default is 'false'.", Name = "NoInit")]
+        public bool NoInitialization { get; }
+
         //[Parameter("Specifies that no logo should be printed. Default is is 'false'.")]
         //public bool NoLogo { get; set; }
 
