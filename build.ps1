@@ -1,7 +1,7 @@
 [CmdletBinding()]
 Param(
     [switch]$NoInit,
-    [switch]$RefLocal,
+    [switch]$RefExt,
     [Parameter(Position=0,Mandatory=$false,ValueFromRemainingArguments=$true)]
     [string[]]$BuildArguments
 )
@@ -42,7 +42,7 @@ if (!$NoInit) {
 }
 
 $MSBuildFile = & "$TempDirectory\Nuke.MSBuildLocator\tools\Nuke.MSBuildLocator.exe"
-ExecSafe { & $MSBuildFile $BuildProjectFile /target:"Restore;Build" /property:ReferenceLocal=$RefLocal }
+ExecSafe { & $MSBuildFile $BuildProjectFile /target:"Restore;Build" /property:ReferenceExternal=$RefExt }
 
 Write-Host "##teamcity[blockClosed name='Prepare']"
 

@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 NOINIT=0
-REFLOCAL="False"
+REFEXT="False"
 BUILD_ARGUMENTS=()
 for i in "$@"; do
     case ${1,,} in
         -noinit) NOINIT=1;;
-        -reflocal) REFLOCAL="True";;
+        -refext) REFLOCAL="True";;
         *) BUILD_ARGUMENTS+=("$1") ;;
     esac
     shift
@@ -38,7 +38,7 @@ if ! ((NOINIT)); then
   elif [[ $NUGET_URL == *"latest"* ]]; then mono $NUGET_FILE update -Self; fi
 fi
 
-msbuild $BUILD_PROJECT_FILE /target:"Restore;Build" /property:"ReferenceLocal=$REFLOCAL"
+msbuild $BUILD_PROJECT_FILE /target:"Restore;Build" /property:"ReferenceExternal=$REFEXT"
 
 ###########################################################################
 # EXECUTE BUILD

@@ -5,7 +5,7 @@
     <TargetFramework>net46</TargetFramework>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <RootNamespace></RootNamespace>
-    <ReferenceLocal>False</ReferenceLocal>
+    <ReferenceExternal>False</ReferenceExternal>
     <IsPackable>false</IsPackable>
     <NoWarn>CS0649;CS0169</NoWarn>
   </PropertyGroup>
@@ -27,11 +27,11 @@
     <PackageReference Include="xunit.runner.console" Version="2.2.0" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(ReferenceLocal)'!='True'">
+  <ItemGroup Condition="'$(ReferenceExternal)'=='True'">
     <PackageReference Include="Nuke.Common" Version="*" />
   </ItemGroup>
   
-  <ItemGroup Condition="'$(ReferenceLocal)'=='True'">
+  <ItemGroup Condition="'$(ReferenceExternal)'!='True'">
     <ProjectReference Include="..\source\Nuke.Core\Nuke.Core.csproj" />
     <ProjectReference Include="..\source\Nuke.Common\Nuke.Common.csproj" />
   </ItemGroup>
