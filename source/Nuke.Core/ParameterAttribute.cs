@@ -37,6 +37,8 @@ namespace Nuke.Core
     [UsedImplicitly(ImplicitUseKindFlags.Assign)]
     public class ParameterAttribute : InjectionAttributeBase
     {
+        private static readonly ParameterService s_parameterService = new ParameterService();
+
         public ParameterAttribute (string description = null)
         {
             Description = description;
@@ -57,7 +59,7 @@ namespace Nuke.Core
                          && !memberType.IsArray
                 ? typeof(Nullable<>).MakeGenericType(memberType)
                 : memberType;
-            return ParameterService.GetParameter(Name ?? memberName, memberType, (Separator ?? string.Empty).SingleOrDefault());
+            return s_parameterService.GetParameter(Name ?? memberName, memberType, (Separator ?? string.Empty).SingleOrDefault());
         }
     }
 }
