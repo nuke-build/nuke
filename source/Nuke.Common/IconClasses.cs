@@ -34,7 +34,6 @@ using Nuke.Core.Execution;
 [assembly: IconClass(typeof(GitRepository), "git")]
 [assembly: IconClass(typeof(GitVersionTasks), "podium")]
 [assembly: IconClass(typeof(InspectCodeTasks), "code")]
-[assembly: IconClass(typeof(SerializationTasks), "file-empty2")]
 [assembly: IconClass(typeof(MSBuildTasks), "download2")]
 [assembly: IconClass(typeof(NuGetTasks), "box")]
 [assembly: IconClass(typeof(Nunit3Tasks), "bug2")]

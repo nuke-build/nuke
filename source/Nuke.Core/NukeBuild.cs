@@ -7,13 +7,10 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
-using Nuke.Core;
 using Nuke.Core.Execution;
 using Nuke.Core.IO;
 using Nuke.Core.OutputSinks;
 using static Nuke.Core.EnvironmentInfo;
-
-[assembly: IconClass(typeof(NukeBuild), "heart3")]
 
 // ReSharper disable VirtualMemberNeverOverridden.Global
 
