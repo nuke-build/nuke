@@ -9,6 +9,7 @@
   <Import Project="..\..\shared\Configuration.props" />
   
   <ItemGroup>
+    <PackageReference Include="FluentCommandLineParser" Version="1.4.3" />
     <PackageReference Include="HtmlAgilityPack" Version="1.4.9.5" />
     <PackageReference Include="Humanizer" Version="2.2.0" />
     <PackageReference Include="JetBrains.Annotations" Version="10.4.0" />

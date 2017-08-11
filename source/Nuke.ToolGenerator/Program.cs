@@ -11,6 +11,7 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Fclp;
 using HtmlAgilityPack;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -24,11 +25,18 @@ namespace Nuke.ToolGenerator
     {
         private static void Main (string[] args)
         {
-            var files = Directory.GetFiles(args[0], "*.json", SearchOption.TopDirectoryOnly);
+            string metadata = null;
+            string generation = null;
 
+            var parser = new FluentCommandLineParser();
+            parser.Setup<string>("metadata").Callback(x => metadata = x);
+            parser.Setup<string>("generate").Callback(x => generation = x);
+            parser.Parse(args);
+
+            var files = Directory.GetFiles(metadata, "*.json", SearchOption.TopDirectoryOnly).Where(x => !x.EndsWith("_schema.json"));
             files.AsParallel().ForAll(file =>
             {
-                var tool = Load(file);
+                var tool = Load(file, generation);
                 using (var streamWriter = new StreamWriter(File.Open(tool.GenerationFileBase + ".Generated.cs", FileMode.Create)))
                 {
                     Generators.ToolGenerator.Run(tool, streamWriter);
@@ -38,23 +46,29 @@ namespace Nuke.ToolGenerator
 
                 Console.WriteLine($"Processed {Path.GetFileName(file)}.");
             });
-
             Console.WriteLine("Finished generation. Press any key to exit...");
             Console.ReadKey();
         }
 
-        private static Tool Load (string file)
+        private static Tool Load (string file, string generation)
         {
             var content = File.ReadAllText(file);
             var tool = JsonConvert.DeserializeObject<Tool>(content);
 
-            var directory = Path.Combine(Environment.CurrentDirectory, tool.Name);
+            var directory = Path.Combine(generation, tool.Name);
             Directory.CreateDirectory(directory);
 
             tool.DefinitionFile = file;
             tool.GenerationFileBase = Path.Combine(directory, Path.GetFileNameWithoutExtension(file));
             tool.RepositoryUrl = $"https://github.com/nuke-build/tools/blob/master/{Path.GetFileName(file)}";
 
+            ApplyBackReferences(tool);
+
+            return tool;
+        }
+
+        private static void ApplyBackReferences (Tool tool)
+        {
             foreach (var task in tool.Tasks)
             {
                 task.Tool = tool;
@@ -79,8 +93,6 @@ namespace Nuke.ToolGenerator
             }
             foreach (var enumeration in tool.Enumerations)
                 enumeration.Tool = tool;
-
-            return tool;
         }
 
         private static void UpdateReferences (Tool tool)
@@ -117,9 +129,11 @@ namespace Nuke.ToolGenerator
 
             var originalLineCount = File.ReadAllLines(tool.DefinitionFile).Length;
             var serializationLineCount = content.Split(new[] { Environment.NewLine }, StringSplitOptions.None).Length;
-            var postfix = originalLineCount != serializationLineCount ? ".new" : string.Empty;
 
-            File.WriteAllText(tool.DefinitionFile + postfix, content);
+            var postfix = originalLineCount != serializationLineCount ? ".new" : string.Empty;
+            File.WriteAllText (tool.DefinitionFile + postfix, content);
+
+            //File.WriteAllText(tool.DefinitionFile, content);
         }
 
         private static async Task<string> GetReferenceContent (string reference)
