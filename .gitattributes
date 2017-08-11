@@ -6,10 +6,6 @@
 *.DotSettings text eol=lf
 *.sh text eol=lf
 
-*.woff binary
-*.ttf binary
-*.eot binary
-
 ###############################################################################
 # Set default behavior for command prompt diff.
 #
