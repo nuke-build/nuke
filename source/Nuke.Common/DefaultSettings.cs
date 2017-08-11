@@ -89,7 +89,7 @@ namespace Nuke.Common
 
         public static MSBuildSettings MSBuildCompileWithVersion => MSBuildCompile
                 .SetAssemblyVersion(GitVersionValue?.AssemblySemVer)
-                .SetFileVersion(GitVersionValue?.AssemblySemVer)
+                .SetFileVersion(GitVersionValue?.FullSemVer)
                 .SetInformationalVersion(GitVersionValue?.InformationalVersion);
 
         // TODO: evenIfNull for dictionary ?
