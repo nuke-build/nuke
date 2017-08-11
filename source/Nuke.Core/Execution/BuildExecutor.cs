@@ -66,7 +66,7 @@ namespace Nuke.Core.Execution
         private static void PrintLogo()
         {
             Logger.Log(FigletTransform.GetText("NUKE"));
-            Logger.Log($"Version: {BuildAssembly.GetName().Version}");
+            Logger.Log($"Version: {typeof(BuildExecutor).GetTypeInfo().Assembly.GetName().Version}");
             Logger.Log(string.Empty);
         }
 
