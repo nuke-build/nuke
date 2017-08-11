@@ -15,6 +15,9 @@ namespace Nuke.ToolGenerator.Model
     [DebuggerDisplay("{" + nameof(DefinitionFile) + "}")]
     public class Tool
     {
+        [JsonProperty("$schema")]
+        private string Schema { get; set; } = "_schema.json#";
+
         [JsonProperty]
         private string[] License { get; set; } =
             {
