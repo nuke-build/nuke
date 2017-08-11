@@ -140,7 +140,7 @@ namespace Nuke.ToolGenerator
             return document.DocumentNode.SelectSingleNode(referenceValues[1]).InnerText;
         }
 
-        private class CustomContractResolver : DefaultContractResolver
+        private class CustomContractResolver : CamelCasePropertyNamesContractResolver
         {
             protected override JsonProperty CreateProperty ([NotNull] MemberInfo member, MemberSerialization memberSerialization)
             {
