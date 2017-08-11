@@ -6,6 +6,22 @@
 [![Twitter](https://img.shields.io/badge/twitter-%40nukebuildnet-blue.svg?style=flat-square&logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAHYcAAB2HAY%2Fl8WUAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTZEaa%2F1AAAGlUlEQVR4Xu2ce4gVVRzHV9NdLXddUQzLUAoMLN2lh1FUmNgflYUPsAcFC0UJW1T0h%2BUDoowwEoMeUkRamQamCVmBaRpRRERGmPZPYBalpKVlYj52%2B3zv%2BXld995dZ%2B7O3DNzZz7w5cydOef3ODp7Zs6cmbqcnJycnJycnBzvdHZ2nt3R0XEJuhHNQDPRNPZfSzlOx61qzknolAHWYSvZPkB5grIE9h%2BnOIBWoKnoLDMRGtr2s830oiTQdDpmB2UoaCO2szndzAWCNo3oMdrpH6HnTqTScNtMJMR3HlqPOtQhfQETH6BRZroEqvRHY6mzCO1DJ9AUO1wKleup8CO6y3YlCuKahH5R8lGBvZ%2FRFeaiAL%2BHo9vRZnTUqqruZor%2BVq0UKtxhFY%2Bgu213IiCeG9A%2Fii9qsHuQ4nHKuUid9rc7cgr2HaFotXDKQ6WNrnqhwVF0jx3yCnFMRErSG%2Fh%2FysIpD3WGqdNcdQe%2Fj1G0WRUvEEMT2uki8gP%2B11L0fOoKKkwu1O4GjfWH80E2ezcQA%2Fjsh%2B%2FnCoF4Av8bUIOFVBhY%2BD0K3Wy7HOyY45qUwjF14iI2B1j1qoDPceiwi6K6WM5vowZ%2BDqS8CN2HNqFDaIaF6WDH065peTguVrM5xJrEDv6WOe%2FVB9%2BfoHY2V1DuQl1H48UW4inYucSO9wr1tqGLrVls4KMRd7p7SBTE9R5F6ZnIgcWuypmhrob5NhTbbQ0%2BZhacJQhi2kIxyEI8HQ7Od9WCQX2xjs2xZiJSsP2S85QMiOcLiqEWXilUuNNVDQftDqIn2OzZeAVgc5Pz4B%2FFgpostPJQr5VKFd9f0vRXivtRJIMM9kJPFEQNMWgkfgMVL2N6hPoaqve7ppWDDd1bPsTmMDNdEdjQP4g38K%2FOe5jN4Ne%2FNHjdNY8Ezc%2B9iFrYDjXYUF8Xq78XrHgC%2F4fRSAspGDTQbEefp4m6InvwHZqHJrKr%2FCjWDepGOusSFvzrSiPcWUQD3ToVJxSiBts6LXSKv8PPNspLKZtRyQwx%2B75B3iC2%2FajRwgkOjS5DmrqJHfxoCl6n%2Bk70PnoWtSM9z%2FjM1fID%2FvdQBDpbSqDhkwUrGYYO1J%2BQyu79adyAPnSmsgn567lJ8MGPylNpVLxY5PdQtBVlEvriU%2BuKYNBgC9qDnkdXoSbsDKFcjSIdmdMAKb9pXRMMGqyytmqs0VKj0FdoOdpthzIDOS%2B0rgkGDXqdD8wgoZ4bqwNnW8PMQ18cQ%2BHmPGlwvhqajUxDP%2ByjCH8NSMP1zkS2oR82WpeEg4bXoMyNuN2hC%2BZZl4SHxh%2BbnSxzuXVHeOjAFvSfGcoc5K55yIqXv52ckXkGZfJUJu1XrCsqBztapbXGmcwO%2Bk8Dk6wb%2Bgb2tGRWz0AzA%2FlqDU50S1gwpuckS1DZpbO1BnkusNSjBcNatO31GUXckJ%2Bm8EdYytGDcS1%2Fm4%2B0TqTmBhhSWmmpRgu261FxYhFH56DbkNYp18SpTR5akTveUowObOuSRk%2Flv0daVKSnazvQbvSvc59%2ByEWDZTzrfDA%2B17mpTchP%2F%2FsmWLrRg49mHPR5xUJSIbfllmp84OQR81dTkJcWRo22NOMDX4NwpOVdNQP5iHZLMX5wNgbVzLUgueilmconDSoBp1q1oNnaVEMOf6AxllZ1wfEEtMtiSR3ErucdsywdPxDASLQGpepCmnjFUjZjW9sdGILQGr5b0LcoFR1JnBso6i2FZEBAmrG5Dr2FtHQtkZ1JXNsomi3sZEKAmojVaD0bLUWnvXvnC%2BLQ8rlwq019QsyTCfgnF75fFAe6wEJLNsQ7gmBfRvpGgXeIY3sqOo8g9T0BrSzda7F7h1g%2BR8k%2BbQnwXPQo8vpKQleIRWgNdjI%2Fc6LAkBZjatQ9pKCTAvHo1QS9o1L1d5t7hGA0I623mHSKrkWxfLegrxCXRtorLezqgMOrkV6GWWZ6FenVpnfRR0iz0ImeeSY%2BTYi%2BwGbV3mMuglNN2V%2BPtBI1VQ%2BKCFcj%2FVbKFkvHHwSiTyhNQ1%2BjRHek4gPdPt7Ez%2BpOR50JBURgU5C%2BnZKoWzLFg75Et%2FKzqt9uCA0B6tTWtNVryPf3Wv5CegmyFfmfRQkLwQ9GevVqFdqLYr3LwL7m635DukyahQZbKOmHZPQJEF3S6OJZlzS6z9SDmYr%2BbtLsOPoT%2FYD0DzQHjefQQHNZ25Covm6mty0vJHF9x%2B8BtJDfeteurDi%2BAN3LtiYcRiO90JO%2BUzMnJycnJycnJ63U1f0Pn1ZeoSwSgjAAAAAASUVORK5CYII%3D)](https://twitter.com/nukebuildnet)
 <!--[![Avoid StackOverflow](https://img.shields.io/badge/avoid-stackoverflow-orange.svg?style=flat-square&logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAHYcAAB2HAY%2Fl8WUAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTZEaa%2F1AAAEhklEQVR4XuWb7XHVMBBFUwIlUAIdQAekA%2BgAOiAdQAekA9IBdAAdQAfQQdjjeX4j%2B93dlSXZkOTOnB9Za%2FVhyau1nnN1f3%2B%2FN8%2BM18YH44vx1fhprIWNa5ShLD74qjqHIY0DeGF8NL4bvaIO6qJO1VYX0tgIs%2FXOULM7StRNG8NWhjRuhM6wZH8bR4m2aLP7RkjjBt4YRw58LdqmD6pvVUhjBc8NAtb%2FIvpCn1RfQ6Qx4drYOus%2FjE%2FGe%2BOVoTqLjWuUuTV%2BGVtEn%2Bjbut4QaQwgGteKQTOYppk5gS91UFet6KOqSyKNDp%2BNGt0ZzKSqowfqpO4a0VdVxwXSKCA5yfTN2GWvXsGNqFkR9Fn5L5DGFdnM%2FzFYpsp3T2gzU7oSpLGAwBWJmThi1j1oO1sNjEH5TkjjCSJqJBpuSUQyKZ8I%2BpDdBHd3kEaD6BttdWxTrVlYJuWTQV%2BIQZ4Yi9yNLgwnoiSndeZnMimfGrKVwJgu%2FC4MxlvDU%2B%2FgIZPyqYW%2BRQkUY1v4LP4wqMBb%2BkT7EQEvk%2FLZAn30xNgWE1g6wo3hadRWl0n5bCXaIhnjuWzpFM0%2BAaYs20Mm5dOCFw8Wq6B0iO7ayL0%2Bk%2FJpgYzR03k1lw7eSQ75d1mul0zKpxVva2SsU5m5YBQ4Rr%2FYZFI%2BrUSrYFrVc0Ev5eU5KiscQSbl04MXC6YUeS7knd6OivwlmZRPD15sY8zTDSAieuo5zPDIpHx6YAyenlHAe%2BnZY%2FlDJuXTi5cdXnPRS37C18gOMimfXnh5U7rhonfMtMfzD5mUTy9eHLjjordXjt7%2BZjIpn1687fAbF70EaI8ACJmUTy9eIPzORU%2FrSkaRSfmMQMq9YFpXMIpMymcEUu4F07qCUWRSPiOQci%2BY1hWMIpPyGYEUF7wk4SkEwV9cfPLb4NGJ0L%2FAS4RuueilwqSP64oeKmEq7L0MnU9NHgFesje9DB39Onw0XgBE0%2BsweKcmjyEOeM%2F%2F9Lo%2FF%2FKOxKZTkweOd9q1OBI78lD0SLztDy0ORcFLiEYfix%2BJ9yMvY53KlIW9ZwWNXAWZlE8L0eyfY1vpwG7AD6BKI2NBJuXTgvfsM0b50xg86R9HIVoFaMRvhJmUzxaigL6YfSgdZ6IPJFhWiwoayKR8aqFvXtaH0g8kZqLvbXpvQiblUwN98p57JH%2FivzCcIH2MHgW2l9abkEn5ZNCX6LsmxiLT%2BgtDQfaZXOtKyKR8IrKZR5s%2Fk5vxUuRZNDwiMLZC29Ezj8JfuKRxhfcuXYp%2FY1G%2Be0KbmdIzDWkU1HylzWo44r2BNrIlj6oOdKTRoWYlIILRHjeCOqNAV6pq8CCNAVlMKMUssUx7DlXwpY6aGZ8VPvNrpDGBiBptkUoEKj5dZzAvDXVTsHGNMpTNgtta9MmN9h7SWAGdjZKlo0VfmlaaNG6A1HLrahgp2r5Ib7cgjRshEeEN68gbQVu02ZqNnpHGRugMr6HR19q9om7a6B74jDQOgAyNaOydNm8RdVDXLhmnNA6G2SI6s2RJqAhYapVg4xplKIvPsJnW3F%2F9BQrtEeu%2BMlmMAAAAAElFTkSuQmCC)](http://nuke.build)-->
 
+## Installation
+
+Execute one of the following commands based on the currently running operating system:
+
+```powershell
+# PowerShell
+powershell -Command iwr https://nuke.build/powershell -OutFile setup.ps1
+powershell -ExecutionPolicy ByPass -File ./setup.ps1
+
+# Bash
+curl -Lsfo setup.sh https://nuke.build/bash
+chmod +x setup.sh; ./setup.sh
+```
+
+On our website there is a complete [getting started](https://www.nuke.build/getting-started.html) guide that explains all the basics of this project.
+
 ## Roadmap
 
 You can vote for your favorite missing features by clicking the image below:
@@ -22,56 +38,9 @@ You have a valuable piece of code and want to share it with the community? Don't
 <!--[![Source](https://img.shields.io/badge/source-master-red.svg?style=flat-square&colorB=632AC4&logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAADIAAAAxCAYAAACYq%2FofAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTCtCgrAAAAEKUlEQVRoQ92Zy0tVURSH7W32BB9EgZlE9Q8UQVRYRERkIQ2KmtQoEbIXvaEGlYMekwaKERFCFEgEhUIEQU0KIihxElaDogZNorflvfats5dbduec633fTR8stve3fnvttTjec19l%2FzI8PFyVTCYX%2BRr0V6etxoOpAvNvVq%2Bhx0ZtOR5M%2B4g%2FuscbEolksNJbF0uFtpsazFt9HIaermqL6cOmJp%2BGoZfzLOO0vQAeVxHl%2BtAI%2BqcD%2BhYfhqGHDhZnCLRqop%2FYr1IgXiZuYZ6okgV9M1GyGwBnn2MJXQn0Ps0fUjlo9pqIcFQlB%2FKbiKIPw5kXtQULmlyJXrVED8KaICKfUOgbicFgdxHgrAt6tAW5HL3fOAw8jrwiATw%2BoikH9A3EL7UVDM44pUdakOegPzGOUdDiBxHQbmraAX09UbBhqB11JeSF%2BrlxuKCnHkRAP0tMUZsFbR3xU215g5on9AgL2jzilVpCkBt7EIFch9oc0NcSP9SWE9QZItq0tAWthniktkjIpz2IcIU%2FJ6vdgt5AfDfO7KHGcS1pQaskXqslFjzpDTICnjMszv1cQF9NZDUM%2B%2BQueVhLWUjVoj81rtTgy2wQAd9dlqhhVhHZDHNaS1ioM4MY80qMgDfzQQS8l4iputWCtpL4prYxwduqWy3IdeixT%2Bwo8Gc3iIC%2FW7c6oK8gvqotFjwndYsFeRb6C%2BNIH%2FZkP4jAnuss07WEBX058cW4wpBrVqsFWZ4T74wjM9iX2yAC%2B9q1hAP6MtKfjcuANkiMvlNV0BaSfmZcmcP%2B3AcR2PuAZYKWsqAvRQ%2BG4W%2FhgKYspORd7AfxZAv78zOIwP5OlqjXmcWEfHReo5IF%2FxL0gaBADlAjf4MI1HjIMl5LpgSfXIk3wcYcyfsgAnXkBjBby0ZCvh7f%2B2BDHijIIAK1Im%2FNI5BvV2teKNggAvV6iUot74C%2BV215oaCDCNTsJqbpEQ7oewjzRVWOUKawgwjUHSBCn2cE9DYi52EoUfhBBGrfYIn8uolci3FlT9EGEagvH45C75pFk0aIRGDMgqIOInBGD1GjRzqgH1RbxhR9EIFzbrOEroxAbheR8XOGLcUfROCsPiL0eUZAP0Zk9G%2BGvzSDCJx3hyXyHQC5HcaVHiUdRODMlyyh75oFcq1EWl%2Bel3wQgXPvsdRqGw7kdhtXarwYROBsedcc%2BjwjkNtJpLwy3gwicL7cAOJuzS1E7DDk%2FBlEoIf7LHE3gEZiyDhdvBtEoI%2B3xExtywG9mQj9RoPm3yACvfSwRP6WTq7JuEbxdhCBfuRntUnangO5bYT9WcPrQQR6kt9D6rVFB3L2RdP7QQT6ekxEftIkLb84C%2F4PItDbR6JaW3VA304s0Id%2BDyLQn1yZ%2BdpuPL4PItDjJ2KuthwNPvl%2F6%2FI8OokGbfl%2FpazsLyYIKq%2Fnun99AAAAAElFTkSuQmCC)](http://sourcebrowser.io/Browse/nuke-build/nuke)-->
 <!--[![Contributors](https://cla-assistant.io/readme/badge/cla-assistant/cla-assistant?style=flat-square&label=contributors&logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAADIAAAAxCAYAAACYq%2FofAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTCtCgrAAAAEKUlEQVRoQ92Zy0tVURSH7W32BB9EgZlE9Q8UQVRYRERkIQ2KmtQoEbIXvaEGlYMekwaKERFCFEgEhUIEQU0KIihxElaDogZNorflvfats5dbduec633fTR8stve3fnvttTjec19l%2FzI8PFyVTCYX%2BRr0V6etxoOpAvNvVq%2Bhx0ZtOR5M%2B4g%2FuscbEolksNJbF0uFtpsazFt9HIaermqL6cOmJp%2BGoZfzLOO0vQAeVxHl%2BtAI%2BqcD%2BhYfhqGHDhZnCLRqop%2FYr1IgXiZuYZ6okgV9M1GyGwBnn2MJXQn0Ps0fUjlo9pqIcFQlB%2FKbiKIPw5kXtQULmlyJXrVED8KaICKfUOgbicFgdxHgrAt6tAW5HL3fOAw8jrwiATw%2BoikH9A3EL7UVDM44pUdakOegPzGOUdDiBxHQbmraAX09UbBhqB11JeSF%2BrlxuKCnHkRAP0tMUZsFbR3xU215g5on9AgL2jzilVpCkBt7EIFch9oc0NcSP9SWE9QZItq0tAWthniktkjIpz2IcIU%2FJ6vdgt5AfDfO7KHGcS1pQaskXqslFjzpDTICnjMszv1cQF9NZDUM%2B%2BQueVhLWUjVoj81rtTgy2wQAd9dlqhhVhHZDHNaS1ioM4MY80qMgDfzQQS8l4iputWCtpL4prYxwduqWy3IdeixT%2Bwo8Gc3iIC%2FW7c6oK8gvqotFjwndYsFeRb6C%2BNIH%2FZkP4jAnuss07WEBX058cW4wpBrVqsFWZ4T74wjM9iX2yAC%2B9q1hAP6MtKfjcuANkiMvlNV0BaSfmZcmcP%2B3AcR2PuAZYKWsqAvRQ%2BG4W%2FhgKYspORd7AfxZAv78zOIwP5OlqjXmcWEfHReo5IF%2FxL0gaBADlAjf4MI1HjIMl5LpgSfXIk3wcYcyfsgAnXkBjBby0ZCvh7f%2B2BDHijIIAK1Im%2FNI5BvV2teKNggAvV6iUot74C%2BV215oaCDCNTsJqbpEQ7oewjzRVWOUKawgwjUHSBCn2cE9DYi52EoUfhBBGrfYIn8uolci3FlT9EGEagvH45C75pFk0aIRGDMgqIOInBGD1GjRzqgH1RbxhR9EIFzbrOEroxAbheR8XOGLcUfROCsPiL0eUZAP0Zk9G%2BGvzSDCJx3hyXyHQC5HcaVHiUdRODMlyyh75oFcq1EWl%2Bel3wQgXPvsdRqGw7kdhtXarwYROBsedcc%2BjwjkNtJpLwy3gwicL7cAOJuzS1E7DDk%2FBlEoIf7LHE3gEZiyDhdvBtEoI%2B3xExtywG9mQj9RoPm3yACvfSwRP6WTq7JuEbxdhCBfuRntUnangO5bYT9WcPrQQR6kt9D6rVFB3L2RdP7QQT6ekxEftIkLb84C%2F4PItDbR6JaW3VA304s0Id%2BDyLQn1yZ%2BdpuPL4PItDjJ2KuthwNPvl%2F6%2FI8OokGbfl%2FpazsLyYIKq%2Fnun99AAAAAElFTkSuQmCC)](http://sourcebrowser.io/Browse/nuke-build/nuke)-->
 
-If you want to contribute, please first get personal with us about your intentions in [our Gitter channel](https://gitter.im/nuke-build/nuke). This helps us establishing a clean and meaningful design of new features, improvements or bug fixes. At the same time it reduces the chances of duplicated work.
+If you want to contribute, please first get personal with us about your intentions in [our Gitter channel](https://gitter.im/nuke-build/nuke). This largely increases the chances for pull-requests getting accepted and helps us establishing a clean and meaningful design of new features. At the same time it reduces the chances of duplicated work.
 
-Adding support for third party executables is very simple. You just need to generate a language-agnostic _tool.json_ file with all the metadata ([schema](https://github.com/nuke-build/nuke/tree/master/source/Nuke.ToolGenerator/Model) and [examples](https://github.com/nuke-build/nuke/search?q=extension%3Atd)). The actual implementation is generated via the `Nuke.ToolGenerator` executable. It will generate:
-
-- Entry methods:
-  - Execution `PreProcess` as extension point
-  - Logging of process start info (executable and arguments)
-  - Start of the process (customizable)
-  - Assertion of the exitcode via exitcode table
-  - Execution of `PostProcess` as extension point
-- Data classes:
-  - Declaration of all properties
-  - Implementation of `GetArguments` with support for:
-    - Primitive types (`string`, `int`, `bool`, etc.)
-    - Lists (w/ or w/o separator)
-    - Dictionaries (w/ key-value-separator; w/ or w/o pair-separator)
-    - Lookups (w/ key-value-separator; w/ or w/o value-separator)
-  - Argument validation with extension point
-  - Marked with `[Serializable]`
-- Extension methods:
-  - Implementation of the builder pattern
-  - For all types (except collections):
-    - `SetMaxCpuCount<T>(this T settings, int? maxCpuCount)`
-    - `ResetMaxCpuCount<T>(this T settings)`
-  - For booleans:
-    - `EnableRunCodeAnalysis<T>(this T settings)`
-    - `DisableRunCodeAnalysis<T>(this T settings)`
-    - `ToggleRunCodeAnalysis<T>(this T settings)`
-  - For lists _[n]_:
-    - `SetTargets<T>(this T settings, params string[] targets)`
-    - `SetTargets<T>(this T settings, IEnumerable<string> targets)`
-    - `AddTargets<T>(this T settings, params string[] targets)`
-    - `AddTargets<T>(this T settings, IEnumerable<string> targets)`
-    - `RemoveTargets<T>(this T settings, params string[] targets)`
-    - `RemoveTargets<T>(this T settings, IEnumerable<string> targets)`
-    - `ClearTargets<T>(this T settings)`
-  - For dictionaries _[n->n]_:
-    - `SetProperties<T>(this T settings, IDictionary<string, string> properties)`
-    - `SetProperty<T>(this T settings, string key, string value)`
-    - `AddProperty<T>(this T settings, string key, string value)`
-    - `RemoveProperty<T>(this T settings, string key)`
-    - `ClearProperties<T>(this T settings)`
-  - For lookups _[n->m*]_:
-    - `SetTraits<T>(this T settings, ILookup<string, string> traits)`
-    - `AddTraits<T>(this T settings, string key, params string[] values)`
-    - `AddTraits<T>(this T settings, string key, IEnumerable<string> values)`
-    - `RemoveTraits<T>(this T settings, string key, params string[] values)`
-    - `RemoveTraits<T>(this T settings, string key, IEnumerable<string> values)`
-    - `RemoveTraits<T>(this T settings, string key)`
-    - `ClearTraits<T>(this T settings)`
+Adding support for third party executables is very simple. You just need to generate a language-agnostic JSON metadata file ([schema](https://github.com/nuke-build/tools/blob/master/metadata/_schema.json) and [examples](https://github.com/nuke-build/tools/tree/master/metadata)). The actual implementation is generated via the `Nuke.ToolGenerator` executable.
 
 ## License
 
