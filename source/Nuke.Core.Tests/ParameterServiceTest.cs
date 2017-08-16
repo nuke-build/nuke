@@ -94,7 +94,7 @@ namespace Nuke.Core.Tests
                     "-guid",
                     $"{guid}",
                     "-datetime",
-                    $"{dateTime.ToString(CultureInfo.CurrentCulture)}"
+                    $"{dateTime.ToString(CultureInfo.InvariantCulture)}"
                 });
 
             service.GetParameter<DateTime>("datetime").Should().BeCloseTo(dateTime, precision: 1000);
