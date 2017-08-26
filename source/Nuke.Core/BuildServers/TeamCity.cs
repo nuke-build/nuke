@@ -4,11 +4,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 using JetBrains.Annotations;
 using Nuke.Core.Utilities;
 using Nuke.Core.Utilities.Collections;
+using Refit;
 using static Nuke.Core.EnvironmentInfo;
 
 namespace Nuke.Core.BuildServers
@@ -24,6 +28,15 @@ namespace Nuke.Core.BuildServers
             Variable("TEAMCITY_VERSION") != null
                 ? new TeamCity(Console.WriteLine)
                 : null;
+
+        public static T CreateRestClient<T> (string serverUrl, string username, string password)
+        {
+            var credentials = new NetworkCredential(username, password);
+            var baseAddress = new Uri($"{serverUrl}/app/rest");
+            var httpClient = new HttpClient(new HttpClientHandler { Credentials = credentials }) { BaseAddress = baseAddress };
+
+            return RestService.For<T>(httpClient);
+        }
 
         private static IReadOnlyDictionary<string, string> ParseDictionary(string file)
         {
@@ -60,16 +73,26 @@ namespace Nuke.Core.BuildServers
             SystemProperties = ParseDictionary(EnsureVariable("TEAMCITY_BUILD_PROPERTIES_FILE"));
             ConfigurationProperties = ParseDictionary(SystemProperties["TEAMCITY_CONFIGURATION_PROPERTIES_FILE"]);
             RunnerProperties = ParseDictionary(SystemProperties["TEAMCITY_RUNNER_PROPERTIES_FILE"]);
+
+            RestClient = CreateRestClient<ITeamCityRestClient>();
+        }
+
+        public T CreateRestClient<T>()
+        {
+            return CreateRestClient<T>(ServerUrl, SystemProperties["TEAMCITY_AUTH_USERID"], SystemProperties["TEAMCITY_AUTH_PASSWORD"]);
         }
 
         public IReadOnlyDictionary<string, string> ConfigurationProperties { get; }
         public IReadOnlyDictionary<string, string> SystemProperties { get; }
         public IReadOnlyDictionary<string, string> RunnerProperties { get; }
 
+        public ITeamCityRestClient RestClient { get; }
+
         public string BuildConfiguration => EnsureVariable("TEAMCITY_BUILDCONF_NAME");
         [NoConvert] public string BuildNumber => EnsureVariable("BUILD_NUMBER");
         public string Version => EnsureVariable("TEAMCITY_VERSION");
         public string ProjectName => EnsureVariable("TEAMCITY_PROJECT_NAME");
+        public string ServerUrl => ConfigurationProperties["TEAMCITY_SERVERURL"];
 
         public void DisableServiceMessages ()
         {
