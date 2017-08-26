@@ -25,12 +25,46 @@ namespace Nuke.Core.BuildServers
                 ? new TeamCity(Console.WriteLine)
                 : null;
 
+        private static IReadOnlyDictionary<string, string> ParseDictionary(string file)
+        {
+            var lines = File.ReadAllLines(file);
+            var dictionary = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+            for (var i = 0; i < lines.Length; i++)
+            {
+                var line = lines[i]
+                        .Replace("\\:", ":")
+                        .Replace("\\=", "=")
+                        .Replace("\\\\", "\\");
+                if (line[index: 0] == '#' || string.IsNullOrWhiteSpace(line))
+                    continue;
+
+                var index = line.IndexOf(value: '=');
+                var key = line.Substring(startIndex: 0, length: index)
+                        .Replace(".", "_")
+                        .Replace("secure:", string.Empty);
+                var value = line.Substring(index + 1);
+
+                dictionary.Add(key, value);
+            }
+
+            return dictionary;
+        }
+
         private readonly Action<string> _messageSink;
 
         private TeamCity (Action<string> messageSink)
         {
             _messageSink = messageSink;
+
+            SystemProperties = ParseDictionary(EnsureVariable("TEAMCITY_BUILD_PROPERTIES_FILE"));
+            ConfigurationProperties = ParseDictionary(SystemProperties["TEAMCITY_CONFIGURATION_PROPERTIES_FILE"]);
+            RunnerProperties = ParseDictionary(SystemProperties["TEAMCITY_RUNNER_PROPERTIES_FILE"]);
         }
+
+        public IReadOnlyDictionary<string, string> ConfigurationProperties { get; }
+        public IReadOnlyDictionary<string, string> SystemProperties { get; }
+        public IReadOnlyDictionary<string, string> RunnerProperties { get; }
 
         public string BuildConfiguration => EnsureVariable("TEAMCITY_BUILDCONF_NAME");
         [NoConvert] public string BuildNumber => EnsureVariable("BUILD_NUMBER");
