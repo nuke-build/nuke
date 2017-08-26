@@ -89,9 +89,6 @@ namespace Nuke.ToolGenerator.Model
         /// </summary>
         public bool CustomExecutable { get; set; }
 
-        [CanBeNull]
-        public string IconClass { get; set; }
-
         /// <summary>
         /// The list of tasks.
         /// </summary>
