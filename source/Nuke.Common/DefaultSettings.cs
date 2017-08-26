@@ -15,6 +15,7 @@ using Nuke.Common.Tools.MSBuild;
 using Nuke.Common.Tools.NuGet;
 using Nuke.Common.Tools.OpenCover;
 using Nuke.Core;
+using Nuke.Core.BuildServers;
 using Nuke.Core.Injection;
 using Nuke.Core.Tooling;
 
@@ -70,10 +71,10 @@ namespace Nuke.Common
                         .SetMaxCpuCount(Environment.ProcessorCount)
                         .SetConfiguration(Build.Configuration);
 
-                var teamCityLogger = EnvironmentInfo.Variable("TEAMCITY_MSBUILD_LOGGER");
-                if (!string.IsNullOrWhiteSpace(teamCityLogger))
+                var teamCityLogger = TeamCity.Instance?.ConfigurationProperties["TEAMCITY_DOTNET_MSBUILD_EXTENSIONS4_0"];
+                if (teamCityLogger != null)
                     toolSettings = toolSettings
-                            .AddLoggers(teamCityLogger)
+                            .AddLoggers($"JetBrains.BuildServer.MSBuildLoggers.MSBuildLogger,{teamCityLogger}")
                             .EnableNoConsoleLogger();
 
                 return toolSettings;
