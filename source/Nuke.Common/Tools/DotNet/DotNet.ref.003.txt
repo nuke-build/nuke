@@ -1,35 +1,93 @@
 
+This topic applies to: ✓ .NET Core 1.x ✓ .NET Core 2.x
 Name
-dotnet-pack - Packs the code into a NuGet package.
+dotnet pack - Packs the code into a NuGet package.
 Synopsis
-dotnet pack [&lt;PROJECT&gt;] [-o|--output] [--no-build] [--include-symbols] [--include-source] [-c|--configuration] [--version-suffix &lt;VERSION_SUFFIX&gt;] [-s|--serviceable] [-v|--verbosity] [-h|--help]
+
+
+
+.NET Core 2.x
+
+
+.NET Core 1.x
+
+
+
+dotnet pack [&lt;PROJECT&gt;] [-c|--configuration] [--force] [--include-source] [--include-symbols] [--no-build] [--no-dependencies] [--no-restore] [-o|--output] [--runtime] [-s|--serviceable] [-v|--verbosity] [--version-suffix]
+dotnet pack [-h|--help]
+
+
+dotnet pack [&lt;PROJECT&gt;] [-c|--configuration] [--include-source] [--include-symbols] [--no-build] [-o|--output] [-s|--serviceable] [-v|--verbosity] [--version-suffix]
+dotnet pack [-h|--help]
+
+
 Description
-The dotnet pack command builds the project and creates NuGet packages. The result of this command is a NuGet package. If the --include-symbols option is present, another package containing the debug symbols is created. 
+The dotnet pack command builds the project and creates NuGet packages. The result of this command is a NuGet package. If the --include-symbols option is present, another package containing the debug symbols is created.
 NuGet dependencies of the packed project are added to the .nuspec file, so they&#39;re properly resolved when the package is installed. Project-to-project references aren&#39;t packaged inside the project. Currently, you must have a package per project if you have project-to-project dependencies.
 By default, dotnet pack builds the project first. If you wish to avoid this behavior, pass the --no-build option. This is often useful in Continuous Integration (CI) build scenarios where you know the code was previously built.
 You can provide MSBuild properties to the dotnet pack command for the packing process. For more information, see NuGet metadata properties and the MSBuild Command-Line Reference.
 Arguments
-PROJECT 
-The project to pack. It&#39;s either a path to a csproj file or to a directory. If omitted, it defaults to the current directory. 
+PROJECT
+The project to pack. It&#39;s either a path to a csproj file or to a directory. If omitted, it defaults to the current directory.
 Options
+
+
+
+.NET Core 2.x
+
+
+.NET Core 1.x
+
+
+
+-c|--configuration {Debug|Release}
+Defines the build configuration. The default value is Debug.
+--force
+Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the project.assets.json file.
 -h|--help
-Prints out a short help for the command.  
--o|--output &lt;OUTPUT_DIRECTORY&gt;
-Places the built packages in the directory specified. 
---no-build
-Don&#39;t build the project before packing. 
---include-symbols
-Generates the symbols nupkg. 
+Prints out a short help for the command.
 --include-source
-Includes the source files in the NuGet package. The sources files are included in the src folder within the nupkg. 
--c|--configuration &lt;CONFIGURATION&gt;
-Configuration to use when building the project. If not specified, configuration defaults to Debug.
---version-suffix &lt;VERSION_SUFFIX&gt;
-Defines the value for the $(VersionSuffix) MSBuild property in the project.
+Includes the source files in the NuGet package. The sources files are included in the src folder within the nupkg.
+--include-symbols
+Generates the symbols nupkg.
+--no-build
+Doesn&#39;t build the project before packing.
+--no-dependencies
+Ignores project-to-project references and only restores the root project.
+--no-restore
+Doesn&#39;t perform an implicit restore when running the command.
+-o|--output &lt;OUTPUT_DIRECTORY&gt;
+Places the built packages in the directory specified.
+-r|--runtime &lt;RUNTIME_IDENTIFIER&gt;
+Specifies the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the RID catalog.
 -s|--serviceable
 Sets the serviceable flag in the package. For more information, see .NET Blog: .NET 4.5.1 Supports Microsoft Security Updates for .NET NuGet Libraries.
---verbosity &lt;LEVEL&gt;
+--version-suffix &lt;VERSION_SUFFIX&gt;
+Defines the value for the $(VersionSuffix) MSBuild property in the project.
+-v|--verbosity &lt;LEVEL&gt;
 Sets the verbosity level of the command. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+
+
+-c|--configuration {Debug|Release}
+Defines the build configuration. The default value is Debug.
+-h|--help
+Prints out a short help for the command.
+--include-source
+Includes the source files in the NuGet package. The sources files are included in the src folder within the nupkg.
+--include-symbols
+Generates the symbols nupkg.
+--no-build
+Doesn&#39;t build the project before packing.
+-o|--output &lt;OUTPUT_DIRECTORY&gt;
+Places the built packages in the directory specified.
+-s|--serviceable
+Sets the serviceable flag in the package. For more information, see .NET Blog: .NET 4.5.1 Supports Microsoft Security Updates for .NET NuGet Libraries.
+--version-suffix &lt;VERSION_SUFFIX&gt;
+Defines the value for the $(VersionSuffix) MSBuild property in the project.
+-v|--verbosity &lt;LEVEL&gt;
+Sets the verbosity level of the command. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+
+
 Examples
 Pack the project in the current directory:
 dotnet pack

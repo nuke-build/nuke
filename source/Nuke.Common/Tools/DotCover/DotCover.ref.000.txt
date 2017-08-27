@@ -1,45 +1,4 @@
-IntroductionRunning Coverage Analysis from the Command LIneConsole Runner Commands
-            dotCover Console Runner provides the following commands:
-        
-                analyse - All-in-one task.
-                Performs coverage analysis, generates report and removes snapshots.
-            
-                cover - Perform coverage analysis of the specified application.
-            
-                delete - Delete all files related to the specified snapshots.
-            
-                help - Show console runner help.
-            
-                list - Obtain list of all files related to the specified snapshots.
-            
-                merge - Merge several coverage snapshots.
-            
-                report - Create a report by the specified snapshot.
-            
-                version - Write dotCover version info to the specified file.
-            
-                zip - Compress coverage snapshot.
-            
-        You can learn everything about each command right in the console by typing
-        help
-        followed by the command name. All commands (including help) have corresponding shortcuts.
-        For instance, to get information about the
-        analyse command, we can type:
-        dotCover.exe help analyse
-
-        or
-
-        dotCover h a
-    
-            
-                It is possible to specify relative paths in the console runner parameters.
-                Relative paths defined in an xml configuration file are treated relative to the location
-                of this file.
-                Relative paths in command line parameters are treated relative
-                to the console runner working directory.
-            
-        analyse
-        
+Console Runner Commands            dotCover Console Runner provides the following commands:                        analyse - All-in-one task.                Performs coverage analysis, generates report and removes snapshots.                            cover - Perform coverage analysis of the specified application.                            delete - Delete all files related to the specified snapshots.                            help - Show console runner help.                            list - Obtain list of all files related to the specified snapshots.                            merge - Merge several coverage snapshots.                            report - Create a report by the specified snapshot.                            version - Write dotCover version info to the specified file.                            zip - Compress coverage snapshot.                    You can learn everything about each command right in the console by typing        help        followed by the command name. All commands (including help) have corresponding shortcuts.        For instance, to get information about the        analyse command, we can type:        dotCover.exe help analyse        or        dotCover h a                                It is possible to specify relative paths in the console runner parameters.                Relative paths defined in an xml configuration file are treated relative to the location                of this file.                Relative paths in command line parameters are treated relative                to the console runner working directory.                    analyse        
 analyse: All-in-one task. Performs coverage analysis, generates report and removes snapshots.
 usage: dotCover analyse [parameters]
 
@@ -116,10 +75,7 @@ Configuration file format:
     &lt;/AttributeFilters&gt;
     --&gt;
   &lt;/AnalyseParams&gt;
-        
-
-    cover
-        
+            cover        
 cover: Performs coverage analysis of the specified application.
 usage: dotCover cover [parameters]
 
@@ -193,15 +149,7 @@ Configuration file format:
     &lt;/AttributeFilters&gt;
     --&gt;
   &lt;/CoverageParams&gt;
-        
-        
-            
-                Format of coverage filters specified from the console are compatible with format of filters
-                defined in JetBrains TeamCity.
-            
-        
-    delete
-         
+                                            Format of coverage filters specified from the console are compatible with format of filters                defined in JetBrains TeamCity.                        delete         
 delete: Delete all files related to the specified snapshots.
 usage: dotCover delete &lt;configuration file&gt;
 
@@ -219,17 +167,11 @@ Configuration file format:
   &lt;Source&gt;&lt;!-- Source file 2 --&gt;&lt;/Source&gt;
   &lt;Source&gt;&lt;!-- Source file N --&gt;&lt;/Source&gt;
 &lt;/DeleteParams&gt;
-                 
-
-    help
-        
+                     help        
 help: Show console runner help.
 Type 'dotCover help &lt;command&gt;' for help on a specific command, parameters and configuration xml format
 Type 'dotCover help &lt;command&gt; &lt;file name&gt;' to write configuration xml example to the specified file
-                 
-
-    list
-         
+                     list         
 list: Obtain list of all files related to the specified snapshots.
 usage: dotCover list [parameters]
 
@@ -251,11 +193,7 @@ Configuration file format:
     &lt;Source&gt;&lt;!-- Source file N --&gt;&lt;/Source&gt;
     &lt;Output&gt;&lt;!-- Resulting file name. Stores plain list of all snapshot files. --&gt;&lt;/Output&gt;
   &lt;/ListParams&gt;
-                 
-
-
-    merge
-        
+                     merge        
 merge: Merge several coverage snapshots.
 usage: dotCover merge [parameters]
 
@@ -279,9 +217,7 @@ Configuration file format:
     &lt;TempDir&gt;&lt;!-- Directory for the auxiliary files. Set to system temp by default. --&gt;&lt;/TempDir&gt;
     &lt;Output&gt;&lt;!-- File name for the merged snapshot. --&gt;&lt;/Output&gt;
   &lt;/MergeParams&gt;
-        
-    report
-        
+            report        
 report: Create a report by the specified snapshot.
 usage: dotCover report [parameters]
 
@@ -303,19 +239,13 @@ Configuration file format:
     &lt;Output&gt;&lt;!-- Resulting report file name. --&gt;&lt;/Output&gt;
     &lt;ReportType&gt;&lt;!-- [HTML|JSON|XML|NDependXML]. A type of the report. XML by default. --&gt;&lt;/ReportType&gt;
   &lt;/ReportParams&gt;
-        
-
-
-    version
-         
+            version         
 version: Write dotCover version info to the specified file.
 usage: dotCover version &lt;output file name&gt;
 
 Global options:
   /LogFile=ARG    : Enables logging and specifies log file name
-                 
-    zip
-         
+                     zip         
 zip: Compress coverage snapshot.
 usage: dotCover zip &lt;configuration file&gt;
 
@@ -330,5 +260,4 @@ Global options:
   &lt;Source&gt;&lt;!-- Required. Coverage snapshot file name. --&gt;&lt;/Source&gt;
   &lt;Output&gt;&lt;!-- Required. Zipped snapshot file name. --&gt;&lt;/Output&gt;
 &lt;/ZipParams&gt;
-                 
-    IntroductionRunning Coverage Analysis from the Command LIneSee AlsoConcepts:Basic ConceptsIntroducing dotCover Console RunnerConsole Runner ConfigurationProcedures:Setting up Coverage Analysis on JetBrains TeamCitySetting up Coverage Analysis on a Third-Party CI ServerWorking with Coverage ResultsLast modified: 3 April 2017 
+                     Last modified: 24 August 2017 Console Runner ConfigurationRunning Remote Coverage Analysis from Visual StudioSee AlsoConcepts:Basic ConceptsRunning Coverage Analysis from the Command LineConsole Runner ConfigurationProcedures:Setting up Coverage Analysis on JetBrains TeamCitySetting up Coverage Analysis on a Third-Party CI ServerWorking with Coverage Results

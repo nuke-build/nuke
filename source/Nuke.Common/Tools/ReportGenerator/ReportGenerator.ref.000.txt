@@ -26,7 +26,7 @@ The following [output formats](https://github.com/danielpalme/ReportGenerator/wi
 * [Cobertura](https://github.com/cobertura/cobertura)
 * Mono ([mprof-report](http://www.mono-project.com/docs/debug+profile/profile/profiler/#analyzing-the-profile-data)) 
 
-Also available as **NuGet** package: http://www.nuget.org/packages/ReportGenerator
+Also available as **NuGet** package: https://www.nuget.org/packages/ReportGenerator/
 
 Additional information about ReportGenerator can be found under [Resources](#resources).
 
@@ -40,7 +40,7 @@ The screenshots show two snippets of the generated reports:
 ![Screenshot 2](http://danielpalme.github.io/ReportGenerator/resources/screenshot2.png)
 
 ### Badges
-Badges in SVG format can be generated if `-reporttypes:Badges` is used:
+Badges in SVG and PNG format can be generated if `-reporttypes:Badges` is used:
 
 ![Sample badge](http://danielpalme.github.io/ReportGenerator/resources/badge.svg)
 
@@ -56,6 +56,7 @@ Parameters:
     [["]-historydir:<history directory>["]]
     [["]-assemblyfilters:<(+|-)filter>[;<(+|-)filter>][;<(+|-)filter>]["]]
     [["]-classfilters:<(+|-)filter>[;<(+|-)filter>][;<(+|-)filter>]["]]
+    [["]-filefilters:<(+|-)filter>[;<(+|-)filter>][;<(+|-)filter>]["]]
     [["]-verbosity:<Verbose|Info|Warning|Error|Off>["]]
 
 Explanations:
@@ -73,6 +74,7 @@ Explanations:
                       Can be used in future reports to show coverage evolution.
    Assembly Filters:  Optional list of assemblies that should be included or excluded in the report.
    Class Filters:     Optional list of classes that should be included or excluded in the report.
+   File Filters:      Optional list of files that should be included or excluded in the report.
                       Exclusion filters take precedence over inclusion filters.                      
                       Wildcards are allowed.
    Verbosity:         The verbosity level of the log messages.
@@ -82,6 +84,7 @@ Default values:
    -reporttypes:Html
    -assemblyfilters:+*
    -classfilters:+*
+   -filefilters:+*
    -verbosity:Verbose
 
 Examples:
