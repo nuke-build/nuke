@@ -44,3 +44,8 @@ using Nuke.Core.Execution;
 [assembly: IconClass(typeof(TextTasks), "file-text3")]
 [assembly: IconClass(typeof(XmlTasks), "file-empty2")]
 [assembly: IconClass(typeof(Xunit2Tasks), "bug2")]
+
+#if !NETCORE
+[assembly: IconClass(typeof(FtpTasks), "sphere2")]
+[assembly: IconClass(typeof(HttpTasks), "sphere2")]
+#endif
