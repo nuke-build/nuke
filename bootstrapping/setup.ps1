@@ -1,6 +1,12 @@
 [CmdletBinding()]
 Param()
 
+$LatestVersion = $(Invoke-WebRequest https://api-v2v3search-0.nuget.org/query?q=packageid:Nuke.Common | ConvertFrom-Json
+).data.version
+Write-Host $LatestVersion
+
+exit
+
 Remove-Item $MyInvocation.MyCommand.Path
 $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 

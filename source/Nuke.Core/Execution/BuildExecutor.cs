@@ -65,8 +65,13 @@ namespace Nuke.Core.Execution
 
         private static void PrintLogo()
         {
+            var assembly = typeof(BuildExecutor).GetTypeInfo().Assembly;
+            var fileVersion = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>().Version;
+            var informationalVersion = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+            var commitSha = informationalVersion.Substring(informationalVersion.LastIndexOf(value: '.') + 1, length: 8);
+
             Logger.Log(FigletTransform.GetText("NUKE"));
-            Logger.Log($"Version: {typeof(BuildExecutor).GetTypeInfo().Assembly.GetName().Version}");
+            Logger.Log($"Version: {fileVersion} [CommitSha: {commitSha}]");
             Logger.Log(string.Empty);
         }
 

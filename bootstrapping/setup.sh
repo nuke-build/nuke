@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+LATEST_VERSION=$(curl -s 'https://api-v2v3search-0.nuget.org/query?q=packageid:Nuke.Common' | \
+    python3 -c "import sys, json; print(json.load(sys.stdin)['data'][0]['version'])")
+echo $LATEST_VERSION
+exit
+
 rm "${BASH_SOURCE[0]}"
 SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 

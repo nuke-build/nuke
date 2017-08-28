@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.13
+VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Core", "source\Nuke.Core\Nuke.Core.csproj", "{F73A2786-3DE2-4011-8111-333B91D97F9E}"
 EndProject
@@ -23,6 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bootstrapping", "bootstrapp
 		bootstrapping\.build.sdk.csproj = bootstrapping\.build.sdk.csproj
 		bootstrapping\Build.cs = bootstrapping\Build.cs
 		bootstrapping\build.dotnet.ps1 = bootstrapping\build.dotnet.ps1
+		bootstrapping\build.dotnet.sh = bootstrapping\build.dotnet.sh
 		bootstrapping\build.ps1 = bootstrapping\build.ps1
 		bootstrapping\build.sh = bootstrapping\build.sh
 		bootstrapping\setup.ps1 = bootstrapping\setup.ps1
@@ -85,5 +86,8 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BB6A9024-24DB-4170-A09B-02349148A78F} = {B43B0E45-8A89-4516-BAD3-2DA4C6660D3A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {47E371AA-DFDF-413B-A524-6E460B082230}
 	EndGlobalSection
 EndGlobal
