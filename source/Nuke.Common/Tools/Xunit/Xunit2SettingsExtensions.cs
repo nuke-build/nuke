@@ -8,7 +8,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Core.Tooling;
 
-namespace Nuke.Common.Tools.Xunit2
+namespace Nuke.Common.Tools.Xunit
 {
     partial class Xunit2SettingsExtensions
     {

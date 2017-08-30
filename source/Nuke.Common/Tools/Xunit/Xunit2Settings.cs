@@ -7,7 +7,7 @@ using System.Linq;
 using Nuke.Core;
 using Nuke.Core.Utilities;
 
-namespace Nuke.Common.Tools.Xunit2
+namespace Nuke.Common.Tools.Xunit
 {
     partial class Xunit2Settings
     {

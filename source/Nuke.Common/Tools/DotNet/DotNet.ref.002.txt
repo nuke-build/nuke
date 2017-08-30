@@ -37,7 +37,7 @@ Options
 .NET Core 2.x
 
 
-.NET Core 2.x
+.NET Core 1.x
 
 
 
@@ -54,7 +54,7 @@ Only warn about failed sources if there are packages meeting the version require
 --no-cache
 Specifies to not cache packages and HTTP requests.
 --no-dependencies
-When restoring a project with project-to-project (P2P) references, restore the root project and not the references.
+When restoring a project with project-to-project (P2P) references, restores the root project and not the references.
 --packages &lt;PACKAGES_DIRECTORY&gt;
 Specifies the directory for restored packages.
 -r|--runtime &lt;RUNTIME_IDENTIFIER&gt;
@@ -76,7 +76,7 @@ Only warn about failed sources if there are packages meeting the version require
 --no-cache
 Specifies to not cache packages and HTTP requests.
 --no-dependencies
-When restoring a project with project-to-project (P2P) references, restore the root project and not the references.
+When restoring a project with project-to-project (P2P) references, restores the root project and not the references.
 --packages &lt;PACKAGES_DIRECTORY&gt;
 Specifies the directory for restored packages.
 -r|--runtime &lt;RUNTIME_IDENTIFIER&gt;

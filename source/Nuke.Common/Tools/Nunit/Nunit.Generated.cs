@@ -2,7 +2,7 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-// Generated from https://github.com/nuke-build/tools/blob/master/Nunit3.json with Nuke.ToolGenerator.
+// Generated from https://github.com/nuke-build/tools/blob/master/Nunit.json with Nuke.ToolGenerator.
 
 using JetBrains.Annotations;
 using Nuke.Common.Tools;
@@ -18,11 +18,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Nuke.Common.Tools.Nunit3
+namespace Nuke.Common.Tools.Nunit
 {
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class Nunit3Tasks
+    public static partial class NunitTasks
     {
         static partial void PreProcess (Nunit3Settings toolSettings);
         static partial void PostProcess (Nunit3Settings toolSettings);
@@ -43,13 +43,13 @@ namespace Nuke.Common.Tools.Nunit3
         }
     }
     #region Nunit3Settings
-    /// <summary><p>Used within <see cref="Nunit3Tasks"/>.</p></summary>
+    /// <summary><p>Used within <see cref="NunitTasks"/>.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
     public partial class Nunit3Settings : ToolSettings
     {
-        /// <summary><p>Path to the Nunit3 executable.</p></summary>
+        /// <summary><p>Path to the Nunit executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"NUnit.ConsoleRunner", $"nunit-console.exe");
         /// <summary><p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (.nunit) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p></summary>
         public virtual IReadOnlyList<string> InputFiles => InputFilesInternal.AsReadOnly();
@@ -177,7 +177,7 @@ namespace Nuke.Common.Tools.Nunit3
     }
     #endregion
     #region Nunit3SettingsExtensions
-    /// <summary><p>Used within <see cref="Nunit3Tasks"/>.</p></summary>
+    /// <summary><p>Used within <see cref="NunitTasks"/>.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class Nunit3SettingsExtensions
@@ -1445,7 +1445,7 @@ namespace Nuke.Common.Tools.Nunit3
     }
     #endregion
     #region NunitProcessType
-    /// <summary><p>Used within <see cref="Nunit3Tasks"/>.</p></summary>
+    /// <summary><p>Used within <see cref="NunitTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
     public partial class NunitProcessType : Enumeration
@@ -1456,7 +1456,7 @@ namespace Nuke.Common.Tools.Nunit3
     }
     #endregion
     #region NunitPrincipalPolicy
-    /// <summary><p>Used within <see cref="Nunit3Tasks"/>.</p></summary>
+    /// <summary><p>Used within <see cref="NunitTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
     public partial class NunitPrincipalPolicy : Enumeration
@@ -1467,7 +1467,7 @@ namespace Nuke.Common.Tools.Nunit3
     }
     #endregion
     #region NunitLabelType
-    /// <summary><p>Used within <see cref="Nunit3Tasks"/>.</p></summary>
+    /// <summary><p>Used within <see cref="NunitTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
     public partial class NunitLabelType : Enumeration
@@ -1478,7 +1478,7 @@ namespace Nuke.Common.Tools.Nunit3
     }
     #endregion
     #region NunitTraceLevel
-    /// <summary><p>Used within <see cref="Nunit3Tasks"/>.</p></summary>
+    /// <summary><p>Used within <see cref="NunitTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
     public partial class NunitTraceLevel : Enumeration

@@ -8,7 +8,7 @@ using System.Linq;
 using FluentAssertions;
 using Nuke.Common.Tools.MSBuild;
 using Nuke.Common.Tools.OpenCover;
-using Nuke.Common.Tools.Xunit2;
+using Nuke.Common.Tools.Xunit;
 using Nuke.Core.IO;
 using Nuke.Core.Tooling;
 using Xunit;

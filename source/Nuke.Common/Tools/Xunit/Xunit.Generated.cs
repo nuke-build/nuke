@@ -2,7 +2,7 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-// Generated from https://github.com/nuke-build/tools/blob/master/Xunit2.json with Nuke.ToolGenerator.
+// Generated from https://github.com/nuke-build/tools/blob/master/Xunit.json with Nuke.ToolGenerator.
 
 using JetBrains.Annotations;
 using Nuke.Common.Tools;
@@ -18,11 +18,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Nuke.Common.Tools.Xunit2
+namespace Nuke.Common.Tools.Xunit
 {
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class Xunit2Tasks
+    public static partial class XunitTasks
     {
         static partial void PreProcess (Xunit2Settings toolSettings);
         static partial void PostProcess (Xunit2Settings toolSettings);
@@ -37,13 +37,13 @@ namespace Nuke.Common.Tools.Xunit2
         }
     }
     #region Xunit2Settings
-    /// <summary><p>Used within <see cref="Xunit2Tasks"/>.</p></summary>
+    /// <summary><p>Used within <see cref="XunitTasks"/>.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
     public partial class Xunit2Settings : ToolSettings
     {
-        /// <summary><p>Path to the Xunit2 executable.</p></summary>
+        /// <summary><p>Path to the Xunit executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"xunit.runner.console", $"{GetPackageExecutable()}");
         /// <summary><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
         public virtual ILookup<string, string> TargetAssemblyWithConfigs => TargetAssemblyWithConfigsInternal.AsReadOnly();
@@ -120,7 +120,7 @@ namespace Nuke.Common.Tools.Xunit2
     }
     #endregion
     #region Xunit2SettingsExtensions
-    /// <summary><p>Used within <see cref="Xunit2Tasks"/>.</p></summary>
+    /// <summary><p>Used within <see cref="XunitTasks"/>.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class Xunit2SettingsExtensions
@@ -908,7 +908,7 @@ namespace Nuke.Common.Tools.Xunit2
     }
     #endregion
     #region ReporterType
-    /// <summary><p>Used within <see cref="Xunit2Tasks"/>.</p></summary>
+    /// <summary><p>Used within <see cref="XunitTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
     public partial class ReporterType : Enumeration
@@ -921,7 +921,7 @@ namespace Nuke.Common.Tools.Xunit2
     }
     #endregion
     #region ResultFormat
-    /// <summary><p>Used within <see cref="Xunit2Tasks"/>.</p></summary>
+    /// <summary><p>Used within <see cref="XunitTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
     public partial class ResultFormat : Enumeration
@@ -933,7 +933,7 @@ namespace Nuke.Common.Tools.Xunit2
     }
     #endregion
     #region ParallelOption
-    /// <summary><p>Used within <see cref="Xunit2Tasks"/>.</p></summary>
+    /// <summary><p>Used within <see cref="XunitTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
     public partial class ParallelOption : Enumeration

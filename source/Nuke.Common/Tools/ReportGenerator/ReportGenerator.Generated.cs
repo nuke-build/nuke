@@ -58,12 +58,15 @@ namespace Nuke.Common.Tools.ReportGenerator
         internal List<string> SourceDirectoriesInternal { get; set; } = new List<string>();
         /// <summary><p>Optional directory for storing persistent coverage information. Can be used in future reports to show coverage evolution.</p></summary>
         public virtual string HistoryDirectory { get; internal set; }
-        /// <summary><p>Optional list of assemblies that should be included or excluded in the report. Default is +*.</p></summary>
+        /// <summary><p>Optional list of assemblies that should be included (+) or excluded (-) in the report. Default is +*.</p></summary>
         public virtual IReadOnlyList<string> AssemblyFilters => AssemblyFiltersInternal.AsReadOnly();
         internal List<string> AssemblyFiltersInternal { get; set; } = new List<string>();
-        /// <summary><p>Optional list of classes that should be included or excluded in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
+        /// <summary><p>Optional list of classes that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
         public virtual IReadOnlyList<string> ClassFilters => ClassFiltersInternal.AsReadOnly();
         internal List<string> ClassFiltersInternal { get; set; } = new List<string>();
+        /// <summary><p>Optional list of files that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
+        public virtual IReadOnlyList<string> FileFilters => FileFiltersInternal.AsReadOnly();
+        internal List<string> FileFiltersInternal { get; set; } = new List<string>();
         /// <summary><p>The verbosity level of the log messages. Default is Verbose.</p></summary>
         public virtual ReportGeneratorVerbosity Verbosity { get; internal set; }
         protected override Arguments GetArgumentsInternal()
@@ -74,8 +77,9 @@ namespace Nuke.Common.Tools.ReportGenerator
               .Add("-reporttypes:{value}", ReportTypes, separator: ';')
               .Add("-sourcedirs:{value}", SourceDirectories, separator: ';')
               .Add("-historydir:{value}", HistoryDirectory)
-              .Add("-assemblyfilters:{value}", AssemblyFilters, separator: ' ', quoteMultiple: true)
-              .Add("-classfilters:{value}", ClassFilters, separator: ' ', quoteMultiple: true)
+              .Add("-assemblyfilters:{value}", AssemblyFilters, separator: ';')
+              .Add("-classfilters:{value}", ClassFilters, separator: ';')
+              .Add("-classfilters:{value}", FileFilters, separator: ';')
               .Add("-verbosity:{value}", Verbosity);
         }
     }
@@ -303,7 +307,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         }
         #endregion
         #region AssemblyFilters
-        /// <summary><p><em>Sets <see cref="ReportGeneratorSettings.AssemblyFilters"/> to a new list.</em></p><p>Optional list of assemblies that should be included or excluded in the report. Default is +*.</p></summary>
+        /// <summary><p><em>Sets <see cref="ReportGeneratorSettings.AssemblyFilters"/> to a new list.</em></p><p>Optional list of assemblies that should be included (+) or excluded (-) in the report. Default is +*.</p></summary>
         [Pure]
         public static ReportGeneratorSettings SetAssemblyFilters(this ReportGeneratorSettings toolSettings, params string[] assemblyFilters)
         {
@@ -311,7 +315,7 @@ namespace Nuke.Common.Tools.ReportGenerator
             toolSettings.AssemblyFiltersInternal = assemblyFilters.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="ReportGeneratorSettings.AssemblyFilters"/> to a new list.</em></p><p>Optional list of assemblies that should be included or excluded in the report. Default is +*.</p></summary>
+        /// <summary><p><em>Sets <see cref="ReportGeneratorSettings.AssemblyFilters"/> to a new list.</em></p><p>Optional list of assemblies that should be included (+) or excluded (-) in the report. Default is +*.</p></summary>
         [Pure]
         public static ReportGeneratorSettings SetAssemblyFilters(this ReportGeneratorSettings toolSettings, IEnumerable<string> assemblyFilters)
         {
@@ -319,7 +323,7 @@ namespace Nuke.Common.Tools.ReportGenerator
             toolSettings.AssemblyFiltersInternal = assemblyFilters.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="ReportGeneratorSettings.AssemblyFilters"/>.</em></p><p>Optional list of assemblies that should be included or excluded in the report. Default is +*.</p></summary>
+        /// <summary><p><em>Adds values to <see cref="ReportGeneratorSettings.AssemblyFilters"/>.</em></p><p>Optional list of assemblies that should be included (+) or excluded (-) in the report. Default is +*.</p></summary>
         [Pure]
         public static ReportGeneratorSettings AddAssemblyFilters(this ReportGeneratorSettings toolSettings, params string[] assemblyFilters)
         {
@@ -327,7 +331,7 @@ namespace Nuke.Common.Tools.ReportGenerator
             toolSettings.AssemblyFiltersInternal.AddRange(assemblyFilters);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="ReportGeneratorSettings.AssemblyFilters"/>.</em></p><p>Optional list of assemblies that should be included or excluded in the report. Default is +*.</p></summary>
+        /// <summary><p><em>Adds values to <see cref="ReportGeneratorSettings.AssemblyFilters"/>.</em></p><p>Optional list of assemblies that should be included (+) or excluded (-) in the report. Default is +*.</p></summary>
         [Pure]
         public static ReportGeneratorSettings AddAssemblyFilters(this ReportGeneratorSettings toolSettings, IEnumerable<string> assemblyFilters)
         {
@@ -335,7 +339,7 @@ namespace Nuke.Common.Tools.ReportGenerator
             toolSettings.AssemblyFiltersInternal.AddRange(assemblyFilters);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="ReportGeneratorSettings.AssemblyFilters"/>.</em></p><p>Optional list of assemblies that should be included or excluded in the report. Default is +*.</p></summary>
+        /// <summary><p><em>Clears <see cref="ReportGeneratorSettings.AssemblyFilters"/>.</em></p><p>Optional list of assemblies that should be included (+) or excluded (-) in the report. Default is +*.</p></summary>
         [Pure]
         public static ReportGeneratorSettings ClearAssemblyFilters(this ReportGeneratorSettings toolSettings)
         {
@@ -343,7 +347,7 @@ namespace Nuke.Common.Tools.ReportGenerator
             toolSettings.AssemblyFiltersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="ReportGeneratorSettings.AssemblyFilters"/>.</em></p><p>Optional list of assemblies that should be included or excluded in the report. Default is +*.</p></summary>
+        /// <summary><p><em>Removes values from <see cref="ReportGeneratorSettings.AssemblyFilters"/>.</em></p><p>Optional list of assemblies that should be included (+) or excluded (-) in the report. Default is +*.</p></summary>
         [Pure]
         public static ReportGeneratorSettings RemoveAssemblyFilters(this ReportGeneratorSettings toolSettings, params string[] assemblyFilters)
         {
@@ -352,7 +356,7 @@ namespace Nuke.Common.Tools.ReportGenerator
             toolSettings.AssemblyFiltersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="ReportGeneratorSettings.AssemblyFilters"/>.</em></p><p>Optional list of assemblies that should be included or excluded in the report. Default is +*.</p></summary>
+        /// <summary><p><em>Removes values from <see cref="ReportGeneratorSettings.AssemblyFilters"/>.</em></p><p>Optional list of assemblies that should be included (+) or excluded (-) in the report. Default is +*.</p></summary>
         [Pure]
         public static ReportGeneratorSettings RemoveAssemblyFilters(this ReportGeneratorSettings toolSettings, IEnumerable<string> assemblyFilters)
         {
@@ -363,7 +367,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         }
         #endregion
         #region ClassFilters
-        /// <summary><p><em>Sets <see cref="ReportGeneratorSettings.ClassFilters"/> to a new list.</em></p><p>Optional list of classes that should be included or excluded in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
+        /// <summary><p><em>Sets <see cref="ReportGeneratorSettings.ClassFilters"/> to a new list.</em></p><p>Optional list of classes that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
         [Pure]
         public static ReportGeneratorSettings SetClassFilters(this ReportGeneratorSettings toolSettings, params string[] classFilters)
         {
@@ -371,7 +375,7 @@ namespace Nuke.Common.Tools.ReportGenerator
             toolSettings.ClassFiltersInternal = classFilters.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="ReportGeneratorSettings.ClassFilters"/> to a new list.</em></p><p>Optional list of classes that should be included or excluded in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
+        /// <summary><p><em>Sets <see cref="ReportGeneratorSettings.ClassFilters"/> to a new list.</em></p><p>Optional list of classes that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
         [Pure]
         public static ReportGeneratorSettings SetClassFilters(this ReportGeneratorSettings toolSettings, IEnumerable<string> classFilters)
         {
@@ -379,7 +383,7 @@ namespace Nuke.Common.Tools.ReportGenerator
             toolSettings.ClassFiltersInternal = classFilters.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="ReportGeneratorSettings.ClassFilters"/>.</em></p><p>Optional list of classes that should be included or excluded in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
+        /// <summary><p><em>Adds values to <see cref="ReportGeneratorSettings.ClassFilters"/>.</em></p><p>Optional list of classes that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
         [Pure]
         public static ReportGeneratorSettings AddClassFilters(this ReportGeneratorSettings toolSettings, params string[] classFilters)
         {
@@ -387,7 +391,7 @@ namespace Nuke.Common.Tools.ReportGenerator
             toolSettings.ClassFiltersInternal.AddRange(classFilters);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="ReportGeneratorSettings.ClassFilters"/>.</em></p><p>Optional list of classes that should be included or excluded in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
+        /// <summary><p><em>Adds values to <see cref="ReportGeneratorSettings.ClassFilters"/>.</em></p><p>Optional list of classes that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
         [Pure]
         public static ReportGeneratorSettings AddClassFilters(this ReportGeneratorSettings toolSettings, IEnumerable<string> classFilters)
         {
@@ -395,7 +399,7 @@ namespace Nuke.Common.Tools.ReportGenerator
             toolSettings.ClassFiltersInternal.AddRange(classFilters);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="ReportGeneratorSettings.ClassFilters"/>.</em></p><p>Optional list of classes that should be included or excluded in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
+        /// <summary><p><em>Clears <see cref="ReportGeneratorSettings.ClassFilters"/>.</em></p><p>Optional list of classes that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
         [Pure]
         public static ReportGeneratorSettings ClearClassFilters(this ReportGeneratorSettings toolSettings)
         {
@@ -403,7 +407,7 @@ namespace Nuke.Common.Tools.ReportGenerator
             toolSettings.ClassFiltersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="ReportGeneratorSettings.ClassFilters"/>.</em></p><p>Optional list of classes that should be included or excluded in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
+        /// <summary><p><em>Removes values from <see cref="ReportGeneratorSettings.ClassFilters"/>.</em></p><p>Optional list of classes that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
         [Pure]
         public static ReportGeneratorSettings RemoveClassFilters(this ReportGeneratorSettings toolSettings, params string[] classFilters)
         {
@@ -412,13 +416,73 @@ namespace Nuke.Common.Tools.ReportGenerator
             toolSettings.ClassFiltersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="ReportGeneratorSettings.ClassFilters"/>.</em></p><p>Optional list of classes that should be included or excluded in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
+        /// <summary><p><em>Removes values from <see cref="ReportGeneratorSettings.ClassFilters"/>.</em></p><p>Optional list of classes that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
         [Pure]
         public static ReportGeneratorSettings RemoveClassFilters(this ReportGeneratorSettings toolSettings, IEnumerable<string> classFilters)
         {
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(classFilters);
             toolSettings.ClassFiltersInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region FileFilters
+        /// <summary><p><em>Sets <see cref="ReportGeneratorSettings.FileFilters"/> to a new list.</em></p><p>Optional list of files that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
+        [Pure]
+        public static ReportGeneratorSettings SetFileFilters(this ReportGeneratorSettings toolSettings, params string[] fileFilters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FileFiltersInternal = fileFilters.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <see cref="ReportGeneratorSettings.FileFilters"/> to a new list.</em></p><p>Optional list of files that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
+        [Pure]
+        public static ReportGeneratorSettings SetFileFilters(this ReportGeneratorSettings toolSettings, IEnumerable<string> fileFilters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FileFiltersInternal = fileFilters.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="ReportGeneratorSettings.FileFilters"/>.</em></p><p>Optional list of files that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
+        [Pure]
+        public static ReportGeneratorSettings AddFileFilters(this ReportGeneratorSettings toolSettings, params string[] fileFilters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FileFiltersInternal.AddRange(fileFilters);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="ReportGeneratorSettings.FileFilters"/>.</em></p><p>Optional list of files that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
+        [Pure]
+        public static ReportGeneratorSettings AddFileFilters(this ReportGeneratorSettings toolSettings, IEnumerable<string> fileFilters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FileFiltersInternal.AddRange(fileFilters);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="ReportGeneratorSettings.FileFilters"/>.</em></p><p>Optional list of files that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
+        [Pure]
+        public static ReportGeneratorSettings ClearFileFilters(this ReportGeneratorSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FileFiltersInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="ReportGeneratorSettings.FileFilters"/>.</em></p><p>Optional list of files that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
+        [Pure]
+        public static ReportGeneratorSettings RemoveFileFilters(this ReportGeneratorSettings toolSettings, params string[] fileFilters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(fileFilters);
+            toolSettings.FileFiltersInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="ReportGeneratorSettings.FileFilters"/>.</em></p><p>Optional list of files that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
+        [Pure]
+        public static ReportGeneratorSettings RemoveFileFilters(this ReportGeneratorSettings toolSettings, IEnumerable<string> fileFilters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(fileFilters);
+            toolSettings.FileFiltersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion
