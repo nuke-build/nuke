@@ -16,17 +16,7 @@ namespace Nuke.ToolGenerator.Model
         [JsonIgnore]
         public Tool Tool { get; set; }
 
-        /// <summary>
-        /// The name of the enumeration.
-        /// </summary>
         public string Name { get; set; }
-
-        /// <summary>
-        /// The list of values defined.
-        /// </summary>
-        /// <remarks>
-        /// Starting from index zero.
-        /// </remarks>
         public List<string> Values { get; set; }
     }
 }

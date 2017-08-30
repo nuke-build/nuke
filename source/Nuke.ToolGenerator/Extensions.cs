@@ -4,7 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using JetBrains.Annotations;
 
 namespace Nuke.ToolGenerator
@@ -25,6 +27,17 @@ namespace Nuke.ToolGenerator
         {
             foreach (var item in enumerable)
                 action(item);
+        }
+
+        public static T Clone<T> (this T obj)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                var binaryFormatter = new BinaryFormatter();
+                binaryFormatter.Serialize(memoryStream, obj);
+                memoryStream.Seek(offset: 0, loc: SeekOrigin.Begin);
+                return (T) binaryFormatter.Deserialize(memoryStream);
+            }
         }
     }
 }

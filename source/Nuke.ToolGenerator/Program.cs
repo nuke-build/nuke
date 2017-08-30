@@ -37,12 +37,19 @@ namespace Nuke.ToolGenerator
             files.AsParallel().ForAll(file =>
             {
                 var tool = Load(file, generation);
+
+                tool.Tasks.ForEach(x => tool.CommonTaskProperties.ForEach(y => x.SettingsClass.Properties.Add(y.Clone())));
+                ApplyBackReferences(tool);
+
                 using (var streamWriter = new StreamWriter(File.Open(tool.GenerationFileBase + ".Generated.cs", FileMode.Create)))
                 {
                     Generators.ToolGenerator.Run(tool, streamWriter);
                 }
+
+                tool.Tasks.ForEach(x => tool.CommonTaskProperties.ForEach(y => x.SettingsClass.Properties.RemoveAll(z => z.Name == y.Name)));
                 UpdateReferences(tool);
-                Save(tool);
+
+                Save (tool);
 
                 Console.WriteLine($"Processed {Path.GetFileName(file)}.");
             });
@@ -62,7 +69,6 @@ namespace Nuke.ToolGenerator
             tool.GenerationFileBase = Path.Combine(directory, Path.GetFileNameWithoutExtension(file));
             tool.RepositoryUrl = $"https://github.com/nuke-build/tools/blob/master/{Path.GetFileName(file)}";
 
-            ApplyBackReferences(tool);
 
             return tool;
         }
@@ -131,7 +137,7 @@ namespace Nuke.ToolGenerator
             var serializationLineCount = content.Split(new[] { Environment.NewLine }, StringSplitOptions.None).Length;
 
             var postfix = originalLineCount != serializationLineCount ? ".new" : string.Empty;
-            File.WriteAllText (tool.DefinitionFile + postfix, content);
+            File.WriteAllText(tool.DefinitionFile + postfix, content);
 
             //File.WriteAllText(tool.DefinitionFile, content);
         }

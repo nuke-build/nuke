@@ -16,26 +16,10 @@ namespace Nuke.ToolGenerator.Model
         [JsonIgnore]
         public Tool Tool { get; set; }
 
-        /// <summary>
-        /// The name of the data class.
-        /// </summary>
         public virtual string Name { get; set; }
-
-        /// <summary>
-        /// The base class to inherit from.
-        /// </summary>
         public string BaseClass { get; set; }
-
-        /// <summary>
-        /// If set to <c>true</c>, no extension methods will be generated.
-        /// </summary>
         public bool NoExtensionMethods { get; set; }
-
         public bool NoArguments { get; set; }
-
-        /// <summary>
-        /// The list of properties.
-        /// </summary>
         public List<Property> Properties { get; set; } = new List<Property>();
     }
 
