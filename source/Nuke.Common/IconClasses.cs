@@ -25,7 +25,7 @@ using Nuke.Common.Tools.Xunit2;
 using Nuke.Core.Execution;
 
 [assembly: IconClass(typeof(DefaultSettings), "equalizer")]
-[assembly: IconClass(typeof(DocFxTasks), "book")]
+[assembly: IconClass(typeof(DocFxTasks), "books")]
 [assembly: IconClass(typeof(DotCoverTasks), "shield2")]
 [assembly: IconClass(typeof(DotNetTasks), "fire")]
 [assembly: IconClass(typeof(DupFinderTasks), "code")]
