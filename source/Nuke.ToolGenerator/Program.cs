@@ -141,7 +141,7 @@ namespace Nuke.ToolGenerator
             var referenceValues = reference.Split('#');
 
             var tempFile = Path.GetTempFileName();
-            using (var webClient = new WebClient())
+            using (var webClient = new AutomaticDecompressingWebClient())
             {
                 await webClient.DownloadFileTaskAsync(referenceValues[0], tempFile);
             }
@@ -172,6 +172,19 @@ namespace Nuke.ToolGenerator
                     return true;
                 };
                 return property;
+            }
+        }
+
+        private class AutomaticDecompressingWebClient : WebClient
+        {
+            protected override WebRequest GetWebRequest (Uri address)
+            {
+                var request = base.GetWebRequest(address) as HttpWebRequest;
+
+                if (request != null)
+                    request.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
+
+                return request;
             }
         }
     }
