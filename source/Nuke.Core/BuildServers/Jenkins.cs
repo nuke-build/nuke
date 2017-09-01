@@ -1,63 +1,111 @@
-﻿using System;
-using System.Linq;
+﻿using static Nuke.Core.EnvironmentInfo;
 
 namespace Nuke.Core.BuildServers
 {
     /// <summary>
-    ///     Interface according to the
-    ///     <a href="https://wiki.jenkins.io/display/JENKINS/Building+a+software+project">official website</a>.
+    ///     Interface according to the <a href="https://wiki.jenkins.io/display/JENKINS/Building+a+software+project">official website</a>.
     /// </summary>
     [BuildServer]
     public class Jenkins
     {
-        public static Jenkins Instance { get; } =  EnvironmentInfo.Variable("JENKINS_URL") != null ? new Jenkins() : null;
+        public static Jenkins Instance { get; } = Variable("JENKINS_HOME") != null ? new Jenkins() : null;
 
         private Jenkins ()
         {
         }
+        /// <summary>
+        ///     The current build display name, such as "#14".
+        /// </summary>
+        public string BuilDisplayName => EnsureVariable("BUILD_DISPLAY_NAME");
 
         /// <summary>
-        ///     The current build number, such as "153"
+        ///     The current build number, such as "14".
         /// </summary>
-        public int BuildNumber => EnvironmentInfo.EnsureVariable<int>("BUILD_NUMBER");
+        public int BuildNumber => EnsureVariable<int>("BUILD_NUMBER");
 
         /// <summary>
-        ///     The current build id, such as "2005-08-22_23-59-59" (YYYY-MM-DD_hh-mm-ss,
-        ///     <a href="https://issues.jenkins-ci.org/browse/JENKINS-26520">defunct</a> since version 1.597)
+        ///     The current build tag, such as "jenkins-nuke-14".
         /// </summary>
-        public string BuildId => EnvironmentInfo.EnsureVariable("BUILD_ID");
+        public string BuildTag => EnsureVariable<string>("BUILD_TAG");
 
         /// <summary>
-        ///     The URL where the results of this build can be found (e.g. http://buildserver/jenkins/job/MyJobName/666/)
+        ///     The number of the executor this build is running on, Equals '0' for first executor.
         /// </summary>
-        public string BuildUrl => EnvironmentInfo.EnsureVariable("BUILD_URL");
+        public int ExecutorNumber => EnsureVariable<int>("EXECUTOR_NUMBER");
 
         /// <summary>
-        ///     The name of the node the current build is running on. Equals 'master' for master node.
+        ///    For Git-based projects, this variable contains the Git branch that was checked out for the build (normally origin/master) ﻿(all the Git* properties require git plugin).
         /// </summary>
-        public string NodeName => EnvironmentInfo.EnsureVariable("NODE_NAME");
+        public string GitBranch => Variable<string>("GIT_BRANCH");
 
         /// <summary>
-        ///     Name of the project of this build. This is the name you gave your job when you first set it up. It's the third
-        ///     column of the Jenkins Dashboard main page.
+        ///    For Git-based projects, this variable contains the Git hash of the commit checked out for the build (like ce9a3c1404e8c91be604088670e93434c4253f03) ﻿(all the Git* properties require git plugin).
         /// </summary>
-        public string JobName => EnvironmentInfo.EnsureVariable("JOB_NAME");
+        public string GitCommit => Variable<string>("GIT_COMMIT");
 
         /// <summary>
-        ///     String of jenkins-${JOB_NAME}-${BUILD_NUMBER}. Convenient to put into a resource file, a jar file, etc for easier
-        ///     identification.
+        ///    For Git-based projects, this variable contains the Git hash of the previous build commit (like ce9a3c1404e8c91be604088670e93434c4253f03) ﻿(all the Git* properties require git plugin).
         /// </summary>
-        public string BuildTag => EnvironmentInfo.EnsureVariable("BUILD_TAG");
+        public string GitPreviousCommit => Variable<string>("GIT_PREVIOUS_COMMIT");
 
         /// <summary>
-        ///     Set to the URL of the Jenkins master that's running the build. This value is used by Jenkins CLI for exampl
+        ///    For Git-based projects, this variable contains the Git hash of the last successful build (like ce9a3c1404e8c91be604088670e93434c4253f03) ﻿(all the Git* properties require git plugin).
         /// </summary>
-        public string JenkinsUrl => EnvironmentInfo.EnsureVariable("JENKINS_URL");
+        public string GitPreviousSuccessfulCommit => Variable<string>("GIT_PREVIOUS_SUCCESSFUL_COMMIT");
 
         /// <summary>
-        ///     The unique number that identifies the current executor (among executors of the same machine) that's carrying out
-        ///     this build. This is the number you see in the "build executor status", except that the number starts from 0, not 1.
+        ///    For Git-based projects, this variable contains the Git url (like git@github.com:user/repo.git or [https://github.com/user/repo.git])  (all the Git* properties require git plugin).
         /// </summary>
-        public string ExecutorNumber => EnvironmentInfo.EnsureVariable("EXECUTOR_NUMBER");
+        public string GitUrl => Variable<string>("GIT_URL");
+
+        /// <summary>
+        ///     The path to the jenkins home directory.
+        /// </summary>
+        public string JenkinsHome => EnsureVariable<string>("JENKINS_HOME");
+
+        /// <summary>
+        /// The jenkins server cookie.
+        /// </summary>
+        public string JenkinsServerCookie => EnsureVariable<string>("JENKINS_SERVER_COOKIE");
+
+        /// <summary>
+        /// The base name of the current job, such as "Nuke".
+        /// </summary>
+        public string JobBaseName => EnsureVariable<string>("JOB_BASE_NAME");
+
+        /// <summary>
+        /// The url to the currents job overview.
+        /// </summary>
+        public string JobDisplayUrl => EnsureVariable<string>("JOB_DISPLAY_URL");
+
+        /// <summary>
+        /// The  name of the current job, such as "Nuke".
+        /// </summary>
+        public string JobName => EnsureVariable<string>("JOB_NAME");
+
+        /// <summary>
+        /// The  labels of the node this build is running on, such as "win64 msbuild".
+        /// </summary>
+        public string NodeLabels => EnsureVariable<string>("NODE_LABELS");
+
+        /// <summary>
+        /// The name of the node this build is running on, such as "master".
+        /// </summary>
+        public string NodeName => EnsureVariable<string>("NODE_NAME");
+
+        /// <summary>
+        /// The url to the currents run changes page.
+        /// </summary>
+        public string RunChangesDisplayUrl => EnsureVariable<string>("RUN_CHANGES_DISPLAY_URL");
+
+        /// <summary>
+        /// The url to the currents run overview page.
+        /// </summary>
+        public string RunDisplayUrl => EnsureVariable<string>("RUN_DISPLAY_URL");
+
+        /// <summary>
+        /// The path tp the folder this job is running in.
+        /// </summary>
+        public string Workspace => EnsureVariable<string>("WORKSPACE");
     }
 }
