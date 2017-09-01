@@ -67,11 +67,13 @@ namespace Nuke.Core.Execution
         {
             var assembly = typeof(BuildExecutor).GetTypeInfo().Assembly;
             var fileVersion = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>().Version;
-            var informationalVersion = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
-            var commitSha = informationalVersion.Substring(informationalVersion.LastIndexOf(value: '.') + 1, length: 8);
+            var informationalVersion = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute> ().InformationalVersion;
+            var details = fileVersion != "1.0.0.0"
+                ? $"CommitSha: {informationalVersion.Substring(informationalVersion.LastIndexOf(value: '.') + 1, length: 8)}"
+                : "local";
 
             Logger.Log(FigletTransform.GetText("NUKE"));
-            Logger.Log($"Version: {fileVersion} [CommitSha: {commitSha}]");
+            Logger.Log($"Version: {fileVersion} [{details}]");
             Logger.Log(string.Empty);
         }
 
