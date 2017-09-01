@@ -109,7 +109,7 @@ namespace Nuke.Core.Execution
             void PrintParameter (MemberInfo parameter)
             {
                 var attribute = parameter.GetCustomAttribute<ParameterAttribute>();
-                var description = SplitLines(attribute.Description);
+                var description = SplitLines(attribute.Description ?? "<no description>");
                 builder.AppendLine($"    -{(attribute.Name ?? parameter.Name).PadRight(padRightParameter)}  {description.First()}");
                 foreach (var line in description.Skip(count: 1))
                     builder.AppendLine($"{new string(c: ' ', count: padRightParameter + 7)}{line}");
