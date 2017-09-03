@@ -13,14 +13,14 @@ namespace Nuke.Common.Tools.DotCover
         public static DotCoverAnalyseSettings NewInstance (this DotCoverAnalyseSettings toolSettings)
         {
             var newToolSettings = toolSettings.NewInstance<DotCoverAnalyseSettings>();
-            newToolSettings._testAction = toolSettings._testAction;
+            newToolSettings.TestActionInternal = toolSettings.TestActionInternal;
             return newToolSettings;
         }
 
         public static DotCoverAnalyseSettings SetTestAction (this DotCoverAnalyseSettings toolSettings, Action testAction)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings._testAction = testAction;
+            toolSettings.TestActionInternal = testAction;
             return toolSettings;
         }
     }

@@ -10,8 +10,8 @@ namespace Nuke.Common.Tools.OpenCover
     partial class OpenCoverSettings
     {
         [NonSerialized]
-        internal Action _testAction;
+        internal Action TestActionInternal;
 
-        public Action TestAction => _testAction;
+        public Action TestAction => TestActionInternal;
     }
 }

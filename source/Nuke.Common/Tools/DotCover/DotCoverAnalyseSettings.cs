@@ -9,9 +9,9 @@ namespace Nuke.Common.Tools.DotCover
     public partial class DotCoverAnalyseSettings
     {
         [NonSerialized]
-        internal Action _testAction;
+        internal Action TestActionInternal;
 
-        public Action TestAction => _testAction;
+        public Action TestAction => TestActionInternal;
 
         private string GetPackageExecutable ()
         {

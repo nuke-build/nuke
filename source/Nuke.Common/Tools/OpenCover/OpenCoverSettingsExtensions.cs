@@ -13,14 +13,14 @@ namespace Nuke.Common.Tools.OpenCover
         public static OpenCoverSettings NewInstance (this OpenCoverSettings toolSettings)
         {
             var newToolSettings = toolSettings.NewInstance<OpenCoverSettings>();
-            newToolSettings._testAction = toolSettings._testAction;
+            newToolSettings.TestActionInternal = toolSettings.TestActionInternal;
             return newToolSettings;
         }
 
         public static OpenCoverSettings SetTestAction (this OpenCoverSettings toolSettings, Action testAction)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings._testAction = testAction;
+            toolSettings.TestActionInternal = testAction;
             return toolSettings;
         }
     }
