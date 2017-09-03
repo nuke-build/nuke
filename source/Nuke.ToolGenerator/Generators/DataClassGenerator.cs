@@ -48,15 +48,13 @@ namespace Nuke.ToolGenerator.Generators
                             .WriteToolPath()
                             .ForEach(dataClass.Properties, WritePropertyDeclaration)
                             .WriteAssertValid()
-                            .WriteGetArgumentsInternal())
+                            .WriteConfigureArguments())
                     .WriteLine("#endregion");
         }
 
-        // ReSharper disable once CyclomaticComplexity
         private static DataClassWriter WriteToolPath (this DataClassWriter writer)
         {
-            var settingsClass = writer.DataClass as SettingsClass;
-            if (settingsClass == null)
+            if (!(writer.DataClass is SettingsClass settingsClass))
                 return writer;
 
             var tool = settingsClass.Tool.NotNull();
@@ -198,7 +196,7 @@ namespace Nuke.ToolGenerator.Generators
             }
         }
 
-        private static DataClassWriter WriteGetArgumentsInternal (this DataClassWriter writer)
+        private static DataClassWriter WriteConfigureArguments (this DataClassWriter writer)
         {
             var formatProperties = writer.DataClass.Properties.Where(x => x.Format != null).ToList();
             if ((writer.DataClass as SettingsClass)?.Task.DefiniteArgument == null && formatProperties.Count == 0)
@@ -209,11 +207,12 @@ namespace Nuke.ToolGenerator.Generators
             last += ";";
 
             return writer
-                    .WriteLine("protected override Arguments GetArgumentsInternal()")
+                    .WriteLine("protected override Arguments ConfigureArguments(Arguments arguments)")
                     .WriteBlock(w => w
-                            .WriteLine("return base.GetArgumentsInternal()")
+                            .WriteLine("arguments")
                             .WriteLine(GetCommandAdditionOrNull(writer.DataClass))
-                            .ForEachWriteLine(argumentAdditions));
+                            .ForEachWriteLine(argumentAdditions)
+                            .WriteLine("return base.ConfigureArguments(arguments);"));
         }
 
         [CanBeNull]

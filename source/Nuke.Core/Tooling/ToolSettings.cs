@@ -29,7 +29,11 @@ namespace Nuke.Core.Tooling
         public virtual IArguments GetArguments ()
         {
             AssertValid();
-            return ArgumentConfigurator(GetArgumentsInternal());
+
+            var arguments = new Arguments();
+            arguments = ConfigureArguments(arguments);
+            arguments = ArgumentConfigurator(arguments);
+            return arguments;
         }
 
         public bool HasValidToolPath()
@@ -43,6 +47,11 @@ namespace Nuke.Core.Tooling
             {
                 return false;
             }
+        }
+
+        protected virtual Arguments ConfigureArguments(Arguments arguments)
+        {
+            return arguments;
         }
 
         protected virtual Arguments GetArgumentsInternal ()
