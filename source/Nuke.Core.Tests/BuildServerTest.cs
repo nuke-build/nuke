@@ -43,6 +43,13 @@ namespace Nuke.Core.Tests
             AssertProperty(TeamServices.Instance.NotNull(), property);
         }
 
+        [BuildServerTheory(typeof(Jenkins))]
+        [MemberData(nameof(Properties), typeof(Jenkins))]
+        public void TestJenkins(PropertyInfo property)
+        {
+            AssertProperty(Jenkins.Instance.NotNull(), property);
+        }
+
         public static IEnumerable<object[]> Properties (Type type)
         {
             return type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
