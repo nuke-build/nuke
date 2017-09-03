@@ -73,9 +73,9 @@ namespace Nuke.Common.Tools.TestCloud
         /// <summary><p>Uploads file or directory along with assemblies. (Can be used multiple times).</p></summary>
         public virtual IReadOnlyList<string> DataPaths => DataPathsInternal.AsReadOnly();
         internal List<string> DataPathsInternal { get; set; } = new List<string>();
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("submit")
               .Add("--assembly-dir {value}", AssemblyDirectory)
               .Add("--devices {value}", Devices)
@@ -89,6 +89,7 @@ namespace Nuke.Common.Tools.TestCloud
               .Add("--test-chunk", TestChunk)
               .Add("--fixture-chunk", FixtureChunk)
               .Add("--data {value}", DataPaths);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion

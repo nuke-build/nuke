@@ -84,15 +84,16 @@ namespace Nuke.Common.Tools.DocFx
             ControlFlow.Assert(File.Exists(ConfigPath) || ConfigPath == null, "File.Exists(ConfigPath) || ConfigPath == null");
             ControlFlow.Assert(Directory.Exists(RepositoryRoot) || RepositoryRoot == null, "Directory.Exists(RepositoryRoot) || RepositoryRoot == null");
         }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("metadata")
               .Add("{value}", ConfigPath)
               .Add("--force", Force)
               .Add("--repositoryRoot {value}", RepositoryRoot)
               .Add("--log {value}", LogFile)
               .Add("--logLevel {value}", LogLevel);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion
@@ -129,9 +130,9 @@ namespace Nuke.Common.Tools.DocFx
             ControlFlow.Assert(Directory.Exists(RepositoryRoot) || RepositoryRoot == null, "Directory.Exists(RepositoryRoot) || RepositoryRoot == null");
             ControlFlow.Assert(Directory.Exists(Theme) || Theme == null, "Directory.Exists(Theme) || Theme == null");
         }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("build")
               .Add("{value}", ConfigPath)
               .Add("--force", Force)
@@ -141,6 +142,7 @@ namespace Nuke.Common.Tools.DocFx
               .Add("--logLevel {value}", LogLevel)
               .Add("--xref {value}", XRefMaps, separator: ',')
               .Add("--serve", Serve);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion

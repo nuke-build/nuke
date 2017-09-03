@@ -132,9 +132,9 @@ namespace Nuke.Common.Tools.Nunit
         public virtual bool? NoHeader { get; internal set; }
         /// <summary><p>Displays console output without color.</p></summary>
         public virtual bool? NoColor { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("{value}", InputFiles)
               .Add("--test={value}", Tests, separator: ',')
               .Add("--testlist={value}", TestListFile)
@@ -173,6 +173,7 @@ namespace Nuke.Common.Tools.Nunit
               .Add("--set-principal-policy={value}", SetPrincipalPolicy)
               .Add("--noheader", NoHeader)
               .Add("--nocolor", NoColor);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion

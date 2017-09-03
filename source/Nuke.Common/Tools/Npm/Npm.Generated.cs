@@ -83,9 +83,9 @@ namespace Nuke.Common.Tools.Npm
         public virtual string NodeDir { get; internal set; }
         /// <summary><p>Causes either only <c>devDependencies</c> or only non-<c>devDependencies</c> to be installed regardless of the <c>NODE_ENV</c>.</p></summary>
         public virtual NpmOnlyMode Only { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("install")
               .Add("{value}", Packages)
               .Add("--production", Production)
@@ -100,6 +100,7 @@ namespace Nuke.Common.Tools.Npm
               .Add("--no-shrinkwrap", NoShrinkWrap)
               .Add("--nodedir={value}", NodeDir)
               .Add("--only={value}", Only);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion
@@ -117,12 +118,13 @@ namespace Nuke.Common.Tools.Npm
         /// <summary><p>Arguments passed to the script.</p></summary>
         public virtual IReadOnlyList<string> Arguments => ArgumentsInternal.AsReadOnly();
         internal List<string> ArgumentsInternal { get; set; } = new List<string>();
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("run")
               .Add("{value}", Command)
               .Add("-- {value}", Arguments, separator: ' ');
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion

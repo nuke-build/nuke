@@ -69,9 +69,9 @@ namespace Nuke.Common.Tools.ReportGenerator
         internal List<string> FileFiltersInternal { get; set; } = new List<string>();
         /// <summary><p>The verbosity level of the log messages. Default is Verbose.</p></summary>
         public virtual ReportGeneratorVerbosity Verbosity { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("-reports:{value}", Reports, separator: ';')
               .Add("-targetdir:{value}", TargetDirectory)
               .Add("-reporttypes:{value}", ReportTypes, separator: ';')
@@ -81,6 +81,7 @@ namespace Nuke.Common.Tools.ReportGenerator
               .Add("-classfilters:{value}", ClassFilters, separator: ';')
               .Add("-classfilters:{value}", FileFilters, separator: ';')
               .Add("-verbosity:{value}", Verbosity);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion

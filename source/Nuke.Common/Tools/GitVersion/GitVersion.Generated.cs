@@ -46,10 +46,11 @@ namespace Nuke.Common.Tools.GitVersion
         /// <summary><p>Path to the GitVersion executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"GitVersion.CommandLine", $"GitVersion.exe");
         public virtual bool? UpdateAssemblyInfo { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("/updateassemblyinfo", UpdateAssemblyInfo);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion

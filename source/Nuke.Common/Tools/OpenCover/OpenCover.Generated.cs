@@ -118,9 +118,9 @@ namespace Nuke.Common.Tools.OpenCover
             ControlFlow.Assert(File.Exists(TargetPath), "File.Exists(TargetPath)");
             ControlFlow.Assert(Directory.Exists(TargetDirectory) || TargetDirectory == null, "Directory.Exists(TargetDirectory) || TargetDirectory == null");
         }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("-target:{value}", TargetPath)
               .Add("-targetargs:{value}", TargetArguments)
               .Add("-targetdir:{value}", TargetDirectory)
@@ -145,6 +145,7 @@ namespace Nuke.Common.Tools.OpenCover
               .Add("-threshold:{value}", MaximumVisitCount)
               .Add("-register:{value}", Registration)
               .Add("-returntargetcode:{value}", TargetExitCodeOffset);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion

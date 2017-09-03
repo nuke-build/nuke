@@ -112,9 +112,9 @@ namespace Nuke.Common.Tools.Paket
         public virtual string LogFile { get; internal set; }
         /// <summary><p>Call coming from the <c>--run</c> feature of the bootstrapper.</p></summary>
         public virtual bool? FromBootstrapper { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("update")
               .Add("{value}", PackageId)
               .Add("--version {value}", PackageVersion)
@@ -133,6 +133,7 @@ namespace Nuke.Common.Tools.Paket
               .Add("--verbose", Verbose)
               .Add("--log-file {value}", LogFile)
               .Add("--from-bootstrapper", FromBootstrapper);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion
@@ -172,9 +173,9 @@ namespace Nuke.Common.Tools.Paket
         public virtual string LogFile { get; internal set; }
         /// <summary><p>Call coming from the <c>--run</c> feature of the bootstrapper.</p></summary>
         public virtual bool? FromBootstrapper { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("restore")
               .Add("--force", Force)
               .Add("--only-referenced", OnlyReferenced)
@@ -189,6 +190,7 @@ namespace Nuke.Common.Tools.Paket
               .Add("--verbose", Verbose)
               .Add("--log-file {value}", LogFile)
               .Add("--from-bootstrapper", FromBootstrapper);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion
@@ -217,9 +219,9 @@ namespace Nuke.Common.Tools.Paket
         public virtual string LogFile { get; internal set; }
         /// <summary><p>Call coming from the <c>--run</c> feature of the bootstrapper.</p></summary>
         public virtual bool? FromBootstrapper { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("push")
               .Add("file {value}", File)
               .Add("--url {value}", Url)
@@ -229,6 +231,7 @@ namespace Nuke.Common.Tools.Paket
               .Add("--verbose", Verbose)
               .Add("--log-file {value}", LogFile)
               .Add("--from-bootstrapper", FromBootstrapper);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion
@@ -279,9 +282,9 @@ namespace Nuke.Common.Tools.Paket
         public virtual string LogFile { get; internal set; }
         /// <summary><p>Call coming from the <c>--run</c> feature of the bootstrapper.</p></summary>
         public virtual bool? FromBootstrapper { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("pack")
               .Add("{value}", OutputDirectory)
               .Add("--build-config {value}", BuildConfiguration)
@@ -301,6 +304,7 @@ namespace Nuke.Common.Tools.Paket
               .Add("--verbose", Verbose)
               .Add("--log-file {value}", LogFile)
               .Add("--from-bootstrapper", FromBootstrapper);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion

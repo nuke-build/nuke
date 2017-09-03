@@ -146,9 +146,9 @@ namespace Nuke.Common.Tools.DotNet
         public virtual bool? ListTests { get; internal set; }
         /// <summary><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
         public virtual DotNetVerbosity Verbosity { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("test")
               .Add("{value}", ProjectFile)
               .Add("--test-adapter-path {value}", TestAdapterPath)
@@ -165,6 +165,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--settings {value}", SettingsFile)
               .Add("--list-tests", ListTests)
               .Add("--verbosity {value}", Verbosity);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion
@@ -197,9 +198,9 @@ namespace Nuke.Common.Tools.DotNet
         public virtual string Runtime { get; internal set; }
         /// <summary><p>Arguments passed to the application being run.</p></summary>
         public virtual string ApplicationArguments { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("run")
               .Add("--configuration {value}", Configuration)
               .Add("--framework {value}", Framework)
@@ -212,6 +213,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--project {value}", ProjectFile)
               .Add("--runtime {value}", Runtime)
               .Add("-- {value}", ApplicationArguments);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion
@@ -245,9 +247,9 @@ namespace Nuke.Common.Tools.DotNet
         public virtual string Source { get; internal set; }
         /// <summary><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
         public virtual DotNetVerbosity Verbosity { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("restore")
               .Add("{value}", ProjectFile)
               .Add("--configfile {value}", ConfigFile)
@@ -260,6 +262,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--runtime {value}", Runtimes)
               .Add("--source {value}", Source)
               .Add("--verbosity {value}", Verbosity);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion
@@ -296,9 +299,9 @@ namespace Nuke.Common.Tools.DotNet
         public virtual DotNetVerbosity Verbostiy { get; internal set; }
         /// <summary><p>Defines the value for the <c>$(VersionSuffix)</c> MSBuild property in the project.</p></summary>
         public virtual string VersionSuffix { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("pack")
               .Add("{value}", Project)
               .Add("--configuration {value}", Configuration)
@@ -313,6 +316,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--serviceable", Serviceable)
               .Add("--verbosity {value}", Verbostiy)
               .Add("--version-suffix {value}", VersionSuffix);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion
@@ -345,9 +349,9 @@ namespace Nuke.Common.Tools.DotNet
         public virtual DotNetVerbosity Verbosity { get; internal set; }
         /// <summary><p>Defines the version suffix for an asterisk (<c>*</c>) in the version field of the project file. The format follows NuGet's version guidelines.</p></summary>
         public virtual string VersionSuffix { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("build")
               .Add("{value}", ProjectFile)
               .Add("--configuration {value}", Configuration)
@@ -360,6 +364,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--runtime {value}", Runtime)
               .Add("--verbosity {value}", Verbosity)
               .Add("--version-suffix {value}", VersionSuffix);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion
@@ -394,9 +399,9 @@ namespace Nuke.Common.Tools.DotNet
         public virtual DotNetVerbosity Verbosity { get; internal set; }
         /// <summary><p>Defines the version suffix for an asterisk (<c>*</c>) in the version field of the project file. The format follows NuGet's version guidelines.</p></summary>
         public virtual string VersionSuffix { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("publish")
               .Add("{value}", Project)
               .Add("--configuration {value}", Configuration)
@@ -410,6 +415,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--runtime {value}", Runtime)
               .Add("--verbosity {value}", Verbosity)
               .Add("--version-suffix {value}", VersionSuffix);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion

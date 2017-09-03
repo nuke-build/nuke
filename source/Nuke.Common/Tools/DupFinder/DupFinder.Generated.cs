@@ -79,9 +79,9 @@ namespace Nuke.Common.Tools.DupFinder
         public virtual string CreateConfigFile { get; internal set; }
         /// <summary><p>Used to load the parameters described above from a configuration file.</p></summary>
         public virtual string ConfigFile { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("{value}", Source)
               .Add("--output={value}", OutputFile)
               .Add("--exclude={value}", ExcludeFiles, separator: ';')
@@ -97,6 +97,7 @@ namespace Nuke.Common.Tools.DupFinder
               .Add("--show-text={value}", ShowText)
               .Add("--config-create={value}", CreateConfigFile)
               .Add("--config={value}", ConfigFile);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion

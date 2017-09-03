@@ -83,9 +83,9 @@ namespace Nuke.Common.Tools.CoverallsNet
         public virtual string ServiceName { get; internal set; }
         /// <summary><p>The github pull request id. Used for updating status on github PRs.</p></summary>
         public virtual int? PullRequest { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("--input {value}", Input)
               .Add("--output {value}", Output)
               .Add("--dryrun", DryRun)
@@ -105,6 +105,7 @@ namespace Nuke.Common.Tools.CoverallsNet
               .Add("--jobId {value}", JobId)
               .Add("--serviceName {value}", ServiceName)
               .Add("--pullRequest {value}", PullRequest);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion

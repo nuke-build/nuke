@@ -90,9 +90,9 @@ namespace Nuke.Common.Tools.InspectCode
             ControlFlow.Assert(File.Exists(TargetPath), "File.Exists(TargetPath)");
             ControlFlow.Assert(Output != null, "Output != null");
         }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("{value}", TargetPath)
               .Add("--output={value}", Output)
               .Add("--no-swea", NoSwea)
@@ -104,6 +104,7 @@ namespace Nuke.Common.Tools.InspectCode
               .Add("--properties={value}", Properties, "{key}={value}")
               .Add("--dumpIssuesTypes", DumpIssuesTypes)
               .Add("--toolset={value}", Toolset);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion

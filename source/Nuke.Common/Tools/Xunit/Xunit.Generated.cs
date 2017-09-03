@@ -93,9 +93,9 @@ namespace Nuke.Common.Tools.Xunit
         public virtual ResultFormat ResultFormat { get; internal set; }
         /// <summary><p>The result file output path.</p></summary>
         public virtual string ResultPath { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("{value}", TargetAssemblyWithConfigs, "{key} {value}")
               .Add("-nologo", NoLogo)
               .Add("-nocolor", NoColor)
@@ -116,6 +116,7 @@ namespace Nuke.Common.Tools.Xunit
               .Add("-noautoreporters", NoAutoReporters)
               .Add("-{value}", Reporter)
               .Add("-{value}", GetResultPath(), customValue: true);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion

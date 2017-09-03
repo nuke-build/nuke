@@ -106,9 +106,9 @@ namespace Nuke.Common.Tools.GitReleaseManager
         public virtual string TargetDirectory { get; internal set; }
         /// <summary><p>Path to where log file should be created. Defaults is <em>logging to console</em>.</p></summary>
         public virtual string LogFilePath { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("addasset")
               .Add("--assets {value}", AssetPaths, separator: ',')
               .Add("--tagName {value}", TagName)
@@ -118,6 +118,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
               .Add("--repository {value}", RepositoryName)
               .Add("--targetDirectory {value}", TargetDirectory)
               .Add("--logFilePath {value}", LogFilePath);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion
@@ -144,9 +145,9 @@ namespace Nuke.Common.Tools.GitReleaseManager
         public virtual string TargetDirectory { get; internal set; }
         /// <summary><p>Path to where log file should be created. Defaults is <em>logging to console</em>.</p></summary>
         public virtual string LogFilePath { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("close")
               .Add("--milestone {value}", Milestone)
               .Add("--username {value}", UserName)
@@ -155,6 +156,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
               .Add("--repository {value}", RepositoryName)
               .Add("--targetDirectory {value}", TargetDirectory)
               .Add("--logFilePath {value}", LogFilePath);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion
@@ -192,9 +194,9 @@ namespace Nuke.Common.Tools.GitReleaseManager
         public virtual string TargetDirectory { get; internal set; }
         /// <summary><p>Path to where log file should be created. Defaults is <em>logging to console</em>.</p></summary>
         public virtual string LogFilePath { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("create")
               .Add("--assets {value}", AssetPaths, separator: ',')
               .Add("--targetcommitish {value}", TargetCommitish)
@@ -208,6 +210,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
               .Add("--repository {value}", RepositoryName)
               .Add("--targetDirectory {value}", TargetDirectory)
               .Add("--logFilePath {value}", LogFilePath);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion
@@ -236,9 +239,9 @@ namespace Nuke.Common.Tools.GitReleaseManager
         public virtual string TargetDirectory { get; internal set; }
         /// <summary><p>Path to where log file should be created. Defaults is <em>logging to console</em>.</p></summary>
         public virtual string LogFilePath { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("export")
               .Add("--tagName {value}", TagName)
               .Add("--fileOutputPath {value}", FileOutputPath)
@@ -248,6 +251,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
               .Add("--repository {value}", RepositoryName)
               .Add("--targetDirectory {value}", TargetDirectory)
               .Add("--logFilePath {value}", LogFilePath);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion
@@ -274,9 +278,9 @@ namespace Nuke.Common.Tools.GitReleaseManager
         public virtual string TargetDirectory { get; internal set; }
         /// <summary><p>Path to where log file should be created. Defaults is <em>logging to console</em>.</p></summary>
         public virtual string LogFilePath { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("publish")
               .Add("--tagName {value}", TagName)
               .Add("--username {value}", UserName)
@@ -285,6 +289,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
               .Add("--repository {value}", RepositoryName)
               .Add("--targetDirectory {value}", TargetDirectory)
               .Add("--logFilePath {value}", LogFilePath);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion

@@ -87,9 +87,9 @@ namespace Nuke.Common.Tools.MSBuild
             base.AssertValid();
             ControlFlow.Assert(File.Exists(TargetPath) || TargetPath == null, "File.Exists(TargetPath) || TargetPath == null");
         }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("{value}", TargetPath)
               .Add("/detailedsummary", DetailedSummary)
               .Add("/maxcpucount:{value}", MaxCpuCount)
@@ -102,6 +102,7 @@ namespace Nuke.Common.Tools.MSBuild
               .Add("/verbosity:{value}", Verbosity)
               .Add("/logger:{value}", Loggers)
               .Add("/noconsolelogger", NoConsoleLogger);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion

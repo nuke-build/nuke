@@ -1,0 +1,91 @@
+
+
+
+
+
+
+
+    
+        
+            
+        
+        
+            
+                Switch
+            
+            
+                
+            
+             
+                        
+                            Visual Studio
+                        
+            
+        
+        The topic you requested is included in another documentation set. For convenience, it's displayed below. Choose Switch to see the topic in its original location.
+        
+    
+
+
+
+
+
+    This documentation is archived and is not being maintained.
+
+
+
+
+  
+  
+    VSTest.Console.exe command-line options
+    
+    
+      
+        
+          
+            
+                        Other Versions
+                    
+          
+          
+            
+          
+        
+        
+          
+            Visual Studio 2012
+          
+        
+      
+    
+    
+    
+       VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line. These options are listed in the General Command Line Options table later in this topic.vstest.console.exe interprets these options and values you specify in a case-insensitive manner.The following table lists all the options for VSTest.Console.exe and short descriptions of them. You can see a similar summary by typing VSTest.Console/? at a command line. Note 
+The MSTest adapter in Visual Studio 2012 also works in legacy mode (equivalent of running tests with mstest.exe) for compatibility. In legacy mode, it cannot take advantage of new VS11 features TestCaseFilter. Adapter can switch to legacy mode when .testsettings file is specified, forcelegacymode is set to true in .runsettings file or using attributes like HostType. Note 
+In order to run automated tests on an ARM architecture based machine, you must use VSTest.Console.exe.General Command Line Options[ test file names ]Run tests from the specified files. Separate multiple test file names with spaces. Examples: mytestproject.dll, mytestproject.dll myothertestproject.exe/Settings:[ file name ]Run tests with additional settings such as data collectors. Example: /Settings:Local.RunSettings/Tests:[ test name ]Run tests with names that match the provided values. To provide multiple values, separate them by commas. Example: /Tests:TestMethod1,testMethod2 Warning:  The /Tests command line option cannot be used with the /TestCaseFilter command line option./ParallelSpecifies that the tests be executed in parallel. By default up to all available cores on the machine may be used. The number of cores to use can be configured by using a settings file./EnablecodecoverageEnables data diagnostic adapter CodeCoverage in the test run. Default settings are used if not specified using settings file./InIsolationRuns the tests in an isolated process. This makes vstest.console.exe process less likely to be stopped on an error in the tests, but tests might run slower./UseVsixExtensionsThis makes vstest.console.exe process use or skip the VSIX extensions installed (if any) in the test run. Example: /UseVsixExtensions:true/TestAdapterPath:[ path ]Forces the vstest.console.exe process to use custom test adapters from a specified path (if any) in the test run.Example: /TestAdapterPath:&lt;pathToCustomAdapters&gt;/Platform:[ platform type ]Target platform architecture to be used for test execution. Valid values are x86, x64 and ARM./Framework: [ framework version ]Target .NET Framework version to be used for test execution. Valid values are Framework35, Framework40 and Framework45. Example: /Framework:framework40/TestCaseFilter:[ expression ]Run tests that match the given expression. &lt;Expression&gt; is of the format &lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]. Example: /TestCaseFilter:"Priority=1" Example: /TestCaseFilter:"TestCategory=Nightly|FullyQualifiedName=Namespace.ClassName.MethodName" Warning:  The /TestCaseFilter command line option cannot be used with the /Tests command line option.  For information about creating and using expressions, see TestCase filter./?Displays usage information./Logger:[ uri/friendlyname ]Specify a logger for test results. Example: To log results into a Visual Studio Test Results File (TRX) use /Logger:trx. Example: To publish test results to Team Foundation Server, use TfsPublisher: /logger:TfsPublisher; Collection=&lt;team project url&gt;; BuildName=&lt;build name&gt;; TeamProject=&lt;team project name&gt;; [;Platform=&lt;Defaults to “Any CPU”&gt;] [;Flavor=&lt;Defaults to “Debug”&gt;] [;RunTitle=&lt;title&gt;] Note:  The TfsPublisher logger requires Visual Studio 2012 with [Visual Studio 2012.1] or later./ListTests:[ file name ]Lists discovered tests from the given test container./ListDiscoverersLists installed test discoverers./ListExecutorsLists installed test executors./ListLoggersLists installed test loggers./ListSettingsProvidersLists installed test settings providers./Diag:[ file name ]Writes diagnostic trace logs to the specified file.Using VSTest.Console.exe with test filesThe usage for vstest.console.exe is:Vstest.console.exe [TestFileNames] [Options]The following shows an example of using VSTest.Console.exe from the command line:Vstest.console.exe myTestProject.dllThe following shows an example of using VSTest.Console.exe from the command line using multiple test files. This is done by separating test file names with spaces:Vstest.console.exe myTestFile.dll myOtherTestFile.dllExampleThe following example shows the use of some of the options for running Vstest.console.exe. In this case, it will run the tests in the myTestFile.dll file, while collecting data specified in the Local.RunSettings file and in an isolated process. Additionally, it will filter the test cases to run based in “Priority 1”, and log the results to a .trx file.vstest.console.exe  myTestFile.dll /Settings:Local.RunSettings /InIsolation /TestCaseFilter:"Priority=1" /Logger:trxSee AlsoRunning automated tests from the command lineUsing VSTest.console from the command line
+    
+  
+
+
+
+
+
+
+
+
+    
+        Show:
+        
+            Inherited
+        
+        
+            Protected
+        
+    
+
+    
+
+
+
+
+    

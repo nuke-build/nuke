@@ -90,9 +90,9 @@ namespace Nuke.Common.Tools.DotCover
         internal List<string> ProcessFiltersInternal { get; set; } = new List<string>();
         /// <summary><p>Remove auto-implemented properties from report.</p></summary>
         public virtual bool? HideAutoProperties { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("analyse")
               .Add("/TargetExecutable={value}", TargetExecutable)
               .Add("/TargetArguments={value}", TargetArguments)
@@ -111,6 +111,7 @@ namespace Nuke.Common.Tools.DotCover
               .Add("/ReturnTargetExitCode", ReturnTargetExitCode)
               .Add("/ProcessFilters={value}", ProcessFilters, separator: ';')
               .Add("/HideAutoProperties", HideAutoProperties);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion

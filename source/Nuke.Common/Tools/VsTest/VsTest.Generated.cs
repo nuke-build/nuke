@@ -84,9 +84,9 @@ namespace Nuke.Common.Tools.VsTest
         public virtual bool? ListSettingsProviders { get; internal set; }
         /// <summary><p>Writes diagnostic trace logs to the specified file.</p></summary>
         public virtual string DiagnosticsFile { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("{value}", TestAssemblies)
               .Add("/Settings:{value}", SettingsFile)
               .Add("/Tests:{value}", Tests, separator: ',')
@@ -105,6 +105,7 @@ namespace Nuke.Common.Tools.VsTest
               .Add("/ListLoggers", ListLoggers)
               .Add("/ListSettingsProviders", ListSettingsProviders)
               .Add("/Diag:{value}", DiagnosticsFile);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion

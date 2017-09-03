@@ -113,9 +113,9 @@ namespace Nuke.Common.Tools.NuGet
             ControlFlow.Assert(File.Exists(TargetPath), "File.Exists(TargetPath)");
             ControlFlow.Assert(File.Exists(ConfigFile) || ConfigFile == null, "File.Exists(ConfigFile) || ConfigFile == null");
         }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("push")
               .Add("{value}", TargetPath)
               .Add("-ApiKey {value}", ApiKey, secret: true)
@@ -129,6 +129,7 @@ namespace Nuke.Common.Tools.NuGet
               .Add("-ForceEnglishOutput", ForceEnglishOutput)
               .Add("-NonInteractive", NonInteractive)
               .Add("-Timeout {value}", Timeout);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion
@@ -184,9 +185,9 @@ namespace Nuke.Common.Tools.NuGet
             ControlFlow.Assert(File.Exists(TargetPath), "File.Exists(TargetPath)");
             ControlFlow.Assert(Directory.Exists(BasePath), "Directory.Exists(BasePath)");
         }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("pack")
               .Add("{value}", TargetPath)
               .Add("-BasePath {value}", BasePath)
@@ -207,6 +208,7 @@ namespace Nuke.Common.Tools.NuGet
               .Add("-Tool", Tool)
               .Add("-Verbosity {value}", Verbosity)
               .Add("-Version {value}", Version);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion
@@ -258,9 +260,9 @@ namespace Nuke.Common.Tools.NuGet
         internal List<string> SourceInternal { get; set; } = new List<string>();
         /// <summary><p><em>(2.5+)</em> Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
         public virtual NuGetVerbosity Verbosity { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("restore")
               .Add("{value}", TargetPath)
               .Add("-ConfigFile {value}", ConfigFile)
@@ -281,6 +283,7 @@ namespace Nuke.Common.Tools.NuGet
               .Add("-SolutionDirectory {value}", SolutionDirectory)
               .Add("-Source {value}", Source, separator: ';')
               .Add("-Verbosity {value}", Verbosity);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion

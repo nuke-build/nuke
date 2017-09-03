@@ -82,9 +82,9 @@ namespace Nuke.Common.Tools.GitLink
         public virtual bool? SkipVerification { get; internal set; }
         /// <summary><p>Enables debug mode with special dumps of msbuild.</p></summary>
         public virtual bool? Debug { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("{value}", SolutionDirectory)
               .Add("-u {value}", RepositoryUrl)
               .Add("-f {value}", File)
@@ -98,6 +98,7 @@ namespace Nuke.Common.Tools.GitLink
               .Add("-errorsaswarnings", ErrorsAsWarnings)
               .Add("-skipverify", SkipVerification)
               .Add("-debug", Debug);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion
@@ -122,15 +123,16 @@ namespace Nuke.Common.Tools.GitLink
         public virtual string BaseDirectory { get; internal set; }
         /// <summary><p>Skip verification that all source files are available in source control.</p></summary>
         public virtual bool? SkipVerification { get; internal set; }
-        protected override Arguments GetArgumentsInternal()
+        protected override Arguments ConfigureArguments(Arguments arguments)
         {
-            return base.GetArgumentsInternal()
+            arguments
               .Add("{value}", PdbFile)
               .Add("--method {value}", Method)
               .Add("--url {value}", RepositoryUrl)
               .Add("--commit {value}", CommitSha)
               .Add("--baseDir {value}", BaseDirectory)
               .Add("--skipVerify", SkipVerification);
+            return base.ConfigureArguments(arguments);
         }
     }
     #endregion

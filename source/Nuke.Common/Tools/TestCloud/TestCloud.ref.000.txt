@@ -1,0 +1,60 @@
+
+    
+    
+        Parameter
+        Description
+    
+    
+    
+        --assembly-dir &lt;PATH&gt;
+        The path to the folder holding the test assemblies.
+    
+    
+        --devices &lt;DEVICE ID&gt;
+        The device ID that was provided in the Test Cloud Upload dialog.
+    
+    
+        --user &lt;EMAIL&gt;
+        The e-mail address of the team member submitting the tests.
+    
+    
+        --nunit-xml &lt;FILENAME&gt;
+        The filename to which test results are exported, formatted as NUnit results XML. Optional.
+    
+    
+        --sign-info &lt;FILENAME&gt;
+        Android only. Supply a signing information file that will be used to sign the Test Server APK. See the
+            section below for more details. Optional.
+        
+    
+    
+        --dsym &lt;FILENAME&gt;
+        iOS only. Will upload the dSYM files along with the application and tests. This allows for more detail in
+            the log files. Optional.
+        
+    
+    
+        --fixture &lt;NUNIT-FIXTURE&gt;
+        NUnit fixture / namespace to run. (Can be used multiple times)
+    
+    
+        --include &lt;CATEGORY-NAME&gt;
+        Identifies the NUnit test categories that should only be included in the test run.
+    
+    
+        --exclude &lt;CATEGORY-NAME&gt;
+        Identifies the NUnit test categories that should be excluded from the test run.
+    
+    
+        --test-chunk
+        Run tests in parallel by method
+    
+    
+        --fixture-chunk
+        Run tests in parallel by fixture
+    
+    
+        --data &lt;FILE OR DIRECTORY&gt;
+        Uploads file or directory along with assemblies. (Can be used multiple times).
+    
+    
