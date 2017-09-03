@@ -282,6 +282,7 @@ namespace Nuke.ToolGenerator.Generators
             IEnumerable<string> additionalParameters,
             params string[] modifications)
         {
+            // NOTE: methods cannot be generic because constraints are not taken into account for overload resolution
             var parameters = new[] { $"this {writer.DataClass.Name} toolSettings" }.Concat(additionalParameters);
             return writer
                     .WriteLine("[Pure]")
