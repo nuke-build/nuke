@@ -19,6 +19,8 @@ namespace Nuke.ToolGenerator.Model
         public string Help { get; set; }
         [CanBeNull]
         public string Postfix { get; set; }
+        [CanBeNull]
+        public string ReturnType { get; set; }
         public bool CustomStart { get; set; }
         public bool CustomAssertion { get; set; }
         public string DefiniteArgument { get; set; }

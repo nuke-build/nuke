@@ -72,7 +72,7 @@ namespace Nuke.ToolGenerator.Generators
                                 "ProcessSettings processSettings = null"
                             });
 
-            return $"public static void {task.GetTaskMethodName()} ({parameterDeclarations.Join()})";
+            return $"public static {task.GetReturnType()} {task.GetTaskMethodName()} ({parameterDeclarations.Join()})";
         }
 
         private static void WriteMainTaskBlock (TaskWriter writer)
@@ -82,7 +82,8 @@ namespace Nuke.ToolGenerator.Generators
                     .WriteLine($"PreProcess(toolSettings);")
                     .WriteLine($"var process = {GetProcessStart(writer.Task)};")
                     .WriteLine(GetProcessAssertion(writer.Task))
-                    .WriteLine($"PostProcess(toolSettings);");
+                    .WriteLine($"PostProcess(toolSettings);")
+                    .WriteLineIfTrue(writer.Task.HasReturnType(), "return GetResult(process, toolSettings);");
         }
 
         private static string GetProcessStart (Task task)
