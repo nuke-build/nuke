@@ -4,6 +4,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -54,7 +56,10 @@ namespace Nuke.Core.Execution
                 if (build.Help.Length == 0 || build.Help.Any(x => "targets".StartsWithOrdinalIgnoreCase(x)))
                     Logger.Log(GetTargetsText(build, defaultTargetFactory));
                 if (build.Help.Length == 0 || build.Help.Any(x => "parameters".StartsWithOrdinalIgnoreCase(x)))
-                Logger.Log(GetParametersText(build));
+                    Logger.Log(GetParametersText(build));
+                if (build.Help.Any(x => "graph".StartsWithOrdinalIgnoreCase(x)))
+                    ShowGraph(build, defaultTargetFactory);
+
                 Environment.Exit(exitCode: 0);
             }
 
@@ -69,11 +74,11 @@ namespace Nuke.Core.Execution
             var fileVersion = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>().Version;
             var informationalVersion = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute> ().InformationalVersion;
             var details = fileVersion != "1.0.0.0"
-                ? $"CommitSha: {informationalVersion.Substring(informationalVersion.LastIndexOf(value: '.') + 1, length: 8)}"
-                : "local";
+                ? $"Version: {fileVersion} [CommitSha: {informationalVersion.Substring(informationalVersion.LastIndexOf(value: '.') + 1, length: 8)}]"
+                : "LOCAL VERSION";
 
             Logger.Log(FigletTransform.GetText("NUKE"));
-            Logger.Log($"Version: {fileVersion} [{details}]");
+            Logger.Log(details);
             Logger.Log(string.Empty);
         }
 
@@ -146,6 +151,37 @@ namespace Nuke.Core.Execution
                 lines[lines.Count - 1] = $"{lines.Last()} {word}";
             }
             return lines;
+        }
+
+        private static void ShowGraph<T> (T build, Target defaultTargetFactory)
+            where T : NukeBuild
+        {
+            string GetStringFromStream (Stream stream)
+            {
+                using (var reader = new StreamReader(stream, Encoding.UTF8))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
+
+            var assembly = typeof(BuildExecutor).GetTypeInfo().Assembly;
+            var resourceName = typeof(BuildExecutor).Namespace + ".graph.html";
+            var resourceStream = assembly.GetManifestResourceStream(resourceName).NotNull("resourceStream != null");
+
+            var targetDefinitions = build.GetTargetDefinitions(defaultTargetFactory);
+            var dependencies =
+                    from target in targetDefinitions
+                    from dependency in target.TargetDefinitionDependencies
+                    select new { Source = dependency.Name, Destination = target.Name};
+            var links = dependencies.Aggregate(
+                new StringBuilder(),
+                (sb, link) => sb.AppendLine($"{link.Source} --> {link.Destination}"),
+                sb => sb.ToString());
+
+            var path = Path.Combine(build.TemporaryDirectory, "graph.html");
+            var contents = GetStringFromStream(resourceStream).Replace("__DEPENDENCIES__", links);
+            File.WriteAllText(path, contents);
+            Process.Start(path);
         }
     }
 }

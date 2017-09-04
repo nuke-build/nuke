@@ -12,6 +12,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="graph.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Execution\graph.html" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Colorful.Console" Version="1.0.7" />
     <PackageReference Include="Glob" Version="0.3.2" />
     <PackageReference Include="JetBrains.Annotations" Version="10.4.0" />
