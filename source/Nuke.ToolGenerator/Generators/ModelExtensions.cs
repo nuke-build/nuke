@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Nuke.ToolGenerator.Model;
 
+
+
 namespace Nuke.ToolGenerator.Generators
 {
     public static class ModelExtensions
@@ -100,6 +102,16 @@ namespace Nuke.ToolGenerator.Generators
         public static string GetTaskMethodName (this Task task)
         {
             return $"{task.Tool.Name}{task.Postfix}";
+        }
+
+        public static string GetReturnType (this Task task)
+        {
+            return task.ReturnType ?? "void";
+        }
+
+        public static bool HasReturnValue (this Task task)
+        {
+            return task.GetReturnType() != "void";
         }
     }
 }

@@ -43,13 +43,14 @@ namespace Nuke.ToolGenerator.Generators
             var currentArgument = properties.Last();
             var setter = $"x => {configuratorName}(x).Set{currentArgument.Name}({currentArgument.Name.ToInstance()})";
             var allArguments = nextArguments.Concat(new[] { setter });
+            var taskCallPrefix = task.HasReturnValue() ? "return " : string.Empty;
 
             writer
                     .WriteSummary(task)
                     .WriteLine(GetTaskSignature(writer.Task, additionalParameterDeclarations))
                     .WriteBlock(w => w
                             .WriteLine("configurator = configurator ?? (x => x);")
-                            .WriteLine($"{task.GetTaskMethodName()}({allArguments.Join()});"));
+                            .WriteLine($"{taskCallPrefix}{task.GetTaskMethodName()}({allArguments.Join()});"));
 
             return writer.WriteTaskOverloads(index + 1);
         }
@@ -72,7 +73,7 @@ namespace Nuke.ToolGenerator.Generators
                                 "ProcessSettings processSettings = null"
                             });
 
-            return $"public static void {task.GetTaskMethodName()} ({parameterDeclarations.Join()})";
+            return $"public static {task.GetReturnType()} {task.GetTaskMethodName()} ({parameterDeclarations.Join()})";
         }
 
         private static void WriteMainTaskBlock (TaskWriter writer)
@@ -82,7 +83,8 @@ namespace Nuke.ToolGenerator.Generators
                     .WriteLine($"PreProcess(toolSettings);")
                     .WriteLine($"var process = {GetProcessStart(writer.Task)};")
                     .WriteLine(GetProcessAssertion(writer.Task))
-                    .WriteLine($"PostProcess(toolSettings);");
+                    .WriteLine($"PostProcess(toolSettings);")
+                    .WriteLineIfTrue(writer.Task.HasReturnValue(), "return GetResult(process, toolSettings);");
         }
 
         private static string GetProcessStart (Task task)
