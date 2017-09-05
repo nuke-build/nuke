@@ -1,7 +1,6 @@
 [CmdletBinding()]
 Param()
 
-Remove-Item $MyInvocation.MyCommand.Path
 $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 
 ###########################################################################
@@ -167,4 +166,5 @@ if (!($SolutionFileContent -match "`"$BuildProjectName`"")) {
 # FINISH
 ###########################################################################
 
+Remove-Item $MyInvocation.MyCommand.Path
 Write-Host "Finished setting up build project."

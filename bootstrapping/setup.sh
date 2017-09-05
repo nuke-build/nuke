@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-rm "${BASH_SOURCE[0]}"
 SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 
 ###########################################################################
@@ -176,4 +175,5 @@ fi
 # FINISH
 ###########################################################################
 
+rm "${BASH_SOURCE[0]}"
 echo "Finished setting up build project."
