@@ -109,7 +109,7 @@ while : ; do
     echo "Which format do you want to use for your build project:"
     echo "[0] Legacy format. Supported by all MSBuild versions."
     echo "[1] SDK-based format. Requires MSBuild 15.0."
-    read -p "Default solution file id: " FORMAT_SELECTION
+    read -p "Format id: " FORMAT_SELECTION
     [[ $FORMAT_SELECTION < 0 || $FORMAT_SELECTION -ge 2 ]] || break
 done
 
