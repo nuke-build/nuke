@@ -23,8 +23,8 @@ function ReadWithDefault {
 }
 
 function Download {
-    mkdir -p $(dirname $2)
-    curl -Lsfo $2 $1
+    mkdir -p "$(dirname "$2")"
+    curl -Lsfo "$2" "$1"
 }
 
 function GetRelative {
@@ -40,9 +40,9 @@ function error {
 # LOCATE SOLUTION FILE
 ###########################################################################
 
-ROOT_DIRECTORY=$SCRIPT_DIR
-while [[ $ROOT_DIRECTORY != / && ! -n "$(find $ROOT_DIRECTORY -maxdepth 1 -regex '.*/\.git')" ]]; do
-    ROOT_DIRECTORY=$(dirname $ROOT_DIRECTORY)
+ROOT_DIRECTORY="$SCRIPT_DIR"
+while [[ $ROOT_DIRECTORY != / && ! -n "$(find "$ROOT_DIRECTORY" -maxdepth 1 -regex '.*/\.git')" ]]; do
+    ROOT_DIRECTORY="$(dirname "$ROOT_DIRECTORY")"
 done
 if [ "$ROOT_DIRECTORY" == / ]; then ROOT_DIRECTORY="$SCRIPT_DIR"; fi
 echo "Searching for solution files in '$ROOT_DIRECTORY' (2-levels)..."
@@ -50,7 +50,7 @@ echo "Searching for solution files in '$ROOT_DIRECTORY' (2-levels)..."
 SOLUTION_FILE_ARRAY=()
 while IFS= read -r -d $'\0'; do
     SOLUTION_FILE_ARRAY+=("$REPLY")
-done < <(find $ROOT_DIRECTORY -maxdepth 2 -name *.sln -print0)
+done < <(find "$ROOT_DIRECTORY" -maxdepth 2 -name "*.sln" -print0)
 if [ ${#SOLUTION_FILE_ARRAY[@]} == 0 ]; then error "No solution file (*.sln) could be found."; fi
 
 SOLUTION_FILE_SELECTION=0
@@ -59,18 +59,18 @@ if [ ${#SOLUTION_FILE_ARRAY[@]} -gt 1 ]; then
         echo "Found multiple solution files:"
         for i in "${!SOLUTION_FILE_ARRAY[@]}"; do
             TMP_SOLUTION_FILE="${SOLUTION_FILE_ARRAY[$i]}"
-            echo "[$i] $(GetRelative $SCRIPT_DIR $TMP_SOLUTION_FILE)"
+            echo "[$i] $(GetRelative "$SCRIPT_DIR" "$TMP_SOLUTION_FILE")"
         done
         read -p "Default solution file id: " SOLUTION_FILE_SELECTION
         [[ $SOLUTION_FILE_SELECTION < 0 || $SOLUTION_FILE_SELECTION -ge ${#SOLUTION_FILE_ARRAY[@]} ]] || break
     done
 fi
 
-SOLUTION_FILE=${SOLUTION_FILE_ARRAY[$SOLUTION_FILE_SELECTION]}
-SOLUTION_DIRECTORY=$(dirname $SOLUTION_FILE)
-echo $(GetRelative $ROOT_DIRECTORY $SOLUTION_FILE) > "$ROOT_DIRECTORY/.nuke"
+SOLUTION_FILE="${SOLUTION_FILE_ARRAY[$SOLUTION_FILE_SELECTION]}"
+SOLUTION_DIRECTORY="$(dirname "$SOLUTION_FILE")"
+echo $(GetRelative "$ROOT_DIRECTORY" "$SOLUTION_FILE") > "$ROOT_DIRECTORY/.nuke"
 
-echo "Using '$(GetRelative $SCRIPT_DIR $SOLUTION_FILE)' case solution file."
+echo "Using '$(GetRelative "$SCRIPT_DIR" "$SOLUTION_FILE")' as solution file."
 
 ###########################################################################
 # GENERATE BUILD SCRIPTS
@@ -82,8 +82,8 @@ BUILD_PROJECT_NAME=$(ReadWithDefault "Name for build project" $DEFAULT_BUILD_PRO
 
 echo "Generating build.ps1, build.sh and configuration file..."
 
-SOLUTION_DIRECTORY_RELATIVE="$(GetRelative $SCRIPT_DIR $SOLUTION_DIRECTORY)"
-ROOT_DIRECTORY_RELATIVE="$(GetRelative $SCRIPT_DIR $ROOT_DIRECTORY)"
+SOLUTION_DIRECTORY_RELATIVE="$(GetRelative "$SCRIPT_DIR" "$SOLUTION_DIRECTORY")"
+ROOT_DIRECTORY_RELATIVE="$(GetRelative "$SCRIPT_DIR" "$ROOT_DIRECTORY")"
 
 sed -e 's~_NUGET_URL_~'"$NUGET_URL"'~g' \
     -e 's~_BUILD_DIRECTORY_NAME_~'"$BUILD_DIRECTORY_NAME"'~g' \
@@ -143,7 +143,7 @@ PROJECT_GUID=$(python -c "import uuid; print str(uuid.uuid4()).upper()")
 if [ $FORMAT_SELECTION == 0 ]; then
     Download "$BOOTSTRAPPING_URL/.build.legacy.packages.config" "$BUILD_DIRECTORY/packages.config"
 
-    SOLUTION_DIRECTORY_RELATIVE="$(GetRelative $BUILD_DIRECTORY $SOLUTION_DIRECTORY)"
+    SOLUTION_DIRECTORY_RELATIVE="$(GetRelative "$BUILD_DIRECTORY" "$SOLUTION_DIRECTORY")"
     sed -e 's~_BUILD_PROJECT_GUID_~'"$PROJECT_GUID"'~g' \
         -e 's~_BUILD_PROJECT_NAME_~'"$BUILD_PROJECT_NAME"'~g' \
         -e 's~_SOLUTION_DIRECTORY_~'"${SOLUTION_DIRECTORY_RELATIVE//\//\\}"'~g' \
@@ -158,16 +158,16 @@ fi
 # ADD TO SOLUTION
 ###########################################################################
 
-if ! grep -q "$BUILD_PROJECT_NAME" "$SOLUTION_FILE"; then
+if ! grep -q "$BUILD_PROJECT_NAME.csproj" "$SOLUTION_FILE"; then
     echo "Adding $BuildProjectName project to solution..."
 
-    BUILD_PROJECT_FILE_RELATIVE=$(GetRelative $SOLUTION_DIRECTORY $BUILD_PROJECT_FILE)
+    BUILD_PROJECT_FILE_RELATIVE="$(GetRelative "$SOLUTION_DIRECTORY" "$BUILD_PROJECT_FILE")"
 
     PROJECT_DEFINITION='Project(\"{'$PROJECTKIND_GUID'}\") = \"'$BUILD_PROJECT_NAME'\", \"'${BUILD_PROJECT_FILE_RELATIVE//\//\\\\}'\", \"{'$PROJECT_GUID'}\"\nEndProject'
     PROJECT_CONFIGURATION='\t\t{'$PROJECT_GUID'}.Debug|Any CPU.ActiveCfg = Debug|Any CPU\n\t\t{'$PROJECT_GUID'}.Release|Any CPU.ActiveCfg = Release|Any CPU'
     
-    awk "/MinimumVisualStudioVersion/{print \$0 RS \"$PROJECT_DEFINITION\";next}1" $SOLUTION_FILE > "$SOLUTION_FILE.bak"
-    awk "/ProjectConfigurationPlatforms/{print \$0 RS \"$PROJECT_CONFIGURATION\";next}1" "$SOLUTION_FILE.bak" > $SOLUTION_FILE
+    awk "/MinimumVisualStudioVersion/{print \$0 RS \"$PROJECT_DEFINITION\";next}1" "$SOLUTION_FILE" > "$SOLUTION_FILE.bak"
+    awk "/ProjectConfigurationPlatforms/{print \$0 RS \"$PROJECT_CONFIGURATION\";next}1" "$SOLUTION_FILE.bak" > "$SOLUTION_FILE"
     
     rm "$SOLUTION_FILE.bak"
 fi
