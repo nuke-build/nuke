@@ -93,14 +93,6 @@ Set-Content "build.sh" ((New-Object System.Net.WebClient).DownloadString("$Boots
     -replace "_ROOT_DIRECTORY_",((GetRelative $PSScriptRoot $RootDirectory) -replace "\\","/"))
 
 ###########################################################################
-# DOWNLOAD NUGET.EXE
-###########################################################################
-
-Write-Host "Downloading nuget.exe..."
-$NuGetFile = "$RootDirectory\.tmp\nuget.exe"
-Download $NuGetUrl $NuGetFile
-
-###########################################################################
 # GENERATE TEMPLATE FILES
 ###########################################################################
 
@@ -137,9 +129,6 @@ if ($FormatSelection -eq 0) {
         -replace "_BUILD_PROJECT_GUID_",$ProjectGuid `
         -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
         -replace "_SOLUTION_DIRECTORY_",(GetRelative $BuildDirectory $SolutionDirectory))
-
-    & $NuGetFile restore $BuildProjectFile -SolutionDirectory $SolutionDirectory
-    & $NuGetFile update $BuildProjectFile
 }
 
 ###########################################################################

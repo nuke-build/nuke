@@ -102,14 +102,6 @@ sed -e 's~_NUGET_URL_~'"$NUGET_URL"'~g' \
     > build.ps1
 
 ###########################################################################
-# DOWNLOAD NUGET.EXE
-###########################################################################
-
-echo "Downloading nuget.exe..."
-NUGET_FILE="$ROOT_DIRECTORY/.tmp/nuget.exe"
-Download $NUGET_URL $NUGET_FILE
-
-###########################################################################
 # GENERATE TEMPLATE FILES
 ###########################################################################
 
@@ -149,9 +141,6 @@ if [ $FORMAT_SELECTION == 0 ]; then
         -e 's~_SOLUTION_DIRECTORY_~'"${SOLUTION_DIRECTORY_RELATIVE//\//\\}"'~g' \
         <<<"$(cat $BUILD_PROJECT_FILE)" \
         > $BUILD_PROJECT_FILE
-        
-    mono $NUGET_FILE restore $BUILD_PROJECT_FILE -SolutionDirectory $SOLUTION_DIRECTORY
-    mono $NUGET_FILE update $BUILD_PROJECT_FILE
 fi
 
 ###########################################################################
