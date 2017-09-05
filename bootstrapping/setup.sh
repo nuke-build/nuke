@@ -44,7 +44,8 @@ ROOT_DIRECTORY=$SCRIPT_DIR
 while [[ $ROOT_DIRECTORY != / && ! -n "$(find $ROOT_DIRECTORY -maxdepth 1 -regex '.*/\.git')" ]]; do
     ROOT_DIRECTORY=$(dirname $ROOT_DIRECTORY)
 done
-if [ $ROOT_DIRECTORY == / ]; then error "Unable to determine root directory (containing .git or .svn folder)"; fi
+if [ "$ROOT_DIRECTORY" == / ]; then ROOT_DIRECTORY="$SCRIPT_DIR"; fi
+echo "Searching for solution files in '$ROOT_DIRECTORY' (2-levels)..."
 
 SOLUTION_FILE_ARRAY=()
 while IFS= read -r -d $'\0'; do

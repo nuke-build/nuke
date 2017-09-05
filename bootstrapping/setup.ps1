@@ -44,9 +44,10 @@ function GetRelative($base, $destination) {
 $RootDirectory = $PSScriptRoot
 while ($RootDirectory -ne "" -and 
        (Get-ChildItem -Path $RootDirectory -Force | Where-Object { $_.Name -match '^.git$|^.svn$' }).length -eq 0) {
-    $RootDirectory = Split-Path $RootDirectory -Parent
+  $RootDirectory = Split-Path $RootDirectory -Parent
 }
-if ($RootDirectory -eq "") { throw "Unable to determine root directory (containing .git or .svn folder)" }
+if ($RootDirectory -eq "") { $RootDirectory = $PSScriptRoot }
+Write-Host "Searching for solution files under '$RootDirectory' (2-levels)..."
 
 $SolutionFiles = @(Get-ChildItem "*.sln" -Path $RootDirectory -Depth 2)
 if ($SolutionFiles.length -eq 0) { throw "No solution file (*.sln) could be found." }
