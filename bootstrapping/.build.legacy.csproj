@@ -82,10 +82,10 @@
     <Reference Include="NuGet.Versioning, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>_SOLUTION_DIRECTORY_\packages\NuGet.Versioning.4.0.0\lib\net45\NuGet.Versioning.dll</HintPath>
     </Reference>
-    <Reference Include="Nuke.Common, Version=0.1.277.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Nuke.Common, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>_SOLUTION_DIRECTORY_\packages\Nuke.Common.0.1.277\lib\net46\Nuke.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Nuke.Core, Version=0.1.277.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Nuke.Core, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>_SOLUTION_DIRECTORY_\packages\Nuke.Core.0.1.277\lib\net46\Nuke.Core.dll</HintPath>
     </Reference>
     <Reference Include="Octokit, Version=0.24.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -114,6 +114,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="YamlDotNet, Version=4.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>_SOLUTION_DIRECTORY_\packages\YamlDotNet.4.2.1\lib\net35\YamlDotNet.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Build.cs" />
