@@ -43,23 +43,23 @@ function GetRelative($base, $destination) {
 
 $RootDirectory = $PSScriptRoot
 while ($RootDirectory -ne "" -and 
-       (Get-ChildItem -Path $RootDirectory -Force | Where-Object { $_.Name -match '^.git$|^.svn$' }).length -eq 0) {
+       @(Get-ChildItem -Path $RootDirectory -Force | Where-Object { $_.Name -match '^.git$|^.svn$' }).length -eq 0) {
   $RootDirectory = Split-Path $RootDirectory -Parent
 }
 if ($RootDirectory -eq "") { $RootDirectory = $PSScriptRoot }
 Write-Host "Searching for solution files under '$RootDirectory' (2-levels)..."
 
 $SolutionFiles = @(Get-ChildItem "*.sln" -Path $RootDirectory -Depth 2)
-if ($SolutionFiles.length -eq 0) { throw "No solution file (*.sln) could be found." }
+if (@($SolutionFiles).length -eq 0) { throw "No solution file (*.sln) could be found." }
 
 $SolutionFileSelection = 0
-if ($SolutionFiles.length -gt 1) {
+if (@($SolutionFiles).length -gt 1) {
   do {
     Write-Host "Found multiple solution files:"
     $SolutionFiles | % {$i=0} { Write-Host "[$i] $(GetRelative $PSScriptRoot $_.FullName)" ; $i++}
     $SolutionFileSelection = Read-host "Default solution file id"
   }
-  until ($SolutionFileSelection -ge 0 -and $SolutionFileSelection -lt $SolutionFiles.length)
+  until ($SolutionFileSelection -ge 0 -and $SolutionFileSelection -lt @($SolutionFiles).length)
 }
 
 $SolutionFile = $SolutionFiles[$SolutionFileSelection].FullName
