@@ -83,10 +83,10 @@
       <HintPath>_SOLUTION_DIRECTORY_\packages\NuGet.Versioning.4.0.0\lib\net45\NuGet.Versioning.dll</HintPath>
     </Reference>
     <Reference Include="Nuke.Common, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>_SOLUTION_DIRECTORY_\packages\Nuke.Common.0.1.277\lib\net46\Nuke.Common.dll</HintPath>
+      <HintPath>_SOLUTION_DIRECTORY_\packages\Nuke.Common._LATEST_VERSION_\lib\net46\Nuke.Common.dll</HintPath>
     </Reference>
     <Reference Include="Nuke.Core, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>_SOLUTION_DIRECTORY_\packages\Nuke.Core.0.1.277\lib\net46\Nuke.Core.dll</HintPath>
+      <HintPath>_SOLUTION_DIRECTORY_\packages\Nuke.Core._LATEST_VERSION_\lib\net46\Nuke.Core.dll</HintPath>
     </Reference>
     <Reference Include="Octokit, Version=0.24.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>_SOLUTION_DIRECTORY_\packages\Octokit.0.24.0\lib\net45\Octokit.dll</HintPath>

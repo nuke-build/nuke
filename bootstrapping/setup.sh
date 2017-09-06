@@ -22,11 +22,6 @@ function ReadWithDefault {
     echo ${prompt:-$2}
 }
 
-function Download {
-    mkdir -p "$(dirname "$2")"
-    curl -Lsfo "$2" "$1"
-}
-
 function GetRelative {
     python -c "import os.path; print os.path.relpath('$2','${1:-$PWD}')"
 }
@@ -73,14 +68,17 @@ echo $(GetRelative "$ROOT_DIRECTORY" "$SOLUTION_FILE") > "$ROOT_DIRECTORY/.nuke"
 echo "Using '$(GetRelative "$SCRIPT_DIR" "$SOLUTION_FILE")' as solution file."
 
 ###########################################################################
-# GENERATE BUILD SCRIPTS
+# GENERATE BUILD SCRIPTS AND NUKE FILE
 ###########################################################################
 
 NUGET_URL=$(ReadWithDefault "NuGet executable download url" $DEFAULT_NUGET_URL)
 BUILD_DIRECTORY_NAME=$(ReadWithDefault "Directory for build project" $DEFAULT_BUILD_DIRECTORY_NAME)
 BUILD_PROJECT_NAME=$(ReadWithDefault "Name for build project" $DEFAULT_BUILD_PROJECT_NAME)
+BUILD_DIRECTORY="$SCRIPT_DIR/$BUILD_DIRECTORY_NAME"
 
-echo "Generating build.ps1, build.sh and configuration file..."
+mkdir -p $(dirname $BUILD_DIRECTORY)
+
+echo "Generating build.ps1, build.sh and .nuke file..."
 
 SOLUTION_DIRECTORY_RELATIVE="$(GetRelative "$SCRIPT_DIR" "$SOLUTION_DIRECTORY")"
 ROOT_DIRECTORY_RELATIVE="$(GetRelative "$SCRIPT_DIR" "$ROOT_DIRECTORY")"
@@ -102,7 +100,7 @@ sed -e 's~_NUGET_URL_~'"$NUGET_URL"'~g' \
     > build.ps1
 
 ###########################################################################
-# GENERATE TEMPLATE FILES
+# GENERATE PROJECT FILES
 ###########################################################################
 
 while : ; do
@@ -113,34 +111,31 @@ while : ; do
     [[ $FORMAT_SELECTION < 0 || $FORMAT_SELECTION -ge 2 ]] || break
 done
 
-echo "Generating template files..."
-
-BUILD_PROJECT_URL_ARRAY=("$BOOTSTRAPPING_URL/.build.legacy.csproj" "$BOOTSTRAPPING_URL/.build.sdk.csproj")
-BUILD_PROJECT_URL=${BUILD_PROJECT_URL_ARRAY[$FORMAT_SELECTION]}
-DOTSETTINGS_URL="$BOOTSTRAPPING_URL/.build.csproj.DotSettings"
-DEFAULTBUILD_URL="$BOOTSTRAPPING_URL/Build.cs"
-
-BUILD_DIRECTORY="$SCRIPT_DIR/$BUILD_DIRECTORY_NAME"
-BUILD_PROJECT_FILE="$BUILD_DIRECTORY/$BUILD_PROJECT_NAME.csproj"
-mkdir -p $(dirname $BUILD_DIRECTORY)
-
-Download $BUILD_PROJECT_URL "$BUILD_PROJECT_FILE"
-Download $DOTSETTINGS_URL "$BUILD_PROJECT_FILE.dotsettings"
-Download $DEFAULTBUILD_URL "$BUILD_DIRECTORY/Build.cs"
-
+LATEST_VERSION=$(curl -s 'https://api-v2v3search-0.nuget.org/query?q=packageid:Nuke.Common' | python3 -c "import sys, json; print(json.load(sys.stdin)['data'][0]['version'])")
+PROJECT_GUID=$(python -c "import uuid; print str(uuid.uuid4()).upper()")
 PROJECTKIND_GUID_ARRAY=("FAE04EC0-301F-11D3-BF4B-00C04F79EFBC" "9A19103F-16F7-4668-BE54-9A1E7A4F7556")
 PROJECTKIND_GUID=${PROJECTKIND_GUID_ARRAY[$FORMAT_SELECTION]}
-PROJECT_GUID=$(python -c "import uuid; print str(uuid.uuid4()).upper()")
+BUILD_PROJECT_URL_ARRAY=("$BOOTSTRAPPING_URL/.build.legacy.csproj" "$BOOTSTRAPPING_URL/.build.sdk.csproj")
+BUILD_PROJECT_URL=${BUILD_PROJECT_URL_ARRAY[$FORMAT_SELECTION]}
+BUILD_PROJECT_FILE="$BUILD_DIRECTORY/$BUILD_PROJECT_NAME.csproj"
+SOLUTION_DIRECTORY_RELATIVE="$(GetRelative "$BUILD_DIRECTORY" "$SOLUTION_DIRECTORY")"
+
+echo "Generating project files for $LATEST_VERSION..."
+
+curl -Lsfo "$BUILD_PROJECT_FILE.dotsettings" "$BOOTSTRAPPING_URL/.build.csproj.DotSettings"
+curl -Lsfo "$BUILD_DIRECTORY/Build.cs" "$BOOTSTRAPPING_URL/Build.cs"
+
+sed -e 's~_BUILD_PROJECT_GUID_~'"$PROJECT_GUID"'~g' \
+    -e 's~_BUILD_PROJECT_NAME_~'"$BUILD_PROJECT_NAME"'~g' \
+    -e 's~_SOLUTION_DIRECTORY_~'"${SOLUTION_DIRECTORY_RELATIVE//\//\\}"'~g' \
+    -e 's~_LATEST_VERSION_~'"$LATEST_VERSION"'~g' \
+    <<<"$(curl -Lsf $BUILD_PROJECT_URL)" \
+    > "$BUILD_PROJECT_FILE"
 
 if [ $FORMAT_SELECTION == 0 ]; then
-    Download "$BOOTSTRAPPING_URL/.build.legacy.packages.config" "$BUILD_DIRECTORY/packages.config"
-
-    SOLUTION_DIRECTORY_RELATIVE="$(GetRelative "$BUILD_DIRECTORY" "$SOLUTION_DIRECTORY")"
-    sed -e 's~_BUILD_PROJECT_GUID_~'"$PROJECT_GUID"'~g' \
-        -e 's~_BUILD_PROJECT_NAME_~'"$BUILD_PROJECT_NAME"'~g' \
-        -e 's~_SOLUTION_DIRECTORY_~'"${SOLUTION_DIRECTORY_RELATIVE//\//\\}"'~g' \
-        <<<"$(cat $BUILD_PROJECT_FILE)" \
-        > $BUILD_PROJECT_FILE
+    sed -e 's~_LATEST_VERSION_~'"$LATEST_VERSION"'~g' \
+        <<<"$(curl -Lsf $BOOTSTRAPPING_URL/.build.legacy.packages.config)" \
+        > "$BUILD_DIRECTORY/packages.config"
 fi
 
 ###########################################################################

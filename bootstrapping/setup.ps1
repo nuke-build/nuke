@@ -75,6 +75,9 @@ Write-Host "Using '$(GetRelative $PSScriptRoot $SolutionFile)' as solution file.
 $NuGetUrl = (ReadWithDefault "NuGet executable download url" $DefaultNuGetUrl)
 $BuildDirectoryName = (ReadWithDefault "Directory for build project" $DefaultBuildDirectoryName)
 $BuildProjectName = (ReadWithDefault "Name for build project" $DefaultBuildProjectName)
+$BuildDirectory = "$PSScriptRoot\$BuildDirectoryName"
+
+md -force $BuildDirectory > $null
 
 Write-Host "Generating build.ps1, build.sh and configuration file..."
 
@@ -93,7 +96,7 @@ Set-Content "build.sh" ((New-Object System.Net.WebClient).DownloadString("$Boots
     -replace "_ROOT_DIRECTORY_",((GetRelative $PSScriptRoot $RootDirectory) -replace "\\","/"))
 
 ###########################################################################
-# GENERATE TEMPLATE FILES
+# GENERATE PROJECT FILES
 ###########################################################################
 
 $FormatSelection = $host.ui.PromptForChoice(
@@ -105,30 +108,27 @@ $FormatSelection = $host.ui.PromptForChoice(
   ),
   1)
 
-Write-Host "Generating template files..."
-
-$BuildProjectUrl = @("$BootstrappingUrl/.build.legacy.csproj", "$BootstrappingUrl/.build.sdk.csproj")[$FormatSelection]
-$DotSettingsUrl = "$BootstrappingUrl/.build.csproj.DotSettings"
-$DefaultBuildUrl = "$BootstrappingUrl/Build.cs"
-
-$BuildDirectory = "$PSScriptRoot\$BuildDirectoryName"
-$BuildProjectFile = "$BuildDirectory\$BuildProjectName.csproj"
-md -force $BuildDirectory > $null
-
-Download $BuildProjectUrl "$BuildProjectFile"
-Download $DotSettingsUrl "$BuildProjectFile.dotsettings"
-Download $DefaultBuildUrl "$BuildDirectory\Build.cs"
-
+$LatestVersion = $(Invoke-WebRequest https://api-v2v3search-0.nuget.org/query?q=packageid:Nuke.Common | ConvertFrom-Json).data.version
 $ProjectGuid = [guid]::NewGuid().ToString().ToUpper()
 $ProjectKindGuid = @("FAE04EC0-301F-11D3-BF4B-00C04F79EFBC", "9A19103F-16F7-4668-BE54-9A1E7A4F7556")[$FormatSelection]
+$BuildProjectUrl = @("$BootstrappingUrl/.build.legacy.csproj", "$BootstrappingUrl/.build.sdk.csproj")[$FormatSelection]
+$BuildProjectFile = "$BuildDirectory\$BuildProjectName.csproj"
+$SolutionDirectoryRelative = (GetRelative $BuildDirectory $SolutionDirectory)
+
+Write-Host "Generating project files for $LatestVersion..."
+
+(New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/.build.csproj.DotSettings", "$BuildProjectFile.dotsettings")
+(New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/Build.cs", "$BuildDirectory\Build.cs")
+
+Set-Content "$BuildProjectFile" ((New-Object System.Net.WebClient).DownloadString("$BuildProjectUrl") `
+    -replace "_BUILD_PROJECT_GUID_",$ProjectGuid `
+    -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
+    -replace "_SOLUTION_DIRECTORY_",$SolutionDirectoryRelative `
+    -replace "_LATEST_VERSION_",$LatestVersion)
 
 if ($FormatSelection -eq 0) {
-    Download "$BootstrappingUrl/.build.legacy.packages.config" "$BuildDirectory\packages.config"
-
-    Set-Content $BuildProjectFile ((Get-Content $BuildProjectFile) `
-        -replace "_BUILD_PROJECT_GUID_",$ProjectGuid `
-        -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
-        -replace "_SOLUTION_DIRECTORY_",(GetRelative $BuildDirectory $SolutionDirectory))
+    Set-Content "$BuildDirectory\packages.config" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/.build.legacy.packages.config") `
+        -replace "_LATEST_VERSION_",$LatestVersion)
 }
 
 ###########################################################################
