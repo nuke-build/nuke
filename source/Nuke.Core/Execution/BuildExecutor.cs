@@ -39,8 +39,9 @@ namespace Nuke.Core.Execution
             var build = Activator.CreateInstance<T>();
             var defaultTargetFactory = defaultTargetExpression.Compile().Invoke(build);
 
-            InjectionService.InjectValues(build);
+            PrintLogo();
 
+            InjectionService.InjectValues(build);
             //{
             //    Console.WriteLine($"Target: {build.Target.Join(", ")}");
             //    Console.WriteLine($"Verbosity: {build.Verbosity}");
@@ -48,8 +49,6 @@ namespace Nuke.Core.Execution
             //    Console.WriteLine($"NoDependencies: {build.NoDependencies}");
             //    Console.WriteLine($"Configuration: {build.Configuration}");
             //}
-
-            PrintLogo();
 
             if (build.Help != null)
             {
