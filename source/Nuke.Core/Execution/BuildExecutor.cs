@@ -167,18 +167,19 @@ namespace Nuke.Core.Execution
             var resourceName = typeof(BuildExecutor).Namespace + ".graph.html";
             var resourceStream = assembly.GetManifestResourceStream(resourceName).NotNull("resourceStream != null");
 
+            var graph = new StringBuilder();
             var targetDefinitions = build.GetTargetDefinitions(defaultTargetFactory);
-            var dependencies =
-                    from target in targetDefinitions
-                    from dependency in target.TargetDefinitionDependencies
-                    select new { Source = dependency.Name, Destination = target.Name};
-            var links = dependencies.Aggregate(
-                new StringBuilder(),
-                (sb, link) => sb.AppendLine($"{link.Source} --> {link.Destination}"),
-                sb => sb.ToString());
+            foreach (var target in targetDefinitions)
+            {
+                var dependendBy = targetDefinitions.Where(x => x.TargetDefinitionDependencies.Contains(target)).ToList();
+                if (dependendBy.Count == 0)
+                    graph.AppendLine(target.Name);
+                else
+                    dependendBy.ForEach(x => graph.AppendLine($"{target.Name} --> {x.Name}"));
+            }
 
             var path = Path.Combine(build.TemporaryDirectory, "graph.html");
-            var contents = GetStringFromStream(resourceStream).Replace("__DEPENDENCIES__", links);
+            var contents = GetStringFromStream(resourceStream).Replace("__GRAPH__", graph.ToString());
             File.WriteAllText(path, contents);
             Process.Start(path);
         }
