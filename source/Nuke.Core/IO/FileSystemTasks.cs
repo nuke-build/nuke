@@ -166,5 +166,19 @@ namespace Nuke.Core.IO
         {
             File.SetAttributes(file, FileAttributes.Normal);
         }
+        
+        /// <summary>
+        /// Returns the time the file or directory was last written to. For directories, the latest time for the whole content is returned.
+        /// </summary>
+        public static DateTime GetLastWriteTimeUtc(string path)
+        {
+            ControlFlow.Assert(Directory.Exists(path) || File.Exists(path), "Directory.Exists(path) || File.Exists(path)");
+
+            return Directory.Exists(path)
+                ? new DirectoryInfo(path)
+                        .GetFileSystemInfos("*", SearchOption.AllDirectories)
+                        .Max(x => x.LastWriteTimeUtc)
+                : File.GetLastWriteTimeUtc(path);
+        }
     }
 }
