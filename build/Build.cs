@@ -97,5 +97,5 @@ class Build : NukeBuild
             });
 
     Target Full => _ => _
-            .DependsOn(Compile, Test, Analysis, Push);
+            .DependsOn(Test, Analysis, Push);
 }
