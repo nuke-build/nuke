@@ -7,6 +7,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Core;
 using Nuke.Core.Injection;
+using Nuke.Core.Tooling;
 
 namespace Nuke.Common.Tools.GitVersion
 {
@@ -24,7 +25,7 @@ namespace Nuke.Common.Tools.GitVersion
         {
             return Value = Value ??
                            (EnvironmentInfo.IsWin && GitVersionTasks.DefaultGitVersion.HasValidToolPath()
-                               ? GitVersionTasks.GitVersion(s => GitVersionTasks.DefaultGitVersion)
+                               ? GitVersionTasks.GitVersion(s => GitVersionTasks.DefaultGitVersion, new ProcessSettings().EnableRedirectOutput())
                                : null);
         }
     }

@@ -4,7 +4,11 @@
 
 using System;
 using System.Linq;
+using System.Net.Http.Headers;
+using System.Reflection;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Nuke.Core;
 using Nuke.Core.Tooling;
 
@@ -15,18 +19,29 @@ namespace Nuke.Common.Tools.GitVersion
         public static GitVersionSettings DefaultGitVersion => new GitVersionSettings()
                 .SetWorkingDirectory(NukeBuild.Instance.RootDirectory);
 
-        public static GitVersion GitVersion (Configure<GitVersionSettings> configurator = null)
+        [CanBeNull]
+        private static GitVersion GetResult (IProcess process, GitVersionSettings toolSettings, [CanBeNull] ProcessSettings processSettings)
         {
-            var toolSettings = configurator.InvokeSafe(new GitVersionSettings());
-            var processSettings = new ProcessSettings().EnableRedirectOutput();
+            if (!(processSettings?.RedirectOutput ?? false))
+            {
+                Logger.Warn(
+                    $"{nameof(GitVersionTasks)}.{nameof(GitVersion)} can only calculate a return value when 'RedirectOutput' is set to true.");
+                return null;
+            }
 
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
-            process.AssertWaitForExit();
-            if (process.ExitCode != 0)
-                ProcessTasks.StartProcess(toolSettings, processSettings.DisableRedirectOutput()).AssertZeroExitCode();
+            var output = process.Output.EnsureOnlyStd().Select(x => x.Text).ToList();
+            var settings = new JsonSerializerSettings { ContractResolver = new AllWritableContractResolver() };
+            return JsonConvert.DeserializeObject<GitVersion> (string.Join ("\r\n", output), settings);
+        }
 
-            var output = process.Output.EnsureOnlyStd().Select(x => x.Text);
-            return JsonConvert.DeserializeObject<GitVersion>(string.Join("\r\n", output));
+        private class AllWritableContractResolver : DefaultContractResolver
+        {
+            protected override JsonProperty CreateProperty ([NotNull] MemberInfo member, MemberSerialization memberSerialization)
+            {
+                var property = base.CreateProperty(member, memberSerialization);
+                property.Writable = true;
+                return property;
+            }
         }
     }
 }
