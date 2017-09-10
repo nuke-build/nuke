@@ -84,7 +84,7 @@ namespace Nuke.ToolGenerator.Generators
                     .WriteLine($"var process = {GetProcessStart(writer.Task)};")
                     .WriteLine(GetProcessAssertion(writer.Task))
                     .WriteLine($"PostProcess(toolSettings);")
-                    .WriteLineIfTrue(writer.Task.HasReturnValue(), "return GetResult(process, toolSettings);");
+                    .WriteLineIfTrue(writer.Task.HasReturnValue(), "return GetResult(process, toolSettings, processSettings);");
         }
 
         private static string GetProcessStart (Task task)
