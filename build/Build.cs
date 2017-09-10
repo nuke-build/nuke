@@ -4,12 +4,10 @@
 
 using System;
 using System.Linq;
-using Nuke.Common;
 using Nuke.Common.Git;
 using Nuke.Common.Tools.GitLink;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.InspectCode;
-using Nuke.Common.Tools.MSBuild;
 using Nuke.Common.Tools.NuGet;
 using Nuke.Common.Tools.OpenCover;
 using Nuke.Common.Tools.Xunit;
@@ -27,7 +25,7 @@ using static Nuke.Core.EnvironmentInfo;
 
 class Build : NukeBuild
 {
-    [Parameter("ApiKey for 'nukebuild' MyGet source.")] readonly string MyGetApiKey;
+    [Parameter("ApiKey for the 'nukebuild' feed.")] readonly string MyGetApiKey;
 
     [GitVersion] readonly GitVersion GitVersion;
     [GitRepository] readonly GitRepository GitRepository;
@@ -35,52 +33,73 @@ class Build : NukeBuild
     public static int Main () => Execute<Build>(x => x.Pack);
 
     Target Clean => _ => _
-            .Executes(() => DeleteDirectories(GlobDirectories(SourceDirectory, "*/bin", "*/obj")))
-            .Executes(() => EnsureCleanDirectory(OutputDirectory));
+            .Executes(() =>
+            {
+                DeleteDirectories(GlobDirectories(SourceDirectory, "*/bin", "*/obj"));
+                EnsureCleanDirectory(OutputDirectory);
+            });
 
     Target Restore => _ => _
             .DependsOn(Clean)
-            .Executes(() => MSBuild(s => DefaultMSBuildRestore));
+            .Executes(() =>
+            {
+                MSBuild(s => DefaultMSBuildRestore);
+            });
 
     Target Compile => _ => _
             .DependsOn(Restore)
             .Requires(() => IsUnix || GitVersion != null)
-            .Executes(() => MSBuild(s => IsWin
-                ? DefaultMSBuildCompileWithVersion
-                : DefaultMSBuildCompile));
+            .Executes(() =>
+            {
+                MSBuild(s => IsWin
+                    ? DefaultMSBuildCompileWithVersion
+                    : DefaultMSBuildCompile);
+            });
 
     Target Link => _ => _
             .OnlyWhen(() => false)
             .DependsOn(Compile)
-            .Executes(() => GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/*/*.pdb")
-                    .Where(x => !x.Contains("ToolGenerator"))
-                    .ForEach(x => GitLink3(s => DefaultGitLink3
-                            .SetPdbFile(x))));
+            .Executes(() =>
+            {
+                GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/*/*.pdb")
+                        .Where(x => !x.Contains("ToolGenerator"))
+                        .ForEach(x => GitLink3(s => DefaultGitLink3
+                                .SetPdbFile(x)));
+            });
 
     Target Pack => _ => _
             .DependsOn(Link)
-            .Executes(() => MSBuild(s => DefaultMSBuildPack));
+            .Executes(() =>
+            {
+                MSBuild(s => DefaultMSBuildPack);
+            });
 
     Target Push => _ => _
             .DependsOn(Pack)
             .Requires(() => MyGetApiKey)
-            .Executes(() => GlobFiles (OutputDirectory, "*.nupkg")
-                    .Where(x => !x.EndsWith("symbols.nupkg"))
-                    .ForEach(x => NuGetPush(s => s
-                            .SetTargetPath(x)
-                            .SetSource("https://www.myget.org/F/nukebuild/api/v2/package")
-                            .SetApiKey(MyGetApiKey)
-                            .SetVerbosity(NuGetVerbosity.Detailed))));
-    
+            .Executes(() =>
+            {
+                GlobFiles(OutputDirectory, "*.nupkg")
+                        .Where(x => !x.EndsWith("symbols.nupkg"))
+                        .ForEach(x => NuGetPush(s => s
+                                .SetTargetPath(x)
+                                .SetSource("https://www.myget.org/F/nukebuild/api/v2/package")
+                                .SetApiKey(MyGetApiKey)
+                                .SetVerbosity(NuGetVerbosity.Detailed)));
+            });
+
     Target Analysis => _ => _
             .DependsOn(Restore)
-            .Executes(() => InspectCode(s => DefaultInspectCode
-                    .AddExtensions(
-                        "EtherealCode.ReSpeller",
-                        "PowerToys.CyclomaticComplexity",
-                        "ReSharper.ImplicitNullability",
-                        "ReSharper.SerializationInspections",
-                        "ReSharper.XmlDocInspections")));
+            .Executes(() =>
+            {
+                InspectCode(s => DefaultInspectCode
+                        .AddExtensions(
+                            "EtherealCode.ReSpeller",
+                            "PowerToys.CyclomaticComplexity",
+                            "ReSharper.ImplicitNullability",
+                            "ReSharper.SerializationInspections",
+                            "ReSharper.XmlDocInspections"));
+            });
 
     Target Test => _ => _
             .DependsOn(Compile)

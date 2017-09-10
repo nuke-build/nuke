@@ -32,8 +32,11 @@ class Build : NukeBuild
     Target Clean => _ => _
             // Disabled for safety.
             .OnlyWhen(() => false)
-            .Executes(() => DeleteDirectories(GlobDirectories(SourceDirectory, "**/bin", "**/obj")))
-            .Executes(() => EnsureCleanDirectory(OutputDirectory));
+            .Executes(() =>
+            {
+                DeleteDirectories(GlobDirectories(SourceDirectory, "**/bin", "**/obj"));
+                EnsureCleanDirectory(OutputDirectory);
+            });
 
     Target Restore => _ => _
             .DependsOn(Clean)
@@ -51,8 +54,11 @@ class Build : NukeBuild
 
     Target Compile => _ => _
             .DependsOn(Restore)
-            .Executes(() => MSBuild(s => DefaultMSBuildCompile
-                    .SetMSBuildVersion(MSBuildVersion)));
+            .Executes(() =>
+            {
+                MSBuild(s => DefaultMSBuildCompile
+                        .SetMSBuildVersion(MSBuildVersion));
+            });
 
     // When having xproj-based projects, using VS2015 is necessary.
     MSBuildVersion? MSBuildVersion =>
