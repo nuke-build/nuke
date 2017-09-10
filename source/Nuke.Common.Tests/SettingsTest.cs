@@ -37,13 +37,13 @@ namespace Nuke.Common.Tests
                         .SetTargetPlatform(MSBuildTargetPlatform.MSIL)
                         .SetConfiguration("Release")
                         .EnableNoLogo(),
-                $"{projectFile} /nologo /property:Platform=AnyCPU /property:Configuration=Release");
+                $"{projectFile} /nologo /p:Platform=AnyCPU /p:Configuration=Release");
 
             Assert<MSBuildSettings>(x => x
                         .SetProjectFile(solutionFile)
                         .SetTargetPlatform(MSBuildTargetPlatform.MSIL)
                         .ToggleRunCodeAnalysis(),
-                $"{solutionFile} /property:Platform=\"Any CPU\" /property:RunCodeAnalysis=True");
+                $"{solutionFile} /p:Platform=\"Any CPU\" /p:RunCodeAnalysis=True");
         }
 
         [Fact]

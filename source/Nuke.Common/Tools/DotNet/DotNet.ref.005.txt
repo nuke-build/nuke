@@ -60,6 +60,7 @@ Ignores project-to-project references and only restores the root project.
 Doesn&#39;t perform an implicit restore when running the command.
 -o|--output &lt;OUTPUT_DIRECTORY&gt;
 Specifies the path for the output directory. If not specified, it defaults to ./bin/[configuration]/[framework]/ for a framework-dependent deployment or ./bin/[configuration]/[framework]/[runtime] for a self-contained deployment.
+If a relative path is provided, the output directory generated is relative to the project file location, not to the current working directory.
 --self-contained
 Publishes the .NET Core runtime with your application so the runtime doesn&#39;t need to be installed on the target machine. If a runtime identifier is specified, its default value is true. For more infomation about the different deployment types, see .NET Core application deployment.
 -r|--runtime &lt;RUNTIME_IDENTIFIER&gt;
@@ -80,6 +81,7 @@ Prints out a short help for the command.
 Specifies one or several target manifests to use to trim the set of packages published with the app. The manifest file is part of the output of the dotnet store command. To specify multiple manifests, add a --manifest option for each manifest. This option is available starting with .NET Core 2.0 SDK.
 -o|--output &lt;OUTPUT_DIRECTORY&gt;
 Specifies the path for the output directory. If not specified, it defaults to ./bin/[configuration]/[framework]/ for a framework-dependent deployment or ./bin/[configuration]/[framework]/[runtime] for a self-contained deployment.
+If a relative path is provided, the output directory generated is relative to the project file location, not to the current working directory.
 -r|--runtime &lt;RUNTIME_IDENTIFIER&gt;
 Publishes the application for a given runtime. This is used when creating a self-contained deployment (SCD). For a list of Runtime Identifiers (RIDs), see the RID catalog. Default is to publish a framework-dependent deployment (FDD).
 -v|--verbosity &lt;LEVEL&gt;

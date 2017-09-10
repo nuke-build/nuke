@@ -108,6 +108,17 @@ namespace Nuke.Common.Tools.DotNet
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
         }
+        static partial void PreProcess (DotNetNuGetPushSettings toolSettings);
+        static partial void PostProcess (DotNetNuGetPushSettings toolSettings);
+        /// <summary><p>Pushes a package to the server and publishes it.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
+        public static void DotNetNuGetPush (Configure<DotNetNuGetPushSettings> configurator = null, ProcessSettings processSettings = null)
+        {
+            var toolSettings = configurator.InvokeSafe(new DotNetNuGetPushSettings());
+            PreProcess(toolSettings);
+            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            process.AssertZeroExitCode();
+            PostProcess(toolSettings);
+        }
     }
     #region DotNetTestSettings
     /// <summary><p>Used within <see cref="DotNetTasks"/>.</p></summary>
@@ -299,6 +310,9 @@ namespace Nuke.Common.Tools.DotNet
         public virtual DotNetVerbosity Verbostiy { get; internal set; }
         /// <summary><p>Defines the value for the <c>$(VersionSuffix)</c> MSBuild property in the project.</p></summary>
         public virtual string VersionSuffix { get; internal set; }
+        /// <summary><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
+        internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -315,7 +329,8 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--runtime {value}", Runtime)
               .Add("--serviceable", Serviceable)
               .Add("--verbosity {value}", Verbostiy)
-              .Add("--version-suffix {value}", VersionSuffix);
+              .Add("--version-suffix {value}", VersionSuffix)
+              .Add("/p:{value}", Properties, "{key}={value}", disallowed: ';');
             return base.ConfigureArguments(arguments);
         }
     }
@@ -349,6 +364,9 @@ namespace Nuke.Common.Tools.DotNet
         public virtual DotNetVerbosity Verbosity { get; internal set; }
         /// <summary><p>Defines the version suffix for an asterisk (<c>*</c>) in the version field of the project file. The format follows NuGet's version guidelines.</p></summary>
         public virtual string VersionSuffix { get; internal set; }
+        /// <summary><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
+        internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -363,7 +381,8 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--output {value}", OutputDirectory)
               .Add("--runtime {value}", Runtime)
               .Add("--verbosity {value}", Verbosity)
-              .Add("--version-suffix {value}", VersionSuffix);
+              .Add("--version-suffix {value}", VersionSuffix)
+              .Add("/p:{value}", Properties, "{key}={value}", disallowed: ';');
             return base.ConfigureArguments(arguments);
         }
     }
@@ -389,7 +408,7 @@ namespace Nuke.Common.Tools.DotNet
         public virtual bool? NoDependencies { get; internal set; }
         /// <summary><p>Doesn't perform an implicit restore when running the command.</p></summary>
         public virtual bool? NoRestore { get; internal set; }
-        /// <summary><p>Specifies the path for the output directory. If not specified, it defaults to <em>./bin/[configuration]/[framework]/</em> for a framework-dependent deployment or <em>./bin/[configuration]/[framework]/[runtime]</em> for a self-contained deployment.</p></summary>
+        /// <summary><p>Specifies the path for the output directory. If not specified, it defaults to <em>./bin/[configuration]/[framework]/</em> for a framework-dependent deployment or <em>./bin/[configuration]/[framework]/[runtime]</em> for a self-contained deployment.<para/>If a relative path is provided, the output directory generated is relative to the project file location, not to the current working directory.</p></summary>
         public virtual string Output { get; internal set; }
         /// <summary><p>Publishes the .NET Core runtime with your application so the runtime doesn't need to be installed on the target machine. If a runtime identifier is specified, its default value is <c>true</c>. For more infomation about the different deployment types, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index">.NET Core application deployment</a>.</p></summary>
         public virtual bool? SelfContained { get; internal set; }
@@ -415,6 +434,53 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--runtime {value}", Runtime)
               .Add("--verbosity {value}", Verbosity)
               .Add("--version-suffix {value}", VersionSuffix);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
+    #region DotNetNuGetPushSettings
+    /// <summary><p>Used within <see cref="DotNetTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class DotNetNuGetPushSettings : DotNetSettings
+    {
+        /// <summary><p>Path of the package to push.</p></summary>
+        public virtual string TargetPath { get; internal set; }
+        /// <summary><p>Specifies the server URL. This option is required unless <c>DefaultPushSource</c> config value is set in the NuGet config file.</p></summary>
+        public virtual string Source { get; internal set; }
+        /// <summary><p>Specifies the symbol server URL.</p></summary>
+        public virtual string SymbolsSource { get; internal set; }
+        /// <summary><p>Specifies the timeout for pushing to a server in seconds. Defaults to 300 seconds (5 minutes). Specifying 0 (zero seconds) applies the default value.</p></summary>
+        public virtual int? Timeout { get; internal set; }
+        /// <summary><p>The API key for the server.</p></summary>
+        public virtual string ApiKey { get; internal set; }
+        /// <summary><p>The API key for the symbol server.</p></summary>
+        public virtual string SymbolApiKey { get; internal set; }
+        /// <summary><p>Disables buffering when pushing to an HTTP(S) server to decrease memory usage.</p></summary>
+        public virtual bool? DisableBuffering { get; internal set; }
+        /// <summary><p>Doesn't push symbols (even if present).</p></summary>
+        public virtual bool? NoSymbols { get; internal set; }
+        /// <summary><p>Forces all logged output in English.</p></summary>
+        public virtual bool? ForceEnglishOutput { get; internal set; }
+        protected override void AssertValid()
+        {
+            base.AssertValid();
+            ControlFlow.Assert(File.Exists(TargetPath), "File.Exists(TargetPath)");
+        }
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("nuget push")
+              .Add("{value}", TargetPath)
+              .Add("--source {value}", Source)
+              .Add("--symbols-source {value}", SymbolsSource)
+              .Add("--timeout {value}", Timeout)
+              .Add("--api-key {value}", ApiKey, secret: true)
+              .Add("--symbol-api-key {value}", SymbolApiKey, secret: true)
+              .Add("--disable-buffering", DisableBuffering)
+              .Add("--no-symbols", NoSymbols)
+              .Add("--force-english-output", ForceEnglishOutput);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -1871,6 +1937,422 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region Properties
+        /// <summary><p><em>Sets <see cref="DotNetPackSettings.Properties"/> to a new dictionary.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings SetProperties(this DotNetPackSettings toolSettings, IDictionary<string, object> properties)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings ClearProperties(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds a new key-value-pair <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings AddProperty(this DotNetPackSettings toolSettings, string propertyKey, object propertyValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes a key-value-pair from <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings RemoveProperty(this DotNetPackSettings toolSettings, string propertyKey)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove(propertyKey);
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets a key-value-pair in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings SetProperty(this DotNetPackSettings toolSettings, string propertyKey, object propertyValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal[propertyKey] = propertyValue;
+            return toolSettings;
+        }
+        #region PackageId
+        /// <summary><p><em>Sets <c>PackageId</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings SetPackageId(this DotNetPackSettings toolSettings, string packageId)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PackageId"] = packageId;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>PackageId</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetPackageId(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PackageId");
+            return toolSettings;
+        }
+        #endregion
+        #region Version
+        /// <summary><p><em>Sets <c>Version</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings SetVersion(this DotNetPackSettings toolSettings, string version)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["Version"] = version;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>Version</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetVersion(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("Version");
+            return toolSettings;
+        }
+        #endregion
+        #region VersionPrefix
+        /// <summary><p><em>Sets <c>VersionPrefix</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings SetVersionPrefix(this DotNetPackSettings toolSettings, string versionPrefix)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["VersionPrefix"] = versionPrefix;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>VersionPrefix</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetVersionPrefix(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("VersionPrefix");
+            return toolSettings;
+        }
+        #endregion
+        #region Authors
+        /// <summary><p><em>Sets <c>Authors</c> in <see cref="DotNetPackSettings.Properties"/> to a new collection.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings SetAuthors(this DotNetPackSettings toolSettings, params string[] authors)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "Authors", authors, ',');
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <c>Authors</c> in <see cref="DotNetPackSettings.Properties"/> to a new collection.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings SetAuthors(this DotNetPackSettings toolSettings, IEnumerable<string> authors)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "Authors", authors, ',');
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <c>Authors</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings AddAuthors(this DotNetPackSettings toolSettings, params string[] authors)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <c>Authors</c> in existing <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings AddAuthors(this DotNetPackSettings toolSettings, IEnumerable<string> authors)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <c>Authors</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings ClearAuthors(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("Authors");
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <c>Authors</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings RemoveAuthors(this DotNetPackSettings toolSettings, params string[] authors)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <c>Authors</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings RemoveAuthors(this DotNetPackSettings toolSettings, IEnumerable<string> authors)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
+            return toolSettings;
+        }
+        #endregion
+        #region Title
+        /// <summary><p><em>Sets <c>Title</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings SetTitle(this DotNetPackSettings toolSettings, string title)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["Title"] = title;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>Title</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetTitle(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("Title");
+            return toolSettings;
+        }
+        #endregion
+        #region Description
+        /// <summary><p><em>Sets <c>Description</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings SetDescription(this DotNetPackSettings toolSettings, string description)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["Description"] = description;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>Description</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetDescription(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("Description");
+            return toolSettings;
+        }
+        #endregion
+        #region Copyright
+        /// <summary><p><em>Sets <c>Copyright</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings SetCopyright(this DotNetPackSettings toolSettings, string copyright)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["Copyright"] = copyright;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>Copyright</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetCopyright(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("Copyright");
+            return toolSettings;
+        }
+        #endregion
+        #region PackageRequireLicenseAcceptance
+        /// <summary><p><em>Sets <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings SetPackageRequireLicenseAcceptance(this DotNetPackSettings toolSettings, bool? packageRequireLicenseAcceptance)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = packageRequireLicenseAcceptance;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetPackageRequireLicenseAcceptance(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PackageRequireLicenseAcceptance");
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings EnablePackageRequireLicenseAcceptance(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings DisablePackageRequireLicenseAcceptance(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings TogglePackageRequireLicenseAcceptance(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PackageRequireLicenseAcceptance");
+            return toolSettings;
+        }
+        #endregion
+        #region PackageLicenseUrl
+        /// <summary><p><em>Sets <c>PackageLicenseUrl</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings SetPackageLicenseUrl(this DotNetPackSettings toolSettings, string packageLicenseUrl)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PackageLicenseUrl"] = packageLicenseUrl;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>PackageLicenseUrl</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetPackageLicenseUrl(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PackageLicenseUrl");
+            return toolSettings;
+        }
+        #endregion
+        #region PackageProjectUrl
+        /// <summary><p><em>Sets <c>PackageProjectUrl</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings SetPackageProjectUrl(this DotNetPackSettings toolSettings, string packageProjectUrl)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PackageProjectUrl"] = packageProjectUrl;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>PackageProjectUrl</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetPackageProjectUrl(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PackageProjectUrl");
+            return toolSettings;
+        }
+        #endregion
+        #region PackageIconUrl
+        /// <summary><p><em>Sets <c>PackageIconUrl</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings SetPackageIconUrl(this DotNetPackSettings toolSettings, string packageIconUrl)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PackageIconUrl"] = packageIconUrl;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>PackageIconUrl</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetPackageIconUrl(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PackageIconUrl");
+            return toolSettings;
+        }
+        #endregion
+        #region PackageTags
+        /// <summary><p><em>Sets <c>PackageTags</c> in <see cref="DotNetPackSettings.Properties"/> to a new collection.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings SetPackageTags(this DotNetPackSettings toolSettings, params string[] packageTags)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <c>PackageTags</c> in <see cref="DotNetPackSettings.Properties"/> to a new collection.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings SetPackageTags(this DotNetPackSettings toolSettings, IEnumerable<string> packageTags)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <c>PackageTags</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings AddPackageTags(this DotNetPackSettings toolSettings, params string[] packageTags)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <c>PackageTags</c> in existing <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings AddPackageTags(this DotNetPackSettings toolSettings, IEnumerable<string> packageTags)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <c>PackageTags</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings ClearPackageTags(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PackageTags");
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <c>PackageTags</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings RemovePackageTags(this DotNetPackSettings toolSettings, params string[] packageTags)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <c>PackageTags</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings RemovePackageTags(this DotNetPackSettings toolSettings, IEnumerable<string> packageTags)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
+            return toolSettings;
+        }
+        #endregion
+        #region PackageReleaseNotes
+        /// <summary><p><em>Sets <c>PackageReleaseNotes</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings SetPackageReleaseNotes(this DotNetPackSettings toolSettings, string packageReleaseNotes)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PackageReleaseNotes"] = packageReleaseNotes;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>PackageReleaseNotes</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetPackageReleaseNotes(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PackageReleaseNotes");
+            return toolSettings;
+        }
+        #endregion
+        #region RepositoryUrl
+        /// <summary><p><em>Sets <c>RepositoryUrl</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings SetRepositoryUrl(this DotNetPackSettings toolSettings, string repositoryUrl)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["RepositoryUrl"] = repositoryUrl;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>RepositoryUrl</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetRepositoryUrl(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("RepositoryUrl");
+            return toolSettings;
+        }
+        #endregion
+        #region RepositoryType
+        /// <summary><p><em>Sets <c>RepositoryType</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings SetRepositoryType(this DotNetPackSettings toolSettings, string repositoryType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["RepositoryType"] = repositoryType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>RepositoryType</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetRepositoryType(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("RepositoryType");
+            return toolSettings;
+        }
+        #endregion
+        #endregion
     }
     #endregion
     #region DotNetBuildSettingsExtensions
@@ -2173,6 +2655,320 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region Properties
+        /// <summary><p><em>Sets <see cref="DotNetBuildSettings.Properties"/> to a new dictionary.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetProperties(this DotNetBuildSettings toolSettings, IDictionary<string, object> properties)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings ClearProperties(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds a new key-value-pair <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings AddProperty(this DotNetBuildSettings toolSettings, string propertyKey, object propertyValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes a key-value-pair from <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings RemoveProperty(this DotNetBuildSettings toolSettings, string propertyKey)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove(propertyKey);
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets a key-value-pair in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetProperty(this DotNetBuildSettings toolSettings, string propertyKey, object propertyValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal[propertyKey] = propertyValue;
+            return toolSettings;
+        }
+        #region RunCodeAnalysis
+        /// <summary><p><em>Sets <c>RunCodeAnalysis</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetRunCodeAnalysis(this DotNetBuildSettings toolSettings, bool? runCodeAnalysis)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["RunCodeAnalysis"] = runCodeAnalysis;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>RunCodeAnalysis</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetRunCodeAnalysis(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("RunCodeAnalysis");
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <c>RunCodeAnalysis</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings EnableRunCodeAnalysis(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["RunCodeAnalysis"] = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <c>RunCodeAnalysis</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings DisableRunCodeAnalysis(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["RunCodeAnalysis"] = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <c>RunCodeAnalysis</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings ToggleRunCodeAnalysis(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "RunCodeAnalysis");
+            return toolSettings;
+        }
+        #endregion
+        #region NoWarn
+        /// <summary><p><em>Sets <c>NoWarn</c> in <see cref="DotNetBuildSettings.Properties"/> to a new collection.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetNoWarns(this DotNetBuildSettings toolSettings, params int[] noWarn)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <c>NoWarn</c> in <see cref="DotNetBuildSettings.Properties"/> to a new collection.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetNoWarns(this DotNetBuildSettings toolSettings, IEnumerable<int> noWarn)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <c>NoWarn</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings AddNoWarns(this DotNetBuildSettings toolSettings, params int[] noWarn)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <c>NoWarn</c> in existing <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings AddNoWarns(this DotNetBuildSettings toolSettings, IEnumerable<int> noWarn)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <c>NoWarn</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings ClearNoWarns(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("NoWarn");
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <c>NoWarn</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings RemoveNoWarns(this DotNetBuildSettings toolSettings, params int[] noWarn)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <c>NoWarn</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings RemoveNoWarns(this DotNetBuildSettings toolSettings, IEnumerable<int> noWarn)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
+            return toolSettings;
+        }
+        #endregion
+        #region WarningsAsErrors
+        /// <summary><p><em>Sets <c>WarningsAsErrors</c> in <see cref="DotNetBuildSettings.Properties"/> to a new collection.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetWarningsAsErrors(this DotNetBuildSettings toolSettings, params int[] warningsAsErrors)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <c>WarningsAsErrors</c> in <see cref="DotNetBuildSettings.Properties"/> to a new collection.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetWarningsAsErrors(this DotNetBuildSettings toolSettings, IEnumerable<int> warningsAsErrors)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <c>WarningsAsErrors</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings AddWarningsAsErrors(this DotNetBuildSettings toolSettings, params int[] warningsAsErrors)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <c>WarningsAsErrors</c> in existing <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings AddWarningsAsErrors(this DotNetBuildSettings toolSettings, IEnumerable<int> warningsAsErrors)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <c>WarningsAsErrors</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings ClearWarningsAsErrors(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("WarningsAsErrors");
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings RemoveWarningsAsErrors(this DotNetBuildSettings toolSettings, params int[] warningsAsErrors)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings RemoveWarningsAsErrors(this DotNetBuildSettings toolSettings, IEnumerable<int> warningsAsErrors)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
+            return toolSettings;
+        }
+        #endregion
+        #region WarningLevel
+        /// <summary><p><em>Sets <c>WarningLevel</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetWarningLevel(this DotNetBuildSettings toolSettings, int? warningLevel)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["WarningLevel"] = warningLevel;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>WarningLevel</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetWarningLevel(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("WarningLevel");
+            return toolSettings;
+        }
+        #endregion
+        #region TreatWarningsAsErrors
+        /// <summary><p><em>Sets <c>TreatWarningsAsErrors</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetTreatWarningsAsErrors(this DotNetBuildSettings toolSettings, bool? treatWarningsAsErrors)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = treatWarningsAsErrors;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>TreatWarningsAsErrors</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetTreatWarningsAsErrors(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("TreatWarningsAsErrors");
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <c>TreatWarningsAsErrors</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings EnableTreatWarningsAsErrors(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <c>TreatWarningsAsErrors</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings DisableTreatWarningsAsErrors(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <c>TreatWarningsAsErrors</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings ToggleTreatWarningsAsErrors(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "TreatWarningsAsErrors");
+            return toolSettings;
+        }
+        #endregion
+        #region AssemblyVersion
+        /// <summary><p><em>Sets <c>AssemblyVersion</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetAssemblyVersion(this DotNetBuildSettings toolSettings, string assemblyVersion)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["AssemblyVersion"] = assemblyVersion;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>AssemblyVersion</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetAssemblyVersion(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("AssemblyVersion");
+            return toolSettings;
+        }
+        #endregion
+        #region FileVersion
+        /// <summary><p><em>Sets <c>FileVersion</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetFileVersion(this DotNetBuildSettings toolSettings, string fileVersion)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["FileVersion"] = fileVersion;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>FileVersion</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetFileVersion(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("FileVersion");
+            return toolSettings;
+        }
+        #endregion
+        #region InformationalVersion
+        /// <summary><p><em>Sets <c>InformationalVersion</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetInformationalVersion(this DotNetBuildSettings toolSettings, string informationalVersion)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["InformationalVersion"] = informationalVersion;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>InformationalVersion</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetInformationalVersion(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("InformationalVersion");
+            return toolSettings;
+        }
+        #endregion
+        #endregion
     }
     #endregion
     #region DotNetPublishSettingsExtensions
@@ -2380,7 +3176,7 @@ namespace Nuke.Common.Tools.DotNet
         }
         #endregion
         #region Output
-        /// <summary><p><em>Sets <see cref="DotNetPublishSettings.Output"/>.</em></p><p>Specifies the path for the output directory. If not specified, it defaults to <em>./bin/[configuration]/[framework]/</em> for a framework-dependent deployment or <em>./bin/[configuration]/[framework]/[runtime]</em> for a self-contained deployment.</p></summary>
+        /// <summary><p><em>Sets <see cref="DotNetPublishSettings.Output"/>.</em></p><p>Specifies the path for the output directory. If not specified, it defaults to <em>./bin/[configuration]/[framework]/</em> for a framework-dependent deployment or <em>./bin/[configuration]/[framework]/[runtime]</em> for a self-contained deployment.<para/>If a relative path is provided, the output directory generated is relative to the project file location, not to the current working directory.</p></summary>
         [Pure]
         public static DotNetPublishSettings SetOutput(this DotNetPublishSettings toolSettings, string output)
         {
@@ -2388,7 +3184,7 @@ namespace Nuke.Common.Tools.DotNet
             toolSettings.Output = output;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DotNetPublishSettings.Output"/>.</em></p><p>Specifies the path for the output directory. If not specified, it defaults to <em>./bin/[configuration]/[framework]/</em> for a framework-dependent deployment or <em>./bin/[configuration]/[framework]/[runtime]</em> for a self-contained deployment.</p></summary>
+        /// <summary><p><em>Resets <see cref="DotNetPublishSettings.Output"/>.</em></p><p>Specifies the path for the output directory. If not specified, it defaults to <em>./bin/[configuration]/[framework]/</em> for a framework-dependent deployment or <em>./bin/[configuration]/[framework]/[runtime]</em> for a self-contained deployment.<para/>If a relative path is provided, the output directory generated is relative to the project file location, not to the current working directory.</p></summary>
         [Pure]
         public static DotNetPublishSettings ResetOutput(this DotNetPublishSettings toolSettings)
         {
@@ -2490,6 +3286,248 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VersionSuffix = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region DotNetNuGetPushSettingsExtensions
+    /// <summary><p>Used within <see cref="DotNetTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class DotNetNuGetPushSettingsExtensions
+    {
+        #region TargetPath
+        /// <summary><p><em>Sets <see cref="DotNetNuGetPushSettings.TargetPath"/>.</em></p><p>Path of the package to push.</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings SetTargetPath(this DotNetNuGetPushSettings toolSettings, string targetPath)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetPath = targetPath;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetNuGetPushSettings.TargetPath"/>.</em></p><p>Path of the package to push.</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings ResetTargetPath(this DotNetNuGetPushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetPath = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Source
+        /// <summary><p><em>Sets <see cref="DotNetNuGetPushSettings.Source"/>.</em></p><p>Specifies the server URL. This option is required unless <c>DefaultPushSource</c> config value is set in the NuGet config file.</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings SetSource(this DotNetNuGetPushSettings toolSettings, string source)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Source = source;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetNuGetPushSettings.Source"/>.</em></p><p>Specifies the server URL. This option is required unless <c>DefaultPushSource</c> config value is set in the NuGet config file.</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings ResetSource(this DotNetNuGetPushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Source = null;
+            return toolSettings;
+        }
+        #endregion
+        #region SymbolsSource
+        /// <summary><p><em>Sets <see cref="DotNetNuGetPushSettings.SymbolsSource"/>.</em></p><p>Specifies the symbol server URL.</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings SetSymbolsSource(this DotNetNuGetPushSettings toolSettings, string symbolsSource)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SymbolsSource = symbolsSource;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetNuGetPushSettings.SymbolsSource"/>.</em></p><p>Specifies the symbol server URL.</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings ResetSymbolsSource(this DotNetNuGetPushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SymbolsSource = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Timeout
+        /// <summary><p><em>Sets <see cref="DotNetNuGetPushSettings.Timeout"/>.</em></p><p>Specifies the timeout for pushing to a server in seconds. Defaults to 300 seconds (5 minutes). Specifying 0 (zero seconds) applies the default value.</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings SetTimeout(this DotNetNuGetPushSettings toolSettings, int? timeout)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Timeout = timeout;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetNuGetPushSettings.Timeout"/>.</em></p><p>Specifies the timeout for pushing to a server in seconds. Defaults to 300 seconds (5 minutes). Specifying 0 (zero seconds) applies the default value.</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings ResetTimeout(this DotNetNuGetPushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Timeout = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ApiKey
+        /// <summary><p><em>Sets <see cref="DotNetNuGetPushSettings.ApiKey"/>.</em></p><p>The API key for the server.</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings SetApiKey(this DotNetNuGetPushSettings toolSettings, string apiKey)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ApiKey = apiKey;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetNuGetPushSettings.ApiKey"/>.</em></p><p>The API key for the server.</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings ResetApiKey(this DotNetNuGetPushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ApiKey = null;
+            return toolSettings;
+        }
+        #endregion
+        #region SymbolApiKey
+        /// <summary><p><em>Sets <see cref="DotNetNuGetPushSettings.SymbolApiKey"/>.</em></p><p>The API key for the symbol server.</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings SetSymbolApiKey(this DotNetNuGetPushSettings toolSettings, string symbolApiKey)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SymbolApiKey = symbolApiKey;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetNuGetPushSettings.SymbolApiKey"/>.</em></p><p>The API key for the symbol server.</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings ResetSymbolApiKey(this DotNetNuGetPushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SymbolApiKey = null;
+            return toolSettings;
+        }
+        #endregion
+        #region DisableBuffering
+        /// <summary><p><em>Sets <see cref="DotNetNuGetPushSettings.DisableBuffering"/>.</em></p><p>Disables buffering when pushing to an HTTP(S) server to decrease memory usage.</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings SetDisableBuffering(this DotNetNuGetPushSettings toolSettings, bool? disableBuffering)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableBuffering = disableBuffering;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetNuGetPushSettings.DisableBuffering"/>.</em></p><p>Disables buffering when pushing to an HTTP(S) server to decrease memory usage.</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings ResetDisableBuffering(this DotNetNuGetPushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableBuffering = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetNuGetPushSettings.DisableBuffering"/>.</em></p><p>Disables buffering when pushing to an HTTP(S) server to decrease memory usage.</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings EnableDisableBuffering(this DotNetNuGetPushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableBuffering = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetNuGetPushSettings.DisableBuffering"/>.</em></p><p>Disables buffering when pushing to an HTTP(S) server to decrease memory usage.</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings DisableDisableBuffering(this DotNetNuGetPushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableBuffering = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetNuGetPushSettings.DisableBuffering"/>.</em></p><p>Disables buffering when pushing to an HTTP(S) server to decrease memory usage.</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings ToggleDisableBuffering(this DotNetNuGetPushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableBuffering = !toolSettings.DisableBuffering;
+            return toolSettings;
+        }
+        #endregion
+        #region NoSymbols
+        /// <summary><p><em>Sets <see cref="DotNetNuGetPushSettings.NoSymbols"/>.</em></p><p>Doesn't push symbols (even if present).</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings SetNoSymbols(this DotNetNuGetPushSettings toolSettings, bool? noSymbols)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoSymbols = noSymbols;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetNuGetPushSettings.NoSymbols"/>.</em></p><p>Doesn't push symbols (even if present).</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings ResetNoSymbols(this DotNetNuGetPushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoSymbols = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetNuGetPushSettings.NoSymbols"/>.</em></p><p>Doesn't push symbols (even if present).</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings EnableNoSymbols(this DotNetNuGetPushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoSymbols = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetNuGetPushSettings.NoSymbols"/>.</em></p><p>Doesn't push symbols (even if present).</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings DisableNoSymbols(this DotNetNuGetPushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoSymbols = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetNuGetPushSettings.NoSymbols"/>.</em></p><p>Doesn't push symbols (even if present).</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings ToggleNoSymbols(this DotNetNuGetPushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoSymbols = !toolSettings.NoSymbols;
+            return toolSettings;
+        }
+        #endregion
+        #region ForceEnglishOutput
+        /// <summary><p><em>Sets <see cref="DotNetNuGetPushSettings.ForceEnglishOutput"/>.</em></p><p>Forces all logged output in English.</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings SetForceEnglishOutput(this DotNetNuGetPushSettings toolSettings, bool? forceEnglishOutput)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = forceEnglishOutput;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetNuGetPushSettings.ForceEnglishOutput"/>.</em></p><p>Forces all logged output in English.</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings ResetForceEnglishOutput(this DotNetNuGetPushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetNuGetPushSettings.ForceEnglishOutput"/>.</em></p><p>Forces all logged output in English.</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings EnableForceEnglishOutput(this DotNetNuGetPushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetNuGetPushSettings.ForceEnglishOutput"/>.</em></p><p>Forces all logged output in English.</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings DisableForceEnglishOutput(this DotNetNuGetPushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetNuGetPushSettings.ForceEnglishOutput"/>.</em></p><p>Forces all logged output in English.</p></summary>
+        [Pure]
+        public static DotNetNuGetPushSettings ToggleForceEnglishOutput(this DotNetNuGetPushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = !toolSettings.ForceEnglishOutput;
             return toolSettings;
         }
         #endregion
