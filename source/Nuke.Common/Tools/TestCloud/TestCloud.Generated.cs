@@ -44,7 +44,7 @@ namespace Nuke.Common.Tools.TestCloud
     public partial class TestCloudSettings : ToolSettings
     {
         /// <summary><p>Path to the TestCloud executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? $"{GetToolPath()}";
+        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"Xamarin.UITest", $"test-cloud.exe");
         /// <summary><p>The path to the folder holding the test assemblies.</p></summary>
         public virtual string AssemblyDirectory { get; internal set; }
         /// <summary><p>The device ID that was provided in the Test Cloud Upload dialog.</p></summary>

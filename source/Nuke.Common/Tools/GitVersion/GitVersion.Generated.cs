@@ -27,13 +27,14 @@ namespace Nuke.Common.Tools.GitVersion
         static partial void PreProcess (GitVersionSettings toolSettings);
         static partial void PostProcess (GitVersionSettings toolSettings);
         /// <summary><p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p><p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p></summary>
-        public static void GitVersion (Configure<GitVersionSettings> configurator = null, ProcessSettings processSettings = null)
+        public static GitVersion GitVersion (Configure<GitVersionSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitVersionSettings());
             PreProcess(toolSettings);
             var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
+            return GetResult(process, toolSettings, processSettings);
         }
     }
     #region GitVersionSettings
@@ -52,6 +53,41 @@ namespace Nuke.Common.Tools.GitVersion
               .Add("/updateassemblyinfo", UpdateAssemblyInfo);
             return base.ConfigureArguments(arguments);
         }
+    }
+    #endregion
+    #region GitVersion
+    /// <summary><p>Used within <see cref="GitVersionTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class GitVersion : ISettingsEntity
+    {
+        public virtual int Major { get; internal set; }
+        public virtual int Minor { get; internal set; }
+        public virtual int Patch { get; internal set; }
+        public virtual string PreReleaseTag { get; internal set; }
+        public virtual string PreReleaseTagWithDash { get; internal set; }
+        public virtual string PreReleaseLabel { get; internal set; }
+        public virtual string PreReleaseNumber { get; internal set; }
+        public virtual string BuildMetaData { get; internal set; }
+        public virtual string BuildMetaDataPadded { get; internal set; }
+        public virtual string FullBuildMetaData { get; internal set; }
+        public virtual string MajorMinorPatch { get; internal set; }
+        public virtual string SemVer { get; internal set; }
+        public virtual string LegacySemVer { get; internal set; }
+        public virtual string LegacySemVerPadded { get; internal set; }
+        public virtual string AssemblySemVer { get; internal set; }
+        public virtual string FullSemVer { get; internal set; }
+        public virtual string InformationalVersion { get; internal set; }
+        public virtual string BranchName { get; internal set; }
+        public virtual string Sha { get; internal set; }
+        public virtual string NuGetVersionV2 { get; internal set; }
+        public virtual string NuGetVersion { get; internal set; }
+        public virtual string NuGetPreReleaseTagV2 { get; internal set; }
+        public virtual string NuGetPreReleaseTag { get; internal set; }
+        public virtual string CommitsSinceVersionSource { get; internal set; }
+        public virtual string CommitsSinceVersionSourcePadded { get; internal set; }
+        public virtual string CommitDate { get; internal set; }
     }
     #endregion
     #region GitVersionSettingsExtensions
