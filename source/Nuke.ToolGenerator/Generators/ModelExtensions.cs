@@ -37,7 +37,7 @@ namespace Nuke.ToolGenerator.Generators
 
         public static string GetNullableType(this Property property)
         {
-            return property.IsValueType() ? property.Type + "?" : property.Type;
+            return property.IsValueType() ? property.Type + "?" : property.Type.Trim('!');
         }
         
         public static string GetCrefTag (this Property property)
