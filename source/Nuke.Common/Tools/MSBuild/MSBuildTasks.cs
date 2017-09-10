@@ -6,13 +6,52 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common.IO;
+using Nuke.Common.Tools.GitVersion;
 using Nuke.Core;
+using Nuke.Core.BuildServers;
 using Nuke.Core.Tooling;
 
 namespace Nuke.Common.Tools.MSBuild
 {
     partial class MSBuildTasks
     {
+        public static MSBuildSettings DefaultMSBuild
+        {
+            get
+            {
+                var toolSettings = new MSBuildSettings()
+                        .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
+                        .SetSolutionFile(NukeBuild.Instance.SolutionFile)
+                        .SetMaxCpuCount(Environment.ProcessorCount)
+                        .SetConfiguration(NukeBuild.Instance.Configuration);
+
+                var teamCityLogger = TeamCity.Instance?.ConfigurationProperties["TEAMCITY_DOTNET_MSBUILD_EXTENSIONS4_0"];
+                if (teamCityLogger != null)
+                    toolSettings = toolSettings
+                            .AddLoggers($"JetBrains.BuildServer.MSBuildLoggers.MSBuildLogger,{teamCityLogger}")
+                            .EnableNoConsoleLogger();
+
+                return toolSettings;
+            }
+        }
+
+        public static MSBuildSettings DefaultMSBuildRestore => DefaultMSBuild
+                .SetTargets("Restore");
+
+        public static MSBuildSettings DefaultMSBuildCompile => DefaultMSBuild
+                .SetTargets("Rebuild");
+
+        public static MSBuildSettings DefaultMSBuildCompileWithVersion => DefaultMSBuildCompile
+                .SetAssemblyVersion(GitVersionAttribute.Value?.AssemblySemVer)
+                .SetFileVersion(GitVersionAttribute.Value?.FullSemVer)
+                .SetInformationalVersion(GitVersionAttribute.Value?.InformationalVersion);
+
+        public static MSBuildSettings DefaultMSBuildPack => DefaultMSBuild
+                .SetTargets("Restore", "Pack")
+                .EnableIncludeSymbols()
+                .SetPackageOutputPath(NukeBuild.Instance.OutputDirectory)
+                .SetPackageVersion(GitVersionAttribute.Value?.NuGetVersionV2);
+
         /// <summary>
         /// Parses MSBuild project file.
         /// </summary>

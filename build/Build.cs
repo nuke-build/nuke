@@ -40,25 +40,26 @@ class Build : NukeBuild
 
     Target Restore => _ => _
             .DependsOn(Clean)
-            .Executes(() => MSBuild(s => DefaultSettings.MSBuildRestore));
+            .Executes(() => MSBuild(s => DefaultMSBuildRestore));
 
     Target Compile => _ => _
             .DependsOn(Restore)
             .Requires(() => IsUnix || GitVersion != null)
             .Executes(() => MSBuild(s => IsWin
-                ? DefaultSettings.MSBuildCompileWithVersion
-                : DefaultSettings.MSBuildCompile));
+                ? DefaultMSBuildCompileWithVersion
+                : DefaultMSBuildCompile));
 
     Target Link => _ => _
             .OnlyWhen(() => false)
             .DependsOn(Compile)
             .Executes(() => GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/*/*.pdb")
                     .Where(x => !x.Contains("ToolGenerator"))
-                    .ForEach(x => GitLink3(s => DefaultSettings.GitLink3.SetPdbFile(x))));
+                    .ForEach(x => GitLink3(s => DefaultGitLink3
+                            .SetPdbFile(x))));
 
     Target Pack => _ => _
-            .DependsOn(Restore, Link)
-            .Executes(() => MSBuild(s => DefaultSettings.MSBuildPack));
+            .DependsOn(Link)
+            .Executes(() => MSBuild(s => DefaultMSBuildPack));
 
     Target Push => _ => _
             .DependsOn(Pack)
@@ -73,7 +74,7 @@ class Build : NukeBuild
     
     Target Analysis => _ => _
             .DependsOn(Restore)
-            .Executes(() => InspectCode(s => DefaultSettings.InspectCode
+            .Executes(() => InspectCode(s => DefaultInspectCode
                     .AddExtensions(
                         "EtherealCode.ReSpeller",
                         "PowerToys.CyclomaticComplexity",
@@ -90,8 +91,8 @@ class Build : NukeBuild
                         s => s.SetResultPath(OutputDirectory / "tests.xml"));
 
                 if (IsWin)
-                    OpenCover(TestXunit, s => DefaultSettings.OpenCover
-                                .SetOutput(OutputDirectory / "coverage.xml"));
+                    OpenCover(TestXunit, s => DefaultOpenCover
+                            .SetOutput(OutputDirectory / "coverage.xml"));
                 else
                     TestXunit();
             });

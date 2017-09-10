@@ -15,17 +15,17 @@ namespace Nuke.Common.Tools.GitVersion
     [UsedImplicitly(ImplicitUseKindFlags.Default)]
     public class GitVersionAttribute : StaticInjectionAttributeBase
     {
-        private static Lazy<GitVersion> s_value = new Lazy<GitVersion>(() =>
-            EnvironmentInfo.IsWin && DefaultSettings.GitVersion.HasValidToolPath()
-                ? GitVersionTasks.GitVersion(s => DefaultSettings.GitVersion)
-                : null);
+        public static GitVersion Value { get; private set; }
 
         public override Type InjectionType => typeof(GitVersion);
 
         [CanBeNull]
         public override object GetStaticValue ()
         {
-            return s_value.Value;
+            return Value = Value ??
+                           (EnvironmentInfo.IsWin && GitVersionTasks.DefaultGitVersion.HasValidToolPath()
+                               ? GitVersionTasks.GitVersion(s => GitVersionTasks.DefaultGitVersion)
+                               : null);
         }
     }
 }

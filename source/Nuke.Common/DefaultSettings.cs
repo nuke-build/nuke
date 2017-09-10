@@ -3,7 +3,6 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Git;
@@ -14,9 +13,6 @@ using Nuke.Common.Tools.MSBuild;
 using Nuke.Common.Tools.NuGet;
 using Nuke.Common.Tools.OpenCover;
 using Nuke.Core;
-using Nuke.Core.BuildServers;
-using Nuke.Core.Injection;
-using Nuke.Core.Tooling;
 
 namespace Nuke.Common
 {
@@ -46,108 +42,40 @@ namespace Nuke.Common
     [PublicAPI]
     public class DefaultSettings
     {
-        private static NukeBuild Build => NukeBuild.Instance;
+        [Obsolete("Use " + nameof(MSBuildTasks) + "." + nameof(MSBuildTasks.DefaultMSBuild))]
+        public static MSBuildSettings MSBuildCommon => MSBuildTasks.DefaultMSBuild;
 
-        [CanBeNull]
-        private static GitVersion GitVersionValue => InjectedValueProvider.GetStaticValue<GitVersion>();
+        [Obsolete("Use " + nameof(MSBuildTasks) + "." + nameof(MSBuildTasks.DefaultMSBuildRestore))]
+        public static MSBuildSettings MSBuildRestore => MSBuildTasks.DefaultMSBuildRestore;
 
-        [CanBeNull]
-        private static GitRepository GitRepositoryValue => InjectedValueProvider.GetStaticValue<GitRepository>();
+        [Obsolete("Use " + nameof(MSBuildTasks) + "." + nameof(MSBuildTasks.DefaultMSBuildCompile))]
+        public static MSBuildSettings MSBuildCompile => MSBuildTasks.DefaultMSBuildCompile;
 
-        [CanBeNull]
-        private static string VersionParameter => EnvironmentInfo.Parameter("version");
+        [Obsolete("Use " + nameof(MSBuildTasks) + "." + nameof(MSBuildTasks.DefaultMSBuildCompileWithVersion))]
+        public static MSBuildSettings MSBuildCompileWithVersion => MSBuildTasks.DefaultMSBuildCompileWithVersion;
 
-        [CanBeNull]
-        public static string Version => VersionParameter ?? GitVersionValue?.AssemblySemVer;
+        [Obsolete("Use " + nameof(MSBuildTasks) + "." + nameof(MSBuildTasks.DefaultMSBuildPack))]
+        public static MSBuildSettings MSBuildPack => MSBuildTasks.DefaultMSBuildPack;
 
-        public static MSBuildSettings MSBuildCommon
-        {
-            get
-            {
-                var toolSettings = new MSBuildSettings()
-                        .SetWorkingDirectory(Build.SolutionDirectory)
-                        .SetSolutionFile(Build.SolutionFile)
-                        .SetMaxCpuCount(Environment.ProcessorCount)
-                        .SetConfiguration(Build.Configuration);
+        [Obsolete("Use " + nameof(GitVersionTasks) + "." + nameof(GitVersionTasks.DefaultGitVersion))]
+        public static GitVersionSettings GitVersion => GitVersionTasks.DefaultGitVersion;
 
-                var teamCityLogger = TeamCity.Instance?.ConfigurationProperties["TEAMCITY_DOTNET_MSBUILD_EXTENSIONS4_0"];
-                if (teamCityLogger != null)
-                    toolSettings = toolSettings
-                            .AddLoggers($"JetBrains.BuildServer.MSBuildLoggers.MSBuildLogger,{teamCityLogger}")
-                            .EnableNoConsoleLogger();
+        [Obsolete("Use " + nameof(NuGetTasks) + "." + nameof(NuGetTasks.DefaultNuGetPack))]
+        public static NuGetPackSettings NuGetPack => NuGetTasks.DefaultNuGetPack;
 
-                return toolSettings;
-            }
-        }
+        [Obsolete("Use " + nameof(NuGetTasks) + "." + nameof(NuGetTasks.DefaultNuGetRestore))]
+        public static NuGetRestoreSettings NuGetRestore => NuGetTasks.DefaultNuGetRestore;
 
+        [Obsolete("Use " + nameof(InspectCodeTasks) + "." + nameof(InspectCodeTasks.DefaultInspectCode))]
+        public static InspectCodeSettings InspectCode => InspectCodeTasks.DefaultInspectCode;
 
-        public static MSBuildSettings MSBuildRestore => MSBuildCommon
-                .SetTargets("Restore");
+        [Obsolete("Use " + nameof(OpenCoverTasks) + "." + nameof(OpenCoverTasks.DefaultOpenCover))]
+        public static OpenCoverSettings OpenCover => OpenCoverTasks.DefaultOpenCover;
 
-        public static MSBuildSettings MSBuildCompile => MSBuildCommon
-                .SetTargets("Rebuild");
+        [Obsolete("Use " + nameof(GitLinkTasks) + "." + nameof(GitLinkTasks.DefaultGitLink2))]
+        public static GitLink2Settings GitLink2 => GitLinkTasks.DefaultGitLink2;
 
-        public static MSBuildSettings MSBuildCompileWithVersion => MSBuildCompile
-                .SetAssemblyVersion(GitVersionValue?.AssemblySemVer)
-                .SetFileVersion(GitVersionValue?.FullSemVer)
-                .SetInformationalVersion(GitVersionValue?.InformationalVersion);
-
-        // TODO: evenIfNull for dictionary ?
-        public static MSBuildSettings MSBuildPack => MSBuildCommon
-                .SetTargets("Restore", "Pack")
-                .EnableIncludeSymbols()
-                .SetPackageOutputPath(Build.OutputDirectory)
-                .SetPackageVersion(VersionParameter ?? GitVersionValue?.NuGetVersionV2);
-
-
-        public static GitVersionSettings GitVersion => new GitVersionSettings()
-                .SetWorkingDirectory(Build.RootDirectory);
-
-        public static NuGetPackSettings NuGetPack => new NuGetPackSettings()
-                .SetWorkingDirectory(Build.RootDirectory)
-                .SetOutputDirectory(Build.OutputDirectory)
-                .SetConfiguration(Build.Configuration)
-                .SetVersion(GitVersionValue?.NuGetVersionV2);
-
-        public static NuGetRestoreSettings NuGetRestore => new NuGetRestoreSettings()
-                .SetWorkingDirectory(Build.RootDirectory)
-                .SetTargetPath(Build.SolutionFile);
-
-        public static InspectCodeSettings InspectCode => new InspectCodeSettings()
-                .SetWorkingDirectory(Build.RootDirectory)
-                .SetTargetPath(Build.SolutionFile)
-                .SetOutput(Path.Combine(Build.OutputDirectory, "inspectCode.xml"));
-
-        public static OpenCoverSettings OpenCover => new OpenCoverSettings()
-                .SetWorkingDirectory(Build.RootDirectory)
-                .SetRegistration(RegistrationType.User)
-                .SetTargetExitCodeOffset(targetExitCodeOffset: 0)
-                .SetFilters(
-                    "+[*]*",
-                    "-[xunit.*]*",
-                    "-[NUnit.*]*",
-                    "-[FluentAssertions.*]*",
-                    "-[Machine.Specifications.*]*")
-                .SetExcludeByAttributes(
-                    "*.Explicit*",
-                    "*.Ignore*",
-                    "System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute")
-                .SetExcludeByFile(
-                    "*/*.Generated.cs",
-                    "*/*.Designer.cs",
-                    "*/*.g.cs",
-                    "*/*.g.i.cs");
-
-        public static GitLink2Settings GitLink2 => new GitLink2Settings()
-                .SetWorkingDirectory(Build.RootDirectory)
-                .SetSolutionDirectory(Build.SolutionDirectory)
-                .SetConfiguration(Build.Configuration)
-                .SetBranchName(GitVersionValue?.BranchName)
-                .SetRepositoryUrl(GitRepositoryValue?.SvnUrl);
-
-        public static GitLink3Settings GitLink3 => new GitLink3Settings()
-                .SetWorkingDirectory(Build.RootDirectory)
-                .SetBaseDirectory(Build.RootDirectory)
-                .SetRepositoryUrl(GitRepositoryValue?.SvnUrl);
+        [Obsolete("Use " + nameof(GitLinkTasks) + "." + nameof(GitLinkTasks.DefaultGitLink3))]
+        public static GitLink3Settings GitLink3 => GitLinkTasks.DefaultGitLink3;
     }
 }

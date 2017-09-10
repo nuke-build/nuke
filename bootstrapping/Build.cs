@@ -44,14 +44,14 @@ class Build : NukeBuild
                 DotNetRestore(SolutionDirectory);
 
                 if (MSBuildVersion == Nuke.Common.Tools.MSBuild.MSBuildVersion.VS2017)
-                    MSBuild(s => DefaultSettings.MSBuildRestore);
+                    MSBuild(s => DefaultMSBuildRestore);
 
                 NuGetRestore(SolutionFile);
             });
 
     Target Compile => _ => _
             .DependsOn(Restore)
-            .Executes(() => MSBuild(s => DefaultSettings.MSBuildCompile
+            .Executes(() => MSBuild(s => DefaultMSBuildCompile
                     .SetMSBuildVersion(MSBuildVersion)));
 
     // When having xproj-based projects, using VS2015 is necessary.

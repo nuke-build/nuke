@@ -5,12 +5,16 @@
 using System;
 using System.Linq;
 using Newtonsoft.Json;
+using Nuke.Core;
 using Nuke.Core.Tooling;
 
 namespace Nuke.Common.Tools.GitVersion
 {
     partial class GitVersionTasks
     {
+        public static GitVersionSettings DefaultGitVersion => new GitVersionSettings()
+                .SetWorkingDirectory(NukeBuild.Instance.RootDirectory);
+
         public static GitVersion GitVersion (Configure<GitVersionSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitVersionSettings());

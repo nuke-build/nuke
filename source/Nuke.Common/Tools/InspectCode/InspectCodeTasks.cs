@@ -20,6 +20,11 @@ namespace Nuke.Common.Tools.InspectCode
 {
     public static partial class InspectCodeTasks
     {
+        public static InspectCodeSettings DefaultInspectCode => new InspectCodeSettings()
+                .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
+                .SetTargetPath(NukeBuild.Instance.SolutionFile)
+                .SetOutput(Path.Combine(NukeBuild.Instance.OutputDirectory, "inspectCode.xml"));
+
         static partial void PreProcess (InspectCodeSettings toolSettings)
         {
             var installedPlugins = GetInstalledPlugins();
