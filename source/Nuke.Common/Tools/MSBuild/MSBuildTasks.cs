@@ -39,9 +39,7 @@ namespace Nuke.Common.Tools.MSBuild
                 .SetTargets("Restore");
 
         public static MSBuildSettings DefaultMSBuildCompile => DefaultMSBuild
-                .SetTargets("Rebuild");
-
-        public static MSBuildSettings DefaultMSBuildCompileWithVersion => DefaultMSBuildCompile
+                .SetTargets("Rebuild")
                 .SetAssemblyVersion(GitVersionAttribute.Value?.AssemblySemVer)
                 .SetFileVersion(GitVersionAttribute.Value?.FullSemVer)
                 .SetInformationalVersion(GitVersionAttribute.Value?.InformationalVersion);

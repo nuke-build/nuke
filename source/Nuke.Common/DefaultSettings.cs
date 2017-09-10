@@ -51,8 +51,8 @@ namespace Nuke.Common
         [Obsolete("Use " + nameof(MSBuildTasks) + "." + nameof(MSBuildTasks.DefaultMSBuildCompile))]
         public static MSBuildSettings MSBuildCompile => MSBuildTasks.DefaultMSBuildCompile;
 
-        [Obsolete("Use " + nameof(MSBuildTasks) + "." + nameof(MSBuildTasks.DefaultMSBuildCompileWithVersion))]
-        public static MSBuildSettings MSBuildCompileWithVersion => MSBuildTasks.DefaultMSBuildCompileWithVersion;
+        [Obsolete("Use " + nameof(MSBuildTasks) + "." + nameof(MSBuildTasks.DefaultMSBuildCompile))]
+        public static MSBuildSettings MSBuildCompileWithVersion => MSBuildTasks.DefaultMSBuildCompile;
 
         [Obsolete("Use " + nameof(MSBuildTasks) + "." + nameof(MSBuildTasks.DefaultMSBuildPack))]
         public static MSBuildSettings MSBuildPack => MSBuildTasks.DefaultMSBuildPack;

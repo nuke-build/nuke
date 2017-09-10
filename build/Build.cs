@@ -51,9 +51,7 @@ class Build : NukeBuild
             .Requires(() => IsUnix || GitVersion != null)
             .Executes(() =>
             {
-                MSBuild(s => IsWin
-                    ? DefaultMSBuildCompileWithVersion
-                    : DefaultMSBuildCompile);
+                MSBuild(s => DefaultMSBuildCompile);
             });
 
     Target Link => _ => _
