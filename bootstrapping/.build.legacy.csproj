@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace></RootNamespace>
     <AssemblyName>_BUILD_PROJECT_NAME_</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
