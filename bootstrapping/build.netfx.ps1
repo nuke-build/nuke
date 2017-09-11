@@ -12,7 +12,7 @@ $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 # CONFIGURATION
 ###########################################################################
 
-$NuGetUrl = "_NUGET_URL_"
+$NuGetVersion = "_NUGET_VERSION_"
 $SolutionDirectory = "$PSScriptRoot\_SOLUTION_DIRECTORY_"
 $BuildProjectFile = "$PSScriptRoot\_BUILD_DIRECTORY_NAME_\_BUILD_PROJECT_NAME_.csproj"
 $BuildExeFile = "$PSScriptRoot\_BUILD_DIRECTORY_NAME_\bin\debug\_BUILD_PROJECT_NAME_.exe"
@@ -27,11 +27,13 @@ function ExecSafe([scriptblock] $cmd) {
     if ($LastExitCode -ne 0) { throw "The following call failed with exit code $LastExitCode. '$cmd'" }
 }
 
+$NuGetUrl = ""https://dist.nuget.org/win-x86-commandline/$NuGetVersion/nuget.exe""
+$NuGetFile = "$TempDirectory\nuget.exe"
+$env:NUGET_EXE = $NuGetFile
+
 if (!$NoInit) {
     md -force $TempDirectory > $null
 
-    $NuGetFile = "$TempDirectory\nuget.exe"
-    $env:NUGET_EXE = $NuGetFile
     if (!(Test-Path $NuGetFile)) { (New-Object System.Net.WebClient).DownloadFile($NuGetUrl, $NuGetFile) }
     elseif ($NuGetUrl.Contains("latest")) { & $NuGetFile update -Self }
 

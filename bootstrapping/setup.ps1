@@ -9,7 +9,7 @@ $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 ###########################################################################
 
 $BootstrappingUrl = "https://raw.githubusercontent.com/nuke-build/nuke/master/bootstrapping"
-$DefaultNuGetUrl = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
+$DefaultNuGetVersion = "latest"
 $DefaultBuildDirectoryName = ".\build"
 $DefaultBuildProjectName = ".build"
 
@@ -72,7 +72,7 @@ Write-Host "Using '$(GetRelative $PSScriptRoot $SolutionFile)' as solution file.
 # GENERATE BUILD SCRIPTS
 ###########################################################################
 
-$NuGetUrl = (ReadWithDefault "NuGet executable download url" $DefaultNuGetUrl)
+$NuGetVersion = (ReadWithDefault "NuGet executable version" $DefaultNuGetVersion)
 $BuildDirectoryName = (ReadWithDefault "Directory for build project" $DefaultBuildDirectoryName)
 $BuildProjectName = (ReadWithDefault "Name for build project" $DefaultBuildProjectName)
 $BuildDirectory = "$PSScriptRoot\$BuildDirectoryName"
@@ -82,14 +82,14 @@ md -force $BuildDirectory > $null
 Write-Host "Generating build.ps1, build.sh and configuration file..."
 
 Set-Content "build.ps1" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.ps1") `
-    -replace "_NUGET_URL_",$NuGetUrl `
+    -replace "_NUGET_VERSION_",$NuGetVersion `
     -replace "_BUILD_DIRECTORY_NAME_",$BuildDirectoryName `
     -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
     -replace "_SOLUTION_DIRECTORY_",(GetRelative $PSScriptRoot $SolutionDirectory) `
     -replace "_ROOT_DIRECTORY_",(GetRelative $PSScriptRoot $RootDirectory))
 
 Set-Content "build.sh" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.sh") `
-    -replace "_NUGET_URL_",$NuGetUrl `
+    -replace "_NUGET_VERSION_",$NuGetVersion `
     -replace "_BUILD_DIRECTORY_NAME_",$BuildDirectoryName `
     -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
     -replace "_SOLUTION_DIRECTORY_",((GetRelative $PSScriptRoot $SolutionDirectory) -replace "\\","/") `

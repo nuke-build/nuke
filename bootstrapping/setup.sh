@@ -8,7 +8,7 @@ SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 ###########################################################################
 
 BOOTSTRAPPING_URL="https://raw.githubusercontent.com/nuke-build/nuke/master/bootstrapping"
-DEFAULT_NUGET_URL="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
+DEFAULT_NUGET_VERSION="latest"
 DEFAULT_BUILD_DIRECTORY_NAME="./build"
 DEFAULT_BUILD_PROJECT_NAME=".build"
 
@@ -71,7 +71,7 @@ echo "Using '$(GetRelative "$SCRIPT_DIR" "$SOLUTION_FILE")' as solution file."
 # GENERATE BUILD SCRIPTS AND NUKE FILE
 ###########################################################################
 
-NUGET_URL=$(ReadWithDefault "NuGet executable download url" $DEFAULT_NUGET_URL)
+NUGET_VERSION=$(ReadWithDefault "NuGet executable version" $DEFAULT_NUGET_VERSION)
 BUILD_DIRECTORY_NAME=$(ReadWithDefault "Directory for build project" $DEFAULT_BUILD_DIRECTORY_NAME)
 BUILD_PROJECT_NAME=$(ReadWithDefault "Name for build project" $DEFAULT_BUILD_PROJECT_NAME)
 BUILD_DIRECTORY="$SCRIPT_DIR/$BUILD_DIRECTORY_NAME"
@@ -83,7 +83,7 @@ echo "Generating build.ps1, build.sh and .nuke file..."
 SOLUTION_DIRECTORY_RELATIVE="$(GetRelative "$SCRIPT_DIR" "$SOLUTION_DIRECTORY")"
 ROOT_DIRECTORY_RELATIVE="$(GetRelative "$SCRIPT_DIR" "$ROOT_DIRECTORY")"
 
-sed -e 's~_NUGET_URL_~'"$NUGET_URL"'~g' \
+sed -e 's~_NUGET_VERSION_~'"$NUGET_VERSION"'~g' \
     -e 's~_BUILD_DIRECTORY_NAME_~'"$BUILD_DIRECTORY_NAME"'~g' \
     -e 's~_BUILD_PROJECT_NAME_~'"$BUILD_PROJECT_NAME"'~g' \
     -e 's~_SOLUTION_DIRECTORY_~'"$SOLUTION_DIRECTORY_RELATIVE"'~g' \
@@ -91,7 +91,7 @@ sed -e 's~_NUGET_URL_~'"$NUGET_URL"'~g' \
     <<<"$(curl -Lsf $BOOTSTRAPPING_URL/build.sh)" \
     > build.sh
     
-sed -e 's~_NUGET_URL_~'"$NUGET_URL"'~g' \
+sed -e 's~_NUGET_VERSION_~'"$NUGET_VERSION"'~g' \
     -e 's~_BUILD_DIRECTORY_NAME_~'"$BUILD_DIRECTORY_NAME"'~g' \
     -e 's~_BUILD_PROJECT_NAME_~'"$BUILD_PROJECT_NAME"'~g' \
     -e 's~_SOLUTION_DIRECTORY_~'"${SOLUTION_DIRECTORY_RELATIVE//\//\\}"'~g' \
