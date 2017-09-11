@@ -4,11 +4,8 @@
 
 using System;
 using System.Linq;
-#if !NETCORE
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-
-#endif
 
 namespace Nuke.Core.Tooling
 {
@@ -17,9 +14,6 @@ namespace Nuke.Core.Tooling
         public static T NewInstance<T> (this T settingsEntity)
             where T : ISettingsEntity
         {
-#if NETCORE
-            return settingsEntity;
-#else
             using (var memoryStream = new MemoryStream())
             {
                 var binaryFormatter = new BinaryFormatter();
@@ -31,7 +25,6 @@ namespace Nuke.Core.Tooling
                     toolSettings.ArgumentConfigurator = ((ToolSettings) (object) settingsEntity).ArgumentConfigurator;
                 return newInstance;
             }
-#endif
         }
     }
 }
