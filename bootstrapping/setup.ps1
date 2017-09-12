@@ -9,9 +9,11 @@ $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 ###########################################################################
 
 $BootstrappingUrl = "https://raw.githubusercontent.com/nuke-build/nuke/master/bootstrapping"
-$DefaultNuGetVersion = "latest"
-$DefaultBuildDirectoryName = ".\build"
-$DefaultBuildProjectName = ".build"
+$NuGetVersion = "latest"
+$BuildDirectoryName = ".\build"
+$BuildProjectName = ".build"
+$TargetFrameworkSelection = 1
+$FormatSelection = 1
 
 ###########################################################################
 # HELPER FUNCTIONS
@@ -69,26 +71,53 @@ $SolutionDirectory = Split-Path $SolutionFile -Parent
 Write-Host "Using '$(GetRelative $PSScriptRoot $SolutionFile)' as solution file."
 
 ###########################################################################
+# OTHER CONFIGURATIONS
+###########################################################################
+
+$TargetFrameworkSelection = $host.ui.PromptForChoice(
+  $null,
+  "Build project target framework:",
+  @(
+    (New-Object System.Management.Automation.Host.ChoiceDescription ".NET &Framework", "Will use MSBuild/Mono."),
+    (New-Object System.Management.Automation.Host.ChoiceDescription ".NET &Core", "Will use dotnet CLI.")
+  ),
+  $TargetFrameworkSelection)
+
+if ($TargetFrameworkSelection -eq 0) {
+  $FormatSelection = $host.ui.PromptForChoice(
+    $null,
+    "Build project format:",
+    @(
+      (New-Object System.Management.Automation.Host.ChoiceDescription "&Legacy format", "Supported by all MSBuild versions."),
+      (New-Object System.Management.Automation.Host.ChoiceDescription "&SDK-based format", "Requires MSBuild 15.0.")
+    ),
+    $FormatSelection)
+    
+  $NuGetVersion = (ReadWithDefault "NuGet executable version" $NuGetVersion)
+}
+
+$BuildDirectoryName = (ReadWithDefault "Directory for build project" $BuildDirectoryName)
+$BuildProjectName = (ReadWithDefault "Name for build project" $BuildProjectName)
+$BuildDirectory = "$PSScriptRoot\$BuildDirectoryName"
+
+###########################################################################
 # GENERATE BUILD SCRIPTS
 ###########################################################################
 
-$NuGetVersion = (ReadWithDefault "NuGet executable version" $DefaultNuGetVersion)
-$BuildDirectoryName = (ReadWithDefault "Directory for build project" $DefaultBuildDirectoryName)
-$BuildProjectName = (ReadWithDefault "Name for build project" $DefaultBuildProjectName)
-$BuildDirectory = "$PSScriptRoot\$BuildDirectoryName"
+Write-Host "Generating build.ps1 and build.sh..."
+
+$ScriptKind = @("netfx", "netcore")[$TargetFrameworkSelection]
 
 md -force $BuildDirectory > $null
 
-Write-Host "Generating build.ps1, build.sh and configuration file..."
-
-Set-Content "build.ps1" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.ps1") `
+Set-Content "build.ps1" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.$($ScriptKind).ps1") `
     -replace "_NUGET_VERSION_",$NuGetVersion `
     -replace "_BUILD_DIRECTORY_NAME_",$BuildDirectoryName `
     -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
     -replace "_SOLUTION_DIRECTORY_",(GetRelative $PSScriptRoot $SolutionDirectory) `
     -replace "_ROOT_DIRECTORY_",(GetRelative $PSScriptRoot $RootDirectory))
 
-Set-Content "build.sh" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.sh") `
+Set-Content "build.sh" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.$($ScriptKind).sh") `
     -replace "_NUGET_VERSION_",$NuGetVersion `
     -replace "_BUILD_DIRECTORY_NAME_",$BuildDirectoryName `
     -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
@@ -99,28 +128,21 @@ Set-Content "build.sh" ((New-Object System.Net.WebClient).DownloadString("$Boots
 # GENERATE PROJECT FILES
 ###########################################################################
 
-$FormatSelection = $host.ui.PromptForChoice(
-  $null,
-  "Which format do you want to use for your build project?",
-  @(
-    (New-Object System.Management.Automation.Host.ChoiceDescription "&Legacy format", "Supported by all MSBuild versions."),
-    (New-Object System.Management.Automation.Host.ChoiceDescription "&SDK-based format", "Requires MSBuild 15.0.")
-  ),
-  1)
+Write-Host "Generating project template..."
 
 $LatestVersion = $(Invoke-WebRequest https://api-v2v3search-0.nuget.org/query?q=packageid:Nuke.Common | ConvertFrom-Json).data.version
 $ProjectGuid = [guid]::NewGuid().ToString().ToUpper()
+$TargetFramework = @("net461", "netcoreapp2.0")[$TargetFrameworkSelection]
 $ProjectKindGuid = @("FAE04EC0-301F-11D3-BF4B-00C04F79EFBC", "9A19103F-16F7-4668-BE54-9A1E7A4F7556")[$FormatSelection]
-$BuildProjectUrl = @("$BootstrappingUrl/.build.legacy.csproj", "$BootstrappingUrl/.build.sdk.csproj")[$FormatSelection]
+$ProjectFormat = @("legacy", "sdk")[$FormatSelection]
 $BuildProjectFile = "$BuildDirectory\$BuildProjectName.csproj"
 $SolutionDirectoryRelative = (GetRelative $BuildDirectory $SolutionDirectory)
-
-Write-Host "Generating project files for $LatestVersion..."
 
 (New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/.build.csproj.DotSettings", "$BuildProjectFile.dotsettings")
 (New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/Build.cs", "$BuildDirectory\Build.cs")
 
-Set-Content "$BuildProjectFile" ((New-Object System.Net.WebClient).DownloadString("$BuildProjectUrl") `
+Set-Content "$BuildProjectFile" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/.build.$($ProjectFormat).csproj") `
+    -replace "_TARGET_FRAMEWORK_",$TargetFramework `
     -replace "_BUILD_PROJECT_GUID_",$ProjectGuid `
     -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
     -replace "_SOLUTION_DIRECTORY_",$SolutionDirectoryRelative `

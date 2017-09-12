@@ -8,9 +8,11 @@ SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 ###########################################################################
 
 BOOTSTRAPPING_URL="https://raw.githubusercontent.com/nuke-build/nuke/master/bootstrapping"
-DEFAULT_NUGET_VERSION="latest"
-DEFAULT_BUILD_DIRECTORY_NAME="./build"
-DEFAULT_BUILD_PROJECT_NAME=".build"
+NUGET_VERSION="latest"
+BUILD_DIRECTORY_NAME="./build"
+BUILD_PROJECT_NAME=".build"
+TARGET_FRAMEWORK_SELECTION=1
+FORMAT_SELECTION=1
 
 ###########################################################################
 # HELPER FUNCTIONS
@@ -68,17 +70,43 @@ echo $(GetRelative "$ROOT_DIRECTORY" "$SOLUTION_FILE") > "$ROOT_DIRECTORY/.nuke"
 echo "Using '$(GetRelative "$SCRIPT_DIR" "$SOLUTION_FILE")' as solution file."
 
 ###########################################################################
-# GENERATE BUILD SCRIPTS AND NUKE FILE
+# OTHER CONFIGURATIONS
 ###########################################################################
 
-NUGET_VERSION=$(ReadWithDefault "NuGet executable version" $DEFAULT_NUGET_VERSION)
+while : ; do
+    echo "Build project target framework:"
+    echo "[0] .NET Framework: Will use MSBuild/Mono."
+    echo "[1] .NET Core: Will use dotnet CLI."
+    read -p "Target framework id: " TARGET_FRAMEWORK_SELECTION
+    [[ $TARGET_FRAMEWORK_SELECTION < 0 || $TARGET_FRAMEWORK_SELECTION -ge 2 ]] || break
+done
+
+if [ $FORMAT_SELECTION == 0 ]; then
+  while : ; do
+      echo "Which format do you want to use for your build project:"
+      echo "[0] Legacy format. Supported by all MSBuild versions."
+      echo "[1] SDK-based format. Requires MSBuild 15.0."
+      read -p "Format id: " FORMAT_SELECTION
+      [[ $FORMAT_SELECTION < 0 || $FORMAT_SELECTION -ge 2 ]] || break
+  done
+
+  NUGET_VERSION=$(ReadWithDefault "NuGet executable version" $NUGET_VERSION)
+fi
+
 BUILD_DIRECTORY_NAME=$(ReadWithDefault "Directory for build project" $DEFAULT_BUILD_DIRECTORY_NAME)
 BUILD_PROJECT_NAME=$(ReadWithDefault "Name for build project" $DEFAULT_BUILD_PROJECT_NAME)
 BUILD_DIRECTORY="$SCRIPT_DIR/$BUILD_DIRECTORY_NAME"
 
-mkdir -p $(dirname $BUILD_DIRECTORY)
+###########################################################################
+# GENERATE BUILD SCRIPTS
+###########################################################################
 
-echo "Generating build.ps1, build.sh and .nuke file..."
+echo "Generating build.ps1 and build.sh..."
+
+SCRIPT_KIND_ARRAY=("netfx" "netcore")
+SCRIPT_KIND=${BUILD_PROJECT_URL_ARRAY[$FORMAT_SELECTION]}
+
+mkdir -p $(dirname $BUILD_DIRECTORY)
 
 SOLUTION_DIRECTORY_RELATIVE="$(GetRelative "$SCRIPT_DIR" "$SOLUTION_DIRECTORY")"
 ROOT_DIRECTORY_RELATIVE="$(GetRelative "$SCRIPT_DIR" "$ROOT_DIRECTORY")"
@@ -88,7 +116,7 @@ sed -e 's~_NUGET_VERSION_~'"$NUGET_VERSION"'~g' \
     -e 's~_BUILD_PROJECT_NAME_~'"$BUILD_PROJECT_NAME"'~g' \
     -e 's~_SOLUTION_DIRECTORY_~'"$SOLUTION_DIRECTORY_RELATIVE"'~g' \
     -e 's~_ROOT_DIRECTORY_~'"$ROOT_DIRECTORY_RELATIVE"'~g' \
-    <<<"$(curl -Lsf $BOOTSTRAPPING_URL/build.sh)" \
+    <<<"$(curl -Lsf $BOOTSTRAPPING_URL/build.$SCRIPT_KIND.sh)" \
     > build.sh
     
 sed -e 's~_NUGET_VERSION_~'"$NUGET_VERSION"'~g' \
@@ -96,40 +124,35 @@ sed -e 's~_NUGET_VERSION_~'"$NUGET_VERSION"'~g' \
     -e 's~_BUILD_PROJECT_NAME_~'"$BUILD_PROJECT_NAME"'~g' \
     -e 's~_SOLUTION_DIRECTORY_~'"${SOLUTION_DIRECTORY_RELATIVE//\//\\}"'~g' \
     -e 's~_ROOT_DIRECTORY_~'"${ROOT_DIRECTORY_RELATIVE//\//\\}"'~g' \
-    <<<"$(curl -Lsf $BOOTSTRAPPING_URL/build.ps1)" \
+    <<<"$(curl -Lsf $BOOTSTRAPPING_URL/build.$SCRIPT_KIND.ps1)" \
     > build.ps1
 
 ###########################################################################
 # GENERATE PROJECT FILES
 ###########################################################################
 
-while : ; do
-    echo "Which format do you want to use for your build project:"
-    echo "[0] Legacy format. Supported by all MSBuild versions."
-    echo "[1] SDK-based format. Requires MSBuild 15.0."
-    read -p "Format id: " FORMAT_SELECTION
-    [[ $FORMAT_SELECTION < 0 || $FORMAT_SELECTION -ge 2 ]] || break
-done
+echo "Generating project template..."
 
 LATEST_VERSION=$(curl -s 'https://api-v2v3search-0.nuget.org/query?q=packageid:Nuke.Common' | python3 -c "import sys, json; print(json.load(sys.stdin)['data'][0]['version'])")
 PROJECT_GUID=$(python -c "import uuid; print str(uuid.uuid4()).upper()")
+TARGET_FRAMEWORK_ARRAY=("net461", "netcoreapp2.0")
+TARGET_FRAMEWORK=${TARGET_FRAMEWORK_ARRAY[$TARGET_FRAMEWORK_SELECTION]}
 PROJECTKIND_GUID_ARRAY=("FAE04EC0-301F-11D3-BF4B-00C04F79EFBC" "9A19103F-16F7-4668-BE54-9A1E7A4F7556")
 PROJECTKIND_GUID=${PROJECTKIND_GUID_ARRAY[$FORMAT_SELECTION]}
-BUILD_PROJECT_URL_ARRAY=("$BOOTSTRAPPING_URL/.build.legacy.csproj" "$BOOTSTRAPPING_URL/.build.sdk.csproj")
-BUILD_PROJECT_URL=${BUILD_PROJECT_URL_ARRAY[$FORMAT_SELECTION]}
+PROJECT_FORMAT_ARRAY=("legacy" "sdk")
+PROJECT_FORMAT=${BUILD_PROJECT_URL_ARRAY[$FORMAT_SELECTION]}
 BUILD_PROJECT_FILE="$BUILD_DIRECTORY/$BUILD_PROJECT_NAME.csproj"
 SOLUTION_DIRECTORY_RELATIVE="$(GetRelative "$BUILD_DIRECTORY" "$SOLUTION_DIRECTORY")"
-
-echo "Generating project files for $LATEST_VERSION..."
 
 curl -Lsfo "$BUILD_PROJECT_FILE.dotsettings" "$BOOTSTRAPPING_URL/.build.csproj.DotSettings"
 curl -Lsfo "$BUILD_DIRECTORY/Build.cs" "$BOOTSTRAPPING_URL/Build.cs"
 
-sed -e 's~_BUILD_PROJECT_GUID_~'"$PROJECT_GUID"'~g' \
+sed -e 's~_TARGET_FRAMEWORK_~'"$TARGET_FRAMEWORK"'~g' \
+    -e 's~_BUILD_PROJECT_GUID_~'"$PROJECT_GUID"'~g' \
     -e 's~_BUILD_PROJECT_NAME_~'"$BUILD_PROJECT_NAME"'~g' \
     -e 's~_SOLUTION_DIRECTORY_~'"${SOLUTION_DIRECTORY_RELATIVE//\//\\}"'~g' \
     -e 's~_LATEST_VERSION_~'"$LATEST_VERSION"'~g' \
-    <<<"$(curl -Lsf $BUILD_PROJECT_URL)" \
+    <<<"$(curl -Lsf $BOOTSTRAPPING_URL/.build.$PROJECT_FORMAT.csproj)" \
     > "$BUILD_PROJECT_FILE"
 
 if [ $FORMAT_SELECTION == 0 ]; then
