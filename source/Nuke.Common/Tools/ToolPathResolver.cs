@@ -18,9 +18,13 @@ namespace Nuke.Common.Tools
     [PublicAPI]
     public static class ToolPathResolver
     {
-        public static string GetEnvironmentExecutable(string environmentExecutable)
+        [CanBeNull]
+        public static string TryGetEnvironmentExecutable(string environmentExecutable)
         {
-            var environmentExecutablePath = EnvironmentInfo.EnsureVariable(environmentExecutable);
+            var environmentExecutablePath = EnvironmentInfo.Variable(environmentExecutable);
+            if (environmentExecutablePath == null)
+                return null;
+
             ControlFlow.Assert(File.Exists(environmentExecutablePath),
                 $"Path '{environmentExecutablePath}' from environment variable '{environmentExecutable}' does not exist.");
             return environmentExecutablePath;
