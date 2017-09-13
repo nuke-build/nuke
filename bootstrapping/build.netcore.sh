@@ -18,13 +18,9 @@ SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 ###########################################################################
 
 DOTNET_CHANNEL="2.0"
-SOLUTION_DIRECTORY="$SCRIPT_DIR/_SOLUTION_DIRECTORY_"
 BUILD_PROJECT_FILE="$SCRIPT_DIR/_BUILD_DIRECTORY_NAME_/_BUILD_PROJECT_NAME_.csproj"
-TEMP_DIRECTORY="$SCRIPT_DIR/_ROOT_DIRECTORY_/.tmp"
 
-###########################################################################
-# PREPARE BUILD
-###########################################################################
+TEMP_DIRECTORY="$SCRIPT_DIR/.tmp"
 
 DOTNET_SCRIPT_URL="https://raw.githubusercontent.com/dotnet/cli/master/scripts/obtain/dotnet-install.sh"
 DOTNET_DIRECTORY="$TEMP_DIRECTORY/dotnet"
@@ -34,6 +30,10 @@ export DOTNET_EXE="$DOTNET_FILE"
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
 export NUGET_XMLDOC_MODE="skip"
+
+###########################################################################
+# PREPARE BUILD
+###########################################################################
 
 if ! ((NOINIT)); then
   mkdir -p "$DOTNET_DIRECTORY"
