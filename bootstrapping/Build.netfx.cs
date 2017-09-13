@@ -5,9 +5,7 @@ using Nuke.Common.Git;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.MSBuild;
 using Nuke.Core;
-using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
-using static Nuke.Common.Tools.NuGet.NuGetTasks;
 using static Nuke.Core.IO.FileSystemTasks;
 using static Nuke.Core.IO.PathConstruction;
 using static Nuke.Core.EnvironmentInfo;
@@ -42,9 +40,6 @@ class Build : NukeBuild
             .DependsOn(Clean)
             .Executes(() =>
             {
-                // Remove tasks as needed.
-                DotNetRestore(SolutionDirectory);
-                NuGetRestore(SolutionFile);
                 MSBuild(s => DefaultMSBuildRestore);
             });
 
