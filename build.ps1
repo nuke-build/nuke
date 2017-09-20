@@ -13,11 +13,19 @@ $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 # CONFIGURATION
 ###########################################################################
 
-$NuGetUrl = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
-$SolutionDirectory = "$PSScriptRoot"
+$DotNetChannel = "2.0"
 $BuildProjectFile = "$PSScriptRoot\build\.build.csproj"
-$BuildExeFile = "$PSScriptRoot\build\bin\debug\.build.exe"
+
 $TempDirectory = "$PSScriptRoot\.tmp"
+
+$DotNetScriptUrl = "https://raw.githubusercontent.com/dotnet/cli/master/scripts/obtain/dotnet-install.ps1"
+$DotNetDirectory = "$TempDirectory\dotnet"
+$DotNetFile = "$DotNetDirectory\dotnet.exe"
+$env:DOTNET_EXE = $DotNetFile
+
+$env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1
+$env:DOTNET_CLI_TELEMETRY_OPTOUT = 1
+$env:NUGET_XMLDOC_MODE = "skip"
 
 ###########################################################################
 # PREPARE BUILD
@@ -28,26 +36,20 @@ function ExecSafe([scriptblock] $cmd) {
     if ($LastExitCode -ne 0) { throw "The following call failed with exit code $LastExitCode. '$cmd'" }
 }
 
-Write-Host "##teamcity[blockOpened name='Prepare']"
-
 if (!$NoInit) {
-    md -force $TempDirectory > $null
+    md -force $DotNetDirectory > $null
 
-    $NuGetFile = "$TempDirectory\nuget.exe"
-    $env:NUGET_EXE = $NuGetFile
-    if (!(Test-Path $NuGetFile)) { (New-Object System.Net.WebClient).DownloadFile($NuGetUrl, $NuGetFile) }
-    elseif ($NuGetUrl.Contains("latest")) { & $NuGetFile update -Self }
+    $DotNetScriptFile = "$TempDirectory\dotnet-install.ps1"
+    if (!(Test-Path $DotNetScriptFile)) { (New-Object System.Net.WebClient).DownloadFile($DotNetScriptUrl, $DotNetScriptFile) }
+    ExecSafe { & $DotNetScriptFile -InstallDir $DotNetDirectory -Channel $DotNetChannel -NoPath }
 
-    ExecSafe { & $NuGetFile install Nuke.MSBuildLocator -ExcludeVersion -OutputDirectory $TempDirectory -SolutionDirectory $SolutionDirectory }
+    ExecSafe { & $DotNetFile restore $BuildProjectFile }
 }
 
-$MSBuildFile = & "$TempDirectory\Nuke.MSBuildLocator\tools\Nuke.MSBuildLocator.exe"
-ExecSafe { & $MSBuildFile $BuildProjectFile /target:"Restore;Build" /property:ReferenceExternal=$RefExt }
-
-Write-Host "##teamcity[blockClosed name='Prepare']"
+ExecSafe { & $DotNetFile build $BuildProjectFile --no-restore /p:ReferenceExternal=$RefExt }
 
 ###########################################################################
 # EXECUTE BUILD
 ###########################################################################
 
-ExecSafe { & $BuildExeFile $BuildArguments }
+ExecSafe { & $DotNetFile run --project $BuildProjectFile --no-build -- $BuildArguments }

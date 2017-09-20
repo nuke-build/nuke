@@ -19,29 +19,38 @@ SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 # CONFIGURATION
 ###########################################################################
 
-NUGET_URL="https://dist.nuget.org/win-x86-commandline/v4.1.0/nuget.exe"
-SOLUTION_DIRECTORY="$SCRIPT_DIR/"
+DOTNET_CHANNEL="2.0"
 BUILD_PROJECT_FILE="$SCRIPT_DIR/build/.build.csproj"
-BUILD_EXE_FILE="$SCRIPT_DIR/build/bin/Debug/.build.exe"
+
 TEMP_DIRECTORY="$SCRIPT_DIR/.tmp"
+
+DOTNET_SCRIPT_URL="https://raw.githubusercontent.com/dotnet/cli/master/scripts/obtain/dotnet-install.sh"
+DOTNET_DIRECTORY="$TEMP_DIRECTORY/dotnet"
+DOTNET_FILE="$DOTNET_DIRECTORY/dotnet"
+export DOTNET_EXE="$DOTNET_FILE"
+
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+export NUGET_XMLDOC_MODE="skip"
 
 ###########################################################################
 # PREPARE BUILD
 ###########################################################################
 
 if ! ((NOINIT)); then
-  mkdir -p $TEMP_DIRECTORY
+  mkdir -p "$DOTNET_DIRECTORY"
 
-  NUGET_FILE="$TEMP_DIRECTORY/nuget.exe"
-  export NUGET_EXE="$NUGET_FILE"
-  if [ ! -f $NUGET_FILE ]; then curl -Lsfo $NUGET_FILE $NUGET_URL;
-  elif [[ $NUGET_URL == *"latest"* ]]; then mono $NUGET_FILE update -Self; fi
+  DOTNET_SCRIPT_FILE="$TEMP_DIRECTORY/dotnet-install.sh"
+  if [ ! -f "$DOTNET_SCRIPT_FILE" ]; then curl -Lsfo "$DOTNET_SCRIPT_FILE" $DOTNET_SCRIPT_URL; chmod +x "$DOTNET_SCRIPT_FILE"; fi
+  "$DOTNET_SCRIPT_FILE" --install-dir "$DOTNET_DIRECTORY" --channel 2.0 --no-path
+
+  "$DOTNET_FILE" restore "$BUILD_PROJECT_FILE"
 fi
 
-msbuild $BUILD_PROJECT_FILE /target:"Restore;Build" /property:"ReferenceExternal=$REFEXT"
+"$DOTNET_FILE" build "$BUILD_PROJECT_FILE" --no-restore /p:"ReferenceExternal=$REFEXT"
 
 ###########################################################################
 # EXECUTE BUILD
 ###########################################################################
 
-mono $BUILD_EXE_FILE ${BUILD_ARGUMENTS[@]}
+"$DOTNET_FILE" run --project "$BUILD_PROJECT_FILE" --no-build -- ${BUILD_ARGUMENTS[@]}
