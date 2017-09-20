@@ -28,14 +28,14 @@ using Nuke.Common.Tools.VsTest;
 using Nuke.Common.Tools.Xunit;
 using Nuke.Core.Execution;
 
-[assembly: IconClass(typeof(CoverallsNetTasks), "stats-growth")]
+[assembly: IconClass(typeof(CoverallsNetTasks), "pie-chart4")]
 [assembly: IconClass(typeof(DefaultSettings), "equalizer")]
 [assembly: IconClass(typeof(DocFxTasks), "books")]
 [assembly: IconClass(typeof(DotCoverTasks), "shield2")]
 [assembly: IconClass(typeof(DotNetTasks), "fire")]
 [assembly: IconClass(typeof(DupFinderTasks), "code")]
 [assembly: IconClass(typeof(GitLinkTasks), "link")]
-[assembly: IconClass(typeof(GitReleaseManagerTasks), "tree7")]
+[assembly: IconClass(typeof(GitReleaseManagerTasks), "books")]
 [assembly: IconClass(typeof(GitRepository), "git")]
 [assembly: IconClass(typeof(GitVersionTasks), "podium")]
 [assembly: IconClass(typeof(InspectCodeTasks), "code")]
@@ -45,7 +45,7 @@ using Nuke.Core.Execution;
 [assembly: IconClass(typeof(NunitTasks), "bug2")]
 [assembly: IconClass(typeof(OpenCoverTasks), "shield2")]
 [assembly: IconClass(typeof(PaketTasks), "box")]
-[assembly: IconClass(typeof(ReportGeneratorTasks), "stats-growth")]
+[assembly: IconClass(typeof(ReportGeneratorTasks), "pie-chart4")]
 [assembly: IconClass(typeof(SerializationTasks), "transmission2")]
 [assembly: IconClass(typeof(TestCloudTasks), "bug2")]
 [assembly: IconClass(typeof(TextTasks), "file-text3")]
