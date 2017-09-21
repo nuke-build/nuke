@@ -20,12 +20,12 @@ namespace Nuke.Common.Tests
             var currentDirectory = (PathConstruction.AbsolutePath) Directory.GetCurrentDirectory();
             var projectFile = currentDirectory / ".." / ".." / ".." / ".." / "Nuke.Common" / "Nuke.Common.csproj";
 
-            var project = MSBuildTasks.MSBuildParseProject(projectFile, x => x.SetProperty("TargetFramework", "netstandard1.6"));
+            var project = MSBuildTasks.MSBuildParseProject(projectFile, x => x.SetProperty("TargetFramework", "netstandard2.0"));
             project.IsSdkProject.Should().BeTrue();
             project.Properties["Configuration"].Should().Be("Debug");
             project.ItemGroups["PackageReference"].Should().NotContain("Octokit");
 
-            project = MSBuildTasks.MSBuildParseProject(projectFile, x => x.SetProperty("TargetFramework", "net46").SetConfiguration("Release"));
+            project = MSBuildTasks.MSBuildParseProject(projectFile, x => x.SetProperty("TargetFramework", "net461").SetConfiguration("Release"));
             project.Properties["Configuration"].Should().Be("Release");
             project.ItemGroups["PackageReference"].Should().Contain("Octokit");
         }

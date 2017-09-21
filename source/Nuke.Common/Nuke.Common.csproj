@@ -16,7 +16,7 @@
     <PackageReference Include="YamlDotNet" Version="4.2.1" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net46'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <PackageReference Include="Octokit" Version="0.24.0" />
     <!--<PackageReference Include="NullGuard.Fody" Version="1.4.6" />-->
   </ItemGroup>
