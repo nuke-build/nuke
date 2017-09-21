@@ -3,15 +3,13 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using System.Xml.XPath;
 using JetBrains.Annotations;
 using Nuke.Core;
-#if !NETCORE
-using System.Collections;
-using System.Xml.XPath;
-#endif
 
 namespace Nuke.Common.IO
 {
@@ -49,13 +47,9 @@ namespace Nuke.Common.IO
             XDocument document,
             string xpath)
         {
-#if NETCORE
-            throw new NotImplementedException();
-#else
             var objects = ((IEnumerable) document.XPathEvaluate(xpath)).Cast<XObject>().ToList();
             return (objects.OfType<XElement>().ToList().AsReadOnly(),
                     objects.OfType<XAttribute>().ToList().AsReadOnly());
-#endif
         }
     }
 }

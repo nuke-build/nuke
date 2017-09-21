@@ -5,9 +5,7 @@ using Nuke.Common.Git;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.MSBuild;
 using Nuke.Core;
-using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
-using static Nuke.Common.Tools.NuGet.NuGetTasks;
 using static Nuke.Core.IO.FileSystemTasks;
 using static Nuke.Core.IO.PathConstruction;
 using static Nuke.Core.EnvironmentInfo;
@@ -42,29 +40,13 @@ class Build : NukeBuild
             .DependsOn(Clean)
             .Executes(() =>
             {
-                // Remove tasks as needed. They exist for compatibility.
-
-                DotNetRestore(SolutionDirectory);
-
-                if (MSBuildVersion == Nuke.Common.Tools.MSBuild.MSBuildVersion.VS2017)
-                    MSBuild(s => DefaultMSBuildRestore);
-
-                NuGetRestore(SolutionFile);
+                MSBuild(s => DefaultMSBuildRestore);
             });
 
     Target Compile => _ => _
             .DependsOn(Restore)
             .Executes(() =>
             {
-                MSBuild(s => DefaultMSBuildCompile
-                        .SetMSBuildVersion(MSBuildVersion));
+                MSBuild(s => DefaultMSBuildCompile);
             });
-
-    // When having xproj-based projects, using VS2015 is necessary.
-    MSBuildVersion? MSBuildVersion =>
-            !IsUnix
-                ? GlobFiles(SolutionDirectory, "*.xproj").Any()
-                    ? Nuke.Common.Tools.MSBuild.MSBuildVersion.VS2015
-                    : Nuke.Common.Tools.MSBuild.MSBuildVersion.VS2017
-                : default(MSBuildVersion?);
 }

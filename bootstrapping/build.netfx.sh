@@ -17,31 +17,33 @@ SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 # CONFIGURATION
 ###########################################################################
 
-NUGET_URL="_NUGET_URL_"
-SOLUTION_DIRECTORY="$SCRIPT_DIR/_SOLUTION_DIRECTORY_"
+NUGET_VERSION="_NUGET_VERSION_"
 BUILD_PROJECT_FILE="$SCRIPT_DIR/_BUILD_DIRECTORY_NAME_/_BUILD_PROJECT_NAME_.csproj"
 BUILD_EXE_FILE="$SCRIPT_DIR/_BUILD_DIRECTORY_NAME_/bin/Debug/_BUILD_PROJECT_NAME_.exe"
-TEMP_DIRECTORY="$SCRIPT_DIR/_ROOT_DIRECTORY_/.tmp"
+
+TEMP_DIRECTORY="$SCRIPT_DIR/.tmp"
+
+NUGET_URL="https://dist.nuget.org/win-x86-commandline/$NUGET_VERSION/nuget.exe"
+NUGET_FILE="$TEMP_DIRECTORY/nuget.exe"
+export NUGET_EXE="$NUGET_FILE"
 
 ###########################################################################
 # PREPARE BUILD
 ###########################################################################
 
 if ! ((NOINIT)); then
-  mkdir -p $TEMP_DIRECTORY
+  mkdir -p "$TEMP_DIRECTORY"
 
-  NUGET_FILE="$TEMP_DIRECTORY/nuget.exe"
-  export NUGET_EXE="$NUGET_FILE"
-  if [ ! -f $NUGET_FILE ]; then curl -Lsfo $NUGET_FILE $NUGET_URL;
-  elif [[ $NUGET_URL == *"latest"* ]]; then mono $NUGET_FILE update -Self; fi
+  if [ ! -f "$NUGET_FILE" ]; then curl -Lsfo "$NUGET_FILE" $NUGET_URL;
+  elif [[ $NUGET_URL == *"latest"* ]]; then mono "$NUGET_FILE" update -Self; fi
 
-  mono $NUGET_FILE restore $BUILD_PROJECT_FILE -SolutionDirectory $SOLUTION_DIRECTORY
+  mono "$NUGET_FILE" restore "$BUILD_PROJECT_FILE"
 fi
 
-msbuild $BUILD_PROJECT_FILE
+msbuild "$BUILD_PROJECT_FILE"
 
 ###########################################################################
 # EXECUTE BUILD
 ###########################################################################
 
-mono $BUILD_EXE_FILE ${BUILD_ARGUMENTS[@]}
+mono "$BUILD_EXE_FILE" ${BUILD_ARGUMENTS[@]}

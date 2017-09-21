@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
-    <TargetFrameworks>net46;netstandard1.6</TargetFrameworks>
+    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
 
   <Import Project="..\Package.props" />
@@ -16,7 +16,7 @@
     <PackageReference Include="YamlDotNet" Version="4.2.1" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net46'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <PackageReference Include="Octokit" Version="0.24.0" />
     <!--<PackageReference Include="NullGuard.Fody" Version="1.4.6" />-->
   </ItemGroup>

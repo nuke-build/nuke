@@ -12,11 +12,15 @@ $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 # CONFIGURATION
 ###########################################################################
 
-$NuGetUrl = "_NUGET_URL_"
-$SolutionDirectory = "$PSScriptRoot\_SOLUTION_DIRECTORY_"
+$NuGetVersion = "_NUGET_VERSION_"
 $BuildProjectFile = "$PSScriptRoot\_BUILD_DIRECTORY_NAME_\_BUILD_PROJECT_NAME_.csproj"
 $BuildExeFile = "$PSScriptRoot\_BUILD_DIRECTORY_NAME_\bin\debug\_BUILD_PROJECT_NAME_.exe"
-$TempDirectory = "$PSScriptRoot\_ROOT_DIRECTORY_\.tmp"
+
+$TempDirectory = "$PSScriptRoot\.tmp"
+
+$NuGetUrl = ""https://dist.nuget.org/win-x86-commandline/$NuGetVersion/nuget.exe""
+$NuGetFile = "$TempDirectory\nuget.exe"
+$env:NUGET_EXE = $NuGetFile
 
 ###########################################################################
 # PREPARE BUILD
@@ -30,13 +34,11 @@ function ExecSafe([scriptblock] $cmd) {
 if (!$NoInit) {
     md -force $TempDirectory > $null
 
-    $NuGetFile = "$TempDirectory\nuget.exe"
-    $env:NUGET_EXE = $NuGetFile
     if (!(Test-Path $NuGetFile)) { (New-Object System.Net.WebClient).DownloadFile($NuGetUrl, $NuGetFile) }
     elseif ($NuGetUrl.Contains("latest")) { & $NuGetFile update -Self }
 
-    ExecSafe { & $NuGetFile restore $BuildProjectFile -SolutionDirectory $SolutionDirectory }
-    ExecSafe { & $NuGetFile install Nuke.MSBuildLocator -ExcludeVersion -OutputDirectory $TempDirectory -SolutionDirectory $SolutionDirectory }
+    ExecSafe { & $NuGetFile restore $BuildProjectFile }
+    ExecSafe { & $NuGetFile install Nuke.MSBuildLocator -ExcludeVersion -OutputDirectory $TempDirectory }
 }
 
 $MSBuildFile = & "$TempDirectory\Nuke.MSBuildLocator\tools\Nuke.MSBuildLocator.exe"

@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
 
 NOINIT=0
-REFEXT="False"
 BUILD_ARGUMENTS=()
 for i in "$@"; do
     case ${1,,} in
         -noinit) NOINIT=1;;
-        -refext) REFLOCAL="True";;
         *) BUILD_ARGUMENTS+=("$1") ;;
     esac
     shift
@@ -20,7 +18,7 @@ SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 ###########################################################################
 
 DOTNET_CHANNEL="2.0"
-BUILD_PROJECT_FILE="$SCRIPT_DIR/build/.build.csproj"
+BUILD_PROJECT_FILE="$SCRIPT_DIR/_BUILD_DIRECTORY_NAME_/_BUILD_PROJECT_NAME_.csproj"
 
 TEMP_DIRECTORY="$SCRIPT_DIR/.tmp"
 
@@ -47,7 +45,7 @@ if ! ((NOINIT)); then
   "$DOTNET_FILE" restore "$BUILD_PROJECT_FILE"
 fi
 
-"$DOTNET_FILE" build "$BUILD_PROJECT_FILE" --no-restore /p:"ReferenceExternal=$REFEXT"
+"$DOTNET_FILE" build "$BUILD_PROJECT_FILE" --no-restore
 
 ###########################################################################
 # EXECUTE BUILD

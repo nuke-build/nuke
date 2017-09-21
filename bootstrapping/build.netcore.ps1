@@ -1,7 +1,6 @@
 [CmdletBinding()]
 Param(
     [switch]$NoInit,
-    [switch]$RefExt,
     [Parameter(Position=0,Mandatory=$false,ValueFromRemainingArguments=$true)]
     [string[]]$BuildArguments
 )
@@ -14,7 +13,7 @@ $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 ###########################################################################
 
 $DotNetChannel = "2.0"
-$BuildProjectFile = "$PSScriptRoot\build\.build.csproj"
+$BuildProjectFile = "$PSScriptRoot\_BUILD_DIRECTORY_NAME_\_BUILD_PROJECT_NAME_.csproj"
 
 $TempDirectory = "$PSScriptRoot\.tmp"
 
@@ -46,7 +45,7 @@ if (!$NoInit) {
     ExecSafe { & $DotNetFile restore $BuildProjectFile }
 }
 
-ExecSafe { & $DotNetFile build $BuildProjectFile --no-restore /p:ReferenceExternal=$RefExt }
+ExecSafe { & $DotNetFile build $BuildProjectFile --no-restore }
 
 ###########################################################################
 # EXECUTE BUILD

@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using Nuke.Common.Git;
+using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitLink;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.InspectCode;
@@ -13,10 +14,9 @@ using Nuke.Common.Tools.OpenCover;
 using Nuke.Common.Tools.Xunit;
 using Nuke.Core;
 using Nuke.Core.Utilities.Collections;
+using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.GitLink.GitLinkTasks;
 using static Nuke.Common.Tools.InspectCode.InspectCodeTasks;
-using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
-using static Nuke.Common.Tools.NuGet.NuGetTasks;
 using static Nuke.Common.Tools.OpenCover.OpenCoverTasks;
 using static Nuke.Common.Tools.Xunit.XunitTasks;
 using static Nuke.Core.IO.FileSystemTasks;
@@ -43,7 +43,7 @@ class Build : NukeBuild
             .DependsOn(Clean)
             .Executes(() =>
             {
-                MSBuild(s => DefaultMSBuildRestore);
+                DotNetRestore(s => DefaultDotNetRestore.SetProjectFile (SolutionFile));
             });
 
     Target Compile => _ => _
@@ -51,7 +51,7 @@ class Build : NukeBuild
             .Requires(() => IsUnix || GitVersion != null)
             .Executes(() =>
             {
-                MSBuild(s => DefaultMSBuildCompile);
+                DotNetBuild(s => DefaultDotNetCompile.SetProjectFile(SolutionFile).EnableNoRestore());
             });
 
     Target Link => _ => _
@@ -69,7 +69,7 @@ class Build : NukeBuild
             .DependsOn(Link)
             .Executes(() =>
             {
-                MSBuild(s => DefaultMSBuildPack);
+                DotNetPack(s => DefaultDotNetPack.SetProject(SolutionFile).EnableNoBuild());
             });
 
     Target Push => _ => _
@@ -79,11 +79,10 @@ class Build : NukeBuild
             {
                 GlobFiles(OutputDirectory, "*.nupkg")
                         .Where(x => !x.EndsWith("symbols.nupkg"))
-                        .ForEach(x => NuGetPush(s => s
+                        .ForEach(x => DotNetNuGetPush(s => s
                                 .SetTargetPath(x)
                                 .SetSource("https://www.myget.org/F/nukebuild/api/v2/package")
-                                .SetApiKey(MyGetApiKey)
-                                .SetVerbosity(NuGetVerbosity.Detailed)));
+                                .SetApiKey(MyGetApiKey)));
             });
 
     Target Analysis => _ => _
