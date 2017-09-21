@@ -75,7 +75,7 @@ Write-Host "Using '$(GetRelative $PSScriptRoot $SolutionFile)' as solution file.
 # OTHER CONFIGURATIONS
 ###########################################################################
 
-$TargetPlatform = $host.ui.PromptForChoice(
+$TargetPlatformSelection = $host.ui.PromptForChoice(
   $null,
   "Build project target platform:",
   @(
@@ -101,6 +101,8 @@ $BuildDirectoryName = (ReadWithDefault "Directory for build project" $BuildDirec
 $BuildProjectName = (ReadWithDefault "Name for build project" $BuildProjectName)
 
 $BuildDirectory = "$PSScriptRoot\$BuildDirectoryName"
+md -force $BuildDirectory > $null
+
 $BuildProjectFile = "$BuildDirectory\$BuildProjectName.csproj"
 $SolutionDirectoryRelative = (GetRelative $BuildDirectory $SolutionDirectory)
 
@@ -119,14 +121,12 @@ $ProjectFormat = @("legacy", "sdk")[$ProjectFormatSelection]
 
 Write-Host "Generating build scripts..."
 
-md -force $BuildDirectory > $null
-
-Set-Content "build.ps1" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.$($TargetFramework).ps1") `
+Set-Content "build.ps1" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.$($TargetPlatform).ps1") `
     -replace "_NUGET_VERSION_",$NuGetVersion `
     -replace "_BUILD_DIRECTORY_NAME_",$BuildDirectoryName `
     -replace "_BUILD_PROJECT_NAME_",$BuildProjectName)
 
-Set-Content "build.sh" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.$($TargetFramework).sh") `
+Set-Content "build.sh" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.$($TargetPlatform).sh") `
     -replace "_NUGET_VERSION_",$NuGetVersion `
     -replace "_BUILD_DIRECTORY_NAME_",$BuildDirectoryName `
     -replace "_BUILD_PROJECT_NAME_",$BuildProjectName)
@@ -138,9 +138,9 @@ Set-Content "build.sh" ((New-Object System.Net.WebClient).DownloadString("$Boots
 Write-Host "Generating build project..."
 
 (New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/.build.csproj.DotSettings", "$BuildProjectFile.dotsettings")
-(New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/Build.$($ScriptKind).cs", "$BuildDirectory\Build.cs")
+(New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/Build.$($TargetPlatform).cs", "$BuildDirectory\Build.cs")
 
-Set-Content "$BuildProjectFile" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/.build.$($TargetPlatform).csproj") `
+Set-Content "$BuildProjectFile" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/.build.$($ProjectFormat).csproj") `
     -replace "_TARGET_FRAMEWORK_",$TargetFramework `
     -replace "_BUILD_PROJECT_GUID_",$ProjectGuid `
     -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `

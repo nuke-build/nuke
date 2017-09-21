@@ -18,7 +18,7 @@ $BuildExeFile = "$PSScriptRoot\_BUILD_DIRECTORY_NAME_\bin\debug\_BUILD_PROJECT_N
 
 $TempDirectory = "$PSScriptRoot\.tmp"
 
-$NuGetUrl = ""https://dist.nuget.org/win-x86-commandline/$NuGetVersion/nuget.exe""
+$NuGetUrl = "https://dist.nuget.org/win-x86-commandline/$NuGetVersion/nuget.exe"
 $NuGetFile = "$TempDirectory\nuget.exe"
 $env:NUGET_EXE = $NuGetFile
 

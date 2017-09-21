@@ -82,7 +82,7 @@ while : ; do
     [[ $TARGET_PLATFORM_SELECTION < 0 || $TARGET_PLATFORM_SELECTION -ge 2 ]] || break
 done
 
-if [ $PROJECT_FORMAT_SELECTION == 0 ]; then
+if [ $TARGET_PLATFORM_SELECTION == 0 ]; then
   while : ; do
       echo "Which format do you want to use for your build project:"
       echo "[0] Legacy format: supported by all MSBuild/Mono versions."
@@ -94,10 +94,12 @@ if [ $PROJECT_FORMAT_SELECTION == 0 ]; then
   NUGET_VERSION=$(ReadWithDefault "NuGet executable version" $NUGET_VERSION)
 fi
 
-BUILD_DIRECTORY_NAME=$(ReadWithDefault "Directory for build project" $DEFAULT_BUILD_DIRECTORY_NAME)
-BUILD_PROJECT_NAME=$(ReadWithDefault "Name for build project" $DEFAULT_BUILD_PROJECT_NAME)
+BUILD_DIRECTORY_NAME=$(ReadWithDefault "Directory for build project" $BUILD_DIRECTORY_NAME)
+BUILD_PROJECT_NAME=$(ReadWithDefault "Name for build project" $BUILD_PROJECT_NAME)
 
 BUILD_DIRECTORY="$SCRIPT_DIR/$BUILD_DIRECTORY_NAME"
+mkdir -p $BUILD_DIRECTORY
+
 BUILD_PROJECT_FILE="$BUILD_DIRECTORY/$BUILD_PROJECT_NAME.csproj"
 SOLUTION_DIRECTORY_RELATIVE="$(GetRelative "$BUILD_DIRECTORY" "$SOLUTION_DIRECTORY")"
 
@@ -106,21 +108,19 @@ PROJECT_GUID=$(python -c "import uuid; print str(uuid.uuid4()).upper()")
 
 TARGET_PLATFORM_ARRAY=("netfx" "netcore")
 TARGET_PLATFORM=${TARGET_PLATFORM_ARRAY[$TARGET_PLATFORM_SELECTION]}
-TARGET_FRAMEWORK_ARRAY=("net461", "netcoreapp2.0")
+TARGET_FRAMEWORK_ARRAY=("net461" "netcoreapp2.0")
 TARGET_FRAMEWORK=${TARGET_FRAMEWORK_ARRAY[$TARGET_PLATFORM_SELECTION]}
 
 PROJECT_KIND_ARRAY=("FAE04EC0-301F-11D3-BF4B-00C04F79EFBC" "9A19103F-16F7-4668-BE54-9A1E7A4F7556")
 PROJECT_KIND=${PROJECT_KIND_ARRAY[$PROJECT_FORMAT_SELECTION]}
 PROJECT_FORMAT_ARRAY=("legacy" "sdk")
-PROJECT_FORMAT=${BUILD_PROJECT_URL_ARRAY[$PROJECT_FORMAT_SELECTION]}
+PROJECT_FORMAT=${PROJECT_FORMAT_ARRAY[$PROJECT_FORMAT_SELECTION]}
 
 ###########################################################################
 # GENERATE BUILD SCRIPTS
 ###########################################################################
 
 echo "Generating build scripts..."
-
-mkdir -p $(dirname $BUILD_DIRECTORY)
 
 sed -e 's~_NUGET_VERSION_~'"$NUGET_VERSION"'~g' \
     -e 's~_BUILD_DIRECTORY_NAME_~'"$BUILD_DIRECTORY_NAME"'~g' \
@@ -129,7 +129,7 @@ sed -e 's~_NUGET_VERSION_~'"$NUGET_VERSION"'~g' \
     > build.sh
     
 sed -e 's~_NUGET_VERSION_~'"$NUGET_VERSION"'~g' \
-    -e 's~_BUILD_DIRECTORY_NAME_~'"$BUILD_DIRECTORY_NAME"'~g' \
+    -e 's~_BUILD_DIRECTORY_NAME_~'"${BUILD_DIRECTORY_NAME//\//\\}"'~g' \
     -e 's~_BUILD_PROJECT_NAME_~'"$BUILD_PROJECT_NAME"'~g' \
     <<<"$(curl -Lsf $BOOTSTRAPPING_URL/build.$TARGET_PLATFORM.ps1)" \
     > build.ps1
@@ -141,7 +141,7 @@ sed -e 's~_NUGET_VERSION_~'"$NUGET_VERSION"'~g' \
 echo "Generating build project..."
 
 curl -Lsfo "$BUILD_PROJECT_FILE.dotsettings" "$BOOTSTRAPPING_URL/.build.csproj.DotSettings"
-curl -Lsfo "$BUILD_DIRECTORY/Build.cs" "$BOOTSTRAPPING_URL/Build.$.cs"
+curl -Lsfo "$BUILD_DIRECTORY/Build.cs" "$BOOTSTRAPPING_URL/Build.$TARGET_PLATFORM.cs"
 
 sed -e 's~_TARGET_FRAMEWORK_~'"$TARGET_FRAMEWORK"'~g' \
     -e 's~_BUILD_PROJECT_GUID_~'"$PROJECT_GUID"'~g' \
