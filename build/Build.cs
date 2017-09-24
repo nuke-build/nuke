@@ -9,7 +9,6 @@ using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitLink;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.InspectCode;
-using Nuke.Common.Tools.NuGet;
 using Nuke.Common.Tools.OpenCover;
 using Nuke.Common.Tools.Xunit;
 using Nuke.Core;

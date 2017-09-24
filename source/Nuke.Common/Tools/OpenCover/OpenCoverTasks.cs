@@ -6,7 +6,6 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Core;
-using Nuke.Core.BuildServers;
 using Nuke.Core.Tooling;
 
 namespace Nuke.Common.Tools.OpenCover

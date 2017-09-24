@@ -4,7 +4,6 @@
 
 using System;
 using System.Linq;
-using System.Linq.Expressions;
 using JetBrains.Annotations;
 using Nuke.Core.Execution;
 using Nuke.Core.Injection;

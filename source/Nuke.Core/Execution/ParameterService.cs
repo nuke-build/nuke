@@ -7,7 +7,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Core.Utilities;
 using Nuke.Core.Utilities.Collections;

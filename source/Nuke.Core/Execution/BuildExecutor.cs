@@ -12,7 +12,6 @@ using System.Reflection;
 using System.Text;
 using Nuke.Core.OutputSinks;
 using Nuke.Core.Utilities;
-using static Nuke.Core.EnvironmentInfo;
 
 namespace Nuke.Core.Execution
 {

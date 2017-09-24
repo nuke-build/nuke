@@ -117,7 +117,7 @@ namespace Nuke.Core
         {
             get
             {
-                var buildAssemblyLocation = BuildAssembly.Location.NotNull("executingAssembly != null");
+                var buildAssemblyLocation = BuildAssembly.Location.NotNull("buildAssemblyLocation != null");
                 var rootDirectory = Directory.GetParent(buildAssemblyLocation);
 
                 while (rootDirectory != null && !rootDirectory.GetFiles(c_configFile).Any())

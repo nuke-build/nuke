@@ -49,7 +49,7 @@ namespace Nuke.Common.Git
         public string Name { get; set; }
 
         /// <summary>A construction of <c>owner/name</c></summary>
-        public string Identifier => $"{Owner.NotNull("Owner != null")}/{Name.NotNull("Repository != null")}";
+        public string Identifier => $"{Owner.NotNull("Owner != null")}/{Name.NotNull("Name != null")}";
 
         /// <summary>Url in the form of <c>https://endpoint/identifier</c></summary>
         public string SvnUrl => $"https://{Endpoint.NotNull("Endpoint != Endpoint")}/{Identifier}";
