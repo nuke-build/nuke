@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.ToolGenerator.Model;
@@ -58,7 +59,7 @@ namespace Nuke.ToolGenerator.Generators
                 return writer;
 
             var tool = settingsClass.Tool.NotNull();
-            var resolvers = new List<string> { "base.ToolPath" };
+            var resolvers = new List<string>();
 
             if (tool.CustomExecutable)
             {
@@ -81,12 +82,14 @@ namespace Nuke.ToolGenerator.Generators
                               $"{tool.PathExecutable.DoubleQuoteInterpolated()})");
             }
 
-            if (resolvers.Count == 1)
+            if (resolvers.Count == 0)
                 return writer;
+
+            Trace.Assert(resolvers.Count == 1, "resolvers.Count == 1");
 
             return writer
                     .WriteSummary($"Path to the {tool.Name} executable.")
-                    .WriteLine($"public override string ToolPath => {resolvers.Join(" ?? ")};");
+                    .WriteLine($"public override string ToolPath => base.ToolPath ?? {resolvers.Single()};");
         }
 
         private static void WritePropertyDeclaration (DataClassWriter writer, Property property)
