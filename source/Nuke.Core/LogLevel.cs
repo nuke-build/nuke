@@ -14,6 +14,6 @@ namespace Nuke.Core
         Trace,
         Information,
         Warning,
-        Failure
+        Error
     }
 }

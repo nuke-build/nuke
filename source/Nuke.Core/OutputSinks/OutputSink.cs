@@ -17,7 +17,7 @@ namespace Nuke.Core.OutputSinks
         void Trace (string text);
         void Info (string text);
         void Warn (string text, string details = null);
-        void Fail (string text, string details = null);
+        void Error (string text, string details = null);
 
         void WriteSummary (IReadOnlyCollection<TargetDefinition> executionList);
     }
@@ -66,9 +66,9 @@ namespace Nuke.Core.OutputSinks
             Instance.Warn(text, details);
         }
 
-        public static void Fail (string text, string details = null)
+        public static void Error (string text, string details = null)
         {
-            Instance.Fail(text, details);
+            Instance.Error(text, details);
         }
 
         public static void WriteSummary (IReadOnlyCollection<TargetDefinition> executionList)

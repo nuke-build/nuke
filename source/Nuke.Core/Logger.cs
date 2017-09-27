@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Core.BuildServers;
 using Nuke.Core.OutputSinks;
@@ -15,33 +16,59 @@ namespace Nuke.Core
     [DebuggerStepThrough]
     public static class Logger
     {
-        public static void Log(string text = null)
+        /// <summary>
+        /// Provides a logging block for better readability. The actual output is dependent on the executing environment.
+        /// <ul>
+        ///   <li><b>Console:</b> logs message with figlet font <em>cybermedium</em></li>
+        ///   <li><b>TeamCity:</b> calls <see cref="TeamCity.OpenBlock"/> and <see cref="TeamCity.CloseBlock"/></li>
+        ///   <li><b>Bitrise:</b> logs message with figlet font <em>ansi-shadow</em></li>
+        /// </ul>
+        /// </summary>
+        /// <returns>
+        /// Returns an <see cref="IDisposable"/> which will automatically end the block.
+        /// </returns>
+        public static IDisposable Block (string text)
+        {
+            return OutputSink.WriteBlock(text);
+        }
+
+        #region Log
+
+        /// <summary>
+        /// Logs a message unconditionally.
+        /// </summary>
+        [StringFormatMethod("format")]
+        public static void Log (string format, params object[] args)
+        {
+            Log(string.Format(format, args));
+        }
+
+        /// <summary>
+        /// Logs a message unconditionally.
+        /// </summary>
+        public static void Log (object value)
+        {
+            Log(value.ToString());
+        }
+
+        /// <summary>
+        /// Logs a message unconditionally.
+        /// </summary>
+        public static void Log (string text = null)
         {
             OutputSink.Write(text ?? string.Empty);
         }
-        
+
+        /// <summary>
+        /// Logs a message unconditionally.
+        /// </summary>
         public static T Log<T> (this T obj, Func<T, string> text)
         {
             Log(text(obj));
             return obj;
         }
 
-        /// <summary>
-        /// Provides a logging block for better readability. The actual output is dependent on the executing environment.
-        /// <ul>
-        ///   <li><b>Console:</b> calls <see cref="Info(string)"/> with figlet font <em>cybermedium</em></li>
-        ///   <li><b>TeamCity:</b> calls <see cref="TeamCity.OpenBlock"/> and <see cref="TeamCity.CloseBlock"/></li>
-        ///   <li><b>Bitrise:</b> calls <see cref="Info(string)"/> with figlet font <em>ansi-shadow</em></li>
-        /// </ul>
-        /// </summary>
-        /// <returns>
-        /// Returns an <see cref="IDisposable"/> which will automatically end the block.
-        /// </returns>
-        [StringFormatMethod("format")]
-        public static IDisposable Block (string text)
-        {
-            return OutputSink.WriteBlock(text);
-        }
+        #endregion
 
         #region Trace
 
@@ -145,13 +172,51 @@ namespace Nuke.Core
         {
             OutputSink.Warn(text ?? string.Empty);
         }
-        
+
         /// <summary>
         /// Logs a message as warning if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Warning"/>.
         /// </summary>
         public static T Warn<T> (this T obj, Func<T, string> text)
         {
             Warn(text(obj));
+            return obj;
+        }
+
+        #endregion
+
+        #region Error
+
+        /// <summary>
+        /// Logs a message as error.
+        /// </summary>
+        [StringFormatMethod("format")]
+        public static void Error (string format, params object[] args)
+        {
+            Error(string.Format(format, args));
+        }
+
+        /// <summary>
+        /// Logs a message as error.
+        /// </summary>
+        public static void Error (object value)
+        {
+            Error(value.ToString());
+        }
+
+        /// <summary>
+        /// Logs a message as error.
+        /// </summary>
+        public static void Error (string text = null)
+        {
+            OutputSink.Error(text ?? string.Empty);
+        }
+
+        /// <summary>
+        /// Logs a message as error.
+        /// </summary>
+        public static T Error<T> (this T obj, Func<T, string> text)
+        {
+            Error(text(obj));
             return obj;
         }
 

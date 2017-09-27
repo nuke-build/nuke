@@ -25,10 +25,10 @@ namespace Nuke.Core.Execution
                 var executionList = Setup(defaultTargetExpression);
                 return new ExecutionListRunner().Run(executionList);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                OutputSink.Fail(ex.Message, ex.StackTrace);
-                return -ex.Message.GetHashCode();
+                OutputSink.Error(exception.Message, exception.StackTrace);
+                return -exception.Message.GetHashCode();
             }
         }
 

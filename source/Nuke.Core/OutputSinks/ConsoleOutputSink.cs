@@ -49,7 +49,7 @@ namespace Nuke.Core.OutputSinks
                 WriteWithColors(details, ConsoleColor.Yellow, ConsoleColor.DarkYellow);
         }
 
-        public virtual void Fail (string text, string details = null)
+        public virtual void Error (string text, string details = null)
         {
             WriteWithColors(text, ConsoleColor.Red, ConsoleColor.DarkRed);
             if (details != null)

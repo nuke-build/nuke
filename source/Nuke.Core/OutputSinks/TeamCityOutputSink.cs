@@ -49,7 +49,7 @@ namespace Nuke.Core.OutputSinks
                 _teamCity.WriteWarning(details);
         }
 
-        public override void Fail (string text, string details = null)
+        public override void Error (string text, string details = null)
         {
             _teamCity.WriteError(text, details);
             _teamCity.AddBuildProblem(text);

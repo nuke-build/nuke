@@ -40,7 +40,7 @@ namespace Nuke.Core.Execution
                     }
                     catch (Exception exception)
                     {
-                        OutputSink.Fail(exception.Message, exception.StackTrace);
+                        OutputSink.Error(exception.Message, exception.StackTrace);
                         target.Status = ExecutionStatus.Failed;
 
                         break;
