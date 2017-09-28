@@ -24,7 +24,7 @@ namespace Nuke.Core
             Environment.SetEnvironmentVariable(name, value);
         }
 
-        public static void SetVariables<T>(string name, IEnumerable<T> values, char separator)
+        public static void SetVariable<T>(string name, IEnumerable<T> values, char separator)
         {
             SetVariable(name, values.Select(x => x.ToString()).Join(separator));
         }
@@ -75,9 +75,9 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Provides access to command-line arguments or environment variables.
+        /// Provides access to a command-line argument or environment variable set.
         /// </summary>
-        public static T[] Parameters<T>(string name, char? separator = null)
+        public static T[] ParameterSet<T>(string name, char? separator = null)
         {
             return s_parameterService.GetParameter<T[]>(name, separator).NotNull();
         }
@@ -129,9 +129,9 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Provides access to environment variables.
+        /// Provides access to an environment variable set.
         /// </summary>
-        public static T[] Variables<T>(string name, char? separator = null)
+        public static T[] VariableSet<T>(string name, char? separator = null)
         {
             return s_parameterService.GetEnvironmentVariable<T[]>(name, separator).NotNull();
         }
@@ -183,9 +183,9 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Provides access to command-line arguments.
+        /// Provides access to a command-line argument set.
         /// </summary>
-        public static T[] Arguments<T>(string name, char? separator = null)
+        public static T[] ArgumentSet<T>(string name, char? separator = null)
         {
             return s_parameterService.GetCommandLineArgument<T[]>(name, separator).NotNull();
         }
