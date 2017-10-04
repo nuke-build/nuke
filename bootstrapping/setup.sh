@@ -101,7 +101,6 @@ BUILD_DIRECTORY="$SCRIPT_DIR/$BUILD_DIRECTORY_NAME"
 mkdir -p $BUILD_DIRECTORY
 
 BUILD_PROJECT_FILE="$BUILD_DIRECTORY/$BUILD_PROJECT_NAME.csproj"
-SOLUTION_DIRECTORY_RELATIVE="$(GetRelative "$BUILD_DIRECTORY" "$SOLUTION_DIRECTORY")"
 
 LATEST_VERSION=$(curl -s 'https://api-v2v3search-0.nuget.org/query?q=packageid:Nuke.Common' | python3 -c "import sys, json; print(json.load(sys.stdin)['data'][0]['version'])")
 PROJECT_GUID=$(python -c "import uuid; print str(uuid.uuid4()).upper()")
@@ -122,15 +121,19 @@ PROJECT_FORMAT=${PROJECT_FORMAT_ARRAY[$PROJECT_FORMAT_SELECTION]}
 
 echo "Generating build scripts..."
 
+SOLUTION_DIRECTORY_RELATIVE="$(GetRelative "$SCRIPT_DIR" "$SOLUTION_DIRECTORY")"
+
 sed -e 's~_NUGET_VERSION_~'"$NUGET_VERSION"'~g' \
     -e 's~_BUILD_DIRECTORY_NAME_~'"$BUILD_DIRECTORY_NAME"'~g' \
     -e 's~_BUILD_PROJECT_NAME_~'"$BUILD_PROJECT_NAME"'~g' \
+    -e 's~_SOLUTION_DIRECTORY_~'"$SOLUTION_DIRECTORY_RELATIVE"'~g' \
     <<<"$(curl -Lsf $BOOTSTRAPPING_URL/build.$TARGET_PLATFORM.sh)" \
     > build.sh
     
 sed -e 's~_NUGET_VERSION_~'"$NUGET_VERSION"'~g' \
     -e 's~_BUILD_DIRECTORY_NAME_~'"${BUILD_DIRECTORY_NAME//\//\\}"'~g' \
     -e 's~_BUILD_PROJECT_NAME_~'"$BUILD_PROJECT_NAME"'~g' \
+    -e 's~_SOLUTION_DIRECTORY_~'"${SOLUTION_DIRECTORY_RELATIVE//\//\\}"'~g' \
     <<<"$(curl -Lsf $BOOTSTRAPPING_URL/build.$TARGET_PLATFORM.ps1)" \
     > build.ps1
 
@@ -139,6 +142,8 @@ sed -e 's~_NUGET_VERSION_~'"$NUGET_VERSION"'~g' \
 ###########################################################################
 
 echo "Generating build project..."
+
+SOLUTION_DIRECTORY_RELATIVE="$(GetRelative "$BUILD_DIRECTORY" "$SOLUTION_DIRECTORY")"
 
 curl -Lsfo "$BUILD_PROJECT_FILE.dotsettings" "$BOOTSTRAPPING_URL/.build.csproj.DotSettings"
 curl -Lsfo "$BUILD_DIRECTORY/Build.cs" "$BOOTSTRAPPING_URL/Build.$TARGET_PLATFORM.cs"

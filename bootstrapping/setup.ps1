@@ -104,7 +104,6 @@ $BuildDirectory = "$PSScriptRoot\$BuildDirectoryName"
 md -force $BuildDirectory > $null
 
 $BuildProjectFile = "$BuildDirectory\$BuildProjectName.csproj"
-$SolutionDirectoryRelative = (GetRelative $BuildDirectory $SolutionDirectory)
 
 $LatestVersion = $(Invoke-WebRequest https://api-v2v3search-0.nuget.org/query?q=packageid:Nuke.Common | ConvertFrom-Json).data.version
 $ProjectGuid = [guid]::NewGuid().ToString().ToUpper()
@@ -121,21 +120,27 @@ $ProjectFormat = @("legacy", "sdk")[$ProjectFormatSelection]
 
 Write-Host "Generating build scripts..."
 
+$SolutionDirectoryRelative = (GetRelative $PSScriptRoot $SolutionDirectory)
+
 Set-Content "build.ps1" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.$($TargetPlatform).ps1") `
     -replace "_NUGET_VERSION_",$NuGetVersion `
     -replace "_BUILD_DIRECTORY_NAME_",$BuildDirectoryName `
-    -replace "_BUILD_PROJECT_NAME_",$BuildProjectName)
+    -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
+    -replace "_SOLUTION_DIRECTORY_",$SolutionDirectoryRelative)
 
 Set-Content "build.sh" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.$($TargetPlatform).sh") `
     -replace "_NUGET_VERSION_",$NuGetVersion `
     -replace "_BUILD_DIRECTORY_NAME_",$BuildDirectoryName `
-    -replace "_BUILD_PROJECT_NAME_",$BuildProjectName)
+    -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
+    -replace "_SOLUTION_DIRECTORY_",($SolutionDirectoryRelative -replace "\\","/"))
 
 ###########################################################################
 # GENERATE PROJECT FILES
 ###########################################################################
 
 Write-Host "Generating build project..."
+
+$SolutionDirectoryRelative = (GetRelative $BuildDirectory $SolutionDirectory)
 
 (New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/.build.csproj.DotSettings", "$BuildProjectFile.dotsettings")
 (New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/Build.$($TargetPlatform).cs", "$BuildDirectory\Build.cs")
