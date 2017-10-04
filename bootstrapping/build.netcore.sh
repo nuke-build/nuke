@@ -3,7 +3,7 @@
 NOINIT=0
 BUILD_ARGUMENTS=()
 for i in "$@"; do
-    case ${1,,} in
+    case $(echo $1 | awk '{print tolower($0)}') in
         -noinit) NOINIT=1;;
         *) BUILD_ARGUMENTS+=("$1") ;;
     esac
