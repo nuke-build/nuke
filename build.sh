@@ -25,7 +25,7 @@ BUILD_PROJECT_FILE="$SCRIPT_DIR/build/.build.csproj"
 TEMP_DIRECTORY="$SCRIPT_DIR/.tmp"
 
 DOTNET_SCRIPT_URL="https://raw.githubusercontent.com/dotnet/cli/master/scripts/obtain/dotnet-install.sh"
-DOTNET_DIRECTORY="$TEMP_DIRECTORY/dotnet"
+DOTNET_DIRECTORY="$TEMP_DIRECTORY/dotnet-unix"
 DOTNET_FILE="$DOTNET_DIRECTORY/dotnet"
 export DOTNET_EXE="$DOTNET_FILE"
 
