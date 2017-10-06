@@ -71,18 +71,22 @@ namespace Nuke.Core.IO
 
         public static void DeleteDirectories (IEnumerable<string> directories)
         {
-            directories.ForEach(DeleteDirectory);
+            var directoryList = directories.ToList();
+            directoryList.ForEach(DeleteDirectory);
         }
 
         public static void DeleteDirectoryInternal (string directory)
         {
             Directory.GetFiles(directory).ForEach(DeleteFile);
             Directory.GetDirectories(directory).ForEach(DeleteDirectoryInternal);
+
+            Logger.Trace($"Deleting directory '{directory}'...");
             Directory.Delete(directory, recursive: false);
         }
 
         private static void DeleteFile (string file)
         {
+            Logger.Trace($"Deleting file '{file}'...");
             EnsureFileAttributes(file);
             File.Delete(file);
         }
