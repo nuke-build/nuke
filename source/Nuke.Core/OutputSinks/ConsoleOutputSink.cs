@@ -91,7 +91,10 @@ namespace Nuke.Core.OutputSinks
             var previousForeground = Console.ForegroundColor;
             var backgroundColor = Console.BackgroundColor;
 
-            var hasDarkBackground = backgroundColor == ConsoleColor.Black || backgroundColor.ToString().StartsWith("Dark");
+            // TODO: can we determine the actual console background color?
+            var hasDarkBackground = (int) backgroundColor == -1
+                                    || backgroundColor == ConsoleColor.Black
+                                    || backgroundColor.ToString().StartsWith("Dark");
 
             using (DelegateDisposable.CreateBracket(
                 () => Console.ForegroundColor = hasDarkBackground ? brightForeground : darkForeground,
