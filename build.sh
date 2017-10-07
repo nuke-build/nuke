@@ -32,6 +32,8 @@ export DOTNET_EXE="$DOTNET_FILE"
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
 export NUGET_XMLDOC_MODE="skip"
+# Workaround according to https://github.com/dotnet/sdk/issues/335
+export FrameworkPathOverride=$(dirname $(which mono))/../lib/mono/4.6.1-api/
 
 ###########################################################################
 # PREPARE BUILD
