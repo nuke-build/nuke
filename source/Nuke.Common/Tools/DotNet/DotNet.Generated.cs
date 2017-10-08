@@ -392,7 +392,7 @@ namespace Nuke.Common.Tools.DotNet
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class DotNetPublishSettings : ToolSettings
+    public partial class DotNetPublishSettings : DotNetSettings
     {
         /// <summary><p>The project to publish, which defaults to the current directory if not specified.</p></summary>
         public virtual string Project { get; internal set; }

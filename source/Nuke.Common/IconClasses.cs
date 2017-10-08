@@ -20,9 +20,11 @@ using Nuke.Common.Tools.MSBuild;
 using Nuke.Common.Tools.Npm;
 using Nuke.Common.Tools.NuGet;
 using Nuke.Common.Tools.Nunit;
+using Nuke.Common.Tools.Octopus;
 using Nuke.Common.Tools.OpenCover;
 using Nuke.Common.Tools.Paket;
 using Nuke.Common.Tools.ReportGenerator;
+using Nuke.Common.Tools.SignTool;
 using Nuke.Common.Tools.TestCloud;
 using Nuke.Common.Tools.VsTest;
 using Nuke.Common.Tools.Xunit;
@@ -43,10 +45,12 @@ using Nuke.Core.Execution;
 [assembly: IconClass(typeof(NpmTasks), "box")]
 [assembly: IconClass(typeof(NuGetTasks), "box")]
 [assembly: IconClass(typeof(NunitTasks), "bug2")]
+[assembly: IconClass(typeof(OctopusTasks), "cloud-upload")]
 [assembly: IconClass(typeof(OpenCoverTasks), "shield2")]
 [assembly: IconClass(typeof(PaketTasks), "box")]
 [assembly: IconClass(typeof(ReportGeneratorTasks), "pie-chart4")]
 [assembly: IconClass(typeof(SerializationTasks), "transmission2")]
+[assembly: IconClass(typeof(SignToolTasks), "key")]
 [assembly: IconClass(typeof(TestCloudTasks), "bug2")]
 [assembly: IconClass(typeof(TextTasks), "file-text3")]
 [assembly: IconClass(typeof(VsTestTasks), "bug2")]
