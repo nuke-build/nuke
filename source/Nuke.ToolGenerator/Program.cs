@@ -38,7 +38,14 @@ namespace Nuke.ToolGenerator
             {
                 var tool = Load(file, generation);
 
-                tool.Tasks.ForEach(x => tool.CommonTaskProperties.ForEach(y => x.SettingsClass.Properties.Add(y.Clone())));
+                foreach (var task in tool.Tasks)
+                {
+                    if (task.OmitCommonProperties)
+                        continue;
+
+                    tool.CommonTaskProperties.ForEach(y => task.SettingsClass.Properties.Add(y.Clone()));
+                }
+
                 ApplyBackReferences(tool);
 
                 using (var streamWriter = new StreamWriter(File.Open(tool.GenerationFileBase + ".Generated.cs", FileMode.Create)))
