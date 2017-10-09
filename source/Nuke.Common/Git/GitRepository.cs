@@ -23,8 +23,8 @@ namespace Nuke.Common.Git
             var patterns =
                     new[]
                     {
-                        @"git@(?<endpoint>.*):(?<owner>.*)/(?<name>.*)(\.git)?",
-                        @"https://(?<endpoint>.*)/(?<owner>.*)/(?<name>.*)(\.git)?"
+                        @"git@(?<endpoint>.*):(?<owner>.*)/(?<name>.*?)(\.git)?$",
+                        @"https://(?<endpoint>.*)/(?<owner>.*)/(?<name>.*?)(\.git)?$"
                     };
 
             var match = patterns.Select(x => Regex.Match(url, x)).FirstOrDefault(x => x.Success);
