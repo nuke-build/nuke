@@ -36,6 +36,8 @@ namespace Nuke.Core.OutputSinks
                     return new BitriseOutputSink();
                 case HostType.TeamCity:
                     return new TeamCityOutputSink(new TeamCity());
+                case HostType.TeamServices:
+                    return new TeamServicesOutputSink(new TeamServices());
                 default:
                     return new ConsoleOutputSink();
             }
