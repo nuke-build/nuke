@@ -29,6 +29,7 @@ namespace Nuke.Core.OutputSinks
         public static IOutputSink Instance =>
                 TeamCityOutputSink.Instance
                 ?? BitriseOutputSink.Instance
+                ?? TeamServicesOutputSink.Instance
                 ?? ConsoleOutputSink.Instance;
         
         public static void Write(string text)

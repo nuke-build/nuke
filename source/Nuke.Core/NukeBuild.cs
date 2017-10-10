@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
+using Nuke.Core.BuildServers;
 using Nuke.Core.Execution;
 using Nuke.Core.IO;
 using Nuke.Core.OutputSinks;
@@ -105,7 +106,7 @@ namespace Nuke.Core
         [Parameter("Shows the help text for this build assembly if supplied.")]
         public string[] Help { get; }
 
-        public static bool IsLocalBuild => OutputSink.Instance is ConsoleOutputSink;
+        public static bool IsLocalBuild => TeamCity.Instance == null && Bitrise.Instance == null && TeamServices.Instance == null;
         public static bool IsServerBuild => !IsLocalBuild;
 
         public LogLevel LogLevel => (LogLevel) Verbosity;

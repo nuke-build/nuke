@@ -18,11 +18,14 @@ namespace Nuke.Core.BuildServers
     {
         public static TeamServices Instance { get; } =
             Variable("TF_BUILD") != null
-                ? new TeamServices()
+                ? new TeamServices(Console.WriteLine)
                 : null;
 
-        private TeamServices ()
+        private readonly Action<string> _messageSink;
+
+        private TeamServices (Action<string> messageSink)
         {
+            _messageSink = messageSink;
         }
 
         /// <summary>
@@ -225,5 +228,47 @@ namespace Nuke.Core.BuildServers
 
         /// <summary> The ID of the team project that this build belongs to.  </summary>
         public Guid TeamProjectId => EnsureVariable<Guid>("SYSTEM_TEAMPROJECTID");
-    }
+
+        /// <summary>
+        ///     Upload user interested log to build’s container “logs\tool” folder. For example: c:\msbuild.log.
+        /// </summary>
+        /// <param name="localFilePath"> Full path to the local file. </param>
+        public void UploadLog(string localFilePath)
+            => _messageSink($"##vso[build.uploadlog]{localFilePath}");
+
+        /// <summary> Update build number for current build. </summary>
+        /// <param name="buildNumber"> New build number to apply. </param>
+        public void UpdateBuildNumber(string buildNumber)
+            => _messageSink($"##vso[build.updatebuildnumber]{buildNumber}");
+
+        /// <summary> Adds a build tag for the current build. </summary>
+        /// <param name="buildTag"> The build tag. </param>
+        public void AddBuildTag(string buildTag)
+            => _messageSink($"##vso[build.addbuildtag]{buildTag}");
+
+        /// <summary> Log error or warning issue to timeline record of current task. </summary>
+        /// <param name="type">         Error or Warning. </param>
+        /// <param name="message">      The message to log. </param>
+        /// <param name="sourcePath">   (Optional) source file location. </param>
+        /// <param name="lineNumber">   (Optional) The line number. </param>
+        /// <param name="columnNumber"> (Optional) The column number. </param>
+        /// <param name="code">         (Optional) Error or warning code. </param>
+        public void LogIssue(TeamServicesIssueType type, string message, string sourcePath = null, string lineNumber = null, string columnNumber = null, string code = null)
+            {
+            string properties = $"type={(type == TeamServicesIssueType.Error ? "error" : "warning")};";
+            if (!string.IsNullOrEmpty(sourcePath))
+                properties += $"sourcepath={sourcePath};";
+
+            if (!string.IsNullOrEmpty(lineNumber))
+                properties += $"linenumber={lineNumber};";
+
+            if (!string.IsNullOrEmpty(columnNumber))
+                properties += $"columnnumber={columnNumber};";
+
+            if (!string.IsNullOrEmpty(code))
+                properties += $"code={code};";
+
+            _messageSink($"##vso[task.logissue {properties}]{message}");
+            }
+        }
 }
