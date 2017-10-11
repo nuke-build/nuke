@@ -18,24 +18,28 @@ namespace Nuke.Common.Git
         /// Tries to parse a string to a valid <see cref="GitRepository" />.
         /// </summary>
         [CanBeNull]
-        public static GitRepository TryParse (string url)
+        public static GitRepository TryParse (string url, string head)
         {
             var patterns =
                     new[]
                     {
-                        @"git@(?<endpoint>.*):(?<owner>.*)/(?<name>.*)(\.git)?",
-                        @"https://(?<endpoint>.*)/(?<owner>.*)/(?<name>.*)(\.git)?"
+                        @"git@(?<endpoint>.*):(?<owner>.*)/(?<name>.*?)(\.git)?$",
+                        @"https://(?<endpoint>.*)/(?<owner>.*)/(?<name>.*?)(\.git)?$"
                     };
 
             var match = patterns.Select(x => Regex.Match(url, x)).FirstOrDefault(x => x.Success);
             if (match == null)
                 return null;
 
+            var branchMatch = Regex.Match(head, @"^ref: refs/heads/(?<branch>.*)");
+
             return new GitRepository
                    {
                        Endpoint = match.Groups["endpoint"].Value,
                        Owner = match.Groups["owner"].Value,
-                       Name = match.Groups["name"].Value
+                       Name = match.Groups["name"].Value,
+                       Head = head,
+                       Branch = branchMatch.Success ? branchMatch.Groups["branch"].Value : null
                    };
         }
 
@@ -62,6 +66,13 @@ namespace Nuke.Common.Git
 
         /// <summary>Url in the form of <c>git@endpoint:identifier.git</c></summary>
         public string SshUrl => $"git@{Endpoint.NotNull("Endpoint != Endpoint")}:{Identifier}.git";
+
+        /// <summary>Current head.</summary>
+        public string Head { get; set; }
+
+        /// <summary>Current branch. Null if head is detached.</summary>
+        [CanBeNull]
+        public string Branch { get; set; }
 
         public override string ToString ()
         {
