@@ -23,13 +23,15 @@ namespace Nuke.Core.OutputSinks
         public override void Warn (string text, string details = null)
         {
             _teamServices.LogIssue(TeamServicesIssueType.Warning, text);
-            base.Warn(text, details);
+            if (details != null)
+                Console.WriteLine(details);
         }
 
         public override void Error (string text, string details = null)
         {
             _teamServices.LogIssue(TeamServicesIssueType.Error, text);
-            base.Error(text, details);
+            if (details != null)
+                Console.WriteLine(details);
         }
     }
 }
