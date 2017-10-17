@@ -18,7 +18,7 @@ $BuildProjectFile = "$PSScriptRoot\_BUILD_DIRECTORY_NAME_\_BUILD_PROJECT_NAME_.c
 $TempDirectory = "$PSScriptRoot\.tmp"
 
 $DotNetScriptUrl = "https://raw.githubusercontent.com/dotnet/cli/master/scripts/obtain/dotnet-install.ps1"
-$DotNetDirectory = "$TempDirectory\dotnet"
+$DotNetDirectory = "$TempDirectory\dotnet-win"
 $DotNetFile = "$DotNetDirectory\dotnet.exe"
 $env:DOTNET_EXE = $DotNetFile
 
