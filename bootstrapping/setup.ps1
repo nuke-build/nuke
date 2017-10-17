@@ -126,13 +126,15 @@ Set-Content "build.ps1" ((New-Object System.Net.WebClient).DownloadString("$Boot
     -replace "_NUGET_VERSION_",$NuGetVersion `
     -replace "_BUILD_DIRECTORY_NAME_",$BuildDirectoryName `
     -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
-    -replace "_SOLUTION_DIRECTORY_",$SolutionDirectoryRelative)
+    -replace "_SOLUTION_DIRECTORY_",$SolutionDirectoryRelative) `
+    -NoNewline
 
 Set-Content "build.sh" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.$($TargetPlatform).sh") `
     -replace "_NUGET_VERSION_",$NuGetVersion `
     -replace "_BUILD_DIRECTORY_NAME_",($BuildDirectoryName -replace "\\","/") `
     -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
-    -replace "_SOLUTION_DIRECTORY_",($SolutionDirectoryRelative -replace "\\","/"))
+    -replace "_SOLUTION_DIRECTORY_",($SolutionDirectoryRelative -replace "\\","/")) `
+    -NoNewline
 
 ###########################################################################
 # GENERATE PROJECT FILES
@@ -150,11 +152,13 @@ Set-Content "$BuildProjectFile" ((New-Object System.Net.WebClient).DownloadStrin
     -replace "_BUILD_PROJECT_GUID_",$ProjectGuid `
     -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
     -replace "_SOLUTION_DIRECTORY_",$SolutionDirectoryRelative `
-    -replace "_NUKE_VERSION_",$NukeVersion)
+    -replace "_NUKE_VERSION_",$NukeVersion) `
+    -NoNewline
 
 if ($ProjectFormatSelection -eq 0) {
     Set-Content "$BuildDirectory\packages.config" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/.build.legacy.packages.config") `
-        -replace "_NUKE_VERSION_",$NukeVersion)
+        -replace "_NUKE_VERSION_",$NukeVersion) `
+        -NoNewline
 }
 
 ###########################################################################
