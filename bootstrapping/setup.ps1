@@ -130,7 +130,7 @@ Set-Content "build.ps1" ((New-Object System.Net.WebClient).DownloadString("$Boot
 
 Set-Content "build.sh" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.$($TargetPlatform).sh") `
     -replace "_NUGET_VERSION_",$NuGetVersion `
-    -replace "_BUILD_DIRECTORY_NAME_",$BuildDirectoryName `
+    -replace "_BUILD_DIRECTORY_NAME_",($BuildDirectoryName -replace "\\","/") `
     -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
     -replace "_SOLUTION_DIRECTORY_",($SolutionDirectoryRelative -replace "\\","/"))
 

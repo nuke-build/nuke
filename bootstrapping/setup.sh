@@ -131,9 +131,9 @@ sed -e 's~_NUGET_VERSION_~'"$NUGET_VERSION"'~g' \
     > build.sh
     
 sed -e 's~_NUGET_VERSION_~'"$NUGET_VERSION"'~g' \
-    -e 's~_BUILD_DIRECTORY_NAME_~'"${BUILD_DIRECTORY_NAME//\//\\}"'~g' \
+    -e 's~_BUILD_DIRECTORY_NAME_~'"${BUILD_DIRECTORY_NAME//\//\\\\}"'~g' \
     -e 's~_BUILD_PROJECT_NAME_~'"$BUILD_PROJECT_NAME"'~g' \
-    -e 's~_SOLUTION_DIRECTORY_~'"${SOLUTION_DIRECTORY_RELATIVE//\//\\}"'~g' \
+    -e 's~_SOLUTION_DIRECTORY_~'"${SOLUTION_DIRECTORY_RELATIVE//\//\\\\}"'~g' \
     <<<"$(curl -Lsf $BOOTSTRAPPING_URL/build.$TARGET_PLATFORM.ps1)" \
     > build.ps1
 
