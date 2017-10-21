@@ -39,13 +39,13 @@ class Build : NukeBuild
             .DependsOn(Clean)
             .Executes(() =>
             {
-                DotNetRestore(SolutionDirectory);
+                DotNetRestore(s => DefaultDotNetRestore);
             });
 
     Target Compile => _ => _
             .DependsOn(Restore)
             .Executes(() =>
             {
-                DotNetBuild(SolutionDirectory);
+                DotNetBuild(s => DefaultDotNetCompile);
             });
 }
