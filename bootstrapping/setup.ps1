@@ -101,7 +101,9 @@ if ($TargetPlatformSelection -eq 0) {
     $ProjectFormatSelection)
     
   $NuGetVersion = (ReadWithDefault "NuGet executable version" $NuGetVersion)
-} else {
+}
+
+if ($TargetPlatformSelection -eq 1 -or $ProjectFormatSelection -eq 1) {
   $NukeVersion = (ReadWithDefault "NUKE framework version (use '*' for always latest)" $NukeVersion)
 }
 

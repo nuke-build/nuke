@@ -100,7 +100,9 @@ if [ $TARGET_PLATFORM_SELECTION == 0 ]; then
   done
 
   NUGET_VERSION=$(ReadWithDefault "NuGet executable version" $NUGET_VERSION)
-else
+fi
+
+if [ $TARGET_PLATFORM_SELECTION == 1 || $PROJECT_FORMAT_SELECTION == 1]; then
   NUKE_VERSION=$(ReadWithDefault "NUKE framework version (use '*' for always latest)" $NUKE_VERSION)
 fi
 
