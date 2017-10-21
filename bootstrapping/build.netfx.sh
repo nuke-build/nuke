@@ -36,7 +36,7 @@ if ! ((NOINIT)); then
   mkdir -p "$TEMP_DIRECTORY"
 
   if [ ! -f "$NUGET_FILE" ]; then curl -Lsfo "$NUGET_FILE" $NUGET_URL;
-  elif [[ $NUGET_URL == *"latest"* ]]; then mono "$NUGET_FILE" update -Self; fi
+  elif [ $NUGET_VERSION == "latest" ]; then mono "$NUGET_FILE" update -Self; fi
 
   mono "$NUGET_FILE" restore "$BUILD_PROJECT_FILE" -SolutionDirectory $SOLUTION_DIRECTORY
 fi
