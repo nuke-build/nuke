@@ -180,7 +180,13 @@ namespace Nuke.Core.Execution
             var path = Path.Combine(build.TemporaryDirectory, "graph.html");
             var contents = GetStringFromStream(resourceStream).Replace("__GRAPH__", graph.ToString());
             File.WriteAllText(path, contents);
-            Process.Start(path);
+
+            // Workaround for https://github.com/dotnet/corefx/issues/10361
+            Process.Start(new ProcessStartInfo
+                          {
+                              FileName = path,
+                              UseShellExecute = true
+                          });
         }
     }
 }
