@@ -88,14 +88,15 @@ namespace Nuke.Core.Execution
             var targetDefinitions = build.GetTargetDefinitions(defaultTargetFactory);
             var longestTargetName = targetDefinitions.Select(x => x.Name.Length).OrderByDescending(x => x).First();
             var padRightTargets = Math.Max(longestTargetName, val2: 20);
-            builder.AppendLine($"  Targets:");
+            builder.AppendLine($"  Targets (with their direct dependencies):");
             builder.AppendLine();
             foreach (var target in targetDefinitions)
             {
                 var dependencies = target.TargetDefinitionDependencies.Count > 0
                     ? $" -> {target.TargetDefinitionDependencies.Select(x => x.Name).Join(", ")}"
                     : string.Empty;
-                builder.AppendLine($"  {(target.IsDefault ? ">" : " ")} {target.Name.PadRight(padRightTargets)}{dependencies}");
+                var targetEntry = target.Name + (target.IsDefault ? " (default)" : string.Empty);
+                builder.AppendLine($"    {targetEntry.PadRight(padRightTargets)}{dependencies}");
                 if (!string.IsNullOrWhiteSpace(target.Description))
                     builder.AppendLine($"      {target.Description}");
             }
