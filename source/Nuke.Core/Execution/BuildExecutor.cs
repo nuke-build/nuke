@@ -41,6 +41,7 @@ namespace Nuke.Core.Execution
             PrintLogo();
 
             InjectionService.InjectValues(build);
+            Logger.Log();
             //{
             //    Console.WriteLine($"Target: {build.Target.Join(", ")}");
             //    Console.WriteLine($"Verbosity: {build.Verbosity}");
@@ -55,11 +56,13 @@ namespace Nuke.Core.Execution
                     Logger.Log(GetTargetsText(build, defaultTargetFactory));
                 if (build.Help.Length == 0 || build.Help.Any(x => "parameters".StartsWithOrdinalIgnoreCase(x)))
                     Logger.Log(GetParametersText(build));
-                if (build.Help.Any(x => "graph".StartsWithOrdinalIgnoreCase(x)))
-                    ShowGraph(build, defaultTargetFactory);
-
-                Environment.Exit(exitCode: 0);
             }
+
+            if (build.Graph)
+                ShowGraph(build, defaultTargetFactory);
+
+            if (build.Help != null || build.Graph)
+                Environment.Exit(exitCode: 0);
 
             var executionList = TargetDefinitionLoader.GetExecutionList(build, defaultTargetFactory);
             RequirementService.ValidateRequirements(executionList, build);
@@ -77,7 +80,7 @@ namespace Nuke.Core.Execution
 
             Logger.Log(FigletTransform.GetText("NUKE"));
             Logger.Log(details);
-            Logger.Log(string.Empty);
+            Logger.Log();
         }
 
         public static string GetTargetsText<T> (T build, Target defaultTargetFactory)

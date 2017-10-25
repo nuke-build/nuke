@@ -100,9 +100,16 @@ namespace Nuke.Core
         public bool CheckPath { get; }
 
         /// <summary>
+        /// Shows the graphical representation of target dependencies.
+        /// </summary>
+        [Parameter("Shows the graphical representation of target dependencies.")]
+        public bool Graph { get; }
+
+        /// <summary>
         /// Shows the help text for this build assembly if supplied.
         /// </summary>
         [Parameter("Shows the help text for this build assembly if supplied.")]
+        [CanBeNull]
         public string[] Help { get; }
 
         public static bool IsLocalBuild => OutputSink.Instance is ConsoleOutputSink;
