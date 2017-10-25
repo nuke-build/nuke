@@ -12,6 +12,10 @@ using static Nuke.Core.EnvironmentInfo;
 
 class Build : NukeBuild
 {
+    // This is the application entry point for the build.
+    // It also defines the default target to execute.
+    public static int Main () => Execute<Build>(x => x.Compile);
+
     // Auto-injection fields:
     //  - [GitVersion] must have 'GitVersion.CommandLine' referenced
     //  - [GitRepository] parses the origin from git config
@@ -21,15 +25,8 @@ class Build : NukeBuild
     //[GitRepository] readonly GitRepository GitRepository;
     //[Parameter] readonly string MyGetApiKey;
 
-
-    // This is the application entry point for the build.
-    // It also defines the default target to execute.
-    public static int Main () => Execute<Build>(x => x.Compile);
-
-
     Target Clean => _ => _
-            // Disabled for safety.
-            .OnlyWhen(() => false)
+            .OnlyWhen(() => false) // Disabled for safety.
             .Executes(() =>
             {
                 DeleteDirectories(GlobDirectories(SourceDirectory, "**/bin", "**/obj"));
