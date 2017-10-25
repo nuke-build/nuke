@@ -36,7 +36,7 @@ namespace Nuke.Common.Tools.DotNet
                 .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
                 .SetProjectFile(NukeBuild.Instance.SolutionFile);
 
-        public static DotNetBuildSettings DefaultDotNetCompile => new DotNetBuildSettings()
+        public static DotNetBuildSettings DefaultDotNetBuild => new DotNetBuildSettings()
                 .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
                 .SetProjectFile(NukeBuild.Instance.SolutionFile)
                 .EnableNoRestore()

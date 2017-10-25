@@ -50,7 +50,7 @@ class Build : NukeBuild
             .Requires(() => IsUnix || GitVersion != null)
             .Executes(() =>
             {
-                DotNetBuild(s => DefaultDotNetCompile.SetProjectFile(SolutionFile).EnableNoRestore());
+                DotNetBuild(s => DefaultDotNetBuild.SetProjectFile(SolutionFile).EnableNoRestore());
             });
 
     Target Link => _ => _
