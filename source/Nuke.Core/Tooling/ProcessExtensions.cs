@@ -28,11 +28,7 @@ namespace Nuke.Core.Tooling
         {
             process.AssertWaitForExit();
             ControlFlow.Assert(process.ExitCode == 0,
-                new[]
-                {
-                    $"Process '{Path.GetFileName(process.StartInfo.FileName)}' exited with code {process.ExitCode}. Please verify the invocation:",
-                    $"> {process.StartInfo.FileName.DoubleQuoteIfNeeded()} {process.StartInfo.Arguments}"
-                }.Join(EnvironmentInfo.NewLine));
+                $"Process '{Path.GetFileName(process.StartInfo.FileName)}' exited with code {process.ExitCode}. Please verify the invocation.");
         }
 
         public static IEnumerable<Output> EnsureOnlyStd (this IEnumerable<Output> output)
