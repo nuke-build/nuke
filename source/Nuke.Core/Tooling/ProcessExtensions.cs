@@ -33,11 +33,12 @@ namespace Nuke.Core.Tooling
 
         public static IEnumerable<Output> EnsureOnlyStd (this IEnumerable<Output> output)
         {
-            foreach (var o in output)
+            var outputList = output.ToList();
+            foreach (var o in outputList)
             {
                 ControlFlow.Assert(o.Type == OutputType.Std, "o.Type == OutputType.Std");
-                yield return o;
             }
+            return outputList;
         }
     }
 }
