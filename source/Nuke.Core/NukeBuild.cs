@@ -112,7 +112,7 @@ namespace Nuke.Core
         [CanBeNull]
         public string[] Help { get; }
 
-        public static bool IsLocalBuild => OutputSink.Instance is ConsoleOutputSink;
+        public static bool IsLocalBuild => OutputSink.Instance.GetType() == typeof(ConsoleOutputSink);
         public static bool IsServerBuild => !IsLocalBuild;
 
         public LogLevel LogLevel => (LogLevel) Verbosity;
