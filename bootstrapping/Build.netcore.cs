@@ -11,18 +11,16 @@ using static Nuke.Core.EnvironmentInfo;
 
 class Build : NukeBuild
 {
-    // This is the application entry point for the build.
-    // It also defines the default target to execute.
+    // Console application entry. Also defines the default target.
     public static int Main () => Execute<Build>(x => x.Compile);
 
     // Auto-injection fields:
-    //  - [GitVersion] must have 'GitVersion.CommandLine' referenced
-    //  - [GitRepository] parses the origin from git config
-    //  - [Parameter] retrieves its value from command-line arguments or environment variables
-    //
-    //[GitVersion] readonly GitVersion GitVersion;
-    //[GitRepository] readonly GitRepository GitRepository;
-    //[Parameter] readonly string MyGetApiKey;
+    // [GitVersion] readonly GitVersion GitVersion;
+    //  - Semantic versioning. Must have 'GitVersion.CommandLine' referenced.
+    // [GitRepository] readonly GitRepository GitRepository;
+    //  - Parses origin, branch name and head from git config.
+    // [Parameter] readonly string MyGetApiKey;
+    //  - Returns command-line arguments and environment variables.
 
     Target Clean => _ => _
             .OnlyWhen(() => false) // Disabled for safety.
