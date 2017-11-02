@@ -10,7 +10,7 @@ using System.Linq;
 using Humanizer;
 using JetBrains.Annotations;
 
-namespace Nuke.ToolGenerator.Generators
+namespace Nuke.CodeGeneration.Generators
 {
     public static class StringExtensions
     {

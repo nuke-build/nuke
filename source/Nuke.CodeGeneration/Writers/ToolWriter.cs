@@ -5,9 +5,9 @@
 using System;
 using System.IO;
 using System.Linq;
-using Nuke.ToolGenerator.Model;
+using Nuke.CodeGeneration.Model;
 
-namespace Nuke.ToolGenerator.Writers
+namespace Nuke.CodeGeneration.Writers
 {
     public class ToolWriter : IDisposable, IWriter, IWriterWrapper
     {

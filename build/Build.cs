@@ -13,6 +13,7 @@ using Nuke.Common.Tools.OpenCover;
 using Nuke.Common.Tools.Xunit;
 using Nuke.Core;
 using Nuke.Core.Utilities.Collections;
+using static Nuke.CodeGeneration.CodeGenerator;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.GitLink.GitLinkTasks;
 using static Nuke.Common.Tools.InspectCode.InspectCodeTasks;
@@ -110,6 +111,14 @@ class Build : NukeBuild
                             .SetOutput(OutputDirectory / "coverage.xml"));
                 else
                     TestXunit();
+            });
+
+    Target Generate => _ => _
+            .Executes(() =>
+            {
+                GenerateCode(
+                    metadataDirectory: RootDirectory / ".." / "tools" / "metadata",
+                    generationDirectory: RootDirectory / "source" / "Nuke.Common" / "Tools");
             });
 
     Target Full => _ => _

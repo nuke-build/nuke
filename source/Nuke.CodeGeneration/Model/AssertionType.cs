@@ -5,7 +5,7 @@
 using System;
 using System.Linq;
 
-namespace Nuke.ToolGenerator.Model
+namespace Nuke.CodeGeneration.Model
 {
     public enum AssertionType
     {

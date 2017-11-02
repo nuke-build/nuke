@@ -9,7 +9,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
-namespace Nuke.ToolGenerator.Model
+namespace Nuke.CodeGeneration.Model
 {
     [UsedImplicitly(ImplicitUseKindFlags.Assign, ImplicitUseTargetFlags.WithMembers)]
     [DebuggerDisplay("{" + nameof(DefinitionFile) + "}")]

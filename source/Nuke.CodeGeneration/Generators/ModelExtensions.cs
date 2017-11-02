@@ -7,11 +7,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Nuke.ToolGenerator.Model;
+using Nuke.CodeGeneration.Model;
 
-
-
-namespace Nuke.ToolGenerator.Generators
+namespace Nuke.CodeGeneration.Generators
 {
     public static class ModelExtensions
     {

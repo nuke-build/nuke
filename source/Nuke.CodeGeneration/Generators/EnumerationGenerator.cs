@@ -5,10 +5,10 @@
 using System;
 using System.Linq;
 using System.Text;
-using Nuke.ToolGenerator.Model;
-using Nuke.ToolGenerator.Writers;
+using Nuke.CodeGeneration.Model;
+using Nuke.CodeGeneration.Writers;
 
-namespace Nuke.ToolGenerator.Generators
+namespace Nuke.CodeGeneration.Generators
 {
     public static class EnumerationGenerator
     {

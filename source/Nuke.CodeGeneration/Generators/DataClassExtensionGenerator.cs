@@ -5,12 +5,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Nuke.ToolGenerator.Model;
-using Nuke.ToolGenerator.Writers;
+using Nuke.CodeGeneration.Model;
+using Nuke.CodeGeneration.Writers;
 
 // ReSharper disable UnusedMethodReturnValue.Local
 
-namespace Nuke.ToolGenerator.Generators
+namespace Nuke.CodeGeneration.Generators
 {
     public static class DataClassExtensionGenerator
     {

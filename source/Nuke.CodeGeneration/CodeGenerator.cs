@@ -4,39 +4,31 @@
 
 using System;
 using System.Collections;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Fclp;
 using HtmlAgilityPack;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Nuke.ToolGenerator.Model;
+using Nuke.CodeGeneration.Model;
+using Nuke.Core;
+using Nuke.Core.Utilities;
 
-namespace Nuke.ToolGenerator
+namespace Nuke.CodeGeneration
 {
-    [SuppressMessage("ReSharper", "MissingXmlDoc")]
-    public static class Program
+    [PublicAPI]
+    public static class CodeGenerator
     {
-        private static void Main (string[] args)
+        public static void GenerateCode (string metadataDirectory, string generationDirectory)
         {
-            string metadata = null;
-            string generation = null;
-
-            var parser = new FluentCommandLineParser();
-            parser.Setup<string>("metadata").Callback(x => metadata = x);
-            parser.Setup<string>("generate").Callback(x => generation = x);
-            parser.Parse(args);
-
-            var files = Directory.GetFiles(metadata, "*.json", SearchOption.TopDirectoryOnly).Where(x => !x.EndsWith("_schema.json"));
+            var files = Directory.GetFiles(metadataDirectory, "*.json", SearchOption.TopDirectoryOnly).Where(x => !x.EndsWith("_schema.json"));
             files.AsParallel().ForAll(file =>
             {
-                var tool = Load(file, generation);
+                var tool = Load(file, generationDirectory);
 
                 foreach (var task in tool.Tasks)
                 {
@@ -56,12 +48,10 @@ namespace Nuke.ToolGenerator
                 tool.Tasks.ForEach(x => tool.CommonTaskProperties.ForEach(y => x.SettingsClass.Properties.RemoveAll(z => z.Name == y.Name)));
                 UpdateReferences(tool);
 
-                Save (tool);
+                Save(tool);
 
-                Console.WriteLine($"Processed {Path.GetFileName(file)}.");
+                Logger.Info($"Processed {Path.GetFileName(file)}.");
             });
-            Console.WriteLine("Finished generation. Press any key to exit...");
-            Console.ReadKey();
         }
 
         private static Tool Load (string file, string generation)
@@ -80,6 +70,7 @@ namespace Nuke.ToolGenerator
             return tool;
         }
 
+        // ReSharper disable once CyclomaticComplexity
         private static void ApplyBackReferences (Tool tool)
         {
             foreach (var task in tool.Tasks)
@@ -110,8 +101,9 @@ namespace Nuke.ToolGenerator
 
         private static void UpdateReferences (Tool tool)
         {
-            Parallel.For(0, tool.References.Count,
-                async i =>
+            Parallel.For(fromInclusive: 0,
+                toExclusive: tool.References.Count,
+                body: async i =>
                 {
                     try
                     {
@@ -122,8 +114,8 @@ namespace Nuke.ToolGenerator
                     }
                     catch (Exception exception)
                     {
-                        Console.Error.WriteLine($"Couldn't update reference #{i} for {Path.GetFileName(tool.DefinitionFile)}:");
-                        Console.Error.WriteLine(exception.Message);
+                        Logger.Error($"Couldn't update reference #{i} for {Path.GetFileName(tool.DefinitionFile)}:");
+                        Logger.Error(exception.Message);
                     }
                 });
         }
