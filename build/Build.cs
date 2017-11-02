@@ -118,7 +118,8 @@ class Build : NukeBuild
             {
                 GenerateCode(
                     metadataDirectory: RootDirectory / ".." / "tools" / "metadata",
-                    generationDirectory: RootDirectory / "source" / "Nuke.Common" / "Tools");
+                    generationDirectory: RootDirectory / "source" / "Nuke.Common" / "Tools",
+                    baseNamespace: "Nuke.Common.Tools");
             });
 
     Target Full => _ => _

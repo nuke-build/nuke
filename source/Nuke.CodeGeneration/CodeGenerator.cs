@@ -15,6 +15,7 @@ using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Nuke.CodeGeneration.Model;
+using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Core;
 using Nuke.Core.Utilities;
@@ -25,19 +26,23 @@ namespace Nuke.CodeGeneration
     [PublicAPI]
     public static class CodeGenerator
     {
-        public static void GenerateCode (string metadataDirectory, string generationDirectory, bool downloadSchema = true)
+        public static void GenerateCode (
+            string metadataDirectory,
+            string generationDirectory,
+            string baseNamespace = null,
+            bool downloadSchema = true)
         {
             if (downloadSchema)
             {
                 HttpTasks.HttpDownloadFile(
                     uri: "https://raw.githubusercontent.com/nuke-build/tools/master/metadata/_schema.json",
-                    path: (AbsolutePath) metadataDirectory / "_schema.json");
+                    path: (RelativePath) metadataDirectory / "_schema.json");
             }
 
             var files = Directory.GetFiles(metadataDirectory, "*.json", SearchOption.TopDirectoryOnly).Where(x => !x.EndsWith("_schema.json"));
             files.AsParallel().ForAll(file =>
             {
-                var tool = Load(file, generationDirectory);
+                var tool = Load(file, generationDirectory, baseNamespace == "Nuke.Common.Tools");
 
                 foreach (var task in tool.Tasks)
                 {
@@ -51,7 +56,7 @@ namespace Nuke.CodeGeneration
 
                 using (var streamWriter = new StreamWriter(File.Open(tool.GenerationFileBase + ".Generated.cs", FileMode.Create)))
                 {
-                    Generators.ToolGenerator.Run(tool, streamWriter);
+                    Generators.ToolGenerator.Run(tool, GetNamespace(baseNamespace, tool), streamWriter);
                 }
 
                 tool.Tasks.ForEach(x => tool.CommonTaskProperties.ForEach(y => x.SettingsClass.Properties.RemoveAll(z => z.Name == y.Name)));
@@ -63,17 +68,25 @@ namespace Nuke.CodeGeneration
             });
         }
 
-        private static Tool Load (string file, string generation)
+        private static string GetNamespace([CanBeNull] string baseNamespace, Tool tool)
+        {
+            return string.IsNullOrEmpty(baseNamespace)
+                ? tool.Name
+                : $"{baseNamespace}.{tool.Name}";
+        }
+
+        private static Tool Load (string file, string generationDirectory, bool isMainRepository)
         {
             var content = File.ReadAllText(file);
             var tool = JsonConvert.DeserializeObject<Tool>(content);
 
-            var directory = Path.Combine(generation, tool.Name);
-            Directory.CreateDirectory(directory);
+            var toolDirectory = Path.Combine(generationDirectory, tool.Name);
+            Directory.CreateDirectory(toolDirectory);
 
             tool.DefinitionFile = file;
-            tool.GenerationFileBase = Path.Combine(directory, Path.GetFileNameWithoutExtension(file));
-            tool.RepositoryUrl = $"https://github.com/nuke-build/tools/blob/master/{Path.GetFileName(file)}";
+            tool.GenerationFileBase = Path.Combine(toolDirectory, Path.GetFileNameWithoutExtension(file));
+            if (isMainRepository)
+                tool.RepositoryUrl = $"https://github.com/nuke-build/tools/blob/master/{Path.GetFileName(file)}";
 
             return tool;
         }

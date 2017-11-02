@@ -16,7 +16,7 @@ namespace Nuke.CodeGeneration.Generators
 {
     public static class ToolGenerator
     {
-        public static void Run (Tool tool, StreamWriter streamWriter)
+        public static void Run (Tool tool, string @namespace, StreamWriter streamWriter)
         {
             using (var writer = new ToolWriter(tool, streamWriter))
             {
@@ -30,7 +30,7 @@ namespace Nuke.CodeGeneration.Generators
                         .WriteLine(string.Empty)
                         .ForEach(GetNamespaceImports(), x => writer.WriteLine($"using {x};"))
                         .WriteLine(string.Empty)
-                        .WriteLine($"namespace {tool.GetNamespace()}")
+                        .WriteLine($"namespace {@namespace}")
                         .WriteBlock(w => w
                                 .WriteAlias()
                                 .WriteDataClasses()

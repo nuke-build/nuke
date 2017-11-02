@@ -3,8 +3,6 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Nuke.CodeGeneration.Model;
@@ -13,21 +11,6 @@ namespace Nuke.CodeGeneration.Generators
 {
     public static class ModelExtensions
     {
-        public static string GetNamespace (this Tool tool)
-        {
-            var namespaces = new Stack<string>();
-            var directory = new FileInfo(tool.GenerationFileBase).Directory;
-            while (directory != null)
-            {
-                namespaces.Push(directory.Name);
-
-                if (directory.GetFiles("*.csproj", SearchOption.TopDirectoryOnly).Any())
-                    break;
-                directory = directory.Parent;
-            }
-            return string.Join(".", namespaces);
-        }
-
         public static bool IsValueType(this Property property)
         {
             return new[] { "int", "bool" }.Contains(property.Type);
