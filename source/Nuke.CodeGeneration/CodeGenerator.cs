@@ -15,16 +15,25 @@ using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Nuke.CodeGeneration.Model;
+using Nuke.Common.IO;
 using Nuke.Core;
 using Nuke.Core.Utilities;
+using static Nuke.Core.IO.PathConstruction;
 
 namespace Nuke.CodeGeneration
 {
     [PublicAPI]
     public static class CodeGenerator
     {
-        public static void GenerateCode (string metadataDirectory, string generationDirectory)
+        public static void GenerateCode (string metadataDirectory, string generationDirectory, bool downloadSchema = true)
         {
+            if (downloadSchema)
+            {
+                HttpTasks.HttpDownloadFile(
+                    uri: "https://raw.githubusercontent.com/nuke-build/tools/master/metadata/_schema.json",
+                    path: (AbsolutePath) metadataDirectory / "_schema.json");
+            }
+
             var files = Directory.GetFiles(metadataDirectory, "*.json", SearchOption.TopDirectoryOnly).Where(x => !x.EndsWith("_schema.json"));
             files.AsParallel().ForAll(file =>
             {
@@ -65,7 +74,6 @@ namespace Nuke.CodeGeneration
             tool.DefinitionFile = file;
             tool.GenerationFileBase = Path.Combine(directory, Path.GetFileNameWithoutExtension(file));
             tool.RepositoryUrl = $"https://github.com/nuke-build/tools/blob/master/{Path.GetFileName(file)}";
-
 
             return tool;
         }
