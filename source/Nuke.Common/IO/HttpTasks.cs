@@ -2,7 +2,6 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-#if !NETCORE
 using System;
 using System.Linq;
 using System.Net;
@@ -41,4 +40,3 @@ namespace Nuke.Common.IO
         }
     }
 }
-#endif

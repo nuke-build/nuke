@@ -7,14 +7,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.IO;
 using Nuke.Core;
 using Nuke.Core.BuildServers;
 using Nuke.Core.IO;
 using Nuke.Core.Tooling;
 using Nuke.Core.Utilities.Collections;
-#if !NETCORE
-using Nuke.Common.IO;
-#endif
 
 namespace Nuke.Common.Tools.InspectCode
 {
@@ -41,15 +39,9 @@ namespace Nuke.Common.Tools.InspectCode
             installedPlugins.Select(x => x.FileName)
                     .ForEach(x => File.Copy(x, Path.Combine(shadowDirectory, Path.GetFileName(x).NotNull()), overwrite: true));
 
-#if !NETCORE
             toolSettings.Extensions.ForEach(x => HttpTasks.HttpDownloadFile(
                 $"https://resharper-plugins.jetbrains.com/api/v2/package/{x}",
                 Path.Combine(shadowDirectory, $"{x}.nupkg")));
-#else
-            ControlFlow.Assert(toolSettings.Extensions.Count == 0,
-                "InspectCodeSettings.Extensions is currently not supported on .NET Core. However, after adding the ReSharper gallery feed " +
-                "(https://resharper-plugins.jetbrains.com/api/v2), you can reference them as normal NuGet packages in your project file.");
-#endif
         }
 
         [CanBeNull]
