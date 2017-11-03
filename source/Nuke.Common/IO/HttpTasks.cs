@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Net;
 using JetBrains.Annotations;
+using Nuke.Core.IO;
 using Nuke.Core.Tooling;
 
 namespace Nuke.Common.IO
@@ -35,6 +36,8 @@ namespace Nuke.Common.IO
             var webClient = new WebClient();
             webClient = configurator.InvokeSafe(webClient);
             headerConfigurator?.Invoke(webClient.Headers);
+
+            FileSystemTasks.EnsureExistingParentDirectory(path);
 
             webClient.DownloadFile(new Uri(uri), path);
         }
