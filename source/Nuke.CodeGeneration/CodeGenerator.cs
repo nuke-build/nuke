@@ -14,8 +14,8 @@ using HtmlAgilityPack;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Nuke.CodeGeneration.Generators;
 using Nuke.CodeGeneration.Model;
-using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Core;
 using Nuke.Core.Utilities;
@@ -30,6 +30,7 @@ namespace Nuke.CodeGeneration
             string metadataDirectory,
             string generationDirectory,
             string baseNamespace = null,
+            bool useNestedNamespaces = false,
             bool downloadSchema = true)
         {
             if (downloadSchema)
@@ -42,7 +43,7 @@ namespace Nuke.CodeGeneration
             var files = Directory.GetFiles(metadataDirectory, "*.json", SearchOption.TopDirectoryOnly).Where(x => !x.EndsWith("_schema.json"));
             files.AsParallel().ForAll(file =>
             {
-                var tool = Load(file, generationDirectory, baseNamespace == "Nuke.Common.Tools");
+                var tool = Load(file, generationDirectory, baseNamespace == "Nuke.Common.Tools", useNestedNamespaces);
 
                 foreach (var task in tool.Tasks)
                 {
@@ -56,7 +57,7 @@ namespace Nuke.CodeGeneration
 
                 using (var streamWriter = new StreamWriter(File.Open(tool.GenerationFileBase + ".Generated.cs", FileMode.Create)))
                 {
-                    Generators.ToolGenerator.Run(tool, GetNamespace(baseNamespace, tool), streamWriter);
+                    ToolGenerator.Run(tool, GetNamespace(baseNamespace, useNestedNamespaces, tool), streamWriter);
                 }
 
                 tool.Tasks.ForEach(x => tool.CommonTaskProperties.ForEach(y => x.SettingsClass.Properties.RemoveAll(z => z.Name == y.Name)));
@@ -68,19 +69,22 @@ namespace Nuke.CodeGeneration
             });
         }
 
-        private static string GetNamespace([CanBeNull] string baseNamespace, Tool tool)
+        [CanBeNull]
+        private static string GetNamespace ([CanBeNull] string baseNamespace, bool useNestedNamespaces, Tool tool)
         {
-            return string.IsNullOrEmpty(baseNamespace)
-                ? tool.Name
-                : $"{baseNamespace}.{tool.Name}";
+            return !useNestedNamespaces
+                ? baseNamespace
+                : string.IsNullOrEmpty(baseNamespace)
+                    ? tool.Name
+                    : $"{baseNamespace}.{tool.Name}";
         }
 
-        private static Tool Load (string file, string generationDirectory, bool isMainRepository)
+        private static Tool Load (string file, string generationDirectory, bool isMainRepository, bool useNestedNamespaces)
         {
             var content = File.ReadAllText(file);
             var tool = JsonConvert.DeserializeObject<Tool>(content);
 
-            var toolDirectory = Path.Combine(generationDirectory, tool.Name);
+            var toolDirectory = useNestedNamespaces ? Path.Combine(generationDirectory, tool.Name) : generationDirectory;
             Directory.CreateDirectory(toolDirectory);
 
             tool.DefinitionFile = file;

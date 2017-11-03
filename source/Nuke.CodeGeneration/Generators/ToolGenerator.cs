@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.CodeGeneration.Model;
 using Nuke.CodeGeneration.Writers;
 using Nuke.Core.Utilities.Collections;
@@ -16,7 +17,7 @@ namespace Nuke.CodeGeneration.Generators
 {
     public static class ToolGenerator
     {
-        public static void Run (Tool tool, string @namespace, StreamWriter streamWriter)
+        public static void Run (Tool tool, [CanBeNull] string @namespace, StreamWriter streamWriter)
         {
             using (var writer = new ToolWriter(tool, streamWriter))
             {
@@ -26,16 +27,25 @@ namespace Nuke.CodeGeneration.Generators
                         .WriteLine("// Distributed under the MIT License.")
                         .WriteLine("// https://github.com/nuke-build/nuke/blob/master/LICENSE")
                         .WriteLine(string.Empty)
-                        .WriteLine($"// Generated from {tool.RepositoryUrl} with Nuke.ToolGenerator.")
+                        .WriteLineIfTrue(tool.RepositoryUrl != null, $"// Generated from {tool.RepositoryUrl} with Nuke.ToolGenerator.")
                         .WriteLine(string.Empty)
                         .ForEach(GetNamespaceImports(), x => writer.WriteLine($"using {x};"))
                         .WriteLine(string.Empty)
-                        .WriteLine($"namespace {@namespace}")
-                        .WriteBlock(w => w
-                                .WriteAlias()
-                                .WriteDataClasses()
-                                .WriteEnumerations());
+                        .WriteLineIfTrue(@namespace != null, $"namespace {@namespace}");
+
+                if (!string.IsNullOrEmpty(@namespace))
+                    writer.WriteBlock(x => x.WriteAll());
+                else
+                    writer.WriteAll();
             }
+        }
+
+        private static ToolWriter WriteAll (this ToolWriter w)
+        {
+            return w
+                    .WriteAlias()
+                    .WriteDataClasses()
+                    .WriteEnumerations();
         }
 
         private static ToolWriter WriteAlias (this ToolWriter writer)
