@@ -34,13 +34,16 @@ namespace Nuke.Common.IO
 
         public static void XmlPoke (string path, string xpath, object value)
         {
-            var (elements, attributes) = GetObjects(XDocument.Load(path), xpath);
+            var document = XDocument.Load(path);
+            var (elements, attributes) = GetObjects(document, xpath);
 
             ControlFlow.Assert((elements.Count == 1 || attributes.Count == 1) && !(elements.Count == 0 && attributes.Count == 0),
                 "(elements.Count == 1 || attributes.Count == 1) && !(elements.Count == 0 && attributes.Count == 0)");
 
             elements.SingleOrDefault()?.SetValue(value);
             attributes.SingleOrDefault()?.SetValue(value);
+
+            document.Save(path);
         }
 
         private static (IReadOnlyCollection<XElement> Elements, IReadOnlyCollection<XAttribute> Attributes) GetObjects (
