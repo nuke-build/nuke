@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using JetBrains.Annotations;
@@ -34,7 +35,7 @@ namespace Nuke.Common.IO
 
         public static void XmlPoke (string path, string xpath, object value)
         {
-            var document = XDocument.Load(path);
+            var document = XDocument.Load(path, LoadOptions.PreserveWhitespace);
             var (elements, attributes) = GetObjects(document, xpath);
 
             ControlFlow.Assert((elements.Count == 1 || attributes.Count == 1) && !(elements.Count == 0 && attributes.Count == 0),
@@ -43,7 +44,11 @@ namespace Nuke.Common.IO
             elements.SingleOrDefault()?.SetValue(value);
             attributes.SingleOrDefault()?.SetValue(value);
 
-            document.Save(path);
+            var writerSettings = new XmlWriterSettings { OmitXmlDeclaration = document.Declaration == null };
+            using (var xmlWriter = XmlWriter.Create(path, writerSettings))
+            {
+                document.Save(xmlWriter);
+            }
         }
 
         private static (IReadOnlyCollection<XElement> Elements, IReadOnlyCollection<XAttribute> Attributes) GetObjects (
