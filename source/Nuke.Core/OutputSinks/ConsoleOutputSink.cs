@@ -82,7 +82,7 @@ namespace Nuke.Core.OutputSinks
             Logger.Log(CreateLine("Total", "", ToMinutesAndSeconds(totalDuration)));
             Logger.Log(new string(c: '=', count: allColumns));
             Logger.Log();
-            Logger.Log($"Finished build on {DateTime.Now.ToString(CultureInfo.InvariantCulture)}.");
+            Logger.Log($"Finished build on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}.");
             Logger.Log();
         }
 
