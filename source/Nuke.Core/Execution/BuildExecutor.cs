@@ -55,7 +55,7 @@ namespace Nuke.Core.Execution
                 if (build.Help.Length == 0 || build.Help.Any(x => "targets".StartsWithOrdinalIgnoreCase(x)))
                     Logger.Log(GetTargetsText(build, defaultTargetFactory));
                 if (build.Help.Length == 0 || build.Help.Any(x => "parameters".StartsWithOrdinalIgnoreCase(x)))
-                    Logger.Log(GetParametersText(build));
+                    Logger.Log(GetParametersText(build, defaultTargetFactory));
             }
 
             if (build.Graph)
@@ -107,9 +107,10 @@ namespace Nuke.Core.Execution
             return builder.ToString();
         }
 
-        public static string GetParametersText<T> (T build)
+        public static string GetParametersText<T> (T build, Target defaultTargetFactory)
             where T : NukeBuild
         {
+            var defaultTarget = build.GetTargetDefinitions(defaultTargetFactory).Single(x => x.IsDefault);
             var builder = new StringBuilder();
 
             var parameters = build.GetParameterMembers().OrderBy(x => x.Name).ToList();
@@ -118,7 +119,9 @@ namespace Nuke.Core.Execution
             void PrintParameter (MemberInfo parameter)
             {
                 var attribute = parameter.GetCustomAttribute<ParameterAttribute>();
-                var description = SplitLines(attribute.Description ?? "<no description>");
+                var description = SplitLines(
+                    attribute.Description?.Replace("{default_target}", defaultTarget.Name)
+                    ?? "<no description>");
                 builder.AppendLine($"  -{(attribute.Name ?? parameter.Name).PadRight(padRightParameter)}  {description.First()}");
                 foreach (var line in description.Skip(count: 1))
                     builder.AppendLine($"{new string(c: ' ', count: padRightParameter + 5)}{line}");
