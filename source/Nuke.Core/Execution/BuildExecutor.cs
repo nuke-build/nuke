@@ -91,7 +91,7 @@ namespace Nuke.Core.Execution
             var targetDefinitions = build.GetTargetDefinitions(defaultTargetFactory);
             var longestTargetName = targetDefinitions.Select(x => x.Name.Length).OrderByDescending(x => x).First();
             var padRightTargets = Math.Max(longestTargetName, val2: 20);
-            builder.AppendLine($"  Targets (with their direct dependencies):");
+            builder.AppendLine("Targets (with their direct dependencies):");
             builder.AppendLine();
             foreach (var target in targetDefinitions)
             {
@@ -99,9 +99,9 @@ namespace Nuke.Core.Execution
                     ? $" -> {target.TargetDefinitionDependencies.Select(x => x.Name).Join(", ")}"
                     : string.Empty;
                 var targetEntry = target.Name + (target.IsDefault ? " (default)" : string.Empty);
-                builder.AppendLine($"    {targetEntry.PadRight(padRightTargets)}{dependencies}");
+                builder.AppendLine($"  {targetEntry.PadRight(padRightTargets)}{dependencies}");
                 if (!string.IsNullOrWhiteSpace(target.Description))
-                    builder.AppendLine($"      {target.Description}");
+                    builder.AppendLine($"    {target.Description}");
             }
 
             return builder.ToString();
@@ -119,12 +119,12 @@ namespace Nuke.Core.Execution
             {
                 var attribute = parameter.GetCustomAttribute<ParameterAttribute>();
                 var description = SplitLines(attribute.Description ?? "<no description>");
-                builder.AppendLine($"    -{(attribute.Name ?? parameter.Name).PadRight(padRightParameter)}  {description.First()}");
+                builder.AppendLine($"  -{(attribute.Name ?? parameter.Name).PadRight(padRightParameter)}  {description.First()}");
                 foreach (var line in description.Skip(count: 1))
-                    builder.AppendLine($"{new string(c: ' ', count: padRightParameter + 7)}{line}");
+                    builder.AppendLine($"{new string(c: ' ', count: padRightParameter + 5)}{line}");
             }
 
-            builder.AppendLine("  Parameters:");
+            builder.AppendLine("Parameters:");
 
             var customParameters = parameters.Where(x => x.DeclaringType != typeof(NukeBuild)).ToList();
             if (customParameters.Count > 0)
