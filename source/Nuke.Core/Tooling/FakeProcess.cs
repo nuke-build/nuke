@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace Nuke.Core.Tooling
@@ -15,7 +14,11 @@ namespace Nuke.Core.Tooling
         {
         }
 
-        public ProcessStartInfo StartInfo => throw new NotSupportedException();
+        public string FileName => throw new NotSupportedException();
+
+        public string Arguments => throw new NotSupportedException();
+
+        public string WorkingDirectory => throw new NotSupportedException();
 
         public IEnumerable<Output> Output => Enumerable.Empty<Output>();
 
