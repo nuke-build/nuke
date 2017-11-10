@@ -190,8 +190,13 @@ namespace Nuke.Core
         /// The <c>src</c> or <c>source</c> directory that is located under the <see cref="RootDirectory"/>.
         /// </summary>
         public virtual PathConstruction.AbsolutePath SourceDirectory
-            => (PathConstruction.AbsolutePath) new[] { "src", "source" }
-                    .SelectMany(x => Directory.GetDirectories(RootDirectory, x))
-                    .SingleOrDefault().NotNull("Could not locate a single source directory. Candidates are '\\src' and '\\source'.");
+        {
+            get
+            {
+                var directories = new[] { "src", "source" }.SelectMany(x => Directory.GetDirectories(RootDirectory, x)).ToList();
+                ControlFlow.Assert(directories.Count == 1, "Could not locate a single source directory. Candidates are '~\\src' and '~\\source'.");
+                return (PathConstruction.AbsolutePath) directories.Single();
+            }
+        }
     }
 }
