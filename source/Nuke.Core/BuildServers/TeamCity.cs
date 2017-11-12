@@ -24,6 +24,7 @@ namespace Nuke.Core.BuildServers
     [BuildServer]
     public class TeamCity
     {
+        [CanBeNull]
         public static TeamCity Instance { get; } =
             Variable("TEAMCITY_VERSION") != null
                 ? new TeamCity(Console.WriteLine)
