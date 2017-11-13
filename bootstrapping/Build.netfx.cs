@@ -16,12 +16,15 @@ class Build : NukeBuild
     public static int Main () => Execute<Build>(x => x.Compile);
 
     // Auto-injection fields:
+
     // [GitVersion] readonly GitVersion GitVersion;
-    //  - Semantic versioning. Must have 'GitVersion.CommandLine' referenced.
+    // Semantic versioning. Must have 'GitVersion.CommandLine' referenced.
+
     // [GitRepository] readonly GitRepository GitRepository;
-    //  - Parses origin, branch name and head from git config.
+    // Parses origin, branch name and head from git config.
+
     // [Parameter] readonly string MyGetApiKey;
-    //  - Returns command-line arguments and environment variables.
+    // Returns command-line arguments and environment variables.
 
     Target Clean => _ => _
             .OnlyWhen(() => false) // Disabled for safety.
