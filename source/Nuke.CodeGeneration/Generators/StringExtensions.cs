@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Linq;
 using Humanizer;
 using JetBrains.Annotations;
+using Nuke.Core.Utilities;
 
 namespace Nuke.CodeGeneration.Generators
 {
@@ -64,11 +65,6 @@ namespace Nuke.CodeGeneration.Generators
         {
             Trace.Assert(text.HasValue, "text.HasValue");
             return $"\'{text.Value}\'";
-        }
-
-        public static string Join (this IEnumerable<string> values, string separator = ", ")
-        {
-            return string.Join(separator, values);
         }
 
         public static string ToSeeCref (this string reference)

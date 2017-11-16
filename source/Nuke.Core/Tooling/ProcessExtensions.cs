@@ -32,7 +32,7 @@ namespace Nuke.Core.Tooling
                 {
                     $"Process '{Path.GetFileName(process.FileName)}' exited with code {process.ExitCode}. Please verify the invocation.",
                     $"> {process.FileName.DoubleQuoteIfNeeded()} {process.Arguments}"
-                }.Join(Environment.NewLine));
+                }.JoinNewLine());
         }
 
         public static IEnumerable<Output> EnsureOnlyStd (this IEnumerable<Output> output)

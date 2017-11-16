@@ -29,7 +29,7 @@ namespace Nuke.Core.Injection
             ControlFlow.Assert(fieldsWithAttributes.Count == 1,
                 new[] { $"Requested value of type '{typeof(T).Name}' has multiple matching fields:" }
                         .Concat(fieldsWithAttributes.Select(x => $"  - {x.Field.Name} ({x.Attribute.GetType().Name})"))
-                        .Join(Environment.NewLine));
+                        .JoinNewLine());
 
             var fieldWithAttribute = fieldsWithAttributes.Single();
             return (T) fieldWithAttribute.Attribute.GetStaticValue();

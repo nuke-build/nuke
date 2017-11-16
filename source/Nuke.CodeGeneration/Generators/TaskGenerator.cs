@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Nuke.CodeGeneration.Model;
 using Nuke.CodeGeneration.Writers;
+using Nuke.Core.Utilities;
 
 // ReSharper disable UnusedMethodReturnValue.Local
 
@@ -50,7 +51,7 @@ namespace Nuke.CodeGeneration.Generators
                     .WriteLine(GetTaskSignature(writer.Task, additionalParameterDeclarations))
                     .WriteBlock(w => w
                             .WriteLine("configurator = configurator ?? (x => x);")
-                            .WriteLine($"{taskCallPrefix}{task.GetTaskMethodName()}({allArguments.Join()});"));
+                            .WriteLine($"{taskCallPrefix}{task.GetTaskMethodName()}({allArguments.JoinComma()});"));
 
             return writer.WriteTaskOverloads(index + 1);
         }
@@ -73,7 +74,7 @@ namespace Nuke.CodeGeneration.Generators
                                 "ProcessSettings processSettings = null"
                             });
 
-            return $"public static {task.GetReturnType()} {task.GetTaskMethodName()} ({parameterDeclarations.Join()})";
+            return $"public static {task.GetReturnType()} {task.GetTaskMethodName()} ({parameterDeclarations.JoinComma()})";
         }
 
         private static void WriteMainTaskBlock (TaskWriter writer)

@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using Nuke.CodeGeneration.Model;
 using Nuke.CodeGeneration.Writers;
 using Nuke.Core;
+using Nuke.Core.Utilities;
 
 // ReSharper disable UnusedMethodReturnValue.Local
 
@@ -248,7 +249,7 @@ namespace Nuke.CodeGeneration.Generators
             if (property.Secret)
                 arguments.Add("secret: true");
 
-            return $"  .Add({arguments.Join()})";
+            return $"  .Add({arguments.JoinComma()})";
         }
     }
 }

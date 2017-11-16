@@ -63,7 +63,7 @@ namespace Nuke.Core.Execution
                     ControlFlow.Fail(
                         new[] { "Incomplete target definition order." }
                                 .Concat(independents.Select(x => $"  - {x.Value.Name}"))
-                                .Join(Environment.NewLine));
+                                .JoinNewLine());
                 }
 
                 var independent = independents.FirstOrDefault();
@@ -77,7 +77,7 @@ namespace Nuke.Core.Execution
                     ControlFlow.Fail(
                         new[] { "Circular dependencies between target definitions." }
                                 .Concat(independents.Select(x => $"  - {cycles}"))
-                                .Join(Environment.NewLine));
+                                .JoinNewLine());
                 }
 
                 graphAsList.Remove(independent);

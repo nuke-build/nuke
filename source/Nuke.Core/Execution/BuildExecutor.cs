@@ -96,7 +96,7 @@ namespace Nuke.Core.Execution
             foreach (var target in targetDefinitions)
             {
                 var dependencies = target.TargetDefinitionDependencies.Count > 0
-                    ? $" -> {target.TargetDefinitionDependencies.Select(x => x.Name).Join(", ")}"
+                    ? $" -> {target.TargetDefinitionDependencies.Select(x => x.Name).JoinComma()}"
                     : string.Empty;
                 var targetEntry = target.Name + (target.IsDefault ? " (default)" : string.Empty);
                 builder.AppendLine($"  {targetEntry.PadRight(padRightTargets)}{dependencies}");

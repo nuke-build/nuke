@@ -102,7 +102,7 @@ namespace Nuke.Core.Utilities
             return str.StartsWith("'") && str.EndsWith("'");
         }
 
-        private static bool Contains(this string str, char?[] chars)
+        private static bool Contains (this string str, char?[] chars)
         {
             return chars.Any(x => x.HasValue && str.IndexOf(x.Value) != -1);
         }
@@ -115,6 +115,16 @@ namespace Nuke.Core.Utilities
         public static string Join (this IEnumerable<string> enumerable, char separator)
         {
             return enumerable.Join(separator.ToString());
+        }
+
+        public static string JoinComma (this IEnumerable<string> values)
+        {
+            return values.Join(", ");
+        }
+
+        public static string JoinNewLine (this IEnumerable<string> values)
+        {
+            return values.Join(Environment.NewLine);
         }
     }
 }

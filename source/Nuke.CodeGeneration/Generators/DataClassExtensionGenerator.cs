@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Nuke.CodeGeneration.Model;
 using Nuke.CodeGeneration.Writers;
+using Nuke.Core.Utilities;
 
 // ReSharper disable UnusedMethodReturnValue.Local
 
@@ -286,7 +287,7 @@ namespace Nuke.CodeGeneration.Generators
             var parameters = new[] { $"this {writer.DataClass.Name} toolSettings" }.Concat(additionalParameters);
             return writer
                     .WriteLine("[Pure]")
-                    .WriteLine($"public static {writer.DataClass.Name} {name}({parameters.Join()})")
+                    .WriteLine($"public static {writer.DataClass.Name} {name}({parameters.JoinComma()})")
                     .WriteBlock(w => w
                             .WriteLine("toolSettings = toolSettings.NewInstance();")
                             .ForEachWriteLine(modifications)
