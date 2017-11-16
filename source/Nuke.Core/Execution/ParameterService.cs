@@ -131,13 +131,13 @@ namespace Nuke.Core.Execution
         private object ConvertValues (IReadOnlyCollection<string> values, Type destinationType)
         {
             ControlFlow.Assert(!destinationType.IsArray || destinationType.GetArrayRank() == 1, "Arrays must have a rank of 1.");
-            var elementType = destinationType.IsArray ? destinationType.GetElementType() : destinationType;
+            var elementType = (destinationType.IsArray ? destinationType.GetElementType() : destinationType).NotNull();
             ControlFlow.Assert(values.Count < 2 || elementType != null, "values.Count < 2 || elementType != null");
 
             if (values.Count == 0)
             {
                 if (destinationType.IsArray)
-                    return Array.CreateInstance(destinationType.GetElementType(), length: 0);
+                    return Array.CreateInstance(elementType, length: 0);
 
                 if (destinationType == typeof(bool) || destinationType == typeof(bool?))
                     return true;
@@ -179,9 +179,12 @@ namespace Nuke.Core.Execution
         private string GetName(Type type)
         {
             if (type.IsArray)
-                return $"{type.GetElementType().Name}[]";
-            if (Nullable.GetUnderlyingType(type) != null)
-                return Nullable.GetUnderlyingType(type).Name + "?";
+                return $"{type.GetElementType().NotNull().Name}[]";
+
+            var underlyingType = Nullable.GetUnderlyingType(type);
+            if (underlyingType != null)
+                return underlyingType.Name + "?";
+
             return type.Name;
         }
     }
