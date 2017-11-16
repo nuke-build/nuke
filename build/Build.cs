@@ -104,7 +104,7 @@ class Build : NukeBuild
             {
                 void TestXunit ()
                     => Xunit2(GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/net4*/Nuke.*.Tests.dll"),
-                        s => s.SetResultPath(OutputDirectory / "tests.xml"));
+                        s => s.AddResultReport(ResultFormat.Xml, OutputDirectory / "tests.xml"));
 
                 if (IsWin)
                     OpenCover(TestXunit, s => DefaultOpenCover

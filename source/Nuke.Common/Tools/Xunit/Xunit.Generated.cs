@@ -90,9 +90,8 @@ namespace Nuke.Common.Tools.Xunit
         /// <summary><p>Reporters:<ul><li><c>-appveyor</c>: forces AppVeyor CI mode (normally auto-detected)</li><li><c>-json</c>: show progress messages in JSON format</li><li><c>-quiet</c>: do not show progress messages</li><li><c>-teamcity</c>: forces TeamCity mode (normally auto-detected)</li><li><c>-verbose</c>: show verbose progress messages</li></ul></p></summary>
         public virtual ReporterType Reporter { get; internal set; }
         /// <summary><p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p></summary>
-        public virtual ResultFormat ResultFormat { get; internal set; }
-        /// <summary><p>The result file output path.</p></summary>
-        public virtual string ResultPath { get; internal set; }
+        public virtual IReadOnlyDictionary<ResultFormat, string> ResultReports => ResultReportsInternal.AsReadOnly();
+        internal Dictionary<ResultFormat, string> ResultReportsInternal { get; set; } = new Dictionary<ResultFormat, string>(EqualityComparer<ResultFormat>.Default);
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -115,7 +114,7 @@ namespace Nuke.Common.Tools.Xunit
               .Add("-namespace {value}", Namespaces)
               .Add("-noautoreporters", NoAutoReporters)
               .Add("-{value}", Reporter)
-              .Add("-{value}", GetResultPath(), customValue: true);
+              .Add("-{value}", ResultReports, "{key} {value}");
             return base.ConfigureArguments(arguments);
         }
     }
@@ -903,6 +902,48 @@ namespace Nuke.Common.Tools.Xunit
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Reporter = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ResultReports
+        /// <summary><p><em>Sets <see cref="Xunit2Settings.ResultReports"/> to a new dictionary.</em></p><p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p></summary>
+        [Pure]
+        public static Xunit2Settings SetResultReports(this Xunit2Settings toolSettings, IDictionary<ResultFormat, string> resultReports)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResultReportsInternal = resultReports.ToDictionary(x => x.Key, x => x.Value, EqualityComparer<ResultFormat>.Default);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="Xunit2Settings.ResultReports"/>.</em></p><p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p></summary>
+        [Pure]
+        public static Xunit2Settings ClearResultReports(this Xunit2Settings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResultReportsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds a new key-value-pair <see cref="Xunit2Settings.ResultReports"/>.</em></p><p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p></summary>
+        [Pure]
+        public static Xunit2Settings AddResultReport(this Xunit2Settings toolSettings, ResultFormat resultReportKey, string resultReportValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResultReportsInternal.Add(resultReportKey, resultReportValue);
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes a key-value-pair from <see cref="Xunit2Settings.ResultReports"/>.</em></p><p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p></summary>
+        [Pure]
+        public static Xunit2Settings RemoveResultReport(this Xunit2Settings toolSettings, ResultFormat resultReportKey)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResultReportsInternal.Remove(resultReportKey);
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets a key-value-pair in <see cref="Xunit2Settings.ResultReports"/>.</em></p><p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p></summary>
+        [Pure]
+        public static Xunit2Settings SetResultReport(this Xunit2Settings toolSettings, ResultFormat resultReportKey, string resultReportValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResultReportsInternal[resultReportKey] = resultReportValue;
             return toolSettings;
         }
         #endregion

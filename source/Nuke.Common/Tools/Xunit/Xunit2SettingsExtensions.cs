@@ -23,21 +23,5 @@ namespace Nuke.Common.Tools.Xunit
         {
             return toolSettings.AddTargetAssemblies(assemblyFiles.AsEnumerable());
         }
-
-        public static Xunit2Settings SetResultPath (
-            this Xunit2Settings toolSettings,
-            [CanBeNull] string resultPath,
-            ResultFormat resultFormat = null)
-        {
-            resultFormat = resultFormat ?? ResultFormat.Xml;
-
-            if (resultPath == null)
-                resultFormat = null;
-
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ResultFormat = resultFormat;
-            toolSettings.ResultPath = resultPath;
-            return toolSettings;
-        }
     }
 }
