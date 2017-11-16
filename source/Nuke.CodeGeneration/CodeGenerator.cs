@@ -24,7 +24,7 @@ using static Nuke.Core.IO.PathConstruction;
 namespace Nuke.CodeGeneration
 {
     [PublicAPI]
-    public static class CodeGenerator
+    public class CodeGenerator
     {
         public static void GenerateCode (
             string metadataDirectory,
@@ -33,70 +33,106 @@ namespace Nuke.CodeGeneration
             bool useNestedNamespaces = false,
             bool downloadSchema = true)
         {
-            if (downloadSchema)
+            new CodeGenerator(
+                        metadataDirectory,
+                        generationDirectory,
+                        baseNamespace,
+                        useNestedNamespaces,
+                        downloadSchema)
+                    .Execute();
+        }
+
+        private const string c_schemaDownloadUrl = "https://raw.githubusercontent.com/nuke-build/tools/master/metadata/_schema.json";
+        private const string c_schemaFileName = "_schema.json";
+        private const string c_nukeCommonNamespace = "Nuke.Common.Tools";
+
+        private readonly string _metadataDirectory;
+        private readonly string _generationDirectory;
+        private readonly string _baseNamespace;
+        private readonly bool _useNestedNamespaces;
+        private readonly bool _downloadSchema;
+
+        private CodeGenerator (
+            string metadataDirectory,
+            string generationDirectory,
+            [CanBeNull] string baseNamespace,
+            bool useNestedNamespaces,
+            bool downloadSchema)
+        {
+            _metadataDirectory = metadataDirectory;
+            _generationDirectory = generationDirectory;
+            _baseNamespace = baseNamespace;
+            _useNestedNamespaces = useNestedNamespaces;
+            _downloadSchema = downloadSchema;
+        }
+
+        public void Execute()
+        {
+            if (_downloadSchema)
+                ControlFlow.SuppressErrors(() =>
+                    HttpTasks.HttpDownloadFile(c_schemaDownloadUrl, (RelativePath) _metadataDirectory / c_schemaFileName));
+
+            var files = Directory.GetFiles(_metadataDirectory, "*.json", SearchOption.TopDirectoryOnly).Where(x => !x.EndsWith(c_schemaFileName));
+            files.AsParallel().ForAll(HandleFile);
+        }
+
+        private void HandleFile (string file)
+        {
+            var tool = Load(file);
+
+            foreach (var task in tool.Tasks)
             {
-                HttpTasks.HttpDownloadFile(
-                    uri: "https://raw.githubusercontent.com/nuke-build/tools/master/metadata/_schema.json",
-                    path: (RelativePath) metadataDirectory / "_schema.json");
+                if (task.OmitCommonProperties)
+                    continue;
+
+                tool.CommonTaskProperties.ForEach(y => task.SettingsClass.Properties.Add(y.Clone()));
             }
 
-            var files = Directory.GetFiles(metadataDirectory, "*.json", SearchOption.TopDirectoryOnly).Where(x => !x.EndsWith("_schema.json"));
-            files.AsParallel().ForAll(file =>
+            ApplyBackReferences(tool);
+
+            using (var streamWriter = new StreamWriter(File.Open(tool.GenerationFileBase + ".Generated.cs", FileMode.Create)))
             {
-                var tool = Load(file, generationDirectory, baseNamespace == "Nuke.Common.Tools", useNestedNamespaces);
+                ToolGenerator.Run(tool, GetNamespace(tool), streamWriter);
+            }
 
-                foreach (var task in tool.Tasks)
-                {
-                    if (task.OmitCommonProperties)
-                        continue;
+            tool.Tasks.ForEach(x => tool.CommonTaskProperties.ForEach(y => x.SettingsClass.Properties.RemoveAll(z => z.Name == y.Name)));
+            System.Threading.Tasks.Task.WaitAll(
+                tool.References.Select(reference => UpdateReference(reference, tool)).ToArray());
 
-                    tool.CommonTaskProperties.ForEach(y => task.SettingsClass.Properties.Add(y.Clone()));
-                }
+            Save(tool);
 
-                ApplyBackReferences(tool);
-
-                using (var streamWriter = new StreamWriter(File.Open(tool.GenerationFileBase + ".Generated.cs", FileMode.Create)))
-                {
-                    ToolGenerator.Run(tool, GetNamespace(baseNamespace, useNestedNamespaces, tool), streamWriter);
-                }
-
-                tool.Tasks.ForEach(x => tool.CommonTaskProperties.ForEach(y => x.SettingsClass.Properties.RemoveAll(z => z.Name == y.Name)));
-                UpdateReferences(tool);
-
-                Save(tool);
-
-                Logger.Info($"Processed {Path.GetFileName(file)}.");
-            });
+            Logger.Info($"Processed {Path.GetFileName(file)}.");
         }
 
         [CanBeNull]
-        private static string GetNamespace ([CanBeNull] string baseNamespace, bool useNestedNamespaces, Tool tool)
+        private string GetNamespace (Tool tool)
         {
-            return !useNestedNamespaces
-                ? baseNamespace
-                : string.IsNullOrEmpty(baseNamespace)
+            return !_useNestedNamespaces
+                ? _baseNamespace
+                : string.IsNullOrEmpty(_baseNamespace)
                     ? tool.Name
-                    : $"{baseNamespace}.{tool.Name}";
+                    : $"{_baseNamespace}.{tool.Name}";
         }
 
-        private static Tool Load (string file, string generationDirectory, bool isMainRepository, bool useNestedNamespaces)
+        private Tool Load (string file)
         {
             var content = File.ReadAllText(file);
             var tool = JsonConvert.DeserializeObject<Tool>(content);
 
-            var toolDirectory = useNestedNamespaces ? Path.Combine(generationDirectory, tool.Name) : generationDirectory;
+            var toolDirectory = _useNestedNamespaces ? Path.Combine(_generationDirectory, tool.Name) : _generationDirectory;
             Directory.CreateDirectory(toolDirectory);
 
             tool.DefinitionFile = file;
             tool.GenerationFileBase = Path.Combine(toolDirectory, Path.GetFileNameWithoutExtension(file));
-            if (isMainRepository)
-                tool.RepositoryUrl = $"https://github.com/nuke-build/tools/blob/master/{Path.GetFileName(file)}";
+            tool.RepositoryUrl = _baseNamespace == c_nukeCommonNamespace
+                ? $"https://github.com/nuke-build/tools/blob/master/{Path.GetFileName(file)}"
+                : null;
 
             return tool;
         }
 
         // ReSharper disable once CyclomaticComplexity
-        private static void ApplyBackReferences (Tool tool)
+        private void ApplyBackReferences (Tool tool)
         {
             foreach (var task in tool.Tasks)
             {
@@ -124,28 +160,24 @@ namespace Nuke.CodeGeneration
                 enumeration.Tool = tool;
         }
 
-        private static void UpdateReferences (Tool tool)
+        private async System.Threading.Tasks.Task UpdateReference (string reference, Tool tool)
         {
-            Parallel.For(fromInclusive: 0,
-                toExclusive: tool.References.Count,
-                body: async i =>
-                {
-                    try
-                    {
-                        var referenceContent = await GetReferenceContent(tool.References[i]);
-                        File.WriteAllText(
-                            $"{tool.GenerationFileBase}.ref.{i.ToString().PadLeft(totalWidth: 3, paddingChar: '0')}.txt",
-                            referenceContent);
-                    }
-                    catch (Exception exception)
-                    {
-                        Logger.Error($"Couldn't update reference #{i} for {Path.GetFileName(tool.DefinitionFile)}:");
-                        Logger.Error(exception.Message);
-                    }
-                });
+            var index = tool.References.IndexOf(reference);
+            try
+            {
+                var referenceContent = GetReferenceContent(reference).Result;
+                File.WriteAllText(
+                    $"{tool.GenerationFileBase}.ref.{index.ToString().PadLeft(totalWidth: 3, paddingChar: '0')}.txt",
+                    referenceContent);
+            }
+            catch (Exception exception)
+            {
+                Logger.Error($"Couldn't update {Path.GetFileName (tool.DefinitionFile)}#{index}: {reference}");
+                Logger.Error(exception.Message);
+            }
         }
 
-        private static void Save (Tool tool)
+        private void Save (Tool tool)
         {
             var content = JsonConvert.SerializeObject(
                 tool,
@@ -166,7 +198,7 @@ namespace Nuke.CodeGeneration
             //File.WriteAllText(tool.DefinitionFile, content);
         }
 
-        private static async Task<string> GetReferenceContent (string reference)
+        private async Task<string> GetReferenceContent (string reference)
         {
             var referenceValues = reference.Split('#');
 
