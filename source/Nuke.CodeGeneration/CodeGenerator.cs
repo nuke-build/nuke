@@ -213,7 +213,9 @@ namespace Nuke.CodeGeneration
 
             var document = new HtmlDocument();
             document.Load(tempFile, Encoding.UTF8);
-            return document.DocumentNode.SelectSingleNode(referenceValues[1]).InnerText;
+            var selectedNode = document.DocumentNode.SelectSingleNode(referenceValues[1]);
+            ControlFlow.Assert(selectedNode != null, "selectedNode != null");
+            return selectedNode.InnerText;
         }
 
         private class CustomContractResolver : CamelCasePropertyNamesContractResolver
