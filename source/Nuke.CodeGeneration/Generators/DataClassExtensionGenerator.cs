@@ -129,7 +129,7 @@ namespace Nuke.CodeGeneration.Generators
                     .WriteSummaryExtension($"Sets {property.GetCrefTag()} to a new dictionary", property)
                     .WriteMethod($"Set{property.Name}",
                         $"IDictionary<{keyType}, {valueType}> {propertyInstance}",
-                        $"{propertyAccess} = {propertyInstance}.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);")
+                        $"{propertyAccess} = {propertyInstance}.ToDictionary(x => x.Key, x => x.Value, {property.GetKeyComparer()});")
                     .WriteSummaryExtension($"Clears {property.GetCrefTag()}", property)
                     .WriteMethod($"Clear{property.Name}",
                         $"{propertyAccess}.Clear();")

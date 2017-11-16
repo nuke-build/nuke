@@ -126,7 +126,7 @@ namespace Nuke.CodeGeneration.Generators
             if (property.IsList())
                 initializationExpression = $"new {property.Type}()";
             else if (property.IsDictionary() || property.IsLookupTable())
-                initializationExpression = $"new {property.Type}(StringComparer.OrdinalIgnoreCase)";
+                initializationExpression = $"new {property.Type}({property.GetKeyComparer()})";
             else
                 initializationExpression = property.Default;
 
@@ -157,7 +157,7 @@ namespace Nuke.CodeGeneration.Generators
 
             if (property.IsLookupTable())
             {
-                var (keyType, valueType) = property.GetDictionaryKeyValueTypes();
+                var (keyType, valueType) = property.GetLookupTableKeyValueTypes();
                 return $"ILookup<{keyType}, {valueType}>";
             }
 
