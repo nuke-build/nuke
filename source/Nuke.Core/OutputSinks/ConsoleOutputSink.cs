@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using Nuke.Core.Execution;
 using Nuke.Core.Utilities;
@@ -86,6 +87,7 @@ namespace Nuke.Core.OutputSinks
             Logger.Log();
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private void WriteWithColors (string text, ConsoleColor brightForeground, ConsoleColor darkForeground)
         {
             var previousForeground = Console.ForegroundColor;
