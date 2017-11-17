@@ -92,6 +92,7 @@ namespace Nuke.Common.Git
         [CanBeNull]
         public string Branch { get; set; }
 
+        [NotNull]
         public override string ToString ()
         {
             return CloneUrl;

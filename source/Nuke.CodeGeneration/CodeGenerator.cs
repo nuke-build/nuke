@@ -169,7 +169,7 @@ namespace Nuke.CodeGeneration
             var index = tool.References.IndexOf(reference);
             try
             {
-                var referenceContent = GetReferenceContent(reference).Result;
+                var referenceContent = await GetReferenceContent(reference);
                 File.WriteAllText(
                     $"{tool.GenerationFileBase}.ref.{index.ToString().PadLeft(totalWidth: 3, paddingChar: '0')}.txt",
                     referenceContent);
