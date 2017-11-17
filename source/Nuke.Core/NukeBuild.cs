@@ -124,17 +124,13 @@ namespace Nuke.Core
         {
             get
             {
-                var buildAssemblyLocation = BuildAssembly.Location.NotNull("buildAssemblyLocation != null");
-                var rootDirectory = Directory.GetParent(buildAssemblyLocation);
+                var buildAssemblyFile = BuildAssembly.Location.NotNull("buildAssemblyFile != null");
+                var buildAssemblyDirectory = Directory.GetParent(buildAssemblyFile);
+                var rootDirectory = FileSystemTasks.SearchDirectory(buildAssemblyDirectory, x => x.GetFiles(c_configFile).Any());
+                ControlFlow.Assert(rootDirectory != null,
+                    $"Could not locate '{c_configFile}' file while traversing up from '{buildAssemblyFile}'.");
 
-                while (rootDirectory != null && !rootDirectory.GetFiles(c_configFile).Any())
-                {
-                    rootDirectory = rootDirectory.Parent;
-                }
-
-                return (PathConstruction.AbsolutePath) rootDirectory
-                        .NotNull($"Could not locate '{c_configFile}' file while traversing up from '{buildAssemblyLocation}'.")
-                        .FullName;
+                return (PathConstruction.AbsolutePath) rootDirectory;
             }
         }
 
