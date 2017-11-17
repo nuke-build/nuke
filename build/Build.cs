@@ -30,7 +30,6 @@ class Build : NukeBuild
     [Parameter ("ApiKey for the 'nukebuild' feed.")] readonly string MyGetApiKey;
 
     [GitVersion] readonly GitVersion GitVersion;
-    [GitRepository] readonly GitRepository GitRepository;
 
     Target Clean => _ => _
             .Executes(() =>
@@ -113,12 +112,17 @@ class Build : NukeBuild
                     TestXunit();
             });
 
+    string MetadataDirectory => RootDirectory / ".." / "tools" / "metadata";
+    string GenerationDirectory => RootDirectory / "source" / "Nuke.Common" / "Tools";
+
     Target Generate => _ => _
             .Executes(() =>
             {
+                var metadataRepository = GitRepository.TryParse(MetadataDirectory).NotNull();
                 GenerateCode(
-                    metadataDirectory: RootDirectory / ".." / "tools" / "metadata",
-                    generationDirectory: RootDirectory / "source" / "Nuke.Common" / "Tools",
+                    MetadataDirectory,
+                    GenerationDirectory,
+                    repositoryBaseUrl: $"{metadataRepository.SvnUrl}/blob/{metadataRepository.Branch}",
                     baseNamespace: "Nuke.Common.Tools",
                     useNestedNamespaces: true);
             });
