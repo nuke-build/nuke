@@ -25,12 +25,12 @@ using static Nuke.Core.EnvironmentInfo;
 
 class Build : NukeBuild
 {
-    [Parameter("ApiKey for the 'nukebuild' feed.")] readonly string MyGetApiKey;
+    public static int Main () => Execute<Build>(x => x.Pack);
+
+    [Parameter ("ApiKey for the 'nukebuild' feed.")] readonly string MyGetApiKey;
 
     [GitVersion] readonly GitVersion GitVersion;
     [GitRepository] readonly GitRepository GitRepository;
-
-    public static int Main () => Execute<Build>(x => x.Pack);
 
     Target Clean => _ => _
             .Executes(() =>
@@ -43,7 +43,7 @@ class Build : NukeBuild
             .DependsOn(Clean)
             .Executes(() =>
             {
-                DotNetRestore(s => DefaultDotNetRestore.SetProjectFile (SolutionFile));
+                DotNetRestore(s => DefaultDotNetRestore);
             });
 
     Target Compile => _ => _
@@ -51,7 +51,7 @@ class Build : NukeBuild
             .Requires(() => IsUnix || GitVersion != null)
             .Executes(() =>
             {
-                DotNetBuild(s => DefaultDotNetBuild.SetProjectFile(SolutionFile).EnableNoRestore());
+                DotNetBuild(s => DefaultDotNetBuild);
             });
 
     Target Link => _ => _
@@ -69,7 +69,7 @@ class Build : NukeBuild
             .DependsOn(Link)
             .Executes(() =>
             {
-                DotNetPack(s => DefaultDotNetPack.SetProject(SolutionFile).EnableNoBuild());
+                DotNetPack(s => DefaultDotNetPack);
             });
 
     Target Push => _ => _
