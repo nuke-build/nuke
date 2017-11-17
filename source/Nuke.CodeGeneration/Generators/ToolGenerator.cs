@@ -6,9 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.CodeGeneration.Model;
 using Nuke.CodeGeneration.Writers;
+using Nuke.Core.Utilities;
 using Nuke.Core.Utilities.Collections;
 
 // ReSharper disable UnusedMethodReturnValue.Local
@@ -17,6 +19,8 @@ namespace Nuke.CodeGeneration.Generators
 {
     public static class ToolGenerator
     {
+        private static readonly Assembly s_assembly = typeof(ToolGenerator).GetTypeInfo().Assembly;
+
         public static void Run (Tool tool, [CanBeNull] string @namespace, StreamWriter streamWriter)
         {
             using (var writer = new ToolWriter(tool, streamWriter))
@@ -27,7 +31,8 @@ namespace Nuke.CodeGeneration.Generators
                         .WriteLine("// Distributed under the MIT License.")
                         .WriteLine("// https://github.com/nuke-build/nuke/blob/master/LICENSE")
                         .WriteLine(string.Empty)
-                        .WriteLineIfTrue(tool.RepositoryUrl != null, $"// Generated from {tool.RepositoryUrl} with Nuke.ToolGenerator.")
+                        .WriteLine($"// Generated with {s_assembly.GetName().Name}, {s_assembly.GetInformationText()}.")
+                        .WriteLineIfTrue(tool.RepositoryUrl != null, $"// Generated from {tool.RepositoryUrl}.")
                         .WriteLine(string.Empty)
                         .ForEach(GetNamespaceImports(), x => writer.WriteLine($"using {x};"))
                         .WriteLine(string.Empty)
