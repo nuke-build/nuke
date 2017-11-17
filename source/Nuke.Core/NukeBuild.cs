@@ -42,13 +42,13 @@ namespace Nuke.Core
         private const string c_configFile = ".nuke";
 
         /// <summary>
-        /// The currently running build instance. Mostly useful for default settings.
+        /// Currently running build instance. Mostly useful for default settings.
         /// </summary>
         public static NukeBuild Instance { get; private set; }
 
         /// <summary>
         /// Executes the build. The provided expression defines the <em>default</em> target that is invoked,
-        /// if no targets have been specified on the command line.
+        /// if no targets have been specified via command-line arguments.
         /// </summary>
         protected static int Execute<T> (Expression<Func<T, Target>> defaultTargetExpression)
             where T : NukeBuild
@@ -62,78 +62,80 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Verbosity with that the build is run. Default is <see cref="Core.Verbosity.Normal"/>.
+        /// Logging verbosity while building. Default is <see cref="Core.Verbosity.Normal"/>.
         /// </summary>
-        [Parameter("Verbosity with that the build is run. Default is 'Normal'.")]
+        [Parameter("Logging verbosity while building. Default is 'Normal'.")]
         public Verbosity Verbosity { get; set; } = Verbosity.Normal;
 
         /// <summary>
         /// Targets to run. Default is <em>Default</em>, which falls back to the target specified in <c>static int Main</c> with <see cref="Execute{T}"/>.
         /// </summary>
-        [Parameter("Target(s) to run. Default is specified in 'static int Main' via 'Execute'.", Separator = "+")]
+        [Parameter("Target(s) to run. Default is '{default_target}'.", Separator = "+")]
         public string[] Target { get; } = { "Default" };
 
         /// <summary>
-        /// Configuration to build. Default is <em>Debug</em> for local and <em>Release</em> for server builds.
+        /// Configuration to build. Default is <em>Debug</em> (local) or <em>Release</em> (server).
         /// </summary>
-        [Parameter("Configuration to build. Default is 'Debug' for local and 'Release' for server builds.")]
+        [Parameter("Configuration to build. Default is 'Debug' (local) or 'Release' (server).")]
         public string Configuration { get; } = IsServerBuild ? "Release" : "Debug";
 
         /// <summary>
-        /// Specifies that no dependencies should be executed. Default is <c>false</c>.
+        /// Disables execution of target dependencies.
         /// </summary>
-        [Parameter("Specifies that no dependencies should be executed. Default is 'false'.", Name = "NoDeps")]
+        [Parameter("Disables execution of target dependencies.", Name = "NoDeps")]
         public bool NoDependencies { get; }
 
         /// <summary>
-        /// Specifies that the bootstrapper should skip initialization. By default this includes updating NuGet.exe and restoring the build project. Default is <c>false</c>.
+        /// Disables bootstrapper initialization.
         /// </summary>
-        [Parameter("Specifies that the bootstrapper should skip initialization. By default this includes updating NuGet.exe and restoring the build project. Default is 'false'.", Name = "NoInit")]
+        [Parameter("Disables bootstrapper initialization.", Name = "NoInit")]
         public bool NoInitialization { get; }
 
-        //[Parameter("Specifies that no logo should be printed. Default is is 'false'.")]
+        //[Parameter("Specifies that no logo should be printed.")]
         //public bool NoLogo { get; set; }
 
         /// <summary>
-        /// Enables additional checks for the <c>PATH</c> environment variable.
+        /// Enables sanity checks for the <c>PATH</c> environment variable.
         /// </summary>
-        [Parameter("Enables additional checks for the 'PATH' environment variable.")]
+        [Parameter("Enables sanity checks for the 'PATH' environment variable.")]
         public bool CheckPath { get; }
 
         /// <summary>
-        /// Shows the help text for this build assembly if supplied.
+        /// Shows the target dependency graph (HTML).
         /// </summary>
-        [Parameter("Shows the help text for this build assembly if supplied.")]
+        [Parameter("Shows the target dependency graph (HTML).")]
+        public bool Graph { get; }
+
+        /// <summary>
+        /// Shows the help text for this build assembly.
+        /// </summary>
+        [Parameter("Shows the help text for this build assembly.")]
+        [CanBeNull]
         public string[] Help { get; }
 
-        public static bool IsLocalBuild => TeamCity.Instance == null && Bitrise.Instance == null && TeamServices.Instance == null;
-        public static bool IsServerBuild => !IsLocalBuild;
+        public static bool IsLocalBuild => OutputSink.Instance.GetType() == typeof(ConsoleOutputSink);
 
         public LogLevel LogLevel => (LogLevel) Verbosity;
 
         /// <summary>
-        /// The root directory where the <c>.nuke</c> file is located. By convention also the root for the repository.
+        /// Gets the full path to the root directory where the <c>.nuke</c> file is located.
         /// </summary>
         public virtual PathConstruction.AbsolutePath RootDirectory
         {
             get
             {
-                var buildAssemblyLocation = BuildAssembly.Location.NotNull("buildAssemblyLocation != null");
-                var rootDirectory = Directory.GetParent(buildAssemblyLocation);
+                var buildAssemblyFile = BuildAssembly.Location.NotNull("buildAssemblyFile != null");
+                var buildAssemblyDirectory = Directory.GetParent(buildAssemblyFile);
+                var rootDirectory = FileSystemTasks.SearchDirectory(buildAssemblyDirectory, x => x.GetFiles(c_configFile).Any());
+                ControlFlow.Assert(rootDirectory != null,
+                    $"Could not locate '{c_configFile}' file while traversing up from '{buildAssemblyFile}'.");
 
-                while (rootDirectory != null && !rootDirectory.GetFiles(c_configFile).Any())
-                {
-                    rootDirectory = rootDirectory.Parent;
-                }
-
-                return (PathConstruction.AbsolutePath) rootDirectory
-                        .NotNull($"Could not locate '{c_configFile}' file while traversing up from '{buildAssemblyLocation}'.")
-                        .FullName;
+                return (PathConstruction.AbsolutePath) rootDirectory;
             }
         }
 
         /// <summary>
-        /// The solution file that is referenced in the <c>.nuke</c> file.
+        /// Full path to the solution file that is referenced in the <c>.nuke</c> file.
         /// </summary>
         public virtual PathConstruction.AbsolutePath SolutionFile
         {
@@ -153,12 +155,12 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// The solution directory derived from the solution file specified in the <c>.nuke</c> file.
+        /// Full path to the solution directory derived the <c>.nuke</c> file.
         /// </summary>
         public virtual PathConstruction.AbsolutePath SolutionDirectory => (PathConstruction.AbsolutePath) Path.GetDirectoryName(SolutionFile);
 
         /// <summary>
-        /// The <c>.tmp</c> directory that is located under the <see cref="RootDirectory"/>.
+        /// Full path to <c>~\.tmp</c>.
         /// </summary>
         public virtual PathConstruction.AbsolutePath TemporaryDirectory
         {
@@ -171,21 +173,26 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// The <c>output</c> directory that is located under the <see cref="RootDirectory"/>.
+        /// Full path to <c>~\output</c>.
         /// </summary>
         public virtual PathConstruction.AbsolutePath OutputDirectory => (PathConstruction.AbsolutePath) Path.Combine(RootDirectory, "output");
 
         /// <summary>
-        /// The <c>artifacts</c> directory that is located under the <see cref="RootDirectory"/>.
+        /// Full path to <c>~\artifacts</c>.
         /// </summary>
         public virtual PathConstruction.AbsolutePath ArtifactsDirectory => (PathConstruction.AbsolutePath) Path.Combine(RootDirectory, "artifacts");
 
         /// <summary>
-        /// The <c>src</c> or <c>source</c> directory that is located under the <see cref="RootDirectory"/>.
+        /// Full path to either <c>~\src</c> or <c>~\source</c>. Throws an exception if either none or both exist.
         /// </summary>
         public virtual PathConstruction.AbsolutePath SourceDirectory
-            => (PathConstruction.AbsolutePath) new[] { "src", "source" }
-                    .SelectMany(x => Directory.GetDirectories(RootDirectory, x))
-                    .SingleOrDefault().NotNull("Could not locate a single source directory. Candidates are '\\src' and '\\source'.");
+        {
+            get
+            {
+                var directories = new[] { "src", "source" }.SelectMany(x => Directory.GetDirectories(RootDirectory, x)).ToList();
+                ControlFlow.Assert(directories.Count == 1, "Could not locate a single source directory. Candidates are '~\\src' and '~\\source'.");
+                return (PathConstruction.AbsolutePath) directories.Single();
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Core.BuildServers;
 using Nuke.Core.Utilities;
 
@@ -11,6 +12,7 @@ namespace Nuke.Core.OutputSinks
 {
     public class TeamCityOutputSink : ConsoleOutputSink
     {
+        [CanBeNull]
         public new static IOutputSink Instance { get; } = TeamCity.Instance != null ? new TeamCityOutputSink(TeamCity.Instance) : null;
 
         private readonly TeamCity _teamCity;

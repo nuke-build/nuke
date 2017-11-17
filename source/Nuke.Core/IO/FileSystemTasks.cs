@@ -184,5 +184,21 @@ namespace Nuke.Core.IO
                         .Max(x => x.LastWriteTimeUtc)
                 : File.GetLastWriteTimeUtc(path);
         }
+
+        [CanBeNull]
+        public static string SearchDirectory(string start, Func<DirectoryInfo, bool> predicate)
+        {
+            return SearchDirectory(new DirectoryInfo(start), predicate);
+        }
+
+        [CanBeNull]
+        public static string SearchDirectory (DirectoryInfo start, Func<DirectoryInfo, bool> predicate)
+        {
+            return start
+                    .DescendantsAndSelf(x => x.Parent)
+                    .Where(x => x != null)
+                    .FirstOrDefault(predicate)
+                    ?.FullName;
+        }
     }
 }

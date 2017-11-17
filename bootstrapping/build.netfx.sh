@@ -3,7 +3,7 @@
 NOINIT=0
 BUILD_ARGUMENTS=()
 for i in "$@"; do
-    case ${1,,} in
+    case $(echo $1 | awk '{print tolower($0)}') in
         -noinit) NOINIT=1;;
         *) BUILD_ARGUMENTS+=("$1") ;;
     esac
@@ -18,6 +18,7 @@ SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 ###########################################################################
 
 NUGET_VERSION="_NUGET_VERSION_"
+SOLUTION_DIRECTORY="$SCRIPT_DIR/_SOLUTION_DIRECTORY_"
 BUILD_PROJECT_FILE="$SCRIPT_DIR/_BUILD_DIRECTORY_NAME_/_BUILD_PROJECT_NAME_.csproj"
 BUILD_EXE_FILE="$SCRIPT_DIR/_BUILD_DIRECTORY_NAME_/bin/Debug/_BUILD_PROJECT_NAME_.exe"
 
@@ -35,9 +36,9 @@ if ! ((NOINIT)); then
   mkdir -p "$TEMP_DIRECTORY"
 
   if [ ! -f "$NUGET_FILE" ]; then curl -Lsfo "$NUGET_FILE" $NUGET_URL;
-  elif [[ $NUGET_URL == *"latest"* ]]; then mono "$NUGET_FILE" update -Self; fi
+  elif [ $NUGET_VERSION == "latest" ]; then mono "$NUGET_FILE" update -Self; fi
 
-  mono "$NUGET_FILE" restore "$BUILD_PROJECT_FILE"
+  mono "$NUGET_FILE" restore "$BUILD_PROJECT_FILE" -SolutionDirectory $SOLUTION_DIRECTORY
 fi
 
 msbuild "$BUILD_PROJECT_FILE"

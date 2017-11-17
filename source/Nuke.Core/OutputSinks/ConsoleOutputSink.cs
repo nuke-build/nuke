@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using Nuke.Core.Execution;
 using Nuke.Core.Utilities;
@@ -82,10 +83,11 @@ namespace Nuke.Core.OutputSinks
             Logger.Log(CreateLine("Total", "", ToMinutesAndSeconds(totalDuration)));
             Logger.Log(new string(c: '=', count: allColumns));
             Logger.Log();
-            Logger.Log($"Finished build on {DateTime.Now.ToString(CultureInfo.InvariantCulture)}.");
+            Logger.Log($"Finished build on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}.");
             Logger.Log();
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private void WriteWithColors (string text, ConsoleColor brightForeground, ConsoleColor darkForeground)
         {
             var previousForeground = Console.ForegroundColor;

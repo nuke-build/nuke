@@ -41,6 +41,7 @@ namespace Nuke.Core.Execution
             PrintLogo();
 
             InjectionService.InjectValues(build);
+            Logger.Log();
             //{
             //    Console.WriteLine($"Target: {build.Target.Join(", ")}");
             //    Console.WriteLine($"Verbosity: {build.Verbosity}");
@@ -54,12 +55,14 @@ namespace Nuke.Core.Execution
                 if (build.Help.Length == 0 || build.Help.Any(x => "targets".StartsWithOrdinalIgnoreCase(x)))
                     Logger.Log(GetTargetsText(build, defaultTargetFactory));
                 if (build.Help.Length == 0 || build.Help.Any(x => "parameters".StartsWithOrdinalIgnoreCase(x)))
-                    Logger.Log(GetParametersText(build));
-                if (build.Help.Any(x => "graph".StartsWithOrdinalIgnoreCase(x)))
-                    ShowGraph(build, defaultTargetFactory);
-
-                Environment.Exit(exitCode: 0);
+                    Logger.Log(GetParametersText(build, defaultTargetFactory));
             }
+
+            if (build.Graph)
+                ShowGraph(build, defaultTargetFactory);
+
+            if (build.Help != null || build.Graph)
+                Environment.Exit(exitCode: 0);
 
             var executionList = TargetDefinitionLoader.GetExecutionList(build, defaultTargetFactory);
             RequirementService.ValidateRequirements(executionList, build);
@@ -68,16 +71,9 @@ namespace Nuke.Core.Execution
 
         private static void PrintLogo()
         {
-            var assembly = typeof(BuildExecutor).GetTypeInfo().Assembly;
-            var fileVersion = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>().Version;
-            var informationalVersion = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute> ().InformationalVersion;
-            var details = fileVersion != "1.0.0.0"
-                ? $"Version: {fileVersion} [CommitSha: {informationalVersion.Substring(informationalVersion.LastIndexOf(value: '.') + 1, length: 8)}]"
-                : "LOCAL VERSION";
-
             Logger.Log(FigletTransform.GetText("NUKE"));
-            Logger.Log(details);
-            Logger.Log(string.Empty);
+            Logger.Log(typeof(BuildExecutor).GetTypeInfo().Assembly.GetInformationText());
+            Logger.Log();
         }
 
         public static string GetTargetsText<T> (T build, Target defaultTargetFactory)
@@ -88,24 +84,26 @@ namespace Nuke.Core.Execution
             var targetDefinitions = build.GetTargetDefinitions(defaultTargetFactory);
             var longestTargetName = targetDefinitions.Select(x => x.Name.Length).OrderByDescending(x => x).First();
             var padRightTargets = Math.Max(longestTargetName, val2: 20);
-            builder.AppendLine($"  Targets:");
+            builder.AppendLine("Targets (with their direct dependencies):");
             builder.AppendLine();
             foreach (var target in targetDefinitions)
             {
                 var dependencies = target.TargetDefinitionDependencies.Count > 0
-                    ? $" -> {target.TargetDefinitionDependencies.Select(x => x.Name).Join(", ")}"
+                    ? $" -> {target.TargetDefinitionDependencies.Select(x => x.Name).JoinComma()}"
                     : string.Empty;
-                builder.AppendLine($"  {(target.IsDefault ? ">" : " ")} {target.Name.PadRight(padRightTargets)}{dependencies}");
+                var targetEntry = target.Name + (target.IsDefault ? " (default)" : string.Empty);
+                builder.AppendLine($"  {targetEntry.PadRight(padRightTargets)}{dependencies}");
                 if (!string.IsNullOrWhiteSpace(target.Description))
-                    builder.AppendLine($"      {target.Description}");
+                    builder.AppendLine($"    {target.Description}");
             }
 
             return builder.ToString();
         }
 
-        public static string GetParametersText<T> (T build)
+        public static string GetParametersText<T> (T build, Target defaultTargetFactory)
             where T : NukeBuild
         {
+            var defaultTarget = build.GetTargetDefinitions(defaultTargetFactory).Single(x => x.IsDefault);
             var builder = new StringBuilder();
 
             var parameters = build.GetParameterMembers().OrderBy(x => x.Name).ToList();
@@ -114,13 +112,15 @@ namespace Nuke.Core.Execution
             void PrintParameter (MemberInfo parameter)
             {
                 var attribute = parameter.GetCustomAttribute<ParameterAttribute>();
-                var description = SplitLines(attribute.Description ?? "<no description>");
-                builder.AppendLine($"    -{(attribute.Name ?? parameter.Name).PadRight(padRightParameter)}  {description.First()}");
+                var description = SplitLines(
+                    attribute.Description?.Replace("{default_target}", defaultTarget.Name)
+                    ?? "<no description>");
+                builder.AppendLine($"  -{(attribute.Name ?? parameter.Name).PadRight(padRightParameter)}  {description.First()}");
                 foreach (var line in description.Skip(count: 1))
-                    builder.AppendLine($"{new string(c: ' ', count: padRightParameter + 7)}{line}");
+                    builder.AppendLine($"{new string(c: ' ', count: padRightParameter + 5)}{line}");
             }
 
-            builder.AppendLine("  Parameters:");
+            builder.AppendLine("Parameters:");
 
             var customParameters = parameters.Where(x => x.DeclaringType != typeof(NukeBuild)).ToList();
             if (customParameters.Count > 0)
@@ -180,7 +180,13 @@ namespace Nuke.Core.Execution
             var path = Path.Combine(build.TemporaryDirectory, "graph.html");
             var contents = GetStringFromStream(resourceStream).Replace("__GRAPH__", graph.ToString());
             File.WriteAllText(path, contents);
-            Process.Start(path);
+
+            // Workaround for https://github.com/dotnet/corefx/issues/10361
+            Process.Start(new ProcessStartInfo
+                          {
+                              FileName = path,
+                              UseShellExecute = true
+                          });
         }
     }
 }

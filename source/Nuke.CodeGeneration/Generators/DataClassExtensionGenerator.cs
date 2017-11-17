@@ -5,12 +5,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Nuke.ToolGenerator.Model;
-using Nuke.ToolGenerator.Writers;
+using Nuke.CodeGeneration.Model;
+using Nuke.CodeGeneration.Writers;
+using Nuke.Core.Utilities;
 
 // ReSharper disable UnusedMethodReturnValue.Local
 
-namespace Nuke.ToolGenerator.Generators
+namespace Nuke.CodeGeneration.Generators
 {
     public static class DataClassExtensionGenerator
     {
@@ -129,7 +130,7 @@ namespace Nuke.ToolGenerator.Generators
                     .WriteSummaryExtension($"Sets {property.GetCrefTag()} to a new dictionary", property)
                     .WriteMethod($"Set{property.Name}",
                         $"IDictionary<{keyType}, {valueType}> {propertyInstance}",
-                        $"{propertyAccess} = {propertyInstance}.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);")
+                        $"{propertyAccess} = {propertyInstance}.ToDictionary(x => x.Key, x => x.Value, {property.GetKeyComparer()});")
                     .WriteSummaryExtension($"Clears {property.GetCrefTag()}", property)
                     .WriteMethod($"Clear{property.Name}",
                         $"{propertyAccess}.Clear();")
@@ -286,7 +287,7 @@ namespace Nuke.ToolGenerator.Generators
             var parameters = new[] { $"this {writer.DataClass.Name} toolSettings" }.Concat(additionalParameters);
             return writer
                     .WriteLine("[Pure]")
-                    .WriteLine($"public static {writer.DataClass.Name} {name}({parameters.Join()})")
+                    .WriteLine($"public static {writer.DataClass.Name} {name}({parameters.JoinComma()})")
                     .WriteBlock(w => w
                             .WriteLine("toolSettings = toolSettings.NewInstance();")
                             .ForEachWriteLine(modifications)

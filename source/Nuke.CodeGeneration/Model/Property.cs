@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Nuke.ToolGenerator.Model
+namespace Nuke.CodeGeneration.Model
 {
     [Serializable]
     [UsedImplicitly(ImplicitUseKindFlags.Assign, ImplicitUseTargetFlags.WithMembers)]

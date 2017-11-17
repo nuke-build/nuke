@@ -7,12 +7,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.ToolGenerator.Model;
-using Nuke.ToolGenerator.Writers;
+using Nuke.CodeGeneration.Model;
+using Nuke.CodeGeneration.Writers;
+using Nuke.Core;
+using Nuke.Core.Utilities;
 
 // ReSharper disable UnusedMethodReturnValue.Local
 
-namespace Nuke.ToolGenerator.Generators
+namespace Nuke.CodeGeneration.Generators
 {
     public static class DataClassGenerator
     {
@@ -125,7 +127,7 @@ namespace Nuke.ToolGenerator.Generators
             if (property.IsList())
                 initializationExpression = $"new {property.Type}()";
             else if (property.IsDictionary() || property.IsLookupTable())
-                initializationExpression = $"new {property.Type}(StringComparer.OrdinalIgnoreCase)";
+                initializationExpression = $"new {property.Type}({property.GetKeyComparer()})";
             else
                 initializationExpression = property.Default;
 
@@ -156,7 +158,7 @@ namespace Nuke.ToolGenerator.Generators
 
             if (property.IsLookupTable())
             {
-                var (keyType, valueType) = property.GetDictionaryKeyValueTypes();
+                var (keyType, valueType) = property.GetLookupTableKeyValueTypes();
                 return $"ILookup<{keyType}, {valueType}>";
             }
 
@@ -247,7 +249,7 @@ namespace Nuke.ToolGenerator.Generators
             if (property.Secret)
                 arguments.Add("secret: true");
 
-            return $"  .Add({arguments.Join()})";
+            return $"  .Add({arguments.JoinComma()})";
         }
     }
 }

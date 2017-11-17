@@ -3,12 +3,10 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Core;
 using Nuke.Core.Injection;
-using Nuke.Core.Utilities;
 
 namespace Nuke.Common.Git
 {
@@ -24,20 +22,9 @@ namespace Nuke.Common.Git
         [CanBeNull]
         public override object GetStaticValue ()
         {
-            return Value = Value ?? ControlFlow.SuppressErrors(() =>
-            {
-                var gitConfig = Path.Combine(NukeBuild.Instance.RootDirectory, ".git", "config");
-                var configContent = File.ReadAllLines(gitConfig);
-                var url = configContent
-                        .Select(x => x.Trim())
-                        .SkipWhile(x => x != "[remote \"origin\"]")
-                        .Skip(count: 1)
-                        .TakeWhile(x => !x.StartsWith("["))
-                        .Single(x => x.StartsWithOrdinalIgnoreCase("url = "))
-                        .Split('=')[1];
-
-                return GitRepository.TryParse(url);
-            });
+            return Value = Value
+                           ?? ControlFlow.SuppressErrors(() =>
+                               GitRepository.TryParse(NukeBuild.Instance.RootDirectory));
         }
     }
 }

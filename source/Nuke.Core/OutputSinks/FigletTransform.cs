@@ -33,7 +33,7 @@ namespace Nuke.Core.OutputSinks
                     .Where(x => !string.IsNullOrWhiteSpace(x));
 
             return EnvironmentInfo.NewLine +
-                   textWithFont.Join(EnvironmentInfo.NewLine) +
+                   textWithFont.JoinNewLine() +
                    EnvironmentInfo.NewLine;
         }
     }

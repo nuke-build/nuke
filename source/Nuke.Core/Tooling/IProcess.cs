@@ -16,7 +16,20 @@ namespace Nuke.Core.Tooling
     [PublicAPI]
     public interface IProcess : IDisposable
     {
-        ProcessStartInfo StartInfo { get; }
+        /// <summary>
+        /// Returns the invoked file name.
+        /// </summary>
+        string FileName { get; }
+
+        /// <summary>
+        /// Returns the arguments with filtered secrets.
+        /// </summary>
+        string Arguments { get; }
+
+        /// <summary>
+        /// Returns the working directory.
+        /// </summary>
+        string WorkingDirectory { get; }
 
         /// <summary>
         /// Contains the output of the process execution.

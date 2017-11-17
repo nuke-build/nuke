@@ -6,16 +6,22 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Nuke.ToolGenerator.Model;
-using Nuke.ToolGenerator.Writers;
+using System.Reflection;
+using JetBrains.Annotations;
+using Nuke.CodeGeneration.Model;
+using Nuke.CodeGeneration.Writers;
+using Nuke.Core.Utilities;
+using Nuke.Core.Utilities.Collections;
 
 // ReSharper disable UnusedMethodReturnValue.Local
 
-namespace Nuke.ToolGenerator.Generators
+namespace Nuke.CodeGeneration.Generators
 {
     public static class ToolGenerator
     {
-        public static void Run (Tool tool, StreamWriter streamWriter)
+        private static readonly Assembly s_assembly = typeof(ToolGenerator).GetTypeInfo().Assembly;
+
+        public static void Run (Tool tool, [CanBeNull] string @namespace, StreamWriter streamWriter)
         {
             using (var writer = new ToolWriter(tool, streamWriter))
             {
@@ -25,16 +31,26 @@ namespace Nuke.ToolGenerator.Generators
                         .WriteLine("// Distributed under the MIT License.")
                         .WriteLine("// https://github.com/nuke-build/nuke/blob/master/LICENSE")
                         .WriteLine(string.Empty)
-                        .WriteLine($"// Generated from {tool.RepositoryUrl} with Nuke.ToolGenerator.")
+                        .WriteLine($"// Generated with {s_assembly.GetName().Name}, {s_assembly.GetInformationText()}.")
+                        .WriteLineIfTrue(tool.RepositoryUrl != null, $"// Generated from {tool.RepositoryUrl}.")
                         .WriteLine(string.Empty)
                         .ForEach(GetNamespaceImports(), x => writer.WriteLine($"using {x};"))
                         .WriteLine(string.Empty)
-                        .WriteLine($"namespace {tool.GetNamespace()}")
-                        .WriteBlock(w => w
-                                .WriteAlias()
-                                .WriteDataClasses()
-                                .WriteEnumerations());
+                        .WriteLineIfTrue(@namespace != null, $"namespace {@namespace}");
+
+                if (!string.IsNullOrEmpty(@namespace))
+                    writer.WriteBlock(x => x.WriteAll());
+                else
+                    writer.WriteAll();
             }
+        }
+
+        private static ToolWriter WriteAll (this ToolWriter w)
+        {
+            return w
+                    .WriteAlias()
+                    .WriteDataClasses()
+                    .WriteEnumerations();
         }
 
         private static ToolWriter WriteAlias (this ToolWriter writer)

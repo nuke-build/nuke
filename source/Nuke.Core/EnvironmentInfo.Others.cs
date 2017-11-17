@@ -3,6 +3,8 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 #if NETCORE
@@ -22,5 +24,16 @@ namespace Nuke.Core
 #else
             => Environment.CurrentDirectory;
 #endif
+
+        public static IReadOnlyDictionary<string, string> Variables
+        {
+            get
+            {
+                var environmentVariables = Environment.GetEnvironmentVariables();
+                return Environment.GetEnvironmentVariables().Keys.Cast<string>()
+                        .ToDictionary(x => x, x => (string) environmentVariables[x], StringComparer.OrdinalIgnoreCase);
+            }
+        }
+
     }
 }

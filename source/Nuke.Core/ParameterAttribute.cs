@@ -43,6 +43,7 @@ namespace Nuke.Core
             Description = description;
         }
 
+        [CanBeNull]
         public string Description { get; }
 
         public string Name { get; set; }

@@ -36,10 +36,11 @@ namespace Nuke.Common.Tools.DotNet
                 .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
                 .SetProjectFile(NukeBuild.Instance.SolutionFile);
 
-        public static DotNetBuildSettings DefaultDotNetCompile => new DotNetBuildSettings()
+        public static DotNetBuildSettings DefaultDotNetBuild => new DotNetBuildSettings()
                 .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
                 .SetProjectFile(NukeBuild.Instance.SolutionFile)
                 .EnableNoRestore()
+                .SetConfiguration(NukeBuild.Instance.Configuration)
                 .SetAssemblyVersion(GitVersionAttribute.Value?.AssemblySemVer)
                 .SetFileVersion(GitVersionAttribute.Value?.FullSemVer)
                 .SetInformationalVersion(GitVersionAttribute.Value?.InformationalVersion);
@@ -48,6 +49,7 @@ namespace Nuke.Common.Tools.DotNet
                 .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
                 .SetProject(NukeBuild.Instance.SolutionFile)
                 .EnableNoBuild()
+                .SetConfiguration(NukeBuild.Instance.Configuration)
                 .EnableIncludeSymbols()
                 .SetOutputDirectory(NukeBuild.Instance.OutputDirectory)
                 .SetVersion(GitVersionAttribute.Value?.NuGetVersionV2);

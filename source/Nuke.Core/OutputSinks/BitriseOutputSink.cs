@@ -4,13 +4,16 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
+using Nuke.Core.BuildServers;
 using Nuke.Core.Utilities;
 
 namespace Nuke.Core.OutputSinks
 {
     public class BitriseOutputSink : ConsoleOutputSink
     {
-        public new static IOutputSink Instance { get; } = BuildServers.Bitrise.Instance != null ? new BitriseOutputSink() : null;
+        [CanBeNull]
+        public new static IOutputSink Instance { get; } = Bitrise.Instance != null ? new BitriseOutputSink() : null;
 
         public override IDisposable WriteBlock (string text)
         {

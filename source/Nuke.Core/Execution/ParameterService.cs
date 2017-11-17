@@ -60,7 +60,7 @@ namespace Nuke.Core.Execution
 
             var values = args.Skip(index + 1).TakeWhile(x => !x.StartsWith("-")).ToArray();
             ControlFlow.Assert(values.Length == 1 || !separator.HasValue || values.All(x => !x.Contains(separator.Value)),
-                $"Command-line argument '{argumentName}' with value [ {values.Join(", ")} ] cannot be split with separator '{separator}'.");
+                $"Command-line argument '{argumentName}' with value [ {values.JoinComma()} ] cannot be split with separator '{separator}'.");
             values = separator.HasValue && values.Any(x => x.Contains(separator.Value))
                 ? values.SingleOrDefault()?.Split(separator.Value) ?? new string[0]
                 : values;
@@ -74,7 +74,7 @@ namespace Nuke.Core.Execution
                 ControlFlow.Fail(
                     new[] { ex.Message, "Command-line arguments were:" }
                             .Concat(args.Select((x, i) => $"  [{i}] = {x}"))
-                            .Join(Environment.NewLine));
+                            .JoinNewLine());
                 return null;
             }
         }
@@ -99,7 +99,7 @@ namespace Nuke.Core.Execution
             }
             catch (Exception ex)
             {
-                ControlFlow.Fail(new[] { ex.Message, "Environment variable was:", value }.Join(Environment.NewLine));
+                ControlFlow.Fail(new[] { ex.Message, "Environment variable was:", value }.JoinNewLine());
                 return null;
             }
         }
@@ -122,7 +122,7 @@ namespace Nuke.Core.Execution
             }
             catch (Exception ex)
             {
-                ControlFlow.Fail(new[] { $"Resolving parameter '{parameterName}' failed.", ex.Message }.Join(Environment.NewLine));
+                ControlFlow.Fail(new[] { $"Resolving parameter '{parameterName}' failed.", ex.Message }.JoinNewLine());
                 return null;
             }
         }
@@ -131,13 +131,13 @@ namespace Nuke.Core.Execution
         private object ConvertValues (IReadOnlyCollection<string> values, Type destinationType)
         {
             ControlFlow.Assert(!destinationType.IsArray || destinationType.GetArrayRank() == 1, "Arrays must have a rank of 1.");
-            var elementType = destinationType.IsArray ? destinationType.GetElementType() : destinationType;
+            var elementType = (destinationType.IsArray ? destinationType.GetElementType() : destinationType).NotNull();
             ControlFlow.Assert(values.Count < 2 || elementType != null, "values.Count < 2 || elementType != null");
 
             if (values.Count == 0)
             {
                 if (destinationType.IsArray)
-                    return Array.CreateInstance(destinationType.GetElementType(), length: 0);
+                    return Array.CreateInstance(elementType, length: 0);
 
                 if (destinationType == typeof(bool) || destinationType == typeof(bool?))
                     return true;
@@ -149,7 +149,7 @@ namespace Nuke.Core.Execution
             var convertedValues = values.Select(x => Convert(x, elementType)).ToList();
             if (!destinationType.IsArray)
             {
-                ControlFlow.Assert(convertedValues.Count == 1, $"Value [ {values.Join(", ")} ] cannot be assigned to '{GetName(destinationType)}'.");
+                ControlFlow.Assert(convertedValues.Count == 1, $"Value [ {values.JoinComma()} ] cannot be assigned to '{GetName(destinationType)}'.");
                 return convertedValues.Single();
             }
 
@@ -179,9 +179,12 @@ namespace Nuke.Core.Execution
         private string GetName(Type type)
         {
             if (type.IsArray)
-                return $"{type.GetElementType().Name}[]";
-            if (Nullable.GetUnderlyingType(type) != null)
-                return Nullable.GetUnderlyingType(type).Name + "?";
+                return $"{type.GetElementType().NotNull().Name}[]";
+
+            var underlyingType = Nullable.GetUnderlyingType(type);
+            if (underlyingType != null)
+                return underlyingType.Name + "?";
+
             return type.Name;
         }
     }

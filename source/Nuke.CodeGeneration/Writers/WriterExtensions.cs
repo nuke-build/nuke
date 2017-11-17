@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.ToolGenerator.Writers
+namespace Nuke.CodeGeneration.Writers
 {
     public static class WriterExtensions
     {

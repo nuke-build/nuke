@@ -15,10 +15,5 @@ namespace Nuke.Common.Tools.Xunit
         {
             return EnvironmentInfo.Is64Bit ? "xunit.console.exe" : "xunit.console.x86.exe";
         }
-
-        private string GetResultPath ()
-        {
-            return $"{ResultFormat} {ResultPath.DoubleQuoteIfNeeded()}";
-        }
     }
 }

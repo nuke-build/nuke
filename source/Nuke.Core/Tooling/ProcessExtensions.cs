@@ -30,18 +30,19 @@ namespace Nuke.Core.Tooling
             ControlFlow.Assert(process.ExitCode == 0,
                 new[]
                 {
-                    $"Process '{Path.GetFileName(process.StartInfo.FileName)}' exited with code {process.ExitCode}. Please verify the invocation:",
-                    $"> {process.StartInfo.FileName.DoubleQuoteIfNeeded()} {process.StartInfo.Arguments}"
-                }.Join(EnvironmentInfo.NewLine));
+                    $"Process '{Path.GetFileName(process.FileName)}' exited with code {process.ExitCode}. Please verify the invocation.",
+                    $"> {process.FileName.DoubleQuoteIfNeeded()} {process.Arguments}"
+                }.JoinNewLine());
         }
 
         public static IEnumerable<Output> EnsureOnlyStd (this IEnumerable<Output> output)
         {
-            foreach (var o in output)
+            var outputList = output.ToList();
+            foreach (var o in outputList)
             {
                 ControlFlow.Assert(o.Type == OutputType.Std, "o.Type == OutputType.Std");
-                yield return o;
             }
+            return outputList;
         }
     }
 }

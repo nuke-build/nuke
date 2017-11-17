@@ -4,7 +4,7 @@ NOINIT=0
 REFEXT="False"
 BUILD_ARGUMENTS=()
 for i in "$@"; do
-    case ${1,,} in
+    case $(echo $1 | awk '{print tolower($0)}') in
         -noinit) NOINIT=1;;
         -refext) REFLOCAL="True";;
         *) BUILD_ARGUMENTS+=("$1") ;;

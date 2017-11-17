@@ -13,6 +13,7 @@ using Nuke.Common.Tools.OpenCover;
 using Nuke.Common.Tools.Xunit;
 using Nuke.Core;
 using Nuke.Core.Utilities.Collections;
+using static Nuke.CodeGeneration.CodeGenerator;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.GitLink.GitLinkTasks;
 using static Nuke.Common.Tools.InspectCode.InspectCodeTasks;
@@ -24,12 +25,11 @@ using static Nuke.Core.EnvironmentInfo;
 
 class Build : NukeBuild
 {
-    [Parameter("ApiKey for the 'nukebuild' feed.")] readonly string MyGetApiKey;
+    public static int Main () => Execute<Build>(x => x.Pack);
+
+    [Parameter ("ApiKey for the 'nukebuild' feed.")] readonly string MyGetApiKey;
 
     [GitVersion] readonly GitVersion GitVersion;
-    [GitRepository] readonly GitRepository GitRepository;
-
-    public static int Main () => Execute<Build>(x => x.Pack);
 
     Target Clean => _ => _
             .Executes(() =>
@@ -42,7 +42,7 @@ class Build : NukeBuild
             .DependsOn(Clean)
             .Executes(() =>
             {
-                DotNetRestore(s => DefaultDotNetRestore.SetProjectFile (SolutionFile));
+                DotNetRestore(s => DefaultDotNetRestore);
             });
 
     Target Compile => _ => _
@@ -50,7 +50,7 @@ class Build : NukeBuild
             .Requires(() => IsUnix || GitVersion != null)
             .Executes(() =>
             {
-                DotNetBuild(s => DefaultDotNetCompile.SetProjectFile(SolutionFile).EnableNoRestore());
+                DotNetBuild(s => DefaultDotNetBuild);
             });
 
     Target Link => _ => _
@@ -68,7 +68,7 @@ class Build : NukeBuild
             .DependsOn(Link)
             .Executes(() =>
             {
-                DotNetPack(s => DefaultDotNetPack.SetProject(SolutionFile).EnableNoBuild());
+                DotNetPack(s => DefaultDotNetPack);
             });
 
     Target Push => _ => _
@@ -103,13 +103,28 @@ class Build : NukeBuild
             {
                 void TestXunit ()
                     => Xunit2(GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/net4*/Nuke.*.Tests.dll"),
-                        s => s.SetResultPath(OutputDirectory / "tests.xml"));
+                        s => s.AddResultReport(ResultFormat.Xml, OutputDirectory / "tests.xml"));
 
                 if (IsWin)
                     OpenCover(TestXunit, s => DefaultOpenCover
                             .SetOutput(OutputDirectory / "coverage.xml"));
                 else
                     TestXunit();
+            });
+
+    string MetadataDirectory => RootDirectory / ".." / "tools" / "metadata";
+    string GenerationDirectory => RootDirectory / "source" / "Nuke.Common" / "Tools";
+
+    Target Generate => _ => _
+            .Executes(() =>
+            {
+                var metadataRepository = GitRepository.TryParse(MetadataDirectory).NotNull();
+                GenerateCode(
+                    MetadataDirectory,
+                    GenerationDirectory,
+                    repositoryBaseUrl: $"{metadataRepository.SvnUrl}/blob/{metadataRepository.Branch}",
+                    baseNamespace: "Nuke.Common.Tools",
+                    useNestedNamespaces: true);
             });
 
     Target Full => _ => _

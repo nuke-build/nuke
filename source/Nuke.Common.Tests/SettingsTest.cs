@@ -55,13 +55,15 @@ namespace Nuke.Common.Tests
                 "A.csproj  B.csproj D.config B.csproj \"new folder\\E.config\"");
 
             Assert<Xunit2Settings>(x => x
-                        .SetResultPath("new folder\\data.xml"),
-                "-Xml \"new folder\\data.xml\"");
+                        .AddResultReport(ResultFormat.HTML, "new folder\\data.html")
+                        .AddResultReport(ResultFormat.Xml, "new_folder\\data.xml"),
+                "-HTML \"new folder\\data.html\" -Xml new_folder\\data.xml");
 
             Assert<Xunit2Settings>(x => x
-                        .SetResultPath("new folder\\data.xml", ResultFormat.HTML)
-                        .EnableDiagnostics(),
-                "-diagnostics -HTML \"new folder\\data.xml\"");
+                        .AddResultReport(ResultFormat.NUnit, "new folder\\nunit.xml")
+                        .EnableDiagnostics()
+                        .EnableFailSkips(),
+                "-failskips -diagnostics -NUnit \"new folder\\nunit.xml\"");
         }
 
         [Fact]

@@ -3,33 +3,17 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Nuke.ToolGenerator.Model;
+using Nuke.CodeGeneration.Model;
+using Nuke.Core;
+using Nuke.Core.Utilities;
+using System.Collections.Generic;
 
-
-
-namespace Nuke.ToolGenerator.Generators
+namespace Nuke.CodeGeneration.Generators
 {
     public static class ModelExtensions
     {
-        public static string GetNamespace (this Tool tool)
-        {
-            var namespaces = new Stack<string>();
-            var directory = new FileInfo(tool.GenerationFileBase).Directory;
-            while (directory != null)
-            {
-                namespaces.Push(directory.Name);
-
-                if (directory.GetFiles("*.csproj", SearchOption.TopDirectoryOnly).Any())
-                    break;
-                directory = directory.Parent;
-            }
-            return string.Join(".", namespaces);
-        }
-
         public static bool IsValueType(this Property property)
         {
             return new[] { "int", "bool" }.Contains(property.Type);
@@ -47,19 +31,32 @@ namespace Nuke.ToolGenerator.Generators
 
         public static string GetListValueType (this Property property)
         {
-            return GetGenerics(property).Single();
+            ControlFlow.Assert(property.IsList(), "property.IsList()");
+            return GetGenerics(property).Single ();
         }
 
         public static (string, string) GetDictionaryKeyValueTypes (this Property property)
         {
+            ControlFlow.Assert(property.IsDictionary(), "property.IsDictionary()");
             var generics = GetGenerics(property);
             return (generics[0], generics[1]);
         }
 
         public static (string, string) GetLookupTableKeyValueTypes (this Property property)
         {
-            var generics = GetGenerics(property);
+            ControlFlow.Assert(property.IsLookupTable(), "property.IsLookupTable()");
+            var generics = GetGenerics (property);
             return (generics[0], generics[1]);
+        }
+
+        public static string GetKeyComparer (this Property property)
+        {
+            ControlFlow.Assert(property.IsDictionary() || property.IsLookupTable(), "property.IsDictionary() || property.IsLookupTable()");
+            var keyType = GetGenerics(property).First();
+
+            return keyType.EqualsOrdinalIgnoreCase("string")
+                ? "StringComparer.OrdinalIgnoreCase"
+                : $"EqualityComparer<{keyType}>.Default";
         }
 
         private static string[] GetGenerics (Property property)

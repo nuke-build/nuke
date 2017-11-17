@@ -29,7 +29,11 @@ namespace Nuke.Core.Tooling
             _outputFilter = outputFilter;
         }
 
-        public ProcessStartInfo StartInfo => _process.StartInfo;
+        public string FileName => _process.StartInfo.FileName;
+
+        public string Arguments => _outputFilter(_process.StartInfo.Arguments);
+
+        public string WorkingDirectory => _process.StartInfo.WorkingDirectory;
 
         public IEnumerable<Output> Output
         {

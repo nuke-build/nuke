@@ -104,7 +104,7 @@ namespace Nuke.Core.BuildServers
         public string RunDisplayUrl => EnsureVariable<string>("RUN_DISPLAY_URL");
 
         /// <summary>
-        /// The path tp the folder this job is running in.
+        /// The path to the folder this job is running in.
         /// </summary>
         public string Workspace => EnsureVariable<string>("WORKSPACE");
     }
