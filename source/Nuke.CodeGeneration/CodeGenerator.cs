@@ -29,6 +29,7 @@ namespace Nuke.CodeGeneration
         public static void GenerateCode (
             string metadataDirectory,
             string generationDirectory,
+            string repositoryBaseUrl = null,
             string baseNamespace = null,
             bool useNestedNamespaces = false,
             bool downloadSchema = true)
@@ -36,6 +37,7 @@ namespace Nuke.CodeGeneration
             new CodeGenerator(
                         metadataDirectory,
                         generationDirectory,
+                        repositoryBaseUrl,
                         baseNamespace,
                         useNestedNamespaces,
                         downloadSchema)
@@ -44,10 +46,10 @@ namespace Nuke.CodeGeneration
 
         private const string c_schemaDownloadUrl = "https://raw.githubusercontent.com/nuke-build/tools/master/metadata/_schema.json";
         private const string c_schemaFileName = "_schema.json";
-        private const string c_nukeCommonNamespace = "Nuke.Common.Tools";
 
         private readonly string _metadataDirectory;
         private readonly string _generationDirectory;
+        private readonly string _repositoryBaseUrl;
         private readonly string _baseNamespace;
         private readonly bool _useNestedNamespaces;
         private readonly bool _downloadSchema;
@@ -55,12 +57,14 @@ namespace Nuke.CodeGeneration
         private CodeGenerator (
             string metadataDirectory,
             string generationDirectory,
+            [CanBeNull] string repositoryBaseUrl,
             [CanBeNull] string baseNamespace,
             bool useNestedNamespaces,
             bool downloadSchema)
         {
             _metadataDirectory = metadataDirectory;
             _generationDirectory = generationDirectory;
+            _repositoryBaseUrl = repositoryBaseUrl;
             _baseNamespace = baseNamespace;
             _useNestedNamespaces = useNestedNamespaces;
             _downloadSchema = downloadSchema;
@@ -124,8 +128,8 @@ namespace Nuke.CodeGeneration
 
             tool.DefinitionFile = file;
             tool.GenerationFileBase = Path.Combine(toolDirectory, Path.GetFileNameWithoutExtension(file));
-            tool.RepositoryUrl = _baseNamespace == c_nukeCommonNamespace
-                ? $"https://github.com/nuke-build/tools/blob/master/{Path.GetFileName(file)}"
+            tool.RepositoryUrl = _repositoryBaseUrl != null
+                ? $"{_repositoryBaseUrl.TrimEnd('/')}/{Path.GetFileName(file)}"
                 : null;
 
             return tool;
