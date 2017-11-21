@@ -24,7 +24,7 @@ namespace Nuke.Core.OutputSinks
 
     internal static class OutputSink
     {
-        private static readonly HashSet<string> s_warnings = new HashSet<string>();
+        private static readonly List<Tuple<LogLevel, string>> s_severeMessages = new List<Tuple<LogLevel, string>>();
 
         public static IOutputSink Instance =>
                 TeamCityOutputSink.Instance
@@ -62,18 +62,43 @@ namespace Nuke.Core.OutputSinks
             if (NukeBuild.Instance?.LogLevel > LogLevel.Warning)
                 return;
 
-            s_warnings.Add(text);
+            s_severeMessages.Add(Tuple.Create(LogLevel.Warning, text));
+
             Instance.Warn(text, details);
         }
 
         public static void Error (string text, string details = null)
         {
+            s_severeMessages.Add(Tuple.Create(LogLevel.Error, text));
+
             Instance.Error(text, details);
         }
 
         public static void WriteSummary (IReadOnlyCollection<TargetDefinition> executionList)
         {
-            s_warnings.ToList().ForEach(x => Instance.Warn(x));
+            Write(string.Empty);
+
+            if (s_severeMessages.Count > 0)
+            {
+                Write("Repeating warnings and errors:");
+
+
+                foreach (var severeMessage in s_severeMessages)
+                    switch (severeMessage.Item1)
+                    {
+                        case LogLevel.Warning:
+                            Instance.Warn(severeMessage.Item2);
+                            break;
+                        case LogLevel.Error:
+                            Instance.Error(severeMessage.Item2);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+
+                Write(string.Empty);
+            }
+
             Instance.WriteSummary(executionList);
         }
     }

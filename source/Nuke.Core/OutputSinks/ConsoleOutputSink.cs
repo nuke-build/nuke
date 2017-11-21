@@ -73,7 +73,6 @@ namespace Nuke.Core.OutputSinks
             string ToMinutesAndSeconds (TimeSpan duration)
                 => $"{(int) duration.TotalMinutes}:{duration:ss}";
 
-            Logger.Log();
             Logger.Log(new string(c: '=', count: allColumns));
             Logger.Log(CreateLine("Target", "Status", "Duration"));
             Logger.Log(new string(c: '-', count: allColumns));
