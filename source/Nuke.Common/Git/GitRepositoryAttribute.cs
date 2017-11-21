@@ -17,8 +17,6 @@ namespace Nuke.Common.Git
     {
         public static GitRepository Value { get; private set; }
 
-        public override Type InjectionType => typeof(GitRepository);
-
         [CanBeNull]
         public override object GetStaticValue ()
         {

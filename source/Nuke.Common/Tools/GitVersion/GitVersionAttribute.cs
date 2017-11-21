@@ -18,8 +18,6 @@ namespace Nuke.Common.Tools.GitVersion
     {
         public static GitVersion Value { get; private set; }
 
-        public override Type InjectionType => typeof(GitVersion);
-
         [CanBeNull]
         public override object GetStaticValue ()
         {

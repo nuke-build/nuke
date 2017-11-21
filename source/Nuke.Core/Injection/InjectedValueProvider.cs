@@ -21,7 +21,6 @@ namespace Nuke.Core.Injection
             var fieldsWithAttributes = (
                 from field in NukeBuild.Instance.GetType().GetFields(c_bindingFlags)
                 from attribute in field.GetCustomAttributes<StaticInjectionAttributeBase>()
-                where attribute.InjectionType == typeof(T)
                 select new { Field = field, Attribute = attribute }).ToList();
 
             if (fieldsWithAttributes.Count == 0)
