@@ -23,10 +23,17 @@ namespace Nuke.Common.Tools.GitVersion
         [CanBeNull]
         public override object GetStaticValue ()
         {
+            // TODO: https://github.com/GitTools/GitVersion/issues/1097
+            if (EnvironmentInfo.IsUnix)
+            {
+                Logger.Warn($"{nameof(GitVersion)} does not work in UNIX environments.");
+                return null;
+            }
+
             return Value = Value ??
-                           (EnvironmentInfo.IsWin && GitVersionTasks.DefaultGitVersion.HasValidToolPath()
-                               ? GitVersionTasks.GitVersion(s => GitVersionTasks.DefaultGitVersion, new ProcessSettings().EnableRedirectOutput())
-                               : null);
+                           GitVersionTasks.GitVersion(
+                               s => GitVersionTasks.DefaultGitVersion,
+                               new ProcessSettings().EnableRedirectOutput());
         }
     }
 }
