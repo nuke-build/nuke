@@ -27,7 +27,8 @@ class Build : NukeBuild
 {
     public static int Main () => Execute<Build>(x => x.Pack);
 
-    [Parameter ("ApiKey for the 'nukebuild' feed.")] readonly string MyGetApiKey;
+    [Parameter("Source for Push target.")] readonly string Source = "https://www.myget.org/F/nukebuild/api/v2/package";
+    [Parameter("ApiKey for the specified source.")] readonly string ApiKey;
 
     [GitVersion] readonly GitVersion GitVersion;
 
@@ -73,15 +74,15 @@ class Build : NukeBuild
 
     Target Push => _ => _
             .DependsOn(Pack)
-            .Requires(() => MyGetApiKey)
+            .Requires(() => ApiKey)
             .Executes(() =>
             {
                 GlobFiles(OutputDirectory, "*.nupkg")
                         .Where(x => !x.EndsWith("symbols.nupkg"))
                         .ForEach(x => DotNetNuGetPush(s => s
                                 .SetTargetPath(x)
-                                .SetSource("https://www.myget.org/F/nukebuild/api/v2/package")
-                                .SetApiKey(MyGetApiKey)));
+                                .SetSource(Source)
+                                .SetApiKey(ApiKey)));
             });
 
     Target Analysis => _ => _
