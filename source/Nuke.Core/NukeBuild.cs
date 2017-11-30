@@ -160,7 +160,7 @@ namespace Nuke.Core
         public virtual PathConstruction.AbsolutePath SolutionDirectory => (PathConstruction.AbsolutePath) Path.GetDirectoryName(SolutionFile);
 
         /// <summary>
-        /// Full path to <c>~\.tmp</c>.
+        /// Full path to <c>/.tmp</c>.
         /// </summary>
         public virtual PathConstruction.AbsolutePath TemporaryDirectory
         {
@@ -173,24 +173,24 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Full path to <c>~\output</c>.
+        /// Full path to <c>/output</c>.
         /// </summary>
         public virtual PathConstruction.AbsolutePath OutputDirectory => (PathConstruction.AbsolutePath) Path.Combine(RootDirectory, "output");
 
         /// <summary>
-        /// Full path to <c>~\artifacts</c>.
+        /// Full path to <c>/artifacts</c>.
         /// </summary>
         public virtual PathConstruction.AbsolutePath ArtifactsDirectory => (PathConstruction.AbsolutePath) Path.Combine(RootDirectory, "artifacts");
 
         /// <summary>
-        /// Full path to either <c>~\src</c> or <c>~\source</c>. Throws an exception if either none or both exist.
+        /// Full path to either <c>/src</c> or <c>/source</c>. Throws an exception if either none or both exist.
         /// </summary>
         public virtual PathConstruction.AbsolutePath SourceDirectory
         {
             get
             {
                 var directories = new[] { "src", "source" }.SelectMany(x => Directory.GetDirectories(RootDirectory, x)).ToList();
-                ControlFlow.Assert(directories.Count == 1, "Could not locate a single source directory. Candidates are '~\\src' and '~\\source'.");
+                ControlFlow.Assert(directories.Count == 1, "Could not locate a single source directory. Candidates are '/src' and '/source'.");
                 return (PathConstruction.AbsolutePath) directories.Single();
             }
         }
