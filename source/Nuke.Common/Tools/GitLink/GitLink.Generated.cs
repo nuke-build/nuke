@@ -2,7 +2,8 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-// Generated from https://github.com/nuke-build/tools/blob/master/GitLink.json with Nuke.ToolGenerator.
+// Generated with Nuke.CodeGeneration, LOCAL VERSION.
+// Generated from https://github.com/nuke-build/tools/blob/master/GitLink.json.
 
 using JetBrains.Annotations;
 using Nuke.Common.Tools;
