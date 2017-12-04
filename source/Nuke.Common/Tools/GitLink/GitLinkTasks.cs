@@ -18,12 +18,12 @@ namespace Nuke.Common.Tools.GitLink
                 .SetSolutionDirectory(NukeBuild.Instance.SolutionDirectory)
                 .SetConfiguration(NukeBuild.Instance.Configuration)
                 .SetBranchName(GitVersionAttribute.Value?.BranchName)
-                .SetRepositoryUrl(GitRepositoryAttribute.Value?.SvnUrl);
+                .SetRepositoryUrl(GitRepositoryAttribute.Value?.ToString());
 
         public static GitLink3Settings DefaultGitLink3 => new GitLink3Settings()
                 .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
                 .SetBaseDirectory(NukeBuild.Instance.RootDirectory)
-                .SetRepositoryUrl(GitRepositoryAttribute.Value?.SvnUrl);
+                .SetRepositoryUrl(GitRepositoryAttribute.Value?.ToString());
 
         static partial void PreProcess (GitLink2Settings toolSettings)
         {

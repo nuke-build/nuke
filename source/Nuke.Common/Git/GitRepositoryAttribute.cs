@@ -22,7 +22,7 @@ namespace Nuke.Common.Git
         {
             return Value = Value
                            ?? ControlFlow.SuppressErrors(() =>
-                               GitRepository.TryParse(NukeBuild.Instance.RootDirectory));
+                               GitRepository.FromLocalDirectory(NukeBuild.Instance.RootDirectory));
         }
     }
 }

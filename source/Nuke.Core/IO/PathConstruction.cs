@@ -49,6 +49,12 @@ namespace Nuke.Core.IO
         {
             return Uri.UnescapeDataString(new Uri($@"{basePath}\").MakeRelativeUri(new Uri(destinationPath)).ToString());
         }
+        
+        [Pure]
+        public static bool IsDescendantPath (string basePath, string destinationPath)
+        {
+            return new Uri(basePath).IsBaseOf(new Uri(destinationPath));
+        }
 
         [Pure]
         public static IEnumerable<string> GlobFiles (string directory, params string[] globPatterns)
