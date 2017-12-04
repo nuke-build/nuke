@@ -12,8 +12,10 @@ using Nuke.Common.Tools.InspectCode;
 using Nuke.Common.Tools.OpenCover;
 using Nuke.Common.Tools.Xunit;
 using Nuke.Core;
+using Nuke.Core.Utilities;
 using Nuke.Core.Utilities.Collections;
 using static Nuke.CodeGeneration.CodeGenerator;
+using static Nuke.Common.Gitter.GitterTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.GitLink.GitLinkTasks;
 using static Nuke.Common.Tools.InspectCode.InspectCodeTasks;
@@ -27,7 +29,9 @@ class Build : NukeBuild
 {
     public static int Main () => Execute<Build>(x => x.Pack);
 
-    [Parameter ("ApiKey for the 'nukebuild' feed.")] readonly string MyGetApiKey;
+    [Parameter("Source for Push target.")] readonly string Source = "https://www.myget.org/F/nukebuild/api/v2/package";
+    [Parameter("ApiKey for the specified source.")] readonly string ApiKey;
+    [Parameter("Gitter authentication token")] readonly string GitterAuthToken;
 
     [GitVersion] readonly GitVersion GitVersion;
 
@@ -73,15 +77,23 @@ class Build : NukeBuild
 
     Target Push => _ => _
             .DependsOn(Pack)
-            .Requires(() => MyGetApiKey)
+            .Requires(() => ApiKey)
             .Executes(() =>
             {
                 GlobFiles(OutputDirectory, "*.nupkg")
                         .Where(x => !x.EndsWith("symbols.nupkg"))
                         .ForEach(x => DotNetNuGetPush(s => s
                                 .SetTargetPath(x)
-                                .SetSource("https://www.myget.org/F/nukebuild/api/v2/package")
-                                .SetApiKey(MyGetApiKey)));
+                                .SetSource(Source)
+                                .SetApiKey(ApiKey)));
+
+                if (Source.Contains("nuget.org"))
+                {
+                    SendGitterMessage (
+                        $"@/all Version {GitVersion.SemVer} has been published.",
+                        roomId: "593f3dadd73408ce4f66db89",
+                        token: GitterAuthToken);
+                }
             });
 
     Target Analysis => _ => _

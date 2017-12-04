@@ -45,6 +45,15 @@ namespace Nuke.Common.Tools.DotNet
                 .SetFileVersion(GitVersionAttribute.Value?.FullSemVer)
                 .SetInformationalVersion(GitVersionAttribute.Value?.InformationalVersion);
 
+        public static DotNetPublishSettings DefaultDotNetPublish => new DotNetPublishSettings()
+                .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
+                .SetProject(NukeBuild.Instance.SolutionFile)
+                .EnableNoRestore()
+                .SetConfiguration(NukeBuild.Instance.Configuration)
+                .SetAssemblyVersion(GitVersionAttribute.Value?.AssemblySemVer)
+                .SetFileVersion(GitVersionAttribute.Value?.FullSemVer)
+                .SetInformationalVersion(GitVersionAttribute.Value?.InformationalVersion);
+
         public static DotNetPackSettings DefaultDotNetPack => new DotNetPackSettings()
                 .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
                 .SetProject(NukeBuild.Instance.SolutionFile)

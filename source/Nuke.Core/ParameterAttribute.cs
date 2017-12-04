@@ -49,8 +49,6 @@ namespace Nuke.Core
         public string Name { get; set; }
         public string Separator { get; set; }
 
-        public override Type InjectionType => null;
-
         [CanBeNull]
         public override object GetValue (string memberName, Type memberType)
         {

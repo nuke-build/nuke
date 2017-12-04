@@ -5,17 +5,14 @@
 using System;
 using System.Linq;
 using Nuke.Core.BuildServers;
-using Nuke.Core.Utilities;
 
 namespace Nuke.Core.OutputSinks
 {
     public class TeamServicesOutputSink : ConsoleOutputSink
     {
-        public new static IOutputSink Instance { get; } = TeamServices.Instance != null ? new TeamServicesOutputSink(TeamServices.Instance) : null;
-
         private readonly TeamServices _teamServices;
 
-        private TeamServicesOutputSink(TeamServices teamServices)
+        internal TeamServicesOutputSink (TeamServices teamServices)
         {
             _teamServices = teamServices;
         }

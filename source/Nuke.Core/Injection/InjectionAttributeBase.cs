@@ -22,9 +22,6 @@ namespace Nuke.Core.Injection
     public abstract class InjectionAttributeBase : Attribute
     {
         [CanBeNull]
-        public virtual Type InjectionType => null;
-
-        [CanBeNull]
         public abstract object GetValue (string memberName, Type memberType);
     }
 }

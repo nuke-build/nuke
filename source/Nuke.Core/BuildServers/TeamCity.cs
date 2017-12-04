@@ -25,10 +25,9 @@ namespace Nuke.Core.BuildServers
     public class TeamCity
     {
         [CanBeNull]
-        public static TeamCity Instance { get; } =
-            Variable("TEAMCITY_VERSION") != null
-                ? new TeamCity(Console.WriteLine)
-                : null;
+        public static TeamCity Instance { get; } = NukeBuild.Instance?.Host == HostType.TeamCity ? new TeamCity() : null;
+
+        internal static bool IsRunningTeamCity => Variable("TEAMCITY_VERSION") != null;
 
         public static T CreateRestClient<T> (string serverUrl, string username, string password)
         {
@@ -37,6 +36,11 @@ namespace Nuke.Core.BuildServers
             var httpClient = new HttpClient(new HttpClientHandler { Credentials = credentials }) { BaseAddress = baseAddress };
 
             return RestService.For<T>(httpClient);
+        }
+        
+        private static Lazy<T> GetLazy<T>(Func<T> provider)
+        {
+            return new Lazy<T>(provider);
         }
 
         private static IReadOnlyDictionary<string, string> ParseDictionary(string file)
@@ -66,16 +70,21 @@ namespace Nuke.Core.BuildServers
         }
 
         private readonly Action<string> _messageSink;
-
-        private TeamCity (Action<string> messageSink)
+        
+        private readonly Lazy<IReadOnlyDictionary<string, string>> _systemProperties;
+        private readonly Lazy<IReadOnlyDictionary<string, string>> _configurationProperties;
+        private readonly Lazy<IReadOnlyDictionary<string, string>> _runnerProperties;
+        private readonly Lazy<ITeamCityRestClient> _restClient;
+        
+        internal TeamCity (Action<string> messageSink = null)
         {
-            _messageSink = messageSink;
+            _messageSink = messageSink ?? Console.WriteLine;
 
-            SystemProperties = ParseDictionary(EnsureVariable("TEAMCITY_BUILD_PROPERTIES_FILE"));
-            ConfigurationProperties = ParseDictionary(SystemProperties["TEAMCITY_CONFIGURATION_PROPERTIES_FILE"]);
-            RunnerProperties = ParseDictionary(SystemProperties["TEAMCITY_RUNNER_PROPERTIES_FILE"]);
+            _systemProperties = GetLazy(() => ParseDictionary(EnsureVariable("TEAMCITY_BUILD_PROPERTIES_FILE")));
+            _configurationProperties = GetLazy(() => ParseDictionary(SystemProperties["TEAMCITY_CONFIGURATION_PROPERTIES_FILE"]));
+            _runnerProperties = GetLazy(() => ParseDictionary(SystemProperties["TEAMCITY_RUNNER_PROPERTIES_FILE"]));
 
-            RestClient = CreateRestClient<ITeamCityRestClient>();
+            _restClient = GetLazy(() => CreateRestClient<ITeamCityRestClient>());
         }
 
         public T CreateRestClient<T>()
@@ -83,11 +92,11 @@ namespace Nuke.Core.BuildServers
             return CreateRestClient<T>(ServerUrl, SystemProperties["TEAMCITY_AUTH_USERID"], SystemProperties["TEAMCITY_AUTH_PASSWORD"]);
         }
 
-        public IReadOnlyDictionary<string, string> ConfigurationProperties { get; }
-        public IReadOnlyDictionary<string, string> SystemProperties { get; }
-        public IReadOnlyDictionary<string, string> RunnerProperties { get; }
+        public IReadOnlyDictionary<string, string> ConfigurationProperties => _configurationProperties.Value;
+        public IReadOnlyDictionary<string, string> SystemProperties => _systemProperties.Value;
+        public IReadOnlyDictionary<string, string> RunnerProperties => _runnerProperties.Value;
 
-        public ITeamCityRestClient RestClient { get; }
+        public ITeamCityRestClient RestClient => _restClient.Value;
 
         public string BuildConfiguration => EnsureVariable("TEAMCITY_BUILDCONF_NAME");
         [NoConvert] public string BuildNumber => EnsureVariable("BUILD_NUMBER");

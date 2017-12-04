@@ -17,10 +17,9 @@ namespace Nuke.Core.BuildServers
     public class Bitrise
     {
         [CanBeNull]
-        public static Bitrise Instance { get; } =
-            Variable("BITRISE_BUILD_URL") != null
-                ? new Bitrise()
-                : null;
+        public static Bitrise Instance { get; } = NukeBuild.Instance?.Host == HostType.Bitrise ? new Bitrise() : null;
+
+        internal static bool IsRunningBitrise => Variable("BITRISE_BUILD_URL") != null;
 
         private static DateTime ConvertUnixTimestamp (long timestamp)
         {
@@ -29,7 +28,7 @@ namespace Nuke.Core.BuildServers
                     .ToLocalTime();
         }
 
-        private Bitrise ()
+        internal Bitrise ()
         {
         }
 

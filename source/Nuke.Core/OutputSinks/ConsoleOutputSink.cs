@@ -17,8 +17,6 @@ namespace Nuke.Core.OutputSinks
     [PublicAPI]
     public class ConsoleOutputSink : IOutputSink
     {
-        public static IOutputSink Instance { get; } = new ConsoleOutputSink();
-        
         public virtual void Write (string text)
         {
             WriteWithColors(text, ConsoleColor.White, ConsoleColor.Black);
@@ -73,7 +71,6 @@ namespace Nuke.Core.OutputSinks
             string ToMinutesAndSeconds (TimeSpan duration)
                 => $"{(int) duration.TotalMinutes}:{duration:ss}";
 
-            Logger.Log();
             Logger.Log(new string(c: '=', count: allColumns));
             Logger.Log(CreateLine("Target", "Status", "Duration"));
             Logger.Log(new string(c: '-', count: allColumns));

@@ -42,9 +42,9 @@ namespace Nuke.Core
         private const string c_configFile = ".nuke";
 
         /// <summary>
-        /// Currently running build instance. Mostly useful for default settings.
+        /// Currently running build instance.
         /// </summary>
-        public static NukeBuild Instance { get; private set; }
+        public static NukeBuild Instance { get; internal set; }
 
         /// <summary>
         /// Executes the build. The provided expression defines the <em>default</em> target that is invoked,
@@ -56,11 +56,6 @@ namespace Nuke.Core
             return BuildExecutor.Execute(defaultTargetExpression);
         }
 
-        protected NukeBuild ()
-        {
-            Instance = this;
-        }
-
         /// <summary>
         /// Logging verbosity while building. Default is <see cref="Core.Verbosity.Normal"/>.
         /// </summary>
@@ -68,10 +63,16 @@ namespace Nuke.Core
         public Verbosity Verbosity { get; set; } = Verbosity.Normal;
 
         /// <summary>
-        /// Targets to run. Default is <em>Default</em>, which falls back to the target specified in <c>static int Main</c> with <see cref="Execute{T}"/>.
+        /// Targets to execute. Default is <em>Default</em>, which falls back to the target specified in <c>static int Main</c> with <see cref="Execute{T}"/>.
         /// </summary>
-        [Parameter("Target(s) to run. Default is '{default_target}'.", Separator = "+")]
+        [Parameter("Target(s) to execute. Default is '{default_target}'.", Separator = "+")]
         public string[] Target { get; } = { "Default" };
+
+        /// <summary>
+        /// Host for execution. Default is <em>automatic</em>.
+        /// </summary>
+        [Parameter("Host for execution. Default is 'automatic'.")]
+        public HostType Host { get; } = GetActualHostType();
 
         /// <summary>
         /// Configuration to build. Default is <em>Debug</em> (local) or <em>Release</em> (server).
@@ -113,7 +114,8 @@ namespace Nuke.Core
         [CanBeNull]
         public string[] Help { get; }
 
-        public static bool IsLocalBuild => OutputSink.Instance.GetType() == typeof(ConsoleOutputSink);
+        public static bool IsLocalBuild => Instance.Host == HostType.Console;
+        public static bool IsServerBuild => !IsLocalBuild;
 
         public LogLevel LogLevel => (LogLevel) Verbosity;
 
@@ -160,7 +162,7 @@ namespace Nuke.Core
         public virtual PathConstruction.AbsolutePath SolutionDirectory => (PathConstruction.AbsolutePath) Path.GetDirectoryName(SolutionFile);
 
         /// <summary>
-        /// Full path to <c>~\.tmp</c>.
+        /// Full path to <c>/.tmp</c>.
         /// </summary>
         public virtual PathConstruction.AbsolutePath TemporaryDirectory
         {
@@ -173,24 +175,24 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Full path to <c>~\output</c>.
+        /// Full path to <c>/output</c>.
         /// </summary>
         public virtual PathConstruction.AbsolutePath OutputDirectory => (PathConstruction.AbsolutePath) Path.Combine(RootDirectory, "output");
 
         /// <summary>
-        /// Full path to <c>~\artifacts</c>.
+        /// Full path to <c>/artifacts</c>.
         /// </summary>
         public virtual PathConstruction.AbsolutePath ArtifactsDirectory => (PathConstruction.AbsolutePath) Path.Combine(RootDirectory, "artifacts");
 
         /// <summary>
-        /// Full path to either <c>~\src</c> or <c>~\source</c>. Throws an exception if either none or both exist.
+        /// Full path to either <c>/src</c> or <c>/source</c>. Throws an exception if either none or both exist.
         /// </summary>
         public virtual PathConstruction.AbsolutePath SourceDirectory
         {
             get
             {
                 var directories = new[] { "src", "source" }.SelectMany(x => Directory.GetDirectories(RootDirectory, x)).ToList();
-                ControlFlow.Assert(directories.Count == 1, "Could not locate a single source directory. Candidates are '~\\src' and '~\\source'.");
+                ControlFlow.Assert(directories.Count == 1, "Could not locate a single source directory. Candidates are '/src' and '/source'.");
                 return (PathConstruction.AbsolutePath) directories.Single();
             }
         }
