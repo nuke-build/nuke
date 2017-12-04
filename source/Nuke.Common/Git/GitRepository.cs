@@ -17,11 +17,13 @@ namespace Nuke.Common.Git
     [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
     public class GitRepository
     {
-        /// <summary>
-        /// Tries to parse a string to a valid <see cref="GitRepository" />.
-        /// </summary>
-        [CanBeNull]
-        public static GitRepository TryParse (string directory)
+        public static GitRepository FromUrl (string url)
+        {
+            var (endpoint, identifier) = ParseUrl(url);
+            return new GitRepository(endpoint, identifier);
+        }
+
+        public static GitRepository FromLocalDirectory (string directory, string remote = "origin")
         {
             var rootDirectory = FileSystemTasks.SearchDirectory(directory, x => x.GetDirectories(".git").Any());
             ControlFlow.Assert(rootDirectory != null, $"Could not locate '.git' directory while traversing up from '{directory}'.");
@@ -31,71 +33,82 @@ namespace Nuke.Common.Git
             ControlFlow.Assert(File.Exists(headFile), $"File.Exists({headFile})");
             var headFileContent = File.ReadAllLines(headFile);
             var head = headFileContent.First();
+            var branchMatch = Regex.Match(head, "^ref: refs/heads/(?<branch>.*)");
 
             var configFile = Path.Combine(gitDirectory, "config");
             var configFileContent = File.ReadAllLines(configFile);
             var url = configFileContent
                     .Select(x => x.Trim())
-                    .SkipWhile(x => x != "[remote \"origin\"]")
+                    .SkipWhile(x => x != $"[remote \"{remote}\"]")
                     .Skip(count: 1)
                     .TakeWhile(x => !x.StartsWith("["))
                     .Single(x => x.StartsWithOrdinalIgnoreCase("url = "))
                     .Split('=')[1];
+            var (endpoint, identifier) = ParseUrl(url);
 
-            var match = new[]
-                        {
-                            @"git@(?<endpoint>.*):(?<owner>.*)/(?<name>.*?)(\.git)?$",
-                            @"https://(?<endpoint>.*)/(?<owner>.*)/(?<name>.*?)(\.git)?$"
-                        }.Select(x => Regex.Match(url, x)).FirstOrDefault(x => x.Success);
-            if (match == null)
-                return null;
-            var branchMatch = Regex.Match(head, "^ref: refs/heads/(?<branch>.*)");
-
-            return new GitRepository
-                   {
-                       Endpoint = match.Groups["endpoint"].Value,
-                       Owner = match.Groups["owner"].Value,
-                       Name = match.Groups["name"].Value,
-                       Head = head,
-                       Branch = branchMatch.Success ? branchMatch.Groups["branch"].Value : null
-                   };
+            return new GitRepository(
+                endpoint,
+                identifier,
+                rootDirectory,
+                head,
+                branchMatch.Success ? branchMatch.Groups["branch"].Value : null);
         }
 
-        /// <summary>The endpoint for the repository. For instance <em>github.com</em>.</summary>
-        public string Endpoint { get; set; }
+        private static (string endpoint, string identifier) ParseUrl (string url)
+        {
+            var match = new[]
+                        {
+                            @"git@(?<endpoint>[^:/]+?)(:|/)(?<identifier>.+?)/?(\.git)?$",
+                            @"^https://(?<endpoint>[^/]+?)/(?<identifier>.+?)/?(\.git)?$"
+                        }
+                    .Select(x => Regex.Match(url.Trim(), x))
+                    .FirstOrDefault(x => x.Success);
+            ControlFlow.Assert(match != null, $"Url '{url}' could not be parsed.");
 
-        /// <summary>The owner of the repository.</summary>
-        public string Owner { get; set; }
+            return (match.Groups["endpoint"].Value, match.Groups["identifier"].Value);
+        }
 
-        /// <summary>The name of the repository.</summary>
-        public string Name { get; set; }
+        public GitRepository (
+            string endpoint,
+            string identifier,
+            string localDirectory = null,
+            string head = null,
+            string branch = null)
+        {
+            Endpoint = endpoint;
+            Identifier = identifier;
+            LocalDirectory = localDirectory;
+            Head = head;
+            Branch = branch;
+        }
 
-        /// <summary>A construction of <c>owner/name</c></summary>
-        public string Identifier => $"{Owner.NotNull("Owner != null")}/{Name.NotNull("Name != null")}";
+        /// <summary>Endpoint for the repository. For instance <em>github.com</em>.</summary>
+        public string Endpoint { get; private set; }
 
-        /// <summary>Url in the form of <c>https://endpoint/identifier</c></summary>
-        public string SvnUrl => $"https://{Endpoint.NotNull("Endpoint != Endpoint")}/{Identifier}";
+        /// <summary>Identifier of the repository.</summary>
+        public string Identifier { get; private set; }
+
+        /// <summary>Local path from which the repository was parsed.</summary>
+        [CanBeNull]
+        public string LocalDirectory { get; private set; }
+
+        /// <summary>Current head; <c>null</c> if parsed from URL.</summary>
+        [CanBeNull]
+        public string Head { get; private set; }
+
+        /// <summary>Current branch; <c>null</c> if head is detached.</summary>
+        [CanBeNull]
+        public string Branch { get; private set; }
 
         /// <summary>Url in the form of <c>https://endpoint/identifier.git</c></summary>
-        public string CloneUrl => $"https://{Endpoint.NotNull("Endpoint != Endpoint")}/{Identifier}.git";
-
-        /// <summary>Url in the form of <c>git://endpoint/identifier.git</c></summary>
-        public string GitUrl => $"git://{Endpoint.NotNull("Endpoint != Endpoint")}/{Identifier}.git";
+        public string HttpsUrl => $"https://{Endpoint}/{Identifier}.git";
 
         /// <summary>Url in the form of <c>git@endpoint:identifier.git</c></summary>
-        public string SshUrl => $"git@{Endpoint.NotNull("Endpoint != Endpoint")}:{Identifier}.git";
+        public string SshUrl => $"git@{Endpoint}:{Identifier}.git";
 
-        /// <summary>Current head.</summary>
-        public string Head { get; set; }
-
-        /// <summary>Current branch. Null if head is detached.</summary>
-        [CanBeNull]
-        public string Branch { get; set; }
-
-        [NotNull]
         public override string ToString ()
         {
-            return CloneUrl;
+            return HttpsUrl.TrimEnd(".git");
         }
     }
 }

@@ -126,5 +126,15 @@ namespace Nuke.Core.Utilities
         {
             return values.Join(Environment.NewLine);
         }
+
+        public static string TrimEnd (this string str, string trim)
+        {
+            return str.EndsWith(trim) ? str.Substring(startIndex: 0, length: str.Length - trim.Length) : str;
+        }
+
+        public static string TrimStart (this string str, string trim)
+        {
+            return str.StartsWith(trim) ? str.Substring(trim.Length) : str;
+        }
     }
 }

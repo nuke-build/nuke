@@ -130,11 +130,11 @@ class Build : NukeBuild
     Target Generate => _ => _
             .Executes(() =>
             {
-                var metadataRepository = GitRepository.TryParse(MetadataDirectory).NotNull();
+                var metadataRepository = GitRepository.FromLocalDirectory(MetadataDirectory).NotNull();
                 GenerateCode(
                     MetadataDirectory,
                     GenerationDirectory,
-                    repositoryBaseUrl: $"{metadataRepository.SvnUrl}/blob/{metadataRepository.Branch}",
+                    repositoryBaseUrl: metadataRepository.GetGitHubBrowseUrl("", itemType: GitHubItemType.File),
                     baseNamespace: "Nuke.Common.Tools",
                     useNestedNamespaces: true);
             });
