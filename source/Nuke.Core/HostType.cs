@@ -11,7 +11,7 @@ namespace Nuke.Core
     {
         Console,
         TeamCity,
-        TeamFoundation,
+        TeamServices,
         Bitrise,
         AppVeyor,
         Jenkins

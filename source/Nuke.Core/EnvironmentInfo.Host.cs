@@ -19,7 +19,7 @@ namespace Nuke.Core
             if (TeamCity.IsRunningTeamCity)
                 return HostType.TeamCity;
             if (TeamServices.IsRunningTeamServices)
-                return HostType.TeamFoundation;
+                return HostType.TeamServices;
             if (Bitrise.IsRunningBitrise)
                 return HostType.Bitrise;
             
