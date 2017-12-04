@@ -17,9 +17,11 @@ namespace Nuke.Core.BuildServers
     public class AppVeyor
     {
         [CanBeNull]
-        public static AppVeyor Instance => Variable("APPVEYOR") != null ? new AppVeyor() : null;
+        public static AppVeyor Instance { get; } = NukeBuild.Instance?.Host == HostType.AppVeyor ? new AppVeyor() : null;
 
-        private AppVeyor ()
+        internal static bool IsRunningAppVeyor => Variable("APPVEYOR") != null;
+
+        internal AppVeyor ()
         {
         }
 

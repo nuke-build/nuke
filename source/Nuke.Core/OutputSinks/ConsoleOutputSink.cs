@@ -17,8 +17,6 @@ namespace Nuke.Core.OutputSinks
     [PublicAPI]
     public class ConsoleOutputSink : IOutputSink
     {
-        public static IOutputSink Instance { get; } = new ConsoleOutputSink();
-        
         public virtual void Write (string text)
         {
             WriteWithColors(text, ConsoleColor.White, ConsoleColor.Black);

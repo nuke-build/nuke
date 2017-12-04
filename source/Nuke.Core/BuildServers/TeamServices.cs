@@ -15,13 +15,13 @@ namespace Nuke.Core.BuildServers
     [PublicAPI]
     [BuildServer]
     public class TeamServices
-    {
-        public static TeamServices Instance { get; } =
-            Variable("SYSTEM_TEAMPROJECTID") != null
-                ? new TeamServices()
-                : null;
+    {        
+        [CanBeNull]
+        public static TeamServices Instance { get; } = NukeBuild.Instance?.Host == HostType.TeamFoundation ? new TeamServices() : null;
 
-        private TeamServices ()
+        internal static bool IsRunningTeamServices => Variable("SYSTEM_TEAMPROJECTID") != null;
+
+        internal TeamServices ()
         {
         }
 

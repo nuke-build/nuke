@@ -12,9 +12,6 @@ namespace Nuke.Core.OutputSinks
 {
     public class BitriseOutputSink : ConsoleOutputSink
     {
-        [CanBeNull]
-        public new static IOutputSink Instance { get; } = Bitrise.Instance != null ? new BitriseOutputSink() : null;
-
         public override IDisposable WriteBlock (string text)
         {
             Info(FigletTransform.GetText(text, "ansi-shadow"));

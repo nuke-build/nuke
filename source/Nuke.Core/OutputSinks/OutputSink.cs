@@ -5,6 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
+using Nuke.Core.BuildServers;
 using Nuke.Core.Execution;
 
 namespace Nuke.Core.OutputSinks
@@ -24,14 +26,24 @@ namespace Nuke.Core.OutputSinks
 
     internal static class OutputSink
     {
+        internal static IOutputSink Instance { get; set; } = GetOutputSink(EnvironmentInfo.GetActualHostType());
+
+        internal static IOutputSink GetOutputSink (HostType hostType)
+        {
+            switch (hostType)
+            {
+                case HostType.Bitrise:
+                    return new BitriseOutputSink();
+                case HostType.TeamCity:
+                    return new TeamCityOutputSink(new TeamCity());
+                default:
+                    return new ConsoleOutputSink();
+            }
+        }
+        
         private static readonly List<Tuple<LogLevel, string>> s_severeMessages = new List<Tuple<LogLevel, string>>();
 
-        public static IOutputSink Instance =>
-                TeamCityOutputSink.Instance
-                ?? BitriseOutputSink.Instance
-                ?? ConsoleOutputSink.Instance;
-        
-        public static void Write(string text)
+        public static void Write (string text)
         {
             Instance.Write(text);
         }

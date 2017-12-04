@@ -1,4 +1,5 @@
-﻿using static Nuke.Core.EnvironmentInfo;
+﻿using JetBrains.Annotations;
+using static Nuke.Core.EnvironmentInfo;
 
 namespace Nuke.Core.BuildServers
 {
@@ -8,11 +9,15 @@ namespace Nuke.Core.BuildServers
     [BuildServer]
     public class Jenkins
     {
-        public static Jenkins Instance { get; } = Variable("JENKINS_HOME") != null ? new Jenkins() : null;
+        [CanBeNull]
+        public static Jenkins Instance { get; } = NukeBuild.Instance?.Host == HostType.Jenkins ? new Jenkins() : null;
 
-        private Jenkins ()
+        internal static bool IsRunningJenkins => Variable("JENKINS_HOME") != null;
+
+        internal Jenkins ()
         {
         }
+        
         /// <summary>
         ///     The current build display name, such as "#14".
         /// </summary>

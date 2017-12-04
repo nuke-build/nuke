@@ -41,9 +41,9 @@ namespace Nuke.Core
         private const string c_configFile = ".nuke";
 
         /// <summary>
-        /// Currently running build instance. Mostly useful for default settings.
+        /// Currently running build instance.
         /// </summary>
-        public static NukeBuild Instance { get; private set; }
+        public static NukeBuild Instance { get; internal set; }
 
         /// <summary>
         /// Executes the build. The provided expression defines the <em>default</em> target that is invoked,
@@ -55,11 +55,6 @@ namespace Nuke.Core
             return BuildExecutor.Execute(defaultTargetExpression);
         }
 
-        protected NukeBuild ()
-        {
-            Instance = this;
-        }
-
         /// <summary>
         /// Logging verbosity while building. Default is <see cref="Core.Verbosity.Normal"/>.
         /// </summary>
@@ -67,10 +62,16 @@ namespace Nuke.Core
         public Verbosity Verbosity { get; set; } = Verbosity.Normal;
 
         /// <summary>
-        /// Targets to run. Default is <em>Default</em>, which falls back to the target specified in <c>static int Main</c> with <see cref="Execute{T}"/>.
+        /// Targets to execute. Default is <em>Default</em>, which falls back to the target specified in <c>static int Main</c> with <see cref="Execute{T}"/>.
         /// </summary>
-        [Parameter("Target(s) to run. Default is '{default_target}'.", Separator = "+")]
+        [Parameter("Target(s) to execute. Default is '{default_target}'.", Separator = "+")]
         public string[] Target { get; } = { "Default" };
+
+        /// <summary>
+        /// Host for execution. Default is <em>automatic</em>.
+        /// </summary>
+        [Parameter("Host for execution. Default is 'automatic'.")]
+        public HostType Host { get; } = GetActualHostType();
 
         /// <summary>
         /// Configuration to build. Default is <em>Debug</em> (local) or <em>Release</em> (server).
@@ -112,7 +113,7 @@ namespace Nuke.Core
         [CanBeNull]
         public string[] Help { get; }
 
-        public static bool IsLocalBuild => OutputSink.Instance.GetType() == typeof(ConsoleOutputSink);
+        public static bool IsLocalBuild => Instance.Host == HostType.Console;
         public static bool IsServerBuild => !IsLocalBuild;
 
         public LogLevel LogLevel => (LogLevel) Verbosity;
