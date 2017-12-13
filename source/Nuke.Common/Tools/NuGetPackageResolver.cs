@@ -151,6 +151,10 @@ namespace Nuke.Common.Tools
         // TODO: check for config ( repositoryPath / globalPackagesFolder )
         public static string GetPackagesDirectory (string packagesConfigFile)
         {
+            var packagesDirectory = EnvironmentInfo.Variable("NUGET_PACKAGES");
+            if (packagesDirectory != null)
+                return packagesDirectory;
+
             if (!IsLegacyFile(packagesConfigFile))
                 return Path.Combine(
                     EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile)
@@ -161,7 +165,7 @@ namespace Nuke.Common.Tools
             if (NukeBuild.Instance != null)
                 return Path.Combine(Path.GetDirectoryName(NukeBuild.Instance.SolutionFile).NotNull(), "packages");
 
-            var packagesDirectory = new FileInfo(packagesConfigFile).Directory.NotNull()
+            packagesDirectory = new FileInfo(packagesConfigFile).Directory.NotNull()
                     .DescendantsAndSelf(x => x.Parent)
                     .SingleOrDefault(x => x.GetFiles("*.sln").Any() && x.GetDirectories("packages").Any())
                     ?.FullName;
