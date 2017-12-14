@@ -147,9 +147,6 @@ echo "Generating build project..."
 
 SOLUTION_DIRECTORY_RELATIVE="$(GetRelative "$BUILD_DIRECTORY" "$SOLUTION_DIRECTORY")"
 
-curl -Lsfo "$BUILD_PROJECT_FILE.dotsettings" "$BOOTSTRAPPING_URL/.build.csproj.DotSettings"
-curl -Lsfo "$BUILD_DIRECTORY/Build.cs" "$BOOTSTRAPPING_URL/Build.$TARGET_PLATFORM.cs"
-
 sed -e 's~_TARGET_FRAMEWORK_~'"$TARGET_FRAMEWORK"'~g' \
     -e 's~_BUILD_PROJECT_GUID_~'"$PROJECT_GUID"'~g' \
     -e 's~_BUILD_PROJECT_NAME_~'"$BUILD_PROJECT_NAME"'~g' \
@@ -157,6 +154,12 @@ sed -e 's~_TARGET_FRAMEWORK_~'"$TARGET_FRAMEWORK"'~g' \
     -e 's~_NUKE_VERSION_~'"$NUKE_VERSION"'~g' \
     <<<"$(curl -Lsf $BOOTSTRAPPING_URL/.build.$PROJECT_FORMAT.csproj)" \
     > "$BUILD_PROJECT_FILE"
+
+curl -Lsfo "$BUILD_PROJECT_FILE.dotsettings" "$BOOTSTRAPPING_URL/.build.csproj.DotSettings"
+
+if [ ! -f "$BUILD_DIRECTORY/Build.cs" ]; then
+    curl -Lsfo "$BUILD_DIRECTORY/Build.cs" "$BOOTSTRAPPING_URL/Build.$TARGET_PLATFORM.cs"
+fi
 
 if [ $PROJECT_FORMAT_SELECTION == 0 ]; then
     sed -e 's~_NUKE_VERSION_~'"$NUKE_VERSION"'~g' \

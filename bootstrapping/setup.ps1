@@ -146,9 +146,6 @@ Write-Host "Generating build project..."
 
 $SolutionDirectoryRelative = (GetRelative $BuildDirectory $SolutionDirectory)
 
-(New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/.build.csproj.DotSettings", "$BuildProjectFile.dotsettings")
-(New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/Build.$($TargetPlatform).cs", "$BuildDirectory\Build.cs")
-
 Set-Content "$BuildProjectFile" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/.build.$($ProjectFormat).csproj") `
     -replace "_TARGET_FRAMEWORK_",$TargetFramework `
     -replace "_BUILD_PROJECT_GUID_",$ProjectGuid `
@@ -156,6 +153,12 @@ Set-Content "$BuildProjectFile" ((New-Object System.Net.WebClient).DownloadStrin
     -replace "_SOLUTION_DIRECTORY_",$SolutionDirectoryRelative `
     -replace "_NUKE_VERSION_",$NukeVersion) `
     -NoNewline
+
+(New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/.build.csproj.DotSettings", "$BuildProjectFile.dotsettings")
+
+if (!(Test-Path "$BuildDirectory\Build.cs")) {
+    (New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/Build.$($TargetPlatform).cs", "$BuildDirectory\Build.cs")
+}
 
 if ($ProjectFormatSelection -eq 0) {
     Set-Content "$BuildDirectory\packages.config" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/.build.legacy.packages.config") `
