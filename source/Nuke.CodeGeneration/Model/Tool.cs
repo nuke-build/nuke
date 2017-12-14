@@ -19,12 +19,7 @@ namespace Nuke.CodeGeneration.Model
         public string Schema { get; set; } = "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json";
 
         [JsonProperty]
-        public string[] License { get; set; } =
-            {
-                "Copyright Matthias Koch 2017.",
-                "Distributed under the MIT License.",
-                "https://github.com/nuke-build/tools/blob/master/LICENSE"
-            };
+        public string[] License { get; set; }
 
         [JsonIgnore]
         public string DefinitionFile { get; set; }
