@@ -35,8 +35,8 @@ namespace Nuke.CodeGeneration
 
         public bool Execute ()
         {
-            var metadataFiles = MetadataFiles.Select(x => x.ItemSpec).ToList();
-            if (!metadataFiles.Any())
+            var metadataFiles = MetadataFiles.Select(x => x.GetMetadata("Fullpath")).ToList();
+            if (!MetadataFiles.Any())
             {
                 ControlFlow.SuppressErrors(() =>
                 {
