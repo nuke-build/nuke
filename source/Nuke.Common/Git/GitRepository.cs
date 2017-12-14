@@ -44,8 +44,11 @@ namespace Nuke.Common.Git
                     .SkipWhile(x => x != $"[remote \"{remote}\"]")
                     .Skip(count: 1)
                     .TakeWhile(x => !x.StartsWith("["))
-                    .Single(x => x.StartsWithOrdinalIgnoreCase("url = "))
-                    .Split('=')[1];
+                    .SingleOrDefault(x => x.StartsWithOrdinalIgnoreCase("url = "))
+                    ?.Split('=')[1];
+            if (url == null)
+                return null;
+
             var (endpoint, identifier) = ParseUrl(url);
 
             return new GitRepository(
