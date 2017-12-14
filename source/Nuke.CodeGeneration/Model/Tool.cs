@@ -16,10 +16,10 @@ namespace Nuke.CodeGeneration.Model
     public class Tool
     {
         [JsonProperty("$schema")]
-        private string Schema { get; set; } = "./_schema.json#";
+        public string Schema { get; set; } = "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json";
 
         [JsonProperty]
-        private string[] License { get; set; } =
+        public string[] License { get; set; } =
             {
                 "Copyright Matthias Koch 2017.",
                 "Distributed under the MIT License.",

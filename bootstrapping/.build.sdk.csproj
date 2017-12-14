@@ -5,13 +5,24 @@
     <TargetFramework>_TARGET_FRAMEWORK_</TargetFramework>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <RootNamespace></RootNamespace>
-    <IsPackable>false</IsPackable>
+    <IsPackable>False</IsPackable>
     <NoWarn>CS0649;CS0169</NoWarn>
+    
+    <!-- NUKE CONFIGURATION -->
+    <NukeVersion>_NUKE_VERSION_</NukeVersion>
+    <NukeCodeGeneration>False</NukeCodeGeneration>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Nuke.Common" Version="_NUKE_VERSION_" />
+    <PackageReference Include="Nuke.Common" Version="$(NukeVersion)" />
+    <PackageReference Include="Nuke.CodeGeneration" Version="$(NukeVersion)" Condition="'$(NukeCodeGeneration)' != 'False'" />
     <PackageReference Include="GitVersion.CommandLine" Version="4.0.0-beta0011" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NukeMetadata Include="**/*.json" Exclude="bin/**;obj/**" />
+    <None Remove="*.csproj.dotsettings;_schema.json;*.ref.*.txt" />
+    <None Remove="*.json;*.json.new" Condition="'$(NukeCodeGeneration)' == 'False'" />
   </ItemGroup>
 
 </Project>

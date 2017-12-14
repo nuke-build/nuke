@@ -57,19 +57,21 @@ class Build : NukeBuild
                 DotNetBuild(s => DefaultDotNetBuild);
             });
 
-    Target Link => _ => _
-            .OnlyWhen(() => false)
-            .DependsOn(Compile)
+    Target Publish => _ => _
+            .DependsOn(Restore)
             .Executes(() =>
             {
-                GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/*/*.pdb")
-                        .Where(x => !x.Contains("ToolGenerator"))
-                        .ForEach(x => GitLink3(s => DefaultGitLink3
-                                .SetPdbFile(x)));
+                var project = SourceDirectory / "Nuke.CodeGeneration" / "Nuke.CodeGeneration.csproj";
+                DotNetPublish(s => DefaultDotNetPublish
+                        .SetProject(project)
+                        .SetFramework("netstandard2.0"));
+                DotNetPublish(s => DefaultDotNetPublish
+                        .SetProject(project)
+                        .SetFramework("net461"));
             });
 
     Target Pack => _ => _
-            .DependsOn(Link)
+            .DependsOn(Compile, Publish)
             .Executes(() =>
             {
                 DotNetPack(s => DefaultDotNetPack);
@@ -130,13 +132,12 @@ class Build : NukeBuild
     Target Generate => _ => _
             .Executes(() =>
             {
-                var metadataRepository = GitRepository.FromLocalDirectory(MetadataDirectory).NotNull();
                 GenerateCode(
                     MetadataDirectory,
                     GenerationDirectory,
-                    repositoryBaseUrl: metadataRepository.GetGitHubBrowseUrl("", itemType: GitHubItemType.File),
                     baseNamespace: "Nuke.Common.Tools",
-                    useNestedNamespaces: true);
+                    useNestedNamespaces: true,
+                    gitRepository: GitRepository.FromLocalDirectory(MetadataDirectory).NotNull());
             });
 
     Target Full => _ => _

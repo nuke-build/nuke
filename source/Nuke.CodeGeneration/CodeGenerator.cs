@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -16,10 +17,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Nuke.CodeGeneration.Generators;
 using Nuke.CodeGeneration.Model;
-using Nuke.Common.IO;
+using Nuke.Common.Git;
 using Nuke.Core;
 using Nuke.Core.Utilities;
-using static Nuke.Core.IO.PathConstruction;
 
 namespace Nuke.CodeGeneration
 {
@@ -28,84 +28,69 @@ namespace Nuke.CodeGeneration
     {
         public static void GenerateCode (
             string metadataDirectory,
-            string generationDirectory,
-            string repositoryBaseUrl = null,
-            string baseNamespace = null,
+            string generationBaseDirectory,
             bool useNestedNamespaces = false,
-            bool downloadSchema = true)
+            string baseNamespace = null,
+            GitRepository gitRepository = null)
         {
             new CodeGenerator(
-                        metadataDirectory,
-                        generationDirectory,
-                        repositoryBaseUrl,
-                        baseNamespace,
+                        Directory.GetFiles(metadataDirectory, "*.json", SearchOption.TopDirectoryOnly),
+                        generationBaseDirectory,
                         useNestedNamespaces,
-                        downloadSchema)
+                        baseNamespace,
+                        gitRepository)
                     .Execute();
         }
-
-        private const string c_schemaDownloadUrl = "https://raw.githubusercontent.com/nuke-build/tools/master/metadata/_schema.json";
-        private const string c_schemaFileName = "_schema.json";
-
-        private readonly string _metadataDirectory;
-        private readonly string _generationDirectory;
-        private readonly string _repositoryBaseUrl;
-        private readonly string _baseNamespace;
+        
+        private readonly List<string> _metadataFiles;
+        private readonly string _baseDirectory;
         private readonly bool _useNestedNamespaces;
-        private readonly bool _downloadSchema;
+        private readonly string _baseNamespace;
+        private readonly GitRepository _repository;
 
-        private CodeGenerator (
-            string metadataDirectory,
-            string generationDirectory,
-            [CanBeNull] string repositoryBaseUrl,
-            [CanBeNull] string baseNamespace,
+        public CodeGenerator (
+            IReadOnlyCollection<string> metadataFiles,
+            string baseDirectory,
             bool useNestedNamespaces,
-            bool downloadSchema)
+            [CanBeNull] string baseNamespace,
+            [CanBeNull] GitRepository repository)
         {
-            _metadataDirectory = metadataDirectory;
-            _generationDirectory = generationDirectory;
-            _repositoryBaseUrl = repositoryBaseUrl;
+            _metadataFiles = metadataFiles.Where(x => !Path.GetFileName(x).NotNull().StartsWith("_")).ToList();
+            _baseDirectory = baseDirectory;
+            _repository = repository;
             _baseNamespace = baseNamespace;
             _useNestedNamespaces = useNestedNamespaces;
-            _downloadSchema = downloadSchema;
         }
 
         public void Execute()
         {
-            if (_downloadSchema)
-                ControlFlow.SuppressErrors(() =>
-                    HttpTasks.HttpDownloadFile(c_schemaDownloadUrl, (RelativePath) _metadataDirectory / c_schemaFileName));
-
-            var files = Directory.GetFiles(_metadataDirectory, "*.json", SearchOption.TopDirectoryOnly).Where(x => !x.EndsWith(c_schemaFileName));
-            files.AsParallel().ForAll(HandleFile);
-        }
-
-        private void HandleFile (string file)
-        {
-            var tool = Load(file);
-
-            foreach (var task in tool.Tasks)
+            _metadataFiles.AsParallel().ForAll(file =>
             {
-                if (task.OmitCommonProperties)
-                    continue;
+                var tool = Load(file);
 
-                tool.CommonTaskProperties.ForEach(y => task.SettingsClass.Properties.Add(y.Clone()));
-            }
+                foreach (var task in tool.Tasks)
+                {
+                    if (task.OmitCommonProperties)
+                        continue;
 
-            ApplyBackReferences(tool);
+                    tool.CommonTaskProperties.ForEach(y => task.SettingsClass.Properties.Add(y.Clone()));
+                }
 
-            using (var streamWriter = new StreamWriter(File.Open(tool.GenerationFileBase + ".Generated.cs", FileMode.Create)))
-            {
-                ToolGenerator.Run(tool, GetNamespace(tool), streamWriter);
-            }
+                ApplyBackReferences(tool);
 
-            tool.Tasks.ForEach(x => tool.CommonTaskProperties.ForEach(y => x.SettingsClass.Properties.RemoveAll(z => z.Name == y.Name)));
-            System.Threading.Tasks.Task.WaitAll(
-                tool.References.Select(reference => UpdateReference(reference, tool)).ToArray());
+                using (var streamWriter = new StreamWriter(File.Open(tool.GenerationFileBase + ".Generated.cs", FileMode.Create)))
+                {
+                    ToolGenerator.Run(tool, GetNamespace(tool), streamWriter);
+                }
 
-            Save(tool);
+                tool.Tasks.ForEach(x => tool.CommonTaskProperties.ForEach(y => x.SettingsClass.Properties.RemoveAll(z => z.Name == y.Name)));
+                System.Threading.Tasks.Task.WaitAll(
+                    tool.References.Select(reference => UpdateReference(reference, tool)).ToArray());
 
-            Logger.Info($"Processed {Path.GetFileName(file)}.");
+                Save(tool);
+
+                Logger.Info($"Processed {Path.GetFileName(file)}.");
+            });
         }
 
         [CanBeNull]
@@ -123,14 +108,12 @@ namespace Nuke.CodeGeneration
             var content = File.ReadAllText(file);
             var tool = JsonConvert.DeserializeObject<Tool>(content);
 
-            var toolDirectory = _useNestedNamespaces ? Path.Combine(_generationDirectory, tool.Name) : _generationDirectory;
+            var toolDirectory = _useNestedNamespaces ? Path.Combine(_baseDirectory, tool.Name) : _baseDirectory;
             Directory.CreateDirectory(toolDirectory);
 
             tool.DefinitionFile = file;
             tool.GenerationFileBase = Path.Combine(toolDirectory, Path.GetFileNameWithoutExtension(file));
-            tool.RepositoryUrl = _repositoryBaseUrl != null
-                ? $"{_repositoryBaseUrl.TrimEnd('/')}/{Path.GetFileName(file)}"
-                : null;
+            tool.RepositoryUrl = _repository?.GetGitHubBrowseUrl(file);
 
             return tool;
         }
@@ -198,8 +181,6 @@ namespace Nuke.CodeGeneration
 
             var postfix = originalLineCount != serializationLineCount ? ".new" : string.Empty;
             File.WriteAllText(tool.DefinitionFile + postfix, content);
-
-            //File.WriteAllText(tool.DefinitionFile, content);
         }
 
         private async Task<string> GetReferenceContent (string reference)
@@ -245,6 +226,7 @@ namespace Nuke.CodeGeneration
 
         private class AutomaticDecompressingWebClient : WebClient
         {
+            [CanBeNull]
             protected override WebRequest GetWebRequest (Uri address)
             {
                 var request = base.GetWebRequest(address) as HttpWebRequest;
