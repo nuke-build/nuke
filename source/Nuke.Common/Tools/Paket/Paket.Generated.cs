@@ -3,7 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 // Generated with Nuke.CodeGeneration, LOCAL VERSION.
-// Generated from https://github.com/nuke-build/tools/blob/master/Paket.json.
+// Generated from https://github.com/nuke-build/tools/blob/master/metadata/Paket.json.
 
 using JetBrains.Annotations;
 using Nuke.Common.Tools;

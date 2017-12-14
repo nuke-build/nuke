@@ -3,7 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 // Generated with Nuke.CodeGeneration, LOCAL VERSION.
-// Generated from https://github.com/nuke-build/tools/blob/master/Octopus.json.
+// Generated from https://github.com/nuke-build/tools/blob/master/metadata/Octopus.json.
 
 using JetBrains.Annotations;
 using Nuke.Common.Tools;
