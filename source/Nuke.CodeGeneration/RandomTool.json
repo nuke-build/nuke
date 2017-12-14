@@ -1,10 +1,13 @@
 ﻿{
   "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
-  "name": "SampleTool",
+  "license": [
+    "License text for this file"
+  ],
+  "name": "RandomTool",
   "officialUrl": "https://official.url",
   "help": "Help text",
-  "packageId": "SampleTool",
-  "packageExecutable": "SampleTool.exe",
+  "packageId": "RandomTool",
+  "packageExecutable": "RandomTool.exe",
   "tasks": [
     {
       "settingsClass": {

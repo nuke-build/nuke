@@ -17,7 +17,7 @@ namespace Nuke.CodeGeneration
     [PublicAPI]
     public class CodeGeneratorTask : ITask
     {
-        private const string c_exampleUrl = "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/Example.json";
+        private const string c_exampleUrl = "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/RandomTool.json";
 
         public IBuildEngine BuildEngine { get; set; }
         public ITaskHost HostObject { get; set; }
@@ -40,7 +40,7 @@ namespace Nuke.CodeGeneration
             {
                 ControlFlow.SuppressErrors(() =>
                 {
-                    var exampleFile = Path.Combine(BaseDirectory, "Example.json");
+                    var exampleFile = Path.Combine(BaseDirectory, "RandomTool.json");
                     HttpTasks.HttpDownloadFile(c_exampleUrl, exampleFile);
                     metadataFiles.Add(exampleFile);
                 });
