@@ -23,10 +23,12 @@ namespace Nuke.Common.Git
             return new GitRepository(endpoint, identifier);
         }
 
+        [CanBeNull]
         public static GitRepository FromLocalDirectory (string directory, string remote = "origin")
         {
             var rootDirectory = FileSystemTasks.SearchDirectory(directory, x => x.GetDirectories(".git").Any());
-            ControlFlow.Assert(rootDirectory != null, $"Could not locate '.git' directory while traversing up from '{directory}'.");
+            if (rootDirectory == null)
+                return null;
             var gitDirectory = Path.Combine(rootDirectory, ".git");
 
             var headFile = Path.Combine(gitDirectory, "HEAD");
