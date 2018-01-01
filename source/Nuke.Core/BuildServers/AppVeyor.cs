@@ -16,8 +16,10 @@ namespace Nuke.Core.BuildServers
     [BuildServer]
     public class AppVeyor
     {
+        private static Lazy<AppVeyor> s_instance = new Lazy<AppVeyor>(() => new AppVeyor());
+
         [CanBeNull]
-        public static AppVeyor Instance { get; } = NukeBuild.Instance?.Host == HostType.AppVeyor ? new AppVeyor() : null;
+        public static AppVeyor Instance => NukeBuild.Instance?.Host == HostType.AppVeyor ? s_instance.Value : null;
 
         internal static bool IsRunningAppVeyor => Variable("APPVEYOR") != null;
 

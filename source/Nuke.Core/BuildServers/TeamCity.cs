@@ -24,8 +24,10 @@ namespace Nuke.Core.BuildServers
     [BuildServer]
     public class TeamCity
     {
+        private static Lazy<TeamCity> s_instance = new Lazy<TeamCity>(() => new TeamCity());
+
         [CanBeNull]
-        public static TeamCity Instance { get; } = NukeBuild.Instance?.Host == HostType.TeamCity ? new TeamCity() : null;
+        public static TeamCity Instance => NukeBuild.Instance?.Host == HostType.TeamCity ? s_instance.Value : null;
 
         internal static bool IsRunningTeamCity => Variable("TEAMCITY_VERSION") != null;
 

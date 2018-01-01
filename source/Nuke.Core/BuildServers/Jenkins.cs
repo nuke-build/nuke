@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
 using static Nuke.Core.EnvironmentInfo;
 
 namespace Nuke.Core.BuildServers
@@ -9,8 +10,10 @@ namespace Nuke.Core.BuildServers
     [BuildServer]
     public class Jenkins
     {
+        private static Lazy<Jenkins> s_instance = new Lazy<Jenkins>(() => new Jenkins());
+
         [CanBeNull]
-        public static Jenkins Instance { get; } = NukeBuild.Instance?.Host == HostType.Jenkins ? new Jenkins() : null;
+        public static Jenkins Instance => NukeBuild.Instance?.Host == HostType.Jenkins ? s_instance.Value : null;
 
         internal static bool IsRunningJenkins => Variable("JENKINS_HOME") != null;
 
