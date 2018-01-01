@@ -39,15 +39,26 @@ namespace Nuke.Core.Tooling
         {
             var toolPath = toolSettings.ToolPath;
             var arguments = toolSettings.GetArguments();
+            var argumentsForExecution = arguments.RenderForExecution();
+            var argumentsForOutput = arguments.RenderForOutput();
+
+#if NETCORE
+            if (EnvironmentInfo.IsUnix && toolPath.EndsWithOrdinalIgnoreCase("exe"))
+            {
+                argumentsForExecution = $"{toolPath.DoubleQuoteIfNeeded()} {argumentsForExecution}";
+                argumentsForOutput = $"{toolPath.DoubleQuoteIfNeeded()} {argumentsForOutput}";
+                toolPath = "/usr/bin/mono";
+            }
+#endif
 
             ControlFlow.Assert(toolPath != null, "ToolPath was not set.");
             ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
-            Logger.Info($"> {Path.GetFullPath(toolPath).DoubleQuoteIfNeeded()} {arguments.RenderForOutput()}");
+            Logger.Info($"> {Path.GetFullPath(toolPath).DoubleQuoteIfNeeded()} {argumentsForOutput}");
 
             processSettings = processSettings ?? new ProcessSettings();
             return StartProcessInternal(
                 toolPath,
-                arguments.RenderForExecution(),
+                argumentsForExecution,
                 toolSettings.WorkingDirectory,
                 processSettings.EnvironmentVariables,
                 processSettings.ExecutionTimeout,
