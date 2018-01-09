@@ -100,7 +100,7 @@ namespace Nuke.Common.Tools
         [CanBeNull]
         public static InstalledPackage GetGlobalInstalledPackage (string packageId, string version = null, string packagesDirectory = null)
         {
-            var versionRange = version == null ? null : VersionRange.Parse(version.Contains("*") ? $"{version}" : $"[{version}]");
+            VersionRange.TryParse(version != null && version.Contains("*") ? $"{version}" : $"[{version}]", out var versionRange);
             return GetGlobalInstalledPackage(packageId, versionRange, packagesDirectory);
         }
 
