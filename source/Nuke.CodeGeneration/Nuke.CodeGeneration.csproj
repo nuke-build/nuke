@@ -21,7 +21,7 @@
     <ProjectReference Include="..\Nuke.Common\Nuke.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == ''">
     <None Include="Nuke.CodeGeneration.targets" PackagePath="build\netstandard2.0" Pack="true" />
     <None Include="Nuke.CodeGeneration.targets" PackagePath="build\net461" Pack="true" />
     <None Include="bin\$(Configuration)\netstandard2.0\publish\**\*.*" PackagePath="build\netstandard2.0" Pack="true" />

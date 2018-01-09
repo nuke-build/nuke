@@ -116,7 +116,7 @@ class Build : NukeBuild
             .Executes(() =>
             {
                 void TestXunit ()
-                    => Xunit2(GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/net4*/Nuke.*.Tests.dll"),
+                    => Xunit2(GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/net4*/Nuke.*.Tests.dll").NotEmpty(),
                         s => s.AddResultReport(ResultFormat.Xml, OutputDirectory / "tests.xml"));
 
                 if (IsWin)
