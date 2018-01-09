@@ -82,6 +82,7 @@ namespace Nuke.Core.IO
 
             Logger.Trace($"Deleting directory '{directory}'...");
             Directory.Delete(directory, recursive: false);
+            ControlFlow.Assert(!Directory.Exists(directory), $"Cannot delete directory '{directory}'.");
         }
 
         private static void DeleteFile (string file)
