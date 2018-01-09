@@ -26,9 +26,9 @@ namespace Nuke.Core.Tooling
         private readonly List<string> _secrets = new List<string>();
         private readonly LookupTable<string, string> _arguments = new LookupTable<string, string>(StringComparer.OrdinalIgnoreCase);
 
-        public Arguments Add (string argument, bool condition = true)
+        public Arguments Add (string argument, bool? condition = true)
         {
-            return Add(argument, condition ? new object() : null);
+            return Add(argument, condition.HasValue && condition.Value ? new object() : null);
         }
 
         public Arguments Add<T> (string argumentFormat, T? value, char? disallowed = null, bool secret = false)
