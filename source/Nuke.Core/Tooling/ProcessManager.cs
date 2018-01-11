@@ -52,7 +52,7 @@ namespace Nuke.Core.Tooling
                 processSettings.EnvironmentVariables,
                 processSettings.ExecutionTimeout,
                 processSettings.RedirectOutput,
-                processSettings.RedirectOutput ? new Func<string, string>(arguments.Filter) : null);
+                arguments.Filter);
         }
 
         [CanBeNull]
