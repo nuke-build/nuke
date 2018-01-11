@@ -29,9 +29,13 @@ class Build : NukeBuild
 {
     public static int Main () => Execute<Build>(x => x.Pack);
 
-    [Parameter("Source for Push target.")] readonly string Source = "https://www.myget.org/F/nukebuild/api/v2/package";
+    [Parameter("Indicates to push to nuget.org feed.")] readonly bool NuGet;
     [Parameter("ApiKey for the specified source.")] readonly string ApiKey;
     [Parameter("Gitter authentication token")] readonly string GitterAuthToken;
+
+    string Source => NuGet
+            ? "https://api.nuget.org/v3/index.json"
+            : "https://www.myget.org/F/nukebuild/api/v2/package";
 
     [GitVersion] readonly GitVersion GitVersion;
 
@@ -80,16 +84,17 @@ class Build : NukeBuild
     Target Push => _ => _
             .DependsOn(Pack)
             .Requires(() => ApiKey)
+            .Requires(() => !NuGet || Configuration.EqualsOrdinalIgnoreCase("release"))
             .Executes(() =>
             {
-                GlobFiles(OutputDirectory, "*.nupkg")
+                GlobFiles(OutputDirectory, "*.nupkg").NotEmpty()
                         .Where(x => !x.EndsWith("symbols.nupkg"))
                         .ForEach(x => DotNetNuGetPush(s => s
                                 .SetTargetPath(x)
                                 .SetSource(Source)
                                 .SetApiKey(ApiKey)));
 
-                if (Source.Contains("nuget.org"))
+                if (NuGet)
                 {
                     SendGitterMessage (
                         $"@/all Version {GitVersion.SemVer} has been published.",
