@@ -14,7 +14,7 @@ namespace Nuke.Common.Tests
 {
     public class MSBuildParseProjectTest
     {
-        [Fact]
+        [WindowsFact]
         public void Test ()
         {
             var currentDirectory = (PathConstruction.AbsolutePath) Directory.GetCurrentDirectory();
