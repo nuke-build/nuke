@@ -32,8 +32,8 @@ namespace Nuke.Common.Tests
 
             var buildProject = solution.Projects.SingleOrDefault(x => x.Name == ".build");
             buildProject.Should().NotBeNull();
-            buildProject.Parent.Should().NotBeNull();
-            buildProject.Parent.Name.Should().Be("misc");
+            buildProject?.Parent.Should().NotBeNull();
+            buildProject?.Parent?.Name.Should().Be("misc");
         }
 
         [Fact]
@@ -44,21 +44,21 @@ namespace Nuke.Common.Tests
             solution.GetProjects("*.Tests").Should().HaveCount(2);
         }
 
-        [Fact]
-        public void ProjectTest ()
-        {
-            //EnvironmentInfo.SetVariable("VisualStudioVersion", @"15.0");
-            EnvironmentInfo.SetVariable("VSINSTALLDIR", @"C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional");
-            //EnvironmentInfo.SetVariable("MSBuildSDKsPath", @"C:\Program Files\dotnet\sdk\2.0.0\Sdks");
-            EnvironmentInfo.SetVariable("MSBuildExtensionsPath", @"..\..\..");
-
-            var netstandardProject = ProjectModelTasks.ParseSolution(SolutionFile, targetFramework: "netstandard2.0")
-                    .Projects.Single(x => x.Name == "Nuke.Common");
-            var netframeworkProject = ProjectModelTasks.ParseSolution(SolutionFile, targetFramework: "net461")
-                    .Projects.Single(x => x.Name == "Nuke.Common");
-
-            netstandardProject.Items["PackageReference"].Should().Contain("NETStandard.Library");
-            netframeworkProject.Items["PackageReference"].Should().Contain("Octokit");
-        }
+//        [Fact]
+//        public void ProjectTest ()
+//        {
+//            //EnvironmentInfo.SetVariable("VisualStudioVersion", @"15.0");
+//            EnvironmentInfo.SetVariable("VSINSTALLDIR", @"C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional");
+//            //EnvironmentInfo.SetVariable("MSBuildSDKsPath", @"C:\Program Files\dotnet\sdk\2.0.0\Sdks");
+//            EnvironmentInfo.SetVariable("MSBuildExtensionsPath", @"..\..\..");
+//
+//            var netstandardProject = ProjectModelTasks.ParseSolution(SolutionFile, targetFramework: "netstandard2.0")
+//                    .Projects.Single(x => x.Name == "Nuke.Common");
+//            var netframeworkProject = ProjectModelTasks.ParseSolution(SolutionFile, targetFramework: "net461")
+//                    .Projects.Single(x => x.Name == "Nuke.Common");
+//
+//            netstandardProject.Items["PackageReference"].Should().Contain("NETStandard.Library");
+//            netframeworkProject.Items["PackageReference"].Should().Contain("Octokit");
+//        }
     }
 }
