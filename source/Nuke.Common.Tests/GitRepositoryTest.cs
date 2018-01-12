@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using FluentAssertions;
 using Nuke.Common.Git;
+using Nuke.Core;
 using Nuke.Core.IO;
 using Nuke.Core.Utilities;
 using Xunit;
@@ -37,7 +38,7 @@ namespace Nuke.Common.Tests
         [Fact]
         public void FromDirectoryTest ()
         {
-            var repository = GitRepository.FromLocalDirectory(Directory.GetCurrentDirectory());
+            var repository = GitRepository.FromLocalDirectory(Directory.GetCurrentDirectory()).NotNull();
             repository.Endpoint.Should().NotBeNullOrEmpty();
             repository.Identifier.Should().NotBeNullOrEmpty();
             repository.LocalDirectory.Should().NotBeNullOrEmpty();
@@ -48,32 +49,31 @@ namespace Nuke.Common.Tests
         public void GitHubRepositoryFromLocalDirectoryTest ()
         {
             var rootDirectory = (PathConstruction.AbsolutePath) Directory.GetCurrentDirectory() / ".." / ".." / ".." / ".." / "..";
-            var repository = GitRepository.FromLocalDirectory(rootDirectory);
-            var httpsUrl = repository.HttpsUrl.TrimEnd(".git");
-            var branch = repository.Branch ?? "master";
+            var repository = GitRepository.FromLocalDirectory(rootDirectory, "master").NotNull();
 
-            repository.GetGitHubBrowseUrl("LICENSE").Should().Be($"{httpsUrl}/blob/{branch}/LICENSE");
-            repository.GetGitHubBrowseUrl("bootstrapping").Should().Be($"{httpsUrl}/tree/{branch}/bootstrapping");
+            var rawUrl = $"https://raw.githubusercontent.com/{repository.Identifier}/blob/{repository.Branch}";
+            var blobUrl = $"https://github.com/{repository.Identifier}/blob/{repository.Branch}";
+            var treeUrl = $"https://github.com/{repository.Identifier}/tree/{repository.Branch}";
 
-            repository.GetGitHubBrowseUrl(rootDirectory / "LICENSE").Should().Be($"{httpsUrl}/blob/{branch}/LICENSE");
-            repository.GetGitHubBrowseUrl(rootDirectory / "bootstrapping").Should().Be($"{httpsUrl}/tree/{branch}/bootstrapping");
+            repository.GetGitHubDownloadUrl(rootDirectory / "LICENSE").Should().Be($"{rawUrl}/LICENSE");
 
-            repository.GetGitHubBrowseUrl("directory", itemType: GitHubItemType.Directory).Should().Be($"{httpsUrl}/tree/{branch}/directory");
-            repository.GetGitHubBrowseUrl("dir/file", itemType: GitHubItemType.File).Should().Be($"{httpsUrl}/blob/{branch}/dir/file");
+            repository.GetGitHubBrowseUrl("LICENSE").Should().Be($"{blobUrl}/LICENSE");
+            repository.GetGitHubBrowseUrl("bootstrapping").Should().Be($"{treeUrl}/bootstrapping");
 
-            var rawUrl = $"https://raw.githubusercontent.com/{repository.Identifier}";
-            repository.GetGitHubDownloadUrl(rootDirectory / "LICENSE").Should().Be($"{rawUrl}/blob/master/LICENSE");
+            repository.GetGitHubBrowseUrl(rootDirectory / "LICENSE").Should().Be($"{blobUrl}/LICENSE");
+            repository.GetGitHubBrowseUrl(rootDirectory / "bootstrapping").Should().Be($"{treeUrl}/bootstrapping");
+
+            repository.GetGitHubBrowseUrl("directory", itemType: GitHubItemType.Directory).Should().Be($"{treeUrl}/directory");
+            repository.GetGitHubBrowseUrl("dir/file", itemType: GitHubItemType.File).Should().Be($"{blobUrl}/dir/file");
         }
 
         [Fact]
         public void GitHubRepositoryFromUrlTest ()
         {
-            var repository = GitRepository.FromUrl("https://github.com/nuke-build/nuke");
-            var httpsUrl = repository.HttpsUrl.TrimEnd(".git");
-            var branch = "dev";
+            var repository = GitRepository.FromUrl("https://github.com/nuke-build/nuke", "dev");
 
-            repository.GetGitHubBrowseUrl("LICENSE", branch, GitHubItemType.File).Should().Be($"{httpsUrl}/blob/{branch}/LICENSE");
-            repository.GetGitHubBrowseUrl("bootstrapping", branch, GitHubItemType.Directory).Should().Be($"{httpsUrl}/tree/{branch}/bootstrapping");
+            repository.GetGitHubBrowseUrl("LICENSE", itemType: GitHubItemType.File).Should().Be($"{repository}/blob/dev/LICENSE");
+            repository.GetGitHubBrowseUrl("bootstrapping", itemType: GitHubItemType.Directory).Should().Be($"{repository}/tree/dev/bootstrapping");
         }
     }
 }

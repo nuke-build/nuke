@@ -17,14 +17,14 @@ namespace Nuke.Common.Git
     [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
     public class GitRepository
     {
-        public static GitRepository FromUrl (string url)
+        public static GitRepository FromUrl (string url, string branch = null)
         {
             var (endpoint, identifier) = ParseUrl(url);
-            return new GitRepository(endpoint, identifier);
+            return new GitRepository(endpoint, identifier, branch: branch);
         }
 
         [CanBeNull]
-        public static GitRepository FromLocalDirectory (string directory, string remote = "origin")
+        public static GitRepository FromLocalDirectory (string directory, string branch = null, string remote = "origin")
         {
             var rootDirectory = FileSystemTasks.SearchDirectory(directory, x => x.GetDirectories(".git").Any());
             if (rootDirectory == null)
@@ -52,11 +52,11 @@ namespace Nuke.Common.Git
             var (endpoint, identifier) = ParseUrl(url);
 
             return new GitRepository(
-                endpoint,
-                identifier,
-                rootDirectory,
-                head,
-                branchMatch.Success ? branchMatch.Groups["branch"].Value : null);
+                    endpoint,
+                    identifier,
+                    rootDirectory,
+                    head,
+                    branch ?? (branchMatch.Success ? branchMatch.Groups["branch"].Value : null));
         }
 
         private static (string endpoint, string identifier) ParseUrl (string url)
