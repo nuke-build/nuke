@@ -53,7 +53,7 @@ namespace Nuke.Core.IO
         [Pure]
         public static bool IsDescendantPath (string basePath, string destinationPath)
         {
-            return new Uri(basePath).IsBaseOf(new Uri(destinationPath));
+            return new Uri(basePath.TrimEnd('/') + '/').IsBaseOf(new Uri(destinationPath.TrimEnd('/') + '/'));
         }
 
         [Pure]
