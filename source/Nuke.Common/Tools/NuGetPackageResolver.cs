@@ -52,6 +52,7 @@ namespace Nuke.Common.Tools
             var installedPackages = new HashSet<InstalledPackage>(InstalledPackage.Comparer.Instance);
             foreach (var packageId in packageIds)
             {
+                // TODO: version as tag
                 var version = XmlTasks.XmlPeekSingle(
                             packagesConfigFile,
                             IsLegacyFile(packagesConfigFile)
@@ -59,10 +60,11 @@ namespace Nuke.Common.Tools
                                 : $".//*[local-name() = 'PackageReference'][@Include='{packageId}']/@Version")
                         .NotNull("version != null");
 
-                var packageData = GetGlobalInstalledPackage(packageId, version, packagesDirectory)
-                        .NotNull($"GetGlobalInstalledPackage({packageId}, {version}, {packagesDirectory}) != null");
-                installedPackages.Add(packageData);
+                var packageData = GetGlobalInstalledPackage(packageId, version, packagesDirectory);
+                if (packageData == null)
+                    continue;
 
+                installedPackages.Add(packageData);
                 yield return packageData;
             }
 
@@ -91,8 +93,7 @@ namespace Nuke.Common.Tools
         {
             return packageToCheck.Metadata.GetDependencyGroups()
                     .SelectMany(x => x.Packages)
-                    .Select(x => GetGlobalInstalledPackage(x.Id, x.VersionRange, packagesDirectory)
-                            .NotNullWarn($"GetGlobalInstalledPackage({x.Id}, {x.VersionRange}, {packagesDirectory}) != null"))
+                    .Select(x => GetGlobalInstalledPackage(x.Id, x.VersionRange, packagesDirectory))
                     .WhereNotNull()
                     .Distinct(x => new { x.Id, x.Version });
         }
