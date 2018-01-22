@@ -29,7 +29,7 @@ namespace Nuke.Core.Tests
             AssertProperty(Bitrise.Instance.NotNull(), property);
             Assert.True(NukeBuild.IsServerBuild);
             Assert.False(NukeBuild.IsLocalBuild);
-            }
+        }
 
         [BuildServerTheory(typeof(TeamCity))]
         [MemberData(nameof(Properties), typeof(TeamCity))]
@@ -38,7 +38,7 @@ namespace Nuke.Core.Tests
             AssertProperty(TeamCity.Instance.NotNull(), property);
             Assert.True(NukeBuild.IsServerBuild);
             Assert.False(NukeBuild.IsLocalBuild);
-            }
+        }
 
         [BuildServerTheory(typeof(TeamServices))]
         [MemberData(nameof(Properties), typeof(TeamServices))]
@@ -51,7 +51,7 @@ namespace Nuke.Core.Tests
 
         [BuildServerTheory(typeof(Jenkins))]
         [MemberData(nameof(Properties), typeof(Jenkins))]
-        public void TestJenkins(PropertyInfo property)
+        public void TestJenkins (PropertyInfo property)
         {
             AssertProperty(Jenkins.Instance.NotNull(), property);
         }

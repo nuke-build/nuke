@@ -12,7 +12,6 @@ namespace Nuke.Core.BuildServers
     {
         private static Lazy<Jenkins> s_instance = new Lazy<Jenkins>(() => new Jenkins());
 
-        [CanBeNull]
         public static Jenkins Instance => NukeBuild.Instance?.Host == HostType.Jenkins ? s_instance.Value : null;
 
         internal static bool IsRunningJenkins => Variable("JENKINS_HOME") != null;
