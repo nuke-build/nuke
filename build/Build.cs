@@ -97,7 +97,7 @@ class Build : NukeBuild
                 if (NuGet)
                 {
                     SendGitterMessage (
-                        $"@/all Version {GitVersion.SemVer} has been published.",
+                        $"@/all Version [{GitVersion.SemVer}](https://www.nuget.org/packages/Nuke.Common/{GitVersion.SemVer}) has been published.",
                         roomId: "593f3dadd73408ce4f66db89",
                         token: GitterAuthToken);
                 }
