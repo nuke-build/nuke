@@ -11,7 +11,6 @@ using Nuke.Core.BuildServers;
 using Nuke.Core.Execution;
 using Nuke.Core.IO;
 using Nuke.Core.OutputSinks;
-using static Nuke.Core.EnvironmentInfo;
 
 // ReSharper disable VirtualMemberNeverOverridden.Global
 
@@ -72,7 +71,7 @@ namespace Nuke.Core
         /// Host for execution. Default is <em>automatic</em>.
         /// </summary>
         [Parameter("Host for execution. Default is 'automatic'.")]
-        public HostType Host { get; } = GetActualHostType();
+        public HostType Host { get; } = EnvironmentInfo.GetActualHostType();
 
         /// <summary>
         /// Configuration to build. Default is <em>Debug</em> (local) or <em>Release</em> (server).
@@ -126,7 +125,7 @@ namespace Nuke.Core
         {
             get
             {
-                var buildAssemblyFile = BuildAssembly.Location.NotNull("buildAssemblyFile != null");
+                var buildAssemblyFile = EnvironmentInfo.BuildAssembly.Location.NotNull("buildAssemblyFile != null");
                 var buildAssemblyDirectory = Directory.GetParent(buildAssemblyFile);
                 var rootDirectory = FileSystemTasks.SearchDirectory(buildAssemblyDirectory, x => x.GetFiles(c_configFile).Any());
                 ControlFlow.Assert(rootDirectory != null,
