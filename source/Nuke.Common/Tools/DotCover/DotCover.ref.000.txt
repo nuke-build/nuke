@@ -260,4 +260,4 @@ Global options:
   &lt;Source&gt;&lt;!-- Required. Coverage snapshot file name. --&gt;&lt;/Source&gt;
   &lt;Output&gt;&lt;!-- Required. Zipped snapshot file name. --&gt;&lt;/Output&gt;
 &lt;/ZipParams&gt;
-                     Last modified: 29 August 2017 Console Runner ConfigurationRunning Remote Coverage Analysis from Visual StudioSee AlsoConcepts:Basic ConceptsRunning Coverage Analysis from the Command LineConsole Runner ConfigurationProcedures:Setting up Coverage Analysis on JetBrains TeamCitySetting up Coverage Analysis on a Third-Party CI ServerWorking with Coverage Results
+                     Last modified: 15 January 2018 Console Runner ConfigurationRunning Remote Coverage Analysis from Visual StudioSee AlsoConcepts:Basic ConceptsRunning Coverage Analysis from the Command LineConsole Runner ConfigurationProcedures:Setting up Coverage Analysis on JetBrains TeamCitySetting up Coverage Analysis on a Third-Party CI ServerWorking with Coverage Results

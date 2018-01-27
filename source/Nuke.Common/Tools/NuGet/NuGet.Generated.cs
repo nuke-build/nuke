@@ -88,7 +88,7 @@ namespace Nuke.Common.Tools.NuGet
         public virtual string TargetPath { get; internal set; }
         /// <summary><p>The API key for the target repository. If not present, the one specified in <em>%AppData%\NuGet\NuGet.Config</em> is used.</p></summary>
         public virtual string ApiKey { get; internal set; }
-        /// <summary><p>Specifies the server URL. With NuGet 2.5+, NuGet will identify a UNC or local folder source and simply copy the file there instead of pushing it using HTTP. Also, starting with NuGet 3.4.2, this is a mandatory parameter unless the <em>NuGet.Config</em> file specifies a <em>DefaultPushSource</em> value.</p></summary>
+        /// <summary><p>Specifies the server URL. NuGet identifies a UNC or local folder source and simply copies the file there instead of pushing it using HTTP.  Also, starting with NuGet 3.4.2, this is a mandatory parameter unless the <em>NuGet.Config</em> file specifies a <em>DefaultPushSource</em> value (see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Configuring NuGet behavior</a>).</p></summary>
         public virtual string Source { get; internal set; }
         /// <summary><p><em>(3.5+)</em> Specifies the symbol server URL; nuget.smbsrc.net is used when pushing to nuget.org</p></summary>
         public virtual string SymbolSource { get; internal set; }
@@ -98,9 +98,9 @@ namespace Nuke.Common.Tools.NuGet
         public virtual bool? NoSymbols { get; internal set; }
         /// <summary><p>Disables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work.</p></summary>
         public virtual bool? DisableBuffering { get; internal set; }
-        /// <summary><p><em>(2.5+)</em> The NuGet configuration file to apply. If not specified, <em>%AppData%\NuGet\NuGet.Config</em> is used.</p></summary>
+        /// <summary><p>The NuGet configuration file to apply. If not specified, <em>%AppData%\NuGet\NuGet.Config</em> is used.</p></summary>
         public virtual string ConfigFile { get; internal set; }
-        /// <summary><p><em>(2.5+)</em> Specifies the amount of details displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        /// <summary><p>Specifies the amount of details displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
         public virtual NuGetVerbosity Verbosity { get; internal set; }
         /// <summary><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
         public virtual bool? ForceEnglishOutput { get; internal set; }
@@ -147,7 +147,7 @@ namespace Nuke.Common.Tools.NuGet
         public virtual string BasePath { get; internal set; }
         /// <summary><p>Specifies that the project should be built before building the package.</p></summary>
         public virtual bool? Build { get; internal set; }
-        /// <summary><p>Specifies one or more wildcard patterns to exclude when creating a package.</p></summary>
+        /// <summary><p>Specifies one or more wildcard patterns to exclude when creating a package. To specify more than one pattern, repeat the <c>-Exclude</c> flag.</p></summary>
         public virtual string Exclude { get; internal set; }
         /// <summary><p>Prevent inclusion of empty directories when building the package.</p></summary>
         public virtual bool? ExcludeEmptyDirectories { get; internal set; }
@@ -167,7 +167,7 @@ namespace Nuke.Common.Tools.NuGet
         public virtual bool? NoPackageAnalysis { get; internal set; }
         /// <summary><p>Specifies the folder in which the created package is stored. If no folder is specified, the current folder is used.</p></summary>
         public virtual string OutputDirectory { get; internal set; }
-        /// <summary><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
+        /// <summary><p>Specifies a list of properties that override values in the project file; see <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/common-msbuild-project-properties">Common MSBuild Project Properties</a> for property names. The Properties argument here is a list of token=value pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks. Note that for the &quot;Configuration&quot; property, the default is &quot;Debug&quot;. To change to a Release configuration, use <c>-Properties Configuration=Release</c>.</p></summary>
         public virtual IReadOnlyDictionary<string, string> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, string> PropertiesInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         /// <summary><p><em>(3.4.4+)</em> Appends a suffix to the internally generated version number, typically used for appending build or other pre-release identifiers. For example, using <c>-suffix nightly</c> will create a package with a version number like <c>1.2.3-nightly</c>. Suffixes must start with a letter to avoid warnings, errors, and potential incompatibilities with different versions of NuGet and the NuGet Package Manager.</p></summary>
@@ -176,7 +176,7 @@ namespace Nuke.Common.Tools.NuGet
         public virtual bool? Symbols { get; internal set; }
         /// <summary><p>Specifies that the output files of the project should be placed in the <c>tool</c> folder.</p></summary>
         public virtual bool? Tool { get; internal set; }
-        /// <summary><p><em>(2.5+)</em> Specifies the amount of details displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        /// <summary><p>Specifies the amount of details displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
         public virtual NuGetVerbosity Verbosity { get; internal set; }
         /// <summary><p>Overrides the version number from the <c>.nuspec</c> file.</p></summary>
         public virtual string Version { get; internal set; }
@@ -256,10 +256,10 @@ namespace Nuke.Common.Tools.NuGet
         public virtual bool? RequireConsent { get; internal set; }
         /// <summary><p>Specifies the solution folder. Not valid when restoring packages for a solution.</p></summary>
         public virtual string SolutionDirectory { get; internal set; }
-        /// <summary><p>Specifies list of package sources to use for the restore.</p></summary>
+        /// <summary><p>Specifies the list of package sources (as URLs) to use for the restore. If omitted, the command uses the sources provided in configuration files, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Configuring NuGet behavior</a>.</p></summary>
         public virtual IReadOnlyList<string> Source => SourceInternal.AsReadOnly();
         internal List<string> SourceInternal { get; set; } = new List<string>();
-        /// <summary><p><em>(2.5+)</em> Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        /// <summary><p>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
         public virtual NuGetVerbosity Verbosity { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -331,7 +331,7 @@ namespace Nuke.Common.Tools.NuGet
         }
         #endregion
         #region Source
-        /// <summary><p><em>Sets <see cref="NuGetPushSettings.Source"/>.</em></p><p>Specifies the server URL. With NuGet 2.5+, NuGet will identify a UNC or local folder source and simply copy the file there instead of pushing it using HTTP. Also, starting with NuGet 3.4.2, this is a mandatory parameter unless the <em>NuGet.Config</em> file specifies a <em>DefaultPushSource</em> value.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPushSettings.Source"/>.</em></p><p>Specifies the server URL. NuGet identifies a UNC or local folder source and simply copies the file there instead of pushing it using HTTP.  Also, starting with NuGet 3.4.2, this is a mandatory parameter unless the <em>NuGet.Config</em> file specifies a <em>DefaultPushSource</em> value (see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Configuring NuGet behavior</a>).</p></summary>
         [Pure]
         public static NuGetPushSettings SetSource(this NuGetPushSettings toolSettings, string source)
         {
@@ -339,7 +339,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Source = source;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NuGetPushSettings.Source"/>.</em></p><p>Specifies the server URL. With NuGet 2.5+, NuGet will identify a UNC or local folder source and simply copy the file there instead of pushing it using HTTP. Also, starting with NuGet 3.4.2, this is a mandatory parameter unless the <em>NuGet.Config</em> file specifies a <em>DefaultPushSource</em> value.</p></summary>
+        /// <summary><p><em>Resets <see cref="NuGetPushSettings.Source"/>.</em></p><p>Specifies the server URL. NuGet identifies a UNC or local folder source and simply copies the file there instead of pushing it using HTTP.  Also, starting with NuGet 3.4.2, this is a mandatory parameter unless the <em>NuGet.Config</em> file specifies a <em>DefaultPushSource</em> value (see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Configuring NuGet behavior</a>).</p></summary>
         [Pure]
         public static NuGetPushSettings ResetSource(this NuGetPushSettings toolSettings)
         {
@@ -469,7 +469,7 @@ namespace Nuke.Common.Tools.NuGet
         }
         #endregion
         #region ConfigFile
-        /// <summary><p><em>Sets <see cref="NuGetPushSettings.ConfigFile"/>.</em></p><p><em>(2.5+)</em> The NuGet configuration file to apply. If not specified, <em>%AppData%\NuGet\NuGet.Config</em> is used.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPushSettings.ConfigFile"/>.</em></p><p>The NuGet configuration file to apply. If not specified, <em>%AppData%\NuGet\NuGet.Config</em> is used.</p></summary>
         [Pure]
         public static NuGetPushSettings SetConfigFile(this NuGetPushSettings toolSettings, string configFile)
         {
@@ -477,7 +477,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.ConfigFile = configFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NuGetPushSettings.ConfigFile"/>.</em></p><p><em>(2.5+)</em> The NuGet configuration file to apply. If not specified, <em>%AppData%\NuGet\NuGet.Config</em> is used.</p></summary>
+        /// <summary><p><em>Resets <see cref="NuGetPushSettings.ConfigFile"/>.</em></p><p>The NuGet configuration file to apply. If not specified, <em>%AppData%\NuGet\NuGet.Config</em> is used.</p></summary>
         [Pure]
         public static NuGetPushSettings ResetConfigFile(this NuGetPushSettings toolSettings)
         {
@@ -487,7 +487,7 @@ namespace Nuke.Common.Tools.NuGet
         }
         #endregion
         #region Verbosity
-        /// <summary><p><em>Sets <see cref="NuGetPushSettings.Verbosity"/>.</em></p><p><em>(2.5+)</em> Specifies the amount of details displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPushSettings.Verbosity"/>.</em></p><p>Specifies the amount of details displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
         [Pure]
         public static NuGetPushSettings SetVerbosity(this NuGetPushSettings toolSettings, NuGetVerbosity verbosity)
         {
@@ -495,7 +495,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Verbosity = verbosity;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NuGetPushSettings.Verbosity"/>.</em></p><p><em>(2.5+)</em> Specifies the amount of details displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        /// <summary><p><em>Resets <see cref="NuGetPushSettings.Verbosity"/>.</em></p><p>Specifies the amount of details displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
         [Pure]
         public static NuGetPushSettings ResetVerbosity(this NuGetPushSettings toolSettings)
         {
@@ -693,7 +693,7 @@ namespace Nuke.Common.Tools.NuGet
         }
         #endregion
         #region Exclude
-        /// <summary><p><em>Sets <see cref="NuGetPackSettings.Exclude"/>.</em></p><p>Specifies one or more wildcard patterns to exclude when creating a package.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPackSettings.Exclude"/>.</em></p><p>Specifies one or more wildcard patterns to exclude when creating a package. To specify more than one pattern, repeat the <c>-Exclude</c> flag.</p></summary>
         [Pure]
         public static NuGetPackSettings SetExclude(this NuGetPackSettings toolSettings, string exclude)
         {
@@ -701,7 +701,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Exclude = exclude;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NuGetPackSettings.Exclude"/>.</em></p><p>Specifies one or more wildcard patterns to exclude when creating a package.</p></summary>
+        /// <summary><p><em>Resets <see cref="NuGetPackSettings.Exclude"/>.</em></p><p>Specifies one or more wildcard patterns to exclude when creating a package. To specify more than one pattern, repeat the <c>-Exclude</c> flag.</p></summary>
         [Pure]
         public static NuGetPackSettings ResetExclude(this NuGetPackSettings toolSettings)
         {
@@ -1017,7 +1017,7 @@ namespace Nuke.Common.Tools.NuGet
         }
         #endregion
         #region Properties
-        /// <summary><p><em>Sets <see cref="NuGetPackSettings.Properties"/> to a new dictionary.</em></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPackSettings.Properties"/> to a new dictionary.</em></p><p>Specifies a list of properties that override values in the project file; see <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/common-msbuild-project-properties">Common MSBuild Project Properties</a> for property names. The Properties argument here is a list of token=value pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks. Note that for the &quot;Configuration&quot; property, the default is &quot;Debug&quot;. To change to a Release configuration, use <c>-Properties Configuration=Release</c>.</p></summary>
         [Pure]
         public static NuGetPackSettings SetProperties(this NuGetPackSettings toolSettings, IDictionary<string, string> properties)
         {
@@ -1025,7 +1025,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="NuGetPackSettings.Properties"/>.</em></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
+        /// <summary><p><em>Clears <see cref="NuGetPackSettings.Properties"/>.</em></p><p>Specifies a list of properties that override values in the project file; see <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/common-msbuild-project-properties">Common MSBuild Project Properties</a> for property names. The Properties argument here is a list of token=value pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks. Note that for the &quot;Configuration&quot; property, the default is &quot;Debug&quot;. To change to a Release configuration, use <c>-Properties Configuration=Release</c>.</p></summary>
         [Pure]
         public static NuGetPackSettings ClearProperties(this NuGetPackSettings toolSettings)
         {
@@ -1033,7 +1033,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.PropertiesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Adds a new key-value-pair <see cref="NuGetPackSettings.Properties"/>.</em></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
+        /// <summary><p><em>Adds a new key-value-pair <see cref="NuGetPackSettings.Properties"/>.</em></p><p>Specifies a list of properties that override values in the project file; see <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/common-msbuild-project-properties">Common MSBuild Project Properties</a> for property names. The Properties argument here is a list of token=value pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks. Note that for the &quot;Configuration&quot; property, the default is &quot;Debug&quot;. To change to a Release configuration, use <c>-Properties Configuration=Release</c>.</p></summary>
         [Pure]
         public static NuGetPackSettings AddProperty(this NuGetPackSettings toolSettings, string propertyKey, string propertyValue)
         {
@@ -1041,7 +1041,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
             return toolSettings;
         }
-        /// <summary><p><em>Removes a key-value-pair from <see cref="NuGetPackSettings.Properties"/>.</em></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
+        /// <summary><p><em>Removes a key-value-pair from <see cref="NuGetPackSettings.Properties"/>.</em></p><p>Specifies a list of properties that override values in the project file; see <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/common-msbuild-project-properties">Common MSBuild Project Properties</a> for property names. The Properties argument here is a list of token=value pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks. Note that for the &quot;Configuration&quot; property, the default is &quot;Debug&quot;. To change to a Release configuration, use <c>-Properties Configuration=Release</c>.</p></summary>
         [Pure]
         public static NuGetPackSettings RemoveProperty(this NuGetPackSettings toolSettings, string propertyKey)
         {
@@ -1049,7 +1049,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.PropertiesInternal.Remove(propertyKey);
             return toolSettings;
         }
-        /// <summary><p><em>Sets a key-value-pair in <see cref="NuGetPackSettings.Properties"/>.</em></p><p>Specifies a list of <c>token=value</c> pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks.</p></summary>
+        /// <summary><p><em>Sets a key-value-pair in <see cref="NuGetPackSettings.Properties"/>.</em></p><p>Specifies a list of properties that override values in the project file; see <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/common-msbuild-project-properties">Common MSBuild Project Properties</a> for property names. The Properties argument here is a list of token=value pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks. Note that for the &quot;Configuration&quot; property, the default is &quot;Debug&quot;. To change to a Release configuration, use <c>-Properties Configuration=Release</c>.</p></summary>
         [Pure]
         public static NuGetPackSettings SetProperty(this NuGetPackSettings toolSettings, string propertyKey, string propertyValue)
         {
@@ -1161,7 +1161,7 @@ namespace Nuke.Common.Tools.NuGet
         }
         #endregion
         #region Verbosity
-        /// <summary><p><em>Sets <see cref="NuGetPackSettings.Verbosity"/>.</em></p><p><em>(2.5+)</em> Specifies the amount of details displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetPackSettings.Verbosity"/>.</em></p><p>Specifies the amount of details displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
         [Pure]
         public static NuGetPackSettings SetVerbosity(this NuGetPackSettings toolSettings, NuGetVerbosity verbosity)
         {
@@ -1169,7 +1169,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Verbosity = verbosity;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NuGetPackSettings.Verbosity"/>.</em></p><p><em>(2.5+)</em> Specifies the amount of details displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        /// <summary><p><em>Resets <see cref="NuGetPackSettings.Verbosity"/>.</em></p><p>Specifies the amount of details displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
         [Pure]
         public static NuGetPackSettings ResetVerbosity(this NuGetPackSettings toolSettings)
         {
@@ -1763,7 +1763,7 @@ namespace Nuke.Common.Tools.NuGet
         }
         #endregion
         #region Source
-        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.Source"/> to a new list.</em></p><p>Specifies list of package sources to use for the restore.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.Source"/> to a new list.</em></p><p>Specifies the list of package sources (as URLs) to use for the restore. If omitted, the command uses the sources provided in configuration files, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Configuring NuGet behavior</a>.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetSource(this NuGetRestoreSettings toolSettings, params string[] source)
         {
@@ -1771,7 +1771,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.SourceInternal = source.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.Source"/> to a new list.</em></p><p>Specifies list of package sources to use for the restore.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.Source"/> to a new list.</em></p><p>Specifies the list of package sources (as URLs) to use for the restore. If omitted, the command uses the sources provided in configuration files, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Configuring NuGet behavior</a>.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetSource(this NuGetRestoreSettings toolSettings, IEnumerable<string> source)
         {
@@ -1779,7 +1779,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.SourceInternal = source.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="NuGetRestoreSettings.Source"/>.</em></p><p>Specifies list of package sources to use for the restore.</p></summary>
+        /// <summary><p><em>Adds values to <see cref="NuGetRestoreSettings.Source"/>.</em></p><p>Specifies the list of package sources (as URLs) to use for the restore. If omitted, the command uses the sources provided in configuration files, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Configuring NuGet behavior</a>.</p></summary>
         [Pure]
         public static NuGetRestoreSettings AddSource(this NuGetRestoreSettings toolSettings, params string[] source)
         {
@@ -1787,7 +1787,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.SourceInternal.AddRange(source);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="NuGetRestoreSettings.Source"/>.</em></p><p>Specifies list of package sources to use for the restore.</p></summary>
+        /// <summary><p><em>Adds values to <see cref="NuGetRestoreSettings.Source"/>.</em></p><p>Specifies the list of package sources (as URLs) to use for the restore. If omitted, the command uses the sources provided in configuration files, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Configuring NuGet behavior</a>.</p></summary>
         [Pure]
         public static NuGetRestoreSettings AddSource(this NuGetRestoreSettings toolSettings, IEnumerable<string> source)
         {
@@ -1795,7 +1795,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.SourceInternal.AddRange(source);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="NuGetRestoreSettings.Source"/>.</em></p><p>Specifies list of package sources to use for the restore.</p></summary>
+        /// <summary><p><em>Clears <see cref="NuGetRestoreSettings.Source"/>.</em></p><p>Specifies the list of package sources (as URLs) to use for the restore. If omitted, the command uses the sources provided in configuration files, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Configuring NuGet behavior</a>.</p></summary>
         [Pure]
         public static NuGetRestoreSettings ClearSource(this NuGetRestoreSettings toolSettings)
         {
@@ -1803,7 +1803,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.SourceInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="NuGetRestoreSettings.Source"/>.</em></p><p>Specifies list of package sources to use for the restore.</p></summary>
+        /// <summary><p><em>Removes values from <see cref="NuGetRestoreSettings.Source"/>.</em></p><p>Specifies the list of package sources (as URLs) to use for the restore. If omitted, the command uses the sources provided in configuration files, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Configuring NuGet behavior</a>.</p></summary>
         [Pure]
         public static NuGetRestoreSettings RemoveSource(this NuGetRestoreSettings toolSettings, params string[] source)
         {
@@ -1812,7 +1812,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.SourceInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="NuGetRestoreSettings.Source"/>.</em></p><p>Specifies list of package sources to use for the restore.</p></summary>
+        /// <summary><p><em>Removes values from <see cref="NuGetRestoreSettings.Source"/>.</em></p><p>Specifies the list of package sources (as URLs) to use for the restore. If omitted, the command uses the sources provided in configuration files, see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Configuring NuGet behavior</a>.</p></summary>
         [Pure]
         public static NuGetRestoreSettings RemoveSource(this NuGetRestoreSettings toolSettings, IEnumerable<string> source)
         {
@@ -1823,7 +1823,7 @@ namespace Nuke.Common.Tools.NuGet
         }
         #endregion
         #region Verbosity
-        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.Verbosity"/>.</em></p><p><em>(2.5+)</em> Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        /// <summary><p><em>Sets <see cref="NuGetRestoreSettings.Verbosity"/>.</em></p><p>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
         [Pure]
         public static NuGetRestoreSettings SetVerbosity(this NuGetRestoreSettings toolSettings, NuGetVerbosity verbosity)
         {
@@ -1831,7 +1831,7 @@ namespace Nuke.Common.Tools.NuGet
             toolSettings.Verbosity = verbosity;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NuGetRestoreSettings.Verbosity"/>.</em></p><p><em>(2.5+)</em> Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        /// <summary><p><em>Resets <see cref="NuGetRestoreSettings.Verbosity"/>.</em></p><p>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
         [Pure]
         public static NuGetRestoreSettings ResetVerbosity(this NuGetRestoreSettings toolSettings)
         {

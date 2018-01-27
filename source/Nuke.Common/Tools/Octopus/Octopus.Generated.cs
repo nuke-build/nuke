@@ -58,6 +58,17 @@ namespace Nuke.Common.Tools.Octopus
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
         }
+        static partial void PreProcess (OctopusDeployReleaseSettings toolSettings);
+        static partial void PostProcess (OctopusDeployReleaseSettings toolSettings);
+        /// <summary><p>The <c>Octo.exe deploy-release</c> can be used to automate the deployment of releases to environments. This allows you to easily integrate Octopus with other continuous integration servers.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
+        public static void OctopusDeployRelease (Configure<OctopusDeployReleaseSettings> configurator = null, ProcessSettings processSettings = null)
+        {
+            var toolSettings = configurator.InvokeSafe(new OctopusDeployReleaseSettings());
+            PreProcess(toolSettings);
+            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            process.AssertZeroExitCode();
+            PostProcess(toolSettings);
+        }
     }
     #region OctopusPackSettings
     /// <summary><p>Used within <see cref="OctopusTasks"/>.</p></summary>
@@ -304,6 +315,125 @@ namespace Nuke.Common.Tools.Octopus
               .Add("--deployto={value}", DeployTo)
               .Add("--tenant={value}", Tenant)
               .Add("--tenanttag={value}", TenantTag)
+              .Add("--server={value}", Server)
+              .Add("--apiKey={value}", ApiKey, secret: true)
+              .Add("--user={value}", Username)
+              .Add("--pass={value}", Password, secret: true)
+              .Add("--configFile={value}", ConfigFile)
+              .Add("--debug", Debug)
+              .Add("--ignoreSslErrors", IgnoreSslErrors)
+              .Add("--enableServiceMessages", EnableServiceMessages)
+              .Add("--timeout={value}", Timeout)
+              .Add("--proxy={value}", Proxy)
+              .Add("--proxyUser={value}", ProxyUsername)
+              .Add("--proxyPass={value}", ProxyPassword, secret: true);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
+    #region OctopusDeployReleaseSettings
+    /// <summary><p>Used within <see cref="OctopusTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class OctopusDeployReleaseSettings : ToolSettings
+    {
+        /// <summary><p>Path to the Octopus executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"OctopusTools", $"Octo.exe");
+        /// <summary><p>Show progress of the deployment.</p></summary>
+        public virtual bool? Progress { get; internal set; }
+        /// <summary><p>Whether to force downloading of already installed packages (flag, default false).</p></summary>
+        public virtual bool? ForcePackageDownload { get; internal set; }
+        /// <summary><p>Whether to wait synchronously for deployment to finish.</p></summary>
+        public virtual bool? WaitForDepployment { get; internal set; }
+        /// <summary><p>Specifies maximum time (timespan format) that the console session will wait for the deployment to finish(default 00:10:00). This will not stop the deployment. Requires <c>WaitForDeployment</c> parameter set.</p></summary>
+        public virtual string DeploymentTimeout { get; internal set; }
+        /// <summary><p>Whether to cancel the deployment if the deployment timeout is reached (flag, default false).</p></summary>
+        public virtual bool? CancelOnTimeout { get; internal set; }
+        /// <summary><p>Specifies how much time (timespan format) should elapse between deployment status checks (default 00:00:10).</p></summary>
+        public virtual string DeploymentCheckSleepCycle { get; internal set; }
+        /// <summary><p>Whether to use Guided Failure mode. (True or False. If not specified, will use default setting from environment).</p></summary>
+        public virtual bool? GuidedFailure { get; internal set; }
+        /// <summary><p>A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.</p></summary>
+        public virtual IReadOnlyList<string> SpecificMachines => SpecificMachinesInternal.AsReadOnly();
+        internal List<string> SpecificMachinesInternal { get; set; } = new List<string>();
+        /// <summary><p>If a project is configured to skip packages with already-installed versions, override this setting to force re-deployment (flag, default false).</p></summary>
+        public virtual bool? Force { get; internal set; }
+        /// <summary><p>Skip a step by name.</p></summary>
+        public virtual IReadOnlyList<string> Skip => SkipInternal.AsReadOnly();
+        internal List<string> SkipInternal { get; set; } = new List<string>();
+        /// <summary><p>Don't print the raw log of failed tasks.</p></summary>
+        public virtual bool? NoRawLog { get; internal set; }
+        /// <summary><p>Redirect the raw log of failed tasks to a file.</p></summary>
+        public virtual string RawLogFile { get; internal set; }
+        /// <summary><p>Values for any prompted variables. For JSON values, embedded quotation marks should be escaped with a backslash. </p></summary>
+        public virtual IReadOnlyDictionary<string, string> Variables => VariablesInternal.AsReadOnly();
+        internal Dictionary<string, string> VariablesInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        /// <summary><p>Time at which deployment should start (scheduled deployment), specified as any valid DateTimeOffset format, and assuming the time zone is the current local time zone.</p></summary>
+        public virtual string DeployAt { get; internal set; }
+        /// <summary><p>Create a deployment for this tenant; specify this argument multiple times to add multiple tenants or use <c>*</c> wildcard to deploy to all tenants who are ready for this release (according to lifecycle).</p></summary>
+        public virtual string Tenant { get; internal set; }
+        /// <summary><p>Create a deployment for tenants matching this tag; specify this argument multiple times to build a query/filter with multiple tags, just like you can in the user interface.</p></summary>
+        public virtual string TenantTag { get; internal set; }
+        /// <summary><p>Name of the project.</p></summary>
+        public virtual string Project { get; internal set; }
+        /// <summary><p>Environment to deploy to, e.g. <c>Production</c>.</p></summary>
+        public virtual string DeployTo { get; internal set; }
+        /// <summary><p>Version number of the release to deploy. Or specify 'latest' for the latest release.</p></summary>
+        public virtual string Version { get; internal set; }
+        /// <summary><p>Channel to use when getting the release to deploy</p></summary>
+        public virtual string Channel { get; internal set; }
+        /// <summary><p>Overwrite the variable snapshot for the release by re-importing the variables from the project</p></summary>
+        public virtual bool? UpdateVariables { get; internal set; }
+        /// <summary><p>The base URL for your Octopus server - e.g., http://your-octopus/</p></summary>
+        public virtual string Server { get; internal set; }
+        /// <summary><p>Your API key. Get this from the user profile page. Your must provide an apiKey or username and password. If the guest account is enabled, a key of API-GUEST can be used.</p></summary>
+        public virtual string ApiKey { get; internal set; }
+        /// <summary><p>Username to use when authenticating with the server. Your must provide an apiKey or username and password.</p></summary>
+        public virtual string Username { get; internal set; }
+        /// <summary><p>Password to use when authenticating with the server.</p></summary>
+        public virtual string Password { get; internal set; }
+        /// <summary><p>Text file of default values, with one 'key = value' per line.</p></summary>
+        public virtual string ConfigFile { get; internal set; }
+        /// <summary><p>Enable debug logging.</p></summary>
+        public virtual bool? Debug { get; internal set; }
+        /// <summary><p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p></summary>
+        public virtual bool? IgnoreSslErrors { get; internal set; }
+        /// <summary><p>Enable TeamCity or Team Foundation Build service messages when logging.</p></summary>
+        public virtual bool? EnableServiceMessages { get; internal set; }
+        /// <summary><p>Timeout in seconds for network operations. Default is 600.</p></summary>
+        public virtual int? Timeout { get; internal set; }
+        /// <summary><p>The URI of the proxy to use, e.g., http://example.com:8080.</p></summary>
+        public virtual string Proxy { get; internal set; }
+        /// <summary><p>The username for the proxy.</p></summary>
+        public virtual string ProxyUsername { get; internal set; }
+        /// <summary><p>The password for the proxy. If both the username and password are omitted and proxyAddress is specified, the default credentials are used.</p></summary>
+        public virtual string ProxyPassword { get; internal set; }
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("deploy-release")
+              .Add("--progress", Progress)
+              .Add("--forcepackagedownload", ForcePackageDownload)
+              .Add("--waitfordeployment", WaitForDepployment)
+              .Add("--deploymenttimeout={value}", DeploymentTimeout)
+              .Add("--cancelontimeout", CancelOnTimeout)
+              .Add("--deploymentchecksleepcycle={value}", DeploymentCheckSleepCycle)
+              .Add("--guidedfailure={value}", GuidedFailure)
+              .Add("--specificmachines={value}", SpecificMachines)
+              .Add("--force", Force)
+              .Add("--skip={value}", Skip)
+              .Add("--norawlog", NoRawLog)
+              .Add("--rawlogfile={value}", RawLogFile)
+              .Add("--variable={value}", Variables, "{key}:{value}")
+              .Add("--deployat={value}", DeployAt)
+              .Add("--tenant={value}", Tenant)
+              .Add("--tenanttag={value}", TenantTag)
+              .Add("--project={value}", Project)
+              .Add("--deployto={value}", DeployTo)
+              .Add("--version={value}", Version)
+              .Add("--channel={value}", Channel)
+              .Add("--updateVariables", UpdateVariables)
               .Add("--server={value}", Server)
               .Add("--apiKey={value}", ApiKey, secret: true)
               .Add("--user={value}", Username)
@@ -2232,6 +2362,980 @@ namespace Nuke.Common.Tools.Octopus
         /// <summary><p><em>Resets <see cref="OctopusCreateReleaseSettings.ProxyPassword"/>.</em></p><p>The password for the proxy. If both the username and password are omitted and proxyAddress is specified, the default credentials are used.</p></summary>
         [Pure]
         public static OctopusCreateReleaseSettings ResetProxyPassword(this OctopusCreateReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProxyPassword = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region OctopusDeployReleaseSettingsExtensions
+    /// <summary><p>Used within <see cref="OctopusTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class OctopusDeployReleaseSettingsExtensions
+    {
+        #region Progress
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.Progress"/>.</em></p><p>Show progress of the deployment.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetProgress(this OctopusDeployReleaseSettings toolSettings, bool? progress)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Progress = progress;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.Progress"/>.</em></p><p>Show progress of the deployment.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetProgress(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Progress = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="OctopusDeployReleaseSettings.Progress"/>.</em></p><p>Show progress of the deployment.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings EnableProgress(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Progress = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="OctopusDeployReleaseSettings.Progress"/>.</em></p><p>Show progress of the deployment.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings DisableProgress(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Progress = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="OctopusDeployReleaseSettings.Progress"/>.</em></p><p>Show progress of the deployment.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ToggleProgress(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Progress = !toolSettings.Progress;
+            return toolSettings;
+        }
+        #endregion
+        #region ForcePackageDownload
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.ForcePackageDownload"/>.</em></p><p>Whether to force downloading of already installed packages (flag, default false).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetForcePackageDownload(this OctopusDeployReleaseSettings toolSettings, bool? forcePackageDownload)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForcePackageDownload = forcePackageDownload;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.ForcePackageDownload"/>.</em></p><p>Whether to force downloading of already installed packages (flag, default false).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetForcePackageDownload(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForcePackageDownload = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="OctopusDeployReleaseSettings.ForcePackageDownload"/>.</em></p><p>Whether to force downloading of already installed packages (flag, default false).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings EnableForcePackageDownload(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForcePackageDownload = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="OctopusDeployReleaseSettings.ForcePackageDownload"/>.</em></p><p>Whether to force downloading of already installed packages (flag, default false).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings DisableForcePackageDownload(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForcePackageDownload = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="OctopusDeployReleaseSettings.ForcePackageDownload"/>.</em></p><p>Whether to force downloading of already installed packages (flag, default false).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ToggleForcePackageDownload(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForcePackageDownload = !toolSettings.ForcePackageDownload;
+            return toolSettings;
+        }
+        #endregion
+        #region WaitForDepployment
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.WaitForDepployment"/>.</em></p><p>Whether to wait synchronously for deployment to finish.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetWaitForDepployment(this OctopusDeployReleaseSettings toolSettings, bool? waitForDepployment)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WaitForDepployment = waitForDepployment;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.WaitForDepployment"/>.</em></p><p>Whether to wait synchronously for deployment to finish.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetWaitForDepployment(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WaitForDepployment = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="OctopusDeployReleaseSettings.WaitForDepployment"/>.</em></p><p>Whether to wait synchronously for deployment to finish.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings EnableWaitForDepployment(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WaitForDepployment = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="OctopusDeployReleaseSettings.WaitForDepployment"/>.</em></p><p>Whether to wait synchronously for deployment to finish.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings DisableWaitForDepployment(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WaitForDepployment = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="OctopusDeployReleaseSettings.WaitForDepployment"/>.</em></p><p>Whether to wait synchronously for deployment to finish.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ToggleWaitForDepployment(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WaitForDepployment = !toolSettings.WaitForDepployment;
+            return toolSettings;
+        }
+        #endregion
+        #region DeploymentTimeout
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.DeploymentTimeout"/>.</em></p><p>Specifies maximum time (timespan format) that the console session will wait for the deployment to finish(default 00:10:00). This will not stop the deployment. Requires <c>WaitForDeployment</c> parameter set.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetDeploymentTimeout(this OctopusDeployReleaseSettings toolSettings, string deploymentTimeout)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DeploymentTimeout = deploymentTimeout;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.DeploymentTimeout"/>.</em></p><p>Specifies maximum time (timespan format) that the console session will wait for the deployment to finish(default 00:10:00). This will not stop the deployment. Requires <c>WaitForDeployment</c> parameter set.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetDeploymentTimeout(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DeploymentTimeout = null;
+            return toolSettings;
+        }
+        #endregion
+        #region CancelOnTimeout
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.CancelOnTimeout"/>.</em></p><p>Whether to cancel the deployment if the deployment timeout is reached (flag, default false).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetCancelOnTimeout(this OctopusDeployReleaseSettings toolSettings, bool? cancelOnTimeout)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CancelOnTimeout = cancelOnTimeout;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.CancelOnTimeout"/>.</em></p><p>Whether to cancel the deployment if the deployment timeout is reached (flag, default false).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetCancelOnTimeout(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CancelOnTimeout = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="OctopusDeployReleaseSettings.CancelOnTimeout"/>.</em></p><p>Whether to cancel the deployment if the deployment timeout is reached (flag, default false).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings EnableCancelOnTimeout(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CancelOnTimeout = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="OctopusDeployReleaseSettings.CancelOnTimeout"/>.</em></p><p>Whether to cancel the deployment if the deployment timeout is reached (flag, default false).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings DisableCancelOnTimeout(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CancelOnTimeout = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="OctopusDeployReleaseSettings.CancelOnTimeout"/>.</em></p><p>Whether to cancel the deployment if the deployment timeout is reached (flag, default false).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ToggleCancelOnTimeout(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CancelOnTimeout = !toolSettings.CancelOnTimeout;
+            return toolSettings;
+        }
+        #endregion
+        #region DeploymentCheckSleepCycle
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.DeploymentCheckSleepCycle"/>.</em></p><p>Specifies how much time (timespan format) should elapse between deployment status checks (default 00:00:10).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetDeploymentCheckSleepCycle(this OctopusDeployReleaseSettings toolSettings, string deploymentCheckSleepCycle)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DeploymentCheckSleepCycle = deploymentCheckSleepCycle;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.DeploymentCheckSleepCycle"/>.</em></p><p>Specifies how much time (timespan format) should elapse between deployment status checks (default 00:00:10).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetDeploymentCheckSleepCycle(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DeploymentCheckSleepCycle = null;
+            return toolSettings;
+        }
+        #endregion
+        #region GuidedFailure
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.GuidedFailure"/>.</em></p><p>Whether to use Guided Failure mode. (True or False. If not specified, will use default setting from environment).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetGuidedFailure(this OctopusDeployReleaseSettings toolSettings, bool? guidedFailure)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GuidedFailure = guidedFailure;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.GuidedFailure"/>.</em></p><p>Whether to use Guided Failure mode. (True or False. If not specified, will use default setting from environment).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetGuidedFailure(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GuidedFailure = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="OctopusDeployReleaseSettings.GuidedFailure"/>.</em></p><p>Whether to use Guided Failure mode. (True or False. If not specified, will use default setting from environment).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings EnableGuidedFailure(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GuidedFailure = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="OctopusDeployReleaseSettings.GuidedFailure"/>.</em></p><p>Whether to use Guided Failure mode. (True or False. If not specified, will use default setting from environment).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings DisableGuidedFailure(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GuidedFailure = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="OctopusDeployReleaseSettings.GuidedFailure"/>.</em></p><p>Whether to use Guided Failure mode. (True or False. If not specified, will use default setting from environment).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ToggleGuidedFailure(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GuidedFailure = !toolSettings.GuidedFailure;
+            return toolSettings;
+        }
+        #endregion
+        #region SpecificMachines
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.SpecificMachines"/> to a new list.</em></p><p>A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetSpecificMachines(this OctopusDeployReleaseSettings toolSettings, params string[] specificMachines)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SpecificMachinesInternal = specificMachines.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.SpecificMachines"/> to a new list.</em></p><p>A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetSpecificMachines(this OctopusDeployReleaseSettings toolSettings, IEnumerable<string> specificMachines)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SpecificMachinesInternal = specificMachines.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="OctopusDeployReleaseSettings.SpecificMachines"/>.</em></p><p>A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings AddSpecificMachines(this OctopusDeployReleaseSettings toolSettings, params string[] specificMachines)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SpecificMachinesInternal.AddRange(specificMachines);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="OctopusDeployReleaseSettings.SpecificMachines"/>.</em></p><p>A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings AddSpecificMachines(this OctopusDeployReleaseSettings toolSettings, IEnumerable<string> specificMachines)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SpecificMachinesInternal.AddRange(specificMachines);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="OctopusDeployReleaseSettings.SpecificMachines"/>.</em></p><p>A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ClearSpecificMachines(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SpecificMachinesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="OctopusDeployReleaseSettings.SpecificMachines"/>.</em></p><p>A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings RemoveSpecificMachines(this OctopusDeployReleaseSettings toolSettings, params string[] specificMachines)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(specificMachines);
+            toolSettings.SpecificMachinesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="OctopusDeployReleaseSettings.SpecificMachines"/>.</em></p><p>A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings RemoveSpecificMachines(this OctopusDeployReleaseSettings toolSettings, IEnumerable<string> specificMachines)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(specificMachines);
+            toolSettings.SpecificMachinesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region Force
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.Force"/>.</em></p><p>If a project is configured to skip packages with already-installed versions, override this setting to force re-deployment (flag, default false).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetForce(this OctopusDeployReleaseSettings toolSettings, bool? force)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = force;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.Force"/>.</em></p><p>If a project is configured to skip packages with already-installed versions, override this setting to force re-deployment (flag, default false).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetForce(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="OctopusDeployReleaseSettings.Force"/>.</em></p><p>If a project is configured to skip packages with already-installed versions, override this setting to force re-deployment (flag, default false).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings EnableForce(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="OctopusDeployReleaseSettings.Force"/>.</em></p><p>If a project is configured to skip packages with already-installed versions, override this setting to force re-deployment (flag, default false).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings DisableForce(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="OctopusDeployReleaseSettings.Force"/>.</em></p><p>If a project is configured to skip packages with already-installed versions, override this setting to force re-deployment (flag, default false).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ToggleForce(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = !toolSettings.Force;
+            return toolSettings;
+        }
+        #endregion
+        #region Skip
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.Skip"/> to a new list.</em></p><p>Skip a step by name.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetSkip(this OctopusDeployReleaseSettings toolSettings, params string[] skip)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipInternal = skip.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.Skip"/> to a new list.</em></p><p>Skip a step by name.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetSkip(this OctopusDeployReleaseSettings toolSettings, IEnumerable<string> skip)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipInternal = skip.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="OctopusDeployReleaseSettings.Skip"/>.</em></p><p>Skip a step by name.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings AddSkip(this OctopusDeployReleaseSettings toolSettings, params string[] skip)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipInternal.AddRange(skip);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="OctopusDeployReleaseSettings.Skip"/>.</em></p><p>Skip a step by name.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings AddSkip(this OctopusDeployReleaseSettings toolSettings, IEnumerable<string> skip)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipInternal.AddRange(skip);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="OctopusDeployReleaseSettings.Skip"/>.</em></p><p>Skip a step by name.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ClearSkip(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="OctopusDeployReleaseSettings.Skip"/>.</em></p><p>Skip a step by name.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings RemoveSkip(this OctopusDeployReleaseSettings toolSettings, params string[] skip)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(skip);
+            toolSettings.SkipInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="OctopusDeployReleaseSettings.Skip"/>.</em></p><p>Skip a step by name.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings RemoveSkip(this OctopusDeployReleaseSettings toolSettings, IEnumerable<string> skip)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(skip);
+            toolSettings.SkipInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region NoRawLog
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.NoRawLog"/>.</em></p><p>Don't print the raw log of failed tasks.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetNoRawLog(this OctopusDeployReleaseSettings toolSettings, bool? noRawLog)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoRawLog = noRawLog;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.NoRawLog"/>.</em></p><p>Don't print the raw log of failed tasks.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetNoRawLog(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoRawLog = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="OctopusDeployReleaseSettings.NoRawLog"/>.</em></p><p>Don't print the raw log of failed tasks.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings EnableNoRawLog(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoRawLog = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="OctopusDeployReleaseSettings.NoRawLog"/>.</em></p><p>Don't print the raw log of failed tasks.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings DisableNoRawLog(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoRawLog = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="OctopusDeployReleaseSettings.NoRawLog"/>.</em></p><p>Don't print the raw log of failed tasks.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ToggleNoRawLog(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoRawLog = !toolSettings.NoRawLog;
+            return toolSettings;
+        }
+        #endregion
+        #region RawLogFile
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.RawLogFile"/>.</em></p><p>Redirect the raw log of failed tasks to a file.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetRawLogFile(this OctopusDeployReleaseSettings toolSettings, string rawLogFile)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RawLogFile = rawLogFile;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.RawLogFile"/>.</em></p><p>Redirect the raw log of failed tasks to a file.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetRawLogFile(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RawLogFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Variables
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.Variables"/> to a new dictionary.</em></p><p>Values for any prompted variables. For JSON values, embedded quotation marks should be escaped with a backslash. </p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetVariables(this OctopusDeployReleaseSettings toolSettings, IDictionary<string, string> variables)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.VariablesInternal = variables.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="OctopusDeployReleaseSettings.Variables"/>.</em></p><p>Values for any prompted variables. For JSON values, embedded quotation marks should be escaped with a backslash. </p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ClearVariables(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.VariablesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds a new key-value-pair <see cref="OctopusDeployReleaseSettings.Variables"/>.</em></p><p>Values for any prompted variables. For JSON values, embedded quotation marks should be escaped with a backslash. </p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings AddVariable(this OctopusDeployReleaseSettings toolSettings, string variableKey, string variableValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.VariablesInternal.Add(variableKey, variableValue);
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes a key-value-pair from <see cref="OctopusDeployReleaseSettings.Variables"/>.</em></p><p>Values for any prompted variables. For JSON values, embedded quotation marks should be escaped with a backslash. </p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings RemoveVariable(this OctopusDeployReleaseSettings toolSettings, string variableKey)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.VariablesInternal.Remove(variableKey);
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets a key-value-pair in <see cref="OctopusDeployReleaseSettings.Variables"/>.</em></p><p>Values for any prompted variables. For JSON values, embedded quotation marks should be escaped with a backslash. </p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetVariable(this OctopusDeployReleaseSettings toolSettings, string variableKey, string variableValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.VariablesInternal[variableKey] = variableValue;
+            return toolSettings;
+        }
+        #endregion
+        #region DeployAt
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.DeployAt"/>.</em></p><p>Time at which deployment should start (scheduled deployment), specified as any valid DateTimeOffset format, and assuming the time zone is the current local time zone.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetDeployAt(this OctopusDeployReleaseSettings toolSettings, string deployAt)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DeployAt = deployAt;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.DeployAt"/>.</em></p><p>Time at which deployment should start (scheduled deployment), specified as any valid DateTimeOffset format, and assuming the time zone is the current local time zone.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetDeployAt(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DeployAt = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Tenant
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.Tenant"/>.</em></p><p>Create a deployment for this tenant; specify this argument multiple times to add multiple tenants or use <c>*</c> wildcard to deploy to all tenants who are ready for this release (according to lifecycle).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetTenant(this OctopusDeployReleaseSettings toolSettings, string tenant)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Tenant = tenant;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.Tenant"/>.</em></p><p>Create a deployment for this tenant; specify this argument multiple times to add multiple tenants or use <c>*</c> wildcard to deploy to all tenants who are ready for this release (according to lifecycle).</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetTenant(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Tenant = null;
+            return toolSettings;
+        }
+        #endregion
+        #region TenantTag
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.TenantTag"/>.</em></p><p>Create a deployment for tenants matching this tag; specify this argument multiple times to build a query/filter with multiple tags, just like you can in the user interface.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetTenantTag(this OctopusDeployReleaseSettings toolSettings, string tenantTag)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TenantTag = tenantTag;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.TenantTag"/>.</em></p><p>Create a deployment for tenants matching this tag; specify this argument multiple times to build a query/filter with multiple tags, just like you can in the user interface.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetTenantTag(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TenantTag = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Project
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.Project"/>.</em></p><p>Name of the project.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetProject(this OctopusDeployReleaseSettings toolSettings, string project)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Project = project;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.Project"/>.</em></p><p>Name of the project.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetProject(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Project = null;
+            return toolSettings;
+        }
+        #endregion
+        #region DeployTo
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.DeployTo"/>.</em></p><p>Environment to deploy to, e.g. <c>Production</c>.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetDeployTo(this OctopusDeployReleaseSettings toolSettings, string deployTo)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DeployTo = deployTo;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.DeployTo"/>.</em></p><p>Environment to deploy to, e.g. <c>Production</c>.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetDeployTo(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DeployTo = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Version
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.Version"/>.</em></p><p>Version number of the release to deploy. Or specify 'latest' for the latest release.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetVersion(this OctopusDeployReleaseSettings toolSettings, string version)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Version = version;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.Version"/>.</em></p><p>Version number of the release to deploy. Or specify 'latest' for the latest release.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetVersion(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Version = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Channel
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.Channel"/>.</em></p><p>Channel to use when getting the release to deploy</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetChannel(this OctopusDeployReleaseSettings toolSettings, string channel)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Channel = channel;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.Channel"/>.</em></p><p>Channel to use when getting the release to deploy</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetChannel(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Channel = null;
+            return toolSettings;
+        }
+        #endregion
+        #region UpdateVariables
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.UpdateVariables"/>.</em></p><p>Overwrite the variable snapshot for the release by re-importing the variables from the project</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetUpdateVariables(this OctopusDeployReleaseSettings toolSettings, bool? updateVariables)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UpdateVariables = updateVariables;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.UpdateVariables"/>.</em></p><p>Overwrite the variable snapshot for the release by re-importing the variables from the project</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetUpdateVariables(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UpdateVariables = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="OctopusDeployReleaseSettings.UpdateVariables"/>.</em></p><p>Overwrite the variable snapshot for the release by re-importing the variables from the project</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings EnableUpdateVariables(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UpdateVariables = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="OctopusDeployReleaseSettings.UpdateVariables"/>.</em></p><p>Overwrite the variable snapshot for the release by re-importing the variables from the project</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings DisableUpdateVariables(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UpdateVariables = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="OctopusDeployReleaseSettings.UpdateVariables"/>.</em></p><p>Overwrite the variable snapshot for the release by re-importing the variables from the project</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ToggleUpdateVariables(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UpdateVariables = !toolSettings.UpdateVariables;
+            return toolSettings;
+        }
+        #endregion
+        #region Server
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.Server"/>.</em></p><p>The base URL for your Octopus server - e.g., http://your-octopus/</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetServer(this OctopusDeployReleaseSettings toolSettings, string server)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Server = server;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.Server"/>.</em></p><p>The base URL for your Octopus server - e.g., http://your-octopus/</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetServer(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Server = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ApiKey
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.ApiKey"/>.</em></p><p>Your API key. Get this from the user profile page. Your must provide an apiKey or username and password. If the guest account is enabled, a key of API-GUEST can be used.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetApiKey(this OctopusDeployReleaseSettings toolSettings, string apiKey)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ApiKey = apiKey;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.ApiKey"/>.</em></p><p>Your API key. Get this from the user profile page. Your must provide an apiKey or username and password. If the guest account is enabled, a key of API-GUEST can be used.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetApiKey(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ApiKey = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Username
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.Username"/>.</em></p><p>Username to use when authenticating with the server. Your must provide an apiKey or username and password.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetUsername(this OctopusDeployReleaseSettings toolSettings, string username)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Username = username;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.Username"/>.</em></p><p>Username to use when authenticating with the server. Your must provide an apiKey or username and password.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetUsername(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Username = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Password
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.Password"/>.</em></p><p>Password to use when authenticating with the server.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetPassword(this OctopusDeployReleaseSettings toolSettings, string password)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Password = password;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.Password"/>.</em></p><p>Password to use when authenticating with the server.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetPassword(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Password = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ConfigFile
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.ConfigFile"/>.</em></p><p>Text file of default values, with one 'key = value' per line.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetConfigFile(this OctopusDeployReleaseSettings toolSettings, string configFile)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = configFile;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.ConfigFile"/>.</em></p><p>Text file of default values, with one 'key = value' per line.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetConfigFile(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Debug
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.Debug"/>.</em></p><p>Enable debug logging.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetDebug(this OctopusDeployReleaseSettings toolSettings, bool? debug)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = debug;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.Debug"/>.</em></p><p>Enable debug logging.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetDebug(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="OctopusDeployReleaseSettings.Debug"/>.</em></p><p>Enable debug logging.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings EnableDebug(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="OctopusDeployReleaseSettings.Debug"/>.</em></p><p>Enable debug logging.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings DisableDebug(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="OctopusDeployReleaseSettings.Debug"/>.</em></p><p>Enable debug logging.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ToggleDebug(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Debug = !toolSettings.Debug;
+            return toolSettings;
+        }
+        #endregion
+        #region IgnoreSslErrors
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.IgnoreSslErrors"/>.</em></p><p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetIgnoreSslErrors(this OctopusDeployReleaseSettings toolSettings, bool? ignoreSslErrors)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreSslErrors = ignoreSslErrors;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.IgnoreSslErrors"/>.</em></p><p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetIgnoreSslErrors(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreSslErrors = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="OctopusDeployReleaseSettings.IgnoreSslErrors"/>.</em></p><p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings EnableIgnoreSslErrors(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreSslErrors = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="OctopusDeployReleaseSettings.IgnoreSslErrors"/>.</em></p><p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings DisableIgnoreSslErrors(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreSslErrors = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="OctopusDeployReleaseSettings.IgnoreSslErrors"/>.</em></p><p>Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ToggleIgnoreSslErrors(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreSslErrors = !toolSettings.IgnoreSslErrors;
+            return toolSettings;
+        }
+        #endregion
+        #region EnableServiceMessages
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.EnableServiceMessages"/>.</em></p><p>Enable TeamCity or Team Foundation Build service messages when logging.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetEnableServiceMessages(this OctopusDeployReleaseSettings toolSettings, bool? enableServiceMessages)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnableServiceMessages = enableServiceMessages;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.EnableServiceMessages"/>.</em></p><p>Enable TeamCity or Team Foundation Build service messages when logging.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetEnableServiceMessages(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnableServiceMessages = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="OctopusDeployReleaseSettings.EnableServiceMessages"/>.</em></p><p>Enable TeamCity or Team Foundation Build service messages when logging.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings EnableEnableServiceMessages(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnableServiceMessages = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="OctopusDeployReleaseSettings.EnableServiceMessages"/>.</em></p><p>Enable TeamCity or Team Foundation Build service messages when logging.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings DisableEnableServiceMessages(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnableServiceMessages = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="OctopusDeployReleaseSettings.EnableServiceMessages"/>.</em></p><p>Enable TeamCity or Team Foundation Build service messages when logging.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ToggleEnableServiceMessages(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnableServiceMessages = !toolSettings.EnableServiceMessages;
+            return toolSettings;
+        }
+        #endregion
+        #region Timeout
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.Timeout"/>.</em></p><p>Timeout in seconds for network operations. Default is 600.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetTimeout(this OctopusDeployReleaseSettings toolSettings, int? timeout)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Timeout = timeout;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.Timeout"/>.</em></p><p>Timeout in seconds for network operations. Default is 600.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetTimeout(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Timeout = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Proxy
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.Proxy"/>.</em></p><p>The URI of the proxy to use, e.g., http://example.com:8080.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetProxy(this OctopusDeployReleaseSettings toolSettings, string proxy)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Proxy = proxy;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.Proxy"/>.</em></p><p>The URI of the proxy to use, e.g., http://example.com:8080.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetProxy(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Proxy = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ProxyUsername
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.ProxyUsername"/>.</em></p><p>The username for the proxy.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetProxyUsername(this OctopusDeployReleaseSettings toolSettings, string proxyUsername)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProxyUsername = proxyUsername;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.ProxyUsername"/>.</em></p><p>The username for the proxy.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetProxyUsername(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProxyUsername = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ProxyPassword
+        /// <summary><p><em>Sets <see cref="OctopusDeployReleaseSettings.ProxyPassword"/>.</em></p><p>The password for the proxy. If both the username and password are omitted and proxyAddress is specified, the default credentials are used.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetProxyPassword(this OctopusDeployReleaseSettings toolSettings, string proxyPassword)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ProxyPassword = proxyPassword;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="OctopusDeployReleaseSettings.ProxyPassword"/>.</em></p><p>The password for the proxy. If both the username and password are omitted and proxyAddress is specified, the default credentials are used.</p></summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetProxyPassword(this OctopusDeployReleaseSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProxyPassword = null;

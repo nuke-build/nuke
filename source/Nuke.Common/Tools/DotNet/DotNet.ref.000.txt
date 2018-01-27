@@ -1,5 +1,5 @@
 
-This topic applies to: ✓ .NET Core 1.x ✓ .NET Core 2.x
+This topic applies to: ✓ .NET Core SDK 1.x ✓ .NET Core SDK 2.x
 Name
 dotnet test - .NET test driver used to execute unit tests.
 Synopsis
@@ -180,7 +180,7 @@ AND
 
 
 
-You can enclose expressions in paranthesis when using conditional operators (for example, (Name~TestMethod1) | (Name~TestMethod2)).
+You can enclose expressions in parenthesis when using conditional operators (for example, (Name~TestMethod1) | (Name~TestMethod2)).
 For additional information and examples on how to use selective unit test filtering, see Running selective unit tests.
 See also
  Frameworks and Targets .NET Core Runtime IDentifier (RID) catalog

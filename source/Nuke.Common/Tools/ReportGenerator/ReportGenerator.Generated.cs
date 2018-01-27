@@ -68,6 +68,8 @@ namespace Nuke.Common.Tools.ReportGenerator
         /// <summary><p>Optional list of files that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*.</p></summary>
         public virtual IReadOnlyList<string> FileFilters => FileFiltersInternal.AsReadOnly();
         internal List<string> FileFiltersInternal { get; set; } = new List<string>();
+        /// <summary><p>Optional tag or build version.</p></summary>
+        public virtual string Tag { get; internal set; }
         /// <summary><p>The verbosity level of the log messages. Default is Verbose.</p></summary>
         public virtual ReportGeneratorVerbosity Verbosity { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -81,6 +83,7 @@ namespace Nuke.Common.Tools.ReportGenerator
               .Add("-assemblyfilters:{value}", AssemblyFilters, separator: ';')
               .Add("-classfilters:{value}", ClassFilters, separator: ';')
               .Add("-classfilters:{value}", FileFilters, separator: ';')
+              .Add("-tag:{value}", Tag)
               .Add("-verbosity:{value}", Verbosity);
             return base.ConfigureArguments(arguments);
         }
@@ -485,6 +488,24 @@ namespace Nuke.Common.Tools.ReportGenerator
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(fileFilters);
             toolSettings.FileFiltersInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region Tag
+        /// <summary><p><em>Sets <see cref="ReportGeneratorSettings.Tag"/>.</em></p><p>Optional tag or build version.</p></summary>
+        [Pure]
+        public static ReportGeneratorSettings SetTag(this ReportGeneratorSettings toolSettings, string tag)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Tag = tag;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="ReportGeneratorSettings.Tag"/>.</em></p><p>Optional tag or build version.</p></summary>
+        [Pure]
+        public static ReportGeneratorSettings ResetTag(this ReportGeneratorSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Tag = null;
             return toolSettings;
         }
         #endregion

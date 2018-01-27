@@ -1,5 +1,5 @@
 
-This topic applies to: ✓ .NET Core 1.x ✓ .NET Core 2.x
+This topic applies to: ✓ .NET Core SDK 1.x ✓ .NET Core SDK 2.x
 Name
 dotnet publish - Packs the application and its dependencies into a folder for deployment to a hosting system.
 Synopsis
@@ -13,7 +13,7 @@ Synopsis
 
 
 
-dotnet publish [&lt;PROJECT&gt;] [-c|--configuration] [-f|--framework] [--force] [--manifest] [no-dependencies] [--no-restore] [-o|--output] [-r|--runtime] [--self-contained] [-v|--verbosity] [--version-suffix]
+dotnet publish [&lt;PROJECT&gt;] [-c|--configuration] [-f|--framework] [--force] [--manifest] [--no-dependencies] [--no-restore] [-o|--output] [-r|--runtime] [--self-contained] [-v|--verbosity] [--version-suffix]
 dotnet publish [-h|--help]
 
 
@@ -62,7 +62,7 @@ Doesn&#39;t perform an implicit restore when running the command.
 Specifies the path for the output directory. If not specified, it defaults to ./bin/[configuration]/[framework]/ for a framework-dependent deployment or ./bin/[configuration]/[framework]/[runtime] for a self-contained deployment.
 If a relative path is provided, the output directory generated is relative to the project file location, not to the current working directory.
 --self-contained
-Publishes the .NET Core runtime with your application so the runtime doesn&#39;t need to be installed on the target machine. If a runtime identifier is specified, its default value is true. For more infomation about the different deployment types, see .NET Core application deployment.
+Publishes the .NET Core runtime with your application so the runtime doesn&#39;t need to be installed on the target machine. If a runtime identifier is specified, its default value is true. For more information about the different deployment types, see .NET Core application deployment.
 -r|--runtime &lt;RUNTIME_IDENTIFIER&gt;
 Publishes the application for a given runtime. This is used when creating a self-contained deployment (SCD). For a list of Runtime Identifiers (RIDs), see the RID catalog. Default is to publish a framework-dependent deployment (FDD).
 -v|--verbosity &lt;LEVEL&gt;
