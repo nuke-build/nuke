@@ -6,7 +6,6 @@ using System;
 using System.Linq;
 using Nuke.Common.Git;
 using Nuke.Common.Tools.DotNet;
-using Nuke.Common.Tools.GitLink;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.InspectCode;
 using Nuke.Common.Tools.OpenCover;
@@ -15,9 +14,10 @@ using Nuke.Core;
 using Nuke.Core.Utilities;
 using Nuke.Core.Utilities.Collections;
 using static Nuke.CodeGeneration.CodeGenerator;
+using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.Gitter.GitterTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
-using static Nuke.Common.Tools.GitLink.GitLinkTasks;
+using static Nuke.Common.Tools.Git.GitTasks;
 using static Nuke.Common.Tools.InspectCode.InspectCodeTasks;
 using static Nuke.Common.Tools.OpenCover.OpenCoverTasks;
 using static Nuke.Common.Tools.Xunit.XunitTasks;
@@ -38,6 +38,7 @@ class Build : NukeBuild
             : "https://www.myget.org/F/nukebuild/api/v2/package";
 
     [GitVersion] readonly GitVersion GitVersion;
+    [GitRepository] readonly GitRepository GitRepository;
 
     Target Clean => _ => _
             .Executes(() =>
@@ -73,18 +74,45 @@ class Build : NukeBuild
                         .SetProject(project)
                         .SetFramework("net461"));
             });
+    
+    string ChangelogFile => RootDirectory / "CHANGELOG.md";
 
-    Target Pack => _ => _
-            .DependsOn(Compile, Publish)
+    Target Changelog => _ => _
+            .OnlyWhen(() => NuGet || Target.Contains(nameof(Changelog)))
             .Executes(() =>
             {
-                DotNetPack(s => DefaultDotNetPack);
+                FinalizeChangelog(ChangelogFile, GitVersion.FullSemVer, GitRepository);
+
+                Git($"add {ChangelogFile}");
+                Git($"commit -m \"Finalize changelog for {GitVersion.FullSemVer}.\"");
+                Git($"tag -f {GitVersion.FullSemVer}");
+            });
+
+    Target Pack => _ => _
+            .DependsOn(Compile, Publish, Changelog)
+            .Executes(() =>
+            {
+                var sectionCaption = InvokedTargets.Contains(nameof(Changelog)) ? GitVersion.FullSemVer : null;
+                var sectionNotes = ExtractChangelogSectionNotes(ChangelogFile, sectionCaption);
+
+                var releaseNotes = sectionNotes
+                        .Select(x => x.Replace("- ", "\u2022 "))
+                        .Concat(new[]
+                                {
+                                    string.Empty,
+                                    $"Find the full changelog at {GitRepository.GetGitHubBrowseUrl(ChangelogFile)}"
+                                })
+                        .JoinNewLine();
+
+                DotNetPack(s => DefaultDotNetPack
+                        .SetPackageReleaseNotes(releaseNotes));
             });
 
     Target Push => _ => _
             .DependsOn(Pack)
             .Requires(() => ApiKey)
             .Requires(() => !NuGet || Configuration.EqualsOrdinalIgnoreCase("release"))
+            .Requires(() => !NuGet || GitVersion.BranchName.Equals("master"))
             .Executes(() =>
             {
                 GlobFiles(OutputDirectory, "*.nupkg").NotEmpty()
@@ -96,10 +124,10 @@ class Build : NukeBuild
 
                 if (NuGet)
                 {
-                    SendGitterMessage (
-                        $"@/all Version [{GitVersion.SemVer}](https://www.nuget.org/packages/Nuke.Common/{GitVersion.SemVer}) has been published.",
-                        roomId: "593f3dadd73408ce4f66db89",
-                        token: GitterAuthToken);
+                    SendGitterMessage(
+                            $"@/all [NUKE {GitVersion.SemVer}](https://www.nuget.org/packages/Nuke.Common/{GitVersion.SemVer}) has been published.",
+                            "593f3dadd73408ce4f66db89",
+                            GitterAuthToken);
                 }
             });
 
