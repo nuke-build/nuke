@@ -8,6 +8,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Core;
 using Nuke.Core.IO;
+using Nuke.Core.Utilities;
 
 namespace Nuke.Common.Git
 {
@@ -18,8 +19,14 @@ namespace Nuke.Common.Git
         Directory
     }
 
+    [PublicAPI]
     public static class GitRepositoryExtensions
     {
+        public static bool IsGitHubRepository(this GitRepository repository)
+        {
+            return repository != null && repository.Endpoint.EqualsOrdinalIgnoreCase("github.com");
+        }
+
         /// <summary>Url in the form of <c>https://raw.githubusercontent.com/{identifier}/blob/{branch}/{file}</c>.</summary>
         public static string GetGitHubDownloadUrl (this GitRepository repository, string file, string branch = null)
         {

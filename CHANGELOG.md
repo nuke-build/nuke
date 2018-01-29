@@ -7,3 +7,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [vNext]
 - Added ChangelogTasks for finalizing unpublished changes to a certain version or extracting NuGet-compatible release notes for a specified tag.
 - Added CLT tasks for Git.
+- Added GitRepository.IsGitHubRepository extension method.
