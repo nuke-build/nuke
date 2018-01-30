@@ -25,6 +25,18 @@ namespace Nuke.Core.Execution
                 var executionList = Setup(defaultTargetExpression);
                 return new ExecutionListRunner().Run(executionList);
             }
+            catch (AggregateException exception)
+            {
+                foreach (var innerException in exception.Flatten().InnerExceptions)
+                    OutputSink.Error(innerException.Message, innerException.StackTrace);
+                return -exception.Message.GetHashCode();
+            }
+            catch (TargetInvocationException exception)
+            {
+                var innerException = exception.InnerException;
+                OutputSink.Error(innerException.Message, innerException.StackTrace);
+                return -exception.Message.GetHashCode();
+            }
             catch (Exception exception)
             {
                 OutputSink.Error(exception.Message, exception.StackTrace);
