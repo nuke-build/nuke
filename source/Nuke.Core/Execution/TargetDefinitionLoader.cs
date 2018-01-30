@@ -15,10 +15,10 @@ namespace Nuke.Core.Execution
         public static IReadOnlyCollection<TargetDefinition> GetExecutionList (NukeBuild build, Target defaultTarget)
         {
             var allTargets = build.GetTargetDefinitions(defaultTarget);
+            ControlFlow.Assert(allTargets.Any(x => x.Name.EqualsOrdinalIgnoreCase("default")),
+                    "The name 'default' cannot be used as target name.");
 
-            ControlFlow.Assert(allTargets.All(x => x.Name != "default"), "The name 'default' cannot be used as target identifier.");
             var specifiedTargets = build.Target.Select(x => GetTargetByName(x, defaultTarget, allTargets, build)).ToList();
-
             return GetSortedList(specifiedTargets, allTargets);
         }
 
