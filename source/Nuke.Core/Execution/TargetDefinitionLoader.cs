@@ -35,8 +35,9 @@ namespace Nuke.Core.Execution
             if (targetDefinition == null)
             {
                 var stringBuilder = new StringBuilder()
-                        .AppendLine(BuildExecutor.GetTargetsText(build, defaultTarget))
-                        .AppendLine($"Target with name '{targetName}' is not available.");
+                        .AppendLine($"Target with name '{targetName}' is not available.")
+                        .AppendLine()
+                        .AppendLine(HelpTextService.GetTargetsText(build, defaultTarget));
 
                 ControlFlow.Fail(stringBuilder.ToString());
             }

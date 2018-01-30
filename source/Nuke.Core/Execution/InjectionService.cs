@@ -17,6 +17,8 @@ namespace Nuke.Core.Execution
                     .GetMembers(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
                     .Where(x => x.GetCustomAttributes<InjectionAttributeBase>().Any()).ToList();
 
+            var anyInjected = false;
+
             foreach (var member in injectionMembers)
             {
                 var attributes = member.GetCustomAttributes().OfType<InjectionAttributeBase>().ToList();
@@ -34,7 +36,12 @@ namespace Nuke.Core.Execution
                 ControlFlow.Assert(memberType.IsAssignableFrom(valueType),
                     $"Field '{member.Name}' must be of type '{valueType.Name}' to get its valued injected from '{attribute.GetType().Name}'.");
                 PrivateInvoke.SetValue(build, member, value);
+
+                anyInjected = true;
             }
+
+            if (anyInjected)
+                Logger.Log();
         }
     }
 }
