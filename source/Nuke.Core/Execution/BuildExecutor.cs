@@ -11,6 +11,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using Nuke.Core.OutputSinks;
 using Nuke.Core.Utilities;
+using Nuke.Core.Utilities.Collections;
 
 namespace Nuke.Core.Execution
 {
@@ -42,6 +43,13 @@ namespace Nuke.Core.Execution
 
             var executionList = TargetDefinitionLoader.GetExecutionList(build);
             RequirementService.ValidateRequirements(executionList, build);
+
+            var normalizedTargets = executionList
+                    .Where(x => build.InvokedTargets.Any(y => y.EqualsOrdinalIgnoreCase(x.Name)))
+                    .Select(x => x.Name);
+            PrivateInvoke.SetValue(build, nameof(NukeBuild.InvokedTargets), normalizedTargets.ToArray());
+            PrivateInvoke.SetValue(build, nameof(NukeBuild.ExecutingTargets), executionList.Select(x => x.Name).ToArray());
+
             return executionList;
         }
 

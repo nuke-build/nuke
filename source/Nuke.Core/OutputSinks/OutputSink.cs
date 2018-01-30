@@ -26,7 +26,7 @@ namespace Nuke.Core.OutputSinks
 
     internal static class OutputSink
     {
-        internal static IOutputSink Instance { get; } = GetOutputSink(EnvironmentInfo.GetHostType());
+        internal static IOutputSink Instance { get; } = GetOutputSink(EnvironmentInfo.HostType);
 
         internal static IOutputSink GetOutputSink (HostType hostType)
         {

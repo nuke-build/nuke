@@ -56,11 +56,6 @@ namespace Nuke.Core
             return BuildExecutor.Execute(defaultTargetExpression);
         }
 
-        private static bool IsLocalBuildInternal()
-        {
-            return EnvironmentInfo.GetHostType() == HostType.Console;
-        }
-
         internal IReadOnlyCollection<TargetDefinition> TargetDefinitions { get; set; }
 
         /// <summary>
@@ -70,22 +65,16 @@ namespace Nuke.Core
         public Verbosity Verbosity { get; set; } = Verbosity.Normal;
 
         /// <summary>
-        /// Targets to execute. Default is <em>Default</em>, which falls back to the target specified in <c>static int Main</c> with <see cref="Execute{T}"/>.
-        /// </summary>
-        [Parameter("Target(s) to execute. Default is '{default_target}'.", Separator = "+")]
-        public string[] Target { get; } = { "Default" };
-
-        /// <summary>
         /// Host for execution. Default is <em>automatic</em>.
         /// </summary>
         [Parameter("Host for execution. Default is 'automatic'.")]
-        public HostType Host { get; } = EnvironmentInfo.GetHostType();
+        public HostType Host { get; } = EnvironmentInfo.HostType;
 
         /// <summary>
         /// Configuration to build. Default is <em>Debug</em> (local) or <em>Release</em> (server).
         /// </summary>
         [Parameter("Configuration to build. Default is 'Debug' (local) or 'Release' (server).")]
-        public string Configuration { get; } = IsLocalBuildInternal() ? "Debug" : "Release";
+        public string Configuration { get; } = EnvironmentInfo.IsLocalBuild ? "Debug" : "Release";
 
         /// <summary>
         /// Disables execution of target dependencies.
@@ -121,10 +110,13 @@ namespace Nuke.Core
         [CanBeNull]
         public string[] Help { get; }
 
-        public bool IsLocalBuild { get; } = IsLocalBuildInternal();
-        public bool IsServerBuild { get; } = !IsLocalBuildInternal();
+        public bool IsLocalBuild { get; } = EnvironmentInfo.IsLocalBuild;
+        public bool IsServerBuild { get; } = !EnvironmentInfo.IsLocalBuild;
 
         public LogLevel LogLevel => (LogLevel) Verbosity;
+
+        public string[] InvokedTargets { get; } = EnvironmentInfo.InvokedTargets;
+        public string[] ExecutingTargets { get; }
 
         /// <summary>
         /// Gets the full path to the root directory where the <c>.nuke</c> file is located.

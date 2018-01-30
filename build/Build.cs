@@ -78,7 +78,7 @@ class Build : NukeBuild
     string ChangelogFile => RootDirectory / "CHANGELOG.md";
 
     Target Changelog => _ => _
-            .OnlyWhen(() => NuGet || Target.Contains(nameof(Changelog)))
+            .OnlyWhen(() => NuGet || InvokedTargets.Contains(nameof(Changelog)))
             .Executes(() =>
             {
                 FinalizeChangelog(ChangelogFile, GitVersion.FullSemVer, GitRepository);

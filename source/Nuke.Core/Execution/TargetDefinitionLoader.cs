@@ -17,7 +17,7 @@ namespace Nuke.Core.Execution
             ControlFlow.Assert(build.TargetDefinitions.All(x => !x.Name.EqualsOrdinalIgnoreCase("default")),
                     "The name 'default' cannot be used as target name.");
 
-            var specifiedTargets = build.Target.Select(x => GetDefinition(x, build)).ToList();
+            var specifiedTargets = build.InvokedTargets.Select(x => GetDefinition(x, build)).ToList();
             return GetSortedList(build, specifiedTargets);
         }
         
