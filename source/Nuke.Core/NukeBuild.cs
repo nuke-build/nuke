@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -55,6 +56,13 @@ namespace Nuke.Core
             return BuildExecutor.Execute(defaultTargetExpression);
         }
 
+        private static bool IsLocalBuildInternal()
+        {
+            return EnvironmentInfo.GetHostType() == HostType.Console;
+        }
+
+        internal IReadOnlyCollection<TargetDefinition> TargetDefinitions { get; set; }
+
         /// <summary>
         /// Logging verbosity while building. Default is <see cref="Core.Verbosity.Normal"/>.
         /// </summary>
@@ -71,13 +79,13 @@ namespace Nuke.Core
         /// Host for execution. Default is <em>automatic</em>.
         /// </summary>
         [Parameter("Host for execution. Default is 'automatic'.")]
-        public HostType Host { get; } = EnvironmentInfo.GetActualHostType();
+        public HostType Host { get; } = EnvironmentInfo.GetHostType();
 
         /// <summary>
         /// Configuration to build. Default is <em>Debug</em> (local) or <em>Release</em> (server).
         /// </summary>
         [Parameter("Configuration to build. Default is 'Debug' (local) or 'Release' (server).")]
-        public string Configuration { get; } = IsServerBuild ? "Release" : "Debug";
+        public string Configuration { get; } = IsLocalBuildInternal() ? "Debug" : "Release";
 
         /// <summary>
         /// Disables execution of target dependencies.
@@ -113,8 +121,8 @@ namespace Nuke.Core
         [CanBeNull]
         public string[] Help { get; }
 
-        public static bool IsLocalBuild => Instance.Host == HostType.Console;
-        public static bool IsServerBuild => !IsLocalBuild;
+        public bool IsLocalBuild { get; } = IsLocalBuildInternal();
+        public bool IsServerBuild { get; } = !IsLocalBuildInternal();
 
         public LogLevel LogLevel => (LogLevel) Verbosity;
 

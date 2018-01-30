@@ -13,7 +13,7 @@ namespace Nuke.Core.Execution
 {
     internal static class GraphService
     {
-        public static void ShowGraph<T> (T build, Target defaultTargetFactory)
+        public static void ShowGraph<T> (T build)
                 where T : NukeBuild
         {
             string GetStringFromStream (Stream stream)
@@ -29,10 +29,9 @@ namespace Nuke.Core.Execution
             var resourceStream = assembly.GetManifestResourceStream(resourceName).NotNull("resourceStream != null");
 
             var graph = new StringBuilder();
-            var targetDefinitions = build.GetTargetDefinitions(defaultTargetFactory);
-            foreach (var target in targetDefinitions)
+            foreach (var target in build.TargetDefinitions)
             {
-                var dependendBy = targetDefinitions.Where(x => x.TargetDefinitionDependencies.Contains(target)).ToList();
+                var dependendBy = build.TargetDefinitions.Where(x => x.TargetDefinitionDependencies.Contains(target)).ToList();
                 if (dependendBy.Count == 0)
                     graph.AppendLine(target.Name);
                 else

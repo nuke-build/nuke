@@ -10,6 +10,11 @@ namespace Nuke.Core
 {
     public static partial class EnvironmentInfo
     {
+        public static HostType GetHostType()
+        {
+            return Parameter<HostType?>(nameof(NukeBuild.Host)) ?? GetActualHostType();
+        }
+
         internal static HostType GetActualHostType()
         {
             if (AppVeyor.IsRunningAppVeyor)

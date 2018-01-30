@@ -13,17 +13,16 @@ namespace Nuke.Core.Execution
 {
     internal static class HelpTextService
     {
-        public static string GetTargetsText<T> (T build, Target defaultTargetFactory)
+        public static string GetTargetsText<T> (T build)
                 where T : NukeBuild
         {
             var builder = new StringBuilder();
 
-            var targetDefinitions = build.GetTargetDefinitions(defaultTargetFactory);
-            var longestTargetName = targetDefinitions.Select(x => x.Name.Length).OrderByDescending(x => x).First();
+            var longestTargetName = build.TargetDefinitions.Select(x => x.Name.Length).OrderByDescending(x => x).First();
             var padRightTargets = Math.Max(longestTargetName, val2: 20);
             builder.AppendLine("Targets (with their direct dependencies):");
             builder.AppendLine();
-            foreach (var target in targetDefinitions)
+            foreach (var target in build.TargetDefinitions)
             {
                 var dependencies = target.TargetDefinitionDependencies.Count > 0
                         ? $" -> {target.TargetDefinitionDependencies.Select(x => x.Name).JoinComma()}"
@@ -37,10 +36,10 @@ namespace Nuke.Core.Execution
             return builder.ToString();
         }
 
-        public static string GetParametersText<T> (T build, Target defaultTargetFactory)
+        public static string GetParametersText<T> (T build)
                 where T : NukeBuild
         {
-            var defaultTarget = build.GetTargetDefinitions(defaultTargetFactory).Single(x => x.IsDefault);
+            var defaultTarget = build.TargetDefinitions.Single(x => x.IsDefault);
             var builder = new StringBuilder();
 
             var parameters = build.GetParameterMembers().OrderBy(x => x.Name).ToList();

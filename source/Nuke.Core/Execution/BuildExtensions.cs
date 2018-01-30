@@ -5,15 +5,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Nuke.Core.Execution
 {
     internal static class BuildExtensions
     {
-        public static IReadOnlyCollection<TargetDefinition> GetTargetDefinitions<T> (this T build, Target defaultTarget)
-            where T : NukeBuild
+        public static IReadOnlyCollection<TargetDefinition> GetTargetDefinitions<T> (
+                this T build,
+                Expression<Func<T, Target>> defaultTargetExpression)
+                where T : NukeBuild
         {
+            var defaultTarget = defaultTargetExpression.Compile().Invoke(build);
             var targetDefinitions = build.GetType()
                     .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                     .Where(x => x.PropertyType == typeof(Target))

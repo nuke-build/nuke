@@ -12,32 +12,29 @@ namespace Nuke.Core.Execution
 {
     internal static class TargetDefinitionLoader
     {
-        public static IReadOnlyCollection<TargetDefinition> GetExecutionList (NukeBuild build, Target defaultTarget)
+        public static IReadOnlyCollection<TargetDefinition> GetExecutionList (NukeBuild build)
         {
-            var allTargets = build.GetTargetDefinitions(defaultTarget);
-            ControlFlow.Assert(allTargets.Any(x => x.Name.EqualsOrdinalIgnoreCase("default")),
+            ControlFlow.Assert(build.TargetDefinitions.All(x => !x.Name.EqualsOrdinalIgnoreCase("default")),
                     "The name 'default' cannot be used as target name.");
 
-            var specifiedTargets = build.Target.Select(x => GetTargetByName(x, defaultTarget, allTargets, build)).ToList();
-            return GetSortedList(specifiedTargets, allTargets);
+            var specifiedTargets = build.Target.Select(x => GetDefinition(x, build)).ToList();
+            return GetSortedList(build, specifiedTargets);
         }
-
-        private static TargetDefinition GetTargetByName (
-            string targetName,
-            Target defaultTarget,
-            IReadOnlyCollection<TargetDefinition> targetDefinitions,
-            NukeBuild build)
+        
+        private static TargetDefinition GetDefinition (
+                string targetName,
+                NukeBuild build)
         {
             if (targetName.EqualsOrdinalIgnoreCase("default"))
-                return targetDefinitions.Single(x => x.IsDefault);
+                return build.TargetDefinitions.Single(x => x.IsDefault);
 
-            var targetDefinition = targetDefinitions.SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(targetName));
+            var targetDefinition = build.TargetDefinitions.SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(targetName));
             if (targetDefinition == null)
             {
                 var stringBuilder = new StringBuilder()
                         .AppendLine($"Target with name '{targetName}' is not available.")
                         .AppendLine()
-                        .AppendLine(HelpTextService.GetTargetsText(build, defaultTarget));
+                        .AppendLine(HelpTextService.GetTargetsText(build));
 
                 ControlFlow.Fail(stringBuilder.ToString());
             }
@@ -45,11 +42,9 @@ namespace Nuke.Core.Execution
             return targetDefinition;
         }
         
-        private static List<TargetDefinition> GetSortedList (
-            IReadOnlyCollection<TargetDefinition> specifiedTargets,
-            IReadOnlyCollection<TargetDefinition> allTargets)
+        private static List<TargetDefinition> GetSortedList (NukeBuild build, IReadOnlyCollection<TargetDefinition> specifiedTargets)
         {
-            var vertexDictionary = allTargets.ToDictionary(x => x, x => new Vertex<TargetDefinition>(x));
+            var vertexDictionary = build.TargetDefinitions.ToDictionary(x => x, x => new Vertex<TargetDefinition>(x));
             foreach (var pair in vertexDictionary)
                 pair.Value.Dependencies = pair.Key.TargetDefinitionDependencies.Select(x => vertexDictionary[x]).ToList();
 
