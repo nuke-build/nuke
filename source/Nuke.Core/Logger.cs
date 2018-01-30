@@ -48,7 +48,7 @@ namespace Nuke.Core
         /// </summary>
         public static void Log (object value)
         {
-            Log(value.ToString());
+            Log(value?.ToString());
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Nuke.Core
         /// </summary>
         public static void Trace (object value)
         {
-            Trace(value.ToString());
+            Trace(value?.ToString());
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Nuke.Core
         /// </summary>
         public static void Info (object value)
         {
-            Info(value.ToString());
+            Info(value?.ToString());
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Nuke.Core
         /// </summary>
         public static void Warn (object value)
         {
-            Warn(value.ToString());
+            Warn(value?.ToString());
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Nuke.Core
         /// </summary>
         public static void Error (object value)
         {
-            Error(value.ToString());
+            Error(value?.ToString());
         }
 
         /// <summary>
