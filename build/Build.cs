@@ -38,7 +38,7 @@ class Build : NukeBuild
             : "https://www.myget.org/F/nukebuild/api/v2/package";
 
     [GitVersion] readonly GitVersion GitVersion;
-    [GitRepository] readonly GitRepository GitRepository;
+    [GitRepository(Branch = "master")] readonly GitRepository GitRepository;
 
     Target Clean => _ => _
             .Executes(() =>
@@ -97,11 +97,8 @@ class Build : NukeBuild
 
                 var releaseNotes = sectionNotes
                         .Select(x => x.Replace("- ", "\u2022 "))
-                        .Concat(new[]
-                                {
-                                    string.Empty,
-                                    $"Find the full changelog at {GitRepository.GetGitHubBrowseUrl(ChangelogFile)}"
-                                })
+                        .Concat(string.Empty)
+                        .Concat($"Find the full changelog at {GitRepository.GetGitHubBrowseUrl(ChangelogFile)}")
                         .JoinNewLine();
 
                 DotNetPack(s => DefaultDotNetPack
