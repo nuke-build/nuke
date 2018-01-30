@@ -25,12 +25,13 @@ namespace Nuke.Core.Utilities.Collections
                 yield return element;
         }
 
-        public static IEnumerable<T> Concat<T> (this IEnumerable<T> enumerable, [CanBeNull] T obj)
+        public static IEnumerable<T> Concat<T> (this IEnumerable<T> enumerable, params T[] others)
         {
             foreach (var element in enumerable)
                 yield return element;
 
-            yield return obj;
+            foreach (var element in others)
+                yield return element;
         }
     }
 }
