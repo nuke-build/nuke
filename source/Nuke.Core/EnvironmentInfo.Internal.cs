@@ -47,7 +47,7 @@ namespace Nuke.Core
                     return argument.Split(new[] { '+' }, StringSplitOptions.RemoveEmptyEntries);
 
                 var parameter = ParameterSet<string>("target", separator: '+');
-                if (parameter.Length != 0)
+                if (parameter != null)
                 {
                     Logger.Warn(new[]
                                 {

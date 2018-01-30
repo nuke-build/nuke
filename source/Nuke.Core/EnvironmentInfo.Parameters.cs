@@ -58,6 +58,15 @@ namespace Nuke.Core
         }
 
         /// <summary>
+        /// Provides access to a command-line argument or environment variable set.
+        /// </summary>
+        [CanBeNull]
+        public static T[] ParameterSet<T>(string name, char? separator = null)
+        {
+            return s_parameterService.GetParameter<T[]>(name, separator);
+        }
+
+        /// <summary>
         /// Provides ensured access to a command-line argument or environment variable.
         /// </summary>
         public static string EnsureParameter(string name)
@@ -68,18 +77,17 @@ namespace Nuke.Core
         /// <summary>
         /// Provides ensured access to a converted command-line argument or environment variable.
         /// </summary>
-        [CanBeNull]
         public static T EnsureParameter<T> (string name)
         {
             return Parameter<T>(name).NotNull($"Parameter<{typeof(T).Name}>('{name}') != null");
         }
 
         /// <summary>
-        /// Provides access to a command-line argument or environment variable set.
+        /// Provides ensured access to a command-line argument or environment variable set.
         /// </summary>
-        public static T[] ParameterSet<T>(string name, char? separator = null)
+        public static T[] EnsureParameterSet<T>(string name, char? separator = null)
         {
-            return s_parameterService.GetParameter<T[]>(name, separator).NotNull();
+            return ParameterSet<T>(name, separator).NotNull($"ParameterSet<{typeof(T).Name}>('{name}', '{separator}') != null");
         }
 
         #endregion
@@ -113,6 +121,15 @@ namespace Nuke.Core
         }
 
         /// <summary>
+        /// Provides access to an environment variable set.
+        /// </summary>
+        [CanBeNull]
+        public static T[] VariableSet<T>(string name, char? separator = null)
+        {
+            return s_parameterService.GetEnvironmentVariable<T[]>(name, separator);
+        }
+
+        /// <summary>
         /// Provides ensured access to an environment variable.
         /// </summary>
         public static string EnsureVariable (string name)
@@ -129,11 +146,11 @@ namespace Nuke.Core
         }
 
         /// <summary>
-        /// Provides access to an environment variable set.
+        /// Provides ensured access to an environment variable set.
         /// </summary>
-        public static T[] VariableSet<T>(string name, char? separator = null)
+        public static T[] EnsureVariableSet<T>(string name, char? separator = null)
         {
-            return s_parameterService.GetEnvironmentVariable<T[]>(name, separator).NotNull();
+            return VariableSet<T>(name, separator).NotNull($"VariableSet<{typeof(T).Name}>('{name}', '{separator}') != null");
         }
 
         #endregion
@@ -167,6 +184,15 @@ namespace Nuke.Core
         }
 
         /// <summary>
+        /// Provides access to a command-line argument set.
+        /// </summary>
+        [CanBeNull]
+        public static T[] ArgumentSet<T>(string name, char? separator = null)
+        {
+            return s_parameterService.GetCommandLineArgument<T[]>(name, separator);
+        }
+
+        /// <summary>
         /// Provides ensured access to a command-line argument.
         /// </summary>
         public static string EnsureArgument (string name)
@@ -181,13 +207,13 @@ namespace Nuke.Core
         {
             return Argument<T>(name).NotNull($"Argument<{typeof(T).Name}>('{name}') != null");
         }
-
+        
         /// <summary>
-        /// Provides access to a command-line argument set.
+        /// Provides ensured access to a command-line argument set.
         /// </summary>
-        public static T[] ArgumentSet<T>(string name, char? separator = null)
+        public static T[] EnsureArgumentSet<T>(string name, char? separator = null)
         {
-            return s_parameterService.GetCommandLineArgument<T[]>(name, separator).NotNull();
+            return ArgumentSet<T>(name, separator).NotNull($"ArgumentSet<{typeof(T).Name}>('{name}', '{separator}') != null");
         }
 
         #endregion
