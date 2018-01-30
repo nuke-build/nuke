@@ -11,4 +11,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added switches (-major and -minor) for bumping versions when using GitVersionAttribute.
 - Added NukeBuild.InvokedTargets (targets passed from command-line).
 - Added NukeBuild.ExecutingTargets (targets that will be executed).
+- Added GitRepository.Branch and GitRepository.Remote properties for pass-through.
 - Deprecated -Target parameter in favor of passing targets as first argument to the bootstrapping scripts.
