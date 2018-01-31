@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common.Git;
 using Nuke.Common.Tools.DotNet;
@@ -32,6 +33,7 @@ class Build : NukeBuild
     [Parameter("Indicates to push to nuget.org feed.")] readonly bool NuGet;
     [Parameter("ApiKey for the specified source.")] readonly string ApiKey;
     [Parameter("Gitter authentication token")] readonly string GitterAuthToken;
+    [Parameter("Amount of changes to announce in Gitter.")] int? AnnounceChanges;
 
     string Source => NuGet
             ? "https://api.nuget.org/v3/index.json"
@@ -77,6 +79,8 @@ class Build : NukeBuild
     
     string ChangelogFile => RootDirectory / "CHANGELOG.md";
 
+    IEnumerable<string> ChangelogSectionNotes => ExtractChangelogSectionNotes(ChangelogFile);
+
     Target Changelog => _ => _
             .OnlyWhen(() => NuGet || InvokedTargets.Contains(nameof(Changelog)))
             .Executes(() =>
@@ -92,13 +96,10 @@ class Build : NukeBuild
             .DependsOn(Compile, Publish, Changelog)
             .Executes(() =>
             {
-                var sectionCaption = InvokedTargets.Contains(nameof(Changelog)) ? GitVersion.FullSemVer : null;
-                var sectionNotes = ExtractChangelogSectionNotes(ChangelogFile, sectionCaption);
-
-                var releaseNotes = sectionNotes
+                var releaseNotes = ChangelogSectionNotes
                         .Select(x => x.Replace("- ", "\u2022 "))
                         .Concat(string.Empty)
-                        .Concat($"Find the full changelog at {GitRepository.GetGitHubBrowseUrl(ChangelogFile)}")
+                        .Concat($"Full changelog at {GitRepository.GetGitHubBrowseUrl(ChangelogFile)}")
                         .JoinNewLine();
 
                 DotNetPack(s => DefaultDotNetPack
@@ -122,9 +123,19 @@ class Build : NukeBuild
                 if (NuGet)
                 {
                     SendGitterMessage(
-                            $"@/all [NUKE {GitVersion.SemVer}](https://www.nuget.org/packages/Nuke.Common/{GitVersion.SemVer}) has been published.",
-                            "593f3dadd73408ce4f66db89",
-                            GitterAuthToken);
+                        new[]
+                            {
+                                ":mega::shipit: @/all",
+                                string.Empty,
+                                $"**NUKE {GitVersion.SemVer} IS OUT!!!**",
+                                string.Empty,
+                                $"This release includes [{ChangelogSectionNotes.Count()} changes](https://www.nuget.org/packages/Nuke.Common/{GitVersion.SemVer}). Most notably, we have:"
+                            }.Concat(ChangelogSectionNotes
+                                .Take(AnnounceChanges ?? 4)
+                                .Select(x => x.Replace("- ", "* ")))
+                            .JoinNewLine(),
+                        "593f3dadd73408ce4f66db89",
+                        GitterAuthToken);
                 }
             });
 
