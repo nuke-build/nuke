@@ -97,7 +97,7 @@ class Build : NukeBuild
             .Executes(() =>
             {
                 var releaseNotes = ChangelogSectionNotes
-                        .Select(x => x.Replace("- ", "\u2022 "))
+                        .Select(x => x.Replace("- ", "\u2022 ").Replace("`", string.Empty))
                         .Concat(string.Empty)
                         .Concat($"Full changelog at {GitRepository.GetGitHubBrowseUrl(ChangelogFile)}")
                         .JoinNewLine();
