@@ -109,6 +109,7 @@ class Build : NukeBuild
     Target Push => _ => _
             .DependsOn(Pack)
             .Requires(() => ApiKey)
+            .Requires(() => !NuGet || ParameterSwitch("major") || ParameterSwitch("minor") || ParameterSwitch("patch"))
             .Requires(() => !NuGet || Configuration.EqualsOrdinalIgnoreCase("release"))
             .Requires(() => !NuGet || GitVersion.BranchName.Equals("master"))
             .Executes(() =>
