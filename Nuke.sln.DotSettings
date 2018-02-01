@@ -5,7 +5,7 @@
 	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=MissingXmlDoc/@EntryIndexedValue">DO_NOT_SHOW</s:String>
 	<s:Boolean x:Key="/Default/CodeInspection/ImplicitNullability/Enabled/@EntryValue">True</s:Boolean>
 	<s:String x:Key="/Default/CodeInspection/XmlDocInspections/TypeMemberAccessibility/@EntryValue">Public</s:String>
-	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">Copyright Matthias Koch 2017.&#xD;
+	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">Copyright Matthias Koch 2018.&#xD;
 Distributed under the MIT License.&#xD;
 https://github.com/nuke-build/nuke/blob/master/LICENSE</s:String>
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=971D2D0D6A22C84E9A514D1166017346/@KeyIndexDefined">True</s:Boolean>
