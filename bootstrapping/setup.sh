@@ -103,6 +103,8 @@ if [ $TARGET_PLATFORM_SELECTION == 0 ]; then
 fi
 
 if [ $TARGET_PLATFORM_SELECTION == 1 || $PROJECT_FORMAT_SELECTION == 1]; then
+  # NUKE_VERSION_ARRAY=(${NUKE_VERSION//./ })
+  # NUKE_VERSION="${NUKE_VERSION_ARRAY[0]}.${NUKE_VERSION_ARRAY[1]}.*"
   NUKE_VERSION=$(ReadWithDefault "NUKE framework version (use '*' for always latest)" $NUKE_VERSION)
 fi
 

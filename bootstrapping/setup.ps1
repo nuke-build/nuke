@@ -104,6 +104,8 @@ if ($TargetPlatformSelection -eq 0) {
 }
 
 if ($TargetPlatformSelection -eq 1 -or $ProjectFormatSelection -eq 1) {
+  # $NukeVersionArray = $NukeVersion.Split('.')
+  # $NukeVersion = "$($NukeVersionArray[0]).$($NukeVersionArray[1]).*"
   $NukeVersion = (ReadWithDefault "NUKE framework version (use '*' for always latest)" $NukeVersion)
 }
 
