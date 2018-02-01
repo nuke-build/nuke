@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -18,17 +18,17 @@ namespace Nuke.Common.ChangeLog
     public static class ChangelogTasks
     {
         [Pure]
-        public static IEnumerable<string> ExtractChangelogSectionNotes (string changelogFile, string tag = null)
+        public static IEnumerable<string> ExtractChangelogSectionNotes(string changelogFile, string tag = null)
         {
             var content = TextTasks.ReadAllLines(changelogFile).ToList();
             var sections = GetReleaseSections(content);
             var section = tag == null
-                    ? sections.First(x => x.StartIndex < x.EndIndex)
-                    : sections.First(x => x.Caption.EqualsOrdinalIgnoreCase(tag)).NotNull($"Could not find release section for '{tag}'.");
+                ? sections.First(x => x.StartIndex < x.EndIndex)
+                : sections.First(x => x.Caption.EqualsOrdinalIgnoreCase(tag)).NotNull($"Could not find release section for '{tag}'.");
 
             return content
-                    .Skip(section.StartIndex + 1)
-                    .Take(section.EndIndex - section.StartIndex);
+                .Skip(section.StartIndex + 1)
+                .Take(section.EndIndex - section.StartIndex);
         }
 
         public static void FinalizeChangelog(string changelogFile, string tag, GitRepository repository = null)
@@ -43,9 +43,9 @@ namespace Nuke.Common.ChangeLog
             ControlFlow.Assert(firstSection.Caption.All(char.IsLetter), "Cannot find a draft section.");
             ControlFlow.Assert(sections.All(x => !x.Caption.EqualsOrdinalIgnoreCase(tag)), $"Tag '{tag}' already exists.");
             ControlFlow.Assert(firstSection.EndIndex > firstSection.StartIndex,
-                    $"Draft section '{firstSection.Caption}' does not contain any information.");
+                $"Draft section '{firstSection.Caption}' does not contain any information.");
             ControlFlow.Assert(secondSection == null || string.Compare(secondSection.Caption, tag, StringComparison.Ordinal) < 0,
-                    $"Tag '{tag}' is not ascending compared to last tag '{secondSection?.Caption}'.");
+                $"Tag '{tag}' is not ascending compared to last tag '{secondSection?.Caption}'.");
 
             content.Insert(firstSection.StartIndex + 1, string.Empty);
             content.Insert(firstSection.StartIndex + 2, $"## [{tag}] / {DateTime.Now:yyyy-MM-dd}");
@@ -70,22 +70,22 @@ namespace Nuke.Common.ChangeLog
             TextTasks.WriteAllText(changelogFile, content);
         }
 
-        private static IEnumerable<ReleaseSection> GetReleaseSections (List<string> content)
+        private static IEnumerable<ReleaseSection> GetReleaseSections(List<string> content)
         {
             const string releaseHeadPrefix = "## ";
 
-            bool IsReleaseHead (string str)
+            bool IsReleaseHead(string str)
                 => str.StartsWith(releaseHeadPrefix);
 
-            bool IsReleaseContent (string str)
+            bool IsReleaseContent(string str)
                 => str.StartsWith("###") || str.Trim().StartsWith("-");
 
-            string GetCaption (string str)
+            string GetCaption(string str)
                 => str
-                        .TrimStart('#', ' ', '[')
-                        .Split(' ')
-                        .First()
-                        .TrimEnd(']');
+                    .TrimStart('#', ' ', '[')
+                    .Split(' ')
+                    .First()
+                    .TrimEnd(']');
 
             int GetTrimmedEndIndex(int endIndex)
             {
@@ -114,12 +114,12 @@ namespace Nuke.Common.ChangeLog
                     endIndex = content.Count - 1;
 
                 var releaseData =
-                        new ReleaseSection
-                        {
-                                Caption = caption,
-                                StartIndex = index,
-                                EndIndex = GetTrimmedEndIndex(endIndex)
-                        };
+                    new ReleaseSection
+                    {
+                        Caption = caption,
+                        StartIndex = index,
+                        EndIndex = GetTrimmedEndIndex(endIndex)
+                    };
 
                 yield return releaseData;
                 Logger.Trace($"Found section '{caption}' [{index}-{releaseData.EndIndex}].");

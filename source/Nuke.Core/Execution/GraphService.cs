@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,10 +13,10 @@ namespace Nuke.Core.Execution
 {
     internal static class GraphService
     {
-        public static void ShowGraph<T> (T build)
-                where T : NukeBuild
+        public static void ShowGraph<T>(T build)
+            where T : NukeBuild
         {
-            string GetStringFromStream (Stream stream)
+            string GetStringFromStream(Stream stream)
             {
                 using (var reader = new StreamReader(stream, Encoding.UTF8))
                 {
@@ -45,8 +45,8 @@ namespace Nuke.Core.Execution
             // Workaround for https://github.com/dotnet/corefx/issues/10361
             Process.Start(new ProcessStartInfo
                           {
-                                  FileName = path,
-                                  UseShellExecute = true
+                              FileName = path,
+                              UseShellExecute = true
                           });
         }
     }

@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -19,7 +19,7 @@ namespace Nuke.Common.IO
         [CanBeNull]
         public static NetworkCredential FtpCredentials { get; set; }
 
-        public static void FtpUploadDirectoryRecursively (string directory, string hostRoot)
+        public static void FtpUploadDirectoryRecursively(string directory, string hostRoot)
         {
             Logger.Info($"Uploading directory '{directory}' to '{hostRoot}'...");
 
@@ -34,12 +34,12 @@ namespace Nuke.Common.IO
             }
         }
 
-        public static void FtpUploadFile (string file, string hostDestination)
+        public static void FtpUploadFile(string file, string hostDestination)
         {
             FtpUploadFileInternal(file, hostDestination);
         }
 
-        private static void FtpUploadFileInternal (string file, string hostDestination, string prefix = null)
+        private static void FtpUploadFileInternal(string file, string hostDestination, string prefix = null)
         {
             Logger.Info($"{prefix}Uploading to '{hostDestination}'...");
 
@@ -62,7 +62,7 @@ namespace Nuke.Common.IO
             });
         }
 
-        public static void FtpMakeDirectory (string path)
+        public static void FtpMakeDirectory(string path)
         {
             var parentPath = GetParentPath(path);
             if (parentPath != path)
@@ -81,7 +81,7 @@ namespace Nuke.Common.IO
             }
         }
 
-        private static string GetParentPath (string path)
+        private static string GetParentPath(string path)
         {
             var uri = new Uri(path);
             return uri.AbsoluteUri.Remove(uri.AbsoluteUri.Length - uri.Segments.Last().Length);

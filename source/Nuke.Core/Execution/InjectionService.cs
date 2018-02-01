@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -11,11 +11,11 @@ namespace Nuke.Core.Execution
 {
     internal static class InjectionService
     {
-        public static void InjectValues (NukeBuild build)
+        public static void InjectValues(NukeBuild build)
         {
             var injectionMembers = build.GetType()
-                    .GetMembers(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-                    .Where(x => x.GetCustomAttributes<InjectionAttributeBase>().Any()).ToList();
+                .GetMembers(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+                .Where(x => x.GetCustomAttributes<InjectionAttributeBase>().Any()).ToList();
 
             var anyInjected = false;
 

@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -18,15 +18,11 @@ namespace Nuke.CodeGeneration.Model
         [JsonProperty("$schema")]
         public string Schema { get; set; } = "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json";
 
-        [JsonProperty]
-        public string[] License { get; set; }
+        [JsonProperty] public string[] License { get; set; }
 
-        [JsonIgnore]
-        public string DefinitionFile { get; set; }
-        [JsonIgnore]
-        public string GenerationFileBase { get; set; }
-        [JsonIgnore]
-        public string RepositoryUrl { get; set; }
+        [JsonIgnore] public string DefinitionFile { get; set; }
+        [JsonIgnore] public string GenerationFileBase { get; set; }
+        [JsonIgnore] public string RepositoryUrl { get; set; }
 
         public List<string> References { get; set; } = new List<string>();
 

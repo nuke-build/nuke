@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -17,7 +17,7 @@ namespace Nuke.Core.Execution
 {
     internal static class BuildExecutor
     {
-        public static int Execute<T> (Expression<Func<T, Target>> defaultTargetExpression)
+        public static int Execute<T>(Expression<Func<T, Target>> defaultTargetExpression)
             where T : NukeBuild
         {
             try
@@ -44,29 +44,29 @@ namespace Nuke.Core.Execution
             }
         }
 
-        private static IReadOnlyCollection<TargetDefinition> Setup<T> (Expression<Func<T, Target>> defaultTargetExpression)
+        private static IReadOnlyCollection<TargetDefinition> Setup<T>(Expression<Func<T, Target>> defaultTargetExpression)
             where T : NukeBuild
         {
             PrintLogo();
 
             var build = CreateBuildInstance(defaultTargetExpression);
-            
+
             HandleGraphAndHelp(build);
 
             var executionList = TargetDefinitionLoader.GetExecutionList(build);
             RequirementService.ValidateRequirements(executionList, build);
 
             var normalizedTargets = executionList
-                    .Where(x => build.InvokedTargets.Any(y => y.EqualsOrdinalIgnoreCase(x.Name)))
-                    .Select(x => x.Name);
+                .Where(x => build.InvokedTargets.Any(y => y.EqualsOrdinalIgnoreCase(x.Name)))
+                .Select(x => x.Name);
             PrivateInvoke.SetValue(build, nameof(NukeBuild.InvokedTargets), normalizedTargets.ToArray());
             PrivateInvoke.SetValue(build, nameof(NukeBuild.ExecutingTargets), executionList.Select(x => x.Name).ToArray());
 
             return executionList;
         }
 
-        private static void HandleGraphAndHelp<T> (T build)
-                where T : NukeBuild
+        private static void HandleGraphAndHelp<T>(T build)
+            where T : NukeBuild
         {
             if (build.Help == null)
                 return;
@@ -84,17 +84,17 @@ namespace Nuke.Core.Execution
                 Environment.Exit(exitCode: 0);
         }
 
-        private static T CreateBuildInstance<T> (Expression<Func<T, Target>> defaultTargetExpression)
-                where T : NukeBuild
+        private static T CreateBuildInstance<T>(Expression<Func<T, Target>> defaultTargetExpression)
+            where T : NukeBuild
         {
             var constructors = typeof(T).GetConstructors();
             ControlFlow.Assert(constructors.Length == 1 && constructors.Single().GetParameters().Length == 0,
-                    $"Type '{typeof(T).Name}' must declare a single parameterless constructor.");
+                $"Type '{typeof(T).Name}' must declare a single parameterless constructor.");
 
             var build = Activator.CreateInstance<T>();
             build.TargetDefinitions = build.GetTargetDefinitions(defaultTargetExpression);
             NukeBuild.Instance = build;
-            
+
             InjectionService.InjectValues(build);
 
             return build;

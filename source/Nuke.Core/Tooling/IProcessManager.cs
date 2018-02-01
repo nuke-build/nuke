@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,10 +13,10 @@ namespace Nuke.Core.Tooling
     public interface IProcessManager
     {
         [CanBeNull]
-        IProcess StartProcess (ToolSettings toolSettings, ProcessSettings processSettings = null);
+        IProcess StartProcess(ToolSettings toolSettings, ProcessSettings processSettings = null);
 
         [CanBeNull]
-        IProcess StartProcess (
+        IProcess StartProcess(
             string toolPath,
             string arguments = null,
             string workingDirectory = null,
@@ -25,6 +25,6 @@ namespace Nuke.Core.Tooling
             bool redirectOutput = false,
             Func<string, string> outputFilter = null);
 
-        CapturedProcessStartInfo CaptureProcessStartInfo (Action action);
+        CapturedProcessStartInfo CaptureProcessStartInfo(Action action);
     }
 }

@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -27,8 +27,10 @@ namespace Nuke.CodeGeneration.Model
 
         public string Name { get; set; }
         public string Type { get; set; }
+
         [JsonConverter(typeof(StringEnumConverter))]
         public AssertionType? Assertion { get; set; }
+
         public string Format { get; set; }
         public string ItemFormat { get; set; }
         public bool NoArgument { get; set; }

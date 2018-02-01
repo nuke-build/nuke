@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -15,7 +15,7 @@ namespace Nuke.Core.Tooling
     {
         ///<summary>Sets <see cref="ToolSettings.ToolPath"/> -- <inheritdoc cref="ToolSettings.ToolPath" /></summary>
         [Pure]
-        public static T SetToolPath<T> (this T toolSettings, [CanBeNull] string toolPath)
+        public static T SetToolPath<T>(this T toolSettings, [CanBeNull] string toolPath)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
@@ -25,7 +25,7 @@ namespace Nuke.Core.Tooling
 
         ///<summary>Sets <see cref="ToolSettings.WorkingDirectory"/> -- <inheritdoc cref="ToolSettings.WorkingDirectory" /></summary>
         [Pure]
-        public static T SetWorkingDirectory<T> (this T toolSettings, [CanBeNull] string workingDirectory)
+        public static T SetWorkingDirectory<T>(this T toolSettings, [CanBeNull] string workingDirectory)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
@@ -35,7 +35,7 @@ namespace Nuke.Core.Tooling
 
         ///<summary>Sets <see cref="ToolSettings.ArgumentConfigurator"/> -- <inheritdoc cref="ToolSettings.ArgumentConfigurator" /></summary>
         [Pure]
-        public static T SetArgumentConfigurator<T> (this T toolSettings, [CanBeNull] Func<Arguments, Arguments> argumentConfigurator)
+        public static T SetArgumentConfigurator<T>(this T toolSettings, [CanBeNull] Func<Arguments, Arguments> argumentConfigurator)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();

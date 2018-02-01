@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -20,7 +20,7 @@ namespace Nuke.Common.Tools.GitVersion
         public static GitVersion Value { get; private set; }
 
         [CanBeNull]
-        public override object GetStaticValue ()
+        public override object GetStaticValue()
         {
             if (Value != null)
                 return Value;
@@ -43,15 +43,15 @@ namespace Nuke.Common.Tools.GitVersion
             return Value = version;
         }
 
-        private static GitVersion GetVersion ()
+        private static GitVersion GetVersion()
         {
             return GitVersionTasks.GitVersion(
-                    s => GitVersionTasks.DefaultGitVersion,
-                    new ProcessSettings().EnableRedirectOutput());
+                s => GitVersionTasks.DefaultGitVersion,
+                new ProcessSettings().EnableRedirectOutput());
         }
 
         [CanBeNull]
-        private static string GetTag (GitVersion version)
+        private static string GetTag(GitVersion version)
         {
             if (!EnvironmentInfo.ParameterSwitch("major") &&
                 !EnvironmentInfo.ParameterSwitch("minor"))
@@ -59,10 +59,9 @@ namespace Nuke.Common.Tools.GitVersion
 
             ControlFlow.Assert(version.BranchName.Equals("master"), "Version can only be bumped on master branch.");
 
-            return EnvironmentInfo.ParameterSwitch("major") 
-                    ? $"{version.Major + 1}.0.0" 
-                    : $"{version.Major}.{version.Minor + 1}.0";
-
+            return EnvironmentInfo.ParameterSwitch("major")
+                ? $"{version.Major + 1}.0.0"
+                : $"{version.Major}.{version.Minor + 1}.0";
         }
     }
 }

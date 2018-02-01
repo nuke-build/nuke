@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -11,15 +11,15 @@ namespace Nuke.Core.Execution
 {
     internal static class PrivateInvoke
     {
-        public static void SetValue (NukeBuild build, string memberName, object value)
+        public static void SetValue(NukeBuild build, string memberName, object value)
         {
             var member = build.GetType().GetMember(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-                    .SingleOrDefault()
-                    .NotNull($"Could not find member '{memberName}' on type '{build.GetType()}'.");
+                .SingleOrDefault()
+                .NotNull($"Could not find member '{memberName}' on type '{build.GetType()}'.");
             SetValue(build, member, value);
         }
 
-        public static void SetValue (NukeBuild build, MemberInfo member, object value)
+        public static void SetValue(NukeBuild build, MemberInfo member, object value)
         {
             if (member is FieldInfo field)
             {
@@ -28,8 +28,8 @@ namespace Nuke.Core.Execution
             else if (member is PropertyInfo property)
             {
                 var backingField = build.GetType().DescendantsAndSelf(x => x.GetTypeInfo().BaseType)
-                        .SelectMany(x => x.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance))
-                        .SingleOrDefault(x => x.Name.StartsWith($"<{member.Name}>"));
+                    .SelectMany(x => x.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance))
+                    .SingleOrDefault(x => x.Name.StartsWith($"<{member.Name}>"));
 
                 if (backingField != null)
                 {

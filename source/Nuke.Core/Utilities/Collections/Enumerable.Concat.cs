@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -17,7 +17,7 @@ namespace Nuke.Core.Utilities.Collections
     [DebuggerStepThrough]
     public static partial class EnumerableExtensions
     {
-        public static IEnumerable<T> Concat<T> ([CanBeNull] this T obj, IEnumerable<T> enumerable)
+        public static IEnumerable<T> Concat<T>([CanBeNull] this T obj, IEnumerable<T> enumerable)
         {
             yield return obj;
 
@@ -25,7 +25,7 @@ namespace Nuke.Core.Utilities.Collections
                 yield return element;
         }
 
-        public static IEnumerable<T> Concat<T> (this IEnumerable<T> enumerable, params T[] others)
+        public static IEnumerable<T> Concat<T>(this IEnumerable<T> enumerable, params T[] others)
         {
             foreach (var element in enumerable)
                 yield return element;

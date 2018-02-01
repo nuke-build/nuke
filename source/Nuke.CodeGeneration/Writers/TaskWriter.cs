@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -10,7 +10,7 @@ namespace Nuke.CodeGeneration.Writers
 {
     public class TaskWriter : IWriterWrapper
     {
-        public TaskWriter (Task task, ToolWriter toolWriter)
+        public TaskWriter(Task task, ToolWriter toolWriter)
         {
             Task = task;
             Writer = toolWriter;

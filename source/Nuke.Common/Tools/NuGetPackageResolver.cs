@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -26,15 +26,15 @@ namespace Nuke.Common.Tools
         }
 
         [CanBeNull]
-        public static InstalledPackage GetLocalInstalledPackage (string packageId, string packagesConfigFile = null)
+        public static InstalledPackage GetLocalInstalledPackage(string packageId, string packagesConfigFile = null)
         {
             return GetLocalInstalledPackages(packagesConfigFile)
-                    .FirstOrDefault(x => x.Id.EqualsOrdinalIgnoreCase(packageId));
+                .FirstOrDefault(x => x.Id.EqualsOrdinalIgnoreCase(packageId));
         }
 
         // TODO: add HasLocalInstalledPackage() ?
         // ReSharper disable once CyclomaticComplexity
-        public static IEnumerable<InstalledPackage> GetLocalInstalledPackages (
+        public static IEnumerable<InstalledPackage> GetLocalInstalledPackages(
             string packagesConfigFile = null,
             bool includeDependencies = false)
         {
@@ -54,11 +54,11 @@ namespace Nuke.Common.Tools
             {
                 // TODO: version as tag
                 var version = XmlTasks.XmlPeekSingle(
-                            packagesConfigFile,
-                            IsLegacyFile(packagesConfigFile)
-                                ? $".//package[@id='{packageId}']/@version"
-                                : $".//*[local-name() = 'PackageReference'][@Include='{packageId}']/@Version")
-                        .NotNull("version != null");
+                        packagesConfigFile,
+                        IsLegacyFile(packagesConfigFile)
+                            ? $".//package[@id='{packageId}']/@version"
+                            : $".//*[local-name() = 'PackageReference'][@Include='{packageId}']/@Version")
+                    .NotNull("version != null");
 
                 var packageData = GetGlobalInstalledPackage(packageId, version, packagesDirectory);
                 if (packageData == null)
@@ -89,17 +89,17 @@ namespace Nuke.Common.Tools
             }
         }
 
-        private static IEnumerable<InstalledPackage> GetDependentPackages (InstalledPackage packageToCheck, string packagesDirectory)
+        private static IEnumerable<InstalledPackage> GetDependentPackages(InstalledPackage packageToCheck, string packagesDirectory)
         {
             return packageToCheck.Metadata.GetDependencyGroups()
-                    .SelectMany(x => x.Packages)
-                    .Select(x => GetGlobalInstalledPackage(x.Id, x.VersionRange, packagesDirectory))
-                    .WhereNotNull()
-                    .Distinct(x => new { x.Id, x.Version });
+                .SelectMany(x => x.Packages)
+                .Select(x => GetGlobalInstalledPackage(x.Id, x.VersionRange, packagesDirectory))
+                .WhereNotNull()
+                .Distinct(x => new { x.Id, x.Version });
         }
 
         [CanBeNull]
-        public static InstalledPackage GetGlobalInstalledPackage (string packageId, string version = null, string packagesDirectory = null)
+        public static InstalledPackage GetGlobalInstalledPackage(string packageId, string version = null, string packagesDirectory = null)
         {
             VersionRange.TryParse(version != null && version.Contains("*") ? $"{version}" : $"[{version}]", out var versionRange);
             return GetGlobalInstalledPackage(packageId, versionRange, packagesDirectory);
@@ -108,7 +108,7 @@ namespace Nuke.Common.Tools
         // TODO: add parameter for auto download?
         // TODO: add parameter for highest/lowest?
         [CanBeNull]
-        public static InstalledPackage GetGlobalInstalledPackage (
+        public static InstalledPackage GetGlobalInstalledPackage(
             string packageId,
             VersionRange versionRange = null,
             string packagesDirectory = null,
@@ -119,19 +119,19 @@ namespace Nuke.Common.Tools
 
             var packagesDirectoryInfo = new DirectoryInfo(packagesDirectory);
             var packageFiles = packagesDirectoryInfo
-                    .GetDirectories(packageId)
-                    .SelectMany(x => x.GetDirectories())
-                    .SelectMany(x => x.GetFiles($"{packageId}*.nupkg"))
-                    .Concat(packagesDirectoryInfo
-                            .GetDirectories($"{packageId}*")
-                            .SelectMany(x => x.GetFiles($"{packageId}*.nupkg")))
-                    .Select(x => x.FullName);
+                .GetDirectories(packageId)
+                .SelectMany(x => x.GetDirectories())
+                .SelectMany(x => x.GetFiles($"{packageId}*.nupkg"))
+                .Concat(packagesDirectoryInfo
+                    .GetDirectories($"{packageId}*")
+                    .SelectMany(x => x.GetFiles($"{packageId}*.nupkg")))
+                .Select(x => x.FullName);
 
             var candidatePackages = packageFiles.Select(x => new InstalledPackage(x))
-                    .Where(x => x.Id.EqualsOrdinalIgnoreCase(packageId)) // packageFiles can contain wrong packages
-                    .Where(x => !x.Version.IsPrerelease || !includePrereleases.HasValue || includePrereleases.Value)
-                    .OrderByDescending(x => x.Version)
-                    .ToList();
+                .Where(x => x.Id.EqualsOrdinalIgnoreCase(packageId)) // packageFiles can contain wrong packages
+                .Where(x => !x.Version.IsPrerelease || !includePrereleases.HasValue || includePrereleases.Value)
+                .OrderByDescending(x => x.Version)
+                .ToList();
 
             return versionRange == null
                 ? candidatePackages.FirstOrDefault()
@@ -141,16 +141,16 @@ namespace Nuke.Common.Tools
 
         // TODO: support for multiple projects per folder
         [CanBeNull]
-        private static string GetPackageConfigFile (string projectDirectory)
+        private static string GetPackageConfigFile(string projectDirectory)
         {
             var projectDirectoryInfo = new DirectoryInfo(projectDirectory);
-            return (projectDirectoryInfo.GetFiles("packages.config").SingleOrDefault() ??
-                    projectDirectoryInfo.GetFiles("*.csproj").SingleOrDefault())
-                    ?.FullName;
+            var packageConfigFile = projectDirectoryInfo.GetFiles("packages.config").SingleOrDefault()
+                                    ?? projectDirectoryInfo.GetFiles("*.csproj").SingleOrDefault();
+            return packageConfigFile?.FullName;
         }
 
         // TODO: check for config ( repositoryPath / globalPackagesFolder )
-        public static string GetPackagesDirectory (string packagesConfigFile)
+        public static string GetPackagesDirectory(string packagesConfigFile)
         {
             var packagesDirectory = EnvironmentInfo.Variable("NUGET_PACKAGES");
             if (packagesDirectory != null)
@@ -159,7 +159,7 @@ namespace Nuke.Common.Tools
             if (!IsLegacyFile(packagesConfigFile))
                 return Path.Combine(
                     EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile)
-                            .NotNull("EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile) != null"),
+                        .NotNull("EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile) != null"),
                     ".nuget",
                     "packages");
 
@@ -167,29 +167,29 @@ namespace Nuke.Common.Tools
                 return Path.Combine(Path.GetDirectoryName(NukeBuild.Instance.SolutionFile).NotNull(), "packages");
 
             packagesDirectory = new FileInfo(packagesConfigFile).Directory.NotNull()
-                    .DescendantsAndSelf(x => x.Parent)
-                    .SingleOrDefault(x => x.GetFiles("*.sln").Any() && x.GetDirectories("packages").Any())
-                    ?.FullName;
+                .DescendantsAndSelf(x => x.Parent)
+                .SingleOrDefault(x => x.GetFiles("*.sln").Any() && x.GetDirectories("packages").Any())
+                ?.FullName;
 
             return packagesDirectory.NotNull("GetPackagesDirectory != null");
         }
 
-        public static string GetBuildPackagesConfigFile ()
+        public static string GetBuildPackagesConfigFile()
         {
             var assemblyLocation = EnvironmentInfo.BuildAssembly.Location.NotNull();
             return new DirectoryInfo(Path.GetDirectoryName(assemblyLocation).NotNull())
-                    .DescendantsAndSelf(x => x.Parent)
-                    .Select(x => GetPackageConfigFile(x.FullName))
-                    .FirstOrDefault(x => x != null)
-                    .NotNull("GetBuildPackagesConfigFile != null");
+                .DescendantsAndSelf(x => x.Parent)
+                .Select(x => GetPackageConfigFile(x.FullName))
+                .FirstOrDefault(x => x != null)
+                .NotNull("GetBuildPackagesConfigFile != null");
         }
 
-        private static bool IsLegacyFile (string packagesConfigFile)
+        private static bool IsLegacyFile(string packagesConfigFile)
         {
             return packagesConfigFile.EndsWith(".config");
         }
 
-        private static bool IncludesDependencies (string packagesConfigFile)
+        private static bool IncludesDependencies(string packagesConfigFile)
         {
             return IsLegacyFile(packagesConfigFile);
         }
@@ -201,7 +201,7 @@ namespace Nuke.Common.Tools
             {
                 public static readonly Comparer Instance = new Comparer();
 
-                public bool Equals ([CanBeNull] InstalledPackage x, [CanBeNull] InstalledPackage y)
+                public bool Equals([CanBeNull] InstalledPackage x, [CanBeNull] InstalledPackage y)
                 {
                     if (ReferenceEquals(x, y))
                         return true;
@@ -214,13 +214,13 @@ namespace Nuke.Common.Tools
                     return Equals(x.Id, y.Id) && Equals(x.Version, y.Version);
                 }
 
-                public int GetHashCode ([NotNull] InstalledPackage obj)
+                public int GetHashCode([NotNull] InstalledPackage obj)
                 {
                     return obj.Id.GetHashCode();
                 }
             }
 
-            public InstalledPackage (string fileName)
+            public InstalledPackage(string fileName)
             {
                 FileName = fileName;
                 Metadata = new PackageArchiveReader(fileName).NuspecReader;
@@ -231,7 +231,7 @@ namespace Nuke.Common.Tools
             public string Id => Metadata.GetIdentity().Id;
             public NuGetVersion Version => Metadata.GetIdentity().Version;
 
-            public override string ToString ()
+            public override string ToString()
             {
                 return $"{Id}.{Version.ToFullString()}";
             }

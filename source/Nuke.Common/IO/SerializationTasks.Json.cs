@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -14,19 +14,19 @@ namespace Nuke.Common.IO
     [PublicAPI]
     public static partial class SerializationTasks
     {
-        public static void JsonSerializeToFile (object obj, string path)
+        public static void JsonSerializeToFile(object obj, string path)
         {
             File.WriteAllText(path, JsonSerialize(obj));
         }
 
         [Pure]
-        public static T JsonDeserializeFromFile<T> (string path)
+        public static T JsonDeserializeFromFile<T>(string path)
         {
             return JsonDeserialize<T>(File.ReadAllText(path));
         }
 
         [Pure]
-        public static string JsonSerialize<T> (T obj, Configure<JsonSerializerSettings> configurator = null)
+        public static string JsonSerialize<T>(T obj, Configure<JsonSerializerSettings> configurator = null)
         {
             configurator = configurator ?? (x => x);
             var settings = new JsonSerializerSettings
@@ -41,7 +41,7 @@ namespace Nuke.Common.IO
         }
 
         [Pure]
-        public static T JsonDeserialize<T> (string content, Configure<JsonSerializerSettings> configurator = null)
+        public static T JsonDeserialize<T>(string content, Configure<JsonSerializerSettings> configurator = null)
         {
             var settings = configurator.InvokeSafe(
                 new JsonSerializerSettings

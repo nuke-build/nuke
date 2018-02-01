@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,8 +13,8 @@ namespace Nuke.Core.Execution
 {
     internal static class HelpTextService
     {
-        public static string GetTargetsText<T> (T build)
-                where T : NukeBuild
+        public static string GetTargetsText<T>(T build)
+            where T : NukeBuild
         {
             var builder = new StringBuilder();
 
@@ -25,8 +25,8 @@ namespace Nuke.Core.Execution
             foreach (var target in build.TargetDefinitions)
             {
                 var dependencies = target.TargetDefinitionDependencies.Count > 0
-                        ? $" -> {target.TargetDefinitionDependencies.Select(x => x.Name).JoinComma()}"
-                        : string.Empty;
+                    ? $" -> {target.TargetDefinitionDependencies.Select(x => x.Name).JoinComma()}"
+                    : string.Empty;
                 var targetEntry = target.Name + (target.IsDefault ? " (default)" : string.Empty);
                 builder.AppendLine($"  {targetEntry.PadRight(padRightTargets)}{dependencies}");
                 if (!string.IsNullOrWhiteSpace(target.Description))
@@ -36,8 +36,8 @@ namespace Nuke.Core.Execution
             return builder.ToString();
         }
 
-        public static string GetParametersText<T> (T build)
-                where T : NukeBuild
+        public static string GetParametersText<T>(T build)
+            where T : NukeBuild
         {
             var defaultTarget = build.TargetDefinitions.Single(x => x.IsDefault);
             var builder = new StringBuilder();
@@ -45,12 +45,12 @@ namespace Nuke.Core.Execution
             var parameters = build.GetParameterMembers().OrderBy(x => x.Name).ToList();
             var padRightParameter = Math.Max(parameters.Max(x => x.Name.Length), val2: 17);
 
-            void PrintParameter (MemberInfo parameter)
+            void PrintParameter(MemberInfo parameter)
             {
                 var attribute = parameter.GetCustomAttribute<ParameterAttribute>();
                 var description = SplitLines(
-                        attribute.Description?.Replace("{default_target}", defaultTarget.Name)
-                        ?? "<no description>");
+                    attribute.Description?.Replace("{default_target}", defaultTarget.Name)
+                    ?? "<no description>");
                 builder.AppendLine($"  -{(attribute.Name ?? parameter.Name).PadRight(padRightParameter)}  {description.First()}");
                 foreach (var line in description.Skip(count: 1))
                     builder.AppendLine($"{new string(c: ' ', count: padRightParameter + 5)}{line}");
@@ -73,7 +73,7 @@ namespace Nuke.Core.Execution
             return builder.ToString();
         }
 
-        private static List<string> SplitLines (string text)
+        private static List<string> SplitLines(string text)
         {
             var words = new Queue<string>(text.Split(' ').ToList());
             var lines = new List<string> { string.Empty };

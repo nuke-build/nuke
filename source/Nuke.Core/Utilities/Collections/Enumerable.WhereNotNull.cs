@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -10,7 +10,7 @@ namespace Nuke.Core.Utilities.Collections
 {
     public static partial class EnumerableExtensions
     {
-        public static IEnumerable<T> WhereNotNull<T> (this IEnumerable<T> enumerable)
+        public static IEnumerable<T> WhereNotNull<T>(this IEnumerable<T> enumerable)
             where T : class
         {
             return enumerable.Where(x => x != null);

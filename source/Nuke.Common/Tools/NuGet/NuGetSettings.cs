@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -14,8 +14,8 @@ namespace Nuke.Common.Tools.NuGet
     public class NuGetSettings : ToolSettings
     {
         public override string ToolPath =>
-                base.ToolPath
-                ?? ToolPathResolver.TryGetEnvironmentExecutable("NUGET_EXE")
-                ?? Path.Combine(NukeBuild.Instance.TemporaryDirectory, "nuget.exe");
+            base.ToolPath
+            ?? ToolPathResolver.TryGetEnvironmentExecutable("NUGET_EXE")
+            ?? Path.Combine(NukeBuild.Instance.TemporaryDirectory, "nuget.exe");
     }
 }

@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -16,7 +16,7 @@ namespace Nuke.Core.Injection
         private const BindingFlags c_bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
 
         [CanBeNull]
-        public static T GetStaticValue<T> ()
+        public static T GetStaticValue<T>()
         {
             var fieldsWithAttributes = (
                 from field in NukeBuild.Instance.GetType().GetFields(c_bindingFlags)
@@ -27,8 +27,8 @@ namespace Nuke.Core.Injection
                 return default(T);
             ControlFlow.Assert(fieldsWithAttributes.Count == 1,
                 new[] { $"Requested value of type '{typeof(T).Name}' has multiple matching fields:" }
-                        .Concat(fieldsWithAttributes.Select(x => $"  - {x.Field.Name} ({x.Attribute.GetType().Name})"))
-                        .JoinNewLine());
+                    .Concat(fieldsWithAttributes.Select(x => $"  - {x.Field.Name} ({x.Attribute.GetType().Name})"))
+                    .JoinNewLine());
 
             var fieldWithAttribute = fieldsWithAttributes.Single();
             return (T) fieldWithAttribute.Attribute.GetStaticValue();

@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -38,7 +38,7 @@ namespace Nuke.Core
     {
         private static readonly ParameterService s_parameterService = new ParameterService();
 
-        public ParameterAttribute (string description = null)
+        public ParameterAttribute(string description = null)
         {
             Description = description;
         }
@@ -50,7 +50,7 @@ namespace Nuke.Core
         public string Separator { get; set; }
 
         [CanBeNull]
-        public override object GetValue (string memberName, Type memberType)
+        public override object GetValue(string memberName, Type memberType)
         {
             memberType = Nullable.GetUnderlyingType(memberType) == null
                          && memberType != typeof(string)

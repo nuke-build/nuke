@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -28,7 +28,7 @@ namespace Nuke.Common.Git
         }
 
         /// <summary>Url in the form of <c>https://raw.githubusercontent.com/{identifier}/blob/{branch}/{file}</c>.</summary>
-        public static string GetGitHubDownloadUrl (this GitRepository repository, string file, string branch = null)
+        public static string GetGitHubDownloadUrl(this GitRepository repository, string file, string branch = null)
         {
             branch = branch ?? repository.Branch.NotNull("repository.Branch != null");
             var fileRelative = GetRepositoryRelativePath(file, repository);
@@ -39,7 +39,7 @@ namespace Nuke.Common.Git
         /// Url in the form of <c>https://github.com/{identifier}/tree/{branch}/directory</c> or
         /// <c>https://github.com/{identifier}/blob/{branch}/file</c> depending on the item type.
         /// </summary>
-        public static string GetGitHubBrowseUrl (
+        public static string GetGitHubBrowseUrl(
             this GitRepository repository,
             string path = null,
             string branch = null,
@@ -54,7 +54,7 @@ namespace Nuke.Common.Git
         }
 
         [CanBeNull]
-        private static string GetMethod ([CanBeNull] string relativePath, GitHubItemType itemType, GitRepository repository)
+        private static string GetMethod([CanBeNull] string relativePath, GitHubItemType itemType, GitRepository repository)
         {
             var absolutePath = repository.LocalDirectory != null && relativePath != null
                 ? Path.Combine(repository.LocalDirectory, relativePath)
@@ -70,7 +70,7 @@ namespace Nuke.Common.Git
         }
 
         [ContractAnnotation("path: null => null; path: notnull => notnull")]
-        private static string GetRepositoryRelativePath ([CanBeNull] string path, GitRepository repository)
+        private static string GetRepositoryRelativePath([CanBeNull] string path, GitRepository repository)
         {
             if (path == null)
                 return null;

@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -23,33 +23,33 @@ namespace Nuke.CodeGeneration.Generators
         {
             return property.IsValueType() ? property.Type + "?" : property.Type.Trim('!');
         }
-        
-        public static string GetCrefTag (this Property property)
+
+        public static string GetCrefTag(this Property property)
         {
             return $"<see cref={$"{property.DataClass.Name}.{property.Name}".DoubleQuote()}/>";
         }
 
-        public static string GetListValueType (this Property property)
+        public static string GetListValueType(this Property property)
         {
             ControlFlow.Assert(property.IsList(), "property.IsList()");
-            return GetGenerics(property).Single ();
+            return GetGenerics(property).Single();
         }
 
-        public static (string, string) GetDictionaryKeyValueTypes (this Property property)
+        public static (string, string) GetDictionaryKeyValueTypes(this Property property)
         {
             ControlFlow.Assert(property.IsDictionary(), "property.IsDictionary()");
             var generics = GetGenerics(property);
             return (generics[0], generics[1]);
         }
 
-        public static (string, string) GetLookupTableKeyValueTypes (this Property property)
+        public static (string, string) GetLookupTableKeyValueTypes(this Property property)
         {
             ControlFlow.Assert(property.IsLookupTable(), "property.IsLookupTable()");
-            var generics = GetGenerics (property);
+            var generics = GetGenerics(property);
             return (generics[0], generics[1]);
         }
 
-        public static string GetKeyComparer (this Property property)
+        public static string GetKeyComparer(this Property property)
         {
             ControlFlow.Assert(property.IsDictionary() || property.IsLookupTable(), "property.IsDictionary() || property.IsLookupTable()");
             var keyType = GetGenerics(property).First();
@@ -59,54 +59,54 @@ namespace Nuke.CodeGeneration.Generators
                 : $"EqualityComparer<{keyType}>.Default";
         }
 
-        private static string[] GetGenerics (Property property)
+        private static string[] GetGenerics(Property property)
         {
             var match = Regex.Match(property.Type, ".*<(?<generics>.*)>");
             return match.Groups["generics"].Value.Split(',').Select(x => x.Trim()).ToArray();
         }
 
-        public static bool IsList (this Property property)
+        public static bool IsList(this Property property)
         {
             return property.Type.StartsWith("List");
         }
 
-        public static bool IsDictionary (this Property property)
+        public static bool IsDictionary(this Property property)
         {
             return property.Type.StartsWith("Dictionary");
         }
 
-        public static bool IsLookupTable (this Property property)
+        public static bool IsLookupTable(this Property property)
         {
             return property.Type.StartsWith("LookupTable");
         }
 
-        public static bool IsBoolean (this Property property)
+        public static bool IsBoolean(this Property property)
         {
             return property.Type.StartsWith("bool");
         }
 
-        public static string GetNullabilityAttribute (this Property property)
+        public static string GetNullabilityAttribute(this Property property)
         {
             var isOptional = property.Assertion.ToString().StartsWith("NullOr");
             return isOptional ? "[CanBeNull] " : string.Empty;
         }
 
-        public static string GetClassName (this Tool tool)
+        public static string GetClassName(this Tool tool)
         {
             return $"{tool.Name}Tasks";
         }
 
-        public static string GetTaskMethodName (this Task task)
+        public static string GetTaskMethodName(this Task task)
         {
             return $"{task.Tool.Name}{task.Postfix}";
         }
 
-        public static string GetReturnType (this Task task)
+        public static string GetReturnType(this Task task)
         {
             return task.ReturnType ?? "void";
         }
 
-        public static bool HasReturnValue (this Task task)
+        public static bool HasReturnValue(this Task task)
         {
             return task.GetReturnType() != "void";
         }

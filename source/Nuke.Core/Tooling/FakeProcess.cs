@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -10,7 +10,7 @@ namespace Nuke.Core.Tooling
 {
     internal class FakeProcess : IProcess
     {
-        public void Dispose ()
+        public void Dispose()
         {
         }
 
@@ -24,11 +24,11 @@ namespace Nuke.Core.Tooling
 
         public int ExitCode => 0;
 
-        public void Kill ()
+        public void Kill()
         {
         }
 
-        public bool WaitForExit ()
+        public bool WaitForExit()
         {
             return true;
         }

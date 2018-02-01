@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -11,7 +11,7 @@ namespace Nuke.Common.Tools.NuGet
 {
     partial class NuGetPackage
     {
-        public static NuGetPackage LoadFrom (string fileName)
+        public static NuGetPackage LoadFrom(string fileName)
         {
             using (var stream = File.OpenRead(fileName))
             {
@@ -19,7 +19,7 @@ namespace Nuke.Common.Tools.NuGet
             }
         }
 
-        public static NuGetPackage LoadFrom (Manifest manifest)
+        public static NuGetPackage LoadFrom(Manifest manifest)
         {
             return NuGetPackageMapper.Map(manifest);
         }

@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -44,7 +44,7 @@ namespace Nuke.Core.Tooling
         /// <summary>
         /// Calls <see cref="Process.Kill"/>.
         /// </summary>
-        void Kill ();
+        void Kill();
 
         /// <summary>
         /// Waits for the process to exit. The timeout is provided via <see cref="ProcessTasks.StartProcess(string,string,string,System.Collections.Generic.IReadOnlyDictionary{string,string},System.Nullable{int},bool,System.Func{string,string})"/> or <see cref="ToolSettings"/>.
@@ -53,6 +53,6 @@ namespace Nuke.Core.Tooling
         /// <returns>
         /// Returns <c>true</c>, if the process exited on its own.
         /// </returns>
-        bool WaitForExit ();
+        bool WaitForExit();
     }
 }

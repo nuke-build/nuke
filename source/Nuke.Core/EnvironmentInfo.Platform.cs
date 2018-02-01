@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -98,10 +98,10 @@ namespace Nuke.Core
         private static class MacOSX
         {
             [DllImport("libc")]
-            private static extern int uname (IntPtr buf);
+            private static extern int uname(IntPtr buf);
 
             // ReSharper disable once CyclomaticComplexity
-            public static bool IsRunningOnMac ()
+            public static bool IsRunningOnMac()
             {
                 try
                 {

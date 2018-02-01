@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -22,6 +22,6 @@ namespace Nuke.Core.Injection
     public abstract class InjectionAttributeBase : Attribute
     {
         [CanBeNull]
-        public abstract object GetValue (string memberName, Type memberType);
+        public abstract object GetValue(string memberName, Type memberType);
     }
 }

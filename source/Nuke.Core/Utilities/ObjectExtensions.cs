@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -16,7 +16,7 @@ namespace Nuke.Core.Utilities
     [DebuggerStepThrough]
     public static class ObjectExtensions
     {
-        public static T Clone<T> (this T obj)
+        public static T Clone<T>(this T obj)
         {
             using (var memoryStream = new MemoryStream())
             {

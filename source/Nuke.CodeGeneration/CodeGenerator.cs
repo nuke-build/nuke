@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -26,7 +26,7 @@ namespace Nuke.CodeGeneration
     [PublicAPI]
     public class CodeGenerator
     {
-        public static void GenerateCode (
+        public static void GenerateCode(
             string metadataDirectory,
             string generationBaseDirectory,
             bool useNestedNamespaces = false,
@@ -34,21 +34,21 @@ namespace Nuke.CodeGeneration
             GitRepository gitRepository = null)
         {
             new CodeGenerator(
-                        Directory.GetFiles(metadataDirectory, "*.json", SearchOption.TopDirectoryOnly),
-                        generationBaseDirectory,
-                        useNestedNamespaces,
-                        baseNamespace,
-                        gitRepository)
-                    .Execute();
+                    Directory.GetFiles(metadataDirectory, "*.json", SearchOption.TopDirectoryOnly),
+                    generationBaseDirectory,
+                    useNestedNamespaces,
+                    baseNamespace,
+                    gitRepository)
+                .Execute();
         }
-        
+
         private readonly List<string> _metadataFiles;
         private readonly string _baseDirectory;
         private readonly bool _useNestedNamespaces;
         private readonly string _baseNamespace;
         private readonly GitRepository _repository;
 
-        public CodeGenerator (
+        public CodeGenerator(
             IReadOnlyCollection<string> metadataFiles,
             string baseDirectory,
             bool useNestedNamespaces,
@@ -94,7 +94,7 @@ namespace Nuke.CodeGeneration
         }
 
         [CanBeNull]
-        private string GetNamespace (Tool tool)
+        private string GetNamespace(Tool tool)
         {
             return !_useNestedNamespaces
                 ? _baseNamespace
@@ -103,7 +103,7 @@ namespace Nuke.CodeGeneration
                     : $"{_baseNamespace}.{tool.Name}";
         }
 
-        private Tool Load (string file)
+        private Tool Load(string file)
         {
             var content = File.ReadAllText(file);
             var tool = JsonConvert.DeserializeObject<Tool>(content);
@@ -119,7 +119,7 @@ namespace Nuke.CodeGeneration
         }
 
         // ReSharper disable once CyclomaticComplexity
-        private void ApplyBackReferences (Tool tool)
+        private void ApplyBackReferences(Tool tool)
         {
             foreach (var task in tool.Tasks)
             {
@@ -133,6 +133,7 @@ namespace Nuke.CodeGeneration
                         delegateProperty.DataClass = task.SettingsClass;
                 }
             }
+
             foreach (var dataClass in tool.DataClasses)
             {
                 dataClass.Tool = tool;
@@ -143,11 +144,12 @@ namespace Nuke.CodeGeneration
                         delegateProperty.DataClass = dataClass;
                 }
             }
+
             foreach (var enumeration in tool.Enumerations)
                 enumeration.Tool = tool;
         }
 
-        private async System.Threading.Tasks.Task UpdateReference (string reference, Tool tool)
+        private async System.Threading.Tasks.Task UpdateReference(string reference, Tool tool)
         {
             var index = tool.References.IndexOf(reference);
             try
@@ -159,12 +161,12 @@ namespace Nuke.CodeGeneration
             }
             catch (Exception exception)
             {
-                Logger.Error($"Couldn't update {Path.GetFileName (tool.DefinitionFile)}#{index}: {reference}");
+                Logger.Error($"Couldn't update {Path.GetFileName(tool.DefinitionFile)}#{index}: {reference}");
                 Logger.Error(exception.Message);
             }
         }
 
-        private void Save (Tool tool)
+        private void Save(Tool tool)
         {
             var content = JsonConvert.SerializeObject(
                 tool,
@@ -183,7 +185,7 @@ namespace Nuke.CodeGeneration
             File.WriteAllText(tool.DefinitionFile + postfix, content);
         }
 
-        private async Task<string> GetReferenceContent (string reference)
+        private async Task<string> GetReferenceContent(string reference)
         {
             var referenceValues = reference.Split('#');
 
@@ -205,7 +207,7 @@ namespace Nuke.CodeGeneration
 
         private class CustomContractResolver : CamelCasePropertyNamesContractResolver
         {
-            protected override JsonProperty CreateProperty ([NotNull] MemberInfo member, MemberSerialization memberSerialization)
+            protected override JsonProperty CreateProperty([NotNull] MemberInfo member, MemberSerialization memberSerialization)
             {
                 var property = base.CreateProperty(member, memberSerialization);
                 property.ShouldSerialize = x =>
@@ -227,7 +229,7 @@ namespace Nuke.CodeGeneration
         private class AutomaticDecompressingWebClient : WebClient
         {
             [CanBeNull]
-            protected override WebRequest GetWebRequest (Uri address)
+            protected override WebRequest GetWebRequest(Uri address)
             {
                 var request = base.GetWebRequest(address) as HttpWebRequest;
 

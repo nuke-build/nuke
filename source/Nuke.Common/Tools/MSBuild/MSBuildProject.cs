@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,7 +13,7 @@ namespace Nuke.Common.Tools.MSBuild
     [PublicAPI]
     public class MSBuildProject : DynamicObject
     {
-        internal MSBuildProject (
+        internal MSBuildProject(
             bool isSdkProject,
             IReadOnlyDictionary<string, string> properties,
             ILookup<string, string> itemGroups)

@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -15,11 +15,11 @@ namespace Nuke.Core.Tooling
         public CapturedProcessStartInfo CapturedProcessStartInfo { get; private set; }
 
         [NotNull]
-        public override IProcess StartProcess (ToolSettings toolSettings, ProcessSettings processSettings = null)
+        public override IProcess StartProcess(ToolSettings toolSettings, ProcessSettings processSettings = null)
         {
             var toolPath = toolSettings.ToolPath;
             var arguments = toolSettings.GetArguments();
-            
+
             ControlFlow.Assert(toolPath != null, "ToolPath was not set.");
             ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
 
@@ -35,7 +35,7 @@ namespace Nuke.Core.Tooling
         }
 
         [NotNull]
-        public override IProcess StartProcess (
+        public override IProcess StartProcess(
             string toolPath,
             string arguments = null,
             string workingDirectory = null,
@@ -51,12 +51,12 @@ namespace Nuke.Core.Tooling
             ControlFlow.Assert(outputFilter == null, "outputFilter == null");
 
             var fakeProcessStartInfo =
-                    new CapturedProcessStartInfo
-                    {
-                        ToolPath = toolPath,
-                        Arguments = arguments,
-                        WorkingDirectory = workingDirectory
-                    };
+                new CapturedProcessStartInfo
+                {
+                    ToolPath = toolPath,
+                    Arguments = arguments,
+                    WorkingDirectory = workingDirectory
+                };
             CapturedProcessStartInfo = fakeProcessStartInfo;
             return new FakeProcess();
         }

@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -15,16 +15,16 @@ namespace Nuke.Core.Tests
     public class BuildServerTest
     {
         [BuildServerFact(typeof(TeamCity))]
-        public void TestTeamCityRestClient ()
+        public void TestTeamCityRestClient()
         {
             TeamCity.Instance.RestClient
-                    .GetBuildQueue().Result
-                    .Builds.Length.Should().BeGreaterThan(expected: 0);
+                .GetBuildQueue().Result
+                .Builds.Length.Should().BeGreaterThan(expected: 0);
         }
 
         [BuildServerTheory(typeof(Bitrise))]
         [MemberData(nameof(Properties), typeof(Bitrise))]
-        public void TestBitrise (PropertyInfo property)
+        public void TestBitrise(PropertyInfo property)
         {
             AssertProperty(Bitrise.Instance.NotNull(), property);
             Assert.True(NukeBuild.Instance.IsServerBuild);
@@ -33,7 +33,7 @@ namespace Nuke.Core.Tests
 
         [BuildServerTheory(typeof(TeamCity))]
         [MemberData(nameof(Properties), typeof(TeamCity))]
-        public void TestTeamCity (PropertyInfo property)
+        public void TestTeamCity(PropertyInfo property)
         {
             AssertProperty(TeamCity.Instance.NotNull(), property);
             Assert.True(NukeBuild.Instance.IsServerBuild);
@@ -42,7 +42,7 @@ namespace Nuke.Core.Tests
 
         [BuildServerTheory(typeof(TeamServices))]
         [MemberData(nameof(Properties), typeof(TeamServices))]
-        public void TestTeamServices (PropertyInfo property)
+        public void TestTeamServices(PropertyInfo property)
         {
             AssertProperty(TeamServices.Instance.NotNull(), property);
             Assert.True(NukeBuild.Instance.IsServerBuild);
@@ -51,18 +51,18 @@ namespace Nuke.Core.Tests
 
         [BuildServerTheory(typeof(Jenkins))]
         [MemberData(nameof(Properties), typeof(Jenkins))]
-        public void TestJenkins (PropertyInfo property)
+        public void TestJenkins(PropertyInfo property)
         {
             AssertProperty(Jenkins.Instance.NotNull(), property);
         }
 
-        public static IEnumerable<object[]> Properties (Type type)
+        public static IEnumerable<object[]> Properties(Type type)
         {
             return type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                    .Select(x => new object[] { x }).ToArray();
+                .Select(x => new object[] { x }).ToArray();
         }
 
-        private static void AssertProperty (object instance, PropertyInfo property)
+        private static void AssertProperty(object instance, PropertyInfo property)
         {
             object value;
             try
@@ -89,14 +89,14 @@ namespace Nuke.Core.Tests
         {
             private readonly Type _type;
 
-            public BuildServerTheoryAttribute (Type type)
+            public BuildServerTheoryAttribute(Type type)
             {
                 _type = type;
             }
 
             public override string Skip => HasNoInstance() ? $"Only applies to {_type.Name}." : null;
 
-            private bool HasNoInstance ()
+            private bool HasNoInstance()
             {
                 var property = _type.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static).NotNull();
                 return property.GetValue(obj: null) == null;
@@ -107,14 +107,14 @@ namespace Nuke.Core.Tests
         {
             private readonly Type _type;
 
-            public BuildServerFactAttribute (Type type)
+            public BuildServerFactAttribute(Type type)
             {
                 _type = type;
             }
 
             public override string Skip => HasNoInstance() ? $"Only applies to {_type.Name}." : null;
 
-            private bool HasNoInstance ()
+            private bool HasNoInstance()
             {
                 var property = _type.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static).NotNull();
                 return property.GetValue(obj: null) == null;

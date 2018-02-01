@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,7 +13,7 @@ namespace Nuke.Core.OutputSinks
 {
     public static class FigletTransform
     {
-        public static string GetText (string text, string integratedFontName = null)
+        public static string GetText(string text, string integratedFontName = null)
         {
             integratedFontName = integratedFontName ?? "cybermedium";
 
@@ -24,13 +24,13 @@ namespace Nuke.Core.OutputSinks
             return GetText(text, resourceStream.NotNull("resourceStream != null"));
         }
 
-        public static string GetText (string text, Stream stream)
+        public static string GetText(string text, Stream stream)
         {
             var figlet = new Figlet(FigletFont.Load(stream));
 
             var textWithFont = figlet.ToAscii(text).ToString()
-                    .Split(new[] { EnvironmentInfo.NewLine }, StringSplitOptions.RemoveEmptyEntries)
-                    .Where(x => !string.IsNullOrWhiteSpace(x));
+                .Split(new[] { EnvironmentInfo.NewLine }, StringSplitOptions.RemoveEmptyEntries)
+                .Where(x => !string.IsNullOrWhiteSpace(x));
 
             return EnvironmentInfo.NewLine +
                    textWithFont.JoinNewLine() +

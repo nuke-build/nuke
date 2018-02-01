@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,10 +13,10 @@ namespace Nuke.Core.Injection
     public abstract class StaticInjectionAttributeBase : InjectionAttributeBase
     {
         [CanBeNull]
-        public abstract object GetStaticValue ();
+        public abstract object GetStaticValue();
 
         [CanBeNull]
-        public override object GetValue (string memberName, Type memberType)
+        public override object GetValue(string memberName, Type memberType)
         {
             return GetStaticValue();
         }

@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -10,7 +10,7 @@ namespace Nuke.Core.Utilities
 {
     public static class AssemblyExtensions
     {
-        public static string GetInformationText (this Assembly assembly)
+        public static string GetInformationText(this Assembly assembly)
         {
             var fileVersion = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>().Version;
             var informationalVersion = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;

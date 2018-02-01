@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -18,13 +18,17 @@ namespace Nuke.Core.Tooling
     public static class ProcessExtensions
     {
         [AssertionMethod]
-        public static void AssertWaitForExit ([AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull] this IProcess process)
+        public static void AssertWaitForExit(
+            [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
+            this IProcess process)
         {
             ControlFlow.Assert(process != null && process.WaitForExit(), "process != null && process.WaitForExit()");
         }
 
         [AssertionMethod]
-        public static void AssertZeroExitCode ([AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull] this IProcess process)
+        public static void AssertZeroExitCode(
+            [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
+            this IProcess process)
         {
             process.AssertWaitForExit();
             ControlFlow.Assert(process.ExitCode == 0,
@@ -35,13 +39,14 @@ namespace Nuke.Core.Tooling
                 }.JoinNewLine());
         }
 
-        public static IEnumerable<Output> EnsureOnlyStd (this IEnumerable<Output> output)
+        public static IEnumerable<Output> EnsureOnlyStd(this IEnumerable<Output> output)
         {
             var outputList = output.ToList();
             foreach (var o in outputList)
             {
                 ControlFlow.Assert(o.Type == OutputType.Std, "o.Type == OutputType.Std");
             }
+
             return outputList;
         }
     }

@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -11,7 +11,7 @@ namespace Nuke.Core.Utilities.Collections
 {
     public static partial class EnumerableExtensions
     {
-        public static IEnumerable<T> DescendantsAndSelf<T> (
+        public static IEnumerable<T> DescendantsAndSelf<T>(
             this T obj,
             Func<T, T> selector,
             [CanBeNull] Func<T, bool> traverse = null)
@@ -22,7 +22,7 @@ namespace Nuke.Core.Utilities.Collections
                 yield return p;
         }
 
-        public static IEnumerable<T> Descendants<T> (
+        public static IEnumerable<T> Descendants<T>(
             this T obj,
             Func<T, T> selector,
             [CanBeNull] Func<T, bool> traverse = null)
@@ -38,7 +38,7 @@ namespace Nuke.Core.Utilities.Collections
                 yield return nextOrDescendant;
         }
 
-        public static IEnumerable<T> DescendantsAndSelf<T> (
+        public static IEnumerable<T> DescendantsAndSelf<T>(
             this T obj,
             Func<T, IEnumerable<T>> selector,
             [CanBeNull] Func<T, bool> traverse = null)
@@ -49,7 +49,7 @@ namespace Nuke.Core.Utilities.Collections
                 yield return p;
         }
 
-        public static IEnumerable<T> Descendants<T> (
+        public static IEnumerable<T> Descendants<T>(
             this T obj,
             Func<T, IEnumerable<T>> selector,
             [CanBeNull] Func<T, bool> traverse = null)

@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -22,7 +22,7 @@ namespace Nuke.Core.BuildServers
 
         internal static bool IsRunningAppVeyor => Variable("APPVEYOR") != null;
 
-        internal AppVeyor ()
+        internal AppVeyor()
         {
         }
 

@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -16,10 +16,10 @@ namespace Nuke.Common.Tools.GitVersion
     partial class GitVersionTasks
     {
         public static GitVersionSettings DefaultGitVersion => new GitVersionSettings()
-                .SetWorkingDirectory(NukeBuild.Instance.RootDirectory);
+            .SetWorkingDirectory(NukeBuild.Instance.RootDirectory);
 
         [CanBeNull]
-        private static GitVersion GetResult (IProcess process, GitVersionSettings toolSettings, [CanBeNull] ProcessSettings processSettings)
+        private static GitVersion GetResult(IProcess process, GitVersionSettings toolSettings, [CanBeNull] ProcessSettings processSettings)
         {
             if (!(processSettings?.RedirectOutput ?? false))
             {
@@ -30,12 +30,12 @@ namespace Nuke.Common.Tools.GitVersion
 
             var output = process.Output.EnsureOnlyStd().Select(x => x.Text).ToList();
             var settings = new JsonSerializerSettings { ContractResolver = new AllWritableContractResolver() };
-            return JsonConvert.DeserializeObject<GitVersion> (string.Join ("\r\n", output), settings);
+            return JsonConvert.DeserializeObject<GitVersion>(string.Join("\r\n", output), settings);
         }
 
         private class AllWritableContractResolver : DefaultContractResolver
         {
-            protected override JsonProperty CreateProperty ([NotNull] MemberInfo member, MemberSerialization memberSerialization)
+            protected override JsonProperty CreateProperty([NotNull] MemberInfo member, MemberSerialization memberSerialization)
             {
                 var property = base.CreateProperty(member, memberSerialization);
                 property.Writable = true;

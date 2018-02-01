@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -24,7 +24,7 @@ namespace Nuke.Core
     public static partial class EnvironmentInfo
     {
         [CanBeNull]
-        public static string SpecialFolder (SpecialFolders folder)
+        public static string SpecialFolder(SpecialFolders folder)
         {
             return Environment.GetFolderPath((Environment.SpecialFolder) folder);
         }

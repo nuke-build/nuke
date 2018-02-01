@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -45,26 +45,26 @@ namespace Nuke.Core.IO
     {
         // TODO: check usages
         [Pure]
-        public static string GetRelativePath (string basePath, string destinationPath)
+        public static string GetRelativePath(string basePath, string destinationPath)
         {
             return Uri.UnescapeDataString(new Uri($@"{basePath}\").MakeRelativeUri(new Uri(destinationPath)).ToString());
         }
-        
+
         [Pure]
-        public static bool IsDescendantPath (string basePath, string destinationPath)
+        public static bool IsDescendantPath(string basePath, string destinationPath)
         {
             return new Uri(basePath.TrimEnd('/') + '/').IsBaseOf(new Uri(destinationPath.TrimEnd('/') + '/'));
         }
 
         [Pure]
-        public static IEnumerable<string> GlobFiles (string directory, params string[] globPatterns)
+        public static IEnumerable<string> GlobFiles(string directory, params string[] globPatterns)
         {
             var directoryInfo = new DirectoryInfo(directory);
             return globPatterns.SelectMany(x => directoryInfo.GlobFiles(x)).Select(x => x.FullName);
         }
 
         [Pure]
-        public static IEnumerable<string> GlobDirectories (string directory, params string[] globPatterns)
+        public static IEnumerable<string> GlobDirectories(string directory, params string[] globPatterns)
         {
             var directoryInfo = new DirectoryInfo(directory);
             return globPatterns.SelectMany(x => directoryInfo.GlobDirectories(x)).Select(x => x.FullName);
@@ -75,40 +75,40 @@ namespace Nuke.Core.IO
         private const char UncSeparator = '\\';
         private const char UnixSeparator = '/';
 
-        private static bool IsSameDirectory ([CanBeNull] string pathPart)
+        private static bool IsSameDirectory([CanBeNull] string pathPart)
             => pathPart?.Length == 1 &&
                pathPart[index: 0] == '.';
 
-        private static bool IsUpwardsDirectory ([CanBeNull] string pathPart)
+        private static bool IsUpwardsDirectory([CanBeNull] string pathPart)
             => pathPart?.Length == 2 &&
                pathPart[index: 0] == '.' &&
                pathPart[index: 1] == '.';
 
-        private static bool IsWinRoot ([CanBeNull] string root)
+        private static bool IsWinRoot([CanBeNull] string root)
             => root?.Length == 2 &&
                char.IsLetter(root[index: 0]) &&
                root[index: 1] == ':';
 
-        private static bool IsUnixRoot ([CanBeNull] string root)
+        private static bool IsUnixRoot([CanBeNull] string root)
             => root?.Length == 1 &&
                root[index: 0] == UnixSeparator;
 
-        private static bool IsUncRoot ([CanBeNull] string root)
+        private static bool IsUncRoot([CanBeNull] string root)
             => root?.Length >= 3 &&
                root[index: 0] == UncSeparator &&
                root[index: 1] == UncSeparator &&
                root.Skip(count: 2).All(char.IsLetterOrDigit);
 
-        private static string GetHeadPart ([CanBeNull] string str, int count) => new string((str ?? string.Empty).Take(count).ToArray());
+        private static string GetHeadPart([CanBeNull] string str, int count) => new string((str ?? string.Empty).Take(count).ToArray());
 
-        private static bool HasUnixRoot ([CanBeNull] string path) => IsUnixRoot(GetHeadPart(path, count: 1));
-        private static bool HasUncRoot ([CanBeNull] string path) => IsUncRoot(GetHeadPart(path, count: 3));
-        private static bool HasWinRoot ([CanBeNull] string path) => IsWinRoot(GetHeadPart(path, count: 2));
+        private static bool HasUnixRoot([CanBeNull] string path) => IsUnixRoot(GetHeadPart(path, count: 1));
+        private static bool HasUncRoot([CanBeNull] string path) => IsUncRoot(GetHeadPart(path, count: 3));
+        private static bool HasWinRoot([CanBeNull] string path) => IsWinRoot(GetHeadPart(path, count: 2));
 
-        public static bool HasPathRoot ([CanBeNull] string path) => GetPathRoot(path) != null;
+        public static bool HasPathRoot([CanBeNull] string path) => GetPathRoot(path) != null;
 
         [CanBeNull]
-        public static string GetPathRoot ([CanBeNull] string path)
+        public static string GetPathRoot([CanBeNull] string path)
         {
             if (path == null)
                 return null;
@@ -129,7 +129,7 @@ namespace Nuke.Core.IO
         }
 
 
-        public static string Combine ([CanBeNull] string path1, string path2, char? separator = null)
+        public static string Combine([CanBeNull] string path1, string path2, char? separator = null)
         {
             // TODO: better something like "SafeHandleRoots"?
             path1 = Trim(path1);
@@ -156,7 +156,7 @@ namespace Nuke.Core.IO
         }
 
         // ReSharper disable once CyclomaticComplexity
-        public static string NormalizePath ([CanBeNull] string path, char? separator = null)
+        public static string NormalizePath([CanBeNull] string path, char? separator = null)
         {
             AssertSeparatorChoice(path, separator);
 
@@ -197,7 +197,7 @@ namespace Nuke.Core.IO
         }
 
 
-        private static char GetSeparator ([CanBeNull] string path)
+        private static char GetSeparator([CanBeNull] string path)
         {
             var root = GetPathRoot(path);
             if (root != null)
@@ -215,7 +215,7 @@ namespace Nuke.Core.IO
             return Path.DirectorySeparatorChar;
         }
 
-        private static void AssertSeparatorChoice ([CanBeNull] string path, char? separator)
+        private static void AssertSeparatorChoice([CanBeNull] string path, char? separator)
         {
             if (separator == null)
                 return;
@@ -230,7 +230,7 @@ namespace Nuke.Core.IO
         }
 
         [ContractAnnotation("null => null; notnull => notnull")]
-        private static string Trim ([CanBeNull] string path)
+        private static string Trim([CanBeNull] string path)
         {
             if (path == null)
                 return null;
@@ -247,34 +247,34 @@ namespace Nuke.Core.IO
             private readonly string _path;
             private readonly char? _separator;
 
-            protected RelativePath (string path, char? separator = null)
+            protected RelativePath(string path, char? separator = null)
             {
                 _path = path;
                 _separator = separator;
             }
 
-            public static explicit operator RelativePath ([CanBeNull] string path)
+            public static explicit operator RelativePath([CanBeNull] string path)
             {
                 return new RelativePath(NormalizePath(path));
             }
 
-            public static implicit operator string (RelativePath path)
+            public static implicit operator string(RelativePath path)
             {
                 return path._path;
             }
 
-            public static RelativePath operator / (RelativePath path1, string path2)
+            public static RelativePath operator /(RelativePath path1, string path2)
             {
                 var separator = path1._separator;
                 return new RelativePath(NormalizePath(Combine(path1, (RelativePath) path2, separator), separator), separator);
             }
 
-            public static RelativePath operator + (RelativePath path1, string path2)
+            public static RelativePath operator +(RelativePath path1, string path2)
             {
                 return path1 / path2;
             }
 
-            public override string ToString ()
+            public override string ToString()
             {
                 return _path;
             }
@@ -282,12 +282,12 @@ namespace Nuke.Core.IO
 
         public class UnixRelativePath : RelativePath
         {
-            protected UnixRelativePath (string path, char? separator)
+            protected UnixRelativePath(string path, char? separator)
                 : base(path, separator)
             {
             }
 
-            public static explicit operator UnixRelativePath ([CanBeNull] string path)
+            public static explicit operator UnixRelativePath([CanBeNull] string path)
             {
                 return new UnixRelativePath(NormalizePath(path), UnixSeparator);
             }
@@ -295,12 +295,12 @@ namespace Nuke.Core.IO
 
         public class WinRelativePath : RelativePath
         {
-            protected WinRelativePath (string path, char? separator)
+            protected WinRelativePath(string path, char? separator)
                 : base(path, separator)
             {
             }
 
-            public static explicit operator WinRelativePath ([CanBeNull] string path)
+            public static explicit operator WinRelativePath([CanBeNull] string path)
             {
                 return new WinRelativePath(NormalizePath(path), WinSeparator);
             }
@@ -311,33 +311,33 @@ namespace Nuke.Core.IO
         {
             private readonly string _path;
 
-            private AbsolutePath (string path)
+            private AbsolutePath(string path)
             {
                 _path = path;
             }
 
-            public static explicit operator AbsolutePath ([CanBeNull] string path)
+            public static explicit operator AbsolutePath([CanBeNull] string path)
             {
                 ControlFlow.Assert(HasPathRoot(path), $"Path '{path}' must be rooted.");
                 return new AbsolutePath(NormalizePath(path));
             }
 
-            public static implicit operator string (AbsolutePath path)
+            public static implicit operator string(AbsolutePath path)
             {
                 return NormalizePath(path._path);
             }
 
-            public static AbsolutePath operator / (AbsolutePath path1, string path2)
+            public static AbsolutePath operator /(AbsolutePath path1, string path2)
             {
                 return new AbsolutePath(Combine(path1, path2));
             }
 
-            public static AbsolutePath operator + (AbsolutePath path1, string path2)
+            public static AbsolutePath operator +(AbsolutePath path1, string path2)
             {
                 return path1 / path2;
             }
 
-            public override string ToString ()
+            public override string ToString()
             {
                 return _path;
             }

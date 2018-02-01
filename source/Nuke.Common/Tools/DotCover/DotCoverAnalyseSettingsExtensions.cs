@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -10,14 +10,14 @@ namespace Nuke.Common.Tools.DotCover
 {
     partial class DotCoverAnalyseSettingsExtensions
     {
-        public static DotCoverAnalyseSettings NewInstance (this DotCoverAnalyseSettings toolSettings)
+        public static DotCoverAnalyseSettings NewInstance(this DotCoverAnalyseSettings toolSettings)
         {
             var newToolSettings = toolSettings.NewInstance<DotCoverAnalyseSettings>();
             newToolSettings.TestActionInternal = toolSettings.TestActionInternal;
             return newToolSettings;
         }
 
-        public static DotCoverAnalyseSettings SetTestAction (this DotCoverAnalyseSettings toolSettings, Action testAction)
+        public static DotCoverAnalyseSettings SetTestAction(this DotCoverAnalyseSettings toolSettings, Action testAction)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TestActionInternal = testAction;

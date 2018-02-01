@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -15,7 +15,7 @@ namespace Nuke.Common.IO
     public static class HttpTasks
     {
         [Pure]
-        public static string HttpDownloadString (
+        public static string HttpDownloadString(
             string uri,
             Configure<WebClient> configurator = null,
             Action<WebHeaderCollection> headerConfigurator = null)
@@ -27,7 +27,7 @@ namespace Nuke.Common.IO
             return webClient.DownloadString(new Uri(uri));
         }
 
-        public static void HttpDownloadFile (
+        public static void HttpDownloadFile(
             string uri,
             string path,
             Configure<WebClient> configurator = null,

@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -14,7 +14,7 @@ namespace Nuke.CodeGeneration.Writers
         private readonly StreamWriter _streamWriter;
         private int _indention;
 
-        public ToolWriter (Tool tool, StreamWriter streamWriter)
+        public ToolWriter(Tool tool, StreamWriter streamWriter)
         {
             Tool = tool;
             _streamWriter = streamWriter;
@@ -23,17 +23,17 @@ namespace Nuke.CodeGeneration.Writers
         public Tool Tool { get; }
         public IWriter Writer => this;
 
-        public void Dispose ()
+        public void Dispose()
         {
             _streamWriter.Dispose();
         }
 
-        void IWriter.WriteLine (string text)
+        void IWriter.WriteLine(string text)
         {
             _streamWriter.WriteLine($"{new string(c: ' ', count: _indention * 4)}{text}");
         }
 
-        void IWriter.WriteBlock (Action action)
+        void IWriter.WriteBlock(Action action)
         {
             this.WriteLine("{");
             _indention++;

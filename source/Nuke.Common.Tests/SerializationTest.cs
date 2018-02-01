@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -52,10 +52,10 @@ namespace Nuke.Common.Tests
             [UsedImplicitly]
             get
             {
-                object[] GetSerialization (string name, Func<Data, Data> serialization) => new object[] { name, serialization };
+                object[] GetSerialization(string name, Func<Data, Data> serialization) => new object[] { name, serialization };
 
                 yield return GetSerialization("Json", x => JsonDeserialize<Data>(JsonSerialize(x)));
-                yield return GetSerialization ("Yaml", x => YamlDeserialize<Data> (YamlSerialize (x)));
+                yield return GetSerialization("Yaml", x => YamlDeserialize<Data>(YamlSerialize(x)));
                 //yield return GetSerialization(x => XmlSerialize(x), x => XmlDeserialize<Data>(x));
             }
         }

@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -41,8 +41,8 @@ namespace Nuke.Core
             get
             {
                 var argument = Environment.GetCommandLineArgs()
-                        .Skip(count: 1).Take(count: 1)
-                        .SingleOrDefault(x => !x.StartsWith("-"));
+                    .Skip(count: 1).Take(count: 1)
+                    .SingleOrDefault(x => !x.StartsWith("-"));
                 if (argument != null)
                     return argument.Split(new[] { '+' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -51,11 +51,11 @@ namespace Nuke.Core
                 {
                     Logger.Warn(new[]
                                 {
-                                        "The 'Target' parameter is deprecated. " +
-                                        "Starting with the next version, targets need to be specified positional:",
-                                        string.Empty,
-                                        "  Usage: build <target1[+target2]> [-parameter value]",
-                                        string.Empty
+                                    "The 'Target' parameter is deprecated. " +
+                                    "Starting with the next version, targets need to be specified positional:",
+                                    string.Empty,
+                                    "  Usage: build <target1[+target2]> [-parameter value]",
+                                    string.Empty
                                 }.JoinNewLine());
                     return parameter;
                 }

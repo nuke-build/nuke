@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -35,11 +35,11 @@ namespace Nuke.Common.Tools
             ControlFlow.Assert(packageId != null && packageExecutable != null, "packageId != null && packageExecutable != null");
             var packagesConfigFile = NuGetPackageResolver.GetBuildPackagesConfigFile();
             var installedPackage = NuGetPackageResolver.GetLocalInstalledPackage(packageId, packagesConfigFile)
-                    .NotNull($"Could not find package '{packageId}' via '{packagesConfigFile}'.");
+                .NotNull($"Could not find package '{packageId}' via '{packagesConfigFile}'.");
             var packageDirectory = Path.GetDirectoryName(installedPackage.FileName).NotNull("packageDirectory != null");
             return Directory.GetFiles(packageDirectory, packageExecutable, SearchOption.AllDirectories)
-                    .SingleOrDefault()
-                    .NotNull($"Could not find '{packageExecutable}' inside '{packageDirectory}'.");
+                .SingleOrDefault()
+                .NotNull($"Could not find '{packageExecutable}' inside '{packageDirectory}'.");
         }
 
         public static string GetPathExecutable(string pathExecutable)
@@ -55,9 +55,9 @@ namespace Nuke.Common.Tools
             locateProcess.AssertWaitForExit();
 
             return locateProcess.Output
-                    .Select(x => x.Text)
-                    .FirstOrDefault(File.Exists)
-                    .NotNull($"Could not find '{pathExecutable}' via '{locateExecutable}'.");
+                .Select(x => x.Text)
+                .FirstOrDefault(File.Exists)
+                .NotNull($"Could not find '{pathExecutable}' via '{locateExecutable}'.");
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -17,7 +17,7 @@ namespace Nuke.Common.IO
     [PublicAPI]
     public static class XmlTasks
     {
-        public static IEnumerable<string> XmlPeek (string path, string xpath)
+        public static IEnumerable<string> XmlPeek(string path, string xpath)
         {
             var (elements, attributes) = GetObjects(XDocument.Load(path), xpath);
             ControlFlow.Assert(elements.Count == 0 || attributes.Count == 0, "elements.Count == 0 || attributes.Count == 0");
@@ -26,14 +26,14 @@ namespace Nuke.Common.IO
         }
 
         [CanBeNull]
-        public static string XmlPeekSingle (string path, string xpath)
+        public static string XmlPeekSingle(string path, string xpath)
         {
             var values = XmlPeek(path, xpath).ToList();
             ControlFlow.Assert(values.Count <= 1, "values.Count <= 1");
             return values.SingleOrDefault();
         }
 
-        public static void XmlPoke (string path, string xpath, object value)
+        public static void XmlPoke(string path, string xpath, object value)
         {
             var document = XDocument.Load(path, LoadOptions.PreserveWhitespace);
             var (elements, attributes) = GetObjects(document, xpath);
@@ -51,13 +51,13 @@ namespace Nuke.Common.IO
             }
         }
 
-        private static (IReadOnlyCollection<XElement> Elements, IReadOnlyCollection<XAttribute> Attributes) GetObjects (
+        private static (IReadOnlyCollection<XElement> Elements, IReadOnlyCollection<XAttribute> Attributes) GetObjects(
             XDocument document,
             string xpath)
         {
             var objects = ((IEnumerable) document.XPathEvaluate(xpath)).Cast<XObject>().ToList();
             return (objects.OfType<XElement>().ToList().AsReadOnly(),
-                    objects.OfType<XAttribute>().ToList().AsReadOnly());
+                objects.OfType<XAttribute>().ToList().AsReadOnly());
         }
     }
 }

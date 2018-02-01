@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -15,12 +15,12 @@ namespace Nuke.Core.Tooling
     {
         protected string Value { get; set; }
 
-        protected bool Equals (Enumeration other)
+        protected bool Equals(Enumeration other)
         {
             return string.Equals(Value, other.Value);
         }
 
-        public override bool Equals ([CanBeNull] object obj)
+        public override bool Equals([CanBeNull] object obj)
         {
             if (ReferenceEquals(objA: null, objB: obj))
                 return false;
@@ -31,14 +31,14 @@ namespace Nuke.Core.Tooling
             return Equals((Enumeration) obj);
         }
 
-        public override int GetHashCode ()
+        public override int GetHashCode()
         {
             // ReSharper disable NonReadonlyMemberInGetHashCode
             return Value != null ? Value.GetHashCode() : 0;
             // ReSharper restore NonReadonlyMemberInGetHashCode
         }
 
-        public override string ToString ()
+        public override string ToString()
         {
             return Value.NotNull("Value != null");
         }

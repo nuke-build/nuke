@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -10,15 +10,15 @@ namespace Nuke.Common.Tools.Git
 {
     public static partial class GitTasks
     {
-        private static IProcess StartProcess (GitSettings toolSettings, ProcessSettings processSettings)
+        private static IProcess StartProcess(GitSettings toolSettings, ProcessSettings processSettings)
         {
             return ProcessTasks.StartProcess(
-                    toolSettings.ToolPath,
-                    toolSettings.Arguments,
-                    toolSettings.WorkingDirectory,
-                    processSettings?.EnvironmentVariables,
-                    processSettings?.ExecutionTimeout,
-                    processSettings?.RedirectOutput ?? false);
+                toolSettings.ToolPath,
+                toolSettings.Arguments,
+                toolSettings.WorkingDirectory,
+                processSettings?.EnvironmentVariables,
+                processSettings?.ExecutionTimeout,
+                processSettings?.RedirectOutput ?? false);
         }
     }
 }
