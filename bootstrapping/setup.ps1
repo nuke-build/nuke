@@ -158,7 +158,7 @@ Set-Content "$BuildProjectFile" ((New-Object System.Net.WebClient).DownloadStrin
     -replace "_NUKE_VERSION_",$NukeVersion) `
     -NoNewline
 
-(New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/.build.csproj.DotSettings", "$BuildProjectFile.dotsettings")
+(New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/../build/.build.csproj.DotSettings", "$BuildProjectFile.DotSettings")
 
 if (!(Test-Path "$BuildDirectory\Build.cs")) {
     (New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/Build.$($TargetPlatform).cs", "$BuildDirectory\Build.cs")

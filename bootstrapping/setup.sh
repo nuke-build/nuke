@@ -159,7 +159,7 @@ sed -e 's~_TARGET_FRAMEWORK_~'"$TARGET_FRAMEWORK"'~g' \
     <<<"$(curl -Lsf $BOOTSTRAPPING_URL/.build.$PROJECT_FORMAT.csproj)" \
     > "$BUILD_PROJECT_FILE"
 
-curl -Lsfo "$BUILD_PROJECT_FILE.dotsettings" "$BOOTSTRAPPING_URL/.build.csproj.DotSettings"
+curl -Lsfo "$BUILD_PROJECT_FILE.DotSettings" "$BOOTSTRAPPING_URL/../build/.build.csproj.DotSettings"
 
 if [ ! -f "$BUILD_DIRECTORY/Build.cs" ]; then
     curl -Lsfo "$BUILD_DIRECTORY/Build.cs" "$BOOTSTRAPPING_URL/Build.$TARGET_PLATFORM.cs"
