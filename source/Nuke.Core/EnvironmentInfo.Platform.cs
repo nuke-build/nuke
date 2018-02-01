@@ -49,9 +49,9 @@ namespace Nuke.Core
         /// </summary>
         public static FrameworkName Framework
 #if NETCORE
-            => new FrameworkName(".NETStandard,Version=v1.6");
+            => new FrameworkName(".NETStandard,Version=v2.0");
 #else
-            => new FrameworkName(".NETFramework,Version=v4.6");
+            => new FrameworkName(".NETFramework,Version=v4.6.1");
 #endif
 
         /// <summary>
