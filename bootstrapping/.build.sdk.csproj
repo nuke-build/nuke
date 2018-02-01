@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <NukeMetadata Include="**/*.json" Exclude="bin/**;obj/**" />
-    <None Remove="*.csproj.dotsettings;_schema.json;*.ref.*.txt" />
+    <None Remove="*.csproj.DotSettings;*.ref.*.txt" />
     <None Remove="*.json;*.json.new" Condition="'$(NukeCodeGeneration)' == 'False'" />
   </ItemGroup>
 
