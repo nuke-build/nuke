@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Nuke.Common.Git;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
@@ -123,20 +124,21 @@ class Build : NukeBuild
 
             if (NuGet)
             {
-                SendGitterMessage(
-                    new[]
-                        {
-                            ":mega::shipit: @/all",
-                            string.Empty,
-                            $"**NUKE {GitVersion.SemVer} IS OUT!!!**",
-                            string.Empty,
-                            $"This release includes [{ChangelogSectionNotes.Count()} changes](https://www.nuget.org/packages/Nuke.Common/{GitVersion.SemVer}). Most notably, we have:"
-                        }.Concat(ChangelogSectionNotes
+                SendGitterMessage(new StringBuilder()
+                        .AppendLine(":mega::shipit: @/all")
+                        .AppendLine()
+                        .AppendLine($"**NUKE {GitVersion.SemVer} IS OUT!!!**")
+                        .AppendLine()
+                        .AppendLine($"This release includes [{ChangelogSectionNotes.Count()} changes]"
+                                    + $"(https://www.nuget.org/packages/Nuke.Common/{GitVersion.SemVer}). "
+                                    + "Most notably, we have:")
+                        .AppendLine(ChangelogSectionNotes
                             .Take(AnnounceChanges ?? 4)
-                            .Select(x => x.Replace("- ", "* ")))
-                        .JoinNewLine(),
-                    "593f3dadd73408ce4f66db89",
-                    GitterAuthToken);
+                            .Select(x => x.Replace("- ", "* "))
+                            .JoinNewLine())
+                        .ToString(),
+                    roomId: "593f3dadd73408ce4f66db89",
+                    token: GitterAuthToken);
             }
         });
 
