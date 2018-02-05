@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Core.Injection
+namespace Nuke.Core.Execution
 {
     /// <summary>
     ///     Marks a field for automatic value injection prior to build execution. Fields marked

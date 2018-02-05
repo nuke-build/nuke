@@ -7,11 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Runtime.Serialization;
-using System.Text;
 using Nuke.Core.OutputSinks;
 using Nuke.Core.Utilities;
-using Nuke.Core.Utilities.Collections;
 
 namespace Nuke.Core.Execution
 {
@@ -33,7 +30,7 @@ namespace Nuke.Core.Execution
             }
             catch (TargetInvocationException exception)
             {
-                var innerException = exception.InnerException;
+                var innerException = exception.InnerException.NotNull();
                 OutputSink.Error(innerException.Message, innerException.StackTrace);
                 return -exception.Message.GetHashCode();
             }

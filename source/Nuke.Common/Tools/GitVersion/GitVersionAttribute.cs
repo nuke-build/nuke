@@ -7,7 +7,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Tools.Git;
 using Nuke.Core;
-using Nuke.Core.Injection;
+using Nuke.Core.Execution;
 using Nuke.Core.Tooling;
 
 namespace Nuke.Common.Tools.GitVersion

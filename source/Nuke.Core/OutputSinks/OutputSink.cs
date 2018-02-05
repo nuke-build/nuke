@@ -11,7 +11,7 @@ using Nuke.Core.Execution;
 
 namespace Nuke.Core.OutputSinks
 {
-    public interface IOutputSink
+    internal interface IOutputSink
     {
         void Write(string text);
         IDisposable WriteBlock(string text);

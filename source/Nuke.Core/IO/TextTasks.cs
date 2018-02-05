@@ -8,10 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
-using Nuke.Core;
-using Nuke.Core.IO;
 
-namespace Nuke.Common.IO
+namespace Nuke.Core.IO
 {
     [PublicAPI]
     public static class TextTasks

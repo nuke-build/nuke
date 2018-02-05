@@ -10,7 +10,8 @@ using Nuke.Core.Utilities;
 
 namespace Nuke.Core.OutputSinks
 {
-    public class TeamCityOutputSink : ConsoleOutputSink
+    [UsedImplicitly]
+    internal class TeamCityOutputSink : ConsoleOutputSink
     {
         private readonly TeamCity _teamCity;
 

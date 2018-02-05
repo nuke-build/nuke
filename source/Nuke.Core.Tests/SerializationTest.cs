@@ -4,12 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using JetBrains.Annotations;
+using Nuke.Core.IO;
 using Xunit;
-using static Nuke.Common.IO.SerializationTasks;
 
-namespace Nuke.Common.Tests
+namespace Nuke.Core.Tests
 {
     public class SerializationTest
     {
@@ -54,8 +55,8 @@ namespace Nuke.Common.Tests
             {
                 object[] GetSerialization(string name, Func<Data, Data> serialization) => new object[] { name, serialization };
 
-                yield return GetSerialization("Json", x => JsonDeserialize<Data>(JsonSerialize(x)));
-                yield return GetSerialization("Yaml", x => YamlDeserialize<Data>(YamlSerialize(x)));
+                yield return GetSerialization("Json", x => SerializationTasks.JsonDeserialize<Data>(SerializationTasks.JsonSerialize(x)));
+                yield return GetSerialization("Yaml", x => SerializationTasks.YamlDeserialize<Data>(SerializationTasks.YamlSerialize(x)));
                 //yield return GetSerialization(x => XmlSerialize(x), x => XmlDeserialize<Data>(x));
             }
         }

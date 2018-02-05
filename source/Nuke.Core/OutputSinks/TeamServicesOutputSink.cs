@@ -4,11 +4,13 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Core.BuildServers;
 
 namespace Nuke.Core.OutputSinks
 {
-    public class TeamServicesOutputSink : ConsoleOutputSink
+    [UsedImplicitly]
+    internal class TeamServicesOutputSink : ConsoleOutputSink
     {
         private readonly TeamServices _teamServices;
 

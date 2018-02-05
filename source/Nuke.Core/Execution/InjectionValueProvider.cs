@@ -8,10 +8,10 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Core.Utilities;
 
-namespace Nuke.Core.Injection
+namespace Nuke.Core.Execution
 {
     [PublicAPI]
-    public static class InjectedValueProvider
+    public static class InjectionValueProvider
     {
         private const BindingFlags c_bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
 

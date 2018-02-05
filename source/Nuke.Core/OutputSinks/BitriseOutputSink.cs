@@ -5,12 +5,12 @@
 using System;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Core.BuildServers;
 using Nuke.Core.Utilities;
 
 namespace Nuke.Core.OutputSinks
 {
-    public class BitriseOutputSink : ConsoleOutputSink
+    [UsedImplicitly]
+    internal class BitriseOutputSink : ConsoleOutputSink
     {
         public override IDisposable WriteBlock(string text)
         {

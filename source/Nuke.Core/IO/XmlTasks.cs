@@ -10,9 +10,8 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using JetBrains.Annotations;
-using Nuke.Core;
 
-namespace Nuke.Common.IO
+namespace Nuke.Core.IO
 {
     [PublicAPI]
     public static class XmlTasks

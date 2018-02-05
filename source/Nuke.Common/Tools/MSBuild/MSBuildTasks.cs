@@ -5,10 +5,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Nuke.Common.IO;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Core;
 using Nuke.Core.BuildServers;
+using Nuke.Core.IO;
 using Nuke.Core.Tooling;
 
 namespace Nuke.Common.Tools.MSBuild

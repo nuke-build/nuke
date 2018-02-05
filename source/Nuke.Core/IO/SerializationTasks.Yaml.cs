@@ -10,7 +10,7 @@ using Nuke.Core.Tooling;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace Nuke.Common.IO
+namespace Nuke.Core.IO
 {
     public static partial class SerializationTasks
     {

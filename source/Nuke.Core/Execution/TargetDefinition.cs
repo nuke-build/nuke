@@ -10,7 +10,7 @@ using JetBrains.Annotations;
 
 namespace Nuke.Core.Execution
 {
-    public class TargetDefinition : ITargetDefinition
+    internal class TargetDefinition : ITargetDefinition
     {
         public static TargetDefinition Create(string name, Target factory = null)
         {

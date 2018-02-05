@@ -6,7 +6,6 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Core.Execution;
-using Nuke.Core.Injection;
 
 namespace Nuke.Core
 {

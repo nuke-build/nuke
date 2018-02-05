@@ -6,14 +6,8 @@ using System;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Common.Tools;
-using Nuke.Core;
-using Nuke.Core.Execution;
-using Nuke.Core.Tooling;
 
-[assembly: IconClass(typeof(ToolPathResolver), "search3")]
-
-namespace Nuke.Common.Tools
+namespace Nuke.Core.Tooling
 {
     [PublicAPI]
     public static class ToolPathResolver
@@ -44,14 +38,18 @@ namespace Nuke.Common.Tools
 
         public static string GetPathExecutable(string pathExecutable)
         {
-            // TODO UB: move to Core and call ProcessManager.Instance ? would require moving NuGetPackageResolver too and reference NuGet packages
             var locateExecutable = EnvironmentInfo.IsWin
                 ? @"C:\Windows\System32\where.exe"
                 : "/usr/bin/which";
-            var locateProcess = ProcessTasks.StartProcess(
+
+            var locateProcess = ProcessManager.StartProcessInternal(
                 locateExecutable,
                 pathExecutable,
-                redirectOutput: true);
+                workingDirectory: null,
+                environmentVariables: null,
+                timeout: null,
+                redirectOutput: true,
+                outputFilter: null);
             locateProcess.AssertWaitForExit();
 
             return locateProcess.Output

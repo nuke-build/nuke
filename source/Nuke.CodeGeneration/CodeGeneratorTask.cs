@@ -8,7 +8,6 @@ using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.Build.Framework;
 using Nuke.Common.Git;
-using Nuke.Common.IO;
 using Nuke.Core;
 using Nuke.Core.IO;
 

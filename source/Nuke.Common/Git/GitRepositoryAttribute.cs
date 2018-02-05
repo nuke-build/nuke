@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Core;
-using Nuke.Core.Injection;
+using Nuke.Core.Execution;
 
 namespace Nuke.Common.Git
 {

@@ -14,8 +14,8 @@ using Console = System.Console;
 
 namespace Nuke.Core.OutputSinks
 {
-    [PublicAPI]
-    public class ConsoleOutputSink : IOutputSink
+    [UsedImplicitly]
+    internal class ConsoleOutputSink : IOutputSink
     {
         public virtual void Write(string text)
         {

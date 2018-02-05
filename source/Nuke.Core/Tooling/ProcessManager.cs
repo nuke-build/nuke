@@ -90,7 +90,7 @@ namespace Nuke.Core.Tooling
         }
 
         [CanBeNull]
-        private static IProcess StartProcessInternal(
+        internal static IProcess StartProcessInternal(
             string toolPath,
             [CanBeNull] string arguments,
             [CanBeNull] string workingDirectory,
