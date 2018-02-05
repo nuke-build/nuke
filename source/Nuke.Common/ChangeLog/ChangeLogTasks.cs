@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
+using NuGet.Versioning;
 using Nuke.Common.Git;
 using Nuke.Core;
 using Nuke.Core.IO;
@@ -44,8 +45,8 @@ namespace Nuke.Common.ChangeLog
             ControlFlow.Assert(sections.All(x => !x.Caption.EqualsOrdinalIgnoreCase(tag)), $"Tag '{tag}' already exists.");
             ControlFlow.Assert(firstSection.EndIndex > firstSection.StartIndex,
                 $"Draft section '{firstSection.Caption}' does not contain any information.");
-            ControlFlow.Assert(secondSection == null || string.Compare(secondSection.Caption, tag, StringComparison.Ordinal) < 0,
-                $"Tag '{tag}' is not ascending compared to last tag '{secondSection?.Caption}'.");
+            ControlFlow.Assert(secondSection == null || NuGetVersion.Parse(tag).CompareTo(NuGetVersion.Parse(secondSection.Caption)) > 0,
+                $"Tag '{tag}' is not greater compared to last tag '{secondSection?.Caption}'.");
 
             content.Insert(firstSection.StartIndex + 1, string.Empty);
             content.Insert(firstSection.StartIndex + 2, $"## [{tag}] / {DateTime.Now:yyyy-MM-dd}");
@@ -72,10 +73,8 @@ namespace Nuke.Common.ChangeLog
 
         private static IEnumerable<ReleaseSection> GetReleaseSections(List<string> content)
         {
-            const string releaseHeadPrefix = "## ";
-
             bool IsReleaseHead(string str)
-                => str.StartsWith(releaseHeadPrefix);
+                => str.StartsWith("## ");
 
             bool IsReleaseContent(string str)
                 => str.StartsWith("###") || str.Trim().StartsWith("-");
