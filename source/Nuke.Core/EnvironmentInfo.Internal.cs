@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using Nuke.Core.BuildServers;
+using Nuke.Core.Execution;
 using Nuke.Core.Utilities;
 
 namespace Nuke.Core
@@ -60,7 +61,7 @@ namespace Nuke.Core
                     return parameter;
                 }
 
-                return new[] { "default" };
+                return new[] { BuildExecutor.DefaultTarget };
             }
         }
     }

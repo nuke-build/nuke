@@ -14,6 +14,8 @@ namespace Nuke.Core.Execution
 {
     internal static class BuildExecutor
     {
+        public const string DefaultTarget = "default";
+
         public static int Execute<T>(Expression<Func<T, Target>> defaultTargetExpression)
             where T : NukeBuild
         {
@@ -54,7 +56,7 @@ namespace Nuke.Core.Execution
             RequirementService.ValidateRequirements(executionList, build);
 
             var normalizedTargets = executionList
-                .Where(x => build.InvokedTargets.Any(y => y.EqualsOrdinalIgnoreCase(x.Name)))
+                .Where(x => build.InvokedTargets.Any(y => y.EqualsOrdinalIgnoreCase(x.Name) || y == DefaultTarget && x.IsDefault))
                 .Select(x => x.Name);
             PrivateInvoke.SetValue(build, nameof(NukeBuild.InvokedTargets), normalizedTargets.ToArray());
             PrivateInvoke.SetValue(build, nameof(NukeBuild.ExecutingTargets), executionList.Select(x => x.Name).ToArray());
