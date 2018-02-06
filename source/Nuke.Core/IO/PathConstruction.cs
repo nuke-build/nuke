@@ -47,13 +47,18 @@ namespace Nuke.Core.IO
         [Pure]
         public static string GetRelativePath(string basePath, string destinationPath)
         {
-            return Uri.UnescapeDataString(new Uri($@"{basePath}\").MakeRelativeUri(new Uri(destinationPath)).ToString());
+            return Uri.UnescapeDataString(GetUri(basePath).MakeRelativeUri(GetUri(destinationPath)).ToString());
         }
 
         [Pure]
         public static bool IsDescendantPath(string basePath, string destinationPath)
         {
-            return new Uri(basePath.TrimEnd('/') + '/').IsBaseOf(new Uri(destinationPath.TrimEnd('/') + '/'));
+            return GetUri(basePath).IsBaseOf(GetUri(destinationPath));
+        }
+
+        private static Uri GetUri(string path)
+        {
+            return new Uri(path.Trim('/') + '/');
         }
 
         [Pure]
