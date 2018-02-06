@@ -32,7 +32,7 @@ namespace Nuke.Common.Git
         {
             branch = branch ?? repository.Branch.NotNull("repository.Branch != null");
             var fileRelative = GetRepositoryRelativePath(file, repository);
-            return $"https://raw.githubusercontent.com/{repository.Identifier}/blob/{branch}/{fileRelative}";
+            return $"https://raw.githubusercontent.com/{repository.Identifier}/{branch}/{fileRelative}";
         }
 
         /// <summary>
