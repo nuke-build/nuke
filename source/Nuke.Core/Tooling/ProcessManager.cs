@@ -89,6 +89,7 @@ namespace Nuke.Core.Tooling
                 outputFilter ?? (x => x));
         }
 
+        // TODO: add default values
         [CanBeNull]
         internal static IProcess StartProcessInternal(
             string toolPath,
