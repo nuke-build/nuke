@@ -47,7 +47,7 @@ namespace Nuke.Core.IO
         [Pure]
         public static string GetRelativePath(string basePath, string destinationPath)
         {
-            return Uri.UnescapeDataString(GetUri(basePath).MakeRelativeUri(GetUri(destinationPath)).ToString());
+            return Uri.UnescapeDataString(GetUri(basePath).MakeRelativeUri(GetUri(destinationPath)).ToString()).TrimEnd('/');
         }
 
         [Pure]
@@ -58,7 +58,16 @@ namespace Nuke.Core.IO
 
         private static Uri GetUri(string path)
         {
-            return new Uri(path.Trim('/') + '/');
+            try
+            {
+                return new Uri(path.TrimEnd('/') + '/');
+            }
+            catch (Exception ex)
+            {
+                Logger.Warn(path);
+                Logger.Warn(ex.Message);
+                throw;
+            }
         }
 
         [Pure]
