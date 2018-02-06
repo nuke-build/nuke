@@ -58,5 +58,5 @@ using Nuke.Core.Execution;
 [assembly: IconClass(typeof(SignToolTasks), "key")]
 [assembly: IconClass(typeof(TestCloudTasks), "bug2")]
 [assembly: IconClass(typeof(VsTestTasks), "bug2")]
-[assembly: IconClass(typeof(WebConfigTransformRunnerTasks), "bug2")]
+[assembly: IconClass(typeof(WebConfigTransformRunnerTasks), "file-empty2")]
 [assembly: IconClass(typeof(XunitTasks), "bug2")]
