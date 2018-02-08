@@ -35,7 +35,6 @@ using Nuke.Core.Execution;
 
 [assembly: IconClass(typeof(ChangelogTasks), "books")]
 [assembly: IconClass(typeof(CoverallsNetTasks), "pie-chart4")]
-[assembly: IconClass(typeof(DefaultSettings), "equalizer")]
 [assembly: IconClass(typeof(DocFxTasks), "books")]
 [assembly: IconClass(typeof(DotCoverTasks), "shield2")]
 [assembly: IconClass(typeof(DotNetTasks), "fire")]
