@@ -34,7 +34,7 @@ class Build : NukeBuild
     [Parameter("Indicates to push to nuget.org feed.")] readonly bool NuGet;
     [Parameter("ApiKey for the specified source.")] readonly string ApiKey;
     [Parameter("Gitter authentication token")] readonly string GitterAuthToken;
-    [Parameter("Amount of changes to announce in Gitter.")] int? AnnounceChanges;
+    [Parameter("Amount of changes to announce in Gitter.")] readonly int? AnnounceChanges;
 
     string Source => NuGet
         ? "https://api.nuget.org/v3/index.json"
@@ -135,8 +135,7 @@ class Build : NukeBuild
                         .AppendLine(ChangelogSectionNotes
                             .Take(AnnounceChanges ?? 4)
                             .Select(x => x.Replace("- ", "* "))
-                            .JoinNewLine())
-                        .ToString(),
+                            .JoinNewLine()).ToString(),
                     roomId: "593f3dadd73408ce4f66db89",
                     token: GitterAuthToken);
             }
