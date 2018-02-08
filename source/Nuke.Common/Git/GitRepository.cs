@@ -23,6 +23,9 @@ namespace Nuke.Common.Git
             return new GitRepository(endpoint, identifier, branch: branch);
         }
 
+        /// <summary>
+        /// Obtains information from a local git repository. Auto-injection can be utilized via <see cref="GitRepositoryAttribute"/>.
+        /// </summary>
         [CanBeNull]
         public static GitRepository FromLocalDirectory(string directory, string branch = null, string remote = "origin")
         {

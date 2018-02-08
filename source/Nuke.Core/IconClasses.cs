@@ -14,7 +14,7 @@ using Nuke.Core.Tooling;
 [assembly: IconClass(typeof(FileSystemTasks), "folder-open")]
 [assembly: IconClass(typeof(Logger), "quill4")]
 [assembly: IconClass(typeof(NukeBuild), "heart3")]
-[assembly: IconClass(typeof(ParameterAttribute), "syringe2")]
+[assembly: IconClass(typeof(ParameterAttribute), "terminal")]
 [assembly: IconClass(typeof(PathConstruction), "price-tag2")]
 [assembly: IconClass(typeof(ProcessTasks), "terminal")]
 [assembly: IconClass(typeof(SerializationTasks), "transmission2")]
