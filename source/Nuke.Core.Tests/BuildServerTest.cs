@@ -56,6 +56,15 @@ namespace Nuke.Core.Tests
             AssertProperty(Jenkins.Instance.NotNull(), property);
         }
 
+        [BuildServerTheory(typeof(Travis))]
+        [MemberData(nameof(Properties), typeof(Travis))]
+        public void TestTravis(PropertyInfo property)
+        {
+            AssertProperty(Travis.Instance.NotNull(), property);
+            Assert.True(Travis.Instance.Ci);
+            Assert.True(Travis.Instance.ContinousIntegration);
+        }
+
         public static IEnumerable<object[]> Properties(Type type)
         {
             return type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
