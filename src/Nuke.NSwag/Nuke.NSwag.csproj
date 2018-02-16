@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Version>0.1.0</Version>
+    <Authors>Sebastian Karasek</Authors>
+    <Company />
+    <Copyright>Sebastian Karasek</Copyright>
+    <PackageLicenseUrl>https://github.com/arodus/nuke-dotnet-nswag/blob/master/README.md</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/arodus/nuke-dotnet-nswag/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/arodus/nuke-dotnet-nswag/</RepositoryUrl>
+    <Description>A dotnet nswag extension for nuke.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="*.ref.*.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Nuke.Common" Version="0.1.458" />
+    <PackageReference Include="Nuke.Core" Version="0.1.458" />
+  </ItemGroup>
+</Project>

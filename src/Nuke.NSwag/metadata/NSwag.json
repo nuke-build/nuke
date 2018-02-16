@@ -1,0 +1,45 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "license": [
+    "Copyright Sebastian Karasek 2017.",
+    "Distributed under the MIT License.",
+    "https://github.com/arodus/nuke-nswag/blob/master/LICENSE"
+  ],
+  "references": [
+    "https://raw.githubusercontent.com/RSuter/NSwag/master/src/NSwag.Commands/Commands/SwaggerGeneration/WebApiToSwaggerCommand.cs",
+    "https://github.com/RSuter/NSwag/blob/master/src/NSwag.SwaggerGeneration.WebApi/WebApiToSwaggerGeneratorSettings.cs"
+  ],
+  "name": "NSwag",
+  "officialUrl": "https://github.com/RSuter/NSwag",
+  "help":
+    "The project combines the functionality of Swashbuckle (Swagger generation) and AutoRest (client generation) in one toolchain. This way a lot of incompatibilites can be avoided and features which are not well described by the Swagger specification or JSON Schema are better supported (e.g. <a href=\"https://github.com/NJsonSchema/NJsonSchema/wiki/Inheritance\">inheritance</a>, <a href=\"https://github.com/NJsonSchema/NJsonSchema/wiki/Enums\">enum</a> and reference handling). The NSwag project heavily uses <a href=\"http://njsonschema.org/\">NJsonSchema for .NET</a> for JSON Schema handling and C#/TypeScript class/interface generation.",
+  "customExecutable": true,
+  "tasks": [
+    {
+      "help": "You can execute an .nswag configuration document by using the <c>run</c> command.",
+      "postfix": "Run",
+      "omitCommonProperties": true,
+      "definiteArgument": "nswag run",
+      "settingsClass": {
+        "baseClass": "NSwagSettings",
+        "properties": [
+          {
+            "name": "ConfigurationPath",
+            "type": "string",
+            "format": "{value}",
+            "help":
+              "Path to the NSwag configuration. If the path is not set nswag will run on all configuration files (<c>*.nswag</c> and <c>nswag.json</c>) in the current directory."
+          },
+          {
+            "name": "Variables",
+            "type": "Dictionary<string,object>",
+            "format": "/variables:{value}",
+            "itemFormat": "{key}={value}",
+            "separator": ",",
+            "help": ""
+          }
+        ]
+      }
+    }
+  ]
+}
