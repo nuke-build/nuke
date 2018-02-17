@@ -47,7 +47,7 @@ namespace Nuke.Core.Tooling
             {
                 argumentsForExecution = $"{toolPath.DoubleQuoteIfNeeded()} {argumentsForExecution}";
                 argumentsForOutput = $"{toolPath.DoubleQuoteIfNeeded()} {argumentsForOutput}";
-                toolPath = "/usr/bin/mono";
+                toolPath = ToolPathResolver.GetPathExecutable("mono");
             }
 #endif
 
