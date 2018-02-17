@@ -63,6 +63,15 @@ namespace Nuke.Core.Tests
             AssertProperty(Travis.Instance.NotNull(), property);
             Assert.True(Travis.Instance.Ci);
             Assert.True(Travis.Instance.ContinousIntegration);
+  
+        [BuildServerTheory(typeof(GitLab))]
+        [MemberData(nameof(Properties),typeof(Jenkins))]
+        public void TestGitLab(PropertyInfo property)
+        {
+            AssertProperty(GitLab.Instance.NotNull(), property);
+            Assert.True(GitLab.Instance.Ci);
+            Assert.True(GitLab.Instance.GitLabCi);
+            Assert.True(GitLab.Instance.Server);
         }
 
         public static IEnumerable<object[]> Properties(Type type)

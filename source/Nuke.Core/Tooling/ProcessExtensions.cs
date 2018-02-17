@@ -18,15 +18,16 @@ namespace Nuke.Core.Tooling
     public static class ProcessExtensions
     {
         [AssertionMethod]
-        public static void AssertWaitForExit(
+        public static IProcess AssertWaitForExit(
             [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
             this IProcess process)
         {
             ControlFlow.Assert(process != null && process.WaitForExit(), "process != null && process.WaitForExit()");
+            return process;
         }
 
         [AssertionMethod]
-        public static void AssertZeroExitCode(
+        public static IProcess AssertZeroExitCode(
             [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
             this IProcess process)
         {
@@ -37,6 +38,7 @@ namespace Nuke.Core.Tooling
                     $"Process '{Path.GetFileName(process.FileName)}' exited with code {process.ExitCode}. Please verify the invocation.",
                     $"> {process.FileName.DoubleQuoteIfNeeded()} {process.Arguments}"
                 }.JoinNewLine());
+            return process;
         }
 
         public static IEnumerable<Output> EnsureOnlyStd(this IEnumerable<Output> output)

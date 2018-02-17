@@ -11,6 +11,11 @@ using Nuke.Core.Execution;
 namespace Nuke.Common.Git
 {
     /// <inheritdoc/>
+    /// <summary>
+    /// Implements auto-injection for <see cref="GitRepository"/>.
+    /// <para/>
+    /// <inheritdoc/>
+    /// </summary>
     [PublicAPI]
     [UsedImplicitly(ImplicitUseKindFlags.Default)]
     public class GitRepositoryAttribute : StaticInjectionAttributeBase

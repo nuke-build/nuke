@@ -13,6 +13,11 @@ using Nuke.Core.Tooling;
 namespace Nuke.Common.Tools.GitVersion
 {
     /// <inheritdoc/>
+    /// <summary>
+    /// Implements auto-injection for <see cref="GitVersionTasks"/>.
+    /// <para/>
+    /// <inheritdoc/>
+    /// </summary>
     [PublicAPI]
     [UsedImplicitly(ImplicitUseKindFlags.Default)]
     public class GitVersionAttribute : StaticInjectionAttributeBase

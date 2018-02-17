@@ -14,7 +14,7 @@ namespace Nuke.Core.Execution
     {
         public static IReadOnlyCollection<TargetDefinition> GetExecutionList(NukeBuild build)
         {
-            ControlFlow.Assert(build.TargetDefinitions.All(x => !x.Name.EqualsOrdinalIgnoreCase("default")),
+            ControlFlow.Assert(build.TargetDefinitions.All(x => !x.Name.EqualsOrdinalIgnoreCase(BuildExecutor.DefaultTarget)),
                 "The name 'default' cannot be used as target name.");
 
             var specifiedTargets = build.InvokedTargets.Select(x => GetDefinition(x, build)).ToList();
@@ -25,7 +25,7 @@ namespace Nuke.Core.Execution
             string targetName,
             NukeBuild build)
         {
-            if (targetName.EqualsOrdinalIgnoreCase("default"))
+            if (targetName.EqualsOrdinalIgnoreCase(BuildExecutor.DefaultTarget))
                 return build.TargetDefinitions.Single(x => x.IsDefault);
 
             var targetDefinition = build.TargetDefinitions.SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(targetName));

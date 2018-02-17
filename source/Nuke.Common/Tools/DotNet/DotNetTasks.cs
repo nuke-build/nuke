@@ -62,5 +62,11 @@ namespace Nuke.Common.Tools.DotNet
             .EnableIncludeSymbols()
             .SetOutputDirectory(NukeBuild.Instance.OutputDirectory)
             .SetVersion(GitVersionAttribute.Value?.NuGetVersionV2);
+
+        public static DotNetTestSettings DefaultDotNetTest => new DotNetTestSettings()
+            .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
+            .EnableNoBuild()
+            .SetConfiguration(NukeBuild.Instance.Configuration)
+            .SetProjectFile(NukeBuild.Instance.SolutionFile);
     }
 }
