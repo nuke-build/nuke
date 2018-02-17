@@ -4,8 +4,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Schema;
+using Newtonsoft.Json.Schema.Generation;
+using Newtonsoft.Json.Serialization;
+using Nuke.CodeGeneration.Model;
 using Nuke.Common.Git;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
@@ -172,6 +178,7 @@ class Build : NukeBuild
 
     string MetadataDirectory => RootDirectory / ".." / "tools" / "metadata";
     string GenerationDirectory => RootDirectory / "source" / "Nuke.Common" / "Tools";
+    string ToolSchemaPath => SourceDirectory / "Nuke.CodeGeneration" / "schema.json";
 
     Target Generate => _ => _
         .Executes(() =>
@@ -182,8 +189,19 @@ class Build : NukeBuild
                 baseNamespace: "Nuke.Common.Tools",
                 useNestedNamespaces: true,
                 gitRepository: GitRepository.FromLocalDirectory(MetadataDirectory).NotNull());
+
+            var schemaGenerator = new JSchemaGenerator
+                                  {
+                                      DefaultRequired = Required.DisallowNull,
+                                      ContractResolver = new CamelCasePropertyNamesContractResolver()
+                                  };
+            var toolSchema = schemaGenerator.Generate(typeof(Tool));
+            toolSchema.Title = "JSON schema for tool metadata";
+            toolSchema.Id = new Uri(GitRepository.GetGitHubDownloadUrl(GetRelativePath(RootDirectory,ToolSchemaPath)));
+            File.WriteAllText(ToolSchemaPath, toolSchema.ToString(SchemaVersion.Draft4));
         });
 
     Target Full => _ => _
         .DependsOn(Test, Analysis, Push);
+
 }

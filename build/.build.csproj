@@ -22,6 +22,7 @@
     <PackageReference Include="gitlink" Version="3.0.0-unstable0090" />
     <PackageReference Include="GitVersion.CommandLine" Version="4.0.0-beta0011" />
     <PackageReference Include="JetBrains.ReSharper.CommandLineTools" Version="2017.1.20170613.162720" />
+    <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.5" />
     <PackageReference Include="OpenCover" Version="4.6.519" />
     <PackageReference Include="ReportGenerator" Version="2.5.6" />
     <PackageReference Include="xunit.runner.console" Version="2.2.0" />

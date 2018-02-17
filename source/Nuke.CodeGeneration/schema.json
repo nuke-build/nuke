@@ -1,196 +1,311 @@
-﻿{
-  "$schema": "http://json-schema.org/draft-04/schema",
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "https://raw.githubusercontent.com/arodus/nuke/master/source/Nuke.CodeGeneration/schema.json",
   "title": "JSON schema for tool metadata",
-  "id": "nuke-tools",
+  "definitions": {
+    "DataClass": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name of the data class.",
+          "type": "string",
+          "pattern": "^[A-Z][a-z]+(?:[A-Z0-9][a-z0-9]+)*$"
+        },
+        "baseClass": {
+          "description": "The base class to inherit from.",
+          "type": "string"
+        },
+        "noExtensionMethods": {
+          "description": "Skips appendig of extension methods.",
+          "type": "boolean"
+        },
+        "noArguments": {
+          "description": "Omits argument parsing.",
+          "type": "boolean"
+        },
+        "properties": {
+          "description": "Properties of the data class.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Property"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "properties"
+      ]
+    },
+    "Enumeration": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name of the enumeration.",
+          "type": "string",
+          "pattern": "^[A-Z][a-z]+(?:[A-Z0-9][a-z0-9]+)*$"
+        },
+        "values": {
+          "description": "The enumeration values.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "values"
+      ]
+    },
+    "Property": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name of the property.",
+          "type": "string",
+          "pattern": "^[A-Z][a-z]+(?:[A-Z0-9][a-z0-9]+)*$"
+        },
+        "type": {
+          "description": "Type of the property. I.e., bool, int, string, List<int>, Dictionary<string, object>, Lookup<string, int.>",
+          "type": "string"
+        },
+        "assertion": {
+          "description": "Automatic assertion.",
+          "type": "integer",
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        "format": {
+          "description": "Argument formatting for the property. '{value}' is replaced by the value of the property.",
+          "type": "string"
+        },
+        "itemFormat": {
+          "description": "Item formatting for dictionaries. '{key}' and '{value}' are replaced accordingly.",
+          "type": "string"
+        },
+        "noArgument": {
+          "description": "Omits argument parsing.",
+          "type": "boolean"
+        },
+        "customImpl": {
+          "description": "Custom implementation of the property.",
+          "type": "boolean"
+        },
+        "noExtensionMethod": {
+          "description": "Skips appendig of extension methods.",
+          "type": "boolean"
+        },
+        "separator": {
+          "description": "Separator used for items of collection types.",
+          "type": "string"
+        },
+        "disallowedCharacter": {
+          "description": "Character that must be double-quoted.",
+          "type": "string"
+        },
+        "quoteMultiple": {
+          "description": "Specifies if list items should be double quoted.",
+          "type": "boolean"
+        },
+        "default": {
+          "description": "Default value that will be used if no value is given.",
+          "type": "string"
+        },
+        "secret": {
+          "description": "Specifies that the value is secret and should be hidden in output.",
+          "type": "boolean"
+        },
+        "customValue": {
+          "description": "Custom implementation of value presentation.",
+          "type": "boolean"
+        },
+        "createOverload": {
+          "description": "Specifies that an overload for the property should be created.",
+          "type": "boolean"
+        },
+        "help": {
+          "description": "Help text for the property.",
+          "type": "string"
+        },
+        "delegates": {
+          "description": "Dictionary delegates for named properties.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Property"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ]
+    },
+    "SettingsClass": {
+      "description": "The settings of the task.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name of the data class.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[A-Z][a-z]+(?:[A-Z0-9][a-z0-9]+)*$"
+        },
+        "baseClass": {
+          "description": "The base class to inherit from.",
+          "type": "string"
+        },
+        "noExtensionMethods": {
+          "description": "Skips appendig of extension methods.",
+          "type": "boolean"
+        },
+        "noArguments": {
+          "description": "Omits argument parsing.",
+          "type": "boolean"
+        },
+        "properties": {
+          "description": "Properties of the data class.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Property"
+          }
+        }
+      },
+      "required": [
+        "properties"
+      ]
+    },
+    "Task": {
+      "type": "object",
+      "properties": {
+        "help": {
+          "description": "Help or introduction text to for the tool. Supports 'a-href', 'c', 'em', 'b', 'ul', 'li' and 'para' tags for better formatting.",
+          "type": "string"
+        },
+        "postfix": {
+          "description": "Postfix for the task alias.",
+          "type": "string",
+          "pattern": "^[A-Z][a-z]+(?:[A-Z0-9][a-z0-9]+)*$"
+        },
+        "returnType": {
+          "description": "Return type of the task.",
+          "type": "string"
+        },
+        "omitCommonProperties": {
+          "description": "Skips appending of common task properties.",
+          "type": "boolean"
+        },
+        "customStart": {
+          "description": "Custom start implementation.",
+          "type": "boolean"
+        },
+        "customAssertion": {
+          "description": "Custom process assertion implementation.",
+          "type": "boolean"
+        },
+        "definiteArgument": {
+          "description": "Argument that will always be printed independently of any set property.",
+          "type": "string"
+        },
+        "settingsClass": {
+          "$ref": "#/definitions/SettingsClass"
+        }
+      },
+      "required": [
+        "settingsClass"
+      ]
+    }
+  },
   "type": "object",
   "properties": {
+    "$schema": {
+      "type": "string"
+    },
     "license": {
       "type": "array",
-      "description": "Contains the license header.",
       "items": {
         "type": "string"
       }
     },
     "references": {
-      "type": "array",
       "description": "Contains all references on which this definition is based on. Allows checking for updates.",
+      "type": "array",
       "items": {
         "type": "string"
       }
     },
     "name": {
+      "description": "Name of the Tool.",
       "type": "string",
-      "description": "Name of the tool."
+      "pattern": "^[A-Z][a-z]+(?:[A-Z0-9][a-z0-9]+)*$"
     },
     "officialUrl": {
+      "description": "Url to the official website.",
       "type": "string",
-      "description": "Url to the official website."
+      "format": "uri"
     },
     "help": {
-      "type": "string",
-      "description": "Help or introduction text to for the tool. Can contain HTML tags for better formatting."
+      "description": "Help or introduction text to for the tool. Supports 'a-href', 'c', 'em', 'b', 'ul', 'li' and 'para' tags for better formatting.",
+      "type": "string"
     },
     "packageId": {
-      "type": "string",
-      "description": "ID for the NuGet package."
+      "description": "ID for the NuGet package.",
+      "type": "string"
     },
     "packageExecutable": {
-      "type": "string",
-      "description": "Exact name of the main executable found in the './tools' folder. Case-sensitive."
+      "description": "Exact name of the main executable found in the './tools' folder. Case-sensitive.",
+      "type": "string"
     },
-    "customExecutable": {
-      "type": "boolean",
-      "description": "Defines that locating the executable is implemented customly."
+    "environmentExecutable": {
+      "description": "Exact name of the environment variable that contains the path to the executable.",
+      "type": "string"
     },
     "pathExecutable": {
-      "type": "string",
-      "description": "Exact name of the executable that can be found via 'where' or 'which'."
+      "description": "Exact name of the executable that can be found via 'where' or 'which'.",
+      "type": "string"
+    },
+    "customExecutable": {
+      "description": "Defines that locating the executable is implemented customly.",
+      "type": "boolean"
     },
     "tasks": {
+      "description": "Help or introduction text to for the tool. Can contain HTML tags for better formatting.",
       "type": "array",
       "items": {
-        "type": "object",
-        "properties": {
-          "help": {
-            "type": "string",
-            "description": "Help or introduction text to for the tool. Can contain HTML tags for better formatting."
-          },
-          "customStart": {
-            "type": "boolean",
-            "description": "Custom start implementation."
-          },
-          "customAssertion": {
-            "type": "boolean",
-            "description": "Custom process assertion implementation."
-          },
-          "redirectOutput": {
-            "type": "boolean",
-            "description": "Sets the default for output redirection."
-          },
-          "returnType": {
-            "type": "string",
-            "description": "Return type of the task."
-          },
-          "postfix": {
-            "type": "string",
-            "description": "Postfix for the task alias."
-          },
-          "definiteArgument": {
-            "type": "string",
-            "description": "Argument that will always be printed independently of any set property."
-          },
-          "omitCommonProperties": {
-            "type": "boolean",
-            "description": "Skips appending of common task properties."
-          },
-          "settingsClass": {
-            "type": "object",
-            "properties": {
-              "properties": {
-                "type": "array",
-                "items": { "$ref": "#/definitions/property" }
-              }
-            }
-          }
-        }
+        "$ref": "#/definitions/Task"
       }
     },
     "commonTaskProperties": {
-      "type": "array",
       "description": "Common properties for all tasks.",
-      "items": { "$ref": "#/definitions/property" }
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Property"
+      }
     },
     "dataClasses": {
-      "type": "array",
       "description": "Common used data classes.",
+      "type": "array",
       "items": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "Name of the data class."
-          },
-          "properties": {
-            "type": "array",
-            "items": { "$ref": "#/definitions/property" }
-          }
-        }
+        "$ref": "#/definitions/DataClass"
       }
     },
     "enumerations": {
+      "description": "Used enumerations.",
       "type": "array",
       "items": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "Name of the enumeration."
-          },
-          "values": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        }
+        "$ref": "#/definitions/Enumeration"
       }
     }
   },
-  "definitions": {
-    "property": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name of the property."
-        },
-        "type": {
-          "type": "string",
-          "description": "Type of the property. I.e., bool, int, string, List<int>, Dictionary<string, object>, Lookup<string, int>"
-        },
-        "format": {
-          "type": "string",
-          "description": "Argument formatting for the property. '{value}' is replaced by the value of the property."
-        },
-        "itemFormat": {
-          "type": "string",
-          "description": "Item formatting for dictionaries. '{key}' and '{value}' are replaced accordingly."
-        },
-        "separator": {
-          "type": "string",
-          "description": "Separator used for items of collection types."
-        },
-        "disallowedCharacter": {
-          "type": "string",
-          "description": "Character that must be double-quoted."
-        },
-        "customValue": {
-          "type": "boolean",
-          "description": "Custom implementation of value presentation."
-        },
-        "noArgument": {
-          "type": "boolean",
-          "description": "Omits argument parsing."
-        },
-        "assertion": {
-          "type": "string",
-          "enum": [ "NotNull", "File", "Directory", "FileOrNull", "DirectoryOrNull" ],
-          "description": "Automatic assertion."
-        },
-        "secret": {
-          "type": "boolean",
-          "description": "Specifies that the value is secret and should be hidden in output."
-        },
-        "createOverload": {
-          "type": "boolean",
-          "description": "Specifies that an overload for the property should be created."
-        },
-        "help": {
-          "type": "string",
-          "description": "Help text for the property."
-        }
-      }
-    }
-  }
+  "required": [
+    "name",
+    "officialUrl",
+    "tasks"
+  ]
 }
-
