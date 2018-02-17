@@ -14,6 +14,7 @@ namespace Nuke.Core
         TeamServices,
         Bitrise,
         AppVeyor,
-        Jenkins
+        Jenkins,
+        GitLab
     }
 }
