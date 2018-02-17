@@ -22,6 +22,7 @@
   <ItemGroup>
     <PackageReference Include="GitVersion.CommandLine" Version="4.0.0-beta0011" />
     <PackageReference Include="JetBrains.ReSharper.CommandLineTools" Version="2017.1.20170613.162720" />
+    <PackageReference Include="NSwag.Commands" Version="11.15.3" />
     <PackageReference Include="Nuke.CodeGeneration" Version="0.1.458" />
     <PackageReference Include="Nuke.Common" Version="0.1.458" />
     <PackageReference Include="Nuke.Core" Version="0.1.458" />
