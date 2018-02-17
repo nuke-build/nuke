@@ -11,7 +11,7 @@ using static Nuke.Core.IO.PathConstruction;
 
 class Build : NukeBuild
 {
-    public static int Main () => Execute<Build>(x => x.Compile);
+    public static int Main () => Execute<Build>(x => x.Pack);
 
     const string Source = "https://www.myget.org/F/nuke-plugins/api/v2/package";
 
