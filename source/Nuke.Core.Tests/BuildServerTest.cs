@@ -56,6 +56,16 @@ namespace Nuke.Core.Tests
             AssertProperty(Jenkins.Instance.NotNull(), property);
         }
 
+        [BuildServerTheory(typeof(GitLab))]
+        [MemberData(nameof(Properties), typeof(GitLab))]
+        public void TestGitLab(PropertyInfo property)
+        {
+            AssertProperty(GitLab.Instance.NotNull(), property);
+            Assert.True(GitLab.Instance.Ci);
+            Assert.True(GitLab.Instance.GitLabCi);
+            Assert.True(GitLab.Instance.Server);
+        }
+
         public static IEnumerable<object[]> Properties(Type type)
         {
             return type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
