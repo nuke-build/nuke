@@ -4,8 +4,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using Nuke.CodeGeneration;
+using Nuke.CodeGeneration.Model;
 using Nuke.Common.Git;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
@@ -26,6 +29,7 @@ using static Nuke.Common.Tools.Xunit.XunitTasks;
 using static Nuke.Core.IO.FileSystemTasks;
 using static Nuke.Core.IO.PathConstruction;
 using static Nuke.Core.EnvironmentInfo;
+using static SchemaGenerator;
 
 class Build : NukeBuild
 {
@@ -171,11 +175,12 @@ class Build : NukeBuild
 
     string MetadataDirectory => RootDirectory / ".." / "tools" / "metadata";
     string GenerationDirectory => RootDirectory / "source" / "Nuke.Common" / "Tools";
+    string ToolSchemaFile => SourceDirectory / "Nuke.CodeGeneration" / "schema.json";
 
-    Target Generate => _ => _
+    Target GenerateCode => _ => _
         .Executes(() =>
         {
-            GenerateCode(
+            CodeGenerator.GenerateCode(
                 MetadataDirectory,
                 GenerationDirectory,
                 baseNamespace: "Nuke.Common.Tools",
@@ -183,6 +188,16 @@ class Build : NukeBuild
                 gitRepository: GitRepository.FromLocalDirectory(MetadataDirectory).NotNull());
         });
 
+    Target GenerateSchema => _ => _
+        .Executes(() =>
+        {
+            GenerateSchema<Tool>(
+                ToolSchemaFile,
+                GitRepository.GetGitHubDownloadUrl(ToolSchemaFile),
+                "Tool metadata schema file by NUKE");
+        });
+
     Target Full => _ => _
         .DependsOn(Test, Analysis, Push);
+
 }
