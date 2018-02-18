@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    ".build": {
+      "commandName": "Project"
+    },
+    "Generate": {
+      "commandName": "Project",
+      "commandLineArgs": "-Target Generate",
+      "workingDirectory": "E:\\arodes\\nuke-nswag"
+    }
+  }
+}

@@ -18,4 +18,7 @@
     <PackageReference Include="Nuke.Common" Version="0.1.458" />
     <PackageReference Include="Nuke.Core" Version="0.1.458" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="metadata\" />
+  </ItemGroup>
 </Project>

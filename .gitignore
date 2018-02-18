@@ -260,6 +260,5 @@ paket-files/
 __pycache__/
 *.pyc
 
-*.generated.cs
+
 *.ref.*.txt
-metadata/
