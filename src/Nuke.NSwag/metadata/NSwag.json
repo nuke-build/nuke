@@ -28,6 +28,7 @@
     {
       "help": "Generates a Swagger specification ASP.NET Core Mvc application using ApiExplorer (experimental).",
       "postfix": "AspNetCore2Swagger",
+      "definiteArgument": "nswag aspnetcore2swagger",
       "settingsClass": {
         "baseClass": "NSwagSettings",
         "properties": [
@@ -184,13 +185,23 @@
     {
       "help": "Prints the toolchain version.",
       "postfix": "Version",
+      "definiteArgument": "nswag version",
       "settingsClass": {
-        "baseClass": "NSwagSettings"
+        "baseClass": "NSwagSettings",
+        "properties": [
+          {
+            "name": "DoNotUse",
+            "type": "bool",
+            "format": "{value}",
+            "help": "This property is just there because of a bug in the code generator."
+          }
+        ]
       }
     },
     {
       "help": "List all types for the given assembly and settings.",
       "postfix": "ListTypes",
+      "definiteArgument": "nswag list-types",
       "settingsClass": {
         "baseClass": "NSwagSettings",
         "properties": [
@@ -202,8 +213,10 @@
           },
           {
             "name": "Variables",
-            "type": "string",
-            "format": "/variables:\\\"{value}\\\""
+            "type": "Dictionary<string,string>",
+            "format": "/variables:\\\"{value}\\\"",
+            "itemFormat": "{key}={value}",
+            "separator": ","
           },
           {
             "name": "Assembly",
@@ -231,6 +244,7 @@
     {
       "help": "List all controllers classes for the given assembly and settings.",
       "postfix": "ListControllers",
+      "definiteArgument": "nswag list-controllers",
       "settingsClass": {
         "baseClass": "NSwagSettings",
         "properties": [
@@ -242,8 +256,10 @@
           },
           {
             "name": "Variables",
-            "type": "string",
-            "format": "/variables:\\\"{value}\\\""
+            "type": "Dictionary<string,string>",
+            "format": "/variables:\\\"{value}\\\"",
+            "itemFormat": "{key}={value}",
+            "separator": ","
           },
           {
             "name": "Assembly",
@@ -270,6 +286,7 @@
     },
     {
       "postfix": "Types2Swagger",
+      "definiteArgument": "nswag types2swagger",
       "settingsClass": {
         "baseClass": "NSwagSettings",
         "properties": [
@@ -360,6 +377,7 @@
     {
       "help": "Generates a Swagger specification for a controller or controlles contained in a .NET Web API assembly.",
       "postfix": "WebApi2Swagger",
+      "definiteArgument": "nswag webapi2swagger",
       "settingsClass": {
         "baseClass": "NSwagSettings",
         "properties": [
@@ -556,13 +574,23 @@
     {
       "help": "Creates a new nswag.json file in the current directory.",
       "postfix": "New",
+      "definiteArgument": "nswag new",
       "settingsClass": {
-        "baseClass": "NSwagSettings"
+        "baseClass": "NSwagSettings",
+        "properties": [
+          {
+            "name": "DoNotUse",
+            "type": "bool",
+            "format": "{value}",
+            "help": "This property is just there because of a bug in the code generator."
+          }
+        ]
       }
     },
     {
       "help": "Executes an .nswag file. If 'input' is not specified then all *.nswag files and the nswag.json file is executed.",
       "postfix": "Run",
+      "definiteArgument": "nswag run",
       "settingsClass": {
         "baseClass": "NSwagSettings",
         "properties": [
@@ -573,8 +601,10 @@
           },
           {
             "name": "Variables",
-            "type": "string",
-            "format": "/variables:\\\"{value}\\\""
+            "type": "Dictionary<string,string>",
+            "format": "/variables:\\\"{value}\\\"",
+            "itemFormat": "{key}={value}",
+            "separator": ","
           }
         ]
       }
@@ -582,6 +612,7 @@
     {
       "help": "Generates CSharp classes from a JSON Schema.",
       "postfix": "JsonSchema2CsClient",
+      "definiteArgument": "nswag jsonschema2csclient",
       "settingsClass": {
         "baseClass": "NSwagSettings",
         "properties": [
@@ -652,6 +683,7 @@
     {
       "help": "Generates TypeScript interfaces from a JSON Schema.",
       "postfix": "JsonSchema2TsClient",
+      "definiteArgument": "nswag jsonschema2tsclient",
       "settingsClass": {
         "baseClass": "NSwagSettings",
         "properties": [
@@ -692,6 +724,7 @@
     {
       "help": "Generates CSharp client code from a Swagger specification.",
       "postfix": "Swagger2CsClient",
+      "definiteArgument": "nswag swagger2csclient",
       "settingsClass": {
         "baseClass": "NSwagSettings",
         "properties": [
@@ -1086,6 +1119,7 @@
     {
       "help": "Generates CSharp Web API controller code from a Swagger specification.",
       "postfix": "Swagger2Cscontroller",
+      "definiteArgument": "nswag swagger2cscontroller",
       "settingsClass": {
         "baseClass": "NSwagSettings",
         "properties": [
@@ -1347,6 +1381,7 @@
     {
       "help": "Generates TypeScript client code from a Swagger specification.",
       "postfix": "Swagger2TsClient",
+      "definiteArgument": "nswag swagger2tsclient",
       "settingsClass": {
         "baseClass": "NSwagSettings",
         "properties": [

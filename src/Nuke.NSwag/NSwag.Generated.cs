@@ -231,6 +231,7 @@ namespace Nuke.NSwag
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
+              .Add("nswag aspnetcore2swagger")
               .Add("/project:\"{value}\"", Project)
               .Add("/mSBuildProjectExtensionsPath:\"{value}\"", MSBuildProjectExtensionsPath)
               .Add("/configuration:\"{value}\"", Configuration)
@@ -268,6 +269,15 @@ namespace Nuke.NSwag
     {
         /// <summary><p>Path to the NSwag executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? $"{GetToolPath()}";
+        /// <summary><p>This property is just there because of a bug in the code generator.</p></summary>
+        public virtual bool? DoNotUse { get; internal set; }
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("nswag version")
+              .Add("{value}", DoNotUse);
+            return base.ConfigureArguments(arguments);
+        }
     }
     #endregion
     #region NSwagListTypesSettings
@@ -281,7 +291,8 @@ namespace Nuke.NSwag
         public override string ToolPath => base.ToolPath ?? $"{GetToolPath()}";
         /// <summary><p>The nswag.json configuration file path.</p></summary>
         public virtual string File { get; internal set; }
-        public virtual string Variables { get; internal set; }
+        public virtual IReadOnlyDictionary<string, string> Variables => VariablesInternal.AsReadOnly();
+        internal Dictionary<string,string> VariablesInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
         /// <summary><p>The path or paths to the .NET assemblies (comma separated).</p></summary>
         public virtual IReadOnlyList<String> Assembly => AssemblyInternal.AsReadOnly();
         internal List<String> AssemblyInternal { get; set; } = new List<String>();
@@ -293,8 +304,9 @@ namespace Nuke.NSwag
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
+              .Add("nswag list-types")
               .Add("/file:\"{value}\"", File)
-              .Add("/variables:\"{value}\"", Variables)
+              .Add("/variables:\"{value}\"", Variables, "{key}={value}", separator: ',')
               .Add("/assembly:\"{value}\"", Assembly, separator: ',')
               .Add("/assemblyConfig:\"{value}\"", AssemblyConfig)
               .Add("/referencePaths:\"{value}\"", ReferencePaths, separator: ',');
@@ -313,7 +325,8 @@ namespace Nuke.NSwag
         public override string ToolPath => base.ToolPath ?? $"{GetToolPath()}";
         /// <summary><p>The nswag.json configuration file path.</p></summary>
         public virtual string File { get; internal set; }
-        public virtual string Variables { get; internal set; }
+        public virtual IReadOnlyDictionary<string, string> Variables => VariablesInternal.AsReadOnly();
+        internal Dictionary<string,string> VariablesInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
         /// <summary><p>The path or paths to the .NET assemblies (comma separated).</p></summary>
         public virtual IReadOnlyList<String> Assembly => AssemblyInternal.AsReadOnly();
         internal List<String> AssemblyInternal { get; set; } = new List<String>();
@@ -325,8 +338,9 @@ namespace Nuke.NSwag
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
+              .Add("nswag list-controllers")
               .Add("/file:\"{value}\"", File)
-              .Add("/variables:\"{value}\"", Variables)
+              .Add("/variables:\"{value}\"", Variables, "{key}={value}", separator: ',')
               .Add("/assembly:\"{value}\"", Assembly, separator: ',')
               .Add("/assemblyConfig:\"{value}\"", AssemblyConfig)
               .Add("/referencePaths:\"{value}\"", ReferencePaths, separator: ',');
@@ -375,6 +389,7 @@ namespace Nuke.NSwag
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
+              .Add("nswag types2swagger")
               .Add("/classNames:\"{value}\"", ClassNames, separator: ',')
               .Add("/defaultPropertyNameHandling:\"{value}\"", DefaultPropertyNameHandling)
               .Add("/defaultReferenceTypeNullHandling:\"{value}\"", DefaultReferenceTypeNullHandling)
@@ -471,6 +486,7 @@ namespace Nuke.NSwag
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
+              .Add("nswag webapi2swagger")
               .Add("/controller:\"{value}\"", Controller)
               .Add("/controllers:\"{value}\"", Controllers, separator: ',')
               .Add("/aspNetCore:\"{value}\"", AspNetCore)
@@ -514,6 +530,15 @@ namespace Nuke.NSwag
     {
         /// <summary><p>Path to the NSwag executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? $"{GetToolPath()}";
+        /// <summary><p>This property is just there because of a bug in the code generator.</p></summary>
+        public virtual bool? DoNotUse { get; internal set; }
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("nswag new")
+              .Add("{value}", DoNotUse);
+            return base.ConfigureArguments(arguments);
+        }
     }
     #endregion
     #region NSwagRunSettings
@@ -526,12 +551,14 @@ namespace Nuke.NSwag
         /// <summary><p>Path to the NSwag executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? $"{GetToolPath()}";
         public virtual string Input { get; internal set; }
-        public virtual string Variables { get; internal set; }
+        public virtual IReadOnlyDictionary<string, string> Variables => VariablesInternal.AsReadOnly();
+        internal Dictionary<string,string> VariablesInternal { get; set; } = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
+              .Add("nswag run")
               .Add("{value}", Input)
-              .Add("/variables:\"{value}\"", Variables);
+              .Add("/variables:\"{value}\"", Variables, "{key}={value}", separator: ',');
             return base.ConfigureArguments(arguments);
         }
     }
@@ -569,6 +596,7 @@ namespace Nuke.NSwag
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
+              .Add("nswag jsonschema2csclient")
               .Add("/name:\"{value}\"", Name)
               .Add("/namespace:\"{value}\"", TargetNamespace)
               .Add("/requiredPropertiesMustBeDefined:\"{value}\"", RequiredPropertiesMustBeDefined)
@@ -606,6 +634,7 @@ namespace Nuke.NSwag
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
+              .Add("nswag jsonschema2tsclient")
               .Add("/name:\"{value}\"", Name)
               .Add("/input:\"{value}\"", Input)
               .Add("/serviceHost:\"{value}\"", ServiceHost)
@@ -760,6 +789,7 @@ namespace Nuke.NSwag
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
+              .Add("nswag swagger2csclient")
               .Add("/clientBaseClass:\"{value}\"", ClientBaseClass)
               .Add("/configurationClass:\"{value}\"", ConfigurationClass)
               .Add("/generateClientClasses:\"{value}\"", GenerateClientClasses)
@@ -927,6 +957,7 @@ namespace Nuke.NSwag
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
+              .Add("nswag swagger2cscontroller")
               .Add("/controllerBaseClass:\"{value}\"", ControllerBaseClass)
               .Add("/controllerStyle:\"{value}\"", ControllerStyle)
               .Add("/useCancellationToken:\"{value}\"", UseCancellationToken)
@@ -1080,6 +1111,7 @@ namespace Nuke.NSwag
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
+              .Add("nswag swagger2tsclient")
               .Add("/className:\"{value}\"", ClassName)
               .Add("/moduleName:\"{value}\"", ModuleName)
               .Add("/namespace:\"{value}\"", TargetNamespace)
@@ -1845,6 +1877,48 @@ namespace Nuke.NSwag
     [ExcludeFromCodeCoverage]
     public static partial class NSwagVersionSettingsExtensions
     {
+        #region DoNotUse
+        /// <summary><p><em>Sets <see cref="NSwagVersionSettings.DoNotUse"/>.</em></p><p>This property is just there because of a bug in the code generator.</p></summary>
+        [Pure]
+        public static NSwagVersionSettings SetDoNotUse(this NSwagVersionSettings toolSettings, bool? doNotUse)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DoNotUse = doNotUse;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagVersionSettings.DoNotUse"/>.</em></p><p>This property is just there because of a bug in the code generator.</p></summary>
+        [Pure]
+        public static NSwagVersionSettings ResetDoNotUse(this NSwagVersionSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DoNotUse = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagVersionSettings.DoNotUse"/>.</em></p><p>This property is just there because of a bug in the code generator.</p></summary>
+        [Pure]
+        public static NSwagVersionSettings EnableDoNotUse(this NSwagVersionSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DoNotUse = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagVersionSettings.DoNotUse"/>.</em></p><p>This property is just there because of a bug in the code generator.</p></summary>
+        [Pure]
+        public static NSwagVersionSettings DisableDoNotUse(this NSwagVersionSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DoNotUse = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagVersionSettings.DoNotUse"/>.</em></p><p>This property is just there because of a bug in the code generator.</p></summary>
+        [Pure]
+        public static NSwagVersionSettings ToggleDoNotUse(this NSwagVersionSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DoNotUse = !toolSettings.DoNotUse;
+            return toolSettings;
+        }
+        #endregion
     }
     #endregion
     #region NSwagListTypesSettingsExtensions
@@ -1872,20 +1946,44 @@ namespace Nuke.NSwag
         }
         #endregion
         #region Variables
-        /// <summary><p><em>Sets <see cref="NSwagListTypesSettings.Variables"/>.</em></p></summary>
+        /// <summary><p><em>Sets <see cref="NSwagListTypesSettings.Variables"/> to a new dictionary.</em></p></summary>
         [Pure]
-        public static NSwagListTypesSettings SetVariables(this NSwagListTypesSettings toolSettings, string variables)
+        public static NSwagListTypesSettings SetVariables(this NSwagListTypesSettings toolSettings, IDictionary<string, string> variables)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Variables = variables;
+            toolSettings.VariablesInternal = variables.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagListTypesSettings.Variables"/>.</em></p></summary>
+        /// <summary><p><em>Clears <see cref="NSwagListTypesSettings.Variables"/>.</em></p></summary>
         [Pure]
-        public static NSwagListTypesSettings ResetVariables(this NSwagListTypesSettings toolSettings)
+        public static NSwagListTypesSettings ClearVariables(this NSwagListTypesSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Variables = null;
+            toolSettings.VariablesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds a new key-value-pair <see cref="NSwagListTypesSettings.Variables"/>.</em></p></summary>
+        [Pure]
+        public static NSwagListTypesSettings AddVariable(this NSwagListTypesSettings toolSettings, string variableKey, string variableValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.VariablesInternal.Add(variableKey, variableValue);
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes a key-value-pair from <see cref="NSwagListTypesSettings.Variables"/>.</em></p></summary>
+        [Pure]
+        public static NSwagListTypesSettings RemoveVariable(this NSwagListTypesSettings toolSettings, string variableKey)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.VariablesInternal.Remove(variableKey);
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets a key-value-pair in <see cref="NSwagListTypesSettings.Variables"/>.</em></p></summary>
+        [Pure]
+        public static NSwagListTypesSettings SetVariable(this NSwagListTypesSettings toolSettings, string variableKey, string variableValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.VariablesInternal[variableKey] = variableValue;
             return toolSettings;
         }
         #endregion
@@ -2054,20 +2152,44 @@ namespace Nuke.NSwag
         }
         #endregion
         #region Variables
-        /// <summary><p><em>Sets <see cref="NSwagListControllersSettings.Variables"/>.</em></p></summary>
+        /// <summary><p><em>Sets <see cref="NSwagListControllersSettings.Variables"/> to a new dictionary.</em></p></summary>
         [Pure]
-        public static NSwagListControllersSettings SetVariables(this NSwagListControllersSettings toolSettings, string variables)
+        public static NSwagListControllersSettings SetVariables(this NSwagListControllersSettings toolSettings, IDictionary<string, string> variables)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Variables = variables;
+            toolSettings.VariablesInternal = variables.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagListControllersSettings.Variables"/>.</em></p></summary>
+        /// <summary><p><em>Clears <see cref="NSwagListControllersSettings.Variables"/>.</em></p></summary>
         [Pure]
-        public static NSwagListControllersSettings ResetVariables(this NSwagListControllersSettings toolSettings)
+        public static NSwagListControllersSettings ClearVariables(this NSwagListControllersSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Variables = null;
+            toolSettings.VariablesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds a new key-value-pair <see cref="NSwagListControllersSettings.Variables"/>.</em></p></summary>
+        [Pure]
+        public static NSwagListControllersSettings AddVariable(this NSwagListControllersSettings toolSettings, string variableKey, string variableValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.VariablesInternal.Add(variableKey, variableValue);
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes a key-value-pair from <see cref="NSwagListControllersSettings.Variables"/>.</em></p></summary>
+        [Pure]
+        public static NSwagListControllersSettings RemoveVariable(this NSwagListControllersSettings toolSettings, string variableKey)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.VariablesInternal.Remove(variableKey);
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets a key-value-pair in <see cref="NSwagListControllersSettings.Variables"/>.</em></p></summary>
+        [Pure]
+        public static NSwagListControllersSettings SetVariable(this NSwagListControllersSettings toolSettings, string variableKey, string variableValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.VariablesInternal[variableKey] = variableValue;
             return toolSettings;
         }
         #endregion
@@ -3739,6 +3861,48 @@ namespace Nuke.NSwag
     [ExcludeFromCodeCoverage]
     public static partial class NSwagNewSettingsExtensions
     {
+        #region DoNotUse
+        /// <summary><p><em>Sets <see cref="NSwagNewSettings.DoNotUse"/>.</em></p><p>This property is just there because of a bug in the code generator.</p></summary>
+        [Pure]
+        public static NSwagNewSettings SetDoNotUse(this NSwagNewSettings toolSettings, bool? doNotUse)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DoNotUse = doNotUse;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagNewSettings.DoNotUse"/>.</em></p><p>This property is just there because of a bug in the code generator.</p></summary>
+        [Pure]
+        public static NSwagNewSettings ResetDoNotUse(this NSwagNewSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DoNotUse = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagNewSettings.DoNotUse"/>.</em></p><p>This property is just there because of a bug in the code generator.</p></summary>
+        [Pure]
+        public static NSwagNewSettings EnableDoNotUse(this NSwagNewSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DoNotUse = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagNewSettings.DoNotUse"/>.</em></p><p>This property is just there because of a bug in the code generator.</p></summary>
+        [Pure]
+        public static NSwagNewSettings DisableDoNotUse(this NSwagNewSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DoNotUse = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagNewSettings.DoNotUse"/>.</em></p><p>This property is just there because of a bug in the code generator.</p></summary>
+        [Pure]
+        public static NSwagNewSettings ToggleDoNotUse(this NSwagNewSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DoNotUse = !toolSettings.DoNotUse;
+            return toolSettings;
+        }
+        #endregion
     }
     #endregion
     #region NSwagRunSettingsExtensions
@@ -3766,20 +3930,44 @@ namespace Nuke.NSwag
         }
         #endregion
         #region Variables
-        /// <summary><p><em>Sets <see cref="NSwagRunSettings.Variables"/>.</em></p></summary>
+        /// <summary><p><em>Sets <see cref="NSwagRunSettings.Variables"/> to a new dictionary.</em></p></summary>
         [Pure]
-        public static NSwagRunSettings SetVariables(this NSwagRunSettings toolSettings, string variables)
+        public static NSwagRunSettings SetVariables(this NSwagRunSettings toolSettings, IDictionary<string, string> variables)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Variables = variables;
+            toolSettings.VariablesInternal = variables.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagRunSettings.Variables"/>.</em></p></summary>
+        /// <summary><p><em>Clears <see cref="NSwagRunSettings.Variables"/>.</em></p></summary>
         [Pure]
-        public static NSwagRunSettings ResetVariables(this NSwagRunSettings toolSettings)
+        public static NSwagRunSettings ClearVariables(this NSwagRunSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Variables = null;
+            toolSettings.VariablesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds a new key-value-pair <see cref="NSwagRunSettings.Variables"/>.</em></p></summary>
+        [Pure]
+        public static NSwagRunSettings AddVariable(this NSwagRunSettings toolSettings, string variableKey, string variableValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.VariablesInternal.Add(variableKey, variableValue);
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes a key-value-pair from <see cref="NSwagRunSettings.Variables"/>.</em></p></summary>
+        [Pure]
+        public static NSwagRunSettings RemoveVariable(this NSwagRunSettings toolSettings, string variableKey)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.VariablesInternal.Remove(variableKey);
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets a key-value-pair in <see cref="NSwagRunSettings.Variables"/>.</em></p></summary>
+        [Pure]
+        public static NSwagRunSettings SetVariable(this NSwagRunSettings toolSettings, string variableKey, string variableValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.VariablesInternal[variableKey] = variableValue;
             return toolSettings;
         }
         #endregion

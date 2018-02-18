@@ -41,8 +41,8 @@ class Build : NukeBuild
     Target Generate => _ => _
         .Executes(() =>
         {
-            NSwagMetadataGenerator.Generate(MetaDataDirectory);
-            CodeGenerator.GenerateCode(MetaDataDirectory, GenerationDirectory, false, "Nuke.NSwag");
+           NSwagMetadataGenerator.Generate(MetaDataDirectory);
+           CodeGenerator.GenerateCode(MetaDataDirectory, GenerationDirectory, false, "Nuke.NSwag");
         });
 
     Target Compile => _ => _

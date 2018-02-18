@@ -64,44 +64,6 @@ namespace Tools
                 JsonConvert.SerializeObject(tool, Formatting.Indented, jsonSettings));
         }
 
-        static Task CreateTask([NotNull] Type commandType, [NotNull] ICollection<string> references)
-        {
-            if (commandType == null) throw new ArgumentNullException(nameof(commandType));
-            if (references == null) throw new ArgumentNullException(nameof(references));
-            var referenceUrl = "https://raw.githubusercontent.com/RSuter/NSwag/master/src/NSwag.Commands"
-                               + commandType.Namespace.Split('.').Skip(1)
-                                   .Aggregate("", (current, next) => $"{current}/{next}")
-                               + $"/{commandType.Name}.cs";
-            references.Add(referenceUrl);
-            var commandAttribute = commandType.GetCustomAttribute<CommandAttribute>(false);
-
-            var postfix = commandAttribute.Name
-                .Replace("-", "")
-                .Replace("schema", "Schema")
-                .Replace("tsc", "Tsc")
-                .Replace("json", "Json")
-                .Replace("client", "Client")
-                .Replace("aspnetcore", "AspNetCore")
-                .Replace("swagger", "Swagger")
-                .Replace("version", "Version")
-                .Replace("list", "List")
-                .Replace("types", "Types")
-                .Replace("controllers", "Controllers")
-                .Replace("webapi", "WebApi")
-                .Replace("to", "To")
-                .Replace("cs", "Cs");
-            postfix = char.ToUpper(postfix[0]) + postfix.Substring(1);
-            var isPascalCase = Regex.Match(postfix, "^[A-Z][a-z0-9]+(?:[A-Z][a-z0-9]+)*$").Success;
-            ControlFlow.Assert(isPascalCase, $"{postfix} is not in pascal case.");
-
-            var task = new Task
-            {
-                Postfix = postfix,
-                Help = commandAttribute.Description
-            };
-            return task;
-        }
-
         static List<Enumeration> GetEnumerations([NotNull] IEnumerable<Type> enumTypes)
         {
             if (enumTypes == null) throw new ArgumentNullException(nameof(enumTypes));
@@ -120,6 +82,29 @@ namespace Tools
             return enumerations;
         }
 
+        static string GetPostfix(string commandName)
+        {
+            var postfix = commandName
+                .Replace("-", "")
+                .Replace("schema", "Schema")
+                .Replace("tsc", "Tsc")
+                .Replace("json", "Json")
+                .Replace("client", "Client")
+                .Replace("aspnetcore", "AspNetCore")
+                .Replace("swagger", "Swagger")
+                .Replace("version", "Version")
+                .Replace("list", "List")
+                .Replace("types", "Types")
+                .Replace("controllers", "Controllers")
+                .Replace("webapi", "WebApi")
+                .Replace("to", "To")
+                .Replace("cs", "Cs");
+            postfix = char.ToUpper(postfix[0]) + postfix.Substring(1);
+            var isPascalCase = Regex.Match(postfix, "^[A-Z][a-z0-9]+(?:[A-Z][a-z0-9]+)*$").Success;
+            ControlFlow.Assert(isPascalCase, $"{postfix} is not in pascal case.");
+            return postfix;
+        }
+
         static List<Property> GetProperties([NotNull] IReflect commandType, [NotNull] ISet<Type> enumTypes)
         {
             if (commandType == null) throw new ArgumentNullException(nameof(commandType));
@@ -129,7 +114,7 @@ namespace Tools
             var argumentProperties = commandType.GetProperties(BindingFlags.Instance | BindingFlags.Public)
                 .Where(p => p.GetCustomAttributes(typeof(ArgumentAttribute), false).Length > 0);
 
-   
+
             argumentProperties.ForEach(argumentProperty =>
             {
                 var argumentAttribute = argumentProperty.GetCustomAttribute<ArgumentAttribute>(false);
@@ -160,13 +145,29 @@ namespace Tools
                 if (argumentProperty.Name == "Variables")
                 {
                     property.Type = "Dictionary<string,string>";
-                    property.ItemFormat = "{Key}={Value}";
+                    property.ItemFormat = "{key}={value}";
                     property.Separator = ',';
                 }
 
                 properties.Add(property);
             });
+            if (properties.Count == 0)
+                properties.Add(new Property
+                {
+                    Type = "bool",
+                    Name = "DoNotUse",
+                    Help = "This property is just there because of a bug in the code generator.",
+                    Format = "{value}"
+                });
             return properties;
+        }
+
+        static string GetReferenceUrl(Type commandType)
+        {
+            return "https://raw.githubusercontent.com/RSuter/NSwag/master/src/NSwag.Commands"
+                   + commandType.Namespace.Split('.').Skip(1)
+                       .Aggregate("", (current, next) => $"{current}/{next}")
+                   + $"/{commandType.Name}.cs";
         }
 
         static List<Task> GetTasks([NotNull] Tool tool, [NotNull] ICollection<string> references,
@@ -183,17 +184,23 @@ namespace Tools
 
             commandClasses.ForEach(commandType =>
             {
-                var task = CreateTask(commandType, references);
-                var settingsClass = new SettingsClass
+                references.Add(GetReferenceUrl(commandType));
+                var commandAttribute = commandType.GetCustomAttribute<CommandAttribute>(false);
+
+                var task = new Task
                 {
-                    Tool = tool,
-                    Task = task,
-                    BaseClass = "NSwagSettings",
-                    Properties = GetProperties(commandType, enumTypes)
+                    Postfix = GetPostfix(commandAttribute.Name),
+                    Help = commandAttribute.Description,
+                    DefiniteArgument = $"nswag {commandAttribute.Name}",
+                    SettingsClass = new SettingsClass
+                    {
+                        Tool = tool,
+                        BaseClass = "NSwagSettings",
+                        Properties = GetProperties(commandType, enumTypes)
+                    }
                 };
 
-
-                task.SettingsClass = settingsClass;
+                task.SettingsClass.Task = task;
                 tasks.Add(task);
             });
             return tasks;
@@ -213,6 +220,7 @@ namespace Tools
 
             static bool IsEmptyCollection(JsonProperty property, object target)
             {
+                if (property.PropertyName.Equals("properties", StringComparison.OrdinalIgnoreCase)) return false;
                 var value = property.ValueProvider.GetValue(target);
                 if (value is ICollection collection && collection.Count == 0)
                     return true;

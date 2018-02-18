@@ -2,6 +2,7 @@
 // Distributed under the MIT License.
 // https://github.com/arodus/nuke-plugin-nswag/blob/master/LICENSE
 
+using System;
 using System.IO;
 using Nuke.Common.Tools;
 using Nuke.Common.Tools.DotNet;
@@ -9,6 +10,7 @@ using Nuke.Core;
 
 namespace Nuke.NSwag
 {
+    [Serializable]
     public class NSwagSettings : DotNetSettings
     {
         protected string GetToolPath()
