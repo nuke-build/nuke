@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <CoreCompileDependsOn>$(CoreCompileDependsOn);NukeCodeGeneration;</CoreCompileDependsOn>
     <NukeBaseDirectory Condition="'$(NukeBaseDirectory)' == ''">$(MSBuildProjectDirectory)</NukeBaseDirectory>
     <NukeUseNestedNamespaces Condition="'$(NukeUseNestedNamespaces)' == ''">False</NukeUseNestedNamespaces>
     <NukeRepositoryUrl Condition="'$(NukeRepositoryUrl)' == ''">$(RepositoryUrl)</NukeRepositoryUrl>
@@ -11,7 +10,7 @@
     TaskName="Nuke.CodeGeneration.CodeGeneratorTask"
     AssemblyFile="$(MSBuildThisFileDirectory)\Nuke.CodeGeneration.dll" />
   
-  <Target Name="NukeCodeGeneration" BeforeTargets="CoreCompile">
+  <Target Name="NukeCodeGeneration" BeforeTargets="CoreCompile" Condition="'$(NukeCodeGeneration)' == 'True'">
     <CodeGeneratorTask
       MetadataFiles="@(NukeMetadata)"
       BaseDirectory="$(NukeBaseDirectory)"
