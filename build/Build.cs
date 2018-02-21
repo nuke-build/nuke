@@ -114,7 +114,7 @@ class Build : NukeBuild
         .DependsOn(Pack)
         .Requires(() => ApiKey)
         .Requires(() => !GitHasUncommitedChanges())
-        .Requires(() => !NuGet || ParameterSwitch("major") || ParameterSwitch("minor") || ParameterSwitch("patch"))
+        .Requires(() => !NuGet || GitVersionAttribute.Bump.HasValue)
         .Requires(() => !NuGet || Configuration.EqualsOrdinalIgnoreCase("release"))
         .Requires(() => !NuGet || GitVersion.BranchName.Equals("master"))
         .Executes(() =>

@@ -22,6 +22,9 @@ namespace Nuke.Common.Tools.GitVersion
     [UsedImplicitly(ImplicitUseKindFlags.Default)]
     public class GitVersionAttribute : StaticInjectionAttributeBase
     {
+        [Parameter("Allows to bump the major or minor version.")]
+        public static GitVersionBump? Bump { get; }
+
         public static GitVersion Value { get; private set; }
 
         [CanBeNull]
@@ -58,13 +61,12 @@ namespace Nuke.Common.Tools.GitVersion
         [CanBeNull]
         private static string GetTag(GitVersion version)
         {
-            if (!EnvironmentInfo.ParameterSwitch("major") &&
-                !EnvironmentInfo.ParameterSwitch("minor"))
+            if (!Bump.HasValue || Bump.Value == GitVersionBump.Patch)
                 return null;
 
             ControlFlow.Assert(version.BranchName.Equals("master"), "Version can only be bumped on master branch.");
 
-            return EnvironmentInfo.ParameterSwitch("major")
+            return Bump.Value == GitVersionBump.Major
                 ? $"{version.Major + 1}.0.0"
                 : $"{version.Major}.{version.Minor + 1}.0";
         }

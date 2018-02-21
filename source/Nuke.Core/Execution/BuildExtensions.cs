@@ -19,7 +19,7 @@ namespace Nuke.Core.Execution
         {
             var defaultTarget = defaultTargetExpression.Compile().Invoke(build);
             var targetDefinitions = build.GetType()
-                .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                .GetProperties(ReflectionService.Instance)
                 .Where(x => x.PropertyType == typeof(Target))
                 .Select(x => LoadTargetDefinition(build, x)).ToList();
 
@@ -54,12 +54,25 @@ namespace Nuke.Core.Execution
                 .Concat(targetDefinition.TargetDependencies.Select(x => factoryDictionary[x]));
         }
 
-
-        public static IReadOnlyCollection<MemberInfo> GetParameterMembers<T>(this T build)
+        public static IReadOnlyCollection<MemberInfo> GetParameterMembers(this NukeBuild build)
         {
-            return build.GetType()
-                .GetMembers(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+            return build.GetInjectionMembers()
                 .Where(x => x.GetCustomAttribute<ParameterAttribute>() != null).ToList();
+        }
+
+        public static IReadOnlyCollection<MemberInfo> GetInjectionMembers(this NukeBuild build)
+        {
+            var members = build.GetType()
+                .GetMembers(ReflectionService.All)
+                .Where(x => x.GetCustomAttributes<InjectionAttributeBase>().Any()).ToList();
+
+            var transitiveMembers = members
+                .SelectMany(x => x.GetCustomAttributes<InjectionAttributeBase>())
+                .SelectMany(x => x.GetType().GetMembers(ReflectionService.All))
+                .Where(x => x.GetCustomAttributes<InjectionAttributeBase>().Any());
+            members.AddRange(transitiveMembers);
+
+            return members;
         }
     }
 }

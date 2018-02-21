@@ -58,8 +58,8 @@ namespace Nuke.Core.Execution
             var normalizedTargets = executionList
                 .Where(x => build.InvokedTargets.Any(y => y.EqualsOrdinalIgnoreCase(x.Name) || y == DefaultTarget && x.IsDefault))
                 .Select(x => x.Name);
-            PrivateInvoke.SetValue(build, nameof(NukeBuild.InvokedTargets), normalizedTargets.ToArray());
-            PrivateInvoke.SetValue(build, nameof(NukeBuild.ExecutingTargets), executionList.Select(x => x.Name).ToArray());
+            ReflectionService.SetValue(build, nameof(NukeBuild.InvokedTargets), normalizedTargets.ToArray());
+            ReflectionService.SetValue(build, nameof(NukeBuild.ExecutingTargets), executionList.Select(x => x.Name).ToArray());
 
             return executionList;
         }
