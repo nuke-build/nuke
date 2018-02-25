@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Nuke.Core.BuildServers;
 using Nuke.Core.OutputSinks;
 using Nuke.Core.Utilities;
 
@@ -52,14 +53,8 @@ namespace Nuke.Core.Execution
 
             HandleGraphAndHelp(build);
 
-            var executionList = TargetDefinitionLoader.GetExecutionList(build);
+            var executionList = TargetDefinitionLoader.GetExecutingTargets(build);
             RequirementService.ValidateRequirements(executionList, build);
-
-            var normalizedTargets = executionList
-                .Where(x => build.InvokedTargets.Any(y => y.EqualsOrdinalIgnoreCase(x.Name) || y == DefaultTarget && x.IsDefault))
-                .Select(x => x.Name);
-            ReflectionService.SetValue(build, nameof(NukeBuild.InvokedTargets), normalizedTargets.ToArray());
-            ReflectionService.SetValue(build, nameof(NukeBuild.ExecutingTargets), executionList.Select(x => x.Name).ToArray());
 
             return executionList;
         }

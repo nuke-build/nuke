@@ -52,7 +52,7 @@ namespace Nuke.Core
                 {
                     Logger.Warn(new[]
                                 {
-                                    "The 'Target' parameter is deprecated. " +
+                                    "The 'Target' parameter is deprecated.",
                                     "Starting with the next version, targets need to be specified positional:",
                                     string.Empty,
                                     "  Usage: build <target1[+target2]> [-parameter value]",
@@ -62,6 +62,28 @@ namespace Nuke.Core
                 }
 
                 return new[] { BuildExecutor.DefaultTarget };
+            }
+        }
+        
+        internal static string[] SkippedTargets
+        {
+            get
+            {
+                if (ParameterSwitch("nodeps"))
+                {
+                    Logger.Warn(new[]
+                                {
+                                    "The 'NoDeps' switch is deprecated.",
+                                    "Starting with the next version, you can use the 'Skip' parameter to skip all dependencies or only specified ones:",
+                                    string.Empty,
+                                    "  Usage: build -skip",
+                                    "         build -skip Clean+Restore",
+                                    string.Empty
+                                }.JoinNewLine());
+                    return new string[0];
+                }
+
+                return null;
             }
         }
     }

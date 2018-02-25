@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 - Deprecated `Target` parameter in favor of passing targets as first argument to the bootstrapping scripts.
+- Deprecated `NoDeps` parameter in favor of new `Skip` parameter that takes a separated list.
 - Deprecated `DefaultSettings` which are now exposed in each task class individually.
 - Added possibility to use `ParameterAttribute` in other injection attributes.
 - Added `GitVersionAttribute.Bump` parameter for bumping major/minor versions.
@@ -13,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `ChangelogTasks.ExtractChangelogSectionNotes` for extracting release data for a specified tag.
 - Added `NukeBuild.InvokedTargets` which exposes targets passed from command-line.
 - Added `NukeBuild.ExecutingTargets` which exposes targets that will be executed.
+- Added `NukeBuild.SkippedTargets` which exposes targets that will be skipped.
 - Added `GitRepository.IsGitHubRepository` extension method.
 - Added `GitRepositoryAttribute.Branch` and `GitRepositoryAttribute.Remote` properties for pass-through.
 - Added `build.cmd` in setup for easier invocation on Windows.

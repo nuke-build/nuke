@@ -77,8 +77,8 @@ namespace Nuke.Core
         /// <summary>
         /// Disables execution of target dependencies.
         /// </summary>
-        [Parameter("Disables execution of target dependencies.", Name = "NoDeps")]
-        public bool NoDependencies { get; }
+        [Parameter("Disables execution of dependent targets.", Name = "Skip")]
+        public string[] SkippedTargets { get; } = EnvironmentInfo.SkippedTargets;
 
         /// <summary>
         /// Disables bootstrapper initialization.
