@@ -17,3 +17,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `GitRepositoryAttribute.Branch` and `GitRepositoryAttribute.Remote` properties for pass-through.
 - Added `build.cmd` in setup for easier invocation on Windows.
 - Added CLT tasks for Git.
+- Fixed background color in console output.
