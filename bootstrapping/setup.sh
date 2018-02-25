@@ -141,7 +141,7 @@ sed -e 's~_NUGET_VERSION_~'"$NUGET_VERSION"'~g' \
     <<<"$(curl -Lsf $BOOTSTRAPPING_URL/build.$TARGET_PLATFORM.ps1)" \
     > build.ps1
 
-curl -Lsfo "build.cmd" "$BOOTSTRAPPING_URL/build.cmd"
+curl -Lsfo "build.cmd" "$BOOTSTRAPPING_URL/../build.cmd"
 
 ###########################################################################
 # GENERATE PROJECT FILES

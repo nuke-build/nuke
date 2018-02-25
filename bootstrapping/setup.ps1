@@ -140,7 +140,7 @@ Set-Content "build.sh" ((New-Object System.Net.WebClient).DownloadString("$Boots
     -replace "_SOLUTION_DIRECTORY_",($SolutionDirectoryRelative -replace "\\","/")) `
     -NoNewline
 
-(New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/build.cmd", "build.cmd")
+(New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/../build.cmd", "build.cmd")
 
 ###########################################################################
 # GENERATE PROJECT FILES
