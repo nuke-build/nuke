@@ -51,6 +51,7 @@ namespace Nuke.Common.ChangeLog
             content.Insert(firstSection.StartIndex + 1, string.Empty);
             content.Insert(firstSection.StartIndex + 2, $"## [{tag}] / {DateTime.Now:yyyy-MM-dd}");
 
+            
             if (repository.IsGitHubRepository())
             {
                 sections = GetReleaseSections(content).ToList();
