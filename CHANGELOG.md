@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Deprecated `Target` parameter in favor of passing targets as first argument to the bootstrapping scripts.
 - Deprecated `NoDeps` parameter in favor of new `Skip` parameter that takes a separated list.
 - Deprecated `DefaultSettings` which are now exposed in each task class individually.
+- Changed default values for `AssemblyVersion` to `{major}.{minor}.0` and `FileVersion` to `{major}.{minor}.{patch}`.
 - Added possibility to use `ParameterAttribute` in other injection attributes.
 - Added `GitVersionAttribute.Bump` parameter for bumping major/minor versions.
 - Added `ChangelogTasks.FinalizeChangelog` for finalizing unpublished changes to a certain version.

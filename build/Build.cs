@@ -89,11 +89,11 @@ class Build : NukeBuild
         .OnlyWhen(() => NuGet || InvokedTargets.Contains(nameof(Changelog)))
         .Executes(() =>
         {
-            FinalizeChangelog(ChangelogFile, GitVersion.FullSemVer, GitRepository);
+            FinalizeChangelog(ChangelogFile, GitVersion.SemVer, GitRepository);
 
             Git($"add {ChangelogFile}");
-            Git($"commit -m \"Finalize changelog for {GitVersion.FullSemVer}.\"");
-            Git($"tag -f {GitVersion.FullSemVer}");
+            Git($"commit -m \"Finalize changelog for {GitVersion.SemVer}.\"");
+            Git($"tag -f {GitVersion.SemVer}");
         });
 
     Target Pack => _ => _
