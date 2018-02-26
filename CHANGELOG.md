@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [0.2.0] / 2018-02-26
 - Deprecated `Target` parameter in favor of passing targets as first argument to the bootstrapping scripts.
 - Deprecated `NoDeps` parameter in favor of new `Skip` parameter that takes a separated list.
 - Deprecated `DefaultSettings` which are now exposed in each task class individually.
@@ -22,3 +24,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `build.cmd` in setup for easier invocation on Windows.
 - Added CLT tasks for Git.
 - Fixed background color in console output.
+
+[vNext]: https://github.com/nuke-build/nuke/compare/0.2.0...HEAD
+[0.2.0]: https://github.com/nuke-build/nuke/tree/0.2.0
