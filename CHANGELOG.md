@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Changed default values for `AssemblyVersion` to `{major}.{minor}.0` and `FileVersion` to `{major}.{minor}.{patch}`.
 - Added possibility to use `ParameterAttribute` in other injection attributes.
 - Added `GitVersionAttribute.Bump` parameter for bumping major/minor versions.
+- Added `GitVersionAttribute.DisableOnUnix` property since GitVersion is not working consistently.
 - Added `ChangelogTasks.FinalizeChangelog` for finalizing unpublished changes to a certain version.
 - Added `ChangelogTasks.ExtractChangelogSectionNotes` for extracting release data for a specified tag.
 - Added `NukeBuild.InvokedTargets` which exposes targets passed from command-line.

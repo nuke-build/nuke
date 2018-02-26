@@ -36,14 +36,14 @@ class Build : NukeBuild
 
     [Parameter("Indicates to push to nuget.org feed.")] readonly bool NuGet;
     [Parameter("ApiKey for the specified source.")] readonly string ApiKey;
-    [Parameter("Gitter authentication token")] readonly string GitterAuthToken;
+    [Parameter("Gitter authentication token.")] readonly string GitterAuthToken;
     [Parameter("Amount of changes to announce in Gitter.")] readonly int? AnnounceChanges;
 
     string Source => NuGet
         ? "https://api.nuget.org/v3/index.json"
         : "https://www.myget.org/F/nukebuild/api/v2/package";
 
-    [GitVersion] readonly GitVersion GitVersion;
+    [GitVersion(DisableOnUnix = true)] readonly GitVersion GitVersion;
     [GitRepository(Branch = "master")] readonly GitRepository GitRepository;
 
     Target Clean => _ => _

@@ -27,18 +27,20 @@ namespace Nuke.Common.Tools.GitVersion
 
         public static GitVersion Value { get; private set; }
 
+        public bool DisableOnUnix { get; set; }
+
         [CanBeNull]
         public override object GetStaticValue()
         {
-            if (Value != null)
-                return Value;
-
             // TODO: https://github.com/GitTools/GitVersion/issues/1097
-            if (EnvironmentInfo.IsUnix)
+            if (EnvironmentInfo.IsUnix && DisableOnUnix)
             {
-                Logger.Warn($"{nameof(GitVersion)} does not work in UNIX environments.");
+                Logger.Warn($"{nameof(GitVersion)} is disabled on UNIX environment.");
                 return null;
             }
+            
+            if (Value != null)
+                return Value;
 
             var version = GetVersion();
             var tag = GetTag(version);
