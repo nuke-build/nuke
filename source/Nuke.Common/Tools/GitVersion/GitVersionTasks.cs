@@ -43,4 +43,18 @@ namespace Nuke.Common.Tools.GitVersion
             }
         }
     }
+
+    [PublicAPI]
+    public static class GitVersionExtensions
+    {
+        public static string GetNormalizedAssemblyVersion(this GitVersion gitVersion)
+        {
+            return $"{gitVersion.Major}.{gitVersion.Minor}.0";
+        }
+        
+        public static string GetNormalizedFileVersion(this GitVersion gitVersion)
+        {
+            return gitVersion.MajorMinorPatch;
+        }
+    }
 }

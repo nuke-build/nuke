@@ -15,14 +15,13 @@
 
   <ItemGroup>
     <PackageReference Include="Nuke.Common" Version="$(NukeVersion)" />
-    <PackageReference Include="Nuke.CodeGeneration" Version="$(NukeVersion)" Condition="'$(NukeCodeGeneration)' != 'False'" />
+    <PackageReference Include="Nuke.CodeGeneration" Version="$(NukeVersion)" Condition="'$(NukeCodeGeneration)' == 'True'" />
     <PackageReference Include="GitVersion.CommandLine" Version="4.0.0-beta0011" />
   </ItemGroup>
 
   <ItemGroup>
     <NukeMetadata Include="**/*.json" Exclude="bin/**;obj/**" />
     <None Remove="*.csproj.DotSettings;*.ref.*.txt" />
-    <None Remove="*.json;*.json.new" Condition="'$(NukeCodeGeneration)' == 'False'" />
   </ItemGroup>
 
 </Project>

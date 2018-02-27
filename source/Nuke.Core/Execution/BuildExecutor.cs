@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Nuke.Core.BuildServers;
 using Nuke.Core.OutputSinks;
 using Nuke.Core.Utilities;
 
@@ -14,6 +15,8 @@ namespace Nuke.Core.Execution
 {
     internal static class BuildExecutor
     {
+        public const string DefaultTarget = "default";
+
         public static int Execute<T>(Expression<Func<T, Target>> defaultTargetExpression)
             where T : NukeBuild
         {
@@ -50,14 +53,8 @@ namespace Nuke.Core.Execution
 
             HandleGraphAndHelp(build);
 
-            var executionList = TargetDefinitionLoader.GetExecutionList(build);
+            var executionList = TargetDefinitionLoader.GetExecutingTargets(build);
             RequirementService.ValidateRequirements(executionList, build);
-
-            var normalizedTargets = executionList
-                .Where(x => build.InvokedTargets.Any(y => y.EqualsOrdinalIgnoreCase(x.Name)))
-                .Select(x => x.Name);
-            PrivateInvoke.SetValue(build, nameof(NukeBuild.InvokedTargets), normalizedTargets.ToArray());
-            PrivateInvoke.SetValue(build, nameof(NukeBuild.ExecutingTargets), executionList.Select(x => x.Name).ToArray());
 
             return executionList;
         }

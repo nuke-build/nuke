@@ -45,9 +45,21 @@ namespace Nuke.Core.IO
     {
         // TODO: check usages
         [Pure]
-        public static string GetRelativePath(string basePath, string destinationPath)
+        public static string GetRootRelativePath(string destinationPath)
         {
-            return Uri.UnescapeDataString(GetUri(basePath).MakeRelativeUri(GetUri(destinationPath)).ToString()).TrimEnd('/');
+            return GetRelativePath(NukeBuild.Instance.RootDirectory, destinationPath);
+        }
+
+        // TODO: check usages
+        [Pure]
+        public static string GetRelativePath(string basePath, string destinationPath, bool normalize = true)
+        {
+            var relativePath = Uri.UnescapeDataString(GetUri(basePath).MakeRelativeUri(GetUri(destinationPath)).ToString()).TrimEnd('/');
+
+            if (normalize && Path.IsPathRooted(basePath))
+                relativePath = relativePath.Replace(oldChar: '/', newChar: Path.DirectorySeparatorChar);
+
+            return relativePath;
         }
 
         [Pure]

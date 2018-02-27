@@ -19,6 +19,7 @@ using Nuke.CodeGeneration.Generators;
 using Nuke.CodeGeneration.Model;
 using Nuke.Common.Git;
 using Nuke.Core;
+using Nuke.Core.IO;
 using Nuke.Core.Utilities;
 
 namespace Nuke.CodeGeneration
@@ -42,7 +43,7 @@ namespace Nuke.CodeGeneration
                 .Execute();
         }
 
-        private readonly List<string> _metadataFiles;
+        private readonly IReadOnlyCollection<string> _metadataFiles;
         private readonly string _baseDirectory;
         private readonly bool _useNestedNamespaces;
         private readonly string _baseNamespace;
@@ -55,7 +56,7 @@ namespace Nuke.CodeGeneration
             [CanBeNull] string baseNamespace,
             [CanBeNull] GitRepository repository)
         {
-            _metadataFiles = metadataFiles.Where(x => !Path.GetFileName(x).NotNull().StartsWith("_")).ToList();
+            _metadataFiles = metadataFiles;
             _baseDirectory = baseDirectory;
             _repository = repository;
             _baseNamespace = baseNamespace;
@@ -89,7 +90,7 @@ namespace Nuke.CodeGeneration
 
                 Save(tool);
 
-                Logger.Info($"Processed {Path.GetFileName(file)}.");
+                Logger.Info($"Generated code from '{Path.GetFileName(file)}'.");
             });
         }
 
@@ -105,6 +106,8 @@ namespace Nuke.CodeGeneration
 
         private Tool Load(string file)
         {
+            Logger.Info($"Loading metadata from '{Path.GetFileName(file)}'...");
+
             var content = File.ReadAllText(file);
             var tool = JsonConvert.DeserializeObject<Tool>(content);
 

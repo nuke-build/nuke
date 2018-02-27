@@ -30,6 +30,8 @@ namespace Nuke.Common.Git
         /// <summary>Url in the form of <c>https://raw.githubusercontent.com/{identifier}/blob/{branch}/{file}</c>.</summary>
         public static string GetGitHubDownloadUrl(this GitRepository repository, string file, string branch = null)
         {
+            ControlFlow.Assert(repository.IsGitHubRepository(), "repository.IsGitHubRepository()");
+
             branch = branch ?? repository.Branch.NotNull("repository.Branch != null");
             var fileRelative = GetRepositoryRelativePath(file, repository);
             return $"https://raw.githubusercontent.com/{repository.Identifier}/{branch}/{fileRelative}";
@@ -45,6 +47,8 @@ namespace Nuke.Common.Git
             string branch = null,
             GitHubItemType itemType = GitHubItemType.Automatic)
         {
+            ControlFlow.Assert(repository.IsGitHubRepository(), "repository.IsGitHubRepository()");
+
             branch = branch ?? repository.Branch.NotNull("repository.Branch != null");
             var relativePath = GetRepositoryRelativePath(path, repository);
             var method = GetMethod(relativePath, itemType, repository);
@@ -80,7 +84,7 @@ namespace Nuke.Common.Git
 
             ControlFlow.Assert(PathConstruction.IsDescendantPath(repository.LocalDirectory.NotNull("repository.LocalDirectory != null"), path),
                 $"PathConstruction.IsDescendantPath({repository.LocalDirectory}, {path})");
-            return PathConstruction.GetRelativePath(repository.LocalDirectory, path);
+            return PathConstruction.GetRelativePath(repository.LocalDirectory, path, normalize: false);
         }
     }
 }

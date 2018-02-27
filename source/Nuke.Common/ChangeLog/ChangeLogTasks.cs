@@ -34,7 +34,7 @@ namespace Nuke.Common.ChangeLog
 
         public static void FinalizeChangelog(string changelogFile, string tag, GitRepository repository = null)
         {
-            Logger.Info($"Finalizing {Path.GetFileName(changelogFile)} for '{tag}'...");
+            Logger.Info($"Finalizing {PathConstruction.GetRootRelativePath(changelogFile)} for '{tag}'...");
 
             var content = TextTasks.ReadAllLines(changelogFile).ToList();
             var sections = GetReleaseSections(content).ToList();
@@ -51,6 +51,7 @@ namespace Nuke.Common.ChangeLog
             content.Insert(firstSection.StartIndex + 1, string.Empty);
             content.Insert(firstSection.StartIndex + 2, $"## [{tag}] / {DateTime.Now:yyyy-MM-dd}");
 
+            
             if (repository.IsGitHubRepository())
             {
                 sections = GetReleaseSections(content).ToList();

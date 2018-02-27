@@ -41,8 +41,8 @@ namespace Nuke.Common.Tools.DotNet
             .SetProjectFile(NukeBuild.Instance.SolutionFile)
             .EnableNoRestore()
             .SetConfiguration(NukeBuild.Instance.Configuration)
-            .SetAssemblyVersion(GitVersionAttribute.Value?.AssemblySemVer)
-            .SetFileVersion(GitVersionAttribute.Value?.FullSemVer)
+            .SetAssemblyVersion(GitVersionAttribute.Value?.GetNormalizedAssemblyVersion())
+            .SetFileVersion(GitVersionAttribute.Value?.GetNormalizedFileVersion())
             .SetInformationalVersion(GitVersionAttribute.Value?.InformationalVersion);
 
         public static DotNetPublishSettings DefaultDotNetPublish => new DotNetPublishSettings()
@@ -50,8 +50,8 @@ namespace Nuke.Common.Tools.DotNet
             .SetProject(NukeBuild.Instance.SolutionFile)
             .EnableNoRestore()
             .SetConfiguration(NukeBuild.Instance.Configuration)
-            .SetAssemblyVersion(GitVersionAttribute.Value?.AssemblySemVer)
-            .SetFileVersion(GitVersionAttribute.Value?.FullSemVer)
+            .SetAssemblyVersion(GitVersionAttribute.Value?.GetNormalizedAssemblyVersion())
+            .SetFileVersion(GitVersionAttribute.Value?.GetNormalizedFileVersion())
             .SetInformationalVersion(GitVersionAttribute.Value?.InformationalVersion);
 
         public static DotNetPackSettings DefaultDotNetPack => new DotNetPackSettings()
@@ -62,5 +62,11 @@ namespace Nuke.Common.Tools.DotNet
             .EnableIncludeSymbols()
             .SetOutputDirectory(NukeBuild.Instance.OutputDirectory)
             .SetVersion(GitVersionAttribute.Value?.NuGetVersionV2);
+
+        public static DotNetTestSettings DefaultDotNetTest => new DotNetTestSettings()
+            .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
+            .EnableNoBuild()
+            .SetConfiguration(NukeBuild.Instance.Configuration)
+            .SetProjectFile(NukeBuild.Instance.SolutionFile);
     }
 }

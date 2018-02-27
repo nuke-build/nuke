@@ -47,8 +47,9 @@ namespace Nuke.Core.Execution
 
             void PrintParameter(MemberInfo parameter)
             {
-                var attribute = parameter.GetCustomAttribute<ParameterAttribute>();
+                var attribute = parameter.GetCustomAttribute<ParameterAttribute>().NotNull();
                 var description = SplitLines(
+                        // TODO: remove
                     attribute.Description?.Replace("{default_target}", defaultTarget.Name)
                     ?? "<no description>");
                 builder.AppendLine($"  -{(attribute.Name ?? parameter.Name).PadRight(padRightParameter)}  {description.First()}");

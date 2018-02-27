@@ -4,8 +4,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using Nuke.CodeGeneration.Model;
 using Nuke.Common.Git;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
@@ -16,6 +18,7 @@ using Nuke.Core;
 using Nuke.Core.Utilities;
 using Nuke.Core.Utilities.Collections;
 using static Nuke.CodeGeneration.CodeGenerator;
+using static Nuke.CodeGeneration.SchemaGenerator;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.Gitter.GitterTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
@@ -33,14 +36,14 @@ class Build : NukeBuild
 
     [Parameter("Indicates to push to nuget.org feed.")] readonly bool NuGet;
     [Parameter("ApiKey for the specified source.")] readonly string ApiKey;
-    [Parameter("Gitter authentication token")] readonly string GitterAuthToken;
-    [Parameter("Amount of changes to announce in Gitter.")] int? AnnounceChanges;
+    [Parameter("Gitter authentication token.")] readonly string GitterAuthToken;
+    [Parameter("Amount of changes to announce in Gitter.")] readonly int? AnnounceChanges;
 
     string Source => NuGet
         ? "https://api.nuget.org/v3/index.json"
         : "https://www.myget.org/F/nukebuild/api/v2/package";
 
-    [GitVersion] readonly GitVersion GitVersion;
+    [GitVersion(DisableOnUnix = true)] readonly GitVersion GitVersion;
     [GitRepository(Branch = "master")] readonly GitRepository GitRepository;
 
     Target Clean => _ => _
@@ -86,11 +89,11 @@ class Build : NukeBuild
         .OnlyWhen(() => NuGet || InvokedTargets.Contains(nameof(Changelog)))
         .Executes(() =>
         {
-            FinalizeChangelog(ChangelogFile, GitVersion.FullSemVer, GitRepository);
+            FinalizeChangelog(ChangelogFile, GitVersion.SemVer, GitRepository);
 
             Git($"add {ChangelogFile}");
-            Git($"commit -m \"Finalize changelog for {GitVersion.FullSemVer}.\"");
-            Git($"tag -f {GitVersion.FullSemVer}");
+            Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.SemVer}.\"");
+            Git($"tag -f {GitVersion.SemVer}");
         });
 
     Target Pack => _ => _
@@ -110,7 +113,8 @@ class Build : NukeBuild
     Target Push => _ => _
         .DependsOn(Pack)
         .Requires(() => ApiKey)
-        .Requires(() => !NuGet || ParameterSwitch("major") || ParameterSwitch("minor") || ParameterSwitch("patch"))
+        .Requires(() => !GitHasUncommitedChanges())
+        .Requires(() => !NuGet || GitVersionAttribute.Bump.HasValue)
         .Requires(() => !NuGet || Configuration.EqualsOrdinalIgnoreCase("release"))
         .Requires(() => !NuGet || GitVersion.BranchName.Equals("master"))
         .Executes(() =>
@@ -135,8 +139,7 @@ class Build : NukeBuild
                         .AppendLine(ChangelogSectionNotes
                             .Take(AnnounceChanges ?? 4)
                             .Select(x => x.Replace("- ", "* "))
-                            .JoinNewLine())
-                        .ToString(),
+                            .JoinNewLine()).ToString(),
                     roomId: "593f3dadd73408ce4f66db89",
                     token: GitterAuthToken);
             }
@@ -172,10 +175,16 @@ class Build : NukeBuild
 
     string MetadataDirectory => RootDirectory / ".." / "tools" / "metadata";
     string GenerationDirectory => RootDirectory / "source" / "Nuke.Common" / "Tools";
+    string ToolSchemaFile => SourceDirectory / "Nuke.CodeGeneration" / "schema.json";
 
     Target Generate => _ => _
         .Executes(() =>
         {
+            GenerateSchema<Tool>(
+                ToolSchemaFile,
+                GitRepository.GetGitHubDownloadUrl(ToolSchemaFile),
+                "Tool metadata schema file by NUKE");
+
             GenerateCode(
                 MetadataDirectory,
                 GenerationDirectory,
@@ -186,4 +195,5 @@ class Build : NukeBuild
 
     Target Full => _ => _
         .DependsOn(Test, Analysis, Push);
+
 }
