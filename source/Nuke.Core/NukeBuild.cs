@@ -105,8 +105,7 @@ namespace Nuke.Core
         /// Shows the help text for this build assembly.
         /// </summary>
         [Parameter("Shows the help text for this build assembly.")]
-        [CanBeNull]
-        public string[] Help { get; }
+        public bool Help { get; }
 
         public bool IsLocalBuild { get; } = EnvironmentInfo.IsLocalBuild;
         public bool IsServerBuild { get; } = !EnvironmentInfo.IsLocalBuild;

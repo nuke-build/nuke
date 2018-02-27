@@ -62,19 +62,16 @@ namespace Nuke.Core.Execution
         private static void HandleGraphAndHelp<T>(T build)
             where T : NukeBuild
         {
-            if (build.Help == null)
-                return;
-
-            if (build.Help.Length == 0 || build.Help.Any(x => "targets".StartsWithOrdinalIgnoreCase(x)))
+            if (build.Help)
+            {
                 Logger.Log(HelpTextService.GetTargetsText(build));
-
-            if (build.Help.Length == 0 || build.Help.Any(x => "parameters".StartsWithOrdinalIgnoreCase(x)))
                 Logger.Log(HelpTextService.GetParametersText(build));
+            }
 
             if (build.Graph)
                 GraphService.ShowGraph(build);
 
-            if (build.Help != null || build.Graph)
+            if (build.Help || build.Graph)
                 Environment.Exit(exitCode: 0);
         }
 
