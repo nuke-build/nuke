@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [vNext]
 - Fixed handling of `Graph` switch.
 - Fixed logging in Nuke.CodeGenerator.
+- Fixed temporary directory path in setup and bootstrapping scripts.
 
 ## [0.2.0] / 2018-02-26
 - Deprecated `Target` parameter in favor of passing targets as first argument to the bootstrapping scripts.
