@@ -17,7 +17,7 @@ namespace Nuke.CodeGeneration
     {
         public static void GenerateSchema<T>(string output, string id, string title)
         {
-            Logger.Info($"Generating schema for '{typeof(T).Name}' to '{PathConstruction.GetRootRelativePath(output)}'...");
+            Logger.Info($"Generating schema for '{typeof(T).Name}' to '{output}'...");
 
             var schemaGenerator = new JSchemaGenerator
                                   {
