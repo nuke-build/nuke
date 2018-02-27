@@ -35,4 +35,8 @@
     <ProjectReference Include="..\source\Nuke.CodeGeneration\Nuke.CodeGeneration.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="*.csproj.DotSettings" />
+  </ItemGroup>
+
 </Project>

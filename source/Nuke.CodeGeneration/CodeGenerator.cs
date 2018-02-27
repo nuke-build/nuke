@@ -90,7 +90,7 @@ namespace Nuke.CodeGeneration
 
                 Save(tool);
 
-                Logger.Info($"Generated code from '{PathConstruction.GetRootRelativePath(file)}'.");
+                Logger.Info($"Generated code from '{Path.GetFileName(file)}'.");
             });
         }
 
@@ -106,7 +106,7 @@ namespace Nuke.CodeGeneration
 
         private Tool Load(string file)
         {
-            Logger.Info($"Loading metadata from '{PathConstruction.GetRootRelativePath(file)}'...");
+            Logger.Info($"Loading metadata from '{Path.GetFileName(file)}'...");
 
             var content = File.ReadAllText(file);
             var tool = JsonConvert.DeserializeObject<Tool>(content);
@@ -164,7 +164,7 @@ namespace Nuke.CodeGeneration
             }
             catch (Exception exception)
             {
-                Logger.Error($"Couldn't update {PathConstruction.GetRootRelativePath(tool.DefinitionFile)}#{index}: {reference}");
+                Logger.Error($"Couldn't update {Path.GetFileName(tool.DefinitionFile)}#{index}: {reference}");
                 Logger.Error(exception.Message);
             }
         }
