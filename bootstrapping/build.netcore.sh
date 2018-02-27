@@ -20,7 +20,7 @@ SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 DOTNET_CHANNEL="2.0"
 BUILD_PROJECT_FILE="$SCRIPT_DIR/_BUILD_DIRECTORY_NAME_/_BUILD_PROJECT_NAME_.csproj"
 
-TEMP_DIRECTORY="$SCRIPT_DIR/.tmp"
+TEMP_DIRECTORY="$SCRIPT_DIR/_ROOT_DIRECTORY_/.tmp"
 
 DOTNET_SCRIPT_URL="https://raw.githubusercontent.com/dotnet/cli/master/scripts/obtain/dotnet-install.sh"
 DOTNET_DIRECTORY="$TEMP_DIRECTORY/dotnet-unix"
