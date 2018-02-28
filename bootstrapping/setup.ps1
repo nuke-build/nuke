@@ -140,7 +140,7 @@ Set-Content "build.sh" ((New-Object System.Net.WebClient).DownloadString("$Boots
     -replace "_BUILD_DIRECTORY_NAME_",($BuildDirectoryName -replace "\\","/") `
     -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
     -replace "_SOLUTION_DIRECTORY_",($SolutionDirectoryRelative -replace "\\","/" `
-    -replace "_ROOT_DIRECTORY_",($RootDirectoryRelative -replace "\\","/")) `
+    -replace "_ROOT_DIRECTORY_",($RootDirectoryRelative -replace "\\","/"))) `
     -NoNewline
 
 (New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/../build.cmd", "build.cmd")
