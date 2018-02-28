@@ -87,7 +87,7 @@ $TargetPlatformSelection = $host.ui.PromptForChoice(
 $TargetPlatform = @("netfx", "netcore")[$TargetPlatformSelection]
 $TargetFramework = @("net461", "netcoreapp2.0")[$TargetPlatformSelection]
 
-$NukeVersion = $(Invoke-WebRequest https://api-v2v3search-0.nuget.org/query?q=packageid:Nuke.Common | ConvertFrom-Json).data.version
+$NukeVersion = $(Invoke-WebRequest -UseBasicParsing https://api-v2v3search-0.nuget.org/query?q=packageid:Nuke.Common | ConvertFrom-Json).data.version
 $ProjectGuid = [guid]::NewGuid().ToString().ToUpper()
 
 if ($TargetPlatformSelection -eq 0) {
