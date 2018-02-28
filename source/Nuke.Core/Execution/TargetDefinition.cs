@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -10,14 +10,14 @@ using JetBrains.Annotations;
 
 namespace Nuke.Core.Execution
 {
-    public class TargetDefinition : ITargetDefinition
+    internal class TargetDefinition : ITargetDefinition
     {
-        public static TargetDefinition Create (string name, Target factory = null)
+        public static TargetDefinition Create(string name, Target factory = null)
         {
             return new TargetDefinition(name, factory);
         }
 
-        private TargetDefinition (string name, Target factory = null)
+        private TargetDefinition(string name, Target factory = null)
         {
             Name = name;
             Factory = factory;
@@ -47,62 +47,62 @@ namespace Nuke.Core.Execution
         internal List<TargetDefinition> TargetDefinitionDependencies { get; }
         internal List<Action> Actions { get; }
 
-        ITargetDefinition ITargetDefinition.Description (string description)
+        ITargetDefinition ITargetDefinition.Description(string description)
         {
             Description = description;
             return this;
         }
 
-        public ITargetDefinition Executes (params Action[] actions)
+        public ITargetDefinition Executes(params Action[] actions)
         {
             Actions.AddRange(actions);
             return this;
         }
 
-        public ITargetDefinition Executes<T> (Func<T> action)
+        public ITargetDefinition Executes<T>(Func<T> action)
         {
             return Executes(new Action(() => action()));
         }
 
-        public ITargetDefinition DependsOn (params Target[] targets)
+        public ITargetDefinition DependsOn(params Target[] targets)
         {
             TargetDependencies.AddRange(targets);
             return this;
         }
 
-        public ITargetDefinition DependsOn (params string[] shadowTargets)
+        public ITargetDefinition DependsOn(params string[] shadowTargets)
         {
             ShadowTargetDependencies.AddRange(shadowTargets);
             return this;
         }
 
-        public ITargetDefinition OnlyWhen (params Func<bool>[] conditions)
+        public ITargetDefinition OnlyWhen(params Func<bool>[] conditions)
         {
             Conditions.AddRange(conditions);
             return this;
         }
 
-        public ITargetDefinition Requires<T> (params Expression<Func<T>>[] parameterRequirement)
+        public ITargetDefinition Requires<T>(params Expression<Func<T>>[] parameterRequirement)
             where T : class
         {
             Requirements.AddRange(parameterRequirement);
             return this;
         }
 
-        public ITargetDefinition Requires<T> (params Expression<Func<T?>>[] parameterRequirement)
+        public ITargetDefinition Requires<T>(params Expression<Func<T?>>[] parameterRequirement)
             where T : struct
         {
             Requirements.AddRange(parameterRequirement);
             return this;
         }
 
-        public ITargetDefinition Requires (params Expression<Func<bool>>[] requirement)
+        public ITargetDefinition Requires(params Expression<Func<bool>>[] requirement)
         {
             Requirements.AddRange(requirement);
             return this;
         }
 
-        public override string ToString ()
+        public override string ToString()
         {
             return $"Target '{Name}'";
         }

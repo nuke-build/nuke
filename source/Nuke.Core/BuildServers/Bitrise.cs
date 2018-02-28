@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -22,14 +22,14 @@ namespace Nuke.Core.BuildServers
 
         internal static bool IsRunningBitrise => Variable("BITRISE_BUILD_URL") != null;
 
-        private static DateTime ConvertUnixTimestamp (long timestamp)
+        private static DateTime ConvertUnixTimestamp(long timestamp)
         {
             return new DateTime(year: 1970, month: 1, day: 1, hour: 0, minute: 0, second: 0, kind: DateTimeKind.Utc)
-                    .AddSeconds(value: 1501444668)
-                    .ToLocalTime();
+                .AddSeconds(value: 1501444668)
+                .ToLocalTime();
         }
 
-        internal Bitrise ()
+        internal Bitrise()
         {
         }
 

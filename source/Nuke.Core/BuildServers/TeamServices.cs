@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -24,7 +24,7 @@ namespace Nuke.Core.BuildServers
 
         private readonly Action<string> _messageSink;
 
-        internal TeamServices (Action<string> messageSink = null)
+        internal TeamServices(Action<string> messageSink = null)
         {
             _messageSink = messageSink ?? Console.WriteLine;
         }
@@ -75,21 +75,21 @@ namespace Nuke.Core.BuildServers
         public Guid TeamProjectId => EnsureVariable<Guid>("SYSTEM_TEAMPROJECTID");
 
         public void UploadLog(string localFilePath)
-        { 
+        {
             _messageSink($"##vso[build.uploadlog]{localFilePath}");
         }
 
         public void UpdateBuildNumber(string buildNumber)
-        { 
+        {
             _messageSink($"##vso[build.updatebuildnumber]{buildNumber}");
         }
 
         public void AddBuildTag(string buildTag)
-        { 
+        {
             _messageSink($"##vso[build.addbuildtag]{buildTag}");
         }
 
-        public void LogError (
+        public void LogError(
             string message,
             string sourcePath = null,
             string lineNumber = null,
@@ -99,7 +99,7 @@ namespace Nuke.Core.BuildServers
             LogIssue(TeamServicesIssueType.Error, message, sourcePath, lineNumber, columnNumber, code);
         }
 
-        public void LogWarning (
+        public void LogWarning(
             string message,
             string sourcePath = null,
             string lineNumber = null,
@@ -109,7 +109,7 @@ namespace Nuke.Core.BuildServers
             LogIssue(TeamServicesIssueType.Warning, message, sourcePath, lineNumber, columnNumber, code);
         }
 
-        public void LogIssue (
+        public void LogIssue(
             TeamServicesIssueType type,
             string message,
             string sourcePath = null,

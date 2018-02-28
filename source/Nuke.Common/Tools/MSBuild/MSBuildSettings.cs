@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -12,7 +12,7 @@ namespace Nuke.Common.Tools.MSBuild
     partial class MSBuildSettings
     {
         [CanBeNull]
-        private string GetTargetPlatform ()
+        private string GetTargetPlatform()
         {
             if (TargetPlatform == null)
                 return null;
@@ -25,7 +25,7 @@ namespace Nuke.Common.Tools.MSBuild
             return TargetPlatform.ToString();
         }
 
-        private string GetToolPath ()
+        private string GetToolPath()
         {
             return MSBuildToolPathResolver.Resolve(MSBuildVersion, MSBuildPlatform);
         }

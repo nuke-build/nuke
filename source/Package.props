@@ -6,7 +6,7 @@
     <Description>Cross-platform build automation system</Description> 
 
     <Authors>Matthias Koch</Authors>
-    <Copyright>Copyright © Matthias Koch 2017</Copyright>
+    <Copyright>Copyright © Matthias Koch $([System.DateTime]::Now.Year)</Copyright>
     <PackageTags>build automation continuous-integration tools orchestration</PackageTags>
 
     <PackageProjectUrl>https://nuke.build</PackageProjectUrl>

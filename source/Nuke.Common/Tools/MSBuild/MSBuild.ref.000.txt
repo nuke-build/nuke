@@ -1,4 +1,32 @@
 
+
+
+				MSBuild Command-Line Reference
+
+					
+							
+								11/04/2016
+							
+							9 minutes to read
+							
+								Contributors
+								
+											
+											
+											
+											
+											
+										all
+								
+							
+
+					
+						
+							In this article
+						
+
+				
+					
 When you use MSBuild.exe to build a project or solution file, you can include several switches to specify various aspects of the process.  
 Syntax
 MSBuild.exe [Switches] [ProjectFile]  
@@ -164,3 +192,8 @@ Example
 msbuild SlnFolders.sln /t:NotInSolutionfolder:Rebuild;NewFolder\InSolutionFolder:Clean  
 See Also
  MSBuild Reference Common MSBuild Project Properties
+
+				
+
+
+			

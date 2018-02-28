@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -26,10 +26,10 @@ namespace Nuke.Core
             {
                 var buildAssembly = BuildAssembly.Location.NotNull("buildAssembly != null");
                 var buildProjectDirectory = new FileInfo(buildAssembly).Directory.NotNull()
-                        .DescendantsAndSelf(x => x.Parent)
-                        .Select(x => x.GetFiles("*.csproj", SearchOption.TopDirectoryOnly).SingleOrDefault())
-                        .FirstOrDefault(x => x != null)
-                        ?.DirectoryName;
+                    .DescendantsAndSelf(x => x.Parent)
+                    .Select(x => x.GetFiles("*.csproj", SearchOption.TopDirectoryOnly).SingleOrDefault())
+                    .FirstOrDefault(x => x != null)
+                    ?.DirectoryName;
                 return (AbsolutePath) buildProjectDirectory.NotNull("buildProjectDirectory != null");
             }
         }

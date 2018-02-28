@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -10,13 +10,23 @@ namespace Nuke.Core.Utilities
 {
     public static class AssemblyExtensions
     {
-        public static string GetInformationText (this Assembly assembly)
+        public static string GetInformationText(this Assembly assembly)
         {
-            var fileVersion = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>().Version;
-            var informationalVersion = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+            var fileVersion = assembly.GetAssemblyFileVersion();
+            var informationalVersion = assembly.GetAssemblyInformationalVersion();
             return fileVersion != "1.0.0.0"
                 ? $"Version: {fileVersion} [CommitSha: {informationalVersion.Substring(informationalVersion.LastIndexOf(value: '.') + 1, length: 8)}]"
                 : "LOCAL VERSION";
+        }
+
+        public static string GetAssemblyFileVersion(this Assembly assembly)
+        {
+            return assembly.GetCustomAttribute<AssemblyFileVersionAttribute>().Version;
+        }
+
+        private static string GetAssemblyInformationalVersion(this Assembly assembly)
+        {
+            return assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
         }
     }
 }

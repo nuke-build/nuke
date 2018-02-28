@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -6,11 +6,16 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Core;
-using Nuke.Core.Injection;
+using Nuke.Core.Execution;
 
 namespace Nuke.Common.Git
 {
     /// <inheritdoc/>
+    /// <summary>
+    /// Implements auto-injection for <see cref="GitRepository"/>.
+    /// <para/>
+    /// <inheritdoc/>
+    /// </summary>
     [PublicAPI]
     [UsedImplicitly(ImplicitUseKindFlags.Default)]
     public class GitRepositoryAttribute : StaticInjectionAttributeBase
@@ -18,11 +23,16 @@ namespace Nuke.Common.Git
         public static GitRepository Value { get; private set; }
 
         [CanBeNull]
-        public override object GetStaticValue ()
+        public string Branch { get; set; }
+
+        public string Remote { get; set; } = "origin";
+
+        [CanBeNull]
+        public override object GetStaticValue()
         {
             return Value = Value
                            ?? ControlFlow.SuppressErrors(() =>
-                               GitRepository.FromLocalDirectory(NukeBuild.Instance.RootDirectory));
+                               GitRepository.FromLocalDirectory(NukeBuild.Instance.RootDirectory, Branch, Remote.NotNull()));
         }
     }
 }

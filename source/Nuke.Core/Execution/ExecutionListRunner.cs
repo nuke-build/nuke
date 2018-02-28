@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -12,7 +12,7 @@ namespace Nuke.Core.Execution
 {
     internal class ExecutionListRunner
     {
-        public int Run (IReadOnlyCollection<TargetDefinition> executionList)
+        public int Run(IReadOnlyCollection<TargetDefinition> executionList)
         {
             foreach (var target in executionList)
             {

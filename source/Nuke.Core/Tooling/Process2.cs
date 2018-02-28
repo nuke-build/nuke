@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -21,7 +21,7 @@ namespace Nuke.Core.Tooling
 
         private readonly Func<string, string> _outputFilter;
 
-        public Process2 (Process process, int? timeout, [CanBeNull] BlockingCollection<Output> output, Func<string, string> outputFilter)
+        public Process2(Process process, int? timeout, [CanBeNull] BlockingCollection<Output> output, Func<string, string> outputFilter)
         {
             _process = process;
             _timeout = timeout;
@@ -47,17 +47,17 @@ namespace Nuke.Core.Tooling
 
         public int ExitCode => _process.ExitCode;
 
-        public void Dispose ()
+        public void Dispose()
         {
             _process.Dispose();
         }
 
-        public void Kill ()
+        public void Kill()
         {
             _process.Kill();
         }
 
-        public bool WaitForExit ()
+        public bool WaitForExit()
         {
             var hasExited = _process.WaitForExit(_timeout ?? -1);
             if (!hasExited)

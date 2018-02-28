@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -30,7 +30,7 @@ namespace Nuke.Core.Utilities
             return str.EndsWith(other, StringComparison.OrdinalIgnoreCase);
         }
 
-        public static string EscapeBraces ([CanBeNull] this string str)
+        public static string EscapeBraces([CanBeNull] this string str)
         {
             if (string.IsNullOrWhiteSpace(str))
                 return string.Empty;
@@ -38,17 +38,17 @@ namespace Nuke.Core.Utilities
             return str.Replace("{", "{{").Replace("}", "}}");
         }
 
-        public static string DoubleQuoteIfNeeded ([CanBeNull] this string str)
+        public static string DoubleQuoteIfNeeded([CanBeNull] this string str)
         {
             return str.DoubleQuoteIfNeeded(' ');
         }
 
-        public static string DoubleQuoteIfNeeded ([CanBeNull] this string str, params char?[] disallowed)
+        public static string DoubleQuoteIfNeeded([CanBeNull] this string str, params char?[] disallowed)
         {
             if (string.IsNullOrWhiteSpace(str))
                 return string.Empty;
 
-            if (str.IsDoubleQuoted ())
+            if (str.IsDoubleQuoted())
                 return str;
 
             if (!str.Contains(disallowed))
@@ -57,7 +57,7 @@ namespace Nuke.Core.Utilities
             return str.DoubleQuote();
         }
 
-        public static string DoubleQuote ([CanBeNull] this string str)
+        public static string DoubleQuote([CanBeNull] this string str)
         {
             if (string.IsNullOrWhiteSpace(str))
                 return string.Empty;
@@ -65,17 +65,17 @@ namespace Nuke.Core.Utilities
             return $"\"{str.Replace("\"", "\\\"")}\"";
         }
 
-        public static string SingleQuoteIfNeeded ([CanBeNull] this string str)
+        public static string SingleQuoteIfNeeded([CanBeNull] this string str)
         {
             return str.SingleQuoteIfNeeded(' ');
         }
 
-        public static string SingleQuoteIfNeeded ([CanBeNull] this string str, params char?[] disallowed)
+        public static string SingleQuoteIfNeeded([CanBeNull] this string str, params char?[] disallowed)
         {
             if (string.IsNullOrWhiteSpace(str))
                 return string.Empty;
 
-            if (str.IsSingleQuoted ())
+            if (str.IsSingleQuoted())
                 return str;
 
             if (!str.Contains(disallowed))
@@ -84,7 +84,7 @@ namespace Nuke.Core.Utilities
             return str.SingleQuote();
         }
 
-        public static string SingleQuote ([CanBeNull] this string str)
+        public static string SingleQuote([CanBeNull] this string str)
         {
             if (string.IsNullOrWhiteSpace(str))
                 return string.Empty;
@@ -102,37 +102,37 @@ namespace Nuke.Core.Utilities
             return str.StartsWith("'") && str.EndsWith("'");
         }
 
-        private static bool Contains (this string str, char?[] chars)
+        private static bool Contains(this string str, char?[] chars)
         {
             return chars.Any(x => x.HasValue && str.IndexOf(x.Value) != -1);
         }
 
-        public static string Join (this IEnumerable<string> enumerable, string separator)
+        public static string Join(this IEnumerable<string> enumerable, string separator)
         {
             return string.Join(separator, enumerable);
         }
 
-        public static string Join (this IEnumerable<string> enumerable, char separator)
+        public static string Join(this IEnumerable<string> enumerable, char separator)
         {
             return enumerable.Join(separator.ToString());
         }
 
-        public static string JoinComma (this IEnumerable<string> values)
+        public static string JoinComma(this IEnumerable<string> values)
         {
             return values.Join(", ");
         }
 
-        public static string JoinNewLine (this IEnumerable<string> values)
+        public static string JoinNewLine(this IEnumerable<string> values)
         {
             return values.Join(Environment.NewLine);
         }
 
-        public static string TrimEnd (this string str, string trim)
+        public static string TrimEnd(this string str, string trim)
         {
             return str.EndsWith(trim) ? str.Substring(startIndex: 0, length: str.Length - trim.Length) : str;
         }
 
-        public static string TrimStart (this string str, string trim)
+        public static string TrimStart(this string str, string trim)
         {
             return str.StartsWith(trim) ? str.Substring(trim.Length) : str;
         }

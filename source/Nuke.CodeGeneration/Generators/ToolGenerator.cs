@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -21,22 +21,22 @@ namespace Nuke.CodeGeneration.Generators
     {
         private static readonly Assembly s_assembly = typeof(ToolGenerator).GetTypeInfo().Assembly;
 
-        public static void Run (Tool tool, [CanBeNull] string @namespace, StreamWriter streamWriter)
+        public static void Run(Tool tool, [CanBeNull] string @namespace, StreamWriter streamWriter)
         {
             using (var writer = new ToolWriter(tool, streamWriter))
             {
                 writer
-                        // TODO [3]: extract license from dotsettings file
-                        .WriteLine("// Copyright Matthias Koch 2017.")
-                        .WriteLine("// Distributed under the MIT License.")
-                        .WriteLine("// https://github.com/nuke-build/nuke/blob/master/LICENSE")
-                        .WriteLine(string.Empty)
-                        .WriteLine($"// Generated with {s_assembly.GetName().Name}, {s_assembly.GetInformationText()}.")
-                        .WriteLineIfTrue(tool.RepositoryUrl != null, $"// Generated from {tool.RepositoryUrl}.")
-                        .WriteLine(string.Empty)
-                        .ForEach(GetNamespaceImports(), x => writer.WriteLine($"using {x};"))
-                        .WriteLine(string.Empty)
-                        .WriteLineIfTrue(@namespace != null, $"namespace {@namespace}");
+                    // TODO [3]: extract license from dotsettings file
+                    .WriteLine("// Copyright Matthias Koch 2018.")
+                    .WriteLine("// Distributed under the MIT License.")
+                    .WriteLine("// https://github.com/nuke-build/nuke/blob/master/LICENSE")
+                    .WriteLine(string.Empty)
+                    .WriteLine($"// Generated with {s_assembly.GetName().Name}, {s_assembly.GetInformationText()}.")
+                    .WriteLineIfTrue(tool.RepositoryUrl != null, $"// Generated from {tool.RepositoryUrl}.")
+                    .WriteLine(string.Empty)
+                    .ForEach(GetNamespaceImports(), x => writer.WriteLine($"using {x};"))
+                    .WriteLine(string.Empty)
+                    .WriteLineIfTrue(@namespace != null, $"namespace {@namespace}");
 
                 if (!string.IsNullOrEmpty(@namespace))
                     writer.WriteBlock(x => x.WriteAll());
@@ -45,21 +45,21 @@ namespace Nuke.CodeGeneration.Generators
             }
         }
 
-        private static ToolWriter WriteAll (this ToolWriter w)
+        private static ToolWriter WriteAll(this ToolWriter w)
         {
             return w
-                    .WriteAlias()
-                    .WriteDataClasses()
-                    .WriteEnumerations();
+                .WriteAlias()
+                .WriteDataClasses()
+                .WriteEnumerations();
         }
 
-        private static ToolWriter WriteAlias (this ToolWriter writer)
+        private static ToolWriter WriteAlias(this ToolWriter writer)
         {
             TaskGenerator.Run(writer.Tool, writer);
             return writer;
         }
 
-        private static ToolWriter WriteDataClasses (this ToolWriter writer)
+        private static ToolWriter WriteDataClasses(this ToolWriter writer)
         {
             var dataClasses = writer.Tool.Tasks.Select(x => x.SettingsClass).Concat(writer.Tool.DataClasses).ToList();
             dataClasses.ForEach(x => DataClassGenerator.Run(x, writer));
@@ -67,13 +67,13 @@ namespace Nuke.CodeGeneration.Generators
             return writer;
         }
 
-        private static ToolWriter WriteEnumerations (this ToolWriter writer)
+        private static ToolWriter WriteEnumerations(this ToolWriter writer)
         {
             writer.Tool.Enumerations.ForEach(x => EnumerationGenerator.Run(x, writer));
             return writer;
         }
 
-        private static IEnumerable<string> GetNamespaceImports ()
+        private static IEnumerable<string> GetNamespaceImports()
         {
             return new[]
                    {

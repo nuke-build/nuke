@@ -1,0 +1,43 @@
+C:\&gt; Octo.exe help pack
+Octopus Deploy Command Line Tool, version 3.3.8+Branch.master.Sha.f8a34fc6097785d7d382ddfaa9a7f009f29bc5fb
+
+Usage: Octo pack [&lt;options&gt;]
+
+Where [&lt;options&gt;] is any of:
+
+Basic options:
+
+      --id=VALUE             The ID of the package; e.g. MyCompany.MyApp
+      --format=VALUE         Package format. Options are: NuPkg, Zip.
+                             Defaults to NuPkg, though we recommend Zip going
+                             forward.
+      --version=VALUE        [Optional] The version of the package; must be a
+                             valid SemVer; defaults to a timestamp-based
+                             version
+      --outFolder=VALUE      [Optional] The folder into which the generated
+                             NUPKG file will be written; defaults to '.'
+      --basePath=VALUE       [Optional] The root folder containing files and
+                             folders to pack; defaults to '.'
+      --verbose              [Optional] List more detailed output.
+                               e.g. Which files are being added.
+
+NuGet packages:
+
+      --author=VALUE         [Optional, Multiple] Add an author to the
+                             package metadata; defaults to the current user
+      --title=VALUE          [Optional] The title of the package
+      --description=VALUE    [Optional] A description of the package;
+                             defaults to a generic description
+      --releaseNotes=VALUE   [Optional] Release notes for this version of the
+                             package
+      --releaseNotesFile=VALUE
+                             [Optional] A file containing release notes for
+                             this version of the package
+
+Advanced options:
+
+      --include=VALUE        [Optional, Multiple] Add a file pattern to
+                             include, relative to the base path e.g. /bin/-
+                             *.dll - if none are specified, defaults to **
+      --overwrite            [Optional] Allow an existing package file of the
+                             same ID/version to be overwritten

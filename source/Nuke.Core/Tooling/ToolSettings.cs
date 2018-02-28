@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -20,13 +20,14 @@ namespace Nuke.Core.Tooling
 
         [NonSerialized]
         private Func<Arguments, Arguments> _argumentConfigurator = x => x;
+
         public virtual Func<Arguments, Arguments> ArgumentConfigurator
         {
             get => _argumentConfigurator;
             internal set => _argumentConfigurator = value;
         }
 
-        public virtual IArguments GetArguments ()
+        public virtual IArguments GetArguments()
         {
             AssertValid();
 
@@ -54,16 +55,16 @@ namespace Nuke.Core.Tooling
             return arguments;
         }
 
-        protected virtual Arguments GetArgumentsInternal ()
+        protected virtual Arguments GetArgumentsInternal()
         {
             return new Arguments();
         }
 
-        protected virtual void AssertValid ()
+        protected virtual void AssertValid()
         {
         }
 
-        public sealed override string ToString ()
+        public sealed override string ToString()
         {
             return base.ToString();
         }

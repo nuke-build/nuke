@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -18,32 +18,32 @@ namespace Nuke.Core.Execution
         private readonly Func<string[]> _commandLineArgumentsProvider;
         private readonly Func<IDictionary> _environmentVariablesProvider;
 
-        public ParameterService (Func<string[]> commandLineArgumentsProvider = null, Func<IDictionary> environmentVariablesProvider = null)
+        public ParameterService(Func<string[]> commandLineArgumentsProvider = null, Func<IDictionary> environmentVariablesProvider = null)
         {
             _environmentVariablesProvider = environmentVariablesProvider ?? Environment.GetEnvironmentVariables;
             _commandLineArgumentsProvider = commandLineArgumentsProvider ?? Environment.GetCommandLineArgs;
         }
 
         [CanBeNull]
-        public T GetParameter<T> (string parameterName, char? separator = null)
+        public T GetParameter<T>(string parameterName, char? separator = null)
         {
             return (T) GetParameter(parameterName, typeof(T), separator);
         }
 
         [CanBeNull]
-        public T GetCommandLineArgument<T> (string parameterName, char? separator = null)
+        public T GetCommandLineArgument<T>(string parameterName, char? separator = null)
         {
             return (T) GetCommandLineArgument(parameterName, typeof(T), separator);
         }
 
         [CanBeNull]
-        public T GetEnvironmentVariable<T> (string parameterName, char? separator = null)
+        public T GetEnvironmentVariable<T>(string parameterName, char? separator = null)
         {
             return (T) GetEnvironmentVariable(parameterName, typeof(T), separator);
         }
 
         [CanBeNull]
-        public object GetParameter (string parameterName, Type destinationType, char? separator = null)
+        public object GetParameter(string parameterName, Type destinationType, char? separator = null)
         {
             return HasCommandLineArgument(parameterName)
                 ? GetCommandLineArgument(parameterName, destinationType, separator)
@@ -51,7 +51,7 @@ namespace Nuke.Core.Execution
         }
 
         [CanBeNull]
-        public object GetCommandLineArgument (string argumentName, Type destinationType, char? separator = null)
+        public object GetCommandLineArgument(string argumentName, Type destinationType, char? separator = null)
         {
             var args = _commandLineArgumentsProvider.Invoke();
             var index = Array.FindLastIndex(args, x => x.EqualsOrdinalIgnoreCase($"-{argumentName}"));
@@ -73,20 +73,20 @@ namespace Nuke.Core.Execution
             {
                 ControlFlow.Fail(
                     new[] { ex.Message, "Command-line arguments were:" }
-                            .Concat(args.Select((x, i) => $"  [{i}] = {x}"))
-                            .JoinNewLine());
+                        .Concat(args.Select((x, i) => $"  [{i}] = {x}"))
+                        .JoinNewLine());
                 return null;
             }
         }
 
-        private bool HasCommandLineArgument (string argumentName)
+        private bool HasCommandLineArgument(string argumentName)
         {
             var args = _commandLineArgumentsProvider.Invoke();
             return Array.FindLastIndex(args, x => x.EqualsOrdinalIgnoreCase($"-{argumentName}")) != -1;
         }
 
         [CanBeNull]
-        public object GetEnvironmentVariable (string variableName, Type destinationType, char? separator = null)
+        public object GetEnvironmentVariable(string variableName, Type destinationType, char? separator = null)
         {
             var variables = _environmentVariablesProvider.Invoke();
             var value = variables.Contains(variableName) ? (string) variables[variableName] : null;
@@ -105,7 +105,7 @@ namespace Nuke.Core.Execution
         }
 
         [CanBeNull]
-        private object GetDefaultValue (Type type)
+        private object GetDefaultValue(Type type)
         {
             if (Nullable.GetUnderlyingType(type) == null && type != typeof(string) && !type.IsArray)
                 return Activator.CreateInstance(type);
@@ -114,7 +114,7 @@ namespace Nuke.Core.Execution
         }
 
         [CanBeNull]
-        private object ConvertValues (string parameterName, IReadOnlyCollection<string> values, Type destinationType)
+        private object ConvertValues(string parameterName, IReadOnlyCollection<string> values, Type destinationType)
         {
             try
             {
@@ -128,7 +128,7 @@ namespace Nuke.Core.Execution
         }
 
         [CanBeNull]
-        private object ConvertValues (IReadOnlyCollection<string> values, Type destinationType)
+        private object ConvertValues(IReadOnlyCollection<string> values, Type destinationType)
         {
             ControlFlow.Assert(!destinationType.IsArray || destinationType.GetArrayRank() == 1, "Arrays must have a rank of 1.");
             var elementType = (destinationType.IsArray ? destinationType.GetElementType() : destinationType).NotNull();
@@ -162,7 +162,7 @@ namespace Nuke.Core.Execution
         }
 
         [CanBeNull]
-        private object Convert (string value, Type destinationType)
+        private object Convert(string value, Type destinationType)
         {
             try
             {

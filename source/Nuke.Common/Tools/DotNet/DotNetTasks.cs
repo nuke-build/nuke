@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -33,34 +33,40 @@ namespace Nuke.Common.Tools.DotNet
         //}
 
         public static DotNetRestoreSettings DefaultDotNetRestore => new DotNetRestoreSettings()
-                .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
-                .SetProjectFile(NukeBuild.Instance.SolutionFile);
+            .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
+            .SetProjectFile(NukeBuild.Instance.SolutionFile);
 
         public static DotNetBuildSettings DefaultDotNetBuild => new DotNetBuildSettings()
-                .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
-                .SetProjectFile(NukeBuild.Instance.SolutionFile)
-                .EnableNoRestore()
-                .SetConfiguration(NukeBuild.Instance.Configuration)
-                .SetAssemblyVersion(GitVersionAttribute.Value?.AssemblySemVer)
-                .SetFileVersion(GitVersionAttribute.Value?.FullSemVer)
-                .SetInformationalVersion(GitVersionAttribute.Value?.InformationalVersion);
+            .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
+            .SetProjectFile(NukeBuild.Instance.SolutionFile)
+            .EnableNoRestore()
+            .SetConfiguration(NukeBuild.Instance.Configuration)
+            .SetAssemblyVersion(GitVersionAttribute.Value?.GetNormalizedAssemblyVersion())
+            .SetFileVersion(GitVersionAttribute.Value?.GetNormalizedFileVersion())
+            .SetInformationalVersion(GitVersionAttribute.Value?.InformationalVersion);
 
         public static DotNetPublishSettings DefaultDotNetPublish => new DotNetPublishSettings()
-                .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
-                .SetProject(NukeBuild.Instance.SolutionFile)
-                .EnableNoRestore()
-                .SetConfiguration(NukeBuild.Instance.Configuration)
-                .SetAssemblyVersion(GitVersionAttribute.Value?.AssemblySemVer)
-                .SetFileVersion(GitVersionAttribute.Value?.FullSemVer)
-                .SetInformationalVersion(GitVersionAttribute.Value?.InformationalVersion);
+            .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
+            .SetProject(NukeBuild.Instance.SolutionFile)
+            .EnableNoRestore()
+            .SetConfiguration(NukeBuild.Instance.Configuration)
+            .SetAssemblyVersion(GitVersionAttribute.Value?.GetNormalizedAssemblyVersion())
+            .SetFileVersion(GitVersionAttribute.Value?.GetNormalizedFileVersion())
+            .SetInformationalVersion(GitVersionAttribute.Value?.InformationalVersion);
 
         public static DotNetPackSettings DefaultDotNetPack => new DotNetPackSettings()
-                .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
-                .SetProject(NukeBuild.Instance.SolutionFile)
-                .EnableNoBuild()
-                .SetConfiguration(NukeBuild.Instance.Configuration)
-                .EnableIncludeSymbols()
-                .SetOutputDirectory(NukeBuild.Instance.OutputDirectory)
-                .SetVersion(GitVersionAttribute.Value?.NuGetVersionV2);
+            .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
+            .SetProject(NukeBuild.Instance.SolutionFile)
+            .EnableNoBuild()
+            .SetConfiguration(NukeBuild.Instance.Configuration)
+            .EnableIncludeSymbols()
+            .SetOutputDirectory(NukeBuild.Instance.OutputDirectory)
+            .SetVersion(GitVersionAttribute.Value?.NuGetVersionV2);
+
+        public static DotNetTestSettings DefaultDotNetTest => new DotNetTestSettings()
+            .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
+            .EnableNoBuild()
+            .SetConfiguration(NukeBuild.Instance.Configuration)
+            .SetProjectFile(NukeBuild.Instance.SolutionFile);
     }
 }

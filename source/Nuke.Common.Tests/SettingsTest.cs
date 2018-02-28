@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -20,61 +20,61 @@ namespace Nuke.Common.Tests
         private static PathConstruction.AbsolutePath RootDirectory
             => (PathConstruction.AbsolutePath) Directory.GetCurrentDirectory() / ".." / ".." / ".." / ".." / "..";
 
-        private static void Assert<T> (Configure<T> configurator, string arguments)
+        private static void Assert<T>(Configure<T> configurator, string arguments)
             where T : ToolSettings, new()
         {
             configurator.Invoke(new T()).GetArguments().RenderForOutput().Should().Be(arguments);
         }
 
         [Fact]
-        public void TestMSBuild ()
+        public void TestMSBuild()
         {
             var projectFile = RootDirectory / "source" / "Nuke.Common" / "Nuke.Common.csproj";
             var solutionFile = RootDirectory / "Nuke.sln";
 
             Assert<MSBuildSettings>(x => x
-                        .SetProjectFile(projectFile)
-                        .SetTargetPlatform(MSBuildTargetPlatform.MSIL)
-                        .SetConfiguration("Release")
-                        .EnableNoLogo(),
+                    .SetProjectFile(projectFile)
+                    .SetTargetPlatform(MSBuildTargetPlatform.MSIL)
+                    .SetConfiguration("Release")
+                    .EnableNoLogo(),
                 $"{projectFile} /nologo /p:Platform=AnyCPU /p:Configuration=Release");
 
             Assert<MSBuildSettings>(x => x
-                        .SetProjectFile(solutionFile)
-                        .SetTargetPlatform(MSBuildTargetPlatform.MSIL)
-                        .ToggleRunCodeAnalysis(),
+                    .SetProjectFile(solutionFile)
+                    .SetTargetPlatform(MSBuildTargetPlatform.MSIL)
+                    .ToggleRunCodeAnalysis(),
                 $"{solutionFile} /p:Platform=\"Any CPU\" /p:RunCodeAnalysis=True");
         }
 
         [Fact]
-        public void TestXunit2 ()
+        public void TestXunit2()
         {
             Assert<Xunit2Settings>(x => x
-                        .AddTargetAssemblies("A.csproj")
-                        .AddTargetAssemblyWithConfigs("B.csproj", "D.config", "new folder\\E.config"),
+                    .AddTargetAssemblies("A.csproj")
+                    .AddTargetAssemblyWithConfigs("B.csproj", "D.config", "new folder\\E.config"),
                 "A.csproj  B.csproj D.config B.csproj \"new folder\\E.config\"");
 
             Assert<Xunit2Settings>(x => x
-                        .AddResultReport(ResultFormat.HTML, "new folder\\data.html")
-                        .AddResultReport(ResultFormat.Xml, "new_folder\\data.xml"),
+                    .AddResultReport(Xunit2ResultFormat.HTML, "new folder\\data.html")
+                    .AddResultReport(Xunit2ResultFormat.Xml, "new_folder\\data.xml"),
                 "-HTML \"new folder\\data.html\" -Xml new_folder\\data.xml");
 
             Assert<Xunit2Settings>(x => x
-                        .AddResultReport(ResultFormat.NUnit, "new folder\\nunit.xml")
-                        .EnableDiagnostics()
-                        .EnableFailSkips(),
+                    .AddResultReport(Xunit2ResultFormat.NUnit, "new folder\\nunit.xml")
+                    .EnableDiagnostics()
+                    .EnableFailSkips(),
                 "-failskips -diagnostics -NUnit \"new folder\\nunit.xml\"");
         }
 
         [Fact]
-        public void TestOpenCover ()
+        public void TestOpenCover()
         {
             var projectFile = RootDirectory / "source" / "Nuke.Common" / "Nuke.Common.csproj";
 
             Assert<OpenCoverSettings>(x => x
-                        .SetTargetPath(projectFile)
-                        .AddFilters("+[*]*", "-[xunit.*]*", "-[NUnit.*]*")
-                        .SetTargetArguments("-diagnostics -HTML \"new folder\\data.xml\""),
+                    .SetTargetPath(projectFile)
+                    .AddFilters("+[*]*", "-[xunit.*]*", "-[NUnit.*]*")
+                    .SetTargetArguments("-diagnostics -HTML \"new folder\\data.xml\""),
                 $"-target:{projectFile} -targetargs:\"-diagnostics -HTML \\\"new folder\\data.xml\\\"\" -filter:\"+[*]* -[xunit.*]* -[NUnit.*]*\"");
         }
     }

@@ -15,7 +15,7 @@ $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 $DotNetChannel = "2.0"
 $BuildProjectFile = "$PSScriptRoot\_BUILD_DIRECTORY_NAME_\_BUILD_PROJECT_NAME_.csproj"
 
-$TempDirectory = "$PSScriptRoot\.tmp"
+$TempDirectory = "$PSScriptRoot\_ROOT_DIRECTORY_\.tmp"
 
 $DotNetScriptUrl = "https://raw.githubusercontent.com/dotnet/cli/master/scripts/obtain/dotnet-install.ps1"
 $DotNetDirectory = "$TempDirectory\dotnet-win"

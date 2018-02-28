@@ -1,4 +1,13 @@
 
+Applies to: package creation &bullet; Supported versions: 2.7+
+Creates a NuGet package based on the specified .nuspec or project file. The dotnet pack command (see dotnet Commands) and msbuild /t:pack (see MSBuild targets) may be used as alternates.
+ImportantUnder Mono, creating a package from a project file is not supported. You also need to adjust non-local paths in the .nuspec file to Unix-style paths, as nuget.exe doesn&#39;t convert Windows pathnames itself.
+
+Usage
+nuget pack &lt;nuspecPath | projectPath&gt; [options]
+where &lt;nuspecPath&gt; and &lt;projectPath&gt; specify the .nuspec or project file, respectively.
+Options
+
 
 
 Option
@@ -16,7 +25,7 @@ Specifies that the project should be built before building the package.
 
 
 Exclude
-Specifies one or more wildcard patterns to exclude when creating a package.
+Specifies one or more wildcard patterns to exclude when creating a package. To specify more than one pattern, repeat the -Exclude flag. See example below.
 
 
 ExcludeEmptyDirectories
@@ -60,7 +69,7 @@ Specifies the folder in which the created package is stored. If no folder is spe
 
 
 Properties
-Specifies a list of token=value pairs, separated by semicolons, where each occurrence of $token$ in the .nuspec file will be replaced with the given value. Values can be strings in quotation marks.
+Specifies a list of properties that override values in the project file; see Common MSBuild Project Properties for property names. The Properties argument here is a list of token=value pairs, separated by semicolons, where each occurrence of $token$ in the .nuspec file will be replaced with the given value. Values can be strings in quotation marks. Note that for the &quot;Configuration&quot; property, the default is &quot;Debug&quot;. To change to a Release configuration, use -Properties Configuration=Release.
 
 
 Suffix
@@ -76,10 +85,42 @@ Specifies that the output files of the project should be placed in the tool fold
 
 
 Verbosity
-Specifies the amount of detail displayed in the output: normal, quiet, detailed (2.5+).
+Specifies the amount of detail displayed in the output: normal, quiet, detailed.
 
 
 Version
 Overrides the version number from the .nuspec file.
 
 
+
+Also see Environment variables
+Excluding development dependencies
+Some NuGet packages are useful as development dependencies, which help you author your own library, but aren&#39;t necessarily needed as actual package dependencies.
+The pack command will ignore package entries in packages.config that have the developmentDependency attribute set to true. These entries will not be include as a dependencies in the created package.
+For example, consider the following packages.config file in the source project:
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;packages&gt;
+    &lt;package id=&quot;jQuery&quot; version=&quot;1.5.2&quot; /&gt;
+    &lt;package id=&quot;netfx-Guard&quot; version=&quot;1.3.3.2&quot; developmentDependency=&quot;true&quot; /&gt;
+    &lt;package id=&quot;microsoft-web-helpers&quot; version=&quot;1.15&quot; /&gt;
+&lt;/packages&gt;
+For this project, the package created by nuget pack will have a dependency on jQuery and microsoft-web-helpers but not netfx-Guard.
+Examples
+nuget pack
+
+nuget pack foo.nuspec
+
+nuget pack foo.csproj
+
+nuget pack foo.csproj -Properties Configuration=Release
+
+nuget pack foo.csproj -Build -Symbols -Properties owners=janedoe,xiaop;version=&quot;1.0.5&quot;
+
+# create a package from project foo.csproj, using MSBuild version 12 to build the project
+nuget pack foo.csproj -Build -Symbols -Properties owners=janedoe,xiaop;version=&quot;1.0.5&quot; -MSBuildVersion 12
+
+nuget pack foo.nuspec -Version 2.1.0
+
+nuget pack foo.nuspec -Version 1.0.0 -MinClientVersion 2.5
+
+nuget pack Package.nuspec -exclude &quot;*.exe&quot; -exclude &quot;*.bat&quot;

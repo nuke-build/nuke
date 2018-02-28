@@ -104,6 +104,8 @@ if ($TargetPlatformSelection -eq 0) {
 }
 
 if ($TargetPlatformSelection -eq 1 -or $ProjectFormatSelection -eq 1) {
+  # $NukeVersionArray = $NukeVersion.Split('.')
+  # $NukeVersion = "$($NukeVersionArray[0]).$($NukeVersionArray[1]).*"
   $NukeVersion = (ReadWithDefault "NUKE framework version (use '*' for always latest)" $NukeVersion)
 }
 
@@ -123,20 +125,25 @@ md -force $BuildDirectory > $null
 Write-Host "Generating build scripts..."
 
 $SolutionDirectoryRelative = (GetRelative $PSScriptRoot $SolutionDirectory)
+$RootDirectoryRelative = (GetRelative $PSScriptRoot $RootDirectory)
 
 Set-Content "build.ps1" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.$($TargetPlatform).ps1") `
     -replace "_NUGET_VERSION_",$NuGetVersion `
     -replace "_BUILD_DIRECTORY_NAME_",$BuildDirectoryName `
     -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
-    -replace "_SOLUTION_DIRECTORY_",$SolutionDirectoryRelative) `
+    -replace "_SOLUTION_DIRECTORY_",$SolutionDirectoryRelative `
+    -replace "_ROOT_DIRECTORY_",$RootDirectoryRelative) `
     -NoNewline
 
 Set-Content "build.sh" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.$($TargetPlatform).sh") `
     -replace "_NUGET_VERSION_",$NuGetVersion `
     -replace "_BUILD_DIRECTORY_NAME_",($BuildDirectoryName -replace "\\","/") `
     -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
-    -replace "_SOLUTION_DIRECTORY_",($SolutionDirectoryRelative -replace "\\","/")) `
+    -replace "_SOLUTION_DIRECTORY_",($SolutionDirectoryRelative -replace "\\","/" `
+    -replace "_ROOT_DIRECTORY_",($RootDirectoryRelative -replace "\\","/")) `
     -NoNewline
+
+(New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/../build.cmd", "build.cmd")
 
 ###########################################################################
 # GENERATE PROJECT FILES
@@ -154,7 +161,7 @@ Set-Content "$BuildProjectFile" ((New-Object System.Net.WebClient).DownloadStrin
     -replace "_NUKE_VERSION_",$NukeVersion) `
     -NoNewline
 
-(New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/.build.csproj.DotSettings", "$BuildProjectFile.dotsettings")
+(New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/../build/.build.csproj.DotSettings", "$BuildProjectFile.DotSettings")
 
 if (!(Test-Path "$BuildDirectory\Build.cs")) {
     (New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/Build.$($TargetPlatform).cs", "$BuildDirectory\Build.cs")

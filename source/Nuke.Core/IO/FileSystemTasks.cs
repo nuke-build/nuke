@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -22,12 +22,12 @@ namespace Nuke.Core.IO
             OverwriteIfNewer
         }
 
-        public static void EnsureExistingParentDirectory (string file)
+        public static void EnsureExistingParentDirectory(string file)
         {
             EnsureExistingDirectory(Path.GetDirectoryName(file).NotNull($"Path.GetDirectoryName({file}) != null"));
         }
 
-        public static void EnsureExistingDirectory (string directory)
+        public static void EnsureExistingDirectory(string directory)
         {
             if (Directory.Exists(directory))
                 return;
@@ -36,12 +36,12 @@ namespace Nuke.Core.IO
             Directory.CreateDirectory(directory);
         }
 
-        public static void EnsureExistingDirectories (IEnumerable<string> directories)
+        public static void EnsureExistingDirectories(IEnumerable<string> directories)
         {
             directories.ForEach(EnsureExistingDirectory);
         }
 
-        public static void EnsureCleanDirectory (string directory)
+        public static void EnsureCleanDirectory(string directory)
         {
             if (!Directory.Exists(directory))
             {
@@ -55,12 +55,12 @@ namespace Nuke.Core.IO
             }
         }
 
-        public static void EnsureCleanDirectories (IEnumerable<string> directories)
+        public static void EnsureCleanDirectories(IEnumerable<string> directories)
         {
             directories.ForEach(EnsureCleanDirectory);
         }
 
-        public static void DeleteDirectory (string directory)
+        public static void DeleteDirectory(string directory)
         {
             if (!Directory.Exists(directory))
                 return;
@@ -75,13 +75,13 @@ namespace Nuke.Core.IO
             DeleteDirectoryInternal(directory);
         }
 
-        public static void DeleteDirectories (IEnumerable<string> directories)
+        public static void DeleteDirectories(IEnumerable<string> directories)
         {
             var directoryList = directories.ToList();
             directoryList.ForEach(DeleteDirectory);
         }
 
-        public static void DeleteDirectoryInternal (string directory)
+        public static void DeleteDirectoryInternal(string directory)
         {
             Directory.GetFiles(directory).ForEach(DeleteFile);
             Directory.GetDirectories(directory).ForEach(DeleteDirectoryInternal);
@@ -91,14 +91,14 @@ namespace Nuke.Core.IO
             ControlFlow.Assert(!Directory.Exists(directory), $"Cannot delete directory '{directory}'.");
         }
 
-        private static void DeleteFile (string file)
+        private static void DeleteFile(string file)
         {
             Logger.Trace($"Deleting file '{file}'...");
             EnsureFileAttributes(file);
             File.Delete(file);
         }
 
-        public static void CopyRecursively (string source, string target, FileExistsPolicy policy = FileExistsPolicy.Fail)
+        public static void CopyRecursively(string source, string target, FileExistsPolicy policy = FileExistsPolicy.Fail)
         {
             ControlFlow.Assert(Directory.Exists(source), $"Directory.Exists({source})");
             ControlFlow.Assert(!Contains(target, source), $"Source '{source}' is not contained in target '{target}'.");
@@ -108,7 +108,7 @@ namespace Nuke.Core.IO
             CopyRecursivelyInternal(source, target, policy);
         }
 
-        private static bool ShouldCopyFile (string sourceFile, string targetFile, FileExistsPolicy policy)
+        private static bool ShouldCopyFile(string sourceFile, string targetFile, FileExistsPolicy policy)
         {
             if (!File.Exists(targetFile))
                 return true;
@@ -130,9 +130,9 @@ namespace Nuke.Core.IO
             }
         }
 
-        private static void CopyRecursivelyInternal (string source, string target, FileExistsPolicy policy)
+        private static void CopyRecursivelyInternal(string source, string target, FileExistsPolicy policy)
         {
-            string GetDestinationPath (string path)
+            string GetDestinationPath(string path)
                 => Path.Combine(target, PathConstruction.GetRelativePath(source, path));
 
             Directory.CreateDirectory(target);
@@ -149,11 +149,11 @@ namespace Nuke.Core.IO
             }
         }
 
-        private static bool Contains (string baseDirectory, string otherDirectory)
+        private static bool Contains(string baseDirectory, string otherDirectory)
         {
             var otherDirectoryInfo = new DirectoryInfo(otherDirectory);
             return new DirectoryInfo(baseDirectory).DescendantsAndSelf(x => x.Parent)
-                    .Any(x => x.FullName == otherDirectoryInfo.FullName);
+                .Any(x => x.FullName == otherDirectoryInfo.FullName);
         }
 
         //public static IEnumerable<string> GetFiles (string directory, string filePattern, bool includeSubDirectories = true)
@@ -161,7 +161,7 @@ namespace Nuke.Core.IO
         //    return Directory.GetFiles (directory, filePattern, includeSubDirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
         //}
 
-        public static void Touch (string path, DateTime? time = null)
+        public static void Touch(string path, DateTime? time = null)
         {
             Logger.Info($"Touching file '{path}'...");
 
@@ -173,11 +173,11 @@ namespace Nuke.Core.IO
                 File.SetLastWriteTime(path, time ?? DateTime.UtcNow);
         }
 
-        private static void EnsureFileAttributes (string file)
+        private static void EnsureFileAttributes(string file)
         {
             File.SetAttributes(file, FileAttributes.Normal);
         }
-        
+
         /// <summary>
         /// Returns the time the file or directory was last written to. For directories, the latest time for the whole content is returned.
         /// </summary>
@@ -187,8 +187,8 @@ namespace Nuke.Core.IO
 
             return Directory.Exists(path)
                 ? new DirectoryInfo(path)
-                        .GetFileSystemInfos("*", SearchOption.AllDirectories)
-                        .Max(x => x.LastWriteTimeUtc)
+                    .GetFileSystemInfos("*", SearchOption.AllDirectories)
+                    .Max(x => x.LastWriteTimeUtc)
                 : File.GetLastWriteTimeUtc(path);
         }
 
@@ -199,13 +199,13 @@ namespace Nuke.Core.IO
         }
 
         [CanBeNull]
-        public static string SearchDirectory (DirectoryInfo start, Func<DirectoryInfo, bool> predicate)
+        public static string SearchDirectory(DirectoryInfo start, Func<DirectoryInfo, bool> predicate)
         {
             return start
-                    .DescendantsAndSelf(x => x.Parent)
-                    .Where(x => x != null)
-                    .FirstOrDefault(predicate)
-                    ?.FullName;
+                .DescendantsAndSelf(x => x.Parent)
+                .Where(x => x != null)
+                .FirstOrDefault(predicate)
+                ?.FullName;
         }
     }
 }

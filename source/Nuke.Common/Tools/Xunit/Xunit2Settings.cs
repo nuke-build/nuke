@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -11,7 +11,7 @@ namespace Nuke.Common.Tools.Xunit
 {
     partial class Xunit2Settings
     {
-        private string GetPackageExecutable ()
+        private string GetPackageExecutable()
         {
             return EnvironmentInfo.Is64Bit ? "xunit.console.exe" : "xunit.console.x86.exe";
         }

@@ -72,7 +72,7 @@ namespace Nuke.Common.Tools.OpenCover
         /// <summary><p>Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard.</p></summary>
         public virtual IReadOnlyList<string> ExcludeByAttributes => ExcludeByAttributesInternal.AsReadOnly();
         internal List<string> ExcludeByAttributesInternal { get; set; } = new List<string>();
-        /// <summary><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
+        /// <summary><p>Exclude a class (or methods) by file-filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
         public virtual IReadOnlyList<string> ExcludeByFile => ExcludeByFileInternal.AsReadOnly();
         internal List<string> ExcludeByFileInternal { get; set; } = new List<string>();
         /// <summary><p>Assemblies being loaded from these locations will be ignored.</p></summary>
@@ -373,7 +373,7 @@ namespace Nuke.Common.Tools.OpenCover
         }
         #endregion
         #region ExcludeByFile
-        /// <summary><p><em>Sets <see cref="OpenCoverSettings.ExcludeByFile"/> to a new list.</em></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.ExcludeByFile"/> to a new list.</em></p><p>Exclude a class (or methods) by file-filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
         public static OpenCoverSettings SetExcludeByFile(this OpenCoverSettings toolSettings, params string[] excludeByFile)
         {
@@ -381,7 +381,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeByFileInternal = excludeByFile.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="OpenCoverSettings.ExcludeByFile"/> to a new list.</em></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
+        /// <summary><p><em>Sets <see cref="OpenCoverSettings.ExcludeByFile"/> to a new list.</em></p><p>Exclude a class (or methods) by file-filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
         public static OpenCoverSettings SetExcludeByFile(this OpenCoverSettings toolSettings, IEnumerable<string> excludeByFile)
         {
@@ -389,7 +389,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeByFileInternal = excludeByFile.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="OpenCoverSettings.ExcludeByFile"/>.</em></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
+        /// <summary><p><em>Adds values to <see cref="OpenCoverSettings.ExcludeByFile"/>.</em></p><p>Exclude a class (or methods) by file-filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
         public static OpenCoverSettings AddExcludeByFile(this OpenCoverSettings toolSettings, params string[] excludeByFile)
         {
@@ -397,7 +397,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeByFileInternal.AddRange(excludeByFile);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="OpenCoverSettings.ExcludeByFile"/>.</em></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
+        /// <summary><p><em>Adds values to <see cref="OpenCoverSettings.ExcludeByFile"/>.</em></p><p>Exclude a class (or methods) by file-filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
         public static OpenCoverSettings AddExcludeByFile(this OpenCoverSettings toolSettings, IEnumerable<string> excludeByFile)
         {
@@ -405,7 +405,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeByFileInternal.AddRange(excludeByFile);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="OpenCoverSettings.ExcludeByFile"/>.</em></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
+        /// <summary><p><em>Clears <see cref="OpenCoverSettings.ExcludeByFile"/>.</em></p><p>Exclude a class (or methods) by file-filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
         public static OpenCoverSettings ClearExcludeByFile(this OpenCoverSettings toolSettings)
         {
@@ -413,7 +413,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeByFileInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="OpenCoverSettings.ExcludeByFile"/>.</em></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
+        /// <summary><p><em>Removes values from <see cref="OpenCoverSettings.ExcludeByFile"/>.</em></p><p>Exclude a class (or methods) by file-filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
         public static OpenCoverSettings RemoveExcludeByFile(this OpenCoverSettings toolSettings, params string[] excludeByFile)
         {
@@ -422,7 +422,7 @@ namespace Nuke.Common.Tools.OpenCover
             toolSettings.ExcludeByFileInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="OpenCoverSettings.ExcludeByFile"/>.</em></p><p>Exclude a class (or methods) by filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
+        /// <summary><p><em>Removes values from <see cref="OpenCoverSettings.ExcludeByFile"/>.</em></p><p>Exclude a class (or methods) by file-filter(s) that match the filenames. An <c>*</c> can be used as a wildcard.</p></summary>
         [Pure]
         public static OpenCoverSettings RemoveExcludeByFile(this OpenCoverSettings toolSettings, IEnumerable<string> excludeByFile)
         {

@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -7,53 +7,65 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Nuke.Core.Utilities;
+using Nuke.Core.Utilities.Collections;
 
 namespace Nuke.Core.Execution
 {
     internal static class TargetDefinitionLoader
     {
-        public static IReadOnlyCollection<TargetDefinition> GetExecutionList (NukeBuild build, Target defaultTarget)
+        public static IReadOnlyCollection<TargetDefinition> GetExecutingTargets(NukeBuild build)
         {
-            var allTargets = build.GetTargetDefinitions(defaultTarget);
+            ControlFlow.Assert(build.TargetDefinitions.All(x => !x.Name.EqualsOrdinalIgnoreCase(BuildExecutor.DefaultTarget)),
+                "The name 'default' cannot be used as target name.");
 
-            ControlFlow.Assert(allTargets.All(x => x.Name != "default"), "The name 'default' cannot be used as target identifier.");
-            var specifiedTargets = build.Target.Select(x => GetTargetByName(x, defaultTarget, allTargets, build)).ToList();
+            var invokedTargets = build.InvokedTargets.Select(x => GetDefinition(x, build)).ToList();
+            var executingTargets = GetUnfilteredExecutingTargets(build, invokedTargets);
+            var skippedTargets = executingTargets
+                    .Where(x => !invokedTargets.Contains(x) &&
+                                build.SkippedTargets != null &&
+                                (build.SkippedTargets.Length == 0 ||
+                                 build.SkippedTargets.Contains(x.Name, StringComparer.OrdinalIgnoreCase))).ToList();
+            skippedTargets.ForEach(x => x.Conditions.Add(() => false));
 
-            return GetSortedList(specifiedTargets, allTargets);
+            string[] GetNames (IEnumerable<TargetDefinition> targets)
+                => targets.Select(x => x.Name).ToArray();
+            
+            ReflectionService.SetValue(build, nameof(NukeBuild.InvokedTargets), GetNames(invokedTargets));
+            ReflectionService.SetValue(build, nameof(NukeBuild.SkippedTargets), GetNames(skippedTargets));
+            ReflectionService.SetValue(build, nameof(NukeBuild.ExecutingTargets), GetNames(executingTargets.Except(skippedTargets)));
+
+            return executingTargets;
         }
 
-        private static TargetDefinition GetTargetByName (
+        private static TargetDefinition GetDefinition(
             string targetName,
-            Target defaultTarget,
-            IReadOnlyCollection<TargetDefinition> targetDefinitions,
             NukeBuild build)
         {
-            if (targetName.EqualsOrdinalIgnoreCase("default"))
-                return targetDefinitions.Single(x => x.IsDefault);
+            if (targetName.EqualsOrdinalIgnoreCase(BuildExecutor.DefaultTarget))
+                return build.TargetDefinitions.Single(x => x.IsDefault);
 
-            var targetDefinition = targetDefinitions.SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(targetName));
+            var targetDefinition = build.TargetDefinitions.SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(targetName));
             if (targetDefinition == null)
             {
                 var stringBuilder = new StringBuilder()
-                        .AppendLine(BuildExecutor.GetTargetsText(build, defaultTarget))
-                        .AppendLine($"Target with name '{targetName}' is not available.");
+                    .AppendLine($"Target with name '{targetName}' is not available.")
+                    .AppendLine()
+                    .AppendLine(HelpTextService.GetTargetsText(build));
 
                 ControlFlow.Fail(stringBuilder.ToString());
             }
 
             return targetDefinition;
         }
-        
-        private static List<TargetDefinition> GetSortedList (
-            IReadOnlyCollection<TargetDefinition> specifiedTargets,
-            IReadOnlyCollection<TargetDefinition> allTargets)
+
+        private static List<TargetDefinition> GetUnfilteredExecutingTargets(NukeBuild build, IReadOnlyCollection<TargetDefinition> invokedTargets)
         {
-            var vertexDictionary = allTargets.ToDictionary(x => x, x => new Vertex<TargetDefinition>(x));
+            var vertexDictionary = build.TargetDefinitions.ToDictionary(x => x, x => new Vertex<TargetDefinition>(x));
             foreach (var pair in vertexDictionary)
                 pair.Value.Dependencies = pair.Key.TargetDefinitionDependencies.Select(x => vertexDictionary[x]).ToList();
 
             var graphAsList = vertexDictionary.Values.ToList();
-            var result = new List<TargetDefinition>();
+            var executingTargets = new List<TargetDefinition>();
 
             while (graphAsList.Any())
             {
@@ -62,8 +74,8 @@ namespace Nuke.Core.Execution
                 {
                     ControlFlow.Fail(
                         new[] { "Incomplete target definition order." }
-                                .Concat(independents.Select(x => $"  - {x.Value.Name}"))
-                                .JoinNewLine());
+                            .Concat(independents.Select(x => $"  - {x.Value.Name}"))
+                            .JoinNewLine());
                 }
 
                 var independent = independents.FirstOrDefault();
@@ -71,26 +83,29 @@ namespace Nuke.Core.Execution
                 {
                     var scc = new StronglyConnectedComponentFinder<TargetDefinition>();
                     var cycles = scc.DetectCycle(graphAsList)
-                            .Cycles()
-                            .Select(x => string.Join(" -> ", x.Select(y => y.Value.Name)));
+                        .Cycles()
+                        .Select(x => string.Join(" -> ", x.Select(y => y.Value.Name)));
 
                     ControlFlow.Fail(
                         new[] { "Circular dependencies between target definitions." }
-                                .Concat(independents.Select(x => $"  - {cycles}"))
-                                .JoinNewLine());
+                            .Concat(independents.Select(x => $"  - {cycles}"))
+                            .JoinNewLine());
                 }
 
                 graphAsList.Remove(independent);
 
                 var targetDefinition = independent.Value;
-                var executableDependency = result.SelectMany(x => x.TargetDefinitionDependencies).Contains(targetDefinition)
-                                           && !EnvironmentInfo.ArgumentSwitch("nodeps");
-                if (specifiedTargets.Contains(targetDefinition) || executableDependency)
-                    result.Add(targetDefinition);
+                var dependencies = executingTargets.SelectMany(x => x.TargetDefinitionDependencies);
+                if (!invokedTargets.Contains(targetDefinition) &&
+                    !dependencies.Contains(targetDefinition))
+                    continue;
+
+                executingTargets.Add(targetDefinition);
             }
 
-            result.Reverse();
-            return result;
+            executingTargets.Reverse();
+
+            return executingTargets;
         }
     }
 }

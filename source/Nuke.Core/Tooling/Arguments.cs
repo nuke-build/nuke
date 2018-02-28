@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,9 +13,9 @@ namespace Nuke.Core.Tooling
 {
     public interface IArguments
     {
-        string Filter (string text);
-        string RenderForExecution ();
-        string RenderForOutput ();
+        string Filter(string text);
+        string RenderForExecution();
+        string RenderForOutput();
     }
 
     public sealed class Arguments : IArguments
@@ -26,23 +26,23 @@ namespace Nuke.Core.Tooling
         private readonly List<string> _secrets = new List<string>();
         private readonly LookupTable<string, string> _arguments = new LookupTable<string, string>(StringComparer.OrdinalIgnoreCase);
 
-        public Arguments Add (string argument, bool? condition = true)
+        public Arguments Add(string argument, bool? condition = true)
         {
             return Add(argument, condition.HasValue && condition.Value ? new object() : null);
         }
 
-        public Arguments Add<T> (string argumentFormat, T? value, char? disallowed = null, bool secret = false)
+        public Arguments Add<T>(string argumentFormat, T? value, char? disallowed = null, bool secret = false)
             where T : struct
         {
             return Add(argumentFormat, value.HasValue ? (object) value.Value : null, disallowed, secret);
         }
 
-        public Arguments Add (string argumentFormat, [CanBeNull] object value, char? disallowed = null, bool secret = false)
+        public Arguments Add(string argumentFormat, [CanBeNull] object value, char? disallowed = null, bool secret = false)
         {
             return Add(argumentFormat, value?.ToString(), disallowed, secret);
         }
 
-        public Arguments Add (
+        public Arguments Add(
             string argumentFormat,
             [CanBeNull] string value,
             char? disallowed = null,
@@ -61,7 +61,7 @@ namespace Nuke.Core.Tooling
             return this;
         }
 
-        public Arguments Add<T> (
+        public Arguments Add<T>(
             string argumentFormat,
             [CanBeNull] IEnumerable<T> values,
             char? separator = null,
@@ -74,7 +74,7 @@ namespace Nuke.Core.Tooling
 
             argumentFormat = argumentFormat.Replace("{value}", "{0}");
 
-            string Format (T value) => value.ToString().DoubleQuoteIfNeeded(separator, disallowed, c_space);
+            string Format(T value) => value.ToString().DoubleQuoteIfNeeded(separator, disallowed, c_space);
 
             if (separator.HasValue)
                 _arguments.Add(argumentFormat, FormatMultiple(list, Format, separator.Value, quoteMultiple));
@@ -84,7 +84,7 @@ namespace Nuke.Core.Tooling
             return this;
         }
 
-        public Arguments Add<TKey, TValue> (
+        public Arguments Add<TKey, TValue>(
             string argumentFormat,
             [CanBeNull] IReadOnlyDictionary<TKey, TValue> dictionary,
             string itemFormat,
@@ -100,12 +100,12 @@ namespace Nuke.Core.Tooling
             var keyValueSeparator = itemFormat.Replace("{key}", string.Empty).Replace("{value}", string.Empty);
             ControlFlow.Assert(keyValueSeparator.Length == 1, "keyValueSeparator.Length == 1");
 
-            string Format (object value) => value.ToString().DoubleQuoteIfNeeded(separator, keyValueSeparator.Single(), disallowed, c_space);
+            string Format(object value) => value.ToString().DoubleQuoteIfNeeded(separator, keyValueSeparator.Single(), disallowed, c_space);
 
-            string FormatPair (KeyValuePair<TKey, TValue> pair)
+            string FormatPair(KeyValuePair<TKey, TValue> pair)
                 => itemFormat
-                        .Replace("{key}", Format(pair.Key))
-                        .Replace("{value}", Format(pair.Value));
+                    .Replace("{key}", Format(pair.Key))
+                    .Replace("{value}", Format(pair.Value));
 
             var pairs = dictionary.Where(x => x.Value.NotNullWarn($"Value for '{x.Key}' is 'null', omitting...") != null).ToList();
             if (separator.HasValue)
@@ -116,7 +116,7 @@ namespace Nuke.Core.Tooling
             return this;
         }
 
-        public Arguments Add<TKey, TValue> (
+        public Arguments Add<TKey, TValue>(
             string argumentFormat,
             [CanBeNull] ILookup<TKey, TValue> lookup,
             string itemFormat,
@@ -131,12 +131,12 @@ namespace Nuke.Core.Tooling
             var listSeparator = itemFormat.Replace("{key}", string.Empty).Replace("{value}", string.Empty);
             ControlFlow.Assert(listSeparator.Length == 1, "listSeparator.Length == 1");
 
-            string Format (object value) => value?.ToString().DoubleQuoteIfNeeded(separator, listSeparator.Single(), disallowed, c_space);
+            string Format(object value) => value?.ToString().DoubleQuoteIfNeeded(separator, listSeparator.Single(), disallowed, c_space);
 
-            string FormatLookup (TKey key, string values)
+            string FormatLookup(TKey key, string values)
                 => itemFormat
-                        .Replace("{key}", Format(key))
-                        .Replace("{value}", values);
+                    .Replace("{key}", Format(key))
+                    .Replace("{value}", values);
 
             if (separator.HasValue)
                 foreach (var list in lookup)
@@ -156,14 +156,14 @@ namespace Nuke.Core.Tooling
                 : values.DoubleQuoteIfNeeded();
         }
 
-        public string Filter (string text)
+        public string Filter(string text)
         {
             return _secrets.Aggregate(text, (str, s) => str.Replace(s, c_hiddenString));
         }
 
-        private string Render (bool forOutput)
+        private string Render(bool forOutput)
         {
-            string Format (string argument)
+            string Format(string argument)
                 => !_secrets.Contains(argument) || !forOutput
                     ? argument
                     : c_hiddenString;
@@ -176,17 +176,17 @@ namespace Nuke.Core.Tooling
             return builder.ToString().TrimEnd();
         }
 
-        public string RenderForExecution ()
+        public string RenderForExecution()
         {
             return Render(forOutput: false);
         }
 
-        public string RenderForOutput ()
+        public string RenderForOutput()
         {
             return Render(forOutput: true);
         }
 
-        public override string ToString ()
+        public override string ToString()
         {
             return RenderForOutput();
         }

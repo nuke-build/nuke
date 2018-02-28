@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -16,11 +16,11 @@ namespace Nuke.Core.Tooling
     [ExcludeFromCodeCoverage]
     public sealed class ProcessSettings : ISettingsEntity
     {
-        public ProcessSettings ()
+        public ProcessSettings()
         {
             var environmentVariables = Environment.GetEnvironmentVariables();
             EnvironmentVariablesInternal = environmentVariables.Keys.Cast<string>()
-                    .ToDictionary(x => x, x => (string) environmentVariables[x], StringComparer.OrdinalIgnoreCase);
+                .ToDictionary(x => x, x => (string) environmentVariables[x], StringComparer.OrdinalIgnoreCase);
         }
 
         public IReadOnlyDictionary<string, string> EnvironmentVariables => EnvironmentVariablesInternal.AsReadOnly();

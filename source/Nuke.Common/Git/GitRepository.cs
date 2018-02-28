@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -17,14 +17,17 @@ namespace Nuke.Common.Git
     [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
     public class GitRepository
     {
-        public static GitRepository FromUrl (string url, string branch = null)
+        public static GitRepository FromUrl(string url, string branch = null)
         {
             var (endpoint, identifier) = ParseUrl(url);
             return new GitRepository(endpoint, identifier, branch: branch);
         }
 
+        /// <summary>
+        /// Obtains information from a local git repository. Auto-injection can be utilized via <see cref="GitRepositoryAttribute"/>.
+        /// </summary>
         [CanBeNull]
-        public static GitRepository FromLocalDirectory (string directory, string branch = null, string remote = "origin")
+        public static GitRepository FromLocalDirectory(string directory, string branch = null, string remote = "origin")
         {
             var rootDirectory = FileSystemTasks.SearchDirectory(directory, x => x.GetDirectories(".git").Any());
             if (rootDirectory == null)
@@ -40,40 +43,40 @@ namespace Nuke.Common.Git
             var configFile = Path.Combine(gitDirectory, "config");
             var configFileContent = File.ReadAllLines(configFile);
             var url = configFileContent
-                    .Select(x => x.Trim())
-                    .SkipWhile(x => x != $"[remote \"{remote}\"]")
-                    .Skip(count: 1)
-                    .TakeWhile(x => !x.StartsWith("["))
-                    .SingleOrDefault(x => x.StartsWithOrdinalIgnoreCase("url = "))
-                    ?.Split('=')[1];
+                .Select(x => x.Trim())
+                .SkipWhile(x => x != $"[remote \"{remote}\"]")
+                .Skip(count: 1)
+                .TakeWhile(x => !x.StartsWith("["))
+                .SingleOrDefault(x => x.StartsWithOrdinalIgnoreCase("url = "))
+                ?.Split('=')[1];
             if (url == null)
                 return null;
 
             var (endpoint, identifier) = ParseUrl(url);
 
             return new GitRepository(
-                    endpoint,
-                    identifier,
-                    rootDirectory,
-                    head,
-                    branch ?? (branchMatch.Success ? branchMatch.Groups["branch"].Value : null));
+                endpoint,
+                identifier,
+                rootDirectory,
+                head,
+                branch ?? (branchMatch.Success ? branchMatch.Groups["branch"].Value : null));
         }
 
-        private static (string endpoint, string identifier) ParseUrl (string url)
+        private static (string endpoint, string identifier) ParseUrl(string url)
         {
             var match = new[]
                         {
                             @"git@(?<endpoint>[^:/]+?)(:|/)(?<identifier>.+?)/?(\.git)?$",
                             @"^https://(?<endpoint>[^/]+?)/(?<identifier>.+?)/?(\.git)?$"
                         }
-                    .Select(x => Regex.Match(url.Trim(), x))
-                    .FirstOrDefault(x => x.Success);
+                .Select(x => Regex.Match(url.Trim(), x))
+                .FirstOrDefault(x => x.Success);
             ControlFlow.Assert(match != null, $"Url '{url}' could not be parsed.");
 
             return (match.Groups["endpoint"].Value, match.Groups["identifier"].Value);
         }
 
-        public GitRepository (
+        public GitRepository(
             string endpoint,
             string identifier,
             string localDirectory = null,
@@ -111,7 +114,7 @@ namespace Nuke.Common.Git
         /// <summary>Url in the form of <c>git@endpoint:identifier.git</c></summary>
         public string SshUrl => $"git@{Endpoint}:{Identifier}.git";
 
-        public override string ToString ()
+        public override string ToString()
         {
             return HttpsUrl.TrimEnd(".git");
         }

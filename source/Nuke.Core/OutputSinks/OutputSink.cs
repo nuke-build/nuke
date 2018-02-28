@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -11,24 +11,24 @@ using Nuke.Core.Execution;
 
 namespace Nuke.Core.OutputSinks
 {
-    public interface IOutputSink
+    internal interface IOutputSink
     {
-        void Write (string text);
-        IDisposable WriteBlock (string text);
+        void Write(string text);
+        IDisposable WriteBlock(string text);
 
-        void Trace (string text);
-        void Info (string text);
-        void Warn (string text, string details = null);
-        void Error (string text, string details = null);
+        void Trace(string text);
+        void Info(string text);
+        void Warn(string text, string details = null);
+        void Error(string text, string details = null);
 
-        void WriteSummary (IReadOnlyCollection<TargetDefinition> executionList);
+        void WriteSummary(IReadOnlyCollection<TargetDefinition> executionList);
     }
 
     internal static class OutputSink
     {
-        internal static IOutputSink Instance { get; set; } = GetOutputSink(EnvironmentInfo.GetActualHostType());
+        internal static IOutputSink Instance { get; } = GetOutputSink(EnvironmentInfo.HostType);
 
-        internal static IOutputSink GetOutputSink (HostType hostType)
+        internal static IOutputSink GetOutputSink(HostType hostType)
         {
             switch (hostType)
             {
@@ -42,20 +42,20 @@ namespace Nuke.Core.OutputSinks
                     return new ConsoleOutputSink();
             }
         }
-        
+
         private static readonly List<Tuple<LogLevel, string>> s_severeMessages = new List<Tuple<LogLevel, string>>();
 
-        public static void Write (string text)
+        public static void Write(string text)
         {
             Instance.Write(text);
         }
 
-        public static IDisposable WriteBlock (string text)
+        public static IDisposable WriteBlock(string text)
         {
             return Instance.WriteBlock(text);
         }
 
-        public static void Trace (string text)
+        public static void Trace(string text)
         {
             if (NukeBuild.Instance?.LogLevel > LogLevel.Trace)
                 return;
@@ -63,7 +63,7 @@ namespace Nuke.Core.OutputSinks
             Instance.Trace(text);
         }
 
-        public static void Info (string text)
+        public static void Info(string text)
         {
             if (NukeBuild.Instance?.LogLevel > LogLevel.Information)
                 return;
@@ -71,7 +71,7 @@ namespace Nuke.Core.OutputSinks
             Instance.Info(text);
         }
 
-        public static void Warn (string text, string details = null)
+        public static void Warn(string text, string details = null)
         {
             if (NukeBuild.Instance?.LogLevel > LogLevel.Warning)
                 return;
@@ -81,14 +81,14 @@ namespace Nuke.Core.OutputSinks
             Instance.Warn(text, details);
         }
 
-        public static void Error (string text, string details = null)
+        public static void Error(string text, string details = null)
         {
             s_severeMessages.Add(Tuple.Create(LogLevel.Error, text));
 
             Instance.Error(text, details);
         }
 
-        public static void WriteSummary (IReadOnlyCollection<TargetDefinition> executionList)
+        public static void WriteSummary(IReadOnlyCollection<TargetDefinition> executionList)
         {
             Write(string.Empty);
 

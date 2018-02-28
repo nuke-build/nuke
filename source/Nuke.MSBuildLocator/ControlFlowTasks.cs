@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -16,7 +16,10 @@ namespace Nuke.MSBuildLocator
     {
         [AssertionMethod]
         [ContractAnnotation("condition: false => halt")]
-        public static void Assert ([AssertionCondition(AssertionConditionType.IS_TRUE)] bool condition, string text)
+        public static void Assert(
+            [AssertionCondition(AssertionConditionType.IS_TRUE)]
+            bool condition,
+            string text)
         {
             if (!condition)
                 throw new Exception($"Assertion \"{text}\" failed.");
@@ -24,7 +27,10 @@ namespace Nuke.MSBuildLocator
 
         [AssertionMethod]
         [ContractAnnotation("obj: null => halt")]
-        public static T NotNull<T> ([AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull] this T obj, string text = null)
+        public static T NotNull<T>(
+            [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
+            this T obj,
+            string text = null)
             where T : class
         {
             if (obj == null)

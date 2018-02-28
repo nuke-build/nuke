@@ -1,4 +1,14 @@
 
+Applies to: package publishing &bullet; Supported versions: all; 4.1.0+ required for nuget.org
+ImportantTo push packages to nuget.org you must use nuget.exe v4.1.0+, which implements the required NuGet protocols.
+
+Pushes a package to a package source and publishes it.
+NuGet&#39;s default configuration is obtained by loading %AppData%\NuGet\NuGet.Config, then loading any Nuget.Config or .nuget\Nuget.Config files starting from root of drive and ending in current directory (see Configuring NuGet Behavior)
+Usage
+nuget push &lt;packagePath&gt; [options]
+where &lt;packagePath&gt; identifies the package to push to the server.
+Options
+
 
 
 Option
@@ -12,7 +22,7 @@ The API key for the target repository. If not present,  the one specified in %Ap
 
 
 ConfigFile
-(2.5+) The NuGet configuration file to apply. If not specified, %AppData%\NuGet\NuGet.Config is used.
+The NuGet configuration file to apply. If not specified, %AppData%\NuGet\NuGet.Config is used.
 
 
 DisableBuffering
@@ -36,7 +46,7 @@ NoSymbols
 
 
 Source
-Specifies the server URL. With NuGet 2.5+, NuGet will identify a UNC or local folder source and simply copy the file there instead of pushing it using HTTP.  Also, starting with NuGet 3.4.2, this is a mandatory parameter unless the NuGet.Config file specifies a DefaultPushSource value.
+Specifies the server URL. NuGet identifies a UNC or local folder source and simply copies the file there instead of pushing it using HTTP.  Also, starting with NuGet 3.4.2, this is a mandatory parameter unless the NuGet.Config file specifies a DefaultPushSource value (see Configuring NuGet behavior).
 
 
 SymbolSource
@@ -52,6 +62,24 @@ Specifies the timeout, in seconds, for pushing to a server. The default is 300 s
 
 
 Verbosity
-Specifies the amount of detail displayed in the output: normal, quiet, detailed (2.5+).
+Specifies the amount of detail displayed in the output: normal, quiet, detailed.
 
 
+
+Also see Environment variables
+Examples
+nuget push foo.nupkg
+
+nuget push foo.symbols.nupkg
+
+nuget push foo.nupkg -Timeout 360
+
+nuget push *.nupkg
+
+nuget.exe push -source \\mycompany\repo\ mypackage.1.0.0.nupkg
+
+nuget push foo.nupkg 4003d786-cc37-4004-bfdf-c4f3e8ef9b3a -Source https://api.nuget.org/v3/index.json
+
+nuget push foo.nupkg 4003d786-cc37-4004-bfdf-c4f3e8ef9b3a
+
+nuget push foo.nupkg 4003d786-cc37-4004-bfdf-c4f3e8ef9b3a -s https://customsource/

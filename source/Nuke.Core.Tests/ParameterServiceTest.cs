@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -15,11 +15,11 @@ namespace Nuke.Core.Tests
 {
     public class ParameterServiceTest
     {
-        private ParameterService GetService (string[] commandLineArguments = null, IDictionary environmentVariables = null)
+        private ParameterService GetService(string[] commandLineArguments = null, IDictionary environmentVariables = null)
         {
             commandLineArguments = commandLineArguments ?? new string[0];
             environmentVariables = environmentVariables ?? new Dictionary<string, string>();
-            
+
             return new ParameterService(() => commandLineArguments, () => environmentVariables);
         }
 
@@ -28,7 +28,7 @@ namespace Nuke.Core.Tests
         [InlineData("AMOUNT", typeof(int), 5)]
         [InlineData("noLogo", typeof(bool), true)]
         [InlineData("nodeps", typeof(bool), false)]
-        public void TestConversion (string argument, Type destinationType, object expectedValue)
+        public void TestConversion(string argument, Type destinationType, object expectedValue)
         {
             GetService(
                 new[]
@@ -53,7 +53,7 @@ namespace Nuke.Core.Tests
         [InlineData(typeof(int?), null)]
         [InlineData(typeof(string), null)]
         [InlineData(typeof(string[]), null)]
-        public void TestNotSupplied (Type destinationType, object expectedValue)
+        public void TestNotSupplied(Type destinationType, object expectedValue)
         {
             GetService().GetCommandLineArgument("notsupplied", destinationType).Should().Be(expectedValue);
         }
@@ -65,7 +65,7 @@ namespace Nuke.Core.Tests
         [InlineData("switch3", typeof(bool), false)]
         [InlineData("notsupplied1", typeof(bool), false)]
         [InlineData("notsupplied2", typeof(int?), null)]
-        public void TestEnvironmentVariables (string parameter, Type destinationType, object expectedValue)
+        public void TestEnvironmentVariables(string parameter, Type destinationType, object expectedValue)
         {
             GetService(
                 new[]
@@ -84,7 +84,7 @@ namespace Nuke.Core.Tests
         }
 
         [Fact]
-        public void TestConversionSpecial ()
+        public void TestConversionSpecial()
         {
             var dateTime = DateTime.Now;
             var guid = Guid.NewGuid();
@@ -102,7 +102,7 @@ namespace Nuke.Core.Tests
         }
 
         [Fact]
-        public void TestConversionCollections ()
+        public void TestConversionCollections()
         {
             var service = GetService(
                 new[]

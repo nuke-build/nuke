@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -28,7 +28,7 @@ namespace Nuke.Common.Tests
         [InlineData("git@git.test.org/test/", "git.test.org", "test")]
         [InlineData("git@git.test.org/test.git", "git.test.org", "test")]
         [InlineData("ssh://git@git.test.org/test.git", "git.test.org", "test")]
-        public void FromUrlTest (string url, string endpoint, string identifier)
+        public void FromUrlTest(string url, string endpoint, string identifier)
         {
             var repository = GitRepository.FromUrl(url);
             repository.Endpoint.Should().Be(endpoint);
@@ -36,7 +36,7 @@ namespace Nuke.Common.Tests
         }
 
         [Fact]
-        public void FromDirectoryTest ()
+        public void FromDirectoryTest()
         {
             var repository = GitRepository.FromLocalDirectory(Directory.GetCurrentDirectory()).NotNull();
             repository.Endpoint.Should().NotBeNullOrEmpty();
@@ -46,12 +46,12 @@ namespace Nuke.Common.Tests
         }
 
         [Fact]
-        public void GitHubRepositoryFromLocalDirectoryTest ()
+        public void GitHubRepositoryFromLocalDirectoryTest()
         {
             var rootDirectory = (PathConstruction.AbsolutePath) Directory.GetCurrentDirectory() / ".." / ".." / ".." / ".." / "..";
             var repository = GitRepository.FromLocalDirectory(rootDirectory, "master").NotNull();
 
-            var rawUrl = $"https://raw.githubusercontent.com/{repository.Identifier}/blob/{repository.Branch}";
+            var rawUrl = $"https://raw.githubusercontent.com/{repository.Identifier}/{repository.Branch}";
             var blobUrl = $"https://github.com/{repository.Identifier}/blob/{repository.Branch}";
             var treeUrl = $"https://github.com/{repository.Identifier}/tree/{repository.Branch}";
 
@@ -68,7 +68,7 @@ namespace Nuke.Common.Tests
         }
 
         [Fact]
-        public void GitHubRepositoryFromUrlTest ()
+        public void GitHubRepositoryFromUrlTest()
         {
             var repository = GitRepository.FromUrl("https://github.com/nuke-build/nuke", "dev");
 

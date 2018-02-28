@@ -1,17 +1,15 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
-using Nuke.Core.BuildServers;
 using Nuke.Core.Execution;
 using Nuke.Core.IO;
-using Nuke.Core.OutputSinks;
-using static Nuke.Core.EnvironmentInfo;
 
 // ReSharper disable VirtualMemberNeverOverridden.Global
 
@@ -50,11 +48,13 @@ namespace Nuke.Core
         /// Executes the build. The provided expression defines the <em>default</em> target that is invoked,
         /// if no targets have been specified via command-line arguments.
         /// </summary>
-        protected static int Execute<T> (Expression<Func<T, Target>> defaultTargetExpression)
+        protected static int Execute<T>(Expression<Func<T, Target>> defaultTargetExpression)
             where T : NukeBuild
         {
             return BuildExecutor.Execute(defaultTargetExpression);
         }
+
+        internal IReadOnlyCollection<TargetDefinition> TargetDefinitions { get; set; }
 
         /// <summary>
         /// Logging verbosity while building. Default is <see cref="Core.Verbosity.Normal"/>.
@@ -63,28 +63,22 @@ namespace Nuke.Core
         public Verbosity Verbosity { get; set; } = Verbosity.Normal;
 
         /// <summary>
-        /// Targets to execute. Default is <em>Default</em>, which falls back to the target specified in <c>static int Main</c> with <see cref="Execute{T}"/>.
-        /// </summary>
-        [Parameter("Target(s) to execute. Default is '{default_target}'.", Separator = "+")]
-        public string[] Target { get; } = { "Default" };
-
-        /// <summary>
         /// Host for execution. Default is <em>automatic</em>.
         /// </summary>
         [Parameter("Host for execution. Default is 'automatic'.")]
-        public HostType Host { get; } = GetActualHostType();
+        public HostType Host { get; } = EnvironmentInfo.HostType;
 
         /// <summary>
         /// Configuration to build. Default is <em>Debug</em> (local) or <em>Release</em> (server).
         /// </summary>
         [Parameter("Configuration to build. Default is 'Debug' (local) or 'Release' (server).")]
-        public string Configuration { get; } = IsServerBuild ? "Release" : "Debug";
+        public string Configuration { get; } = EnvironmentInfo.IsLocalBuild ? "Debug" : "Release";
 
         /// <summary>
         /// Disables execution of target dependencies.
         /// </summary>
-        [Parameter("Disables execution of target dependencies.", Name = "NoDeps")]
-        public bool NoDependencies { get; }
+        [Parameter("Disables execution of dependent targets.", Name = "Skip")]
+        public string[] SkippedTargets { get; } = EnvironmentInfo.SkippedTargets;
 
         /// <summary>
         /// Disables bootstrapper initialization.
@@ -111,13 +105,15 @@ namespace Nuke.Core
         /// Shows the help text for this build assembly.
         /// </summary>
         [Parameter("Shows the help text for this build assembly.")]
-        [CanBeNull]
-        public string[] Help { get; }
+        public bool Help { get; }
 
-        public static bool IsLocalBuild => Instance.Host == HostType.Console;
-        public static bool IsServerBuild => !IsLocalBuild;
+        public bool IsLocalBuild { get; } = EnvironmentInfo.IsLocalBuild;
+        public bool IsServerBuild { get; } = !EnvironmentInfo.IsLocalBuild;
 
         public LogLevel LogLevel => (LogLevel) Verbosity;
+
+        public string[] InvokedTargets { get; } = EnvironmentInfo.InvokedTargets;
+        public string[] ExecutingTargets { get; }
 
         /// <summary>
         /// Gets the full path to the root directory where the <c>.nuke</c> file is located.
@@ -126,7 +122,7 @@ namespace Nuke.Core
         {
             get
             {
-                var buildAssemblyFile = BuildAssembly.Location.NotNull("buildAssemblyFile != null");
+                var buildAssemblyFile = EnvironmentInfo.BuildAssembly.Location.NotNull("buildAssemblyFile != null");
                 var buildAssemblyDirectory = Directory.GetParent(buildAssemblyFile);
                 var rootDirectory = FileSystemTasks.SearchDirectory(buildAssemblyDirectory, x => x.GetFiles(c_configFile).Any());
                 ControlFlow.Assert(rootDirectory != null,

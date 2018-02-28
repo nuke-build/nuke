@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -8,7 +8,6 @@ using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.Build.Framework;
 using Nuke.Common.Git;
-using Nuke.Common.IO;
 using Nuke.Core;
 using Nuke.Core.IO;
 
@@ -33,7 +32,7 @@ namespace Nuke.CodeGeneration
         [CanBeNull]
         public string BaseNamespace { get; set; }
 
-        public bool Execute ()
+        public bool Execute()
         {
             var metadataFiles = MetadataFiles.Select(x => x.GetMetadata("Fullpath")).ToList();
             if (!MetadataFiles.Any())
@@ -47,12 +46,12 @@ namespace Nuke.CodeGeneration
             }
 
             new CodeGenerator(
-                        metadataFiles,
-                        BaseDirectory,
-                        UseNestedNamespaces,
-                        BaseNamespace,
-                        GitRepository.FromLocalDirectory(BaseDirectory))
-                    .Execute();
+                    metadataFiles,
+                    BaseDirectory,
+                    UseNestedNamespaces,
+                    BaseNamespace,
+                    GitRepository.FromLocalDirectory(BaseDirectory))
+                .Execute();
 
             return true;
         }

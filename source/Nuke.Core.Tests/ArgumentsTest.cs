@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,25 +13,25 @@ namespace Nuke.Core.Tests
 {
     public class ArgumentsTest
     {
-        private void Assert (Func<Arguments, Arguments> transform, string expected)
+        private void Assert(Func<Arguments, Arguments> transform, string expected)
         {
             Assert(x => transform(x).ToString(), expected);
         }
 
-        private void Assert (Func<Arguments, string> transform, string expected)
+        private void Assert(Func<Arguments, string> transform, string expected)
         {
             transform(new Arguments()).Should().Be(expected);
         }
 
         [Fact]
-        public void TestBoolean ()
+        public void TestBoolean()
         {
             Assert(x => x.Add("-unconditional"), "-unconditional");
             Assert(x => x.Add("-do-not-add", condition: false), "");
         }
 
         [Fact]
-        public void TestValues ()
+        public void TestValues()
         {
             Assert(x => x.Add("-arg {value}", "custom-value"), "-arg custom-value");
             Assert(x => x.Add("-arg {value}", (int?) null), "");
@@ -39,21 +39,21 @@ namespace Nuke.Core.Tests
         }
 
         [Fact]
-        public void TestSecret ()
+        public void TestSecret()
         {
             Assert(x => x.Add("-arg {value}", "secret", secret: true).RenderForOutput(), "-arg [hidden]");
             Assert(x => x.Add("-arg {value}", "secret", secret: true).RenderForExecution(), "-arg secret");
         }
 
         [Fact]
-        public void TestList ()
+        public void TestList()
         {
             var files =
-                    new[]
-                    {
-                        @"C:\new folder\file.txt",
-                        @"C:\temp\file.txt"
-                    };
+                new[]
+                {
+                    @"C:\new folder\file.txt",
+                    @"C:\temp\file.txt"
+                };
 
             Assert(x => x.Add(
                     "/files {value}",
@@ -76,17 +76,17 @@ namespace Nuke.Core.Tests
         }
 
         [Fact]
-        public void TestDictionary ()
+        public void TestDictionary()
         {
             var dictionary =
-                    new Dictionary<string, string>
-                    {
-                        { "a", @"C:\new folder\file.txt" },
-                        { "b", "value" },
-                        { "c", null },
-                        { "d", "1;2;3" },
-                        { "e", "x=z" }
-                    };
+                new Dictionary<string, string>
+                {
+                    { "a", @"C:\new folder\file.txt" },
+                    { "b", "value" },
+                    { "c", null },
+                    { "d", "1;2;3" },
+                    { "e", "x=z" }
+                };
 
             Assert(x => x.Add(
                     "/p:{value}",
@@ -104,15 +104,15 @@ namespace Nuke.Core.Tests
         }
 
         [Fact]
-        public void TestLookup ()
+        public void TestLookup()
         {
             var lookup =
-                    new LookupTable<string, string>(
-                        new Dictionary<string, List<string>>
-                        {
-                            { "category", new List<string> { "integration test", "web tests" } },
-                            { "kind", new List<string> { "performance", "smoke" } }
-                        });
+                new LookupTable<string, string>(
+                    new Dictionary<string, List<string>>
+                    {
+                        { "category", new List<string> { "integration test", "web tests" } },
+                        { "kind", new List<string> { "performance", "smoke" } }
+                    });
 
             Assert(x => x.Add(
                     "-trait {value}",
@@ -130,7 +130,7 @@ namespace Nuke.Core.Tests
         }
 
         [Fact]
-        public void TestFilter ()
+        public void TestFilter()
         {
             Assert(x => x.Add("-arg {value}", "secret", secret: true).Filter("foosecretbar"), "foo[hidden]bar");
         }
