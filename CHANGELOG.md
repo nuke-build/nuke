@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Fixed `NuGetSettings` to resolve tool path from `NuGet.CommandLine` package.
 - Fixed `Invoke-WebRequest` when InternetExplorer's first-launch configuration was not completed.
 - Fixed resolution of relative paths to be minimal.
+- Fixed `PathConstruction.GetRelativePath` to work with UNIX paths.
 
 ## [0.2.0] / 2018-02-26
 - Deprecated `Target` parameter in favor of passing targets as first argument to the bootstrapping scripts.

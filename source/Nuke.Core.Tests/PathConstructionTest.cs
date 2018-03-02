@@ -13,6 +13,27 @@ namespace Nuke.Core.Tests
     public class PathConstructionTest
     {
         [Theory]
+        [InlineData("C:\\A\\B\\C", "C:\\A\\B", "..")]
+        [InlineData("C:\\A\\B\\", "C:\\A\\B\\C", "C")]
+        [InlineData("C:\\A\\B\\C", "C:\\A\\B\\D\\E", "..\\D\\E")]
+        [InlineData("/bin/etc", "/bin/tmp", "../tmp")]
+        public void TestGetRelativePath(string basePath, string destinationPath, string expected)
+        {
+            GetRelativePath(basePath, destinationPath).Should().Be(expected);
+        }
+
+        [Theory]
+        [InlineData("C:\\A\\B\\C", "C:\\A\\B", false)]
+        [InlineData("C:\\A\\B", "C:\\A\\B\\C\\", true)]
+        [InlineData("C:\\A\\B\\..\\C", "C:\\A\\B\\..\\C\\D", true)]
+        [InlineData("/bin/etc", "/bin/etc/../etc/foo", true)]
+        [InlineData("/bin/etc", "/bin/etc/../bar/foo", false)]
+        public void TestIsDescendantPath(string basePath, string destinationPath, bool expected)
+        {
+            IsDescendantPath(basePath, destinationPath).Should().Be(expected);
+        }
+
+        [Theory]
         [InlineData("\\\\server", "\\\\server")]
         [InlineData("\\\\server\\", "\\\\server")]
         [InlineData("\\\\server\\foo\\bar", "\\\\server")]
@@ -46,7 +67,6 @@ namespace Nuke.Core.Tests
         {
             HasPathRoot(input).Should().BeFalse();
         }
-
 
         [Theory]
         [InlineData("foo", "bar", '/', "foo/bar")]

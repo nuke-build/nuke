@@ -61,6 +61,7 @@ namespace Nuke.Common.Tests
 
             repository.GetGitHubBrowseUrl(rootDirectory / "LICENSE").Should().Be($"{blobUrl}/LICENSE");
             repository.GetGitHubBrowseUrl(rootDirectory / "bootstrapping").Should().Be($"{treeUrl}/bootstrapping");
+            repository.GetGitHubBrowseUrl(rootDirectory / "bootstrapping" / "setup.sh").Should().Be($"{blobUrl}/bootstrapping/setup.sh");
 
             repository.GetGitHubBrowseUrl("directory", itemType: GitHubItemType.Directory).Should().Be($"{treeUrl}/directory");
             repository.GetGitHubBrowseUrl("dir/file", itemType: GitHubItemType.File).Should().Be($"{blobUrl}/dir/file");

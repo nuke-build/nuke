@@ -54,32 +54,27 @@ namespace Nuke.Core.IO
         [Pure]
         public static string GetRelativePath(string basePath, string destinationPath, bool normalize = true)
         {
-            var relativePath = Uri.UnescapeDataString(GetUri(basePath).MakeRelativeUri(GetUri(destinationPath)).ToString()).TrimEnd('/');
+            basePath = NormalizePath(basePath);
+            destinationPath = NormalizePath(destinationPath);
 
-            if (normalize && Path.IsPathRooted(basePath))
-                relativePath = relativePath.Replace(oldChar: '/', newChar: Path.DirectorySeparatorChar);
+            var separator = GetSeparator(basePath);
+            ControlFlow.Assert(separator == GetSeparator(destinationPath), "Separators do not match.");
+            ControlFlow.Assert(!IsWinRoot(basePath) || Path.GetPathRoot(basePath) == Path.GetPathRoot(destinationPath), "Root must be same.");
 
-            return relativePath;
+            var baseParts = basePath.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);
+            var destinationParts = destinationPath.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);
+
+            var sameParts = baseParts.Zip(destinationParts, (a, b) => new { Base = a, Destination = b }).ToList()
+                .Where(x => x.Base.EqualsOrdinalIgnoreCase(x.Destination))
+                .Count();
+            return Enumerable.Repeat("..", baseParts.Count() - sameParts).ToList()
+                .Concat(destinationParts.Skip(sameParts).ToList()).Join(separator);
         }
 
         [Pure]
         public static bool IsDescendantPath(string basePath, string destinationPath)
         {
-            return GetUri(basePath).IsBaseOf(GetUri(destinationPath));
-        }
-
-        private static Uri GetUri(string path)
-        {
-            try
-            {
-                return new Uri(path.TrimEnd('/') + '/');
-            }
-            catch (Exception ex)
-            {
-                Logger.Warn(path);
-                Logger.Warn(ex.Message);
-                throw;
-            }
+            return NormalizePath(destinationPath).StartsWith(NormalizePath(basePath));
         }
 
         [Pure]

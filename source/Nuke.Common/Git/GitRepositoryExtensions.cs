@@ -33,8 +33,8 @@ namespace Nuke.Common.Git
             ControlFlow.Assert(repository.IsGitHubRepository(), "repository.IsGitHubRepository()");
 
             branch = branch ?? repository.Branch.NotNull("repository.Branch != null");
-            var fileRelative = GetRepositoryRelativePath(file, repository);
-            return $"https://raw.githubusercontent.com/{repository.Identifier}/{branch}/{fileRelative}";
+            var relativePath = GetRepositoryRelativePath(file, repository);
+            return $"https://raw.githubusercontent.com/{repository.Identifier}/{branch}/{relativePath}";
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Nuke.Common.Git
         private static string GetMethod([CanBeNull] string relativePath, GitHubItemType itemType, GitRepository repository)
         {
             var absolutePath = repository.LocalDirectory != null && relativePath != null
-                ? Path.Combine(repository.LocalDirectory, relativePath)
+                ? PathConstruction.NormalizePath(Path.Combine(repository.LocalDirectory, relativePath))
                 : null;
 
             if (itemType == GitHubItemType.Directory || Directory.Exists(absolutePath) || relativePath == null)
@@ -84,7 +84,7 @@ namespace Nuke.Common.Git
 
             ControlFlow.Assert(PathConstruction.IsDescendantPath(repository.LocalDirectory.NotNull("repository.LocalDirectory != null"), path),
                 $"PathConstruction.IsDescendantPath({repository.LocalDirectory}, {path})");
-            return PathConstruction.GetRelativePath(repository.LocalDirectory, path, normalize: false);
+            return PathConstruction.GetRelativePath(repository.LocalDirectory, path).Replace(oldChar: '\\', newChar: '/');
         }
     }
 }
