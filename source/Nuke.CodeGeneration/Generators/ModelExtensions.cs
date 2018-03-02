@@ -8,7 +8,6 @@ using System.Text.RegularExpressions;
 using Nuke.CodeGeneration.Model;
 using Nuke.Core;
 using Nuke.Core.Utilities;
-using System.Collections.Generic;
 
 namespace Nuke.CodeGeneration.Generators
 {

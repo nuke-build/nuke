@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Nuke.Core.BuildServers;
 using Nuke.Core.OutputSinks;
 using Nuke.Core.Utilities;
 

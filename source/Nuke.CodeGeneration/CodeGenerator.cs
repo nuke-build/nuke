@@ -19,7 +19,6 @@ using Nuke.CodeGeneration.Generators;
 using Nuke.CodeGeneration.Model;
 using Nuke.Common.Git;
 using Nuke.Core;
-using Nuke.Core.IO;
 using Nuke.Core.Utilities;
 
 namespace Nuke.CodeGeneration

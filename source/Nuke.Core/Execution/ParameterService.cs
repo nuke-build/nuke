@@ -75,6 +75,7 @@ namespace Nuke.Core.Execution
                     new[] { ex.Message, "Command-line arguments were:" }
                         .Concat(args.Select((x, i) => $"  [{i}] = {x}"))
                         .JoinNewLine());
+                // ReSharper disable once HeuristicUnreachableCode
                 return null;
             }
         }
@@ -100,6 +101,7 @@ namespace Nuke.Core.Execution
             catch (Exception ex)
             {
                 ControlFlow.Fail(new[] { ex.Message, "Environment variable was:", value }.JoinNewLine());
+                // ReSharper disable once HeuristicUnreachableCode
                 return null;
             }
         }
@@ -123,6 +125,7 @@ namespace Nuke.Core.Execution
             catch (Exception ex)
             {
                 ControlFlow.Fail(new[] { $"Resolving parameter '{parameterName}' failed.", ex.Message }.JoinNewLine());
+                // ReSharper disable once HeuristicUnreachableCode
                 return null;
             }
         }
@@ -172,6 +175,7 @@ namespace Nuke.Core.Execution
             catch
             {
                 ControlFlow.Fail($"Value '{value}' could not be converted to '{GetName(destinationType)}'.");
+                // ReSharper disable once HeuristicUnreachableCode
                 return null;
             }
         }

@@ -4,7 +4,6 @@
 
 using System;
 using System.Linq;
-using Nuke.Common;
 using Nuke.Common.ChangeLog;
 using Nuke.Common.Git;
 using Nuke.Common.Gitter;

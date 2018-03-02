@@ -9,7 +9,6 @@ using FluentAssertions;
 using Nuke.Common.Git;
 using Nuke.Core;
 using Nuke.Core.IO;
-using Nuke.Core.Utilities;
 using Xunit;
 
 namespace Nuke.Common.Tests

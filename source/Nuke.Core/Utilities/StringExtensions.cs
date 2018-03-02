@@ -35,7 +35,7 @@ namespace Nuke.Core.Utilities
             if (string.IsNullOrWhiteSpace(str))
                 return string.Empty;
 
-            return str.Replace("{", "{{").Replace("}", "}}");
+            return str.NotNull().Replace("{", "{{").Replace("}", "}}");
         }
 
         public static string DoubleQuoteIfNeeded([CanBeNull] this string str)
@@ -62,7 +62,7 @@ namespace Nuke.Core.Utilities
             if (string.IsNullOrWhiteSpace(str))
                 return string.Empty;
 
-            return $"\"{str.Replace("\"", "\\\"")}\"";
+            return $"\"{str.NotNull().Replace("\"", "\\\"")}\"";
         }
 
         public static string SingleQuoteIfNeeded([CanBeNull] this string str)
@@ -89,7 +89,7 @@ namespace Nuke.Core.Utilities
             if (string.IsNullOrWhiteSpace(str))
                 return string.Empty;
 
-            return $"'{str.Replace("'", "\\'")}'";
+            return $"'{str.NotNull().Replace("'", "\\'")}'";
         }
 
         public static bool IsDoubleQuoted(this string str)

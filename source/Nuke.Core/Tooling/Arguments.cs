@@ -140,7 +140,7 @@ namespace Nuke.Core.Tooling
 
             if (separator.HasValue)
                 foreach (var list in lookup)
-                    _arguments.Add(argumentFormat, FormatLookup(list.Key, FormatMultiple(list, x => Format(x), separator.Value, quoteMultiple)));
+                    _arguments.Add(argumentFormat, FormatLookup(list.Key, FormatMultiple(list, x => Format(x), separator.NotNull().Value, quoteMultiple)));
             else
                 foreach (var list in lookup)
                     _arguments.AddRange(argumentFormat, list.Select(x => FormatLookup(list.Key, Format(x))));

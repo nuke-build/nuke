@@ -80,7 +80,6 @@ namespace Nuke.Core.Tests
             Assert.Throws<Exception>(() => Combine(path1, path2, separator)).Message.Should().Be($"Assertion failed: {expected}");
         }
 
-
         [Theory]
         [InlineData(null, null, "")]
         [InlineData("", null, "")]
@@ -112,7 +111,6 @@ namespace Nuke.Core.Tests
         {
             Assert.Throws<Exception>(() => NormalizePath(input, separator)).Message.Should().Be($"Assertion failed: {message}");
         }
-
 
         [Theory]
         [InlineData(new object[] { "foo", "bar" }, "foo\\bar", "foo/bar")]

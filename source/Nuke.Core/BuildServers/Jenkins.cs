@@ -3,7 +3,6 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using JetBrains.Annotations;
 using static Nuke.Core.EnvironmentInfo;
 
 namespace Nuke.Core.BuildServers

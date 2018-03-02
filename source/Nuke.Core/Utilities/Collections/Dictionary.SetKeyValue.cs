@@ -13,7 +13,7 @@ namespace Nuke.Core.Utilities.Collections
     {
         public static IDictionary<TKey, TValue> SetKeyValue<TKey, TValue>(
             this IDictionary<TKey, TValue> dictionary,
-            [CanBeNull] TKey key,
+            TKey key,
             [CanBeNull] TValue value)
         {
             dictionary[key] = value;

@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using NuGet.Versioning;
@@ -13,6 +12,7 @@ using Nuke.Common.Git;
 using Nuke.Core;
 using Nuke.Core.IO;
 using Nuke.Core.Utilities;
+// ReSharper disable ArgumentsStyleLiteral
 
 namespace Nuke.Common.ChangeLog
 {

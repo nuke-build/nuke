@@ -3,10 +3,8 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Nuke.Core.Utilities.Collections;
 
 namespace Nuke.Core.Execution
 {

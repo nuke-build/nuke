@@ -3,13 +3,12 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using Humanizer;
 using JetBrains.Annotations;
-using Nuke.Core.Utilities;
+using Nuke.Core;
 
 namespace Nuke.CodeGeneration.Generators
 {
@@ -64,7 +63,7 @@ namespace Nuke.CodeGeneration.Generators
         public static string SingleQuote(this char? text)
         {
             Trace.Assert(text.HasValue, "text.HasValue");
-            return $"\'{text.Value}\'";
+            return $"\'{text.NotNull().Value}\'";
         }
 
         public static string ToSeeCref(this string reference)

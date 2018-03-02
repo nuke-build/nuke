@@ -5,7 +5,6 @@
 using System;
 using System.Linq;
 using Nuke.Core;
-using Nuke.Core.Utilities;
 
 namespace Nuke.Common.Tools.Xunit
 {
