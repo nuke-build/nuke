@@ -36,14 +36,17 @@ namespace Nuke.Common.Tests
                     .SetProjectFile(projectFile)
                     .SetTargetPlatform(MSBuildTargetPlatform.MSIL)
                     .SetConfiguration("Release")
+                    .DisableNodeReuse()
                     .EnableNoLogo(),
-                $"{projectFile} /nologo /p:Platform=AnyCPU /p:Configuration=Release");
+                $"{projectFile} /nodeReuse:False /nologo /p:Platform=AnyCPU /p:Configuration=Release");
 
             Assert<MSBuildSettings>(x => x
                     .SetProjectFile(solutionFile)
                     .SetTargetPlatform(MSBuildTargetPlatform.MSIL)
+                    .EnableNodeReuse()
+                    .DisableNoLogo()
                     .ToggleRunCodeAnalysis(),
-                $"{solutionFile} /p:Platform=\"Any CPU\" /p:RunCodeAnalysis=True");
+                $"{solutionFile} /nodeReuse:True /p:Platform=\"Any CPU\" /p:RunCodeAnalysis=True");
         }
 
         [Fact]

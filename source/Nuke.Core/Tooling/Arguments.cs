@@ -18,6 +18,7 @@ namespace Nuke.Core.Tooling
         string RenderForOutput();
     }
 
+    // TODO: extract {value} and {key} into constants
     public sealed class Arguments : IArguments
     {
         private const string c_hiddenString = "[hidden]";
@@ -26,15 +27,17 @@ namespace Nuke.Core.Tooling
         private readonly List<string> _secrets = new List<string>();
         private readonly LookupTable<string, string> _arguments = new LookupTable<string, string>(StringComparer.OrdinalIgnoreCase);
 
-        public Arguments Add(string argument, bool? condition = true)
+        public Arguments Add(string argumentFormat, bool? condition = true)
         {
-            return Add(argument, condition.HasValue && condition.Value ? new object() : null);
+            return condition.HasValue && (condition.Value || argumentFormat.Contains("{value}"))  
+                ? Add(argumentFormat, (object) condition.Value) 
+                : this;
         }
 
         public Arguments Add<T>(string argumentFormat, T? value, char? disallowed = null, bool secret = false)
             where T : struct
         {
-            return Add(argumentFormat, value.HasValue ? (object) value.Value : null, disallowed, secret);
+            return value.HasValue ? Add(argumentFormat, value.Value, disallowed, secret) : this;
         }
 
         public Arguments Add(string argumentFormat, [CanBeNull] object value, char? disallowed = null, bool secret = false)
