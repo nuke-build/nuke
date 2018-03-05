@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Fixed resolution of relative paths to be minimal.
 - Fixed `PathConstruction.GetRelativePath` to work with UNIX paths.
 - Fixed argument formatting for boolean values.
+- Fixed enumeration of modified collection.
 
 ## [0.2.0] / 2018-02-26
 - Deprecated `Target` parameter in favor of passing targets as first argument to the bootstrapping scripts.

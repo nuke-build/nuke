@@ -69,10 +69,9 @@ namespace Nuke.Core.Execution
             var transitiveMembers = members
                 .SelectMany(x => x.GetCustomAttributes<InjectionAttributeBase>())
                 .SelectMany(x => x.GetType().GetMembers(ReflectionService.All))
-                .Where(x => x.GetCustomAttributes<InjectionAttributeBase>().Any());
-            members.AddRange(transitiveMembers);
+                .Where(x => x.GetCustomAttributes<InjectionAttributeBase>().Any()).ToList();
 
-            return members;
+            return members.Concat(transitiveMembers).ToList();
         }
     }
 }
