@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [0.2.10] / 2018-03-05
 - Fixed handling of `Graph` switch.
 - Fixed logging in Nuke.CodeGenerator.
 - Fixed temporary directory path in setup and bootstrapping scripts.
@@ -34,5 +36,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git.
 - Fixed background color in console output.
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.2.0...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.2.10...HEAD
+[0.2.10]: https://github.com/nuke-build/nuke/compare/0.2.0...0.2.10
 [0.2.0]: https://github.com/nuke-build/nuke/tree/0.2.0
