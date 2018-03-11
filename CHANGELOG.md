@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [vNext]
 - Added `StringExtensions.ReplaceRegex` for fluent regular expression replacements.
 - Changed `StringExtensions.JoinNewLine` to accept `PlatformFamily` parameter which designates line-endings.
+- Fixed line-endings in setup scripts.
 
 ## [0.2.10] / 2018-03-05
 - Fixed handling of `Graph` switch.

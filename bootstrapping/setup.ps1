@@ -64,7 +64,7 @@ if (@($SolutionFiles).length -gt 1) {
 $SolutionFile = $SolutionFiles[$SolutionFileSelection].FullName
 $SolutionDirectory = Split-Path $SolutionFile -Parent
 
-((GetRelative $RootDirectory $SolutionFile) -replace "\\","/") | Out-File "$RootDirectory\.nuke"
+Set-Content "$RootDirectory\.nuke" ((GetRelative $RootDirectory $SolutionFile) -replace "\\","/") -Encoding UTF8 -NoNewline
 
 Write-Host "Using '$(GetRelative $PSScriptRoot $SolutionFile)' as solution file."
 

@@ -66,7 +66,7 @@ fi
 SOLUTION_FILE="${SOLUTION_FILE_ARRAY[$SOLUTION_FILE_SELECTION]}"
 SOLUTION_DIRECTORY="$(dirname "$SOLUTION_FILE")"
 
-echo $(GetRelative "$ROOT_DIRECTORY" "$SOLUTION_FILE") > "$ROOT_DIRECTORY/.nuke"
+printf $(GetRelative "$ROOT_DIRECTORY" "$SOLUTION_FILE") > "$ROOT_DIRECTORY/.nuke"
 
 echo "Using '$(GetRelative "$SCRIPT_DIR" "$SOLUTION_FILE")' as solution file."
 
@@ -102,7 +102,7 @@ if [ $TARGET_PLATFORM_SELECTION == 0 ]; then
   NUGET_VERSION=$(ReadWithDefault "NuGet executable version" $NUGET_VERSION)
 fi
 
-if [ $TARGET_PLATFORM_SELECTION == 1 || $PROJECT_FORMAT_SELECTION == 1]; then
+if [[ $TARGET_PLATFORM_SELECTION == 1 || $PROJECT_FORMAT_SELECTION == 1 ]]; then
   # NUKE_VERSION_ARRAY=(${NUKE_VERSION//./ })
   # NUKE_VERSION="${NUKE_VERSION_ARRAY[0]}.${NUKE_VERSION_ARRAY[1]}.*"
   NUKE_VERSION=$(ReadWithDefault "NUKE framework version (use '*' for always latest)" $NUKE_VERSION)
@@ -183,8 +183,8 @@ if ! grep -q "$BUILD_PROJECT_NAME.csproj" "$SOLUTION_FILE"; then
 
     BUILD_PROJECT_FILE_RELATIVE="$(GetRelative "$SOLUTION_DIRECTORY" "$BUILD_PROJECT_FILE")"
 
-    PROJECT_DEFINITION='Project(\"{'$PROJECT_KIND'}\") = \"'$BUILD_PROJECT_NAME'\", \"'${BUILD_PROJECT_FILE_RELATIVE//\//\\\\}'\", \"{'$PROJECT_GUID'}\"\nEndProject'
-    PROJECT_CONFIGURATION='\t\t{'$PROJECT_GUID'}.Debug|Any CPU.ActiveCfg = Debug|Any CPU\n\t\t{'$PROJECT_GUID'}.Release|Any CPU.ActiveCfg = Release|Any CPU'
+    PROJECT_DEFINITION='Project(\"{'$PROJECT_KIND'}\") = \"'$BUILD_PROJECT_NAME'\", \"'${BUILD_PROJECT_FILE_RELATIVE//\//\\\\}'\", \"{'$PROJECT_GUID'}\"\r\nEndProject\r'
+    PROJECT_CONFIGURATION='\t\t{'$PROJECT_GUID'}.Debug|Any CPU.ActiveCfg = Debug|Any CPU\r\n\t\t{'$PROJECT_GUID'}.Release|Any CPU.ActiveCfg = Release|Any CPU\r'
     
     awk "/MinimumVisualStudioVersion/{print \$0 RS \"$PROJECT_DEFINITION\";next}1" "$SOLUTION_FILE" > "$SOLUTION_FILE.bak"
     awk "/ProjectConfigurationPlatforms/{print \$0 RS \"$PROJECT_CONFIGURATION\";next}1" "$SOLUTION_FILE.bak" > "$SOLUTION_FILE"
