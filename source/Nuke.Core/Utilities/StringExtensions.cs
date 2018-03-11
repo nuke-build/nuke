@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 
 namespace Nuke.Core.Utilities
@@ -135,6 +136,15 @@ namespace Nuke.Core.Utilities
         public static string TrimStart(this string str, string trim)
         {
             return str.StartsWith(trim) ? str.Substring(trim.Length) : str;
+        }
+
+        public static string ReplaceRegex(
+            this string str,
+            string pattern,
+            MatchEvaluator matchEvaluator,
+            RegexOptions options = RegexOptions.None)
+        {
+            return Regex.Replace(str, pattern, matchEvaluator, options);
         }
     }
 }
