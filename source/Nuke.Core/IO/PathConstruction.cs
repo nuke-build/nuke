@@ -64,10 +64,9 @@ namespace Nuke.Core.IO
             var baseParts = basePath.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);
             var destinationParts = destinationPath.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);
 
-            var sameParts = baseParts.Zip(destinationParts, (a, b) => new { Base = a, Destination = b }).ToList()
-                .Where(x => x.Base.EqualsOrdinalIgnoreCase(x.Destination))
-                .Count();
-            return Enumerable.Repeat("..", baseParts.Count() - sameParts).ToList()
+            var sameParts = baseParts.Zip(destinationParts, (a, b) => new { Base = a, Destination = b })
+                .Count(x => x.Base.EqualsOrdinalIgnoreCase(x.Destination));
+            return Enumerable.Repeat("..", baseParts.Length - sameParts).ToList()
                 .Concat(destinationParts.Skip(sameParts).ToList()).Join(separator);
         }
 

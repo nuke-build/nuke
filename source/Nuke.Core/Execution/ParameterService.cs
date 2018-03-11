@@ -20,6 +20,7 @@ namespace Nuke.Core.Execution
 
         public ParameterService(Func<string[]> commandLineArgumentsProvider = null, Func<IDictionary> environmentVariablesProvider = null)
         {
+            // TODO: refactor to IDictionary<string, string> and string[]
             _environmentVariablesProvider = environmentVariablesProvider ?? Environment.GetEnvironmentVariables;
             _commandLineArgumentsProvider = commandLineArgumentsProvider ?? Environment.GetCommandLineArgs;
         }

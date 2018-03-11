@@ -12,28 +12,27 @@ namespace Nuke.Core
 {
     public static partial class EnvironmentInfo
     {
-        internal static HostType HostType
+        private static Lazy<HostType> s_hostType = new Lazy<HostType>(() =>
         {
-            get
-            {
-                var hostType = Parameter<HostType?>(nameof(NukeBuild.Host));
-                if (hostType.HasValue)
-                    return hostType.Value;
+            var hostType = Parameter<HostType?>(nameof(NukeBuild.Host));
+            if (hostType.HasValue)
+                return hostType.Value;
 
-                if (AppVeyor.IsRunningAppVeyor)
-                    return HostType.AppVeyor;
-                if (Jenkins.IsRunningJenkins)
-                    return HostType.Jenkins;
-                if (TeamCity.IsRunningTeamCity)
-                    return HostType.TeamCity;
-                if (TeamServices.IsRunningTeamServices)
-                    return HostType.TeamServices;
-                if (Bitrise.IsRunningBitrise)
-                    return HostType.Bitrise;
+            if (AppVeyor.IsRunningAppVeyor)
+                return HostType.AppVeyor;
+            if (Jenkins.IsRunningJenkins)
+                return HostType.Jenkins;
+            if (TeamCity.IsRunningTeamCity)
+                return HostType.TeamCity;
+            if (TeamServices.IsRunningTeamServices)
+                return HostType.TeamServices;
+            if (Bitrise.IsRunningBitrise)
+                return HostType.Bitrise;
 
-                return HostType.Console;
-            }
-        }
+            return HostType.Console;
+        });
+
+        internal static HostType HostType => s_hostType.Value;
 
         internal static bool IsLocalBuild => HostType == HostType.Console;
 
