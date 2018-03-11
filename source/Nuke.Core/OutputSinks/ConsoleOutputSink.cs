@@ -16,6 +16,14 @@ namespace Nuke.Core.OutputSinks
     [UsedImplicitly]
     internal class ConsoleOutputSink : IOutputSink
     {
+        private readonly bool _useAnsiColors;
+
+        public ConsoleOutputSink()
+        {
+            var term = EnvironmentInfo.Variable("TERM");
+            _useAnsiColors = term != null && term.StartsWith("xterm", StringComparison.OrdinalIgnoreCase);
+        }
+
         public virtual void Write(string text)
         {
             WriteWithColors(text, ConsoleColor.White);
@@ -85,6 +93,19 @@ namespace Nuke.Core.OutputSinks
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         private void WriteWithColors(string text, ConsoleColor foregroundColor)
+        {
+            if (_useAnsiColors)
+                WriteWithAnsiColors(text, foregroundColor);
+            else
+                WriteWithConsoleColors(text, foregroundColor);
+        }
+
+        private void WriteWithAnsiColors(string text, ConsoleColor foregroundColor)
+        {
+            Console.WriteLine(AnsiColorFormatter.ColorizeString(text, foregroundColor));
+        }
+
+        private void WriteWithConsoleColors(string text, ConsoleColor foregroundColor)
         {
             var previousForegroundColor = Console.ForegroundColor;
 

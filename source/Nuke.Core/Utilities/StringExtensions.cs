@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Text;
 using JetBrains.Annotations;
 
 namespace Nuke.Core.Utilities
@@ -154,6 +155,16 @@ namespace Nuke.Core.Utilities
                     ? "\r\n"
                     : "\n";
             return values.Join(newLine);
+        }
+
+        [Pure]
+        public static string Replace(this string str, int index, int length, string replacement)
+        {
+            return new StringBuilder()
+                .Append(str.Substring(startIndex: 0, length: index))
+                .Append(replacement)
+                .Append(str.Substring(index + length))
+                .ToString();
         }
 
         [Pure]
