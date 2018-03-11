@@ -123,9 +123,14 @@ namespace Nuke.Core.Utilities
             return values.Join(", ");
         }
 
-        public static string JoinNewLine(this IEnumerable<string> values)
+        public static string JoinNewLine(this IEnumerable<string> values, PlatformFamily? platformFamily = null)
         {
-            return values.Join(Environment.NewLine);
+            var newLine = !platformFamily.HasValue
+                ? Environment.NewLine
+                : platformFamily.Value == PlatformFamily.Windows
+                    ? "\r\n"
+                    : "\n";
+            return values.Join(newLine);
         }
 
         public static string TrimEnd(this string str, string trim)
