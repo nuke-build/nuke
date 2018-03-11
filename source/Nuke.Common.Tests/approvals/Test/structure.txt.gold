@@ -1,0 +1,8 @@
+.nuke
+build.sh
+build.cmd
+build.ps1
+Dummy.sln
+build/Build.cs
+build/.build.csproj
+build/.build.csproj.DotSettings

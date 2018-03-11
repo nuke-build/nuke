@@ -50,7 +50,7 @@ while ($RootDirectory -ne "" -and
 if ($RootDirectory -eq "") { $RootDirectory = $PSScriptRoot }
 Write-Host "Searching for solution files under '$RootDirectory' (2-levels)..."
 
-$SolutionFiles = @(Get-ChildItem "*.sln" -Path $RootDirectory -Depth 2)
+$SolutionFiles = @(Get-ChildItem "*.sln" -Path "$RootDirectory\*","$RootDirectory\*\*")
 if (@($SolutionFiles).length -eq 0) { throw "No solution file (*.sln) could be found." }
 
 $SolutionFileSelection = 0
