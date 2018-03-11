@@ -33,7 +33,9 @@ function Download($url, $file) {
 function GetRelative($base, $destination) {
     $baseUri = [System.Uri]$($base + '/')
     $destinationUri = [System.Uri]$($destination + '/')
-    return $baseUri.MakeRelativeUri($destinationUri).OriginalString.TrimEnd('/').Replace('/', '\');
+    $relativePath = $baseUri.MakeRelativeUri($destinationUri).OriginalString.TrimEnd('/').Replace('/', '\');
+    if ([string]::IsNullOrEmpty($relativePath)) { return "." }
+    else { return $relativePath }
 }
 
 ###########################################################################
