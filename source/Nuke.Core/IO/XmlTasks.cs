@@ -51,7 +51,7 @@ namespace Nuke.Core.IO
             }
         }
 
-        public static void XmlPokeMultiple(string path, string xpath, Func<string, object> valueTransform)
+        public static void XmlPoke(string path, string xpath, Func<string, object> valueManipulator)
         {
             var document = XDocument.Load(path, LoadOptions.PreserveWhitespace);
             var (elements, attributes) = GetObjects(document, xpath);
@@ -59,8 +59,8 @@ namespace Nuke.Core.IO
             ControlFlow.Assert(elements.Count > 0 || attributes.Count > 0,
                 "elements.Count > 0 || attributes.Count > 0");
 
-            elements.ForEach(e => e.SetValue(valueTransform(e.Value)));
-            attributes.ForEach(e => e.SetValue(valueTransform(e.Value)));
+            elements.ForEach(e => e.SetValue(valueManipulator(e.Value)));
+            attributes.ForEach(e => e.SetValue(valueManipulator(e.Value)));
 
             var writerSettings = new XmlWriterSettings { OmitXmlDeclaration = document.Declaration == null };
             using (var xmlWriter = XmlWriter.Create(path, writerSettings))
