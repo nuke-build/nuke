@@ -10,6 +10,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using JetBrains.Annotations;
+using Nuke.Core.Utilities.Collections;
 
 namespace Nuke.Core.IO
 {
@@ -42,6 +43,24 @@ namespace Nuke.Core.IO
 
             elements.SingleOrDefault()?.SetValue(value);
             attributes.SingleOrDefault()?.SetValue(value);
+
+            var writerSettings = new XmlWriterSettings { OmitXmlDeclaration = document.Declaration == null };
+            using (var xmlWriter = XmlWriter.Create(path, writerSettings))
+            {
+                document.Save(xmlWriter);
+            }
+        }
+
+        public static void XmlPokeMultiple(string path, string xpath, Func<string, object> valueTransform)
+        {
+            var document = XDocument.Load(path, LoadOptions.PreserveWhitespace);
+            var (elements, attributes) = GetObjects(document, xpath);
+
+            ControlFlow.Assert(elements.Count > 0 || attributes.Count > 0,
+                "elements.Count > 0 || attributes.Count > 0");
+
+            elements.ForEach(e => e.SetValue(valueTransform(e.Value)));
+            attributes.ForEach(e => e.SetValue(valueTransform(e.Value)));
 
             var writerSettings = new XmlWriterSettings { OmitXmlDeclaration = document.Declaration == null };
             using (var xmlWriter = XmlWriter.Create(path, writerSettings))
