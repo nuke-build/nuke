@@ -77,6 +77,9 @@ namespace Nuke.Core.Tooling
             Func<string, string> outputFilter = null)
         {
             ControlFlow.Assert(toolPath != null, "ToolPath was not set.");
+            if (!Path.IsPathRooted(toolPath) && !toolPath.Contains(Path.DirectorySeparatorChar))
+                toolPath = ToolPathResolver.GetPathExecutable(toolPath);
+                
             ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
             Logger.Info($"> {Path.GetFullPath(toolPath).DoubleQuoteIfNeeded()} {arguments}");
 

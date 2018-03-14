@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `StringExtensions.ReplaceRegex` for fluent regular expression replacements.
 - Changed `NukeBuild.Configuration` to be overridable but still injectable.
 - Changed `StringExtensions.JoinNewLine` to accept `PlatformFamily` parameter which designates line-endings.
+- Fixed `ProcessManager` to resolve `toolPath` from environment.
 - Fixed line-endings in setup scripts.
 
 ## [0.2.10] / 2018-03-05
