@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -10,7 +10,7 @@ namespace Nuke.Core.Utilities.Collections
 {
     public static partial class EnumerableExtensions
     {
-        public static IEnumerable<T> TSort<T> (this IEnumerable<T> source, Func<T, IEnumerable<T>> dependencies, bool throwOnCycle = false)
+        public static IEnumerable<T> TSort<T>(this IEnumerable<T> source, Func<T, IEnumerable<T>> dependencies, bool throwOnCycle = false)
         {
             var sorted = new List<T>();
             var visited = new HashSet<T>();
@@ -21,7 +21,7 @@ namespace Nuke.Core.Utilities.Collections
             return sorted;
         }
 
-        private static void Visit<T> (T item, HashSet<T> visited, List<T> sorted, Func<T, IEnumerable<T>> dependencies, bool throwOnCycle)
+        private static void Visit<T>(T item, HashSet<T> visited, List<T> sorted, Func<T, IEnumerable<T>> dependencies, bool throwOnCycle)
         {
             if (visited.Contains(item))
             {

@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -10,10 +10,10 @@ using Nuke.Core;
 
 namespace Nuke.Common.Tools.SignTool
 {
-    partial class SignToolSettings
+    partial class SignToolTasks
     {
         [CanBeNull]
-        private string GetToolPath ()
+        private static string GetToolPath()
         {
             var programDirectory = EnvironmentInfo.SpecialFolder(
                 EnvironmentInfo.Is64Bit
@@ -31,8 +31,8 @@ namespace Nuke.Common.Tools.SignTool
                        Path.Combine(programDirectory, "Windows Kits", "8.0", "bin", platformIdentifier),
                        Path.Combine(programDirectory, "Microsoft SDKs", "Windows", "v7.1A", "Bin")
                    }
-                    .Select(x => Path.Combine(x, "signtool.exe"))
-                    .FirstOrDefault(System.IO.File.Exists);
+                .Select(x => Path.Combine(x, "signtool.exe"))
+                .FirstOrDefault(File.Exists);
         }
     }
 }

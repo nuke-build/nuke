@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,12 +13,12 @@ namespace Nuke.Core.Tooling
 {
     public static class ExtensionHelper
     {
-        public static void ToggleBoolean (IDictionary dictionary, string key)
+        public static void ToggleBoolean(IDictionary dictionary, string key)
         {
             dictionary[key] = !dictionary.Contains(key) || !Convert<bool>(dictionary[key]);
         }
 
-        public static void SetCollection<T> (IDictionary dictionary, string key, IEnumerable<T> values, char separator)
+        public static void SetCollection<T>(IDictionary dictionary, string key, IEnumerable<T> values, char separator)
         {
             var collectionAsString = CollectionToString(values, separator);
             if (string.IsNullOrWhiteSpace(collectionAsString))
@@ -27,14 +27,14 @@ namespace Nuke.Core.Tooling
             dictionary[key] = collectionAsString;
         }
 
-        public static void AddItems<T> (IDictionary dictionary, string key, IEnumerable<T> values, char separator)
+        public static void AddItems<T>(IDictionary dictionary, string key, IEnumerable<T> values, char separator)
         {
             var collection = ParseCollection<T>(dictionary, key, separator);
             collection.AddRange(values);
             dictionary[key] = CollectionToString(collection, separator);
         }
 
-        public static void RemoveItems<T> (IDictionary dictionary, string key, IEnumerable<T> values, char separator)
+        public static void RemoveItems<T>(IDictionary dictionary, string key, IEnumerable<T> values, char separator)
         {
             var valueHashSet = new HashSet<T>(values);
             var collection = ParseCollection<T>(dictionary, key, separator);
@@ -42,20 +42,20 @@ namespace Nuke.Core.Tooling
             dictionary[key] = CollectionToString(collection, separator);
         }
 
-        private static List<TValue> ParseCollection<TValue> (IDictionary dictionary, string key, char separator)
+        private static List<TValue> ParseCollection<TValue>(IDictionary dictionary, string key, char separator)
         {
             return (dictionary.Contains(key)
-                        ? ((string) dictionary[key]).Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries)
-                        : new string[0])
-                    .Select(Convert<TValue>).ToList();
+                    ? ((string) dictionary[key]).Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries)
+                    : new string[0])
+                .Select(Convert<TValue>).ToList();
         }
 
-        private static string CollectionToString<T> (IEnumerable<T> collection, char separator)
+        private static string CollectionToString<T>(IEnumerable<T> collection, char separator)
         {
             return collection.Select(x => x.ToString()).Join(separator);
         }
 
-        private static T Convert<T> (object value)
+        private static T Convert<T>(object value)
         {
             var typeConverter = TypeDescriptor.GetConverter(typeof(T));
             return (T) typeConverter.ConvertFromInvariantString(value.ToString());

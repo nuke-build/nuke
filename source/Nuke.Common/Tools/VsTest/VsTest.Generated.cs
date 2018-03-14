@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,10 +25,12 @@ namespace Nuke.Common.Tools.VsTest
     [ExcludeFromCodeCoverage]
     public static partial class VsTestTasks
     {
-        static partial void PreProcess (VsTestSettings toolSettings);
-        static partial void PostProcess (VsTestSettings toolSettings);
+        /// <summary><p>Path to the VsTest executable.</p></summary>
+        public static string VsTestPath => GetToolPath();
+        static partial void PreProcess(VsTestSettings toolSettings);
+        static partial void PostProcess(VsTestSettings toolSettings);
         /// <summary><p>VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.</p><p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/jj155796.aspx">official website</a>.</p></summary>
-        public static void VsTest (Configure<VsTestSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void VsTest(Configure<VsTestSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new VsTestSettings());
             PreProcess(toolSettings);
@@ -45,7 +47,7 @@ namespace Nuke.Common.Tools.VsTest
     public partial class VsTestSettings : ToolSettings
     {
         /// <summary><p>Path to the VsTest executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? $"{GetToolPath()}";
+        public override string ToolPath => base.ToolPath ?? VsTestTasks.VsTestPath;
         /// <summary><p>Run tests from the specified files. Separate multiple test file names with spaces.</p></summary>
         public virtual IReadOnlyList<string> TestAssemblies => TestAssembliesInternal.AsReadOnly();
         internal List<string> TestAssembliesInternal { get; set; } = new List<string>();

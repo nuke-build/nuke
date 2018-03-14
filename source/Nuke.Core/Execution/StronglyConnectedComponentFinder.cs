@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -19,7 +19,7 @@ namespace Nuke.Core.Execution
         /// </summary>
         /// <param name="graph">Graph to detect cycles within.</param>
         /// <returns>Set of strongly connected components (sets of vertices)</returns>
-        public StronglyConnectedComponentList<T> DetectCycle (IEnumerable<Vertex<T>> graph)
+        public StronglyConnectedComponentList<T> DetectCycle(IEnumerable<Vertex<T>> graph)
         {
             _stronglyConnectedComponents = new StronglyConnectedComponentList<T>();
             _index = 0;
@@ -29,10 +29,11 @@ namespace Nuke.Core.Execution
                 if (v.Index < 0)
                     StrongConnect(v);
             }
+
             return _stronglyConnectedComponents;
         }
 
-        private void StrongConnect (Vertex<T> v)
+        private void StrongConnect(Vertex<T> v)
         {
             v.Index = _index;
             v.LowLink = _index;
@@ -62,6 +63,7 @@ namespace Nuke.Core.Execution
                 w2 = _stack.Pop();
                 scc.Add(w2);
             } while (v != w2);
+
             _stronglyConnectedComponents.Add(scc);
         }
     }

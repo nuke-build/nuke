@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -11,9 +11,9 @@ namespace Nuke.Core.Utilities.Collections
 {
     public static partial class DictionaryExtensions
     {
-        public static IDictionary<TKey, TValue> SetKeyValue<TKey, TValue> (
+        public static IDictionary<TKey, TValue> SetKeyValue<TKey, TValue>(
             this IDictionary<TKey, TValue> dictionary,
-            [CanBeNull] TKey key,
+            TKey key,
             [CanBeNull] TValue value)
         {
             dictionary[key] = value;

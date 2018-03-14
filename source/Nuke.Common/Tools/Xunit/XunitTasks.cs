@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -12,7 +12,12 @@ namespace Nuke.Common.Tools.Xunit
 {
     public static partial class XunitTasks
     {
-        public static void Xunit2 (
+        private static string GetPackageExecutable()
+        {
+            return EnvironmentInfo.Is64Bit ? "xunit.console.exe" : "xunit.console.x86.exe";
+        }
+        
+        public static void Xunit2(
             IEnumerable<string> assemblyFiles,
             Configure<Xunit2Settings> configurator = null,
             ProcessSettings processSettings = null)
@@ -20,7 +25,7 @@ namespace Nuke.Common.Tools.Xunit
             Xunit2(x => configurator.InvokeSafe(x).AddTargetAssemblies(assemblyFiles), processSettings);
         }
 
-        private static void AssertProcess (IProcess process, Xunit2Settings toolSettings)
+        private static void AssertProcess(IProcess process, Xunit2Settings toolSettings)
         {
             process.AssertWaitForExit();
             switch (process.ExitCode)

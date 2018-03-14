@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -18,11 +18,11 @@ namespace Nuke.Core.Tooling
     {
         public static IProcessManager Instance { get; private set; } = new ProcessManager();
 
-        internal ProcessManager ()
+        internal ProcessManager()
         {
         }
 
-        public CapturedProcessStartInfo CaptureProcessStartInfo (Action action)
+        public CapturedProcessStartInfo CaptureProcessStartInfo(Action action)
         {
             var fakeProcessManager = new CapturingProcessManager();
             using (DelegateDisposable.CreateBracket(
@@ -35,7 +35,7 @@ namespace Nuke.Core.Tooling
         }
 
         [CanBeNull]
-        public virtual IProcess StartProcess (ToolSettings toolSettings, ProcessSettings processSettings = null)
+        public virtual IProcess StartProcess(ToolSettings toolSettings, ProcessSettings processSettings = null)
         {
             var toolPath = toolSettings.ToolPath;
             var arguments = toolSettings.GetArguments();
@@ -47,7 +47,7 @@ namespace Nuke.Core.Tooling
             {
                 argumentsForExecution = $"{toolPath.DoubleQuoteIfNeeded()} {argumentsForExecution}";
                 argumentsForOutput = $"{toolPath.DoubleQuoteIfNeeded()} {argumentsForOutput}";
-                toolPath = "/usr/bin/mono";
+                toolPath = ToolPathResolver.GetPathExecutable("mono");
             }
 #endif
 
@@ -67,7 +67,7 @@ namespace Nuke.Core.Tooling
         }
 
         [CanBeNull]
-        public virtual IProcess StartProcess (
+        public virtual IProcess StartProcess(
             string toolPath,
             string arguments = null,
             string workingDirectory = null,
@@ -77,6 +77,9 @@ namespace Nuke.Core.Tooling
             Func<string, string> outputFilter = null)
         {
             ControlFlow.Assert(toolPath != null, "ToolPath was not set.");
+            if (Path.IsPathRooted(toolPath) && toolPath.Contains(Path.DirectorySeparatorChar))
+                toolPath = ToolPathResolver.GetPathExecutable(toolPath);
+                
             ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
             Logger.Info($"> {Path.GetFullPath(toolPath).DoubleQuoteIfNeeded()} {arguments}");
 
@@ -89,8 +92,9 @@ namespace Nuke.Core.Tooling
                 outputFilter ?? (x => x));
         }
 
+        // TODO: add default values
         [CanBeNull]
-        private static IProcess StartProcessInternal (
+        internal static IProcess StartProcessInternal(
             string toolPath,
             [CanBeNull] string arguments,
             [CanBeNull] string workingDirectory,
@@ -126,7 +130,7 @@ namespace Nuke.Core.Tooling
             return new Process2(process, timeout, GetOutputSink(redirectOutput, process), outputFilter ?? (x => x));
         }
 
-        private static void ApplyEnvironmentVariables (
+        private static void ApplyEnvironmentVariables(
             [CanBeNull] IReadOnlyDictionary<string, string> environmentVariables,
             ProcessStartInfo startInfo)
         {
@@ -140,14 +144,14 @@ namespace Nuke.Core.Tooling
         }
 
         [CanBeNull]
-        private static BlockingCollection<Output> GetOutputSink (bool redirectOutput, Process process)
+        private static BlockingCollection<Output> GetOutputSink(bool redirectOutput, Process process)
         {
             if (!redirectOutput)
                 return null;
 
             var output = new BlockingCollection<Output>();
 
-            void AddNotNullData (DataReceivedEventArgs e, OutputType outputType)
+            void AddNotNullData(DataReceivedEventArgs e, OutputType outputType)
             {
                 if (e.Data != null)
                     output.Add(new Output { Text = e.Data, Type = outputType });
@@ -161,9 +165,9 @@ namespace Nuke.Core.Tooling
             return output;
         }
 
-        private static void PrintEnvironmentVariables (ProcessStartInfo startInfo)
+        private static void PrintEnvironmentVariables(ProcessStartInfo startInfo)
         {
-            void TraceItem (string key, string value) => Logger.Trace($"  - {key} = {value}");
+            void TraceItem(string key, string value) => Logger.Trace($"  - {key} = {value}");
 
             Logger.Trace("Environment variables:");
 
@@ -184,13 +188,13 @@ namespace Nuke.Core.Tooling
             }
         }
 
-        private static void CheckPathEnvironmentVariable (ProcessStartInfo startInfo)
+        private static void CheckPathEnvironmentVariable(ProcessStartInfo startInfo)
         {
             startInfo.Environment
-                    .SingleOrDefault(x => x.Key.EqualsOrdinalIgnoreCase("path"))
-                    .Value.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
-                    .Where(x => !Directory.Exists(x))
-                    .ForEach(x => Logger.Warn($"Path environment variable contains invalid or inaccessible path '{x}'."));
+                .SingleOrDefault(x => x.Key.EqualsOrdinalIgnoreCase("path"))
+                .Value.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
+                .Where(x => !Directory.Exists(x))
+                .ForEach(x => Logger.Warn($"Path environment variable contains invalid or inaccessible path '{x}'."));
         }
     }
 }

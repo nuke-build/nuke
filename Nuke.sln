@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2003
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Core", "source\Nuke.Core\Nuke.Core.csproj", "{F73A2786-3DE2-4011-8111-333B91D97F9E}"
 EndProject
@@ -15,7 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.MSBuildLocator", "sour
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bootstrapping", "bootstrapping", "{76BF44AE-484F-4441-BC36-B498F44E4F94}"
 	ProjectSection(SolutionItems) = preProject
-		bootstrapping\.build.csproj.DotSettings = bootstrapping\.build.csproj.DotSettings
 		bootstrapping\.build.legacy.csproj = bootstrapping\.build.legacy.csproj
 		bootstrapping\.build.legacy.packages.config = bootstrapping\.build.legacy.packages.config
 		bootstrapping\.build.sdk.csproj = bootstrapping\.build.sdk.csproj
@@ -35,8 +34,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{B43B0E45-8
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		.nuke = .nuke
+		.travis.yml = .travis.yml
 		build.ps1 = build.ps1
 		build.sh = build.sh
+		CHANGELOG.md = CHANGELOG.md
 		GitVersion.yml = GitVersion.yml
 		.github\ISSUE_TEMPLATE.md = .github\ISSUE_TEMPLATE.md
 		LICENSE = LICENSE

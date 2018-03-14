@@ -25,18 +25,16 @@ function ReadWithDefault($text, $default) {
     return ($default,$prompt)[[bool]$prompt]
 }
 
-function Download($url, $file) {
-    md -force (Split-Path $file -Parent) > $null
-    (New-Object System.Net.WebClient).DownloadFile($url, $file)
+function GetRelative($base, $destination) {
+    $baseUri = [System.Uri]$($base + '/')
+    $destinationUri = [System.Uri]$($destination + '/')
+    $relativePath = $baseUri.MakeRelativeUri($destinationUri).OriginalString.TrimEnd('/').Replace('/', '\');
+    if ([string]::IsNullOrEmpty($relativePath)) { return "." }
+    else { return $relativePath }
 }
 
-function GetRelative($base, $destination) {
-    Push-Location $base
-    try {
-        return (Resolve-Path -relative $destination)
-    } finally {
-        Pop-Location
-    }
+function WriteFile($path, $content) {
+    [System.IO.File]::WriteAllText($path, $content)
 }
 
 ###########################################################################
@@ -51,7 +49,7 @@ while ($RootDirectory -ne "" -and
 if ($RootDirectory -eq "") { $RootDirectory = $PSScriptRoot }
 Write-Host "Searching for solution files under '$RootDirectory' (2-levels)..."
 
-$SolutionFiles = @(Get-ChildItem "*.sln" -Path $RootDirectory -Depth 2)
+$SolutionFiles = @(Get-ChildItem "*.sln" -Path "$RootDirectory\*","$RootDirectory\*\*")
 if (@($SolutionFiles).length -eq 0) { throw "No solution file (*.sln) could be found." }
 
 $SolutionFileSelection = 0
@@ -67,7 +65,7 @@ if (@($SolutionFiles).length -gt 1) {
 $SolutionFile = $SolutionFiles[$SolutionFileSelection].FullName
 $SolutionDirectory = Split-Path $SolutionFile -Parent
 
-((GetRelative $RootDirectory $SolutionFile) -replace "\\","/") | Out-File "$RootDirectory\.nuke"
+WriteFile "$RootDirectory\.nuke"  ((GetRelative $RootDirectory $SolutionFile) -replace "\\","/")
 
 Write-Host "Using '$(GetRelative $PSScriptRoot $SolutionFile)' as solution file."
 
@@ -75,19 +73,19 @@ Write-Host "Using '$(GetRelative $PSScriptRoot $SolutionFile)' as solution file.
 # OTHER CONFIGURATIONS
 ###########################################################################
 
-$TargetPlatformSelection = $host.ui.PromptForChoice(
-  $null,
-  "Build project target platform:",
-  @(
-    (New-Object System.Management.Automation.Host.ChoiceDescription ".NET &Framework", "boostrapping with MSBuild/Mono."),
-    (New-Object System.Management.Automation.Host.ChoiceDescription ".NET &Core", "bootstrapping with dotnet CLT.")
-  ),
-  $TargetPlatformSelection)
+#$TargetPlatformSelection = $host.ui.PromptForChoice(
+#  $null,
+#  "Build project target platform:",
+#  @(
+#    (New-Object System.Management.Automation.Host.ChoiceDescription ".NET &Framework", "boostrapping with MSBuild/Mono."),
+#    (New-Object System.Management.Automation.Host.ChoiceDescription ".NET &Core", "bootstrapping with dotnet CLT.")
+#  ),
+#  $TargetPlatformSelection)
 
 $TargetPlatform = @("netfx", "netcore")[$TargetPlatformSelection]
 $TargetFramework = @("net461", "netcoreapp2.0")[$TargetPlatformSelection]
 
-$NukeVersion = $(Invoke-WebRequest https://api-v2v3search-0.nuget.org/query?q=packageid:Nuke.Common | ConvertFrom-Json).data.version
+$NukeVersion = $(Invoke-WebRequest -UseBasicParsing https://api-v2v3search-0.nuget.org/query?q=packageid:Nuke.Common | ConvertFrom-Json).data.version
 $ProjectGuid = [guid]::NewGuid().ToString().ToUpper()
 
 if ($TargetPlatformSelection -eq 0) {
@@ -104,6 +102,8 @@ if ($TargetPlatformSelection -eq 0) {
 }
 
 if ($TargetPlatformSelection -eq 1 -or $ProjectFormatSelection -eq 1) {
+  # $NukeVersionArray = $NukeVersion.Split('.')
+  # $NukeVersion = "$($NukeVersionArray[0]).$($NukeVersionArray[1]).*"
   $NukeVersion = (ReadWithDefault "NUKE framework version (use '*' for always latest)" $NukeVersion)
 }
 
@@ -123,20 +123,23 @@ md -force $BuildDirectory > $null
 Write-Host "Generating build scripts..."
 
 $SolutionDirectoryRelative = (GetRelative $PSScriptRoot $SolutionDirectory)
+$RootDirectoryRelative = (GetRelative $PSScriptRoot $RootDirectory)
 
-Set-Content "build.ps1" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.$($TargetPlatform).ps1") `
+WriteFile "build.ps1" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.$($TargetPlatform).ps1") `
     -replace "_NUGET_VERSION_",$NuGetVersion `
     -replace "_BUILD_DIRECTORY_NAME_",$BuildDirectoryName `
     -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
-    -replace "_SOLUTION_DIRECTORY_",$SolutionDirectoryRelative) `
-    -NoNewline
+    -replace "_SOLUTION_DIRECTORY_",$SolutionDirectoryRelative `
+    -replace "_ROOT_DIRECTORY_",$RootDirectoryRelative)
 
-Set-Content "build.sh" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.$($TargetPlatform).sh") `
+WriteFile "build.sh" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.$($TargetPlatform).sh") `
     -replace "_NUGET_VERSION_",$NuGetVersion `
     -replace "_BUILD_DIRECTORY_NAME_",($BuildDirectoryName -replace "\\","/") `
     -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
-    -replace "_SOLUTION_DIRECTORY_",($SolutionDirectoryRelative -replace "\\","/")) `
-    -NoNewline
+    -replace "_SOLUTION_DIRECTORY_",($SolutionDirectoryRelative -replace "\\","/") `
+    -replace "_ROOT_DIRECTORY_",($RootDirectoryRelative -replace "\\","/"))
+
+(New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/../build.cmd", "build.cmd")
 
 ###########################################################################
 # GENERATE PROJECT FILES
@@ -146,24 +149,22 @@ Write-Host "Generating build project..."
 
 $SolutionDirectoryRelative = (GetRelative $BuildDirectory $SolutionDirectory)
 
-Set-Content "$BuildProjectFile" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/.build.$($ProjectFormat).csproj") `
+WriteFile "$BuildProjectFile" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/.build.$($ProjectFormat).csproj") `
     -replace "_TARGET_FRAMEWORK_",$TargetFramework `
     -replace "_BUILD_PROJECT_GUID_",$ProjectGuid `
     -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
     -replace "_SOLUTION_DIRECTORY_",$SolutionDirectoryRelative `
-    -replace "_NUKE_VERSION_",$NukeVersion) `
-    -NoNewline
+    -replace "_NUKE_VERSION_",$NukeVersion)
 
-(New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/.build.csproj.DotSettings", "$BuildProjectFile.dotsettings")
+(New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/../build/.build.csproj.DotSettings", "$BuildProjectFile.DotSettings")
 
 if (!(Test-Path "$BuildDirectory\Build.cs")) {
     (New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/Build.$($TargetPlatform).cs", "$BuildDirectory\Build.cs")
 }
 
 if ($ProjectFormatSelection -eq 0) {
-    Set-Content "$BuildDirectory\packages.config" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/.build.legacy.packages.config") `
-        -replace "_NUKE_VERSION_",$NukeVersion) `
-        -NoNewline
+    WriteFile "$BuildDirectory\packages.config" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/.build.legacy.packages.config") `
+        -replace "_NUKE_VERSION_",$NukeVersion)
 }
 
 ###########################################################################

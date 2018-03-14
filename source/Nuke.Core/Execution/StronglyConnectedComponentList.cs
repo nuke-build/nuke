@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,34 +13,34 @@ namespace Nuke.Core.Execution
     {
         private readonly LinkedList<StronglyConnectedComponent<T>> _collection;
 
-        public StronglyConnectedComponentList ()
+        public StronglyConnectedComponentList()
         {
             _collection = new LinkedList<StronglyConnectedComponent<T>>();
         }
 
-        public void Add (StronglyConnectedComponent<T> scc)
+        public void Add(StronglyConnectedComponent<T> scc)
         {
             _collection.AddLast(scc);
         }
 
         public int Count => _collection.Count;
 
-        public IEnumerator<StronglyConnectedComponent<T>> GetEnumerator ()
+        public IEnumerator<StronglyConnectedComponent<T>> GetEnumerator()
         {
             return _collection.GetEnumerator();
         }
 
-        IEnumerator IEnumerable.GetEnumerator ()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return _collection.GetEnumerator();
         }
 
-        public IEnumerable<StronglyConnectedComponent<T>> IndependentComponents ()
+        public IEnumerable<StronglyConnectedComponent<T>> IndependentComponents()
         {
             return this.Where(c => !c.IsCycle);
         }
 
-        public IEnumerable<StronglyConnectedComponent<T>> Cycles ()
+        public IEnumerable<StronglyConnectedComponent<T>> Cycles()
         {
             return this.Where(c => c.IsCycle);
         }

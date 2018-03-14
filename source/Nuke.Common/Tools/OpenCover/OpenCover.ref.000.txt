@@ -18,7 +18,7 @@ or
     1.	“messages remaining on the queue”
     2.	“number of messages processed”
 * <a id="excludebyattribute"/>`-excludebyattribute:<filter>[;filter][;filter]` - Exclude a class or method by filter(s) that match attributes that have been applied. An `*` can be used as a wildcard.
-* <a id="excludebyfile"/>`-excludebyfile:<filter>[;<filter>][;<filter>]` - Exclude a class (or methods) by filter(s) that match the filenames. An `*` can be used as a wildcard.
+* <a id="excludebyfile"/>`-excludebyfile:<filename>[;<filename>][;<filename>]` - Exclude a class (or methods) by file-filter(s) that match the filenames. An `*` can be used as a wildcard.
 * <a id="excludedirs"/>`-excludedirs:<path to exclude>[;<path to exclude>]` - Assemblies being loaded from these locations will be ignored.
 * <a id="filter"/>`-filter:<filters>` - A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where `(+|-)[Assembly-Filter]Type-Filter`.  For example `+[Open*]*` includes all types in assemblies starting with _Open_, `-[*]Core.*` exclude all types in the _Core_ namespace regardless of the assembly. If no filters are supplied then the default inclusive filter `+[*]*` is applied automatically. See [Understanding Filters](#understanding-filters) for more information.
     * NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: `-filter:"+[*]* -[A*]Name.*"` 

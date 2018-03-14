@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -11,7 +11,7 @@ namespace Nuke.Core.Tooling
 {
     public static class SettingsEntityExtensions
     {
-        public static T NewInstance<T> (this T settingsEntity)
+        public static T NewInstance<T>(this T settingsEntity)
             where T : ISettingsEntity
         {
             using (var memoryStream = new MemoryStream())

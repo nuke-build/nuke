@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,10 +25,12 @@ namespace Nuke.Common.Tools.CoverallsNet
     [ExcludeFromCodeCoverage]
     public static partial class CoverallsNetTasks
     {
-        static partial void PreProcess (CoverallsNetSettings toolSettings);
-        static partial void PostProcess (CoverallsNetSettings toolSettings);
+        /// <summary><p>Path to the CoverallsNet executable.</p></summary>
+        public static string CoverallsNetPath => ToolPathResolver.GetPackageExecutable("coveralls.net", "csmacnz.Coveralls.exe");
+        static partial void PreProcess(CoverallsNetSettings toolSettings);
+        static partial void PostProcess(CoverallsNetSettings toolSettings);
         /// <summary><p>Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.</p><p>For more details, visit the <a href="https://coverallsnet.readthedocs.io">official website</a>.</p></summary>
-        public static void CoverallsNet (Configure<CoverallsNetSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void CoverallsNet(Configure<CoverallsNetSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new CoverallsNetSettings());
             PreProcess(toolSettings);
@@ -45,7 +47,7 @@ namespace Nuke.Common.Tools.CoverallsNet
     public partial class CoverallsNetSettings : ToolSettings
     {
         /// <summary><p>Path to the CoverallsNet executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"coveralls.net", $"csmacnz.Coveralls.exe");
+        public override string ToolPath => base.ToolPath ?? CoverallsNetTasks.CoverallsNetPath;
         /// <summary><p>The coverage source file location.</p></summary>
         public virtual string Input { get; internal set; }
         /// <summary><p>The coverage results json will be written to this file it provided.</p></summary>

@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -19,13 +19,13 @@ namespace Nuke.Common.Tools.MSBuild
     {
         private static readonly MSBuildPlatform[] s_platforms = { MSBuildPlatform.x86, MSBuildPlatform.x64 };
 
-        public static string Resolve (MSBuildVersion? msBuildVersion = null, MSBuildPlatform? msBuildPlatform = null)
+        public static string Resolve(MSBuildVersion? msBuildVersion = null, MSBuildPlatform? msBuildPlatform = null)
         {
             return ResolveInternal(msBuildVersion, msBuildPlatform).FirstOrDefault()
-                    .NotNull("Could not find a suitable MSBuild instance.");
+                .NotNull("Could not find a suitable MSBuild instance.");
         }
 
-        private static IEnumerable<string> ResolveInternal (MSBuildVersion? msBuildVersion = null, MSBuildPlatform? msBuildPlatform = null)
+        private static IEnumerable<string> ResolveInternal(MSBuildVersion? msBuildVersion = null, MSBuildPlatform? msBuildPlatform = null)
         {
             if (EnvironmentInfo.IsUnix)
             {
@@ -53,17 +53,17 @@ namespace Nuke.Common.Tools.MSBuild
 
             var preferedPlatform = EnvironmentInfo.Is64Bit ? MSBuildPlatform.x64 : MSBuildPlatform.x86;
             var filteredInstances = instances
-                    .Where(x => File.Exists(x.ToolPath))
-                    .Where(x => !msBuildVersion.HasValue || x.Version == msBuildVersion)
-                    .Where(x => !msBuildPlatform.HasValue || x.Platform == msBuildPlatform)
-                    .OrderBy(x => x.Version)
-                    .ThenByDescending(x => x.Platform == preferedPlatform)
-                    .ToList();
+                .Where(x => File.Exists(x.ToolPath))
+                .Where(x => !msBuildVersion.HasValue || x.Version == msBuildVersion)
+                .Where(x => !msBuildPlatform.HasValue || x.Platform == msBuildPlatform)
+                .OrderBy(x => x.Version)
+                .ThenByDescending(x => x.Platform == preferedPlatform)
+                .ToList();
 
             return filteredInstances.Select(x => x.ToolPath);
         }
 
-        private static Instance GetVs2017Instance (MSBuildPlatform platform, string vs2017Edition)
+        private static Instance GetVs2017Instance(MSBuildPlatform platform, string vs2017Edition)
         {
             var basePath = Path.Combine(
                 EnvironmentInfo.SpecialFolder(SpecialFolders.ProgramFilesX86).NotNull("path1 != null"),
@@ -77,7 +77,7 @@ namespace Nuke.Common.Tools.MSBuild
                     : basePath);
         }
 
-        private static Instance GetVs2013To2015Instance (MSBuildPlatform platform, MSBuildVersion version)
+        private static Instance GetVs2013To2015Instance(MSBuildPlatform platform, MSBuildVersion version)
         {
             var basePath = Path.Combine(
                 EnvironmentInfo.SpecialFolder(SpecialFolders.ProgramFilesX86).NotNull("path1 != null"),
@@ -91,7 +91,7 @@ namespace Nuke.Common.Tools.MSBuild
                     : basePath);
         }
 
-        private static string GetVersionFolder (MSBuildVersion version)
+        private static string GetVersionFolder(MSBuildVersion version)
         {
             switch (version)
             {
@@ -109,7 +109,7 @@ namespace Nuke.Common.Tools.MSBuild
         [DebuggerDisplay("{" + nameof(ToolPath) + "}")]
         private class Instance
         {
-            public Instance (MSBuildVersion version, MSBuildPlatform platform, string directory)
+            public Instance(MSBuildVersion version, MSBuildPlatform platform, string directory)
             {
                 Platform = platform;
                 Version = version;

@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -14,23 +14,23 @@ namespace Nuke.Common.Tools.GitLink
     public static partial class GitLinkTasks
     {
         public static GitLink2Settings DefaultGitLink2 => new GitLink2Settings()
-                .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
-                .SetSolutionDirectory(NukeBuild.Instance.SolutionDirectory)
-                .SetConfiguration(NukeBuild.Instance.Configuration)
-                .SetBranchName(GitVersionAttribute.Value?.BranchName)
-                .SetRepositoryUrl(GitRepositoryAttribute.Value?.ToString());
+            .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
+            .SetSolutionDirectory(NukeBuild.Instance.SolutionDirectory)
+            .SetConfiguration(NukeBuild.Instance.Configuration)
+            .SetBranchName(GitVersionAttribute.Value?.BranchName)
+            .SetRepositoryUrl(GitRepositoryAttribute.Value?.ToString());
 
         public static GitLink3Settings DefaultGitLink3 => new GitLink3Settings()
-                .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
-                .SetBaseDirectory(NukeBuild.Instance.RootDirectory)
-                .SetRepositoryUrl(GitRepositoryAttribute.Value?.ToString());
+            .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
+            .SetBaseDirectory(NukeBuild.Instance.RootDirectory)
+            .SetRepositoryUrl(GitRepositoryAttribute.Value?.ToString());
 
-        static partial void PreProcess (GitLink2Settings toolSettings)
+        static partial void PreProcess(GitLink2Settings toolSettings)
         {
             ControlFlow.AssertWarn(toolSettings.ToolPath.Contains("gitlink\\2"), "toolSettings.ToolPath.Contains('gitlink\\2')");
         }
 
-        static partial void PreProcess (GitLink3Settings toolSettings)
+        static partial void PreProcess(GitLink3Settings toolSettings)
         {
             ControlFlow.AssertWarn(toolSettings.ToolPath.Contains("gitlink\\3"), "toolSettings.ToolPath.Contains('gitlink\\3')");
         }

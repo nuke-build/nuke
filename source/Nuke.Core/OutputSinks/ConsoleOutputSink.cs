@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -14,15 +14,15 @@ using Console = System.Console;
 
 namespace Nuke.Core.OutputSinks
 {
-    [PublicAPI]
-    public class ConsoleOutputSink : IOutputSink
+    [UsedImplicitly]
+    internal class ConsoleOutputSink : IOutputSink
     {
-        public virtual void Write (string text)
+        public virtual void Write(string text)
         {
-            WriteWithColors(text, ConsoleColor.White, ConsoleColor.Black);
+            WriteWithColors(text, ConsoleColor.White);
         }
 
-        public virtual IDisposable WriteBlock (string text)
+        public virtual IDisposable WriteBlock(string text)
         {
             Info(FigletTransform.GetText(text));
 
@@ -31,31 +31,31 @@ namespace Nuke.Core.OutputSinks
                 () => Console.Title = $"Finished: {text}");
         }
 
-        public virtual void Trace (string text)
+        public virtual void Trace(string text)
         {
-            WriteWithColors(text, ConsoleColor.Gray, ConsoleColor.DarkGray);
+            WriteWithColors(text, ConsoleColor.DarkGray);
         }
 
-        public virtual void Info (string text)
+        public virtual void Info(string text)
         {
-            WriteWithColors(text, ConsoleColor.White, ConsoleColor.Black);
+            WriteWithColors(text, ConsoleColor.White);
         }
 
-        public virtual void Warn (string text, string details = null)
+        public virtual void Warn(string text, string details = null)
         {
-            WriteWithColors(text, ConsoleColor.Yellow, ConsoleColor.DarkYellow);
+            WriteWithColors(text, ConsoleColor.DarkYellow);
             if (details != null)
-                WriteWithColors(details, ConsoleColor.Yellow, ConsoleColor.DarkYellow);
+                WriteWithColors(details, ConsoleColor.DarkYellow);
         }
 
-        public virtual void Error (string text, string details = null)
+        public virtual void Error(string text, string details = null)
         {
-            WriteWithColors(text, ConsoleColor.Red, ConsoleColor.DarkRed);
+            WriteWithColors(text, ConsoleColor.DarkRed);
             if (details != null)
-                WriteWithColors(details, ConsoleColor.Red, ConsoleColor.DarkRed);
+                WriteWithColors(details, ConsoleColor.DarkRed);
         }
 
-        public virtual void WriteSummary (IReadOnlyCollection<TargetDefinition> executionList)
+        public virtual void WriteSummary(IReadOnlyCollection<TargetDefinition> executionList)
         {
             var firstColumn = Math.Max(executionList.Max(x => x.Name.Length) + 4, val2: 20);
             var secondColumn = 10;
@@ -63,12 +63,12 @@ namespace Nuke.Core.OutputSinks
             var allColumns = firstColumn + secondColumn + thirdColumn;
             var totalDuration = executionList.Aggregate(TimeSpan.Zero, (t, x) => t.Add(x.Duration));
 
-            string CreateLine (string target, string executionStatus, string duration)
+            string CreateLine(string target, string executionStatus, string duration)
                 => target.PadRight(firstColumn, paddingChar: ' ')
                    + executionStatus.PadRight(secondColumn, paddingChar: ' ')
                    + duration.PadLeft(thirdColumn, paddingChar: ' ');
 
-            string ToMinutesAndSeconds (TimeSpan duration)
+            string ToMinutesAndSeconds(TimeSpan duration)
                 => $"{(int) duration.TotalMinutes}:{duration:ss}";
 
             Logger.Log(new string(c: '=', count: allColumns));
@@ -85,19 +85,13 @@ namespace Nuke.Core.OutputSinks
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        private void WriteWithColors (string text, ConsoleColor brightForeground, ConsoleColor darkForeground)
+        private void WriteWithColors(string text, ConsoleColor foregroundColor)
         {
-            var previousForeground = Console.ForegroundColor;
-            var backgroundColor = Console.BackgroundColor;
-
-            // TODO: can we determine the actual console background color?
-            var hasDarkBackground = (int) backgroundColor == -1
-                                    || backgroundColor == ConsoleColor.Black
-                                    || backgroundColor.ToString().StartsWith("Dark");
+            var previousForegroundColor = Console.ForegroundColor;
 
             using (DelegateDisposable.CreateBracket(
-                () => Console.ForegroundColor = hasDarkBackground ? brightForeground : darkForeground,
-                () => Console.ForegroundColor = previousForeground))
+                () => Console.ForegroundColor = foregroundColor,
+                () => Console.ForegroundColor = previousForegroundColor))
             {
                 Console.WriteLine(text);
             }

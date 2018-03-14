@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,10 +25,12 @@ namespace Nuke.Common.Tools.GitLink
     [ExcludeFromCodeCoverage]
     public static partial class GitLinkTasks
     {
-        static partial void PreProcess (GitLink2Settings toolSettings);
-        static partial void PostProcess (GitLink2Settings toolSettings);
+        /// <summary><p>Path to the GitLink executable.</p></summary>
+        public static string GitLinkPath => ToolPathResolver.GetPackageExecutable("gitlink", "GitLink.exe");
+        static partial void PreProcess(GitLink2Settings toolSettings);
+        static partial void PostProcess(GitLink2Settings toolSettings);
         /// <summary><p>GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.</p><p>For more details, visit the <a href="https://github.com/GitTools/GitLink/">official website</a>.</p></summary>
-        public static void GitLink2 (Configure<GitLink2Settings> configurator = null, ProcessSettings processSettings = null)
+        public static void GitLink2(Configure<GitLink2Settings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitLink2Settings());
             PreProcess(toolSettings);
@@ -36,10 +38,10 @@ namespace Nuke.Common.Tools.GitLink
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
         }
-        static partial void PreProcess (GitLink3Settings toolSettings);
-        static partial void PostProcess (GitLink3Settings toolSettings);
+        static partial void PreProcess(GitLink3Settings toolSettings);
+        static partial void PostProcess(GitLink3Settings toolSettings);
         /// <summary><p>GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.</p><p>For more details, visit the <a href="https://github.com/GitTools/GitLink/">official website</a>.</p></summary>
-        public static void GitLink3 (Configure<GitLink3Settings> configurator = null, ProcessSettings processSettings = null)
+        public static void GitLink3(Configure<GitLink3Settings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitLink3Settings());
             PreProcess(toolSettings);
@@ -56,7 +58,7 @@ namespace Nuke.Common.Tools.GitLink
     public partial class GitLink2Settings : ToolSettings
     {
         /// <summary><p>Path to the GitLink executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"gitlink", $"GitLink.exe");
+        public override string ToolPath => base.ToolPath ?? GitLinkTasks.GitLinkPath;
         /// <summary><p>The directory containing the solution with the pdb files.</p></summary>
         public virtual string SolutionDirectory { get; internal set; }
         /// <summary><p>Url to remote git repository.</p></summary>
@@ -111,7 +113,7 @@ namespace Nuke.Common.Tools.GitLink
     public partial class GitLink3Settings : ToolSettings
     {
         /// <summary><p>Path to the GitLink executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"gitlink", $"GitLink.exe");
+        public override string ToolPath => base.ToolPath ?? GitLinkTasks.GitLinkPath;
         /// <summary><p>The PDB to add source indexing to.</p></summary>
         public virtual string PdbFile { get; internal set; }
         /// <summary><p>The method for SRCSRV to retrieve source code. One of &lt;Http|Powershell&gt;. Default is Http.</p></summary>

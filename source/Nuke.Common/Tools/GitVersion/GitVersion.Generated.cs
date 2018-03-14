@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,10 +25,12 @@ namespace Nuke.Common.Tools.GitVersion
     [ExcludeFromCodeCoverage]
     public static partial class GitVersionTasks
     {
-        static partial void PreProcess (GitVersionSettings toolSettings);
-        static partial void PostProcess (GitVersionSettings toolSettings);
+        /// <summary><p>Path to the GitVersion executable.</p></summary>
+        public static string GitVersionPath => ToolPathResolver.GetPackageExecutable("GitVersion.CommandLine", "GitVersion.exe");
+        static partial void PreProcess(GitVersionSettings toolSettings);
+        static partial void PostProcess(GitVersionSettings toolSettings);
         /// <summary><p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p><p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p></summary>
-        public static GitVersion GitVersion (Configure<GitVersionSettings> configurator = null, ProcessSettings processSettings = null)
+        public static GitVersion GitVersion(Configure<GitVersionSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitVersionSettings());
             PreProcess(toolSettings);
@@ -46,7 +48,7 @@ namespace Nuke.Common.Tools.GitVersion
     public partial class GitVersionSettings : ToolSettings
     {
         /// <summary><p>Path to the GitVersion executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"GitVersion.CommandLine", $"GitVersion.exe");
+        public override string ToolPath => base.ToolPath ?? GitVersionTasks.GitVersionPath;
         public virtual bool? UpdateAssemblyInfo { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {

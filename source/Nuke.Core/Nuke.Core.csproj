@@ -23,9 +23,13 @@
     <PackageReference Include="Colorful.Console" Version="1.0.7" />
     <PackageReference Include="Glob" Version="0.3.2" />
     <PackageReference Include="JetBrains.Annotations" Version="10.4.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.*" />
+    <PackageReference Include="NuGet.Client" Version="4.0.0" />
     <PackageReference Include="Refit" Version="4.0.0" />
     <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
+    <PackageReference Include="System.ValueTuple" Version="4.3.0" />
+    <PackageReference Include="YamlDotNet" Version="4.2.1" />
   </ItemGroup>
 
 </Project>

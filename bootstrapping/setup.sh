@@ -66,7 +66,7 @@ fi
 SOLUTION_FILE="${SOLUTION_FILE_ARRAY[$SOLUTION_FILE_SELECTION]}"
 SOLUTION_DIRECTORY="$(dirname "$SOLUTION_FILE")"
 
-echo $(GetRelative "$ROOT_DIRECTORY" "$SOLUTION_FILE") > "$ROOT_DIRECTORY/.nuke"
+printf $(GetRelative "$ROOT_DIRECTORY" "$SOLUTION_FILE") > "$ROOT_DIRECTORY/.nuke"
 
 echo "Using '$(GetRelative "$SCRIPT_DIR" "$SOLUTION_FILE")' as solution file."
 
@@ -102,7 +102,9 @@ if [ $TARGET_PLATFORM_SELECTION == 0 ]; then
   NUGET_VERSION=$(ReadWithDefault "NuGet executable version" $NUGET_VERSION)
 fi
 
-if [ $TARGET_PLATFORM_SELECTION == 1 || $PROJECT_FORMAT_SELECTION == 1]; then
+if [[ $TARGET_PLATFORM_SELECTION == 1 || $PROJECT_FORMAT_SELECTION == 1 ]]; then
+  # NUKE_VERSION_ARRAY=(${NUKE_VERSION//./ })
+  # NUKE_VERSION="${NUKE_VERSION_ARRAY[0]}.${NUKE_VERSION_ARRAY[1]}.*"
   NUKE_VERSION=$(ReadWithDefault "NUKE framework version (use '*' for always latest)" $NUKE_VERSION)
 fi
 
@@ -124,11 +126,13 @@ mkdir -p $BUILD_DIRECTORY
 echo "Generating build scripts..."
 
 SOLUTION_DIRECTORY_RELATIVE="$(GetRelative "$SCRIPT_DIR" "$SOLUTION_DIRECTORY")"
+ROOT_DIRECTORY_RELATIVE="$(GetRelative "$SCRIPT_DIR" "$ROOT_DIRECTORY")"
 
 sed -e 's~_NUGET_VERSION_~'"$NUGET_VERSION"'~g' \
     -e 's~_BUILD_DIRECTORY_NAME_~'"$BUILD_DIRECTORY_NAME"'~g' \
     -e 's~_BUILD_PROJECT_NAME_~'"$BUILD_PROJECT_NAME"'~g' \
     -e 's~_SOLUTION_DIRECTORY_~'"$SOLUTION_DIRECTORY_RELATIVE"'~g' \
+    -e 's~_ROOT_DIRECTORY_~'"$ROOT_DIRECTORY_RELATIVE"'~g' \
     <<<"$(curl -Lsf $BOOTSTRAPPING_URL/build.$TARGET_PLATFORM.sh)" \
     > build.sh
     
@@ -136,8 +140,11 @@ sed -e 's~_NUGET_VERSION_~'"$NUGET_VERSION"'~g' \
     -e 's~_BUILD_DIRECTORY_NAME_~'"${BUILD_DIRECTORY_NAME//\//\\\\}"'~g' \
     -e 's~_BUILD_PROJECT_NAME_~'"$BUILD_PROJECT_NAME"'~g' \
     -e 's~_SOLUTION_DIRECTORY_~'"${SOLUTION_DIRECTORY_RELATIVE//\//\\\\}"'~g' \
+    -e 's~_ROOT_DIRECTORY_~'"${ROOT_DIRECTORY_RELATIVE//\//\\\\}"'~g' \
     <<<"$(curl -Lsf $BOOTSTRAPPING_URL/build.$TARGET_PLATFORM.ps1)" \
     > build.ps1
+
+curl -Lsfo "build.cmd" "$BOOTSTRAPPING_URL/../build.cmd"
 
 ###########################################################################
 # GENERATE PROJECT FILES
@@ -155,7 +162,7 @@ sed -e 's~_TARGET_FRAMEWORK_~'"$TARGET_FRAMEWORK"'~g' \
     <<<"$(curl -Lsf $BOOTSTRAPPING_URL/.build.$PROJECT_FORMAT.csproj)" \
     > "$BUILD_PROJECT_FILE"
 
-curl -Lsfo "$BUILD_PROJECT_FILE.dotsettings" "$BOOTSTRAPPING_URL/.build.csproj.DotSettings"
+curl -Lsfo "$BUILD_PROJECT_FILE.DotSettings" "$BOOTSTRAPPING_URL/../build/.build.csproj.DotSettings"
 
 if [ ! -f "$BUILD_DIRECTORY/Build.cs" ]; then
     curl -Lsfo "$BUILD_DIRECTORY/Build.cs" "$BOOTSTRAPPING_URL/Build.$TARGET_PLATFORM.cs"
@@ -176,8 +183,8 @@ if ! grep -q "$BUILD_PROJECT_NAME.csproj" "$SOLUTION_FILE"; then
 
     BUILD_PROJECT_FILE_RELATIVE="$(GetRelative "$SOLUTION_DIRECTORY" "$BUILD_PROJECT_FILE")"
 
-    PROJECT_DEFINITION='Project(\"{'$PROJECT_KIND'}\") = \"'$BUILD_PROJECT_NAME'\", \"'${BUILD_PROJECT_FILE_RELATIVE//\//\\\\}'\", \"{'$PROJECT_GUID'}\"\nEndProject'
-    PROJECT_CONFIGURATION='\t\t{'$PROJECT_GUID'}.Debug|Any CPU.ActiveCfg = Debug|Any CPU\n\t\t{'$PROJECT_GUID'}.Release|Any CPU.ActiveCfg = Release|Any CPU'
+    PROJECT_DEFINITION='Project(\"{'$PROJECT_KIND'}\") = \"'$BUILD_PROJECT_NAME'\", \"'${BUILD_PROJECT_FILE_RELATIVE//\//\\\\}'\", \"{'$PROJECT_GUID'}\"\r\nEndProject\r'
+    PROJECT_CONFIGURATION='\t\t{'$PROJECT_GUID'}.Debug|Any CPU.ActiveCfg = Debug|Any CPU\r\n\t\t{'$PROJECT_GUID'}.Release|Any CPU.ActiveCfg = Release|Any CPU\r'
     
     awk "/MinimumVisualStudioVersion/{print \$0 RS \"$PROJECT_DEFINITION\";next}1" "$SOLUTION_FILE" > "$SOLUTION_FILE.bak"
     awk "/ProjectConfigurationPlatforms/{print \$0 RS \"$PROJECT_CONFIGURATION\";next}1" "$SOLUTION_FILE.bak" > "$SOLUTION_FILE"

@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Common.IO;
 using Nuke.Core;
 using Nuke.Core.BuildServers;
 using Nuke.Core.IO;
@@ -18,12 +17,17 @@ namespace Nuke.Common.Tools.InspectCode
 {
     public static partial class InspectCodeTasks
     {
-        public static InspectCodeSettings DefaultInspectCode => new InspectCodeSettings()
-                .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
-                .SetTargetPath(NukeBuild.Instance.SolutionFile)
-                .SetOutput(Path.Combine(NukeBuild.Instance.OutputDirectory, "inspectCode.xml"));
+        private static string GetPackageExecutable()
+        {
+            return EnvironmentInfo.Is64Bit ? "inspectcode.exe" : "inspectcode.x86.exe";
+        }
 
-        static partial void PreProcess (InspectCodeSettings toolSettings)
+        public static InspectCodeSettings DefaultInspectCode => new InspectCodeSettings()
+            .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
+            .SetTargetPath(NukeBuild.Instance.SolutionFile)
+            .SetOutput(Path.Combine(NukeBuild.Instance.OutputDirectory, "inspectCode.xml"));
+
+        static partial void PreProcess(InspectCodeSettings toolSettings)
         {
             var installedPlugins = GetInstalledPlugins();
             if (installedPlugins.Count == 0 && toolSettings.Extensions.Count == 0)
@@ -37,7 +41,7 @@ namespace Nuke.Common.Tools.InspectCode
                 FileSystemTasks.FileExistsPolicy.OverwriteIfNewer);
 
             installedPlugins.Select(x => x.FileName)
-                    .ForEach(x => File.Copy(x, Path.Combine(shadowDirectory, Path.GetFileName(x).NotNull()), overwrite: true));
+                .ForEach(x => File.Copy(x, Path.Combine(shadowDirectory, Path.GetFileName(x).NotNull()), overwrite: true));
 
             toolSettings.Extensions.ForEach(x => HttpTasks.HttpDownloadFile(
                 $"https://resharper-plugins.jetbrains.com/api/v2/package/{x}",
@@ -53,31 +57,32 @@ namespace Nuke.Common.Tools.InspectCode
                 toolSettings = toolSettings.SetToolPath(
                     Path.Combine(
                         GetShadowDirectory(toolSettings, installedPackages),
-                        toolSettings.GetPackageExecutable()));
+                        GetPackageExecutable()));
             }
 
             return ProcessTasks.StartProcess(toolSettings, processSettings);
         }
 
-        static partial void PostProcess (InspectCodeSettings toolSettings)
+        static partial void PostProcess(InspectCodeSettings toolSettings)
         {
             TeamCity.Instance?.ImportData(TeamCityImportType.ReSharperInspectCode, toolSettings.Output);
         }
 
         // TODO [3]: validation of wave version?
-        private static IReadOnlyCollection<NuGetPackageResolver.InstalledPackage> GetInstalledPlugins ()
+
+        private static IReadOnlyCollection<NuGetPackageResolver.InstalledPackage> GetInstalledPlugins()
         {
             return NuGetPackageResolver.GetLocalInstalledPackages()
-                    .Where(x => x.Metadata.GetDependencyGroups().SelectMany(y => y.Packages).Any(y => y.Id == "Wave"))
-                    .ToList();
+                .Where(x => x.Metadata.GetDependencyGroups().SelectMany(y => y.Packages).Any(y => y.Id == "Wave"))
+                .ToList();
         }
 
-        private static string GetShadowDirectory (
+        private static string GetShadowDirectory(
             InspectCodeSettings toolSettings,
             IReadOnlyCollection<NuGetPackageResolver.InstalledPackage> installedPlugins)
         {
             var hashCode = Math.Abs(installedPlugins.Select(x => x.Id).Concat(toolSettings.Extensions)
-                    .Aggregate(seed: 0, func: (hc, x) => hc + x.GetHashCode()));
+                .Aggregate(seed: 0, func: (hc, x) => hc + x.GetHashCode()));
             var hashCodeString = hashCode.ToString().Substring(startIndex: 0, length: 4);
             return Path.Combine(NukeBuild.Instance.TemporaryDirectory, $"InspectCode-{hashCodeString}");
         }

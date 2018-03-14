@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -12,15 +12,20 @@ namespace Nuke.Common.Tools.DotCover
 {
     public static partial class DotCoverTasks
     {
+        private static string GetPackageExecutable()
+        {
+            throw new NotImplementedException();
+        }
+        
         [CanBeNull]
-        private static IProcess StartProcess (DotCoverAnalyseSettings toolSettings, ProcessSettings processSettings)
+        private static IProcess StartProcess(DotCoverAnalyseSettings toolSettings, ProcessSettings processSettings)
         {
             var testAction = toolSettings.TestAction.NotNull("testAction != null");
             var capturedStartInfo = ProcessTasks.CaptureProcessStartInfo(testAction);
             toolSettings = toolSettings
-                    .SetTargetExecutable(capturedStartInfo.ToolPath)
-                    .SetTargetArguments(capturedStartInfo.Arguments)
-                    .SetTargetWorkingDirectory(capturedStartInfo.WorkingDirectory);
+                .SetTargetExecutable(capturedStartInfo.ToolPath)
+                .SetTargetArguments(capturedStartInfo.Arguments)
+                .SetTargetWorkingDirectory(capturedStartInfo.WorkingDirectory);
 
             return ProcessTasks.StartProcess(toolSettings, processSettings);
         }

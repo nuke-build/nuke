@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,6 +13,27 @@ namespace Nuke.Core.Tests
     public class PathConstructionTest
     {
         [Theory]
+        [InlineData("C:\\A\\B\\C", "C:\\A\\B", "..")]
+        [InlineData("C:\\A\\B\\", "C:\\A\\B\\C", "C")]
+        [InlineData("C:\\A\\B\\C", "C:\\A\\B\\D\\E", "..\\D\\E")]
+        [InlineData("/bin/etc", "/bin/tmp", "../tmp")]
+        public void TestGetRelativePath(string basePath, string destinationPath, string expected)
+        {
+            GetRelativePath(basePath, destinationPath).Should().Be(expected);
+        }
+
+        [Theory]
+        [InlineData("C:\\A\\B\\C", "C:\\A\\B", false)]
+        [InlineData("C:\\A\\B", "C:\\A\\B\\C\\", true)]
+        [InlineData("C:\\A\\B\\..\\C", "C:\\A\\B\\..\\C\\D", true)]
+        [InlineData("/bin/etc", "/bin/etc/../etc/foo", true)]
+        [InlineData("/bin/etc", "/bin/etc/../bar/foo", false)]
+        public void TestIsDescendantPath(string basePath, string destinationPath, bool expected)
+        {
+            IsDescendantPath(basePath, destinationPath).Should().Be(expected);
+        }
+
+        [Theory]
         [InlineData("\\\\server", "\\\\server")]
         [InlineData("\\\\server\\", "\\\\server")]
         [InlineData("\\\\server\\foo\\bar", "\\\\server")]
@@ -20,7 +41,7 @@ namespace Nuke.Core.Tests
         [InlineData("/bin/usr", "/")]
         [InlineData("C:\\", "C:")]
         [InlineData("C:\\foo\\bar", "C:")]
-        public void TestGetPathRoot (string input, string expected)
+        public void TestGetPathRoot(string input, string expected)
         {
             GetPathRoot(input).Should().Be(expected);
         }
@@ -32,7 +53,7 @@ namespace Nuke.Core.Tests
         [InlineData("/bin/usr")]
         [InlineData("C:\\")]
         [InlineData("C:\\foo\\bar")]
-        public void TestHasPathRoot_True (string input)
+        public void TestHasPathRoot_True(string input)
         {
             HasPathRoot(input).Should().BeTrue();
         }
@@ -42,11 +63,10 @@ namespace Nuke.Core.Tests
         [InlineData("foo\\bar")]
         [InlineData(".\\foo\\bar")]
         [InlineData("./foo/bar")]
-        public void TestHasPathRoot_False (string input)
+        public void TestHasPathRoot_False(string input)
         {
             HasPathRoot(input).Should().BeFalse();
         }
-
 
         [Theory]
         [InlineData("foo", "bar", '/', "foo/bar")]
@@ -62,7 +82,7 @@ namespace Nuke.Core.Tests
         [InlineData("\\\\server", null, null, "\\\\server")]
         [InlineData("\\\\server", "foo", null, "\\\\server\\foo")]
         [InlineData("\\\\server\\foo", "bar", null, "\\\\server\\foo\\bar")]
-        public void TestCombine (string path1, string path2, char? separator, string expected)
+        public void TestCombine(string path1, string path2, char? separator, string expected)
         {
             Combine(path1, path2, separator).Should().Be(expected);
         }
@@ -75,11 +95,10 @@ namespace Nuke.Core.Tests
         [InlineData("C:\\", "C:\\", '\\', "Second path must not be rooted.")]
         [InlineData("\\\\server", "\\\\server\\", '\\', "Second path must not be rooted.")]
         [InlineData("/", "/", '/', "Second path must not be rooted.")]
-        public void TestCombine_Throws (string path1, string path2, char? separator, string expected)
+        public void TestCombine_Throws(string path1, string path2, char? separator, string expected)
         {
             Assert.Throws<Exception>(() => Combine(path1, path2, separator)).Message.Should().Be($"Assertion failed: {expected}");
         }
-
 
         [Theory]
         [InlineData(null, null, "")]
@@ -96,7 +115,7 @@ namespace Nuke.Core.Tests
         [InlineData("/bin\\foo/bar", null, "/bin/foo/bar")]
         [InlineData("/bin/foo/.././/bar", null, "/bin/bar")]
         [InlineData("C:\\/foo/../.\\/bar", null, "C:\\bar")]
-        public void TestNormalizePath (string input, char? separator, string expected)
+        public void TestNormalizePath(string input, char? separator, string expected)
         {
             NormalizePath(input, separator).Should().Be(expected);
         }
@@ -108,18 +127,17 @@ namespace Nuke.Core.Tests
         [InlineData("C:\\foo", '/', "For Windows-rooted paths the separator must be '\\'.")]
         [InlineData("\\\\server\\foo", '/', "For UNC-rooted paths the separator must be '\\'.")]
         [InlineData("/bin/foo/bar", '\\', "For Unix-rooted paths the separator must be '/'.")]
-        public void TestNormalizePath_Throws (string input, char? separator, string message)
+        public void TestNormalizePath_Throws(string input, char? separator, string message)
         {
             Assert.Throws<Exception>(() => NormalizePath(input, separator)).Message.Should().Be($"Assertion failed: {message}");
         }
-
 
         [Theory]
         [InlineData(new object[] { "foo", "bar" }, "foo\\bar", "foo/bar")]
         [InlineData(new object[] { "./foo", "bar" }, "foo\\bar", "foo/bar")]
         [InlineData(new object[] { "foo", "..", ".", "", null, "bar", "foo" }, "bar\\foo", "bar/foo")]
         [InlineData(new object[] { "..", ".", "..", "foo" }, "..\\..\\foo", "../../foo")]
-        public void RelativePath (object[] parts, string expectedWindows, string expectedUnix)
+        public void RelativePath(object[] parts, string expectedWindows, string expectedUnix)
         {
             ParseRelativePath(parts).Should().Be(EnvironmentInfo.IsWin ? expectedWindows : expectedUnix);
         }
@@ -128,7 +146,7 @@ namespace Nuke.Core.Tests
         [InlineData(new object[] { "/bin", "foo", "..", "bar" }, "/bin/bar")]
         [InlineData(new object[] { "C:", "windows", "foo", "..", "bar" }, "C:\\windows\\bar")]
         [InlineData(new object[] { "\\\\server", "foo", "..", "bar" }, "\\\\server\\bar")]
-        public void RelativePath_AsAbsolute (object[] parts, string expected)
+        public void RelativePath_AsAbsolute(object[] parts, string expected)
         {
             ParseRelativePath(parts).Should().Be(expected);
         }
@@ -139,7 +157,7 @@ namespace Nuke.Core.Tests
         [InlineData(new object[] { "C:" }, "C:\\")]
         [InlineData(new object[] { "C:\\", "windows" }, "C:\\windows")]
         [InlineData(new object[] { "\\\\server", "foo", "..", "bar" }, "\\\\server\\bar")]
-        public void AbsolutePath (object[] parts, string expected)
+        public void AbsolutePath(object[] parts, string expected)
         {
             ParseAbsolutePath(parts).Should().Be(expected);
         }
@@ -149,7 +167,7 @@ namespace Nuke.Core.Tests
         [InlineData(new object[] { "/", "", "..", "bar" }, "Cannot normalize '/..' beyond path root.")]
         [InlineData(new object[] { "\\\\server", "", "..", "bar" }, "Cannot normalize '\\\\server\\..' beyond path root.")]
         [InlineData(new object[] { "foo", "bar" }, "Path 'foo' must be rooted.")]
-        public void AbsolutePath_Throws (object[] parts, string expected)
+        public void AbsolutePath_Throws(object[] parts, string expected)
         {
             Assert.Throws<Exception>(() => ParseAbsolutePath(parts)).Message.Should().Be($"Assertion failed: {expected}");
         }
@@ -161,12 +179,12 @@ namespace Nuke.Core.Tests
             ((string) ((WinRelativePath) "foo" / "bar")).Should().Be("foo\\bar");
         }
 
-        private static string ParseRelativePath (object[] parts)
+        private static string ParseRelativePath(object[] parts)
         {
             return parts.Skip(count: 1).Aggregate((RelativePath) (string) parts[0], (rp, p) => rp / (string) p);
         }
 
-        private static string ParseAbsolutePath (object[] parts)
+        private static string ParseAbsolutePath(object[] parts)
         {
             return parts.Skip(count: 1).Aggregate((AbsolutePath) (string) parts[0], (rp, p) => rp / (string) p);
         }

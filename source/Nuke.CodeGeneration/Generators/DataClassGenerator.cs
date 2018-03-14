@@ -1,10 +1,9 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.CodeGeneration.Model;
@@ -18,7 +17,7 @@ namespace Nuke.CodeGeneration.Generators
 {
     public static class DataClassGenerator
     {
-        public static void Run (DataClass dataClass, ToolWriter toolWriter)
+        public static void Run(DataClass dataClass, ToolWriter toolWriter)
         {
             if (!dataClass.NoArguments)
             {
@@ -41,72 +40,48 @@ namespace Nuke.CodeGeneration.Generators
             var baseType = dataClass.BaseClass ?? (dataClass.Name.EndsWith("Settings") ? "ToolSettings" : "ISettingsEntity");
 
             writer
-                    .WriteLine($"#region {dataClass.Name}")
-                    .WriteSummary(dataClass)
-                    .WriteLine("[PublicAPI]")
-                    .WriteLine("[ExcludeFromCodeCoverage]")
-                    .WriteLine("[Serializable]")
-                    .WriteLine($"public partial class {dataClass.Name} : {baseType}")
-                    .WriteBlock(w => w
-                            .WriteToolPath()
-                            .ForEach(dataClass.Properties, WritePropertyDeclaration)
-                            .WriteAssertValid()
-                            .WriteConfigureArguments())
-                    .WriteLine("#endregion");
+                .WriteLine($"#region {dataClass.Name}")
+                .WriteSummary(dataClass)
+                .WriteLine("[PublicAPI]")
+                .WriteLine("[ExcludeFromCodeCoverage]")
+                .WriteLine("[Serializable]")
+                .WriteLine($"public partial class {dataClass.Name} : {baseType}")
+                .WriteBlock(w => w
+                    .WriteToolPath()
+                    .ForEach(dataClass.Properties, WritePropertyDeclaration)
+                    .WriteAssertValid()
+                    .WriteConfigureArguments())
+                .WriteLine("#endregion");
         }
 
-        private static DataClassWriter WriteToolPath (this DataClassWriter writer)
+        private static DataClassWriter WriteToolPath(this DataClassWriter writer)
         {
             if (!(writer.DataClass is SettingsClass settingsClass))
                 return writer;
 
             var tool = settingsClass.Tool.NotNull();
-            var resolvers = new List<string>();
-
-            if (tool.CustomExecutable)
-            {
-                resolvers.Add("{GetToolPath()}".DoubleQuoteInterpolated());
-            }
-            if (tool.PackageId != null)
-            {
-                resolvers.Add("ToolPathResolver.GetPackageExecutable(" +
-                              $"{tool.PackageId.DoubleQuoteInterpolated()}, " +
-                              $"{(tool.PackageExecutable ?? "{GetPackageExecutable()}").DoubleQuoteInterpolated()})");
-            }
-            if (tool.EnvironmentExecutable != null)
-            {
-                resolvers.Add("ToolPathResolver.GetEnvironmentExecutable(" +
-                              $"{tool.EnvironmentExecutable.DoubleQuoteInterpolated()})");
-            }
-            if (tool.PathExecutable != null)
-            {
-                resolvers.Add("ToolPathResolver.GetPathExecutable(" +
-                              $"{tool.PathExecutable.DoubleQuoteInterpolated()})");
-            }
-
-            if (resolvers.Count == 0)
-                return writer;
-
-            Trace.Assert(resolvers.Count == 1, "resolvers.Count == 1");
+            var resolver = !tool.CustomExecutable
+                ? $"{tool.GetClassName()}.{tool.Name}Path"
+                : "GetToolPath()";
 
             return writer
-                    .WriteSummary($"Path to the {tool.Name} executable.")
-                    .WriteLine($"public override string ToolPath => base.ToolPath ?? {resolvers.Single()};");
+                .WriteSummary($"Path to the {tool.Name} executable.")
+                .WriteLine($"public override string ToolPath => base.ToolPath ?? {resolver};");
         }
 
-        private static void WritePropertyDeclaration (DataClassWriter writer, Property property)
+        private static void WritePropertyDeclaration(DataClassWriter writer, Property property)
         {
             if (property.CustomImpl)
                 return;
 
             writer
-                    .WriteSummary(property)
-                    .WriteLine(GetPublicPropertyDeclaration(property))
-                    .WriteLine(GetInternalPropertyDeclarationOrNull(property));
+                .WriteSummary(property)
+                .WriteLine(GetPublicPropertyDeclaration(property))
+                .WriteLine(GetInternalPropertyDeclarationOrNull(property));
         }
 
         [CanBeNull]
-        private static string GetInternalPropertyDeclarationOrNull (Property property)
+        private static string GetInternalPropertyDeclarationOrNull(Property property)
         {
             if (!property.IsList() && !property.IsDictionary() && !property.IsLookupTable())
                 return null;
@@ -114,14 +89,14 @@ namespace Nuke.CodeGeneration.Generators
             return $"internal {property.Type} {property.Name}Internal {{ get; set; }}{GetPropertyInitialization(property)}";
         }
 
-        private static string GetPublicPropertyDeclaration (Property property)
+        private static string GetPublicPropertyDeclaration(Property property)
         {
             var type = GetPublicPropertyType(property);
             var implementation = GetPublicPropertyImplementation(property);
             return $"public virtual {type} {property.Name} {implementation}";
         }
 
-        private static string GetPropertyInitialization (Property property)
+        private static string GetPropertyInitialization(Property property)
         {
             string initializationExpression;
             if (property.IsList())
@@ -136,14 +111,14 @@ namespace Nuke.CodeGeneration.Generators
                 : string.Empty;
         }
 
-        private static string GetPublicPropertyImplementation (Property property)
+        private static string GetPublicPropertyImplementation(Property property)
         {
             return property.IsList() || property.IsDictionary() || property.IsLookupTable()
                 ? $"=> {property.Name}Internal.AsReadOnly();"
                 : $"{{ get; internal set; }}{GetPropertyInitialization(property)}";
         }
 
-        private static string GetPublicPropertyType (Property property)
+        private static string GetPublicPropertyType(Property property)
         {
             if (property.IsList())
             {
@@ -166,23 +141,23 @@ namespace Nuke.CodeGeneration.Generators
         }
 
 
-        private static DataClassWriter WriteAssertValid (this DataClassWriter writer)
+        private static DataClassWriter WriteAssertValid(this DataClassWriter writer)
         {
             var validatedProperties = writer.DataClass.Properties.Where(x => x.Assertion != null).ToList();
             if (validatedProperties.Count == 0)
                 return writer;
 
             return writer
-                    .WriteLine("protected override void AssertValid()")
-                    .WriteBlock(w => w
-                            .WriteLine("base.AssertValid();")
-                            .ForEach(
-                                validatedProperties.Select(GetAssertion),
-                                assertion => w.WriteLine($"ControlFlow.Assert({assertion}, {assertion.DoubleQuote()});"))
-                    );
+                .WriteLine("protected override void AssertValid()")
+                .WriteBlock(w => w
+                    .WriteLine("base.AssertValid();")
+                    .ForEach(
+                        validatedProperties.Select(GetAssertion),
+                        assertion => w.WriteLine($"ControlFlow.Assert({assertion}, {assertion.DoubleQuote()});"))
+                );
         }
 
-        private static string GetAssertion (Property property)
+        private static string GetAssertion(Property property)
         {
             switch (property.Assertion)
             {
@@ -201,7 +176,7 @@ namespace Nuke.CodeGeneration.Generators
             }
         }
 
-        private static DataClassWriter WriteConfigureArguments (this DataClassWriter writer)
+        private static DataClassWriter WriteConfigureArguments(this DataClassWriter writer)
         {
             var formatProperties = writer.DataClass.Properties.Where(x => x.Format != null).ToList();
             if ((writer.DataClass as SettingsClass)?.Task.DefiniteArgument == null && formatProperties.Count == 0)
@@ -212,16 +187,16 @@ namespace Nuke.CodeGeneration.Generators
             last += ";";
 
             return writer
-                    .WriteLine("protected override Arguments ConfigureArguments(Arguments arguments)")
-                    .WriteBlock(w => w
-                            .WriteLine("arguments")
-                            .WriteLine(GetCommandAdditionOrNull(writer.DataClass))
-                            .ForEachWriteLine(argumentAdditions)
-                            .WriteLine("return base.ConfigureArguments(arguments);"));
+                .WriteLine("protected override Arguments ConfigureArguments(Arguments arguments)")
+                .WriteBlock(w => w
+                    .WriteLine("arguments")
+                    .WriteLine(GetCommandAdditionOrNull(writer.DataClass))
+                    .ForEachWriteLine(argumentAdditions)
+                    .WriteLine("return base.ConfigureArguments(arguments);"));
         }
 
         [CanBeNull]
-        private static string GetCommandAdditionOrNull (DataClass dataClass)
+        private static string GetCommandAdditionOrNull(DataClass dataClass)
         {
             var settingsClass = dataClass as SettingsClass;
             return settingsClass?.Task.DefiniteArgument != null
@@ -229,7 +204,7 @@ namespace Nuke.CodeGeneration.Generators
                 : null;
         }
 
-        private static string GetArgumentAddition (Property property)
+        private static string GetArgumentAddition(Property property)
         {
             var arguments = new List<string>
                             {

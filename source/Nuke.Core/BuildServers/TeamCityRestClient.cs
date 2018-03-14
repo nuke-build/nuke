@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -16,11 +16,11 @@ namespace Nuke.Core.BuildServers
     public interface ITeamCityRestClient
     {
         [Get("/buildQueue")]
-        Task<BuildQueue> GetBuildQueue ();
+        Task<BuildQueue> GetBuildQueue();
 
         [Headers("Accept: text/plain")]
         [Get("/builds/{build}/pin")]
-        Task<bool> IsPinned (Build build);
+        Task<bool> IsPinned(Build build);
     }
 
     [PublicAPI]
@@ -48,7 +48,7 @@ namespace Nuke.Core.BuildServers
 
         public string WebUrl { get; set; }
 
-        public override string ToString ()
+        public override string ToString()
         {
             return $"buildId:{Id.NotNull("Id != null")}";
         }

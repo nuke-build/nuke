@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -8,14 +8,13 @@ using System.Linq;
 using FluentAssertions;
 using Nuke.Common.Tools.MSBuild;
 using Nuke.Core.IO;
-using Xunit;
 
 namespace Nuke.Common.Tests
 {
     public class MSBuildParseProjectTest
     {
         [WindowsFact]
-        public void Test ()
+        public void Test()
         {
             var currentDirectory = (PathConstruction.AbsolutePath) Directory.GetCurrentDirectory();
             var projectFile = currentDirectory / ".." / ".." / ".." / ".." / "Nuke.Common" / "Nuke.Common.csproj";

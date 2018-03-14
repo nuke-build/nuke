@@ -1,54 +1,60 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Nuke.Common.IO;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Core;
 using Nuke.Core.BuildServers;
+using Nuke.Core.IO;
 using Nuke.Core.Tooling;
 
 namespace Nuke.Common.Tools.MSBuild
 {
     partial class MSBuildTasks
     {
+        private static string GetToolPath()
+        {
+            return MSBuildToolPathResolver.Resolve();
+        }
+
         public static MSBuildSettings DefaultMSBuild
         {
             get
             {
                 var toolSettings = new MSBuildSettings()
-                        .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
-                        .SetSolutionFile(NukeBuild.Instance.SolutionFile)
-                        .SetMaxCpuCount(Environment.ProcessorCount)
-                        .SetConfiguration(NukeBuild.Instance.Configuration);
+                    .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
+                    .SetSolutionFile(NukeBuild.Instance.SolutionFile)
+                    .SetMaxCpuCount(Environment.ProcessorCount)
+                    .SetConfiguration(NukeBuild.Instance.Configuration)
+                    .SetNodeReuse(NukeBuild.Instance.IsLocalBuild);
 
                 var teamCityLogger = TeamCity.Instance?.ConfigurationProperties["TEAMCITY_DOTNET_MSBUILD_EXTENSIONS4_0"];
                 if (teamCityLogger != null)
                     toolSettings = toolSettings
-                            .AddLoggers($"JetBrains.BuildServer.MSBuildLoggers.MSBuildLogger,{teamCityLogger}")
-                            .EnableNoConsoleLogger();
+                        .AddLoggers($"JetBrains.BuildServer.MSBuildLoggers.MSBuildLogger,{teamCityLogger}")
+                        .EnableNoConsoleLogger();
 
                 return toolSettings;
             }
         }
 
         public static MSBuildSettings DefaultMSBuildRestore => DefaultMSBuild
-                .SetTargets("Restore");
+            .SetTargets("Restore");
 
         public static MSBuildSettings DefaultMSBuildCompile => DefaultMSBuild
-                .SetTargets("Rebuild")
-                .SetAssemblyVersion(GitVersionAttribute.Value?.AssemblySemVer)
-                .SetFileVersion(GitVersionAttribute.Value?.FullSemVer)
-                .SetInformationalVersion(GitVersionAttribute.Value?.InformationalVersion);
+            .SetTargets("Rebuild")
+            .SetAssemblyVersion(GitVersionAttribute.Value?.GetNormalizedAssemblyVersion())
+            .SetFileVersion(GitVersionAttribute.Value?.GetNormalizedFileVersion())
+            .SetInformationalVersion(GitVersionAttribute.Value?.InformationalVersion);
 
         public static MSBuildSettings DefaultMSBuildPack => DefaultMSBuild
-                .SetTargets("Restore", "Pack")
-                .EnableIncludeSymbols()
-                .SetPackageOutputPath(NukeBuild.Instance.OutputDirectory)
-                .SetPackageVersion(GitVersionAttribute.Value?.NuGetVersionV2);
+            .SetTargets("Restore", "Pack")
+            .EnableIncludeSymbols()
+            .SetPackageOutputPath(NukeBuild.Instance.OutputDirectory)
+            .SetPackageVersion(GitVersionAttribute.Value?.NuGetVersionV2);
 
         /// <summary>
         /// Parses MSBuild project file.
@@ -63,11 +69,11 @@ namespace Nuke.Common.Tools.MSBuild
             ControlFlow.Assert((isSdkProject || isLegacyProject) && (!isSdkProject || !isLegacyProject), "Unknown format.");
 
             var toolSettings = configurator.InvokeSafe(new MSBuildSettings())
-                    .SetProjectFile(projectFile)
-                    .SetVerbosity(MSBuildVerbosity.Diagnostic)
-                    .SetTargets(Guid.NewGuid().ToString());
+                .SetProjectFile(projectFile)
+                .SetVerbosity(MSBuildVerbosity.Diagnostic)
+                .SetTargets(Guid.NewGuid().ToString());
             var processSettings = new ProcessSettings()
-                    .SetRedirectOutput(redirectOutput: true);
+                .SetRedirectOutput(redirectOutput: true);
             var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertWaitForExit();
 
@@ -78,11 +84,11 @@ namespace Nuke.Common.Tools.MSBuild
             return new MSBuildProject(isSdkProject, properties, itemGroups);
         }
 
-        private static Dictionary<string, string> ParseProperties (string[] lines)
+        private static Dictionary<string, string> ParseProperties(string[] lines)
         {
             var propertyLines = lines
-                    .SkipWhile(x => x != "Initial Properties:").Skip(count: 1)
-                    .TakeWhile(x => x != "Initial Items:").ToList();
+                .SkipWhile(x => x != "Initial Properties:").Skip(count: 1)
+                .TakeWhile(x => x != "Initial Items:").ToList();
 
             var dictionary = new Dictionary<string, string>();
             for (var i = 0; i < propertyLines.Count - 1; i++)
@@ -115,11 +121,11 @@ namespace Nuke.Common.Tools.MSBuild
             return dictionary;
         }
 
-        private static ILookup<string, string> ParseItemGroups (string[] lines)
+        private static ILookup<string, string> ParseItemGroups(string[] lines)
         {
             var itemGroupLines = lines
-                    .SkipWhile(x => x != "Initial Items:").Skip(count: 1)
-                    .TakeWhile(x => !string.IsNullOrWhiteSpace(x)).ToList();
+                .SkipWhile(x => x != "Initial Items:").Skip(count: 1)
+                .TakeWhile(x => !string.IsNullOrWhiteSpace(x)).ToList();
 
             var lookup = new LookupTable<string, string>(EqualityComparer<string>.Default);
             for (var i = 0; i < itemGroupLines.Count; i++)

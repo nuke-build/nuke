@@ -1,10 +1,11 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
@@ -16,7 +17,13 @@ namespace Nuke.CodeGeneration.Model
         [JsonIgnore]
         public Tool Tool { get; set; }
 
+        [JsonProperty(Required = Required.Always)]
+        [RegularExpression(RegexPatterns.Name)]
+        [Description("Name of the enumeration.")]
         public string Name { get; set; }
+
+        [JsonProperty(Required = Required.Always)]
+        [Description("The enumeration values.")]
         public List<string> Values { get; set; }
     }
 }

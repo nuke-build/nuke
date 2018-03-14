@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -23,12 +23,12 @@ namespace Nuke.Common.Gitter
 
     public static class GitterTasks
     {
-        public static void SendGitterMessage (string message, string roomId, string token)
+        public static void SendGitterMessage(string message, string roomId, string token)
         {
             SendGitterMessageAsync(message, roomId, token).Wait();
         }
 
-        public static async Task SendGitterMessageAsync (string message, string roomId, string token)
+        public static async Task SendGitterMessageAsync(string message, string roomId, string token)
         {
             var client = new HttpClient(new AuthenticatedHttpClientHandler(token));
 
@@ -41,12 +41,12 @@ namespace Nuke.Common.Gitter
         {
             private readonly string _token;
 
-            public AuthenticatedHttpClientHandler (string token)
+            public AuthenticatedHttpClientHandler(string token)
             {
                 _token = token;
             }
 
-            protected override async Task<HttpResponseMessage> SendAsync ([NotNull] HttpRequestMessage request, CancellationToken cancellationToken)
+            protected override async Task<HttpResponseMessage> SendAsync([NotNull] HttpRequestMessage request, CancellationToken cancellationToken)
             {
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _token);
                 return await base.SendAsync(request, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);

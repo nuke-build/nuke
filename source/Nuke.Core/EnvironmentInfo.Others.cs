@@ -1,9 +1,8 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,9 +30,8 @@ namespace Nuke.Core
             {
                 var environmentVariables = Environment.GetEnvironmentVariables();
                 return Environment.GetEnvironmentVariables().Keys.Cast<string>()
-                        .ToDictionary(x => x, x => (string) environmentVariables[x], StringComparer.OrdinalIgnoreCase);
+                    .ToDictionary(x => x, x => (string) environmentVariables[x], StringComparer.OrdinalIgnoreCase);
             }
         }
-
     }
 }

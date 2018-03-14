@@ -1,5 +1,5 @@
 
-This topic applies to: ✓ .NET Core 1.x ✓ .NET Core 2.x
+This topic applies to: ✓ .NET Core SDK 1.x ✓ .NET Core SDK 2.x
 Name
 dotnet run - Runs source code without any explicit compile or launch commands.
 Synopsis
@@ -46,6 +46,8 @@ Delimits arguments to dotnet run from arguments for the application being run. A
 Defines the build configuration. The default value is Debug.
 -f|--framework &lt;FRAMEWORK&gt;
 Builds and runs the app using the specified framework. The framework must be specified in the project file.
+--force
+Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting project.assets.json.
 -h|--help
 Prints out a short help for the command.
 --launch-profile &lt;NAME&gt;
@@ -53,6 +55,8 @@ The name of the launch profile (if any) to use when launching the application. L
 Staging and Production. For more information, see Working with multiple environments.
 --no-build
 Doesn&#39;t build the project before running.
+--no-dependencies
+When restoring a project with project-to-project (P2P) references, restores the root project and not the references.
 --no-launch-profile
 Doesn&#39;t attempt to use launchSettings.json to configure the application.
 --no-restore

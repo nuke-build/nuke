@@ -1,5 +1,8 @@
-﻿using System;
-using JetBrains.Annotations;
+﻿// Copyright Matthias Koch 2018.
+// Distributed under the MIT License.
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
+
+using System;
 using static Nuke.Core.EnvironmentInfo;
 
 namespace Nuke.Core.BuildServers
@@ -16,10 +19,10 @@ namespace Nuke.Core.BuildServers
 
         internal static bool IsRunningJenkins => Variable("JENKINS_HOME") != null;
 
-        internal Jenkins ()
+        internal Jenkins()
         {
         }
-        
+
         /// <summary>
         ///     The current build display name, such as "#14".
         /// </summary>
