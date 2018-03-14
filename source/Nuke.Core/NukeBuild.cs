@@ -72,7 +72,7 @@ namespace Nuke.Core
         /// Configuration to build. Default is <em>Debug</em> (local) or <em>Release</em> (server).
         /// </summary>
         [Parameter("Configuration to build. Default is 'Debug' (local) or 'Release' (server).")]
-        public string Configuration { get; } = EnvironmentInfo.IsLocalBuild ? "Debug" : "Release";
+        public virtual string Configuration { get; } = EnvironmentInfo.IsLocalBuild ? "Debug" : "Release";
 
         /// <summary>
         /// Disables execution of target dependencies.
