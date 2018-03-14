@@ -34,7 +34,7 @@ namespace Nuke.Core.Execution
             {
                 var backingField = member.DeclaringType.DescendantsAndSelf(x => x.GetTypeInfo().BaseType)
                     .SelectMany(x => x.GetFields(All))
-                    .SingleOrDefault(x => x.Name.StartsWith($"<{member.Name}>"));
+                    .FirstOrDefault(x => x.Name.StartsWith($"<{member.Name}>"));
 
                 if (backingField != null)
                 {
