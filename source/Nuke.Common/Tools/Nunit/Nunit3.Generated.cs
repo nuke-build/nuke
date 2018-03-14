@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,10 +25,12 @@ namespace Nuke.Common.Tools.Nunit
     [ExcludeFromCodeCoverage]
     public static partial class NunitTasks
     {
-        static partial void PreProcess (Nunit3Settings toolSettings);
-        static partial void PostProcess (Nunit3Settings toolSettings);
+        /// <summary><p>Path to the Nunit executable.</p></summary>
+        public static string NunitPath => ToolPathResolver.GetPackageExecutable("NUnit.ConsoleRunner", "nunit3-console.exe");
+        static partial void PreProcess(Nunit3Settings toolSettings);
+        static partial void PostProcess(Nunit3Settings toolSettings);
         /// <summary><p>NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href="http://www.junit.org/">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.</p><p>For more details, visit the <a href="https://www.nunit.org/">official website</a>.</p></summary>
-        public static void Nunit3 (Configure<Nunit3Settings> configurator = null, ProcessSettings processSettings = null)
+        public static void Nunit3(Configure<Nunit3Settings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new Nunit3Settings());
             PreProcess(toolSettings);
@@ -37,7 +39,7 @@ namespace Nuke.Common.Tools.Nunit
             PostProcess(toolSettings);
         }
         /// <summary><p>NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href="http://www.junit.org/">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.</p><p>For more details, visit the <a href="https://www.nunit.org/">official website</a>.</p></summary>
-        public static void Nunit3 (List<string> inputFiles, Configure<Nunit3Settings> configurator = null, ProcessSettings processSettings = null)
+        public static void Nunit3(List<string> inputFiles, Configure<Nunit3Settings> configurator = null, ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
             Nunit3(x => configurator(x).SetInputFiles(inputFiles));
@@ -51,7 +53,7 @@ namespace Nuke.Common.Tools.Nunit
     public partial class Nunit3Settings : ToolSettings
     {
         /// <summary><p>Path to the Nunit executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"NUnit.ConsoleRunner", $"nunit3-console.exe");
+        public override string ToolPath => base.ToolPath ?? NunitTasks.NunitPath;
         /// <summary><p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (.nunit) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p></summary>
         public virtual IReadOnlyList<string> InputFiles => InputFilesInternal.AsReadOnly();
         internal List<string> InputFilesInternal { get; set; } = new List<string>();

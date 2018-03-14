@@ -13,9 +13,5 @@ namespace Nuke.Common.Tools.DotCover
 
         public Action TestAction => TestActionInternal;
 
-        private string GetPackageExecutable()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

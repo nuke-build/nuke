@@ -15,6 +15,11 @@ namespace Nuke.Common.Tools.MSBuild
 {
     partial class MSBuildTasks
     {
+        private static string GetToolPath()
+        {
+            return MSBuildToolPathResolver.Resolve();
+        }
+
         public static MSBuildSettings DefaultMSBuild
         {
             get

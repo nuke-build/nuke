@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,10 +25,12 @@ namespace Nuke.Common.Tools.DotNet
     [ExcludeFromCodeCoverage]
     public static partial class DotNetTasks
     {
-        static partial void PreProcess (DotNetTestSettings toolSettings);
-        static partial void PostProcess (DotNetTestSettings toolSettings);
+        /// <summary><p>Path to the DotNet executable.</p></summary>
+        public static string DotNetPath => GetToolPath();
+        static partial void PreProcess(DotNetTestSettings toolSettings);
+        static partial void PostProcess(DotNetTestSettings toolSettings);
         /// <summary><p>The <c>dotnet test</c> command is used to execute unit tests in a given project. Unit tests are console application projects that have dependencies on the unit test framework (for example, MSTest, NUnit, or xUnit) and the dotnet test runner for the unit testing framework. These are packaged as NuGet packages and are restored as ordinary dependencies for the project.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
-        public static void DotNetTest (Configure<DotNetTestSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void DotNetTest(Configure<DotNetTestSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new DotNetTestSettings());
             PreProcess(toolSettings);
@@ -36,10 +38,10 @@ namespace Nuke.Common.Tools.DotNet
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
         }
-        static partial void PreProcess (DotNetRunSettings toolSettings);
-        static partial void PostProcess (DotNetRunSettings toolSettings);
+        static partial void PreProcess(DotNetRunSettings toolSettings);
+        static partial void PostProcess(DotNetRunSettings toolSettings);
         /// <summary><p>The <c>dotnet run</c> command provides a convenient option to run your application from the source code with one command. It's useful for fast iterative development from the command line. The command depends on the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-build"><c>dotnet build</c></a> command to build the code. Any requirements for the build, such as that the project must be restored first, apply to <c>dotnet run</c> as well.</p><p>Output files are written into the default location, which is <c>bin/&lt;configuration&gt;/&lt;target&gt;</c>. For example if you have a <c>netcoreapp1.0</c> application and you run <c>dotnet run</c>, the output is placed in <c>bin/Debug/netcoreapp1.0</c>. Files are overwritten as needed. Temporary files are placed in the <c>obj</c> directory.</p><p>If the project specifies multiple frameworks, executing <c>dotnet run</c> results in an error unless the <c>-f|--framework &lt;FRAMEWORK&gt;</c> option is used to specify the framework.</p><p>The <c>dotnet run</c> command is used in the context of projects, not built assemblies. If you're trying to run a framework-dependent application DLL instead, you must use <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet">dotnet</a> without a command. For example, to run <c>myapp.dll</c>, use: <c>dotnet myapp.dll</c></p><p>For more information on the <c>dotnet</c> driver, see the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/index">.NET Core Command Line Tools (CLI)</a> topic.</p><p>In order to run the application, the <c>dotnet run</c> command resolves the dependencies of the application that are outside of the shared runtime from the NuGet cache. Because it uses cached dependencies, it's not recommended to use <c>dotnet run</c> to run applications in production. Instead, <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index">create a deployment</a> using the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish"><c>dotnet publish</c></a> command and deploy the published output.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
-        public static void DotNetRun (Configure<DotNetRunSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void DotNetRun(Configure<DotNetRunSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new DotNetRunSettings());
             PreProcess(toolSettings);
@@ -47,10 +49,10 @@ namespace Nuke.Common.Tools.DotNet
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
         }
-        static partial void PreProcess (DotNetRestoreSettings toolSettings);
-        static partial void PostProcess (DotNetRestoreSettings toolSettings);
+        static partial void PreProcess(DotNetRestoreSettings toolSettings);
+        static partial void PostProcess(DotNetRestoreSettings toolSettings);
         /// <summary><p>The <c>dotnet restore</c> command uses NuGet to restore dependencies as well as project-specific tools that are specified in the project file. By default, the restoration of dependencies and tools are performed in parallel.</p><p>Starting with .NET Core 2.0, you don't have to run <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-restore"><c>dotnet restore</c></a> because it's run implicitly by all commands, such as <c>dotnet build</c> and <c>dotnet run</c>, that require a restore to occur. It's still a valid command in certain scenarios where doing an explicit restore makes sense, such as <a href="https://docs.microsoft.com/en-us/vsts/build-release/apps/aspnet/build-aspnet-core">continuous integration builds in Visual Studio Team Services</a> or in build systems that need to explicitly control the time at which the restore occurs.</p><p>In order to restore the dependencies, NuGet needs the feeds where the packages are located. Feeds are usually provided via the <em>NuGet.config</em> configuration file. A default configuration file is provided when the CLI tools are installed. You specify additional feeds by creating your own <em>NuGet.config</em> file in the project directory. You also specify additional feeds per invocation at a command prompt.</p><p>For dependencies, you specify where the restored packages are placed during the restore operation using the <c>--packages</c> argument. If not specified, the default NuGet package cache is used, which is found in the <c>.nuget/packages</c> directory in the user's home directory on all operating systems (for example, <em>/home/user1</em> on Linux or <em>C:\Users\user1</em> on Windows).</p><p>For project-specific tooling, <c>dotnet restore</c> first restores the package in which the tool is packed, and then proceeds to restore the tool's dependencies as specified in its project file.</p><p>The behavior of the <c>dotnet restore</c> command is affected by some of the settings in the <em>Nuget.Config</em> file, if present. For example, setting the <c>globalPackagesFolder</c> in <em>NuGet.Config</em> places the restored NuGet packages in the specified folder. This is an alternative to specifying the <c>--packages</c> option on the <c>dotnet restore</c> command. For more information, see the <a href="https://docs.microsoft.com/nuget/schema/nuget-config-file">NuGet.Config reference</a>.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
-        public static void DotNetRestore (Configure<DotNetRestoreSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void DotNetRestore(Configure<DotNetRestoreSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new DotNetRestoreSettings());
             PreProcess(toolSettings);
@@ -59,15 +61,15 @@ namespace Nuke.Common.Tools.DotNet
             PostProcess(toolSettings);
         }
         /// <summary><p>The <c>dotnet restore</c> command uses NuGet to restore dependencies as well as project-specific tools that are specified in the project file. By default, the restoration of dependencies and tools are performed in parallel.</p><p>Starting with .NET Core 2.0, you don't have to run <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-restore"><c>dotnet restore</c></a> because it's run implicitly by all commands, such as <c>dotnet build</c> and <c>dotnet run</c>, that require a restore to occur. It's still a valid command in certain scenarios where doing an explicit restore makes sense, such as <a href="https://docs.microsoft.com/en-us/vsts/build-release/apps/aspnet/build-aspnet-core">continuous integration builds in Visual Studio Team Services</a> or in build systems that need to explicitly control the time at which the restore occurs.</p><p>In order to restore the dependencies, NuGet needs the feeds where the packages are located. Feeds are usually provided via the <em>NuGet.config</em> configuration file. A default configuration file is provided when the CLI tools are installed. You specify additional feeds by creating your own <em>NuGet.config</em> file in the project directory. You also specify additional feeds per invocation at a command prompt.</p><p>For dependencies, you specify where the restored packages are placed during the restore operation using the <c>--packages</c> argument. If not specified, the default NuGet package cache is used, which is found in the <c>.nuget/packages</c> directory in the user's home directory on all operating systems (for example, <em>/home/user1</em> on Linux or <em>C:\Users\user1</em> on Windows).</p><p>For project-specific tooling, <c>dotnet restore</c> first restores the package in which the tool is packed, and then proceeds to restore the tool's dependencies as specified in its project file.</p><p>The behavior of the <c>dotnet restore</c> command is affected by some of the settings in the <em>Nuget.Config</em> file, if present. For example, setting the <c>globalPackagesFolder</c> in <em>NuGet.Config</em> places the restored NuGet packages in the specified folder. This is an alternative to specifying the <c>--packages</c> option on the <c>dotnet restore</c> command. For more information, see the <a href="https://docs.microsoft.com/nuget/schema/nuget-config-file">NuGet.Config reference</a>.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
-        public static void DotNetRestore (string projectFile, Configure<DotNetRestoreSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void DotNetRestore(string projectFile, Configure<DotNetRestoreSettings> configurator = null, ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
             DotNetRestore(x => configurator(x).SetProjectFile(projectFile));
         }
-        static partial void PreProcess (DotNetPackSettings toolSettings);
-        static partial void PostProcess (DotNetPackSettings toolSettings);
+        static partial void PreProcess(DotNetPackSettings toolSettings);
+        static partial void PostProcess(DotNetPackSettings toolSettings);
         /// <summary><p>The <c>dotnet pack</c> command builds the project and creates NuGet packages. The result of this command is a NuGet package. If the <c>--include-symbols</c> option is present, another package containing the debug symbols is created.</p><p>NuGet dependencies of the packed project are added to the <em>.nuspec</em> file, so they're properly resolved when the package is installed. Project-to-project references aren't packaged inside the project. Currently, you must have a package per project if you have project-to-project dependencies.</p><p>By default, <c>dotnet pack</c> builds the project first. If you wish to avoid this behavior, pass the <c>--no-build</c> option. This is often useful in Continuous Integration (CI) build scenarios where you know the code was previously built.</p><p>You can provide MSBuild properties to the <c>dotnet pack</c> command for the packing process. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/csproj#nuget-metadata-properties">NuGet metadata properties</a> and the <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference">MSBuild Command-Line Reference</a>.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
-        public static void DotNetPack (Configure<DotNetPackSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void DotNetPack(Configure<DotNetPackSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new DotNetPackSettings());
             PreProcess(toolSettings);
@@ -76,15 +78,15 @@ namespace Nuke.Common.Tools.DotNet
             PostProcess(toolSettings);
         }
         /// <summary><p>The <c>dotnet pack</c> command builds the project and creates NuGet packages. The result of this command is a NuGet package. If the <c>--include-symbols</c> option is present, another package containing the debug symbols is created.</p><p>NuGet dependencies of the packed project are added to the <em>.nuspec</em> file, so they're properly resolved when the package is installed. Project-to-project references aren't packaged inside the project. Currently, you must have a package per project if you have project-to-project dependencies.</p><p>By default, <c>dotnet pack</c> builds the project first. If you wish to avoid this behavior, pass the <c>--no-build</c> option. This is often useful in Continuous Integration (CI) build scenarios where you know the code was previously built.</p><p>You can provide MSBuild properties to the <c>dotnet pack</c> command for the packing process. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/csproj#nuget-metadata-properties">NuGet metadata properties</a> and the <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference">MSBuild Command-Line Reference</a>.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
-        public static void DotNetPack (string project, Configure<DotNetPackSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void DotNetPack(string project, Configure<DotNetPackSettings> configurator = null, ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
             DotNetPack(x => configurator(x).SetProject(project));
         }
-        static partial void PreProcess (DotNetBuildSettings toolSettings);
-        static partial void PostProcess (DotNetBuildSettings toolSettings);
+        static partial void PreProcess(DotNetBuildSettings toolSettings);
+        static partial void PostProcess(DotNetBuildSettings toolSettings);
         /// <summary><p>The <c>dotnet build</c> command builds the project and its dependencies into a set of binaries. The binaries include the project's code in Intermediate Language (IL) files with a <em>.dll</em> extension and symbol files used for debugging with a <em>.pdb</em> extension. A dependencies JSON file (<em>*.deps.json</em>) is produced that lists the dependencies of the application. A <em>.runtimeconfig.json</em> file is produced, which specifies the shared runtime and its version for the application.</p><p>If the project has third-party dependencies, such as libraries from NuGet, they're resolved from the NuGet cache and aren't available with the project's built output. With that in mind, the product of <c>dotnet build</c>d isn't ready to be transferred to another machine to run. This is in contrast to the behavior of the .NET Framework in which building an executable project (an application) produces output that's runnable on any machine where the .NET Framework is installed. To have a similar experience with .NET Core, you use the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish"><c>dotnet publish</c></a> command. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index">.NET Core Application Deployment</a>.</p><p>Building requires the <em>project.assets.json</em> file, which lists the dependencies of your application. The file is created <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-restore"><c>dotnet restore</c></a> is executed. Without the assets file in place, the tooling cannot resolve reference assemblies, which will result in errors. With .NET Core 1.x SDK, you needed to explicitily run the <c>dotnet restore</c> before running <c>dotnet build</c>. Starting with .NET Core 2.0 SDK, <c>dotnet restore</c> runs implicitily when you run <c>dotnet build</c>. If you want to disable implicit restore when running the build command, you can pass the <c>--no-restore</c> option.</p><p><c>dotnet build</c> uses MSBuild to build the project; thus, it supports both parallel and incremental builds. Refer to <a href="https://docs.microsoft.com/visualstudio/msbuild/incremental-builds">Incremental Builds</a> for more information.</p><p>In addition to its options, the <c>dotnet build</c> command accepts MSBuild options, such as <c>/p</c> for setting properties or <c>/l</c> to define a logger. Learn more about these options in the <a href="https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference">MSBuild Command-Line Reference</a>.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
-        public static void DotNetBuild (Configure<DotNetBuildSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void DotNetBuild(Configure<DotNetBuildSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new DotNetBuildSettings());
             PreProcess(toolSettings);
@@ -93,15 +95,32 @@ namespace Nuke.Common.Tools.DotNet
             PostProcess(toolSettings);
         }
         /// <summary><p>The <c>dotnet build</c> command builds the project and its dependencies into a set of binaries. The binaries include the project's code in Intermediate Language (IL) files with a <em>.dll</em> extension and symbol files used for debugging with a <em>.pdb</em> extension. A dependencies JSON file (<em>*.deps.json</em>) is produced that lists the dependencies of the application. A <em>.runtimeconfig.json</em> file is produced, which specifies the shared runtime and its version for the application.</p><p>If the project has third-party dependencies, such as libraries from NuGet, they're resolved from the NuGet cache and aren't available with the project's built output. With that in mind, the product of <c>dotnet build</c>d isn't ready to be transferred to another machine to run. This is in contrast to the behavior of the .NET Framework in which building an executable project (an application) produces output that's runnable on any machine where the .NET Framework is installed. To have a similar experience with .NET Core, you use the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish"><c>dotnet publish</c></a> command. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index">.NET Core Application Deployment</a>.</p><p>Building requires the <em>project.assets.json</em> file, which lists the dependencies of your application. The file is created <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-restore"><c>dotnet restore</c></a> is executed. Without the assets file in place, the tooling cannot resolve reference assemblies, which will result in errors. With .NET Core 1.x SDK, you needed to explicitily run the <c>dotnet restore</c> before running <c>dotnet build</c>. Starting with .NET Core 2.0 SDK, <c>dotnet restore</c> runs implicitily when you run <c>dotnet build</c>. If you want to disable implicit restore when running the build command, you can pass the <c>--no-restore</c> option.</p><p><c>dotnet build</c> uses MSBuild to build the project; thus, it supports both parallel and incremental builds. Refer to <a href="https://docs.microsoft.com/visualstudio/msbuild/incremental-builds">Incremental Builds</a> for more information.</p><p>In addition to its options, the <c>dotnet build</c> command accepts MSBuild options, such as <c>/p</c> for setting properties or <c>/l</c> to define a logger. Learn more about these options in the <a href="https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference">MSBuild Command-Line Reference</a>.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
-        public static void DotNetBuild (string projectFile, Configure<DotNetBuildSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void DotNetBuild(string projectFile, Configure<DotNetBuildSettings> configurator = null, ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
             DotNetBuild(x => configurator(x).SetProjectFile(projectFile));
         }
-        static partial void PreProcess (DotNetPublishSettings toolSettings);
-        static partial void PostProcess (DotNetPublishSettings toolSettings);
+        static partial void PreProcess(DotNetCleanSettings toolSettings);
+        static partial void PostProcess(DotNetCleanSettings toolSettings);
+        /// <summary><p>The <c>dotnet clean</c> command cleans the output of the previous build. It's implemented as an <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-targets">MSBuild target</a>, so the project is evaluated when the command is run. Only the outputs created during the build are cleaned. Both intermediate <em>(obj)</em> and final output <em>(bin)</em> folders are cleaned.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
+        public static void DotNetClean(Configure<DotNetCleanSettings> configurator = null, ProcessSettings processSettings = null)
+        {
+            var toolSettings = configurator.InvokeSafe(new DotNetCleanSettings());
+            PreProcess(toolSettings);
+            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            process.AssertZeroExitCode();
+            PostProcess(toolSettings);
+        }
+        /// <summary><p>The <c>dotnet clean</c> command cleans the output of the previous build. It's implemented as an <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-targets">MSBuild target</a>, so the project is evaluated when the command is run. Only the outputs created during the build are cleaned. Both intermediate <em>(obj)</em> and final output <em>(bin)</em> folders are cleaned.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
+        public static void DotNetClean(string project, Configure<DotNetCleanSettings> configurator = null, ProcessSettings processSettings = null)
+        {
+            configurator = configurator ?? (x => x);
+            DotNetClean(x => configurator(x).SetProject(project));
+        }
+        static partial void PreProcess(DotNetPublishSettings toolSettings);
+        static partial void PostProcess(DotNetPublishSettings toolSettings);
         /// <summary><p><c>dotnet publish</c> compiles the application, reads through its dependencies specified in the project file, and publishes the resulting set of files to a directory. The output will contain the following:<para/><ul><li>Intermediate Language (IL) code in an assembly with a <em>dll</em> extension.</li><li><em>.deps.json</em> file that contains all of the dependencies of the project.</li><li><em>.runtime.config.json</em> file that specifies the shared runtime that the application expects, as well as other configuration options for the runtime (for example, garbage collection type).</li><li>The application's dependencies. These are copied from the NuGet cache into the output folder.</li></ul><para/>The <c>dotnet publish</c> command's output is ready for deployment to a hosting system (for example, a server, PC, Mac, laptop) for execution and is the only officially supported way to prepare the application for deployment. Depending on the type of deployment that the project specifies, the hosting system may or may not have the .NET Core shared runtime installed on it. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index">.NET Core Application Deployment</a>. For the directory structure of a published application, see <a href="https://docs.microsoft.com/en-us/aspnet/core/hosting/directory-structure">Directory structure</a>.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
-        public static void DotNetPublish (Configure<DotNetPublishSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void DotNetPublish(Configure<DotNetPublishSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new DotNetPublishSettings());
             PreProcess(toolSettings);
@@ -109,10 +128,10 @@ namespace Nuke.Common.Tools.DotNet
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
         }
-        static partial void PreProcess (DotNetNuGetPushSettings toolSettings);
-        static partial void PostProcess (DotNetNuGetPushSettings toolSettings);
+        static partial void PreProcess(DotNetNuGetPushSettings toolSettings);
+        static partial void PostProcess(DotNetNuGetPushSettings toolSettings);
         /// <summary><p>Pushes a package to the server and publishes it.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
-        public static void DotNetNuGetPush (Configure<DotNetNuGetPushSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void DotNetNuGetPush(Configure<DotNetNuGetPushSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new DotNetNuGetPushSettings());
             PreProcess(toolSettings);
@@ -126,8 +145,10 @@ namespace Nuke.Common.Tools.DotNet
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class DotNetTestSettings : DotNetSettings
+    public partial class DotNetTestSettings : ToolSettings
     {
+        /// <summary><p>Path to the DotNet executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
         /// <summary><p>Specifies a path to the test project. If omitted, it defaults to current directory.</p></summary>
         public virtual string ProjectFile { get; internal set; }
         /// <summary><p>Use the custom test adapters from the specified path in the test run.</p></summary>
@@ -186,8 +207,10 @@ namespace Nuke.Common.Tools.DotNet
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class DotNetRunSettings : DotNetSettings
+    public partial class DotNetRunSettings : ToolSettings
     {
+        /// <summary><p>Path to the DotNet executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
         /// <summary><p>Configuration to use for building the project. The default value is Debug.</p></summary>
         public virtual string Configuration { get; internal set; }
         /// <summary><p>Builds and runs the app using the specified framework. The framework must be specified in the project file.</p></summary>
@@ -234,8 +257,10 @@ namespace Nuke.Common.Tools.DotNet
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class DotNetRestoreSettings : DotNetSettings
+    public partial class DotNetRestoreSettings : ToolSettings
     {
+        /// <summary><p>Path to the DotNet executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
         /// <summary><p>Optional path to the project file to restore.</p></summary>
         public virtual string ProjectFile { get; internal set; }
         /// <summary><p>The NuGet configuration file (<em>NuGet.config</em>) to use for the restore operation.</p></summary>
@@ -283,8 +308,10 @@ namespace Nuke.Common.Tools.DotNet
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class DotNetPackSettings : DotNetSettings
+    public partial class DotNetPackSettings : ToolSettings
     {
+        /// <summary><p>Path to the DotNet executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
         /// <summary><p>The project to pack. It's either a path to a csproj file or to a directory. If omitted, it defaults to the current directory.</p></summary>
         public virtual string Project { get; internal set; }
         /// <summary><p>Configuration to use when building the project. If not specified, configuration defaults to <c>Debug</c>.</p></summary>
@@ -341,8 +368,10 @@ namespace Nuke.Common.Tools.DotNet
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class DotNetBuildSettings : DotNetSettings
+    public partial class DotNetBuildSettings : ToolSettings
     {
+        /// <summary><p>Path to the DotNet executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
         /// <summary><p>The project file to build. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in proj and uses that file.</p></summary>
         public virtual string ProjectFile { get; internal set; }
         /// <summary><p>Defines the build configuration. If omitted, the build configuration defaults to <c>Debug</c>. Use <c>Release</c> build a Release configuration.</p></summary>
@@ -388,13 +417,50 @@ namespace Nuke.Common.Tools.DotNet
         }
     }
     #endregion
+    #region DotNetCleanSettings
+    /// <summary><p>Used within <see cref="DotNetTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class DotNetCleanSettings : ToolSettings
+    {
+        /// <summary><p>Path to the DotNet executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
+        /// <summary><p>The MSBuild project to clean. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in <em>proj</em> and uses that file.</p></summary>
+        public virtual string Project { get; internal set; }
+        /// <summary><p>Defines the build configuration. The default value is <c>Debug</c>. This option is only required when cleaning if you specified it during build time.</p></summary>
+        public virtual string Configuration { get; internal set; }
+        /// <summary><p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">framework</a> that was specified at build time. The framework must be defined in the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/csproj">project file</a>. If you specified the framework at build time, you must specify the framework when cleaning.</p></summary>
+        public virtual string Framework { get; internal set; }
+        /// <summary><p>Directory in which the build outputs are placed. Specify the <c>--framework</c> switch with the output directory switch if you specified the framework when the project was built.</p></summary>
+        public virtual string Output { get; internal set; }
+        /// <summary><p>Cleans the output folder of the specified runtime. This is used when a <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index#self-contained-deployments-scd">self-contained deployment</a> was created.</p></summary>
+        public virtual string Runtime { get; internal set; }
+        /// <summary><p>Sets the verbosity level of the command. Allowed levels are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].</p></summary>
+        public virtual DotNetVerbosity Verbosity { get; internal set; }
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("clean")
+              .Add("{value}", Project)
+              .Add("--configuration {value}", Configuration)
+              .Add("--framework {value}", Framework)
+              .Add("--output {value}", Output)
+              .Add("--runtime {value}", Runtime)
+              .Add("--verbosity {value}", Verbosity);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
     #region DotNetPublishSettings
     /// <summary><p>Used within <see cref="DotNetTasks"/>.</p></summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class DotNetPublishSettings : DotNetSettings
+    public partial class DotNetPublishSettings : ToolSettings
     {
+        /// <summary><p>Path to the DotNet executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
         /// <summary><p>The project to publish, which defaults to the current directory if not specified.</p></summary>
         public virtual string Project { get; internal set; }
         /// <summary><p>Defines the build configuration. The default value is <c>Debug</c>.</p></summary>
@@ -434,7 +500,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--no-dependencies", NoDependencies)
               .Add("--no-restore", NoRestore)
               .Add("--output {value}", Output)
-              .Add("--self-contained", SelfContained)
+              .Add("--self-contained {value}", SelfContained)
               .Add("--runtime {value}", Runtime)
               .Add("--verbosity {value}", Verbosity)
               .Add("--version-suffix {value}", VersionSuffix)
@@ -448,8 +514,10 @@ namespace Nuke.Common.Tools.DotNet
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class DotNetNuGetPushSettings : DotNetSettings
+    public partial class DotNetNuGetPushSettings : ToolSettings
     {
+        /// <summary><p>Path to the DotNet executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
         /// <summary><p>Path of the package to push.</p></summary>
         public virtual string TargetPath { get; internal set; }
         /// <summary><p>Specifies the server URL. This option is required unless <c>DefaultPushSource</c> config value is set in the NuGet config file.</p></summary>
@@ -2973,6 +3041,122 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #endregion
+    }
+    #endregion
+    #region DotNetCleanSettingsExtensions
+    /// <summary><p>Used within <see cref="DotNetTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class DotNetCleanSettingsExtensions
+    {
+        #region Project
+        /// <summary><p><em>Sets <see cref="DotNetCleanSettings.Project"/>.</em></p><p>The MSBuild project to clean. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in <em>proj</em> and uses that file.</p></summary>
+        [Pure]
+        public static DotNetCleanSettings SetProject(this DotNetCleanSettings toolSettings, string project)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Project = project;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetCleanSettings.Project"/>.</em></p><p>The MSBuild project to clean. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in <em>proj</em> and uses that file.</p></summary>
+        [Pure]
+        public static DotNetCleanSettings ResetProject(this DotNetCleanSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Project = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Configuration
+        /// <summary><p><em>Sets <see cref="DotNetCleanSettings.Configuration"/>.</em></p><p>Defines the build configuration. The default value is <c>Debug</c>. This option is only required when cleaning if you specified it during build time.</p></summary>
+        [Pure]
+        public static DotNetCleanSettings SetConfiguration(this DotNetCleanSettings toolSettings, string configuration)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Configuration = configuration;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetCleanSettings.Configuration"/>.</em></p><p>Defines the build configuration. The default value is <c>Debug</c>. This option is only required when cleaning if you specified it during build time.</p></summary>
+        [Pure]
+        public static DotNetCleanSettings ResetConfiguration(this DotNetCleanSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Configuration = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Framework
+        /// <summary><p><em>Sets <see cref="DotNetCleanSettings.Framework"/>.</em></p><p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">framework</a> that was specified at build time. The framework must be defined in the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/csproj">project file</a>. If you specified the framework at build time, you must specify the framework when cleaning.</p></summary>
+        [Pure]
+        public static DotNetCleanSettings SetFramework(this DotNetCleanSettings toolSettings, string framework)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = framework;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetCleanSettings.Framework"/>.</em></p><p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">framework</a> that was specified at build time. The framework must be defined in the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/csproj">project file</a>. If you specified the framework at build time, you must specify the framework when cleaning.</p></summary>
+        [Pure]
+        public static DotNetCleanSettings ResetFramework(this DotNetCleanSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Output
+        /// <summary><p><em>Sets <see cref="DotNetCleanSettings.Output"/>.</em></p><p>Directory in which the build outputs are placed. Specify the <c>--framework</c> switch with the output directory switch if you specified the framework when the project was built.</p></summary>
+        [Pure]
+        public static DotNetCleanSettings SetOutput(this DotNetCleanSettings toolSettings, string output)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Output = output;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetCleanSettings.Output"/>.</em></p><p>Directory in which the build outputs are placed. Specify the <c>--framework</c> switch with the output directory switch if you specified the framework when the project was built.</p></summary>
+        [Pure]
+        public static DotNetCleanSettings ResetOutput(this DotNetCleanSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Output = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Runtime
+        /// <summary><p><em>Sets <see cref="DotNetCleanSettings.Runtime"/>.</em></p><p>Cleans the output folder of the specified runtime. This is used when a <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index#self-contained-deployments-scd">self-contained deployment</a> was created.</p></summary>
+        [Pure]
+        public static DotNetCleanSettings SetRuntime(this DotNetCleanSettings toolSettings, string runtime)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Runtime = runtime;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetCleanSettings.Runtime"/>.</em></p><p>Cleans the output folder of the specified runtime. This is used when a <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index#self-contained-deployments-scd">self-contained deployment</a> was created.</p></summary>
+        [Pure]
+        public static DotNetCleanSettings ResetRuntime(this DotNetCleanSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Runtime = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Verbosity
+        /// <summary><p><em>Sets <see cref="DotNetCleanSettings.Verbosity"/>.</em></p><p>Sets the verbosity level of the command. Allowed levels are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].</p></summary>
+        [Pure]
+        public static DotNetCleanSettings SetVerbosity(this DotNetCleanSettings toolSettings, DotNetVerbosity verbosity)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = verbosity;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetCleanSettings.Verbosity"/>.</em></p><p>Sets the verbosity level of the command. Allowed levels are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].</p></summary>
+        [Pure]
+        public static DotNetCleanSettings ResetVerbosity(this DotNetCleanSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = null;
+            return toolSettings;
+        }
         #endregion
     }
     #endregion

@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,10 +25,12 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
     [ExcludeFromCodeCoverage]
     public static partial class WebConfigTransformRunnerTasks
     {
-        static partial void PreProcess (WebConfigTransformRunnerSettings toolSettings);
-        static partial void PostProcess (WebConfigTransformRunnerSettings toolSettings);
+        /// <summary><p>Path to the WebConfigTransformRunner executable.</p></summary>
+        public static string WebConfigTransformRunnerPath => ToolPathResolver.GetPackageExecutable("WebConfigTransformRunner", "WebConfigTransformRunner.exe");
+        static partial void PreProcess(WebConfigTransformRunnerSettings toolSettings);
+        static partial void PostProcess(WebConfigTransformRunnerSettings toolSettings);
         /// <summary><p>This is a commandline tool to run an ASP.Net web.config tranformation.</p><p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p></summary>
-        public static void WebConfigTransformRunner (Configure<WebConfigTransformRunnerSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void WebConfigTransformRunner(Configure<WebConfigTransformRunnerSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new WebConfigTransformRunnerSettings());
             PreProcess(toolSettings);
@@ -45,7 +47,7 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
     public partial class WebConfigTransformRunnerSettings : ToolSettings
     {
         /// <summary><p>Path to the WebConfigTransformRunner executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"WebConfigTransformRunner", $"WebConfigTransformRunner.exe");
+        public override string ToolPath => base.ToolPath ?? WebConfigTransformRunnerTasks.WebConfigTransformRunnerPath;
         /// <summary><p>The base web.config file</p></summary>
         public virtual string WebConfigFilename  { get; internal set; }
         /// <summary><p>The transformation web.config file</p></summary>

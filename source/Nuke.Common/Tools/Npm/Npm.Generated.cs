@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,10 +25,12 @@ namespace Nuke.Common.Tools.Npm
     [ExcludeFromCodeCoverage]
     public static partial class NpmTasks
     {
-        static partial void PreProcess (NpmInstallSettings toolSettings);
-        static partial void PostProcess (NpmInstallSettings toolSettings);
+        /// <summary><p>Path to the Npm executable.</p></summary>
+        public static string NpmPath => ToolPathResolver.GetPathExecutable("npm");
+        static partial void PreProcess(NpmInstallSettings toolSettings);
+        static partial void PostProcess(NpmInstallSettings toolSettings);
         /// <summary><p>Installs a package, and any packages that it depends on. If the package has a package-lock or shrinkwrap file, the installation of dependencies will be driven by that, with an <b>npm-shrinkwrap.json</b> taking precedence if both files exist. See <a href="https://docs.npmjs.com/files/package-lock.json">package-lock.json</a> and <a href="https://docs.npmjs.com/cli/shrinkwrap">npm-shrinkwrap</a>.<para/>A package is: <ul><li>a) A folder containing a program described by a <a href="https://docs.npmjs.com/files/package.json">package.json file</a></li><li>b) A gzipped tarball containing (b)</li><li>c) A url that resolves to (b)</li><li>d) a <c>&lt;name&gt;@&lt;version&gt;</c> that is published on the registry (see <a href="https://docs.npmjs.com/misc/registry">npm-registry</a>) with (c)</li><li>e) a <c>&lt;name&gt;@&lt;tag&gt;</c> (see <a href="https://docs.npmjs.com/cli/dist-tag">npm-dist-tag</a>) that points to (d)</li><li>f) a <c>&lt;name&gt;</c> that has a "latest" tag satisfying (e)</li><li>g) a <c>&lt;git remote url&gt;</c> that resolves to (a)</li></ul></p><p>For more details, visit the <a href="https://www.npmjs.com/">official website</a>.</p></summary>
-        public static void NpmInstall (Configure<NpmInstallSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void NpmInstall(Configure<NpmInstallSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new NpmInstallSettings());
             PreProcess(toolSettings);
@@ -36,10 +38,10 @@ namespace Nuke.Common.Tools.Npm
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
         }
-        static partial void PreProcess (NpmRunSettings toolSettings);
-        static partial void PostProcess (NpmRunSettings toolSettings);
+        static partial void PreProcess(NpmRunSettings toolSettings);
+        static partial void PostProcess(NpmRunSettings toolSettings);
         /// <summary><p>Runs an arbitrary command from a package's <c>"scripts"</c> object. If no <c>"command"</c> is provided, it will list the available scripts. <c>run[-script]</c> is used by the test, start, restart, and stop commands, but can be called directly, as well. When the scripts in the package are printed out, they're separated into lifecycle (test, start, restart) and directly-run scripts."</p><p>For more details, visit the <a href="https://www.npmjs.com/">official website</a>.</p></summary>
-        public static void NpmRun (Configure<NpmRunSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void NpmRun(Configure<NpmRunSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new NpmRunSettings());
             PreProcess(toolSettings);
@@ -56,7 +58,7 @@ namespace Nuke.Common.Tools.Npm
     public partial class NpmInstallSettings : ToolSettings
     {
         /// <summary><p>Path to the Npm executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPathExecutable($"npm");
+        public override string ToolPath => base.ToolPath ?? NpmTasks.NpmPath;
         /// <summary><p>List of packages to be installed.</p></summary>
         public virtual IReadOnlyList<string> Packages => PackagesInternal.AsReadOnly();
         internal List<string> PackagesInternal { get; set; } = new List<string>();
@@ -113,7 +115,7 @@ namespace Nuke.Common.Tools.Npm
     public partial class NpmRunSettings : ToolSettings
     {
         /// <summary><p>Path to the Npm executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPathExecutable($"npm");
+        public override string ToolPath => base.ToolPath ?? NpmTasks.NpmPath;
         /// <summary><p>The command to be executed.</p></summary>
         public virtual string Command { get; internal set; }
         /// <summary><p>Arguments passed to the script.</p></summary>

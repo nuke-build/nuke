@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,10 +25,12 @@ namespace Nuke.Common.Tools.InspectCode
     [ExcludeFromCodeCoverage]
     public static partial class InspectCodeTasks
     {
-        static partial void PreProcess (InspectCodeSettings toolSettings);
-        static partial void PostProcess (InspectCodeSettings toolSettings);
+        /// <summary><p>Path to the InspectCode executable.</p></summary>
+        public static string InspectCodePath => ToolPathResolver.GetPackageExecutable("JetBrains.ReSharper.CommandLineTools", GetPackageExecutable());
+        static partial void PreProcess(InspectCodeSettings toolSettings);
+        static partial void PostProcess(InspectCodeSettings toolSettings);
         /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p><p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p></summary>
-        public static void InspectCode (Configure<InspectCodeSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void InspectCode(Configure<InspectCodeSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new InspectCodeSettings());
             PreProcess(toolSettings);
@@ -37,13 +39,13 @@ namespace Nuke.Common.Tools.InspectCode
             PostProcess(toolSettings);
         }
         /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p><p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p></summary>
-        public static void InspectCode (string targetPath, Configure<InspectCodeSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void InspectCode(string targetPath, Configure<InspectCodeSettings> configurator = null, ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
             InspectCode(x => configurator(x).SetTargetPath(targetPath));
         }
         /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p><p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p></summary>
-        public static void InspectCode (string targetPath, string output, Configure<InspectCodeSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void InspectCode(string targetPath, string output, Configure<InspectCodeSettings> configurator = null, ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
             InspectCode(targetPath, x => configurator(x).SetOutput(output));
@@ -57,7 +59,7 @@ namespace Nuke.Common.Tools.InspectCode
     public partial class InspectCodeSettings : ToolSettings
     {
         /// <summary><p>Path to the InspectCode executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"JetBrains.ReSharper.CommandLineTools", $"{GetPackageExecutable()}");
+        public override string ToolPath => base.ToolPath ?? InspectCodeTasks.InspectCodePath;
         /// <summary><p>Target path.</p></summary>
         public virtual string TargetPath { get; internal set; }
         /// <summary><p>Lets you set the output file. By default, the output file is saved in the <em>%TEMP%</em> directory.</p></summary>

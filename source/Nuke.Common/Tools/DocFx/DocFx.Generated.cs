@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,10 +25,12 @@ namespace Nuke.Common.Tools.DocFx
     [ExcludeFromCodeCoverage]
     public static partial class DocFxTasks
     {
-        static partial void PreProcess (DocFxMetadataSettings toolSettings);
-        static partial void PostProcess (DocFxMetadataSettings toolSettings);
+        /// <summary><p>Path to the DocFx executable.</p></summary>
+        public static string DocFxPath => ToolPathResolver.GetPackageExecutable("docfx.console", "docfx.exe");
+        static partial void PreProcess(DocFxMetadataSettings toolSettings);
+        static partial void PostProcess(DocFxMetadataSettings toolSettings);
         /// <summary><p>DocFX is an API documentation generator for .NET, and currently it supports C# and VB. It generates API reference documentation from triple-slash comments in your source code. It also allows you to use Markdown files to create additional topics such as tutorials and how-tos, and to customize the generated reference documentation. DocFX builds a static HTML website from your source code and Markdown files, which can be easily hosted on any web servers (for example, <em>github.io</em>). Also, DocFX provides you the flexibility to customize the layout and style of your website through templates. If you are interested in creating your own website with your own styles, you can follow <a href="http://dotnet.github.io/docfx/tutorial/howto_create_custom_template.html">how to create custom template</a> to create custom templates.</p><p>For more details, visit the <a href="https://dotnet.github.io/docfx/">official website</a>.</p></summary>
-        public static void DocFxMetadata (Configure<DocFxMetadataSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void DocFxMetadata(Configure<DocFxMetadataSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new DocFxMetadataSettings());
             PreProcess(toolSettings);
@@ -37,15 +39,15 @@ namespace Nuke.Common.Tools.DocFx
             PostProcess(toolSettings);
         }
         /// <summary><p>DocFX is an API documentation generator for .NET, and currently it supports C# and VB. It generates API reference documentation from triple-slash comments in your source code. It also allows you to use Markdown files to create additional topics such as tutorials and how-tos, and to customize the generated reference documentation. DocFX builds a static HTML website from your source code and Markdown files, which can be easily hosted on any web servers (for example, <em>github.io</em>). Also, DocFX provides you the flexibility to customize the layout and style of your website through templates. If you are interested in creating your own website with your own styles, you can follow <a href="http://dotnet.github.io/docfx/tutorial/howto_create_custom_template.html">how to create custom template</a> to create custom templates.</p><p>For more details, visit the <a href="https://dotnet.github.io/docfx/">official website</a>.</p></summary>
-        public static void DocFxMetadata (string configPath, Configure<DocFxMetadataSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void DocFxMetadata(string configPath, Configure<DocFxMetadataSettings> configurator = null, ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
             DocFxMetadata(x => configurator(x).SetConfigPath(configPath));
         }
-        static partial void PreProcess (DocFxBuildSettings toolSettings);
-        static partial void PostProcess (DocFxBuildSettings toolSettings);
+        static partial void PreProcess(DocFxBuildSettings toolSettings);
+        static partial void PostProcess(DocFxBuildSettings toolSettings);
         /// <summary><p>DocFX is an API documentation generator for .NET, and currently it supports C# and VB. It generates API reference documentation from triple-slash comments in your source code. It also allows you to use Markdown files to create additional topics such as tutorials and how-tos, and to customize the generated reference documentation. DocFX builds a static HTML website from your source code and Markdown files, which can be easily hosted on any web servers (for example, <em>github.io</em>). Also, DocFX provides you the flexibility to customize the layout and style of your website through templates. If you are interested in creating your own website with your own styles, you can follow <a href="http://dotnet.github.io/docfx/tutorial/howto_create_custom_template.html">how to create custom template</a> to create custom templates.</p><p>For more details, visit the <a href="https://dotnet.github.io/docfx/">official website</a>.</p></summary>
-        public static void DocFxBuild (Configure<DocFxBuildSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void DocFxBuild(Configure<DocFxBuildSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new DocFxBuildSettings());
             PreProcess(toolSettings);
@@ -54,7 +56,7 @@ namespace Nuke.Common.Tools.DocFx
             PostProcess(toolSettings);
         }
         /// <summary><p>DocFX is an API documentation generator for .NET, and currently it supports C# and VB. It generates API reference documentation from triple-slash comments in your source code. It also allows you to use Markdown files to create additional topics such as tutorials and how-tos, and to customize the generated reference documentation. DocFX builds a static HTML website from your source code and Markdown files, which can be easily hosted on any web servers (for example, <em>github.io</em>). Also, DocFX provides you the flexibility to customize the layout and style of your website through templates. If you are interested in creating your own website with your own styles, you can follow <a href="http://dotnet.github.io/docfx/tutorial/howto_create_custom_template.html">how to create custom template</a> to create custom templates.</p><p>For more details, visit the <a href="https://dotnet.github.io/docfx/">official website</a>.</p></summary>
-        public static void DocFxBuild (string configPath, Configure<DocFxBuildSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void DocFxBuild(string configPath, Configure<DocFxBuildSettings> configurator = null, ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
             DocFxBuild(x => configurator(x).SetConfigPath(configPath));
@@ -68,7 +70,7 @@ namespace Nuke.Common.Tools.DocFx
     public partial class DocFxMetadataSettings : ToolSettings
     {
         /// <summary><p>Path to the DocFx executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"docfx.console", $"docfx.exe");
+        public override string ToolPath => base.ToolPath ?? DocFxTasks.DocFxPath;
         /// <summary><p>Path to the docfx.json configuration file.</p></summary>
         public virtual string ConfigPath { get; internal set; }
         /// <summary><p>Force re-generate all the metadata.</p></summary>
@@ -106,7 +108,7 @@ namespace Nuke.Common.Tools.DocFx
     public partial class DocFxBuildSettings : ToolSettings
     {
         /// <summary><p>Path to the DocFx executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"docfx.console", $"docfx.exe");
+        public override string ToolPath => base.ToolPath ?? DocFxTasks.DocFxPath;
         /// <summary><p>Path to the docfx.json configuration file.</p></summary>
         public virtual string ConfigPath { get; internal set; }
         /// <summary><p>Force re-generate all the metadata.</p></summary>

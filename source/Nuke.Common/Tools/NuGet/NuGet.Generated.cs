@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,10 +25,12 @@ namespace Nuke.Common.Tools.NuGet
     [ExcludeFromCodeCoverage]
     public static partial class NuGetTasks
     {
-        static partial void PreProcess (NuGetPushSettings toolSettings);
-        static partial void PostProcess (NuGetPushSettings toolSettings);
+        /// <summary><p>Path to the NuGet executable.</p></summary>
+        public static string NuGetPath => GetToolPath();
+        static partial void PreProcess(NuGetPushSettings toolSettings);
+        static partial void PostProcess(NuGetPushSettings toolSettings);
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static void NuGetPush (Configure<NuGetPushSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void NuGetPush(Configure<NuGetPushSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new NuGetPushSettings());
             PreProcess(toolSettings);
@@ -36,10 +38,10 @@ namespace Nuke.Common.Tools.NuGet
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
         }
-        static partial void PreProcess (NuGetPackSettings toolSettings);
-        static partial void PostProcess (NuGetPackSettings toolSettings);
+        static partial void PreProcess(NuGetPackSettings toolSettings);
+        static partial void PostProcess(NuGetPackSettings toolSettings);
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static void NuGetPack (Configure<NuGetPackSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void NuGetPack(Configure<NuGetPackSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new NuGetPackSettings());
             PreProcess(toolSettings);
@@ -48,21 +50,21 @@ namespace Nuke.Common.Tools.NuGet
             PostProcess(toolSettings);
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static void NuGetPack (string targetPath, Configure<NuGetPackSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void NuGetPack(string targetPath, Configure<NuGetPackSettings> configurator = null, ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
             NuGetPack(x => configurator(x).SetTargetPath(targetPath));
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static void NuGetPack (string targetPath, string version, Configure<NuGetPackSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void NuGetPack(string targetPath, string version, Configure<NuGetPackSettings> configurator = null, ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
             NuGetPack(targetPath, x => configurator(x).SetVersion(version));
         }
-        static partial void PreProcess (NuGetRestoreSettings toolSettings);
-        static partial void PostProcess (NuGetRestoreSettings toolSettings);
+        static partial void PreProcess(NuGetRestoreSettings toolSettings);
+        static partial void PostProcess(NuGetRestoreSettings toolSettings);
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static void NuGetRestore (Configure<NuGetRestoreSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void NuGetRestore(Configure<NuGetRestoreSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new NuGetRestoreSettings());
             PreProcess(toolSettings);
@@ -71,7 +73,7 @@ namespace Nuke.Common.Tools.NuGet
             PostProcess(toolSettings);
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static void NuGetRestore (string targetPath, Configure<NuGetRestoreSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void NuGetRestore(string targetPath, Configure<NuGetRestoreSettings> configurator = null, ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
             NuGetRestore(x => configurator(x).SetTargetPath(targetPath));
@@ -82,8 +84,10 @@ namespace Nuke.Common.Tools.NuGet
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class NuGetPushSettings : NuGetSettings
+    public partial class NuGetPushSettings : ToolSettings
     {
+        /// <summary><p>Path to the NuGet executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
         /// <summary><p>Path of the package to push.</p></summary>
         public virtual string TargetPath { get; internal set; }
         /// <summary><p>The API key for the target repository. If not present, the one specified in <em>%AppData%\NuGet\NuGet.Config</em> is used.</p></summary>
@@ -139,8 +143,10 @@ namespace Nuke.Common.Tools.NuGet
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class NuGetPackSettings : NuGetSettings
+    public partial class NuGetPackSettings : ToolSettings
     {
+        /// <summary><p>Path to the NuGet executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
         /// <summary><p>The <c>.nuspec</c> or <c>.csproj</c> file.</p></summary>
         public virtual string TargetPath { get; internal set; }
         /// <summary><p>Sets the base path of the files defined in the <c>.nuspec</c> file.</p></summary>
@@ -218,8 +224,10 @@ namespace Nuke.Common.Tools.NuGet
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class NuGetRestoreSettings : NuGetSettings
+    public partial class NuGetRestoreSettings : ToolSettings
     {
+        /// <summary><p>Path to the NuGet executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
         /// <summary><p>Defines the project to restore. I.e., the location of a solution file, a <c>packages.config</c>, or a <c>project.json</c> file.</p></summary>
         public virtual string TargetPath { get; internal set; }
         /// <summary><p>The NuGet configuration file to apply. If not specified, <em>%AppData%\NuGet\NuGet.Config</em> is used.</p></summary>

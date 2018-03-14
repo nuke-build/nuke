@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,10 +25,12 @@ namespace Nuke.Common.Tools.MSBuild
     [ExcludeFromCodeCoverage]
     public static partial class MSBuildTasks
     {
-        static partial void PreProcess (MSBuildSettings toolSettings);
-        static partial void PostProcess (MSBuildSettings toolSettings);
+        /// <summary><p>Path to the MSBuild executable.</p></summary>
+        public static string MSBuildPath => GetToolPath();
+        static partial void PreProcess(MSBuildSettings toolSettings);
+        static partial void PostProcess(MSBuildSettings toolSettings);
         /// <summary><p>The Microsoft Build Engine is a platform for building applications. This engine, which is also known as MSBuild, provides an XML schema for a project file that controls how the build platform processes and builds software. Visual Studio uses MSBuild, but it doesn't depend on Visual Studio. By invoking msbuild.exe on your project or solution file, you can orchestrate and build products in environments where Visual Studio isn't installed. Visual Studio uses MSBuild to load and build managed projects. The project files in Visual Studio (.csproj,.vbproj, vcxproj, and others) contain MSBuild XML code that executes when you build a project by using the IDE. Visual Studio projects import all the necessary settings and build processes to do typical development work, but you can extend or modify them from within Visual Studio or by using an XML editor.</p><p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/ms164311.aspx">official website</a>.</p></summary>
-        public static void MSBuild (Configure<MSBuildSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void MSBuild(Configure<MSBuildSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new MSBuildSettings());
             PreProcess(toolSettings);
@@ -37,7 +39,7 @@ namespace Nuke.Common.Tools.MSBuild
             PostProcess(toolSettings);
         }
         /// <summary><p>The Microsoft Build Engine is a platform for building applications. This engine, which is also known as MSBuild, provides an XML schema for a project file that controls how the build platform processes and builds software. Visual Studio uses MSBuild, but it doesn't depend on Visual Studio. By invoking msbuild.exe on your project or solution file, you can orchestrate and build products in environments where Visual Studio isn't installed. Visual Studio uses MSBuild to load and build managed projects. The project files in Visual Studio (.csproj,.vbproj, vcxproj, and others) contain MSBuild XML code that executes when you build a project by using the IDE. Visual Studio projects import all the necessary settings and build processes to do typical development work, but you can extend or modify them from within Visual Studio or by using an XML editor.</p><p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/ms164311.aspx">official website</a>.</p></summary>
-        public static void MSBuild (string targetPath, Configure<MSBuildSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void MSBuild(string targetPath, Configure<MSBuildSettings> configurator = null, ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
             MSBuild(x => configurator(x).SetTargetPath(targetPath));
@@ -51,7 +53,7 @@ namespace Nuke.Common.Tools.MSBuild
     public partial class MSBuildSettings : ToolSettings
     {
         /// <summary><p>Path to the MSBuild executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? $"{GetToolPath()}";
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         /// <summary><p>The solution or project file on which MSBuild is executed.</p></summary>
         public virtual string TargetPath { get; internal set; }
         /// <summary><p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p></summary>
@@ -334,6 +336,24 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal[propertyKey] = propertyValue;
             return toolSettings;
         }
+        #region OutDir
+        /// <summary><p><em>Sets <c>OutDir</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static MSBuildSettings SetOutDir(this MSBuildSettings toolSettings, string outDir)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["OutDir"] = outDir;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>OutDir</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        [Pure]
+        public static MSBuildSettings ResetOutDir(this MSBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("OutDir");
+            return toolSettings;
+        }
+        #endregion
         #region RunCodeAnalysis
         /// <summary><p><em>Sets <c>RunCodeAnalysis</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
         [Pure]

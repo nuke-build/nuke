@@ -3,13 +3,12 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Linq;
 
 namespace Nuke.Common.Tools.VsTest
 {
-    public partial class VsTestSettings
+    public static partial class VsTestTasks
     {
-        private string GetToolPath()
+        private static string GetToolPath()
         {
             throw new NotImplementedException();
         }

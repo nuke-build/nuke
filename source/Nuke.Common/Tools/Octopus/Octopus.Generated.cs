@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,10 +25,12 @@ namespace Nuke.Common.Tools.Octopus
     [ExcludeFromCodeCoverage]
     public static partial class OctopusTasks
     {
-        static partial void PreProcess (OctopusPackSettings toolSettings);
-        static partial void PostProcess (OctopusPackSettings toolSettings);
+        /// <summary><p>Path to the Octopus executable.</p></summary>
+        public static string OctopusPath => ToolPathResolver.GetPackageExecutable("OctopusTools", "Octo.exe");
+        static partial void PreProcess(OctopusPackSettings toolSettings);
+        static partial void PostProcess(OctopusPackSettings toolSettings);
         /// <summary><p>The <c>Octo.exe pack</c> command provides a number of other useful parameters that can be used to customize the way your package gets created, such as output folder, files to include and release notes.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
-        public static void OctopusPack (Configure<OctopusPackSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void OctopusPack(Configure<OctopusPackSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new OctopusPackSettings());
             PreProcess(toolSettings);
@@ -36,10 +38,10 @@ namespace Nuke.Common.Tools.Octopus
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
         }
-        static partial void PreProcess (OctopusPushSettings toolSettings);
-        static partial void PostProcess (OctopusPushSettings toolSettings);
+        static partial void PreProcess(OctopusPushSettings toolSettings);
+        static partial void PostProcess(OctopusPushSettings toolSettings);
         /// <summary><p>The <c>Octo.exe push</c> command can push any of the supported packages types listed on this <a href="https://octopus.com/docs/packaging-applications/supported-packages">page</a>.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
-        public static void OctopusPush (Configure<OctopusPushSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void OctopusPush(Configure<OctopusPushSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new OctopusPushSettings());
             PreProcess(toolSettings);
@@ -47,10 +49,10 @@ namespace Nuke.Common.Tools.Octopus
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
         }
-        static partial void PreProcess (OctopusCreateReleaseSettings toolSettings);
-        static partial void PostProcess (OctopusCreateReleaseSettings toolSettings);
+        static partial void PreProcess(OctopusCreateReleaseSettings toolSettings);
+        static partial void PostProcess(OctopusCreateReleaseSettings toolSettings);
         /// <summary><p>The <c>Octo.exe create-release</c> can be used to automate the creation of releases. This allows you to easily integrate Octopus with other continuous integration servers.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
-        public static void OctopusCreateRelease (Configure<OctopusCreateReleaseSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void OctopusCreateRelease(Configure<OctopusCreateReleaseSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new OctopusCreateReleaseSettings());
             PreProcess(toolSettings);
@@ -58,10 +60,10 @@ namespace Nuke.Common.Tools.Octopus
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
         }
-        static partial void PreProcess (OctopusDeployReleaseSettings toolSettings);
-        static partial void PostProcess (OctopusDeployReleaseSettings toolSettings);
+        static partial void PreProcess(OctopusDeployReleaseSettings toolSettings);
+        static partial void PostProcess(OctopusDeployReleaseSettings toolSettings);
         /// <summary><p>The <c>Octo.exe deploy-release</c> can be used to automate the deployment of releases to environments. This allows you to easily integrate Octopus with other continuous integration servers.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
-        public static void OctopusDeployRelease (Configure<OctopusDeployReleaseSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void OctopusDeployRelease(Configure<OctopusDeployReleaseSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new OctopusDeployReleaseSettings());
             PreProcess(toolSettings);
@@ -78,7 +80,7 @@ namespace Nuke.Common.Tools.Octopus
     public partial class OctopusPackSettings : ToolSettings
     {
         /// <summary><p>Path to the Octopus executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"OctopusTools", $"Octo.exe");
+        public override string ToolPath => base.ToolPath ?? OctopusTasks.OctopusPath;
         /// <summary><p>The ID of the package. E.g. <c>MyCompany.MyApp</c>.</p></summary>
         public virtual string Id { get; internal set; }
         /// <summary><p>Package format. Options are: NuPkg, Zip. Defaults to NuPkg, though we recommend Zip going forward.</p></summary>
@@ -135,7 +137,7 @@ namespace Nuke.Common.Tools.Octopus
     public partial class OctopusPushSettings : ToolSettings
     {
         /// <summary><p>Path to the Octopus executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"OctopusTools", $"Octo.exe");
+        public override string ToolPath => base.ToolPath ?? OctopusTasks.OctopusPath;
         /// <summary><p>Package file to push.</p></summary>
         public virtual IReadOnlyList<string> Package => PackageInternal.AsReadOnly();
         internal List<string> PackageInternal { get; set; } = new List<string>();
@@ -195,7 +197,7 @@ namespace Nuke.Common.Tools.Octopus
     public partial class OctopusCreateReleaseSettings : ToolSettings
     {
         /// <summary><p>Path to the Octopus executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"OctopusTools", $"Octo.exe");
+        public override string ToolPath => base.ToolPath ?? OctopusTasks.OctopusPath;
         /// <summary><p>Name of the project.</p></summary>
         public virtual string Project { get; internal set; }
         /// <summary><p>Default version number of all packages to use for this release.</p></summary>
@@ -339,7 +341,7 @@ namespace Nuke.Common.Tools.Octopus
     public partial class OctopusDeployReleaseSettings : ToolSettings
     {
         /// <summary><p>Path to the Octopus executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"OctopusTools", $"Octo.exe");
+        public override string ToolPath => base.ToolPath ?? OctopusTasks.OctopusPath;
         /// <summary><p>Show progress of the deployment.</p></summary>
         public virtual bool? Progress { get; internal set; }
         /// <summary><p>Whether to force downloading of already installed packages (flag, default false).</p></summary>

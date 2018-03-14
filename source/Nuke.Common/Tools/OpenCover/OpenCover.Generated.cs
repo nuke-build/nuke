@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,10 +25,12 @@ namespace Nuke.Common.Tools.OpenCover
     [ExcludeFromCodeCoverage]
     public static partial class OpenCoverTasks
     {
-        static partial void PreProcess (OpenCoverSettings toolSettings);
-        static partial void PostProcess (OpenCoverSettings toolSettings);
+        /// <summary><p>Path to the OpenCover executable.</p></summary>
+        public static string OpenCoverPath => ToolPathResolver.GetPackageExecutable("OpenCover", "OpenCover.Console.exe");
+        static partial void PreProcess(OpenCoverSettings toolSettings);
+        static partial void PostProcess(OpenCoverSettings toolSettings);
         /// <summary><p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p><p>For more details, visit the <a href="https://github.com/OpenCover/opencover">official website</a>.</p></summary>
-        public static void OpenCover (Configure<OpenCoverSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void OpenCover(Configure<OpenCoverSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new OpenCoverSettings());
             PreProcess(toolSettings);
@@ -37,13 +39,13 @@ namespace Nuke.Common.Tools.OpenCover
             PostProcess(toolSettings);
         }
         /// <summary><p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p><p>For more details, visit the <a href="https://github.com/OpenCover/opencover">official website</a>.</p></summary>
-        public static void OpenCover (Action testAction, Configure<OpenCoverSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void OpenCover(Action testAction, Configure<OpenCoverSettings> configurator = null, ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
             OpenCover(x => configurator(x).SetTestAction(testAction));
         }
         /// <summary><p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p><p>For more details, visit the <a href="https://github.com/OpenCover/opencover">official website</a>.</p></summary>
-        public static void OpenCover (Action testAction, string output, Configure<OpenCoverSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void OpenCover(Action testAction, string output, Configure<OpenCoverSettings> configurator = null, ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
             OpenCover(testAction, x => configurator(x).SetOutput(output));
@@ -57,7 +59,7 @@ namespace Nuke.Common.Tools.OpenCover
     public partial class OpenCoverSettings : ToolSettings
     {
         /// <summary><p>Path to the OpenCover executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"OpenCover", $"OpenCover.Console.exe");
+        public override string ToolPath => base.ToolPath ?? OpenCoverTasks.OpenCoverPath;
         /// <summary><p>The name of the target application or service that will be started; this can also be a path to the target application.</p></summary>
         public virtual string TargetPath { get; internal set; }
         /// <summary><p>Arguments to be passed to the target process.</p></summary>

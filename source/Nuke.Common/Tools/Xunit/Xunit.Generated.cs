@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,10 +25,12 @@ namespace Nuke.Common.Tools.Xunit
     [ExcludeFromCodeCoverage]
     public static partial class XunitTasks
     {
-        static partial void PreProcess (Xunit2Settings toolSettings);
-        static partial void PostProcess (Xunit2Settings toolSettings);
+        /// <summary><p>Path to the Xunit executable.</p></summary>
+        public static string XunitPath => ToolPathResolver.GetPackageExecutable("xunit.runner.console", GetPackageExecutable());
+        static partial void PreProcess(Xunit2Settings toolSettings);
+        static partial void PostProcess(Xunit2Settings toolSettings);
         /// <summary><p>xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Written by the original inventor of NUnit v2, xUnit.net is the latest technology for unit testing C#, F#, VB.NET and other .NET languages. xUnit.net works with ReSharper, CodeRush, TestDriven.NET and Xamarin. It is part of the <a href="https://www.dotnetfoundation.org/">.NET Foundation</a>, and operates under their <a href="https://www.dotnetfoundation.org/code-of-conduct">code of conduct</a>. It is licensed under <a href="https://opensource.org/licenses/Apache-2.0">Apache 2</a> (an OSI approved license).</p><p>For more details, visit the <a href="https://xunit.github.io">official website</a>.</p></summary>
-        public static void Xunit2 (Configure<Xunit2Settings> configurator = null, ProcessSettings processSettings = null)
+        public static void Xunit2(Configure<Xunit2Settings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new Xunit2Settings());
             PreProcess(toolSettings);
@@ -45,7 +47,7 @@ namespace Nuke.Common.Tools.Xunit
     public partial class Xunit2Settings : ToolSettings
     {
         /// <summary><p>Path to the Xunit executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"xunit.runner.console", $"{GetPackageExecutable()}");
+        public override string ToolPath => base.ToolPath ?? XunitTasks.XunitPath;
         /// <summary><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
         public virtual ILookup<string, string> TargetAssemblyWithConfigs => TargetAssemblyWithConfigsInternal.AsReadOnly();
         internal LookupTable<string, string> TargetAssemblyWithConfigsInternal { get; set; } = new LookupTable<string, string>(StringComparer.OrdinalIgnoreCase);
