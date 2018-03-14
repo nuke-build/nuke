@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Nuke.CodeGeneration.Model;
 using Nuke.CodeGeneration.Writers;
@@ -24,10 +25,14 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteLine("[PublicAPI]")
                 .WriteLine("[ExcludeFromCodeCoverage]")
                 .WriteLine($"public static partial class {tool.GetClassName()}")
-                .WriteBlock(w => tool.Tasks.ForEach(x => new TaskWriter(x, toolWriter)
-                    .WritePreAndPostProcess()
-                    .WriteMainTask()
-                    .WriteTaskOverloads()));
+                .WriteBlock(w =>
+                {
+                    w.WriteToolPath();
+                    tool.Tasks.ForEach(x => new TaskWriter(x, toolWriter)
+                        .WritePreAndPostProcess()
+                        .WriteMainTask()
+                        .WriteTaskOverloads());
+                });
         }
 
         private static TaskWriter WriteTaskOverloads(this TaskWriter writer, int index = 0)
@@ -74,7 +79,7 @@ namespace Nuke.CodeGeneration.Generators
                             "ProcessSettings processSettings = null"
                         });
 
-            return $"public static {task.GetReturnType()} {task.GetTaskMethodName()} ({parameterDeclarations.JoinComma()})";
+            return $"public static {task.GetReturnType()} {task.GetTaskMethodName()}({parameterDeclarations.JoinComma()})";
         }
 
         private static void WriteMainTaskBlock(TaskWriter writer)
@@ -102,12 +107,46 @@ namespace Nuke.CodeGeneration.Generators
                 : "AssertProcess(process, toolSettings);";
         }
 
+        private static ToolWriter WriteToolPath(this ToolWriter writer)
+        {
+            var tool = writer.Tool;
+            var resolvers = new List<string>();
+
+            if (tool.PackageId != null)
+            {
+                resolvers.Add("ToolPathResolver.GetPackageExecutable(" +
+                              $"{tool.PackageId.DoubleQuote()}, " +
+                              $"{tool.PackageExecutable?.DoubleQuote() ?? "GetPackageExecutable()"})");
+            }
+
+            if (tool.EnvironmentExecutable != null)
+            {
+                resolvers.Add($"ToolPathResolver.GetEnvironmentExecutable({tool.EnvironmentExecutable.DoubleQuote()})");
+            }
+
+            if (tool.PathExecutable != null)
+            {
+                resolvers.Add($"ToolPathResolver.GetPathExecutable({tool.PathExecutable.DoubleQuote()})");
+            }
+
+            if (resolvers.Count == 0)
+            {
+                resolvers.Add("GetToolPath()");
+            }
+
+            Trace.Assert(resolvers.Count == 1, "resolvers.Count == 1");
+
+            return writer
+                .WriteSummary($"Path to the {tool.Name} executable.")
+                .WriteLine($"public static string {tool.Name}Path => {resolvers.Single()};");
+        }
+
         private static TaskWriter WritePreAndPostProcess(this TaskWriter writer)
         {
             var settingsClass = writer.Task.SettingsClass.Name;
             return writer
-                .WriteLine($"static partial void PreProcess ({settingsClass} toolSettings);")
-                .WriteLine($"static partial void PostProcess ({settingsClass} toolSettings);");
+                .WriteLine($"static partial void PreProcess({settingsClass} toolSettings);")
+                .WriteLine($"static partial void PostProcess({settingsClass} toolSettings);");
         }
     }
 }
