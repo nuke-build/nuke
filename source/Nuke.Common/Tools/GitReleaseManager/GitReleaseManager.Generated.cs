@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,10 +25,12 @@ namespace Nuke.Common.Tools.GitReleaseManager
     [ExcludeFromCodeCoverage]
     public static partial class GitReleaseManagerTasks
     {
-        static partial void PreProcess (GitReleaseManagerAddAssetsSettings toolSettings);
-        static partial void PostProcess (GitReleaseManagerAddAssetsSettings toolSettings);
+        /// <summary><p>Path to the GitReleaseManager executable.</p></summary>
+        public static string GitReleaseManagerPath => ToolPathResolver.GetPackageExecutable("gitreleasemanager", "GitReleaseManager.exe");
+        static partial void PreProcess(GitReleaseManagerAddAssetsSettings toolSettings);
+        static partial void PostProcess(GitReleaseManagerAddAssetsSettings toolSettings);
         /// <summary><p>Adds an asset to an existing release.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
-        public static void GitReleaseManagerAddAssets (Configure<GitReleaseManagerAddAssetsSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void GitReleaseManagerAddAssets(Configure<GitReleaseManagerAddAssetsSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitReleaseManagerAddAssetsSettings());
             PreProcess(toolSettings);
@@ -36,10 +38,10 @@ namespace Nuke.Common.Tools.GitReleaseManager
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
         }
-        static partial void PreProcess (GitReleaseManagerCloseSettings toolSettings);
-        static partial void PostProcess (GitReleaseManagerCloseSettings toolSettings);
+        static partial void PreProcess(GitReleaseManagerCloseSettings toolSettings);
+        static partial void PostProcess(GitReleaseManagerCloseSettings toolSettings);
         /// <summary><p>Closes the milestone.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
-        public static void GitReleaseManagerClose (Configure<GitReleaseManagerCloseSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void GitReleaseManagerClose(Configure<GitReleaseManagerCloseSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitReleaseManagerCloseSettings());
             PreProcess(toolSettings);
@@ -47,10 +49,10 @@ namespace Nuke.Common.Tools.GitReleaseManager
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
         }
-        static partial void PreProcess (GitReleaseManagerCreateSettings toolSettings);
-        static partial void PostProcess (GitReleaseManagerCreateSettings toolSettings);
+        static partial void PreProcess(GitReleaseManagerCreateSettings toolSettings);
+        static partial void PostProcess(GitReleaseManagerCreateSettings toolSettings);
         /// <summary><p>Creates a draft release notes from a milestone.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
-        public static void GitReleaseManagerCreate (Configure<GitReleaseManagerCreateSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void GitReleaseManagerCreate(Configure<GitReleaseManagerCreateSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitReleaseManagerCreateSettings());
             PreProcess(toolSettings);
@@ -58,10 +60,10 @@ namespace Nuke.Common.Tools.GitReleaseManager
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
         }
-        static partial void PreProcess (GitReleaseManagerExportSettings toolSettings);
-        static partial void PostProcess (GitReleaseManagerExportSettings toolSettings);
+        static partial void PreProcess(GitReleaseManagerExportSettings toolSettings);
+        static partial void PostProcess(GitReleaseManagerExportSettings toolSettings);
         /// <summary><p>Exports all the Release Notes in markdown format.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
-        public static void GitReleaseManagerExport (Configure<GitReleaseManagerExportSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void GitReleaseManagerExport(Configure<GitReleaseManagerExportSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitReleaseManagerExportSettings());
             PreProcess(toolSettings);
@@ -69,10 +71,10 @@ namespace Nuke.Common.Tools.GitReleaseManager
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
         }
-        static partial void PreProcess (GitReleaseManagerPublishSettings toolSettings);
-        static partial void PostProcess (GitReleaseManagerPublishSettings toolSettings);
+        static partial void PreProcess(GitReleaseManagerPublishSettings toolSettings);
+        static partial void PostProcess(GitReleaseManagerPublishSettings toolSettings);
         /// <summary><p>Publishes the GitHub Release.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
-        public static void GitReleaseManagerPublish (Configure<GitReleaseManagerPublishSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void GitReleaseManagerPublish(Configure<GitReleaseManagerPublishSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitReleaseManagerPublishSettings());
             PreProcess(toolSettings);
@@ -89,7 +91,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
     public partial class GitReleaseManagerAddAssetsSettings : ToolSettings
     {
         /// <summary><p>Path to the GitReleaseManager executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"gitreleasemanager", $"GitReleaseManager.exe");
+        public override string ToolPath => base.ToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
         /// <summary><p>Paths to the files to include in the release.</p></summary>
         public virtual IReadOnlyList<string> AssetPaths => AssetPathsInternal.AsReadOnly();
         internal List<string> AssetPathsInternal { get; set; } = new List<string>();
@@ -131,7 +133,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
     public partial class GitReleaseManagerCloseSettings : ToolSettings
     {
         /// <summary><p>Path to the GitReleaseManager executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"gitreleasemanager", $"GitReleaseManager.exe");
+        public override string ToolPath => base.ToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
         /// <summary><p>The milestone to use.</p></summary>
         public virtual string Milestone { get; internal set; }
         /// <summary><p>The username to access GitHub with.</p></summary>
@@ -169,7 +171,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
     public partial class GitReleaseManagerCreateSettings : ToolSettings
     {
         /// <summary><p>Path to the GitReleaseManager executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"gitreleasemanager", $"GitReleaseManager.exe");
+        public override string ToolPath => base.ToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
         /// <summary><p>Paths to the files to include in the release.</p></summary>
         public virtual IReadOnlyList<string> AssetPaths => AssetPathsInternal.AsReadOnly();
         internal List<string> AssetPathsInternal { get; set; } = new List<string>();
@@ -223,7 +225,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
     public partial class GitReleaseManagerExportSettings : ToolSettings
     {
         /// <summary><p>Path to the GitReleaseManager executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"gitreleasemanager", $"GitReleaseManager.exe");
+        public override string ToolPath => base.ToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
         /// <summary><p>The name of the release. Typically this is the generated SemVer Version Number.</p></summary>
         public virtual string TagName { get; internal set; }
         /// <summary><p>Path to the file export releases.</p></summary>
@@ -264,7 +266,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
     public partial class GitReleaseManagerPublishSettings : ToolSettings
     {
         /// <summary><p>Path to the GitReleaseManager executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"gitreleasemanager", $"GitReleaseManager.exe");
+        public override string ToolPath => base.ToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
         /// <summary><p>The name of the release. Typically this is the generated SemVer Version Number.</p></summary>
         public virtual string TagName { get; internal set; }
         /// <summary><p>The username to access GitHub with.</p></summary>

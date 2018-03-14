@@ -12,25 +12,11 @@ namespace Nuke.Common.Tools.DotNet
 {
     public static partial class DotNetTasks
     {
-        //public static MSBuildSettings DefaultMSBuild
-        //{
-        //    get
-        //    {
-        //        var toolSettings = new MSBuildSettings ()
-        //                .SetWorkingDirectory (NukeBuild.Instance.SolutionDirectory)
-        //                .SetSolutionFile (NukeBuild.Instance.SolutionFile)
-        //                .SetMaxCpuCount (Environment.ProcessorCount)
-        //                .SetConfiguration (NukeBuild.Instance.Configuration);
-
-        //        var teamCityLogger = TeamCity.Instance?.ConfigurationProperties["TEAMCITY_DOTNET_MSBUILD_EXTENSIONS4_0"];
-        //        if (teamCityLogger != null)
-        //            toolSettings = toolSettings
-        //                    .AddLoggers ($"JetBrains.BuildServer.MSBuildLoggers.MSBuildLogger,{teamCityLogger}")
-        //                    .EnableNoConsoleLogger ();
-
-        //        return toolSettings;
-        //    }
-        //}
+        public static string GetToolPath()
+        {
+            return ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE")
+                   ?? ToolPathResolver.GetPathExecutable("dotnet");
+        }
 
         public static DotNetRestoreSettings DefaultDotNetRestore => new DotNetRestoreSettings()
             .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)

@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,10 +25,12 @@ namespace Nuke.Common.Tools.Git
     [ExcludeFromCodeCoverage]
     public static partial class GitTasks
     {
-        static partial void PreProcess (GitSettings toolSettings);
-        static partial void PostProcess (GitSettings toolSettings);
+        /// <summary><p>Path to the Git executable.</p></summary>
+        public static string GitPath => ToolPathResolver.GetPathExecutable("git");
+        static partial void PreProcess(GitSettings toolSettings);
+        static partial void PostProcess(GitSettings toolSettings);
         /// <summary><p>Git is a <a href="https://git-scm.com/about/free-and-open-source">free and open source</a> distributed version control system designed to handle everything from small to very large projects with speed and efficiency. Git is <a href="https://git-scm.com/documentation">easy to learn</a> and has a <a href="https://git-scm.com/about/small-and-fast">tiny footprint with lightning fast performance</a>. It outclasses SCM tools like Subversion, CVS, Perforce, and ClearCase with features like <a href="https://git-scm.com/about/branching-and-merging">cheap local branching</a>, convenient <a href="https://git-scm.com/about/staging-area">staging areas</a>, and <a href="https://git-scm.com/about/distributed">multiple workflows</a>.</p><p>For more details, visit the <a href="https://git-scm.com/">official website</a>.</p></summary>
-        public static void Git (Configure<GitSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void Git(Configure<GitSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitSettings());
             PreProcess(toolSettings);
@@ -37,7 +39,7 @@ namespace Nuke.Common.Tools.Git
             PostProcess(toolSettings);
         }
         /// <summary><p>Git is a <a href="https://git-scm.com/about/free-and-open-source">free and open source</a> distributed version control system designed to handle everything from small to very large projects with speed and efficiency. Git is <a href="https://git-scm.com/documentation">easy to learn</a> and has a <a href="https://git-scm.com/about/small-and-fast">tiny footprint with lightning fast performance</a>. It outclasses SCM tools like Subversion, CVS, Perforce, and ClearCase with features like <a href="https://git-scm.com/about/branching-and-merging">cheap local branching</a>, convenient <a href="https://git-scm.com/about/staging-area">staging areas</a>, and <a href="https://git-scm.com/about/distributed">multiple workflows</a>.</p><p>For more details, visit the <a href="https://git-scm.com/">official website</a>.</p></summary>
-        public static void Git (string arguments, Configure<GitSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void Git(string arguments, Configure<GitSettings> configurator = null, ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
             Git(x => configurator(x).SetArguments(arguments));
@@ -51,7 +53,7 @@ namespace Nuke.Common.Tools.Git
     public partial class GitSettings : ToolSettings
     {
         /// <summary><p>Path to the Git executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPathExecutable($"git");
+        public override string ToolPath => base.ToolPath ?? GitTasks.GitPath;
         public virtual string Arguments { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {

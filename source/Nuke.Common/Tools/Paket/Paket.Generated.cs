@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,10 +25,12 @@ namespace Nuke.Common.Tools.Paket
     [ExcludeFromCodeCoverage]
     public static partial class PaketTasks
     {
-        static partial void PreProcess (PaketUpdateSettings toolSettings);
-        static partial void PostProcess (PaketUpdateSettings toolSettings);
+        /// <summary><p>Path to the Paket executable.</p></summary>
+        public static string PaketPath => ToolPathResolver.GetPackageExecutable("Paket", "paket.exe");
+        static partial void PreProcess(PaketUpdateSettings toolSettings);
+        static partial void PostProcess(PaketUpdateSettings toolSettings);
         /// <summary><p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href="https://www.nuget.org/">NuGet</a> packages and also enables referencing files directly from <a href="https://fsprojects.github.io/Paket/git-dependencies.html">Git repositories</a> or any <a href="https://fsprojects.github.io/Paket/http-dependencies.html">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href="https://fsprojects.github.io/Paket/getting-started.html"><em>Getting started</em> tutorial</a> and take a look at the <a href="https://fsprojects.github.io/Paket/faq.html">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href="https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion">convert from NuGet</a> section.</p><p>For more details, visit the <a href="https://fsprojects.github.io/paket">official website</a>.</p></summary>
-        public static void PaketUpdate (Configure<PaketUpdateSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void PaketUpdate(Configure<PaketUpdateSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new PaketUpdateSettings());
             PreProcess(toolSettings);
@@ -36,10 +38,10 @@ namespace Nuke.Common.Tools.Paket
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
         }
-        static partial void PreProcess (PaketRestoreSettings toolSettings);
-        static partial void PostProcess (PaketRestoreSettings toolSettings);
+        static partial void PreProcess(PaketRestoreSettings toolSettings);
+        static partial void PostProcess(PaketRestoreSettings toolSettings);
         /// <summary><p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href="https://www.nuget.org/">NuGet</a> packages and also enables referencing files directly from <a href="https://fsprojects.github.io/Paket/git-dependencies.html">Git repositories</a> or any <a href="https://fsprojects.github.io/Paket/http-dependencies.html">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href="https://fsprojects.github.io/Paket/getting-started.html"><em>Getting started</em> tutorial</a> and take a look at the <a href="https://fsprojects.github.io/Paket/faq.html">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href="https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion">convert from NuGet</a> section.</p><p>For more details, visit the <a href="https://fsprojects.github.io/paket">official website</a>.</p></summary>
-        public static void PaketRestore (Configure<PaketRestoreSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void PaketRestore(Configure<PaketRestoreSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new PaketRestoreSettings());
             PreProcess(toolSettings);
@@ -47,10 +49,10 @@ namespace Nuke.Common.Tools.Paket
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
         }
-        static partial void PreProcess (PaketPushSettings toolSettings);
-        static partial void PostProcess (PaketPushSettings toolSettings);
+        static partial void PreProcess(PaketPushSettings toolSettings);
+        static partial void PostProcess(PaketPushSettings toolSettings);
         /// <summary><p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href="https://www.nuget.org/">NuGet</a> packages and also enables referencing files directly from <a href="https://fsprojects.github.io/Paket/git-dependencies.html">Git repositories</a> or any <a href="https://fsprojects.github.io/Paket/http-dependencies.html">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href="https://fsprojects.github.io/Paket/getting-started.html"><em>Getting started</em> tutorial</a> and take a look at the <a href="https://fsprojects.github.io/Paket/faq.html">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href="https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion">convert from NuGet</a> section.</p><p>For more details, visit the <a href="https://fsprojects.github.io/paket">official website</a>.</p></summary>
-        public static void PaketPush (Configure<PaketPushSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void PaketPush(Configure<PaketPushSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new PaketPushSettings());
             PreProcess(toolSettings);
@@ -58,10 +60,10 @@ namespace Nuke.Common.Tools.Paket
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
         }
-        static partial void PreProcess (PaketPackSettings toolSettings);
-        static partial void PostProcess (PaketPackSettings toolSettings);
+        static partial void PreProcess(PaketPackSettings toolSettings);
+        static partial void PostProcess(PaketPackSettings toolSettings);
         /// <summary><p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href="https://www.nuget.org/">NuGet</a> packages and also enables referencing files directly from <a href="https://fsprojects.github.io/Paket/git-dependencies.html">Git repositories</a> or any <a href="https://fsprojects.github.io/Paket/http-dependencies.html">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href="https://fsprojects.github.io/Paket/getting-started.html"><em>Getting started</em> tutorial</a> and take a look at the <a href="https://fsprojects.github.io/Paket/faq.html">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href="https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion">convert from NuGet</a> section.</p><p>For more details, visit the <a href="https://fsprojects.github.io/paket">official website</a>.</p></summary>
-        public static void PaketPack (Configure<PaketPackSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void PaketPack(Configure<PaketPackSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new PaketPackSettings());
             PreProcess(toolSettings);
@@ -78,7 +80,7 @@ namespace Nuke.Common.Tools.Paket
     public partial class PaketUpdateSettings : ToolSettings
     {
         /// <summary><p>Path to the Paket executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"Paket", $"paket.exe");
+        public override string ToolPath => base.ToolPath ?? PaketTasks.PaketPath;
         /// <summary><p>NuGet package ID.</p></summary>
         public virtual string PackageId { get; internal set; }
         /// <summary><p>Dependency version constraint.</p></summary>
@@ -146,7 +148,7 @@ namespace Nuke.Common.Tools.Paket
     public partial class PaketRestoreSettings : ToolSettings
     {
         /// <summary><p>Path to the Paket executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"Paket", $"paket.exe");
+        public override string ToolPath => base.ToolPath ?? PaketTasks.PaketPath;
         /// <summary><p>Force download and reinstallation of all dependencies.</p></summary>
         public virtual bool? Force { get; internal set; }
         /// <summary><p>Only restore packages that are referenced by paket.references files.</p></summary>
@@ -203,7 +205,7 @@ namespace Nuke.Common.Tools.Paket
     public partial class PaketPushSettings : ToolSettings
     {
         /// <summary><p>Path to the Paket executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"Paket", $"paket.exe");
+        public override string ToolPath => base.ToolPath ?? PaketTasks.PaketPath;
         /// <summary><p>Path to the package.</p></summary>
         public virtual string File { get; internal set; }
         /// <summary><p>URL of the NuGet feed.</p></summary>
@@ -244,7 +246,7 @@ namespace Nuke.Common.Tools.Paket
     public partial class PaketPackSettings : ToolSettings
     {
         /// <summary><p>Path to the Paket executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"Paket", $"paket.exe");
+        public override string ToolPath => base.ToolPath ?? PaketTasks.PaketPath;
         /// <summary><p>Output directory for .nupkg files.</p></summary>
         public virtual string OutputDirectory { get; internal set; }
         /// <summary><p>Build configuration that should be packaged. Default is <em>Release</em>.</p></summary>

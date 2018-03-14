@@ -17,6 +17,11 @@ namespace Nuke.Common.Tools.InspectCode
 {
     public static partial class InspectCodeTasks
     {
+        private static string GetPackageExecutable()
+        {
+            return EnvironmentInfo.Is64Bit ? "inspectcode.exe" : "inspectcode.x86.exe";
+        }
+
         public static InspectCodeSettings DefaultInspectCode => new InspectCodeSettings()
             .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
             .SetTargetPath(NukeBuild.Instance.SolutionFile)
@@ -52,7 +57,7 @@ namespace Nuke.Common.Tools.InspectCode
                 toolSettings = toolSettings.SetToolPath(
                     Path.Combine(
                         GetShadowDirectory(toolSettings, installedPackages),
-                        toolSettings.GetPackageExecutable()));
+                        GetPackageExecutable()));
             }
 
             return ProcessTasks.StartProcess(toolSettings, processSettings);
@@ -64,6 +69,7 @@ namespace Nuke.Common.Tools.InspectCode
         }
 
         // TODO [3]: validation of wave version?
+
         private static IReadOnlyCollection<NuGetPackageResolver.InstalledPackage> GetInstalledPlugins()
         {
             return NuGetPackageResolver.GetLocalInstalledPackages()

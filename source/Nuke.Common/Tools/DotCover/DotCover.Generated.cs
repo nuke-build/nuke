@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,10 +25,12 @@ namespace Nuke.Common.Tools.DotCover
     [ExcludeFromCodeCoverage]
     public static partial class DotCoverTasks
     {
-        static partial void PreProcess (DotCoverAnalyseSettings toolSettings);
-        static partial void PostProcess (DotCoverAnalyseSettings toolSettings);
+        /// <summary><p>Path to the DotCover executable.</p></summary>
+        public static string DotCoverPath => ToolPathResolver.GetPackageExecutable("JetBrains.dotCover.CommandLineTools", GetPackageExecutable());
+        static partial void PreProcess(DotCoverAnalyseSettings toolSettings);
+        static partial void PostProcess(DotCoverAnalyseSettings toolSettings);
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
-        public static void DotCoverAnalyse (Configure<DotCoverAnalyseSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void DotCoverAnalyse(Configure<DotCoverAnalyseSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new DotCoverAnalyseSettings());
             PreProcess(toolSettings);
@@ -37,7 +39,7 @@ namespace Nuke.Common.Tools.DotCover
             PostProcess(toolSettings);
         }
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
-        public static void DotCoverAnalyse (Action testAction, Configure<DotCoverAnalyseSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void DotCoverAnalyse(Action testAction, Configure<DotCoverAnalyseSettings> configurator = null, ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
             DotCoverAnalyse(x => configurator(x).SetTestAction(testAction));
@@ -51,7 +53,7 @@ namespace Nuke.Common.Tools.DotCover
     public partial class DotCoverAnalyseSettings : ToolSettings
     {
         /// <summary><p>Path to the DotCover executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"JetBrains.dotCover.CommandLineTools", $"{GetPackageExecutable()}");
+        public override string ToolPath => base.ToolPath ?? DotCoverTasks.DotCoverPath;
         /// <summary><p>File name of the program to analyse.</p></summary>
         public virtual string TargetExecutable { get; internal set; }
         /// <summary><p>Program arguments.</p></summary>

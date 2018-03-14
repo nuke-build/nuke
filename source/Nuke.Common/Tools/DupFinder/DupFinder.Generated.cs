@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,10 +25,12 @@ namespace Nuke.Common.Tools.DupFinder
     [ExcludeFromCodeCoverage]
     public static partial class DupFinderTasks
     {
-        static partial void PreProcess (DupFinderSettings toolSettings);
-        static partial void PostProcess (DupFinderSettings toolSettings);
+        /// <summary><p>Path to the DupFinder executable.</p></summary>
+        public static string DupFinderPath => ToolPathResolver.GetPackageExecutable("JetBrains.ReSharper.CommandLineTools", "dupfinder.exe");
+        static partial void PreProcess(DupFinderSettings toolSettings);
+        static partial void PostProcess(DupFinderSettings toolSettings);
         /// <summary><p>dupFinder is a free command line tool that finds duplicates in C# and Visual Basic .NET code - no more, no less. But being a JetBrains tool, dupFinder does it in a smart way. By default, it considers code fragments as duplicates not only if they are identical, but also if they are structurally similar, even if they contain different variables, fields, methods, types or literals. Of course, you can configure the allowed similarity as well as the minimum relative size of duplicated fragments.</p><p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/dupFinder.html">official website</a>.</p></summary>
-        public static void DupFinder (Configure<DupFinderSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void DupFinder(Configure<DupFinderSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new DupFinderSettings());
             PreProcess(toolSettings);
@@ -45,7 +47,7 @@ namespace Nuke.Common.Tools.DupFinder
     public partial class DupFinderSettings : ToolSettings
     {
         /// <summary><p>Path to the DupFinder executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"JetBrains.ReSharper.CommandLineTools", $"dupfinder.exe");
+        public override string ToolPath => base.ToolPath ?? DupFinderTasks.DupFinderPath;
         /// <summary><p>Defines files included into the duplicates search. Use Visual Studio solution or project files, Ant-like wildcards or specific source file and folder names. Paths should be either absolute or relative to the working directory.</p></summary>
         public virtual string Source { get; internal set; }
         /// <summary><p>Lets you set the output file.</p></summary>

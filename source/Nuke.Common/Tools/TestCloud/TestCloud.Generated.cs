@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,10 +25,12 @@ namespace Nuke.Common.Tools.TestCloud
     [ExcludeFromCodeCoverage]
     public static partial class TestCloudTasks
     {
-        static partial void PreProcess (TestCloudSettings toolSettings);
-        static partial void PostProcess (TestCloudSettings toolSettings);
+        /// <summary><p>Path to the TestCloud executable.</p></summary>
+        public static string TestCloudPath => ToolPathResolver.GetPackageExecutable("Xamarin.UITest", "test-cloud.exe");
+        static partial void PreProcess(TestCloudSettings toolSettings);
+        static partial void PostProcess(TestCloudSettings toolSettings);
         /// <summary><p>Test Cloud is a cloud based service consisting of thousands of physical mobile devices. Users upload their apps and tests to Test Cloud, which will install the apps on the devices and run the tests. When the tests are complete, Test Cloud, the results made available to users through an easy to use and informative web-based front end.</p><p>For more details, visit the <a href="https://developer.xamarin.com/guides/testcloud/">official website</a>.</p></summary>
-        public static void TestCloud (Configure<TestCloudSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void TestCloud(Configure<TestCloudSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new TestCloudSettings());
             PreProcess(toolSettings);
@@ -45,7 +47,7 @@ namespace Nuke.Common.Tools.TestCloud
     public partial class TestCloudSettings : ToolSettings
     {
         /// <summary><p>Path to the TestCloud executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? ToolPathResolver.GetPackageExecutable($"Xamarin.UITest", $"test-cloud.exe");
+        public override string ToolPath => base.ToolPath ?? TestCloudTasks.TestCloudPath;
         /// <summary><p>The path to the folder holding the test assemblies.</p></summary>
         public virtual string AssemblyDirectory { get; internal set; }
         /// <summary><p>The device ID that was provided in the Test Cloud Upload dialog.</p></summary>

@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2017.
+// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,10 +25,12 @@ namespace Nuke.Common.Tools.SignTool
     [ExcludeFromCodeCoverage]
     public static partial class SignToolTasks
     {
-        static partial void PreProcess (SignToolSettings toolSettings);
-        static partial void PostProcess (SignToolSettings toolSettings);
+        /// <summary><p>Path to the SignTool executable.</p></summary>
+        public static string SignToolPath => GetToolPath();
+        static partial void PreProcess(SignToolSettings toolSettings);
+        static partial void PostProcess(SignToolSettings toolSettings);
         /// <summary><p>Use the <c>sign</c> command to sign files using embedded signatures. Signing protects a file from tampering, and allows users to verify the signer (you) based on a signing certificate. The options below allow you to specify signing parameters and to select the signing certificate you wish to use.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe">official website</a>.</p></summary>
-        public static void SignTool (Configure<SignToolSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void SignTool(Configure<SignToolSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new SignToolSettings());
             PreProcess(toolSettings);
@@ -45,7 +47,7 @@ namespace Nuke.Common.Tools.SignTool
     public partial class SignToolSettings : ToolSettings
     {
         /// <summary><p>Path to the SignTool executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? $"{GetToolPath()}";
+        public override string ToolPath => base.ToolPath ?? SignToolTasks.SignToolPath;
         /// <summary><p>Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.</p></summary>
         public virtual bool? AutomaticSelection { get; internal set; }
         /// <summary><p>Add an additional certificate to the signature block.</p></summary>
