@@ -54,6 +54,7 @@ namespace Nuke.Core.Tooling
 
             return locateProcess.Output
                 .Select(x => x.Text)
+                .Where(x => EnvironmentInfo.IsWin && Path.HasExtension(x) || EnvironmentInfo.IsUnix)
                 .FirstOrDefault(File.Exists)
                 .NotNull($"Could not find '{pathExecutable}' via '{locateExecutable}'.");
         }
