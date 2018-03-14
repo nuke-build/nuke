@@ -67,6 +67,8 @@ namespace Nuke.CodeGeneration
             _metadataFiles.AsParallel().ForAll(file =>
             {
                 var tool = Load(file);
+                if (tool == null)
+                    return;
 
                 foreach (var task in tool.Tasks)
                 {
@@ -105,19 +107,26 @@ namespace Nuke.CodeGeneration
 
         private Tool Load(string file)
         {
-            Logger.Info($"Loading metadata from '{Path.GetFileName(file)}'...");
+            try
+            {
+                var content = File.ReadAllText(file);
+                var tool = JsonConvert.DeserializeObject<Tool>(content);
 
-            var content = File.ReadAllText(file);
-            var tool = JsonConvert.DeserializeObject<Tool>(content);
+                var toolDirectory = _useNestedNamespaces ? Path.Combine(_baseDirectory, tool.Name) : _baseDirectory;
+                Directory.CreateDirectory(toolDirectory);
 
-            var toolDirectory = _useNestedNamespaces ? Path.Combine(_baseDirectory, tool.Name) : _baseDirectory;
-            Directory.CreateDirectory(toolDirectory);
+                tool.DefinitionFile = file;
+                tool.GenerationFileBase = Path.Combine(toolDirectory, Path.GetFileNameWithoutExtension(file));
+                tool.RepositoryUrl = _repository?.GetGitHubBrowseUrl(file);
 
-            tool.DefinitionFile = file;
-            tool.GenerationFileBase = Path.Combine(toolDirectory, Path.GetFileNameWithoutExtension(file));
-            tool.RepositoryUrl = _repository?.GetGitHubBrowseUrl(file);
-
-            return tool;
+                return tool;
+            }
+            catch (Exception exception)
+            {               
+                Logger.Error($"Couldn't load metadata file '{Path.GetFileName(file)}'.");
+                Logger.Error(exception.Message);
+                return null;
+            }
         }
 
         // ReSharper disable once CyclomaticComplexity

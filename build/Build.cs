@@ -173,7 +173,7 @@ class Build : NukeBuild
                 TestXunit();
         });
 
-    string MetadataDirectory => RootDirectory / ".." / "tools" / "metadata";
+    string MetadataDirectory => RootDirectory / ".." / "nuke-tools" / "metadata";
     string GenerationDirectory => RootDirectory / "source" / "Nuke.Common" / "Tools";
     string ToolSchemaFile => SourceDirectory / "Nuke.CodeGeneration" / "schema.json";
 
