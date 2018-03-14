@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.CodeGeneration.Model;
@@ -61,40 +60,13 @@ namespace Nuke.CodeGeneration.Generators
                 return writer;
 
             var tool = settingsClass.Tool.NotNull();
-            var resolvers = new List<string>();
-
-            if (tool.CustomExecutable)
-            {
-                resolvers.Add("{GetToolPath()}".DoubleQuoteInterpolated());
-            }
-
-            if (tool.PackageId != null)
-            {
-                resolvers.Add("ToolPathResolver.GetPackageExecutable(" +
-                              $"{tool.PackageId.DoubleQuoteInterpolated()}, " +
-                              $"{(tool.PackageExecutable ?? "{GetPackageExecutable()}").DoubleQuoteInterpolated()})");
-            }
-
-            if (tool.EnvironmentExecutable != null)
-            {
-                resolvers.Add("ToolPathResolver.GetEnvironmentExecutable(" +
-                              $"{tool.EnvironmentExecutable.DoubleQuoteInterpolated()})");
-            }
-
-            if (tool.PathExecutable != null)
-            {
-                resolvers.Add("ToolPathResolver.GetPathExecutable(" +
-                              $"{tool.PathExecutable.DoubleQuoteInterpolated()})");
-            }
-
-            if (resolvers.Count == 0)
-                return writer;
-
-            Trace.Assert(resolvers.Count == 1, "resolvers.Count == 1");
+            var resolver = !tool.CustomExecutable
+                ? $"{tool.GetClassName()}.{tool.Name}Path"
+                : "GetToolPath()";
 
             return writer
                 .WriteSummary($"Path to the {tool.Name} executable.")
-                .WriteLine($"public override string ToolPath => base.ToolPath ?? {resolvers.Single()};");
+                .WriteLine($"public override string ToolPath => base.ToolPath ?? {resolver};");
         }
 
         private static void WritePropertyDeclaration(DataClassWriter writer, Property property)
