@@ -5,8 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Deprecated `Action` usages in `DotCoverTasks` and `OpenCoverTasks` in favor of `SetTargetSettings`.
 - Added `StringExtensions.ReplaceRegex` for fluent regular expression replacements.
-- Added `[Tool]Tasks.[Tool]Path` property for better accessibility. 
+- Added `[Tool]Tasks.[Tool]Path` property for better accessibility.
+- Added `DotCoverTasks` aliases for `cover`, `delete`, `merge`, `report` and `zip`.
 - Changed `NukeBuild.Configuration` to be overridable but still injectable.
 - Changed `StringExtensions.JoinNewLine` to accept `PlatformFamily` parameter which designates line-endings.
 - Fixed `ProcessManager` to resolve `toolPath` from environment.

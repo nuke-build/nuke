@@ -34,21 +34,21 @@ namespace Nuke.Common.Tools.OpenCover
         {
             var toolSettings = configurator.InvokeSafe(new OpenCoverSettings());
             PreProcess(toolSettings);
-            var process = StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
         }
         /// <summary><p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p><p>For more details, visit the <a href="https://github.com/OpenCover/opencover">official website</a>.</p></summary>
-        public static void OpenCover(Action testAction, Configure<OpenCoverSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void OpenCover(ToolSettings targetSettings, Configure<OpenCoverSettings> configurator = null, ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
-            OpenCover(x => configurator(x).SetTestAction(testAction));
+            OpenCover(x => configurator(x).SetTargetSettings(targetSettings));
         }
         /// <summary><p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p><p>For more details, visit the <a href="https://github.com/OpenCover/opencover">official website</a>.</p></summary>
-        public static void OpenCover(Action testAction, string output, Configure<OpenCoverSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void OpenCover(ToolSettings targetSettings, string output, Configure<OpenCoverSettings> configurator = null, ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
-            OpenCover(testAction, x => configurator(x).SetOutput(output));
+            OpenCover(targetSettings, x => configurator(x).SetOutput(output));
         }
     }
     #region OpenCoverSettings
@@ -60,6 +60,8 @@ namespace Nuke.Common.Tools.OpenCover
     {
         /// <summary><p>Path to the OpenCover executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? OpenCoverTasks.OpenCoverPath;
+        /// <summary><p>The target settings that execute the tests.</p></summary>
+        public virtual ToolSettings TargetSettings { get; internal set; }
         /// <summary><p>The name of the target application or service that will be started; this can also be a path to the target application.</p></summary>
         public virtual string TargetPath { get; internal set; }
         /// <summary><p>Arguments to be passed to the target process.</p></summary>

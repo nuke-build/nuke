@@ -10,18 +10,30 @@ namespace Nuke.Common.Tools.DotCover
 {
     partial class DotCoverAnalyseSettingsExtensions
     {
-        public static DotCoverAnalyseSettings NewInstance(this DotCoverAnalyseSettings toolSettings)
-        {
-            var newToolSettings = toolSettings.NewInstance<DotCoverAnalyseSettings>();
-            newToolSettings.TestActionInternal = toolSettings.TestActionInternal;
-            return newToolSettings;
+        [Obsolete("Use " + nameof(SetTargetSettings) + " instead.")]
+        public static DotCoverAnalyseSettings SetTestAction(this DotCoverAnalyseSettings toolSettings, Action testAction)
+        {    
+            var capturedStartInfo = ProcessTasks.CaptureProcessStartInfo(testAction);
+            return toolSettings
+                .SetTargetExecutable(capturedStartInfo.ToolPath)
+                .SetTargetArguments(capturedStartInfo.Arguments)
+                .SetTargetWorkingDirectory(capturedStartInfo.WorkingDirectory);
         }
 
-        public static DotCoverAnalyseSettings SetTestAction(this DotCoverAnalyseSettings toolSettings, Action testAction)
+        public static DotCoverAnalyseSettings SetTargetSettings(this DotCoverAnalyseSettings toolSettings, ToolSettings targetSettings)
         {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TestActionInternal = testAction;
-            return toolSettings;
+            return toolSettings
+                .SetTargetExecutable(targetSettings.ToolPath)
+                .SetTargetArguments(targetSettings.GetArguments().RenderForExecution())
+                .SetTargetWorkingDirectory(targetSettings.WorkingDirectory);
+        }
+        
+        public static DotCoverAnalyseSettings ResetTargetSettings(this DotCoverAnalyseSettings toolSettings)
+        {
+            return toolSettings
+                .ResetTargetExecutable()
+                .ResetTargetArguments()
+                .ResetTargetWorkingDirectory();
         }
     }
 }

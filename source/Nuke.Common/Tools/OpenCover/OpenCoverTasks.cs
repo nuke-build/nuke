@@ -4,7 +4,6 @@
 
 using System;
 using System.Linq;
-using JetBrains.Annotations;
 using Nuke.Core;
 using Nuke.Core.Tooling;
 
@@ -32,17 +31,18 @@ namespace Nuke.Common.Tools.OpenCover
                 "*/*.g.cs",
                 "*/*.g.i.cs");
 
-        [CanBeNull]
-        private static IProcess StartProcess(OpenCoverSettings toolSettings, ProcessSettings processSettings = null)
+        [Obsolete("Use " + nameof(OpenCoverSettings) + "." + nameof(OpenCoverSettingsExtensions.SetTargetSettings) + " instead.")]
+        public static void OpenCover(Action testAction, Configure<OpenCoverSettings> configurator = null, ProcessSettings processSettings = null)
         {
-            var testAction = toolSettings.TestAction.NotNull("testAction != null");
-            var capturedStartInfo = ProcessTasks.CaptureProcessStartInfo(testAction);
-            toolSettings = toolSettings
-                .SetTargetPath(capturedStartInfo.ToolPath)
-                .SetTargetArguments(capturedStartInfo.Arguments)
-                .SetTargetDirectory(capturedStartInfo.WorkingDirectory);
+            configurator = configurator ?? (x => x);
+            OpenCover(x => configurator(x).SetTestAction(testAction));
+        }
 
-            return ProcessTasks.StartProcess(toolSettings, processSettings);
+        [Obsolete("Use " + nameof(OpenCoverSettings) + "." + nameof(OpenCoverSettingsExtensions.SetTargetSettings) + " instead.")]
+        public static void OpenCover(Action testAction, string output, Configure<OpenCoverSettings> configurator = null, ProcessSettings processSettings = null)
+        {
+            configurator = configurator ?? (x => x);
+            OpenCover(testAction, x => configurator(x).SetOutput(output));
         }
     }
 }

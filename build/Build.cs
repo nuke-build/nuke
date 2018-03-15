@@ -162,15 +162,16 @@ class Build : NukeBuild
         .DependsOn(Compile)
         .Executes(() =>
         {
-            void TestXunit()
-                => Xunit2(GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/net4*/Nuke.*.Tests.dll").NotEmpty(),
-                    s => s.AddResultReport(Xunit2ResultFormat.Xml, OutputDirectory / "tests.xml"));
-
+            var xunitSettings = new Xunit2Settings()
+                .AddTargetAssemblies(GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/net4*/Nuke.*.Tests.dll").NotEmpty())
+                .AddResultReport(Xunit2ResultFormat.Xml, OutputDirectory / "tests.xml");
+            
             if (IsWin)
-                OpenCover(TestXunit, s => DefaultOpenCover
-                    .SetOutput(OutputDirectory / "coverage.xml"));
+                OpenCover(s => DefaultOpenCover
+                    .SetOutput(OutputDirectory / "coverage.xml")
+                    .SetTargetSettings(xunitSettings));
             else
-                TestXunit();
+                Xunit2(s => xunitSettings);
         });
 
     string MetadataDirectory => RootDirectory / ".." / "nuke-tools" / "metadata";

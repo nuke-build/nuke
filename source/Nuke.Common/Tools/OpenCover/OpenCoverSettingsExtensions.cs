@@ -10,18 +10,30 @@ namespace Nuke.Common.Tools.OpenCover
 {
     partial class OpenCoverSettingsExtensions
     {
-        public static OpenCoverSettings NewInstance(this OpenCoverSettings toolSettings)
-        {
-            var newToolSettings = toolSettings.NewInstance<OpenCoverSettings>();
-            newToolSettings.TestActionInternal = toolSettings.TestActionInternal;
-            return newToolSettings;
+        [Obsolete("Use " + nameof(SetTargetSettings) + " instead.")]
+        public static OpenCoverSettings SetTestAction(this OpenCoverSettings toolSettings, Action testAction)
+        {    
+            var capturedStartInfo = ProcessTasks.CaptureProcessStartInfo(testAction);
+            return toolSettings
+                .SetTargetPath(capturedStartInfo.ToolPath)
+                .SetTargetArguments(capturedStartInfo.Arguments)
+                .SetTargetDirectory(capturedStartInfo.WorkingDirectory);
         }
 
-        public static OpenCoverSettings SetTestAction(this OpenCoverSettings toolSettings, Action testAction)
+        public static OpenCoverSettings SetTargetSettings(this OpenCoverSettings toolSettings, ToolSettings targetSettings)
         {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TestActionInternal = testAction;
-            return toolSettings;
+            return toolSettings
+                .SetTargetPath(targetSettings.ToolPath)
+                .SetTargetArguments(targetSettings.GetArguments().RenderForExecution())
+                .SetTargetDirectory(targetSettings.WorkingDirectory);
+        }
+        
+        public static OpenCoverSettings ResetTargetSettings(this OpenCoverSettings toolSettings)
+        {
+            return toolSettings
+                .ResetTargetPath()
+                .ResetTargetArguments()
+                .ResetTargetDirectory();
         }
     }
 }
