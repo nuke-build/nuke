@@ -69,13 +69,23 @@ namespace Nuke.CodeGeneration
                 var tool = Load(file);
                 if (tool == null)
                     return;
+        
+                // for formatting and ordering of properties
+                Save(tool);
 
                 foreach (var task in tool.Tasks)
                 {
-                    if (task.OmitCommonProperties)
-                        continue;
+                    if (!task.OmitCommonProperties)
+                    {
+                        tool.CommonTaskProperties.ForEach(x => task.SettingsClass.Properties.Add(x.Clone()));
+                    }
 
-                    tool.CommonTaskProperties.ForEach(y => task.SettingsClass.Properties.Add(y.Clone()));
+                    foreach (var commonPropertySet in task.CommonPropertySets)
+                    {
+                        ControlFlow.Assert(tool.CommonTaskPropertySets.TryGetValue(commonPropertySet, out var properties),
+                            "commonPropertySets[{commonPropertySet}] != null");
+                        properties.ForEach(x => task.SettingsClass.Properties.Add(x.Clone()));
+                    }
                 }
 
                 ApplyBackReferences(tool);
@@ -85,11 +95,8 @@ namespace Nuke.CodeGeneration
                     ToolGenerator.Run(tool, GetNamespace(tool), streamWriter);
                 }
 
-                tool.Tasks.ForEach(x => tool.CommonTaskProperties.ForEach(y => x.SettingsClass.Properties.RemoveAll(z => z.Name == y.Name)));
                 System.Threading.Tasks.Task.WaitAll(
                     tool.References.Select(reference => UpdateReference(reference, tool)).ToArray());
-
-                Save(tool);
 
                 Logger.Info($"Generated code from '{Path.GetFileName(file)}'.");
             });
@@ -122,7 +129,7 @@ namespace Nuke.CodeGeneration
                 return tool;
             }
             catch (Exception exception)
-            {               
+            {
                 Logger.Error($"Couldn't load metadata file '{Path.GetFileName(file)}'.");
                 Logger.Error(exception.Message);
                 return null;
@@ -189,11 +196,7 @@ namespace Nuke.CodeGeneration
                     DefaultValueHandling = DefaultValueHandling.Ignore
                 });
 
-            var originalLineCount = File.ReadAllLines(tool.DefinitionFile).Length;
-            var serializationLineCount = content.Split(new[] { Environment.NewLine }, StringSplitOptions.None).Length;
-
-            var postfix = originalLineCount != serializationLineCount ? ".new" : string.Empty;
-            File.WriteAllText(tool.DefinitionFile + postfix, content);
+            File.WriteAllText(tool.DefinitionFile, content);
         }
 
         private async Task<string> GetReferenceContent(string reference)

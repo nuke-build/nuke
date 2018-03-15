@@ -65,6 +65,9 @@ namespace Nuke.CodeGeneration.Model
         [Description("Common properties for all tasks.")]
         public List<Property> CommonTaskProperties { get; set; } = new List<Property>();
 
+        [Description("Named common property sets which can be used by tasks.")]
+        public Dictionary<string, List<Property>> CommonTaskPropertySets { get; set; } = new Dictionary<string, List<Property>>();
+
         [Description("Common used data classes.")]
         public List<DataClass> DataClasses { get; set; } = new List<DataClass>();
 
