@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using JetBrains.Annotations;
@@ -31,6 +32,9 @@ namespace Nuke.CodeGeneration.Model
 
         [Description("Skips appending of common task properties.")]
         public bool OmitCommonProperties { get; set; }
+
+        [Description("Appends the properties of the named property sets.")]
+        public List<string> CommonPropertySets { get; set; } = new List<string>();
 
         [Description("Custom start implementation.")]
         public bool CustomStart { get; set; }

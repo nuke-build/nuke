@@ -201,6 +201,13 @@
           "description": "Skips appending of common task properties.",
           "type": "boolean"
         },
+        "commonPropertySets": {
+          "description": "Appends the properties of the named property sets.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "customStart": {
           "description": "Custom start implementation.",
           "type": "boolean"
@@ -286,6 +293,16 @@
       "type": "array",
       "items": {
         "$ref": "#/definitions/Property"
+      }
+    },
+    "commonTaskPropertySets": {
+      "description": "Named common property sets which can be used by tasks.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/Property"
+        }
       }
     },
     "dataClasses": {
