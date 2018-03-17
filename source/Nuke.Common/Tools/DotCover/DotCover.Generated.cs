@@ -38,12 +38,6 @@ namespace Nuke.Common.Tools.DotCover
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
         }
-        /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
-        public static void DotCoverAnalyse(ToolSettings targetSettings, Configure<DotCoverAnalyseSettings> configurator = null, ProcessSettings processSettings = null)
-        {
-            configurator = configurator ?? (x => x);
-            DotCoverAnalyse(x => configurator(x).SetTargetSettings(targetSettings));
-        }
         static partial void PreProcess(DotCoverCoverSettings toolSettings);
         static partial void PostProcess(DotCoverCoverSettings toolSettings);
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
@@ -54,12 +48,6 @@ namespace Nuke.Common.Tools.DotCover
             var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
-        }
-        /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
-        public static void DotCoverCover(ToolSettings targetSettings, Configure<DotCoverCoverSettings> configurator = null, ProcessSettings processSettings = null)
-        {
-            configurator = configurator ?? (x => x);
-            DotCoverCover(x => configurator(x).SetTargetSettings(targetSettings));
         }
         static partial void PreProcess(DotCoverDeleteSettings toolSettings);
         static partial void PostProcess(DotCoverDeleteSettings toolSettings);
@@ -116,8 +104,14 @@ namespace Nuke.Common.Tools.DotCover
         /// <summary><p>Path to the DotCover executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotCoverTasks.DotCoverPath;
         public virtual string Configuration { get; internal set; }
-        /// <summary><p>The target settings that execute the tests.</p></summary>
-        public virtual ToolSettings TargetSettings { get; internal set; }
+        /// <summary><p>A type of the report. The default value is <c>XML</c>.</p></summary>
+        public virtual DotCoverReportType ReportType { get; internal set; }
+        /// <summary><p>Resulting report file name.</p></summary>
+        public virtual string OutputFile { get; internal set; }
+        /// <summary><p>Remove auto-implemented properties from report.</p></summary>
+        public virtual bool? HideAutoProperties { get; internal set; }
+        /// <summary><p>Enables logging and specifies log file name.</p></summary>
+        public virtual string LogFile { get; internal set; }
         /// <summary><p>File name of the program to analyse.</p></summary>
         public virtual string TargetExecutable { get; internal set; }
         /// <summary><p>Program arguments.</p></summary>
@@ -126,10 +120,6 @@ namespace Nuke.Common.Tools.DotCover
         public virtual string TargetWorkingDirectory { get; internal set; }
         /// <summary><p>Directory for auxiliary files. Set to the system temp by default.</p></summary>
         public virtual string TempDirectory { get; internal set; }
-        /// <summary><p>A type of the report. The default value is <c>XML</c>.</p></summary>
-        public virtual DotCoverReportType ReportType { get; internal set; }
-        /// <summary><p>Resulting report file name.</p></summary>
-        public virtual string OutputFile { get; internal set; }
         /// <summary><p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p></summary>
         public virtual bool? InheritConsole { get; internal set; } = true;
         /// <summary><p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p></summary>
@@ -155,10 +145,6 @@ namespace Nuke.Common.Tools.DotCover
         /// <summary><p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p></summary>
         public virtual IReadOnlyList<string> ProcessFilters => ProcessFiltersInternal.AsReadOnly();
         internal List<string> ProcessFiltersInternal { get; set; } = new List<string>();
-        /// <summary><p>Remove auto-implemented properties from report.</p></summary>
-        public virtual bool? HideAutoProperties { get; internal set; }
-        /// <summary><p>Enables logging and specifies log file name.</p></summary>
-        public virtual string LogFile { get; internal set; }
         protected override void AssertValid()
         {
             base.AssertValid();
@@ -169,12 +155,14 @@ namespace Nuke.Common.Tools.DotCover
             arguments
               .Add("analyse")
               .Add("{value}", Configuration)
+              .Add("/ReportType={value}", ReportType)
+              .Add("/Output={value}", OutputFile)
+              .Add("/HideAutoProperties", HideAutoProperties)
+              .Add("/LogFile={value}", LogFile)
               .Add("/TargetExecutable={value}", TargetExecutable)
               .Add("/TargetArguments={value}", TargetArguments)
               .Add("/TargetWorkingDir={value}", TargetWorkingDirectory)
               .Add("/TempDir={value}", TempDirectory)
-              .Add("/ReportType={value}", ReportType)
-              .Add("/Output={value}", OutputFile)
               .Add("/InheritConsole={value}", InheritConsole)
               .Add("/AnalyseTargetArguments={value}", AnalyseTargetArguments)
               .Add("/Scope={value}", Scope, separator: ';')
@@ -184,9 +172,7 @@ namespace Nuke.Common.Tools.DotCover
               .Add("/SymbolSearchPaths={value}", SymbolSearchPaths, separator: ';')
               .Add("/AllowSymbolServerAccess", AllowSymbolServerAccess)
               .Add("/ReturnTargetExitCode", ReturnTargetExitCode)
-              .Add("/ProcessFilters={value}", ProcessFilters, separator: ';')
-              .Add("/HideAutoProperties", HideAutoProperties)
-              .Add("/LogFile={value}", LogFile);
+              .Add("/ProcessFilters={value}", ProcessFilters, separator: ';');
             return base.ConfigureArguments(arguments);
         }
     }
@@ -201,8 +187,10 @@ namespace Nuke.Common.Tools.DotCover
         /// <summary><p>Path to the DotCover executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotCoverTasks.DotCoverPath;
         public virtual string Configuration { get; internal set; }
-        /// <summary><p>The target settings that execute the tests.</p></summary>
-        public virtual ToolSettings TargetSettings { get; internal set; }
+        /// <summary><p>Path to the resulting coverage snapshot.</p></summary>
+        public virtual string OutputFile { get; internal set; }
+        /// <summary><p>Enables logging and specifies log file name.</p></summary>
+        public virtual string LogFile { get; internal set; }
         /// <summary><p>File name of the program to analyse.</p></summary>
         public virtual string TargetExecutable { get; internal set; }
         /// <summary><p>Program arguments.</p></summary>
@@ -211,8 +199,6 @@ namespace Nuke.Common.Tools.DotCover
         public virtual string TargetWorkingDirectory { get; internal set; }
         /// <summary><p>Directory for auxiliary files. Set to the system temp by default.</p></summary>
         public virtual string TempDirectory { get; internal set; }
-        /// <summary><p>Path to the resulting coverage snapshot.</p></summary>
-        public virtual string OutputFile { get; internal set; }
         /// <summary><p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p></summary>
         public virtual bool? InheritConsole { get; internal set; } = true;
         /// <summary><p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p></summary>
@@ -238,8 +224,6 @@ namespace Nuke.Common.Tools.DotCover
         /// <summary><p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p></summary>
         public virtual IReadOnlyList<string> ProcessFilters => ProcessFiltersInternal.AsReadOnly();
         internal List<string> ProcessFiltersInternal { get; set; } = new List<string>();
-        /// <summary><p>Enables logging and specifies log file name.</p></summary>
-        public virtual string LogFile { get; internal set; }
         protected override void AssertValid()
         {
             base.AssertValid();
@@ -250,11 +234,12 @@ namespace Nuke.Common.Tools.DotCover
             arguments
               .Add("cover")
               .Add("{value}", Configuration)
+              .Add("/Output={value}", OutputFile)
+              .Add("/LogFile={value}", LogFile)
               .Add("/TargetExecutable={value}", TargetExecutable)
               .Add("/TargetArguments={value}", TargetArguments)
               .Add("/TargetWorkingDir={value}", TargetWorkingDirectory)
               .Add("/TempDir={value}", TempDirectory)
-              .Add("/Output={value}", OutputFile)
               .Add("/InheritConsole={value}", InheritConsole)
               .Add("/AnalyseTargetArguments={value}", AnalyseTargetArguments)
               .Add("/Scope={value}", Scope, separator: ';')
@@ -264,8 +249,7 @@ namespace Nuke.Common.Tools.DotCover
               .Add("/SymbolSearchPaths={value}", SymbolSearchPaths, separator: ';')
               .Add("/AllowSymbolServerAccess", AllowSymbolServerAccess)
               .Add("/ReturnTargetExitCode", ReturnTargetExitCode)
-              .Add("/ProcessFilters={value}", ProcessFilters, separator: ';')
-              .Add("/LogFile={value}", LogFile);
+              .Add("/ProcessFilters={value}", ProcessFilters, separator: ';');
             return base.ConfigureArguments(arguments);
         }
     }
@@ -435,6 +419,102 @@ namespace Nuke.Common.Tools.DotCover
             return toolSettings;
         }
         #endregion
+        #region ReportType
+        /// <summary><p><em>Sets <see cref="DotCoverAnalyseSettings.ReportType"/>.</em></p><p>A type of the report. The default value is <c>XML</c>.</p></summary>
+        [Pure]
+        public static DotCoverAnalyseSettings SetReportType(this DotCoverAnalyseSettings toolSettings, DotCoverReportType reportType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReportType = reportType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotCoverAnalyseSettings.ReportType"/>.</em></p><p>A type of the report. The default value is <c>XML</c>.</p></summary>
+        [Pure]
+        public static DotCoverAnalyseSettings ResetReportType(this DotCoverAnalyseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ReportType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region OutputFile
+        /// <summary><p><em>Sets <see cref="DotCoverAnalyseSettings.OutputFile"/>.</em></p><p>Resulting report file name.</p></summary>
+        [Pure]
+        public static DotCoverAnalyseSettings SetOutputFile(this DotCoverAnalyseSettings toolSettings, string outputFile)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OutputFile = outputFile;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotCoverAnalyseSettings.OutputFile"/>.</em></p><p>Resulting report file name.</p></summary>
+        [Pure]
+        public static DotCoverAnalyseSettings ResetOutputFile(this DotCoverAnalyseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OutputFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region HideAutoProperties
+        /// <summary><p><em>Sets <see cref="DotCoverAnalyseSettings.HideAutoProperties"/>.</em></p><p>Remove auto-implemented properties from report.</p></summary>
+        [Pure]
+        public static DotCoverAnalyseSettings SetHideAutoProperties(this DotCoverAnalyseSettings toolSettings, bool? hideAutoProperties)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HideAutoProperties = hideAutoProperties;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotCoverAnalyseSettings.HideAutoProperties"/>.</em></p><p>Remove auto-implemented properties from report.</p></summary>
+        [Pure]
+        public static DotCoverAnalyseSettings ResetHideAutoProperties(this DotCoverAnalyseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HideAutoProperties = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotCoverAnalyseSettings.HideAutoProperties"/>.</em></p><p>Remove auto-implemented properties from report.</p></summary>
+        [Pure]
+        public static DotCoverAnalyseSettings EnableHideAutoProperties(this DotCoverAnalyseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HideAutoProperties = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotCoverAnalyseSettings.HideAutoProperties"/>.</em></p><p>Remove auto-implemented properties from report.</p></summary>
+        [Pure]
+        public static DotCoverAnalyseSettings DisableHideAutoProperties(this DotCoverAnalyseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HideAutoProperties = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotCoverAnalyseSettings.HideAutoProperties"/>.</em></p><p>Remove auto-implemented properties from report.</p></summary>
+        [Pure]
+        public static DotCoverAnalyseSettings ToggleHideAutoProperties(this DotCoverAnalyseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HideAutoProperties = !toolSettings.HideAutoProperties;
+            return toolSettings;
+        }
+        #endregion
+        #region LogFile
+        /// <summary><p><em>Sets <see cref="DotCoverAnalyseSettings.LogFile"/>.</em></p><p>Enables logging and specifies log file name.</p></summary>
+        [Pure]
+        public static DotCoverAnalyseSettings SetLogFile(this DotCoverAnalyseSettings toolSettings, string logFile)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogFile = logFile;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotCoverAnalyseSettings.LogFile"/>.</em></p><p>Enables logging and specifies log file name.</p></summary>
+        [Pure]
+        public static DotCoverAnalyseSettings ResetLogFile(this DotCoverAnalyseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogFile = null;
+            return toolSettings;
+        }
+        #endregion
         #region TargetExecutable
         /// <summary><p><em>Sets <see cref="DotCoverAnalyseSettings.TargetExecutable"/>.</em></p><p>File name of the program to analyse.</p></summary>
         [Pure]
@@ -504,42 +584,6 @@ namespace Nuke.Common.Tools.DotCover
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TempDirectory = null;
-            return toolSettings;
-        }
-        #endregion
-        #region ReportType
-        /// <summary><p><em>Sets <see cref="DotCoverAnalyseSettings.ReportType"/>.</em></p><p>A type of the report. The default value is <c>XML</c>.</p></summary>
-        [Pure]
-        public static DotCoverAnalyseSettings SetReportType(this DotCoverAnalyseSettings toolSettings, DotCoverReportType reportType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ReportType = reportType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DotCoverAnalyseSettings.ReportType"/>.</em></p><p>A type of the report. The default value is <c>XML</c>.</p></summary>
-        [Pure]
-        public static DotCoverAnalyseSettings ResetReportType(this DotCoverAnalyseSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ReportType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region OutputFile
-        /// <summary><p><em>Sets <see cref="DotCoverAnalyseSettings.OutputFile"/>.</em></p><p>Resulting report file name.</p></summary>
-        [Pure]
-        public static DotCoverAnalyseSettings SetOutputFile(this DotCoverAnalyseSettings toolSettings, string outputFile)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.OutputFile = outputFile;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DotCoverAnalyseSettings.OutputFile"/>.</em></p><p>Resulting report file name.</p></summary>
-        [Pure]
-        public static DotCoverAnalyseSettings ResetOutputFile(this DotCoverAnalyseSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.OutputFile = null;
             return toolSettings;
         }
         #endregion
@@ -1053,66 +1097,6 @@ namespace Nuke.Common.Tools.DotCover
             return toolSettings;
         }
         #endregion
-        #region HideAutoProperties
-        /// <summary><p><em>Sets <see cref="DotCoverAnalyseSettings.HideAutoProperties"/>.</em></p><p>Remove auto-implemented properties from report.</p></summary>
-        [Pure]
-        public static DotCoverAnalyseSettings SetHideAutoProperties(this DotCoverAnalyseSettings toolSettings, bool? hideAutoProperties)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.HideAutoProperties = hideAutoProperties;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DotCoverAnalyseSettings.HideAutoProperties"/>.</em></p><p>Remove auto-implemented properties from report.</p></summary>
-        [Pure]
-        public static DotCoverAnalyseSettings ResetHideAutoProperties(this DotCoverAnalyseSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.HideAutoProperties = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="DotCoverAnalyseSettings.HideAutoProperties"/>.</em></p><p>Remove auto-implemented properties from report.</p></summary>
-        [Pure]
-        public static DotCoverAnalyseSettings EnableHideAutoProperties(this DotCoverAnalyseSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.HideAutoProperties = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="DotCoverAnalyseSettings.HideAutoProperties"/>.</em></p><p>Remove auto-implemented properties from report.</p></summary>
-        [Pure]
-        public static DotCoverAnalyseSettings DisableHideAutoProperties(this DotCoverAnalyseSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.HideAutoProperties = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="DotCoverAnalyseSettings.HideAutoProperties"/>.</em></p><p>Remove auto-implemented properties from report.</p></summary>
-        [Pure]
-        public static DotCoverAnalyseSettings ToggleHideAutoProperties(this DotCoverAnalyseSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.HideAutoProperties = !toolSettings.HideAutoProperties;
-            return toolSettings;
-        }
-        #endregion
-        #region LogFile
-        /// <summary><p><em>Sets <see cref="DotCoverAnalyseSettings.LogFile"/>.</em></p><p>Enables logging and specifies log file name.</p></summary>
-        [Pure]
-        public static DotCoverAnalyseSettings SetLogFile(this DotCoverAnalyseSettings toolSettings, string logFile)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.LogFile = logFile;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DotCoverAnalyseSettings.LogFile"/>.</em></p><p>Enables logging and specifies log file name.</p></summary>
-        [Pure]
-        public static DotCoverAnalyseSettings ResetLogFile(this DotCoverAnalyseSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.LogFile = null;
-            return toolSettings;
-        }
-        #endregion
     }
     #endregion
     #region DotCoverCoverSettingsExtensions
@@ -1136,6 +1120,42 @@ namespace Nuke.Common.Tools.DotCover
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
+            return toolSettings;
+        }
+        #endregion
+        #region OutputFile
+        /// <summary><p><em>Sets <see cref="DotCoverCoverSettings.OutputFile"/>.</em></p><p>Path to the resulting coverage snapshot.</p></summary>
+        [Pure]
+        public static DotCoverCoverSettings SetOutputFile(this DotCoverCoverSettings toolSettings, string outputFile)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OutputFile = outputFile;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotCoverCoverSettings.OutputFile"/>.</em></p><p>Path to the resulting coverage snapshot.</p></summary>
+        [Pure]
+        public static DotCoverCoverSettings ResetOutputFile(this DotCoverCoverSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OutputFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region LogFile
+        /// <summary><p><em>Sets <see cref="DotCoverCoverSettings.LogFile"/>.</em></p><p>Enables logging and specifies log file name.</p></summary>
+        [Pure]
+        public static DotCoverCoverSettings SetLogFile(this DotCoverCoverSettings toolSettings, string logFile)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogFile = logFile;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotCoverCoverSettings.LogFile"/>.</em></p><p>Enables logging and specifies log file name.</p></summary>
+        [Pure]
+        public static DotCoverCoverSettings ResetLogFile(this DotCoverCoverSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogFile = null;
             return toolSettings;
         }
         #endregion
@@ -1208,24 +1228,6 @@ namespace Nuke.Common.Tools.DotCover
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TempDirectory = null;
-            return toolSettings;
-        }
-        #endregion
-        #region OutputFile
-        /// <summary><p><em>Sets <see cref="DotCoverCoverSettings.OutputFile"/>.</em></p><p>Path to the resulting coverage snapshot.</p></summary>
-        [Pure]
-        public static DotCoverCoverSettings SetOutputFile(this DotCoverCoverSettings toolSettings, string outputFile)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.OutputFile = outputFile;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DotCoverCoverSettings.OutputFile"/>.</em></p><p>Path to the resulting coverage snapshot.</p></summary>
-        [Pure]
-        public static DotCoverCoverSettings ResetOutputFile(this DotCoverCoverSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.OutputFile = null;
             return toolSettings;
         }
         #endregion
@@ -1736,24 +1738,6 @@ namespace Nuke.Common.Tools.DotCover
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(processFilters);
             toolSettings.ProcessFiltersInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        #endregion
-        #region LogFile
-        /// <summary><p><em>Sets <see cref="DotCoverCoverSettings.LogFile"/>.</em></p><p>Enables logging and specifies log file name.</p></summary>
-        [Pure]
-        public static DotCoverCoverSettings SetLogFile(this DotCoverCoverSettings toolSettings, string logFile)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.LogFile = logFile;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DotCoverCoverSettings.LogFile"/>.</em></p><p>Enables logging and specifies log file name.</p></summary>
-        [Pure]
-        public static DotCoverCoverSettings ResetLogFile(this DotCoverCoverSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.LogFile = null;
             return toolSettings;
         }
         #endregion
