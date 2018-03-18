@@ -24,8 +24,6 @@ namespace Nuke.CodeGeneration.Model
 
         [JsonIgnore] public string DefinitionFile { get; set; }
 
-        [JsonIgnore] public string GenerationFileBase { get; set; }
-
         [JsonIgnore] public string RepositoryUrl { get; set; }
 
         [Description("Contains all references on which this definition is based on. Allows checking for updates.")]

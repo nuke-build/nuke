@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Schema;
 using Newtonsoft.Json.Schema.Generation;
@@ -13,6 +14,7 @@ using Nuke.Core.IO;
 
 namespace Nuke.CodeGeneration
 {
+    [PublicAPI]
     public static class SchemaGenerator
     {
         public static void GenerateSchema<T>(string output, string id, string title)

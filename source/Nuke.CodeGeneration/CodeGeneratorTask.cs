@@ -31,6 +31,8 @@ namespace Nuke.CodeGeneration
 
         [CanBeNull]
         public string BaseNamespace { get; set; }
+        
+        public bool UpdateReferences { get; set; }
 
         public bool Execute()
         {
@@ -45,13 +47,15 @@ namespace Nuke.CodeGeneration
                 });
             }
 
-            new CodeGenerator(
-                    metadataFiles,
-                    BaseDirectory,
-                    UseNestedNamespaces,
-                    BaseNamespace,
-                    GitRepository.FromLocalDirectory(BaseDirectory))
-                .Execute();
+            CodeGenerator.GenerateCode(
+                metadataFiles,
+                BaseDirectory,
+                UseNestedNamespaces,
+                BaseNamespace,
+                GitRepository.FromLocalDirectory(BaseDirectory));
+
+            if (UpdateReferences)
+                ReferenceUpdater.UpdateReferences(metadataFiles);
 
             return true;
         }

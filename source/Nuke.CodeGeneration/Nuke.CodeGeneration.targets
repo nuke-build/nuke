@@ -4,6 +4,7 @@
     <NukeBaseDirectory Condition="'$(NukeBaseDirectory)' == ''">$(MSBuildProjectDirectory)</NukeBaseDirectory>
     <NukeUseNestedNamespaces Condition="'$(NukeUseNestedNamespaces)' == ''">False</NukeUseNestedNamespaces>
     <NukeRepositoryUrl Condition="'$(NukeRepositoryUrl)' == ''">$(RepositoryUrl)</NukeRepositoryUrl>
+    <NukeUpdateReferences Condition="'$(NukeUpdateReferences)' == ''">True</NukeUpdateReferences>
   </PropertyGroup>
   
   <UsingTask
@@ -17,7 +18,8 @@
       MetadataFiles="@(NukeMetadata)"
       BaseDirectory="$(NukeBaseDirectory)"
       UseNestedNamespaces="$(NukeUseNestedNamespaces)"
-      BaseNamespace="$(NukeBaseNamespace)" />
+      BaseNamespace="$(NukeBaseNamespace)"
+      UpdateReferences="$(NukeUpdateReferences)" />
     <Message Text="Generated tool APIs" />
   </Target>
 </Project>
