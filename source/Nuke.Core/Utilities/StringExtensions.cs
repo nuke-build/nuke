@@ -16,6 +16,11 @@ namespace Nuke.Core.Utilities
     [DebuggerStepThrough]
     public static class StringExtensions
     {
+        public static bool ContainsOrdinalIgnoreCase(this string str, string other)
+        {
+            return str.IndexOf(other, StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
         public static bool EqualsOrdinalIgnoreCase(this string str, string other)
         {
             return str.Equals(other, StringComparison.OrdinalIgnoreCase);

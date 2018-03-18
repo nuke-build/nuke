@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 - Deprecated `Action` usages in `DotCoverTasks` and `OpenCoverTasks` in favor of `SetTargetSettings`.
+- Added `ProjectModelTasks` with matching `SolutionAttribute` for auto-injection.
 - Added `StringExtensions.ReplaceRegex` for fluent regular expression replacements.
 - Added `[Tool]Tasks.[Tool]Path` property for better accessibility.
 - Added `DotCoverTasks` aliases for `cover`, `delete`, `merge`, `report` and `zip`.

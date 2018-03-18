@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using Nuke.CodeGeneration.Model;
 using Nuke.Common.Git;
+using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.InspectCode;
@@ -45,6 +46,7 @@ class Build : NukeBuild
 
     [GitVersion(DisableOnUnix = true)] readonly GitVersion GitVersion;
     [GitRepository(Branch = "master")] readonly GitRepository GitRepository;
+    [Solution] readonly Solution Solution;
 
     Target Clean => _ => _
         .Executes(() =>
@@ -72,7 +74,7 @@ class Build : NukeBuild
         .DependsOn(Restore)
         .Executes(() =>
         {
-            var project = SourceDirectory / "Nuke.CodeGeneration" / "Nuke.CodeGeneration.csproj";
+            var project = Solution.GetProject("Nuke.CodeGeneration");
             DotNetPublish(s => DefaultDotNetPublish
                 .SetProject(project)
                 .SetFramework("netstandard2.0"));
