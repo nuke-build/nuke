@@ -16,26 +16,31 @@ namespace Nuke.Core.Utilities
     [DebuggerStepThrough]
     public static class StringExtensions
     {
+        [Pure]
         public static bool ContainsOrdinalIgnoreCase(this string str, string other)
         {
             return str.IndexOf(other, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
+        [Pure]
         public static bool EqualsOrdinalIgnoreCase(this string str, string other)
         {
             return str.Equals(other, StringComparison.OrdinalIgnoreCase);
         }
 
+        [Pure]
         public static bool StartsWithOrdinalIgnoreCase(this string str, string other)
         {
             return str.StartsWith(other, StringComparison.OrdinalIgnoreCase);
         }
 
+        [Pure]
         public static bool EndsWithOrdinalIgnoreCase(this string str, string other)
         {
             return str.EndsWith(other, StringComparison.OrdinalIgnoreCase);
         }
 
+        [Pure]
         public static string EscapeBraces([CanBeNull] this string str)
         {
             if (string.IsNullOrWhiteSpace(str))
@@ -44,11 +49,13 @@ namespace Nuke.Core.Utilities
             return str.NotNull().Replace("{", "{{").Replace("}", "}}");
         }
 
+        [Pure]
         public static string DoubleQuoteIfNeeded([CanBeNull] this string str)
         {
             return str.DoubleQuoteIfNeeded(' ');
         }
 
+        [Pure]
         public static string DoubleQuoteIfNeeded([CanBeNull] this string str, params char?[] disallowed)
         {
             if (string.IsNullOrWhiteSpace(str))
@@ -63,6 +70,7 @@ namespace Nuke.Core.Utilities
             return str.DoubleQuote();
         }
 
+        [Pure]
         public static string DoubleQuote([CanBeNull] this string str)
         {
             if (string.IsNullOrWhiteSpace(str))
@@ -71,11 +79,13 @@ namespace Nuke.Core.Utilities
             return $"\"{str.NotNull().Replace("\"", "\\\"")}\"";
         }
 
+        [Pure]
         public static string SingleQuoteIfNeeded([CanBeNull] this string str)
         {
             return str.SingleQuoteIfNeeded(' ');
         }
 
+        [Pure]
         public static string SingleQuoteIfNeeded([CanBeNull] this string str, params char?[] disallowed)
         {
             if (string.IsNullOrWhiteSpace(str))
@@ -90,6 +100,7 @@ namespace Nuke.Core.Utilities
             return str.SingleQuote();
         }
 
+        [Pure]
         public static string SingleQuote([CanBeNull] this string str)
         {
             if (string.IsNullOrWhiteSpace(str))
@@ -98,36 +109,43 @@ namespace Nuke.Core.Utilities
             return $"'{str.NotNull().Replace("'", "\\'")}'";
         }
 
+        [Pure]
         public static bool IsDoubleQuoted(this string str)
         {
             return str.StartsWith("\"") && str.EndsWith("\"");
         }
 
+        [Pure]
         public static bool IsSingleQuoted(this string str)
         {
             return str.StartsWith("'") && str.EndsWith("'");
         }
 
+        [Pure]
         private static bool Contains(this string str, char?[] chars)
         {
             return chars.Any(x => x.HasValue && str.IndexOf(x.Value) != -1);
         }
 
+        [Pure]
         public static string Join(this IEnumerable<string> enumerable, string separator)
         {
             return string.Join(separator, enumerable);
         }
 
+        [Pure]
         public static string Join(this IEnumerable<string> enumerable, char separator)
         {
             return enumerable.Join(separator.ToString());
         }
 
+        [Pure]
         public static string JoinComma(this IEnumerable<string> values)
         {
             return values.Join(", ");
         }
 
+        [Pure]
         public static string JoinNewLine(this IEnumerable<string> values, PlatformFamily? platformFamily = null)
         {
             var newLine = !platformFamily.HasValue
@@ -138,16 +156,19 @@ namespace Nuke.Core.Utilities
             return values.Join(newLine);
         }
 
+        [Pure]
         public static string TrimEnd(this string str, string trim)
         {
             return str.EndsWith(trim) ? str.Substring(startIndex: 0, length: str.Length - trim.Length) : str;
         }
 
+        [Pure]
         public static string TrimStart(this string str, string trim)
         {
             return str.StartsWith(trim) ? str.Substring(trim.Length) : str;
         }
 
+        [Pure]
         public static string ReplaceRegex(
             this string str,
             string pattern,
