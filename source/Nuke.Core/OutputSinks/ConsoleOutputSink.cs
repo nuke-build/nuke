@@ -10,7 +10,6 @@ using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using Nuke.Core.Execution;
 using Nuke.Core.Utilities;
-using Console = System.Console;
 
 namespace Nuke.Core.OutputSinks
 {

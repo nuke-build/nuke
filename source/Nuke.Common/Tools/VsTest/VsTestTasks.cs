@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Linq;
 
 namespace Nuke.Common.Tools.VsTest
 {

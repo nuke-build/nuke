@@ -32,7 +32,7 @@ namespace Nuke.Common.Tests
 
             AssertOutput();
         }
-        
+
         private void CopySolutionFile(RelativePath solutionFileRelative = null)
         {
             var solutionDirectory = TestOutputDirectory / (solutionFileRelative ?? string.Empty);
@@ -72,7 +72,7 @@ EndGlobal
             int? solutionChoice = null,
             TargetPlatform targetPlatform = TargetPlatform.Core,
             ProjectFormat projectFormat = ProjectFormat.Sdk,
-            string nugetVersion = null, 
+            string nugetVersion = null,
             string nukeVersion = null,
             string buildDirectoryName = null,
             string buildProjectName = null)
@@ -82,7 +82,7 @@ EndGlobal
             var workingDirectory = TestOutputDirectory / (setupDirectoryRelative ?? string.Empty);
             FileSystemTasks.EnsureExistingDirectory(workingDirectory);
             var setupFileAbsolute = workingDirectory / setupFileName;
-            
+
             var bootstrappingUri = EnvironmentInfo.IsWin ? new Uri(bootstrappingDirectory).AbsoluteUri : $"file://{bootstrappingDirectory}";
             var content = File.ReadAllText(bootstrappingDirectory / setupFileName)
                 .Replace("https://raw.githubusercontent.com/nuke-build/nuke/master/bootstrapping", bootstrappingUri)
@@ -102,7 +102,7 @@ EndGlobal
                                               WorkingDirectory = workingDirectory,
                                               UseShellExecute = false,
                                               RedirectStandardInput = true,
-                                              RedirectStandardOutput = true, 
+                                              RedirectStandardOutput = true,
                                               RedirectStandardError = true
                                           }
                           };
@@ -122,27 +122,23 @@ EndGlobal
             process.BeginErrorReadLine();
 
             if (solutionChoice.HasValue)
-            {
                 process.StandardInput.WriteLine(solutionChoice.Value);
-            }
 
             process.StandardInput.WriteLine(EnvironmentInfo.IsWin
                 ? targetPlatform == TargetPlatform.Framework ? "F" : "C"
                 : ((int) targetPlatform).ToString());
-            
+
             if (targetPlatform == TargetPlatform.Framework)
             {
                 process.StandardInput.WriteLine(EnvironmentInfo.IsWin
                     ? projectFormat == ProjectFormat.Legacy ? "L" : "S"
                     : ((int) projectFormat).ToString());
-                
+
                 process.StandardInput.WriteLine(nugetVersion);
             }
 
             if (targetPlatform == TargetPlatform.Core || projectFormat == ProjectFormat.Sdk)
-            {
                 process.StandardInput.WriteLine(nukeVersion);
-            }
 
             process.StandardInput.WriteLine(buildDirectoryName);
             process.StandardInput.WriteLine(buildProjectName);
@@ -188,17 +184,15 @@ EndGlobal
                     builder.AppendLine($"{fileName} COMPARE {CreateRiderComparisonScript(approvalFile, tempFile)}");
                 }
                 else
-                {
                     File.Delete(tempFile);
-                }
-                
+
                 if (fixFile != null)
                     fixFiles.Add(fixFile);
             }
 
             if (fixFiles.Count > 0)
                 TestOutputHelper.WriteLine($"COPY ALL {CreateCompositeScript(fixFiles)}");
-            
+
             TestOutputHelper.WriteLine(builder.ToString());
 
             Assert.True(fixFiles.Count == 0);

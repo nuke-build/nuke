@@ -120,19 +120,13 @@ namespace Nuke.CodeGeneration.Generators
             }
 
             if (tool.EnvironmentExecutable != null)
-            {
                 resolvers.Add($"ToolPathResolver.GetEnvironmentExecutable({tool.EnvironmentExecutable.DoubleQuote()})");
-            }
 
             if (tool.PathExecutable != null)
-            {
                 resolvers.Add($"ToolPathResolver.GetPathExecutable({tool.PathExecutable.DoubleQuote()})");
-            }
 
             if (resolvers.Count == 0)
-            {
                 resolvers.Add("GetToolPath()");
-            }
 
             Trace.Assert(resolvers.Count == 1, "resolvers.Count == 1");
 

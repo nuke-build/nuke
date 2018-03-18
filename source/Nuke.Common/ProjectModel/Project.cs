@@ -13,7 +13,7 @@ namespace Nuke.Common.ProjectModel
     [DebuggerDisplay("{" + nameof(Path) + "}")]
     public class Project
     {
-        internal Project (
+        internal Project(
             Guid id,
             string name,
             string path,
@@ -37,7 +37,7 @@ namespace Nuke.Common.ProjectModel
         [CanBeNull]
         public Project Parent { get; }
 
-        public static implicit operator string (Project project)
+        public static implicit operator string(Project project)
         {
             return project.Path;
         }

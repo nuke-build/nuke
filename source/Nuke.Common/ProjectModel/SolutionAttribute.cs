@@ -10,7 +10,7 @@ using Nuke.Core.Execution;
 
 namespace Nuke.Common.ProjectModel
 {
-    /// <inheritdoc/>
+    /// <inheritdoc />
     [PublicAPI]
     [UsedImplicitly(ImplicitUseKindFlags.Assign)]
     public class SolutionAttribute : StaticInjectionAttributeBase
@@ -24,7 +24,7 @@ namespace Nuke.Common.ProjectModel
         public static Solution Value { get; private set; }
 
         [CanBeNull]
-        public override object GetStaticValue ()
+        public override object GetStaticValue()
         {
             return Value = Value ??
                            ProjectModelTasks.ParseSolution(

@@ -16,7 +16,7 @@ namespace Nuke.Common.Tools.Xunit
         {
             return EnvironmentInfo.Is64Bit ? "xunit.console.exe" : "xunit.console.x86.exe";
         }
-        
+
         public static void Xunit2(
             IEnumerable<string> assemblyFiles,
             Configure<Xunit2Settings> configurator = null,

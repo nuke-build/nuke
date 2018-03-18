@@ -121,9 +121,7 @@ namespace Nuke.CodeGeneration.Generators
         private static string GetPublicPropertyType(Property property)
         {
             if (property.IsList())
-            {
                 return $"IReadOnlyList<{property.GetListValueType()}>";
-            }
 
             if (property.IsDictionary())
             {
@@ -139,7 +137,6 @@ namespace Nuke.CodeGeneration.Generators
 
             return property.GetNullableType();
         }
-
 
         private static DataClassWriter WriteAssertValid(this DataClassWriter writer)
         {

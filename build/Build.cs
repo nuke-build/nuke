@@ -169,9 +169,11 @@ class Build : NukeBuild
                 .AddResultReport(Xunit2ResultFormat.Xml, OutputDirectory / "tests.xml");
             
             if (IsWin)
+            {
                 OpenCover(s => DefaultOpenCover
                     .SetOutput(OutputDirectory / "coverage.xml")
                     .SetTargetSettings(xunitSettings));
+            }
             else
                 Xunit2(s => xunitSettings);
         });

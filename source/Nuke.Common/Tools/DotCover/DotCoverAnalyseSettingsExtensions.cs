@@ -12,7 +12,7 @@ namespace Nuke.Common.Tools.DotCover
     {
         [Obsolete("Use " + nameof(SetTargetSettings) + " instead.")]
         public static DotCoverAnalyseSettings SetTestAction(this DotCoverAnalyseSettings toolSettings, Action testAction)
-        {    
+        {
             var capturedStartInfo = ProcessTasks.CaptureProcessStartInfo(testAction);
             return toolSettings
                 .SetTargetExecutable(capturedStartInfo.ToolPath)
@@ -27,7 +27,7 @@ namespace Nuke.Common.Tools.DotCover
                 .SetTargetArguments(targetSettings.GetArguments().RenderForExecution())
                 .SetTargetWorkingDirectory(targetSettings.WorkingDirectory);
         }
-        
+
         public static DotCoverAnalyseSettings ResetTargetSettings(this DotCoverAnalyseSettings toolSettings)
         {
             return toolSettings

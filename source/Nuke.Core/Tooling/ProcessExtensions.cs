@@ -45,9 +45,7 @@ namespace Nuke.Core.Tooling
         {
             var outputList = output.ToList();
             foreach (var o in outputList)
-            {
                 ControlFlow.Assert(o.Type == OutputType.Std, "o.Type == OutputType.Std");
-            }
 
             return outputList;
         }

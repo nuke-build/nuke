@@ -51,7 +51,7 @@ namespace Nuke.Common.Tools.GitVersion
         {
             return $"{gitVersion.Major}.{gitVersion.Minor}.0";
         }
-        
+
         public static string GetNormalizedFileVersion(this GitVersion gitVersion)
         {
             return gitVersion.MajorMinorPatch;

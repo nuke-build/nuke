@@ -12,7 +12,7 @@ namespace Nuke.Common.Tools.OpenCover
     {
         [Obsolete("Use " + nameof(SetTargetSettings) + " instead.")]
         public static OpenCoverSettings SetTestAction(this OpenCoverSettings toolSettings, Action testAction)
-        {    
+        {
             var capturedStartInfo = ProcessTasks.CaptureProcessStartInfo(testAction);
             return toolSettings
                 .SetTargetPath(capturedStartInfo.ToolPath)
@@ -27,7 +27,7 @@ namespace Nuke.Common.Tools.OpenCover
                 .SetTargetArguments(targetSettings.GetArguments().RenderForExecution())
                 .SetTargetDirectory(targetSettings.WorkingDirectory);
         }
-        
+
         public static OpenCoverSettings ResetTargetSettings(this OpenCoverSettings toolSettings)
         {
             return toolSettings

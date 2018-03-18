@@ -12,6 +12,7 @@ using Nuke.Common.Git;
 using Nuke.Core;
 using Nuke.Core.IO;
 using Nuke.Core.Utilities;
+
 // ReSharper disable ArgumentsStyleLiteral
 
 namespace Nuke.Common.ChangeLog

@@ -11,7 +11,7 @@ namespace Nuke.MSBuildLocator
     public static class Program
     {
         [STAThread]
-        public static void Main ()
+        public static void Main()
         {
             var msbuildPath = MSBuildToolPathResolver.Resolve();
             Console.WriteLine(msbuildPath);

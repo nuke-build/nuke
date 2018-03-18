@@ -38,7 +38,7 @@ namespace Nuke.Common.Tools.GitVersion
                 Logger.Warn($"{nameof(GitVersion)} is disabled on UNIX environment.");
                 return null;
             }
-            
+
             if (Value != null)
                 return Value;
 

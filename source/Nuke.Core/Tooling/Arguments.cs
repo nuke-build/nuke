@@ -29,8 +29,8 @@ namespace Nuke.Core.Tooling
 
         public Arguments Add(string argumentFormat, bool? condition = true)
         {
-            return condition.HasValue && (condition.Value || argumentFormat.Contains("{value}"))  
-                ? Add(argumentFormat, (object) condition.Value) 
+            return condition.HasValue && (condition.Value || argumentFormat.Contains("{value}"))
+                ? Add(argumentFormat, (object) condition.Value)
                 : this;
         }
 
@@ -142,11 +142,15 @@ namespace Nuke.Core.Tooling
                     .Replace("{value}", values);
 
             if (separator.HasValue)
+            {
                 foreach (var list in lookup)
                     _arguments.Add(argumentFormat, FormatLookup(list.Key, FormatMultiple(list, x => Format(x), separator.NotNull().Value, quoteMultiple)));
+            }
             else
+            {
                 foreach (var list in lookup)
                     _arguments.AddRange(argumentFormat, list.Select(x => FormatLookup(list.Key, Format(x))));
+            }
 
             return this;
         }

@@ -14,7 +14,7 @@ namespace Nuke.Common.ProjectModel
     [PublicAPI]
     public class Solution
     {
-        internal Solution (string path, IReadOnlyCollection<Project> projects)
+        internal Solution(string path, IReadOnlyCollection<Project> projects)
         {
             Path = path;
             Projects = projects;
@@ -23,7 +23,7 @@ namespace Nuke.Common.ProjectModel
         public string Path { get; }
         public IReadOnlyCollection<Project> Projects { get; }
 
-        public static implicit operator string (Solution solution)
+        public static implicit operator string(Solution solution)
         {
             return solution.Path;
         }
@@ -40,8 +40,8 @@ namespace Nuke.Common.ProjectModel
         {
             wildcardPattern = $"^{wildcardPattern}$";
             var regex = new Regex(wildcardPattern
-                    .Replace(".", "\\.")
-                    .Replace("*", ".*"));
+                .Replace(".", "\\.")
+                .Replace("*", ".*"));
             return Projects.Where(x => regex.IsMatch(x.Name));
         }
     }

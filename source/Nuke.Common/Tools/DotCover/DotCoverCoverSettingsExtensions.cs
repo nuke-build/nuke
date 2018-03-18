@@ -17,7 +17,7 @@ namespace Nuke.Common.Tools.DotCover
                 .SetTargetArguments(targetSettings.GetArguments().RenderForExecution())
                 .SetTargetWorkingDirectory(targetSettings.WorkingDirectory);
         }
-        
+
         public static DotCoverCoverSettings ResetTargetSettings(this DotCoverCoverSettings toolSettings)
         {
             return toolSettings

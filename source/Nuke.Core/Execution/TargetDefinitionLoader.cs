@@ -20,15 +20,15 @@ namespace Nuke.Core.Execution
             var invokedTargets = build.InvokedTargets.Select(x => GetDefinition(x, build)).ToList();
             var executingTargets = GetUnfilteredExecutingTargets(build, invokedTargets);
             var skippedTargets = executingTargets
-                    .Where(x => !invokedTargets.Contains(x) &&
-                                build.SkippedTargets != null &&
-                                (build.SkippedTargets.Length == 0 ||
-                                 build.SkippedTargets.Contains(x.Name, StringComparer.OrdinalIgnoreCase))).ToList();
+                .Where(x => !invokedTargets.Contains(x) &&
+                            build.SkippedTargets != null &&
+                            (build.SkippedTargets.Length == 0 ||
+                             build.SkippedTargets.Contains(x.Name, StringComparer.OrdinalIgnoreCase))).ToList();
             skippedTargets.ForEach(x => x.Conditions.Add(() => false));
 
-            string[] GetNames (IEnumerable<TargetDefinition> targets)
+            string[] GetNames(IEnumerable<TargetDefinition> targets)
                 => targets.Select(x => x.Name).ToArray();
-            
+
             ReflectionService.SetValue(build, nameof(NukeBuild.InvokedTargets), GetNames(invokedTargets));
             ReflectionService.SetValue(build, nameof(NukeBuild.SkippedTargets), GetNames(skippedTargets));
             ReflectionService.SetValue(build, nameof(NukeBuild.ExecutingTargets), GetNames(executingTargets.Except(skippedTargets)));

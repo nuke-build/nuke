@@ -39,7 +39,11 @@ namespace Nuke.Common.Tools.OpenCover
         }
 
         [Obsolete("Use " + nameof(OpenCoverSettings) + "." + nameof(OpenCoverSettingsExtensions.SetTargetSettings) + " instead.")]
-        public static void OpenCover(Action testAction, string output, Configure<OpenCoverSettings> configurator = null, ProcessSettings processSettings = null)
+        public static void OpenCover(
+            Action testAction,
+            string output,
+            Configure<OpenCoverSettings> configurator = null,
+            ProcessSettings processSettings = null)
         {
             configurator = configurator ?? (x => x);
             OpenCover(testAction, x => configurator(x).SetOutput(output));

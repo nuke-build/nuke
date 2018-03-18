@@ -71,7 +71,7 @@ namespace Nuke.Common.Tests
         {
             var scriptFile = Path.ChangeExtension(Path.GetTempFileName(), "bat");
             File.WriteAllText(scriptFile, content);
-            
+
             return new Uri(scriptFile).AbsoluteUri;
         }
 

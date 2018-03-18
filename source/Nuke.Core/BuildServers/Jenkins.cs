@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Linq;
 using static Nuke.Core.EnvironmentInfo;
 
 namespace Nuke.Core.BuildServers

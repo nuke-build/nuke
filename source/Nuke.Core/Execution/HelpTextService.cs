@@ -49,7 +49,7 @@ namespace Nuke.Core.Execution
             {
                 var attribute = parameter.GetCustomAttribute<ParameterAttribute>().NotNull();
                 var description = SplitLines(
-                        // TODO: remove
+                    // TODO: remove
                     attribute.Description?.Replace("{default_target}", defaultTarget.Name)
                     ?? "<no description>");
                 builder.AppendLine($"  -{(attribute.Name ?? parameter.Name).PadRight(padRightParameter)}  {description.First()}");

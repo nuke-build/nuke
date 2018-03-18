@@ -28,7 +28,7 @@ namespace Nuke.Core.IO
                 var relativePath = PathConstruction.GetRelativePath(directory, file);
                 var hostPath = $"{hostRoot}/{relativePath}";
 
-                FtpUploadFileInternal(file, hostPath, prefix: $"[{index + 1}/{files.Count}] ");
+                FtpUploadFileInternal(file, hostPath, $"[{index + 1}/{files.Count}] ");
             }
         }
 

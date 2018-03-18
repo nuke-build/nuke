@@ -15,37 +15,37 @@ namespace Nuke.Common.ProjectModel
     [PublicAPI]
     public static class ProjectModelTasks
     {
-        public static Solution ParseSolution (string solutionFile, string configuration = null, string targetFramework = null)
+        public static Solution ParseSolution(string solutionFile, string configuration = null, string targetFramework = null)
         {
-            string GuidPattern (string text)
+            string GuidPattern(string text)
                 => $@"\{{(?<{Regex.Escape(text)}>[0-9a-fA-F]{{8}}-[0-9a-fA-F]{{4}}-[0-9a-fA-F]{{4}}-[0-9a-fA-F]{{4}}-[0-9a-fA-F]{{12}})\}}";
 
-            string TextPattern (string name)
+            string TextPattern(string name)
                 => $@"""(?<{Regex.Escape(name)}>[^""]*)""";
 
-            string ProjectPattern ()
+            string ProjectPattern()
                 => $@"^Project\(""{GuidPattern("typeId")}""\)\s*=\s*{TextPattern("name")},\s*{TextPattern("path")},\s*""{GuidPattern("id")}""$";
 
             var lines = File.ReadAllLines(solutionFile);
 
             var childToParent = lines
-                    .SkipWhile(x => !Regex.IsMatch(x, @"^\s*GlobalSection\(NestedProjects\) = preSolution$"))
-                    .Skip(count: 1)
-                    .TakeWhile(x => !Regex.IsMatch(x, @"^\s*EndGlobalSection$"))
-                    .Select(x => Regex.Match(x, $@"^\s*{GuidPattern("child")}\s*=\s*{GuidPattern("parent")}$"))
-                    .ToDictionary(x => Guid.Parse(x.Groups["child"].Value), x => Guid.Parse(x.Groups["parent"].Value));
+                .SkipWhile(x => !Regex.IsMatch(x, @"^\s*GlobalSection\(NestedProjects\) = preSolution$"))
+                .Skip(count: 1)
+                .TakeWhile(x => !Regex.IsMatch(x, @"^\s*EndGlobalSection$"))
+                .Select(x => Regex.Match(x, $@"^\s*{GuidPattern("child")}\s*=\s*{GuidPattern("parent")}$"))
+                .ToDictionary(x => Guid.Parse(x.Groups["child"].Value), x => Guid.Parse(x.Groups["parent"].Value));
 
             var projectData = lines
-                    .Select(x => Regex.Match(x, ProjectPattern()))
-                    .Where(x => x.Success)
-                    .Select(x =>
-                        new
-                        {
-                            Id = Guid.Parse(x.Groups["id"].Value),
-                            Name = x.Groups["name"].Value,
-                            TypeId = Guid.Parse(x.Groups["typeId"].Value),
-                            Path = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(solutionFile).NotNull(), x.Groups["path"].Value))
-                        }).ToList();
+                .Select(x => Regex.Match(x, ProjectPattern()))
+                .Where(x => x.Success)
+                .Select(x =>
+                    new
+                    {
+                        Id = Guid.Parse(x.Groups["id"].Value),
+                        Name = x.Groups["name"].Value,
+                        TypeId = Guid.Parse(x.Groups["typeId"].Value),
+                        Path = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(solutionFile).NotNull(), x.Groups["path"].Value))
+                    }).ToList();
 
             var projects = new List<Project>();
             while (projectData.Count > 0)

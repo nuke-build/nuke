@@ -137,7 +137,6 @@ namespace Nuke.Core.Tooling
                 : candidatePackages.SingleOrDefault(x => x.Version == versionRange.FindBestMatch(candidatePackages.Select(y => y.Version)));
         }
 
-
         // TODO: support for multiple projects per folder
         [CanBeNull]
         private static string GetPackageConfigFile(string projectDirectory)
@@ -156,11 +155,13 @@ namespace Nuke.Core.Tooling
                 return packagesDirectory;
 
             if (!IsLegacyFile(packagesConfigFile))
+            {
                 return Path.Combine(
                     EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile)
                         .NotNull("EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile) != null"),
                     ".nuget",
                     "packages");
+            }
 
             if (NukeBuild.Instance != null)
                 return Path.Combine(Path.GetDirectoryName(NukeBuild.Instance.SolutionFile).NotNull(), "packages");

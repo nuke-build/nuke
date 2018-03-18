@@ -18,10 +18,6 @@ namespace Nuke.Core.Tooling
     {
         public static IProcessManager Instance { get; private set; } = new ProcessManager();
 
-        internal ProcessManager()
-        {
-        }
-
         public CapturedProcessStartInfo CaptureProcessStartInfo(Action action)
         {
             var fakeProcessManager = new CapturingProcessManager();
@@ -79,7 +75,7 @@ namespace Nuke.Core.Tooling
             ControlFlow.Assert(toolPath != null, "ToolPath was not set.");
             if (!Path.IsPathRooted(toolPath) && !toolPath.Contains(Path.DirectorySeparatorChar))
                 toolPath = ToolPathResolver.GetPathExecutable(toolPath);
-                
+
             ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
             Logger.Info($"> {Path.GetFullPath(toolPath).DoubleQuoteIfNeeded()} {arguments}");
 

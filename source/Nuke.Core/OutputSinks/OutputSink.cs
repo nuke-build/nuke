@@ -95,8 +95,8 @@ namespace Nuke.Core.OutputSinks
             {
                 Write("Repeating warnings and errors:");
 
-
                 foreach (var severeMessage in s_severeMessages)
+                {
                     switch (severeMessage.Item1)
                     {
                         case LogLevel.Warning:
@@ -108,6 +108,7 @@ namespace Nuke.Core.OutputSinks
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
+                }
 
                 Write(string.Empty);
             }

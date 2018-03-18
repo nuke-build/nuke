@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2017.
+﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -20,12 +20,12 @@ namespace Nuke.Common.Tests
             => (AbsolutePath) Directory.GetCurrentDirectory() / ".." / ".." / ".." / ".." / ".." / "Nuke.sln";
 
         [Fact]
-        public void SolutionTest ()
+        public void SolutionTest()
         {
             var solution = ProjectModelTasks.ParseSolution(SolutionFile);
 
             solution.Projects.Where(x => x.Is(ProjectType.SolutionFolder)).Select(x => x.Name)
-                    .Should().BeEquivalentTo("bootstrapping", "misc");
+                .Should().BeEquivalentTo("bootstrapping", "misc");
 
             solution.Projects.Where(x => x.Is(ProjectType.CSharpProject)).Should().HaveCount(7);
 
@@ -36,7 +36,7 @@ namespace Nuke.Common.Tests
         }
 
         [Fact]
-        public void SolutionGetProjectsTest ()
+        public void SolutionGetProjectsTest()
         {
             var solution = ProjectModelTasks.ParseSolution(SolutionFile);
 

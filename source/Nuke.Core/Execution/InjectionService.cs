@@ -15,8 +15,8 @@ namespace Nuke.Core.Execution
             var anyInjected = false;
 
             var injectionMembers = build.GetInjectionMembers()
-                    .OrderByDescending(x => x.GetCustomAttribute<ParameterAttribute>() != null);
-            
+                .OrderByDescending(x => x.GetCustomAttribute<ParameterAttribute>() != null);
+
             foreach (var member in injectionMembers)
             {
                 var attributes = member.GetCustomAttributes().OfType<InjectionAttributeBase>().ToList();

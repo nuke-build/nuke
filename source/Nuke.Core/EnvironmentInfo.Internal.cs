@@ -63,7 +63,7 @@ namespace Nuke.Core
                 return new[] { BuildExecutor.DefaultTarget };
             }
         }
-        
+
         internal static string[] SkippedTargets
         {
             get

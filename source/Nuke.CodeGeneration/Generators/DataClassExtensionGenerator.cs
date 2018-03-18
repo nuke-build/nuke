@@ -37,6 +37,7 @@ namespace Nuke.CodeGeneration.Generators
             writer.WriteLine($"#region {property.Name}");
 
             if (!property.IsList() && !property.IsDictionary() && !property.IsLookupTable())
+            {
                 writer
                     .WriteSummaryExtension($"Sets {property.GetCrefTag()}", property)
                     .WriteMethod(
@@ -47,6 +48,7 @@ namespace Nuke.CodeGeneration.Generators
                     .WriteMethod(
                         $"Reset{property.Name}",
                         $"toolSettings.{property.Name} = null;");
+            }
 
             if (property.IsBoolean())
                 WriteBooleanExtensions(writer, property);
@@ -160,6 +162,7 @@ namespace Nuke.CodeGeneration.Generators
             string GetModification(string newValue) => $"{propertyAccess}[{delegateProperty.Name.DoubleQuote()}] = {newValue};";
 
             if (!delegateProperty.IsList())
+            {
                 writer
                     .WriteSummaryExtension($"Sets {reference} in {property.GetCrefTag()}", delegateProperty, property)
                     .WriteMethod(
@@ -170,6 +173,7 @@ namespace Nuke.CodeGeneration.Generators
                     .WriteMethod(
                         $"Reset{delegateProperty.Name}",
                         $"{propertyAccess}.Remove({delegateProperty.Name.DoubleQuote()});");
+            }
 
             if (delegateProperty.IsBoolean())
             {

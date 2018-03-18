@@ -21,20 +21,20 @@ namespace Nuke.Common.Tools.Git
                 processSettings?.ExecutionTimeout,
                 processSettings?.RedirectOutput ?? false);
         }
-        
+
         public static bool GitIsDetached()
         {
             return GitIsDetached(EnvironmentInfo.WorkingDirectory);
         }
-        
+
         public static bool GitIsDetached(string workingDirectory)
         {
             var process = StartProcess(
-                            new GitSettings()
-                                    .SetWorkingDirectory(workingDirectory)
-                                    .SetArguments("symbolic-ref --short -q HEAD"),
-                            new ProcessSettings().EnableRedirectOutput())
-                    .AssertWaitForExit();
+                    new GitSettings()
+                        .SetWorkingDirectory(workingDirectory)
+                        .SetArguments("symbolic-ref --short -q HEAD"),
+                    new ProcessSettings().EnableRedirectOutput())
+                .AssertWaitForExit();
 
             return !process.Output.Any();
         }

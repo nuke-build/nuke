@@ -69,7 +69,7 @@ namespace Nuke.CodeGeneration
                 var tool = Load(file);
                 if (tool == null)
                     return;
-        
+
                 // for formatting and ordering of properties
                 Save(tool);
 
