@@ -7,11 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [vNext]
 - Deprecated `Action` usages in `DotCoverTasks` and `OpenCoverTasks` in favor of `SetTargetSettings`.
 - Added `ProjectModelTasks` with matching `SolutionAttribute` for auto-injection.
-- Added `StringExtensions.ReplaceRegex` for fluent regular expression replacements.
 - Added `[Tool]Tasks.[Tool]Path` property for better accessibility.
 - Added `DotCoverTasks` aliases for `cover`, `delete`, `merge`, `report` and `zip`.
+- Added `ArrayExtensions` for deconstruction.
 - Changed `NukeBuild.Configuration` to be overridable but still injectable.
-- Changed `StringExtensions.JoinNewLine` to accept `PlatformFamily` parameter which designates line-endings.
 - Fixed `ProcessManager` to resolve `toolPath` from environment.
 - Fixed `ProcessManager` to filter executable based on operating system and file extensions.
 - Fixed line-endings in setup scripts.
