@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2018.
+﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -31,7 +31,7 @@ namespace Nuke.CodeGeneration
 
         [CanBeNull]
         public string BaseNamespace { get; set; }
-        
+
         public bool UpdateReferences { get; set; }
 
         public bool Execute()

@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2018.
+// Copyright Matthias Koch, Sebastian Karasek 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -90,7 +90,6 @@ namespace Nuke.Core.IO
             return globPatterns.SelectMany(x => directoryInfo.GlobDirectories(x)).Select(x => x.FullName);
         }
 
-
         private const char WinSeparator = '\\';
         private const char UncSeparator = '\\';
         private const char UnixSeparator = '/';
@@ -147,7 +146,6 @@ namespace Nuke.Core.IO
 
             return null;
         }
-
 
         public static string Combine([CanBeNull] string path1, string path2, char? separator = null)
         {
@@ -216,7 +214,6 @@ namespace Nuke.Core.IO
             return Combine(root, tailParts.Join(separator.ToString()), separator);
         }
 
-
         private static char GetSeparator([CanBeNull] string path)
         {
             var root = GetPathRoot(path);
@@ -259,7 +256,6 @@ namespace Nuke.Core.IO
                 ? path
                 : path.TrimEnd(WinSeparator, UnixSeparator, UncSeparator);
         }
-
 
         [DebuggerDisplay("{" + nameof(_path) + "}")]
         public class RelativePath

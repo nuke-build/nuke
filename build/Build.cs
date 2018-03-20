@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2018.
+﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -167,7 +167,7 @@ class Build : NukeBuild
             var xunitSettings = new Xunit2Settings()
                 .AddTargetAssemblies(GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/net4*/Nuke.*.Tests.dll").NotEmpty())
                 .AddResultReport(Xunit2ResultFormat.Xml, OutputDirectory / "tests.xml");
-            
+
             if (IsWin)
             {
                 OpenCover(s => DefaultOpenCover
@@ -200,5 +200,4 @@ class Build : NukeBuild
 
     Target Full => _ => _
         .DependsOn(Test, Analysis, Push);
-
 }

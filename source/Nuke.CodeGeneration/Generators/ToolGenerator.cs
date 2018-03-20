@@ -1,4 +1,4 @@
-// Copyright Matthias Koch 2018.
+// Copyright Matthias Koch, Sebastian Karasek 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -27,7 +27,7 @@ namespace Nuke.CodeGeneration.Generators
             {
                 writer
                     // TODO [3]: extract license from dotsettings file
-                    .WriteLine("// Copyright Matthias Koch 2018.")
+                    .WriteLine("// Copyright Matthias Koch, Sebastian Karasek 2018.")
                     .WriteLine("// Distributed under the MIT License.")
                     .WriteLine("// https://github.com/nuke-build/nuke/blob/master/LICENSE")
                     .WriteLine(string.Empty)

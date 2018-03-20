@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch 2018.
+﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -43,7 +43,7 @@ namespace Nuke.CodeGeneration
                     $"{Path.GetFileNameWithoutExtension(tool.DefinitionFile)}.ref.{referenceId}.txt");
                 var referenceContent = await GetReferenceContent(reference);
                 File.WriteAllText(referenceFile, referenceContent);
-                
+
                 Logger.Info($"Updated reference for '{Path.GetFileName(tool.DefinitionFile)}#{index}'.");
             }
             catch (Exception exception)
