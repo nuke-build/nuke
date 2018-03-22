@@ -4,11 +4,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-
-#if NETCORE
 using System.IO;
-#endif
+using System.Linq;
+using System.Reflection;
+using JetBrains.Annotations;
+using Nuke.Core.Utilities;
+using Nuke.Core.Utilities.Collections;
 
 namespace Nuke.Core
 {
@@ -25,13 +26,53 @@ namespace Nuke.Core
 #endif
 
         public static IReadOnlyDictionary<string, string> Variables
+            => Environment.GetEnvironmentVariables()
+                .ToGeneric<string, string>(StringComparer.OrdinalIgnoreCase)
+                .AsReadOnly();
+
+        public static string[] CommandLineArguments { get; } = GetSurrogateArguments() ?? Environment.GetCommandLineArgs();
+        
+        private const string c_nukeTmpFileName = "nuke.tmp";
+        
+        [CanBeNull]
+        private static string[] GetSurrogateArguments()
         {
-            get
-            {
-                var environmentVariables = Environment.GetEnvironmentVariables();
-                return Environment.GetEnvironmentVariables().Keys.Cast<string>()
-                    .ToDictionary(x => x, x => (string) environmentVariables[x], StringComparer.OrdinalIgnoreCase);
-            }
+            var assemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location).NotNull();
+            var argumentsFile = Path.Combine(assemblyDirectory, c_nukeTmpFileName);
+            if (!File.Exists(argumentsFile))
+                return null;
+            
+            var argumentLines = File.ReadAllLines(argumentsFile);
+            ControlFlow.Assert(argumentLines.Length == 1, $"{c_nukeTmpFileName} must have only one single line");
+            
+            File.Delete(argumentsFile);
+            if (File.GetLastWriteTime(argumentsFile).AddMinutes(value: 1) < DateTime.Now)
+                return null;
+
+            var splittedArguments = ParseCommandLineArguments(argumentLines.Single());
+            return new[] { Assembly.GetEntryAssembly().Location }.Concat(splittedArguments).ToArray();
+        }
+
+        public static string[] ParseCommandLineArguments(string commandLine)
+        {
+            var inSingleQuotes = false;
+            var inDoubleQuotes = false;
+            var escaped = false;
+            return commandLine.Split(x =>
+                {
+                    if (x == '\"' && !inSingleQuotes && !escaped)
+                        inDoubleQuotes = !inDoubleQuotes;
+
+                    if (x == '\'' && !inDoubleQuotes && !escaped)
+                        inSingleQuotes = !inSingleQuotes;
+
+                    escaped = x == '\\' && !escaped;
+
+                    return x == ' ' && !(inDoubleQuotes || inSingleQuotes);
+                })
+                .Select(x => x.TrimMatchingDoubleQuotes().TrimMatchingQuotes().Replace("\\\"", "\"").Replace("\\\'", "'"))
+                .Where(x => !string.IsNullOrEmpty(x))
+                .ToArray();
         }
     }
 }
