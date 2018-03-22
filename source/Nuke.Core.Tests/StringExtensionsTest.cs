@@ -19,5 +19,16 @@ namespace Nuke.Core.Tests
         {
             input.DoubleQuoteIfNeeded().Should().Be(output);
         }
+
+        [Theory]
+        [InlineData("arg",'\"',"arg")]
+        [InlineData("\"arg\"", '\"', "arg")]
+        [InlineData("\"\"arg\"\"", '\"', "\"arg\"")]
+        [InlineData("\"arg", '\"', "\"arg")]
+        [InlineData("arg\"", '\"', "arg\"")]
+        public void TestTrimMatchingQuotes(string input, char quote, string expected)
+        {
+            input.TrimMatchingQuotes(quote).Should().Be(expected);
+        }
     }
 }
