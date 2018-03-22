@@ -3,24 +3,24 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using FluentAssertions;
 using Nuke.Core.Execution;
+using Nuke.Core.Utilities.Collections;
 using Xunit;
 
 namespace Nuke.Core.Tests
 {
     public class ParameterServiceTest
     {
-        private ParameterService GetService(string[] commandLineArguments = null, IDictionary environmentVariables = null)
+        private ParameterService GetService(string[] commandLineArguments = null, IDictionary<string, string> environmentVariables = null)
         {
             commandLineArguments = commandLineArguments ?? new string[0];
             environmentVariables = environmentVariables ?? new Dictionary<string, string>();
 
-            return new ParameterService(() => commandLineArguments, () => environmentVariables);
+            return new ParameterService(commandLineArguments, environmentVariables.AsReadOnly());
         }
 
         [Theory]
@@ -120,6 +120,21 @@ namespace Nuke.Core.Tests
 
             service.GetParameter<string[]>("files").Should().BeEquivalentTo("C:\\new folder\\file.txt", "C:\\file.txt");
             service.GetParameter<string[]>("values", separator: '+').Should().BeEquivalentTo("A", "B", "C");
+        }
+
+        [Theory]
+        [InlineData(new[] { "arg1" }, 0, typeof(string), "arg1")]
+        [InlineData(new[] { "true" }, 0, typeof(bool), true)]
+        [InlineData(new[] { "arg1" }, 1, typeof(string), null)]
+        [InlineData(new[] { "arg1", "arg2" }, 1, typeof(string), "arg2")]
+        [InlineData(new[] { "posArg", "-NamedArg", "value" }, 0, typeof(string), "posArg")]
+        [InlineData(new[] { "posArg", "-NamedArg", "value" }, 1, typeof(string), null)]
+        [InlineData(new[] { "posArg", "-NamedArg", "value" }, 2, typeof(string), null)]
+        [InlineData(new[] { "arg1", "arg2", "arg3" }, -1, typeof(string), "arg3")]
+        public void TestPositionalCommandLineArguments(string[] commandLineArgs, int position, Type destinationType, object expectedValue)
+        {
+            var service = GetService(commandLineArgs);
+            service.GetCommandLineArgument(position, destinationType).Should().Be(expectedValue);
         }
     }
 }

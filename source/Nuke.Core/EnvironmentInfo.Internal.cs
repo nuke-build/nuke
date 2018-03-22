@@ -40,9 +40,9 @@ namespace Nuke.Core
         {
             get
             {
-                var argument = Environment.GetCommandLineArgs()
-                    .Skip(count: 1).Take(count: 1)
-                    .SingleOrDefault(x => !x.StartsWith("-"));
+                var argument = ParameterService.Instance.GetCommandLineArgument<string>(position: 1);
+                argument = argument == null || argument.StartsWith("-") ? null : argument;
+
                 if (argument != null)
                     return argument.Split(new[] { '+' }, StringSplitOptions.RemoveEmptyEntries);
 

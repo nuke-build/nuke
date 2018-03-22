@@ -3,7 +3,6 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -15,15 +14,20 @@ namespace Nuke.Core.Execution
 {
     public class ParameterService
     {
-        private readonly Func<string[]> _commandLineArgumentsProvider;
-        private readonly Func<IDictionary> _environmentVariablesProvider;
+        private static ParameterService s_instance;
 
-        public ParameterService(Func<string[]> commandLineArgumentsProvider = null, Func<IDictionary> environmentVariablesProvider = null)
+        private readonly string[] _commandLineArguments;
+        private readonly Func<IReadOnlyDictionary<string, string>> _environmentVariablesProvider;
+
+        public ParameterService(
+            [CanBeNull] string[] commandLineArguments = null,
+            [CanBeNull] IReadOnlyDictionary<string, string> environmentVariables = null)
         {
-            // TODO: refactor to IDictionary<string, string> and string[]
-            _environmentVariablesProvider = environmentVariablesProvider ?? Environment.GetEnvironmentVariables;
-            _commandLineArgumentsProvider = commandLineArgumentsProvider ?? Environment.GetCommandLineArgs;
+            _environmentVariablesProvider = () => environmentVariables ?? EnvironmentInfo.Variables;
+            _commandLineArguments = commandLineArguments ?? EnvironmentInfo.CommandLineArguments;
         }
+
+        public static ParameterService Instance => s_instance ?? (s_instance = new ParameterService());
 
         [CanBeNull]
         public T GetParameter<T>(string parameterName, char? separator = null)
@@ -35,6 +39,12 @@ namespace Nuke.Core.Execution
         public T GetCommandLineArgument<T>(string parameterName, char? separator = null)
         {
             return (T) GetCommandLineArgument(parameterName, typeof(T), separator);
+        }
+
+        [CanBeNull]
+        public T GetCommandLineArgument<T>(int position, char? separator = null)
+        {
+            return (T) GetCommandLineArgument(position, typeof(T), separator);
         }
 
         [CanBeNull]
@@ -54,12 +64,41 @@ namespace Nuke.Core.Execution
         [CanBeNull]
         public object GetCommandLineArgument(string argumentName, Type destinationType, char? separator = null)
         {
-            var args = _commandLineArgumentsProvider.Invoke();
-            var index = Array.FindLastIndex(args, x => x.EqualsOrdinalIgnoreCase($"-{argumentName}"));
+            var index = Array.FindLastIndex(_commandLineArguments, x => x.EqualsOrdinalIgnoreCase($"-{argumentName}"));
             if (index == -1)
                 return GetDefaultValue(destinationType);
 
-            var values = args.Skip(index + 1).TakeWhile(x => !x.StartsWith("-")).ToArray();
+            var values = _commandLineArguments.Skip(index + 1).TakeWhile(x => !x.StartsWith("-")).ToArray();
+            return ConvertCommandLineArguments(argumentName, values, destinationType, _commandLineArguments, separator);
+        }
+
+        [CanBeNull]
+        public object GetCommandLineArgument(int position, Type destinationType, char? separator = null)
+        {
+            var positionalParametersCount = _commandLineArguments.TakeWhile(x => !x.StartsWith("-")).Count();
+
+            if (position < 0)
+                position = positionalParametersCount - 1;
+            
+            if (positionalParametersCount <= position)
+                return null;
+
+            return ConvertCommandLineArguments(
+                $"positional[{position}]",
+                new[] { _commandLineArguments[position] },
+                destinationType,
+                _commandLineArguments,
+                separator);
+        }
+
+        [CanBeNull]
+        public object ConvertCommandLineArguments(
+            string argumentName,
+            string[] values,
+            Type destinationType,
+            string[] commandLineArguments,
+            char? separator = null)
+        {
             ControlFlow.Assert(values.Length == 1 || !separator.HasValue || values.All(x => !x.Contains(separator.Value)),
                 $"Command-line argument '{argumentName}' with value [ {values.JoinComma()} ] cannot be split with separator '{separator}'.");
             values = separator.HasValue && values.Any(x => x.Contains(separator.Value))
@@ -74,7 +113,7 @@ namespace Nuke.Core.Execution
             {
                 ControlFlow.Fail(
                     new[] { ex.Message, "Command-line arguments were:" }
-                        .Concat(args.Select((x, i) => $"  [{i}] = {x}"))
+                        .Concat(commandLineArguments.Select((x, i) => $"  [{i}] = {x}"))
                         .JoinNewLine());
                 // ReSharper disable once HeuristicUnreachableCode
                 return null;
@@ -83,16 +122,15 @@ namespace Nuke.Core.Execution
 
         private bool HasCommandLineArgument(string argumentName)
         {
-            var args = _commandLineArgumentsProvider.Invoke();
-            return Array.FindLastIndex(args, x => x.EqualsOrdinalIgnoreCase($"-{argumentName}")) != -1;
+            return Array.FindLastIndex(_commandLineArguments, x => x.EqualsOrdinalIgnoreCase($"-{argumentName}")) != -1;
         }
 
         [CanBeNull]
         public object GetEnvironmentVariable(string variableName, Type destinationType, char? separator = null)
         {
             var variables = _environmentVariablesProvider.Invoke();
-            var value = variables.Contains(variableName) ? (string) variables[variableName] : null;
-            if (value == null)
+
+            if (!variables.TryGetValue(variableName, out var value))
                 return GetDefaultValue(destinationType);
 
             try
@@ -112,7 +150,6 @@ namespace Nuke.Core.Execution
         {
             if (Nullable.GetUnderlyingType(type) == null && type != typeof(string) && !type.IsArray)
                 return Activator.CreateInstance(type);
-
             return null;
         }
 
