@@ -169,6 +169,30 @@ namespace Nuke.Core.Utilities
         }
 
         [Pure]
+        public static string TrimMatchingQuotes(this string str, char quote)
+        {
+            if (str.Length < 2)
+                return str;
+            
+            if (str[index: 0] != quote || str[str.Length - 1] != quote)
+                return str;
+
+            return str.Substring(startIndex: 1, length: str.Length - 2);
+        }
+
+        [Pure]
+        public static string TrimMatchingDoubleQuotes(this string str)
+        {
+            return TrimMatchingQuotes(str, quote: '"');
+        }
+
+        [Pure]
+        public static string TrimMatchingQuotes(this string str)
+        {
+            return TrimMatchingQuotes(str, quote: '\'');
+        }
+
+        [Pure]
         public static string ReplaceRegex(
             this string str,
             string pattern,
@@ -176,6 +200,22 @@ namespace Nuke.Core.Utilities
             RegexOptions options = RegexOptions.None)
         {
             return Regex.Replace(str, pattern, matchEvaluator, options);
+        }
+
+        [Pure]
+        public static IEnumerable<string> Split(this string str, Func<char, bool> predicate)
+        {
+            var next = 0;
+            for (var i = 0; i < str.Length; i++)
+            {
+                if (!predicate(str[i]))
+                    continue;
+                
+                yield return str.Substring(next, i - next);
+                next = i + 1;
+            }
+
+            yield return str.Substring(next);
         }
     }
 }
