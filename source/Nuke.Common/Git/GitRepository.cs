@@ -29,7 +29,7 @@ namespace Nuke.Common.Git
         [CanBeNull]
         public static GitRepository FromLocalDirectory(string directory, string branch = null, string remote = "origin")
         {
-            var rootDirectory = FileSystemTasks.SearchDirectory(directory, x => x.GetDirectories(".git").Any());
+            var rootDirectory = FileSystemTasks.FindParentDirectory(directory, x => x.GetDirectories(".git").Any());
             if (rootDirectory == null)
                 return null;
             var gitDirectory = Path.Combine(rootDirectory, ".git");

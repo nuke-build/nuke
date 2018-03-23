@@ -6,7 +6,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using JetBrains.Annotations;
 using Nuke.Core.Utilities.Collections;
 using static Nuke.Core.IO.PathConstruction;
 
@@ -14,20 +13,15 @@ namespace Nuke.Core
 {
     public static partial class EnvironmentInfo
     {
-        /// <summary>
-        /// The build entry assembly.
-        /// </summary>
-        public static Assembly BuildAssembly => Assembly.GetEntryAssembly();
-
-        [CanBeNull]
-        public static AbsolutePath BuildDirectory
+        public static AbsolutePath BuildProjectDirectory
         {
             get
             {
-                var buildAssembly = BuildAssembly.Location.NotNull("buildAssembly != null");
-                var buildProjectDirectory = new FileInfo(buildAssembly).Directory.NotNull()
+                var executingAssembly = Assembly.GetExecutingAssembly().Location;
+                var buildProjectDirectory = Directory.GetParent(executingAssembly).NotNull()
                     .DescendantsAndSelf(x => x.Parent)
-                    .Select(x => x.GetFiles("*.csproj", SearchOption.TopDirectoryOnly).SingleOrDefault())
+                    .Select(x => x.GetFiles("*.csproj", SearchOption.TopDirectoryOnly)
+                                .SingleOrDefaultOrError($"Found multiple project files in '{x}'."))
                     .FirstOrDefault(x => x != null)
                     ?.DirectoryName;
                 return (AbsolutePath) buildProjectDirectory.NotNull("buildProjectDirectory != null");

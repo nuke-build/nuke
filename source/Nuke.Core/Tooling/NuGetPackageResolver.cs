@@ -176,12 +176,7 @@ namespace Nuke.Core.Tooling
 
         public static string GetBuildPackagesConfigFile()
         {
-            var assemblyLocation = EnvironmentInfo.BuildAssembly.Location.NotNull();
-            return new DirectoryInfo(Path.GetDirectoryName(assemblyLocation).NotNull())
-                .DescendantsAndSelf(x => x.Parent)
-                .Select(x => GetPackageConfigFile(x.FullName))
-                .FirstOrDefault(x => x != null)
-                .NotNull("GetBuildPackagesConfigFile != null");
+            return GetPackageConfigFile(EnvironmentInfo.BuildProjectDirectory).NotNull("GetBuildPackagesConfigFile != null");
         }
 
         private static bool IsLegacyFile(string packagesConfigFile)
