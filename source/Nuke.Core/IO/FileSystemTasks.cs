@@ -65,7 +65,7 @@ namespace Nuke.Core.IO
             if (!Directory.Exists(directory))
                 return;
 
-            if (PathConstruction.IsDescendantPath(EnvironmentInfo.BuildDirectory, directory))
+            if (PathConstruction.IsDescendantPath(EnvironmentInfo.BuildProjectDirectory, directory))
             {
                 Logger.Warn($"Skipping directory '{directory}' because it is contained in the build project directory...");
                 return;
@@ -193,13 +193,13 @@ namespace Nuke.Core.IO
         }
 
         [CanBeNull]
-        public static string SearchDirectory(string start, Func<DirectoryInfo, bool> predicate)
+        public static string FindParentDirectory(string start, Func<DirectoryInfo, bool> predicate)
         {
-            return SearchDirectory(new DirectoryInfo(start), predicate);
+            return FindParentDirectory(new DirectoryInfo(start), predicate);
         }
 
         [CanBeNull]
-        public static string SearchDirectory(DirectoryInfo start, Func<DirectoryInfo, bool> predicate)
+        public static string FindParentDirectory(DirectoryInfo start, Func<DirectoryInfo, bool> predicate)
         {
             return start
                 .DescendantsAndSelf(x => x.Parent)
