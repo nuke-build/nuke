@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Changed `NukeBuild.Configuration` to be overridable but still injectable.
 - Fixed `ProcessManager` to resolve `toolPath` from environment.
 - Fixed `ProcessManager` to filter executable based on operating system and file extensions.
+- Fixed `DeleteDirectory` for non-existent sub-directories at time of deletion.
 - Fixed line-endings in setup scripts.
 
 ## [0.2.10] / 2018-03-05

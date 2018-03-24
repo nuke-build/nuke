@@ -83,6 +83,9 @@ namespace Nuke.Core.IO
 
         public static void DeleteDirectoryInternal(string directory)
         {
+            if (!Directory.Exists(directory))
+                return;
+            
             Directory.GetFiles(directory).ForEach(DeleteFile);
             Directory.GetDirectories(directory).ForEach(DeleteDirectoryInternal);
 
