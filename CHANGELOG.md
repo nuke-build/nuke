@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
-## [0.3.0] / 2018-03-24
+## [0.3.1] / 2018-03-26
 - Deprecated `Action` usages in `DotCoverTasks` and `OpenCoverTasks` in favor of `SetTargetSettings`.
 - Added `ProjectModelTasks` with matching `SolutionAttribute` for auto-injection.
 - Added `[Tool]Tasks.[Tool]Path` property for better accessibility.
@@ -48,7 +48,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git.
 - Fixed background color in console output.
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.3.0...HEAD
-[0.3.0]: https://github.com/nuke-build/nuke/compare/0.2.10...0.3.0
+[vNext]: https://github.com/nuke-build/nuke/compare/0.3.1...HEAD
+[0.3.1]: https://github.com/nuke-build/nuke/compare/0.2.10...0.3.1
 [0.2.10]: https://github.com/nuke-build/nuke/compare/0.2.0...0.2.10
 [0.2.0]: https://github.com/nuke-build/nuke/tree/0.2.0

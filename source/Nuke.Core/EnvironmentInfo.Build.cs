@@ -13,12 +13,22 @@ namespace Nuke.Core
 {
     public static partial class EnvironmentInfo
     {
+        public static AbsolutePath BuildAssemblyDirectory
+        {
+            get
+            {
+                var entryAssembly = Assembly.GetEntryAssembly();
+                ControlFlow.Assert(entryAssembly.GetTypes().Any(x => x.IsSubclassOf(typeof(NukeBuild))),
+                    $"{entryAssembly} doesn't contain a NukeBuild class.");
+                return (AbsolutePath) Path.GetDirectoryName(entryAssembly.Location).NotNull();
+            }
+        }
+
         public static AbsolutePath BuildProjectDirectory
         {
             get
             {
-                var executingAssembly = Assembly.GetExecutingAssembly().Location;
-                var buildProjectDirectory = Directory.GetParent(executingAssembly).NotNull()
+                var buildProjectDirectory = new DirectoryInfo(BuildAssemblyDirectory)
                     .DescendantsAndSelf(x => x.Parent)
                     .Select(x => x.GetFiles("*.csproj", SearchOption.TopDirectoryOnly)
                                 .SingleOrDefaultOrError($"Found multiple project files in '{x}'."))
