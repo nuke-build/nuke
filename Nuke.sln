@@ -40,6 +40,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{B43B0E45-8
 		CHANGELOG.md = CHANGELOG.md
 		GitVersion.yml = GitVersion.yml
 		.github\ISSUE_TEMPLATE.md = .github\ISSUE_TEMPLATE.md
+		Jenkinsfile = Jenkinsfile
 		LICENSE = LICENSE
 		Nuke.sln.DotSettings = Nuke.sln.DotSettings
 		.github\PULL_REQUEST_TEMPLATE.md = .github\PULL_REQUEST_TEMPLATE.md
