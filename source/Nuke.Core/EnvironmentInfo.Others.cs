@@ -43,11 +43,15 @@ namespace Nuke.Core
                 return null;
             
             var argumentLines = File.ReadAllLines(argumentsFile);
-            ControlFlow.Assert(argumentLines.Length == 1, $"{c_nukeTmpFileName} must have only one single line");
+            var lastWriteTime = File.GetLastWriteTime(argumentsFile);
             
+            ControlFlow.Assert(argumentLines.Length == 1, $"{c_nukeTmpFileName} must have only one single line");
             File.Delete(argumentsFile);
-            if (File.GetLastWriteTime(argumentsFile).AddMinutes(value: 1) < DateTime.Now)
+            if (lastWriteTime.AddMinutes(value: 1) < DateTime.Now)
+            {
+                Logger.Warn($"Last write time of '{c_nukeTmpFileName}' was '{lastWriteTime}'. Skipping...");
                 return null;
+            }
 
             var splittedArguments = ParseCommandLineArguments(argumentLines.Single());
             return new[] { Assembly.GetEntryAssembly().Location }.Concat(splittedArguments).ToArray();
