@@ -17,68 +17,64 @@ namespace Nuke.Core.Tests
         [BuildServerFact(typeof(TeamCity))]
         public void TestTeamCityRestClient()
         {
-            TeamCity.Instance.RestClient
+            CreateBuildServer<TeamCity>().RestClient
                 .GetBuildQueue().Result
                 .Builds.Length.Should().BeGreaterThan(expected: 0);
         }
 
         [BuildServerTheory(typeof(Bitrise))]
         [MemberData(nameof(Properties), typeof(Bitrise))]
-        public void TestBitrise(PropertyInfo property)
+        public void TestBitrise(Bitrise instance, PropertyInfo property)
         {
-            AssertProperty(Bitrise.Instance.NotNull(), property);
-            Assert.True(NukeBuild.Instance.IsServerBuild);
-            Assert.False(NukeBuild.Instance.IsLocalBuild);
+            AssertProperty(instance, property);
         }
 
         [BuildServerTheory(typeof(TeamCity))]
         [MemberData(nameof(Properties), typeof(TeamCity))]
-        public void TestTeamCity(PropertyInfo property)
+        public void TestTeamCity(TeamCity instance, PropertyInfo property)
         {
-            AssertProperty(TeamCity.Instance.NotNull(), property);
-            Assert.True(NukeBuild.Instance.IsServerBuild);
-            Assert.False(NukeBuild.Instance.IsLocalBuild);
+            AssertProperty(instance, property);
         }
 
         [BuildServerTheory(typeof(TeamServices))]
         [MemberData(nameof(Properties), typeof(TeamServices))]
-        public void TestTeamServices(PropertyInfo property)
+        public void TestTeamServices(TeamServices instance, PropertyInfo property)
         {
-            AssertProperty(TeamServices.Instance.NotNull(), property);
-            Assert.True(NukeBuild.Instance.IsServerBuild);
-            Assert.False(NukeBuild.Instance.IsLocalBuild);
+            AssertProperty(instance, property);
         }
 
         [BuildServerTheory(typeof(Jenkins))]
         [MemberData(nameof(Properties), typeof(Jenkins))]
-        public void TestJenkins(PropertyInfo property)
+        public void TestJenkins(Jenkins instance, PropertyInfo property)
         {
-            AssertProperty(Jenkins.Instance.NotNull(), property);
+            AssertProperty(instance, property);
         }
 
         [BuildServerTheory(typeof(Travis))]
         [MemberData(nameof(Properties), typeof(Travis))]
-        public void TestTravis(PropertyInfo property)
+        public void TestTravis(Travis instance, PropertyInfo property)
         {
-            AssertProperty(Travis.Instance.NotNull(), property);
-            Assert.True(Travis.Instance.Ci);
-            Assert.True(Travis.Instance.ContinousIntegration);
+            AssertProperty(instance, property);
+            Assert.True(instance.Ci);
+            Assert.True(instance.ContinousIntegration);
         }
 
         [BuildServerTheory(typeof(GitLab))]
         [MemberData(nameof(Properties), typeof(GitLab))]
-        public void TestGitLab(PropertyInfo property)
+        public void TestGitLab(GitLab instance, PropertyInfo property)
         {
-            AssertProperty(GitLab.Instance.NotNull(), property);
-            Assert.True(GitLab.Instance.Ci);
-            Assert.True(GitLab.Instance.GitLabCi);
-            Assert.True(GitLab.Instance.Server);
+            AssertProperty(instance, property);
+            Assert.True(instance.Ci);
+            Assert.True(instance.GitLabCi);
+            Assert.True(instance.Server);
         }
 
         public static IEnumerable<object[]> Properties(Type type)
         {
+            var instance = CreateBuildServer(type);
+
             return type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Select(x => new object[] { x }).ToArray();
+                .Select(x => new[] { instance, x }).ToArray();
         }
 
         private static void AssertProperty(object instance, PropertyInfo property)
@@ -104,6 +100,22 @@ namespace Nuke.Core.Tests
             Guid.TryParse(strValue, out var _).Should().BeFalse("Guid");
         }
 
+        private static T CreateBuildServer<T>()
+        {
+            return (T) CreateBuildServer(typeof(T));
+        }
+
+        private static object CreateBuildServer(Type type)
+        {
+            return Activator.CreateInstance(type, nonPublic: true);
+        }
+        
+        private static bool IsRunning(Type type)
+        {
+            var property = type.GetProperty($"IsRunning{type.Name}", BindingFlags.NonPublic | BindingFlags.Static).NotNull();
+            return (bool) property.GetValue(obj: null);
+        }
+
         private class BuildServerTheoryAttribute : TheoryAttribute
         {
             private readonly Type _type;
@@ -113,13 +125,8 @@ namespace Nuke.Core.Tests
                 _type = type;
             }
 
-            public override string Skip => HasNoInstance() ? $"Only applies to {_type.Name}." : null;
+            public override string Skip => !IsRunning(_type) ? $"Only applies to {_type.Name}." : null;
 
-            private bool HasNoInstance()
-            {
-                var property = _type.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static).NotNull();
-                return property.GetValue(obj: null) == null;
-            }
         }
 
         private class BuildServerFactAttribute : FactAttribute
@@ -131,13 +138,7 @@ namespace Nuke.Core.Tests
                 _type = type;
             }
 
-            public override string Skip => HasNoInstance() ? $"Only applies to {_type.Name}." : null;
-
-            private bool HasNoInstance()
-            {
-                var property = _type.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static).NotNull();
-                return property.GetValue(obj: null) == null;
-            }
+            public override string Skip => !IsRunning(_type) ? $"Only applies to {_type.Name}." : null;
         }
     }
 }
