@@ -22,6 +22,13 @@ namespace Nuke.Core.Tests
                 .Builds.Length.Should().BeGreaterThan(expected: 0);
         }
 
+        [BuildServerTheory(typeof(AppVeyor))]
+        [MemberData(nameof(Properties), typeof(AppVeyor))]
+        public void TestAppVeyor(AppVeyor instance, PropertyInfo property)
+        {
+            AssertProperty(instance, property);
+        }
+
         [BuildServerTheory(typeof(Bitrise))]
         [MemberData(nameof(Properties), typeof(Bitrise))]
         public void TestBitrise(PropertyInfo property, Bitrise instance)

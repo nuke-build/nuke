@@ -45,6 +45,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{B43B0E45-8
 		Nuke.sln.DotSettings = Nuke.sln.DotSettings
 		.github\PULL_REQUEST_TEMPLATE.md = .github\PULL_REQUEST_TEMPLATE.md
 		README.md = README.md
+		appveyor.yml = appveyor.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Core.Tests", "source\Nuke.Core.Tests\Nuke.Core.Tests.csproj", "{FBC3039F-9793-4ECD-9A63-DB5B8BDDBA53}"
