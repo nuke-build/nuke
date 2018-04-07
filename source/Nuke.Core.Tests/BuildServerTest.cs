@@ -24,35 +24,35 @@ namespace Nuke.Core.Tests
 
         [BuildServerTheory(typeof(Bitrise))]
         [MemberData(nameof(Properties), typeof(Bitrise))]
-        public void TestBitrise(Bitrise instance, PropertyInfo property)
+        public void TestBitrise(PropertyInfo property, Bitrise instance)
         {
             AssertProperty(instance, property);
         }
 
         [BuildServerTheory(typeof(TeamCity))]
         [MemberData(nameof(Properties), typeof(TeamCity))]
-        public void TestTeamCity(TeamCity instance, PropertyInfo property)
+        public void TestTeamCity(PropertyInfo property, TeamCity instance)
         {
             AssertProperty(instance, property);
         }
 
         [BuildServerTheory(typeof(TeamServices))]
         [MemberData(nameof(Properties), typeof(TeamServices))]
-        public void TestTeamServices(TeamServices instance, PropertyInfo property)
+        public void TestTeamServices(PropertyInfo property, TeamServices instance)
         {
             AssertProperty(instance, property);
         }
 
         [BuildServerTheory(typeof(Jenkins))]
         [MemberData(nameof(Properties), typeof(Jenkins))]
-        public void TestJenkins(Jenkins instance, PropertyInfo property)
+        public void TestJenkins(PropertyInfo property, Jenkins instance)
         {
             AssertProperty(instance, property);
         }
 
         [BuildServerTheory(typeof(Travis))]
         [MemberData(nameof(Properties), typeof(Travis))]
-        public void TestTravis(Travis instance, PropertyInfo property)
+        public void TestTravis(PropertyInfo property, Travis instance)
         {
             AssertProperty(instance, property);
             Assert.True(instance.Ci);
@@ -61,7 +61,7 @@ namespace Nuke.Core.Tests
 
         [BuildServerTheory(typeof(GitLab))]
         [MemberData(nameof(Properties), typeof(GitLab))]
-        public void TestGitLab(GitLab instance, PropertyInfo property)
+        public void TestGitLab(PropertyInfo property, GitLab instance)
         {
             AssertProperty(instance, property);
             Assert.True(instance.Ci);
@@ -74,7 +74,7 @@ namespace Nuke.Core.Tests
             var instance = CreateBuildServer(type);
 
             return type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Select(x => new[] { instance, x }).ToArray();
+                .Select(x => new[] { x, instance }).ToArray();
         }
 
         private static void AssertProperty(object instance, PropertyInfo property)
