@@ -82,7 +82,7 @@ namespace Nuke.Core.BuildServers
         {
         }
 
-        internal TeamCity([CanBeNull] Action<string> messageSink)
+        internal TeamCity(Action<string> messageSink = null)
         {
             _messageSink = messageSink ?? Console.WriteLine;
 
