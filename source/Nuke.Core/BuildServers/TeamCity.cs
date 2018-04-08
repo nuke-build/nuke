@@ -109,6 +109,7 @@ namespace Nuke.Core.BuildServers
         public string Version => EnsureVariable("TEAMCITY_VERSION");
         public string ProjectName => EnsureVariable("TEAMCITY_PROJECT_NAME");
         public string ServerUrl => ConfigurationProperties["TEAMCITY_SERVERURL"];
+        public string BranchName => ConfigurationProperties["TEAMCITY_BUILD_BRANCH"];
 
         public void DisableServiceMessages()
         {
