@@ -16,7 +16,7 @@ namespace Nuke.Core.Utilities
             var informationalVersion = assembly.GetAssemblyInformationalVersion();
             return fileVersion != "1.0.0.0"
                 ? $"Version: {fileVersion} [CommitSha: {informationalVersion.Substring(informationalVersion.LastIndexOf(value: '.') + 1, length: 8)}]"
-                : "LOCAL VERSION";
+                : "Version: LOCAL";
         }
 
         public static string GetAssemblyFileVersion(this Assembly assembly)
