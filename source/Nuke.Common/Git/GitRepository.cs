@@ -64,7 +64,7 @@ namespace Nuke.Common.Git
             var match = new[]
                         {
                             @"git@(?<endpoint>[^:/]+?)(:|/)(?<identifier>.+?)/?(\.git)?$",
-                            @"^https://(?<endpoint>[^/]+?)/(?<identifier>.+?)/?(\.git)?$"
+                            @"^https://([^:]+:[^:@]+@)?(?<endpoint>[^/]+?)/(?<identifier>.+?)/?(\.git)?$"
                         }
                 .Select(x => Regex.Match(url.Trim(), x))
                 .FirstOrDefault(x => x.Success);

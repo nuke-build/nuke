@@ -21,6 +21,7 @@ namespace Nuke.Common.Tests
         [InlineData("https://github.com/nuke-build/", "github.com", "nuke-build")]
         [InlineData("https://github.com/nuke-build/nuke", "github.com", "nuke-build/nuke")]
         [InlineData("https://github.com/nuke-build/nuke.git", "github.com", "nuke-build/nuke")]
+        [InlineData("https://user:pass@github.com/nuke-build/nuke.git", "github.com", "nuke-build/nuke")]
         [InlineData(" https://github.com/TdMxm/nuke.git", "github.com", "TdMxm/nuke")]
         [InlineData("git@git.test.org:test", "git.test.org", "test")]
         [InlineData("git@git.test.org/test", "git.test.org", "test")]
