@@ -37,7 +37,7 @@ namespace Nuke.Core.BuildServers
         /// <summary>
         /// <c>$CI_COMMIT_REF_NAME</c> lowercased, shortened to 63 bytes, and with everything except <c>0-9</c> and <c>a-z</c> replaced with <c>-</c>. No leading / trailing <c>-</c>. Use in URLs, host names and domain names.
         /// </summary>
-        public string CommitrefSlug => Variable("CI_COMMIT_REF_SLUG");
+        public string CommitRefSlug => Variable("CI_COMMIT_REF_SLUG");
 
         /// <summary>
         /// The commit revision for which project is built.
