@@ -94,6 +94,7 @@ namespace Nuke.Core.Execution
         {
             Logger.Log(FigletTransform.GetText("NUKE"));
             Logger.Log(typeof(BuildExecutor).GetTypeInfo().Assembly.GetInformationText());
+            Logger.Log($"Host: {EnvironmentInfo.HostType}");
             Logger.Log();
         }
     }
