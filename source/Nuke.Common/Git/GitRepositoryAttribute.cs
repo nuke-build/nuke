@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Core;
+using Nuke.Core.BuildServers;
 using Nuke.Core.Execution;
 
 namespace Nuke.Common.Git
@@ -23,7 +24,13 @@ namespace Nuke.Common.Git
         public static GitRepository Value { get; private set; }
 
         [CanBeNull]
-        public string Branch { get; set; }
+        public string Branch { get; set; } = AppVeyor.Instance?.RepositoryBranch ??
+                                             Bitrise.Instance?.GitBranch ??
+                                             GitLab.Instance?.CommitRefName ??
+                                             Jenkins.Instance?.GitBranch ??
+                                             TeamCity.Instance?.BranchName ??
+                                             TeamServices.Instance?.SourceBranchName ??
+                                             Travis.Instance?.Branch;
 
         public string Remote { get; set; } = "origin";
 
