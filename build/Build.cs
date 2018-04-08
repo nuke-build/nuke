@@ -45,7 +45,7 @@ class Build : NukeBuild
         : "https://www.myget.org/F/nukebuild/api/v2/package";
 
     [GitVersion(DisableOnUnix = true)] readonly GitVersion GitVersion;
-    [GitRepository(Branch = "master")] readonly GitRepository GitRepository;
+    [GitRepository] readonly GitRepository GitRepository;
     [Solution] readonly Solution Solution;
 
     Target Clean => _ => _
