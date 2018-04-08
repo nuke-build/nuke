@@ -28,6 +28,10 @@ namespace Nuke.Core
                 return HostType.TeamServices;
             if (Bitrise.IsRunningBitrise)
                 return HostType.Bitrise;
+            if (GitLab.IsRunningGitLab)
+                return HostType.GitLab;
+            if (Travis.IsRunningTravis)
+                return HostType.Travis;
 
             return HostType.Console;
         });
