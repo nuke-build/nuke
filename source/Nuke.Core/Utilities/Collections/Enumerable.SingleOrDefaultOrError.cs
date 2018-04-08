@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using JetBrains.Annotations;
 
 namespace Nuke.Core.Utilities.Collections
 {
@@ -15,7 +12,6 @@ namespace Nuke.Core.Utilities.Collections
             if (enumerable == null) throw new ArgumentNullException(nameof(enumerable));
             if (predicate == null) throw new ArgumentNullException(nameof(predicate));
             if (string.IsNullOrEmpty(message)) throw new ArgumentException("message must not be null or empty", nameof(message));
-
 
             try
             {
@@ -40,7 +36,6 @@ namespace Nuke.Core.Utilities.Collections
             {
                 throw new InvalidOperationException(message, ex);
             }
-
         }
     }
 }

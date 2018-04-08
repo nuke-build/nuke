@@ -12,11 +12,6 @@
     <PackageReference Include="JetBrains.Annotations" Version="10.4.0" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
-    <PackageReference Include="Octokit" Version="0.24.0" />
-    <!--<PackageReference Include="NullGuard.Fody" Version="1.4.6" />-->
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Nuke.Core\Nuke.Core.csproj" />
   </ItemGroup>
