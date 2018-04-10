@@ -44,7 +44,7 @@ class Build : NukeBuild
         ? "https://api.nuget.org/v3/index.json"
         : "https://www.myget.org/F/nukebuild/api/v2/package";
 
-    [GitVersion(DisableOnUnix = true)] readonly GitVersion GitVersion;
+    [GitVersion] readonly GitVersion GitVersion;
     [GitRepository] readonly GitRepository GitRepository;
     [Solution] readonly Solution Solution;
 
