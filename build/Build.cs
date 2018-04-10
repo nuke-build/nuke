@@ -74,17 +74,22 @@ class Build : NukeBuild
         {
             DotNetBuild(s => DefaultDotNetBuild);
         });
+    
+    Project GlobalToolProject => Solution.GetProject("Nuke.GlobalTool");
+    Project CodeGenerationProject => Solution.GetProject("Nuke.CodeGeneration");
 
     Target Publish => _ => _
         .DependsOn(Restore)
         .Executes(() =>
         {
-            var project = Solution.GetProject("Nuke.CodeGeneration");
             DotNetPublish(s => DefaultDotNetPublish
-                .SetProject(project)
+                .SetProject(GlobalToolProject));
+            
+            DotNetPublish(s => DefaultDotNetPublish
+                .SetProject(CodeGenerationProject)
                 .SetFramework("netstandard2.0"));
             DotNetPublish(s => DefaultDotNetPublish
-                .SetProject(project)
+                .SetProject(CodeGenerationProject)
                 .SetFramework("net461"));
         });
 

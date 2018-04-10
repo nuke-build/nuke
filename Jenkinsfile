@@ -1,5 +1,5 @@
 pipeline {
-    agent {label 'linux' }
+    agent { label 'linux' }
     options {
         buildDiscarder(logRotator(numToKeepStr:'10'))
         timeout(time: 15, unit: 'MINUTES')
@@ -7,12 +7,12 @@ pipeline {
     stages {
         stage('Compile') {
             steps {
-                sh '/bin/bash ./build.sh Compile'
+                sh '/bin/bash ./build.sh Compile -local'
             }
         }
         stage('Test') {
             steps {
-               sh '/bin/bash ./build.sh Test -Skip -NoInit'
+               sh '/bin/bash ./build.sh Test -Skip -local'
             }
             post {
                 always {
@@ -22,12 +22,12 @@ pipeline {
         }
         stage('Publish') {
             steps {
-                sh '/bin/bash ./build.sh Publish -Skip -NoInit'
+                sh '/bin/bash ./build.sh Publish -Skip -local'
             }
         }
         stage('Pack') {
             steps {
-                sh '/bin/bash ./build.sh Pack -Skip -NoInit'
+                sh '/bin/bash ./build.sh Pack -Skip -local'
             }
         }
         

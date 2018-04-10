@@ -140,6 +140,12 @@ namespace Nuke.Common.Utilities
         }
 
         [Pure]
+        public static string JoinSpace(this IEnumerable<string> values)
+        {
+            return values.Join(" ");
+        }
+
+        [Pure]
         public static string JoinComma(this IEnumerable<string> values)
         {
             return values.Join(", ");

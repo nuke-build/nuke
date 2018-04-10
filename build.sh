@@ -22,7 +22,7 @@ SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 BUILD_PROJECT_FILE="$SCRIPT_DIR/build/.build.csproj"
 TEMP_DIRECTORY="$SCRIPT_DIR/.tmp"
 
-DOTNET_CHANNEL="2.0"
+DOTNET_VERSION="2.1.300-rc1-008673"
 DOTNET_SCRIPT_URL="https://raw.githubusercontent.com/dotnet/cli/master/scripts/obtain/dotnet-install.sh"
 DOTNET_DIRECTORY="$TEMP_DIRECTORY/dotnet-unix"
 
@@ -48,7 +48,7 @@ else
         curl -Lsfo "$DOTNET_SCRIPT_FILE" "$DOTNET_SCRIPT_URL"
         
         chmod +x "$DOTNET_SCRIPT_FILE"
-        "$DOTNET_SCRIPT_FILE" --install-dir "$DOTNET_DIRECTORY" --channel "$DOTNET_CHANNEL" --no-path
+        "$DOTNET_SCRIPT_FILE" --install-dir "$DOTNET_DIRECTORY" --version "$DOTNET_VERSION" --no-path
     fi
 fi
 

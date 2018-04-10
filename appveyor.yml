@@ -1,7 +1,7 @@
 image: Visual Studio 2017
 
 build_script:
-  - ps: .\build.ps1 test+pack
+  - ps: .\build.ps1 test+pack -local
 
 branches:
   only:

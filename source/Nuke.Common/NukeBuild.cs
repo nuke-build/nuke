@@ -37,7 +37,7 @@ namespace Nuke.Common
     [PublicAPI]
     public abstract class NukeBuild
     {
-        private const string c_configFile = ".nuke";
+        public const string ConfigurationFile = ".nuke";
 
         /// <summary>
         /// Currently running build instance.
@@ -122,9 +122,9 @@ namespace Nuke.Common
         {
             get
             {
-                var rootDirectory = FileSystemTasks.FindParentDirectory(EnvironmentInfo.BuildProjectDirectory, x => x.GetFiles(c_configFile).Any());
+                var rootDirectory = FileSystemTasks.FindParentDirectory(EnvironmentInfo.BuildProjectDirectory, x => x.GetFiles(ConfigurationFile).Any());
                 ControlFlow.Assert(rootDirectory != null,
-                    $"Could not locate '{c_configFile}' file while traversing up from '{EnvironmentInfo.BuildProjectDirectory}'.");
+                    $"Could not locate '{ConfigurationFile}' file while traversing up from '{EnvironmentInfo.BuildProjectDirectory}'.");
 
                 return (PathConstruction.AbsolutePath) rootDirectory;
             }
@@ -137,11 +137,11 @@ namespace Nuke.Common
         {
             get
             {
-                var nukeFile = Path.Combine(RootDirectory, c_configFile);
-                ControlFlow.Assert(File.Exists(nukeFile), $"File.Exists({c_configFile})");
+                var nukeFile = Path.Combine(RootDirectory, ConfigurationFile);
+                ControlFlow.Assert(File.Exists(nukeFile), $"File.Exists({ConfigurationFile})");
 
                 var solutionFileRelative = File.ReadAllLines(nukeFile)[0];
-                ControlFlow.Assert(!solutionFileRelative.Contains(value: '\\'), $"{c_configFile} must use unix-styled separators");
+                ControlFlow.Assert(!solutionFileRelative.Contains(value: '\\'), $"{ConfigurationFile} must use unix-styled separators");
 
                 var solutionFile = Path.GetFullPath(Path.Combine(RootDirectory, solutionFileRelative));
                 ControlFlow.Assert(File.Exists(solutionFile), "File.Exists(solutionFile)");
