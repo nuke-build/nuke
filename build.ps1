@@ -16,7 +16,8 @@ $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 $BuildProjectFile = "$PSScriptRoot\build\.build.csproj"
 $TempDirectory = "$PSScriptRoot\.tmp"
 
-$DotNetChannel = "2.0"
+# Version from https://github.com/dotnet/core/blob/master/release-notes/releases.json
+$DotNetVersion = "2.1.300-rc1-008673"
 $DotNetScriptUrl = "https://raw.githubusercontent.com/dotnet/cli/master/scripts/obtain/dotnet-install.ps1"
 $DotNetDirectory = "$TempDirectory\dotnet-win"
 
@@ -45,7 +46,7 @@ else {
         $DotNetScriptFile = "$TempDirectory\dotnet-install.ps1"
         (New-Object System.Net.WebClient).DownloadFile($DotNetScriptUrl, $DotNetScriptFile)
 
-        & $DotNetScriptFile -InstallDir $DotNetDirectory -Channel $DotNetChannel -NoPath
+        & $DotNetScriptFile -InstallDir $DotNetDirectory -Version $DotNetVersion -NoPath
         if ($LASTEXITCODE) { exit $LASTEXITCODE }
     }
 }
