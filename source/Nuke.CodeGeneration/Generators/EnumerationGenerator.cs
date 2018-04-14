@@ -32,7 +32,7 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteLine($"public partial class {enumeration.Name} : Enumeration")
                 .WriteBlock(w => w.ForEach(enumeration.Values,
                     x => w.WriteLine(
-                        $"public static {enumeration.Name} {GetIdentifier(x)} = new {enumeration.Name} {{ Value = {x.DoubleQuote()} }};")))
+                        $"public static {enumeration.Name} {GetIdentifier(x).EscapeProperty()} = new {enumeration.Name} {{ Value = {x.DoubleQuote()} }};")))
                 .WriteLine("#endregion");
         }
     }
