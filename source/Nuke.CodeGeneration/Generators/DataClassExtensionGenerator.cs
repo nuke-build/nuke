@@ -43,7 +43,7 @@ namespace Nuke.CodeGeneration.Generators
                     .WriteMethod(
                         $"Set{property.Name}",
                         property,
-                        $"toolSettings.{property.Name} = {property.Name.ToInstance()};")
+                        $"toolSettings.{property.Name} = {property.Name.ToInstance().EscapeParameter()};")
                     .WriteSummaryExtension($"Resets {property.GetCrefTag()}", property)
                     .WriteMethod(
                         $"Reset{property.Name}",
@@ -80,7 +80,7 @@ namespace Nuke.CodeGeneration.Generators
         private static void WriteListExtensions(DataClassWriter writer, Property property)
         {
             var propertyInternal = $"{property.Name}Internal";
-            var propertyInstance = property.Name.ToInstance();
+            var propertyInstance = property.Name.ToInstance().EscapeParameter();
             var valueType = property.GetListValueType();
             var propertyAccess = $"toolSettings.{propertyInternal}";
 
@@ -120,7 +120,7 @@ namespace Nuke.CodeGeneration.Generators
 
         private static void WriteDictionaryExtensions(DataClassWriter writer, Property property)
         {
-            var propertyInstance = property.Name.ToInstance();
+            var propertyInstance = property.Name.ToInstance().EscapeParameter();
             var (keyType, valueType) = property.GetDictionaryKeyValueTypes();
             var propertySingular = property.Name.ToSingular();
             var propertySingularInstance = property.Name.ToSingular().ToInstance();
@@ -264,7 +264,7 @@ namespace Nuke.CodeGeneration.Generators
         private static DataClassWriter WriteMethod(this DataClassWriter writer, string name, Property property, string modification)
         {
             return writer.WriteMethod(name,
-                $"{property.GetNullabilityAttribute()}{property.GetNullableType()} {property.Name.ToInstance()}",
+                $"{property.GetNullabilityAttribute()}{property.GetNullableType()} {property.Name.ToInstance().EscapeParameter()}",
                 modification);
         }
 
