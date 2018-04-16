@@ -58,6 +58,7 @@ using Nuke.Core.Execution;
 [assembly: IconClass(typeof(ProjectModelTasks), "tree7")]
 [assembly: IconClass(typeof(ReportGeneratorTasks), "pie-chart4")]
 [assembly: IconClass(typeof(SignToolTasks), "key")]
+[assembly: IconClass(typeof(SolutionAttribute), "tree7")]
 [assembly: IconClass(typeof(TestCloudTasks), "bug2")]
 [assembly: IconClass(typeof(VsTestTasks), "bug2")]
 [assembly: IconClass(typeof(WebConfigTransformRunnerTasks), "file-empty2")]
