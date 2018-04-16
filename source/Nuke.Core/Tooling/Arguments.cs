@@ -25,7 +25,7 @@ namespace Nuke.Core.Tooling
         private const char c_space = ' ';
 
         private readonly List<string> _secrets = new List<string>();
-        private readonly LookupTable<string, string> _arguments = new LookupTable<string, string>(StringComparer.OrdinalIgnoreCase);
+        private readonly List<KeyValuePair<string, List<string>>> _arguments = new List<KeyValuePair<string, List<string>>>();
 
         public Arguments Add(string argumentFormat, bool? condition = true)
         {
@@ -59,7 +59,7 @@ namespace Nuke.Core.Tooling
                 _secrets.Add(value);
 
             argumentFormat = argumentFormat.Replace("{value}", "{0}");
-            _arguments.Add(argumentFormat, customValue ? value : value.DoubleQuoteIfNeeded(disallowed, c_space));
+            Add(argumentFormat, customValue ? value : value.DoubleQuoteIfNeeded(disallowed, c_space));
 
             return this;
         }
@@ -80,9 +80,9 @@ namespace Nuke.Core.Tooling
             string Format(T value) => value.ToString().DoubleQuoteIfNeeded(separator, disallowed, c_space);
 
             if (separator.HasValue)
-                _arguments.Add(argumentFormat, FormatMultiple(list, Format, separator.Value, quoteMultiple));
+                Add(argumentFormat, FormatMultiple(list, Format, separator.Value, quoteMultiple));
             else
-                _arguments.AddRange(argumentFormat, list.Select(Format));
+                AddRange(argumentFormat, list.Select(Format));
 
             return this;
         }
@@ -112,9 +112,9 @@ namespace Nuke.Core.Tooling
 
             var pairs = dictionary.Where(x => x.Value.NotNullWarn($"Value for '{x.Key}' is 'null', omitting...") != null).ToList();
             if (separator.HasValue)
-                _arguments.Add(argumentFormat, FormatMultiple(pairs, FormatPair, separator.Value, quoteMultiple));
+                Add(argumentFormat, FormatMultiple(pairs, FormatPair, separator.Value, quoteMultiple));
             else
-                _arguments.AddRange(argumentFormat, pairs.Select(FormatPair));
+                AddRange(argumentFormat, pairs.Select(FormatPair));
 
             return this;
         }
@@ -144,15 +144,46 @@ namespace Nuke.Core.Tooling
             if (separator.HasValue)
             {
                 foreach (var list in lookup)
-                    _arguments.Add(argumentFormat, FormatLookup(list.Key, FormatMultiple(list, x => Format(x), separator.NotNull().Value, quoteMultiple)));
+                    Add(argumentFormat, FormatLookup(list.Key, FormatMultiple(list, x => Format(x), separator.NotNull().Value, quoteMultiple)));
             }
             else
             {
                 foreach (var list in lookup)
-                    _arguments.AddRange(argumentFormat, list.Select(x => FormatLookup(list.Key, Format(x))));
+                    AddRange(argumentFormat, list.Select(x => FormatLookup(list.Key, Format(x))));
             }
 
             return this;
+        }
+
+        public Arguments Concatenate(Arguments arguments)
+        {
+            _arguments.AddRange(arguments._arguments);
+            _secrets.AddRange(arguments._secrets);
+            return this;
+        }
+
+        private void Add(string format, string value)
+        {
+            var list = _arguments.LastOrDefault(x => x.Key.Equals(format, StringComparison.OrdinalIgnoreCase)).Value;
+            if (list == null)
+            {
+                list = new List<string>();
+                _arguments.Add(new KeyValuePair<string, List<string>>(format, list));
+            }
+
+            list.Add(value);
+        }
+
+        private void AddRange(string format, IEnumerable<string> values)
+        {
+            var list = _arguments.LastOrDefault(x => x.Key.Equals(format, StringComparison.OrdinalIgnoreCase)).Value;
+            if (list == null)
+            {
+                list = new List<string>();
+                _arguments.Add(new KeyValuePair<string, List<string>>(format, list));
+            }
+
+            list.AddRange(values);
         }
 
         private string FormatMultiple<T>(IEnumerable<T> items, Func<T, string> format, char separator, bool quoteMultiple)
@@ -177,7 +208,7 @@ namespace Nuke.Core.Tooling
 
             var builder = new StringBuilder();
             foreach (var argumentPair in _arguments)
-            foreach (var argument in argumentPair)
+            foreach (var argument in argumentPair.Value)
                 builder.AppendFormat(argumentPair.Key, Format(argument)).Append(c_space);
 
             return builder.ToString().TrimEnd();
