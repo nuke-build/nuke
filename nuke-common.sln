@@ -35,6 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{B43B0E45-8
 		.gitignore = .gitignore
 		.nuke = .nuke
 		.travis.yml = .travis.yml
+		appveyor.yml = appveyor.yml
 		build.ps1 = build.ps1
 		build.sh = build.sh
 		CHANGELOG.md = CHANGELOG.md
@@ -42,10 +43,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{B43B0E45-8
 		.github\ISSUE_TEMPLATE.md = .github\ISSUE_TEMPLATE.md
 		Jenkinsfile = Jenkinsfile
 		LICENSE = LICENSE
-		Nuke.sln.DotSettings = Nuke.sln.DotSettings
 		.github\PULL_REQUEST_TEMPLATE.md = .github\PULL_REQUEST_TEMPLATE.md
 		README.md = README.md
-		appveyor.yml = appveyor.yml
+		nuke-common.sln.DotSettings = nuke-common.sln.DotSettings
+		nuke-common.sln.DotSettings.user = nuke-common.sln.DotSettings.user
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Core.Tests", "source\Nuke.Core.Tests\Nuke.Core.Tests.csproj", "{FBC3039F-9793-4ECD-9A63-DB5B8BDDBA53}"
@@ -89,7 +90,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{BB6A9024-24DB-4170-A09B-02349148A78F} = {B43B0E45-8A89-4516-BAD3-2DA4C6660D3A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A2C37D4D-74E1-443B-999B-505B8C6694C9}

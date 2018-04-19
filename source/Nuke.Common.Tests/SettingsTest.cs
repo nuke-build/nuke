@@ -30,7 +30,7 @@ namespace Nuke.Common.Tests
         public void TestMSBuild()
         {
             var projectFile = RootDirectory / "source" / "Nuke.Common" / "Nuke.Common.csproj";
-            var solutionFile = RootDirectory / "Nuke.sln";
+            var solutionFile = RootDirectory / "nuke-common.sln";
 
             Assert<MSBuildSettings>(x => x
                     .SetProjectFile(projectFile)
