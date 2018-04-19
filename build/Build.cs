@@ -67,7 +67,8 @@ class Build : NukeBuild
         .Requires(() => IsUnix || GitVersion != null)
         .Executes(() =>
         {
-            DotNetBuild(s => DefaultDotNetBuild);
+            DotNetBuild(s => DefaultDotNetBuild
+                .DisableTreatWarningsAsErrors());
         });
 
     Target Publish => _ => _
