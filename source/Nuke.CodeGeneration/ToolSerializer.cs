@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Nuke.CodeGeneration.Model;
-using Nuke.Core;
+using Nuke.Common;
 
 namespace Nuke.CodeGeneration
 {

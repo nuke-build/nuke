@@ -5,9 +5,9 @@
 using System;
 using System.Linq;
 using JetBrains.Annotations;
-using static Nuke.Core.EnvironmentInfo;
+using static Nuke.Common.EnvironmentInfo;
 
-namespace Nuke.Core.BuildServers
+namespace Nuke.Common.BuildServers
 {
     /// <summary>
     /// Interface according to the <a href="https://www.visualstudio.com/en-us/docs/build/define/variables">official website</a>.

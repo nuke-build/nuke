@@ -9,7 +9,7 @@ using Xunit;
 
 // ReSharper disable ArgumentsStyleLiteral
 
-namespace Nuke.Core.Tests
+namespace Nuke.Common.Tests
 {
     public class ControlFlowTest
     {

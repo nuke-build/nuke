@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 
 // ReSharper disable InconsistentNaming
 
-namespace Nuke.Core.BuildServers
+namespace Nuke.Common.BuildServers
 {
     [PublicAPI]
     public enum TravisEventType

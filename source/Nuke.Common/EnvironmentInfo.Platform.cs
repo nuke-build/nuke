@@ -7,7 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 
-namespace Nuke.Core
+namespace Nuke.Common
 {
     public enum PlatformFamily
     {

@@ -7,9 +7,9 @@ using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
-using Nuke.Core.Tooling;
+using Nuke.Common.Tooling;
 
-namespace Nuke.Core.IO
+namespace Nuke.Common.IO
 {
     [PublicAPI]
     public static partial class SerializationTasks

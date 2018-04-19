@@ -6,10 +6,10 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Core.BuildServers;
-using Nuke.Core.OutputSinks;
+using Nuke.Common.BuildServers;
+using Nuke.Common.OutputSinks;
 
-namespace Nuke.Core
+namespace Nuke.Common
 {
     [PublicAPI]
     [DebuggerNonUserCode]

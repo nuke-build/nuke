@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Core.Execution
+namespace Nuke.Common.Execution
 {
     /// <inheritdoc />
     [PublicAPI]

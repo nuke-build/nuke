@@ -7,7 +7,7 @@ using System.Linq;
 using FluentAssertions;
 using Xunit;
 
-namespace Nuke.Core.Tests
+namespace Nuke.Common.Tests
 {
     public class EnvironmentInfoTest
     {

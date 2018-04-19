@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Core.Execution
+namespace Nuke.Common.Execution
 {
     /// <summary>
     ///     Value injection is executed prior to build execution. Fields marked

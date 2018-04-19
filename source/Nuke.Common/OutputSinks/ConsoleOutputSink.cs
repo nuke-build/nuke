@@ -8,10 +8,10 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
-using Nuke.Core.Execution;
-using Nuke.Core.Utilities;
+using Nuke.Common.Execution;
+using Nuke.Common.Utilities;
 
-namespace Nuke.Core.OutputSinks
+namespace Nuke.Common.OutputSinks
 {
     [UsedImplicitly]
     internal class ConsoleOutputSink : IOutputSink

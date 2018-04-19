@@ -9,9 +9,9 @@ using System.Linq;
 using JetBrains.Annotations;
 using NuGet.Versioning;
 using Nuke.Common.Git;
-using Nuke.Core;
-using Nuke.Core.IO;
-using Nuke.Core.Utilities;
+using Nuke.Common;
+using Nuke.Common.IO;
+using Nuke.Common.Utilities;
 
 // ReSharper disable ArgumentsStyleLiteral
 

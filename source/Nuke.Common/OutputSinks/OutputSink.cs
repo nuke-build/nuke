@@ -5,10 +5,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Nuke.Core.BuildServers;
-using Nuke.Core.Execution;
+using Nuke.Common.BuildServers;
+using Nuke.Common.Execution;
 
-namespace Nuke.Core.OutputSinks
+namespace Nuke.Common.OutputSinks
 {
     internal interface IOutputSink
     {

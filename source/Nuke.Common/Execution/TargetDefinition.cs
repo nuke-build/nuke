@@ -8,7 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
 
-namespace Nuke.Core.Execution
+namespace Nuke.Common.Execution
 {
     internal class TargetDefinition : ITargetDefinition
     {

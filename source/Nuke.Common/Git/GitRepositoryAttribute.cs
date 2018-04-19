@@ -5,9 +5,9 @@
 using System;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Core;
-using Nuke.Core.BuildServers;
-using Nuke.Core.Execution;
+using Nuke.Common;
+using Nuke.Common.BuildServers;
+using Nuke.Common.Execution;
 
 namespace Nuke.Common.Git
 {

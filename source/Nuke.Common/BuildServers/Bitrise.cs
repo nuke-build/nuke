@@ -5,9 +5,9 @@
 using System;
 using System.Linq;
 using JetBrains.Annotations;
-using static Nuke.Core.EnvironmentInfo;
+using static Nuke.Common.EnvironmentInfo;
 
-namespace Nuke.Core.BuildServers
+namespace Nuke.Common.BuildServers
 {
     /// <summary>
     /// Interface according to the <a href="http://devcenter.bitrise.io/faq/available-environment-variables/#exposed-by-bitriseio">official website</a>.

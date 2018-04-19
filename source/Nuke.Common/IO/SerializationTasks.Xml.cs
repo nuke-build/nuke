@@ -9,7 +9,7 @@ using System.Linq;
 using System.Xml.Serialization;
 using JetBrains.Annotations;
 
-namespace Nuke.Core.IO
+namespace Nuke.Common.IO
 {
     public static partial class SerializationTasks
     {

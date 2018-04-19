@@ -10,8 +10,8 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.CodeGeneration.Model;
 using Nuke.CodeGeneration.Writers;
-using Nuke.Core.Utilities;
-using Nuke.Core.Utilities.Collections;
+using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 // ReSharper disable UnusedMethodReturnValue.Local
 
@@ -79,10 +79,10 @@ namespace Nuke.CodeGeneration.Generators
                    {
                        "JetBrains.Annotations",
                        "Nuke.Common.Tools",
-                       "Nuke.Core",
-                       "Nuke.Core.Execution",
-                       "Nuke.Core.Tooling",
-                       "Nuke.Core.Utilities.Collections",
+                       "Nuke.Common",
+                       "Nuke.Common.Execution",
+                       "Nuke.Common.Tooling",
+                       "Nuke.Common.Utilities.Collections",
                        "System",
                        "System.Collections.Generic",
                        "System.Collections.ObjectModel",

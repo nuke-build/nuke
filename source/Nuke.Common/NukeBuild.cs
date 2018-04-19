@@ -8,12 +8,12 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
-using Nuke.Core.Execution;
-using Nuke.Core.IO;
+using Nuke.Common.Execution;
+using Nuke.Common.IO;
 
 // ReSharper disable VirtualMemberNeverOverridden.Global
 
-namespace Nuke.Core
+namespace Nuke.Common
 {
     /// <summary>
     /// Base class for build definitions. Derived types must declare <c>static int Main</c> which calls

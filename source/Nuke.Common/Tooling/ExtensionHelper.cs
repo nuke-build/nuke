@@ -7,9 +7,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Nuke.Core.Utilities;
+using Nuke.Common.Utilities;
 
-namespace Nuke.Core.Tooling
+namespace Nuke.Common.Tooling
 {
     public static class ExtensionHelper
     {

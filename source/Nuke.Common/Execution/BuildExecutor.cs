@@ -7,10 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Nuke.Core.OutputSinks;
-using Nuke.Core.Utilities;
+using Nuke.Common.OutputSinks;
+using Nuke.Common.Utilities;
 
-namespace Nuke.Core.Execution
+namespace Nuke.Common.Execution
 {
     internal static class BuildExecutor
     {

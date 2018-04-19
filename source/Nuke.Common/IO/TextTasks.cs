@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
 
-namespace Nuke.Core.IO
+namespace Nuke.Common.IO
 {
     [PublicAPI]
     public static class TextTasks

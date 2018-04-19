@@ -6,8 +6,8 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Nuke.CodeGeneration.Model;
-using Nuke.Core;
-using Nuke.Core.Utilities;
+using Nuke.Common;
+using Nuke.Common.Utilities;
 
 namespace Nuke.CodeGeneration.Generators
 {

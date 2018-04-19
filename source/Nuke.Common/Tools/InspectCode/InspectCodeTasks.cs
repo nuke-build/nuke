@@ -7,11 +7,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Core;
-using Nuke.Core.BuildServers;
-using Nuke.Core.IO;
-using Nuke.Core.Tooling;
-using Nuke.Core.Utilities.Collections;
+using Nuke.Common;
+using Nuke.Common.BuildServers;
+using Nuke.Common.IO;
+using Nuke.Common.Tooling;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Tools.InspectCode
 {

@@ -4,8 +4,8 @@
 
 using System;
 using System.Linq;
-using Nuke.Core;
-using Nuke.Core.Tooling;
+using Nuke.Common;
+using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.OpenCover
 {

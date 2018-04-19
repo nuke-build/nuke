@@ -4,11 +4,11 @@
 
 using System;
 using System.Linq;
-using Nuke.Core.BuildServers;
-using Nuke.Core.Execution;
-using Nuke.Core.Utilities;
+using Nuke.Common.BuildServers;
+using Nuke.Common.Execution;
+using Nuke.Common.Utilities;
 
-namespace Nuke.Core
+namespace Nuke.Common
 {
     public static partial class EnvironmentInfo
     {

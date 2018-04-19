@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Core.BuildServers
+namespace Nuke.Common.BuildServers
 {
     [PublicAPI]
     public enum TeamCityImportType

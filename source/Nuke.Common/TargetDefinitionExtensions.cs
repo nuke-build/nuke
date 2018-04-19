@@ -5,7 +5,7 @@
 using System;
 using System.Linq;
 
-namespace Nuke.Core
+namespace Nuke.Common
 {
     public static class TargetDefinitionExtensions
     {

@@ -6,9 +6,9 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Tools.Git;
-using Nuke.Core;
-using Nuke.Core.Execution;
-using Nuke.Core.Tooling;
+using Nuke.Common;
+using Nuke.Common.Execution;
+using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.GitVersion
 {

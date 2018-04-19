@@ -9,10 +9,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Core.Utilities;
-using Nuke.Core.Utilities.Collections;
+using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
-namespace Nuke.Core.Tooling
+namespace Nuke.Common.Tooling
 {
     internal class ProcessManager : IProcessManager
     {

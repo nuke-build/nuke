@@ -5,9 +5,9 @@
 using System;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Core.Execution;
+using Nuke.Common.Execution;
 
-namespace Nuke.Core
+namespace Nuke.Common
 {
     /// <inheritdoc/>
     /// <summary>

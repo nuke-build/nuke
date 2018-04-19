@@ -85,8 +85,8 @@
     <Reference Include="Nuke.Common, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>_SOLUTION_DIRECTORY_\packages\Nuke.Common._NUKE_VERSION_\lib\net461\Nuke.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Nuke.Core, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>_SOLUTION_DIRECTORY_\packages\Nuke.Core._NUKE_VERSION_\lib\net461\Nuke.Core.dll</HintPath>
+    <Reference Include="Nuke.Common, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>_SOLUTION_DIRECTORY_\packages\Nuke.Common._NUKE_VERSION_\lib\net461\Nuke.Common.dll</HintPath>
     </Reference>
     <Reference Include="Octokit, Version=0.24.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>_SOLUTION_DIRECTORY_\packages\Octokit.0.24.0\lib\net45\Octokit.dll</HintPath>

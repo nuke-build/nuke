@@ -11,7 +11,7 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 using JetBrains.Annotations;
 
-namespace Nuke.Core.IO
+namespace Nuke.Common.IO
 {
     [PublicAPI]
     public static class XmlTasks

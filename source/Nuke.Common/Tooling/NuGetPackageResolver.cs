@@ -9,11 +9,11 @@ using System.Linq;
 using JetBrains.Annotations;
 using NuGet.Packaging;
 using NuGet.Versioning;
-using Nuke.Core.IO;
-using Nuke.Core.Utilities;
-using Nuke.Core.Utilities.Collections;
+using Nuke.Common.IO;
+using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
-namespace Nuke.Core.Tooling
+namespace Nuke.Common.Tooling
 {
     [PublicAPI]
     public static class NuGetPackageResolver

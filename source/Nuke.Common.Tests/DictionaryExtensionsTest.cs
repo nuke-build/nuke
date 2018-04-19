@@ -7,10 +7,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using Nuke.Core.Utilities.Collections;
+using Nuke.Common.Utilities.Collections;
 using Xunit;
 
-namespace Nuke.Core.Tests
+namespace Nuke.Common.Tests
 {
     public class DictionaryExtensionsTest
     {

@@ -6,9 +6,9 @@ using System;
 using System.Linq;
 using System.Net;
 using JetBrains.Annotations;
-using Nuke.Core.Tooling;
+using Nuke.Common.Tooling;
 
-namespace Nuke.Core.IO
+namespace Nuke.Common.IO
 {
     [PublicAPI]
     public static class HttpTasks

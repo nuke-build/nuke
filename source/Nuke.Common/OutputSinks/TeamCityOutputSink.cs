@@ -5,10 +5,10 @@
 using System;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Core.BuildServers;
-using Nuke.Core.Utilities;
+using Nuke.Common.BuildServers;
+using Nuke.Common.Utilities;
 
-namespace Nuke.Core.OutputSinks
+namespace Nuke.Common.OutputSinks
 {
     [UsedImplicitly]
     internal class TeamCityOutputSink : ConsoleOutputSink

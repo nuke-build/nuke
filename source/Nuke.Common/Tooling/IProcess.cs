@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Core.Tooling
+namespace Nuke.Common.Tooling
 {
     /// <summary>
     /// Abstraction for <see cref="Process"/>.

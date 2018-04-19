@@ -7,10 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using JetBrains.Annotations;
-using Nuke.Core.IO;
+using Nuke.Common.IO;
 using Xunit;
 
-namespace Nuke.Core.Tests
+namespace Nuke.Common.Tests
 {
     public class SerializationTest
     {

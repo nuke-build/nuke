@@ -6,10 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using Nuke.Core.Tooling;
+using Nuke.Common.Tooling;
 using Xunit;
 
-namespace Nuke.Core.Tests
+namespace Nuke.Common.Tests
 {
     public class ArgumentsTest
     {

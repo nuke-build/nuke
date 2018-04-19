@@ -6,9 +6,9 @@ using System;
 using System.Linq;
 using FluentAssertions;
 using Xunit;
-using static Nuke.Core.IO.PathConstruction;
+using static Nuke.Common.IO.PathConstruction;
 
-namespace Nuke.Core.Tests
+namespace Nuke.Common.Tests
 {
     public class PathConstructionTest
     {

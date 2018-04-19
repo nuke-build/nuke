@@ -9,7 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Core.Utilities.Collections
+namespace Nuke.Common.Utilities.Collections
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "MissingXmlDoc")]

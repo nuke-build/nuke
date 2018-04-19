@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Nuke.Core.Utilities;
+using Nuke.Common.Utilities;
 
-namespace Nuke.Core.Execution
+namespace Nuke.Common.Execution
 {
     internal static class HelpTextService
     {

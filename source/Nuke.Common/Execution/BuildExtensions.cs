@@ -8,7 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Nuke.Core.Execution
+namespace Nuke.Common.Execution
 {
     internal static class BuildExtensions
     {

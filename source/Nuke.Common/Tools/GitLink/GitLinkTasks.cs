@@ -6,8 +6,8 @@ using System;
 using System.Linq;
 using Nuke.Common.Git;
 using Nuke.Common.Tools.GitVersion;
-using Nuke.Core;
-using Nuke.Core.Tooling;
+using Nuke.Common;
+using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.GitLink
 {

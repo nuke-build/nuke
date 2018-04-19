@@ -9,7 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Nuke.Core.Execution
+namespace Nuke.Common.Execution
 {
     internal static class GraphService
     {

@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Core.Utilities.Collections;
+using Nuke.Common.Utilities.Collections;
 
-namespace Nuke.Core.IO
+namespace Nuke.Common.IO
 {
     [PublicAPI]
     public static class FileSystemTasks

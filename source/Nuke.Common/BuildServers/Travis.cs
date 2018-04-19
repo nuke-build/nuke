@@ -4,9 +4,9 @@
 
 using System;
 using System.Linq;
-using static Nuke.Core.EnvironmentInfo;
+using static Nuke.Common.EnvironmentInfo;
 
-namespace Nuke.Core.BuildServers
+namespace Nuke.Common.BuildServers
 {
     /// <summary>
     /// Interface according to the <a href="https://docs.travis-ci.com/user/environment-variables/">official website</a>.

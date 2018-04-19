@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using HtmlAgilityPack;
 using JetBrains.Annotations;
 using Nuke.CodeGeneration.Model;
-using Nuke.Core;
+using Nuke.Common;
 
 namespace Nuke.CodeGeneration
 {

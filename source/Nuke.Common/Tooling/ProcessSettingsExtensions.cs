@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Core.Tooling
+namespace Nuke.Common.Tooling
 {
     [PublicAPI]
     [ExcludeFromCodeCoverage]

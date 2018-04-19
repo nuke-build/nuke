@@ -29,7 +29,6 @@
   </ItemGroup>
   
   <ItemGroup Condition="'$(ReferenceExternal)'!='True'">
-    <ProjectReference Include="..\source\Nuke.Core\Nuke.Core.csproj" />
     <ProjectReference Include="..\source\Nuke.Common\Nuke.Common.csproj" />
     <ProjectReference Include="..\source\Nuke.CodeGeneration\Nuke.CodeGeneration.csproj" />
   </ItemGroup>

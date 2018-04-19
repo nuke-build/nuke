@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Nuke.Core.Tooling
+namespace Nuke.Common.Tooling
 {
     internal class FakeProcess : IProcess
     {

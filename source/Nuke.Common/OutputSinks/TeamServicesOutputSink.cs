@@ -5,9 +5,9 @@
 using System;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Core.BuildServers;
+using Nuke.Common.BuildServers;
 
-namespace Nuke.Core.OutputSinks
+namespace Nuke.Common.OutputSinks
 {
     [UsedImplicitly]
     internal class TeamServicesOutputSink : ConsoleOutputSink

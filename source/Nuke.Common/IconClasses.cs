@@ -31,10 +31,10 @@ using Nuke.Common.Tools.TestCloud;
 using Nuke.Common.Tools.VsTest;
 using Nuke.Common.Tools.WebConfigTransformRunner;
 using Nuke.Common.Tools.Xunit;
-using Nuke.Core;
-using Nuke.Core.Execution;
-using Nuke.Core.IO;
-using Nuke.Core.Tooling;
+using Nuke.Common;
+using Nuke.Common.Execution;
+using Nuke.Common.IO;
+using Nuke.Common.Tooling;
 
 [assembly: IconClass(typeof(ChangelogTasks), "books")]
 [assembly: IconClass(typeof(ControlFlow), "footprint")]

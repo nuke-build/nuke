@@ -12,7 +12,7 @@ using Nuke.Common.Tools.InspectCode;
 using Nuke.Common.Tools.MSBuild;
 using Nuke.Common.Tools.NuGet;
 using Nuke.Common.Tools.OpenCover;
-using Nuke.Core;
+using Nuke.Common;
 
 namespace Nuke.Common
 {

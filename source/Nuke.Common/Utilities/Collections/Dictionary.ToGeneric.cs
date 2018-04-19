@@ -7,7 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Nuke.Core.Utilities.Collections
+namespace Nuke.Common.Utilities.Collections
 {
     public static partial class DictionaryExtensions
     {

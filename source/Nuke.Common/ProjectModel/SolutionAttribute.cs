@@ -5,8 +5,8 @@
 using System;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Core;
-using Nuke.Core.Execution;
+using Nuke.Common;
+using Nuke.Common.Execution;
 
 namespace Nuke.Common.ProjectModel
 {

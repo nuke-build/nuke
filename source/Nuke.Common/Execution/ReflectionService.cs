@@ -5,9 +5,9 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Nuke.Core.Utilities.Collections;
+using Nuke.Common.Utilities.Collections;
 
-namespace Nuke.Core.Execution
+namespace Nuke.Common.Execution
 {
     internal static class ReflectionService
     {

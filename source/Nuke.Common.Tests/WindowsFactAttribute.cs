@@ -4,7 +4,7 @@
 
 using System;
 using System.Linq;
-using Nuke.Core;
+using Nuke.Common;
 using Xunit;
 
 namespace Nuke.Common.Tests

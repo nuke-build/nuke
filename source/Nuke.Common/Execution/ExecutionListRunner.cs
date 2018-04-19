@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Nuke.Core.OutputSinks;
+using Nuke.Common.OutputSinks;
 
-namespace Nuke.Core.Execution
+namespace Nuke.Common.Execution
 {
     internal class ExecutionListRunner
     {

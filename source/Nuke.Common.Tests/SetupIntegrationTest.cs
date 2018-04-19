@@ -8,12 +8,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Nuke.Core;
-using Nuke.Core.IO;
-using Nuke.Core.Utilities;
+using Nuke.Common;
+using Nuke.Common.IO;
+using Nuke.Common.Utilities;
 using Xunit;
 using Xunit.Abstractions;
-using static Nuke.Core.IO.PathConstruction;
+using static Nuke.Common.IO.PathConstruction;
 
 namespace Nuke.Common.Tests
 {

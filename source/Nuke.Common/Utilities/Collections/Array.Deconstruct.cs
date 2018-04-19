@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Core.Utilities.Collections
+namespace Nuke.Common.Utilities.Collections
 {
     [PublicAPI]
     public static class ArrayExtensions

@@ -4,9 +4,9 @@
 
 using System;
 using System.Linq;
-using static Nuke.Core.EnvironmentInfo;
+using static Nuke.Common.EnvironmentInfo;
 
-namespace Nuke.Core.BuildServers
+namespace Nuke.Common.BuildServers
 {
     /// <summary>
     ///     Interface according to the <a href="https://wiki.jenkins.io/display/JENKINS/Building+a+software+project">official website</a>.

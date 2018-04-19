@@ -9,8 +9,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Schema;
 using Newtonsoft.Json.Schema.Generation;
 using Newtonsoft.Json.Serialization;
-using Nuke.Core;
-using Nuke.Core.IO;
+using Nuke.Common;
+using Nuke.Common.IO;
 
 namespace Nuke.CodeGeneration
 {

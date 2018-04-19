@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
-using Nuke.Core;
+using Nuke.Common;
 
 namespace Nuke.Common.ProjectModel
 {

@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Core
+namespace Nuke.Common
 {
     [PublicAPI]
     public enum SpecialFolders

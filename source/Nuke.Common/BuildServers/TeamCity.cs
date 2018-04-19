@@ -10,12 +10,12 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using JetBrains.Annotations;
-using Nuke.Core.Utilities;
-using Nuke.Core.Utilities.Collections;
+using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 using Refit;
-using static Nuke.Core.EnvironmentInfo;
+using static Nuke.Common.EnvironmentInfo;
 
-namespace Nuke.Core.BuildServers
+namespace Nuke.Common.BuildServers
 {
     /// <summary>
     /// Interface according to the <a href="https://confluence.jetbrains.com/display/TCDL/Build+Script+Interaction+with+TeamCity">official website</a>.

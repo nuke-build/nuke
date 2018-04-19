@@ -7,11 +7,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using FluentAssertions;
-using Nuke.Core.Execution;
-using Nuke.Core.Utilities.Collections;
+using Nuke.Common.Execution;
+using Nuke.Common.Utilities.Collections;
 using Xunit;
 
-namespace Nuke.Core.Tests
+namespace Nuke.Common.Tests
 {
     public class ParameterServiceTest
     {

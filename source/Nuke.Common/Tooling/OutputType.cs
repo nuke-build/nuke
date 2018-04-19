@@ -5,7 +5,7 @@
 using System;
 using System.Linq;
 
-namespace Nuke.Core.Tooling
+namespace Nuke.Common.Tooling
 {
     public enum OutputType
     {

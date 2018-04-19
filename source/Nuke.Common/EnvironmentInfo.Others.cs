@@ -8,10 +8,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using Nuke.Core.Utilities;
-using Nuke.Core.Utilities.Collections;
+using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
-namespace Nuke.Core
+namespace Nuke.Common
 {
     public static partial class EnvironmentInfo
     {

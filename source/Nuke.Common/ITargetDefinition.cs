@@ -7,7 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
 
-namespace Nuke.Core
+namespace Nuke.Common
 {
     /// <summary>
     ///   Public API for defining targets.

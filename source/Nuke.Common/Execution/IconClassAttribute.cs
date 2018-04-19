@@ -5,7 +5,7 @@
 using System;
 using System.Linq;
 
-namespace Nuke.Core.Execution
+namespace Nuke.Common.Execution
 {
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public class IconClassAttribute : Attribute

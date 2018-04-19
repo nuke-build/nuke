@@ -6,10 +6,10 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Nuke.Core.Utilities.Collections;
-using static Nuke.Core.IO.PathConstruction;
+using Nuke.Common.Utilities.Collections;
+using static Nuke.Common.IO.PathConstruction;
 
-namespace Nuke.Core
+namespace Nuke.Common
 {
     public static partial class EnvironmentInfo
     {
