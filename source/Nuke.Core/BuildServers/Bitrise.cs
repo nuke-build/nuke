@@ -33,15 +33,15 @@ namespace Nuke.Core.BuildServers
         {
         }
 
-        public string BuildUrl => EnsureVariable("BITRISE_BUILD_URL");
-        public long BuildNumber => EnsureVariable<long>("BITRISE_BUILD_NUMBER");
-        public string AppTitle => EnsureVariable("BITRISE_APP_TITLE");
-        public string AppUrl => EnsureVariable("BITRISE_APP_URL");
-        public string AppSlug => EnsureVariable("BITRISE_APP_SLUG");
-        public string BuildSlug => EnsureVariable("BITRISE_BUILD_SLUG");
-        public DateTime BuildTriggerTimestamp => ConvertUnixTimestamp(EnsureVariable<long>("BITRISE_BUILD_TRIGGER_TIMESTAMP"));
-        public string RepositoryUrl => EnsureVariable("GIT_REPOSITORY_URL");
-        public string GitBranch => EnsureVariable("BITRISE_GIT_BRANCH");
+        public string BuildUrl => Variable("BITRISE_BUILD_URL");
+        public long BuildNumber => Variable<long>("BITRISE_BUILD_NUMBER");
+        public string AppTitle => Variable("BITRISE_APP_TITLE");
+        public string AppUrl => Variable("BITRISE_APP_URL");
+        public string AppSlug => Variable("BITRISE_APP_SLUG");
+        public string BuildSlug => Variable("BITRISE_BUILD_SLUG");
+        public DateTime BuildTriggerTimestamp => ConvertUnixTimestamp(Variable<long>("BITRISE_BUILD_TRIGGER_TIMESTAMP"));
+        public string RepositoryUrl => Variable("GIT_REPOSITORY_URL");
+        public string GitBranch => Variable("BITRISE_GIT_BRANCH");
         [CanBeNull] public string GitTag => Variable("BITRISE_GIT_TAG");
         [CanBeNull] public string GitCommit => Variable("BITRISE_GIT_COMMIT");
         [CanBeNull] public string GitMessage => Variable("BITRISE_GIT_MESSAGE");

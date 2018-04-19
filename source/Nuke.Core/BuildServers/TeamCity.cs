@@ -44,8 +44,12 @@ namespace Nuke.Core.BuildServers
             return new Lazy<T>(provider);
         }
 
-        private static IReadOnlyDictionary<string, string> ParseDictionary(string file)
+        [CanBeNull]
+        private static IReadOnlyDictionary<string, string> ParseDictionary([CanBeNull] string file)
         {
+            if (file == null)
+                return null;
+            
             var lines = File.ReadAllLines(file);
             var dictionary = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
@@ -86,9 +90,9 @@ namespace Nuke.Core.BuildServers
         {
             _messageSink = messageSink ?? Console.WriteLine;
 
-            _systemProperties = GetLazy(() => ParseDictionary(EnsureVariable("TEAMCITY_BUILD_PROPERTIES_FILE")));
-            _configurationProperties = GetLazy(() => ParseDictionary(SystemProperties["TEAMCITY_CONFIGURATION_PROPERTIES_FILE"]));
-            _runnerProperties = GetLazy(() => ParseDictionary(SystemProperties["TEAMCITY_RUNNER_PROPERTIES_FILE"]));
+            _systemProperties = GetLazy(() => ParseDictionary(Variable("TEAMCITY_BUILD_PROPERTIES_FILE")));
+            _configurationProperties = GetLazy(() => ParseDictionary(SystemProperties?["TEAMCITY_CONFIGURATION_PROPERTIES_FILE"]));
+            _runnerProperties = GetLazy(() => ParseDictionary(SystemProperties?["TEAMCITY_RUNNER_PROPERTIES_FILE"]));
 
             _restClient = GetLazy(() => CreateRestClient<ITeamCityRestClient>());
         }
@@ -104,12 +108,12 @@ namespace Nuke.Core.BuildServers
 
         public ITeamCityRestClient RestClient => _restClient.Value;
 
-        public string BuildConfiguration => EnsureVariable("TEAMCITY_BUILDCONF_NAME");
-        [NoConvert] public string BuildNumber => EnsureVariable("BUILD_NUMBER");
-        public string Version => EnsureVariable("TEAMCITY_VERSION");
-        public string ProjectName => EnsureVariable("TEAMCITY_PROJECT_NAME");
-        public string ServerUrl => ConfigurationProperties["TEAMCITY_SERVERURL"];
-        public string BranchName => ConfigurationProperties["TEAMCITY_BUILD_BRANCH"];
+        public string BuildConfiguration => Variable("TEAMCITY_BUILDCONF_NAME");
+        [NoConvert] public string BuildNumber => Variable("BUILD_NUMBER");
+        public string Version => Variable("TEAMCITY_VERSION");
+        public string ProjectName => Variable("TEAMCITY_PROJECT_NAME");
+        public string ServerUrl => ConfigurationProperties?["TEAMCITY_SERVERURL"];
+        public string BranchName => ConfigurationProperties?["TEAMCITY_BUILD_BRANCH"];
 
         public void DisableServiceMessages()
         {
