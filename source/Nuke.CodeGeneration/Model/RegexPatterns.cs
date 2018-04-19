@@ -9,6 +9,6 @@ namespace Nuke.CodeGeneration.Model
 {
     internal static class RegexPatterns
     {
-        public const string Name = "^[A-Z][a-z]+(?:[A-Z0-9][a-z0-9]+)*$";
+        public const string Name = "^[0-9A-Z][A-Za-z0-9]*$";
     }
 }
