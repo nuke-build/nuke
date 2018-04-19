@@ -78,10 +78,10 @@ namespace Nuke.CodeGeneration.Generators
             return new[]
                    {
                        "JetBrains.Annotations",
-                       "Nuke.Common.Tools",
                        "Nuke.Common",
                        "Nuke.Common.Execution",
                        "Nuke.Common.Tooling",
+                       "Nuke.Common.Tools",
                        "Nuke.Common.Utilities.Collections",
                        "System",
                        "System.Collections.Generic",
