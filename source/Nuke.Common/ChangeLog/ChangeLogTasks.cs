@@ -9,7 +9,6 @@ using System.Linq;
 using JetBrains.Annotations;
 using NuGet.Versioning;
 using Nuke.Common.Git;
-using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 

@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using FluentAssertions;
 using Nuke.Common.Git;
-using Nuke.Common;
 using Nuke.Common.IO;
 using Xunit;
 

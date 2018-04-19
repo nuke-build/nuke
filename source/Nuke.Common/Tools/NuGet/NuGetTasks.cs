@@ -5,7 +5,6 @@
 using System;
 using System.Linq;
 using Nuke.Common.Tools.GitVersion;
-using Nuke.Common;
 using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.NuGet

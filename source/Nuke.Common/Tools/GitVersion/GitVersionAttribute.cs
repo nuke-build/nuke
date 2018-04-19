@@ -6,7 +6,6 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Tools.Git;
-using Nuke.Common;
 using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
 

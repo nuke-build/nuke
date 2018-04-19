@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common.Tools.GitVersion;
-using Nuke.Common;
 using Nuke.Common.BuildServers;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;

@@ -8,7 +8,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Xunit;
