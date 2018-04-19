@@ -24,11 +24,6 @@ namespace Nuke.Core.BuildServers
 
         private readonly Action<string> _messageSink;
 
-        internal TeamServices()
-            : this(messageSink: null)
-        {
-        }
-
         internal TeamServices(Action<string> messageSink = null)
         {
             _messageSink = messageSink ?? Console.WriteLine;

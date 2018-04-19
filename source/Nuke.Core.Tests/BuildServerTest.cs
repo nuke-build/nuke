@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using FluentAssertions;
@@ -114,7 +115,8 @@ namespace Nuke.Core.Tests
 
         private static object CreateBuildServer(Type type)
         {
-            return Activator.CreateInstance(type, nonPublic: true);
+            var bindingFlags = BindingFlags.CreateInstance | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.OptionalParamBinding;
+            return Activator.CreateInstance(type, bindingFlags, binder: null, args: new object[0], culture: CultureInfo.CurrentCulture);
         }
         
         private static bool IsRunning(Type type)

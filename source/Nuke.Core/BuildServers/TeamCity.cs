@@ -77,11 +77,6 @@ namespace Nuke.Core.BuildServers
         private readonly Lazy<IReadOnlyDictionary<string, string>> _runnerProperties;
         private readonly Lazy<ITeamCityRestClient> _restClient;
 
-        internal TeamCity()
-            : this(messageSink: null)
-        {
-        }
-
         internal TeamCity(Action<string> messageSink = null)
         {
             _messageSink = messageSink ?? Console.WriteLine;
