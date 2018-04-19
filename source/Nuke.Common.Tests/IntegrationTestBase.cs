@@ -7,11 +7,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Nuke.Core;
-using Nuke.Core.IO;
-using Nuke.Core.Utilities;
+using Nuke.Common.IO;
+using Nuke.Common.Utilities;
 using Xunit.Abstractions;
-using static Nuke.Core.IO.PathConstruction;
+using static Nuke.Common.IO.PathConstruction;
 
 namespace Nuke.Common.Tests
 {

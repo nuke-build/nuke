@@ -7,9 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
-using Nuke.Core;
-using Nuke.Core.IO;
-using Nuke.Core.Utilities;
+using Nuke.Common.IO;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Git
 {

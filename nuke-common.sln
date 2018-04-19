@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Core", "source\Nuke.Core\Nuke.Core.csproj", "{F73A2786-3DE2-4011-8111-333B91D97F9E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = ".build", "build\.build.csproj", "{BB6A9024-24DB-4170-A09B-02349148A78F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Common", "source\Nuke.Common\Nuke.Common.csproj", "{B6D4E654-6822-42FF-86AD-DB07BE759760}"
@@ -49,8 +47,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{B43B0E45-8
 		nuke-common.sln.DotSettings.user = nuke-common.sln.DotSettings.user
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Core.Tests", "source\Nuke.Core.Tests\Nuke.Core.Tests.csproj", "{FBC3039F-9793-4ECD-9A63-DB5B8BDDBA53}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.CodeGeneration", "source\Nuke.CodeGeneration\Nuke.CodeGeneration.csproj", "{34FBD413-AD5D-493E-BD61-ED8497D314A0}"
 EndProject
 Global
@@ -59,10 +55,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F73A2786-3DE2-4011-8111-333B91D97F9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F73A2786-3DE2-4011-8111-333B91D97F9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F73A2786-3DE2-4011-8111-333B91D97F9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F73A2786-3DE2-4011-8111-333B91D97F9E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BB6A9024-24DB-4170-A09B-02349148A78F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BB6A9024-24DB-4170-A09B-02349148A78F}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{B6D4E654-6822-42FF-86AD-DB07BE759760}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -77,10 +69,6 @@ Global
 		{656F585C-0B2D-429D-95A7-226EF59DAB79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{656F585C-0B2D-429D-95A7-226EF59DAB79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{656F585C-0B2D-429D-95A7-226EF59DAB79}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FBC3039F-9793-4ECD-9A63-DB5B8BDDBA53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FBC3039F-9793-4ECD-9A63-DB5B8BDDBA53}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FBC3039F-9793-4ECD-9A63-DB5B8BDDBA53}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FBC3039F-9793-4ECD-9A63-DB5B8BDDBA53}.Release|Any CPU.Build.0 = Release|Any CPU
 		{34FBD413-AD5D-493E-BD61-ED8497D314A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{34FBD413-AD5D-493E-BD61-ED8497D314A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34FBD413-AD5D-493E-BD61-ED8497D314A0}.Release|Any CPU.ActiveCfg = Release|Any CPU

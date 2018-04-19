@@ -15,8 +15,8 @@
     <Compile Include="..\Nuke.Common\Tools\MSBuild\MSBuildPlatform.cs" Link="MSBuildPlatform.cs" />
     <Compile Include="..\Nuke.Common\Tools\MSBuild\MSBuildToolPathResolver.cs" Link="MSBuildToolPathResolver.cs" />
     <Compile Include="..\Nuke.Common\Tools\MSBuild\MSBuildVersion.cs" Link="MSBuildVersion.cs" />
-    <Compile Include="..\Nuke.Core\EnvironmentInfo.Platform.cs" Link="EnvironmentInfo.Platform.cs" />
-    <Compile Include="..\Nuke.Core\EnvironmentInfo.SpecialFolder.cs" Link="EnvironmentInfo.SpecialFolder.cs" />
+    <Compile Include="..\Nuke.Common\EnvironmentInfo.Platform.cs" Link="EnvironmentInfo.Platform.cs" />
+    <Compile Include="..\Nuke.Common\EnvironmentInfo.SpecialFolder.cs" Link="EnvironmentInfo.SpecialFolder.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -15,9 +15,9 @@ using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.InspectCode;
 using Nuke.Common.Tools.OpenCover;
 using Nuke.Common.Tools.Xunit;
-using Nuke.Core;
-using Nuke.Core.Utilities;
-using Nuke.Core.Utilities.Collections;
+using Nuke.Common;
+using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 using static Nuke.CodeGeneration.CodeGenerator;
 using static Nuke.CodeGeneration.ReferenceUpdater;
 using static Nuke.CodeGeneration.SchemaGenerator;
@@ -28,9 +28,9 @@ using static Nuke.Common.Tools.Git.GitTasks;
 using static Nuke.Common.Tools.InspectCode.InspectCodeTasks;
 using static Nuke.Common.Tools.OpenCover.OpenCoverTasks;
 using static Nuke.Common.Tools.Xunit.XunitTasks;
-using static Nuke.Core.IO.FileSystemTasks;
-using static Nuke.Core.IO.PathConstruction;
-using static Nuke.Core.EnvironmentInfo;
+using static Nuke.Common.IO.FileSystemTasks;
+using static Nuke.Common.IO.PathConstruction;
+using static Nuke.Common.EnvironmentInfo;
 
 class Build : NukeBuild
 {
@@ -206,7 +206,7 @@ class Build : NukeBuild
                 GenerationDirectory,
                 baseNamespace: "Nuke.Common.Tools",
                 useNestedNamespaces: true,
-                gitRepository: GitRepository.FromLocalDirectory(MetadataDirectory).NotNull());
+                gitRepository: GitRepository);
         });
 
     Target Full => _ => _

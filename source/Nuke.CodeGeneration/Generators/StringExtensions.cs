@@ -8,7 +8,7 @@ using System.Globalization;
 using System.Linq;
 using Humanizer;
 using JetBrains.Annotations;
-using Nuke.Core;
+using Nuke.Common;
 
 namespace Nuke.CodeGeneration.Generators
 {

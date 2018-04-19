@@ -8,8 +8,7 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Nuke.Core;
-using Nuke.Core.Tooling;
+using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.GitVersion
 {
