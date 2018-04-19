@@ -1,0 +1,97 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "license": [
+    "Copyright Matthias Koch 2017.",
+    "Distributed under the MIT License.",
+    "https://github.com/nuke-build/tools/blob/master/LICENSE"
+  ],
+  "references": [
+    "https://developer.xamarin.com/guides/testcloud/uitest/working-with/submitting-tests-at-command-line#//div[@class='doc-content']/table"
+  ],
+  "name": "TestCloud",
+  "officialUrl": "https://developer.xamarin.com/guides/testcloud/",
+  "help": "Test Cloud is a cloud based service consisting of thousands of physical mobile devices. Users upload their apps and tests to Test Cloud, which will install the apps on the devices and run the tests. When the tests are complete, Test Cloud, the results made available to users through an easy to use and informative web-based front end.",
+  "packageId": "Xamarin.UITest",
+  "packageExecutable": "test-cloud.exe",
+  "tasks": [
+    {
+      "definiteArgument": "submit",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AssemblyDirectory",
+            "type": "string",
+            "format": "--assembly-dir {value}",
+            "help": "The path to the folder holding the test assemblies."
+          },
+          {
+            "name": "Devices",
+            "type": "string",
+            "format": "--devices {value}",
+            "help": "The device ID that was provided in the Test Cloud Upload dialog."
+          },
+          {
+            "name": "UserEmail",
+            "type": "string",
+            "format": "--user {value}",
+            "help": "The e-mail address of the team member submitting the tests."
+          },
+          {
+            "name": "NunitResultsFile",
+            "type": "string",
+            "format": "--nunit-xml {value}",
+            "help": "The filename to which test results are exported, formatted as NUnit results XML. Optional."
+          },
+          {
+            "name": "SignInfoFile",
+            "type": "string",
+            "format": "--sign-info {value}",
+            "help": "Android only. Supply a signing information file that will be used to sign the Test Server APK. See the section below for more details. Optional."
+          },
+          {
+            "name": "DsymFile",
+            "type": "string",
+            "format": "--dsym {value}",
+            "help": "iOS only. Will upload the dSYM files along with the application and tests. This allows for more detail in the log files. Optional."
+          },
+          {
+            "name": "Fixtures",
+            "type": "List<string>",
+            "format": "--fixture {value}",
+            "help": "NUnit fixture / namespace to run. (Can be used multiple times)."
+          },
+          {
+            "name": "IncludeCategories",
+            "type": "List<string>",
+            "format": "--include {value}",
+            "help": "Identifies the NUnit test categories that should only be included in the test run."
+          },
+          {
+            "name": "ExcludeCategories",
+            "type": "List<string>",
+            "format": "--exclude {value}",
+            "help": "Identifies the NUnit test categories that should be excluded from the test run."
+          },
+          {
+            "name": "TestChunk",
+            "type": "bool",
+            "format": "--test-chunk",
+            "help": "Run tests in parallel by method."
+          },
+          {
+            "name": "FixtureChunk",
+            "type": "bool",
+            "format": "--fixture-chunk",
+            "help": "Run tests in parallel by fixture."
+          },
+          {
+            "name": "DataPaths",
+            "type": "List<string>",
+            "format": "--data {value}",
+            "help": "Uploads file or directory along with assemblies. (Can be used multiple times)."
+          }
+        ]
+      }
+    }
+  ]
+}

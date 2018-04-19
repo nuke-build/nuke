@@ -1,0 +1,143 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "license": [
+    "Copyright Matthias Koch 2017.",
+    "Distributed under the MIT License.",
+    "https://github.com/nuke-build/tools/blob/master/LICENSE"
+  ],
+  "references": [
+    "https://raw.githubusercontent.com/GitTools/GitVersion/master/docs/more-info/variables.md"
+  ],
+  "name": "GitVersion",
+  "officialUrl": "http://gitversion.readthedocs.io/en/stable/",
+  "help": "GitVersion is a tool to help you achieve Semantic Versioning on your project.",
+  "packageId": "GitVersion.CommandLine",
+  "packageExecutable": "GitVersion.exe",
+  "tasks": [
+    {
+      "returnType": "GitVersion",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "UpdateAssemblyInfo",
+            "type": "bool",
+            "format": "/updateassemblyinfo"
+          }
+        ]
+      }
+    }
+  ],
+  "dataClasses": [
+    {
+      "name": "GitVersion",
+      "noExtensionMethods": true,
+      "noArguments": true,
+      "properties": [
+        {
+          "name": "Major",
+          "type": "int!"
+        },
+        {
+          "name": "Minor",
+          "type": "int!"
+        },
+        {
+          "name": "Patch",
+          "type": "int!"
+        },
+        {
+          "name": "PreReleaseTag",
+          "type": "string"
+        },
+        {
+          "name": "PreReleaseTagWithDash",
+          "type": "string"
+        },
+        {
+          "name": "PreReleaseLabel",
+          "type": "string"
+        },
+        {
+          "name": "PreReleaseNumber",
+          "type": "string"
+        },
+        {
+          "name": "BuildMetaData",
+          "type": "string"
+        },
+        {
+          "name": "BuildMetaDataPadded",
+          "type": "string"
+        },
+        {
+          "name": "FullBuildMetaData",
+          "type": "string"
+        },
+        {
+          "name": "MajorMinorPatch",
+          "type": "string"
+        },
+        {
+          "name": "SemVer",
+          "type": "string"
+        },
+        {
+          "name": "LegacySemVer",
+          "type": "string"
+        },
+        {
+          "name": "LegacySemVerPadded",
+          "type": "string"
+        },
+        {
+          "name": "AssemblySemVer",
+          "type": "string"
+        },
+        {
+          "name": "FullSemVer",
+          "type": "string"
+        },
+        {
+          "name": "InformationalVersion",
+          "type": "string"
+        },
+        {
+          "name": "BranchName",
+          "type": "string"
+        },
+        {
+          "name": "Sha",
+          "type": "string"
+        },
+        {
+          "name": "NuGetVersionV2",
+          "type": "string"
+        },
+        {
+          "name": "NuGetVersion",
+          "type": "string"
+        },
+        {
+          "name": "NuGetPreReleaseTagV2",
+          "type": "string"
+        },
+        {
+          "name": "NuGetPreReleaseTag",
+          "type": "string"
+        },
+        {
+          "name": "CommitsSinceVersionSource",
+          "type": "string"
+        },
+        {
+          "name": "CommitsSinceVersionSourcePadded",
+          "type": "string"
+        },
+        {
+          "name": "CommitDate",
+          "type": "string"
+        }
+      ]
+    }
+  ]
+}

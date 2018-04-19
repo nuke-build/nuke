@@ -1,0 +1,224 @@
+
+          
+paket pack
+Create NuGet packages from paket.template files.
+ 1: 
+ 2: 
+ 3: 
+ 4: 
+ 5: 
+ 6: 
+ 7: 
+ 8: 
+ 9: 
+10: 
+11: 
+12: 
+13: 
+14: 
+15: 
+16: 
+17: 
+18: 
+19: 
+20: 
+21: 
+22: 
+23: 
+24: 
+25: 
+26: 
+27: 
+28: 
+29: 
+30: 
+31: 
+32: 
+33: 
+34: 
+35: 
+36: 
+37: 
+38: 
+39: 
+40: 
+41: 
+42: 
+43: 
+
+paket pack [--help] [--build-config &lt;configuration&gt;] [--build-platform &lt;platform&gt;]
+           [--version &lt;version&gt;] [--template &lt;path&gt;] [--exclude &lt;package ID&gt;]
+           [--specific-version &lt;package ID&gt; &lt;version&gt;] [--release-notes &lt;text&gt;]
+           [--lock-dependencies] [--minimum-from-lock-file] [--pin-project-references] [--symbols]
+           [--include-referenced-projects] [--project-url &lt;URL&gt;] &lt;path&gt;
+
+OUTPUT:
+
+    &lt;path&gt;                output directory for .nupkg files
+
+OPTIONS:
+
+    --build-config &lt;configuration&gt;
+                          build configuration that should be packaged (default: Release)
+    --build-platform &lt;platform&gt;
+                          build platform that should be packaged (default: check all known platform
+                          targets)
+    --version &lt;version&gt;   version of the package
+    --template &lt;path&gt;     pack a single paket.template file
+    --exclude &lt;package ID&gt;
+                          exclude paket.template file by package ID; may be repeated
+    --specific-version &lt;package ID&gt; &lt;version&gt;
+                          version number to use for package ID; may be repeated
+    --release-notes &lt;text&gt;
+                          release notes
+    --lock-dependencies   use version constraints from paket.lock instead of paket.dependencies
+    --minimum-from-lock-file
+                          use version constraints from paket.lock instead of paket.dependencies and
+                          add them as a minimum version; --lock-dependencies overrides this option
+    --pin-project-references
+                          pin dependencies generated from project references to exact versions (=)
+                          instead of using minimum versions (&gt;=); with --lock-dependencies project
+                          references will be pinned even if this option is not specified
+    --symbols             create symbol and source packages in addition to library and content
+                          packages
+    --include-referenced-projects
+                          include symbols and source from referenced projects
+    --project-url &lt;URL&gt;   homepage URL for the package
+    --silent, -s          suppress console output
+    --verbose, -v         print detailed information to the console
+    --log-file &lt;path&gt;     print output to a file
+    --from-bootstrapper   call coming from the '--run' feature of the bootstrapper
+    --help                display this list of options.
+
+If you add the --verbose flag Paket will run in verbose mode and show detailed information.
+With --log-file [path] you can trace the logged information into a file.
+Creating NuGet packages
+Consider the following paket.dependencies file file:
+1: 
+2: 
+3: 
+4: 
+
+source https://nuget.org/api/v2
+
+nuget Castle.Windsor ~&gt; 3.2
+nuget NUnit
+
+One of your projects has a paket.references file:
+1: 
+
+Castle.Windsor
+
+When you run paket install, your
+paket.lock file will look like this:
+1: 
+2: 
+3: 
+4: 
+5: 
+6: 
+
+NUGET
+  remote: https://nuget.org/api/v2
+    Castle.Core (3.3.3)
+    Castle.Windsor (3.3.0)
+      Castle.Core (&gt;= 3.3.0)
+    NUnit (2.6.4)
+
+When you are done programming and wish to create a NuGet package of your
+project, create a paket.template file with type project and
+run:
+1: 
+
+paket pack nugets --version 1.0.0
+
+You could also run:
+1: 
+
+paket pack nugets --version 1.0.0 --lock-dependencies
+
+Depending on which command you issue, Paket creates different version
+requirements of the packages you depend on in the resulting .nuspec file of
+your package:
+
+
+
+Dependency
+Default
+With locked dependencies
+
+
+
+
+Castle.Windsor
+[3.2,4.0)
+[3.3.0]
+
+
+
+
+The first command (without the --lock-dependencies parameter) creates the
+version requirements as specified in your paket.dependencies file.
+The second command takes the currently resolved versions from your
+paket.lock file and "locks" them to these specific versions.
+Symbol packages
+Visual Studio can be configured to download symbol/source versions of installed
+packages from a symbol server, allowing the developer to use the debugger to
+step into the source (see
+SymbolSource). These
+symbol/source packages are the same as the regular packages, but contain the
+source files (under src) and PDBs alongside the DLLs. Paket can build these
+symbol/source packages, in addition to the regular packages, using the symbols
+parameter:
+1: 
+
+paket pack nugets --symbols
+
+Including referenced projects
+Paket automatically replaces inter-project dependencies with NuGet dependencies
+if the dependency has it's own paket.template. In addition to
+this the parameter --include-referenced-projects instructs Paket to add
+project output to the package for inter-project dependencies that don't have a
+paket.template file.
+
+
+It recursively iterates referenced projects and adds their project output to
+the package
+
+
+When combined with the symbols switch, it
+will also include the source code of the referenced projects.  Also
+recursively.
+
+
+Any projects that are encountered in this search that have their own project
+template are ignored.
+
+
+Version ranges
+By default Paket uses the specified version ranges from the
+paket.dependencies file as version ranges for dependencies of the
+new NuGet package. The --minimum-from-lock-file parameter instructs Paket to
+use the version from the paket.lock file and use it as the minimum
+version.
+Localized packages
+When using a paket.template file with type project any
+localized satellite assemblies are included in the package created.
+The following layout is used:
+1: 
+2: 
+3: 
+4: 
+5: 
+6: 
+
+.
+└── lib
+    └── net45
+        ├── se
+        │   └── Foo.resources.dll
+        └── Foo.dll
+
+
+
+        

@@ -1,0 +1,132 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "license": [
+    "Copyright Matthias Koch 2017.",
+    "Distributed under the MIT License.",
+    "https://github.com/nuke-build/tools/blob/master/LICENSE"
+  ],
+  "references": [
+    "https://raw.githubusercontent.com/dotnet/docfx/dev/src/docfx/Models/MetadataCommandOptions.cs",
+    "https://raw.githubusercontent.com/dotnet/docfx/dev/src/docfx/Models/BuildCommandOptions.cs"
+  ],
+  "name": "DocFx",
+  "officialUrl": "https://dotnet.github.io/docfx/",
+  "help": "DocFX is an API documentation generator for .NET, and currently it supports C# and VB. It generates API reference documentation from triple-slash comments in your source code. It also allows you to use Markdown files to create additional topics such as tutorials and how-tos, and to customize the generated reference documentation. DocFX builds a static HTML website from your source code and Markdown files, which can be easily hosted on any web servers (for example, <em>github.io</em>). Also, DocFX provides you the flexibility to customize the layout and style of your website through templates. If you are interested in creating your own website with your own styles, you can follow <a href=\"http://dotnet.github.io/docfx/tutorial/howto_create_custom_template.html\">how to create custom template</a> to create custom templates.",
+  "packageId": "docfx.console",
+  "packageExecutable": "docfx.exe",
+  "tasks": [
+    {
+      "postfix": "Metadata",
+      "definiteArgument": "metadata",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ConfigPath",
+            "type": "string",
+            "assertion": "FileOrNull",
+            "format": "{value}",
+            "createOverload": true,
+            "help": "Path to the docfx.json configuration file."
+          },
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "--force",
+            "help": "Force re-generate all the metadata."
+          },
+          {
+            "name": "RepositoryRoot",
+            "type": "string",
+            "assertion": "DirectoryOrNull",
+            "format": "--repositoryRoot {value}",
+            "help": "Specify the GIT repository root folder."
+          },
+          {
+            "name": "LogFile",
+            "type": "string",
+            "format": "--log {value}",
+            "help": "Specify the file name to save processing log."
+          },
+          {
+            "name": "LogLevel",
+            "type": "DocFxLogLevel",
+            "format": "--logLevel {value}",
+            "help": "Specify to which log level will be logged. By default log level &gt;= Info will be logged. The acceptable value could be Verbose, Info, Warning, Error."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "Build",
+      "definiteArgument": "build",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ConfigPath",
+            "type": "string",
+            "assertion": "FileOrNull",
+            "format": "{value}",
+            "createOverload": true,
+            "help": "Path to the docfx.json configuration file."
+          },
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "--force",
+            "help": "Force re-generate all the metadata."
+          },
+          {
+            "name": "RepositoryRoot",
+            "type": "string",
+            "assertion": "DirectoryOrNull",
+            "format": "--repositoryRoot {value}",
+            "help": "Specify the GIT repository root folder."
+          },
+          {
+            "name": "Theme",
+            "type": "string",
+            "assertion": "DirectoryOrNull",
+            "format": "--theme {value}",
+            "help": "Specify which theme to use. By default 'default' theme is offered."
+          },
+          {
+            "name": "LogFile",
+            "type": "string",
+            "format": "--log {value}",
+            "help": "Specify the file name to save processing log."
+          },
+          {
+            "name": "LogLevel",
+            "type": "DocFxLogLevel",
+            "format": "--logLevel {value}",
+            "help": "Specify to which log level will be logged. By default log level &gt;= Info will be logged. The acceptable value could be Verbose, Info, Warning, Error."
+          },
+          {
+            "name": "XRefMaps",
+            "type": "List<string>",
+            "format": "--xref {value}",
+            "separator": ",",
+            "help": "Specify the urls of xrefmap used by content files."
+          },
+          {
+            "name": "Serve",
+            "type": "bool",
+            "format": "--serve",
+            "help": "Host the generated documentation to a website."
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "DocFxLogLevel",
+      "values": [
+        "Verbose",
+        "Info",
+        "Warning",
+        "Error"
+      ]
+    }
+  ]
+}

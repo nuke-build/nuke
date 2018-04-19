@@ -1,0 +1,537 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "license": [
+    "Copyright Matthias Koch 2017.",
+    "Distributed under the MIT License.",
+    "https://github.com/nuke-build/tools/blob/master/LICENSE"
+  ],
+  "references": [
+    "https://octopus.com/docs/api-and-integration/octo.exe-command-line/creating-releases#//article[@id='doc-content']/pre[2]",
+    "https://octopus.com/docs/api-and-integration/octo.exe-command-line/pushing-packages#//article[@id='doc-content']/pre[3]",
+    "https://octopus.com/docs/packaging-applications/nuget-packages/using-octo.exe#//article[@id='doc-content']/pre[6]",
+    "https://octopus.com/docs/api-and-integration/octo.exe-command-line/deploying-releases#//article[@id='doc-content']/pre[2]"
+  ],
+  "name": "Octopus",
+  "officialUrl": "https://octopus.com/",
+  "help": "Octopus Deploy is an automated deployment server, which you install yourself, much like you would install SQL Server, Team Foundation Server or JetBrains TeamCity. Octopus makes it easy to automate deployment of ASP.NET web applications and Windows Services into development, test and production environments.<para/>Along with the Octopus Deploy server, you'll also install a lightweight agent service on each of the machines that you plan to deploy to, for example your web and application servers. We call this the Tentacle agent; the idea being that one Octopus server controls many Tentacles, potentially a lot more than 8! With Octopus and Tentacle, you can easily deploy to your own servers, or cloud services from providers like Amazon Web Services or Microsoft Azure.",
+  "packageId": "OctopusTools",
+  "packageExecutable": "Octo.exe",
+  "tasks": [
+    {
+      "help": "The <c>Octo.exe pack</c> command provides a number of other useful parameters that can be used to customize the way your package gets created, such as output folder, files to include and release notes.",
+      "postfix": "Pack",
+      "omitCommonProperties": true,
+      "definiteArgument": "pack",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Id",
+            "type": "string",
+            "format": "--id={value}",
+            "help": "The ID of the package. E.g. <c>MyCompany.MyApp</c>."
+          },
+          {
+            "name": "Format",
+            "type": "OctopusPackFormat",
+            "format": "--format={value}",
+            "help": "Package format. Options are: NuPkg, Zip. Defaults to NuPkg, though we recommend Zip going forward."
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "--version={value}",
+            "help": "The version of the package; must be a valid SemVer. Defaults to a timestamp-based version."
+          },
+          {
+            "name": "OutputFolder",
+            "type": "string",
+            "format": "--outFolder={value}",
+            "help": "The folder into which the generated NUPKG file will be written. Defaults to <c>.</c>."
+          },
+          {
+            "name": "BasePath",
+            "type": "string",
+            "format": "--basePath={value}",
+            "help": "The root folder containing files and folders to pack. Defaults to <c>.</c>."
+          },
+          {
+            "name": "Verbose",
+            "type": "bool",
+            "format": "--verbose",
+            "help": "List more detailed output. E.g. Which files are being added."
+          },
+          {
+            "name": "Authors",
+            "type": "List<string>",
+            "format": "--author={value}",
+            "help": "Add an author to the package metadata. Defaults to the current user."
+          },
+          {
+            "name": "Title",
+            "type": "string",
+            "format": "--title={value}",
+            "help": "The title of the package."
+          },
+          {
+            "name": "Description",
+            "type": "string",
+            "format": "--description={value}",
+            "help": "A description of the package. Defaults to a generic description."
+          },
+          {
+            "name": "ReleaseNotes",
+            "type": "string",
+            "format": "--releaseNotes={value}",
+            "help": "Release notes for this version of the package."
+          },
+          {
+            "name": "ReleaseNotesFile",
+            "type": "string",
+            "format": "--releaseNotesFile={value}",
+            "help": "A file containing release notes for this version of the package."
+          },
+          {
+            "name": "Include",
+            "type": "string",
+            "format": "--include={value}",
+            "help": "Add a file pattern to include, relative to the base path. E.g. <c>/bin/-*.dll</c> - if none are specified, defaults to <c>**</c>."
+          },
+          {
+            "name": "Overwrite",
+            "type": "bool",
+            "format": "--overwrite",
+            "help": "Allow an existing package file of the same ID/version to be overwritten."
+          }
+        ]
+      }
+    },
+    {
+      "help": "The <c>Octo.exe push</c> command can push any of the supported packages types listed on this <a href=\"https://octopus.com/docs/packaging-applications/supported-packages\">page</a>.",
+      "postfix": "Push",
+      "definiteArgument": "push",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Package",
+            "type": "List<string>",
+            "format": "--package={value}",
+            "help": "Package file to push."
+          },
+          {
+            "name": "ReplaceExisting",
+            "type": "bool",
+            "format": "--replace-existing",
+            "help": "If the package already exists in the repository, the default behavior is to reject the new package being pushed. You can pass this flag to overwrite the existing package."
+          }
+        ]
+      }
+    },
+    {
+      "help": "The <c>Octo.exe create-release</c> can be used to automate the creation of releases. This allows you to easily integrate Octopus with other continuous integration servers.",
+      "postfix": "CreateRelease",
+      "definiteArgument": "create-release",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Project",
+            "type": "string",
+            "format": "--project={value}",
+            "help": "Name of the project."
+          },
+          {
+            "name": "DefaultPackageVersion",
+            "type": "string",
+            "format": "--packageversion={value}",
+            "help": "Default version number of all packages to use for this release."
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "--version={value}",
+            "help": "Release number to use for the new release."
+          },
+          {
+            "name": "Channel",
+            "type": "string",
+            "format": "--channel={value}",
+            "help": "Channel to use for the new release. Omit this argument to automatically select the best channel."
+          },
+          {
+            "name": "PackageVersions",
+            "type": "Dictionary<string, string>",
+            "format": "--package={value}",
+            "itemFormat": "{key}:{value}",
+            "help": "Version number to use for a step or package in the release. Format: <c>--package=StepNameOrPackageId:Version</c>."
+          },
+          {
+            "name": "PackagesFolder",
+            "type": "string",
+            "format": "--packagesFolder={value}",
+            "help": "A folder containing NuGet packages from which we should get versions."
+          },
+          {
+            "name": "ReleaseNotes",
+            "type": "string",
+            "format": "--releasenotes={value}",
+            "help": "Release Notes for the new release. Styling with Markdown is supported."
+          },
+          {
+            "name": "ReleaseNotesFile",
+            "type": "string",
+            "format": "--releasenotesfile={value}",
+            "help": "Path to a file that contains Release Notes for the new release. Supports Markdown files."
+          },
+          {
+            "name": "IgnoreExisting",
+            "type": "bool",
+            "format": "--ignoreexisting",
+            "help": "Don't create this release if there is already one with the same version number."
+          },
+          {
+            "name": "IgnoreChannelRules",
+            "type": "bool",
+            "format": "--ignorechannelrules",
+            "help": "Create the release ignoring any version rules specified by the channel."
+          },
+          {
+            "name": "PackagePrerelease",
+            "type": "string",
+            "format": "--packageprerelease={value}",
+            "help": "Pre-release for latest version of all packages to use for this release."
+          },
+          {
+            "name": "WhatIf",
+            "type": "bool",
+            "format": "--whatif",
+            "help": "Perform a dry run but don't actually create/deploy release."
+          },
+          {
+            "name": "Progress",
+            "type": "bool",
+            "format": "--progress",
+            "help": "Show progress of the deployment."
+          },
+          {
+            "name": "ForcePackageDownload",
+            "type": "bool",
+            "format": "--forcepackagedownload",
+            "help": "Whether to force downloading of already installed packages (flag, default false)."
+          },
+          {
+            "name": "WaitForDepployment",
+            "type": "bool",
+            "format": "--waitfordeployment",
+            "help": "Whether to wait synchronously for deployment to finish."
+          },
+          {
+            "name": "DeploymentTimeout",
+            "type": "string",
+            "format": "--deploymenttimeout={value}",
+            "help": "Specifies maximum time (timespan format) that the console session will wait for the deployment to finish(default 00:10:00). This will not stop the deployment. Requires <c>--waitfordeployment</c> parameter set."
+          },
+          {
+            "name": "CancelOnTimeout",
+            "type": "bool",
+            "format": "--cancelontimeout",
+            "help": "Whether to cancel the deployment if the deployment timeout is reached (flag, default false)."
+          },
+          {
+            "name": "DeploymentCheckSleepCycle",
+            "type": "string",
+            "format": "--deploymentchecksleepcycle={value}",
+            "help": "Specifies how much time (timespan format) should elapse between deployment status checks (default 00:00:10)."
+          },
+          {
+            "name": "GuidedFailure",
+            "type": "bool",
+            "format": "--guidedfailure={value}",
+            "help": "Whether to use Guided Failure mode. (True or False. If not specified, will use default setting from environment)."
+          },
+          {
+            "name": "SpecificMachines",
+            "type": "List<string>",
+            "format": "--specificmachines={value}",
+            "help": "A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered."
+          },
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "--force",
+            "help": "If a project is configured to skip packages with already-installed versions, override this setting to force re-deployment (flag, default false)."
+          },
+          {
+            "name": "Skip",
+            "type": "List<string>",
+            "format": "--skip={value}",
+            "help": "Skip a step by name."
+          },
+          {
+            "name": "NoRawLog",
+            "type": "bool",
+            "format": "--norawlog",
+            "help": "Don't print the raw log of failed tasks."
+          },
+          {
+            "name": "RawLogFile",
+            "type": "string",
+            "format": "--rawlogfile={value}",
+            "help": "Redirect the raw log of failed tasks to a file."
+          },
+          {
+            "name": "Variables",
+            "type": "Dictionary<string, string>",
+            "format": "--variable={value}",
+            "itemFormat": "{key}:{value}",
+            "help": "Values for any prompted variables in the format Label:Value. For JSON values, embedded quotation marks should be escaped with a backslash."
+          },
+          {
+            "name": "DeployAt",
+            "type": "string",
+            "format": "--deployat={value}",
+            "help": "Time at which deployment should start (scheduled deployment), specified as any valid DateTimeOffset format, and assuming the time zone is the current local time zone."
+          },
+          {
+            "name": "DeployTo",
+            "type": "string",
+            "format": "--deployto={value}",
+            "help": "Environment to automatically deploy to, e.g., <c>Production</c>."
+          },
+          {
+            "name": "Tenant",
+            "type": "string",
+            "format": "--tenant={value}",
+            "help": "A tenant the deployment will be performed for; specify this argument multiple times to add multiple tenants or use <c>*</c> wildcard to deploy to tenants able to deploy."
+          },
+          {
+            "name": "TenantTag",
+            "type": "string",
+            "format": "--tenanttag={value}",
+            "help": "A tenant tag used to match tenants that the deployment will be performed for; specify this argument multiple times to add multiple tenant tags."
+          }
+        ]
+      }
+    },
+    {
+      "help": "The <c>Octo.exe deploy-release</c> can be used to automate the deployment of releases to environments. This allows you to easily integrate Octopus with other continuous integration servers.",
+      "postfix": "DeployRelease",
+      "definiteArgument": "deploy-release",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Progress",
+            "type": "bool",
+            "format": "--progress",
+            "help": "Show progress of the deployment."
+          },
+          {
+            "name": "ForcePackageDownload",
+            "type": "bool",
+            "format": "--forcepackagedownload",
+            "help": "Whether to force downloading of already installed packages (flag, default false)."
+          },
+          {
+            "name": "WaitForDepployment",
+            "type": "bool",
+            "format": "--waitfordeployment",
+            "help": "Whether to wait synchronously for deployment to finish."
+          },
+          {
+            "name": "DeploymentTimeout",
+            "type": "string",
+            "format": "--deploymenttimeout={value}",
+            "help": "Specifies maximum time (timespan format) that the console session will wait for the deployment to finish(default 00:10:00). This will not stop the deployment. Requires <c>WaitForDeployment</c> parameter set."
+          },
+          {
+            "name": "CancelOnTimeout",
+            "type": "bool",
+            "format": "--cancelontimeout",
+            "help": "Whether to cancel the deployment if the deployment timeout is reached (flag, default false)."
+          },
+          {
+            "name": "DeploymentCheckSleepCycle",
+            "type": "string",
+            "format": "--deploymentchecksleepcycle={value}",
+            "help": "Specifies how much time (timespan format) should elapse between deployment status checks (default 00:00:10)."
+          },
+          {
+            "name": "GuidedFailure",
+            "type": "bool",
+            "format": "--guidedfailure={value}",
+            "help": "Whether to use Guided Failure mode. (True or False. If not specified, will use default setting from environment)."
+          },
+          {
+            "name": "SpecificMachines",
+            "type": "List<string>",
+            "format": "--specificmachines={value}",
+            "help": "A comma-separated list of machines names to target in the deployed environment. If not specified all machines in the environment will be considered."
+          },
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "--force",
+            "help": "If a project is configured to skip packages with already-installed versions, override this setting to force re-deployment (flag, default false)."
+          },
+          {
+            "name": "Skip",
+            "type": "List<string>",
+            "format": "--skip={value}",
+            "help": "Skip a step by name."
+          },
+          {
+            "name": "NoRawLog",
+            "type": "bool",
+            "format": "--norawlog",
+            "help": "Don't print the raw log of failed tasks."
+          },
+          {
+            "name": "RawLogFile",
+            "type": "string",
+            "format": "--rawlogfile={value}",
+            "help": "Redirect the raw log of failed tasks to a file."
+          },
+          {
+            "name": "Variables",
+            "type": "Dictionary<string, string>",
+            "format": "--variable={value}",
+            "itemFormat": "{key}:{value}",
+            "help": "Values for any prompted variables. For JSON values, embedded quotation marks should be escaped with a backslash. "
+          },
+          {
+            "name": "DeployAt",
+            "type": "string",
+            "format": "--deployat={value}",
+            "help": "Time at which deployment should start (scheduled deployment), specified as any valid DateTimeOffset format, and assuming the time zone is the current local time zone."
+          },
+          {
+            "name": "Tenant",
+            "type": "string",
+            "format": "--tenant={value}",
+            "help": "Create a deployment for this tenant; specify this argument multiple times to add multiple tenants or use <c>*</c> wildcard to deploy to all tenants who are ready for this release (according to lifecycle)."
+          },
+          {
+            "name": "TenantTag",
+            "type": "string",
+            "format": "--tenanttag={value}",
+            "help": "Create a deployment for tenants matching this tag; specify this argument multiple times to build a query/filter with multiple tags, just like you can in the user interface."
+          },
+          {
+            "name": "Project",
+            "type": "string",
+            "format": "--project={value}",
+            "help": "Name of the project."
+          },
+          {
+            "name": "DeployTo",
+            "type": "string",
+            "format": "--deployto={value}",
+            "help": "Environment to deploy to, e.g. <c>Production</c>."
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "--version={value}",
+            "help": "Version number of the release to deploy. Or specify 'latest' for the latest release."
+          },
+          {
+            "name": "Channel",
+            "type": "string",
+            "format": "--channel={value}",
+            "help": "Channel to use when getting the release to deploy"
+          },
+          {
+            "name": "UpdateVariables",
+            "type": "bool",
+            "format": "--updateVariables",
+            "help": "Overwrite the variable snapshot for the release by re-importing the variables from the project"
+          }
+        ]
+      }
+    }
+  ],
+  "commonTaskProperties": [
+    {
+      "name": "Server",
+      "type": "string",
+      "format": "--server={value}",
+      "help": "The base URL for your Octopus server - e.g., http://your-octopus/"
+    },
+    {
+      "name": "ApiKey",
+      "type": "string",
+      "format": "--apiKey={value}",
+      "secret": true,
+      "help": "Your API key. Get this from the user profile page. Your must provide an apiKey or username and password. If the guest account is enabled, a key of API-GUEST can be used."
+    },
+    {
+      "name": "Username",
+      "type": "string",
+      "format": "--user={value}",
+      "help": "Username to use when authenticating with the server. Your must provide an apiKey or username and password."
+    },
+    {
+      "name": "Password",
+      "type": "string",
+      "format": "--pass={value}",
+      "secret": true,
+      "help": "Password to use when authenticating with the server."
+    },
+    {
+      "name": "ConfigFile",
+      "type": "string",
+      "format": "--configFile={value}",
+      "help": "Text file of default values, with one 'key = value' per line."
+    },
+    {
+      "name": "Debug",
+      "type": "bool",
+      "format": "--debug",
+      "help": "Enable debug logging."
+    },
+    {
+      "name": "IgnoreSslErrors",
+      "type": "bool",
+      "format": "--ignoreSslErrors",
+      "help": "Set this flag if your Octopus server uses HTTPS but the certificate is not trusted on this machine. Any certificate errors will be ignored. WARNING: this option may create a security vulnerability."
+    },
+    {
+      "name": "EnableServiceMessages",
+      "type": "bool",
+      "format": "--enableServiceMessages",
+      "help": "Enable TeamCity or Team Foundation Build service messages when logging."
+    },
+    {
+      "name": "Timeout",
+      "type": "int",
+      "format": "--timeout={value}",
+      "help": "Timeout in seconds for network operations. Default is 600."
+    },
+    {
+      "name": "Proxy",
+      "type": "string",
+      "format": "--proxy={value}",
+      "help": "The URI of the proxy to use, e.g., http://example.com:8080."
+    },
+    {
+      "name": "ProxyUsername",
+      "type": "string",
+      "format": "--proxyUser={value}",
+      "help": "The username for the proxy."
+    },
+    {
+      "name": "ProxyPassword",
+      "type": "string",
+      "format": "--proxyPass={value}",
+      "secret": true,
+      "help": "The password for the proxy. If both the username and password are omitted and proxyAddress is specified, the default credentials are used."
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "OctopusPackFormat",
+      "values": [
+        "NuPkg",
+        "Zip"
+      ]
+    }
+  ]
+}

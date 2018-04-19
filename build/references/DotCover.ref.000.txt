@@ -1,0 +1,263 @@
+Console Runner Commands            dotCover Console Runner provides the following commands:                        analyse - All-in-one task.                Performs coverage analysis, generates report and removes snapshots.                            cover - Perform coverage analysis of the specified application.                            delete - Delete all files related to the specified snapshots.                            help - Show console runner help.                            list - Obtain list of all files related to the specified snapshots.                            merge - Merge several coverage snapshots.                            report - Create a report by the specified snapshot.                            version - Write dotCover version info to the specified file.                            zip - Compress coverage snapshot.                    You can learn everything about each command right in the console by typing        help        followed by the command name. All commands (including help) have corresponding shortcuts.        For instance, to get information about the        analyse command, we can type:        dotCover.exe help analyse        or        dotCover h a                                It is possible to specify relative paths in the console runner parameters.                Relative paths defined in an xml configuration file are treated relative to the location                of this file.                Relative paths in command line parameters are treated relative                to the console runner working directory.                    analyse        
+analyse: All-in-one task. Performs coverage analysis, generates report and removes snapshots.
+usage: dotCover analyse [parameters]
+
+Valid parameters:
+  /TargetExecutable=ARG        : (Required) File name of the program to analyse
+  /TargetArguments=ARG         : (Optional) Program arguments
+  /TargetWorkingDir=ARG        : (Optional) Program working directory
+  /TempDir=ARG                 : (Optional) Directory for auxiliary files. Set to the system temp by default
+  /ReportType=ARG              : (Optional) [HTML|JSON|XML|DetailedXML|NDependXML]. A type of the report. XML by default
+  /Output=ARG                  : (Required) Resulting report file name
+  /InheritConsole=ARG          : (Optional) [True|False] Lets the analysed application to inherit dotCover console. True by default
+                                 Please note that windows of the analysed GUI application will not be hidden if the console is inherited
+  /AnalyseTargetArguments=ARG  : (Optional) [True|False] Specifies whether dotCover should analyse the 'target arguments' string
+                                 and convert relative paths to absolute ones. True by default
+  /Scope                       : (Optional) Allows including assemblies that were not loaded in the specified scope into coverage results.
+                                 The parameter is a semicolon separated list of file path masks.
+                                 Ant-style patterns are supported here (e.g. ProjectFolder/**/*.dll)
+  /Filters=ARG                 : (Optional) Specifies coverage filters using the following syntax: +:module=*;class=*;function=*;
+                                 Use -:myassembly to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here
+  /AttributeFilters=ARG        : (Optional) Specifies attribute filters using the following syntax: filter1;filter2;...
+                                 Asterisk wildcard (*) is supported here
+  /DisableDefaultFilters       : (Optional) Disables default (automatically added) filters
+  /SymbolSearchPaths=ARG       : (Optional) Specifies additional symbol search paths. Paths to symbol servers (starting with srv* prefix) are
+                                 supported here. Values are separated with semicolon
+  /AllowSymbolServerAccess     : (Optional) Allows dotCover to search for PDB files on a symbol server
+  /ReturnTargetExitCode        : (Optional) Returns the exit code of the target executable in case coverage analysis succeeded
+  /ProcessFilters=ARG          : (Optional) Specifies process filters. Syntax: +:process1;-:process2
+  /HideAutoProperties          : (Optional) Remove auto-implemented properties from report
+
+
+Global parameters:
+  /LogFile=ARG                 : (Optional) Enables logging and specifies log file name
+
+It is possible to specify part of the parameters or all of them in the configuration file.
+usage: dotCover analyse &lt;configuration file name&gt; [parameters]
+Configuration file format:
+
+  &lt;AnalyseParams&gt;
+    &lt;TargetExecutable&gt;&lt;!-- File name of the program to analyse. --&gt;&lt;/TargetExecutable&gt;
+    &lt;TargetArguments&gt;&lt;!-- Program arguments. --&gt;&lt;/TargetArguments&gt;
+    &lt;TargetWorkingDir&gt;&lt;!-- Program working directory. --&gt;&lt;/TargetWorkingDir&gt;
+    &lt;TempDir&gt;&lt;!-- Directory for the auxiliary files. Set to system temp by default. --&gt;&lt;/TempDir&gt;
+    &lt;Output&gt;&lt;!-- Resulting report file name. --&gt;&lt;/Output&gt;
+    &lt;ReportType&gt;&lt;!-- [HTML|JSON|XML|NDependXML]. A type of the report. XML by default. --&gt;&lt;/ReportType&gt;
+    &lt;InheritConsole&gt;&lt;!-- [True|False] Lets the application being analysed to inherit dotCover console. True by default. --&gt;&lt;/InheritConsole&gt;
+    &lt;AnalyseTargetArguments&gt;&lt;!-- [True|False] Specifies whether dotCover should analyse target arguments string and convert relative paths to absolute there. True by default. --&gt;&lt;AnalyseTargetArguments&gt;
+
+    &lt;!-- Appends coverage results with assemblies in specified scope that were not loaded during analysis. Ant-style patterns are supported here.
+    &lt;Scope&gt;
+      &lt;ScopeEntry&gt;ProjectFolder/**/*.dll&lt;/ScopeEntry&gt;
+      &lt;ScopeEntry&gt;ProjectFolder/**/*.exe&lt;/ScopeEntry&gt;
+    &lt;/Scope&gt;
+    --&gt;
+    &lt;!-- Coverage filters. It's possible to use asterisks as wildcard symbols.
+    &lt;Filters&gt;
+      &lt;IncludeFilters&gt;
+        &lt;FilterEntry&gt;
+          &lt;ModuleMask&gt; Module mask &lt;/ModuleMask&gt;
+          &lt;ClassMask&gt; Class mask &lt;/ClassMask&gt;
+          &lt;FunctionMask&gt; Function mask &lt;/FunctionMask&gt;
+        &lt;/FilterEntry&gt;
+      &lt;/IncludeFilters&gt;
+      &lt;ExcludeFilters&gt;
+        &lt;FilterEntry&gt;...&lt;/FilterEntry&gt;
+        &lt;FilterEntry&gt;...&lt;/FilterEntry&gt;
+        &lt;FilterEntry&gt;...&lt;/FilterEntry&gt;
+      &lt;/ExcludeFilters&gt;
+    &lt;/Filters&gt;
+    --&gt;
+    &lt;!-- Attribute filters. It's possible to use asterisks as wildcard symbols.
+    &lt;AttributeFilters&gt;
+      &lt;AttributeFilterEntry&gt; Attribute class mask &lt;/AttributeFilterEntry&gt;
+      &lt;AttributeFilterEntry&gt;System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute&lt;/AttributeFilterEntry&gt;
+    &lt;/AttributeFilters&gt;
+    --&gt;
+  &lt;/AnalyseParams&gt;
+            cover        
+cover: Performs coverage analysis of the specified application.
+usage: dotCover cover [parameters]
+
+Valid parameters:
+  /TargetExecutable=ARG        : (Required) File name of the program to analyse
+  /TargetArguments=ARG         : (Optional) Program arguments
+  /TargetWorkingDir=ARG        : (Optional) Program working directory
+  /TempDir=ARG                 : (Optional) Directory for auxiliary files. Set to the system temp by default
+  /Output=ARG                  : (Required) Path to the resulting coverage snapshot
+  /InheritConsole=ARG          : (Optional) [True|False] Lets the application being analysed to inherit dotCover console. True by default
+                                 Please note that windows of analysed GUI application will not be hidden if the console is inherited
+  /AnalyseTargetArguments=ARG  : (Optional) [True|False] Specifies whether dotCover should analyse target arguments string
+                                 and convert relative paths to absolute there. True by default
+  /Scope                       : (Optional) Allows Including not loaded assemblies in the specified scope into coverage results.
+                                 The parameter is a semicolon separated list of file path masks.
+                                 Ant-style patterns are supported here (e.g. ProjectFolder/**/*.dll)
+  /Filters=ARG                 : (Optional) Specifies coverage filters using the following syntax: +:module=*;type=*;function=*;
+                                 Use -:myassembly to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here
+  /AttributeFilters=ARG        : (Optional) Specifies attribute filters using the following syntax: filter1;filter2;...
+                                 Asterisk wildcard (*) is supported here
+  /DisableDefaultFilters       : (Optional) Disables default (automatically added) filters
+  /SymbolSearchPaths=ARG       : (Optional) Specifies additional symbol search paths. Paths to symbol servers (starting with srv* prefix) are
+                                 supported here. Values are separated with semicolon
+  /AllowSymbolServerAccess     : (Optional) Allows dotCover to search for PDB files on a symbol server
+  /ReturnTargetExitCode        : (Optional) Returns the exit code of the target executable in case coverage analysis succeeded
+  /ProcessFilters=ARG          : (Optional) Specifies process filters. Syntax: +:process1;-:process2
+
+
+Global parameters:
+  /LogFile=ARG                 : (Optional) Enables logging and specifies log file name
+
+It is possible to specify part of the parameters or all of them in the configuration file.
+usage: dotCover cover &lt;configuration file name&gt; [parameters]
+Configuration file format:
+
+  &lt;CoverageParams&gt;
+    &lt;TargetExecutable&gt;&lt;!-- File name of the program to analyse. --&gt;&lt;/TargetExecutable&gt;
+    &lt;TargetArguments&gt;&lt;!-- Program arguments. --&gt;&lt;/TargetArguments&gt;
+    &lt;TargetWorkingDir&gt;&lt;!-- Program working directory. --&gt;&lt;/TargetWorkingDir&gt;
+    &lt;TempDir&gt;&lt;!-- Directory for the auxiliary files. Set to system temp by default. --&gt;&lt;/TempDir&gt;
+    &lt;Output&gt;&lt;!-- Path to the resulting coverage snapshot. --&gt;&lt;/Output&gt;
+    &lt;InheritConsole&gt;&lt;!-- [True|False] Lets the application being analysed to inherit dotCover console. True by default. --&gt;&lt;/InheritConsole&gt;
+    &lt;AnalyseTargetArguments&gt;&lt;!-- [True|False] Specifies whether dotCover should analyse target arguments string and convert relative paths to absolute there. True by default. --&gt;&lt;AnalyseTargetArguments&gt;
+
+    &lt;!-- Appends coverage results with assemblies in specified scope that were not loaded during analysis. Ant-style patterns are supported here.
+    &lt;Scope&gt;
+      &lt;ScopeEntry&gt;ProjectFolder/**/*.dll&lt;/ScopeEntry&gt;
+      &lt;ScopeEntry&gt;ProjectFolder/**/*.exe&lt;/ScopeEntry&gt;
+    &lt;/Scope&gt;
+    --&gt;
+    &lt;!-- Coverage filters. It's possible to use asterisks as wildcard symbols.
+    &lt;Filters&gt;
+      &lt;IncludeFilters&gt;
+        &lt;FilterEntry&gt;
+          &lt;ModuleMask&gt; Module mask &lt;/ModuleMask&gt;
+          &lt;ClassMask&gt; Class mask &lt;/ClassMask&gt;
+          &lt;FunctionMask&gt; Function mask &lt;/FunctionMask&gt;
+        &lt;/FilterEntry&gt;
+      &lt;/IncludeFilters&gt;
+      &lt;ExcludeFilters&gt;
+        &lt;FilterEntry&gt;...&lt;/FilterEntry&gt;
+        &lt;FilterEntry&gt;...&lt;/FilterEntry&gt;
+        &lt;FilterEntry&gt;...&lt;/FilterEntry&gt;
+      &lt;/ExcludeFilters&gt;
+    &lt;/Filters&gt;
+    --&gt;
+    &lt;!-- Attribute filters. It's possible to use asterisks as wildcard symbols.
+    &lt;AttributeFilters&gt;
+      &lt;AttributeFilterEntry&gt; Attribute class mask &lt;/AttributeFilterEntry&gt;
+      &lt;AttributeFilterEntry&gt;System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute&lt;/AttributeFilterEntry&gt;
+    &lt;/AttributeFilters&gt;
+    --&gt;
+  &lt;/CoverageParams&gt;
+                                            Format of coverage filters specified from the console are compatible with format of filters                defined in JetBrains TeamCity.                        delete         
+delete: Delete all files related to the specified snapshots.
+usage: dotCover delete &lt;configuration file&gt;
+
+Valid options:
+  /Source=ARG      : List of snapshot files separated with semicolon (;)
+
+Global options:
+  /LogFile=ARG     : Enables logging and specifies log file name
+
+Configuration file format:
+
+&lt;DeleteParams&gt;
+  &lt;!-- At least one source required. --&gt;
+  &lt;Source&gt;&lt;!-- Source file 1 --&gt;&lt;/Source&gt;
+  &lt;Source&gt;&lt;!-- Source file 2 --&gt;&lt;/Source&gt;
+  &lt;Source&gt;&lt;!-- Source file N --&gt;&lt;/Source&gt;
+&lt;/DeleteParams&gt;
+                     help        
+help: Show console runner help.
+Type 'dotCover help &lt;command&gt;' for help on a specific command, parameters and configuration xml format
+Type 'dotCover help &lt;command&gt; &lt;file name&gt;' to write configuration xml example to the specified file
+                     list         
+list: Obtain list of all files related to the specified snapshots.
+usage: dotCover list [parameters]
+
+Valid parameters:
+  /Source=ARG     : (Required) List of snapshot files separated with semicolon (;)
+  /Output=ARG     : (Required) Resulting file name. Stores plain list of all snapshot files.
+
+Global parameters:
+  /LogFile=ARG    : (Optional) Enables logging and specifies log file name
+
+It is possible to specify part of the parameters or all of them in the configuration file.
+usage: dotCover list &lt;configuration file name&gt; [parameters]
+Configuration file format:
+
+  &lt;ListParams&gt;
+    &lt;!-- At least one source required. --&gt;
+    &lt;Source&gt;&lt;!-- Source file 1 --&gt;&lt;/Source&gt;
+    &lt;Source&gt;&lt;!-- Source file 2 --&gt;&lt;/Source&gt;
+    &lt;Source&gt;&lt;!-- Source file N --&gt;&lt;/Source&gt;
+    &lt;Output&gt;&lt;!-- Resulting file name. Stores plain list of all snapshot files. --&gt;&lt;/Output&gt;
+  &lt;/ListParams&gt;
+                     merge        
+merge: Merge several coverage snapshots.
+usage: dotCover merge [parameters]
+
+Valid parameters:
+  /Source=ARG     : (Required) List of snapshots separated with semicolon (;)
+  /Output=ARG     : (Required) File name for the merged snapshot
+  /TempDir=ARG    : (Optional) Directory for the auxiliary files. Set to system temp by default
+
+Global parameters:
+  /LogFile=ARG    : (Optional) Enables logging and specifies log file name
+
+It is possible to specify part of the parameters or all of them in the configuration file.
+usage: dotCover merge &lt;configuration file name&gt; [parameters]
+Configuration file format:
+
+  &lt;MergeParams&gt;
+    &lt;!-- At least one source required. --&gt;
+    &lt;Source&gt;&lt;!-- Source file 1 --&gt;&lt;/Source&gt;
+    &lt;Source&gt;&lt;!-- Source file 2 --&gt;&lt;/Source&gt;
+    &lt;Source&gt;&lt;!-- Source file N --&gt;&lt;/Source&gt;
+    &lt;TempDir&gt;&lt;!-- Directory for the auxiliary files. Set to system temp by default. --&gt;&lt;/TempDir&gt;
+    &lt;Output&gt;&lt;!-- File name for the merged snapshot. --&gt;&lt;/Output&gt;
+  &lt;/MergeParams&gt;
+            report        
+report: Create a report by the specified snapshot.
+usage: dotCover report [parameters]
+
+Valid parameters:
+  /Source=ARG            : (Required) Coverage snapshot file name
+  /Output=ARG            : (Required) Resulting report file name
+  /ReportType=ARG        : (Optional) [HTML|JSON|XML|NDependXML]. A type of the report. XML by default
+  /HideAutoProperties          : (Optional) Remove auto-implemented properties from report
+
+Global parameters:
+  /LogFile=ARG           : (Optional) Enables logging and specifies log file name
+
+It is possible to specify part of the parameters or all of them in the configuration file.
+usage: dotCover report &lt;configuration file name&gt; [parameters]
+Configuration file format:
+
+  &lt;ReportParams&gt;
+    &lt;Source&gt;&lt;!-- Coverage snapshot file name. --&gt;&lt;/Source&gt;
+    &lt;Output&gt;&lt;!-- Resulting report file name. --&gt;&lt;/Output&gt;
+    &lt;ReportType&gt;&lt;!-- [HTML|JSON|XML|NDependXML]. A type of the report. XML by default. --&gt;&lt;/ReportType&gt;
+  &lt;/ReportParams&gt;
+            version         
+version: Write dotCover version info to the specified file.
+usage: dotCover version &lt;output file name&gt;
+
+Global options:
+  /LogFile=ARG    : Enables logging and specifies log file name
+                     zip         
+zip: Compress coverage snapshot.
+usage: dotCover zip &lt;configuration file&gt;
+
+Valid options:
+  /Source=ARG    : Coverage snapshot file name
+  /Output=ARG    : Zipped snapshot file name
+
+Global options:
+  /LogFile=ARG   : Enables logging and specifies log file name
+
+&lt;ZipParams&gt;
+  &lt;Source&gt;&lt;!-- Required. Coverage snapshot file name. --&gt;&lt;/Source&gt;
+  &lt;Output&gt;&lt;!-- Required. Zipped snapshot file name. --&gt;&lt;/Output&gt;
+&lt;/ZipParams&gt;
+                     Last modified: 15 January 2018 Console Runner ConfigurationRunning Remote Coverage Analysis from Visual StudioSee AlsoConcepts:Basic ConceptsRunning Coverage Analysis from the Command LineConsole Runner ConfigurationProcedures:Setting up Coverage Analysis on JetBrains TeamCitySetting up Coverage Analysis on a Third-Party CI ServerWorking with Coverage Results

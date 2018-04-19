@@ -1,0 +1,309 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "license": [
+    "Copyright Matthias Koch 2017.",
+    "Distributed under the MIT License.",
+    "https://github.com/nuke-build/tools/blob/master/LICENSE"
+  ],
+  "references": [
+    "https://www.jetbrains.com/help/dotcover/dotCover__Console_Runner_Commands.html#//article[@class='article']"
+  ],
+  "name": "DotCover",
+  "officialUrl": "https://www.jetbrains.com/dotcover",
+  "help": "dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.",
+  "packageId": "JetBrains.dotCover.CommandLineTools",
+  "packageExecutable": "dotCover.exe",
+  "tasks": [
+    {
+      "postfix": "Analyse",
+      "commonPropertySets": [
+        "analyse-cover"
+      ],
+      "definiteArgument": "analyse",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Configuration",
+            "type": "string",
+            "assertion": "FileOrNull",
+            "format": "{value}"
+          },
+          {
+            "name": "ReportType",
+            "type": "DotCoverReportType",
+            "format": "/ReportType={value}",
+            "help": "A type of the report. The default value is <c>XML</c>."
+          },
+          {
+            "name": "OutputFile",
+            "type": "string",
+            "format": "/Output={value}",
+            "help": "Resulting report file name."
+          },
+          {
+            "name": "HideAutoProperties",
+            "type": "bool",
+            "format": "/HideAutoProperties",
+            "help": "Remove auto-implemented properties from report."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "Cover",
+      "commonPropertySets": [
+        "analyse-cover"
+      ],
+      "definiteArgument": "cover",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Configuration",
+            "type": "string",
+            "assertion": "FileOrNull",
+            "format": "{value}"
+          },
+          {
+            "name": "OutputFile",
+            "type": "string",
+            "format": "/Output={value}",
+            "help": "Path to the resulting coverage snapshot."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "Delete",
+      "definiteArgument": "delete",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Configuration",
+            "type": "string",
+            "assertion": "FileOrNull",
+            "format": "{value}"
+          },
+          {
+            "name": "Source",
+            "type": "List<string>",
+            "format": "/Source={value}",
+            "separator": ";",
+            "help": "List of snapshot files."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "Merge",
+      "definiteArgument": "merge",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Configuration",
+            "type": "string",
+            "assertion": "FileOrNull",
+            "format": "{value}"
+          },
+          {
+            "name": "Source",
+            "type": "List<string>",
+            "format": "/Source={value}",
+            "separator": ";",
+            "help": "List of snapshot files."
+          },
+          {
+            "name": "OutputFile",
+            "type": "string",
+            "format": "/Output={value}",
+            "help": "File name for the merged snapshot."
+          },
+          {
+            "name": "TempDirectory",
+            "type": "string",
+            "format": "/TempDir={value}",
+            "help": "Directory for auxiliary files. Set to the system temp by default."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "Report",
+      "definiteArgument": "report",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Configuration",
+            "type": "string",
+            "assertion": "FileOrNull",
+            "format": "{value}"
+          },
+          {
+            "name": "Source",
+            "type": "List<string>",
+            "format": "/Source={value}",
+            "separator": ";",
+            "help": "List of snapshot files."
+          },
+          {
+            "name": "OutputFile",
+            "type": "string",
+            "format": "/Output={value}",
+            "help": "Resulting report file name."
+          },
+          {
+            "name": "ReportType",
+            "type": "DotCoverReportType",
+            "format": "/ReportType={value}",
+            "help": "A type of the report. The default value is <c>XML</c>."
+          },
+          {
+            "name": "HideAutoProperties",
+            "type": "bool",
+            "format": "/HideAutoProperties",
+            "help": "Remove auto-implemented properties from report."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "Zip",
+      "definiteArgument": "zip",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Configuration",
+            "type": "string",
+            "assertion": "FileOrNull",
+            "format": "{value}"
+          },
+          {
+            "name": "Source",
+            "type": "string",
+            "format": "/Source={value}",
+            "help": "Coverage snapshot file name."
+          },
+          {
+            "name": "OutputFile",
+            "type": "string",
+            "format": "/Output={value}",
+            "help": "Zipped snapshot file name."
+          }
+        ]
+      }
+    }
+  ],
+  "commonTaskProperties": [
+    {
+      "name": "LogFile",
+      "type": "string",
+      "format": "/LogFile={value}",
+      "help": "Enables logging and specifies log file name."
+    }
+  ],
+  "commonTaskPropertySets": {
+    "analyse-cover": [
+      {
+        "name": "TargetExecutable",
+        "type": "string",
+        "format": "/TargetExecutable={value}",
+        "help": "File name of the program to analyse."
+      },
+      {
+        "name": "TargetArguments",
+        "type": "string",
+        "format": "/TargetArguments={value}",
+        "help": "Program arguments."
+      },
+      {
+        "name": "TargetWorkingDirectory",
+        "type": "string",
+        "format": "/TargetWorkingDir={value}",
+        "help": "Program working directory."
+      },
+      {
+        "name": "TempDirectory",
+        "type": "string",
+        "format": "/TempDir={value}",
+        "help": "Directory for auxiliary files. Set to the system temp by default."
+      },
+      {
+        "name": "InheritConsole",
+        "type": "bool",
+        "format": "/InheritConsole={value}",
+        "default": "true",
+        "help": "Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited."
+      },
+      {
+        "name": "AnalyseTargetArguments",
+        "type": "bool",
+        "format": "/AnalyseTargetArguments={value}",
+        "default": "true",
+        "help": "Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>."
+      },
+      {
+        "name": "Scope",
+        "type": "List<string>",
+        "format": "/Scope={value}",
+        "separator": ";",
+        "help": "Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>)."
+      },
+      {
+        "name": "Filters",
+        "type": "List<string>",
+        "format": "/Filters={value}",
+        "separator": ";",
+        "help": "Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here."
+      },
+      {
+        "name": "AttributeFilters",
+        "type": "List<string>",
+        "format": "/AttributeFilters={value}",
+        "separator": ";",
+        "help": "Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here."
+      },
+      {
+        "name": "DisableDefaultFilters",
+        "type": "bool",
+        "format": "/DisableDefaultFilters",
+        "help": "Disables default (automatically added) filters."
+      },
+      {
+        "name": "SymbolSearchPaths",
+        "type": "List<string>",
+        "format": "/SymbolSearchPaths={value}",
+        "separator": ";",
+        "help": "Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here."
+      },
+      {
+        "name": "AllowSymbolServerAccess",
+        "type": "bool",
+        "format": "/AllowSymbolServerAccess",
+        "help": "Allows dotCover to search for PDB files on a symbol server."
+      },
+      {
+        "name": "ReturnTargetExitCode",
+        "type": "bool",
+        "format": "/ReturnTargetExitCode",
+        "help": "Returns the exit code of the target executable in case coverage analysis succeeded."
+      },
+      {
+        "name": "ProcessFilters",
+        "type": "List<string>",
+        "format": "/ProcessFilters={value}",
+        "separator": ";",
+        "help": "Specifies process filters. Syntax: <c>+:process1;-:process2</c>."
+      }
+    ]
+  },
+  "enumerations": [
+    {
+      "name": "DotCoverReportType",
+      "values": [
+        "Html",
+        "Json",
+        "Xml",
+        "DetailedXml"
+      ]
+    }
+  ]
+}
