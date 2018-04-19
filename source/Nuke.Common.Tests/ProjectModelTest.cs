@@ -27,7 +27,7 @@ namespace Nuke.Common.Tests
             solution.Projects.Where(x => x.Is(ProjectType.SolutionFolder)).Select(x => x.Name)
                 .Should().BeEquivalentTo("bootstrapping", "misc");
 
-            solution.Projects.Where(x => x.Is(ProjectType.CSharpProject)).Should().HaveCount(7);
+            solution.Projects.Where(x => x.Is(ProjectType.CSharpProject)).Should().HaveCount(5);
 
             var buildProject = solution.Projects.SingleOrDefault(x => x.Name == ".build");
             buildProject.Should().NotBeNull();
@@ -40,7 +40,7 @@ namespace Nuke.Common.Tests
         {
             var solution = ProjectModelTasks.ParseSolution(SolutionFile);
 
-            solution.GetProjects("*.Tests").Should().HaveCount(2);
+            solution.GetProjects("*.Tests").Should().HaveCount(1);
         }
 
 //        [Fact]
