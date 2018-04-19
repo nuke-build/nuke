@@ -27,22 +27,22 @@ namespace Nuke.Core.BuildServers
         /// <summary>
         ///     The current build display name, such as "#14".
         /// </summary>
-        public string BuilDisplayName => EnsureVariable("BUILD_DISPLAY_NAME");
+        public string BuilDisplayName => Variable("BUILD_DISPLAY_NAME");
 
         /// <summary>
         ///     The current build number, such as "14".
         /// </summary>
-        public int BuildNumber => EnsureVariable<int>("BUILD_NUMBER");
+        public int BuildNumber => Variable<int>("BUILD_NUMBER");
 
         /// <summary>
         ///     The current build tag, such as "jenkins-nuke-14".
         /// </summary>
-        public string BuildTag => EnsureVariable<string>("BUILD_TAG");
+        public string BuildTag => Variable<string>("BUILD_TAG");
 
         /// <summary>
         ///     The number of the executor this build is running on, Equals '0' for first executor.
         /// </summary>
-        public int ExecutorNumber => EnsureVariable<int>("EXECUTOR_NUMBER");
+        public int ExecutorNumber => Variable<int>("EXECUTOR_NUMBER");
 
         /// <summary>
         ///    For Git-based projects, this variable contains the Git branch that was checked out for the build (normally origin/master) ﻿(all the Git* properties require git plugin).
@@ -72,51 +72,51 @@ namespace Nuke.Core.BuildServers
         /// <summary>
         ///     The path to the jenkins home directory.
         /// </summary>
-        public string JenkinsHome => EnsureVariable<string>("JENKINS_HOME");
+        public string JenkinsHome => Variable<string>("JENKINS_HOME");
 
         /// <summary>
         /// The jenkins server cookie.
         /// </summary>
-        public string JenkinsServerCookie => EnsureVariable<string>("JENKINS_SERVER_COOKIE");
+        public string JenkinsServerCookie => Variable<string>("JENKINS_SERVER_COOKIE");
 
         /// <summary>
         /// The base name of the current job, such as "Nuke".
         /// </summary>
-        public string JobBaseName => EnsureVariable<string>("JOB_BASE_NAME");
+        public string JobBaseName => Variable<string>("JOB_BASE_NAME");
 
         /// <summary>
         /// The url to the currents job overview.
         /// </summary>
-        public string JobDisplayUrl => EnsureVariable<string>("JOB_DISPLAY_URL");
+        public string JobDisplayUrl => Variable<string>("JOB_DISPLAY_URL");
 
         /// <summary>
         /// The  name of the current job, such as "Nuke".
         /// </summary>
-        public string JobName => EnsureVariable<string>("JOB_NAME");
+        public string JobName => Variable<string>("JOB_NAME");
 
         /// <summary>
         /// The  labels of the node this build is running on, such as "win64 msbuild".
         /// </summary>
-        public string NodeLabels => EnsureVariable<string>("NODE_LABELS");
+        public string NodeLabels => Variable<string>("NODE_LABELS");
 
         /// <summary>
         /// The name of the node this build is running on, such as "master".
         /// </summary>
-        public string NodeName => EnsureVariable<string>("NODE_NAME");
+        public string NodeName => Variable<string>("NODE_NAME");
 
         /// <summary>
         /// The url to the currents run changes page.
         /// </summary>
-        public string RunChangesDisplayUrl => EnsureVariable<string>("RUN_CHANGES_DISPLAY_URL");
+        public string RunChangesDisplayUrl => Variable<string>("RUN_CHANGES_DISPLAY_URL");
 
         /// <summary>
         /// The url to the currents run overview page.
         /// </summary>
-        public string RunDisplayUrl => EnsureVariable<string>("RUN_DISPLAY_URL");
+        public string RunDisplayUrl => Variable<string>("RUN_DISPLAY_URL");
 
         /// <summary>
         /// The path to the folder this job is running in.
         /// </summary>
-        public string Workspace => EnsureVariable<string>("WORKSPACE");
+        public string Workspace => Variable<string>("WORKSPACE");
     }
 }

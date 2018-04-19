@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using FluentAssertions;
+using JetBrains.Annotations;
 using Nuke.Core.BuildServers;
 using Xunit;
 
@@ -96,6 +97,9 @@ namespace Nuke.Core.Tests
             {
                 throw exception.InnerException.NotNull();
             }
+
+            if (property.GetCustomAttribute<CanBeNullAttribute>() == null)
+                value.Should().NotBeNull();
 
             if (!(value is string strValue) || property.GetCustomAttribute<NoConvertAttribute>() != null)
                 return;
