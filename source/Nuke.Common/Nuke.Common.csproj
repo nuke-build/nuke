@@ -8,12 +8,23 @@
   <Import Project="..\..\shared\Configuration.props" />
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="6.0.2" />
-    <PackageReference Include="JetBrains.Annotations" Version="10.4.0" />
+    <EmbeddedResource Include="**\*.flf" />
+    <None Remove="graph.html" />
+    <EmbeddedResource Include="Execution\graph.html" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Nuke.Core\Nuke.Core.csproj" />
+    <PackageReference Include="AutoMapper" Version="6.0.2" />
+    <PackageReference Include="Colorful.Console" Version="1.0.7" />
+    <PackageReference Include="Glob" Version="0.3.2" />
+    <PackageReference Include="JetBrains.Annotations" Version="10.4.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.*" />
+    <PackageReference Include="NuGet.Packaging" Version="4.5.0" />
+    <PackageReference Include="Refit" Version="4.0.0" />
+    <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
+    <PackageReference Include="System.ValueTuple" Version="4.3.0" />
+    <PackageReference Include="YamlDotNet" Version="4.2.1" />
   </ItemGroup>
 
 </Project>
