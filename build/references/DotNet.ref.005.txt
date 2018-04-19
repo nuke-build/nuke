@@ -1,0 +1,106 @@
+
+This topic applies to: ✓ .NET Core SDK 1.x ✓ .NET Core SDK 2.x
+Name
+dotnet publish - Packs the application and its dependencies into a folder for deployment to a hosting system.
+Synopsis
+
+
+
+.NET Core 2.x
+
+
+.NET Core 1.x
+
+
+
+dotnet publish [&lt;PROJECT&gt;] [-c|--configuration] [-f|--framework] [--force] [--manifest] [--no-dependencies] [--no-restore] [-o|--output] [-r|--runtime] [--self-contained] [-v|--verbosity] [--version-suffix]
+dotnet publish [-h|--help]
+
+
+dotnet publish [&lt;PROJECT&gt;] [-c|--configuration] [-f|--framework] [-o|--output] [-r|--runtime] [-v|--verbosity] [--version-suffix]
+dotnet publish [-h|--help]
+
+
+Description
+dotnet publish compiles the application, reads through its dependencies specified in the project file, and publishes the resulting set of files to a directory. The output will contain the following:
+
+Intermediate Language (IL) code in an assembly with a dll extension.
+.deps.json file that contains all of the dependencies of the project.
+.runtime.config.json file that specifies the shared runtime that the application expects, as well as other configuration options for the runtime (for example, garbage collection type).
+The application&#39;s dependencies. These are copied from the NuGet cache into the output folder.
+
+The dotnet publish command&#39;s output is ready for deployment to a hosting system (for example, a server, PC, Mac, laptop) for execution and is the only officially supported way to prepare the application for deployment. Depending on the type of deployment that the project specifies, the hosting system may or may not have the .NET Core shared runtime installed on it. For more information, see .NET Core Application Deployment. For the directory structure of a published application, see Directory structure.
+Arguments
+PROJECT
+The project to publish, which defaults to the current directory if not specified.
+Options
+
+
+
+.NET Core 2.x
+
+
+.NET Core 1.x
+
+
+
+-c|--configuration {Debug|Release}
+Defines the build configuration. The default value is Debug.
+-f|--framework &lt;FRAMEWORK&gt;
+Publishes the application for the specified target framework. You must specify the target framework in the project file.
+--force
+Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the project.assets.json file.
+-h|--help
+Prints out a short help for the command.
+--manifest &lt;PATH_TO_MANIFEST_FILE&gt;
+Specifies one or several target manifests to use to trim the set of packages published with the app. The manifest file is part of the output of the dotnet store command. To specify multiple manifests, add a --manifest option for each manifest. This option is available starting with .NET Core 2.0 SDK.
+--no-dependencies
+Ignores project-to-project references and only restores the root project.
+--no-restore
+Doesn&#39;t perform an implicit restore when running the command.
+-o|--output &lt;OUTPUT_DIRECTORY&gt;
+Specifies the path for the output directory. If not specified, it defaults to ./bin/[configuration]/[framework]/ for a framework-dependent deployment or ./bin/[configuration]/[framework]/[runtime] for a self-contained deployment.
+If a relative path is provided, the output directory generated is relative to the project file location, not to the current working directory.
+--self-contained
+Publishes the .NET Core runtime with your application so the runtime doesn&#39;t need to be installed on the target machine. If a runtime identifier is specified, its default value is true. For more information about the different deployment types, see .NET Core application deployment.
+-r|--runtime &lt;RUNTIME_IDENTIFIER&gt;
+Publishes the application for a given runtime. This is used when creating a self-contained deployment (SCD). For a list of Runtime Identifiers (RIDs), see the RID catalog. Default is to publish a framework-dependent deployment (FDD).
+-v|--verbosity &lt;LEVEL&gt;
+Sets the verbosity level of the command. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+--version-suffix &lt;VERSION_SUFFIX&gt;
+Defines the version suffix to replace the asterisk (*) in the version field of the project file.
+
+
+-c|--configuration {Debug|Release}
+Defines the build configuration. The default value is Debug.
+-f|--framework &lt;FRAMEWORK&gt;
+Publishes the application for the specified target framework. You must specify the target framework in the project file.
+-h|--help
+Prints out a short help for the command.
+--manifest &lt;PATH_TO_MANIFEST_FILE&gt;
+Specifies one or several target manifests to use to trim the set of packages published with the app. The manifest file is part of the output of the dotnet store command. To specify multiple manifests, add a --manifest option for each manifest. This option is available starting with .NET Core 2.0 SDK.
+-o|--output &lt;OUTPUT_DIRECTORY&gt;
+Specifies the path for the output directory. If not specified, it defaults to ./bin/[configuration]/[framework]/ for a framework-dependent deployment or ./bin/[configuration]/[framework]/[runtime] for a self-contained deployment.
+If a relative path is provided, the output directory generated is relative to the project file location, not to the current working directory.
+-r|--runtime &lt;RUNTIME_IDENTIFIER&gt;
+Publishes the application for a given runtime. This is used when creating a self-contained deployment (SCD). For a list of Runtime Identifiers (RIDs), see the RID catalog. Default is to publish a framework-dependent deployment (FDD).
+-v|--verbosity &lt;LEVEL&gt;
+Sets the verbosity level of the command. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+--version-suffix &lt;VERSION_SUFFIX&gt;
+Defines the version suffix to replace the asterisk (*) in the version field of the project file.
+
+
+Examples
+Publish the project in the current directory:
+dotnet publish
+Publish the application using the specified project file:
+dotnet publish ~/projects/app1/app1.csproj
+Publish the project in the current directory using the netcoreapp1.1 framework:
+dotnet publish --framework netcoreapp1.1
+Publish the current application using the netcoreapp1.1 framework and the runtime for OS X 10.10 (you must list this RID in the project file).
+dotnet publish --framework netcoreapp1.1 --runtime osx.10.11-x64
+See also
+
+Target frameworks
+Runtime IDentifier (RID) catalog
+

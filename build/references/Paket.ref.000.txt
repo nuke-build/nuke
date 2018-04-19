@@ -1,0 +1,111 @@
+
+          
+paket update
+Update dependencies to their latest version.
+ 1: 
+ 2: 
+ 3: 
+ 4: 
+ 5: 
+ 6: 
+ 7: 
+ 8: 
+ 9: 
+10: 
+11: 
+12: 
+13: 
+14: 
+15: 
+16: 
+17: 
+18: 
+19: 
+20: 
+21: 
+22: 
+23: 
+24: 
+25: 
+26: 
+27: 
+28: 
+29: 
+30: 
+
+paket update [--help] [--version &lt;version constraint&gt;] [--group &lt;name&gt;] [--create-new-binding-files]
+             [--force] [--redirects] [--clean-redirects] [--no-install] [--keep-major]
+             [--keep-minor] [--keep-patch] [--filter] [--touch-affected-refs] &lt;package id&gt;
+
+NUGET:
+
+    &lt;package id&gt;          NuGet package ID
+
+OPTIONS:
+
+    --version, -V &lt;version constraint&gt;
+                          dependency version constraint
+    --group, -g &lt;name&gt;    specify dependency group to update (default: all groups)
+    --create-new-binding-files
+                          create binding redirect files if needed
+    --force, -f           force download and reinstallation of all dependencies
+    --redirects           create binding redirects
+    --clean-redirects     remove binding redirects that were not created by Paket
+    --no-install          do not modify projects
+    --keep-major          only allow updates that preserve the major version
+    --keep-minor          only allow updates that preserve the minor version
+    --keep-patch          only allow updates that preserve the patch version
+    --filter              treat the NuGet package ID as a regex to filter packages
+    --touch-affected-refs touch project files referencing affected dependencies to help incremental
+                          build tools detecting the change
+    --silent, -s          suppress console output
+    --verbose, -v         print detailed information to the console
+    --log-file &lt;path&gt;     print output to a file
+    --from-bootstrapper   call coming from the '--run' feature of the bootstrapper
+    --help                display this list of options.
+
+If you add the --verbose flag Paket will run in verbose mode and show detailed information.
+With --log-file [path] you can trace the logged information into a file.
+Updating all packages
+If you do not specify a package, then all packages from
+paket.dependencies are updated.
+1: 
+
+paket update
+
+First, the current paket.lock file is deleted.
+paket update then recomputes the current dependency
+resolution, as explained under
+Package resolution algorithm, and writes it to
+paket.lock file. It then proceeds to download the packages
+and to install them into the projects.
+Please see paket install if you want to keep the current
+versions from your paket.lock file.
+Updating a single package, or packages matching a pattern
+It's also possible to update only specified packages and to keep all other
+dependencies fixed:
+1: 
+2: 
+
+paket update &lt;package id&gt;
+paket update &lt;package id&gt; --filter
+
+The --filter parameter makes Paket interpret the &lt;package id&gt; as a regular
+expression pattern to match against, rather than a single package. Paket
+enforces a "total" match (i.e. an implicit ^ and $ at beginning and end of
+&lt;package id&gt; as added).
+Updating a single group
+If you want to update a single group you can use the following command:
+1: 
+
+paket update --group &lt;group&gt;
+
+Updating http dependencies
+If you want to update a file you need to use the
+paket install command or
+paket update command with the --force parameter.
+Using groups for http dependent files
+can be helpful in order to reduce the number of files that are reinstalled.
+
+
+        

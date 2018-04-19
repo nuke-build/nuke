@@ -19,27 +19,27 @@ namespace Nuke.CodeGeneration
     [PublicAPI]
     public static class ReferenceUpdater
     {
-        public static void UpdateReferences(string metadataDirectory, string referenceDirectory = null)
+        public static void UpdateReferences(string specificationsDirectory, string referencesDirectory = null)
         {
-            UpdateReferences(Directory.GetFiles(metadataDirectory, "*.json", SearchOption.TopDirectoryOnly), referenceDirectory);
+            UpdateReferences(Directory.GetFiles(specificationsDirectory, "*.json", SearchOption.TopDirectoryOnly), referencesDirectory);
         }
 
-        public static void UpdateReferences(IEnumerable<string> metadataFiles, string referenceDirectory = null)
+        public static void UpdateReferences(IEnumerable<string> specificationFiles, string referencesDirectory = null)
         {
-            var tools = metadataFiles.Select(ToolSerializer.Load);
-            var updateTasks = tools.SelectMany(x => x.References.Select(y => Update(y, x, referenceDirectory)));
+            var tools = specificationFiles.Select(ToolSerializer.Load);
+            var updateTasks = tools.SelectMany(x => x.References.Select(y => Update(y, x, referencesDirectory)));
             System.Threading.Tasks.Task.WaitAll(updateTasks.ToArray());
         }
 
-        private static async System.Threading.Tasks.Task Update(string reference, Tool tool, [CanBeNull] string referenceDirectory)
+        private static async System.Threading.Tasks.Task Update(string reference, Tool tool, [CanBeNull] string referencesDirectory)
         {
             var index = tool.References.IndexOf(reference);
             try
             {
-                referenceDirectory = referenceDirectory ?? Path.GetDirectoryName(tool.DefinitionFile).NotNull();
+                referencesDirectory = referencesDirectory ?? Path.GetDirectoryName(tool.DefinitionFile).NotNull();
                 var referenceId = index.ToString().PadLeft(totalWidth: 3, paddingChar: '0');
                 var referenceFile = Path.Combine(
-                    referenceDirectory,
+                    referencesDirectory,
                     $"{Path.GetFileNameWithoutExtension(tool.DefinitionFile)}.ref.{referenceId}.txt");
                 var referenceContent = await GetReferenceContent(reference);
                 File.WriteAllText(referenceFile, referenceContent);

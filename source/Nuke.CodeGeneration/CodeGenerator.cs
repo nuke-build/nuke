@@ -20,14 +20,14 @@ namespace Nuke.CodeGeneration
     public static class CodeGenerator
     {
         public static void GenerateCode(
-            string metadataDirectory,
+            string specificationDirectory,
             string generationBaseDirectory,
             bool useNestedNamespaces = false,
             string baseNamespace = null,
             GitRepository gitRepository = null)
         {
             GenerateCode(
-                Directory.GetFiles(metadataDirectory, "*.json", SearchOption.TopDirectoryOnly),
+                Directory.GetFiles(specificationDirectory, "*.json", SearchOption.TopDirectoryOnly),
                 generationBaseDirectory,
                 useNestedNamespaces,
                 baseNamespace,
@@ -35,15 +35,15 @@ namespace Nuke.CodeGeneration
         }
 
         public static void GenerateCode(
-            IReadOnlyCollection<string> metadataFiles,
+            IReadOnlyCollection<string> specificationFiles,
             string baseDirectory,
             bool useNestedNamespaces,
             [CanBeNull] string baseNamespace,
             [CanBeNull] GitRepository repository)
         {
-            foreach (var metadataFile in metadataFiles)
+            foreach (var specificationFile in specificationFiles)
             {
-                var tool = ToolSerializer.Load(metadataFile);
+                var tool = ToolSerializer.Load(specificationFile);
                 // for formatting and ordering of properties
                 ToolSerializer.Save(tool);
                 ApplyRuntimeInformation(tool, repository);

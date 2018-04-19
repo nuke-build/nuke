@@ -1,0 +1,199 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "license": [
+    "Copyright Matthias Koch 2017.",
+    "Distributed under the MIT License.",
+    "https://github.com/nuke-build/tools/blob/master/LICENSE"
+  ],
+  "references": [
+    "https://raw.githubusercontent.com/xunit/xunit/master/src/xunit.console/ConsoleRunner.cs"
+  ],
+  "name": "Xunit",
+  "officialUrl": "https://xunit.github.io",
+  "help": "xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Written by the original inventor of NUnit v2, xUnit.net is the latest technology for unit testing C#, F#, VB.NET and other .NET languages. xUnit.net works with ReSharper, CodeRush, TestDriven.NET and Xamarin. It is part of the <a href=\"https://www.dotnetfoundation.org/\">.NET Foundation</a>, and operates under their <a href=\"https://www.dotnetfoundation.org/code-of-conduct\">code of conduct</a>. It is licensed under <a href=\"https://opensource.org/licenses/Apache-2.0\">Apache 2</a> (an OSI approved license).",
+  "packageId": "xunit.runner.console",
+  "tasks": [
+    {
+      "postfix": "2",
+      "customAssertion": true,
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "TargetAssemblyWithConfigs",
+            "type": "LookupTable<string, string>",
+            "format": "{value}",
+            "itemFormat": "{key} {value}",
+            "help": "Assemblies to test, and their related related configuration files (ending with .json or .config)."
+          },
+          {
+            "name": "NoLogo",
+            "type": "bool",
+            "format": "-nologo",
+            "help": "Do not show the copyright message."
+          },
+          {
+            "name": "NoColor",
+            "type": "bool",
+            "format": "-nocolor",
+            "help": "Do not output results with colors."
+          },
+          {
+            "name": "FailSkips",
+            "type": "bool",
+            "format": "-failskips",
+            "help": "Convert skipped tests into failures."
+          },
+          {
+            "name": "StopOnFail",
+            "type": "bool",
+            "format": "-stoponfail",
+            "help": "Stop on first test failure."
+          },
+          {
+            "name": "Parallel",
+            "type": "Xunit2ParallelOption",
+            "format": "-parallel {value}",
+            "help": "Set parallelization based on option:<ul><li><b>none:</b> turn off all parallelization</li><li><b>collections:</b> only parallelize collections</li><li><b>assemblies:</b> only parallelize assemblies</li><li><b>all:</b> parallelize assemblies &amp; collections</li></ul>"
+          },
+          {
+            "name": "MaxThreads",
+            "type": "int",
+            "format": "-maxthreads {value}",
+            "help": "Maximum thread count for collection parallelization:<br/><ul><li><b>default:</b> run with default (1 thread per CPU thread)</li><li><b>unlimited:</b> run with unbounded thread count</li><li><b>(number):</b> limit task thread pool size to 'count'</li></ul>"
+          },
+          {
+            "name": "AppDomainMode",
+            "type": "Xunit2AppDomainMode",
+            "format": "-appdomains {value}",
+            "help": "AppDomain modes:<ul><li><c>-ifavailable</c>: choose based on library type</li><li><c>-required</c>: force app domains on</li><li><c>-denied</c>: force app domains off</li></ul>"
+          },
+          {
+            "name": "NoShadowCopying",
+            "type": "bool",
+            "format": "-noshadow",
+            "help": "Do not shadow copy assemblies."
+          },
+          {
+            "name": "Wait",
+            "type": "bool",
+            "format": "-wait",
+            "help": "Wait for input after completion."
+          },
+          {
+            "name": "Diagnostics",
+            "type": "bool",
+            "format": "-diagnostics",
+            "help": "Enable diagnostics messages for all test assemblies."
+          },
+          {
+            "name": "Pause",
+            "type": "bool",
+            "format": "-pause",
+            "help": "Pause before doing any work, to help attach a debugger."
+          },
+          {
+            "name": "Debug",
+            "type": "bool",
+            "format": "-debug",
+            "help": "Launch the debugger to debug the tests."
+          },
+          {
+            "name": "Serialization",
+            "type": "bool",
+            "format": "-serialize",
+            "help": "Serialize all test cases (for diagnostic purposes only)."
+          },
+          {
+            "name": "Traits",
+            "type": "LookupTable<string, string>",
+            "format": "-trait {value}",
+            "itemFormat": "{key}={value}",
+            "help": "Only run tests with matching name/value traits."
+          },
+          {
+            "name": "ExcludedTraits",
+            "type": "LookupTable<string, string>",
+            "format": "-notrait {value}",
+            "itemFormat": "{key}={value}",
+            "help": "Do not run tests with matching name/value traits."
+          },
+          {
+            "name": "Methods",
+            "type": "List<string>",
+            "format": "-method {value}",
+            "help": "Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod')."
+          },
+          {
+            "name": "Classes",
+            "type": "List<string>",
+            "format": "-class {value}",
+            "help": "Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass')."
+          },
+          {
+            "name": "Namespaces",
+            "type": "List<string>",
+            "format": "-namespace {value}",
+            "help": "Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace')."
+          },
+          {
+            "name": "NoAutoReporters",
+            "type": "bool",
+            "format": "-noautoreporters",
+            "help": "Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor)."
+          },
+          {
+            "name": "Reporter",
+            "type": "Xunit2ReporterType",
+            "format": "-{value}",
+            "help": "Reporters:<ul><li><c>-appveyor</c>: forces AppVeyor CI mode (normally auto-detected)</li><li><c>-json</c>: show progress messages in JSON format</li><li><c>-quiet</c>: do not show progress messages</li><li><c>-teamcity</c>: forces TeamCity mode (normally auto-detected)</li><li><c>-verbose</c>: show verbose progress messages</li></ul>"
+          },
+          {
+            "name": "ResultReports",
+            "type": "Dictionary<Xunit2ResultFormat, string>",
+            "format": "-{value}",
+            "itemFormat": "{key} {value}",
+            "help": "Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul>"
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "Xunit2ReporterType",
+      "values": [
+        "AppVeyor",
+        "JSON",
+        "Quiet",
+        "TeamCity",
+        "Verbose"
+      ]
+    },
+    {
+      "name": "Xunit2ResultFormat",
+      "values": [
+        "Xml",
+        "XmlV1",
+        "NUnit",
+        "HTML"
+      ]
+    },
+    {
+      "name": "Xunit2ParallelOption",
+      "values": [
+        "None",
+        "Collections",
+        "Assemblies",
+        "All"
+      ]
+    },
+    {
+      "name": "Xunit2AppDomainMode",
+      "values": [
+        "IfAvailable",
+        "Required",
+        "Denied"
+      ]
+    }
+  ]
+}

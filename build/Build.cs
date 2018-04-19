@@ -19,6 +19,7 @@ using Nuke.Core;
 using Nuke.Core.Utilities;
 using Nuke.Core.Utilities.Collections;
 using static Nuke.CodeGeneration.CodeGenerator;
+using static Nuke.CodeGeneration.ReferenceUpdater;
 using static Nuke.CodeGeneration.SchemaGenerator;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.Gitter.GitterTasks;
@@ -178,20 +179,30 @@ class Build : NukeBuild
                 Xunit2(s => xunitSettings);
         });
 
-    string MetadataDirectory => RootDirectory / ".." / "nuke-tools" / "metadata";
+    string SpecificationsDirectory => BuildProjectDirectory / "specifications";
+    string ReferencesDirectory => BuildProjectDirectory / "references";
     string GenerationDirectory => RootDirectory / "source" / "Nuke.Common" / "Tools";
     string ToolSchemaFile => SourceDirectory / "Nuke.CodeGeneration" / "schema.json";
 
+    Target References => _ => _
+        .Requires(() => !GitHasUncommitedChanges())
+        .Executes(() =>
+        {
+            EnsureCleanDirectory(ReferencesDirectory);
+            
+            UpdateReferences(SpecificationsDirectory, ReferencesDirectory);
+        });
+    
     Target Generate => _ => _
         .Executes(() =>
         {
             GenerateSchema<Tool>(
                 ToolSchemaFile,
                 GitRepository.GetGitHubDownloadUrl(ToolSchemaFile),
-                "Tool metadata schema file by NUKE");
+                "Tool specification schema file by NUKE");
 
             GenerateCode(
-                MetadataDirectory,
+                SpecificationsDirectory,
                 GenerationDirectory,
                 baseNamespace: "Nuke.Common.Tools",
                 useNestedNamespaces: true,

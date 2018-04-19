@@ -1,0 +1,182 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "license": [
+    "Copyright Matthias Koch 2017.",
+    "Distributed under the MIT License.",
+    "https://github.com/nuke-build/tools/blob/master/LICENSE"
+  ],
+  "references": [
+    "https://raw.githubusercontent.com/GitTools/GitReleaseManager/develop/Source/GitReleaseManager.Cli/Options/BaseSubOptions.cs",
+    "https://raw.githubusercontent.com/GitTools/GitReleaseManager/develop/Source/GitReleaseManager.Cli/Options/BaseGitHubSubOptions.cs",
+    "https://raw.githubusercontent.com/GitTools/GitReleaseManager/develop/Source/GitReleaseManager.Cli/Options/AddAssetSubOptions.cs",
+    "https://raw.githubusercontent.com/GitTools/GitReleaseManager/develop/Source/GitReleaseManager.Cli/Options/CloseSubOptions.cs",
+    "https://raw.githubusercontent.com/GitTools/GitReleaseManager/develop/Source/GitReleaseManager.Cli/Options/CreateSubOptions.cs",
+    "https://raw.githubusercontent.com/GitTools/GitReleaseManager/develop/Source/GitReleaseManager.Cli/Options/ExportSubOptions.cs",
+    "https://raw.githubusercontent.com/GitTools/GitReleaseManager/develop/Source/GitReleaseManager.Cli/Options/PublishSubOptions.cs"
+  ],
+  "name": "GitReleaseManager",
+  "officialUrl": "https://gitreleasemanager.readthedocs.io",
+  "help": "GitReleaseManager is a tool that will help create a set of release notes for your application/product. It does this using the collection of issues which are stored on the GitHub Issue Tracker for your application/product.<para/>By inspecting the issues that have been assigned to a particular milestone, GitReleaseManager creates a set of release notes, in markdown format, which are then used to create a Release on GitHub.<para/>In addition to creating a Release, GitReleaseManager can be used to publish a release, close a milestone, and also to export the complete set of release notes for your application/product.",
+  "packageId": "gitreleasemanager",
+  "packageExecutable": "GitReleaseManager.exe",
+  "tasks": [
+    {
+      "help": "Adds an asset to an existing release.",
+      "postfix": "AddAssets",
+      "definiteArgument": "addasset",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AssetPaths",
+            "type": "List<string>",
+            "format": "--assets {value}",
+            "separator": ",",
+            "help": "Paths to the files to include in the release."
+          },
+          {
+            "name": "TagName",
+            "type": "string",
+            "format": "--tagName {value}",
+            "help": "The name of the release. Typically this is the generated SemVer Version Number."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Closes the milestone.",
+      "postfix": "Close",
+      "definiteArgument": "close",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Milestone",
+            "type": "string",
+            "format": "--milestone {value}",
+            "help": "The milestone to use."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Creates a draft release notes from a milestone.",
+      "postfix": "Create",
+      "definiteArgument": "create",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AssetPaths",
+            "type": "List<string>",
+            "format": "--assets {value}",
+            "separator": ",",
+            "help": "Paths to the files to include in the release."
+          },
+          {
+            "name": "TargetCommitish",
+            "type": "string",
+            "format": "--targetcommitish {value}",
+            "help": "The commit to tag. Can be a branch or SHA. Defaults to repository's default branch."
+          },
+          {
+            "name": "Milestone",
+            "type": "string",
+            "format": "--milestone {value}",
+            "help": "The milestone to use."
+          },
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "--name {value}",
+            "help": "The name of the release. Typically this is the generated SemVer Version Number."
+          },
+          {
+            "name": "InputFilePath",
+            "type": "string",
+            "format": "--inputFilePath {value}",
+            "help": "The path to the file to be used as the content of the release notes."
+          },
+          {
+            "name": "Prerelease",
+            "type": "bool",
+            "format": "--prerelease",
+            "help": "Creates the release as a pre-release."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Exports all the Release Notes in markdown format.",
+      "postfix": "Export",
+      "definiteArgument": "export",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "TagName",
+            "type": "string",
+            "format": "--tagName {value}",
+            "help": "The name of the release. Typically this is the generated SemVer Version Number."
+          },
+          {
+            "name": "FileOutputPath",
+            "type": "string",
+            "format": "--fileOutputPath {value}",
+            "help": "Path to the file export releases."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Publishes the GitHub Release.",
+      "postfix": "Publish",
+      "definiteArgument": "publish",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "TagName",
+            "type": "string",
+            "format": "--tagName {value}",
+            "help": "The name of the release. Typically this is the generated SemVer Version Number."
+          }
+        ]
+      }
+    }
+  ],
+  "commonTaskProperties": [
+    {
+      "name": "UserName",
+      "type": "string",
+      "format": "--username {value}",
+      "help": "The username to access GitHub with."
+    },
+    {
+      "name": "Password",
+      "type": "string",
+      "format": "--password {value}",
+      "secret": true,
+      "help": "The password to access GitHub with."
+    },
+    {
+      "name": "RepositoryOwner",
+      "type": "string",
+      "format": "--owner {value}",
+      "help": "The owner of the repository."
+    },
+    {
+      "name": "RepositoryName",
+      "type": "string",
+      "format": "--repository {value}",
+      "help": "The name of the repository."
+    },
+    {
+      "name": "TargetDirectory",
+      "type": "string",
+      "format": "--targetDirectory {value}",
+      "help": "The directory on which GitReleaseManager should be executed. Default is <em>current directory</em>."
+    },
+    {
+      "name": "LogFilePath",
+      "type": "string",
+      "format": "--logFilePath {value}",
+      "help": "Path to where log file should be created. Defaults is <em>logging to console</em>."
+    }
+  ]
+}
