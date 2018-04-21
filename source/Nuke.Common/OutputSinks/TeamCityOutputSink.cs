@@ -54,5 +54,10 @@ namespace Nuke.Common.OutputSinks
             _teamCity.WriteError(text, details);
             _teamCity.AddBuildProblem(text);
         }
+
+        public override void Success(string text)
+        {
+            _teamCity.WriteMessage(text);
+        }
     }
 }

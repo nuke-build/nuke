@@ -221,5 +221,43 @@ namespace Nuke.Common
         }
 
         #endregion
+        
+        #region Success
+
+        /// <summary>
+        /// Logs a message as Success.
+        /// </summary>
+        [StringFormatMethod("format")]
+        public static void Success(string format, params object[] args)
+        {
+            Success(string.Format(format, args));
+        }
+
+        /// <summary>
+        /// Logs a message as Success.
+        /// </summary>
+        public static void Success(object value)
+        {
+            Success(value?.ToString());
+        }
+
+        /// <summary>
+        /// Logs a message as Success.
+        /// </summary>
+        public static void Success(string text = null)
+        {
+            OutputSink.Success(text ?? string.Empty);
+        }
+
+        /// <summary>
+        /// Logs a message as Success.
+        /// </summary>
+        public static T Success<T>(this T obj, Func<T, string> text)
+        {
+            Success(text(obj));
+            return obj;
+        }
+
+        #endregion
     }
 }

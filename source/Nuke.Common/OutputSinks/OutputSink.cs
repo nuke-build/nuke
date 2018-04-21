@@ -19,6 +19,7 @@ namespace Nuke.Common.OutputSinks
         void Info(string text);
         void Warn(string text, string details = null);
         void Error(string text, string details = null);
+        void Success(string text);
 
         void WriteSummary(IReadOnlyCollection<TargetDefinition> executionList);
     }
@@ -85,6 +86,11 @@ namespace Nuke.Common.OutputSinks
             s_severeMessages.Add(Tuple.Create(LogLevel.Error, text));
 
             Instance.Error(text, details);
+        }
+
+        public static void Success(string text)
+        {
+            Instance.Success(text);
         }
 
         public static void WriteSummary(IReadOnlyCollection<TargetDefinition> executionList)

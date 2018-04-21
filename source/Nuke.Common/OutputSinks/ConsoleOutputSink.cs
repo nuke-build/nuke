@@ -49,9 +49,14 @@ namespace Nuke.Common.OutputSinks
 
         public virtual void Error(string text, string details = null)
         {
-            WriteWithColors(text, ConsoleColor.DarkRed);
+            WriteWithColors(text, ConsoleColor.Red);
             if (details != null)
-                WriteWithColors(details, ConsoleColor.DarkRed);
+                WriteWithColors(details, ConsoleColor.Red);
+        }
+
+        public virtual void Success(string text)
+        {
+            WriteWithColors(text, ConsoleColor.Green);
         }
 
         public virtual void WriteSummary(IReadOnlyCollection<TargetDefinition> executionList)
