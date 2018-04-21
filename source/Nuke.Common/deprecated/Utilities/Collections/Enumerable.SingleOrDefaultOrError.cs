@@ -1,3 +1,4 @@
+// ReSharper disable All
 #pragma warning disable 618
 using System;
 using System.Collections.Generic;
