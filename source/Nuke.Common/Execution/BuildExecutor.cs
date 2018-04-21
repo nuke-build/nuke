@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -19,10 +20,22 @@ namespace Nuke.Common.Execution
         public static int Execute<T>(Expression<Func<T, Target>> defaultTargetExpression)
             where T : NukeBuild
         {
+            Logger.Log(FigletTransform.GetText("NUKE"));
+            Logger.Log(typeof(BuildExecutor).GetTypeInfo().Assembly.GetInformationText());
+            Logger.Log($"Host: {EnvironmentInfo.HostType}");
+            Logger.Log();
+
+            var executionList = default(IReadOnlyCollection<TargetDefinition>);
             try
             {
-                var executionList = Setup(defaultTargetExpression);
-                return new ExecutionListRunner().Run(executionList);
+                var build = CreateBuildInstance(defaultTargetExpression);
+                HandleEarlyExits(build);
+
+                executionList = TargetDefinitionLoader.GetExecutingTargets(build);
+                RequirementService.ValidateRequirements(executionList, build);
+                Execute(executionList);
+                
+                return 0;
             }
             catch (AggregateException exception)
             {
@@ -41,24 +54,53 @@ namespace Nuke.Common.Execution
                 OutputSink.Error(exception.Message, exception.StackTrace);
                 return -exception.Message.GetHashCode();
             }
+            finally
+            {
+                if (executionList != null)
+                    OutputSink.WriteSummary(executionList);
+            }
         }
 
-        private static IReadOnlyCollection<TargetDefinition> Setup<T>(Expression<Func<T, Target>> defaultTargetExpression)
-            where T : NukeBuild
+        private static void Execute(IEnumerable<TargetDefinition> executionList)
         {
-            PrintLogo();
+            foreach (var target in executionList)
+            {
+                if (target.Factory == null)
+                {
+                    target.Status = ExecutionStatus.Absent;
+                    continue;
+                }
 
-            var build = CreateBuildInstance(defaultTargetExpression);
+                if (target.Conditions.Any(x => !x()))
+                {
+                    target.Status = ExecutionStatus.Skipped;
+                    continue;
+                }
 
-            HandleGraphAndHelp(build);
+                using (Logger.Block(target.Name))
+                {
+                    var stopwatch = Stopwatch.StartNew();
+                    try
+                    {
+                        target.Actions.ForEach(x => x());
+                        target.Duration = stopwatch.Elapsed;
 
-            var executionList = TargetDefinitionLoader.GetExecutingTargets(build);
-            RequirementService.ValidateRequirements(executionList, build);
-
-            return executionList;
+                        target.Status = ExecutionStatus.Executed;
+                    }
+                    catch
+                    {
+                        target.Status = ExecutionStatus.Failed;
+                        throw;
+                    }
+                    finally
+                    {
+                        target.Duration = stopwatch.Elapsed;
+                    }
+                }
+            }
         }
 
-        private static void HandleGraphAndHelp<T>(T build)
+        private static void HandleEarlyExits<T>(T build)
             where T : NukeBuild
         {
             if (build.Help)
@@ -88,14 +130,6 @@ namespace Nuke.Common.Execution
             InjectionService.InjectValues(build);
 
             return build;
-        }
-
-        private static void PrintLogo()
-        {
-            Logger.Log(FigletTransform.GetText("NUKE"));
-            Logger.Log(typeof(BuildExecutor).GetTypeInfo().Assembly.GetInformationText());
-            Logger.Log($"Host: {EnvironmentInfo.HostType}");
-            Logger.Log();
         }
     }
 }
