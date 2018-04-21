@@ -42,9 +42,9 @@ namespace Nuke.Common.OutputSinks
 
         public virtual void Warn(string text, string details = null)
         {
-            WriteWithColors(text, ConsoleColor.DarkYellow);
+            WriteWithColors(text, ConsoleColor.Yellow);
             if (details != null)
-                WriteWithColors(details, ConsoleColor.DarkYellow);
+                WriteWithColors(details, ConsoleColor.Yellow);
         }
 
         public virtual void Error(string text, string details = null)
