@@ -78,7 +78,7 @@ namespace Nuke.Common.Execution
             var positionalParametersCount = _commandLineArguments.TakeWhile(x => !x.StartsWith("-")).Count();
 
             if (position < 0)
-                position = positionalParametersCount - 1;
+                position = positionalParametersCount + position % positionalParametersCount;
             
             if (positionalParametersCount <= position)
                 return null;

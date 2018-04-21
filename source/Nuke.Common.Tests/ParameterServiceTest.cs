@@ -131,6 +131,7 @@ namespace Nuke.Common.Tests
         [InlineData(new[] { "posArg", "-NamedArg", "value" }, 1, typeof(string), null)]
         [InlineData(new[] { "posArg", "-NamedArg", "value" }, 2, typeof(string), null)]
         [InlineData(new[] { "arg1", "arg2", "arg3" }, -1, typeof(string), "arg3")]
+        [InlineData(new[] { "arg1", "arg2", "arg3" }, -2, typeof(string), "arg2")]
         public void TestPositionalCommandLineArguments(string[] commandLineArgs, int position, Type destinationType, object expectedValue)
         {
             var service = GetService(commandLineArgs);
