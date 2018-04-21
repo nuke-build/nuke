@@ -78,14 +78,33 @@ namespace Nuke.Common.OutputSinks
             Logger.Log(new string(c: '=', count: allColumns));
             Logger.Log(CreateLine("Target", "Status", "Duration"));
             Logger.Log(new string(c: '-', count: allColumns));
-            foreach (var target in executionList.TakeWhile(x => x.Status != ExecutionStatus.None))
-                Logger.Log(CreateLine(target.Name, target.Status.ToString(), ToMinutesAndSeconds(target.Duration)));
+            foreach (var target in executionList)
+            {
+                var line = CreateLine(target.Name, target.Status.ToString(), ToMinutesAndSeconds(target.Duration));
+                switch (target.Status)
+                {
+                    case ExecutionStatus.Absent:
+                    case ExecutionStatus.NotRun:
+                    case ExecutionStatus.Skipped:
+                        Logger.Trace(line);
+                        break;
+                    case ExecutionStatus.Executed:
+                        Logger.Success(line);
+                        break;
+                    case ExecutionStatus.Failed:
+                        Logger.Error(line);
+                        break;
+                }
+            }
+
             Logger.Log(new string(c: '-', count: allColumns));
             Logger.Log(CreateLine("Total", "", ToMinutesAndSeconds(totalDuration)));
             Logger.Log(new string(c: '=', count: allColumns));
             Logger.Log();
-            Logger.Log($"Finished build on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}.");
-            Logger.Log();
+            if (executionList.All(x => x.Status != ExecutionStatus.Failed))
+                Logger.Success($"Build succeeded on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}.");
+            else
+                Logger.Error($"Build failed on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}.");
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]

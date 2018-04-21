@@ -9,7 +9,7 @@ namespace Nuke.Common.Execution
 {
     public enum ExecutionStatus
     {
-        None,
+        NotRun,
         Skipped,
         Executed,
         Failed,
