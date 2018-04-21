@@ -47,6 +47,21 @@ namespace Nuke.Common.Tests
         }
 
         [Theory]
+        [InlineData("MSBuildConfiguration", typeof(string), "msbcfg")]
+        [InlineData("dockerConfiguration", typeof(string), "dkrcfg")]
+        public void TestSplitted(string argument, Type destinationType, object expectedValue)
+        {
+            GetService(
+                new[]
+                {
+                    "-msbuild-configuration",
+                    "msbcfg",
+                    "-docker-configuration",
+                    "dkrcfg"
+                }).GetCommandLineArgument(argument, destinationType).Should().Be(expectedValue);
+        }
+
+        [Theory]
         [InlineData(typeof(bool), false)]
         [InlineData(typeof(bool?), null)]
         [InlineData(typeof(int), 0)]

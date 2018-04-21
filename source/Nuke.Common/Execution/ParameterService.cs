@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -64,7 +65,7 @@ namespace Nuke.Common.Execution
         [CanBeNull]
         public object GetCommandLineArgument(string argumentName, Type destinationType, char? separator = null)
         {
-            var index = Array.FindLastIndex(_commandLineArguments, x => x.EqualsOrdinalIgnoreCase($"-{argumentName}"));
+            var index = GetCommandLineArgumentIndex(argumentName);
             if (index == -1)
                 return GetDefaultValue(destinationType);
 
@@ -76,10 +77,9 @@ namespace Nuke.Common.Execution
         public object GetCommandLineArgument(int position, Type destinationType, char? separator = null)
         {
             var positionalParametersCount = _commandLineArguments.TakeWhile(x => !x.StartsWith("-")).Count();
-
             if (position < 0)
                 position = positionalParametersCount + position % positionalParametersCount;
-            
+
             if (positionalParametersCount <= position)
                 return null;
 
@@ -122,7 +122,30 @@ namespace Nuke.Common.Execution
 
         private bool HasCommandLineArgument(string argumentName)
         {
-            return Array.FindLastIndex(_commandLineArguments, x => x.EqualsOrdinalIgnoreCase($"-{argumentName}")) != -1;
+            return GetCommandLineArgumentIndex(argumentName) != -1;
+        }
+
+        private int GetCommandLineArgumentIndex(string argumentName)
+        {
+            var hadLower = false;
+            var splittedName = argumentName.Split(c =>
+            {
+                var shouldSplit = hadLower && char.IsUpper(c);
+                hadLower = char.IsLower(c) && !shouldSplit;
+                
+                return shouldSplit;
+            }).Join("-");
+            
+            var index = Array.FindLastIndex(_commandLineArguments, 
+                x => x.EqualsOrdinalIgnoreCase($"-{argumentName}") || x.EqualsOrdinalIgnoreCase($"-{splittedName}"));
+
+            if (index == -1)
+            {
+                var candidates = _commandLineArguments.Where(x => x.StartsWith("-")).Select(x => x.TrimStart("-").Replace("-", string.Empty));
+                CheckNames(argumentName, candidates);
+            }
+
+            return index;
         }
 
         [CanBeNull]
@@ -228,6 +251,46 @@ namespace Nuke.Common.Execution
                 return underlyingType.Name + "?";
 
             return type.Name;
+        }
+
+        private void CheckNames(string name, IEnumerable<string> candidates)
+        {
+            const double similarityThreshold = 0.4;
+
+            name = name.ToLower();
+            foreach (var candidate in candidates.Select(x => x.ToLower()))
+            {
+                var levenshteinDistance = (float) GetLevenshteinDistance(name, candidate);
+                if (levenshteinDistance / name.Length < similarityThreshold)
+                {
+                    Logger.Warn($"Requested parameter '{name}' was not found. Is there a typo in '{candidate}'?");
+                    return;
+                }
+            }
+        }
+
+        private int GetLevenshteinDistance(string a, string b)
+        {
+            if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b)) 
+                return 0;
+
+            var lengthA = a.Length;
+            var lengthB = b.Length;
+            var distances = new int[lengthA + 1, lengthB + 1];
+            for (var i = 0; i <= lengthA; distances[i, 0] = i++) ;
+            for (var j = 0; j <= lengthB; distances[0, j] = j++) ;
+
+            for (var i = 1; i <= lengthA; i++)
+            for (var j = 1; j <= lengthB; j++)
+            {
+                var cost = b[j - 1] == a[i - 1] ? 0 : 1;
+                distances[i, j] = Math.Min(
+                    Math.Min(distances[i - 1, j] + 1, distances[i, j - 1] + 1),
+                    distances[i - 1, j - 1] + cost
+                );
+            }
+
+            return distances[lengthA, lengthB];
         }
     }
 }
