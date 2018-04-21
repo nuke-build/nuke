@@ -74,7 +74,7 @@ namespace Nuke.Common
 
                     return x == ' ' && !(inDoubleQuotes || inSingleQuotes);
                 })
-                .Select(x => x.TrimMatchingDoubleQuotes().TrimMatchingQuotes().Replace("\\\"", "\"").Replace("\\\'", "'"))
+                .Select(x => x.Trim().TrimMatchingDoubleQuotes().TrimMatchingQuotes().Replace("\\\"", "\"").Replace("\\\'", "'"))
                 .Where(x => !string.IsNullOrEmpty(x))
                 .ToArray();
         }

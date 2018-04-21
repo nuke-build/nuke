@@ -212,7 +212,7 @@ namespace Nuke.Common.Utilities
                     continue;
                 
                 yield return str.Substring(next, i - next);
-                next = i + 1;
+                next = i;
             }
 
             yield return str.Substring(next);
