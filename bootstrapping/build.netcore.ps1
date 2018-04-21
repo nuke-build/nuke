@@ -51,4 +51,5 @@ ExecSafe { & $DotNetFile build $BuildProjectFile --no-restore }
 # EXECUTE BUILD
 ###########################################################################
 
-ExecSafe { & $DotNetFile run --project $BuildProjectFile --no-build -- $BuildArguments }
+& $DotNetFile run --project $BuildProjectFile --no-build -- $BuildArguments
+exit $LASTEXITCODE

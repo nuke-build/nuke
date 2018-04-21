@@ -49,4 +49,5 @@ ExecSafe { & $MSBuildFile $BuildProjectFile }
 # EXECUTE BUILD
 ###########################################################################
 
-ExecSafe { & $BuildExeFile $BuildArguments }
+& $BuildExeFile $BuildArguments
+exit $LASTEXITCODE
