@@ -29,6 +29,7 @@ namespace Nuke.Common.Execution
             try
             {
                 var build = CreateBuildInstance(defaultTargetExpression);
+                InjectionService.InjectValues(build);
                 HandleEarlyExits(build);
 
                 executionList = TargetDefinitionLoader.GetExecutingTargets(build);
@@ -126,8 +127,6 @@ namespace Nuke.Common.Execution
             var build = Activator.CreateInstance<T>();
             build.TargetDefinitions = build.GetTargetDefinitions(defaultTargetExpression);
             NukeBuild.Instance = build;
-
-            InjectionService.InjectValues(build);
 
             return build;
         }

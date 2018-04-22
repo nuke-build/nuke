@@ -32,6 +32,7 @@ namespace Nuke.Common.ProjectModel
         public Guid Id { get; }
         public string Name { get; }
         public string Path { get; }
+        public string Directory => System.IO.Path.GetDirectoryName(Path);
         public Guid TypeId { get; }
 
         [CanBeNull]
