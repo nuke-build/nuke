@@ -21,7 +21,7 @@ namespace Nuke.Common.Execution
             where T : NukeBuild
         {
             Logger.Log(FigletTransform.GetText("NUKE"));
-            Logger.Log(typeof(BuildExecutor).GetTypeInfo().Assembly.GetInformationText());
+            Logger.Log($"Version: {typeof(BuildExecutor).GetTypeInfo().Assembly.GetVersionText()}");
             Logger.Log($"Host: {EnvironmentInfo.HostType}");
             Logger.Log();
 
