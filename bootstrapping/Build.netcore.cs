@@ -10,7 +10,7 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
 class Build : NukeBuild
 {
-    // Console application entry. Also defines the default target.
+    // Console application entry point. Also defines the default target.
     public static int Main () => Execute<Build>(x => x.Compile);
 
     // Auto-injection fields:
@@ -23,6 +23,9 @@ class Build : NukeBuild
     
     // [Parameter] readonly string MyGetApiKey;
     // Returns command-line arguments and environment variables.
+    
+    // [Solution] readonly Solution Solution;
+    // Provides access to the structure of the solution.
 
     Target Clean => _ => _
             .OnlyWhen(() => false) // Disabled for safety.
