@@ -26,7 +26,7 @@ namespace Nuke.Common.Tests
 
         [BuildServerTheory(typeof(AppVeyor))]
         [MemberData(nameof(Properties), typeof(AppVeyor))]
-        public void TestAppVeyor(AppVeyor instance, PropertyInfo property)
+        public void TestAppVeyor(PropertyInfo property, AppVeyor instance)
         {
             AssertProperty(instance, property);
         }
