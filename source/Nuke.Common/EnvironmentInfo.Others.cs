@@ -26,9 +26,21 @@ namespace Nuke.Common
 #endif
 
         public static IReadOnlyDictionary<string, string> Variables
-            => Environment.GetEnvironmentVariables()
-                .ToGeneric<string, string>(StringComparer.OrdinalIgnoreCase)
-                .AsReadOnly();
+        {
+            get
+            {
+                var environmentVariables = Environment.GetEnvironmentVariables()
+                    .ToGeneric<string, string>(StringComparer.CurrentCulture);
+
+                var groups = environmentVariables.GroupBy(x => x.Key, StringComparer.OrdinalIgnoreCase).ToList();
+                foreach (var group in groups.Where(x => x.Count() > 1))
+                    Logger.Warn($"Environment variable '{group.Key}' exists multiple times with different casing. Falling back to case-sensitive.");
+                
+                return groups.Any(x => x.Count() > 1)
+                    ? environmentVariables.AsReadOnly()
+                    : new Dictionary<string, string>(environmentVariables, StringComparer.OrdinalIgnoreCase).AsReadOnly();
+            }
+        }
 
         public static string[] CommandLineArguments { get; } = GetSurrogateArguments() ?? Environment.GetCommandLineArgs();
         
