@@ -104,12 +104,12 @@ namespace Nuke.Common.Tests
             if (!(value is string strValue) || property.GetCustomAttribute<NoConvertAttribute>() != null)
                 return;
 
-            bool.TryParse(strValue, out var _).Should().BeFalse("boolean");
-            long.TryParse(strValue, out var _).Should().BeFalse("long");
-            decimal.TryParse(strValue, out var _).Should().BeFalse("decimal");
-            DateTime.TryParse(strValue, out var _).Should().BeFalse("DateTime");
-            TimeSpan.TryParse(strValue, out var _).Should().BeFalse("TimeSpan");
-            Guid.TryParse(strValue, out var _).Should().BeFalse("Guid");
+            bool.TryParse(strValue, out _).Should().BeFalse("boolean");
+            long.TryParse(strValue, out _).Should().BeFalse("long");
+            decimal.TryParse(strValue, out _).Should().BeFalse("decimal");
+            DateTime.TryParse(strValue, out _).Should().BeFalse("DateTime");
+            TimeSpan.TryParse(strValue, out _).Should().BeFalse("TimeSpan");
+            Guid.TryParse(strValue, out _).Should().BeFalse("Guid");
         }
 
         private static T CreateBuildServer<T>()
@@ -139,7 +139,6 @@ namespace Nuke.Common.Tests
             }
 
             public override string Skip => !IsRunning(_type) ? $"Only applies to {_type.Name}." : null;
-
         }
 
         private class BuildServerFactAttribute : FactAttribute

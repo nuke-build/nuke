@@ -4,7 +4,6 @@ using System.Linq;
 
 namespace Nuke.Common.Utilities.Collections
 {
-
     public static partial class EnumerableExtensions
     {
         public static T SingleOrDefaultOrError<T>(this IEnumerable<T> enumerable, Func<T, bool> predicate, string message)
