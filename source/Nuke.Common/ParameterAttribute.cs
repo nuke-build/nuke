@@ -54,7 +54,11 @@ namespace Nuke.Common
                          !memberType.IsArray
                 ? typeof(Nullable<>).MakeGenericType(memberType)
                 : memberType;
-            return ParameterService.Instance.GetParameter(Name ?? memberName, memberType, (Separator ?? string.Empty).SingleOrDefault());
+            return ParameterService.Instance.GetParameter(
+                parameterName: Name ?? memberName,
+                destinationType: memberType,
+                separator: (Separator ?? string.Empty).SingleOrDefault(),
+                checkNames: true);
         }
     }
 }

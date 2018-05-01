@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -55,17 +54,17 @@ namespace Nuke.Common.Execution
         }
 
         [CanBeNull]
-        public object GetParameter(string parameterName, Type destinationType, char? separator = null)
+        public object GetParameter(string parameterName, Type destinationType, char? separator = null, bool checkNames = false)
         {
-            return HasCommandLineArgument(parameterName)
+            return HasCommandLineArgument(parameterName, checkNames)
                 ? GetCommandLineArgument(parameterName, destinationType, separator)
                 : GetEnvironmentVariable(parameterName, destinationType, separator);
         }
 
         [CanBeNull]
-        public object GetCommandLineArgument(string argumentName, Type destinationType, char? separator = null)
+        public object GetCommandLineArgument(string argumentName, Type destinationType, char? separator = null, bool checkNames = false)
         {
-            var index = GetCommandLineArgumentIndex(argumentName);
+            var index = GetCommandLineArgumentIndex(argumentName, checkNames);
             if (index == -1)
                 return GetDefaultValue(destinationType);
 
@@ -120,12 +119,12 @@ namespace Nuke.Common.Execution
             }
         }
 
-        private bool HasCommandLineArgument(string argumentName)
+        private bool HasCommandLineArgument(string argumentName, bool checkNames)
         {
-            return GetCommandLineArgumentIndex(argumentName) != -1;
+            return GetCommandLineArgumentIndex(argumentName, checkNames) != -1;
         }
 
-        private int GetCommandLineArgumentIndex(string argumentName)
+        private int GetCommandLineArgumentIndex(string argumentName, bool checkNames)
         {
             var hadLower = false;
             var splittedName = argumentName.Split(c =>
@@ -139,7 +138,7 @@ namespace Nuke.Common.Execution
             var index = Array.FindLastIndex(_commandLineArguments, 
                 x => x.EqualsOrdinalIgnoreCase($"-{argumentName}") || x.EqualsOrdinalIgnoreCase($"-{splittedName}"));
 
-            if (index == -1)
+            if (index == -1 && checkNames)
             {
                 var candidates = _commandLineArguments.Where(x => x.StartsWith("-")).Select(x => x.TrimStart("-").Replace("-", string.Empty));
                 CheckNames(argumentName, candidates);
@@ -255,15 +254,15 @@ namespace Nuke.Common.Execution
 
         private void CheckNames(string name, IEnumerable<string> candidates)
         {
-            const double similarityThreshold = 0.4;
+            const double similarityThreshold = 0.5;
 
             name = name.ToLower();
             foreach (var candidate in candidates.Select(x => x.ToLower()))
             {
                 var levenshteinDistance = (float) GetLevenshteinDistance(name, candidate);
-                if (levenshteinDistance / name.Length < similarityThreshold)
+                if (levenshteinDistance / name.Length <= similarityThreshold)
                 {
-                    Logger.Warn($"Requested parameter '{name}' was not found. Is there a typo in '{candidate}'?");
+                    Logger.Warn($"Requested parameter '{name}' was not found. Is there a typo with '{candidate}' which was passed?");
                     return;
                 }
             }
@@ -277,8 +276,14 @@ namespace Nuke.Common.Execution
             var lengthA = a.Length;
             var lengthB = b.Length;
             var distances = new int[lengthA + 1, lengthB + 1];
-            for (var i = 0; i <= lengthA; distances[i, 0] = i++) ;
-            for (var j = 0; j <= lengthB; distances[0, j] = j++) ;
+            
+            for (var i = 0; i <= lengthA; distances[i, 0] = i++)
+            {
+            }
+            
+            for (var j = 0; j <= lengthB; distances[0, j] = j++)
+            {
+            }
 
             for (var i = 1; i <= lengthA; i++)
             for (var j = 1; j <= lengthB; j++)
