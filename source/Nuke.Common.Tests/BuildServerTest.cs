@@ -100,6 +100,8 @@ namespace Nuke.Common.Tests
 
             if (property.GetCustomAttribute<CanBeNullAttribute>() == null)
                 value.Should().NotBeNull();
+            else if (property.PropertyType != typeof(string))
+                Nullable.GetUnderlyingType(property.PropertyType).Should().NotBeNull();
 
             if (!(value is string strValue) || property.GetCustomAttribute<NoConvertAttribute>() != null)
                 return;
