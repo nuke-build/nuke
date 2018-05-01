@@ -67,7 +67,7 @@ namespace Nuke.Common.BuildServers
         public Guid CollectionId => Variable<Guid>("SYSTEM_COLLECTIONID");
         public string DefaultWorkingDirectory => Variable("SYSTEM_DEFAULTWORKINGDIRECTORY");
         public long DefinitionId => Variable<long>("SYSTEM_DEFINITIONID");
-        [CanBeNull] public string PullRequestId => Variable("SYSTEM_PULLREQUEST_PULLREQUESTID");
+        [CanBeNull] public long? PullRequestId => Variable<long?>("SYSTEM_PULLREQUEST_PULLREQUESTID");
         [CanBeNull] public string PullRequestSourceBranch => Variable("SYSTEM_PULLREQUEST_SOURCEBRANCH");
         [CanBeNull] public string PullRequestTargetBranch => Variable("SYSTEM_PULLREQUEST_TARGETBRANCH");
         public string TeamFoundationCollectionUri => Variable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI");
