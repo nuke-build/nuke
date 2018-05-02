@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 
 namespace Nuke.Common
@@ -29,6 +30,11 @@ namespace Nuke.Common
         ///   Adds a set of actions that will be executed for this target.
         /// </summary>
         ITargetDefinition Executes<T>(Func<T> action);
+
+        /// <summary>
+        ///   Adds a <see cref="Task"/> that will be executed for this target.
+        /// </summary>
+        ITargetDefinition Executes(Func<Task> action);
 
         /// <summary>
         ///   Adds a set of dependent targets that will be executed before this target.
