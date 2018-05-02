@@ -82,7 +82,7 @@
     <Reference Include="NuGet.Versioning, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>_SOLUTION_DIRECTORY_\packages\NuGet.Versioning.4.0.0\lib\net45\NuGet.Versioning.dll</HintPath>
     </Reference>
-    <Reference Include="Nuke.Common, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Nuke.Common, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>_SOLUTION_DIRECTORY_\packages\Nuke.Common._NUKE_VERSION_\lib\net461\Nuke.Common.dll</HintPath>
     </Reference>
     <Reference Include="Octokit, Version=0.24.0.0, Culture=neutral, processorArchitecture=MSIL">
