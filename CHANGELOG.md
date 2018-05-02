@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [0.4.0] / 2018-05-02
 - Deprecated `Nuke.Core` namespace. All types have been moved to `Nuke.Common`.
 - Changed parameter binding to allow lisp-cased arguments (dashes for camel-humps).
 - Changed build execution to automatically unwrap `AggregateException` and `TargetInvocationException`.
@@ -63,7 +65,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git.
 - Fixed background color in console output.
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.3.1...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.4.0...HEAD
+[0.4.0]: https://github.com/nuke-build/nuke/compare/0.3.1...0.4.0
 [0.3.1]: https://github.com/nuke-build/nuke/compare/0.2.10...0.3.1
 [0.2.10]: https://github.com/nuke-build/nuke/compare/0.2.0...0.2.10
 [0.2.0]: https://github.com/nuke-build/nuke/tree/0.2.0
