@@ -1,0 +1,210 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "license": [
+    "Copyright Matthias Koch 2017.",
+    "Distributed under the MIT License.",
+    "https://github.com/nuke-build/tools/blob/master/LICENSE"
+  ],
+  "references": [
+    "https://raw.githubusercontent.com/wiki/OpenCover/opencover/Usage.md"
+  ],
+  "name": "OpenCover",
+  "officialUrl": "https://github.com/OpenCover/opencover",
+  "help": "OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.",
+  "packageId": "OpenCover",
+  "packageExecutable": "OpenCover.Console.exe",
+  "tasks": [
+    {
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "TargetPath",
+            "type": "string",
+            "assertion": "File",
+            "format": "-target:{value}",
+            "help": "The name of the target application or service that will be started; this can also be a path to the target application."
+          },
+          {
+            "name": "TargetArguments",
+            "type": "string",
+            "format": "-targetargs:{value}",
+            "help": "Arguments to be passed to the target process."
+          },
+          {
+            "name": "TargetDirectory",
+            "type": "string",
+            "assertion": "DirectoryOrNull",
+            "format": "-targetdir:{value}",
+            "help": "The path to the target directory; if the target argument already contains a path then this argument can be used to provide an alternate path where PDB files may be found."
+          },
+          {
+            "name": "CoverByTests",
+            "type": "List<string>",
+            "format": "-coverbytest:{value}",
+            "separator": ";",
+            "help": "Gather coverage by test by analyzing the assemblies that match these filters for Test methods. Currently only MSTest, XUnit, and NUnit tests are supported; other frameworks can be added on request - please raise support request on GitHub."
+          },
+          {
+            "name": "PerformanceCounters",
+            "type": "bool",
+            "format": "-enableperformancecounters",
+            "help": "<em>Administrator</em> privileges required. Allows the monitoring in <em>Performance Monitor</em> of the following values (they are usually cleared at the end of a performance run):<ul><li>messages remaining on the queue</li><li>number of messages processed</li></ul>"
+          },
+          {
+            "name": "ExcludeByAttributes",
+            "type": "List<string>",
+            "format": "-excludebyattribute:{value}",
+            "separator": ";",
+            "help": "Exclude a class or method by filter(s) that match attributes that have been applied. An <c>*</c> can be used as a wildcard."
+          },
+          {
+            "name": "ExcludeByFile",
+            "type": "List<string>",
+            "format": "-excludebyfile:{value}",
+            "separator": ";",
+            "help": "Exclude a class (or methods) by file-filter(s) that match the filenames. An <c>*</c> can be used as a wildcard."
+          },
+          {
+            "name": "ExcludeDirectories",
+            "type": "List<string>",
+            "format": "-excludedirs:{value}",
+            "separator": ";",
+            "help": "Assemblies being loaded from these locations will be ignored."
+          },
+          {
+            "name": "Filters",
+            "type": "List<string>",
+            "format": "-filter:{value}",
+            "separator": " ",
+            "quoteMultiple": true,
+            "help": "<p>A list of filters to apply to selectively include or exclude assemblies and classes from coverage results. Using PartCover syntax, where <c>(+|-)[Assembly-Filter]Type-Filter</c>. For example <c>+[Open*]*</c> includes all types in assemblies starting with <em>Open</em>, <c>-[*]Core.*</c> exclude all types in the <em>Core</em> namespace regardless of the assembly. If no filters are supplied then the default inclusive filter <c>+[*]*</c> is applied automatically. See Understanding Filters for more information.</p><ul><li>NOTE: Multiple filters can be applied by separating them with spaces and enclosing them with quotes: <c>-filter:\"+[*]* -[A*]Name.*\"</c></li><li>NOTE: Exclusion filters take precedence over inclusion filters.</li></ul>"
+          },
+          {
+            "name": "HideSkippedKinds",
+            "type": "List<OpenCoverSkipping>",
+            "format": "-hideskipped:{value}",
+            "separator": ";",
+            "help": "Remove information from output file (-output:) that relates to classes/modules that have been skipped (filtered) due to the use of the switches <c>-excludebyfile</c>, <c>-excludebyattribute</c> and <c>-filter</c> or where the PDB is missing. Multiple arguments can be used by separating them with a semicolon, e.g. <c>-hideskipped:File;MissingPdb;Attribute</c>"
+          },
+          {
+            "name": "Verbosity",
+            "type": "OpenCoverVerbosity",
+            "format": "-log:{value}",
+            "help": "Change the logging level, default is set to Info. Logging is based on log4net logging levels and appenders."
+          },
+          {
+            "name": "MergeByHash",
+            "type": "bool",
+            "format": "-mergebyhash",
+            "help": "Under some scenarios e.g. using MSTest, an assembly may be loaded many times from different locations. This option is used to merge the coverage results for an assembly regardless of where it was loaded assuming the assembly has the same file-hash in each location."
+          },
+          {
+            "name": "MergeOutput",
+            "type": "bool",
+            "format": "-mergeoutput",
+            "help": "Allow to merge the results with an existing file (specified by <c>-output</c> option). So the coverage from the output file will be loaded first (if exists)."
+          },
+          {
+            "name": "NoDefaultFilters",
+            "type": "bool",
+            "format": "-nodefaultfilters",
+            "help": "A list of default exclusion filters are usually applied, this option can be used to turn them off. The default filters are:<ul><li><c>-[System]*</c></li><li><c>-[System.*]*</c></li><li><c>-[mscorlib]*</c></li><li><c>-[mscorlib.*]*</c></li><li><c>-[Microsoft.VisualBasic]*</c></li></ul>"
+          },
+          {
+            "name": "OldStyle",
+            "type": "bool",
+            "format": "-oldStyle",
+            "help": "Use old style instrumentation - the instrumentation is not Silverlight friendly and is provided to support environments where mscorlib instrumentation is not working. <em>ONLY</em> use this option if you are encountering <see cref=\"MissingMethodException\"/> like errors when the code is run under OpenCover. The issue could be down to <em>ngen /Profile</em> of the mscorlib which then interferes with the instrumentation."
+          },
+          {
+            "name": "Output",
+            "type": "string",
+            "format": "-output:{value}",
+            "help": "The location and name of the output Xml file. If no value is supplied then the current directory will be used and the output filename will be <c>results.xml</c>."
+          },
+          {
+            "name": "SafeMode",
+            "type": "bool",
+            "format": "-safemode:{value}",
+            "help": "Enable or disable safemode - default is on/yes. When safemode is on OpenCover will use a common buffer for all threads in an instrumented process and this may have performance impacts depending on your code and its tests. Turning safemode off uses individual buffers for each thread but this may lead to data loss (uncovered code reported) if the runtime shuts down the instrumented process before the profiler has had time to retrieve the data and shunt it to the host for processing."
+          },
+          {
+            "name": "SearchDirectories",
+            "type": "List<string>",
+            "format": "-searchdirs:{value}",
+            "separator": ";",
+            "help": "Alternative locations to look for PDBs."
+          },
+          {
+            "name": "Service",
+            "type": "bool",
+            "format": "-service",
+            "help": "The value provided in the target parameter is the name of a service rather than a name of a process. <em>Administrator</em> privileges recommended."
+          },
+          {
+            "name": "ShowUnvisited",
+            "type": "bool",
+            "format": "-showunvisited",
+            "help": "Show a list of unvisited methods and classes after the coverage run is finished and the results are presented."
+          },
+          {
+            "name": "SkipAutoProperties",
+            "type": "bool",
+            "format": "-skipautoprops",
+            "help": "Neither track nor record auto-implemented properties. That is, skip getters and setters like these: <c>public bool Service { get; set; }</c>"
+          },
+          {
+            "name": "MaximumVisitCount",
+            "type": "int",
+            "format": "-threshold:{value}",
+            "help": "Limits the number of visit counts recorded/reported for an instrumentation point. May have some performance gains as it can reduce the number of messages sent from the profiler. Coverage results should not be affected but will have an obvious impact on the Visit Counts reported."
+          },
+          {
+            "name": "Registration",
+            "type": "RegistrationType",
+            "format": "-register:{value}",
+            "help": "Use this switch to register and de-register the code coverage profiler. Alternatively use the optional user argument to do per-user registration where the user account does not have administrative permissions. Alternatively use an administrative account to register the profilers using the <em>regsvr32</em> utility. If you do not want to use the registry entries, use <c>-register:Path32</c> or <c>-register:Path64</c> to let opencover select the profiler for you. Depending on your choice it selects the <em>OpenCoverAssemblyLocation/x86/OpenCover.Profiler.dll</em> or <em>OpenCoverAssemblyLocation/x64/OpenCover.Profiler.dll</em>."
+          },
+          {
+            "name": "TargetExitCodeOffset",
+            "type": "int",
+            "format": "-returntargetcode:{value}",
+            "help": "Return the target process exit code instead of the OpenCover console exit code. Use the offset to return the OpenCover console at a value outside the range returned by the target process."
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "OpenCoverVerbosity",
+      "values": [
+        "Off",
+        "Fatal",
+        "Error",
+        "Warn",
+        "Info",
+        "Debug",
+        "Verbose",
+        "All"
+      ]
+    },
+    {
+      "name": "OpenCoverSkipping",
+      "values": [
+        "File",
+        "Filter",
+        "Attribute",
+        "MissingPdb"
+      ]
+    },
+    {
+      "name": "RegistrationType",
+      "values": [
+        "User",
+        "Path32",
+        "Path64"
+      ]
+    }
+  ]
+}

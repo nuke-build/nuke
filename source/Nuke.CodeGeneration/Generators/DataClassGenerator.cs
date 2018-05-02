@@ -8,8 +8,8 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.CodeGeneration.Model;
 using Nuke.CodeGeneration.Writers;
-using Nuke.Core;
-using Nuke.Core.Utilities;
+using Nuke.Common;
+using Nuke.Common.Utilities;
 
 // ReSharper disable UnusedMethodReturnValue.Local
 

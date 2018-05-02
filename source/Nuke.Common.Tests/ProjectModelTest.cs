@@ -8,7 +8,7 @@ using System.Linq;
 using FluentAssertions;
 using Nuke.Common.ProjectModel;
 using Xunit;
-using static Nuke.Core.IO.PathConstruction;
+using static Nuke.Common.IO.PathConstruction;
 
 // ReSharper disable ArgumentsStyleLiteral
 
@@ -17,7 +17,7 @@ namespace Nuke.Common.Tests
     public class ProjectModelTest
     {
         private static AbsolutePath SolutionFile
-            => (AbsolutePath) Directory.GetCurrentDirectory() / ".." / ".." / ".." / ".." / ".." / "Nuke.sln";
+            => (AbsolutePath) Directory.GetCurrentDirectory() / ".." / ".." / ".." / ".." / ".." / "nuke-common.sln";
 
         [Fact]
         public void SolutionTest()
@@ -27,12 +27,11 @@ namespace Nuke.Common.Tests
             solution.Projects.Where(x => x.Is(ProjectType.SolutionFolder)).Select(x => x.Name)
                 .Should().BeEquivalentTo("bootstrapping", "misc");
 
-            solution.Projects.Where(x => x.Is(ProjectType.CSharpProject)).Should().HaveCount(7);
+            solution.Projects.Where(x => x.Is(ProjectType.CSharpProject)).Should().HaveCount(5);
 
             var buildProject = solution.Projects.SingleOrDefault(x => x.Name == ".build");
             buildProject.Should().NotBeNull();
-            buildProject?.Parent.Should().NotBeNull();
-            buildProject?.Parent?.Name.Should().Be("misc");
+            buildProject.Is(ProjectType.CSharpProject).Should().BeTrue();
         }
 
         [Fact]
@@ -40,7 +39,7 @@ namespace Nuke.Common.Tests
         {
             var solution = ProjectModelTasks.ParseSolution(SolutionFile);
 
-            solution.GetProjects("*.Tests").Should().HaveCount(2);
+            solution.GetProjects("*.Tests").Should().HaveCount(1);
         }
 
 //        [Fact]

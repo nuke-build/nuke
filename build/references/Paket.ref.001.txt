@@ -1,0 +1,62 @@
+
+          
+paket restore
+Download the computed dependency graph.
+ 1: 
+ 2: 
+ 3: 
+ 4: 
+ 5: 
+ 6: 
+ 7: 
+ 8: 
+ 9: 
+10: 
+11: 
+12: 
+13: 
+14: 
+15: 
+16: 
+17: 
+18: 
+19: 
+20: 
+21: 
+22: 
+23: 
+
+paket restore [--help] [--force] [--only-referenced] [--touch-affected-refs] [--ignore-checks]
+              [--fail-on-checks] [--group &lt;name&gt;] [--project &lt;path&gt;] [--references-file &lt;path&gt;]
+              [--target-framework &lt;framework&gt;]
+
+OPTIONS:
+
+    --force, -f           force download and reinstallation of all dependencies
+    --only-referenced     only restore packages that are referenced by paket.references files
+    --touch-affected-refs touch project files referencing affected dependencies to help incremental
+                          build tools detecting the change
+    --ignore-checks       do not check if paket.dependencies and paket.lock are in sync
+    --fail-on-checks      abort if any checks fail
+    --group, -g &lt;name&gt;    restore dependencies of a single group
+    --project, -p &lt;path&gt;  restore dependencies of a single project
+    --references-file &lt;path&gt;
+                          restore packages from a paket.references file; may be repeated
+    --target-framework &lt;framework&gt;
+                          restore only for the specified target framework
+    --silent, -s          suppress console output
+    --verbose, -v         print detailed information to the console
+    --log-file &lt;path&gt;     print output to a file
+    --from-bootstrapper   call coming from the '--run' feature of the bootstrapper
+    --help                display this list of options.
+
+If you add the --verbose flag Paket will run in verbose mode and show detailed information.
+With --log-file [path] you can trace the logged information into a file.
+Requires a valid paket.lock file
+paket restore fails with an error if the paket.lock file
+does not exist. No packages are downloaded in that case. Please see
+paket install and paket update to
+learn how to create the paket.lock file.
+
+
+        

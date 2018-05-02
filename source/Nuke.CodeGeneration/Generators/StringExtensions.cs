@@ -8,12 +8,92 @@ using System.Globalization;
 using System.Linq;
 using Humanizer;
 using JetBrains.Annotations;
-using Nuke.Core;
+using Nuke.Common;
 
 namespace Nuke.CodeGeneration.Generators
 {
     public static class StringExtensions
     {
+        private static readonly string[] s_reservedWords = {
+                                                               "abstract",
+                                                               "as",
+                                                               "base",
+                                                               "bool",
+                                                               "break",
+                                                               "byte",
+                                                               "case",
+                                                               "catch",
+                                                               "char",
+                                                               "checked",
+                                                               "class",
+                                                               "const",
+                                                               "continue",
+                                                               "decimal",
+                                                               "default",
+                                                               "delegate",
+                                                               "do",
+                                                               "double",
+                                                               "else",
+                                                               "enum",
+                                                               "event",
+                                                               "explicit",
+                                                               "extern",
+                                                               "false",
+                                                               "finally",
+                                                               "fixed",
+                                                               "float",
+                                                               "for",
+                                                               "foreach",
+                                                               "goto",
+                                                               "if",
+                                                               "implicit",
+                                                               "in",
+                                                               "int",
+                                                               "interface",
+                                                               "internal",
+                                                               "is",
+                                                               "lock",
+                                                               "long",
+                                                               "namespace",
+                                                               "new",
+                                                               "null",
+                                                               "object",
+                                                               "operator",
+                                                               "out",
+                                                               "override",
+                                                               "params",
+                                                               "private",
+                                                               "protected",
+                                                               "public",
+                                                               "readonly",
+                                                               "ref",
+                                                               "return",
+                                                               "sbyte",
+                                                               "sealed",
+                                                               "short",
+                                                               "sizeof",
+                                                               "stackalloc",
+                                                               "static",
+                                                               "string",
+                                                               "struct",
+                                                               "switch",
+                                                               "this",
+                                                               "throw",
+                                                               "true",
+                                                               "try",
+                                                               "typeof",
+                                                               "uint",
+                                                               "ulong",
+                                                               "unchecked",
+                                                               "unsafe",
+                                                               "ushort",
+                                                               "using",
+                                                               "virtual",
+                                                               "void",
+                                                               "volatile",
+                                                               "while"
+                                                           };
+
         public static string ToInstance(this string text)
         {
             var firstLowerCaseIndex = text.TakeWhile(char.IsUpper).Count();
@@ -21,9 +101,14 @@ namespace Nuke.CodeGeneration.Generators
                    text.Substring(firstLowerCaseIndex);
         }
 
-        public static string Escape(this string text)
+        public static string EscapeParameter(this string parameterName)
         {
-            return new[] { "namespace", "class" }.Contains(text) ? "@" + text : text;
+            return s_reservedWords.Contains(parameterName) ? "@" + parameterName : parameterName;
+        }
+
+        public static string EscapeProperty(this string propertyName)
+        {
+            return s_reservedWords.Contains(propertyName) ? propertyName + "_" : propertyName;
         }
 
         public static string ToMember(this string text)
@@ -72,3 +157,4 @@ namespace Nuke.CodeGeneration.Generators
         }
     }
 }
+

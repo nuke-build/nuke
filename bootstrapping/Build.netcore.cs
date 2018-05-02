@@ -3,15 +3,14 @@ using System.Linq;
 using Nuke.Common;
 using Nuke.Common.Git;
 using Nuke.Common.Tools.GitVersion;
-using Nuke.Core;
+using static Nuke.Common.EnvironmentInfo;
+using static Nuke.Common.IO.FileSystemTasks;
+using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
-using static Nuke.Core.IO.FileSystemTasks;
-using static Nuke.Core.IO.PathConstruction;
-using static Nuke.Core.EnvironmentInfo;
 
 class Build : NukeBuild
 {
-    // Console application entry. Also defines the default target.
+    // Console application entry point. Also defines the default target.
     public static int Main () => Execute<Build>(x => x.Compile);
 
     // Auto-injection fields:
@@ -24,6 +23,9 @@ class Build : NukeBuild
     
     // [Parameter] readonly string MyGetApiKey;
     // Returns command-line arguments and environment variables.
+    
+    // [Solution] readonly Solution Solution;
+    // Provides access to the structure of the solution.
 
     Target Clean => _ => _
             .OnlyWhen(() => false) // Disabled for safety.

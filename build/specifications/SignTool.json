@@ -1,0 +1,300 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "license": [
+    "Copyright Matthias Koch 2017.",
+    "Distributed under the MIT License.",
+    "https://github.com/nuke-build/tools/blob/master/LICENSE"
+  ],
+  "references": [
+    "https://raw.githubusercontent.com/dotnet/docs/master/docs/framework/tools/signtool-exe.md"
+  ],
+  "name": "SignTool",
+  "officialUrl": "https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe",
+  "help": "Sign Tool is a command-line tool that digitally signs files, verifies signatures in files, and time-stamps files.",
+  "tasks": [
+    {
+      "help": "Use the <c>sign</c> command to sign files using embedded signatures. Signing protects a file from tampering, and allows users to verify the signer (you) based on a signing certificate. The options below allow you to specify signing parameters and to select the signing certificate you wish to use.",
+      "definiteArgument": "sign",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AutomaticSelection",
+            "type": "bool",
+            "format": "/a",
+            "help": "Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert."
+          },
+          {
+            "name": "AdditionalCertificate",
+            "type": "string",
+            "format": "/ac {value}",
+            "help": "Add an additional certificate to the signature block."
+          },
+          {
+            "name": "CertificateTemplateName",
+            "type": "string",
+            "format": "/c {value}",
+            "help": "Specify the Certificate Template Name (Microsoft extension) of the signing cert."
+          },
+          {
+            "name": "File",
+            "type": "string",
+            "format": "/f {value}",
+            "help": "Specify the signing cert in a file. If this file is a PFX with a password, the password may be supplied with the <c>/p</c> option. If the file does not contain private keys, use the <c>/csp</c> and <c>/kc</c> options to specify the CSP and container name of the private key."
+          },
+          {
+            "name": "Issuer",
+            "type": "string",
+            "format": "/i {value}",
+            "help": "Specify the Issuer of the signing cert, or a substring."
+          },
+          {
+            "name": "SigningSubjectName",
+            "type": "string",
+            "format": "/n {value}",
+            "help": "Specify the Subject Name of the signing cert, or a substring."
+          },
+          {
+            "name": "Password",
+            "type": "string",
+            "format": "/p {value}",
+            "secret": true,
+            "help": "Specify a password to use when opening the PFX file."
+          },
+          {
+            "name": "RootSubjectName",
+            "type": "string",
+            "format": "/r {value}",
+            "help": "Specify the Subject Name of a Root cert that the signing cert must chain to."
+          },
+          {
+            "name": "Store",
+            "type": "string",
+            "format": "/s {value}",
+            "help": "Specify the Store to open when searching for the cert. The default is the <c>MY</c> Store."
+          },
+          {
+            "name": "MachineStore",
+            "type": "bool",
+            "format": "/sm",
+            "help": "Open a Machine store instead of a User store."
+          },
+          {
+            "name": "Sha1Thumbprint",
+            "type": "string",
+            "format": "/sha1 {value}",
+            "secret": true,
+            "help": "Specify the SHA1 thumbprint of the signing cert."
+          },
+          {
+            "name": "FileDigestAlgorithm",
+            "type": "string",
+            "format": "/fd {value}",
+            "help": "Specifies the file digest algorithm to use for creating file signatures. (Default is <c>SHA1</c>)"
+          },
+          {
+            "name": "EnhancedKeyUsage",
+            "type": "string",
+            "format": "/u {value}",
+            "help": "Specify the Enhanced Key Usage that must be present in the cert.<para/>The parameter may be specified by OID or by string. The default usage is <em>Code Signing</em> (1.3.6.1.5.5.7.3.3)."
+          },
+          {
+            "name": "WindowsSystemComponentVerification",
+            "type": "bool",
+            "format": "/uw",
+            "help": "Specify usage of <em>Windows System Component Verification</em> (1.3.6.1.4.1.311.10.3.6)."
+          },
+          {
+            "name": "Csp",
+            "type": "string",
+            "format": "/csp {value}",
+            "help": "Specify the CSP containing the Private Key Container."
+          },
+          {
+            "name": "KeyContainer",
+            "type": "string",
+            "format": "/kc {value}",
+            "help": "Specify the Key Container Name of the Private Key."
+          },
+          {
+            "name": "AppendSignature",
+            "type": "bool",
+            "format": "/as",
+            "help": "Append this signature. If no primary signature is present, this signature will be made the primary signature instead."
+          },
+          {
+            "name": "Description",
+            "type": "string",
+            "format": "/d {value}",
+            "help": "Provide a description of the signed content."
+          },
+          {
+            "name": "Url",
+            "type": "string",
+            "format": "/du {value}",
+            "help": "Provide a URL with more information about the signed content."
+          },
+          {
+            "name": "TimestampServerUrl",
+            "type": "string",
+            "format": "/t {value}",
+            "help": "Specify the timestamp server's URL. If this option is not present, the signed file will not be timestamped. A warning is generated if timestamping fails."
+          },
+          {
+            "name": "Rfc3161TimestampServerUrl",
+            "type": "string",
+            "format": "/tr {value}",
+            "help": "Specifies the RFC 3161 timestamp server's URL. If this option (or <c>/t</c>) is not specified, the signed file will not be timestamped. A warning is generated if timestamping fails. This switch cannot be used with the <c>/t</c> switch."
+          },
+          {
+            "name": "Rfc3161TimestampServerUrlSealed",
+            "type": "string",
+            "format": "/tseal {value}",
+            "help": "Specifies the RFC 3161 timestamp server's URL for timestamping a sealed file."
+          },
+          {
+            "name": "TimestampServerDigestAlgorithm",
+            "type": "string",
+            "format": "/td {value}",
+            "help": "Used with the <c>/tr</c> or <c>/tseal</c> switch to request a digest algorithm used by the RFC 3161 timestamp server."
+          },
+          {
+            "name": "AuthenticatedAttributes",
+            "type": "Dictionary<string, string>",
+            "format": "/sa {value}",
+            "itemFormat": "{key} {value}",
+            "help": "Specify an OID and value to be included as an authenticated attribute in the signature. The value will be encoded as an ASN1 UTF8 string. This option may be given multiple times."
+          },
+          {
+            "name": "SealingSignature",
+            "type": "bool",
+            "format": "/seal",
+            "help": "Add a sealing signature if the file format supports it."
+          },
+          {
+            "name": "IntentToSealAttribute",
+            "type": "bool",
+            "format": "/itos",
+            "help": "Create a primary signature with the intent-to-seal attribute."
+          },
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "/force",
+            "help": "Continue to seal or sign in situations where the existing signature or sealing signature needs to be removed to support sealing."
+          },
+          {
+            "name": "NoSealWarn",
+            "type": "bool",
+            "format": "/nosealwarn",
+            "help": "Sealing-related warnings do not affect SignTool's return code."
+          },
+          {
+            "name": "SignedDigestAndUnsignedPkcs7Path",
+            "type": "string",
+            "format": "/dg {value}",
+            "help": "Generates the to be signed digest and the unsigned PKCS7 files. The output digest and PKCS7 files will be: <c>&lt;path&gt;\\&lt;file&gt;.dig</c> and <c>&lt;path&gt;\\&lt;file&gt;.p7u</c>. To output an additional XML file, see <c>/dxml</c>."
+          },
+          {
+            "name": "SignDigestOnly",
+            "type": "bool",
+            "format": "/ds",
+            "help": "Signs the digest only. The input file should be the digest generated by the <c>/dg</c> option. The output file will be: <c>&lt;file&gt;.signed</c>."
+          },
+          {
+            "name": "GenerateSignature",
+            "type": "string",
+            "format": "/di {value}",
+            "help": "Creates the signature by ingesting the signed digest to the unsigned PKCS7 file. The input signed digest and unsigned PKCS7 files should be: <c>&lt;path&gt;\\&lt;file&gt;.dig.signed</c> and <c>&lt;path&gt;\\&lt;file&gt;.p7u</c>."
+          },
+          {
+            "name": "XmlFile",
+            "type": "bool",
+            "format": "/dxml",
+            "help": "When used with the <c>/dg</c> option, produces an XML file. The output file will be: <c>&lt;path&gt;\\&lt;file&gt;.dig.xml</c>."
+          },
+          {
+            "name": "AuthenticodeDigestSignLibDll",
+            "type": "string",
+            "format": "/dlib {value}",
+            "help": "Specifies the DLL implementing the AuthenticodeDigestSign function to sign the digest with. This option is equivalent to using SignTool separately with the <c>/dg</c>, <c>/ds</c>, and <c>/di</c> switches, except this option invokes all three as one atomic operation."
+          },
+          {
+            "name": "AuthenticodeDigestSignPassUnmodified",
+            "type": "string",
+            "format": "dmdf {value}",
+            "help": "When used with the <c>/dlib</c> option, passes the file's contents to the AuthenticodeDigestSign function without modification."
+          },
+          {
+            "name": "ContentFileToPkcs7",
+            "type": "string",
+            "format": "/p7 {value}",
+            "help": "Specifies that for each specified content file a PKCS7 file is produced. The PKCS7 file will be named: <c>&lt;path&gt;\\&lt;file&gt;.p7</c>"
+          },
+          {
+            "name": "SignedContentIdentifier",
+            "type": "string",
+            "format": "/p7co {value}",
+            "help": "Specifies the <c>&lt;OID&gt;</c> that identifies the signed content."
+          },
+          {
+            "name": "SignedContentMethod",
+            "type": "SignToolContentMethod",
+            "format": "/p7ce {value}",
+            "help": "efined values:<ul><li><b>Embedded:</b> Embeds the signed content in the PKCS7.</li><li><b>DetachedSignedData:</b> Produces the signed data part of a detached PKCS7.</li></ul>The default is <c>Embedded</c>."
+          },
+          {
+            "name": "PageHashes",
+            "type": "bool",
+            "format": "/ph",
+            "help": "Generate page hashes for executable files if supported."
+          },
+          {
+            "name": "SuppressPageHashes",
+            "type": "bool",
+            "format": "/nph",
+            "help": "Suppress page hashes for executable files if supported. The default is determined by the <c>SIGNTOOL_PAGE_HASHES</c> environment variable and by the <em>wintrust.dll</em> version."
+          },
+          {
+            "name": "RelaxedMarkerCheck",
+            "type": "bool",
+            "format": "/rmc",
+            "help": "Specifies signing a PE file with the relaxed marker check semantic. The flag is ignored for non-PE files. During verification, certain authenticated sections of the signature will bypass invalid PE markers check. This option should only be used after careful consideration and reviewing the details of MSRC case MS12-024 to ensure that no vulnerabilities are introduced."
+          },
+          {
+            "name": "Quiet",
+            "type": "bool",
+            "format": "/q",
+            "help": "No output on success and minimal output on failure."
+          },
+          {
+            "name": "Verbose",
+            "type": "bool",
+            "format": "/v",
+            "help": "Print verbose success and status messages. This may also provide slightly more information on error."
+          },
+          {
+            "name": "Debug",
+            "type": "bool",
+            "format": "/debug",
+            "help": "Display additional debug information."
+          },
+          {
+            "name": "Files",
+            "type": "List<string>",
+            "format": "{value}",
+            "help": "Files to sign."
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "SignToolContentMethod",
+      "values": [
+        "Embedded",
+        "DetachedSignedData"
+      ]
+    }
+  ]
+}

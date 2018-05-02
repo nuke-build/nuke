@@ -9,8 +9,8 @@ using FluentAssertions;
 using Nuke.Common.Tools.MSBuild;
 using Nuke.Common.Tools.OpenCover;
 using Nuke.Common.Tools.Xunit;
-using Nuke.Core.IO;
-using Nuke.Core.Tooling;
+using Nuke.Common.IO;
+using Nuke.Common.Tooling;
 using Xunit;
 
 namespace Nuke.Common.Tests
@@ -30,7 +30,7 @@ namespace Nuke.Common.Tests
         public void TestMSBuild()
         {
             var projectFile = RootDirectory / "source" / "Nuke.Common" / "Nuke.Common.csproj";
-            var solutionFile = RootDirectory / "Nuke.sln";
+            var solutionFile = RootDirectory / "nuke-common.sln";
 
             Assert<MSBuildSettings>(x => x
                     .SetProjectFile(projectFile)

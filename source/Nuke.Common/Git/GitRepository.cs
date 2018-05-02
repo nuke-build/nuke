@@ -7,9 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
-using Nuke.Core;
-using Nuke.Core.IO;
-using Nuke.Core.Utilities;
+using Nuke.Common.IO;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Git
 {
@@ -26,12 +25,10 @@ namespace Nuke.Common.Git
         /// <summary>
         /// Obtains information from a local git repository. Auto-injection can be utilized via <see cref="GitRepositoryAttribute"/>.
         /// </summary>
-        [CanBeNull]
         public static GitRepository FromLocalDirectory(string directory, string branch = null, string remote = "origin")
         {
             var rootDirectory = FileSystemTasks.FindParentDirectory(directory, x => x.GetDirectories(".git").Any());
-            if (rootDirectory == null)
-                return null;
+            ControlFlow.Assert(rootDirectory != null, $"Could not find root directory for '{directory}'.");
             var gitDirectory = Path.Combine(rootDirectory, ".git");
 
             var headFile = Path.Combine(gitDirectory, "HEAD");
@@ -49,8 +46,7 @@ namespace Nuke.Common.Git
                 .TakeWhile(x => !x.StartsWith("["))
                 .SingleOrDefault(x => x.StartsWithOrdinalIgnoreCase("url = "))
                 ?.Split('=')[1];
-            if (url == null)
-                return null;
+            ControlFlow.Assert(url != null, $"Could not parse remote URL for '{remote}'.");
 
             var (endpoint, identifier) = ParseUrl(url);
 
@@ -67,7 +63,7 @@ namespace Nuke.Common.Git
             var match = new[]
                         {
                             @"git@(?<endpoint>[^:/]+?)(:|/)(?<identifier>.+?)/?(\.git)?$",
-                            @"^https://(?<endpoint>[^/]+?)/(?<identifier>.+?)/?(\.git)?$"
+                            @"^https://([^:]+:[^:@]+@)?(?<endpoint>[^/]+?)/(?<identifier>.+?)/?(\.git)?$"
                         }
                 .Select(x => Regex.Match(url.Trim(), x))
                 .FirstOrDefault(x => x.Success);

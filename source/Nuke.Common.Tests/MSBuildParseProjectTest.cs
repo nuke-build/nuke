@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using FluentAssertions;
 using Nuke.Common.Tools.MSBuild;
-using Nuke.Core.IO;
+using Nuke.Common.IO;
 
 namespace Nuke.Common.Tests
 {
@@ -22,11 +22,11 @@ namespace Nuke.Common.Tests
             var project = MSBuildTasks.MSBuildParseProject(projectFile, x => x.SetProperty("TargetFramework", "netstandard2.0"));
             project.IsSdkProject.Should().BeTrue();
             project.Properties["Configuration"].Should().Be("Debug");
-            project.ItemGroups["PackageReference"].Should().NotContain("Octokit");
+            project.Properties["TargetFramework"].Should().Be("netstandard2.0");
 
             project = MSBuildTasks.MSBuildParseProject(projectFile, x => x.SetProperty("TargetFramework", "net461").SetConfiguration("Release"));
-            project.Properties["Configuration"].Should().Be("Release");
-            project.ItemGroups["PackageReference"].Should().Contain("Octokit");
+            project.Properties["Configuration"].Should().Be("Release");        
+            project.Properties["TargetFramework"].Should().Be("net461");
         }
     }
 }

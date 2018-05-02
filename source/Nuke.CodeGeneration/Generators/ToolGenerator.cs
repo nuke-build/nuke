@@ -10,8 +10,8 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.CodeGeneration.Model;
 using Nuke.CodeGeneration.Writers;
-using Nuke.Core.Utilities;
-using Nuke.Core.Utilities.Collections;
+using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 // ReSharper disable UnusedMethodReturnValue.Local
 
@@ -31,7 +31,7 @@ namespace Nuke.CodeGeneration.Generators
                     .WriteLine("// Distributed under the MIT License.")
                     .WriteLine("// https://github.com/nuke-build/nuke/blob/master/LICENSE")
                     .WriteLine(string.Empty)
-                    .WriteLine($"// Generated with {s_assembly.GetName().Name}, {s_assembly.GetInformationText()}.")
+                    .WriteLine($"// Generated with {s_assembly.GetName().Name}, Version: {s_assembly.GetVersionText()}.")
                     .WriteLineIfTrue(tool.RepositoryUrl != null, $"// Generated from {tool.RepositoryUrl}.")
                     .WriteLine(string.Empty)
                     .ForEach(GetNamespaceImports(), x => writer.WriteLine($"using {x};"))
@@ -78,11 +78,11 @@ namespace Nuke.CodeGeneration.Generators
             return new[]
                    {
                        "JetBrains.Annotations",
+                       "Nuke.Common",
+                       "Nuke.Common.Execution",
+                       "Nuke.Common.Tooling",
                        "Nuke.Common.Tools",
-                       "Nuke.Core",
-                       "Nuke.Core.Execution",
-                       "Nuke.Core.Tooling",
-                       "Nuke.Core.Utilities.Collections",
+                       "Nuke.Common.Utilities.Collections",
                        "System",
                        "System.Collections.Generic",
                        "System.Collections.ObjectModel",

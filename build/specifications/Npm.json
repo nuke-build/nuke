@@ -1,0 +1,136 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "license": [
+    "Copyright Matthias Koch 2017.",
+    "Distributed under the MIT License.",
+    "https://github.com/nuke-build/tools/blob/master/LICENSE"
+  ],
+  "references": [
+    "https://docs.npmjs.com/cli/install#//div[@id='page']",
+    "https://docs.npmjs.com/cli/run-script#//div[@id='page']"
+  ],
+  "name": "Npm",
+  "officialUrl": "https://www.npmjs.com/",
+  "help": "npm is the package manager for the Node JavaScript platform. It puts modules in place so that node can find them, and manages dependency conflicts intelligently.<para/>It is extremely configurable to support a wide variety of use cases. Most commonly, it is used to publish, discover, install, and develop node programs.",
+  "pathExecutable": "npm",
+  "tasks": [
+    {
+      "help": "Installs a package, and any packages that it depends on. If the package has a package-lock or shrinkwrap file, the installation of dependencies will be driven by that, with an <b>npm-shrinkwrap.json</b> taking precedence if both files exist. See <a href=\"https://docs.npmjs.com/files/package-lock.json\">package-lock.json</a> and <a href=\"https://docs.npmjs.com/cli/shrinkwrap\">npm-shrinkwrap</a>.<para/>A package is: <ul><li>a) A folder containing a program described by a <a href=\"https://docs.npmjs.com/files/package.json\">package.json file</a></li><li>b) A gzipped tarball containing (b)</li><li>c) A url that resolves to (b)</li><li>d) a <c>&lt;name&gt;@&lt;version&gt;</c> that is published on the registry (see <a href=\"https://docs.npmjs.com/misc/registry\">npm-registry</a>) with (c)</li><li>e) a <c>&lt;name&gt;@&lt;tag&gt;</c> (see <a href=\"https://docs.npmjs.com/cli/dist-tag\">npm-dist-tag</a>) that points to (d)</li><li>f) a <c>&lt;name&gt;</c> that has a \"latest\" tag satisfying (e)</li><li>g) a <c>&lt;git remote url&gt;</c> that resolves to (a)</li></ul>",
+      "postfix": "Install",
+      "definiteArgument": "install",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Packages",
+            "type": "List<string>",
+            "format": "{value}",
+            "help": "List of packages to be installed."
+          },
+          {
+            "name": "Production",
+            "type": "bool",
+            "format": "--production",
+            "help": "Causes npm to not install modules listed in devDependencies."
+          },
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "--force",
+            "help": "Forces npm to fetch remote resources even if a local copy exists on disk."
+          },
+          {
+            "name": "Global",
+            "type": "bool",
+            "format": "--global",
+            "help": "Causes npm to install the package globally rather than locally. See <a href=\"https://docs.npmjs.com/files/folders\">npm-folders</a>."
+          },
+          {
+            "name": "GlobalStyle",
+            "type": "bool",
+            "format": "--global-style",
+            "help": "Causes npm to install the package into your local <c>node_modules</c> folder with the same layout it uses with the global <c>node_modules</c> folder. Only your direct dependencies will show in <c>node_modules</c> and everything they depend on will be flattened in their <c>node_modules</c> folders. This obviously will eliminate some deduping."
+          },
+          {
+            "name": "IgnoreScripts",
+            "type": "bool",
+            "format": "--ignore-scripts",
+            "help": "Causes npm to not execute any scripts defined in the package.json. See <a href=\"https://docs.npmjs.com/misc/scripts\">npm-scripts</a>."
+          },
+          {
+            "name": "LegacyBundling",
+            "type": "bool",
+            "format": "--legacy-bundling",
+            "help": "Causes npm to install the package such that versions of npm prior to 1.4, such as the one included with node 0.8, can install the package. This eliminates all automatic deduping."
+          },
+          {
+            "name": "Link",
+            "type": "bool",
+            "format": "--link",
+            "help": "Cause npm to link global installs into the local space in some cases."
+          },
+          {
+            "name": "NoBinLinks",
+            "type": "bool",
+            "format": "--no-bin-links",
+            "help": "Prevents npm from creating symlinks for any binaries the package might contain."
+          },
+          {
+            "name": "NoOptional",
+            "type": "bool",
+            "format": "--no-optional",
+            "help": "Prevents optional dependencies from being installed."
+          },
+          {
+            "name": "NoShrinkWrap",
+            "type": "bool",
+            "format": "--no-shrinkwrap",
+            "help": "Ignores an available shrinkwrap file and use the package.json instead."
+          },
+          {
+            "name": "NodeDir",
+            "type": "string",
+            "format": "--nodedir={value}",
+            "help": "Allows npm to find the node source code so that npm can compile native modules."
+          },
+          {
+            "name": "Only",
+            "type": "NpmOnlyMode",
+            "format": "--only={value}",
+            "help": "Causes either only <c>devDependencies</c> or only non-<c>devDependencies</c> to be installed regardless of the <c>NODE_ENV</c>."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Runs an arbitrary command from a package's <c>\"scripts\"</c> object. If no <c>\"command\"</c> is provided, it will list the available scripts. <c>run[-script]</c> is used by the test, start, restart, and stop commands, but can be called directly, as well. When the scripts in the package are printed out, they're separated into lifecycle (test, start, restart) and directly-run scripts.\"",
+      "postfix": "Run",
+      "definiteArgument": "run",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Command",
+            "type": "string",
+            "format": "{value}",
+            "help": "The command to be executed."
+          },
+          {
+            "name": "Arguments",
+            "type": "List<string>",
+            "format": "-- {value}",
+            "separator": " ",
+            "help": "Arguments passed to the script."
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "NpmOnlyMode",
+      "values": [
+        "production",
+        "development"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,381 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "license": [
+    "Copyright Matthias Koch 2017.",
+    "Distributed under the MIT License.",
+    "https://github.com/nuke-build/tools/blob/master/LICENSE"
+  ],
+  "references": [
+    "https://raw.githubusercontent.com/NuGet/docs.microsoft.com-nuget/live/docs/tools/cli-ref-pack.md",
+    "https://raw.githubusercontent.com/NuGet/docs.microsoft.com-nuget/live/docs/tools/cli-ref-push.md",
+    "https://raw.githubusercontent.com/NuGet/docs.microsoft.com-nuget/live/docs/tools/cli-ref-restore.md"
+  ],
+  "name": "NuGet",
+  "officialUrl": "https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference",
+  "help": "The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.",
+  "tasks": [
+    {
+      "postfix": "Push",
+      "definiteArgument": "push",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "TargetPath",
+            "type": "string",
+            "assertion": "File",
+            "format": "{value}",
+            "help": "Path of the package to push."
+          },
+          {
+            "name": "ApiKey",
+            "type": "string",
+            "format": "-ApiKey {value}",
+            "secret": true,
+            "help": "The API key for the target repository. If not present, the one specified in <em>%AppData%\\NuGet\\NuGet.Config</em> is used."
+          },
+          {
+            "name": "Source",
+            "type": "string",
+            "format": "-Source {value}",
+            "help": "Specifies the server URL. NuGet identifies a UNC or local folder source and simply copies the file there instead of pushing it using HTTP.  Also, starting with NuGet 3.4.2, this is a mandatory parameter unless the <em>NuGet.Config</em> file specifies a <em>DefaultPushSource</em> value (see <a href=\"https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior\">Configuring NuGet behavior</a>)."
+          },
+          {
+            "name": "SymbolSource",
+            "type": "string",
+            "format": "-SymbolSource {value}",
+            "help": "<em>(3.5+)</em> Specifies the symbol server URL; nuget.smbsrc.net is used when pushing to nuget.org"
+          },
+          {
+            "name": "SymbolApiKey",
+            "type": "string",
+            "format": "-SymbolApiKey {value}",
+            "secret": true,
+            "help": "<em>(3.5+)</em> Specifies the API key for the URL specified in <c>-SymbolSource</c>."
+          },
+          {
+            "name": "NoSymbols",
+            "type": "bool",
+            "format": "-NoSymbols",
+            "help": "<em>(3.5+)</em> If a symbols package exists, it will not be pushed to a symbol server."
+          },
+          {
+            "name": "DisableBuffering",
+            "type": "bool",
+            "format": "-DisableBuffering",
+            "help": "Disables buffering when pushing to an HTTP(s) server to decrease memory usages. Caution: when this option is used, integrated Windows authentication might not work."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "assertion": "FileOrNull",
+            "format": "-ConfigFile {value}",
+            "help": "The NuGet configuration file to apply. If not specified, <em>%AppData%\\NuGet\\NuGet.Config</em> is used."
+          },
+          {
+            "name": "Verbosity",
+            "type": "NuGetVerbosity",
+            "format": "-Verbosity {value}",
+            "help": "Specifies the amount of details displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>."
+          },
+          {
+            "name": "ForceEnglishOutput",
+            "type": "bool",
+            "format": "-ForceEnglishOutput",
+            "help": "<em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture."
+          },
+          {
+            "name": "NonInteractive",
+            "type": "bool",
+            "format": "-NonInteractive",
+            "help": "Suppresses prompts for user input or confirmations."
+          },
+          {
+            "name": "Timeout",
+            "type": "int",
+            "format": "-Timeout {value}",
+            "help": "Specifies the timeout, in seconds, for pushing to a server. The default is 300 seconds (5 minutes)."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "Pack",
+      "definiteArgument": "pack",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "TargetPath",
+            "type": "string",
+            "assertion": "File",
+            "format": "{value}",
+            "createOverload": true,
+            "help": "The <c>.nuspec</c> or <c>.csproj</c> file."
+          },
+          {
+            "name": "BasePath",
+            "type": "string",
+            "assertion": "Directory",
+            "format": "-BasePath {value}",
+            "help": "Sets the base path of the files defined in the <c>.nuspec</c> file."
+          },
+          {
+            "name": "Build",
+            "type": "bool",
+            "format": "-Build",
+            "help": "Specifies that the project should be built before building the package."
+          },
+          {
+            "name": "Exclude",
+            "type": "string",
+            "format": "-Exclude {value}",
+            "help": "Specifies one or more wildcard patterns to exclude when creating a package. To specify more than one pattern, repeat the <c>-Exclude</c> flag."
+          },
+          {
+            "name": "ExcludeEmptyDirectories",
+            "type": "bool",
+            "format": "-ExcludeEmptyDirectories",
+            "help": "Prevent inclusion of empty directories when building the package."
+          },
+          {
+            "name": "IncludeReferencedProjects",
+            "type": "bool",
+            "format": "-IncludeReferencedProjects",
+            "help": "Indicates that the built package should include referenced projects either as dependencies or as part of the package. If a referenced project has a corresponding <c>.nuspec</c> file that has the same name as the project, then that referenced project is added as a dependency. Otherwise, the referenced project is added as part of the package."
+          },
+          {
+            "name": "MinClientVersion",
+            "type": "bool",
+            "format": "-MinClientVersion",
+            "help": "Set the <em>minClientVersion</em> attribute for the created package. This value will override the value of the existing <em>minClientVersion</em> attribute (if any) in the <c>.nuspec</c> file."
+          },
+          {
+            "name": "ForceEnglishOutput",
+            "type": "bool",
+            "format": "-ForceEnglishOutput",
+            "help": "<em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture."
+          },
+          {
+            "name": "MSBuildPath",
+            "type": "string",
+            "format": "-MSBuildPath {value}",
+            "help": "<em>(4.0+)</em> Specifies the path of MSBuild to use with the command, taking precedence over <c>-MSBuildVersion</c>."
+          },
+          {
+            "name": "MSBuildVersion",
+            "type": "NuGetMSBuildVersion",
+            "format": "-MSBuildVersion {value}",
+            "help": "<em>(3.2+)</em> Specifies the version of MSBuild to be used with this command. Supported values are <em>4</em>, <em>12</em>, <em>14</em>. By default the MSBuild in your path is picked, otherwise it defaults to the highest installed version of MSBuild."
+          },
+          {
+            "name": "NoDefaultExcludes",
+            "type": "bool",
+            "format": "-NoDefaultExcludes",
+            "help": "Prevents default exclusion of NuGet package files and files and folders starting with a dot, such as <em>.svn</em> and <c>.gitignore</c>."
+          },
+          {
+            "name": "NoPackageAnalysis",
+            "type": "bool",
+            "format": "-NoPackageAnalysis",
+            "help": "Specifies that pack should not run package analysis after building the package."
+          },
+          {
+            "name": "OutputDirectory",
+            "type": "string",
+            "format": "-OutputDirectory {value}",
+            "help": "Specifies the folder in which the created package is stored. If no folder is specified, the current folder is used."
+          },
+          {
+            "name": "Properties",
+            "type": "Dictionary<string, string>",
+            "format": "-Properties {value}",
+            "itemFormat": "{key}={value}",
+            "separator": ";",
+            "help": "Specifies a list of properties that override values in the project file; see <a href=\"https://docs.microsoft.com/en-us/visualstudio/msbuild/common-msbuild-project-properties\">Common MSBuild Project Properties</a> for property names. The Properties argument here is a list of token=value pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks. Note that for the &quot;Configuration&quot; property, the default is &quot;Debug&quot;. To change to a Release configuration, use <c>-Properties Configuration=Release</c>."
+          },
+          {
+            "name": "Suffix",
+            "type": "string",
+            "format": "-Suffix {value}",
+            "help": "<em>(3.4.4+)</em> Appends a suffix to the internally generated version number, typically used for appending build or other pre-release identifiers. For example, using <c>-suffix nightly</c> will create a package with a version number like <c>1.2.3-nightly</c>. Suffixes must start with a letter to avoid warnings, errors, and potential incompatibilities with different versions of NuGet and the NuGet Package Manager."
+          },
+          {
+            "name": "Symbols",
+            "type": "bool",
+            "format": "-Symbols",
+            "help": "Specifies that the package contains sources and symbols. When used with a <c>.nuspec</c> file, this creates a regular NuGet package file and the corresponding symbols package."
+          },
+          {
+            "name": "Tool",
+            "type": "bool",
+            "format": "-Tool",
+            "help": "Specifies that the output files of the project should be placed in the <c>tool</c> folder."
+          },
+          {
+            "name": "Verbosity",
+            "type": "NuGetVerbosity",
+            "format": "-Verbosity {value}",
+            "help": "Specifies the amount of details displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>."
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "-Version {value}",
+            "createOverload": true,
+            "help": "Overrides the version number from the <c>.nuspec</c> file."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "Restore",
+      "definiteArgument": "restore",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "TargetPath",
+            "type": "string",
+            "format": "{value}",
+            "createOverload": true,
+            "help": "Defines the project to restore. I.e., the location of a solution file, a <c>packages.config</c>, or a <c>project.json</c> file."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "-ConfigFile {value}",
+            "help": "The NuGet configuration file to apply. If not specified, <em>%AppData%\\NuGet\\NuGet.Config</em> is used."
+          },
+          {
+            "name": "DirectDownload",
+            "type": "bool",
+            "format": "-DirectDownload",
+            "help": "<em>(4.0+)</em> Downloads packages directly without populating caches with any binaries or metadata."
+          },
+          {
+            "name": "DisableParallelProcessing",
+            "type": "bool",
+            "format": "-DisableParallelProcessing",
+            "help": "Disables restoring multiple packages in parallel."
+          },
+          {
+            "name": "FallbackSource",
+            "type": "List<string>",
+            "format": "-FallbackSource {value}",
+            "separator": ";",
+            "help": "<em>(3.2+)</em> A list of package sources to use as fallbacks in case the package isn't found in the primary or default source."
+          },
+          {
+            "name": "ForceEnglishOutput",
+            "type": "bool",
+            "format": "-ForceEnglishOutput",
+            "help": "<em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture."
+          },
+          {
+            "name": "MSBuildPath",
+            "type": "string",
+            "format": "-MSBuildPath {value}",
+            "help": "<em>(4.0+)</em> Specifies the path of MSBuild to use with the command, taking precedence over <c>-MSBuildVersion</c>."
+          },
+          {
+            "name": "MSBuildVersion",
+            "type": "NuGetMSBuildVersion",
+            "format": "-MSBuildVersion {value}",
+            "help": "<em>(3.2+)</em> Specifies the version of MSBuild to be used with this command. Supported values are <em>4</em>, <em>12</em>, <em>14</em>, <em>15</em>. By default the MSBuild in your path is picked, otherwise it defaults to the highest installed version of MSBuild."
+          },
+          {
+            "name": "NoCache",
+            "type": "bool",
+            "format": "-NoCache",
+            "help": "Prevents NuGet from using packages from local machine caches."
+          },
+          {
+            "name": "NonInteractive",
+            "type": "bool",
+            "format": "-NonInteractive",
+            "help": "Suppresses prompts for user input or confirmations."
+          },
+          {
+            "name": "OutputDirectory",
+            "type": "string",
+            "format": "-OutputDirectory {value}",
+            "help": "Specifies the folder in which packages are installed. If no folder is specified, the current folder is used."
+          },
+          {
+            "name": "PackageSaveMode",
+            "type": "List<PackageSaveMode>",
+            "format": "-PackageSaveMode {value}",
+            "separator": ";",
+            "help": "Specifies the types of files to save after package installation: one of <c>nuspec</c>, <c>nupkg</c>, or <c>nuspec;nupkg</c>."
+          },
+          {
+            "name": "PackagesDirectory",
+            "type": "string",
+            "format": "-PackagesDirectory {value}",
+            "help": "Same as <c>OutputDirectory</c>."
+          },
+          {
+            "name": "Project2ProjectTimeOut",
+            "type": "int",
+            "format": "-Project2ProjectTimeOut {value}",
+            "help": "Timeout in seconds for resolving project-to-project references."
+          },
+          {
+            "name": "Recursive",
+            "type": "bool",
+            "format": "-Recursive",
+            "help": "<em>(4.0+)</em> Restores all references projects for UWP and .NET Core projects. Does not apply to projects using <c>packages.config</c>."
+          },
+          {
+            "name": "RequireConsent",
+            "type": "bool",
+            "format": "-RequireConsent",
+            "help": "Verifies that restoring packages is enabled before downloading and installing the packages. For details, see <a href=\"https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore\">Package Restore</a>."
+          },
+          {
+            "name": "SolutionDirectory",
+            "type": "string",
+            "format": "-SolutionDirectory {value}",
+            "help": "Specifies the solution folder. Not valid when restoring packages for a solution."
+          },
+          {
+            "name": "Source",
+            "type": "List<string>",
+            "format": "-Source {value}",
+            "separator": ";",
+            "help": "Specifies the list of package sources (as URLs) to use for the restore. If omitted, the command uses the sources provided in configuration files, see <a href=\"https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior\">Configuring NuGet behavior</a>."
+          },
+          {
+            "name": "Verbosity",
+            "type": "NuGetVerbosity",
+            "format": "-Verbosity {value}",
+            "help": "Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>."
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "NuGetVerbosity",
+      "values": [
+        "Normal",
+        "Quiet",
+        "Detailed"
+      ]
+    },
+    {
+      "name": "PackageSaveMode",
+      "values": [
+        "Nuspec",
+        "Nupkg"
+      ]
+    },
+    {
+      "name": "NuGetMSBuildVersion",
+      "values": [
+        "4",
+        "12",
+        "14"
+      ]
+    }
+  ]
+}

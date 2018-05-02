@@ -1,0 +1,45 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "license": [
+    "Copyright Matthias Koch 2017.",
+    "Distributed under the MIT License.",
+    "https://github.com/nuke-build/tools/blob/master/LICENSE"
+  ],
+  "references": [
+    "https://raw.githubusercontent.com/erichexter/WebConfigTransformRunner/master/Readme.md"
+  ],
+  "name": "WebConfigTransformRunner",
+  "officialUrl": "https://github.com/erichexter/WebConfigTransformRunner",
+  "help": "This is a commandline tool to run an ASP.Net web.config tranformation.",
+  "packageId": "WebConfigTransformRunner",
+  "packageExecutable": "WebConfigTransformRunner.exe",
+  "tasks": [
+    {
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "WebConfigFilename ",
+            "type": "string",
+            "assertion": "File",
+            "format": "{value}",
+            "help": "The base web.config file"
+          },
+          {
+            "name": "TransformFilename",
+            "type": "string",
+            "assertion": "File",
+            "format": "{value}",
+            "help": "The transformation web.config file"
+          },
+          {
+            "name": "OutputFilename",
+            "type": "string",
+            "assertion": "NotNull",
+            "format": "{value}",
+            "help": "The path to the output web.config file"
+          }
+        ]
+      }
+    }
+  ]
+}

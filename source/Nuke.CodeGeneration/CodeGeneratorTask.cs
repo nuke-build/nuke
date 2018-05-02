@@ -8,8 +8,8 @@ using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.Build.Framework;
 using Nuke.Common.Git;
-using Nuke.Core;
-using Nuke.Core.IO;
+using Nuke.Common;
+using Nuke.Common.IO;
 
 namespace Nuke.CodeGeneration
 {

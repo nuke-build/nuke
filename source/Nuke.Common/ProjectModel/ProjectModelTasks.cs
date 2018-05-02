@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
-using Nuke.Core;
 
 namespace Nuke.Common.ProjectModel
 {

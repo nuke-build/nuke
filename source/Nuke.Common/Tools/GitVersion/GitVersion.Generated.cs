@@ -7,10 +7,10 @@
 
 using JetBrains.Annotations;
 using Nuke.Common.Tools;
-using Nuke.Core;
-using Nuke.Core.Execution;
-using Nuke.Core.Tooling;
-using Nuke.Core.Utilities.Collections;
+using Nuke.Common;
+using Nuke.Common.Execution;
+using Nuke.Common.Tooling;
+using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

@@ -5,6 +5,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Deprecated `Nuke.Core` namespace. All types have been moved to `Nuke.Common`.
+- Changed parameter binding to allow lisp-cased arguments (dashes for camel-humps).
+- Changed build execution to automatically unwrap `AggregateException` and `TargetInvocationException`.
+- Changed build server instances to access variables in non-ensured way.
+- Changed `GitRepository.FromLocalDirectory` to not return null but fail instead.
+- Changed reference from `NuGet.Client` to `NuGet.Packaging`.
+- Changed summary output to use `Trace`, `Error`, `Success` methods of `Logger`.
+- Added integration infrastructure for ReSharper plugin.
+- Added typo-checking for arguments that should be bound via `ParameterAttribute`.
+- Added automatic retrieval of `GitRepositoryAttribute.BranchName` from build server instances.
+- Added `Logger.Success` method.
+- Fixed `GitRepository.ParseUrl` to strip username and password.
+- Fixed nullable properties in `TeamServices` and `Bitrise`.
+- Fixed host simulation.
+- Fixed environment variable parsing when case-insensitive duplicates are found.
 
 ## [0.3.1] / 2018-03-26
 - Deprecated `Action` usages in `DotCoverTasks` and `OpenCoverTasks` in favor of `SetTargetSettings`.

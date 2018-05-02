@@ -1,0 +1,321 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "license": [
+    "Copyright Matthias Koch 2017.",
+    "Distributed under the MIT License.",
+    "https://github.com/nuke-build/tools/blob/master/LICENSE"
+  ],
+  "references": [
+    "https://fsprojects.github.io/Paket/paket-update.html#//div[@id='main']",
+    "https://fsprojects.github.io/Paket/paket-restore.html#//div[@id='main']",
+    "https://fsprojects.github.io/Paket/paket-push.html#//div[@id='main']",
+    "https://fsprojects.github.io/Paket/paket-pack.html#//div[@id='main']"
+  ],
+  "name": "Paket",
+  "officialUrl": "https://fsprojects.github.io/paket",
+  "help": "<p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href=\"https://www.nuget.org/\">NuGet</a> packages and also enables referencing files directly from <a href=\"https://fsprojects.github.io/Paket/git-dependencies.html\">Git repositories</a> or any <a href=\"https://fsprojects.github.io/Paket/http-dependencies.html\">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href=\"https://fsprojects.github.io/Paket/getting-started.html\"><em>Getting started</em> tutorial</a> and take a look at the <a href=\"https://fsprojects.github.io/Paket/faq.html\">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href=\"https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion\">convert from NuGet</a> section.</p>",
+  "packageId": "Paket",
+  "packageExecutable": "paket.exe",
+  "tasks": [
+    {
+      "postfix": "Update",
+      "definiteArgument": "update",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "PackageId",
+            "type": "string",
+            "format": "{value}",
+            "help": "NuGet package ID."
+          },
+          {
+            "name": "PackageVersion",
+            "type": "string",
+            "format": "--version {value}",
+            "help": "Dependency version constraint."
+          },
+          {
+            "name": "DependencyGroup",
+            "type": "string",
+            "format": "--group {value}",
+            "help": "Dependency group to update. Default is <em>all groups</em>."
+          },
+          {
+            "name": "CreateNewBindingFiles",
+            "type": "bool",
+            "format": "--create-new-binding-files",
+            "help": "Creates binding redirect files if needed."
+          },
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "--force",
+            "help": "Force download and reinstallation of all dependencies."
+          },
+          {
+            "name": "Redirects",
+            "type": "bool",
+            "format": "--redirects",
+            "help": "Create binding redirects."
+          },
+          {
+            "name": "CleanRedirects",
+            "type": "bool",
+            "format": "--clean-redirects",
+            "help": "Remove binding redirects that were not created by Paket."
+          },
+          {
+            "name": "NoInstall",
+            "type": "bool",
+            "format": "--no-install",
+            "help": "Do not modify projects."
+          },
+          {
+            "name": "KeepMajor",
+            "type": "bool",
+            "format": "--keep-major",
+            "help": "Only allow updates that preserve the major version."
+          },
+          {
+            "name": "KeepMinor",
+            "type": "bool",
+            "format": "--keep-minor",
+            "help": "Only allow updates that preserve the minor version."
+          },
+          {
+            "name": "KeepPatch",
+            "type": "bool",
+            "format": "--keep-patch",
+            "help": "Only allow updates that preserve the patch version."
+          },
+          {
+            "name": "Filter",
+            "type": "bool",
+            "format": "--filter",
+            "help": "Treat the NuGet package ID as a regex to filter packages."
+          },
+          {
+            "name": "TouchAffectedReferences",
+            "type": "bool",
+            "format": "--touch-affected-refs",
+            "help": "Touch project files referencing affected dependencies, to help incremental build tools detecting the change."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "Restore",
+      "definiteArgument": "restore",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "--force",
+            "help": "Force download and reinstallation of all dependencies."
+          },
+          {
+            "name": "OnlyReferenced",
+            "type": "bool",
+            "format": "--only-referenced",
+            "help": "Only restore packages that are referenced by paket.references files."
+          },
+          {
+            "name": "TouchAffectedRefs",
+            "type": "bool",
+            "format": "--touch-affected-refs",
+            "help": "Touches project files referencing packages which are being restored, to help incremental build tools detecting the change."
+          },
+          {
+            "name": "IgnoreChecks",
+            "type": "bool",
+            "format": "--ignore-checks",
+            "help": "Do not check if paket.dependencies and paket.lock are in sync."
+          },
+          {
+            "name": "FailOnChecks",
+            "type": "bool",
+            "format": "--fail-on-checks",
+            "help": "Abort if any checks fail."
+          },
+          {
+            "name": "DependencyGroup",
+            "type": "string",
+            "format": "--group {value}",
+            "help": "Restore dependencies of a single group."
+          },
+          {
+            "name": "ProjectFile",
+            "type": "string",
+            "format": "--project {value}",
+            "help": "Restore dependencies of a single project."
+          },
+          {
+            "name": "ReferencesFiles",
+            "type": "List<string>",
+            "format": "--references-files {value}",
+            "help": "Restore packages from a paket.references file."
+          },
+          {
+            "name": "TargetFramework",
+            "type": "string",
+            "format": "--target-framework {value}",
+            "help": "Restore only for the specified target framework."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "Push",
+      "definiteArgument": "push",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "File",
+            "type": "string",
+            "format": "file {value}",
+            "help": "Path to the package."
+          },
+          {
+            "name": "Url",
+            "type": "string",
+            "format": "--url {value}",
+            "help": "URL of the NuGet feed."
+          },
+          {
+            "name": "ApiKey",
+            "type": "string",
+            "format": "--api-key {value}",
+            "secret": true,
+            "help": "API key for the URL. Default is the <c>NUGET_KEY</c> environment variable."
+          },
+          {
+            "name": "Endpoint",
+            "type": "string",
+            "format": "--endpoint {value}",
+            "help": "API endpoint to push to. Default is <em>/api/v2/package</em>."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "Pack",
+      "definiteArgument": "pack",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "OutputDirectory",
+            "type": "string",
+            "format": "{value}",
+            "help": "Output directory for .nupkg files."
+          },
+          {
+            "name": "BuildConfiguration",
+            "type": "string",
+            "format": "--build-config {value}",
+            "help": "Build configuration that should be packaged. Default is <em>Release</em>."
+          },
+          {
+            "name": "BuildPlatform",
+            "type": "string",
+            "format": "--build-platform {value}",
+            "help": "Build platform that should be packaged. Default is <em>check all known platform targets</em>."
+          },
+          {
+            "name": "PackageVersion",
+            "type": "string",
+            "format": "--version {value}",
+            "help": "Version of the package."
+          },
+          {
+            "name": "TemplateFile",
+            "type": "string",
+            "format": "--template {value}",
+            "help": "Pack a single paket.template file."
+          },
+          {
+            "name": "Exclude",
+            "type": "List<string>",
+            "format": "--exclude {value}",
+            "help": "Exclude paket.template file by package ID."
+          },
+          {
+            "name": "SpecificVersions",
+            "type": "Dictionary<string, string>",
+            "format": "--specific-version {value}",
+            "itemFormat": "{key} {value}",
+            "help": "Package IDs with version numbers."
+          },
+          {
+            "name": "ReleaseNotes",
+            "type": "string",
+            "format": "--release-notes {value}",
+            "help": "Specify release notes for the package."
+          },
+          {
+            "name": "LockDependencies",
+            "type": "bool",
+            "format": "--lock-dependencies",
+            "help": "Use version requirements from paket.lock instead of paket.dependencies."
+          },
+          {
+            "name": "MinimumFromLockFile",
+            "type": "bool",
+            "format": "--minimum-from-lock-file",
+            "help": "Use version requirements from paket.lock instead of paket.dependencies, and add them as a minimum version. <c>--lock-dependencies</c> will over-ride this option."
+          },
+          {
+            "name": "PinProjectReferences",
+            "type": "bool",
+            "format": "--pin-project-references",
+            "help": "Pin dependencies generated from project references (=) instead of using minimum (>=) for version specification.  If <c>--lock-dependencies</c> is specified, project references will be pinned even if this option is not specified."
+          },
+          {
+            "name": "Symbols",
+            "type": "bool",
+            "format": "--symbols",
+            "help": "Build symbol/source packages in addition to library/content packages."
+          },
+          {
+            "name": "IncludeReferencedProjects",
+            "type": "bool",
+            "format": "--include-referenced-projects",
+            "help": "Include symbol/source from referenced projects."
+          },
+          {
+            "name": "ProjectUrl",
+            "type": "string",
+            "format": "--project-url {value}",
+            "help": "Url to the projects home page."
+          }
+        ]
+      }
+    }
+  ],
+  "commonTaskProperties": [
+    {
+      "name": "Silent",
+      "type": "bool",
+      "format": "--silent",
+      "help": "Suppress console output."
+    },
+    {
+      "name": "Verbose",
+      "type": "bool",
+      "format": "--verbose",
+      "help": "Print detailed information to the console."
+    },
+    {
+      "name": "LogFile",
+      "type": "string",
+      "format": "--log-file {value}",
+      "help": "Print output to a file."
+    },
+    {
+      "name": "FromBootstrapper",
+      "type": "bool",
+      "format": "--from-bootstrapper",
+      "help": "Call coming from the <c>--run</c> feature of the bootstrapper."
+    }
+  ]
+}

@@ -15,10 +15,11 @@ using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.InspectCode;
 using Nuke.Common.Tools.OpenCover;
 using Nuke.Common.Tools.Xunit;
-using Nuke.Core;
-using Nuke.Core.Utilities;
-using Nuke.Core.Utilities.Collections;
+using Nuke.Common;
+using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 using static Nuke.CodeGeneration.CodeGenerator;
+using static Nuke.CodeGeneration.ReferenceUpdater;
 using static Nuke.CodeGeneration.SchemaGenerator;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.Gitter.GitterTasks;
@@ -27,9 +28,9 @@ using static Nuke.Common.Tools.Git.GitTasks;
 using static Nuke.Common.Tools.InspectCode.InspectCodeTasks;
 using static Nuke.Common.Tools.OpenCover.OpenCoverTasks;
 using static Nuke.Common.Tools.Xunit.XunitTasks;
-using static Nuke.Core.IO.FileSystemTasks;
-using static Nuke.Core.IO.PathConstruction;
-using static Nuke.Core.EnvironmentInfo;
+using static Nuke.Common.IO.FileSystemTasks;
+using static Nuke.Common.IO.PathConstruction;
+using static Nuke.Common.EnvironmentInfo;
 
 class Build : NukeBuild
 {
@@ -44,8 +45,8 @@ class Build : NukeBuild
         ? "https://api.nuget.org/v3/index.json"
         : "https://www.myget.org/F/nukebuild/api/v2/package";
 
-    [GitVersion(DisableOnUnix = true)] readonly GitVersion GitVersion;
-    [GitRepository(Branch = "master")] readonly GitRepository GitRepository;
+    [GitVersion] readonly GitVersion GitVersion;
+    [GitRepository] readonly GitRepository GitRepository;
     [Solution] readonly Solution Solution;
 
     Target Clean => _ => _
@@ -178,24 +179,34 @@ class Build : NukeBuild
                 Xunit2(s => xunitSettings);
         });
 
-    string MetadataDirectory => RootDirectory / ".." / "nuke-tools" / "metadata";
+    string SpecificationsDirectory => BuildProjectDirectory / "specifications";
+    string ReferencesDirectory => BuildProjectDirectory / "references";
     string GenerationDirectory => RootDirectory / "source" / "Nuke.Common" / "Tools";
     string ToolSchemaFile => SourceDirectory / "Nuke.CodeGeneration" / "schema.json";
 
+    Target References => _ => _
+        .Requires(() => !GitHasUncommitedChanges())
+        .Executes(() =>
+        {
+            EnsureCleanDirectory(ReferencesDirectory);
+            
+            UpdateReferences(SpecificationsDirectory, ReferencesDirectory);
+        });
+    
     Target Generate => _ => _
         .Executes(() =>
         {
             GenerateSchema<Tool>(
                 ToolSchemaFile,
                 GitRepository.GetGitHubDownloadUrl(ToolSchemaFile),
-                "Tool metadata schema file by NUKE");
+                "Tool specification schema file by NUKE");
 
             GenerateCode(
-                MetadataDirectory,
+                SpecificationsDirectory,
                 GenerationDirectory,
                 baseNamespace: "Nuke.Common.Tools",
                 useNestedNamespaces: true,
-                gitRepository: GitRepository.FromLocalDirectory(MetadataDirectory).NotNull());
+                gitRepository: GitRepository);
         });
 
     Target Full => _ => _
