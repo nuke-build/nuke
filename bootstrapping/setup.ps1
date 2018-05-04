@@ -86,6 +86,7 @@ $TargetPlatform = @("netfx", "netcore")[$TargetPlatformSelection]
 $TargetFramework = @("net461", "netcoreapp2.0")[$TargetPlatformSelection]
 
 $NukeVersion = $(Invoke-WebRequest -UseBasicParsing https://api-v2v3search-0.nuget.org/query?q=packageid:Nuke.Common | ConvertFrom-Json).data.version
+$NukeVersionParts = $NukeVersion.Split('.')
 $ProjectGuid = [guid]::NewGuid().ToString().ToUpper()
 
 if ($TargetPlatformSelection -eq 0) {
@@ -102,7 +103,6 @@ if ($TargetPlatformSelection -eq 0) {
 }
 
 if ($TargetPlatformSelection -eq 1 -or $ProjectFormatSelection -eq 1) {
-  # $NukeVersionArray = $NukeVersion.Split('.')
   # $NukeVersion = "$($NukeVersionArray[0]).$($NukeVersionArray[1]).*"
   $NukeVersion = (ReadWithDefault "NUKE framework version (use '*' for always latest)" $NukeVersion)
 }
@@ -154,7 +154,8 @@ WriteFile "$BuildProjectFile" ((New-Object System.Net.WebClient).DownloadString(
     -replace "_BUILD_PROJECT_GUID_",$ProjectGuid `
     -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
     -replace "_SOLUTION_DIRECTORY_",$SolutionDirectoryRelative `
-    -replace "_NUKE_VERSION_",$NukeVersion)
+    -replace "_NUKE_VERSION_",$NukeVersion `
+    -replace "_NUKE_VERSION_MAJOR_MINOR_","$($NukeVersionParts[0]).$($NukeVersionParts[1])")
 
 (New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/../build/.build.csproj.DotSettings", "$BuildProjectFile.DotSettings")
 
