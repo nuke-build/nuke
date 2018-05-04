@@ -88,6 +88,7 @@ TARGET_FRAMEWORK_ARRAY=("net461" "netcoreapp2.0")
 TARGET_FRAMEWORK=${TARGET_FRAMEWORK_ARRAY[$TARGET_PLATFORM_SELECTION]}
 
 NUKE_VERSION=$(curl -s 'https://api-v2v3search-0.nuget.org/query?q=packageid:Nuke.Common' | python3 -c "import sys, json; print(json.load(sys.stdin)['data'][0]['version'])")
+NUKE_VERSION_PARTS=(${NUKE_VERSION//./ })
 PROJECT_GUID=$(python -c "import uuid; print str(uuid.uuid4()).upper()")
 
 if [ $TARGET_PLATFORM_SELECTION == 0 ]; then
@@ -103,7 +104,6 @@ if [ $TARGET_PLATFORM_SELECTION == 0 ]; then
 fi
 
 if [[ $TARGET_PLATFORM_SELECTION == 1 || $PROJECT_FORMAT_SELECTION == 1 ]]; then
-  # NUKE_VERSION_ARRAY=(${NUKE_VERSION//./ })
   # NUKE_VERSION="${NUKE_VERSION_ARRAY[0]}.${NUKE_VERSION_ARRAY[1]}.*"
   NUKE_VERSION=$(ReadWithDefault "NUKE framework version (use '*' for always latest)" $NUKE_VERSION)
 fi
@@ -159,6 +159,7 @@ sed -e 's~_TARGET_FRAMEWORK_~'"$TARGET_FRAMEWORK"'~g' \
     -e 's~_BUILD_PROJECT_NAME_~'"$BUILD_PROJECT_NAME"'~g' \
     -e 's~_SOLUTION_DIRECTORY_~'"${SOLUTION_DIRECTORY_RELATIVE//\//\\}"'~g' \
     -e 's~_NUKE_VERSION_~'"$NUKE_VERSION"'~g' \
+    -e 's~_NUKE_VERSION_MAJOR_MINOR_~'"${NUKE_VERSION_PARTS[0]}.${NUKE_VERSION_PARTS[1]}"'~g' \
     <<<"$(curl -Lsf $BOOTSTRAPPING_URL/.build.$PROJECT_FORMAT.csproj)" \
     > "$BUILD_PROJECT_FILE"
 
