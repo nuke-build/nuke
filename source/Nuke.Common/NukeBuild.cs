@@ -77,7 +77,7 @@ namespace Nuke.Common
         /// <summary>
         /// Disables execution of target dependencies.
         /// </summary>
-        [Parameter("Disables execution of dependent targets.", Name = "Skip")]
+        [Parameter("Disables execution of dependent targets.", Name = "Skip", Separator = "+")]
         public string[] SkippedTargets { get; } = EnvironmentInfo.SkippedTargets;
 
         /// <summary>
