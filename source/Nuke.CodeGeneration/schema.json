@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "id": "https://raw.githubusercontent.com/nuke-build/nuke/specifications/source/Nuke.CodeGeneration/schema.json",
+  "id": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
   "title": "Tool specification schema file by NUKE",
   "definitions": {
     "DataClass": {
@@ -9,7 +9,7 @@
         "name": {
           "description": "Name of the data class.",
           "type": "string",
-          "pattern": "^[A-Z][a-z]+(?:[A-Z0-9][a-z0-9]+)*$"
+          "pattern": "^[0-9A-Z][A-Za-z0-9]*$"
         },
         "baseClass": {
           "description": "The base class to inherit from.",
@@ -42,7 +42,7 @@
         "name": {
           "description": "Name of the enumeration.",
           "type": "string",
-          "pattern": "^[A-Z][a-z]+(?:[A-Z0-9][a-z0-9]+)*$"
+          "pattern": "^[0-9A-Z][A-Za-z0-9]*$"
         },
         "values": {
           "description": "The enumeration values.",
@@ -63,7 +63,7 @@
         "name": {
           "description": "Name of the property.",
           "type": "string",
-          "pattern": "^[A-Z][a-z]+(?:[A-Z0-9][a-z0-9]+)*$"
+          "pattern": "^[0-9A-Z][A-Za-z0-9]*$"
         },
         "type": {
           "description": "Type of the property. I.e., bool, int, string, List<int>, Dictionary<string, object>, Lookup<string, int.>",
@@ -155,7 +155,7 @@
             "string",
             "null"
           ],
-          "pattern": "^[A-Z][a-z]+(?:[A-Z0-9][a-z0-9]+)*$"
+          "pattern": "^[0-9A-Z][A-Za-z0-9]*$"
         },
         "baseClass": {
           "description": "The base class to inherit from.",
@@ -191,7 +191,7 @@
         "postfix": {
           "description": "Postfix for the task alias.",
           "type": "string",
-          "pattern": "^[A-Z][a-z]+(?:[A-Z0-9][a-z0-9]+)*$"
+          "pattern": "^[0-9A-Z][A-Za-z0-9]*$"
         },
         "returnType": {
           "description": "Return type of the task.",
@@ -250,7 +250,7 @@
     "name": {
       "description": "Name of the Tool.",
       "type": "string",
-      "pattern": "^[A-Z][a-z]+(?:[A-Z0-9][a-z0-9]+)*$"
+      "pattern": "^[0-9A-Z][A-Za-z0-9]*$"
     },
     "officialUrl": {
       "description": "Url to the official website.",
