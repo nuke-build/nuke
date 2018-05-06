@@ -9,6 +9,7 @@ using System.Linq;
 using Nuke.CodeGeneration.Model;
 using Nuke.CodeGeneration.Writers;
 using Nuke.Common.Utilities;
+using Nuke.Core.Tooling;
 
 // ReSharper disable UnusedMethodReturnValue.Local
 
@@ -18,7 +19,7 @@ namespace Nuke.CodeGeneration.Generators
     {
         public static void Run(Tool tool, ToolWriter toolWriter)
         {
-            if (tool.Tasks.Count == 0)
+            if (tool.Tasks.Count == 0 && !tool.CustomExecutable && tool.PathExecutable == null && tool.PackageId == null)
                 return;
 
             toolWriter
@@ -28,6 +29,7 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteBlock(w =>
                 {
                     w.WriteToolPath();
+                    w.WriteGenericTask();
                     tool.Tasks.ForEach(x => new TaskWriter(x, toolWriter)
                         .WritePreAndPostProcess()
                         .WriteMainTask()
@@ -45,9 +47,8 @@ namespace Nuke.CodeGeneration.Generators
 
             var additionalParameterDeclarations = properties.Select(x => $"{x.GetNullabilityAttribute()}{x.Type} {x.Name.ToInstance()}");
             var nextArguments = properties.AsEnumerable().Reverse().Skip(count: 1).Reverse().Select(x => x.Name.ToInstance());
-            var configuratorName = "configurator";
             var currentArgument = properties.Last();
-            var setter = $"x => {configuratorName}(x).Set{currentArgument.Name}({currentArgument.Name.ToInstance()})";
+            var setter = $"x => configurator(x).Set{currentArgument.Name}({currentArgument.Name.ToInstance()})";
             var allArguments = nextArguments.Concat(new[] { setter });
             var taskCallPrefix = task.HasReturnValue() ? "return " : string.Empty;
 
@@ -59,6 +60,33 @@ namespace Nuke.CodeGeneration.Generators
                     .WriteLine($"{taskCallPrefix}{task.GetTaskMethodName()}({allArguments.JoinComma()});"));
 
             return writer.WriteTaskOverloads(index + 1);
+        }
+
+        private static void WriteGenericTask(this ToolWriter writer)
+        {
+            var tool = writer.Tool;
+            var parameters = new[]
+                             {
+                                 "string arguments",
+                                 "string workingDirectory = null",
+                                 "ProcessSettings processSettings = null"
+                             };
+            var arguments = new[]
+                            {
+                                $"{tool.Name}Path",
+                                "arguments",
+                                "workingDirectory",
+                                "processSettings?.EnvironmentVariables",
+                                "processSettings?.ExecutionTimeout",
+                                "processSettings?.RedirectOutput ?? true"
+                            };
+            writer
+                .WriteSummary(tool.Help)
+                .WriteLine($"public static IEnumerable<string> {tool.Name}({parameters.JoinComma()})")
+                .WriteBlock(w => w
+                    .WriteLine($"var process = ProcessTasks.StartProcess({arguments.JoinComma()});")
+                    .WriteLine("process.AssertZeroExitCode();")
+                    .WriteLine("return process.Output.Select(x => x.Text);"));
         }
 
         private static TaskWriter WriteMainTask(this TaskWriter writer)
