@@ -110,6 +110,11 @@ namespace Nuke.Common.Git
         /// <summary>Url in the form of <c>git@endpoint:identifier.git</c></summary>
         public string SshUrl => $"git@{Endpoint}:{Identifier}.git";
 
+        public GitRepository SetBranch(string branch)
+        {
+            return new GitRepository(Endpoint, Identifier, LocalDirectory, Head, branch);
+        }
+
         public override string ToString()
         {
             return HttpsUrl.TrimEnd(".git");
