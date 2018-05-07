@@ -198,7 +198,7 @@ class Build : NukeBuild
         {
             GenerateSchema<Tool>(
                 ToolSchemaFile,
-                GitRepository.GetGitHubDownloadUrl(ToolSchemaFile),
+                GitRepository.GetGitHubDownloadUrl(ToolSchemaFile, "master"),
                 "Tool specification schema file by NUKE");
 
             GenerateCode(
@@ -206,7 +206,7 @@ class Build : NukeBuild
                 GenerationDirectory,
                 baseNamespace: "Nuke.Common.Tools",
                 useNestedNamespaces: true,
-                gitRepository: GitRepository);
+                gitRepository: GitRepository.SetBranch("master"));
         });
 
     Target Full => _ => _
