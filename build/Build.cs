@@ -45,6 +45,10 @@ class Build : NukeBuild
         ? "https://api.nuget.org/v3/index.json"
         : "https://www.myget.org/F/nukebuild/api/v2/package";
 
+    string SymbolSource => NuGet
+        ? "https://nuget.smbsrc.net/"
+        : "https://www.myget.org/F/nukebuild/symbols/api/v2/package";
+
     [GitVersion] readonly GitVersion GitVersion;
     [GitRepository] readonly GitRepository GitRepository;
     [Solution] readonly Solution Solution;
@@ -123,10 +127,11 @@ class Build : NukeBuild
         .Executes(() =>
         {
             GlobFiles(OutputDirectory, "*.nupkg").NotEmpty()
-                .Where(x => !x.EndsWith("symbols.nupkg"))
+                .Where(x => !x.EndsWith(".symbols.nupkg"))
                 .ForEach(x => DotNetNuGetPush(s => s
                     .SetTargetPath(x)
                     .SetSource(Source)
+                    .SetSymbolsSource(SymbolSource)
                     .SetApiKey(ApiKey)));
 
             if (NuGet)
