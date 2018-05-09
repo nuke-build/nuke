@@ -131,7 +131,7 @@ class Build : NukeBuild
                 .ForEach(x => DotNetNuGetPush(s => s
                     .SetTargetPath(x)
                     .SetSource(Source)
-                    .SetSymbolsSource(SymbolSource)
+                    .SetSymbolSource(SymbolSource)
                     .SetApiKey(ApiKey)));
 
             if (NuGet)

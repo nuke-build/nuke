@@ -739,9 +739,9 @@
             "help": "Specifies the server URL. This option is required unless <c>DefaultPushSource</c> config value is set in the NuGet config file."
           },
           {
-            "name": "SymbolsSource",
+            "name": "SymbolSource",
             "type": "string",
-            "format": "--symbols-source {value}",
+            "format": "--symbol-source {value}",
             "help": "Specifies the symbol server URL."
           },
           {
