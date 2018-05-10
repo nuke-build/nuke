@@ -5,6 +5,8 @@ Param(
     [string[]]$BuildArguments
 )
 
+Write-Output "Windows PowerShell $($Host.Version)"
+
 Set-StrictMode -Version 2.0; $ErrorActionPreference = "Stop"; $ConfirmPreference = "None"; trap { $host.SetShouldExit(1) }
 $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 
@@ -43,6 +45,7 @@ else {
         ExecSafe { & $env:NUGET_EXE update -Self }
     }
 }
+Write-Output $($env:NUGET_EXE help | select -First 1)
 
 ExecSafe { & $env:NUGET_EXE install Nuke.MSBuildLocator -ExcludeVersion -OutputDirectory $TempDirectory -SolutionDirectory $SolutionDirectory }
 $MSBuildFile = & "$TempDirectory\Nuke.MSBuildLocator\tools\Nuke.MSBuildLocator.exe"

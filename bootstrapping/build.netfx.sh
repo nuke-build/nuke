@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+echo $(bash --version 2>&1 | head -n 1)
+
 LOCAL=0
 BUILD_ARGUMENTS=()
 for i in "$@"; do
@@ -41,6 +43,7 @@ else
         mono "$NUGET_EXE" update -Self
     fi
 fi
+echo $("$NUGET_EXE" help 2>&1 | head -n 1)
 
 mono "$NUGET_EXE" restore "$BUILD_PROJECT_FILE" -SolutionDirectory "$SOLUTION_DIRECTORY"
 msbuild "$BUILD_PROJECT_FILE"
