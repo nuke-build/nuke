@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+echo $(bash --version 2>&1 | head -n 1)
+
 LOCAL=0
 BUILD_ARGUMENTS=()
 for i in "$@"; do
@@ -47,5 +49,6 @@ else
         "$DOTNET_SCRIPT_FILE" --install-dir "$DOTNET_DIRECTORY" --channel "$DOTNET_CHANNEL" --no-path
     fi
 fi
+echo "Microsoft (R) .NET Core SDK version $(dotnet --version)"
 
 "$DOTNET_EXE" run --project "$BUILD_PROJECT_FILE" -- ${BUILD_ARGUMENTS[@]}

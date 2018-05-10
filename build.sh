@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+echo $(bash --version 2>&1 | head -n 1)
+
 LOCAL=0
 REFEXT="False"
 BUILD_ARGUMENTS=()
@@ -33,7 +35,7 @@ export NUGET_XMLDOC_MODE="skip"
 export FrameworkPathOverride=$(dirname $(which mono))/../lib/mono/4.6.1-api/
 
 ###########################################################################
-# FIND/DOWNLOAD DOTNET; RUN BUILD
+# EXECUTION
 ###########################################################################
 
 if ! ((LOCAL)) && [ -x "$(command -v dotnet)" ]; then
@@ -51,6 +53,7 @@ else
         "$DOTNET_SCRIPT_FILE" --install-dir "$DOTNET_DIRECTORY" --channel "$DOTNET_CHANNEL" --no-path
     fi
 fi
+echo "Microsoft (R) .NET Core SDK version $(dotnet --version)"
 
 "$DOTNET_EXE" build "$BUILD_PROJECT_FILE" /p:"ReferenceExternal=$REFEXT"
 "$DOTNET_EXE" run --project "$BUILD_PROJECT_FILE" -- ${BUILD_ARGUMENTS[@]}
