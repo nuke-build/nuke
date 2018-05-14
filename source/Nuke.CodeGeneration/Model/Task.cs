@@ -46,6 +46,10 @@ namespace Nuke.CodeGeneration.Model
         [Description("Argument that will always be printed independently of any set property.")]
         public string DefiniteArgument { get; set; }
 
+        [CanBeNull]
+        [Description("Url of the task. If not specified, the tool url will be used.")]
+        public string OfficialUrl { get; set; }
+
         [Description("The settings of the task.")]
         public SettingsClass SettingsClass { get; set; } = new SettingsClass();
     }

@@ -216,6 +216,10 @@
           "description": "Argument that will always be printed independently of any set property.",
           "type": "string"
         },
+        "officialUrl": {
+          "description": "Url of the task. If not specified, the tool url will be used.",
+          "type": "string"
+        },
         "settingsClass": {
           "$ref": "#/definitions/SettingsClass"
         }
