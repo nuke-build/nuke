@@ -32,8 +32,7 @@
         }
       },
       "required": [
-        "name",
-        "properties"
+        "name"
       ]
     },
     "Enumeration": {
@@ -176,10 +175,7 @@
             "$ref": "#/definitions/Property"
           }
         }
-      },
-      "required": [
-        "properties"
-      ]
+      }
     },
     "Task": {
       "type": "object",
@@ -223,10 +219,7 @@
         "settingsClass": {
           "$ref": "#/definitions/SettingsClass"
         }
-      },
-      "required": [
-        "settingsClass"
-      ]
+      }
     }
   },
   "type": "object",
@@ -322,7 +315,6 @@
   },
   "required": [
     "name",
-    "officialUrl",
-    "tasks"
+    "officialUrl"
   ]
 }
