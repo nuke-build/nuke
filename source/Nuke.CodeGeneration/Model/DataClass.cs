@@ -32,7 +32,6 @@ namespace Nuke.CodeGeneration.Model
         [Description("Omits argument parsing.")]
         public bool NoArguments { get; set; }
 
-        [JsonProperty(Required = Required.Always)]
         [Description("Properties of the data class.")]
         public List<Property> Properties { get; set; } = new List<Property>();
     }

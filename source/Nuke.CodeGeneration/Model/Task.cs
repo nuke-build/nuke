@@ -46,8 +46,7 @@ namespace Nuke.CodeGeneration.Model
         [Description("Argument that will always be printed independently of any set property.")]
         public string DefiniteArgument { get; set; }
 
-        [JsonProperty(Required = Required.Always)]
         [Description("The settings of the task.")]
-        public SettingsClass SettingsClass { get; set; }
+        public SettingsClass SettingsClass { get; set; } = new SettingsClass();
     }
 }
