@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Tooling
 {
@@ -32,6 +33,7 @@ namespace Nuke.Common.Tooling
             this IProcess process)
         {
             process.AssertWaitForExit();
+            if (process.HasOutput) process.Output.Where(x => x.Type == OutputType.Err).ForEach(x => Logger.Error(x.Text));
             ControlFlow.Assert(process.ExitCode == 0,
                 new[]
                 {

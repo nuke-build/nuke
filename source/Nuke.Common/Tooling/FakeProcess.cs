@@ -22,6 +22,8 @@ namespace Nuke.Common.Tooling
 
         public IEnumerable<Output> Output => Enumerable.Empty<Output>();
 
+        public bool HasOutput => false;
+
         public int ExitCode => 0;
 
         public void Kill()
