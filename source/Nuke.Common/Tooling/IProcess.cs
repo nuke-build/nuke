@@ -37,6 +37,11 @@ namespace Nuke.Common.Tooling
         IEnumerable<Output> Output { get; }
 
         /// <summary>
+        /// Inidicates if the process has any ouput.
+        /// </summary>
+        bool HasOutput { get; }
+
+        /// <summary>
         /// Returns <see cref="Process.ExitCode"/>.
         /// </summary>
         int ExitCode { get; }
