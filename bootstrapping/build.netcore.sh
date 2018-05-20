@@ -24,7 +24,6 @@ TEMP_DIRECTORY="$SCRIPT_DIR/_ROOT_DIRECTORY_/.tmp"
 
 DOTNET_CHANNEL="2.0"
 DOTNET_SCRIPT_URL="https://raw.githubusercontent.com/dotnet/cli/master/scripts/obtain/dotnet-install.sh"
-DOTNET_DIRECTORY="$TEMP_DIRECTORY/dotnet-unix"
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
@@ -37,17 +36,17 @@ export NUGET_XMLDOC_MODE="skip"
 if ! ((LOCAL)) && [ -x "$(command -v dotnet)" ]; then
     export DOTNET_EXE="$(command -v dotnet)"
 else
+    DOTNET_DIRECTORY="$TEMP_DIRECTORY/dotnet-unix"
     export DOTNET_EXE="$DOTNET_DIRECTORY/dotnet"
-  
-    if [ ! -f "$DOTNET_EXE" ]; then
-        mkdir -p "$DOTNET_DIRECTORY"
-        
-        DOTNET_SCRIPT_FILE="$TEMP_DIRECTORY/dotnet-install.sh"
+
+    DOTNET_SCRIPT_FILE="$TEMP_DIRECTORY/dotnet-install.sh"
+    if [ ! -f "$DOTNET_SCRIPT_FILE" ]; then
+        mkdir -p "$TEMP_DIRECTORY"
         curl -Lsfo "$DOTNET_SCRIPT_FILE" "$DOTNET_SCRIPT_URL"
-        
-        chmod +x "$DOTNET_SCRIPT_FILE"
-        "$DOTNET_SCRIPT_FILE" --install-dir "$DOTNET_DIRECTORY" --channel "$DOTNET_CHANNEL" --no-path
     fi
+
+    chmod +x "$DOTNET_SCRIPT_FILE"
+    "$DOTNET_SCRIPT_FILE" --install-dir "$DOTNET_DIRECTORY" --channel "$DOTNET_CHANNEL" --no-path
 fi
 echo "Microsoft (R) .NET Core SDK version $("$DOTNET_EXE" --version)"
 

@@ -19,7 +19,6 @@ $TempDirectory = "$PSScriptRoot\_ROOT_DIRECTORY_\.tmp"
 
 $DotNetChannel = "2.0"
 $DotNetScriptUrl = "https://raw.githubusercontent.com/dotnet/cli/master/scripts/obtain/dotnet-install.ps1"
-$DotNetDirectory = "$TempDirectory\dotnet-win"
 
 $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1
 $env:DOTNET_CLI_TELEMETRY_OPTOUT = 1
@@ -38,16 +37,16 @@ if (-not $Local -and (Get-Command "dotnet" -ErrorAction SilentlyContinue) -ne $n
     $env:DOTNET_EXE = (Get-Command "dotnet").Path
 }
 else {
+    $DotNetDirectory = "$TempDirectory\dotnet-win"
     $env:DOTNET_EXE = "$DotNetDirectory\dotnet.exe"
-    
-    if (!(Test-Path $env:DOTNET_EXE)) {
-        md -force $DotNetDirectory > $null
 
-        $DotNetScriptFile = "$TempDirectory\dotnet-install.ps1"
+    $DotNetScriptFile = "$TempDirectory\dotnet-install.ps1"
+    if (!(Test-Path $DotNetScriptFile)) {
+        md -force $TempDirectory > $null
         (New-Object System.Net.WebClient).DownloadFile($DotNetScriptUrl, $DotNetScriptFile)
-
-        ExecSafe { & $DotNetScriptFile -InstallDir $DotNetDirectory -Channel $DotNetChannel -NoPath }
     }
+
+    ExecSafe { & $DotNetScriptFile -InstallDir $DotNetDirectory -Channel $DotNetChannel -NoPath }
 }
 Write-Output "Microsoft (R) .NET Core SDK version $(& $env:DOTNET_EXE --version)"
 
