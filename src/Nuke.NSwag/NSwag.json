@@ -23,22 +23,15 @@
   "name": "NSwag",
   "officialUrl": "https://github.com/RSuter/NSwag",
   "help": "The project combines the functionality of Swashbuckle (Swagger generation) and AutoRest (client generation) in one toolchain. This way a lot of incompatibilites can be avoided and features which are not well described by the Swagger specification or JSON Schema are better supported (e.g. <a href=\"https://github.com/NJsonSchema/NJsonSchema/wiki/Inheritance\">inheritance</a>, <a href=\"https://github.com/NJsonSchema/NJsonSchema/wiki/Enums\">enum</a> and reference handling). The NSwag project heavily uses <a href=\"http://njsonschema.org/\">NJsonSchema for .NET</a> for JSON Schema handling and C#/TypeScript class/interface generation.",
-  "packageId": "NSwag.MSBuild",
   "packageExecutable": "NSwag.Commandline",
+  "customExecutable": true,
   "tasks": [
     {
       "help": "Prints the toolchain version.",
       "postfix": "Version",
       "definiteArgument": "version",
       "settingsClass": {
-        "properties": [
-          {
-            "name": "DoNotUse",
-            "type": "bool?",
-            "format": "{value}",
-            "help": "DoNotUse"
-          }
-        ]
+        "baseClass": "NSwagSettings"
       }
     },
     {
@@ -49,6 +42,7 @@
       ],
       "definiteArgument": "list-types",
       "settingsClass": {
+        "baseClass": "NSwagSettings",
         "properties": [
           {
             "name": "File",
@@ -73,6 +67,7 @@
       ],
       "definiteArgument": "list-controllers",
       "settingsClass": {
+        "baseClass": "NSwagSettings",
         "properties": [
           {
             "name": "File",
@@ -97,6 +92,7 @@
       ],
       "definiteArgument": "types2swagger",
       "settingsClass": {
+        "baseClass": "NSwagSettings",
         "properties": [
           {
             "name": "ClassNames",
@@ -165,6 +161,7 @@
       ],
       "definiteArgument": "webapi2swagger",
       "settingsClass": {
+        "baseClass": "NSwagSettings",
         "properties": [
           {
             "name": "Controller",
@@ -209,6 +206,7 @@
       ],
       "definiteArgument": "aspnetcore2swagger",
       "settingsClass": {
+        "baseClass": "NSwagSettings",
         "properties": [
           {
             "name": "Project",
@@ -260,14 +258,7 @@
       "postfix": "CreateDocument",
       "definiteArgument": "new",
       "settingsClass": {
-        "properties": [
-          {
-            "name": "DoNotUse",
-            "type": "bool?",
-            "format": "{value}",
-            "help": "DoNotUse"
-          }
-        ]
+        "baseClass": "NSwagSettings"
       }
     },
     {
@@ -275,6 +266,7 @@
       "postfix": "ExecuteDocument",
       "definiteArgument": "run",
       "settingsClass": {
+        "baseClass": "NSwagSettings",
         "properties": [
           {
             "name": "Input",
@@ -299,6 +291,7 @@
       ],
       "definiteArgument": "jsonschema2csclient",
       "settingsClass": {
+        "baseClass": "NSwagSettings",
         "properties": [
           {
             "name": "Name",
@@ -348,6 +341,7 @@
       ],
       "definiteArgument": "jsonschema2tsclient",
       "settingsClass": {
+        "baseClass": "NSwagSettings",
         "properties": [
           {
             "name": "Name",
@@ -369,6 +363,7 @@
       ],
       "definiteArgument": "swagger2csclient",
       "settingsClass": {
+        "baseClass": "NSwagSettings",
         "properties": [
           {
             "name": "ClientBaseClass",
@@ -546,6 +541,7 @@
       ],
       "definiteArgument": "swagger2cscontroller",
       "settingsClass": {
+        "baseClass": "NSwagSettings",
         "properties": [
           {
             "name": "ControllerBaseClass",
@@ -584,6 +580,7 @@
       ],
       "definiteArgument": "swagger2tsclient",
       "settingsClass": {
+        "baseClass": "NSwagSettings",
         "properties": [
           {
             "name": "ClassName",
@@ -839,6 +836,15 @@
           }
         ]
       }
+    }
+  ],
+  "commonTaskProperties": [
+    {
+      "name": "NSwagRuntime",
+      "type": "string",
+      "format": "{value}",
+      "customImpl": true,
+      "customValue": true
     }
   ],
   "commonTaskPropertySets": {

@@ -3,7 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 // Generated with Nuke.CodeGeneration, Version: 0.5.0-alpha.27 [CommitSha: 1e4928c8].
-// Generated from https://github.com/arodus/nuke-tools-nswag/blob/master/src/Nuke.NSwag/NSwag.json.
+// Generated from https://github.com/arodus/nuke-tools-nswag/blob/fix/src/Nuke.NSwag/NSwag.json.
 
 using JetBrains.Annotations;
 using Nuke.Common;
@@ -26,7 +26,7 @@ namespace Nuke.NSwag
     public static partial class NSwagTasks
     {
         /// <summary><p>Path to the NSwag executable.</p></summary>
-        public static string NSwagPath => ToolPathResolver.GetPackageExecutable("NSwag.MSBuild", "NSwag.Commandline");
+        public static string NSwagPath => GetToolPath();
         /// <summary><p>The project combines the functionality of Swashbuckle (Swagger generation) and AutoRest (client generation) in one toolchain. This way a lot of incompatibilites can be avoided and features which are not well described by the Swagger specification or JSON Schema are better supported (e.g. <a href="https://github.com/NJsonSchema/NJsonSchema/wiki/Inheritance">inheritance</a>, <a href="https://github.com/NJsonSchema/NJsonSchema/wiki/Enums">enum</a> and reference handling). The NSwag project heavily uses <a href="http://njsonschema.org/">NJsonSchema for .NET</a> for JSON Schema handling and C#/TypeScript class/interface generation.</p></summary>
         public static IEnumerable<string> NSwag(string arguments, string workingDirectory = null, ProcessSettings processSettings = null)
         {
@@ -183,17 +183,15 @@ namespace Nuke.NSwag
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class NSwagVersionSettings : ToolSettings
+    public partial class NSwagVersionSettings : NSwagSettings
     {
         /// <summary><p>Path to the NSwag executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? NSwagTasks.NSwagPath;
-        /// <summary><p>DoNotUse</p></summary>
-        public virtual bool? DoNotUse { get; internal set; }
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
               .Add("version")
-              .Add("{value}", DoNotUse);
+              .Add("{value}", GetNSwagRuntime(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -203,10 +201,10 @@ namespace Nuke.NSwag
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class NSwagListTypesSettings : ToolSettings
+    public partial class NSwagListTypesSettings : NSwagSettings
     {
         /// <summary><p>Path to the NSwag executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? NSwagTasks.NSwagPath;
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         /// <summary><p>The nswag.json configuration file path.</p></summary>
         public virtual string File { get; internal set; }
         public virtual IReadOnlyDictionary<string, object> Variables => VariablesInternal.AsReadOnly();
@@ -225,6 +223,7 @@ namespace Nuke.NSwag
               .Add("list-types")
               .Add("/File:{value}", File)
               .Add("/Variables:{value}", Variables, "{key}={value}")
+              .Add("{value}", GetNSwagRuntime(), customValue: true)
               .Add("/Assembly:{value}", Assembly)
               .Add("/AssemblyConfig:{value}", AssemblyConfig)
               .Add("/ReferencePaths:{value}", ReferencePaths);
@@ -237,10 +236,10 @@ namespace Nuke.NSwag
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class NSwagListWebApiControllersSettings : ToolSettings
+    public partial class NSwagListWebApiControllersSettings : NSwagSettings
     {
         /// <summary><p>Path to the NSwag executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? NSwagTasks.NSwagPath;
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         /// <summary><p>The nswag.json configuration file path.</p></summary>
         public virtual string File { get; internal set; }
         public virtual IReadOnlyDictionary<string, object> Variables => VariablesInternal.AsReadOnly();
@@ -259,6 +258,7 @@ namespace Nuke.NSwag
               .Add("list-controllers")
               .Add("/File:{value}", File)
               .Add("/Variables:{value}", Variables, "{key}={value}")
+              .Add("{value}", GetNSwagRuntime(), customValue: true)
               .Add("/Assembly:{value}", Assembly)
               .Add("/AssemblyConfig:{value}", AssemblyConfig)
               .Add("/ReferencePaths:{value}", ReferencePaths);
@@ -271,10 +271,10 @@ namespace Nuke.NSwag
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class NSwagTypesToSwaggerSettings : ToolSettings
+    public partial class NSwagTypesToSwaggerSettings : NSwagSettings
     {
         /// <summary><p>Path to the NSwag executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? NSwagTasks.NSwagPath;
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         /// <summary><p>The class names.</p></summary>
         public virtual IReadOnlyList<string> ClassNames => ClassNamesInternal.AsReadOnly();
         internal List<string> ClassNamesInternal { get; set; } = new List<string>();
@@ -319,6 +319,7 @@ namespace Nuke.NSwag
               .Add("/AllowReferencesWithProperties:{value}", AllowReferencesWithProperties)
               .Add("/GenerateKnownTypes:{value}", GenerateKnownTypes)
               .Add("/GenerateXmlObjects:{value}", GenerateXmlObjects)
+              .Add("{value}", GetNSwagRuntime(), customValue: true)
               .Add("/Output:{value}", Output)
               .Add("/OutputType:{value}", OutputType)
               .Add("/Assembly:{value}", Assembly)
@@ -333,10 +334,10 @@ namespace Nuke.NSwag
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class NSwagWebApiToSwaggerSettings : ToolSettings
+    public partial class NSwagWebApiToSwaggerSettings : NSwagSettings
     {
         /// <summary><p>Path to the NSwag executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? NSwagTasks.NSwagPath;
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         /// <summary><p>The Web API controller full class name or empty to load all controllers from the assembly.</p></summary>
         public virtual string Controller { get; internal set; }
         /// <summary><p>The Web API controller full class names or empty to load all controllers from the assembly (comma separated).</p></summary>
@@ -417,6 +418,7 @@ namespace Nuke.NSwag
               .Add("/AspNetCore:{value}", AspNetCore)
               .Add("/DefaultUrlTemplate:{value}", DefaultUrlTemplate)
               .Add("/AddMissingPathParameters:{value}", AddMissingPathParameters)
+              .Add("{value}", GetNSwagRuntime(), customValue: true)
               .Add("/DefaultPropertyNameHandling:{value}", DefaultPropertyNameHandling)
               .Add("/DefaultReferenceTypeNullHandling:{value}", DefaultReferenceTypeNullHandling)
               .Add("/DefaultEnumHandling:{value}", DefaultEnumHandling)
@@ -453,10 +455,10 @@ namespace Nuke.NSwag
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class NSwagAspNetCoreToSwaggerSettings : ToolSettings
+    public partial class NSwagAspNetCoreToSwaggerSettings : NSwagSettings
     {
         /// <summary><p>Path to the NSwag executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? NSwagTasks.NSwagPath;
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         /// <summary><p>The project to use.</p></summary>
         public virtual string Project { get; internal set; }
         /// <summary><p>The MSBuild project extensions path. Defaults to "obj".</p></summary>
@@ -542,6 +544,7 @@ namespace Nuke.NSwag
               .Add("/TargetFramework:{value}", TargetFramework)
               .Add("/NoBuild:{value}", NoBuild)
               .Add("/Verbose:{value}", Verbose)
+              .Add("{value}", GetNSwagRuntime(), customValue: true)
               .Add("/DefaultPropertyNameHandling:{value}", DefaultPropertyNameHandling)
               .Add("/DefaultReferenceTypeNullHandling:{value}", DefaultReferenceTypeNullHandling)
               .Add("/DefaultEnumHandling:{value}", DefaultEnumHandling)
@@ -578,17 +581,15 @@ namespace Nuke.NSwag
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class NSwagCreateDocumentSettings : ToolSettings
+    public partial class NSwagCreateDocumentSettings : NSwagSettings
     {
         /// <summary><p>Path to the NSwag executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? NSwagTasks.NSwagPath;
-        /// <summary><p>DoNotUse</p></summary>
-        public virtual bool? DoNotUse { get; internal set; }
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
               .Add("new")
-              .Add("{value}", DoNotUse);
+              .Add("{value}", GetNSwagRuntime(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -598,10 +599,10 @@ namespace Nuke.NSwag
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class NSwagExecuteDocumentSettings : ToolSettings
+    public partial class NSwagExecuteDocumentSettings : NSwagSettings
     {
         /// <summary><p>Path to the NSwag executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? NSwagTasks.NSwagPath;
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         public virtual string Input { get; internal set; }
         public virtual IReadOnlyDictionary<string, object> Variables => VariablesInternal.AsReadOnly();
         internal Dictionary<string,object> VariablesInternal { get; set; } = new Dictionary<string,object>(StringComparer.OrdinalIgnoreCase);
@@ -610,7 +611,8 @@ namespace Nuke.NSwag
             arguments
               .Add("run")
               .Add("/Input:{value}", Input)
-              .Add("/Variables:{value}", Variables, "{key}={value}");
+              .Add("/Variables:{value}", Variables, "{key}={value}")
+              .Add("{value}", GetNSwagRuntime(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -620,10 +622,10 @@ namespace Nuke.NSwag
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class NSwagJsonSchemaToCSharpSettings : ToolSettings
+    public partial class NSwagJsonSchemaToCSharpSettings : NSwagSettings
     {
         /// <summary><p>Path to the NSwag executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? NSwagTasks.NSwagPath;
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         /// <summary><p>The class name of the root schema.</p></summary>
         public virtual string Name { get; internal set; }
         /// <summary><p>The namespace of the generated classes.</p></summary>
@@ -655,6 +657,7 @@ namespace Nuke.NSwag
               .Add("/DateTimeType:{value}", DateTimeType)
               .Add("/ArrayType:{value}", ArrayType)
               .Add("/DictionaryType:{value}", DictionaryType)
+              .Add("{value}", GetNSwagRuntime(), customValue: true)
               .Add("/Input:{value}", Input)
               .Add("/ServiceHost:{value}", ServiceHost)
               .Add("/ServiceSchemes:{value}", ServiceSchemes)
@@ -668,10 +671,10 @@ namespace Nuke.NSwag
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class NSwagJsonSchemaToTypeScriptSettings : ToolSettings
+    public partial class NSwagJsonSchemaToTypeScriptSettings : NSwagSettings
     {
         /// <summary><p>Path to the NSwag executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? NSwagTasks.NSwagPath;
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         /// <summary><p>The type name of the root schema.</p></summary>
         public virtual string Name { get; internal set; }
         /// <summary><p>A file path or URL to the data or the JSON data itself.</p></summary>
@@ -688,6 +691,7 @@ namespace Nuke.NSwag
             arguments
               .Add("jsonschema2tsclient")
               .Add("/Name:{value}", Name)
+              .Add("{value}", GetNSwagRuntime(), customValue: true)
               .Add("/Input:{value}", Input)
               .Add("/ServiceHost:{value}", ServiceHost)
               .Add("/ServiceSchemes:{value}", ServiceSchemes)
@@ -701,10 +705,10 @@ namespace Nuke.NSwag
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class NSwagSwaggerToCSharpClientSettings : ToolSettings
+    public partial class NSwagSwaggerToCSharpClientSettings : NSwagSettings
     {
         /// <summary><p>Path to the NSwag executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? NSwagTasks.NSwagPath;
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         /// <summary><p>The client base class (empty for no base class).</p></summary>
         public virtual string ClientBaseClass { get; internal set; }
         /// <summary><p>The configuration class. The setting ClientBaseClass must be set. (empty for no configuration class).</p></summary>
@@ -879,6 +883,7 @@ namespace Nuke.NSwag
               .Add("/GenerateUpdateJsonSerializerSettingsMethod:{value}", GenerateUpdateJsonSerializerSettingsMethod)
               .Add("/SerializeTypeInformation:{value}", SerializeTypeInformation)
               .Add("/QueryNullValue:{value}", QueryNullValue)
+              .Add("{value}", GetNSwagRuntime(), customValue: true)
               .Add("/ClassName:{value}", ClassName)
               .Add("/OperationGenerationMode:{value}", OperationGenerationMode)
               .Add("/AdditionalNamespaceUsages:{value}", AdditionalNamespaceUsages)
@@ -929,10 +934,10 @@ namespace Nuke.NSwag
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class NSwagSwaggerToCSharpControllerSettings : ToolSettings
+    public partial class NSwagSwaggerToCSharpControllerSettings : NSwagSettings
     {
         /// <summary><p>Path to the NSwag executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? NSwagTasks.NSwagPath;
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         /// <summary><p>The controller base class (empty for 'ApiController').</p></summary>
         public virtual string ControllerBaseClass { get; internal set; }
         /// <summary><p>The controller generation style (partial, abstract; default: partial).</p></summary>
@@ -1037,6 +1042,7 @@ namespace Nuke.NSwag
               .Add("/ControllerStyle:{value}", ControllerStyle)
               .Add("/UseCancellationToken:{value}", UseCancellationToken)
               .Add("/AspNetNamespace:{value}", AspNetNamespace)
+              .Add("{value}", GetNSwagRuntime(), customValue: true)
               .Add("/ClassName:{value}", ClassName)
               .Add("/OperationGenerationMode:{value}", OperationGenerationMode)
               .Add("/AdditionalNamespaceUsages:{value}", AdditionalNamespaceUsages)
@@ -1087,10 +1093,10 @@ namespace Nuke.NSwag
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public partial class NSwagSwaggerToTypeScriptClientSettings : ToolSettings
+    public partial class NSwagSwaggerToTypeScriptClientSettings : NSwagSettings
     {
         /// <summary><p>Path to the NSwag executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? NSwagTasks.NSwagPath;
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         /// <summary><p>The class name of the generated client.</p></summary>
         public virtual string ClassName { get; internal set; }
         /// <summary><p>The TypeScript module name (default: '', no module).</p></summary>
@@ -1243,6 +1249,7 @@ namespace Nuke.NSwag
               .Add("/UseGetBaseUrlMethod:{value}", UseGetBaseUrlMethod)
               .Add("/BaseUrlTokenName:{value}", BaseUrlTokenName)
               .Add("/QueryNullValue:{value}", QueryNullValue)
+              .Add("{value}", GetNSwagRuntime(), customValue: true)
               .Add("/TemplateDirectory:{value}", TemplateDirectory)
               .Add("/TypeNameGenerator:{value}", TypeNameGenerator)
               .Add("/PropertyNameGeneratorType:{value}", PropertyNameGeneratorType)
@@ -1261,48 +1268,6 @@ namespace Nuke.NSwag
     [ExcludeFromCodeCoverage]
     public static partial class NSwagVersionSettingsExtensions
     {
-        #region DoNotUse
-        /// <summary><p><em>Sets <see cref="NSwagVersionSettings.DoNotUse"/>.</em></p><p>DoNotUse</p></summary>
-        [Pure]
-        public static NSwagVersionSettings SetDoNotUse(this NSwagVersionSettings toolSettings, bool? doNotUse)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DoNotUse = doNotUse;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagVersionSettings.DoNotUse"/>.</em></p><p>DoNotUse</p></summary>
-        [Pure]
-        public static NSwagVersionSettings ResetDoNotUse(this NSwagVersionSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DoNotUse = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagVersionSettings.DoNotUse"/>.</em></p><p>DoNotUse</p></summary>
-        [Pure]
-        public static NSwagVersionSettings EnableDoNotUse(this NSwagVersionSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DoNotUse = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagVersionSettings.DoNotUse"/>.</em></p><p>DoNotUse</p></summary>
-        [Pure]
-        public static NSwagVersionSettings DisableDoNotUse(this NSwagVersionSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DoNotUse = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagVersionSettings.DoNotUse"/>.</em></p><p>DoNotUse</p></summary>
-        [Pure]
-        public static NSwagVersionSettings ToggleDoNotUse(this NSwagVersionSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DoNotUse = !toolSettings.DoNotUse;
-            return toolSettings;
-        }
-        #endregion
     }
     #endregion
     #region NSwagListTypesSettingsExtensions
@@ -4363,48 +4328,6 @@ namespace Nuke.NSwag
     [ExcludeFromCodeCoverage]
     public static partial class NSwagCreateDocumentSettingsExtensions
     {
-        #region DoNotUse
-        /// <summary><p><em>Sets <see cref="NSwagCreateDocumentSettings.DoNotUse"/>.</em></p><p>DoNotUse</p></summary>
-        [Pure]
-        public static NSwagCreateDocumentSettings SetDoNotUse(this NSwagCreateDocumentSettings toolSettings, bool? doNotUse)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DoNotUse = doNotUse;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagCreateDocumentSettings.DoNotUse"/>.</em></p><p>DoNotUse</p></summary>
-        [Pure]
-        public static NSwagCreateDocumentSettings ResetDoNotUse(this NSwagCreateDocumentSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DoNotUse = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagCreateDocumentSettings.DoNotUse"/>.</em></p><p>DoNotUse</p></summary>
-        [Pure]
-        public static NSwagCreateDocumentSettings EnableDoNotUse(this NSwagCreateDocumentSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DoNotUse = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagCreateDocumentSettings.DoNotUse"/>.</em></p><p>DoNotUse</p></summary>
-        [Pure]
-        public static NSwagCreateDocumentSettings DisableDoNotUse(this NSwagCreateDocumentSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DoNotUse = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagCreateDocumentSettings.DoNotUse"/>.</em></p><p>DoNotUse</p></summary>
-        [Pure]
-        public static NSwagCreateDocumentSettings ToggleDoNotUse(this NSwagCreateDocumentSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DoNotUse = !toolSettings.DoNotUse;
-            return toolSettings;
-        }
-        #endregion
     }
     #endregion
     #region NSwagExecuteDocumentSettingsExtensions

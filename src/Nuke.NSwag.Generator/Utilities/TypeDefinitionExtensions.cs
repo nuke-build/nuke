@@ -1,6 +1,6 @@
 ﻿// Copyright Sebastian Karasek, Matthias Koch 2018.
 // Distributed under the MIT License.
-// https://github.com/nuke-build/ide-extensions/blob/master/LICENSE
+// https://github.com/nuke-build/nswag/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
@@ -15,23 +15,23 @@ namespace Nuke.NSwag.Generator.Utilities
         private const string c_consoleCommandInterfaceFullName = "NConsole.IConsoleCommand";
         private const string c_commandAttributeTypeFullName = "NConsole.CommandAttribute";
 
-        public static string GetPropertySetName (this TypeDefinition typeDefinition)
+        public static string GetPropertySetName(this TypeDefinition typeDefinition)
         {
             var indexOfGenericSeperator = typeDefinition.Name.IndexOf(value: '`');
             var name = indexOfGenericSeperator < 0
-                    ? typeDefinition.Name
-                    : typeDefinition.Name.Substring(startIndex: 0, length: indexOfGenericSeperator);
+                ? typeDefinition.Name
+                : typeDefinition.Name.Substring(startIndex: 0, length: indexOfGenericSeperator);
             return name.Replace("Base", string.Empty);
         }
 
-        public static bool IsBaseClass (this TypeDefinition typeDefinition)
+        public static bool IsBaseClass(this TypeDefinition typeDefinition)
         {
             if (!typeDefinition.IsAbstract || typeDefinition.IsInterface) return false;
             if (typeDefinition.Interfaces.Any(y => y.InterfaceType.FullName == c_consoleCommandInterfaceFullName)) return true;
             return typeDefinition.BaseType != null && IsBaseClass(typeDefinition.BaseType.Resolve());
         }
 
-        public static List<string> GetCommonPropertySets (this TypeDefinition typeDefinition)
+        public static List<string> GetCommonPropertySets(this TypeDefinition typeDefinition)
         {
             var commonPropertySets = new List<string>();
             if (typeDefinition.IsBaseClass()) commonPropertySets.Add(typeDefinition.GetPropertySetName());
@@ -39,13 +39,13 @@ namespace Nuke.NSwag.Generator.Utilities
             return commonPropertySets;
         }
 
-        public static CustomAttribute GetCommandAttribute (this TypeDefinition typeDefinition)
+        public static CustomAttribute GetCommandAttribute(this TypeDefinition typeDefinition)
         {
             ControlFlow.Assert(typeDefinition.HasCommandAttribute(), "typeDefinition.HasCommandAttribute()");
             return typeDefinition.CustomAttributes.Single(x => x.AttributeType.FullName == c_commandAttributeTypeFullName);
         }
 
-        public static bool HasCommandAttribute (this TypeDefinition typeDefinition)
+        public static bool HasCommandAttribute(this TypeDefinition typeDefinition)
         {
             return typeDefinition.HasCustomAttributes
                    && typeDefinition.CustomAttributes.Any(x => x.AttributeType.FullName == c_commandAttributeTypeFullName);
