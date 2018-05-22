@@ -1,4 +1,9 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">Copyright Sebastian Karasek $CURRENT_YEAR$.&#xD;
-Distributed under the MIT License.&#xD;
-https://github.com/arodus/nuke-plugin-nswag/blob/master/LICENSE</s:String></wpf:ResourceDictionary>
+	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=F203AACE36F9664BBB343188AFE44103/RelativePath/@EntryValue">..\shared\Inspections.DotSettings</s:String>
+	<s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=F203AACE36F9664BBB343188AFE44103/@KeyIndexDefined">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=F84025986C172E44AA2AE43DADA98C65/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=F84025986C172E44AA2AE43DADA98C65/RelativePath/@EntryValue">..\shared\CodeStyle.DotSettings</s:String>
+	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=FileF203AACE36F9664BBB343188AFE44103/@KeyIndexDefined">True</s:Boolean>
+	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=FileF203AACE36F9664BBB343188AFE44103/RelativePriority/@EntryValue">1</s:Double>
+	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=FileF84025986C172E44AA2AE43DADA98C65/@KeyIndexDefined">True</s:Boolean>
+	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=FileF84025986C172E44AA2AE43DADA98C65/RelativePriority/@EntryValue">2</s:Double></wpf:ResourceDictionary>
