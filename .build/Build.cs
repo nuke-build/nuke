@@ -20,12 +20,24 @@ class Build : NukeBuild
 {
     public static int Main() => Execute<Build>(x => x.Pack);
 
-    const string Source = "https://www.myget.org/F/nuke-plugins/api/v2/package";
-
     [GitRepository] readonly GitRepository GitRepository;
     [GitVersion] readonly GitVersion GitVersion;
-    [Parameter] readonly string MyGetApiKey;
     [Solution] readonly Solution Solution;
+
+    [Parameter("ApiKey for the specified source.")]
+    readonly string ApiKey;
+
+    [Parameter("Indicates to push to nuget.org feed.")]
+    readonly bool NuGet;
+
+    string Source => NuGet
+        ? "https://api.nuget.org/v3/index.json"
+        : "https://www.myget.org/F/nukebuild/api/v2/package";
+
+    string SymbolSource => NuGet
+        ? "https://nuget.smbsrc.net"
+        : "https://www.myget.org/F/nukebuild/symbols/api/v2/package";
+
     string ChangelogFile => RootDirectory / "CHANGELOG.md";
 
     Project NSwagProject => Solution.GetProject("Nuke.NSwag");
@@ -89,16 +101,19 @@ class Build : NukeBuild
 
     Target Push => _ => _
         .DependsOn(Pack)
-        .Requires(() => MyGetApiKey != null,
-            () => GitRepository.Branch == "master" || GitRepository.Branch == "develop")
-        .OnlyWhen(() => GitRepository.Branch == "master")
+        .Requires(() => ApiKey)
+        .Requires(() => !GitHasUncommitedChanges())
+        .Requires(() => !NuGet || GitVersionAttribute.Bump.HasValue)
+        .Requires(() => !NuGet || Configuration.EqualsOrdinalIgnoreCase("release"))
+        .Requires(() => !NuGet || GitVersion.BranchName.Equals("master"))
         .Executes(() =>
         {
             GlobFiles(OutputDirectory, "*.nupkg").NotEmpty()
                 .Where(f => !f.EndsWith("symbols.nupkg"))
                 .ForEach(p => DotNetNuGetPush(c => c
                     .SetSource(Source)
-                    .SetApiKey(MyGetApiKey)
+                    .SetSymbolSource(SymbolSource)
+                    .SetApiKey(ApiKey)
                     .SetTargetPath(p)));
         });
 
