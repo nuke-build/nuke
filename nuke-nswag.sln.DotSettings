@@ -1,0 +1,14 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">Copyright Sebastian Karasek, Matthias Koch $CURRENT_YEAR$.&#xD;
+Distributed under the MIT License.&#xD;
+https://github.com/nuke-build/nswag/blob/master/LICENSE</s:String>
+	<s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=8FA3E91AC034184D9FB9188620CFFEC5/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=8FA3E91AC034184D9FB9188620CFFEC5/AbsolutePath/@EntryValue">E:\nuke-build\nuke-nswag\shared\CodeStyle.DotSettings</s:String>
+	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=8FA3E91AC034184D9FB9188620CFFEC5/RelativePath/@EntryValue">..\shared\CodeStyle.DotSettings</s:String>
+	<s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=EC5016E210C5784EB4D19E40966D53B6/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=EC5016E210C5784EB4D19E40966D53B6/AbsolutePath/@EntryValue">E:\nuke-build\nuke-nswag\shared\Inspections.DotSettings</s:String>
+	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=EC5016E210C5784EB4D19E40966D53B6/RelativePath/@EntryValue">..\shared\Inspections.DotSettings</s:String>
+	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File8FA3E91AC034184D9FB9188620CFFEC5/@KeyIndexDefined">True</s:Boolean>
+	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File8FA3E91AC034184D9FB9188620CFFEC5/RelativePriority/@EntryValue">1</s:Double>
+	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=FileEC5016E210C5784EB4D19E40966D53B6/@KeyIndexDefined">True</s:Boolean>
+	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=FileEC5016E210C5784EB4D19E40966D53B6/RelativePriority/@EntryValue">2</s:Double></wpf:ResourceDictionary>

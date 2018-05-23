@@ -20,13 +20,19 @@ namespace Nuke.NSwag.Generator
     {
         private static List<Property> ParseProperties(TypeDefinition typeDefinition)
         {
+            var positionalArguments = new Dictionary<string, int>();
+
             var properties = typeDefinition.Properties
                 .Where(x => x.HasArgumentAttribute())
                 .Select(x =>
                 {
                     var argumentAttribute = x.GetArgumentAttribute();
-                    var type = x.GetTypeName(argumentAttribute);
                     var name = argumentAttribute.GetPropertyValue<string>("Name") ?? x.Name;
+                    var type = x.GetTypeName(argumentAttribute);
+
+                    var position = argumentAttribute.GetPropertyValue<int>("Position");
+                    if (position > 0) positionalArguments.Add(name, position);
+
                     return new Property
                            {
                                Name = name,
@@ -36,7 +42,9 @@ namespace Nuke.NSwag.Generator
                                Separator = type.StartsWith("List<") && type.StartsWith("Dictionary<") ? ',' : default(char?),
                                ItemFormat = type.StartsWith("Dictionary<") ? "{key}={value}" : null
                            };
-                }).ToList();
+                })
+                .OrderBy(x => positionalArguments.TryGetValue(x.Name, out var position) ? $"!{position}" : x.Name)
+                .ToList();
             return properties;
         }
 

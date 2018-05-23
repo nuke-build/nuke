@@ -3,7 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 // Generated with Nuke.CodeGeneration, Version: 0.5.0-alpha.27 [CommitSha: 1e4928c8].
-// Generated from https://github.com/arodus/nuke-tools-nswag/blob/fix/src/Nuke.NSwag/NSwag.json.
+// Generated from https://github.com/nuke-build/nswag/blob/master/src/Nuke.NSwag/NSwag.json.
 
 using JetBrains.Annotations;
 using Nuke.Common;
@@ -275,25 +275,25 @@ namespace Nuke.NSwag
     {
         /// <summary><p>Path to the NSwag executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? GetToolPath();
+        /// <summary><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
+        public virtual bool? AllowReferencesWithProperties { get; internal set; }
         /// <summary><p>The class names.</p></summary>
         public virtual IReadOnlyList<string> ClassNames => ClassNamesInternal.AsReadOnly();
         internal List<string> ClassNamesInternal { get; set; } = new List<string>();
+        /// <summary><p>The default enum handling ('String' or 'Integer'), default: Integer.</p></summary>
+        public virtual EnumHandling DefaultEnumHandling { get; internal set; }
         /// <summary><p>The default property name handling ('Default' or 'CamelCase').</p></summary>
         public virtual PropertyNameHandling DefaultPropertyNameHandling { get; internal set; }
         /// <summary><p>The default null handling (if NotNullAttribute and CanBeNullAttribute are missing, default: Null, Null or NotNull).</p></summary>
         public virtual ReferenceTypeNullHandling DefaultReferenceTypeNullHandling { get; internal set; }
-        /// <summary><p>The default enum handling ('String' or 'Integer'), default: Integer.</p></summary>
-        public virtual EnumHandling DefaultEnumHandling { get; internal set; }
         /// <summary><p>Flatten the inheritance hierarchy instead of using allOf to describe inheritance (default: false).</p></summary>
         public virtual bool? FlattenInheritanceHierarchy { get; internal set; }
-        /// <summary><p>Ignore properties with the ObsoleteAttribute (default: false).</p></summary>
-        public virtual bool? IgnoreObsoleteProperties { get; internal set; }
-        /// <summary><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
-        public virtual bool? AllowReferencesWithProperties { get; internal set; }
         /// <summary><p>Generate schemas for types in KnownTypeAttribute attributes (default: true).</p></summary>
         public virtual bool? GenerateKnownTypes { get; internal set; }
         /// <summary><p>Generate xmlObject representation for definitions (default: false).</p></summary>
         public virtual bool? GenerateXmlObjects { get; internal set; }
+        /// <summary><p>Ignore properties with the ObsoleteAttribute (default: false).</p></summary>
+        public virtual bool? IgnoreObsoleteProperties { get; internal set; }
         /// <summary><p>The output file path (optional).</p></summary>
         public virtual string Output { get; internal set; }
         /// <summary><p>Specifies the output schema type (Swagger2|OpenApi3, default: Swagger2).</p></summary>
@@ -310,15 +310,15 @@ namespace Nuke.NSwag
         {
             arguments
               .Add("types2swagger")
+              .Add("/AllowReferencesWithProperties:{value}", AllowReferencesWithProperties)
               .Add("/ClassNames:{value}", ClassNames)
+              .Add("/DefaultEnumHandling:{value}", DefaultEnumHandling)
               .Add("/DefaultPropertyNameHandling:{value}", DefaultPropertyNameHandling)
               .Add("/DefaultReferenceTypeNullHandling:{value}", DefaultReferenceTypeNullHandling)
-              .Add("/DefaultEnumHandling:{value}", DefaultEnumHandling)
               .Add("/FlattenInheritanceHierarchy:{value}", FlattenInheritanceHierarchy)
-              .Add("/IgnoreObsoleteProperties:{value}", IgnoreObsoleteProperties)
-              .Add("/AllowReferencesWithProperties:{value}", AllowReferencesWithProperties)
               .Add("/GenerateKnownTypes:{value}", GenerateKnownTypes)
               .Add("/GenerateXmlObjects:{value}", GenerateXmlObjects)
+              .Add("/IgnoreObsoleteProperties:{value}", IgnoreObsoleteProperties)
               .Add("{value}", GetNSwagRuntime(), customValue: true)
               .Add("/Output:{value}", Output)
               .Add("/OutputType:{value}", OutputType)
@@ -338,65 +338,65 @@ namespace Nuke.NSwag
     {
         /// <summary><p>Path to the NSwag executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? GetToolPath();
+        /// <summary><p>Specifies whether to add path parameters which are missing in the action method (default: true).</p></summary>
+        public virtual bool? AddMissingPathParameters { get; internal set; }
+        /// <summary><p>Specifies whether the controllers are hosted by ASP.NET Core.</p></summary>
+        public virtual bool? AspNetCore { get; internal set; }
         /// <summary><p>The Web API controller full class name or empty to load all controllers from the assembly.</p></summary>
         public virtual string Controller { get; internal set; }
         /// <summary><p>The Web API controller full class names or empty to load all controllers from the assembly (comma separated).</p></summary>
         public virtual IReadOnlyList<string> Controllers => ControllersInternal.AsReadOnly();
         internal List<string> ControllersInternal { get; set; } = new List<string>();
-        /// <summary><p>Specifies whether the controllers are hosted by ASP.NET Core.</p></summary>
-        public virtual bool? AspNetCore { get; internal set; }
         /// <summary><p>The Web API default URL template (default for Web API: 'api/{controller}/{id}'; for MVC projects: '{controller}/{action}/{id?}').</p></summary>
         public virtual string DefaultUrlTemplate { get; internal set; }
-        /// <summary><p>Specifies whether to add path parameters which are missing in the action method (default: true).</p></summary>
-        public virtual bool? AddMissingPathParameters { get; internal set; }
+        /// <summary><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
+        public virtual bool? AllowReferencesWithProperties { get; internal set; }
+        /// <summary><p>The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        public virtual string ContractResolver { get; internal set; }
+        /// <summary><p>The default enum handling ('String' or 'Integer'), default: Integer.</p></summary>
+        public virtual EnumHandling DefaultEnumHandling { get; internal set; }
         /// <summary><p>The default property name handling ('Default' or 'CamelCase').</p></summary>
         public virtual PropertyNameHandling DefaultPropertyNameHandling { get; internal set; }
         /// <summary><p>The default null handling (if NotNullAttribute and CanBeNullAttribute are missing, default: Null, Null or NotNull).</p></summary>
         public virtual ReferenceTypeNullHandling DefaultReferenceTypeNullHandling { get; internal set; }
-        /// <summary><p>The default enum handling ('String' or 'Integer'), default: Integer.</p></summary>
-        public virtual EnumHandling DefaultEnumHandling { get; internal set; }
+        /// <summary><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        public virtual IReadOnlyList<string> DocumentProcessors => DocumentProcessorsInternal.AsReadOnly();
+        internal List<string> DocumentProcessorsInternal { get; set; } = new List<string>();
+        /// <summary><p>Specifies the Swagger document template (may be a path or JSON, default: none).</p></summary>
+        public virtual string DocumentTemplate { get; internal set; }
+        /// <summary><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
+        public virtual IReadOnlyList<string> ExcludedTypeNames => ExcludedTypeNamesInternal.AsReadOnly();
+        internal List<string> ExcludedTypeNamesInternal { get; set; } = new List<string>();
         /// <summary><p>Flatten the inheritance hierarchy instead of using allOf to describe inheritance (default: false).</p></summary>
         public virtual bool? FlattenInheritanceHierarchy { get; internal set; }
+        /// <summary><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
+        public virtual bool? GenerateAbstractProperties { get; internal set; }
         /// <summary><p>Generate schemas for types in KnownTypeAttribute attributes (default: true).</p></summary>
         public virtual bool? GenerateKnownTypes { get; internal set; }
         /// <summary><p>Generate xmlObject representation for definitions (default: false).</p></summary>
         public virtual bool? GenerateXmlObjects { get; internal set; }
-        /// <summary><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
-        public virtual bool? GenerateAbstractProperties { get; internal set; }
         /// <summary><p>Ignore properties with the ObsoleteAttribute (default: false).</p></summary>
         public virtual bool? IgnoreObsoleteProperties { get; internal set; }
-        /// <summary><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
-        public virtual bool? AllowReferencesWithProperties { get; internal set; }
-        /// <summary><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
-        public virtual IReadOnlyList<string> ExcludedTypeNames => ExcludedTypeNamesInternal.AsReadOnly();
-        internal List<string> ExcludedTypeNamesInternal { get; set; } = new List<string>();
-        /// <summary><p>Overrides the service host of the web service (optional, use '.' to remove the hostname).</p></summary>
-        public virtual string ServiceHost { get; internal set; }
-        /// <summary><p>The basePath of the Swagger specification (optional).</p></summary>
-        public virtual string ServiceBasePath { get; internal set; }
-        /// <summary><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
-        public virtual IReadOnlyList<string> ServiceSchemes => ServiceSchemesInternal.AsReadOnly();
-        internal List<string> ServiceSchemesInternal { get; set; } = new List<string>();
-        /// <summary><p>Specify the title of the Swagger specification (ignored when DocumentTemplate is set).</p></summary>
-        public virtual string InfoTitle { get; internal set; }
         /// <summary><p>Specify the description of the Swagger specification (ignored when DocumentTemplate is set).</p></summary>
         public virtual string InfoDescription { get; internal set; }
+        /// <summary><p>Specify the title of the Swagger specification (ignored when DocumentTemplate is set).</p></summary>
+        public virtual string InfoTitle { get; internal set; }
         /// <summary><p>Specify the version of the Swagger specification (default: 1.0.0, ignored when DocumentTemplate is set).</p></summary>
         public virtual string InfoVersion { get; internal set; }
-        /// <summary><p>Specifies the Swagger document template (may be a path or JSON, default: none).</p></summary>
-        public virtual string DocumentTemplate { get; internal set; }
-        /// <summary><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        public virtual IReadOnlyList<string> DocumentProcessors => DocumentProcessorsInternal.AsReadOnly();
-        internal List<string> DocumentProcessorsInternal { get; set; } = new List<string>();
         /// <summary><p>The operation processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         public virtual IReadOnlyList<string> OperationProcessors => OperationProcessorsInternal.AsReadOnly();
         internal List<string> OperationProcessorsInternal { get; set; } = new List<string>();
-        /// <summary><p>The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        public virtual string TypeNameGenerator { get; internal set; }
         /// <summary><p>The custom ISchemaNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         public virtual string SchemaNameGenerator { get; internal set; }
-        /// <summary><p>The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        public virtual string ContractResolver { get; internal set; }
+        /// <summary><p>The basePath of the Swagger specification (optional).</p></summary>
+        public virtual string ServiceBasePath { get; internal set; }
+        /// <summary><p>Overrides the service host of the web service (optional, use '.' to remove the hostname).</p></summary>
+        public virtual string ServiceHost { get; internal set; }
+        /// <summary><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
+        public virtual IReadOnlyList<string> ServiceSchemes => ServiceSchemesInternal.AsReadOnly();
+        internal List<string> ServiceSchemesInternal { get; set; } = new List<string>();
+        /// <summary><p>The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        public virtual string TypeNameGenerator { get; internal set; }
         /// <summary><p>The output file path (optional).</p></summary>
         public virtual string Output { get; internal set; }
         /// <summary><p>Specifies the output schema type (Swagger2|OpenApi3, default: Swagger2).</p></summary>
@@ -413,34 +413,34 @@ namespace Nuke.NSwag
         {
             arguments
               .Add("webapi2swagger")
+              .Add("/AddMissingPathParameters:{value}", AddMissingPathParameters)
+              .Add("/AspNetCore:{value}", AspNetCore)
               .Add("/Controller:{value}", Controller)
               .Add("/Controllers:{value}", Controllers)
-              .Add("/AspNetCore:{value}", AspNetCore)
               .Add("/DefaultUrlTemplate:{value}", DefaultUrlTemplate)
-              .Add("/AddMissingPathParameters:{value}", AddMissingPathParameters)
               .Add("{value}", GetNSwagRuntime(), customValue: true)
+              .Add("/AllowReferencesWithProperties:{value}", AllowReferencesWithProperties)
+              .Add("/ContractResolver:{value}", ContractResolver)
+              .Add("/DefaultEnumHandling:{value}", DefaultEnumHandling)
               .Add("/DefaultPropertyNameHandling:{value}", DefaultPropertyNameHandling)
               .Add("/DefaultReferenceTypeNullHandling:{value}", DefaultReferenceTypeNullHandling)
-              .Add("/DefaultEnumHandling:{value}", DefaultEnumHandling)
+              .Add("/DocumentProcessors:{value}", DocumentProcessors)
+              .Add("/DocumentTemplate:{value}", DocumentTemplate)
+              .Add("/ExcludedTypeNames:{value}", ExcludedTypeNames)
               .Add("/FlattenInheritanceHierarchy:{value}", FlattenInheritanceHierarchy)
+              .Add("/GenerateAbstractProperties:{value}", GenerateAbstractProperties)
               .Add("/GenerateKnownTypes:{value}", GenerateKnownTypes)
               .Add("/GenerateXmlObjects:{value}", GenerateXmlObjects)
-              .Add("/GenerateAbstractProperties:{value}", GenerateAbstractProperties)
               .Add("/IgnoreObsoleteProperties:{value}", IgnoreObsoleteProperties)
-              .Add("/AllowReferencesWithProperties:{value}", AllowReferencesWithProperties)
-              .Add("/ExcludedTypeNames:{value}", ExcludedTypeNames)
-              .Add("/ServiceHost:{value}", ServiceHost)
-              .Add("/ServiceBasePath:{value}", ServiceBasePath)
-              .Add("/ServiceSchemes:{value}", ServiceSchemes)
-              .Add("/InfoTitle:{value}", InfoTitle)
               .Add("/InfoDescription:{value}", InfoDescription)
+              .Add("/InfoTitle:{value}", InfoTitle)
               .Add("/InfoVersion:{value}", InfoVersion)
-              .Add("/DocumentTemplate:{value}", DocumentTemplate)
-              .Add("/DocumentProcessors:{value}", DocumentProcessors)
               .Add("/OperationProcessors:{value}", OperationProcessors)
-              .Add("/TypeNameGenerator:{value}", TypeNameGenerator)
               .Add("/SchemaNameGenerator:{value}", SchemaNameGenerator)
-              .Add("/ContractResolver:{value}", ContractResolver)
+              .Add("/ServiceBasePath:{value}", ServiceBasePath)
+              .Add("/ServiceHost:{value}", ServiceHost)
+              .Add("/ServiceSchemes:{value}", ServiceSchemes)
+              .Add("/TypeNameGenerator:{value}", TypeNameGenerator)
               .Add("/Output:{value}", Output)
               .Add("/OutputType:{value}", OutputType)
               .Add("/Assembly:{value}", Assembly)
@@ -459,68 +459,68 @@ namespace Nuke.NSwag
     {
         /// <summary><p>Path to the NSwag executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? GetToolPath();
-        /// <summary><p>The project to use.</p></summary>
-        public virtual string Project { get; internal set; }
-        /// <summary><p>The MSBuild project extensions path. Defaults to "obj".</p></summary>
-        public virtual string MSBuildProjectExtensionsPath { get; internal set; }
         /// <summary><p>The configuration to use.</p></summary>
         public virtual string Configuration { get; internal set; }
+        /// <summary><p>The MSBuild project extensions path. Defaults to "obj".</p></summary>
+        public virtual string MSBuildProjectExtensionsPath { get; internal set; }
+        /// <summary><p>Don't build the project. Only use this when the build is up-to-date.</p></summary>
+        public virtual bool? NoBuild { get; internal set; }
+        /// <summary><p>The project to use.</p></summary>
+        public virtual string Project { get; internal set; }
         /// <summary><p>The runtime to use.</p></summary>
         public virtual string Runtime { get; internal set; }
         /// <summary><p>The target framework to use.</p></summary>
         public virtual string TargetFramework { get; internal set; }
-        /// <summary><p>Don't build the project. Only use this when the build is up-to-date.</p></summary>
-        public virtual bool? NoBuild { get; internal set; }
         /// <summary><p>Print verbose output.</p></summary>
         public virtual bool? Verbose { get; internal set; }
+        /// <summary><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
+        public virtual bool? AllowReferencesWithProperties { get; internal set; }
+        /// <summary><p>The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        public virtual string ContractResolver { get; internal set; }
+        /// <summary><p>The default enum handling ('String' or 'Integer'), default: Integer.</p></summary>
+        public virtual EnumHandling DefaultEnumHandling { get; internal set; }
         /// <summary><p>The default property name handling ('Default' or 'CamelCase').</p></summary>
         public virtual PropertyNameHandling DefaultPropertyNameHandling { get; internal set; }
         /// <summary><p>The default null handling (if NotNullAttribute and CanBeNullAttribute are missing, default: Null, Null or NotNull).</p></summary>
         public virtual ReferenceTypeNullHandling DefaultReferenceTypeNullHandling { get; internal set; }
-        /// <summary><p>The default enum handling ('String' or 'Integer'), default: Integer.</p></summary>
-        public virtual EnumHandling DefaultEnumHandling { get; internal set; }
+        /// <summary><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        public virtual IReadOnlyList<string> DocumentProcessors => DocumentProcessorsInternal.AsReadOnly();
+        internal List<string> DocumentProcessorsInternal { get; set; } = new List<string>();
+        /// <summary><p>Specifies the Swagger document template (may be a path or JSON, default: none).</p></summary>
+        public virtual string DocumentTemplate { get; internal set; }
+        /// <summary><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
+        public virtual IReadOnlyList<string> ExcludedTypeNames => ExcludedTypeNamesInternal.AsReadOnly();
+        internal List<string> ExcludedTypeNamesInternal { get; set; } = new List<string>();
         /// <summary><p>Flatten the inheritance hierarchy instead of using allOf to describe inheritance (default: false).</p></summary>
         public virtual bool? FlattenInheritanceHierarchy { get; internal set; }
+        /// <summary><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
+        public virtual bool? GenerateAbstractProperties { get; internal set; }
         /// <summary><p>Generate schemas for types in KnownTypeAttribute attributes (default: true).</p></summary>
         public virtual bool? GenerateKnownTypes { get; internal set; }
         /// <summary><p>Generate xmlObject representation for definitions (default: false).</p></summary>
         public virtual bool? GenerateXmlObjects { get; internal set; }
-        /// <summary><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
-        public virtual bool? GenerateAbstractProperties { get; internal set; }
         /// <summary><p>Ignore properties with the ObsoleteAttribute (default: false).</p></summary>
         public virtual bool? IgnoreObsoleteProperties { get; internal set; }
-        /// <summary><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
-        public virtual bool? AllowReferencesWithProperties { get; internal set; }
-        /// <summary><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
-        public virtual IReadOnlyList<string> ExcludedTypeNames => ExcludedTypeNamesInternal.AsReadOnly();
-        internal List<string> ExcludedTypeNamesInternal { get; set; } = new List<string>();
-        /// <summary><p>Overrides the service host of the web service (optional, use '.' to remove the hostname).</p></summary>
-        public virtual string ServiceHost { get; internal set; }
-        /// <summary><p>The basePath of the Swagger specification (optional).</p></summary>
-        public virtual string ServiceBasePath { get; internal set; }
-        /// <summary><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
-        public virtual IReadOnlyList<string> ServiceSchemes => ServiceSchemesInternal.AsReadOnly();
-        internal List<string> ServiceSchemesInternal { get; set; } = new List<string>();
-        /// <summary><p>Specify the title of the Swagger specification (ignored when DocumentTemplate is set).</p></summary>
-        public virtual string InfoTitle { get; internal set; }
         /// <summary><p>Specify the description of the Swagger specification (ignored when DocumentTemplate is set).</p></summary>
         public virtual string InfoDescription { get; internal set; }
+        /// <summary><p>Specify the title of the Swagger specification (ignored when DocumentTemplate is set).</p></summary>
+        public virtual string InfoTitle { get; internal set; }
         /// <summary><p>Specify the version of the Swagger specification (default: 1.0.0, ignored when DocumentTemplate is set).</p></summary>
         public virtual string InfoVersion { get; internal set; }
-        /// <summary><p>Specifies the Swagger document template (may be a path or JSON, default: none).</p></summary>
-        public virtual string DocumentTemplate { get; internal set; }
-        /// <summary><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        public virtual IReadOnlyList<string> DocumentProcessors => DocumentProcessorsInternal.AsReadOnly();
-        internal List<string> DocumentProcessorsInternal { get; set; } = new List<string>();
         /// <summary><p>The operation processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         public virtual IReadOnlyList<string> OperationProcessors => OperationProcessorsInternal.AsReadOnly();
         internal List<string> OperationProcessorsInternal { get; set; } = new List<string>();
-        /// <summary><p>The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        public virtual string TypeNameGenerator { get; internal set; }
         /// <summary><p>The custom ISchemaNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         public virtual string SchemaNameGenerator { get; internal set; }
-        /// <summary><p>The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        public virtual string ContractResolver { get; internal set; }
+        /// <summary><p>The basePath of the Swagger specification (optional).</p></summary>
+        public virtual string ServiceBasePath { get; internal set; }
+        /// <summary><p>Overrides the service host of the web service (optional, use '.' to remove the hostname).</p></summary>
+        public virtual string ServiceHost { get; internal set; }
+        /// <summary><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
+        public virtual IReadOnlyList<string> ServiceSchemes => ServiceSchemesInternal.AsReadOnly();
+        internal List<string> ServiceSchemesInternal { get; set; } = new List<string>();
+        /// <summary><p>The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        public virtual string TypeNameGenerator { get; internal set; }
         /// <summary><p>The output file path (optional).</p></summary>
         public virtual string Output { get; internal set; }
         /// <summary><p>Specifies the output schema type (Swagger2|OpenApi3, default: Swagger2).</p></summary>
@@ -537,36 +537,36 @@ namespace Nuke.NSwag
         {
             arguments
               .Add("aspnetcore2swagger")
-              .Add("/Project:{value}", Project)
-              .Add("/MSBuildProjectExtensionsPath:{value}", MSBuildProjectExtensionsPath)
               .Add("/Configuration:{value}", Configuration)
+              .Add("/MSBuildProjectExtensionsPath:{value}", MSBuildProjectExtensionsPath)
+              .Add("/NoBuild:{value}", NoBuild)
+              .Add("/Project:{value}", Project)
               .Add("/Runtime:{value}", Runtime)
               .Add("/TargetFramework:{value}", TargetFramework)
-              .Add("/NoBuild:{value}", NoBuild)
               .Add("/Verbose:{value}", Verbose)
               .Add("{value}", GetNSwagRuntime(), customValue: true)
+              .Add("/AllowReferencesWithProperties:{value}", AllowReferencesWithProperties)
+              .Add("/ContractResolver:{value}", ContractResolver)
+              .Add("/DefaultEnumHandling:{value}", DefaultEnumHandling)
               .Add("/DefaultPropertyNameHandling:{value}", DefaultPropertyNameHandling)
               .Add("/DefaultReferenceTypeNullHandling:{value}", DefaultReferenceTypeNullHandling)
-              .Add("/DefaultEnumHandling:{value}", DefaultEnumHandling)
+              .Add("/DocumentProcessors:{value}", DocumentProcessors)
+              .Add("/DocumentTemplate:{value}", DocumentTemplate)
+              .Add("/ExcludedTypeNames:{value}", ExcludedTypeNames)
               .Add("/FlattenInheritanceHierarchy:{value}", FlattenInheritanceHierarchy)
+              .Add("/GenerateAbstractProperties:{value}", GenerateAbstractProperties)
               .Add("/GenerateKnownTypes:{value}", GenerateKnownTypes)
               .Add("/GenerateXmlObjects:{value}", GenerateXmlObjects)
-              .Add("/GenerateAbstractProperties:{value}", GenerateAbstractProperties)
               .Add("/IgnoreObsoleteProperties:{value}", IgnoreObsoleteProperties)
-              .Add("/AllowReferencesWithProperties:{value}", AllowReferencesWithProperties)
-              .Add("/ExcludedTypeNames:{value}", ExcludedTypeNames)
-              .Add("/ServiceHost:{value}", ServiceHost)
-              .Add("/ServiceBasePath:{value}", ServiceBasePath)
-              .Add("/ServiceSchemes:{value}", ServiceSchemes)
-              .Add("/InfoTitle:{value}", InfoTitle)
               .Add("/InfoDescription:{value}", InfoDescription)
+              .Add("/InfoTitle:{value}", InfoTitle)
               .Add("/InfoVersion:{value}", InfoVersion)
-              .Add("/DocumentTemplate:{value}", DocumentTemplate)
-              .Add("/DocumentProcessors:{value}", DocumentProcessors)
               .Add("/OperationProcessors:{value}", OperationProcessors)
-              .Add("/TypeNameGenerator:{value}", TypeNameGenerator)
               .Add("/SchemaNameGenerator:{value}", SchemaNameGenerator)
-              .Add("/ContractResolver:{value}", ContractResolver)
+              .Add("/ServiceBasePath:{value}", ServiceBasePath)
+              .Add("/ServiceHost:{value}", ServiceHost)
+              .Add("/ServiceSchemes:{value}", ServiceSchemes)
+              .Add("/TypeNameGenerator:{value}", TypeNameGenerator)
               .Add("/Output:{value}", Output)
               .Add("/OutputType:{value}", OutputType)
               .Add("/Assembly:{value}", Assembly)
@@ -626,18 +626,18 @@ namespace Nuke.NSwag
     {
         /// <summary><p>Path to the NSwag executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? GetToolPath();
+        /// <summary><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
+        public virtual string ArrayType { get; internal set; }
+        /// <summary><p>The date time .NET type (default: 'DateTime').</p></summary>
+        public virtual string DateTimeType { get; internal set; }
+        /// <summary><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
+        public virtual string DictionaryType { get; internal set; }
         /// <summary><p>The class name of the root schema.</p></summary>
         public virtual string Name { get; internal set; }
         /// <summary><p>The namespace of the generated classes.</p></summary>
         public virtual string Namespace { get; internal set; }
         /// <summary><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
         public virtual bool? RequiredPropertiesMustBeDefined { get; internal set; }
-        /// <summary><p>The date time .NET type (default: 'DateTime').</p></summary>
-        public virtual string DateTimeType { get; internal set; }
-        /// <summary><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
-        public virtual string ArrayType { get; internal set; }
-        /// <summary><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
-        public virtual string DictionaryType { get; internal set; }
         /// <summary><p>A file path or URL to the data or the JSON data itself.</p></summary>
         public virtual string Input { get; internal set; }
         /// <summary><p>Overrides the service host of the web document (optional, use '.' to remove the hostname).</p></summary>
@@ -651,12 +651,12 @@ namespace Nuke.NSwag
         {
             arguments
               .Add("jsonschema2csclient")
+              .Add("/ArrayType:{value}", ArrayType)
+              .Add("/DateTimeType:{value}", DateTimeType)
+              .Add("/DictionaryType:{value}", DictionaryType)
               .Add("/Name:{value}", Name)
               .Add("/Namespace:{value}", Namespace)
               .Add("/RequiredPropertiesMustBeDefined:{value}", RequiredPropertiesMustBeDefined)
-              .Add("/DateTimeType:{value}", DateTimeType)
-              .Add("/ArrayType:{value}", ArrayType)
-              .Add("/DictionaryType:{value}", DictionaryType)
               .Add("{value}", GetNSwagRuntime(), customValue: true)
               .Add("/Input:{value}", Input)
               .Add("/ServiceHost:{value}", ServiceHost)
@@ -711,138 +711,138 @@ namespace Nuke.NSwag
         public override string ToolPath => base.ToolPath ?? GetToolPath();
         /// <summary><p>The client base class (empty for no base class).</p></summary>
         public virtual string ClientBaseClass { get; internal set; }
-        /// <summary><p>The configuration class. The setting ClientBaseClass must be set. (empty for no configuration class).</p></summary>
-        public virtual string ConfigurationClass { get; internal set; }
-        /// <summary><p>Specifies whether generate client classes.</p></summary>
-        public virtual bool? GenerateClientClasses { get; internal set; }
-        /// <summary><p>Specifies whether generate interfaces for the client classes.</p></summary>
-        public virtual bool? GenerateClientInterfaces { get; internal set; }
-        /// <summary><p>Specifies whether to generate DTO classes.</p></summary>
-        public virtual bool? GenerateDtoTypes { get; internal set; }
-        /// <summary><p>Specifies whether an HttpClient instance is injected.</p></summary>
-        public virtual bool? InjectHttpClient { get; internal set; }
-        /// <summary><p>Specifies whether to dispose the HttpClient (injected HttpClient is never disposed).</p></summary>
-        public virtual bool? DisposeHttpClient { get; internal set; }
-        /// <summary><p>List of methods with a protected access modifier ('classname.methodname').</p></summary>
-        public virtual IReadOnlyList<string> ProtectedMethods => ProtectedMethodsInternal.AsReadOnly();
-        internal List<string> ProtectedMethodsInternal { get; set; } = new List<string>();
-        /// <summary><p>Specifies whether to generate exception classes (default: true).</p></summary>
-        public virtual bool? GenerateExceptionClasses { get; internal set; }
-        /// <summary><p>The exception class (default 'SwaggerException', may use '{controller}' placeholder).</p></summary>
-        public virtual string ExceptionClass { get; internal set; }
-        /// <summary><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: true).</p></summary>
-        public virtual bool? WrapDtoExceptions { get; internal set; }
-        /// <summary><p>Specifies whether to call CreateHttpClientAsync on the base class to create a new HttpClient.</p></summary>
-        public virtual bool? UseHttpClientCreationMethod { get; internal set; }
-        /// <summary><p>Specifies the HttpClient type. By default the 'System.Net.Http.HttpClient' is used.</p></summary>
-        public virtual string HttpClientType { get; internal set; }
-        /// <summary><p>Specifies whether to call CreateHttpRequestMessageAsync on the base class to create a new HttpRequestMethod.</p></summary>
-        public virtual bool? UseHttpRequestMessageCreationMethod { get; internal set; }
-        /// <summary><p>Specifies whether to use and expose the base URL (default: true).</p></summary>
-        public virtual bool? UseBaseUrl { get; internal set; }
-        /// <summary><p>Specifies whether to generate the BaseUrl property, must be defined on the base class otherwise (default: true).</p></summary>
-        public virtual bool? GenerateBaseUrlProperty { get; internal set; }
-        /// <summary><p>Specifies whether to generate synchronous methods (not recommended, default: false).</p></summary>
-        public virtual bool? GenerateSyncMethods { get; internal set; }
-        /// <summary><p>Specifies whether to expose the JsonSerializerSettings property (default: false).</p></summary>
-        public virtual bool? ExposeJsonSerializerSettings { get; internal set; }
         /// <summary><p>The client class access modifier (default: public).</p></summary>
         public virtual string ClientClassAccessModifier { get; internal set; }
-        /// <summary><p>The DTO class/enum access modifier (default: public).</p></summary>
-        public virtual string TypeAccessModifier { get; internal set; }
-        /// <summary><p>Specifies whether to generate contracts output (interface and models in a separate file set with the ContractsOutput parameter).</p></summary>
-        public virtual bool? GenerateContractsOutput { get; internal set; }
+        /// <summary><p>The configuration class. The setting ClientBaseClass must be set. (empty for no configuration class).</p></summary>
+        public virtual string ConfigurationClass { get; internal set; }
         /// <summary><p>The contracts .NET namespace.</p></summary>
         public virtual string ContractsNamespace { get; internal set; }
         /// <summary><p>The contracts output file path (optional, if no path is set then a single file with the implementation and contracts is generated).</p></summary>
         public virtual string ContractsOutput { get; internal set; }
-        /// <summary><p>Specifies the format for DateTime type method parameters (default: s).</p></summary>
-        public virtual string ParameterDateTimeFormat { get; internal set; }
+        /// <summary><p>Specifies whether to dispose the HttpClient (injected HttpClient is never disposed).</p></summary>
+        public virtual bool? DisposeHttpClient { get; internal set; }
+        /// <summary><p>The exception class (default 'SwaggerException', may use '{controller}' placeholder).</p></summary>
+        public virtual string ExceptionClass { get; internal set; }
+        /// <summary><p>Specifies whether to expose the JsonSerializerSettings property (default: false).</p></summary>
+        public virtual bool? ExposeJsonSerializerSettings { get; internal set; }
+        /// <summary><p>Specifies whether to generate the BaseUrl property, must be defined on the base class otherwise (default: true).</p></summary>
+        public virtual bool? GenerateBaseUrlProperty { get; internal set; }
+        /// <summary><p>Specifies whether generate client classes.</p></summary>
+        public virtual bool? GenerateClientClasses { get; internal set; }
+        /// <summary><p>Specifies whether generate interfaces for the client classes.</p></summary>
+        public virtual bool? GenerateClientInterfaces { get; internal set; }
+        /// <summary><p>Specifies whether to generate contracts output (interface and models in a separate file set with the ContractsOutput parameter).</p></summary>
+        public virtual bool? GenerateContractsOutput { get; internal set; }
+        /// <summary><p>Specifies whether to generate DTO classes.</p></summary>
+        public virtual bool? GenerateDtoTypes { get; internal set; }
+        /// <summary><p>Specifies whether to generate exception classes (default: true).</p></summary>
+        public virtual bool? GenerateExceptionClasses { get; internal set; }
+        /// <summary><p>Specifies whether to generate synchronous methods (not recommended, default: false).</p></summary>
+        public virtual bool? GenerateSyncMethods { get; internal set; }
         /// <summary><p>Generate the UpdateJsonSerializerSettings method (must be implemented in the base class otherwise, default: true).</p></summary>
         public virtual bool? GenerateUpdateJsonSerializerSettingsMethod { get; internal set; }
-        /// <summary><p>Serialize the type information in a $type property (not recommended, also sets TypeNameHandling = Auto, default: true).</p></summary>
-        public virtual bool? SerializeTypeInformation { get; internal set; }
+        /// <summary><p>Specifies the HttpClient type. By default the 'System.Net.Http.HttpClient' is used.</p></summary>
+        public virtual string HttpClientType { get; internal set; }
+        /// <summary><p>Specifies whether an HttpClient instance is injected.</p></summary>
+        public virtual bool? InjectHttpClient { get; internal set; }
+        /// <summary><p>Specifies the format for DateTime type method parameters (default: s).</p></summary>
+        public virtual string ParameterDateTimeFormat { get; internal set; }
+        /// <summary><p>List of methods with a protected access modifier ('classname.methodname').</p></summary>
+        public virtual IReadOnlyList<string> ProtectedMethods => ProtectedMethodsInternal.AsReadOnly();
+        internal List<string> ProtectedMethodsInternal { get; set; } = new List<string>();
         /// <summary><p>The null value used for query parameters which are null (default: '').</p></summary>
         public virtual string QueryNullValue { get; internal set; }
-        /// <summary><p>The class name of the generated client.</p></summary>
-        public virtual string ClassName { get; internal set; }
-        /// <summary><p>The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments').</p></summary>
-        public virtual OperationGenerationMode OperationGenerationMode { get; internal set; }
-        /// <summary><p>The additional namespace usages.</p></summary>
-        public virtual IReadOnlyList<string> AdditionalNamespaceUsages => AdditionalNamespaceUsagesInternal.AsReadOnly();
-        internal List<string> AdditionalNamespaceUsagesInternal { get; set; } = new List<string>();
+        /// <summary><p>Serialize the type information in a $type property (not recommended, also sets TypeNameHandling = Auto, default: true).</p></summary>
+        public virtual bool? SerializeTypeInformation { get; internal set; }
+        /// <summary><p>The DTO class/enum access modifier (default: public).</p></summary>
+        public virtual string TypeAccessModifier { get; internal set; }
+        /// <summary><p>Specifies whether to use and expose the base URL (default: true).</p></summary>
+        public virtual bool? UseBaseUrl { get; internal set; }
+        /// <summary><p>Specifies whether to call CreateHttpClientAsync on the base class to create a new HttpClient.</p></summary>
+        public virtual bool? UseHttpClientCreationMethod { get; internal set; }
+        /// <summary><p>Specifies whether to call CreateHttpRequestMessageAsync on the base class to create a new HttpRequestMethod.</p></summary>
+        public virtual bool? UseHttpRequestMessageCreationMethod { get; internal set; }
+        /// <summary><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: true).</p></summary>
+        public virtual bool? WrapDtoExceptions { get; internal set; }
         /// <summary><p>The additional contract namespace usages.</p></summary>
         public virtual IReadOnlyList<string> AdditionalContractNamespaceUsages => AdditionalContractNamespaceUsagesInternal.AsReadOnly();
         internal List<string> AdditionalContractNamespaceUsagesInternal { get; set; } = new List<string>();
-        /// <summary><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
-        public virtual bool? GenerateOptionalParameters { get; internal set; }
-        /// <summary><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
-        public virtual bool? GenerateJsonMethods { get; internal set; }
-        /// <summary><p>The generic array .NET type of operation parameters (default: 'IEnumerable').</p></summary>
-        public virtual string ParameterArrayType { get; internal set; }
-        /// <summary><p>The generic dictionary .NET type of operation parameters (default: 'IReadOnlyDictionary').</p></summary>
-        public virtual string ParameterDictionaryType { get; internal set; }
-        /// <summary><p>The generic array .NET type of operation responses (default: 'ICollection').</p></summary>
-        public virtual string ResponseArrayType { get; internal set; }
-        /// <summary><p>The generic dictionary .NET type of operation responses (default: 'IDictionary').</p></summary>
-        public virtual string ResponseDictionaryType { get; internal set; }
-        /// <summary><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
-        public virtual bool? WrapResponses { get; internal set; }
-        /// <summary><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        public virtual IReadOnlyList<string> WrapResponseMethods => WrapResponseMethodsInternal.AsReadOnly();
-        internal List<string> WrapResponseMethodsInternal { get; set; } = new List<string>();
-        /// <summary><p>Specifies whether to generate response classes (default: true).</p></summary>
-        public virtual bool? GenerateResponseClasses { get; internal set; }
-        /// <summary><p>The response class (default 'SwaggerResponse', may use '{controller}' placeholder).</p></summary>
-        public virtual string ResponseClass { get; internal set; }
-        /// <summary><p>The namespace of the generated classes.</p></summary>
-        public virtual string Namespace { get; internal set; }
-        /// <summary><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
-        public virtual bool? RequiredPropertiesMustBeDefined { get; internal set; }
-        /// <summary><p>The date .NET type (default: 'DateTime').</p></summary>
-        public virtual string DateType { get; internal set; }
-        /// <summary><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
-        public virtual IReadOnlyList<string> JsonConverters => JsonConvertersInternal.AsReadOnly();
-        internal List<string> JsonConvertersInternal { get; set; } = new List<string>();
-        /// <summary><p>The date time .NET type (default: 'DateTime').</p></summary>
-        public virtual string DateTimeType { get; internal set; }
-        /// <summary><p>The time .NET type (default: 'TimeSpan').</p></summary>
-        public virtual string TimeType { get; internal set; }
-        /// <summary><p>The time span .NET type (default: 'TimeSpan').</p></summary>
-        public virtual string TimeSpanType { get; internal set; }
-        /// <summary><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
-        public virtual string ArrayType { get; internal set; }
-        /// <summary><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
-        public virtual string DictionaryType { get; internal set; }
+        /// <summary><p>The additional namespace usages.</p></summary>
+        public virtual IReadOnlyList<string> AdditionalNamespaceUsages => AdditionalNamespaceUsagesInternal.AsReadOnly();
+        internal List<string> AdditionalNamespaceUsagesInternal { get; set; } = new List<string>();
         /// <summary><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
         public virtual string ArrayBaseType { get; internal set; }
-        /// <summary><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
-        public virtual string DictionaryBaseType { get; internal set; }
+        /// <summary><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
+        public virtual string ArrayType { get; internal set; }
+        /// <summary><p>The class name of the generated client.</p></summary>
+        public virtual string ClassName { get; internal set; }
         /// <summary><p>The CSharp class style, 'Poco' or 'Inpc' (default: 'Inpc').</p></summary>
         public virtual CSharpClassStyle ClassStyle { get; internal set; }
-        /// <summary><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
-        public virtual bool? GenerateDefaultValues { get; internal set; }
-        /// <summary><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
-        public virtual bool? GenerateDataAnnotations { get; internal set; }
+        /// <summary><p>The date time .NET type (default: 'DateTime').</p></summary>
+        public virtual string DateTimeType { get; internal set; }
+        /// <summary><p>The date .NET type (default: 'DateTime').</p></summary>
+        public virtual string DateType { get; internal set; }
+        /// <summary><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
+        public virtual string DictionaryBaseType { get; internal set; }
+        /// <summary><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
+        public virtual string DictionaryType { get; internal set; }
         /// <summary><p>The excluded DTO type names (must be defined in an import or other namespace).</p></summary>
         public virtual IReadOnlyList<string> ExcludedTypeNames => ExcludedTypeNamesInternal.AsReadOnly();
         internal List<string> ExcludedTypeNamesInternal { get; set; } = new List<string>();
-        /// <summary><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
-        public virtual bool? HandleReferences { get; internal set; }
+        /// <summary><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
+        public virtual bool? GenerateDataAnnotations { get; internal set; }
+        /// <summary><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
+        public virtual bool? GenerateDefaultValues { get; internal set; }
         /// <summary><p>Specifies whether to remove the setter for non-nullable array properties (default: false).</p></summary>
         public virtual bool? GenerateImmutableArrayProperties { get; internal set; }
         /// <summary><p>Specifies whether to remove the setter for non-nullable dictionary properties (default: false).</p></summary>
         public virtual bool? GenerateImmutableDictionaryProperties { get; internal set; }
+        /// <summary><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
+        public virtual bool? GenerateJsonMethods { get; internal set; }
+        /// <summary><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
+        public virtual bool? GenerateOptionalParameters { get; internal set; }
+        /// <summary><p>Specifies whether to generate response classes (default: true).</p></summary>
+        public virtual bool? GenerateResponseClasses { get; internal set; }
+        /// <summary><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
+        public virtual bool? HandleReferences { get; internal set; }
+        /// <summary><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
+        public virtual IReadOnlyList<string> JsonConverters => JsonConvertersInternal.AsReadOnly();
+        internal List<string> JsonConvertersInternal { get; set; } = new List<string>();
         /// <summary><p>The name of a static method which is called to transform the JsonSerializerSettings used in the generated ToJson()/FromJson() methods (default: none).</p></summary>
         public virtual string JsonSerializerSettingsTransformationMethod { get; internal set; }
+        /// <summary><p>The namespace of the generated classes.</p></summary>
+        public virtual string Namespace { get; internal set; }
+        /// <summary><p>The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments').</p></summary>
+        public virtual OperationGenerationMode OperationGenerationMode { get; internal set; }
+        /// <summary><p>The generic array .NET type of operation parameters (default: 'IEnumerable').</p></summary>
+        public virtual string ParameterArrayType { get; internal set; }
+        /// <summary><p>The generic dictionary .NET type of operation parameters (default: 'IReadOnlyDictionary').</p></summary>
+        public virtual string ParameterDictionaryType { get; internal set; }
+        /// <summary><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
+        public virtual bool? RequiredPropertiesMustBeDefined { get; internal set; }
+        /// <summary><p>The generic array .NET type of operation responses (default: 'ICollection').</p></summary>
+        public virtual string ResponseArrayType { get; internal set; }
+        /// <summary><p>The response class (default 'SwaggerResponse', may use '{controller}' placeholder).</p></summary>
+        public virtual string ResponseClass { get; internal set; }
+        /// <summary><p>The generic dictionary .NET type of operation responses (default: 'IDictionary').</p></summary>
+        public virtual string ResponseDictionaryType { get; internal set; }
+        /// <summary><p>The time span .NET type (default: 'TimeSpan').</p></summary>
+        public virtual string TimeSpanType { get; internal set; }
+        /// <summary><p>The time .NET type (default: 'TimeSpan').</p></summary>
+        public virtual string TimeType { get; internal set; }
+        /// <summary><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
+        public virtual IReadOnlyList<string> WrapResponseMethods => WrapResponseMethodsInternal.AsReadOnly();
+        internal List<string> WrapResponseMethodsInternal { get; set; } = new List<string>();
+        /// <summary><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
+        public virtual bool? WrapResponses { get; internal set; }
+        /// <summary><p>The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        public virtual string EnumNameGeneratorType { get; internal set; }
+        /// <summary><p>The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        public virtual string PropertyNameGeneratorType { get; internal set; }
         /// <summary><p>The Liquid template directory (experimental).</p></summary>
         public virtual string TemplateDirectory { get; internal set; }
         /// <summary><p>The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         public virtual string TypeNameGenerator { get; internal set; }
-        /// <summary><p>The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        public virtual string PropertyNameGeneratorType { get; internal set; }
-        /// <summary><p>The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        public virtual string EnumNameGeneratorType { get; internal set; }
         /// <summary><p>A file path or URL to the data or the JSON data itself.</p></summary>
         public virtual string Input { get; internal set; }
         /// <summary><p>Overrides the service host of the web document (optional, use '.' to remove the hostname).</p></summary>
@@ -857,70 +857,70 @@ namespace Nuke.NSwag
             arguments
               .Add("swagger2csclient")
               .Add("/ClientBaseClass:{value}", ClientBaseClass)
-              .Add("/ConfigurationClass:{value}", ConfigurationClass)
-              .Add("/GenerateClientClasses:{value}", GenerateClientClasses)
-              .Add("/GenerateClientInterfaces:{value}", GenerateClientInterfaces)
-              .Add("/GenerateDtoTypes:{value}", GenerateDtoTypes)
-              .Add("/InjectHttpClient:{value}", InjectHttpClient)
-              .Add("/DisposeHttpClient:{value}", DisposeHttpClient)
-              .Add("/ProtectedMethods:{value}", ProtectedMethods)
-              .Add("/GenerateExceptionClasses:{value}", GenerateExceptionClasses)
-              .Add("/ExceptionClass:{value}", ExceptionClass)
-              .Add("/WrapDtoExceptions:{value}", WrapDtoExceptions)
-              .Add("/UseHttpClientCreationMethod:{value}", UseHttpClientCreationMethod)
-              .Add("/HttpClientType:{value}", HttpClientType)
-              .Add("/UseHttpRequestMessageCreationMethod:{value}", UseHttpRequestMessageCreationMethod)
-              .Add("/UseBaseUrl:{value}", UseBaseUrl)
-              .Add("/GenerateBaseUrlProperty:{value}", GenerateBaseUrlProperty)
-              .Add("/GenerateSyncMethods:{value}", GenerateSyncMethods)
-              .Add("/ExposeJsonSerializerSettings:{value}", ExposeJsonSerializerSettings)
               .Add("/ClientClassAccessModifier:{value}", ClientClassAccessModifier)
-              .Add("/TypeAccessModifier:{value}", TypeAccessModifier)
-              .Add("/GenerateContractsOutput:{value}", GenerateContractsOutput)
+              .Add("/ConfigurationClass:{value}", ConfigurationClass)
               .Add("/ContractsNamespace:{value}", ContractsNamespace)
               .Add("/ContractsOutput:{value}", ContractsOutput)
-              .Add("/ParameterDateTimeFormat:{value}", ParameterDateTimeFormat)
+              .Add("/DisposeHttpClient:{value}", DisposeHttpClient)
+              .Add("/ExceptionClass:{value}", ExceptionClass)
+              .Add("/ExposeJsonSerializerSettings:{value}", ExposeJsonSerializerSettings)
+              .Add("/GenerateBaseUrlProperty:{value}", GenerateBaseUrlProperty)
+              .Add("/GenerateClientClasses:{value}", GenerateClientClasses)
+              .Add("/GenerateClientInterfaces:{value}", GenerateClientInterfaces)
+              .Add("/GenerateContractsOutput:{value}", GenerateContractsOutput)
+              .Add("/GenerateDtoTypes:{value}", GenerateDtoTypes)
+              .Add("/GenerateExceptionClasses:{value}", GenerateExceptionClasses)
+              .Add("/GenerateSyncMethods:{value}", GenerateSyncMethods)
               .Add("/GenerateUpdateJsonSerializerSettingsMethod:{value}", GenerateUpdateJsonSerializerSettingsMethod)
-              .Add("/SerializeTypeInformation:{value}", SerializeTypeInformation)
+              .Add("/HttpClientType:{value}", HttpClientType)
+              .Add("/InjectHttpClient:{value}", InjectHttpClient)
+              .Add("/ParameterDateTimeFormat:{value}", ParameterDateTimeFormat)
+              .Add("/ProtectedMethods:{value}", ProtectedMethods)
               .Add("/QueryNullValue:{value}", QueryNullValue)
+              .Add("/SerializeTypeInformation:{value}", SerializeTypeInformation)
+              .Add("/TypeAccessModifier:{value}", TypeAccessModifier)
+              .Add("/UseBaseUrl:{value}", UseBaseUrl)
+              .Add("/UseHttpClientCreationMethod:{value}", UseHttpClientCreationMethod)
+              .Add("/UseHttpRequestMessageCreationMethod:{value}", UseHttpRequestMessageCreationMethod)
+              .Add("/WrapDtoExceptions:{value}", WrapDtoExceptions)
               .Add("{value}", GetNSwagRuntime(), customValue: true)
-              .Add("/ClassName:{value}", ClassName)
-              .Add("/OperationGenerationMode:{value}", OperationGenerationMode)
-              .Add("/AdditionalNamespaceUsages:{value}", AdditionalNamespaceUsages)
               .Add("/AdditionalContractNamespaceUsages:{value}", AdditionalContractNamespaceUsages)
-              .Add("/GenerateOptionalParameters:{value}", GenerateOptionalParameters)
-              .Add("/GenerateJsonMethods:{value}", GenerateJsonMethods)
-              .Add("/ParameterArrayType:{value}", ParameterArrayType)
-              .Add("/ParameterDictionaryType:{value}", ParameterDictionaryType)
-              .Add("/ResponseArrayType:{value}", ResponseArrayType)
-              .Add("/ResponseDictionaryType:{value}", ResponseDictionaryType)
-              .Add("/WrapResponses:{value}", WrapResponses)
-              .Add("/WrapResponseMethods:{value}", WrapResponseMethods)
-              .Add("/GenerateResponseClasses:{value}", GenerateResponseClasses)
-              .Add("/ResponseClass:{value}", ResponseClass)
-              .Add("/Namespace:{value}", Namespace)
-              .Add("/RequiredPropertiesMustBeDefined:{value}", RequiredPropertiesMustBeDefined)
-              .Add("/DateType:{value}", DateType)
-              .Add("/JsonConverters:{value}", JsonConverters)
-              .Add("/DateTimeType:{value}", DateTimeType)
-              .Add("/TimeType:{value}", TimeType)
-              .Add("/TimeSpanType:{value}", TimeSpanType)
-              .Add("/ArrayType:{value}", ArrayType)
-              .Add("/DictionaryType:{value}", DictionaryType)
+              .Add("/AdditionalNamespaceUsages:{value}", AdditionalNamespaceUsages)
               .Add("/ArrayBaseType:{value}", ArrayBaseType)
-              .Add("/DictionaryBaseType:{value}", DictionaryBaseType)
+              .Add("/ArrayType:{value}", ArrayType)
+              .Add("/ClassName:{value}", ClassName)
               .Add("/ClassStyle:{value}", ClassStyle)
-              .Add("/GenerateDefaultValues:{value}", GenerateDefaultValues)
-              .Add("/GenerateDataAnnotations:{value}", GenerateDataAnnotations)
+              .Add("/DateTimeType:{value}", DateTimeType)
+              .Add("/DateType:{value}", DateType)
+              .Add("/DictionaryBaseType:{value}", DictionaryBaseType)
+              .Add("/DictionaryType:{value}", DictionaryType)
               .Add("/ExcludedTypeNames:{value}", ExcludedTypeNames)
-              .Add("/HandleReferences:{value}", HandleReferences)
+              .Add("/GenerateDataAnnotations:{value}", GenerateDataAnnotations)
+              .Add("/GenerateDefaultValues:{value}", GenerateDefaultValues)
               .Add("/GenerateImmutableArrayProperties:{value}", GenerateImmutableArrayProperties)
               .Add("/GenerateImmutableDictionaryProperties:{value}", GenerateImmutableDictionaryProperties)
+              .Add("/GenerateJsonMethods:{value}", GenerateJsonMethods)
+              .Add("/GenerateOptionalParameters:{value}", GenerateOptionalParameters)
+              .Add("/GenerateResponseClasses:{value}", GenerateResponseClasses)
+              .Add("/HandleReferences:{value}", HandleReferences)
+              .Add("/JsonConverters:{value}", JsonConverters)
               .Add("/JsonSerializerSettingsTransformationMethod:{value}", JsonSerializerSettingsTransformationMethod)
+              .Add("/Namespace:{value}", Namespace)
+              .Add("/OperationGenerationMode:{value}", OperationGenerationMode)
+              .Add("/ParameterArrayType:{value}", ParameterArrayType)
+              .Add("/ParameterDictionaryType:{value}", ParameterDictionaryType)
+              .Add("/RequiredPropertiesMustBeDefined:{value}", RequiredPropertiesMustBeDefined)
+              .Add("/ResponseArrayType:{value}", ResponseArrayType)
+              .Add("/ResponseClass:{value}", ResponseClass)
+              .Add("/ResponseDictionaryType:{value}", ResponseDictionaryType)
+              .Add("/TimeSpanType:{value}", TimeSpanType)
+              .Add("/TimeType:{value}", TimeType)
+              .Add("/WrapResponseMethods:{value}", WrapResponseMethods)
+              .Add("/WrapResponses:{value}", WrapResponses)
+              .Add("/EnumNameGeneratorType:{value}", EnumNameGeneratorType)
+              .Add("/PropertyNameGeneratorType:{value}", PropertyNameGeneratorType)
               .Add("/TemplateDirectory:{value}", TemplateDirectory)
               .Add("/TypeNameGenerator:{value}", TypeNameGenerator)
-              .Add("/PropertyNameGeneratorType:{value}", PropertyNameGeneratorType)
-              .Add("/EnumNameGeneratorType:{value}", EnumNameGeneratorType)
               .Add("/Input:{value}", Input)
               .Add("/ServiceHost:{value}", ServiceHost)
               .Add("/ServiceSchemes:{value}", ServiceSchemes)
@@ -938,93 +938,93 @@ namespace Nuke.NSwag
     {
         /// <summary><p>Path to the NSwag executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? GetToolPath();
+        /// <summary><p>The ASP.NET (Core) framework namespace (default: 'System.Web.Http').</p></summary>
+        public virtual string AspNetNamespace { get; internal set; }
         /// <summary><p>The controller base class (empty for 'ApiController').</p></summary>
         public virtual string ControllerBaseClass { get; internal set; }
         /// <summary><p>The controller generation style (partial, abstract; default: partial).</p></summary>
         public virtual CSharpControllerStyle ControllerStyle { get; internal set; }
         /// <summary><p>Add a cancellation token parameter (default: false).</p></summary>
         public virtual bool? UseCancellationToken { get; internal set; }
-        /// <summary><p>The ASP.NET (Core) framework namespace (default: 'System.Web.Http').</p></summary>
-        public virtual string AspNetNamespace { get; internal set; }
-        /// <summary><p>The class name of the generated client.</p></summary>
-        public virtual string ClassName { get; internal set; }
-        /// <summary><p>The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments').</p></summary>
-        public virtual OperationGenerationMode OperationGenerationMode { get; internal set; }
-        /// <summary><p>The additional namespace usages.</p></summary>
-        public virtual IReadOnlyList<string> AdditionalNamespaceUsages => AdditionalNamespaceUsagesInternal.AsReadOnly();
-        internal List<string> AdditionalNamespaceUsagesInternal { get; set; } = new List<string>();
         /// <summary><p>The additional contract namespace usages.</p></summary>
         public virtual IReadOnlyList<string> AdditionalContractNamespaceUsages => AdditionalContractNamespaceUsagesInternal.AsReadOnly();
         internal List<string> AdditionalContractNamespaceUsagesInternal { get; set; } = new List<string>();
-        /// <summary><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
-        public virtual bool? GenerateOptionalParameters { get; internal set; }
-        /// <summary><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
-        public virtual bool? GenerateJsonMethods { get; internal set; }
-        /// <summary><p>The generic array .NET type of operation parameters (default: 'IEnumerable').</p></summary>
-        public virtual string ParameterArrayType { get; internal set; }
-        /// <summary><p>The generic dictionary .NET type of operation parameters (default: 'IReadOnlyDictionary').</p></summary>
-        public virtual string ParameterDictionaryType { get; internal set; }
-        /// <summary><p>The generic array .NET type of operation responses (default: 'ICollection').</p></summary>
-        public virtual string ResponseArrayType { get; internal set; }
-        /// <summary><p>The generic dictionary .NET type of operation responses (default: 'IDictionary').</p></summary>
-        public virtual string ResponseDictionaryType { get; internal set; }
-        /// <summary><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
-        public virtual bool? WrapResponses { get; internal set; }
-        /// <summary><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        public virtual IReadOnlyList<string> WrapResponseMethods => WrapResponseMethodsInternal.AsReadOnly();
-        internal List<string> WrapResponseMethodsInternal { get; set; } = new List<string>();
-        /// <summary><p>Specifies whether to generate response classes (default: true).</p></summary>
-        public virtual bool? GenerateResponseClasses { get; internal set; }
-        /// <summary><p>The response class (default 'SwaggerResponse', may use '{controller}' placeholder).</p></summary>
-        public virtual string ResponseClass { get; internal set; }
-        /// <summary><p>The namespace of the generated classes.</p></summary>
-        public virtual string Namespace { get; internal set; }
-        /// <summary><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
-        public virtual bool? RequiredPropertiesMustBeDefined { get; internal set; }
-        /// <summary><p>The date .NET type (default: 'DateTime').</p></summary>
-        public virtual string DateType { get; internal set; }
-        /// <summary><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
-        public virtual IReadOnlyList<string> JsonConverters => JsonConvertersInternal.AsReadOnly();
-        internal List<string> JsonConvertersInternal { get; set; } = new List<string>();
-        /// <summary><p>The date time .NET type (default: 'DateTime').</p></summary>
-        public virtual string DateTimeType { get; internal set; }
-        /// <summary><p>The time .NET type (default: 'TimeSpan').</p></summary>
-        public virtual string TimeType { get; internal set; }
-        /// <summary><p>The time span .NET type (default: 'TimeSpan').</p></summary>
-        public virtual string TimeSpanType { get; internal set; }
-        /// <summary><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
-        public virtual string ArrayType { get; internal set; }
-        /// <summary><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
-        public virtual string DictionaryType { get; internal set; }
+        /// <summary><p>The additional namespace usages.</p></summary>
+        public virtual IReadOnlyList<string> AdditionalNamespaceUsages => AdditionalNamespaceUsagesInternal.AsReadOnly();
+        internal List<string> AdditionalNamespaceUsagesInternal { get; set; } = new List<string>();
         /// <summary><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
         public virtual string ArrayBaseType { get; internal set; }
-        /// <summary><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
-        public virtual string DictionaryBaseType { get; internal set; }
+        /// <summary><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
+        public virtual string ArrayType { get; internal set; }
+        /// <summary><p>The class name of the generated client.</p></summary>
+        public virtual string ClassName { get; internal set; }
         /// <summary><p>The CSharp class style, 'Poco' or 'Inpc' (default: 'Inpc').</p></summary>
         public virtual CSharpClassStyle ClassStyle { get; internal set; }
-        /// <summary><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
-        public virtual bool? GenerateDefaultValues { get; internal set; }
-        /// <summary><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
-        public virtual bool? GenerateDataAnnotations { get; internal set; }
+        /// <summary><p>The date time .NET type (default: 'DateTime').</p></summary>
+        public virtual string DateTimeType { get; internal set; }
+        /// <summary><p>The date .NET type (default: 'DateTime').</p></summary>
+        public virtual string DateType { get; internal set; }
+        /// <summary><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
+        public virtual string DictionaryBaseType { get; internal set; }
+        /// <summary><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
+        public virtual string DictionaryType { get; internal set; }
         /// <summary><p>The excluded DTO type names (must be defined in an import or other namespace).</p></summary>
         public virtual IReadOnlyList<string> ExcludedTypeNames => ExcludedTypeNamesInternal.AsReadOnly();
         internal List<string> ExcludedTypeNamesInternal { get; set; } = new List<string>();
-        /// <summary><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
-        public virtual bool? HandleReferences { get; internal set; }
+        /// <summary><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
+        public virtual bool? GenerateDataAnnotations { get; internal set; }
+        /// <summary><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
+        public virtual bool? GenerateDefaultValues { get; internal set; }
         /// <summary><p>Specifies whether to remove the setter for non-nullable array properties (default: false).</p></summary>
         public virtual bool? GenerateImmutableArrayProperties { get; internal set; }
         /// <summary><p>Specifies whether to remove the setter for non-nullable dictionary properties (default: false).</p></summary>
         public virtual bool? GenerateImmutableDictionaryProperties { get; internal set; }
+        /// <summary><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
+        public virtual bool? GenerateJsonMethods { get; internal set; }
+        /// <summary><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
+        public virtual bool? GenerateOptionalParameters { get; internal set; }
+        /// <summary><p>Specifies whether to generate response classes (default: true).</p></summary>
+        public virtual bool? GenerateResponseClasses { get; internal set; }
+        /// <summary><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
+        public virtual bool? HandleReferences { get; internal set; }
+        /// <summary><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
+        public virtual IReadOnlyList<string> JsonConverters => JsonConvertersInternal.AsReadOnly();
+        internal List<string> JsonConvertersInternal { get; set; } = new List<string>();
         /// <summary><p>The name of a static method which is called to transform the JsonSerializerSettings used in the generated ToJson()/FromJson() methods (default: none).</p></summary>
         public virtual string JsonSerializerSettingsTransformationMethod { get; internal set; }
+        /// <summary><p>The namespace of the generated classes.</p></summary>
+        public virtual string Namespace { get; internal set; }
+        /// <summary><p>The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments').</p></summary>
+        public virtual OperationGenerationMode OperationGenerationMode { get; internal set; }
+        /// <summary><p>The generic array .NET type of operation parameters (default: 'IEnumerable').</p></summary>
+        public virtual string ParameterArrayType { get; internal set; }
+        /// <summary><p>The generic dictionary .NET type of operation parameters (default: 'IReadOnlyDictionary').</p></summary>
+        public virtual string ParameterDictionaryType { get; internal set; }
+        /// <summary><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
+        public virtual bool? RequiredPropertiesMustBeDefined { get; internal set; }
+        /// <summary><p>The generic array .NET type of operation responses (default: 'ICollection').</p></summary>
+        public virtual string ResponseArrayType { get; internal set; }
+        /// <summary><p>The response class (default 'SwaggerResponse', may use '{controller}' placeholder).</p></summary>
+        public virtual string ResponseClass { get; internal set; }
+        /// <summary><p>The generic dictionary .NET type of operation responses (default: 'IDictionary').</p></summary>
+        public virtual string ResponseDictionaryType { get; internal set; }
+        /// <summary><p>The time span .NET type (default: 'TimeSpan').</p></summary>
+        public virtual string TimeSpanType { get; internal set; }
+        /// <summary><p>The time .NET type (default: 'TimeSpan').</p></summary>
+        public virtual string TimeType { get; internal set; }
+        /// <summary><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
+        public virtual IReadOnlyList<string> WrapResponseMethods => WrapResponseMethodsInternal.AsReadOnly();
+        internal List<string> WrapResponseMethodsInternal { get; set; } = new List<string>();
+        /// <summary><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
+        public virtual bool? WrapResponses { get; internal set; }
+        /// <summary><p>The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        public virtual string EnumNameGeneratorType { get; internal set; }
+        /// <summary><p>The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        public virtual string PropertyNameGeneratorType { get; internal set; }
         /// <summary><p>The Liquid template directory (experimental).</p></summary>
         public virtual string TemplateDirectory { get; internal set; }
         /// <summary><p>The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         public virtual string TypeNameGenerator { get; internal set; }
-        /// <summary><p>The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        public virtual string PropertyNameGeneratorType { get; internal set; }
-        /// <summary><p>The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        public virtual string EnumNameGeneratorType { get; internal set; }
         /// <summary><p>A file path or URL to the data or the JSON data itself.</p></summary>
         public virtual string Input { get; internal set; }
         /// <summary><p>Overrides the service host of the web document (optional, use '.' to remove the hostname).</p></summary>
@@ -1038,48 +1038,48 @@ namespace Nuke.NSwag
         {
             arguments
               .Add("swagger2cscontroller")
+              .Add("/AspNetNamespace:{value}", AspNetNamespace)
               .Add("/ControllerBaseClass:{value}", ControllerBaseClass)
               .Add("/ControllerStyle:{value}", ControllerStyle)
               .Add("/UseCancellationToken:{value}", UseCancellationToken)
-              .Add("/AspNetNamespace:{value}", AspNetNamespace)
               .Add("{value}", GetNSwagRuntime(), customValue: true)
-              .Add("/ClassName:{value}", ClassName)
-              .Add("/OperationGenerationMode:{value}", OperationGenerationMode)
-              .Add("/AdditionalNamespaceUsages:{value}", AdditionalNamespaceUsages)
               .Add("/AdditionalContractNamespaceUsages:{value}", AdditionalContractNamespaceUsages)
-              .Add("/GenerateOptionalParameters:{value}", GenerateOptionalParameters)
-              .Add("/GenerateJsonMethods:{value}", GenerateJsonMethods)
-              .Add("/ParameterArrayType:{value}", ParameterArrayType)
-              .Add("/ParameterDictionaryType:{value}", ParameterDictionaryType)
-              .Add("/ResponseArrayType:{value}", ResponseArrayType)
-              .Add("/ResponseDictionaryType:{value}", ResponseDictionaryType)
-              .Add("/WrapResponses:{value}", WrapResponses)
-              .Add("/WrapResponseMethods:{value}", WrapResponseMethods)
-              .Add("/GenerateResponseClasses:{value}", GenerateResponseClasses)
-              .Add("/ResponseClass:{value}", ResponseClass)
-              .Add("/Namespace:{value}", Namespace)
-              .Add("/RequiredPropertiesMustBeDefined:{value}", RequiredPropertiesMustBeDefined)
-              .Add("/DateType:{value}", DateType)
-              .Add("/JsonConverters:{value}", JsonConverters)
-              .Add("/DateTimeType:{value}", DateTimeType)
-              .Add("/TimeType:{value}", TimeType)
-              .Add("/TimeSpanType:{value}", TimeSpanType)
-              .Add("/ArrayType:{value}", ArrayType)
-              .Add("/DictionaryType:{value}", DictionaryType)
+              .Add("/AdditionalNamespaceUsages:{value}", AdditionalNamespaceUsages)
               .Add("/ArrayBaseType:{value}", ArrayBaseType)
-              .Add("/DictionaryBaseType:{value}", DictionaryBaseType)
+              .Add("/ArrayType:{value}", ArrayType)
+              .Add("/ClassName:{value}", ClassName)
               .Add("/ClassStyle:{value}", ClassStyle)
-              .Add("/GenerateDefaultValues:{value}", GenerateDefaultValues)
-              .Add("/GenerateDataAnnotations:{value}", GenerateDataAnnotations)
+              .Add("/DateTimeType:{value}", DateTimeType)
+              .Add("/DateType:{value}", DateType)
+              .Add("/DictionaryBaseType:{value}", DictionaryBaseType)
+              .Add("/DictionaryType:{value}", DictionaryType)
               .Add("/ExcludedTypeNames:{value}", ExcludedTypeNames)
-              .Add("/HandleReferences:{value}", HandleReferences)
+              .Add("/GenerateDataAnnotations:{value}", GenerateDataAnnotations)
+              .Add("/GenerateDefaultValues:{value}", GenerateDefaultValues)
               .Add("/GenerateImmutableArrayProperties:{value}", GenerateImmutableArrayProperties)
               .Add("/GenerateImmutableDictionaryProperties:{value}", GenerateImmutableDictionaryProperties)
+              .Add("/GenerateJsonMethods:{value}", GenerateJsonMethods)
+              .Add("/GenerateOptionalParameters:{value}", GenerateOptionalParameters)
+              .Add("/GenerateResponseClasses:{value}", GenerateResponseClasses)
+              .Add("/HandleReferences:{value}", HandleReferences)
+              .Add("/JsonConverters:{value}", JsonConverters)
               .Add("/JsonSerializerSettingsTransformationMethod:{value}", JsonSerializerSettingsTransformationMethod)
+              .Add("/Namespace:{value}", Namespace)
+              .Add("/OperationGenerationMode:{value}", OperationGenerationMode)
+              .Add("/ParameterArrayType:{value}", ParameterArrayType)
+              .Add("/ParameterDictionaryType:{value}", ParameterDictionaryType)
+              .Add("/RequiredPropertiesMustBeDefined:{value}", RequiredPropertiesMustBeDefined)
+              .Add("/ResponseArrayType:{value}", ResponseArrayType)
+              .Add("/ResponseClass:{value}", ResponseClass)
+              .Add("/ResponseDictionaryType:{value}", ResponseDictionaryType)
+              .Add("/TimeSpanType:{value}", TimeSpanType)
+              .Add("/TimeType:{value}", TimeType)
+              .Add("/WrapResponseMethods:{value}", WrapResponseMethods)
+              .Add("/WrapResponses:{value}", WrapResponses)
+              .Add("/EnumNameGeneratorType:{value}", EnumNameGeneratorType)
+              .Add("/PropertyNameGeneratorType:{value}", PropertyNameGeneratorType)
               .Add("/TemplateDirectory:{value}", TemplateDirectory)
               .Add("/TypeNameGenerator:{value}", TypeNameGenerator)
-              .Add("/PropertyNameGeneratorType:{value}", PropertyNameGeneratorType)
-              .Add("/EnumNameGeneratorType:{value}", EnumNameGeneratorType)
               .Add("/Input:{value}", Input)
               .Add("/ServiceHost:{value}", ServiceHost)
               .Add("/ServiceSchemes:{value}", ServiceSchemes)
@@ -1097,103 +1097,103 @@ namespace Nuke.NSwag
     {
         /// <summary><p>Path to the NSwag executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? GetToolPath();
+        /// <summary><p>The token name for injecting the API base URL string (used in the Angular template, default: 'API_BASE_URL').</p></summary>
+        public virtual string BaseUrlTokenName { get; internal set; }
         /// <summary><p>The class name of the generated client.</p></summary>
         public virtual string ClassName { get; internal set; }
-        /// <summary><p>The TypeScript module name (default: '', no module).</p></summary>
-        public virtual string ModuleName { get; internal set; }
-        /// <summary><p>The TypeScript namespace (default: '', no namespace).</p></summary>
-        public virtual string Namespace { get; internal set; }
-        /// <summary><p>The target TypeScript version (default: 1.8).</p></summary>
-        public virtual decimal? TypeScriptVersion { get; internal set; }
-        /// <summary><p>The type of the asynchronism handling ('JQueryCallbacks', 'JQueryPromises', 'AngularJS', 'Angular', 'Fetch', 'Aurelia').</p></summary>
-        public virtual TypeScriptTemplate Template { get; internal set; }
-        /// <summary><p>The promise type ('Promise' or 'QPromise').</p></summary>
-        public virtual PromiseType PromiseType { get; internal set; }
-        /// <summary><p>The Angular HTTP service class (default 'Http', 'HttpClient').</p></summary>
-        public virtual HttpClass HttpClass { get; internal set; }
-        /// <summary><p>Specifies whether to use the Angular 6 Singleton Provider (Angular template only, default: false).</p></summary>
-        public virtual bool? UseSingletonProvider { get; internal set; }
-        /// <summary><p>The Angular injection token type (default 'OpaqueToken', 'InjectionToken').</p></summary>
-        public virtual InjectionTokenType InjectionTokenType { get; internal set; }
-        /// <summary><p>The target RxJs version (default: 5.0).</p></summary>
-        public virtual decimal? RxJsVersion { get; internal set; }
-        /// <summary><p>The date time type ('Date', 'MomentJS', 'OffsetMomentJS', 'string').</p></summary>
-        public virtual TypeScriptDateTimeType DateTimeType { get; internal set; }
-        /// <summary><p>The null value used in object initializers (default 'Undefined', 'Null').</p></summary>
-        public virtual TypeScriptNullValue NullValue { get; internal set; }
-        /// <summary><p>Specifies whether generate client classes.</p></summary>
-        public virtual bool? GenerateClientClasses { get; internal set; }
-        /// <summary><p>Specifies whether generate interfaces for the client classes (default: false).</p></summary>
-        public virtual bool? GenerateClientInterfaces { get; internal set; }
-        /// <summary><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
-        public virtual bool? GenerateOptionalParameters { get; internal set; }
-        /// <summary><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: false).</p></summary>
-        public virtual bool? WrapDtoExceptions { get; internal set; }
-        /// <summary><p>The base class of the generated client classes (optional, must be imported or implemented in the extension code).</p></summary>
-        public virtual string ClientBaseClass { get; internal set; }
-        /// <summary><p>Specifies whether to wrap success responses to allow full response access (experimental).</p></summary>
-        public virtual bool? WrapResponses { get; internal set; }
-        /// <summary><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        public virtual IReadOnlyList<string> WrapResponseMethods => WrapResponseMethodsInternal.AsReadOnly();
-        internal List<string> WrapResponseMethodsInternal { get; set; } = new List<string>();
-        /// <summary><p>Specifies whether to generate response classes (default: true).</p></summary>
-        public virtual bool? GenerateResponseClasses { get; internal set; }
-        /// <summary><p>The response class (default 'SwaggerResponse', may use '{controller}' placeholder).</p></summary>
-        public virtual string ResponseClass { get; internal set; }
-        /// <summary><p>List of methods with a protected access modifier ('classname.methodname').</p></summary>
-        public virtual IReadOnlyList<string> ProtectedMethods => ProtectedMethodsInternal.AsReadOnly();
-        internal List<string> ProtectedMethodsInternal { get; set; } = new List<string>();
-        /// <summary><p>The configuration class. The setting ClientBaseClass must be set. (empty for no configuration class).</p></summary>
-        public virtual string ConfigurationClass { get; internal set; }
-        /// <summary><p>Call 'transformOptions' on the base class or extension class (default: false).</p></summary>
-        public virtual bool? UseTransformOptionsMethod { get; internal set; }
-        /// <summary><p>Call 'transformResult' on the base class or extension class (default: false).</p></summary>
-        public virtual bool? UseTransformResultMethod { get; internal set; }
-        /// <summary><p>Specifies whether to generate DTO classes.</p></summary>
-        public virtual bool? GenerateDtoTypes { get; internal set; }
-        /// <summary><p>The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments').</p></summary>
-        public virtual OperationGenerationMode OperationGenerationMode { get; internal set; }
-        /// <summary><p>Specifies whether to mark optional properties with ? (default: false).</p></summary>
-        public virtual bool? MarkOptionalProperties { get; internal set; }
-        /// <summary><p>Specifies whether a clone() method should be generated in the DTO classes (default: false).</p></summary>
-        public virtual bool? GenerateCloneMethod { get; internal set; }
-        /// <summary><p>The type style (default: Class).</p></summary>
-        public virtual TypeScriptTypeStyle TypeStyle { get; internal set; }
         /// <summary><p>The type names which always generate plain TypeScript classes.</p></summary>
         public virtual IReadOnlyList<string> ClassTypes => ClassTypesInternal.AsReadOnly();
         internal List<string> ClassTypesInternal { get; set; } = new List<string>();
+        /// <summary><p>The base class of the generated client classes (optional, must be imported or implemented in the extension code).</p></summary>
+        public virtual string ClientBaseClass { get; internal set; }
+        /// <summary><p>The configuration class. The setting ClientBaseClass must be set. (empty for no configuration class).</p></summary>
+        public virtual string ConfigurationClass { get; internal set; }
+        /// <summary><p>Convert POJO objects in the constructor data to DTO instances (GenerateConstructorInterface must be enabled, default: false).</p></summary>
+        public virtual bool? ConvertConstructorInterfaceData { get; internal set; }
+        /// <summary><p>The date time type ('Date', 'MomentJS', 'OffsetMomentJS', 'string').</p></summary>
+        public virtual TypeScriptDateTimeType DateTimeType { get; internal set; }
+        /// <summary><p>The excluded DTO type names (must be defined in an import or other namespace).</p></summary>
+        public virtual IReadOnlyList<string> ExcludedTypeNames => ExcludedTypeNamesInternal.AsReadOnly();
+        internal List<string> ExcludedTypeNamesInternal { get; set; } = new List<string>();
         /// <summary><p>The list of extended classes.</p></summary>
         public virtual IReadOnlyList<string> ExtendedClasses => ExtendedClassesInternal.AsReadOnly();
         internal List<string> ExtendedClassesInternal { get; set; } = new List<string>();
         /// <summary><p>The extension code (string or file path).</p></summary>
         public virtual string ExtensionCode { get; internal set; }
-        /// <summary><p>Specifies whether to generate default values for properties (default: true).</p></summary>
-        public virtual bool? GenerateDefaultValues { get; internal set; }
-        /// <summary><p>The excluded DTO type names (must be defined in an import or other namespace).</p></summary>
-        public virtual IReadOnlyList<string> ExcludedTypeNames => ExcludedTypeNamesInternal.AsReadOnly();
-        internal List<string> ExcludedTypeNamesInternal { get; set; } = new List<string>();
-        /// <summary><p>Handle JSON references (default: false).</p></summary>
-        public virtual bool? HandleReferences { get; internal set; }
+        /// <summary><p>Specifies whether generate client classes.</p></summary>
+        public virtual bool? GenerateClientClasses { get; internal set; }
+        /// <summary><p>Specifies whether generate interfaces for the client classes (default: false).</p></summary>
+        public virtual bool? GenerateClientInterfaces { get; internal set; }
+        /// <summary><p>Specifies whether a clone() method should be generated in the DTO classes (default: false).</p></summary>
+        public virtual bool? GenerateCloneMethod { get; internal set; }
         /// <summary><p>Generate an class interface which is used in the constructor to initialize the class (only available when TypeStyle is Class, default: true).</p></summary>
         public virtual bool? GenerateConstructorInterface { get; internal set; }
-        /// <summary><p>Convert POJO objects in the constructor data to DTO instances (GenerateConstructorInterface must be enabled, default: false).</p></summary>
-        public virtual bool? ConvertConstructorInterfaceData { get; internal set; }
+        /// <summary><p>Specifies whether to generate default values for properties (default: true).</p></summary>
+        public virtual bool? GenerateDefaultValues { get; internal set; }
+        /// <summary><p>Specifies whether to generate DTO classes.</p></summary>
+        public virtual bool? GenerateDtoTypes { get; internal set; }
+        /// <summary><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
+        public virtual bool? GenerateOptionalParameters { get; internal set; }
+        /// <summary><p>Specifies whether to generate response classes (default: true).</p></summary>
+        public virtual bool? GenerateResponseClasses { get; internal set; }
+        /// <summary><p>Handle JSON references (default: false).</p></summary>
+        public virtual bool? HandleReferences { get; internal set; }
+        /// <summary><p>The Angular HTTP service class (default 'Http', 'HttpClient').</p></summary>
+        public virtual HttpClass HttpClass { get; internal set; }
         /// <summary><p>Specifies whether required types should be imported (default: true).</p></summary>
         public virtual bool? ImportRequiredTypes { get; internal set; }
-        /// <summary><p>Specifies whether to use the 'getBaseUrl(defaultUrl: string)' method from the base class (default: false).</p></summary>
-        public virtual bool? UseGetBaseUrlMethod { get; internal set; }
-        /// <summary><p>The token name for injecting the API base URL string (used in the Angular template, default: 'API_BASE_URL').</p></summary>
-        public virtual string BaseUrlTokenName { get; internal set; }
+        /// <summary><p>The Angular injection token type (default 'OpaqueToken', 'InjectionToken').</p></summary>
+        public virtual InjectionTokenType InjectionTokenType { get; internal set; }
+        /// <summary><p>Specifies whether to mark optional properties with ? (default: false).</p></summary>
+        public virtual bool? MarkOptionalProperties { get; internal set; }
+        /// <summary><p>The TypeScript module name (default: '', no module).</p></summary>
+        public virtual string ModuleName { get; internal set; }
+        /// <summary><p>The TypeScript namespace (default: '', no namespace).</p></summary>
+        public virtual string Namespace { get; internal set; }
+        /// <summary><p>The null value used in object initializers (default 'Undefined', 'Null').</p></summary>
+        public virtual TypeScriptNullValue NullValue { get; internal set; }
+        /// <summary><p>The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments').</p></summary>
+        public virtual OperationGenerationMode OperationGenerationMode { get; internal set; }
+        /// <summary><p>The promise type ('Promise' or 'QPromise').</p></summary>
+        public virtual PromiseType PromiseType { get; internal set; }
+        /// <summary><p>List of methods with a protected access modifier ('classname.methodname').</p></summary>
+        public virtual IReadOnlyList<string> ProtectedMethods => ProtectedMethodsInternal.AsReadOnly();
+        internal List<string> ProtectedMethodsInternal { get; set; } = new List<string>();
         /// <summary><p>The null value used for query parameters which are null (default: '').</p></summary>
         public virtual string QueryNullValue { get; internal set; }
+        /// <summary><p>The response class (default 'SwaggerResponse', may use '{controller}' placeholder).</p></summary>
+        public virtual string ResponseClass { get; internal set; }
+        /// <summary><p>The target RxJs version (default: 5.0).</p></summary>
+        public virtual decimal? RxJsVersion { get; internal set; }
+        /// <summary><p>The type of the asynchronism handling ('JQueryCallbacks', 'JQueryPromises', 'AngularJS', 'Angular', 'Fetch', 'Aurelia').</p></summary>
+        public virtual TypeScriptTemplate Template { get; internal set; }
+        /// <summary><p>The target TypeScript version (default: 1.8).</p></summary>
+        public virtual decimal? TypeScriptVersion { get; internal set; }
+        /// <summary><p>The type style (default: Class).</p></summary>
+        public virtual TypeScriptTypeStyle TypeStyle { get; internal set; }
+        /// <summary><p>Specifies whether to use the 'getBaseUrl(defaultUrl: string)' method from the base class (default: false).</p></summary>
+        public virtual bool? UseGetBaseUrlMethod { get; internal set; }
+        /// <summary><p>Specifies whether to use the Angular 6 Singleton Provider (Angular template only, default: false).</p></summary>
+        public virtual bool? UseSingletonProvider { get; internal set; }
+        /// <summary><p>Call 'transformOptions' on the base class or extension class (default: false).</p></summary>
+        public virtual bool? UseTransformOptionsMethod { get; internal set; }
+        /// <summary><p>Call 'transformResult' on the base class or extension class (default: false).</p></summary>
+        public virtual bool? UseTransformResultMethod { get; internal set; }
+        /// <summary><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: false).</p></summary>
+        public virtual bool? WrapDtoExceptions { get; internal set; }
+        /// <summary><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
+        public virtual IReadOnlyList<string> WrapResponseMethods => WrapResponseMethodsInternal.AsReadOnly();
+        internal List<string> WrapResponseMethodsInternal { get; set; } = new List<string>();
+        /// <summary><p>Specifies whether to wrap success responses to allow full response access (experimental).</p></summary>
+        public virtual bool? WrapResponses { get; internal set; }
+        /// <summary><p>The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        public virtual string EnumNameGeneratorType { get; internal set; }
+        /// <summary><p>The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        public virtual string PropertyNameGeneratorType { get; internal set; }
         /// <summary><p>The Liquid template directory (experimental).</p></summary>
         public virtual string TemplateDirectory { get; internal set; }
         /// <summary><p>The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         public virtual string TypeNameGenerator { get; internal set; }
-        /// <summary><p>The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        public virtual string PropertyNameGeneratorType { get; internal set; }
-        /// <summary><p>The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        public virtual string EnumNameGeneratorType { get; internal set; }
         /// <summary><p>A file path or URL to the data or the JSON data itself.</p></summary>
         public virtual string Input { get; internal set; }
         /// <summary><p>Overrides the service host of the web document (optional, use '.' to remove the hostname).</p></summary>
@@ -1207,53 +1207,53 @@ namespace Nuke.NSwag
         {
             arguments
               .Add("swagger2tsclient")
+              .Add("/BaseUrlTokenName:{value}", BaseUrlTokenName)
               .Add("/ClassName:{value}", ClassName)
-              .Add("/ModuleName:{value}", ModuleName)
-              .Add("/Namespace:{value}", Namespace)
-              .Add("/TypeScriptVersion:{value}", TypeScriptVersion)
-              .Add("/Template:{value}", Template)
-              .Add("/PromiseType:{value}", PromiseType)
-              .Add("/HttpClass:{value}", HttpClass)
-              .Add("/UseSingletonProvider:{value}", UseSingletonProvider)
-              .Add("/InjectionTokenType:{value}", InjectionTokenType)
-              .Add("/RxJsVersion:{value}", RxJsVersion)
-              .Add("/DateTimeType:{value}", DateTimeType)
-              .Add("/NullValue:{value}", NullValue)
-              .Add("/GenerateClientClasses:{value}", GenerateClientClasses)
-              .Add("/GenerateClientInterfaces:{value}", GenerateClientInterfaces)
-              .Add("/GenerateOptionalParameters:{value}", GenerateOptionalParameters)
-              .Add("/WrapDtoExceptions:{value}", WrapDtoExceptions)
-              .Add("/ClientBaseClass:{value}", ClientBaseClass)
-              .Add("/WrapResponses:{value}", WrapResponses)
-              .Add("/WrapResponseMethods:{value}", WrapResponseMethods)
-              .Add("/GenerateResponseClasses:{value}", GenerateResponseClasses)
-              .Add("/ResponseClass:{value}", ResponseClass)
-              .Add("/ProtectedMethods:{value}", ProtectedMethods)
-              .Add("/ConfigurationClass:{value}", ConfigurationClass)
-              .Add("/UseTransformOptionsMethod:{value}", UseTransformOptionsMethod)
-              .Add("/UseTransformResultMethod:{value}", UseTransformResultMethod)
-              .Add("/GenerateDtoTypes:{value}", GenerateDtoTypes)
-              .Add("/OperationGenerationMode:{value}", OperationGenerationMode)
-              .Add("/MarkOptionalProperties:{value}", MarkOptionalProperties)
-              .Add("/GenerateCloneMethod:{value}", GenerateCloneMethod)
-              .Add("/TypeStyle:{value}", TypeStyle)
               .Add("/ClassTypes:{value}", ClassTypes)
+              .Add("/ClientBaseClass:{value}", ClientBaseClass)
+              .Add("/ConfigurationClass:{value}", ConfigurationClass)
+              .Add("/ConvertConstructorInterfaceData:{value}", ConvertConstructorInterfaceData)
+              .Add("/DateTimeType:{value}", DateTimeType)
+              .Add("/ExcludedTypeNames:{value}", ExcludedTypeNames)
               .Add("/ExtendedClasses:{value}", ExtendedClasses)
               .Add("/ExtensionCode:{value}", ExtensionCode)
-              .Add("/GenerateDefaultValues:{value}", GenerateDefaultValues)
-              .Add("/ExcludedTypeNames:{value}", ExcludedTypeNames)
-              .Add("/HandleReferences:{value}", HandleReferences)
+              .Add("/GenerateClientClasses:{value}", GenerateClientClasses)
+              .Add("/GenerateClientInterfaces:{value}", GenerateClientInterfaces)
+              .Add("/GenerateCloneMethod:{value}", GenerateCloneMethod)
               .Add("/GenerateConstructorInterface:{value}", GenerateConstructorInterface)
-              .Add("/ConvertConstructorInterfaceData:{value}", ConvertConstructorInterfaceData)
+              .Add("/GenerateDefaultValues:{value}", GenerateDefaultValues)
+              .Add("/GenerateDtoTypes:{value}", GenerateDtoTypes)
+              .Add("/GenerateOptionalParameters:{value}", GenerateOptionalParameters)
+              .Add("/GenerateResponseClasses:{value}", GenerateResponseClasses)
+              .Add("/HandleReferences:{value}", HandleReferences)
+              .Add("/HttpClass:{value}", HttpClass)
               .Add("/ImportRequiredTypes:{value}", ImportRequiredTypes)
-              .Add("/UseGetBaseUrlMethod:{value}", UseGetBaseUrlMethod)
-              .Add("/BaseUrlTokenName:{value}", BaseUrlTokenName)
+              .Add("/InjectionTokenType:{value}", InjectionTokenType)
+              .Add("/MarkOptionalProperties:{value}", MarkOptionalProperties)
+              .Add("/ModuleName:{value}", ModuleName)
+              .Add("/Namespace:{value}", Namespace)
+              .Add("/NullValue:{value}", NullValue)
+              .Add("/OperationGenerationMode:{value}", OperationGenerationMode)
+              .Add("/PromiseType:{value}", PromiseType)
+              .Add("/ProtectedMethods:{value}", ProtectedMethods)
               .Add("/QueryNullValue:{value}", QueryNullValue)
+              .Add("/ResponseClass:{value}", ResponseClass)
+              .Add("/RxJsVersion:{value}", RxJsVersion)
+              .Add("/Template:{value}", Template)
+              .Add("/TypeScriptVersion:{value}", TypeScriptVersion)
+              .Add("/TypeStyle:{value}", TypeStyle)
+              .Add("/UseGetBaseUrlMethod:{value}", UseGetBaseUrlMethod)
+              .Add("/UseSingletonProvider:{value}", UseSingletonProvider)
+              .Add("/UseTransformOptionsMethod:{value}", UseTransformOptionsMethod)
+              .Add("/UseTransformResultMethod:{value}", UseTransformResultMethod)
+              .Add("/WrapDtoExceptions:{value}", WrapDtoExceptions)
+              .Add("/WrapResponseMethods:{value}", WrapResponseMethods)
+              .Add("/WrapResponses:{value}", WrapResponses)
               .Add("{value}", GetNSwagRuntime(), customValue: true)
+              .Add("/EnumNameGeneratorType:{value}", EnumNameGeneratorType)
+              .Add("/PropertyNameGeneratorType:{value}", PropertyNameGeneratorType)
               .Add("/TemplateDirectory:{value}", TemplateDirectory)
               .Add("/TypeNameGenerator:{value}", TypeNameGenerator)
-              .Add("/PropertyNameGeneratorType:{value}", PropertyNameGeneratorType)
-              .Add("/EnumNameGeneratorType:{value}", EnumNameGeneratorType)
               .Add("/Input:{value}", Input)
               .Add("/ServiceHost:{value}", ServiceHost)
               .Add("/ServiceSchemes:{value}", ServiceSchemes)
@@ -1688,6 +1688,48 @@ namespace Nuke.NSwag
     [ExcludeFromCodeCoverage]
     public static partial class NSwagTypesToSwaggerSettingsExtensions
     {
+        #region AllowReferencesWithProperties
+        /// <summary><p><em>Sets <see cref="NSwagTypesToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
+        [Pure]
+        public static NSwagTypesToSwaggerSettings SetAllowReferencesWithProperties(this NSwagTypesToSwaggerSettings toolSettings, bool? allowReferencesWithProperties)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowReferencesWithProperties = allowReferencesWithProperties;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagTypesToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
+        [Pure]
+        public static NSwagTypesToSwaggerSettings ResetAllowReferencesWithProperties(this NSwagTypesToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowReferencesWithProperties = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagTypesToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
+        [Pure]
+        public static NSwagTypesToSwaggerSettings EnableAllowReferencesWithProperties(this NSwagTypesToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowReferencesWithProperties = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagTypesToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
+        [Pure]
+        public static NSwagTypesToSwaggerSettings DisableAllowReferencesWithProperties(this NSwagTypesToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowReferencesWithProperties = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagTypesToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
+        [Pure]
+        public static NSwagTypesToSwaggerSettings ToggleAllowReferencesWithProperties(this NSwagTypesToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowReferencesWithProperties = !toolSettings.AllowReferencesWithProperties;
+            return toolSettings;
+        }
+        #endregion
         #region ClassNames
         /// <summary><p><em>Sets <see cref="NSwagTypesToSwaggerSettings.ClassNames"/> to a new list.</em></p><p>The class names.</p></summary>
         [Pure]
@@ -1748,6 +1790,24 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
+        #region DefaultEnumHandling
+        /// <summary><p><em>Sets <see cref="NSwagTypesToSwaggerSettings.DefaultEnumHandling"/>.</em></p><p>The default enum handling ('String' or 'Integer'), default: Integer.</p></summary>
+        [Pure]
+        public static NSwagTypesToSwaggerSettings SetDefaultEnumHandling(this NSwagTypesToSwaggerSettings toolSettings, EnumHandling defaultEnumHandling)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DefaultEnumHandling = defaultEnumHandling;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagTypesToSwaggerSettings.DefaultEnumHandling"/>.</em></p><p>The default enum handling ('String' or 'Integer'), default: Integer.</p></summary>
+        [Pure]
+        public static NSwagTypesToSwaggerSettings ResetDefaultEnumHandling(this NSwagTypesToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DefaultEnumHandling = null;
+            return toolSettings;
+        }
+        #endregion
         #region DefaultPropertyNameHandling
         /// <summary><p><em>Sets <see cref="NSwagTypesToSwaggerSettings.DefaultPropertyNameHandling"/>.</em></p><p>The default property name handling ('Default' or 'CamelCase').</p></summary>
         [Pure]
@@ -1781,24 +1841,6 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DefaultReferenceTypeNullHandling = null;
-            return toolSettings;
-        }
-        #endregion
-        #region DefaultEnumHandling
-        /// <summary><p><em>Sets <see cref="NSwagTypesToSwaggerSettings.DefaultEnumHandling"/>.</em></p><p>The default enum handling ('String' or 'Integer'), default: Integer.</p></summary>
-        [Pure]
-        public static NSwagTypesToSwaggerSettings SetDefaultEnumHandling(this NSwagTypesToSwaggerSettings toolSettings, EnumHandling defaultEnumHandling)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DefaultEnumHandling = defaultEnumHandling;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagTypesToSwaggerSettings.DefaultEnumHandling"/>.</em></p><p>The default enum handling ('String' or 'Integer'), default: Integer.</p></summary>
-        [Pure]
-        public static NSwagTypesToSwaggerSettings ResetDefaultEnumHandling(this NSwagTypesToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DefaultEnumHandling = null;
             return toolSettings;
         }
         #endregion
@@ -1841,90 +1883,6 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FlattenInheritanceHierarchy = !toolSettings.FlattenInheritanceHierarchy;
-            return toolSettings;
-        }
-        #endregion
-        #region IgnoreObsoleteProperties
-        /// <summary><p><em>Sets <see cref="NSwagTypesToSwaggerSettings.IgnoreObsoleteProperties"/>.</em></p><p>Ignore properties with the ObsoleteAttribute (default: false).</p></summary>
-        [Pure]
-        public static NSwagTypesToSwaggerSettings SetIgnoreObsoleteProperties(this NSwagTypesToSwaggerSettings toolSettings, bool? ignoreObsoleteProperties)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.IgnoreObsoleteProperties = ignoreObsoleteProperties;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagTypesToSwaggerSettings.IgnoreObsoleteProperties"/>.</em></p><p>Ignore properties with the ObsoleteAttribute (default: false).</p></summary>
-        [Pure]
-        public static NSwagTypesToSwaggerSettings ResetIgnoreObsoleteProperties(this NSwagTypesToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.IgnoreObsoleteProperties = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagTypesToSwaggerSettings.IgnoreObsoleteProperties"/>.</em></p><p>Ignore properties with the ObsoleteAttribute (default: false).</p></summary>
-        [Pure]
-        public static NSwagTypesToSwaggerSettings EnableIgnoreObsoleteProperties(this NSwagTypesToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.IgnoreObsoleteProperties = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagTypesToSwaggerSettings.IgnoreObsoleteProperties"/>.</em></p><p>Ignore properties with the ObsoleteAttribute (default: false).</p></summary>
-        [Pure]
-        public static NSwagTypesToSwaggerSettings DisableIgnoreObsoleteProperties(this NSwagTypesToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.IgnoreObsoleteProperties = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagTypesToSwaggerSettings.IgnoreObsoleteProperties"/>.</em></p><p>Ignore properties with the ObsoleteAttribute (default: false).</p></summary>
-        [Pure]
-        public static NSwagTypesToSwaggerSettings ToggleIgnoreObsoleteProperties(this NSwagTypesToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.IgnoreObsoleteProperties = !toolSettings.IgnoreObsoleteProperties;
-            return toolSettings;
-        }
-        #endregion
-        #region AllowReferencesWithProperties
-        /// <summary><p><em>Sets <see cref="NSwagTypesToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
-        [Pure]
-        public static NSwagTypesToSwaggerSettings SetAllowReferencesWithProperties(this NSwagTypesToSwaggerSettings toolSettings, bool? allowReferencesWithProperties)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.AllowReferencesWithProperties = allowReferencesWithProperties;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagTypesToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
-        [Pure]
-        public static NSwagTypesToSwaggerSettings ResetAllowReferencesWithProperties(this NSwagTypesToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.AllowReferencesWithProperties = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagTypesToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
-        [Pure]
-        public static NSwagTypesToSwaggerSettings EnableAllowReferencesWithProperties(this NSwagTypesToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.AllowReferencesWithProperties = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagTypesToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
-        [Pure]
-        public static NSwagTypesToSwaggerSettings DisableAllowReferencesWithProperties(this NSwagTypesToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.AllowReferencesWithProperties = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagTypesToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
-        [Pure]
-        public static NSwagTypesToSwaggerSettings ToggleAllowReferencesWithProperties(this NSwagTypesToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.AllowReferencesWithProperties = !toolSettings.AllowReferencesWithProperties;
             return toolSettings;
         }
         #endregion
@@ -2009,6 +1967,48 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GenerateXmlObjects = !toolSettings.GenerateXmlObjects;
+            return toolSettings;
+        }
+        #endregion
+        #region IgnoreObsoleteProperties
+        /// <summary><p><em>Sets <see cref="NSwagTypesToSwaggerSettings.IgnoreObsoleteProperties"/>.</em></p><p>Ignore properties with the ObsoleteAttribute (default: false).</p></summary>
+        [Pure]
+        public static NSwagTypesToSwaggerSettings SetIgnoreObsoleteProperties(this NSwagTypesToSwaggerSettings toolSettings, bool? ignoreObsoleteProperties)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreObsoleteProperties = ignoreObsoleteProperties;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagTypesToSwaggerSettings.IgnoreObsoleteProperties"/>.</em></p><p>Ignore properties with the ObsoleteAttribute (default: false).</p></summary>
+        [Pure]
+        public static NSwagTypesToSwaggerSettings ResetIgnoreObsoleteProperties(this NSwagTypesToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreObsoleteProperties = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagTypesToSwaggerSettings.IgnoreObsoleteProperties"/>.</em></p><p>Ignore properties with the ObsoleteAttribute (default: false).</p></summary>
+        [Pure]
+        public static NSwagTypesToSwaggerSettings EnableIgnoreObsoleteProperties(this NSwagTypesToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreObsoleteProperties = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagTypesToSwaggerSettings.IgnoreObsoleteProperties"/>.</em></p><p>Ignore properties with the ObsoleteAttribute (default: false).</p></summary>
+        [Pure]
+        public static NSwagTypesToSwaggerSettings DisableIgnoreObsoleteProperties(this NSwagTypesToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreObsoleteProperties = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagTypesToSwaggerSettings.IgnoreObsoleteProperties"/>.</em></p><p>Ignore properties with the ObsoleteAttribute (default: false).</p></summary>
+        [Pure]
+        public static NSwagTypesToSwaggerSettings ToggleIgnoreObsoleteProperties(this NSwagTypesToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreObsoleteProperties = !toolSettings.IgnoreObsoleteProperties;
             return toolSettings;
         }
         #endregion
@@ -2194,6 +2194,90 @@ namespace Nuke.NSwag
     [ExcludeFromCodeCoverage]
     public static partial class NSwagWebApiToSwaggerSettingsExtensions
     {
+        #region AddMissingPathParameters
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.AddMissingPathParameters"/>.</em></p><p>Specifies whether to add path parameters which are missing in the action method (default: true).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings SetAddMissingPathParameters(this NSwagWebApiToSwaggerSettings toolSettings, bool? addMissingPathParameters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AddMissingPathParameters = addMissingPathParameters;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.AddMissingPathParameters"/>.</em></p><p>Specifies whether to add path parameters which are missing in the action method (default: true).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ResetAddMissingPathParameters(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AddMissingPathParameters = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagWebApiToSwaggerSettings.AddMissingPathParameters"/>.</em></p><p>Specifies whether to add path parameters which are missing in the action method (default: true).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings EnableAddMissingPathParameters(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AddMissingPathParameters = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagWebApiToSwaggerSettings.AddMissingPathParameters"/>.</em></p><p>Specifies whether to add path parameters which are missing in the action method (default: true).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings DisableAddMissingPathParameters(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AddMissingPathParameters = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagWebApiToSwaggerSettings.AddMissingPathParameters"/>.</em></p><p>Specifies whether to add path parameters which are missing in the action method (default: true).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ToggleAddMissingPathParameters(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AddMissingPathParameters = !toolSettings.AddMissingPathParameters;
+            return toolSettings;
+        }
+        #endregion
+        #region AspNetCore
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.AspNetCore"/>.</em></p><p>Specifies whether the controllers are hosted by ASP.NET Core.</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings SetAspNetCore(this NSwagWebApiToSwaggerSettings toolSettings, bool? aspNetCore)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AspNetCore = aspNetCore;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.AspNetCore"/>.</em></p><p>Specifies whether the controllers are hosted by ASP.NET Core.</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ResetAspNetCore(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AspNetCore = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagWebApiToSwaggerSettings.AspNetCore"/>.</em></p><p>Specifies whether the controllers are hosted by ASP.NET Core.</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings EnableAspNetCore(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AspNetCore = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagWebApiToSwaggerSettings.AspNetCore"/>.</em></p><p>Specifies whether the controllers are hosted by ASP.NET Core.</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings DisableAspNetCore(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AspNetCore = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagWebApiToSwaggerSettings.AspNetCore"/>.</em></p><p>Specifies whether the controllers are hosted by ASP.NET Core.</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ToggleAspNetCore(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AspNetCore = !toolSettings.AspNetCore;
+            return toolSettings;
+        }
+        #endregion
         #region Controller
         /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.Controller"/>.</em></p><p>The Web API controller full class name or empty to load all controllers from the assembly.</p></summary>
         [Pure]
@@ -2272,48 +2356,6 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region AspNetCore
-        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.AspNetCore"/>.</em></p><p>Specifies whether the controllers are hosted by ASP.NET Core.</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings SetAspNetCore(this NSwagWebApiToSwaggerSettings toolSettings, bool? aspNetCore)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.AspNetCore = aspNetCore;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.AspNetCore"/>.</em></p><p>Specifies whether the controllers are hosted by ASP.NET Core.</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings ResetAspNetCore(this NSwagWebApiToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.AspNetCore = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagWebApiToSwaggerSettings.AspNetCore"/>.</em></p><p>Specifies whether the controllers are hosted by ASP.NET Core.</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings EnableAspNetCore(this NSwagWebApiToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.AspNetCore = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagWebApiToSwaggerSettings.AspNetCore"/>.</em></p><p>Specifies whether the controllers are hosted by ASP.NET Core.</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings DisableAspNetCore(this NSwagWebApiToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.AspNetCore = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagWebApiToSwaggerSettings.AspNetCore"/>.</em></p><p>Specifies whether the controllers are hosted by ASP.NET Core.</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings ToggleAspNetCore(this NSwagWebApiToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.AspNetCore = !toolSettings.AspNetCore;
-            return toolSettings;
-        }
-        #endregion
         #region DefaultUrlTemplate
         /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.DefaultUrlTemplate"/>.</em></p><p>The Web API default URL template (default for Web API: 'api/{controller}/{id}'; for MVC projects: '{controller}/{action}/{id?}').</p></summary>
         [Pure]
@@ -2332,45 +2374,81 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region AddMissingPathParameters
-        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.AddMissingPathParameters"/>.</em></p><p>Specifies whether to add path parameters which are missing in the action method (default: true).</p></summary>
+        #region AllowReferencesWithProperties
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
         [Pure]
-        public static NSwagWebApiToSwaggerSettings SetAddMissingPathParameters(this NSwagWebApiToSwaggerSettings toolSettings, bool? addMissingPathParameters)
+        public static NSwagWebApiToSwaggerSettings SetAllowReferencesWithProperties(this NSwagWebApiToSwaggerSettings toolSettings, bool? allowReferencesWithProperties)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AddMissingPathParameters = addMissingPathParameters;
+            toolSettings.AllowReferencesWithProperties = allowReferencesWithProperties;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.AddMissingPathParameters"/>.</em></p><p>Specifies whether to add path parameters which are missing in the action method (default: true).</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
         [Pure]
-        public static NSwagWebApiToSwaggerSettings ResetAddMissingPathParameters(this NSwagWebApiToSwaggerSettings toolSettings)
+        public static NSwagWebApiToSwaggerSettings ResetAllowReferencesWithProperties(this NSwagWebApiToSwaggerSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AddMissingPathParameters = null;
+            toolSettings.AllowReferencesWithProperties = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="NSwagWebApiToSwaggerSettings.AddMissingPathParameters"/>.</em></p><p>Specifies whether to add path parameters which are missing in the action method (default: true).</p></summary>
+        /// <summary><p><em>Enables <see cref="NSwagWebApiToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
         [Pure]
-        public static NSwagWebApiToSwaggerSettings EnableAddMissingPathParameters(this NSwagWebApiToSwaggerSettings toolSettings)
+        public static NSwagWebApiToSwaggerSettings EnableAllowReferencesWithProperties(this NSwagWebApiToSwaggerSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AddMissingPathParameters = true;
+            toolSettings.AllowReferencesWithProperties = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="NSwagWebApiToSwaggerSettings.AddMissingPathParameters"/>.</em></p><p>Specifies whether to add path parameters which are missing in the action method (default: true).</p></summary>
+        /// <summary><p><em>Disables <see cref="NSwagWebApiToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
         [Pure]
-        public static NSwagWebApiToSwaggerSettings DisableAddMissingPathParameters(this NSwagWebApiToSwaggerSettings toolSettings)
+        public static NSwagWebApiToSwaggerSettings DisableAllowReferencesWithProperties(this NSwagWebApiToSwaggerSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AddMissingPathParameters = false;
+            toolSettings.AllowReferencesWithProperties = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="NSwagWebApiToSwaggerSettings.AddMissingPathParameters"/>.</em></p><p>Specifies whether to add path parameters which are missing in the action method (default: true).</p></summary>
+        /// <summary><p><em>Toggles <see cref="NSwagWebApiToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
         [Pure]
-        public static NSwagWebApiToSwaggerSettings ToggleAddMissingPathParameters(this NSwagWebApiToSwaggerSettings toolSettings)
+        public static NSwagWebApiToSwaggerSettings ToggleAllowReferencesWithProperties(this NSwagWebApiToSwaggerSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AddMissingPathParameters = !toolSettings.AddMissingPathParameters;
+            toolSettings.AllowReferencesWithProperties = !toolSettings.AllowReferencesWithProperties;
+            return toolSettings;
+        }
+        #endregion
+        #region ContractResolver
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.ContractResolver"/>.</em></p><p>The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings SetContractResolver(this NSwagWebApiToSwaggerSettings toolSettings, string contractResolver)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ContractResolver = contractResolver;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.ContractResolver"/>.</em></p><p>The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ResetContractResolver(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ContractResolver = null;
+            return toolSettings;
+        }
+        #endregion
+        #region DefaultEnumHandling
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.DefaultEnumHandling"/>.</em></p><p>The default enum handling ('String' or 'Integer'), default: Integer.</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings SetDefaultEnumHandling(this NSwagWebApiToSwaggerSettings toolSettings, EnumHandling defaultEnumHandling)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DefaultEnumHandling = defaultEnumHandling;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.DefaultEnumHandling"/>.</em></p><p>The default enum handling ('String' or 'Integer'), default: Integer.</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ResetDefaultEnumHandling(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DefaultEnumHandling = null;
             return toolSettings;
         }
         #endregion
@@ -2410,21 +2488,141 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region DefaultEnumHandling
-        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.DefaultEnumHandling"/>.</em></p><p>The default enum handling ('String' or 'Integer'), default: Integer.</p></summary>
+        #region DocumentProcessors
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.DocumentProcessors"/> to a new list.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         [Pure]
-        public static NSwagWebApiToSwaggerSettings SetDefaultEnumHandling(this NSwagWebApiToSwaggerSettings toolSettings, EnumHandling defaultEnumHandling)
+        public static NSwagWebApiToSwaggerSettings SetDocumentProcessors(this NSwagWebApiToSwaggerSettings toolSettings, params string[] documentProcessors)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DefaultEnumHandling = defaultEnumHandling;
+            toolSettings.DocumentProcessorsInternal = documentProcessors.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.DefaultEnumHandling"/>.</em></p><p>The default enum handling ('String' or 'Integer'), default: Integer.</p></summary>
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.DocumentProcessors"/> to a new list.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         [Pure]
-        public static NSwagWebApiToSwaggerSettings ResetDefaultEnumHandling(this NSwagWebApiToSwaggerSettings toolSettings)
+        public static NSwagWebApiToSwaggerSettings SetDocumentProcessors(this NSwagWebApiToSwaggerSettings toolSettings, IEnumerable<string> documentProcessors)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DefaultEnumHandling = null;
+            toolSettings.DocumentProcessorsInternal = documentProcessors.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagWebApiToSwaggerSettings.DocumentProcessors"/>.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings AddDocumentProcessors(this NSwagWebApiToSwaggerSettings toolSettings, params string[] documentProcessors)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DocumentProcessorsInternal.AddRange(documentProcessors);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagWebApiToSwaggerSettings.DocumentProcessors"/>.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings AddDocumentProcessors(this NSwagWebApiToSwaggerSettings toolSettings, IEnumerable<string> documentProcessors)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DocumentProcessorsInternal.AddRange(documentProcessors);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="NSwagWebApiToSwaggerSettings.DocumentProcessors"/>.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ClearDocumentProcessors(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DocumentProcessorsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagWebApiToSwaggerSettings.DocumentProcessors"/>.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings RemoveDocumentProcessors(this NSwagWebApiToSwaggerSettings toolSettings, params string[] documentProcessors)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(documentProcessors);
+            toolSettings.DocumentProcessorsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagWebApiToSwaggerSettings.DocumentProcessors"/>.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings RemoveDocumentProcessors(this NSwagWebApiToSwaggerSettings toolSettings, IEnumerable<string> documentProcessors)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(documentProcessors);
+            toolSettings.DocumentProcessorsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region DocumentTemplate
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.DocumentTemplate"/>.</em></p><p>Specifies the Swagger document template (may be a path or JSON, default: none).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings SetDocumentTemplate(this NSwagWebApiToSwaggerSettings toolSettings, string documentTemplate)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DocumentTemplate = documentTemplate;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.DocumentTemplate"/>.</em></p><p>Specifies the Swagger document template (may be a path or JSON, default: none).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ResetDocumentTemplate(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DocumentTemplate = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ExcludedTypeNames
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.ExcludedTypeNames"/> to a new list.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings SetExcludedTypeNames(this NSwagWebApiToSwaggerSettings toolSettings, params string[] excludedTypeNames)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludedTypeNamesInternal = excludedTypeNames.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.ExcludedTypeNames"/> to a new list.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings SetExcludedTypeNames(this NSwagWebApiToSwaggerSettings toolSettings, IEnumerable<string> excludedTypeNames)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludedTypeNamesInternal = excludedTypeNames.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagWebApiToSwaggerSettings.ExcludedTypeNames"/>.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings AddExcludedTypeNames(this NSwagWebApiToSwaggerSettings toolSettings, params string[] excludedTypeNames)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludedTypeNamesInternal.AddRange(excludedTypeNames);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagWebApiToSwaggerSettings.ExcludedTypeNames"/>.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings AddExcludedTypeNames(this NSwagWebApiToSwaggerSettings toolSettings, IEnumerable<string> excludedTypeNames)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludedTypeNamesInternal.AddRange(excludedTypeNames);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="NSwagWebApiToSwaggerSettings.ExcludedTypeNames"/>.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ClearExcludedTypeNames(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludedTypeNamesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagWebApiToSwaggerSettings.ExcludedTypeNames"/>.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings RemoveExcludedTypeNames(this NSwagWebApiToSwaggerSettings toolSettings, params string[] excludedTypeNames)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(excludedTypeNames);
+            toolSettings.ExcludedTypeNamesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagWebApiToSwaggerSettings.ExcludedTypeNames"/>.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings RemoveExcludedTypeNames(this NSwagWebApiToSwaggerSettings toolSettings, IEnumerable<string> excludedTypeNames)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(excludedTypeNames);
+            toolSettings.ExcludedTypeNamesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion
@@ -2467,6 +2665,48 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FlattenInheritanceHierarchy = !toolSettings.FlattenInheritanceHierarchy;
+            return toolSettings;
+        }
+        #endregion
+        #region GenerateAbstractProperties
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.GenerateAbstractProperties"/>.</em></p><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings SetGenerateAbstractProperties(this NSwagWebApiToSwaggerSettings toolSettings, bool? generateAbstractProperties)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateAbstractProperties = generateAbstractProperties;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.GenerateAbstractProperties"/>.</em></p><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ResetGenerateAbstractProperties(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateAbstractProperties = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagWebApiToSwaggerSettings.GenerateAbstractProperties"/>.</em></p><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings EnableGenerateAbstractProperties(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateAbstractProperties = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagWebApiToSwaggerSettings.GenerateAbstractProperties"/>.</em></p><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings DisableGenerateAbstractProperties(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateAbstractProperties = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagWebApiToSwaggerSettings.GenerateAbstractProperties"/>.</em></p><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ToggleGenerateAbstractProperties(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateAbstractProperties = !toolSettings.GenerateAbstractProperties;
             return toolSettings;
         }
         #endregion
@@ -2554,48 +2794,6 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region GenerateAbstractProperties
-        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.GenerateAbstractProperties"/>.</em></p><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings SetGenerateAbstractProperties(this NSwagWebApiToSwaggerSettings toolSettings, bool? generateAbstractProperties)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateAbstractProperties = generateAbstractProperties;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.GenerateAbstractProperties"/>.</em></p><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings ResetGenerateAbstractProperties(this NSwagWebApiToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateAbstractProperties = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagWebApiToSwaggerSettings.GenerateAbstractProperties"/>.</em></p><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings EnableGenerateAbstractProperties(this NSwagWebApiToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateAbstractProperties = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagWebApiToSwaggerSettings.GenerateAbstractProperties"/>.</em></p><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings DisableGenerateAbstractProperties(this NSwagWebApiToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateAbstractProperties = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagWebApiToSwaggerSettings.GenerateAbstractProperties"/>.</em></p><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings ToggleGenerateAbstractProperties(this NSwagWebApiToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateAbstractProperties = !toolSettings.GenerateAbstractProperties;
-            return toolSettings;
-        }
-        #endregion
         #region IgnoreObsoleteProperties
         /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.IgnoreObsoleteProperties"/>.</em></p><p>Ignore properties with the ObsoleteAttribute (default: false).</p></summary>
         [Pure]
@@ -2638,201 +2836,21 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region AllowReferencesWithProperties
-        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
+        #region InfoDescription
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.InfoDescription"/>.</em></p><p>Specify the description of the Swagger specification (ignored when DocumentTemplate is set).</p></summary>
         [Pure]
-        public static NSwagWebApiToSwaggerSettings SetAllowReferencesWithProperties(this NSwagWebApiToSwaggerSettings toolSettings, bool? allowReferencesWithProperties)
+        public static NSwagWebApiToSwaggerSettings SetInfoDescription(this NSwagWebApiToSwaggerSettings toolSettings, string infoDescription)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AllowReferencesWithProperties = allowReferencesWithProperties;
+            toolSettings.InfoDescription = infoDescription;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.InfoDescription"/>.</em></p><p>Specify the description of the Swagger specification (ignored when DocumentTemplate is set).</p></summary>
         [Pure]
-        public static NSwagWebApiToSwaggerSettings ResetAllowReferencesWithProperties(this NSwagWebApiToSwaggerSettings toolSettings)
+        public static NSwagWebApiToSwaggerSettings ResetInfoDescription(this NSwagWebApiToSwaggerSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AllowReferencesWithProperties = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagWebApiToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings EnableAllowReferencesWithProperties(this NSwagWebApiToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.AllowReferencesWithProperties = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagWebApiToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings DisableAllowReferencesWithProperties(this NSwagWebApiToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.AllowReferencesWithProperties = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagWebApiToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings ToggleAllowReferencesWithProperties(this NSwagWebApiToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.AllowReferencesWithProperties = !toolSettings.AllowReferencesWithProperties;
-            return toolSettings;
-        }
-        #endregion
-        #region ExcludedTypeNames
-        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.ExcludedTypeNames"/> to a new list.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings SetExcludedTypeNames(this NSwagWebApiToSwaggerSettings toolSettings, params string[] excludedTypeNames)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludedTypeNamesInternal = excludedTypeNames.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.ExcludedTypeNames"/> to a new list.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings SetExcludedTypeNames(this NSwagWebApiToSwaggerSettings toolSettings, IEnumerable<string> excludedTypeNames)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludedTypeNamesInternal = excludedTypeNames.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagWebApiToSwaggerSettings.ExcludedTypeNames"/>.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings AddExcludedTypeNames(this NSwagWebApiToSwaggerSettings toolSettings, params string[] excludedTypeNames)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludedTypeNamesInternal.AddRange(excludedTypeNames);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagWebApiToSwaggerSettings.ExcludedTypeNames"/>.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings AddExcludedTypeNames(this NSwagWebApiToSwaggerSettings toolSettings, IEnumerable<string> excludedTypeNames)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludedTypeNamesInternal.AddRange(excludedTypeNames);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="NSwagWebApiToSwaggerSettings.ExcludedTypeNames"/>.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings ClearExcludedTypeNames(this NSwagWebApiToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludedTypeNamesInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagWebApiToSwaggerSettings.ExcludedTypeNames"/>.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings RemoveExcludedTypeNames(this NSwagWebApiToSwaggerSettings toolSettings, params string[] excludedTypeNames)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(excludedTypeNames);
-            toolSettings.ExcludedTypeNamesInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagWebApiToSwaggerSettings.ExcludedTypeNames"/>.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings RemoveExcludedTypeNames(this NSwagWebApiToSwaggerSettings toolSettings, IEnumerable<string> excludedTypeNames)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(excludedTypeNames);
-            toolSettings.ExcludedTypeNamesInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        #endregion
-        #region ServiceHost
-        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.ServiceHost"/>.</em></p><p>Overrides the service host of the web service (optional, use '.' to remove the hostname).</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings SetServiceHost(this NSwagWebApiToSwaggerSettings toolSettings, string serviceHost)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServiceHost = serviceHost;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.ServiceHost"/>.</em></p><p>Overrides the service host of the web service (optional, use '.' to remove the hostname).</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings ResetServiceHost(this NSwagWebApiToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServiceHost = null;
-            return toolSettings;
-        }
-        #endregion
-        #region ServiceBasePath
-        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.ServiceBasePath"/>.</em></p><p>The basePath of the Swagger specification (optional).</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings SetServiceBasePath(this NSwagWebApiToSwaggerSettings toolSettings, string serviceBasePath)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServiceBasePath = serviceBasePath;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.ServiceBasePath"/>.</em></p><p>The basePath of the Swagger specification (optional).</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings ResetServiceBasePath(this NSwagWebApiToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServiceBasePath = null;
-            return toolSettings;
-        }
-        #endregion
-        #region ServiceSchemes
-        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.ServiceSchemes"/> to a new list.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings SetServiceSchemes(this NSwagWebApiToSwaggerSettings toolSettings, params string[] serviceSchemes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServiceSchemesInternal = serviceSchemes.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.ServiceSchemes"/> to a new list.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings SetServiceSchemes(this NSwagWebApiToSwaggerSettings toolSettings, IEnumerable<string> serviceSchemes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServiceSchemesInternal = serviceSchemes.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagWebApiToSwaggerSettings.ServiceSchemes"/>.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings AddServiceSchemes(this NSwagWebApiToSwaggerSettings toolSettings, params string[] serviceSchemes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServiceSchemesInternal.AddRange(serviceSchemes);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagWebApiToSwaggerSettings.ServiceSchemes"/>.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings AddServiceSchemes(this NSwagWebApiToSwaggerSettings toolSettings, IEnumerable<string> serviceSchemes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServiceSchemesInternal.AddRange(serviceSchemes);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="NSwagWebApiToSwaggerSettings.ServiceSchemes"/>.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings ClearServiceSchemes(this NSwagWebApiToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServiceSchemesInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagWebApiToSwaggerSettings.ServiceSchemes"/>.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings RemoveServiceSchemes(this NSwagWebApiToSwaggerSettings toolSettings, params string[] serviceSchemes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(serviceSchemes);
-            toolSettings.ServiceSchemesInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagWebApiToSwaggerSettings.ServiceSchemes"/>.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings RemoveServiceSchemes(this NSwagWebApiToSwaggerSettings toolSettings, IEnumerable<string> serviceSchemes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(serviceSchemes);
-            toolSettings.ServiceSchemesInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.InfoDescription = null;
             return toolSettings;
         }
         #endregion
@@ -2854,24 +2872,6 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region InfoDescription
-        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.InfoDescription"/>.</em></p><p>Specify the description of the Swagger specification (ignored when DocumentTemplate is set).</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings SetInfoDescription(this NSwagWebApiToSwaggerSettings toolSettings, string infoDescription)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.InfoDescription = infoDescription;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.InfoDescription"/>.</em></p><p>Specify the description of the Swagger specification (ignored when DocumentTemplate is set).</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings ResetInfoDescription(this NSwagWebApiToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.InfoDescription = null;
-            return toolSettings;
-        }
-        #endregion
         #region InfoVersion
         /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.InfoVersion"/>.</em></p><p>Specify the version of the Swagger specification (default: 1.0.0, ignored when DocumentTemplate is set).</p></summary>
         [Pure]
@@ -2887,84 +2887,6 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InfoVersion = null;
-            return toolSettings;
-        }
-        #endregion
-        #region DocumentTemplate
-        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.DocumentTemplate"/>.</em></p><p>Specifies the Swagger document template (may be a path or JSON, default: none).</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings SetDocumentTemplate(this NSwagWebApiToSwaggerSettings toolSettings, string documentTemplate)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DocumentTemplate = documentTemplate;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.DocumentTemplate"/>.</em></p><p>Specifies the Swagger document template (may be a path or JSON, default: none).</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings ResetDocumentTemplate(this NSwagWebApiToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DocumentTemplate = null;
-            return toolSettings;
-        }
-        #endregion
-        #region DocumentProcessors
-        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.DocumentProcessors"/> to a new list.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings SetDocumentProcessors(this NSwagWebApiToSwaggerSettings toolSettings, params string[] documentProcessors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DocumentProcessorsInternal = documentProcessors.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.DocumentProcessors"/> to a new list.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings SetDocumentProcessors(this NSwagWebApiToSwaggerSettings toolSettings, IEnumerable<string> documentProcessors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DocumentProcessorsInternal = documentProcessors.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagWebApiToSwaggerSettings.DocumentProcessors"/>.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings AddDocumentProcessors(this NSwagWebApiToSwaggerSettings toolSettings, params string[] documentProcessors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DocumentProcessorsInternal.AddRange(documentProcessors);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagWebApiToSwaggerSettings.DocumentProcessors"/>.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings AddDocumentProcessors(this NSwagWebApiToSwaggerSettings toolSettings, IEnumerable<string> documentProcessors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DocumentProcessorsInternal.AddRange(documentProcessors);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="NSwagWebApiToSwaggerSettings.DocumentProcessors"/>.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings ClearDocumentProcessors(this NSwagWebApiToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DocumentProcessorsInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagWebApiToSwaggerSettings.DocumentProcessors"/>.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings RemoveDocumentProcessors(this NSwagWebApiToSwaggerSettings toolSettings, params string[] documentProcessors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(documentProcessors);
-            toolSettings.DocumentProcessorsInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagWebApiToSwaggerSettings.DocumentProcessors"/>.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings RemoveDocumentProcessors(this NSwagWebApiToSwaggerSettings toolSettings, IEnumerable<string> documentProcessors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(documentProcessors);
-            toolSettings.DocumentProcessorsInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion
@@ -3028,24 +2950,6 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region TypeNameGenerator
-        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.TypeNameGenerator"/>.</em></p><p>The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings SetTypeNameGenerator(this NSwagWebApiToSwaggerSettings toolSettings, string typeNameGenerator)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TypeNameGenerator = typeNameGenerator;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.TypeNameGenerator"/>.</em></p><p>The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagWebApiToSwaggerSettings ResetTypeNameGenerator(this NSwagWebApiToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TypeNameGenerator = null;
-            return toolSettings;
-        }
-        #endregion
         #region SchemaNameGenerator
         /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.SchemaNameGenerator"/>.</em></p><p>The custom ISchemaNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         [Pure]
@@ -3064,21 +2968,117 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region ContractResolver
-        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.ContractResolver"/>.</em></p><p>The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        #region ServiceBasePath
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.ServiceBasePath"/>.</em></p><p>The basePath of the Swagger specification (optional).</p></summary>
         [Pure]
-        public static NSwagWebApiToSwaggerSettings SetContractResolver(this NSwagWebApiToSwaggerSettings toolSettings, string contractResolver)
+        public static NSwagWebApiToSwaggerSettings SetServiceBasePath(this NSwagWebApiToSwaggerSettings toolSettings, string serviceBasePath)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ContractResolver = contractResolver;
+            toolSettings.ServiceBasePath = serviceBasePath;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.ContractResolver"/>.</em></p><p>The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.ServiceBasePath"/>.</em></p><p>The basePath of the Swagger specification (optional).</p></summary>
         [Pure]
-        public static NSwagWebApiToSwaggerSettings ResetContractResolver(this NSwagWebApiToSwaggerSettings toolSettings)
+        public static NSwagWebApiToSwaggerSettings ResetServiceBasePath(this NSwagWebApiToSwaggerSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ContractResolver = null;
+            toolSettings.ServiceBasePath = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ServiceHost
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.ServiceHost"/>.</em></p><p>Overrides the service host of the web service (optional, use '.' to remove the hostname).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings SetServiceHost(this NSwagWebApiToSwaggerSettings toolSettings, string serviceHost)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ServiceHost = serviceHost;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.ServiceHost"/>.</em></p><p>Overrides the service host of the web service (optional, use '.' to remove the hostname).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ResetServiceHost(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ServiceHost = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ServiceSchemes
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.ServiceSchemes"/> to a new list.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings SetServiceSchemes(this NSwagWebApiToSwaggerSettings toolSettings, params string[] serviceSchemes)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ServiceSchemesInternal = serviceSchemes.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.ServiceSchemes"/> to a new list.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings SetServiceSchemes(this NSwagWebApiToSwaggerSettings toolSettings, IEnumerable<string> serviceSchemes)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ServiceSchemesInternal = serviceSchemes.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagWebApiToSwaggerSettings.ServiceSchemes"/>.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings AddServiceSchemes(this NSwagWebApiToSwaggerSettings toolSettings, params string[] serviceSchemes)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ServiceSchemesInternal.AddRange(serviceSchemes);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagWebApiToSwaggerSettings.ServiceSchemes"/>.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings AddServiceSchemes(this NSwagWebApiToSwaggerSettings toolSettings, IEnumerable<string> serviceSchemes)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ServiceSchemesInternal.AddRange(serviceSchemes);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="NSwagWebApiToSwaggerSettings.ServiceSchemes"/>.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ClearServiceSchemes(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ServiceSchemesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagWebApiToSwaggerSettings.ServiceSchemes"/>.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings RemoveServiceSchemes(this NSwagWebApiToSwaggerSettings toolSettings, params string[] serviceSchemes)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(serviceSchemes);
+            toolSettings.ServiceSchemesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagWebApiToSwaggerSettings.ServiceSchemes"/>.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings RemoveServiceSchemes(this NSwagWebApiToSwaggerSettings toolSettings, IEnumerable<string> serviceSchemes)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(serviceSchemes);
+            toolSettings.ServiceSchemesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region TypeNameGenerator
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.TypeNameGenerator"/>.</em></p><p>The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings SetTypeNameGenerator(this NSwagWebApiToSwaggerSettings toolSettings, string typeNameGenerator)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TypeNameGenerator = typeNameGenerator;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.TypeNameGenerator"/>.</em></p><p>The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ResetTypeNameGenerator(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TypeNameGenerator = null;
             return toolSettings;
         }
         #endregion
@@ -3264,42 +3264,6 @@ namespace Nuke.NSwag
     [ExcludeFromCodeCoverage]
     public static partial class NSwagAspNetCoreToSwaggerSettingsExtensions
     {
-        #region Project
-        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.Project"/>.</em></p><p>The project to use.</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings SetProject(this NSwagAspNetCoreToSwaggerSettings toolSettings, string project)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Project = project;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.Project"/>.</em></p><p>The project to use.</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings ResetProject(this NSwagAspNetCoreToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Project = null;
-            return toolSettings;
-        }
-        #endregion
-        #region MSBuildProjectExtensionsPath
-        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.MSBuildProjectExtensionsPath"/>.</em></p><p>The MSBuild project extensions path. Defaults to "obj".</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings SetMSBuildProjectExtensionsPath(this NSwagAspNetCoreToSwaggerSettings toolSettings, string msbuildProjectExtensionsPath)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.MSBuildProjectExtensionsPath = msbuildProjectExtensionsPath;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.MSBuildProjectExtensionsPath"/>.</em></p><p>The MSBuild project extensions path. Defaults to "obj".</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings ResetMSBuildProjectExtensionsPath(this NSwagAspNetCoreToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.MSBuildProjectExtensionsPath = null;
-            return toolSettings;
-        }
-        #endregion
         #region Configuration
         /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.Configuration"/>.</em></p><p>The configuration to use.</p></summary>
         [Pure]
@@ -3318,39 +3282,21 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region Runtime
-        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.Runtime"/>.</em></p><p>The runtime to use.</p></summary>
+        #region MSBuildProjectExtensionsPath
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.MSBuildProjectExtensionsPath"/>.</em></p><p>The MSBuild project extensions path. Defaults to "obj".</p></summary>
         [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings SetRuntime(this NSwagAspNetCoreToSwaggerSettings toolSettings, string runtime)
+        public static NSwagAspNetCoreToSwaggerSettings SetMSBuildProjectExtensionsPath(this NSwagAspNetCoreToSwaggerSettings toolSettings, string msbuildProjectExtensionsPath)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Runtime = runtime;
+            toolSettings.MSBuildProjectExtensionsPath = msbuildProjectExtensionsPath;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.Runtime"/>.</em></p><p>The runtime to use.</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.MSBuildProjectExtensionsPath"/>.</em></p><p>The MSBuild project extensions path. Defaults to "obj".</p></summary>
         [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings ResetRuntime(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        public static NSwagAspNetCoreToSwaggerSettings ResetMSBuildProjectExtensionsPath(this NSwagAspNetCoreToSwaggerSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Runtime = null;
-            return toolSettings;
-        }
-        #endregion
-        #region TargetFramework
-        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.TargetFramework"/>.</em></p><p>The target framework to use.</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings SetTargetFramework(this NSwagAspNetCoreToSwaggerSettings toolSettings, string targetFramework)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TargetFramework = targetFramework;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.TargetFramework"/>.</em></p><p>The target framework to use.</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings ResetTargetFramework(this NSwagAspNetCoreToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TargetFramework = null;
+            toolSettings.MSBuildProjectExtensionsPath = null;
             return toolSettings;
         }
         #endregion
@@ -3396,6 +3342,60 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
+        #region Project
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.Project"/>.</em></p><p>The project to use.</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings SetProject(this NSwagAspNetCoreToSwaggerSettings toolSettings, string project)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Project = project;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.Project"/>.</em></p><p>The project to use.</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ResetProject(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Project = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Runtime
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.Runtime"/>.</em></p><p>The runtime to use.</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings SetRuntime(this NSwagAspNetCoreToSwaggerSettings toolSettings, string runtime)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Runtime = runtime;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.Runtime"/>.</em></p><p>The runtime to use.</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ResetRuntime(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Runtime = null;
+            return toolSettings;
+        }
+        #endregion
+        #region TargetFramework
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.TargetFramework"/>.</em></p><p>The target framework to use.</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings SetTargetFramework(this NSwagAspNetCoreToSwaggerSettings toolSettings, string targetFramework)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetFramework = targetFramework;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.TargetFramework"/>.</em></p><p>The target framework to use.</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ResetTargetFramework(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TargetFramework = null;
+            return toolSettings;
+        }
+        #endregion
         #region Verbose
         /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.Verbose"/>.</em></p><p>Print verbose output.</p></summary>
         [Pure]
@@ -3438,6 +3438,84 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
+        #region AllowReferencesWithProperties
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings SetAllowReferencesWithProperties(this NSwagAspNetCoreToSwaggerSettings toolSettings, bool? allowReferencesWithProperties)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowReferencesWithProperties = allowReferencesWithProperties;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ResetAllowReferencesWithProperties(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowReferencesWithProperties = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagAspNetCoreToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings EnableAllowReferencesWithProperties(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowReferencesWithProperties = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagAspNetCoreToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings DisableAllowReferencesWithProperties(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowReferencesWithProperties = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagAspNetCoreToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ToggleAllowReferencesWithProperties(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowReferencesWithProperties = !toolSettings.AllowReferencesWithProperties;
+            return toolSettings;
+        }
+        #endregion
+        #region ContractResolver
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.ContractResolver"/>.</em></p><p>The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings SetContractResolver(this NSwagAspNetCoreToSwaggerSettings toolSettings, string contractResolver)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ContractResolver = contractResolver;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.ContractResolver"/>.</em></p><p>The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ResetContractResolver(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ContractResolver = null;
+            return toolSettings;
+        }
+        #endregion
+        #region DefaultEnumHandling
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.DefaultEnumHandling"/>.</em></p><p>The default enum handling ('String' or 'Integer'), default: Integer.</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings SetDefaultEnumHandling(this NSwagAspNetCoreToSwaggerSettings toolSettings, EnumHandling defaultEnumHandling)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DefaultEnumHandling = defaultEnumHandling;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.DefaultEnumHandling"/>.</em></p><p>The default enum handling ('String' or 'Integer'), default: Integer.</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ResetDefaultEnumHandling(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DefaultEnumHandling = null;
+            return toolSettings;
+        }
+        #endregion
         #region DefaultPropertyNameHandling
         /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.DefaultPropertyNameHandling"/>.</em></p><p>The default property name handling ('Default' or 'CamelCase').</p></summary>
         [Pure]
@@ -3474,21 +3552,141 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region DefaultEnumHandling
-        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.DefaultEnumHandling"/>.</em></p><p>The default enum handling ('String' or 'Integer'), default: Integer.</p></summary>
+        #region DocumentProcessors
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.DocumentProcessors"/> to a new list.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings SetDefaultEnumHandling(this NSwagAspNetCoreToSwaggerSettings toolSettings, EnumHandling defaultEnumHandling)
+        public static NSwagAspNetCoreToSwaggerSettings SetDocumentProcessors(this NSwagAspNetCoreToSwaggerSettings toolSettings, params string[] documentProcessors)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DefaultEnumHandling = defaultEnumHandling;
+            toolSettings.DocumentProcessorsInternal = documentProcessors.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.DefaultEnumHandling"/>.</em></p><p>The default enum handling ('String' or 'Integer'), default: Integer.</p></summary>
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.DocumentProcessors"/> to a new list.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings ResetDefaultEnumHandling(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        public static NSwagAspNetCoreToSwaggerSettings SetDocumentProcessors(this NSwagAspNetCoreToSwaggerSettings toolSettings, IEnumerable<string> documentProcessors)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DefaultEnumHandling = null;
+            toolSettings.DocumentProcessorsInternal = documentProcessors.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagAspNetCoreToSwaggerSettings.DocumentProcessors"/>.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings AddDocumentProcessors(this NSwagAspNetCoreToSwaggerSettings toolSettings, params string[] documentProcessors)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DocumentProcessorsInternal.AddRange(documentProcessors);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagAspNetCoreToSwaggerSettings.DocumentProcessors"/>.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings AddDocumentProcessors(this NSwagAspNetCoreToSwaggerSettings toolSettings, IEnumerable<string> documentProcessors)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DocumentProcessorsInternal.AddRange(documentProcessors);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="NSwagAspNetCoreToSwaggerSettings.DocumentProcessors"/>.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ClearDocumentProcessors(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DocumentProcessorsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagAspNetCoreToSwaggerSettings.DocumentProcessors"/>.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings RemoveDocumentProcessors(this NSwagAspNetCoreToSwaggerSettings toolSettings, params string[] documentProcessors)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(documentProcessors);
+            toolSettings.DocumentProcessorsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagAspNetCoreToSwaggerSettings.DocumentProcessors"/>.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings RemoveDocumentProcessors(this NSwagAspNetCoreToSwaggerSettings toolSettings, IEnumerable<string> documentProcessors)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(documentProcessors);
+            toolSettings.DocumentProcessorsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region DocumentTemplate
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.DocumentTemplate"/>.</em></p><p>Specifies the Swagger document template (may be a path or JSON, default: none).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings SetDocumentTemplate(this NSwagAspNetCoreToSwaggerSettings toolSettings, string documentTemplate)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DocumentTemplate = documentTemplate;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.DocumentTemplate"/>.</em></p><p>Specifies the Swagger document template (may be a path or JSON, default: none).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ResetDocumentTemplate(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DocumentTemplate = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ExcludedTypeNames
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.ExcludedTypeNames"/> to a new list.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings SetExcludedTypeNames(this NSwagAspNetCoreToSwaggerSettings toolSettings, params string[] excludedTypeNames)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludedTypeNamesInternal = excludedTypeNames.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.ExcludedTypeNames"/> to a new list.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings SetExcludedTypeNames(this NSwagAspNetCoreToSwaggerSettings toolSettings, IEnumerable<string> excludedTypeNames)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludedTypeNamesInternal = excludedTypeNames.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagAspNetCoreToSwaggerSettings.ExcludedTypeNames"/>.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings AddExcludedTypeNames(this NSwagAspNetCoreToSwaggerSettings toolSettings, params string[] excludedTypeNames)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludedTypeNamesInternal.AddRange(excludedTypeNames);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagAspNetCoreToSwaggerSettings.ExcludedTypeNames"/>.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings AddExcludedTypeNames(this NSwagAspNetCoreToSwaggerSettings toolSettings, IEnumerable<string> excludedTypeNames)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludedTypeNamesInternal.AddRange(excludedTypeNames);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="NSwagAspNetCoreToSwaggerSettings.ExcludedTypeNames"/>.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ClearExcludedTypeNames(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludedTypeNamesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagAspNetCoreToSwaggerSettings.ExcludedTypeNames"/>.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings RemoveExcludedTypeNames(this NSwagAspNetCoreToSwaggerSettings toolSettings, params string[] excludedTypeNames)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(excludedTypeNames);
+            toolSettings.ExcludedTypeNamesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagAspNetCoreToSwaggerSettings.ExcludedTypeNames"/>.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings RemoveExcludedTypeNames(this NSwagAspNetCoreToSwaggerSettings toolSettings, IEnumerable<string> excludedTypeNames)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(excludedTypeNames);
+            toolSettings.ExcludedTypeNamesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion
@@ -3531,6 +3729,48 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FlattenInheritanceHierarchy = !toolSettings.FlattenInheritanceHierarchy;
+            return toolSettings;
+        }
+        #endregion
+        #region GenerateAbstractProperties
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.GenerateAbstractProperties"/>.</em></p><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings SetGenerateAbstractProperties(this NSwagAspNetCoreToSwaggerSettings toolSettings, bool? generateAbstractProperties)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateAbstractProperties = generateAbstractProperties;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.GenerateAbstractProperties"/>.</em></p><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ResetGenerateAbstractProperties(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateAbstractProperties = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagAspNetCoreToSwaggerSettings.GenerateAbstractProperties"/>.</em></p><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings EnableGenerateAbstractProperties(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateAbstractProperties = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagAspNetCoreToSwaggerSettings.GenerateAbstractProperties"/>.</em></p><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings DisableGenerateAbstractProperties(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateAbstractProperties = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagAspNetCoreToSwaggerSettings.GenerateAbstractProperties"/>.</em></p><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ToggleGenerateAbstractProperties(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateAbstractProperties = !toolSettings.GenerateAbstractProperties;
             return toolSettings;
         }
         #endregion
@@ -3618,48 +3858,6 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region GenerateAbstractProperties
-        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.GenerateAbstractProperties"/>.</em></p><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings SetGenerateAbstractProperties(this NSwagAspNetCoreToSwaggerSettings toolSettings, bool? generateAbstractProperties)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateAbstractProperties = generateAbstractProperties;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.GenerateAbstractProperties"/>.</em></p><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings ResetGenerateAbstractProperties(this NSwagAspNetCoreToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateAbstractProperties = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagAspNetCoreToSwaggerSettings.GenerateAbstractProperties"/>.</em></p><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings EnableGenerateAbstractProperties(this NSwagAspNetCoreToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateAbstractProperties = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagAspNetCoreToSwaggerSettings.GenerateAbstractProperties"/>.</em></p><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings DisableGenerateAbstractProperties(this NSwagAspNetCoreToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateAbstractProperties = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagAspNetCoreToSwaggerSettings.GenerateAbstractProperties"/>.</em></p><p>Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false).</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings ToggleGenerateAbstractProperties(this NSwagAspNetCoreToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateAbstractProperties = !toolSettings.GenerateAbstractProperties;
-            return toolSettings;
-        }
-        #endregion
         #region IgnoreObsoleteProperties
         /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.IgnoreObsoleteProperties"/>.</em></p><p>Ignore properties with the ObsoleteAttribute (default: false).</p></summary>
         [Pure]
@@ -3702,201 +3900,21 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region AllowReferencesWithProperties
-        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
+        #region InfoDescription
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.InfoDescription"/>.</em></p><p>Specify the description of the Swagger specification (ignored when DocumentTemplate is set).</p></summary>
         [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings SetAllowReferencesWithProperties(this NSwagAspNetCoreToSwaggerSettings toolSettings, bool? allowReferencesWithProperties)
+        public static NSwagAspNetCoreToSwaggerSettings SetInfoDescription(this NSwagAspNetCoreToSwaggerSettings toolSettings, string infoDescription)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AllowReferencesWithProperties = allowReferencesWithProperties;
+            toolSettings.InfoDescription = infoDescription;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.InfoDescription"/>.</em></p><p>Specify the description of the Swagger specification (ignored when DocumentTemplate is set).</p></summary>
         [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings ResetAllowReferencesWithProperties(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        public static NSwagAspNetCoreToSwaggerSettings ResetInfoDescription(this NSwagAspNetCoreToSwaggerSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AllowReferencesWithProperties = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagAspNetCoreToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings EnableAllowReferencesWithProperties(this NSwagAspNetCoreToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.AllowReferencesWithProperties = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagAspNetCoreToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings DisableAllowReferencesWithProperties(this NSwagAspNetCoreToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.AllowReferencesWithProperties = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagAspNetCoreToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings ToggleAllowReferencesWithProperties(this NSwagAspNetCoreToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.AllowReferencesWithProperties = !toolSettings.AllowReferencesWithProperties;
-            return toolSettings;
-        }
-        #endregion
-        #region ExcludedTypeNames
-        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.ExcludedTypeNames"/> to a new list.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings SetExcludedTypeNames(this NSwagAspNetCoreToSwaggerSettings toolSettings, params string[] excludedTypeNames)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludedTypeNamesInternal = excludedTypeNames.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.ExcludedTypeNames"/> to a new list.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings SetExcludedTypeNames(this NSwagAspNetCoreToSwaggerSettings toolSettings, IEnumerable<string> excludedTypeNames)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludedTypeNamesInternal = excludedTypeNames.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagAspNetCoreToSwaggerSettings.ExcludedTypeNames"/>.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings AddExcludedTypeNames(this NSwagAspNetCoreToSwaggerSettings toolSettings, params string[] excludedTypeNames)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludedTypeNamesInternal.AddRange(excludedTypeNames);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagAspNetCoreToSwaggerSettings.ExcludedTypeNames"/>.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings AddExcludedTypeNames(this NSwagAspNetCoreToSwaggerSettings toolSettings, IEnumerable<string> excludedTypeNames)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludedTypeNamesInternal.AddRange(excludedTypeNames);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="NSwagAspNetCoreToSwaggerSettings.ExcludedTypeNames"/>.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings ClearExcludedTypeNames(this NSwagAspNetCoreToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludedTypeNamesInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagAspNetCoreToSwaggerSettings.ExcludedTypeNames"/>.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings RemoveExcludedTypeNames(this NSwagAspNetCoreToSwaggerSettings toolSettings, params string[] excludedTypeNames)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(excludedTypeNames);
-            toolSettings.ExcludedTypeNamesInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagAspNetCoreToSwaggerSettings.ExcludedTypeNames"/>.</em></p><p>The excluded type names (same as JsonSchemaIgnoreAttribute).</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings RemoveExcludedTypeNames(this NSwagAspNetCoreToSwaggerSettings toolSettings, IEnumerable<string> excludedTypeNames)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(excludedTypeNames);
-            toolSettings.ExcludedTypeNamesInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        #endregion
-        #region ServiceHost
-        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.ServiceHost"/>.</em></p><p>Overrides the service host of the web service (optional, use '.' to remove the hostname).</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings SetServiceHost(this NSwagAspNetCoreToSwaggerSettings toolSettings, string serviceHost)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServiceHost = serviceHost;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.ServiceHost"/>.</em></p><p>Overrides the service host of the web service (optional, use '.' to remove the hostname).</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings ResetServiceHost(this NSwagAspNetCoreToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServiceHost = null;
-            return toolSettings;
-        }
-        #endregion
-        #region ServiceBasePath
-        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.ServiceBasePath"/>.</em></p><p>The basePath of the Swagger specification (optional).</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings SetServiceBasePath(this NSwagAspNetCoreToSwaggerSettings toolSettings, string serviceBasePath)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServiceBasePath = serviceBasePath;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.ServiceBasePath"/>.</em></p><p>The basePath of the Swagger specification (optional).</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings ResetServiceBasePath(this NSwagAspNetCoreToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServiceBasePath = null;
-            return toolSettings;
-        }
-        #endregion
-        #region ServiceSchemes
-        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.ServiceSchemes"/> to a new list.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings SetServiceSchemes(this NSwagAspNetCoreToSwaggerSettings toolSettings, params string[] serviceSchemes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServiceSchemesInternal = serviceSchemes.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.ServiceSchemes"/> to a new list.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings SetServiceSchemes(this NSwagAspNetCoreToSwaggerSettings toolSettings, IEnumerable<string> serviceSchemes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServiceSchemesInternal = serviceSchemes.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagAspNetCoreToSwaggerSettings.ServiceSchemes"/>.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings AddServiceSchemes(this NSwagAspNetCoreToSwaggerSettings toolSettings, params string[] serviceSchemes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServiceSchemesInternal.AddRange(serviceSchemes);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagAspNetCoreToSwaggerSettings.ServiceSchemes"/>.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings AddServiceSchemes(this NSwagAspNetCoreToSwaggerSettings toolSettings, IEnumerable<string> serviceSchemes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServiceSchemesInternal.AddRange(serviceSchemes);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="NSwagAspNetCoreToSwaggerSettings.ServiceSchemes"/>.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings ClearServiceSchemes(this NSwagAspNetCoreToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ServiceSchemesInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagAspNetCoreToSwaggerSettings.ServiceSchemes"/>.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings RemoveServiceSchemes(this NSwagAspNetCoreToSwaggerSettings toolSettings, params string[] serviceSchemes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(serviceSchemes);
-            toolSettings.ServiceSchemesInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagAspNetCoreToSwaggerSettings.ServiceSchemes"/>.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings RemoveServiceSchemes(this NSwagAspNetCoreToSwaggerSettings toolSettings, IEnumerable<string> serviceSchemes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(serviceSchemes);
-            toolSettings.ServiceSchemesInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.InfoDescription = null;
             return toolSettings;
         }
         #endregion
@@ -3918,24 +3936,6 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region InfoDescription
-        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.InfoDescription"/>.</em></p><p>Specify the description of the Swagger specification (ignored when DocumentTemplate is set).</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings SetInfoDescription(this NSwagAspNetCoreToSwaggerSettings toolSettings, string infoDescription)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.InfoDescription = infoDescription;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.InfoDescription"/>.</em></p><p>Specify the description of the Swagger specification (ignored when DocumentTemplate is set).</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings ResetInfoDescription(this NSwagAspNetCoreToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.InfoDescription = null;
-            return toolSettings;
-        }
-        #endregion
         #region InfoVersion
         /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.InfoVersion"/>.</em></p><p>Specify the version of the Swagger specification (default: 1.0.0, ignored when DocumentTemplate is set).</p></summary>
         [Pure]
@@ -3951,84 +3951,6 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.InfoVersion = null;
-            return toolSettings;
-        }
-        #endregion
-        #region DocumentTemplate
-        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.DocumentTemplate"/>.</em></p><p>Specifies the Swagger document template (may be a path or JSON, default: none).</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings SetDocumentTemplate(this NSwagAspNetCoreToSwaggerSettings toolSettings, string documentTemplate)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DocumentTemplate = documentTemplate;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.DocumentTemplate"/>.</em></p><p>Specifies the Swagger document template (may be a path or JSON, default: none).</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings ResetDocumentTemplate(this NSwagAspNetCoreToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DocumentTemplate = null;
-            return toolSettings;
-        }
-        #endregion
-        #region DocumentProcessors
-        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.DocumentProcessors"/> to a new list.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings SetDocumentProcessors(this NSwagAspNetCoreToSwaggerSettings toolSettings, params string[] documentProcessors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DocumentProcessorsInternal = documentProcessors.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.DocumentProcessors"/> to a new list.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings SetDocumentProcessors(this NSwagAspNetCoreToSwaggerSettings toolSettings, IEnumerable<string> documentProcessors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DocumentProcessorsInternal = documentProcessors.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagAspNetCoreToSwaggerSettings.DocumentProcessors"/>.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings AddDocumentProcessors(this NSwagAspNetCoreToSwaggerSettings toolSettings, params string[] documentProcessors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DocumentProcessorsInternal.AddRange(documentProcessors);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagAspNetCoreToSwaggerSettings.DocumentProcessors"/>.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings AddDocumentProcessors(this NSwagAspNetCoreToSwaggerSettings toolSettings, IEnumerable<string> documentProcessors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DocumentProcessorsInternal.AddRange(documentProcessors);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="NSwagAspNetCoreToSwaggerSettings.DocumentProcessors"/>.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings ClearDocumentProcessors(this NSwagAspNetCoreToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DocumentProcessorsInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagAspNetCoreToSwaggerSettings.DocumentProcessors"/>.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings RemoveDocumentProcessors(this NSwagAspNetCoreToSwaggerSettings toolSettings, params string[] documentProcessors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(documentProcessors);
-            toolSettings.DocumentProcessorsInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagAspNetCoreToSwaggerSettings.DocumentProcessors"/>.</em></p><p>The document processor type names in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings RemoveDocumentProcessors(this NSwagAspNetCoreToSwaggerSettings toolSettings, IEnumerable<string> documentProcessors)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(documentProcessors);
-            toolSettings.DocumentProcessorsInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion
@@ -4092,24 +4014,6 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region TypeNameGenerator
-        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.TypeNameGenerator"/>.</em></p><p>The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings SetTypeNameGenerator(this NSwagAspNetCoreToSwaggerSettings toolSettings, string typeNameGenerator)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TypeNameGenerator = typeNameGenerator;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.TypeNameGenerator"/>.</em></p><p>The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings ResetTypeNameGenerator(this NSwagAspNetCoreToSwaggerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TypeNameGenerator = null;
-            return toolSettings;
-        }
-        #endregion
         #region SchemaNameGenerator
         /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.SchemaNameGenerator"/>.</em></p><p>The custom ISchemaNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         [Pure]
@@ -4128,21 +4032,117 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region ContractResolver
-        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.ContractResolver"/>.</em></p><p>The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        #region ServiceBasePath
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.ServiceBasePath"/>.</em></p><p>The basePath of the Swagger specification (optional).</p></summary>
         [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings SetContractResolver(this NSwagAspNetCoreToSwaggerSettings toolSettings, string contractResolver)
+        public static NSwagAspNetCoreToSwaggerSettings SetServiceBasePath(this NSwagAspNetCoreToSwaggerSettings toolSettings, string serviceBasePath)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ContractResolver = contractResolver;
+            toolSettings.ServiceBasePath = serviceBasePath;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.ContractResolver"/>.</em></p><p>The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.ServiceBasePath"/>.</em></p><p>The basePath of the Swagger specification (optional).</p></summary>
         [Pure]
-        public static NSwagAspNetCoreToSwaggerSettings ResetContractResolver(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        public static NSwagAspNetCoreToSwaggerSettings ResetServiceBasePath(this NSwagAspNetCoreToSwaggerSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ContractResolver = null;
+            toolSettings.ServiceBasePath = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ServiceHost
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.ServiceHost"/>.</em></p><p>Overrides the service host of the web service (optional, use '.' to remove the hostname).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings SetServiceHost(this NSwagAspNetCoreToSwaggerSettings toolSettings, string serviceHost)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ServiceHost = serviceHost;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.ServiceHost"/>.</em></p><p>Overrides the service host of the web service (optional, use '.' to remove the hostname).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ResetServiceHost(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ServiceHost = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ServiceSchemes
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.ServiceSchemes"/> to a new list.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings SetServiceSchemes(this NSwagAspNetCoreToSwaggerSettings toolSettings, params string[] serviceSchemes)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ServiceSchemesInternal = serviceSchemes.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.ServiceSchemes"/> to a new list.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings SetServiceSchemes(this NSwagAspNetCoreToSwaggerSettings toolSettings, IEnumerable<string> serviceSchemes)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ServiceSchemesInternal = serviceSchemes.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagAspNetCoreToSwaggerSettings.ServiceSchemes"/>.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings AddServiceSchemes(this NSwagAspNetCoreToSwaggerSettings toolSettings, params string[] serviceSchemes)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ServiceSchemesInternal.AddRange(serviceSchemes);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagAspNetCoreToSwaggerSettings.ServiceSchemes"/>.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings AddServiceSchemes(this NSwagAspNetCoreToSwaggerSettings toolSettings, IEnumerable<string> serviceSchemes)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ServiceSchemesInternal.AddRange(serviceSchemes);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="NSwagAspNetCoreToSwaggerSettings.ServiceSchemes"/>.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ClearServiceSchemes(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ServiceSchemesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagAspNetCoreToSwaggerSettings.ServiceSchemes"/>.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings RemoveServiceSchemes(this NSwagAspNetCoreToSwaggerSettings toolSettings, params string[] serviceSchemes)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(serviceSchemes);
+            toolSettings.ServiceSchemesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagAspNetCoreToSwaggerSettings.ServiceSchemes"/>.</em></p><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings RemoveServiceSchemes(this NSwagAspNetCoreToSwaggerSettings toolSettings, IEnumerable<string> serviceSchemes)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(serviceSchemes);
+            toolSettings.ServiceSchemesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region TypeNameGenerator
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.TypeNameGenerator"/>.</em></p><p>The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings SetTypeNameGenerator(this NSwagAspNetCoreToSwaggerSettings toolSettings, string typeNameGenerator)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TypeNameGenerator = typeNameGenerator;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.TypeNameGenerator"/>.</em></p><p>The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ResetTypeNameGenerator(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TypeNameGenerator = null;
             return toolSettings;
         }
         #endregion
@@ -4404,6 +4404,60 @@ namespace Nuke.NSwag
     [ExcludeFromCodeCoverage]
     public static partial class NSwagJsonSchemaToCSharpSettingsExtensions
     {
+        #region ArrayType
+        /// <summary><p><em>Sets <see cref="NSwagJsonSchemaToCSharpSettings.ArrayType"/>.</em></p><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
+        [Pure]
+        public static NSwagJsonSchemaToCSharpSettings SetArrayType(this NSwagJsonSchemaToCSharpSettings toolSettings, string arrayType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ArrayType = arrayType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagJsonSchemaToCSharpSettings.ArrayType"/>.</em></p><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
+        [Pure]
+        public static NSwagJsonSchemaToCSharpSettings ResetArrayType(this NSwagJsonSchemaToCSharpSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ArrayType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region DateTimeType
+        /// <summary><p><em>Sets <see cref="NSwagJsonSchemaToCSharpSettings.DateTimeType"/>.</em></p><p>The date time .NET type (default: 'DateTime').</p></summary>
+        [Pure]
+        public static NSwagJsonSchemaToCSharpSettings SetDateTimeType(this NSwagJsonSchemaToCSharpSettings toolSettings, string dateTimeType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DateTimeType = dateTimeType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagJsonSchemaToCSharpSettings.DateTimeType"/>.</em></p><p>The date time .NET type (default: 'DateTime').</p></summary>
+        [Pure]
+        public static NSwagJsonSchemaToCSharpSettings ResetDateTimeType(this NSwagJsonSchemaToCSharpSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DateTimeType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region DictionaryType
+        /// <summary><p><em>Sets <see cref="NSwagJsonSchemaToCSharpSettings.DictionaryType"/>.</em></p><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
+        [Pure]
+        public static NSwagJsonSchemaToCSharpSettings SetDictionaryType(this NSwagJsonSchemaToCSharpSettings toolSettings, string dictionaryType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DictionaryType = dictionaryType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagJsonSchemaToCSharpSettings.DictionaryType"/>.</em></p><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
+        [Pure]
+        public static NSwagJsonSchemaToCSharpSettings ResetDictionaryType(this NSwagJsonSchemaToCSharpSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DictionaryType = null;
+            return toolSettings;
+        }
+        #endregion
         #region Name
         /// <summary><p><em>Sets <see cref="NSwagJsonSchemaToCSharpSettings.Name"/>.</em></p><p>The class name of the root schema.</p></summary>
         [Pure]
@@ -4479,60 +4533,6 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RequiredPropertiesMustBeDefined = !toolSettings.RequiredPropertiesMustBeDefined;
-            return toolSettings;
-        }
-        #endregion
-        #region DateTimeType
-        /// <summary><p><em>Sets <see cref="NSwagJsonSchemaToCSharpSettings.DateTimeType"/>.</em></p><p>The date time .NET type (default: 'DateTime').</p></summary>
-        [Pure]
-        public static NSwagJsonSchemaToCSharpSettings SetDateTimeType(this NSwagJsonSchemaToCSharpSettings toolSettings, string dateTimeType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DateTimeType = dateTimeType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagJsonSchemaToCSharpSettings.DateTimeType"/>.</em></p><p>The date time .NET type (default: 'DateTime').</p></summary>
-        [Pure]
-        public static NSwagJsonSchemaToCSharpSettings ResetDateTimeType(this NSwagJsonSchemaToCSharpSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DateTimeType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region ArrayType
-        /// <summary><p><em>Sets <see cref="NSwagJsonSchemaToCSharpSettings.ArrayType"/>.</em></p><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
-        [Pure]
-        public static NSwagJsonSchemaToCSharpSettings SetArrayType(this NSwagJsonSchemaToCSharpSettings toolSettings, string arrayType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ArrayType = arrayType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagJsonSchemaToCSharpSettings.ArrayType"/>.</em></p><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
-        [Pure]
-        public static NSwagJsonSchemaToCSharpSettings ResetArrayType(this NSwagJsonSchemaToCSharpSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ArrayType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region DictionaryType
-        /// <summary><p><em>Sets <see cref="NSwagJsonSchemaToCSharpSettings.DictionaryType"/>.</em></p><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
-        [Pure]
-        public static NSwagJsonSchemaToCSharpSettings SetDictionaryType(this NSwagJsonSchemaToCSharpSettings toolSettings, string dictionaryType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DictionaryType = dictionaryType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagJsonSchemaToCSharpSettings.DictionaryType"/>.</em></p><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
-        [Pure]
-        public static NSwagJsonSchemaToCSharpSettings ResetDictionaryType(this NSwagJsonSchemaToCSharpSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DictionaryType = null;
             return toolSettings;
         }
         #endregion
@@ -4816,6 +4816,24 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
+        #region ClientClassAccessModifier
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ClientClassAccessModifier"/>.</em></p><p>The client class access modifier (default: public).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetClientClassAccessModifier(this NSwagSwaggerToCSharpClientSettings toolSettings, string clientClassAccessModifier)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ClientClassAccessModifier = clientClassAccessModifier;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ClientClassAccessModifier"/>.</em></p><p>The client class access modifier (default: public).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetClientClassAccessModifier(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ClientClassAccessModifier = null;
+            return toolSettings;
+        }
+        #endregion
         #region ConfigurationClass
         /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ConfigurationClass"/>.</em></p><p>The configuration class. The setting ClientBaseClass must be set. (empty for no configuration class).</p></summary>
         [Pure]
@@ -4831,6 +4849,186 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ConfigurationClass = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ContractsNamespace
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ContractsNamespace"/>.</em></p><p>The contracts .NET namespace.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetContractsNamespace(this NSwagSwaggerToCSharpClientSettings toolSettings, string contractsNamespace)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ContractsNamespace = contractsNamespace;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ContractsNamespace"/>.</em></p><p>The contracts .NET namespace.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetContractsNamespace(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ContractsNamespace = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ContractsOutput
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ContractsOutput"/>.</em></p><p>The contracts output file path (optional, if no path is set then a single file with the implementation and contracts is generated).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetContractsOutput(this NSwagSwaggerToCSharpClientSettings toolSettings, string contractsOutput)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ContractsOutput = contractsOutput;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ContractsOutput"/>.</em></p><p>The contracts output file path (optional, if no path is set then a single file with the implementation and contracts is generated).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetContractsOutput(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ContractsOutput = null;
+            return toolSettings;
+        }
+        #endregion
+        #region DisposeHttpClient
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.DisposeHttpClient"/>.</em></p><p>Specifies whether to dispose the HttpClient (injected HttpClient is never disposed).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetDisposeHttpClient(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? disposeHttpClient)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisposeHttpClient = disposeHttpClient;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.DisposeHttpClient"/>.</em></p><p>Specifies whether to dispose the HttpClient (injected HttpClient is never disposed).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetDisposeHttpClient(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisposeHttpClient = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.DisposeHttpClient"/>.</em></p><p>Specifies whether to dispose the HttpClient (injected HttpClient is never disposed).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings EnableDisposeHttpClient(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisposeHttpClient = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.DisposeHttpClient"/>.</em></p><p>Specifies whether to dispose the HttpClient (injected HttpClient is never disposed).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings DisableDisposeHttpClient(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisposeHttpClient = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.DisposeHttpClient"/>.</em></p><p>Specifies whether to dispose the HttpClient (injected HttpClient is never disposed).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ToggleDisposeHttpClient(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisposeHttpClient = !toolSettings.DisposeHttpClient;
+            return toolSettings;
+        }
+        #endregion
+        #region ExceptionClass
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ExceptionClass"/>.</em></p><p>The exception class (default 'SwaggerException', may use '{controller}' placeholder).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetExceptionClass(this NSwagSwaggerToCSharpClientSettings toolSettings, string exceptionClass)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExceptionClass = exceptionClass;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ExceptionClass"/>.</em></p><p>The exception class (default 'SwaggerException', may use '{controller}' placeholder).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetExceptionClass(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExceptionClass = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ExposeJsonSerializerSettings
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ExposeJsonSerializerSettings"/>.</em></p><p>Specifies whether to expose the JsonSerializerSettings property (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetExposeJsonSerializerSettings(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? exposeJsonSerializerSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExposeJsonSerializerSettings = exposeJsonSerializerSettings;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ExposeJsonSerializerSettings"/>.</em></p><p>Specifies whether to expose the JsonSerializerSettings property (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetExposeJsonSerializerSettings(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExposeJsonSerializerSettings = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.ExposeJsonSerializerSettings"/>.</em></p><p>Specifies whether to expose the JsonSerializerSettings property (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings EnableExposeJsonSerializerSettings(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExposeJsonSerializerSettings = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.ExposeJsonSerializerSettings"/>.</em></p><p>Specifies whether to expose the JsonSerializerSettings property (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings DisableExposeJsonSerializerSettings(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExposeJsonSerializerSettings = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.ExposeJsonSerializerSettings"/>.</em></p><p>Specifies whether to expose the JsonSerializerSettings property (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ToggleExposeJsonSerializerSettings(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExposeJsonSerializerSettings = !toolSettings.ExposeJsonSerializerSettings;
+            return toolSettings;
+        }
+        #endregion
+        #region GenerateBaseUrlProperty
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateBaseUrlProperty"/>.</em></p><p>Specifies whether to generate the BaseUrl property, must be defined on the base class otherwise (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetGenerateBaseUrlProperty(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? generateBaseUrlProperty)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateBaseUrlProperty = generateBaseUrlProperty;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateBaseUrlProperty"/>.</em></p><p>Specifies whether to generate the BaseUrl property, must be defined on the base class otherwise (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetGenerateBaseUrlProperty(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateBaseUrlProperty = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateBaseUrlProperty"/>.</em></p><p>Specifies whether to generate the BaseUrl property, must be defined on the base class otherwise (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings EnableGenerateBaseUrlProperty(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateBaseUrlProperty = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateBaseUrlProperty"/>.</em></p><p>Specifies whether to generate the BaseUrl property, must be defined on the base class otherwise (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings DisableGenerateBaseUrlProperty(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateBaseUrlProperty = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.GenerateBaseUrlProperty"/>.</em></p><p>Specifies whether to generate the BaseUrl property, must be defined on the base class otherwise (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ToggleGenerateBaseUrlProperty(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateBaseUrlProperty = !toolSettings.GenerateBaseUrlProperty;
             return toolSettings;
         }
         #endregion
@@ -4918,6 +5116,48 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
+        #region GenerateContractsOutput
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateContractsOutput"/>.</em></p><p>Specifies whether to generate contracts output (interface and models in a separate file set with the ContractsOutput parameter).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetGenerateContractsOutput(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? generateContractsOutput)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateContractsOutput = generateContractsOutput;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateContractsOutput"/>.</em></p><p>Specifies whether to generate contracts output (interface and models in a separate file set with the ContractsOutput parameter).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetGenerateContractsOutput(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateContractsOutput = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateContractsOutput"/>.</em></p><p>Specifies whether to generate contracts output (interface and models in a separate file set with the ContractsOutput parameter).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings EnableGenerateContractsOutput(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateContractsOutput = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateContractsOutput"/>.</em></p><p>Specifies whether to generate contracts output (interface and models in a separate file set with the ContractsOutput parameter).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings DisableGenerateContractsOutput(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateContractsOutput = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.GenerateContractsOutput"/>.</em></p><p>Specifies whether to generate contracts output (interface and models in a separate file set with the ContractsOutput parameter).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ToggleGenerateContractsOutput(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateContractsOutput = !toolSettings.GenerateContractsOutput;
+            return toolSettings;
+        }
+        #endregion
         #region GenerateDtoTypes
         /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateDtoTypes"/>.</em></p><p>Specifies whether to generate DTO classes.</p></summary>
         [Pure]
@@ -4957,6 +5197,150 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GenerateDtoTypes = !toolSettings.GenerateDtoTypes;
+            return toolSettings;
+        }
+        #endregion
+        #region GenerateExceptionClasses
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateExceptionClasses"/>.</em></p><p>Specifies whether to generate exception classes (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetGenerateExceptionClasses(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? generateExceptionClasses)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateExceptionClasses = generateExceptionClasses;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateExceptionClasses"/>.</em></p><p>Specifies whether to generate exception classes (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetGenerateExceptionClasses(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateExceptionClasses = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateExceptionClasses"/>.</em></p><p>Specifies whether to generate exception classes (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings EnableGenerateExceptionClasses(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateExceptionClasses = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateExceptionClasses"/>.</em></p><p>Specifies whether to generate exception classes (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings DisableGenerateExceptionClasses(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateExceptionClasses = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.GenerateExceptionClasses"/>.</em></p><p>Specifies whether to generate exception classes (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ToggleGenerateExceptionClasses(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateExceptionClasses = !toolSettings.GenerateExceptionClasses;
+            return toolSettings;
+        }
+        #endregion
+        #region GenerateSyncMethods
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateSyncMethods"/>.</em></p><p>Specifies whether to generate synchronous methods (not recommended, default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetGenerateSyncMethods(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? generateSyncMethods)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateSyncMethods = generateSyncMethods;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateSyncMethods"/>.</em></p><p>Specifies whether to generate synchronous methods (not recommended, default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetGenerateSyncMethods(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateSyncMethods = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateSyncMethods"/>.</em></p><p>Specifies whether to generate synchronous methods (not recommended, default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings EnableGenerateSyncMethods(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateSyncMethods = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateSyncMethods"/>.</em></p><p>Specifies whether to generate synchronous methods (not recommended, default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings DisableGenerateSyncMethods(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateSyncMethods = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.GenerateSyncMethods"/>.</em></p><p>Specifies whether to generate synchronous methods (not recommended, default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ToggleGenerateSyncMethods(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateSyncMethods = !toolSettings.GenerateSyncMethods;
+            return toolSettings;
+        }
+        #endregion
+        #region GenerateUpdateJsonSerializerSettingsMethod
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateUpdateJsonSerializerSettingsMethod"/>.</em></p><p>Generate the UpdateJsonSerializerSettings method (must be implemented in the base class otherwise, default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetGenerateUpdateJsonSerializerSettingsMethod(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? generateUpdateJsonSerializerSettingsMethod)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateUpdateJsonSerializerSettingsMethod = generateUpdateJsonSerializerSettingsMethod;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateUpdateJsonSerializerSettingsMethod"/>.</em></p><p>Generate the UpdateJsonSerializerSettings method (must be implemented in the base class otherwise, default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetGenerateUpdateJsonSerializerSettingsMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateUpdateJsonSerializerSettingsMethod = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateUpdateJsonSerializerSettingsMethod"/>.</em></p><p>Generate the UpdateJsonSerializerSettings method (must be implemented in the base class otherwise, default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings EnableGenerateUpdateJsonSerializerSettingsMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateUpdateJsonSerializerSettingsMethod = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateUpdateJsonSerializerSettingsMethod"/>.</em></p><p>Generate the UpdateJsonSerializerSettings method (must be implemented in the base class otherwise, default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings DisableGenerateUpdateJsonSerializerSettingsMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateUpdateJsonSerializerSettingsMethod = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.GenerateUpdateJsonSerializerSettingsMethod"/>.</em></p><p>Generate the UpdateJsonSerializerSettings method (must be implemented in the base class otherwise, default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ToggleGenerateUpdateJsonSerializerSettingsMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateUpdateJsonSerializerSettingsMethod = !toolSettings.GenerateUpdateJsonSerializerSettingsMethod;
+            return toolSettings;
+        }
+        #endregion
+        #region HttpClientType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.HttpClientType"/>.</em></p><p>Specifies the HttpClient type. By default the 'System.Net.Http.HttpClient' is used.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetHttpClientType(this NSwagSwaggerToCSharpClientSettings toolSettings, string httpClientType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HttpClientType = httpClientType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.HttpClientType"/>.</em></p><p>Specifies the HttpClient type. By default the 'System.Net.Http.HttpClient' is used.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetHttpClientType(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HttpClientType = null;
             return toolSettings;
         }
         #endregion
@@ -5002,45 +5386,21 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region DisposeHttpClient
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.DisposeHttpClient"/>.</em></p><p>Specifies whether to dispose the HttpClient (injected HttpClient is never disposed).</p></summary>
+        #region ParameterDateTimeFormat
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ParameterDateTimeFormat"/>.</em></p><p>Specifies the format for DateTime type method parameters (default: s).</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetDisposeHttpClient(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? disposeHttpClient)
+        public static NSwagSwaggerToCSharpClientSettings SetParameterDateTimeFormat(this NSwagSwaggerToCSharpClientSettings toolSettings, string parameterDateTimeFormat)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DisposeHttpClient = disposeHttpClient;
+            toolSettings.ParameterDateTimeFormat = parameterDateTimeFormat;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.DisposeHttpClient"/>.</em></p><p>Specifies whether to dispose the HttpClient (injected HttpClient is never disposed).</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ParameterDateTimeFormat"/>.</em></p><p>Specifies the format for DateTime type method parameters (default: s).</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetDisposeHttpClient(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        public static NSwagSwaggerToCSharpClientSettings ResetParameterDateTimeFormat(this NSwagSwaggerToCSharpClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DisposeHttpClient = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.DisposeHttpClient"/>.</em></p><p>Specifies whether to dispose the HttpClient (injected HttpClient is never disposed).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings EnableDisposeHttpClient(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DisposeHttpClient = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.DisposeHttpClient"/>.</em></p><p>Specifies whether to dispose the HttpClient (injected HttpClient is never disposed).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings DisableDisposeHttpClient(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DisposeHttpClient = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.DisposeHttpClient"/>.</em></p><p>Specifies whether to dispose the HttpClient (injected HttpClient is never disposed).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ToggleDisposeHttpClient(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DisposeHttpClient = !toolSettings.DisposeHttpClient;
+            toolSettings.ParameterDateTimeFormat = null;
             return toolSettings;
         }
         #endregion
@@ -5104,549 +5464,21 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region GenerateExceptionClasses
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateExceptionClasses"/>.</em></p><p>Specifies whether to generate exception classes (default: true).</p></summary>
+        #region QueryNullValue
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.QueryNullValue"/>.</em></p><p>The null value used for query parameters which are null (default: '').</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetGenerateExceptionClasses(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? generateExceptionClasses)
+        public static NSwagSwaggerToCSharpClientSettings SetQueryNullValue(this NSwagSwaggerToCSharpClientSettings toolSettings, string queryNullValue)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateExceptionClasses = generateExceptionClasses;
+            toolSettings.QueryNullValue = queryNullValue;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateExceptionClasses"/>.</em></p><p>Specifies whether to generate exception classes (default: true).</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.QueryNullValue"/>.</em></p><p>The null value used for query parameters which are null (default: '').</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetGenerateExceptionClasses(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        public static NSwagSwaggerToCSharpClientSettings ResetQueryNullValue(this NSwagSwaggerToCSharpClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateExceptionClasses = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateExceptionClasses"/>.</em></p><p>Specifies whether to generate exception classes (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings EnableGenerateExceptionClasses(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateExceptionClasses = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateExceptionClasses"/>.</em></p><p>Specifies whether to generate exception classes (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings DisableGenerateExceptionClasses(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateExceptionClasses = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.GenerateExceptionClasses"/>.</em></p><p>Specifies whether to generate exception classes (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ToggleGenerateExceptionClasses(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateExceptionClasses = !toolSettings.GenerateExceptionClasses;
-            return toolSettings;
-        }
-        #endregion
-        #region ExceptionClass
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ExceptionClass"/>.</em></p><p>The exception class (default 'SwaggerException', may use '{controller}' placeholder).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetExceptionClass(this NSwagSwaggerToCSharpClientSettings toolSettings, string exceptionClass)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExceptionClass = exceptionClass;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ExceptionClass"/>.</em></p><p>The exception class (default 'SwaggerException', may use '{controller}' placeholder).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetExceptionClass(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExceptionClass = null;
-            return toolSettings;
-        }
-        #endregion
-        #region WrapDtoExceptions
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.WrapDtoExceptions"/>.</em></p><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetWrapDtoExceptions(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? wrapDtoExceptions)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapDtoExceptions = wrapDtoExceptions;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.WrapDtoExceptions"/>.</em></p><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetWrapDtoExceptions(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapDtoExceptions = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.WrapDtoExceptions"/>.</em></p><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings EnableWrapDtoExceptions(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapDtoExceptions = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.WrapDtoExceptions"/>.</em></p><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings DisableWrapDtoExceptions(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapDtoExceptions = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.WrapDtoExceptions"/>.</em></p><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ToggleWrapDtoExceptions(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapDtoExceptions = !toolSettings.WrapDtoExceptions;
-            return toolSettings;
-        }
-        #endregion
-        #region UseHttpClientCreationMethod
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.UseHttpClientCreationMethod"/>.</em></p><p>Specifies whether to call CreateHttpClientAsync on the base class to create a new HttpClient.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetUseHttpClientCreationMethod(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? useHttpClientCreationMethod)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.UseHttpClientCreationMethod = useHttpClientCreationMethod;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.UseHttpClientCreationMethod"/>.</em></p><p>Specifies whether to call CreateHttpClientAsync on the base class to create a new HttpClient.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetUseHttpClientCreationMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.UseHttpClientCreationMethod = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.UseHttpClientCreationMethod"/>.</em></p><p>Specifies whether to call CreateHttpClientAsync on the base class to create a new HttpClient.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings EnableUseHttpClientCreationMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.UseHttpClientCreationMethod = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.UseHttpClientCreationMethod"/>.</em></p><p>Specifies whether to call CreateHttpClientAsync on the base class to create a new HttpClient.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings DisableUseHttpClientCreationMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.UseHttpClientCreationMethod = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.UseHttpClientCreationMethod"/>.</em></p><p>Specifies whether to call CreateHttpClientAsync on the base class to create a new HttpClient.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ToggleUseHttpClientCreationMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.UseHttpClientCreationMethod = !toolSettings.UseHttpClientCreationMethod;
-            return toolSettings;
-        }
-        #endregion
-        #region HttpClientType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.HttpClientType"/>.</em></p><p>Specifies the HttpClient type. By default the 'System.Net.Http.HttpClient' is used.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetHttpClientType(this NSwagSwaggerToCSharpClientSettings toolSettings, string httpClientType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.HttpClientType = httpClientType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.HttpClientType"/>.</em></p><p>Specifies the HttpClient type. By default the 'System.Net.Http.HttpClient' is used.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetHttpClientType(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.HttpClientType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region UseHttpRequestMessageCreationMethod
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.UseHttpRequestMessageCreationMethod"/>.</em></p><p>Specifies whether to call CreateHttpRequestMessageAsync on the base class to create a new HttpRequestMethod.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetUseHttpRequestMessageCreationMethod(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? useHttpRequestMessageCreationMethod)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.UseHttpRequestMessageCreationMethod = useHttpRequestMessageCreationMethod;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.UseHttpRequestMessageCreationMethod"/>.</em></p><p>Specifies whether to call CreateHttpRequestMessageAsync on the base class to create a new HttpRequestMethod.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetUseHttpRequestMessageCreationMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.UseHttpRequestMessageCreationMethod = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.UseHttpRequestMessageCreationMethod"/>.</em></p><p>Specifies whether to call CreateHttpRequestMessageAsync on the base class to create a new HttpRequestMethod.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings EnableUseHttpRequestMessageCreationMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.UseHttpRequestMessageCreationMethod = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.UseHttpRequestMessageCreationMethod"/>.</em></p><p>Specifies whether to call CreateHttpRequestMessageAsync on the base class to create a new HttpRequestMethod.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings DisableUseHttpRequestMessageCreationMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.UseHttpRequestMessageCreationMethod = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.UseHttpRequestMessageCreationMethod"/>.</em></p><p>Specifies whether to call CreateHttpRequestMessageAsync on the base class to create a new HttpRequestMethod.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ToggleUseHttpRequestMessageCreationMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.UseHttpRequestMessageCreationMethod = !toolSettings.UseHttpRequestMessageCreationMethod;
-            return toolSettings;
-        }
-        #endregion
-        #region UseBaseUrl
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.UseBaseUrl"/>.</em></p><p>Specifies whether to use and expose the base URL (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetUseBaseUrl(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? useBaseUrl)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.UseBaseUrl = useBaseUrl;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.UseBaseUrl"/>.</em></p><p>Specifies whether to use and expose the base URL (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetUseBaseUrl(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.UseBaseUrl = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.UseBaseUrl"/>.</em></p><p>Specifies whether to use and expose the base URL (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings EnableUseBaseUrl(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.UseBaseUrl = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.UseBaseUrl"/>.</em></p><p>Specifies whether to use and expose the base URL (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings DisableUseBaseUrl(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.UseBaseUrl = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.UseBaseUrl"/>.</em></p><p>Specifies whether to use and expose the base URL (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ToggleUseBaseUrl(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.UseBaseUrl = !toolSettings.UseBaseUrl;
-            return toolSettings;
-        }
-        #endregion
-        #region GenerateBaseUrlProperty
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateBaseUrlProperty"/>.</em></p><p>Specifies whether to generate the BaseUrl property, must be defined on the base class otherwise (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetGenerateBaseUrlProperty(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? generateBaseUrlProperty)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateBaseUrlProperty = generateBaseUrlProperty;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateBaseUrlProperty"/>.</em></p><p>Specifies whether to generate the BaseUrl property, must be defined on the base class otherwise (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetGenerateBaseUrlProperty(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateBaseUrlProperty = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateBaseUrlProperty"/>.</em></p><p>Specifies whether to generate the BaseUrl property, must be defined on the base class otherwise (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings EnableGenerateBaseUrlProperty(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateBaseUrlProperty = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateBaseUrlProperty"/>.</em></p><p>Specifies whether to generate the BaseUrl property, must be defined on the base class otherwise (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings DisableGenerateBaseUrlProperty(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateBaseUrlProperty = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.GenerateBaseUrlProperty"/>.</em></p><p>Specifies whether to generate the BaseUrl property, must be defined on the base class otherwise (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ToggleGenerateBaseUrlProperty(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateBaseUrlProperty = !toolSettings.GenerateBaseUrlProperty;
-            return toolSettings;
-        }
-        #endregion
-        #region GenerateSyncMethods
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateSyncMethods"/>.</em></p><p>Specifies whether to generate synchronous methods (not recommended, default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetGenerateSyncMethods(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? generateSyncMethods)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateSyncMethods = generateSyncMethods;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateSyncMethods"/>.</em></p><p>Specifies whether to generate synchronous methods (not recommended, default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetGenerateSyncMethods(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateSyncMethods = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateSyncMethods"/>.</em></p><p>Specifies whether to generate synchronous methods (not recommended, default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings EnableGenerateSyncMethods(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateSyncMethods = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateSyncMethods"/>.</em></p><p>Specifies whether to generate synchronous methods (not recommended, default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings DisableGenerateSyncMethods(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateSyncMethods = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.GenerateSyncMethods"/>.</em></p><p>Specifies whether to generate synchronous methods (not recommended, default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ToggleGenerateSyncMethods(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateSyncMethods = !toolSettings.GenerateSyncMethods;
-            return toolSettings;
-        }
-        #endregion
-        #region ExposeJsonSerializerSettings
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ExposeJsonSerializerSettings"/>.</em></p><p>Specifies whether to expose the JsonSerializerSettings property (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetExposeJsonSerializerSettings(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? exposeJsonSerializerSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExposeJsonSerializerSettings = exposeJsonSerializerSettings;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ExposeJsonSerializerSettings"/>.</em></p><p>Specifies whether to expose the JsonSerializerSettings property (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetExposeJsonSerializerSettings(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExposeJsonSerializerSettings = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.ExposeJsonSerializerSettings"/>.</em></p><p>Specifies whether to expose the JsonSerializerSettings property (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings EnableExposeJsonSerializerSettings(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExposeJsonSerializerSettings = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.ExposeJsonSerializerSettings"/>.</em></p><p>Specifies whether to expose the JsonSerializerSettings property (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings DisableExposeJsonSerializerSettings(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExposeJsonSerializerSettings = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.ExposeJsonSerializerSettings"/>.</em></p><p>Specifies whether to expose the JsonSerializerSettings property (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ToggleExposeJsonSerializerSettings(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExposeJsonSerializerSettings = !toolSettings.ExposeJsonSerializerSettings;
-            return toolSettings;
-        }
-        #endregion
-        #region ClientClassAccessModifier
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ClientClassAccessModifier"/>.</em></p><p>The client class access modifier (default: public).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetClientClassAccessModifier(this NSwagSwaggerToCSharpClientSettings toolSettings, string clientClassAccessModifier)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ClientClassAccessModifier = clientClassAccessModifier;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ClientClassAccessModifier"/>.</em></p><p>The client class access modifier (default: public).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetClientClassAccessModifier(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ClientClassAccessModifier = null;
-            return toolSettings;
-        }
-        #endregion
-        #region TypeAccessModifier
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.TypeAccessModifier"/>.</em></p><p>The DTO class/enum access modifier (default: public).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetTypeAccessModifier(this NSwagSwaggerToCSharpClientSettings toolSettings, string typeAccessModifier)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TypeAccessModifier = typeAccessModifier;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.TypeAccessModifier"/>.</em></p><p>The DTO class/enum access modifier (default: public).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetTypeAccessModifier(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TypeAccessModifier = null;
-            return toolSettings;
-        }
-        #endregion
-        #region GenerateContractsOutput
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateContractsOutput"/>.</em></p><p>Specifies whether to generate contracts output (interface and models in a separate file set with the ContractsOutput parameter).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetGenerateContractsOutput(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? generateContractsOutput)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateContractsOutput = generateContractsOutput;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateContractsOutput"/>.</em></p><p>Specifies whether to generate contracts output (interface and models in a separate file set with the ContractsOutput parameter).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetGenerateContractsOutput(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateContractsOutput = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateContractsOutput"/>.</em></p><p>Specifies whether to generate contracts output (interface and models in a separate file set with the ContractsOutput parameter).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings EnableGenerateContractsOutput(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateContractsOutput = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateContractsOutput"/>.</em></p><p>Specifies whether to generate contracts output (interface and models in a separate file set with the ContractsOutput parameter).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings DisableGenerateContractsOutput(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateContractsOutput = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.GenerateContractsOutput"/>.</em></p><p>Specifies whether to generate contracts output (interface and models in a separate file set with the ContractsOutput parameter).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ToggleGenerateContractsOutput(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateContractsOutput = !toolSettings.GenerateContractsOutput;
-            return toolSettings;
-        }
-        #endregion
-        #region ContractsNamespace
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ContractsNamespace"/>.</em></p><p>The contracts .NET namespace.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetContractsNamespace(this NSwagSwaggerToCSharpClientSettings toolSettings, string contractsNamespace)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ContractsNamespace = contractsNamespace;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ContractsNamespace"/>.</em></p><p>The contracts .NET namespace.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetContractsNamespace(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ContractsNamespace = null;
-            return toolSettings;
-        }
-        #endregion
-        #region ContractsOutput
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ContractsOutput"/>.</em></p><p>The contracts output file path (optional, if no path is set then a single file with the implementation and contracts is generated).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetContractsOutput(this NSwagSwaggerToCSharpClientSettings toolSettings, string contractsOutput)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ContractsOutput = contractsOutput;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ContractsOutput"/>.</em></p><p>The contracts output file path (optional, if no path is set then a single file with the implementation and contracts is generated).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetContractsOutput(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ContractsOutput = null;
-            return toolSettings;
-        }
-        #endregion
-        #region ParameterDateTimeFormat
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ParameterDateTimeFormat"/>.</em></p><p>Specifies the format for DateTime type method parameters (default: s).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetParameterDateTimeFormat(this NSwagSwaggerToCSharpClientSettings toolSettings, string parameterDateTimeFormat)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ParameterDateTimeFormat = parameterDateTimeFormat;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ParameterDateTimeFormat"/>.</em></p><p>Specifies the format for DateTime type method parameters (default: s).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetParameterDateTimeFormat(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ParameterDateTimeFormat = null;
-            return toolSettings;
-        }
-        #endregion
-        #region GenerateUpdateJsonSerializerSettingsMethod
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateUpdateJsonSerializerSettingsMethod"/>.</em></p><p>Generate the UpdateJsonSerializerSettings method (must be implemented in the base class otherwise, default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetGenerateUpdateJsonSerializerSettingsMethod(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? generateUpdateJsonSerializerSettingsMethod)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateUpdateJsonSerializerSettingsMethod = generateUpdateJsonSerializerSettingsMethod;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateUpdateJsonSerializerSettingsMethod"/>.</em></p><p>Generate the UpdateJsonSerializerSettings method (must be implemented in the base class otherwise, default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetGenerateUpdateJsonSerializerSettingsMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateUpdateJsonSerializerSettingsMethod = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateUpdateJsonSerializerSettingsMethod"/>.</em></p><p>Generate the UpdateJsonSerializerSettings method (must be implemented in the base class otherwise, default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings EnableGenerateUpdateJsonSerializerSettingsMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateUpdateJsonSerializerSettingsMethod = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateUpdateJsonSerializerSettingsMethod"/>.</em></p><p>Generate the UpdateJsonSerializerSettings method (must be implemented in the base class otherwise, default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings DisableGenerateUpdateJsonSerializerSettingsMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateUpdateJsonSerializerSettingsMethod = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.GenerateUpdateJsonSerializerSettingsMethod"/>.</em></p><p>Generate the UpdateJsonSerializerSettings method (must be implemented in the base class otherwise, default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ToggleGenerateUpdateJsonSerializerSettingsMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateUpdateJsonSerializerSettingsMethod = !toolSettings.GenerateUpdateJsonSerializerSettingsMethod;
+            toolSettings.QueryNullValue = null;
             return toolSettings;
         }
         #endregion
@@ -5692,117 +5524,189 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region QueryNullValue
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.QueryNullValue"/>.</em></p><p>The null value used for query parameters which are null (default: '').</p></summary>
+        #region TypeAccessModifier
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.TypeAccessModifier"/>.</em></p><p>The DTO class/enum access modifier (default: public).</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetQueryNullValue(this NSwagSwaggerToCSharpClientSettings toolSettings, string queryNullValue)
+        public static NSwagSwaggerToCSharpClientSettings SetTypeAccessModifier(this NSwagSwaggerToCSharpClientSettings toolSettings, string typeAccessModifier)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.QueryNullValue = queryNullValue;
+            toolSettings.TypeAccessModifier = typeAccessModifier;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.QueryNullValue"/>.</em></p><p>The null value used for query parameters which are null (default: '').</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.TypeAccessModifier"/>.</em></p><p>The DTO class/enum access modifier (default: public).</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetQueryNullValue(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        public static NSwagSwaggerToCSharpClientSettings ResetTypeAccessModifier(this NSwagSwaggerToCSharpClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.QueryNullValue = null;
-            return toolSettings;
-        }
-        #endregion
-        #region ClassName
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ClassName"/>.</em></p><p>The class name of the generated client.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetClassName(this NSwagSwaggerToCSharpClientSettings toolSettings, string className)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ClassName = className;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ClassName"/>.</em></p><p>The class name of the generated client.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetClassName(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ClassName = null;
+            toolSettings.TypeAccessModifier = null;
             return toolSettings;
         }
         #endregion
-        #region OperationGenerationMode
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.OperationGenerationMode"/>.</em></p><p>The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments').</p></summary>
+        #region UseBaseUrl
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.UseBaseUrl"/>.</em></p><p>Specifies whether to use and expose the base URL (default: true).</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetOperationGenerationMode(this NSwagSwaggerToCSharpClientSettings toolSettings, OperationGenerationMode operationGenerationMode)
+        public static NSwagSwaggerToCSharpClientSettings SetUseBaseUrl(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? useBaseUrl)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.OperationGenerationMode = operationGenerationMode;
+            toolSettings.UseBaseUrl = useBaseUrl;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.OperationGenerationMode"/>.</em></p><p>The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments').</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.UseBaseUrl"/>.</em></p><p>Specifies whether to use and expose the base URL (default: true).</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetOperationGenerationMode(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        public static NSwagSwaggerToCSharpClientSettings ResetUseBaseUrl(this NSwagSwaggerToCSharpClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.OperationGenerationMode = null;
+            toolSettings.UseBaseUrl = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.UseBaseUrl"/>.</em></p><p>Specifies whether to use and expose the base URL (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings EnableUseBaseUrl(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseBaseUrl = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.UseBaseUrl"/>.</em></p><p>Specifies whether to use and expose the base URL (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings DisableUseBaseUrl(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseBaseUrl = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.UseBaseUrl"/>.</em></p><p>Specifies whether to use and expose the base URL (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ToggleUseBaseUrl(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseBaseUrl = !toolSettings.UseBaseUrl;
             return toolSettings;
         }
         #endregion
-        #region AdditionalNamespaceUsages
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.AdditionalNamespaceUsages"/> to a new list.</em></p><p>The additional namespace usages.</p></summary>
+        #region UseHttpClientCreationMethod
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.UseHttpClientCreationMethod"/>.</em></p><p>Specifies whether to call CreateHttpClientAsync on the base class to create a new HttpClient.</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetAdditionalNamespaceUsages(this NSwagSwaggerToCSharpClientSettings toolSettings, params string[] additionalNamespaceUsages)
+        public static NSwagSwaggerToCSharpClientSettings SetUseHttpClientCreationMethod(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? useHttpClientCreationMethod)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AdditionalNamespaceUsagesInternal = additionalNamespaceUsages.ToList();
+            toolSettings.UseHttpClientCreationMethod = useHttpClientCreationMethod;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.AdditionalNamespaceUsages"/> to a new list.</em></p><p>The additional namespace usages.</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.UseHttpClientCreationMethod"/>.</em></p><p>Specifies whether to call CreateHttpClientAsync on the base class to create a new HttpClient.</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetAdditionalNamespaceUsages(this NSwagSwaggerToCSharpClientSettings toolSettings, IEnumerable<string> additionalNamespaceUsages)
+        public static NSwagSwaggerToCSharpClientSettings ResetUseHttpClientCreationMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AdditionalNamespaceUsagesInternal = additionalNamespaceUsages.ToList();
+            toolSettings.UseHttpClientCreationMethod = null;
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpClientSettings.AdditionalNamespaceUsages"/>.</em></p><p>The additional namespace usages.</p></summary>
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.UseHttpClientCreationMethod"/>.</em></p><p>Specifies whether to call CreateHttpClientAsync on the base class to create a new HttpClient.</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings AddAdditionalNamespaceUsages(this NSwagSwaggerToCSharpClientSettings toolSettings, params string[] additionalNamespaceUsages)
+        public static NSwagSwaggerToCSharpClientSettings EnableUseHttpClientCreationMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AdditionalNamespaceUsagesInternal.AddRange(additionalNamespaceUsages);
+            toolSettings.UseHttpClientCreationMethod = true;
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpClientSettings.AdditionalNamespaceUsages"/>.</em></p><p>The additional namespace usages.</p></summary>
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.UseHttpClientCreationMethod"/>.</em></p><p>Specifies whether to call CreateHttpClientAsync on the base class to create a new HttpClient.</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings AddAdditionalNamespaceUsages(this NSwagSwaggerToCSharpClientSettings toolSettings, IEnumerable<string> additionalNamespaceUsages)
+        public static NSwagSwaggerToCSharpClientSettings DisableUseHttpClientCreationMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AdditionalNamespaceUsagesInternal.AddRange(additionalNamespaceUsages);
+            toolSettings.UseHttpClientCreationMethod = false;
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="NSwagSwaggerToCSharpClientSettings.AdditionalNamespaceUsages"/>.</em></p><p>The additional namespace usages.</p></summary>
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.UseHttpClientCreationMethod"/>.</em></p><p>Specifies whether to call CreateHttpClientAsync on the base class to create a new HttpClient.</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ClearAdditionalNamespaceUsages(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        public static NSwagSwaggerToCSharpClientSettings ToggleUseHttpClientCreationMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AdditionalNamespaceUsagesInternal.Clear();
+            toolSettings.UseHttpClientCreationMethod = !toolSettings.UseHttpClientCreationMethod;
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpClientSettings.AdditionalNamespaceUsages"/>.</em></p><p>The additional namespace usages.</p></summary>
+        #endregion
+        #region UseHttpRequestMessageCreationMethod
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.UseHttpRequestMessageCreationMethod"/>.</em></p><p>Specifies whether to call CreateHttpRequestMessageAsync on the base class to create a new HttpRequestMethod.</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings RemoveAdditionalNamespaceUsages(this NSwagSwaggerToCSharpClientSettings toolSettings, params string[] additionalNamespaceUsages)
+        public static NSwagSwaggerToCSharpClientSettings SetUseHttpRequestMessageCreationMethod(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? useHttpRequestMessageCreationMethod)
         {
             toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(additionalNamespaceUsages);
-            toolSettings.AdditionalNamespaceUsagesInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.UseHttpRequestMessageCreationMethod = useHttpRequestMessageCreationMethod;
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpClientSettings.AdditionalNamespaceUsages"/>.</em></p><p>The additional namespace usages.</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.UseHttpRequestMessageCreationMethod"/>.</em></p><p>Specifies whether to call CreateHttpRequestMessageAsync on the base class to create a new HttpRequestMethod.</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings RemoveAdditionalNamespaceUsages(this NSwagSwaggerToCSharpClientSettings toolSettings, IEnumerable<string> additionalNamespaceUsages)
+        public static NSwagSwaggerToCSharpClientSettings ResetUseHttpRequestMessageCreationMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(additionalNamespaceUsages);
-            toolSettings.AdditionalNamespaceUsagesInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.UseHttpRequestMessageCreationMethod = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.UseHttpRequestMessageCreationMethod"/>.</em></p><p>Specifies whether to call CreateHttpRequestMessageAsync on the base class to create a new HttpRequestMethod.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings EnableUseHttpRequestMessageCreationMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseHttpRequestMessageCreationMethod = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.UseHttpRequestMessageCreationMethod"/>.</em></p><p>Specifies whether to call CreateHttpRequestMessageAsync on the base class to create a new HttpRequestMethod.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings DisableUseHttpRequestMessageCreationMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseHttpRequestMessageCreationMethod = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.UseHttpRequestMessageCreationMethod"/>.</em></p><p>Specifies whether to call CreateHttpRequestMessageAsync on the base class to create a new HttpRequestMethod.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ToggleUseHttpRequestMessageCreationMethod(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseHttpRequestMessageCreationMethod = !toolSettings.UseHttpRequestMessageCreationMethod;
+            return toolSettings;
+        }
+        #endregion
+        #region WrapDtoExceptions
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.WrapDtoExceptions"/>.</em></p><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetWrapDtoExceptions(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? wrapDtoExceptions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapDtoExceptions = wrapDtoExceptions;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.WrapDtoExceptions"/>.</em></p><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetWrapDtoExceptions(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapDtoExceptions = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.WrapDtoExceptions"/>.</em></p><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings EnableWrapDtoExceptions(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapDtoExceptions = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.WrapDtoExceptions"/>.</em></p><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings DisableWrapDtoExceptions(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapDtoExceptions = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.WrapDtoExceptions"/>.</em></p><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ToggleWrapDtoExceptions(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapDtoExceptions = !toolSettings.WrapDtoExceptions;
             return toolSettings;
         }
         #endregion
@@ -5866,549 +5770,63 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region GenerateOptionalParameters
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateOptionalParameters"/>.</em></p><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
+        #region AdditionalNamespaceUsages
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.AdditionalNamespaceUsages"/> to a new list.</em></p><p>The additional namespace usages.</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetGenerateOptionalParameters(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? generateOptionalParameters)
+        public static NSwagSwaggerToCSharpClientSettings SetAdditionalNamespaceUsages(this NSwagSwaggerToCSharpClientSettings toolSettings, params string[] additionalNamespaceUsages)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateOptionalParameters = generateOptionalParameters;
+            toolSettings.AdditionalNamespaceUsagesInternal = additionalNamespaceUsages.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateOptionalParameters"/>.</em></p><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.AdditionalNamespaceUsages"/> to a new list.</em></p><p>The additional namespace usages.</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetGenerateOptionalParameters(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        public static NSwagSwaggerToCSharpClientSettings SetAdditionalNamespaceUsages(this NSwagSwaggerToCSharpClientSettings toolSettings, IEnumerable<string> additionalNamespaceUsages)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateOptionalParameters = null;
+            toolSettings.AdditionalNamespaceUsagesInternal = additionalNamespaceUsages.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateOptionalParameters"/>.</em></p><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
+        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpClientSettings.AdditionalNamespaceUsages"/>.</em></p><p>The additional namespace usages.</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings EnableGenerateOptionalParameters(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        public static NSwagSwaggerToCSharpClientSettings AddAdditionalNamespaceUsages(this NSwagSwaggerToCSharpClientSettings toolSettings, params string[] additionalNamespaceUsages)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateOptionalParameters = true;
+            toolSettings.AdditionalNamespaceUsagesInternal.AddRange(additionalNamespaceUsages);
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateOptionalParameters"/>.</em></p><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
+        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpClientSettings.AdditionalNamespaceUsages"/>.</em></p><p>The additional namespace usages.</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings DisableGenerateOptionalParameters(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        public static NSwagSwaggerToCSharpClientSettings AddAdditionalNamespaceUsages(this NSwagSwaggerToCSharpClientSettings toolSettings, IEnumerable<string> additionalNamespaceUsages)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateOptionalParameters = false;
+            toolSettings.AdditionalNamespaceUsagesInternal.AddRange(additionalNamespaceUsages);
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.GenerateOptionalParameters"/>.</em></p><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
+        /// <summary><p><em>Clears <see cref="NSwagSwaggerToCSharpClientSettings.AdditionalNamespaceUsages"/>.</em></p><p>The additional namespace usages.</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ToggleGenerateOptionalParameters(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        public static NSwagSwaggerToCSharpClientSettings ClearAdditionalNamespaceUsages(this NSwagSwaggerToCSharpClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateOptionalParameters = !toolSettings.GenerateOptionalParameters;
+            toolSettings.AdditionalNamespaceUsagesInternal.Clear();
             return toolSettings;
         }
-        #endregion
-        #region GenerateJsonMethods
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateJsonMethods"/>.</em></p><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
+        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpClientSettings.AdditionalNamespaceUsages"/>.</em></p><p>The additional namespace usages.</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetGenerateJsonMethods(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? generateJsonMethods)
+        public static NSwagSwaggerToCSharpClientSettings RemoveAdditionalNamespaceUsages(this NSwagSwaggerToCSharpClientSettings toolSettings, params string[] additionalNamespaceUsages)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateJsonMethods = generateJsonMethods;
+            var hashSet = new HashSet<string>(additionalNamespaceUsages);
+            toolSettings.AdditionalNamespaceUsagesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateJsonMethods"/>.</em></p><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
+        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpClientSettings.AdditionalNamespaceUsages"/>.</em></p><p>The additional namespace usages.</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetGenerateJsonMethods(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        public static NSwagSwaggerToCSharpClientSettings RemoveAdditionalNamespaceUsages(this NSwagSwaggerToCSharpClientSettings toolSettings, IEnumerable<string> additionalNamespaceUsages)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateJsonMethods = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateJsonMethods"/>.</em></p><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings EnableGenerateJsonMethods(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateJsonMethods = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateJsonMethods"/>.</em></p><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings DisableGenerateJsonMethods(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateJsonMethods = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.GenerateJsonMethods"/>.</em></p><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ToggleGenerateJsonMethods(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateJsonMethods = !toolSettings.GenerateJsonMethods;
-            return toolSettings;
-        }
-        #endregion
-        #region ParameterArrayType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ParameterArrayType"/>.</em></p><p>The generic array .NET type of operation parameters (default: 'IEnumerable').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetParameterArrayType(this NSwagSwaggerToCSharpClientSettings toolSettings, string parameterArrayType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ParameterArrayType = parameterArrayType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ParameterArrayType"/>.</em></p><p>The generic array .NET type of operation parameters (default: 'IEnumerable').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetParameterArrayType(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ParameterArrayType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region ParameterDictionaryType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ParameterDictionaryType"/>.</em></p><p>The generic dictionary .NET type of operation parameters (default: 'IReadOnlyDictionary').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetParameterDictionaryType(this NSwagSwaggerToCSharpClientSettings toolSettings, string parameterDictionaryType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ParameterDictionaryType = parameterDictionaryType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ParameterDictionaryType"/>.</em></p><p>The generic dictionary .NET type of operation parameters (default: 'IReadOnlyDictionary').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetParameterDictionaryType(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ParameterDictionaryType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region ResponseArrayType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ResponseArrayType"/>.</em></p><p>The generic array .NET type of operation responses (default: 'ICollection').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetResponseArrayType(this NSwagSwaggerToCSharpClientSettings toolSettings, string responseArrayType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ResponseArrayType = responseArrayType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ResponseArrayType"/>.</em></p><p>The generic array .NET type of operation responses (default: 'ICollection').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetResponseArrayType(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ResponseArrayType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region ResponseDictionaryType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ResponseDictionaryType"/>.</em></p><p>The generic dictionary .NET type of operation responses (default: 'IDictionary').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetResponseDictionaryType(this NSwagSwaggerToCSharpClientSettings toolSettings, string responseDictionaryType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ResponseDictionaryType = responseDictionaryType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ResponseDictionaryType"/>.</em></p><p>The generic dictionary .NET type of operation responses (default: 'IDictionary').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetResponseDictionaryType(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ResponseDictionaryType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region WrapResponses
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetWrapResponses(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? wrapResponses)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponses = wrapResponses;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetWrapResponses(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponses = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings EnableWrapResponses(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponses = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings DisableWrapResponses(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponses = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ToggleWrapResponses(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponses = !toolSettings.WrapResponses;
-            return toolSettings;
-        }
-        #endregion
-        #region WrapResponseMethods
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponseMethods"/> to a new list.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetWrapResponseMethods(this NSwagSwaggerToCSharpClientSettings toolSettings, params string[] wrapResponseMethods)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponseMethodsInternal = wrapResponseMethods.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponseMethods"/> to a new list.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetWrapResponseMethods(this NSwagSwaggerToCSharpClientSettings toolSettings, IEnumerable<string> wrapResponseMethods)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponseMethodsInternal = wrapResponseMethods.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings AddWrapResponseMethods(this NSwagSwaggerToCSharpClientSettings toolSettings, params string[] wrapResponseMethods)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponseMethodsInternal.AddRange(wrapResponseMethods);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings AddWrapResponseMethods(this NSwagSwaggerToCSharpClientSettings toolSettings, IEnumerable<string> wrapResponseMethods)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponseMethodsInternal.AddRange(wrapResponseMethods);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ClearWrapResponseMethods(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponseMethodsInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings RemoveWrapResponseMethods(this NSwagSwaggerToCSharpClientSettings toolSettings, params string[] wrapResponseMethods)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(wrapResponseMethods);
-            toolSettings.WrapResponseMethodsInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings RemoveWrapResponseMethods(this NSwagSwaggerToCSharpClientSettings toolSettings, IEnumerable<string> wrapResponseMethods)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(wrapResponseMethods);
-            toolSettings.WrapResponseMethodsInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        #endregion
-        #region GenerateResponseClasses
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateResponseClasses"/>.</em></p><p>Specifies whether to generate response classes (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetGenerateResponseClasses(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? generateResponseClasses)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateResponseClasses = generateResponseClasses;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateResponseClasses"/>.</em></p><p>Specifies whether to generate response classes (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetGenerateResponseClasses(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateResponseClasses = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateResponseClasses"/>.</em></p><p>Specifies whether to generate response classes (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings EnableGenerateResponseClasses(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateResponseClasses = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateResponseClasses"/>.</em></p><p>Specifies whether to generate response classes (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings DisableGenerateResponseClasses(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateResponseClasses = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.GenerateResponseClasses"/>.</em></p><p>Specifies whether to generate response classes (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ToggleGenerateResponseClasses(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateResponseClasses = !toolSettings.GenerateResponseClasses;
-            return toolSettings;
-        }
-        #endregion
-        #region ResponseClass
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ResponseClass"/>.</em></p><p>The response class (default 'SwaggerResponse', may use '{controller}' placeholder).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetResponseClass(this NSwagSwaggerToCSharpClientSettings toolSettings, string responseClass)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ResponseClass = responseClass;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ResponseClass"/>.</em></p><p>The response class (default 'SwaggerResponse', may use '{controller}' placeholder).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetResponseClass(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ResponseClass = null;
-            return toolSettings;
-        }
-        #endregion
-        #region Namespace
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.Namespace"/>.</em></p><p>The namespace of the generated classes.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetNamespace(this NSwagSwaggerToCSharpClientSettings toolSettings, string @namespace)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Namespace = @namespace;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.Namespace"/>.</em></p><p>The namespace of the generated classes.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetNamespace(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Namespace = null;
-            return toolSettings;
-        }
-        #endregion
-        #region RequiredPropertiesMustBeDefined
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.RequiredPropertiesMustBeDefined"/>.</em></p><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetRequiredPropertiesMustBeDefined(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? requiredPropertiesMustBeDefined)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RequiredPropertiesMustBeDefined = requiredPropertiesMustBeDefined;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.RequiredPropertiesMustBeDefined"/>.</em></p><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetRequiredPropertiesMustBeDefined(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RequiredPropertiesMustBeDefined = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.RequiredPropertiesMustBeDefined"/>.</em></p><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings EnableRequiredPropertiesMustBeDefined(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RequiredPropertiesMustBeDefined = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.RequiredPropertiesMustBeDefined"/>.</em></p><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings DisableRequiredPropertiesMustBeDefined(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RequiredPropertiesMustBeDefined = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.RequiredPropertiesMustBeDefined"/>.</em></p><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ToggleRequiredPropertiesMustBeDefined(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RequiredPropertiesMustBeDefined = !toolSettings.RequiredPropertiesMustBeDefined;
-            return toolSettings;
-        }
-        #endregion
-        #region DateType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.DateType"/>.</em></p><p>The date .NET type (default: 'DateTime').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetDateType(this NSwagSwaggerToCSharpClientSettings toolSettings, string dateType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DateType = dateType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.DateType"/>.</em></p><p>The date .NET type (default: 'DateTime').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetDateType(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DateType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region JsonConverters
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.JsonConverters"/> to a new list.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetJsonConverters(this NSwagSwaggerToCSharpClientSettings toolSettings, params string[] jsonConverters)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.JsonConvertersInternal = jsonConverters.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.JsonConverters"/> to a new list.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetJsonConverters(this NSwagSwaggerToCSharpClientSettings toolSettings, IEnumerable<string> jsonConverters)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.JsonConvertersInternal = jsonConverters.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpClientSettings.JsonConverters"/>.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings AddJsonConverters(this NSwagSwaggerToCSharpClientSettings toolSettings, params string[] jsonConverters)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.JsonConvertersInternal.AddRange(jsonConverters);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpClientSettings.JsonConverters"/>.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings AddJsonConverters(this NSwagSwaggerToCSharpClientSettings toolSettings, IEnumerable<string> jsonConverters)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.JsonConvertersInternal.AddRange(jsonConverters);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="NSwagSwaggerToCSharpClientSettings.JsonConverters"/>.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ClearJsonConverters(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.JsonConvertersInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpClientSettings.JsonConverters"/>.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings RemoveJsonConverters(this NSwagSwaggerToCSharpClientSettings toolSettings, params string[] jsonConverters)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(jsonConverters);
-            toolSettings.JsonConvertersInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpClientSettings.JsonConverters"/>.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings RemoveJsonConverters(this NSwagSwaggerToCSharpClientSettings toolSettings, IEnumerable<string> jsonConverters)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(jsonConverters);
-            toolSettings.JsonConvertersInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        #endregion
-        #region DateTimeType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.DateTimeType"/>.</em></p><p>The date time .NET type (default: 'DateTime').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetDateTimeType(this NSwagSwaggerToCSharpClientSettings toolSettings, string dateTimeType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DateTimeType = dateTimeType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.DateTimeType"/>.</em></p><p>The date time .NET type (default: 'DateTime').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetDateTimeType(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DateTimeType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region TimeType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.TimeType"/>.</em></p><p>The time .NET type (default: 'TimeSpan').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetTimeType(this NSwagSwaggerToCSharpClientSettings toolSettings, string timeType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TimeType = timeType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.TimeType"/>.</em></p><p>The time .NET type (default: 'TimeSpan').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetTimeType(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TimeType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region TimeSpanType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.TimeSpanType"/>.</em></p><p>The time span .NET type (default: 'TimeSpan').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetTimeSpanType(this NSwagSwaggerToCSharpClientSettings toolSettings, string timeSpanType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TimeSpanType = timeSpanType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.TimeSpanType"/>.</em></p><p>The time span .NET type (default: 'TimeSpan').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetTimeSpanType(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TimeSpanType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region ArrayType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ArrayType"/>.</em></p><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetArrayType(this NSwagSwaggerToCSharpClientSettings toolSettings, string arrayType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ArrayType = arrayType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ArrayType"/>.</em></p><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetArrayType(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ArrayType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region DictionaryType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.DictionaryType"/>.</em></p><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetDictionaryType(this NSwagSwaggerToCSharpClientSettings toolSettings, string dictionaryType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DictionaryType = dictionaryType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.DictionaryType"/>.</em></p><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetDictionaryType(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DictionaryType = null;
+            var hashSet = new HashSet<string>(additionalNamespaceUsages);
+            toolSettings.AdditionalNamespaceUsagesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion
@@ -6430,21 +5848,39 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region DictionaryBaseType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.DictionaryBaseType"/>.</em></p><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
+        #region ArrayType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ArrayType"/>.</em></p><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetDictionaryBaseType(this NSwagSwaggerToCSharpClientSettings toolSettings, string dictionaryBaseType)
+        public static NSwagSwaggerToCSharpClientSettings SetArrayType(this NSwagSwaggerToCSharpClientSettings toolSettings, string arrayType)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DictionaryBaseType = dictionaryBaseType;
+            toolSettings.ArrayType = arrayType;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.DictionaryBaseType"/>.</em></p><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ArrayType"/>.</em></p><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetDictionaryBaseType(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        public static NSwagSwaggerToCSharpClientSettings ResetArrayType(this NSwagSwaggerToCSharpClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DictionaryBaseType = null;
+            toolSettings.ArrayType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ClassName
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ClassName"/>.</em></p><p>The class name of the generated client.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetClassName(this NSwagSwaggerToCSharpClientSettings toolSettings, string className)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ClassName = className;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ClassName"/>.</em></p><p>The class name of the generated client.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetClassName(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ClassName = null;
             return toolSettings;
         }
         #endregion
@@ -6466,87 +5902,75 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region GenerateDefaultValues
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
+        #region DateTimeType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.DateTimeType"/>.</em></p><p>The date time .NET type (default: 'DateTime').</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetGenerateDefaultValues(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? generateDefaultValues)
+        public static NSwagSwaggerToCSharpClientSettings SetDateTimeType(this NSwagSwaggerToCSharpClientSettings toolSettings, string dateTimeType)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDefaultValues = generateDefaultValues;
+            toolSettings.DateTimeType = dateTimeType;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.DateTimeType"/>.</em></p><p>The date time .NET type (default: 'DateTime').</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetGenerateDefaultValues(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        public static NSwagSwaggerToCSharpClientSettings ResetDateTimeType(this NSwagSwaggerToCSharpClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDefaultValues = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings EnableGenerateDefaultValues(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDefaultValues = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings DisableGenerateDefaultValues(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDefaultValues = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ToggleGenerateDefaultValues(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDefaultValues = !toolSettings.GenerateDefaultValues;
+            toolSettings.DateTimeType = null;
             return toolSettings;
         }
         #endregion
-        #region GenerateDataAnnotations
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateDataAnnotations"/>.</em></p><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
+        #region DateType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.DateType"/>.</em></p><p>The date .NET type (default: 'DateTime').</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetGenerateDataAnnotations(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? generateDataAnnotations)
+        public static NSwagSwaggerToCSharpClientSettings SetDateType(this NSwagSwaggerToCSharpClientSettings toolSettings, string dateType)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDataAnnotations = generateDataAnnotations;
+            toolSettings.DateType = dateType;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateDataAnnotations"/>.</em></p><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.DateType"/>.</em></p><p>The date .NET type (default: 'DateTime').</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetGenerateDataAnnotations(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        public static NSwagSwaggerToCSharpClientSettings ResetDateType(this NSwagSwaggerToCSharpClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDataAnnotations = null;
+            toolSettings.DateType = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateDataAnnotations"/>.</em></p><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
+        #endregion
+        #region DictionaryBaseType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.DictionaryBaseType"/>.</em></p><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings EnableGenerateDataAnnotations(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        public static NSwagSwaggerToCSharpClientSettings SetDictionaryBaseType(this NSwagSwaggerToCSharpClientSettings toolSettings, string dictionaryBaseType)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDataAnnotations = true;
+            toolSettings.DictionaryBaseType = dictionaryBaseType;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateDataAnnotations"/>.</em></p><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.DictionaryBaseType"/>.</em></p><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings DisableGenerateDataAnnotations(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        public static NSwagSwaggerToCSharpClientSettings ResetDictionaryBaseType(this NSwagSwaggerToCSharpClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDataAnnotations = false;
+            toolSettings.DictionaryBaseType = null;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.GenerateDataAnnotations"/>.</em></p><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
+        #endregion
+        #region DictionaryType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.DictionaryType"/>.</em></p><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ToggleGenerateDataAnnotations(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        public static NSwagSwaggerToCSharpClientSettings SetDictionaryType(this NSwagSwaggerToCSharpClientSettings toolSettings, string dictionaryType)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDataAnnotations = !toolSettings.GenerateDataAnnotations;
+            toolSettings.DictionaryType = dictionaryType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.DictionaryType"/>.</em></p><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetDictionaryType(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DictionaryType = null;
             return toolSettings;
         }
         #endregion
@@ -6610,45 +6034,87 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region HandleReferences
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.HandleReferences"/>.</em></p><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
+        #region GenerateDataAnnotations
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateDataAnnotations"/>.</em></p><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetHandleReferences(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? handleReferences)
+        public static NSwagSwaggerToCSharpClientSettings SetGenerateDataAnnotations(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? generateDataAnnotations)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HandleReferences = handleReferences;
+            toolSettings.GenerateDataAnnotations = generateDataAnnotations;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.HandleReferences"/>.</em></p><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateDataAnnotations"/>.</em></p><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetHandleReferences(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        public static NSwagSwaggerToCSharpClientSettings ResetGenerateDataAnnotations(this NSwagSwaggerToCSharpClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HandleReferences = null;
+            toolSettings.GenerateDataAnnotations = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.HandleReferences"/>.</em></p><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateDataAnnotations"/>.</em></p><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings EnableHandleReferences(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        public static NSwagSwaggerToCSharpClientSettings EnableGenerateDataAnnotations(this NSwagSwaggerToCSharpClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HandleReferences = true;
+            toolSettings.GenerateDataAnnotations = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.HandleReferences"/>.</em></p><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateDataAnnotations"/>.</em></p><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings DisableHandleReferences(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        public static NSwagSwaggerToCSharpClientSettings DisableGenerateDataAnnotations(this NSwagSwaggerToCSharpClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HandleReferences = false;
+            toolSettings.GenerateDataAnnotations = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.HandleReferences"/>.</em></p><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.GenerateDataAnnotations"/>.</em></p><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ToggleHandleReferences(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        public static NSwagSwaggerToCSharpClientSettings ToggleGenerateDataAnnotations(this NSwagSwaggerToCSharpClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HandleReferences = !toolSettings.HandleReferences;
+            toolSettings.GenerateDataAnnotations = !toolSettings.GenerateDataAnnotations;
+            return toolSettings;
+        }
+        #endregion
+        #region GenerateDefaultValues
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetGenerateDefaultValues(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? generateDefaultValues)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateDefaultValues = generateDefaultValues;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetGenerateDefaultValues(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateDefaultValues = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings EnableGenerateDefaultValues(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateDefaultValues = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings DisableGenerateDefaultValues(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateDefaultValues = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ToggleGenerateDefaultValues(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateDefaultValues = !toolSettings.GenerateDefaultValues;
             return toolSettings;
         }
         #endregion
@@ -6736,6 +6202,234 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
+        #region GenerateJsonMethods
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateJsonMethods"/>.</em></p><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetGenerateJsonMethods(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? generateJsonMethods)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateJsonMethods = generateJsonMethods;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateJsonMethods"/>.</em></p><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetGenerateJsonMethods(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateJsonMethods = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateJsonMethods"/>.</em></p><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings EnableGenerateJsonMethods(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateJsonMethods = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateJsonMethods"/>.</em></p><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings DisableGenerateJsonMethods(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateJsonMethods = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.GenerateJsonMethods"/>.</em></p><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ToggleGenerateJsonMethods(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateJsonMethods = !toolSettings.GenerateJsonMethods;
+            return toolSettings;
+        }
+        #endregion
+        #region GenerateOptionalParameters
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateOptionalParameters"/>.</em></p><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetGenerateOptionalParameters(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? generateOptionalParameters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateOptionalParameters = generateOptionalParameters;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateOptionalParameters"/>.</em></p><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetGenerateOptionalParameters(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateOptionalParameters = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateOptionalParameters"/>.</em></p><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings EnableGenerateOptionalParameters(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateOptionalParameters = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateOptionalParameters"/>.</em></p><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings DisableGenerateOptionalParameters(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateOptionalParameters = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.GenerateOptionalParameters"/>.</em></p><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ToggleGenerateOptionalParameters(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateOptionalParameters = !toolSettings.GenerateOptionalParameters;
+            return toolSettings;
+        }
+        #endregion
+        #region GenerateResponseClasses
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateResponseClasses"/>.</em></p><p>Specifies whether to generate response classes (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetGenerateResponseClasses(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? generateResponseClasses)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateResponseClasses = generateResponseClasses;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.GenerateResponseClasses"/>.</em></p><p>Specifies whether to generate response classes (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetGenerateResponseClasses(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateResponseClasses = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateResponseClasses"/>.</em></p><p>Specifies whether to generate response classes (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings EnableGenerateResponseClasses(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateResponseClasses = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.GenerateResponseClasses"/>.</em></p><p>Specifies whether to generate response classes (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings DisableGenerateResponseClasses(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateResponseClasses = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.GenerateResponseClasses"/>.</em></p><p>Specifies whether to generate response classes (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ToggleGenerateResponseClasses(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateResponseClasses = !toolSettings.GenerateResponseClasses;
+            return toolSettings;
+        }
+        #endregion
+        #region HandleReferences
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.HandleReferences"/>.</em></p><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetHandleReferences(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? handleReferences)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HandleReferences = handleReferences;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.HandleReferences"/>.</em></p><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetHandleReferences(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HandleReferences = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.HandleReferences"/>.</em></p><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings EnableHandleReferences(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HandleReferences = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.HandleReferences"/>.</em></p><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings DisableHandleReferences(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HandleReferences = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.HandleReferences"/>.</em></p><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ToggleHandleReferences(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HandleReferences = !toolSettings.HandleReferences;
+            return toolSettings;
+        }
+        #endregion
+        #region JsonConverters
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.JsonConverters"/> to a new list.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetJsonConverters(this NSwagSwaggerToCSharpClientSettings toolSettings, params string[] jsonConverters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.JsonConvertersInternal = jsonConverters.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.JsonConverters"/> to a new list.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetJsonConverters(this NSwagSwaggerToCSharpClientSettings toolSettings, IEnumerable<string> jsonConverters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.JsonConvertersInternal = jsonConverters.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpClientSettings.JsonConverters"/>.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings AddJsonConverters(this NSwagSwaggerToCSharpClientSettings toolSettings, params string[] jsonConverters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.JsonConvertersInternal.AddRange(jsonConverters);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpClientSettings.JsonConverters"/>.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings AddJsonConverters(this NSwagSwaggerToCSharpClientSettings toolSettings, IEnumerable<string> jsonConverters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.JsonConvertersInternal.AddRange(jsonConverters);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="NSwagSwaggerToCSharpClientSettings.JsonConverters"/>.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ClearJsonConverters(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.JsonConvertersInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpClientSettings.JsonConverters"/>.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings RemoveJsonConverters(this NSwagSwaggerToCSharpClientSettings toolSettings, params string[] jsonConverters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(jsonConverters);
+            toolSettings.JsonConvertersInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpClientSettings.JsonConverters"/>.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings RemoveJsonConverters(this NSwagSwaggerToCSharpClientSettings toolSettings, IEnumerable<string> jsonConverters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(jsonConverters);
+            toolSettings.JsonConvertersInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
         #region JsonSerializerSettingsTransformationMethod
         /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.JsonSerializerSettingsTransformationMethod"/>.</em></p><p>The name of a static method which is called to transform the JsonSerializerSettings used in the generated ToJson()/FromJson() methods (default: none).</p></summary>
         [Pure]
@@ -6751,6 +6445,348 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.JsonSerializerSettingsTransformationMethod = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Namespace
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.Namespace"/>.</em></p><p>The namespace of the generated classes.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetNamespace(this NSwagSwaggerToCSharpClientSettings toolSettings, string @namespace)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Namespace = @namespace;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.Namespace"/>.</em></p><p>The namespace of the generated classes.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetNamespace(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Namespace = null;
+            return toolSettings;
+        }
+        #endregion
+        #region OperationGenerationMode
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.OperationGenerationMode"/>.</em></p><p>The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetOperationGenerationMode(this NSwagSwaggerToCSharpClientSettings toolSettings, OperationGenerationMode operationGenerationMode)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OperationGenerationMode = operationGenerationMode;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.OperationGenerationMode"/>.</em></p><p>The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetOperationGenerationMode(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OperationGenerationMode = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ParameterArrayType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ParameterArrayType"/>.</em></p><p>The generic array .NET type of operation parameters (default: 'IEnumerable').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetParameterArrayType(this NSwagSwaggerToCSharpClientSettings toolSettings, string parameterArrayType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ParameterArrayType = parameterArrayType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ParameterArrayType"/>.</em></p><p>The generic array .NET type of operation parameters (default: 'IEnumerable').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetParameterArrayType(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ParameterArrayType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ParameterDictionaryType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ParameterDictionaryType"/>.</em></p><p>The generic dictionary .NET type of operation parameters (default: 'IReadOnlyDictionary').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetParameterDictionaryType(this NSwagSwaggerToCSharpClientSettings toolSettings, string parameterDictionaryType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ParameterDictionaryType = parameterDictionaryType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ParameterDictionaryType"/>.</em></p><p>The generic dictionary .NET type of operation parameters (default: 'IReadOnlyDictionary').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetParameterDictionaryType(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ParameterDictionaryType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region RequiredPropertiesMustBeDefined
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.RequiredPropertiesMustBeDefined"/>.</em></p><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetRequiredPropertiesMustBeDefined(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? requiredPropertiesMustBeDefined)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequiredPropertiesMustBeDefined = requiredPropertiesMustBeDefined;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.RequiredPropertiesMustBeDefined"/>.</em></p><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetRequiredPropertiesMustBeDefined(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequiredPropertiesMustBeDefined = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.RequiredPropertiesMustBeDefined"/>.</em></p><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings EnableRequiredPropertiesMustBeDefined(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequiredPropertiesMustBeDefined = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.RequiredPropertiesMustBeDefined"/>.</em></p><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings DisableRequiredPropertiesMustBeDefined(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequiredPropertiesMustBeDefined = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.RequiredPropertiesMustBeDefined"/>.</em></p><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ToggleRequiredPropertiesMustBeDefined(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequiredPropertiesMustBeDefined = !toolSettings.RequiredPropertiesMustBeDefined;
+            return toolSettings;
+        }
+        #endregion
+        #region ResponseArrayType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ResponseArrayType"/>.</em></p><p>The generic array .NET type of operation responses (default: 'ICollection').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetResponseArrayType(this NSwagSwaggerToCSharpClientSettings toolSettings, string responseArrayType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResponseArrayType = responseArrayType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ResponseArrayType"/>.</em></p><p>The generic array .NET type of operation responses (default: 'ICollection').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetResponseArrayType(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResponseArrayType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ResponseClass
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ResponseClass"/>.</em></p><p>The response class (default 'SwaggerResponse', may use '{controller}' placeholder).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetResponseClass(this NSwagSwaggerToCSharpClientSettings toolSettings, string responseClass)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResponseClass = responseClass;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ResponseClass"/>.</em></p><p>The response class (default 'SwaggerResponse', may use '{controller}' placeholder).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetResponseClass(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResponseClass = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ResponseDictionaryType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ResponseDictionaryType"/>.</em></p><p>The generic dictionary .NET type of operation responses (default: 'IDictionary').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetResponseDictionaryType(this NSwagSwaggerToCSharpClientSettings toolSettings, string responseDictionaryType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResponseDictionaryType = responseDictionaryType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ResponseDictionaryType"/>.</em></p><p>The generic dictionary .NET type of operation responses (default: 'IDictionary').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetResponseDictionaryType(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResponseDictionaryType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region TimeSpanType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.TimeSpanType"/>.</em></p><p>The time span .NET type (default: 'TimeSpan').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetTimeSpanType(this NSwagSwaggerToCSharpClientSettings toolSettings, string timeSpanType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TimeSpanType = timeSpanType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.TimeSpanType"/>.</em></p><p>The time span .NET type (default: 'TimeSpan').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetTimeSpanType(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TimeSpanType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region TimeType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.TimeType"/>.</em></p><p>The time .NET type (default: 'TimeSpan').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetTimeType(this NSwagSwaggerToCSharpClientSettings toolSettings, string timeType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TimeType = timeType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.TimeType"/>.</em></p><p>The time .NET type (default: 'TimeSpan').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetTimeType(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TimeType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region WrapResponseMethods
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponseMethods"/> to a new list.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetWrapResponseMethods(this NSwagSwaggerToCSharpClientSettings toolSettings, params string[] wrapResponseMethods)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapResponseMethodsInternal = wrapResponseMethods.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponseMethods"/> to a new list.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetWrapResponseMethods(this NSwagSwaggerToCSharpClientSettings toolSettings, IEnumerable<string> wrapResponseMethods)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapResponseMethodsInternal = wrapResponseMethods.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings AddWrapResponseMethods(this NSwagSwaggerToCSharpClientSettings toolSettings, params string[] wrapResponseMethods)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapResponseMethodsInternal.AddRange(wrapResponseMethods);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings AddWrapResponseMethods(this NSwagSwaggerToCSharpClientSettings toolSettings, IEnumerable<string> wrapResponseMethods)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapResponseMethodsInternal.AddRange(wrapResponseMethods);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ClearWrapResponseMethods(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapResponseMethodsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings RemoveWrapResponseMethods(this NSwagSwaggerToCSharpClientSettings toolSettings, params string[] wrapResponseMethods)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(wrapResponseMethods);
+            toolSettings.WrapResponseMethodsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings RemoveWrapResponseMethods(this NSwagSwaggerToCSharpClientSettings toolSettings, IEnumerable<string> wrapResponseMethods)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(wrapResponseMethods);
+            toolSettings.WrapResponseMethodsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region WrapResponses
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetWrapResponses(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? wrapResponses)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapResponses = wrapResponses;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetWrapResponses(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapResponses = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings EnableWrapResponses(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapResponses = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings DisableWrapResponses(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapResponses = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ToggleWrapResponses(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapResponses = !toolSettings.WrapResponses;
+            return toolSettings;
+        }
+        #endregion
+        #region EnumNameGeneratorType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.EnumNameGeneratorType"/>.</em></p><p>The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetEnumNameGeneratorType(this NSwagSwaggerToCSharpClientSettings toolSettings, string enumNameGeneratorType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnumNameGeneratorType = enumNameGeneratorType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.EnumNameGeneratorType"/>.</em></p><p>The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetEnumNameGeneratorType(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnumNameGeneratorType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region PropertyNameGeneratorType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.PropertyNameGeneratorType"/>.</em></p><p>The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetPropertyNameGeneratorType(this NSwagSwaggerToCSharpClientSettings toolSettings, string propertyNameGeneratorType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertyNameGeneratorType = propertyNameGeneratorType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.PropertyNameGeneratorType"/>.</em></p><p>The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetPropertyNameGeneratorType(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertyNameGeneratorType = null;
             return toolSettings;
         }
         #endregion
@@ -6787,42 +6823,6 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameGenerator = null;
-            return toolSettings;
-        }
-        #endregion
-        #region PropertyNameGeneratorType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.PropertyNameGeneratorType"/>.</em></p><p>The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetPropertyNameGeneratorType(this NSwagSwaggerToCSharpClientSettings toolSettings, string propertyNameGeneratorType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertyNameGeneratorType = propertyNameGeneratorType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.PropertyNameGeneratorType"/>.</em></p><p>The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetPropertyNameGeneratorType(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertyNameGeneratorType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region EnumNameGeneratorType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.EnumNameGeneratorType"/>.</em></p><p>The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings SetEnumNameGeneratorType(this NSwagSwaggerToCSharpClientSettings toolSettings, string enumNameGeneratorType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.EnumNameGeneratorType = enumNameGeneratorType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.EnumNameGeneratorType"/>.</em></p><p>The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpClientSettings ResetEnumNameGeneratorType(this NSwagSwaggerToCSharpClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.EnumNameGeneratorType = null;
             return toolSettings;
         }
         #endregion
@@ -6948,6 +6948,24 @@ namespace Nuke.NSwag
     [ExcludeFromCodeCoverage]
     public static partial class NSwagSwaggerToCSharpControllerSettingsExtensions
     {
+        #region AspNetNamespace
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.AspNetNamespace"/>.</em></p><p>The ASP.NET (Core) framework namespace (default: 'System.Web.Http').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetAspNetNamespace(this NSwagSwaggerToCSharpControllerSettings toolSettings, string aspNetNamespace)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AspNetNamespace = aspNetNamespace;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.AspNetNamespace"/>.</em></p><p>The ASP.NET (Core) framework namespace (default: 'System.Web.Http').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetAspNetNamespace(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AspNetNamespace = null;
+            return toolSettings;
+        }
+        #endregion
         #region ControllerBaseClass
         /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.ControllerBaseClass"/>.</em></p><p>The controller base class (empty for 'ApiController').</p></summary>
         [Pure]
@@ -7026,57 +7044,63 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region AspNetNamespace
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.AspNetNamespace"/>.</em></p><p>The ASP.NET (Core) framework namespace (default: 'System.Web.Http').</p></summary>
+        #region AdditionalContractNamespaceUsages
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.AdditionalContractNamespaceUsages"/> to a new list.</em></p><p>The additional contract namespace usages.</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetAspNetNamespace(this NSwagSwaggerToCSharpControllerSettings toolSettings, string aspNetNamespace)
+        public static NSwagSwaggerToCSharpControllerSettings SetAdditionalContractNamespaceUsages(this NSwagSwaggerToCSharpControllerSettings toolSettings, params string[] additionalContractNamespaceUsages)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AspNetNamespace = aspNetNamespace;
+            toolSettings.AdditionalContractNamespaceUsagesInternal = additionalContractNamespaceUsages.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.AspNetNamespace"/>.</em></p><p>The ASP.NET (Core) framework namespace (default: 'System.Web.Http').</p></summary>
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.AdditionalContractNamespaceUsages"/> to a new list.</em></p><p>The additional contract namespace usages.</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetAspNetNamespace(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        public static NSwagSwaggerToCSharpControllerSettings SetAdditionalContractNamespaceUsages(this NSwagSwaggerToCSharpControllerSettings toolSettings, IEnumerable<string> additionalContractNamespaceUsages)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AspNetNamespace = null;
+            toolSettings.AdditionalContractNamespaceUsagesInternal = additionalContractNamespaceUsages.ToList();
             return toolSettings;
         }
-        #endregion
-        #region ClassName
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.ClassName"/>.</em></p><p>The class name of the generated client.</p></summary>
+        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpControllerSettings.AdditionalContractNamespaceUsages"/>.</em></p><p>The additional contract namespace usages.</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetClassName(this NSwagSwaggerToCSharpControllerSettings toolSettings, string className)
+        public static NSwagSwaggerToCSharpControllerSettings AddAdditionalContractNamespaceUsages(this NSwagSwaggerToCSharpControllerSettings toolSettings, params string[] additionalContractNamespaceUsages)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ClassName = className;
+            toolSettings.AdditionalContractNamespaceUsagesInternal.AddRange(additionalContractNamespaceUsages);
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.ClassName"/>.</em></p><p>The class name of the generated client.</p></summary>
+        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpControllerSettings.AdditionalContractNamespaceUsages"/>.</em></p><p>The additional contract namespace usages.</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetClassName(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        public static NSwagSwaggerToCSharpControllerSettings AddAdditionalContractNamespaceUsages(this NSwagSwaggerToCSharpControllerSettings toolSettings, IEnumerable<string> additionalContractNamespaceUsages)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ClassName = null;
+            toolSettings.AdditionalContractNamespaceUsagesInternal.AddRange(additionalContractNamespaceUsages);
             return toolSettings;
         }
-        #endregion
-        #region OperationGenerationMode
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.OperationGenerationMode"/>.</em></p><p>The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments').</p></summary>
+        /// <summary><p><em>Clears <see cref="NSwagSwaggerToCSharpControllerSettings.AdditionalContractNamespaceUsages"/>.</em></p><p>The additional contract namespace usages.</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetOperationGenerationMode(this NSwagSwaggerToCSharpControllerSettings toolSettings, OperationGenerationMode operationGenerationMode)
+        public static NSwagSwaggerToCSharpControllerSettings ClearAdditionalContractNamespaceUsages(this NSwagSwaggerToCSharpControllerSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.OperationGenerationMode = operationGenerationMode;
+            toolSettings.AdditionalContractNamespaceUsagesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.OperationGenerationMode"/>.</em></p><p>The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments').</p></summary>
+        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpControllerSettings.AdditionalContractNamespaceUsages"/>.</em></p><p>The additional contract namespace usages.</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetOperationGenerationMode(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        public static NSwagSwaggerToCSharpControllerSettings RemoveAdditionalContractNamespaceUsages(this NSwagSwaggerToCSharpControllerSettings toolSettings, params string[] additionalContractNamespaceUsages)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.OperationGenerationMode = null;
+            var hashSet = new HashSet<string>(additionalContractNamespaceUsages);
+            toolSettings.AdditionalContractNamespaceUsagesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpControllerSettings.AdditionalContractNamespaceUsages"/>.</em></p><p>The additional contract namespace usages.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings RemoveAdditionalContractNamespaceUsages(this NSwagSwaggerToCSharpControllerSettings toolSettings, IEnumerable<string> additionalContractNamespaceUsages)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(additionalContractNamespaceUsages);
+            toolSettings.AdditionalContractNamespaceUsagesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion
@@ -7140,573 +7164,21 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region AdditionalContractNamespaceUsages
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.AdditionalContractNamespaceUsages"/> to a new list.</em></p><p>The additional contract namespace usages.</p></summary>
+        #region ArrayBaseType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.ArrayBaseType"/>.</em></p><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetAdditionalContractNamespaceUsages(this NSwagSwaggerToCSharpControllerSettings toolSettings, params string[] additionalContractNamespaceUsages)
+        public static NSwagSwaggerToCSharpControllerSettings SetArrayBaseType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string arrayBaseType)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AdditionalContractNamespaceUsagesInternal = additionalContractNamespaceUsages.ToList();
+            toolSettings.ArrayBaseType = arrayBaseType;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.AdditionalContractNamespaceUsages"/> to a new list.</em></p><p>The additional contract namespace usages.</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.ArrayBaseType"/>.</em></p><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetAdditionalContractNamespaceUsages(this NSwagSwaggerToCSharpControllerSettings toolSettings, IEnumerable<string> additionalContractNamespaceUsages)
+        public static NSwagSwaggerToCSharpControllerSettings ResetArrayBaseType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.AdditionalContractNamespaceUsagesInternal = additionalContractNamespaceUsages.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpControllerSettings.AdditionalContractNamespaceUsages"/>.</em></p><p>The additional contract namespace usages.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings AddAdditionalContractNamespaceUsages(this NSwagSwaggerToCSharpControllerSettings toolSettings, params string[] additionalContractNamespaceUsages)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.AdditionalContractNamespaceUsagesInternal.AddRange(additionalContractNamespaceUsages);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpControllerSettings.AdditionalContractNamespaceUsages"/>.</em></p><p>The additional contract namespace usages.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings AddAdditionalContractNamespaceUsages(this NSwagSwaggerToCSharpControllerSettings toolSettings, IEnumerable<string> additionalContractNamespaceUsages)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.AdditionalContractNamespaceUsagesInternal.AddRange(additionalContractNamespaceUsages);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="NSwagSwaggerToCSharpControllerSettings.AdditionalContractNamespaceUsages"/>.</em></p><p>The additional contract namespace usages.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ClearAdditionalContractNamespaceUsages(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.AdditionalContractNamespaceUsagesInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpControllerSettings.AdditionalContractNamespaceUsages"/>.</em></p><p>The additional contract namespace usages.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings RemoveAdditionalContractNamespaceUsages(this NSwagSwaggerToCSharpControllerSettings toolSettings, params string[] additionalContractNamespaceUsages)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(additionalContractNamespaceUsages);
-            toolSettings.AdditionalContractNamespaceUsagesInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpControllerSettings.AdditionalContractNamespaceUsages"/>.</em></p><p>The additional contract namespace usages.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings RemoveAdditionalContractNamespaceUsages(this NSwagSwaggerToCSharpControllerSettings toolSettings, IEnumerable<string> additionalContractNamespaceUsages)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(additionalContractNamespaceUsages);
-            toolSettings.AdditionalContractNamespaceUsagesInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        #endregion
-        #region GenerateOptionalParameters
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateOptionalParameters"/>.</em></p><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetGenerateOptionalParameters(this NSwagSwaggerToCSharpControllerSettings toolSettings, bool? generateOptionalParameters)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateOptionalParameters = generateOptionalParameters;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateOptionalParameters"/>.</em></p><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetGenerateOptionalParameters(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateOptionalParameters = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateOptionalParameters"/>.</em></p><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings EnableGenerateOptionalParameters(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateOptionalParameters = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateOptionalParameters"/>.</em></p><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings DisableGenerateOptionalParameters(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateOptionalParameters = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateOptionalParameters"/>.</em></p><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ToggleGenerateOptionalParameters(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateOptionalParameters = !toolSettings.GenerateOptionalParameters;
-            return toolSettings;
-        }
-        #endregion
-        #region GenerateJsonMethods
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateJsonMethods"/>.</em></p><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetGenerateJsonMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings, bool? generateJsonMethods)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateJsonMethods = generateJsonMethods;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateJsonMethods"/>.</em></p><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetGenerateJsonMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateJsonMethods = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateJsonMethods"/>.</em></p><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings EnableGenerateJsonMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateJsonMethods = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateJsonMethods"/>.</em></p><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings DisableGenerateJsonMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateJsonMethods = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateJsonMethods"/>.</em></p><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ToggleGenerateJsonMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateJsonMethods = !toolSettings.GenerateJsonMethods;
-            return toolSettings;
-        }
-        #endregion
-        #region ParameterArrayType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.ParameterArrayType"/>.</em></p><p>The generic array .NET type of operation parameters (default: 'IEnumerable').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetParameterArrayType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string parameterArrayType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ParameterArrayType = parameterArrayType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.ParameterArrayType"/>.</em></p><p>The generic array .NET type of operation parameters (default: 'IEnumerable').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetParameterArrayType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ParameterArrayType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region ParameterDictionaryType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.ParameterDictionaryType"/>.</em></p><p>The generic dictionary .NET type of operation parameters (default: 'IReadOnlyDictionary').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetParameterDictionaryType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string parameterDictionaryType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ParameterDictionaryType = parameterDictionaryType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.ParameterDictionaryType"/>.</em></p><p>The generic dictionary .NET type of operation parameters (default: 'IReadOnlyDictionary').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetParameterDictionaryType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ParameterDictionaryType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region ResponseArrayType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.ResponseArrayType"/>.</em></p><p>The generic array .NET type of operation responses (default: 'ICollection').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetResponseArrayType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string responseArrayType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ResponseArrayType = responseArrayType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.ResponseArrayType"/>.</em></p><p>The generic array .NET type of operation responses (default: 'ICollection').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetResponseArrayType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ResponseArrayType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region ResponseDictionaryType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.ResponseDictionaryType"/>.</em></p><p>The generic dictionary .NET type of operation responses (default: 'IDictionary').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetResponseDictionaryType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string responseDictionaryType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ResponseDictionaryType = responseDictionaryType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.ResponseDictionaryType"/>.</em></p><p>The generic dictionary .NET type of operation responses (default: 'IDictionary').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetResponseDictionaryType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ResponseDictionaryType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region WrapResponses
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetWrapResponses(this NSwagSwaggerToCSharpControllerSettings toolSettings, bool? wrapResponses)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponses = wrapResponses;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetWrapResponses(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponses = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings EnableWrapResponses(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponses = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings DisableWrapResponses(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponses = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ToggleWrapResponses(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponses = !toolSettings.WrapResponses;
-            return toolSettings;
-        }
-        #endregion
-        #region WrapResponseMethods
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponseMethods"/> to a new list.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetWrapResponseMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings, params string[] wrapResponseMethods)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponseMethodsInternal = wrapResponseMethods.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponseMethods"/> to a new list.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetWrapResponseMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings, IEnumerable<string> wrapResponseMethods)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponseMethodsInternal = wrapResponseMethods.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings AddWrapResponseMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings, params string[] wrapResponseMethods)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponseMethodsInternal.AddRange(wrapResponseMethods);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings AddWrapResponseMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings, IEnumerable<string> wrapResponseMethods)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponseMethodsInternal.AddRange(wrapResponseMethods);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ClearWrapResponseMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponseMethodsInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings RemoveWrapResponseMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings, params string[] wrapResponseMethods)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(wrapResponseMethods);
-            toolSettings.WrapResponseMethodsInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings RemoveWrapResponseMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings, IEnumerable<string> wrapResponseMethods)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(wrapResponseMethods);
-            toolSettings.WrapResponseMethodsInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        #endregion
-        #region GenerateResponseClasses
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateResponseClasses"/>.</em></p><p>Specifies whether to generate response classes (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetGenerateResponseClasses(this NSwagSwaggerToCSharpControllerSettings toolSettings, bool? generateResponseClasses)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateResponseClasses = generateResponseClasses;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateResponseClasses"/>.</em></p><p>Specifies whether to generate response classes (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetGenerateResponseClasses(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateResponseClasses = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateResponseClasses"/>.</em></p><p>Specifies whether to generate response classes (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings EnableGenerateResponseClasses(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateResponseClasses = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateResponseClasses"/>.</em></p><p>Specifies whether to generate response classes (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings DisableGenerateResponseClasses(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateResponseClasses = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateResponseClasses"/>.</em></p><p>Specifies whether to generate response classes (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ToggleGenerateResponseClasses(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateResponseClasses = !toolSettings.GenerateResponseClasses;
-            return toolSettings;
-        }
-        #endregion
-        #region ResponseClass
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.ResponseClass"/>.</em></p><p>The response class (default 'SwaggerResponse', may use '{controller}' placeholder).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetResponseClass(this NSwagSwaggerToCSharpControllerSettings toolSettings, string responseClass)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ResponseClass = responseClass;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.ResponseClass"/>.</em></p><p>The response class (default 'SwaggerResponse', may use '{controller}' placeholder).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetResponseClass(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ResponseClass = null;
-            return toolSettings;
-        }
-        #endregion
-        #region Namespace
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.Namespace"/>.</em></p><p>The namespace of the generated classes.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetNamespace(this NSwagSwaggerToCSharpControllerSettings toolSettings, string @namespace)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Namespace = @namespace;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.Namespace"/>.</em></p><p>The namespace of the generated classes.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetNamespace(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Namespace = null;
-            return toolSettings;
-        }
-        #endregion
-        #region RequiredPropertiesMustBeDefined
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.RequiredPropertiesMustBeDefined"/>.</em></p><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetRequiredPropertiesMustBeDefined(this NSwagSwaggerToCSharpControllerSettings toolSettings, bool? requiredPropertiesMustBeDefined)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RequiredPropertiesMustBeDefined = requiredPropertiesMustBeDefined;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.RequiredPropertiesMustBeDefined"/>.</em></p><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetRequiredPropertiesMustBeDefined(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RequiredPropertiesMustBeDefined = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpControllerSettings.RequiredPropertiesMustBeDefined"/>.</em></p><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings EnableRequiredPropertiesMustBeDefined(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RequiredPropertiesMustBeDefined = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpControllerSettings.RequiredPropertiesMustBeDefined"/>.</em></p><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings DisableRequiredPropertiesMustBeDefined(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RequiredPropertiesMustBeDefined = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpControllerSettings.RequiredPropertiesMustBeDefined"/>.</em></p><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ToggleRequiredPropertiesMustBeDefined(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RequiredPropertiesMustBeDefined = !toolSettings.RequiredPropertiesMustBeDefined;
-            return toolSettings;
-        }
-        #endregion
-        #region DateType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.DateType"/>.</em></p><p>The date .NET type (default: 'DateTime').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetDateType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string dateType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DateType = dateType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.DateType"/>.</em></p><p>The date .NET type (default: 'DateTime').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetDateType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DateType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region JsonConverters
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.JsonConverters"/> to a new list.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetJsonConverters(this NSwagSwaggerToCSharpControllerSettings toolSettings, params string[] jsonConverters)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.JsonConvertersInternal = jsonConverters.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.JsonConverters"/> to a new list.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetJsonConverters(this NSwagSwaggerToCSharpControllerSettings toolSettings, IEnumerable<string> jsonConverters)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.JsonConvertersInternal = jsonConverters.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpControllerSettings.JsonConverters"/>.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings AddJsonConverters(this NSwagSwaggerToCSharpControllerSettings toolSettings, params string[] jsonConverters)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.JsonConvertersInternal.AddRange(jsonConverters);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpControllerSettings.JsonConverters"/>.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings AddJsonConverters(this NSwagSwaggerToCSharpControllerSettings toolSettings, IEnumerable<string> jsonConverters)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.JsonConvertersInternal.AddRange(jsonConverters);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="NSwagSwaggerToCSharpControllerSettings.JsonConverters"/>.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ClearJsonConverters(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.JsonConvertersInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpControllerSettings.JsonConverters"/>.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings RemoveJsonConverters(this NSwagSwaggerToCSharpControllerSettings toolSettings, params string[] jsonConverters)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(jsonConverters);
-            toolSettings.JsonConvertersInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpControllerSettings.JsonConverters"/>.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings RemoveJsonConverters(this NSwagSwaggerToCSharpControllerSettings toolSettings, IEnumerable<string> jsonConverters)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(jsonConverters);
-            toolSettings.JsonConvertersInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        #endregion
-        #region DateTimeType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.DateTimeType"/>.</em></p><p>The date time .NET type (default: 'DateTime').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetDateTimeType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string dateTimeType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DateTimeType = dateTimeType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.DateTimeType"/>.</em></p><p>The date time .NET type (default: 'DateTime').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetDateTimeType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DateTimeType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region TimeType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.TimeType"/>.</em></p><p>The time .NET type (default: 'TimeSpan').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetTimeType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string timeType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TimeType = timeType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.TimeType"/>.</em></p><p>The time .NET type (default: 'TimeSpan').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetTimeType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TimeType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region TimeSpanType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.TimeSpanType"/>.</em></p><p>The time span .NET type (default: 'TimeSpan').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetTimeSpanType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string timeSpanType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TimeSpanType = timeSpanType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.TimeSpanType"/>.</em></p><p>The time span .NET type (default: 'TimeSpan').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetTimeSpanType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.TimeSpanType = null;
+            toolSettings.ArrayBaseType = null;
             return toolSettings;
         }
         #endregion
@@ -7728,57 +7200,21 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region DictionaryType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.DictionaryType"/>.</em></p><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
+        #region ClassName
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.ClassName"/>.</em></p><p>The class name of the generated client.</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetDictionaryType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string dictionaryType)
+        public static NSwagSwaggerToCSharpControllerSettings SetClassName(this NSwagSwaggerToCSharpControllerSettings toolSettings, string className)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DictionaryType = dictionaryType;
+            toolSettings.ClassName = className;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.DictionaryType"/>.</em></p><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.ClassName"/>.</em></p><p>The class name of the generated client.</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetDictionaryType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        public static NSwagSwaggerToCSharpControllerSettings ResetClassName(this NSwagSwaggerToCSharpControllerSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DictionaryType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region ArrayBaseType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.ArrayBaseType"/>.</em></p><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetArrayBaseType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string arrayBaseType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ArrayBaseType = arrayBaseType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.ArrayBaseType"/>.</em></p><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetArrayBaseType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ArrayBaseType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region DictionaryBaseType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.DictionaryBaseType"/>.</em></p><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetDictionaryBaseType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string dictionaryBaseType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DictionaryBaseType = dictionaryBaseType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.DictionaryBaseType"/>.</em></p><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetDictionaryBaseType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DictionaryBaseType = null;
+            toolSettings.ClassName = null;
             return toolSettings;
         }
         #endregion
@@ -7800,87 +7236,75 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region GenerateDefaultValues
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
+        #region DateTimeType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.DateTimeType"/>.</em></p><p>The date time .NET type (default: 'DateTime').</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetGenerateDefaultValues(this NSwagSwaggerToCSharpControllerSettings toolSettings, bool? generateDefaultValues)
+        public static NSwagSwaggerToCSharpControllerSettings SetDateTimeType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string dateTimeType)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDefaultValues = generateDefaultValues;
+            toolSettings.DateTimeType = dateTimeType;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.DateTimeType"/>.</em></p><p>The date time .NET type (default: 'DateTime').</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetGenerateDefaultValues(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        public static NSwagSwaggerToCSharpControllerSettings ResetDateTimeType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDefaultValues = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings EnableGenerateDefaultValues(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDefaultValues = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings DisableGenerateDefaultValues(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDefaultValues = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ToggleGenerateDefaultValues(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDefaultValues = !toolSettings.GenerateDefaultValues;
+            toolSettings.DateTimeType = null;
             return toolSettings;
         }
         #endregion
-        #region GenerateDataAnnotations
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateDataAnnotations"/>.</em></p><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
+        #region DateType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.DateType"/>.</em></p><p>The date .NET type (default: 'DateTime').</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetGenerateDataAnnotations(this NSwagSwaggerToCSharpControllerSettings toolSettings, bool? generateDataAnnotations)
+        public static NSwagSwaggerToCSharpControllerSettings SetDateType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string dateType)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDataAnnotations = generateDataAnnotations;
+            toolSettings.DateType = dateType;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateDataAnnotations"/>.</em></p><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.DateType"/>.</em></p><p>The date .NET type (default: 'DateTime').</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetGenerateDataAnnotations(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        public static NSwagSwaggerToCSharpControllerSettings ResetDateType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDataAnnotations = null;
+            toolSettings.DateType = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateDataAnnotations"/>.</em></p><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
+        #endregion
+        #region DictionaryBaseType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.DictionaryBaseType"/>.</em></p><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings EnableGenerateDataAnnotations(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        public static NSwagSwaggerToCSharpControllerSettings SetDictionaryBaseType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string dictionaryBaseType)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDataAnnotations = true;
+            toolSettings.DictionaryBaseType = dictionaryBaseType;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateDataAnnotations"/>.</em></p><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.DictionaryBaseType"/>.</em></p><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings DisableGenerateDataAnnotations(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        public static NSwagSwaggerToCSharpControllerSettings ResetDictionaryBaseType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDataAnnotations = false;
+            toolSettings.DictionaryBaseType = null;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateDataAnnotations"/>.</em></p><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
+        #endregion
+        #region DictionaryType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.DictionaryType"/>.</em></p><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ToggleGenerateDataAnnotations(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        public static NSwagSwaggerToCSharpControllerSettings SetDictionaryType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string dictionaryType)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDataAnnotations = !toolSettings.GenerateDataAnnotations;
+            toolSettings.DictionaryType = dictionaryType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.DictionaryType"/>.</em></p><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetDictionaryType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DictionaryType = null;
             return toolSettings;
         }
         #endregion
@@ -7944,45 +7368,87 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region HandleReferences
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.HandleReferences"/>.</em></p><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
+        #region GenerateDataAnnotations
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateDataAnnotations"/>.</em></p><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetHandleReferences(this NSwagSwaggerToCSharpControllerSettings toolSettings, bool? handleReferences)
+        public static NSwagSwaggerToCSharpControllerSettings SetGenerateDataAnnotations(this NSwagSwaggerToCSharpControllerSettings toolSettings, bool? generateDataAnnotations)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HandleReferences = handleReferences;
+            toolSettings.GenerateDataAnnotations = generateDataAnnotations;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.HandleReferences"/>.</em></p><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateDataAnnotations"/>.</em></p><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetHandleReferences(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        public static NSwagSwaggerToCSharpControllerSettings ResetGenerateDataAnnotations(this NSwagSwaggerToCSharpControllerSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HandleReferences = null;
+            toolSettings.GenerateDataAnnotations = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpControllerSettings.HandleReferences"/>.</em></p><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateDataAnnotations"/>.</em></p><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings EnableHandleReferences(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        public static NSwagSwaggerToCSharpControllerSettings EnableGenerateDataAnnotations(this NSwagSwaggerToCSharpControllerSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HandleReferences = true;
+            toolSettings.GenerateDataAnnotations = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpControllerSettings.HandleReferences"/>.</em></p><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateDataAnnotations"/>.</em></p><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings DisableHandleReferences(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        public static NSwagSwaggerToCSharpControllerSettings DisableGenerateDataAnnotations(this NSwagSwaggerToCSharpControllerSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HandleReferences = false;
+            toolSettings.GenerateDataAnnotations = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpControllerSettings.HandleReferences"/>.</em></p><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateDataAnnotations"/>.</em></p><p>Specifies whether to generate data annotation attributes on DTO classes (default: true).</p></summary>
         [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ToggleHandleReferences(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        public static NSwagSwaggerToCSharpControllerSettings ToggleGenerateDataAnnotations(this NSwagSwaggerToCSharpControllerSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.HandleReferences = !toolSettings.HandleReferences;
+            toolSettings.GenerateDataAnnotations = !toolSettings.GenerateDataAnnotations;
+            return toolSettings;
+        }
+        #endregion
+        #region GenerateDefaultValues
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetGenerateDefaultValues(this NSwagSwaggerToCSharpControllerSettings toolSettings, bool? generateDefaultValues)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateDefaultValues = generateDefaultValues;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetGenerateDefaultValues(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateDefaultValues = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings EnableGenerateDefaultValues(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateDefaultValues = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings DisableGenerateDefaultValues(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateDefaultValues = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ToggleGenerateDefaultValues(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateDefaultValues = !toolSettings.GenerateDefaultValues;
             return toolSettings;
         }
         #endregion
@@ -8070,6 +7536,234 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
+        #region GenerateJsonMethods
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateJsonMethods"/>.</em></p><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetGenerateJsonMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings, bool? generateJsonMethods)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateJsonMethods = generateJsonMethods;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateJsonMethods"/>.</em></p><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetGenerateJsonMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateJsonMethods = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateJsonMethods"/>.</em></p><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings EnableGenerateJsonMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateJsonMethods = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateJsonMethods"/>.</em></p><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings DisableGenerateJsonMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateJsonMethods = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateJsonMethods"/>.</em></p><p>Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ToggleGenerateJsonMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateJsonMethods = !toolSettings.GenerateJsonMethods;
+            return toolSettings;
+        }
+        #endregion
+        #region GenerateOptionalParameters
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateOptionalParameters"/>.</em></p><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetGenerateOptionalParameters(this NSwagSwaggerToCSharpControllerSettings toolSettings, bool? generateOptionalParameters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateOptionalParameters = generateOptionalParameters;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateOptionalParameters"/>.</em></p><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetGenerateOptionalParameters(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateOptionalParameters = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateOptionalParameters"/>.</em></p><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings EnableGenerateOptionalParameters(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateOptionalParameters = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateOptionalParameters"/>.</em></p><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings DisableGenerateOptionalParameters(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateOptionalParameters = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateOptionalParameters"/>.</em></p><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ToggleGenerateOptionalParameters(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateOptionalParameters = !toolSettings.GenerateOptionalParameters;
+            return toolSettings;
+        }
+        #endregion
+        #region GenerateResponseClasses
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateResponseClasses"/>.</em></p><p>Specifies whether to generate response classes (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetGenerateResponseClasses(this NSwagSwaggerToCSharpControllerSettings toolSettings, bool? generateResponseClasses)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateResponseClasses = generateResponseClasses;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateResponseClasses"/>.</em></p><p>Specifies whether to generate response classes (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetGenerateResponseClasses(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateResponseClasses = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateResponseClasses"/>.</em></p><p>Specifies whether to generate response classes (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings EnableGenerateResponseClasses(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateResponseClasses = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateResponseClasses"/>.</em></p><p>Specifies whether to generate response classes (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings DisableGenerateResponseClasses(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateResponseClasses = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpControllerSettings.GenerateResponseClasses"/>.</em></p><p>Specifies whether to generate response classes (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ToggleGenerateResponseClasses(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateResponseClasses = !toolSettings.GenerateResponseClasses;
+            return toolSettings;
+        }
+        #endregion
+        #region HandleReferences
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.HandleReferences"/>.</em></p><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetHandleReferences(this NSwagSwaggerToCSharpControllerSettings toolSettings, bool? handleReferences)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HandleReferences = handleReferences;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.HandleReferences"/>.</em></p><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetHandleReferences(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HandleReferences = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpControllerSettings.HandleReferences"/>.</em></p><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings EnableHandleReferences(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HandleReferences = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpControllerSettings.HandleReferences"/>.</em></p><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings DisableHandleReferences(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HandleReferences = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpControllerSettings.HandleReferences"/>.</em></p><p>Use preserve references handling (All) in the JSON serializer (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ToggleHandleReferences(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HandleReferences = !toolSettings.HandleReferences;
+            return toolSettings;
+        }
+        #endregion
+        #region JsonConverters
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.JsonConverters"/> to a new list.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetJsonConverters(this NSwagSwaggerToCSharpControllerSettings toolSettings, params string[] jsonConverters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.JsonConvertersInternal = jsonConverters.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.JsonConverters"/> to a new list.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetJsonConverters(this NSwagSwaggerToCSharpControllerSettings toolSettings, IEnumerable<string> jsonConverters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.JsonConvertersInternal = jsonConverters.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpControllerSettings.JsonConverters"/>.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings AddJsonConverters(this NSwagSwaggerToCSharpControllerSettings toolSettings, params string[] jsonConverters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.JsonConvertersInternal.AddRange(jsonConverters);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpControllerSettings.JsonConverters"/>.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings AddJsonConverters(this NSwagSwaggerToCSharpControllerSettings toolSettings, IEnumerable<string> jsonConverters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.JsonConvertersInternal.AddRange(jsonConverters);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="NSwagSwaggerToCSharpControllerSettings.JsonConverters"/>.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ClearJsonConverters(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.JsonConvertersInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpControllerSettings.JsonConverters"/>.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings RemoveJsonConverters(this NSwagSwaggerToCSharpControllerSettings toolSettings, params string[] jsonConverters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(jsonConverters);
+            toolSettings.JsonConvertersInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpControllerSettings.JsonConverters"/>.</em></p><p>Specifies the custom Json.NET converter types (optional, comma separated).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings RemoveJsonConverters(this NSwagSwaggerToCSharpControllerSettings toolSettings, IEnumerable<string> jsonConverters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(jsonConverters);
+            toolSettings.JsonConvertersInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
         #region JsonSerializerSettingsTransformationMethod
         /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.JsonSerializerSettingsTransformationMethod"/>.</em></p><p>The name of a static method which is called to transform the JsonSerializerSettings used in the generated ToJson()/FromJson() methods (default: none).</p></summary>
         [Pure]
@@ -8085,6 +7779,348 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.JsonSerializerSettingsTransformationMethod = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Namespace
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.Namespace"/>.</em></p><p>The namespace of the generated classes.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetNamespace(this NSwagSwaggerToCSharpControllerSettings toolSettings, string @namespace)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Namespace = @namespace;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.Namespace"/>.</em></p><p>The namespace of the generated classes.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetNamespace(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Namespace = null;
+            return toolSettings;
+        }
+        #endregion
+        #region OperationGenerationMode
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.OperationGenerationMode"/>.</em></p><p>The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetOperationGenerationMode(this NSwagSwaggerToCSharpControllerSettings toolSettings, OperationGenerationMode operationGenerationMode)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OperationGenerationMode = operationGenerationMode;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.OperationGenerationMode"/>.</em></p><p>The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetOperationGenerationMode(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OperationGenerationMode = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ParameterArrayType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.ParameterArrayType"/>.</em></p><p>The generic array .NET type of operation parameters (default: 'IEnumerable').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetParameterArrayType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string parameterArrayType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ParameterArrayType = parameterArrayType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.ParameterArrayType"/>.</em></p><p>The generic array .NET type of operation parameters (default: 'IEnumerable').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetParameterArrayType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ParameterArrayType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ParameterDictionaryType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.ParameterDictionaryType"/>.</em></p><p>The generic dictionary .NET type of operation parameters (default: 'IReadOnlyDictionary').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetParameterDictionaryType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string parameterDictionaryType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ParameterDictionaryType = parameterDictionaryType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.ParameterDictionaryType"/>.</em></p><p>The generic dictionary .NET type of operation parameters (default: 'IReadOnlyDictionary').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetParameterDictionaryType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ParameterDictionaryType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region RequiredPropertiesMustBeDefined
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.RequiredPropertiesMustBeDefined"/>.</em></p><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetRequiredPropertiesMustBeDefined(this NSwagSwaggerToCSharpControllerSettings toolSettings, bool? requiredPropertiesMustBeDefined)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequiredPropertiesMustBeDefined = requiredPropertiesMustBeDefined;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.RequiredPropertiesMustBeDefined"/>.</em></p><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetRequiredPropertiesMustBeDefined(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequiredPropertiesMustBeDefined = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpControllerSettings.RequiredPropertiesMustBeDefined"/>.</em></p><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings EnableRequiredPropertiesMustBeDefined(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequiredPropertiesMustBeDefined = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpControllerSettings.RequiredPropertiesMustBeDefined"/>.</em></p><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings DisableRequiredPropertiesMustBeDefined(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequiredPropertiesMustBeDefined = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpControllerSettings.RequiredPropertiesMustBeDefined"/>.</em></p><p>Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ToggleRequiredPropertiesMustBeDefined(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequiredPropertiesMustBeDefined = !toolSettings.RequiredPropertiesMustBeDefined;
+            return toolSettings;
+        }
+        #endregion
+        #region ResponseArrayType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.ResponseArrayType"/>.</em></p><p>The generic array .NET type of operation responses (default: 'ICollection').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetResponseArrayType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string responseArrayType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResponseArrayType = responseArrayType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.ResponseArrayType"/>.</em></p><p>The generic array .NET type of operation responses (default: 'ICollection').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetResponseArrayType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResponseArrayType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ResponseClass
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.ResponseClass"/>.</em></p><p>The response class (default 'SwaggerResponse', may use '{controller}' placeholder).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetResponseClass(this NSwagSwaggerToCSharpControllerSettings toolSettings, string responseClass)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResponseClass = responseClass;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.ResponseClass"/>.</em></p><p>The response class (default 'SwaggerResponse', may use '{controller}' placeholder).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetResponseClass(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResponseClass = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ResponseDictionaryType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.ResponseDictionaryType"/>.</em></p><p>The generic dictionary .NET type of operation responses (default: 'IDictionary').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetResponseDictionaryType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string responseDictionaryType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResponseDictionaryType = responseDictionaryType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.ResponseDictionaryType"/>.</em></p><p>The generic dictionary .NET type of operation responses (default: 'IDictionary').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetResponseDictionaryType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResponseDictionaryType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region TimeSpanType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.TimeSpanType"/>.</em></p><p>The time span .NET type (default: 'TimeSpan').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetTimeSpanType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string timeSpanType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TimeSpanType = timeSpanType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.TimeSpanType"/>.</em></p><p>The time span .NET type (default: 'TimeSpan').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetTimeSpanType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TimeSpanType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region TimeType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.TimeType"/>.</em></p><p>The time .NET type (default: 'TimeSpan').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetTimeType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string timeType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TimeType = timeType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.TimeType"/>.</em></p><p>The time .NET type (default: 'TimeSpan').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetTimeType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TimeType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region WrapResponseMethods
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponseMethods"/> to a new list.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetWrapResponseMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings, params string[] wrapResponseMethods)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapResponseMethodsInternal = wrapResponseMethods.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponseMethods"/> to a new list.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetWrapResponseMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings, IEnumerable<string> wrapResponseMethods)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapResponseMethodsInternal = wrapResponseMethods.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings AddWrapResponseMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings, params string[] wrapResponseMethods)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapResponseMethodsInternal.AddRange(wrapResponseMethods);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings AddWrapResponseMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings, IEnumerable<string> wrapResponseMethods)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapResponseMethodsInternal.AddRange(wrapResponseMethods);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ClearWrapResponseMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapResponseMethodsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings RemoveWrapResponseMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings, params string[] wrapResponseMethods)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(wrapResponseMethods);
+            toolSettings.WrapResponseMethodsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings RemoveWrapResponseMethods(this NSwagSwaggerToCSharpControllerSettings toolSettings, IEnumerable<string> wrapResponseMethods)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(wrapResponseMethods);
+            toolSettings.WrapResponseMethodsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region WrapResponses
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetWrapResponses(this NSwagSwaggerToCSharpControllerSettings toolSettings, bool? wrapResponses)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapResponses = wrapResponses;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetWrapResponses(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapResponses = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings EnableWrapResponses(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapResponses = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings DisableWrapResponses(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapResponses = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpControllerSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ToggleWrapResponses(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.WrapResponses = !toolSettings.WrapResponses;
+            return toolSettings;
+        }
+        #endregion
+        #region EnumNameGeneratorType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.EnumNameGeneratorType"/>.</em></p><p>The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetEnumNameGeneratorType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string enumNameGeneratorType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnumNameGeneratorType = enumNameGeneratorType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.EnumNameGeneratorType"/>.</em></p><p>The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetEnumNameGeneratorType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnumNameGeneratorType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region PropertyNameGeneratorType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.PropertyNameGeneratorType"/>.</em></p><p>The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetPropertyNameGeneratorType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string propertyNameGeneratorType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertyNameGeneratorType = propertyNameGeneratorType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.PropertyNameGeneratorType"/>.</em></p><p>The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetPropertyNameGeneratorType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertyNameGeneratorType = null;
             return toolSettings;
         }
         #endregion
@@ -8121,42 +8157,6 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameGenerator = null;
-            return toolSettings;
-        }
-        #endregion
-        #region PropertyNameGeneratorType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.PropertyNameGeneratorType"/>.</em></p><p>The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetPropertyNameGeneratorType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string propertyNameGeneratorType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertyNameGeneratorType = propertyNameGeneratorType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.PropertyNameGeneratorType"/>.</em></p><p>The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetPropertyNameGeneratorType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertyNameGeneratorType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region EnumNameGeneratorType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.EnumNameGeneratorType"/>.</em></p><p>The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings SetEnumNameGeneratorType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string enumNameGeneratorType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.EnumNameGeneratorType = enumNameGeneratorType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.EnumNameGeneratorType"/>.</em></p><p>The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToCSharpControllerSettings ResetEnumNameGeneratorType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.EnumNameGeneratorType = null;
             return toolSettings;
         }
         #endregion
@@ -8282,6 +8282,24 @@ namespace Nuke.NSwag
     [ExcludeFromCodeCoverage]
     public static partial class NSwagSwaggerToTypeScriptClientSettingsExtensions
     {
+        #region BaseUrlTokenName
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.BaseUrlTokenName"/>.</em></p><p>The token name for injecting the API base URL string (used in the Angular template, default: 'API_BASE_URL').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetBaseUrlTokenName(this NSwagSwaggerToTypeScriptClientSettings toolSettings, string baseUrlTokenName)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BaseUrlTokenName = baseUrlTokenName;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.BaseUrlTokenName"/>.</em></p><p>The token name for injecting the API base URL string (used in the Angular template, default: 'API_BASE_URL').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ResetBaseUrlTokenName(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BaseUrlTokenName = null;
+            return toolSettings;
+        }
+        #endregion
         #region ClassName
         /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ClassName"/>.</em></p><p>The class name of the generated client.</p></summary>
         [Pure]
@@ -8300,189 +8318,141 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region ModuleName
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ModuleName"/>.</em></p><p>The TypeScript module name (default: '', no module).</p></summary>
+        #region ClassTypes
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ClassTypes"/> to a new list.</em></p><p>The type names which always generate plain TypeScript classes.</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetModuleName(this NSwagSwaggerToTypeScriptClientSettings toolSettings, string moduleName)
+        public static NSwagSwaggerToTypeScriptClientSettings SetClassTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] classTypes)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ModuleName = moduleName;
+            toolSettings.ClassTypesInternal = classTypes.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.ModuleName"/>.</em></p><p>The TypeScript module name (default: '', no module).</p></summary>
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ClassTypes"/> to a new list.</em></p><p>The type names which always generate plain TypeScript classes.</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetModuleName(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        public static NSwagSwaggerToTypeScriptClientSettings SetClassTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> classTypes)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ModuleName = null;
+            toolSettings.ClassTypesInternal = classTypes.ToList();
             return toolSettings;
         }
-        #endregion
-        #region Namespace
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.Namespace"/>.</em></p><p>The TypeScript namespace (default: '', no namespace).</p></summary>
+        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToTypeScriptClientSettings.ClassTypes"/>.</em></p><p>The type names which always generate plain TypeScript classes.</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetNamespace(this NSwagSwaggerToTypeScriptClientSettings toolSettings, string @namespace)
+        public static NSwagSwaggerToTypeScriptClientSettings AddClassTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] classTypes)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Namespace = @namespace;
+            toolSettings.ClassTypesInternal.AddRange(classTypes);
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.Namespace"/>.</em></p><p>The TypeScript namespace (default: '', no namespace).</p></summary>
+        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToTypeScriptClientSettings.ClassTypes"/>.</em></p><p>The type names which always generate plain TypeScript classes.</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetNamespace(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        public static NSwagSwaggerToTypeScriptClientSettings AddClassTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> classTypes)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Namespace = null;
+            toolSettings.ClassTypesInternal.AddRange(classTypes);
             return toolSettings;
         }
-        #endregion
-        #region TypeScriptVersion
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.TypeScriptVersion"/>.</em></p><p>The target TypeScript version (default: 1.8).</p></summary>
+        /// <summary><p><em>Clears <see cref="NSwagSwaggerToTypeScriptClientSettings.ClassTypes"/>.</em></p><p>The type names which always generate plain TypeScript classes.</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetTypeScriptVersion(this NSwagSwaggerToTypeScriptClientSettings toolSettings, decimal? typeScriptVersion)
+        public static NSwagSwaggerToTypeScriptClientSettings ClearClassTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TypeScriptVersion = typeScriptVersion;
+            toolSettings.ClassTypesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.TypeScriptVersion"/>.</em></p><p>The target TypeScript version (default: 1.8).</p></summary>
+        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToTypeScriptClientSettings.ClassTypes"/>.</em></p><p>The type names which always generate plain TypeScript classes.</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetTypeScriptVersion(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        public static NSwagSwaggerToTypeScriptClientSettings RemoveClassTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] classTypes)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TypeScriptVersion = null;
+            var hashSet = new HashSet<string>(classTypes);
+            toolSettings.ClassTypesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        #endregion
-        #region Template
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.Template"/>.</em></p><p>The type of the asynchronism handling ('JQueryCallbacks', 'JQueryPromises', 'AngularJS', 'Angular', 'Fetch', 'Aurelia').</p></summary>
+        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToTypeScriptClientSettings.ClassTypes"/>.</em></p><p>The type names which always generate plain TypeScript classes.</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetTemplate(this NSwagSwaggerToTypeScriptClientSettings toolSettings, TypeScriptTemplate template)
+        public static NSwagSwaggerToTypeScriptClientSettings RemoveClassTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> classTypes)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Template = template;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.Template"/>.</em></p><p>The type of the asynchronism handling ('JQueryCallbacks', 'JQueryPromises', 'AngularJS', 'Angular', 'Fetch', 'Aurelia').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetTemplate(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Template = null;
+            var hashSet = new HashSet<string>(classTypes);
+            toolSettings.ClassTypesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion
-        #region PromiseType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.PromiseType"/>.</em></p><p>The promise type ('Promise' or 'QPromise').</p></summary>
+        #region ClientBaseClass
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ClientBaseClass"/>.</em></p><p>The base class of the generated client classes (optional, must be imported or implemented in the extension code).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetPromiseType(this NSwagSwaggerToTypeScriptClientSettings toolSettings, PromiseType promiseType)
+        public static NSwagSwaggerToTypeScriptClientSettings SetClientBaseClass(this NSwagSwaggerToTypeScriptClientSettings toolSettings, string clientBaseClass)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.PromiseType = promiseType;
+            toolSettings.ClientBaseClass = clientBaseClass;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.PromiseType"/>.</em></p><p>The promise type ('Promise' or 'QPromise').</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.ClientBaseClass"/>.</em></p><p>The base class of the generated client classes (optional, must be imported or implemented in the extension code).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetPromiseType(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        public static NSwagSwaggerToTypeScriptClientSettings ResetClientBaseClass(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.PromiseType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region HttpClass
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.HttpClass"/>.</em></p><p>The Angular HTTP service class (default 'Http', 'HttpClient').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetHttpClass(this NSwagSwaggerToTypeScriptClientSettings toolSettings, HttpClass httpClass)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.HttpClass = httpClass;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.HttpClass"/>.</em></p><p>The Angular HTTP service class (default 'Http', 'HttpClient').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetHttpClass(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.HttpClass = null;
+            toolSettings.ClientBaseClass = null;
             return toolSettings;
         }
         #endregion
-        #region UseSingletonProvider
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.UseSingletonProvider"/>.</em></p><p>Specifies whether to use the Angular 6 Singleton Provider (Angular template only, default: false).</p></summary>
+        #region ConfigurationClass
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ConfigurationClass"/>.</em></p><p>The configuration class. The setting ClientBaseClass must be set. (empty for no configuration class).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetUseSingletonProvider(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? useSingletonProvider)
+        public static NSwagSwaggerToTypeScriptClientSettings SetConfigurationClass(this NSwagSwaggerToTypeScriptClientSettings toolSettings, string configurationClass)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.UseSingletonProvider = useSingletonProvider;
+            toolSettings.ConfigurationClass = configurationClass;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.UseSingletonProvider"/>.</em></p><p>Specifies whether to use the Angular 6 Singleton Provider (Angular template only, default: false).</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.ConfigurationClass"/>.</em></p><p>The configuration class. The setting ClientBaseClass must be set. (empty for no configuration class).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetUseSingletonProvider(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        public static NSwagSwaggerToTypeScriptClientSettings ResetConfigurationClass(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.UseSingletonProvider = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.UseSingletonProvider"/>.</em></p><p>Specifies whether to use the Angular 6 Singleton Provider (Angular template only, default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings EnableUseSingletonProvider(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.UseSingletonProvider = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.UseSingletonProvider"/>.</em></p><p>Specifies whether to use the Angular 6 Singleton Provider (Angular template only, default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings DisableUseSingletonProvider(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.UseSingletonProvider = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.UseSingletonProvider"/>.</em></p><p>Specifies whether to use the Angular 6 Singleton Provider (Angular template only, default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ToggleUseSingletonProvider(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.UseSingletonProvider = !toolSettings.UseSingletonProvider;
+            toolSettings.ConfigurationClass = null;
             return toolSettings;
         }
         #endregion
-        #region InjectionTokenType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.InjectionTokenType"/>.</em></p><p>The Angular injection token type (default 'OpaqueToken', 'InjectionToken').</p></summary>
+        #region ConvertConstructorInterfaceData
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ConvertConstructorInterfaceData"/>.</em></p><p>Convert POJO objects in the constructor data to DTO instances (GenerateConstructorInterface must be enabled, default: false).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetInjectionTokenType(this NSwagSwaggerToTypeScriptClientSettings toolSettings, InjectionTokenType injectionTokenType)
+        public static NSwagSwaggerToTypeScriptClientSettings SetConvertConstructorInterfaceData(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? convertConstructorInterfaceData)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.InjectionTokenType = injectionTokenType;
+            toolSettings.ConvertConstructorInterfaceData = convertConstructorInterfaceData;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.InjectionTokenType"/>.</em></p><p>The Angular injection token type (default 'OpaqueToken', 'InjectionToken').</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.ConvertConstructorInterfaceData"/>.</em></p><p>Convert POJO objects in the constructor data to DTO instances (GenerateConstructorInterface must be enabled, default: false).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetInjectionTokenType(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        public static NSwagSwaggerToTypeScriptClientSettings ResetConvertConstructorInterfaceData(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.InjectionTokenType = null;
+            toolSettings.ConvertConstructorInterfaceData = null;
             return toolSettings;
         }
-        #endregion
-        #region RxJsVersion
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.RxJsVersion"/>.</em></p><p>The target RxJs version (default: 5.0).</p></summary>
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.ConvertConstructorInterfaceData"/>.</em></p><p>Convert POJO objects in the constructor data to DTO instances (GenerateConstructorInterface must be enabled, default: false).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetRxJsVersion(this NSwagSwaggerToTypeScriptClientSettings toolSettings, decimal? rxJsVersion)
+        public static NSwagSwaggerToTypeScriptClientSettings EnableConvertConstructorInterfaceData(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RxJsVersion = rxJsVersion;
+            toolSettings.ConvertConstructorInterfaceData = true;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.RxJsVersion"/>.</em></p><p>The target RxJs version (default: 5.0).</p></summary>
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.ConvertConstructorInterfaceData"/>.</em></p><p>Convert POJO objects in the constructor data to DTO instances (GenerateConstructorInterface must be enabled, default: false).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetRxJsVersion(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        public static NSwagSwaggerToTypeScriptClientSettings DisableConvertConstructorInterfaceData(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.RxJsVersion = null;
+            toolSettings.ConvertConstructorInterfaceData = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.ConvertConstructorInterfaceData"/>.</em></p><p>Convert POJO objects in the constructor data to DTO instances (GenerateConstructorInterface must be enabled, default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ToggleConvertConstructorInterfaceData(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConvertConstructorInterfaceData = !toolSettings.ConvertConstructorInterfaceData;
             return toolSettings;
         }
         #endregion
@@ -8504,21 +8474,141 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region NullValue
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.NullValue"/>.</em></p><p>The null value used in object initializers (default 'Undefined', 'Null').</p></summary>
+        #region ExcludedTypeNames
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ExcludedTypeNames"/> to a new list.</em></p><p>The excluded DTO type names (must be defined in an import or other namespace).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetNullValue(this NSwagSwaggerToTypeScriptClientSettings toolSettings, TypeScriptNullValue nullValue)
+        public static NSwagSwaggerToTypeScriptClientSettings SetExcludedTypeNames(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] excludedTypeNames)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NullValue = nullValue;
+            toolSettings.ExcludedTypeNamesInternal = excludedTypeNames.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.NullValue"/>.</em></p><p>The null value used in object initializers (default 'Undefined', 'Null').</p></summary>
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ExcludedTypeNames"/> to a new list.</em></p><p>The excluded DTO type names (must be defined in an import or other namespace).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetNullValue(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        public static NSwagSwaggerToTypeScriptClientSettings SetExcludedTypeNames(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> excludedTypeNames)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.NullValue = null;
+            toolSettings.ExcludedTypeNamesInternal = excludedTypeNames.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToTypeScriptClientSettings.ExcludedTypeNames"/>.</em></p><p>The excluded DTO type names (must be defined in an import or other namespace).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings AddExcludedTypeNames(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] excludedTypeNames)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludedTypeNamesInternal.AddRange(excludedTypeNames);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToTypeScriptClientSettings.ExcludedTypeNames"/>.</em></p><p>The excluded DTO type names (must be defined in an import or other namespace).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings AddExcludedTypeNames(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> excludedTypeNames)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludedTypeNamesInternal.AddRange(excludedTypeNames);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="NSwagSwaggerToTypeScriptClientSettings.ExcludedTypeNames"/>.</em></p><p>The excluded DTO type names (must be defined in an import or other namespace).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ClearExcludedTypeNames(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludedTypeNamesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToTypeScriptClientSettings.ExcludedTypeNames"/>.</em></p><p>The excluded DTO type names (must be defined in an import or other namespace).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings RemoveExcludedTypeNames(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] excludedTypeNames)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(excludedTypeNames);
+            toolSettings.ExcludedTypeNamesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToTypeScriptClientSettings.ExcludedTypeNames"/>.</em></p><p>The excluded DTO type names (must be defined in an import or other namespace).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings RemoveExcludedTypeNames(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> excludedTypeNames)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(excludedTypeNames);
+            toolSettings.ExcludedTypeNamesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region ExtendedClasses
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ExtendedClasses"/> to a new list.</em></p><p>The list of extended classes.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetExtendedClasses(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] extendedClasses)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExtendedClassesInternal = extendedClasses.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ExtendedClasses"/> to a new list.</em></p><p>The list of extended classes.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetExtendedClasses(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> extendedClasses)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExtendedClassesInternal = extendedClasses.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToTypeScriptClientSettings.ExtendedClasses"/>.</em></p><p>The list of extended classes.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings AddExtendedClasses(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] extendedClasses)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExtendedClassesInternal.AddRange(extendedClasses);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToTypeScriptClientSettings.ExtendedClasses"/>.</em></p><p>The list of extended classes.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings AddExtendedClasses(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> extendedClasses)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExtendedClassesInternal.AddRange(extendedClasses);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="NSwagSwaggerToTypeScriptClientSettings.ExtendedClasses"/>.</em></p><p>The list of extended classes.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ClearExtendedClasses(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExtendedClassesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToTypeScriptClientSettings.ExtendedClasses"/>.</em></p><p>The list of extended classes.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings RemoveExtendedClasses(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] extendedClasses)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(extendedClasses);
+            toolSettings.ExtendedClassesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToTypeScriptClientSettings.ExtendedClasses"/>.</em></p><p>The list of extended classes.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings RemoveExtendedClasses(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> extendedClasses)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(extendedClasses);
+            toolSettings.ExtendedClassesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region ExtensionCode
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ExtensionCode"/>.</em></p><p>The extension code (string or file path).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetExtensionCode(this NSwagSwaggerToTypeScriptClientSettings toolSettings, string extensionCode)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExtensionCode = extensionCode;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.ExtensionCode"/>.</em></p><p>The extension code (string or file path).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ResetExtensionCode(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExtensionCode = null;
             return toolSettings;
         }
         #endregion
@@ -8606,6 +8696,174 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
+        #region GenerateCloneMethod
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateCloneMethod"/>.</em></p><p>Specifies whether a clone() method should be generated in the DTO classes (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetGenerateCloneMethod(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? generateCloneMethod)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateCloneMethod = generateCloneMethod;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateCloneMethod"/>.</em></p><p>Specifies whether a clone() method should be generated in the DTO classes (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ResetGenerateCloneMethod(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateCloneMethod = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateCloneMethod"/>.</em></p><p>Specifies whether a clone() method should be generated in the DTO classes (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings EnableGenerateCloneMethod(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateCloneMethod = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateCloneMethod"/>.</em></p><p>Specifies whether a clone() method should be generated in the DTO classes (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings DisableGenerateCloneMethod(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateCloneMethod = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateCloneMethod"/>.</em></p><p>Specifies whether a clone() method should be generated in the DTO classes (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ToggleGenerateCloneMethod(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateCloneMethod = !toolSettings.GenerateCloneMethod;
+            return toolSettings;
+        }
+        #endregion
+        #region GenerateConstructorInterface
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateConstructorInterface"/>.</em></p><p>Generate an class interface which is used in the constructor to initialize the class (only available when TypeStyle is Class, default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetGenerateConstructorInterface(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? generateConstructorInterface)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateConstructorInterface = generateConstructorInterface;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateConstructorInterface"/>.</em></p><p>Generate an class interface which is used in the constructor to initialize the class (only available when TypeStyle is Class, default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ResetGenerateConstructorInterface(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateConstructorInterface = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateConstructorInterface"/>.</em></p><p>Generate an class interface which is used in the constructor to initialize the class (only available when TypeStyle is Class, default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings EnableGenerateConstructorInterface(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateConstructorInterface = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateConstructorInterface"/>.</em></p><p>Generate an class interface which is used in the constructor to initialize the class (only available when TypeStyle is Class, default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings DisableGenerateConstructorInterface(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateConstructorInterface = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateConstructorInterface"/>.</em></p><p>Generate an class interface which is used in the constructor to initialize the class (only available when TypeStyle is Class, default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ToggleGenerateConstructorInterface(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateConstructorInterface = !toolSettings.GenerateConstructorInterface;
+            return toolSettings;
+        }
+        #endregion
+        #region GenerateDefaultValues
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetGenerateDefaultValues(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? generateDefaultValues)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateDefaultValues = generateDefaultValues;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ResetGenerateDefaultValues(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateDefaultValues = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings EnableGenerateDefaultValues(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateDefaultValues = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings DisableGenerateDefaultValues(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateDefaultValues = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ToggleGenerateDefaultValues(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateDefaultValues = !toolSettings.GenerateDefaultValues;
+            return toolSettings;
+        }
+        #endregion
+        #region GenerateDtoTypes
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateDtoTypes"/>.</em></p><p>Specifies whether to generate DTO classes.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetGenerateDtoTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? generateDtoTypes)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateDtoTypes = generateDtoTypes;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateDtoTypes"/>.</em></p><p>Specifies whether to generate DTO classes.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ResetGenerateDtoTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateDtoTypes = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateDtoTypes"/>.</em></p><p>Specifies whether to generate DTO classes.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings EnableGenerateDtoTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateDtoTypes = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateDtoTypes"/>.</em></p><p>Specifies whether to generate DTO classes.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings DisableGenerateDtoTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateDtoTypes = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateDtoTypes"/>.</em></p><p>Specifies whether to generate DTO classes.</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ToggleGenerateDtoTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GenerateDtoTypes = !toolSettings.GenerateDtoTypes;
+            return toolSettings;
+        }
+        #endregion
         #region GenerateOptionalParameters
         /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateOptionalParameters"/>.</em></p><p>Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false).</p></summary>
         [Pure]
@@ -8645,168 +8903,6 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.GenerateOptionalParameters = !toolSettings.GenerateOptionalParameters;
-            return toolSettings;
-        }
-        #endregion
-        #region WrapDtoExceptions
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapDtoExceptions"/>.</em></p><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetWrapDtoExceptions(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? wrapDtoExceptions)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapDtoExceptions = wrapDtoExceptions;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapDtoExceptions"/>.</em></p><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetWrapDtoExceptions(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapDtoExceptions = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapDtoExceptions"/>.</em></p><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings EnableWrapDtoExceptions(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapDtoExceptions = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapDtoExceptions"/>.</em></p><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings DisableWrapDtoExceptions(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapDtoExceptions = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapDtoExceptions"/>.</em></p><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ToggleWrapDtoExceptions(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapDtoExceptions = !toolSettings.WrapDtoExceptions;
-            return toolSettings;
-        }
-        #endregion
-        #region ClientBaseClass
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ClientBaseClass"/>.</em></p><p>The base class of the generated client classes (optional, must be imported or implemented in the extension code).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetClientBaseClass(this NSwagSwaggerToTypeScriptClientSettings toolSettings, string clientBaseClass)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ClientBaseClass = clientBaseClass;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.ClientBaseClass"/>.</em></p><p>The base class of the generated client classes (optional, must be imported or implemented in the extension code).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetClientBaseClass(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ClientBaseClass = null;
-            return toolSettings;
-        }
-        #endregion
-        #region WrapResponses
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access (experimental).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetWrapResponses(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? wrapResponses)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponses = wrapResponses;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access (experimental).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetWrapResponses(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponses = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access (experimental).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings EnableWrapResponses(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponses = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access (experimental).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings DisableWrapResponses(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponses = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access (experimental).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ToggleWrapResponses(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponses = !toolSettings.WrapResponses;
-            return toolSettings;
-        }
-        #endregion
-        #region WrapResponseMethods
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponseMethods"/> to a new list.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetWrapResponseMethods(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] wrapResponseMethods)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponseMethodsInternal = wrapResponseMethods.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponseMethods"/> to a new list.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetWrapResponseMethods(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> wrapResponseMethods)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponseMethodsInternal = wrapResponseMethods.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings AddWrapResponseMethods(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] wrapResponseMethods)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponseMethodsInternal.AddRange(wrapResponseMethods);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings AddWrapResponseMethods(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> wrapResponseMethods)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponseMethodsInternal.AddRange(wrapResponseMethods);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ClearWrapResponseMethods(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.WrapResponseMethodsInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings RemoveWrapResponseMethods(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] wrapResponseMethods)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(wrapResponseMethods);
-            toolSettings.WrapResponseMethodsInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings RemoveWrapResponseMethods(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> wrapResponseMethods)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(wrapResponseMethods);
-            toolSettings.WrapResponseMethodsInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion
@@ -8852,21 +8948,255 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region ResponseClass
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ResponseClass"/>.</em></p><p>The response class (default 'SwaggerResponse', may use '{controller}' placeholder).</p></summary>
+        #region HandleReferences
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.HandleReferences"/>.</em></p><p>Handle JSON references (default: false).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetResponseClass(this NSwagSwaggerToTypeScriptClientSettings toolSettings, string responseClass)
+        public static NSwagSwaggerToTypeScriptClientSettings SetHandleReferences(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? handleReferences)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ResponseClass = responseClass;
+            toolSettings.HandleReferences = handleReferences;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.ResponseClass"/>.</em></p><p>The response class (default 'SwaggerResponse', may use '{controller}' placeholder).</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.HandleReferences"/>.</em></p><p>Handle JSON references (default: false).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetResponseClass(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        public static NSwagSwaggerToTypeScriptClientSettings ResetHandleReferences(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ResponseClass = null;
+            toolSettings.HandleReferences = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.HandleReferences"/>.</em></p><p>Handle JSON references (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings EnableHandleReferences(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HandleReferences = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.HandleReferences"/>.</em></p><p>Handle JSON references (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings DisableHandleReferences(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HandleReferences = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.HandleReferences"/>.</em></p><p>Handle JSON references (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ToggleHandleReferences(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HandleReferences = !toolSettings.HandleReferences;
+            return toolSettings;
+        }
+        #endregion
+        #region HttpClass
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.HttpClass"/>.</em></p><p>The Angular HTTP service class (default 'Http', 'HttpClient').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetHttpClass(this NSwagSwaggerToTypeScriptClientSettings toolSettings, HttpClass httpClass)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HttpClass = httpClass;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.HttpClass"/>.</em></p><p>The Angular HTTP service class (default 'Http', 'HttpClient').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ResetHttpClass(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HttpClass = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ImportRequiredTypes
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ImportRequiredTypes"/>.</em></p><p>Specifies whether required types should be imported (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetImportRequiredTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? importRequiredTypes)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ImportRequiredTypes = importRequiredTypes;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.ImportRequiredTypes"/>.</em></p><p>Specifies whether required types should be imported (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ResetImportRequiredTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ImportRequiredTypes = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.ImportRequiredTypes"/>.</em></p><p>Specifies whether required types should be imported (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings EnableImportRequiredTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ImportRequiredTypes = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.ImportRequiredTypes"/>.</em></p><p>Specifies whether required types should be imported (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings DisableImportRequiredTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ImportRequiredTypes = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.ImportRequiredTypes"/>.</em></p><p>Specifies whether required types should be imported (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ToggleImportRequiredTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ImportRequiredTypes = !toolSettings.ImportRequiredTypes;
+            return toolSettings;
+        }
+        #endregion
+        #region InjectionTokenType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.InjectionTokenType"/>.</em></p><p>The Angular injection token type (default 'OpaqueToken', 'InjectionToken').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetInjectionTokenType(this NSwagSwaggerToTypeScriptClientSettings toolSettings, InjectionTokenType injectionTokenType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.InjectionTokenType = injectionTokenType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.InjectionTokenType"/>.</em></p><p>The Angular injection token type (default 'OpaqueToken', 'InjectionToken').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ResetInjectionTokenType(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.InjectionTokenType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region MarkOptionalProperties
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.MarkOptionalProperties"/>.</em></p><p>Specifies whether to mark optional properties with ? (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetMarkOptionalProperties(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? markOptionalProperties)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MarkOptionalProperties = markOptionalProperties;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.MarkOptionalProperties"/>.</em></p><p>Specifies whether to mark optional properties with ? (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ResetMarkOptionalProperties(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MarkOptionalProperties = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.MarkOptionalProperties"/>.</em></p><p>Specifies whether to mark optional properties with ? (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings EnableMarkOptionalProperties(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MarkOptionalProperties = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.MarkOptionalProperties"/>.</em></p><p>Specifies whether to mark optional properties with ? (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings DisableMarkOptionalProperties(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MarkOptionalProperties = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.MarkOptionalProperties"/>.</em></p><p>Specifies whether to mark optional properties with ? (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ToggleMarkOptionalProperties(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MarkOptionalProperties = !toolSettings.MarkOptionalProperties;
+            return toolSettings;
+        }
+        #endregion
+        #region ModuleName
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ModuleName"/>.</em></p><p>The TypeScript module name (default: '', no module).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetModuleName(this NSwagSwaggerToTypeScriptClientSettings toolSettings, string moduleName)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ModuleName = moduleName;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.ModuleName"/>.</em></p><p>The TypeScript module name (default: '', no module).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ResetModuleName(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ModuleName = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Namespace
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.Namespace"/>.</em></p><p>The TypeScript namespace (default: '', no namespace).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetNamespace(this NSwagSwaggerToTypeScriptClientSettings toolSettings, string @namespace)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Namespace = @namespace;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.Namespace"/>.</em></p><p>The TypeScript namespace (default: '', no namespace).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ResetNamespace(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Namespace = null;
+            return toolSettings;
+        }
+        #endregion
+        #region NullValue
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.NullValue"/>.</em></p><p>The null value used in object initializers (default 'Undefined', 'Null').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetNullValue(this NSwagSwaggerToTypeScriptClientSettings toolSettings, TypeScriptNullValue nullValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NullValue = nullValue;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.NullValue"/>.</em></p><p>The null value used in object initializers (default 'Undefined', 'Null').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ResetNullValue(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NullValue = null;
+            return toolSettings;
+        }
+        #endregion
+        #region OperationGenerationMode
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.OperationGenerationMode"/>.</em></p><p>The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetOperationGenerationMode(this NSwagSwaggerToTypeScriptClientSettings toolSettings, OperationGenerationMode operationGenerationMode)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OperationGenerationMode = operationGenerationMode;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.OperationGenerationMode"/>.</em></p><p>The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ResetOperationGenerationMode(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OperationGenerationMode = null;
+            return toolSettings;
+        }
+        #endregion
+        #region PromiseType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.PromiseType"/>.</em></p><p>The promise type ('Promise' or 'QPromise').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetPromiseType(this NSwagSwaggerToTypeScriptClientSettings toolSettings, PromiseType promiseType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PromiseType = promiseType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.PromiseType"/>.</em></p><p>The promise type ('Promise' or 'QPromise').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ResetPromiseType(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PromiseType = null;
             return toolSettings;
         }
         #endregion
@@ -8930,21 +9260,195 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region ConfigurationClass
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ConfigurationClass"/>.</em></p><p>The configuration class. The setting ClientBaseClass must be set. (empty for no configuration class).</p></summary>
+        #region QueryNullValue
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.QueryNullValue"/>.</em></p><p>The null value used for query parameters which are null (default: '').</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetConfigurationClass(this NSwagSwaggerToTypeScriptClientSettings toolSettings, string configurationClass)
+        public static NSwagSwaggerToTypeScriptClientSettings SetQueryNullValue(this NSwagSwaggerToTypeScriptClientSettings toolSettings, string queryNullValue)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ConfigurationClass = configurationClass;
+            toolSettings.QueryNullValue = queryNullValue;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.ConfigurationClass"/>.</em></p><p>The configuration class. The setting ClientBaseClass must be set. (empty for no configuration class).</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.QueryNullValue"/>.</em></p><p>The null value used for query parameters which are null (default: '').</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetConfigurationClass(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        public static NSwagSwaggerToTypeScriptClientSettings ResetQueryNullValue(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ConfigurationClass = null;
+            toolSettings.QueryNullValue = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ResponseClass
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ResponseClass"/>.</em></p><p>The response class (default 'SwaggerResponse', may use '{controller}' placeholder).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetResponseClass(this NSwagSwaggerToTypeScriptClientSettings toolSettings, string responseClass)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResponseClass = responseClass;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.ResponseClass"/>.</em></p><p>The response class (default 'SwaggerResponse', may use '{controller}' placeholder).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ResetResponseClass(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResponseClass = null;
+            return toolSettings;
+        }
+        #endregion
+        #region RxJsVersion
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.RxJsVersion"/>.</em></p><p>The target RxJs version (default: 5.0).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetRxJsVersion(this NSwagSwaggerToTypeScriptClientSettings toolSettings, decimal? rxJsVersion)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RxJsVersion = rxJsVersion;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.RxJsVersion"/>.</em></p><p>The target RxJs version (default: 5.0).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ResetRxJsVersion(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RxJsVersion = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Template
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.Template"/>.</em></p><p>The type of the asynchronism handling ('JQueryCallbacks', 'JQueryPromises', 'AngularJS', 'Angular', 'Fetch', 'Aurelia').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetTemplate(this NSwagSwaggerToTypeScriptClientSettings toolSettings, TypeScriptTemplate template)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Template = template;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.Template"/>.</em></p><p>The type of the asynchronism handling ('JQueryCallbacks', 'JQueryPromises', 'AngularJS', 'Angular', 'Fetch', 'Aurelia').</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ResetTemplate(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Template = null;
+            return toolSettings;
+        }
+        #endregion
+        #region TypeScriptVersion
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.TypeScriptVersion"/>.</em></p><p>The target TypeScript version (default: 1.8).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetTypeScriptVersion(this NSwagSwaggerToTypeScriptClientSettings toolSettings, decimal? typeScriptVersion)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TypeScriptVersion = typeScriptVersion;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.TypeScriptVersion"/>.</em></p><p>The target TypeScript version (default: 1.8).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ResetTypeScriptVersion(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TypeScriptVersion = null;
+            return toolSettings;
+        }
+        #endregion
+        #region TypeStyle
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.TypeStyle"/>.</em></p><p>The type style (default: Class).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetTypeStyle(this NSwagSwaggerToTypeScriptClientSettings toolSettings, TypeScriptTypeStyle typeStyle)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TypeStyle = typeStyle;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.TypeStyle"/>.</em></p><p>The type style (default: Class).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ResetTypeStyle(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TypeStyle = null;
+            return toolSettings;
+        }
+        #endregion
+        #region UseGetBaseUrlMethod
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.UseGetBaseUrlMethod"/>.</em></p><p>Specifies whether to use the 'getBaseUrl(defaultUrl: string)' method from the base class (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetUseGetBaseUrlMethod(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? useGetBaseUrlMethod)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseGetBaseUrlMethod = useGetBaseUrlMethod;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.UseGetBaseUrlMethod"/>.</em></p><p>Specifies whether to use the 'getBaseUrl(defaultUrl: string)' method from the base class (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ResetUseGetBaseUrlMethod(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseGetBaseUrlMethod = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.UseGetBaseUrlMethod"/>.</em></p><p>Specifies whether to use the 'getBaseUrl(defaultUrl: string)' method from the base class (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings EnableUseGetBaseUrlMethod(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseGetBaseUrlMethod = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.UseGetBaseUrlMethod"/>.</em></p><p>Specifies whether to use the 'getBaseUrl(defaultUrl: string)' method from the base class (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings DisableUseGetBaseUrlMethod(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseGetBaseUrlMethod = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.UseGetBaseUrlMethod"/>.</em></p><p>Specifies whether to use the 'getBaseUrl(defaultUrl: string)' method from the base class (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ToggleUseGetBaseUrlMethod(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseGetBaseUrlMethod = !toolSettings.UseGetBaseUrlMethod;
+            return toolSettings;
+        }
+        #endregion
+        #region UseSingletonProvider
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.UseSingletonProvider"/>.</em></p><p>Specifies whether to use the Angular 6 Singleton Provider (Angular template only, default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetUseSingletonProvider(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? useSingletonProvider)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseSingletonProvider = useSingletonProvider;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.UseSingletonProvider"/>.</em></p><p>Specifies whether to use the Angular 6 Singleton Provider (Angular template only, default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ResetUseSingletonProvider(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseSingletonProvider = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.UseSingletonProvider"/>.</em></p><p>Specifies whether to use the Angular 6 Singleton Provider (Angular template only, default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings EnableUseSingletonProvider(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseSingletonProvider = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.UseSingletonProvider"/>.</em></p><p>Specifies whether to use the Angular 6 Singleton Provider (Angular template only, default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings DisableUseSingletonProvider(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseSingletonProvider = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.UseSingletonProvider"/>.</em></p><p>Specifies whether to use the Angular 6 Singleton Provider (Angular template only, default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ToggleUseSingletonProvider(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseSingletonProvider = !toolSettings.UseSingletonProvider;
             return toolSettings;
         }
         #endregion
@@ -9032,651 +9536,183 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
-        #region GenerateDtoTypes
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateDtoTypes"/>.</em></p><p>Specifies whether to generate DTO classes.</p></summary>
+        #region WrapDtoExceptions
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapDtoExceptions"/>.</em></p><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: false).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetGenerateDtoTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? generateDtoTypes)
+        public static NSwagSwaggerToTypeScriptClientSettings SetWrapDtoExceptions(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? wrapDtoExceptions)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDtoTypes = generateDtoTypes;
+            toolSettings.WrapDtoExceptions = wrapDtoExceptions;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateDtoTypes"/>.</em></p><p>Specifies whether to generate DTO classes.</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapDtoExceptions"/>.</em></p><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: false).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetGenerateDtoTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        public static NSwagSwaggerToTypeScriptClientSettings ResetWrapDtoExceptions(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDtoTypes = null;
+            toolSettings.WrapDtoExceptions = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateDtoTypes"/>.</em></p><p>Specifies whether to generate DTO classes.</p></summary>
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapDtoExceptions"/>.</em></p><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: false).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings EnableGenerateDtoTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        public static NSwagSwaggerToTypeScriptClientSettings EnableWrapDtoExceptions(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDtoTypes = true;
+            toolSettings.WrapDtoExceptions = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateDtoTypes"/>.</em></p><p>Specifies whether to generate DTO classes.</p></summary>
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapDtoExceptions"/>.</em></p><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: false).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings DisableGenerateDtoTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        public static NSwagSwaggerToTypeScriptClientSettings DisableWrapDtoExceptions(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDtoTypes = false;
+            toolSettings.WrapDtoExceptions = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateDtoTypes"/>.</em></p><p>Specifies whether to generate DTO classes.</p></summary>
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapDtoExceptions"/>.</em></p><p>Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: false).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ToggleGenerateDtoTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        public static NSwagSwaggerToTypeScriptClientSettings ToggleWrapDtoExceptions(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDtoTypes = !toolSettings.GenerateDtoTypes;
-            return toolSettings;
-        }
-        #endregion
-        #region OperationGenerationMode
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.OperationGenerationMode"/>.</em></p><p>The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetOperationGenerationMode(this NSwagSwaggerToTypeScriptClientSettings toolSettings, OperationGenerationMode operationGenerationMode)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.OperationGenerationMode = operationGenerationMode;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.OperationGenerationMode"/>.</em></p><p>The operation generation mode ('SingleClientFromOperationId' or 'MultipleClientsFromPathSegments').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetOperationGenerationMode(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.OperationGenerationMode = null;
+            toolSettings.WrapDtoExceptions = !toolSettings.WrapDtoExceptions;
             return toolSettings;
         }
         #endregion
-        #region MarkOptionalProperties
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.MarkOptionalProperties"/>.</em></p><p>Specifies whether to mark optional properties with ? (default: false).</p></summary>
+        #region WrapResponseMethods
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponseMethods"/> to a new list.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetMarkOptionalProperties(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? markOptionalProperties)
+        public static NSwagSwaggerToTypeScriptClientSettings SetWrapResponseMethods(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] wrapResponseMethods)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MarkOptionalProperties = markOptionalProperties;
+            toolSettings.WrapResponseMethodsInternal = wrapResponseMethods.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.MarkOptionalProperties"/>.</em></p><p>Specifies whether to mark optional properties with ? (default: false).</p></summary>
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponseMethods"/> to a new list.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetMarkOptionalProperties(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        public static NSwagSwaggerToTypeScriptClientSettings SetWrapResponseMethods(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> wrapResponseMethods)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MarkOptionalProperties = null;
+            toolSettings.WrapResponseMethodsInternal = wrapResponseMethods.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.MarkOptionalProperties"/>.</em></p><p>Specifies whether to mark optional properties with ? (default: false).</p></summary>
+        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings EnableMarkOptionalProperties(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        public static NSwagSwaggerToTypeScriptClientSettings AddWrapResponseMethods(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] wrapResponseMethods)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MarkOptionalProperties = true;
+            toolSettings.WrapResponseMethodsInternal.AddRange(wrapResponseMethods);
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.MarkOptionalProperties"/>.</em></p><p>Specifies whether to mark optional properties with ? (default: false).</p></summary>
+        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings DisableMarkOptionalProperties(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        public static NSwagSwaggerToTypeScriptClientSettings AddWrapResponseMethods(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> wrapResponseMethods)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MarkOptionalProperties = false;
+            toolSettings.WrapResponseMethodsInternal.AddRange(wrapResponseMethods);
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.MarkOptionalProperties"/>.</em></p><p>Specifies whether to mark optional properties with ? (default: false).</p></summary>
+        /// <summary><p><em>Clears <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ToggleMarkOptionalProperties(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        public static NSwagSwaggerToTypeScriptClientSettings ClearWrapResponseMethods(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.MarkOptionalProperties = !toolSettings.MarkOptionalProperties;
+            toolSettings.WrapResponseMethodsInternal.Clear();
             return toolSettings;
         }
-        #endregion
-        #region GenerateCloneMethod
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateCloneMethod"/>.</em></p><p>Specifies whether a clone() method should be generated in the DTO classes (default: false).</p></summary>
+        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetGenerateCloneMethod(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? generateCloneMethod)
+        public static NSwagSwaggerToTypeScriptClientSettings RemoveWrapResponseMethods(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] wrapResponseMethods)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateCloneMethod = generateCloneMethod;
+            var hashSet = new HashSet<string>(wrapResponseMethods);
+            toolSettings.WrapResponseMethodsInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateCloneMethod"/>.</em></p><p>Specifies whether a clone() method should be generated in the DTO classes (default: false).</p></summary>
+        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponseMethods"/>.</em></p><p>List of methods where responses are wrapped ('ControllerName.MethodName', WrapResponses must be true).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetGenerateCloneMethod(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        public static NSwagSwaggerToTypeScriptClientSettings RemoveWrapResponseMethods(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> wrapResponseMethods)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateCloneMethod = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateCloneMethod"/>.</em></p><p>Specifies whether a clone() method should be generated in the DTO classes (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings EnableGenerateCloneMethod(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateCloneMethod = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateCloneMethod"/>.</em></p><p>Specifies whether a clone() method should be generated in the DTO classes (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings DisableGenerateCloneMethod(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateCloneMethod = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateCloneMethod"/>.</em></p><p>Specifies whether a clone() method should be generated in the DTO classes (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ToggleGenerateCloneMethod(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateCloneMethod = !toolSettings.GenerateCloneMethod;
+            var hashSet = new HashSet<string>(wrapResponseMethods);
+            toolSettings.WrapResponseMethodsInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion
-        #region TypeStyle
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.TypeStyle"/>.</em></p><p>The type style (default: Class).</p></summary>
+        #region WrapResponses
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access (experimental).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetTypeStyle(this NSwagSwaggerToTypeScriptClientSettings toolSettings, TypeScriptTypeStyle typeStyle)
+        public static NSwagSwaggerToTypeScriptClientSettings SetWrapResponses(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? wrapResponses)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TypeStyle = typeStyle;
+            toolSettings.WrapResponses = wrapResponses;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.TypeStyle"/>.</em></p><p>The type style (default: Class).</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access (experimental).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetTypeStyle(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        public static NSwagSwaggerToTypeScriptClientSettings ResetWrapResponses(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.TypeStyle = null;
+            toolSettings.WrapResponses = null;
             return toolSettings;
         }
-        #endregion
-        #region ClassTypes
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ClassTypes"/> to a new list.</em></p><p>The type names which always generate plain TypeScript classes.</p></summary>
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access (experimental).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetClassTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] classTypes)
+        public static NSwagSwaggerToTypeScriptClientSettings EnableWrapResponses(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ClassTypesInternal = classTypes.ToList();
+            toolSettings.WrapResponses = true;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ClassTypes"/> to a new list.</em></p><p>The type names which always generate plain TypeScript classes.</p></summary>
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access (experimental).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetClassTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> classTypes)
+        public static NSwagSwaggerToTypeScriptClientSettings DisableWrapResponses(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ClassTypesInternal = classTypes.ToList();
+            toolSettings.WrapResponses = false;
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToTypeScriptClientSettings.ClassTypes"/>.</em></p><p>The type names which always generate plain TypeScript classes.</p></summary>
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.WrapResponses"/>.</em></p><p>Specifies whether to wrap success responses to allow full response access (experimental).</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings AddClassTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] classTypes)
+        public static NSwagSwaggerToTypeScriptClientSettings ToggleWrapResponses(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ClassTypesInternal.AddRange(classTypes);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToTypeScriptClientSettings.ClassTypes"/>.</em></p><p>The type names which always generate plain TypeScript classes.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings AddClassTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> classTypes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ClassTypesInternal.AddRange(classTypes);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="NSwagSwaggerToTypeScriptClientSettings.ClassTypes"/>.</em></p><p>The type names which always generate plain TypeScript classes.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ClearClassTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ClassTypesInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToTypeScriptClientSettings.ClassTypes"/>.</em></p><p>The type names which always generate plain TypeScript classes.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings RemoveClassTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] classTypes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(classTypes);
-            toolSettings.ClassTypesInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToTypeScriptClientSettings.ClassTypes"/>.</em></p><p>The type names which always generate plain TypeScript classes.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings RemoveClassTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> classTypes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(classTypes);
-            toolSettings.ClassTypesInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.WrapResponses = !toolSettings.WrapResponses;
             return toolSettings;
         }
         #endregion
-        #region ExtendedClasses
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ExtendedClasses"/> to a new list.</em></p><p>The list of extended classes.</p></summary>
+        #region EnumNameGeneratorType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.EnumNameGeneratorType"/>.</em></p><p>The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetExtendedClasses(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] extendedClasses)
+        public static NSwagSwaggerToTypeScriptClientSettings SetEnumNameGeneratorType(this NSwagSwaggerToTypeScriptClientSettings toolSettings, string enumNameGeneratorType)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExtendedClassesInternal = extendedClasses.ToList();
+            toolSettings.EnumNameGeneratorType = enumNameGeneratorType;
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ExtendedClasses"/> to a new list.</em></p><p>The list of extended classes.</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.EnumNameGeneratorType"/>.</em></p><p>The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetExtendedClasses(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> extendedClasses)
+        public static NSwagSwaggerToTypeScriptClientSettings ResetEnumNameGeneratorType(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExtendedClassesInternal = extendedClasses.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToTypeScriptClientSettings.ExtendedClasses"/>.</em></p><p>The list of extended classes.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings AddExtendedClasses(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] extendedClasses)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExtendedClassesInternal.AddRange(extendedClasses);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToTypeScriptClientSettings.ExtendedClasses"/>.</em></p><p>The list of extended classes.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings AddExtendedClasses(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> extendedClasses)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExtendedClassesInternal.AddRange(extendedClasses);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="NSwagSwaggerToTypeScriptClientSettings.ExtendedClasses"/>.</em></p><p>The list of extended classes.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ClearExtendedClasses(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExtendedClassesInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToTypeScriptClientSettings.ExtendedClasses"/>.</em></p><p>The list of extended classes.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings RemoveExtendedClasses(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] extendedClasses)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(extendedClasses);
-            toolSettings.ExtendedClassesInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToTypeScriptClientSettings.ExtendedClasses"/>.</em></p><p>The list of extended classes.</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings RemoveExtendedClasses(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> extendedClasses)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(extendedClasses);
-            toolSettings.ExtendedClassesInternal.RemoveAll(x => hashSet.Contains(x));
+            toolSettings.EnumNameGeneratorType = null;
             return toolSettings;
         }
         #endregion
-        #region ExtensionCode
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ExtensionCode"/>.</em></p><p>The extension code (string or file path).</p></summary>
+        #region PropertyNameGeneratorType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.PropertyNameGeneratorType"/>.</em></p><p>The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetExtensionCode(this NSwagSwaggerToTypeScriptClientSettings toolSettings, string extensionCode)
+        public static NSwagSwaggerToTypeScriptClientSettings SetPropertyNameGeneratorType(this NSwagSwaggerToTypeScriptClientSettings toolSettings, string propertyNameGeneratorType)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExtensionCode = extensionCode;
+            toolSettings.PropertyNameGeneratorType = propertyNameGeneratorType;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.ExtensionCode"/>.</em></p><p>The extension code (string or file path).</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.PropertyNameGeneratorType"/>.</em></p><p>The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetExtensionCode(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        public static NSwagSwaggerToTypeScriptClientSettings ResetPropertyNameGeneratorType(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExtensionCode = null;
-            return toolSettings;
-        }
-        #endregion
-        #region GenerateDefaultValues
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetGenerateDefaultValues(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? generateDefaultValues)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDefaultValues = generateDefaultValues;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetGenerateDefaultValues(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDefaultValues = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings EnableGenerateDefaultValues(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDefaultValues = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings DisableGenerateDefaultValues(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDefaultValues = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateDefaultValues"/>.</em></p><p>Specifies whether to generate default values for properties (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ToggleGenerateDefaultValues(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateDefaultValues = !toolSettings.GenerateDefaultValues;
-            return toolSettings;
-        }
-        #endregion
-        #region ExcludedTypeNames
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ExcludedTypeNames"/> to a new list.</em></p><p>The excluded DTO type names (must be defined in an import or other namespace).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetExcludedTypeNames(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] excludedTypeNames)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludedTypeNamesInternal = excludedTypeNames.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ExcludedTypeNames"/> to a new list.</em></p><p>The excluded DTO type names (must be defined in an import or other namespace).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetExcludedTypeNames(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> excludedTypeNames)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludedTypeNamesInternal = excludedTypeNames.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToTypeScriptClientSettings.ExcludedTypeNames"/>.</em></p><p>The excluded DTO type names (must be defined in an import or other namespace).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings AddExcludedTypeNames(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] excludedTypeNames)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludedTypeNamesInternal.AddRange(excludedTypeNames);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="NSwagSwaggerToTypeScriptClientSettings.ExcludedTypeNames"/>.</em></p><p>The excluded DTO type names (must be defined in an import or other namespace).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings AddExcludedTypeNames(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> excludedTypeNames)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludedTypeNamesInternal.AddRange(excludedTypeNames);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="NSwagSwaggerToTypeScriptClientSettings.ExcludedTypeNames"/>.</em></p><p>The excluded DTO type names (must be defined in an import or other namespace).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ClearExcludedTypeNames(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ExcludedTypeNamesInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToTypeScriptClientSettings.ExcludedTypeNames"/>.</em></p><p>The excluded DTO type names (must be defined in an import or other namespace).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings RemoveExcludedTypeNames(this NSwagSwaggerToTypeScriptClientSettings toolSettings, params string[] excludedTypeNames)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(excludedTypeNames);
-            toolSettings.ExcludedTypeNamesInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="NSwagSwaggerToTypeScriptClientSettings.ExcludedTypeNames"/>.</em></p><p>The excluded DTO type names (must be defined in an import or other namespace).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings RemoveExcludedTypeNames(this NSwagSwaggerToTypeScriptClientSettings toolSettings, IEnumerable<string> excludedTypeNames)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(excludedTypeNames);
-            toolSettings.ExcludedTypeNamesInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        #endregion
-        #region HandleReferences
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.HandleReferences"/>.</em></p><p>Handle JSON references (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetHandleReferences(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? handleReferences)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.HandleReferences = handleReferences;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.HandleReferences"/>.</em></p><p>Handle JSON references (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetHandleReferences(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.HandleReferences = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.HandleReferences"/>.</em></p><p>Handle JSON references (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings EnableHandleReferences(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.HandleReferences = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.HandleReferences"/>.</em></p><p>Handle JSON references (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings DisableHandleReferences(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.HandleReferences = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.HandleReferences"/>.</em></p><p>Handle JSON references (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ToggleHandleReferences(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.HandleReferences = !toolSettings.HandleReferences;
-            return toolSettings;
-        }
-        #endregion
-        #region GenerateConstructorInterface
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateConstructorInterface"/>.</em></p><p>Generate an class interface which is used in the constructor to initialize the class (only available when TypeStyle is Class, default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetGenerateConstructorInterface(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? generateConstructorInterface)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateConstructorInterface = generateConstructorInterface;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateConstructorInterface"/>.</em></p><p>Generate an class interface which is used in the constructor to initialize the class (only available when TypeStyle is Class, default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetGenerateConstructorInterface(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateConstructorInterface = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateConstructorInterface"/>.</em></p><p>Generate an class interface which is used in the constructor to initialize the class (only available when TypeStyle is Class, default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings EnableGenerateConstructorInterface(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateConstructorInterface = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateConstructorInterface"/>.</em></p><p>Generate an class interface which is used in the constructor to initialize the class (only available when TypeStyle is Class, default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings DisableGenerateConstructorInterface(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateConstructorInterface = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.GenerateConstructorInterface"/>.</em></p><p>Generate an class interface which is used in the constructor to initialize the class (only available when TypeStyle is Class, default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ToggleGenerateConstructorInterface(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.GenerateConstructorInterface = !toolSettings.GenerateConstructorInterface;
-            return toolSettings;
-        }
-        #endregion
-        #region ConvertConstructorInterfaceData
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ConvertConstructorInterfaceData"/>.</em></p><p>Convert POJO objects in the constructor data to DTO instances (GenerateConstructorInterface must be enabled, default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetConvertConstructorInterfaceData(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? convertConstructorInterfaceData)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ConvertConstructorInterfaceData = convertConstructorInterfaceData;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.ConvertConstructorInterfaceData"/>.</em></p><p>Convert POJO objects in the constructor data to DTO instances (GenerateConstructorInterface must be enabled, default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetConvertConstructorInterfaceData(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ConvertConstructorInterfaceData = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.ConvertConstructorInterfaceData"/>.</em></p><p>Convert POJO objects in the constructor data to DTO instances (GenerateConstructorInterface must be enabled, default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings EnableConvertConstructorInterfaceData(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ConvertConstructorInterfaceData = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.ConvertConstructorInterfaceData"/>.</em></p><p>Convert POJO objects in the constructor data to DTO instances (GenerateConstructorInterface must be enabled, default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings DisableConvertConstructorInterfaceData(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ConvertConstructorInterfaceData = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.ConvertConstructorInterfaceData"/>.</em></p><p>Convert POJO objects in the constructor data to DTO instances (GenerateConstructorInterface must be enabled, default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ToggleConvertConstructorInterfaceData(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ConvertConstructorInterfaceData = !toolSettings.ConvertConstructorInterfaceData;
-            return toolSettings;
-        }
-        #endregion
-        #region ImportRequiredTypes
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ImportRequiredTypes"/>.</em></p><p>Specifies whether required types should be imported (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetImportRequiredTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? importRequiredTypes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ImportRequiredTypes = importRequiredTypes;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.ImportRequiredTypes"/>.</em></p><p>Specifies whether required types should be imported (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetImportRequiredTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ImportRequiredTypes = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.ImportRequiredTypes"/>.</em></p><p>Specifies whether required types should be imported (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings EnableImportRequiredTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ImportRequiredTypes = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.ImportRequiredTypes"/>.</em></p><p>Specifies whether required types should be imported (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings DisableImportRequiredTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ImportRequiredTypes = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.ImportRequiredTypes"/>.</em></p><p>Specifies whether required types should be imported (default: true).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ToggleImportRequiredTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ImportRequiredTypes = !toolSettings.ImportRequiredTypes;
-            return toolSettings;
-        }
-        #endregion
-        #region UseGetBaseUrlMethod
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.UseGetBaseUrlMethod"/>.</em></p><p>Specifies whether to use the 'getBaseUrl(defaultUrl: string)' method from the base class (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetUseGetBaseUrlMethod(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? useGetBaseUrlMethod)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.UseGetBaseUrlMethod = useGetBaseUrlMethod;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.UseGetBaseUrlMethod"/>.</em></p><p>Specifies whether to use the 'getBaseUrl(defaultUrl: string)' method from the base class (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetUseGetBaseUrlMethod(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.UseGetBaseUrlMethod = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.UseGetBaseUrlMethod"/>.</em></p><p>Specifies whether to use the 'getBaseUrl(defaultUrl: string)' method from the base class (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings EnableUseGetBaseUrlMethod(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.UseGetBaseUrlMethod = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.UseGetBaseUrlMethod"/>.</em></p><p>Specifies whether to use the 'getBaseUrl(defaultUrl: string)' method from the base class (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings DisableUseGetBaseUrlMethod(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.UseGetBaseUrlMethod = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.UseGetBaseUrlMethod"/>.</em></p><p>Specifies whether to use the 'getBaseUrl(defaultUrl: string)' method from the base class (default: false).</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ToggleUseGetBaseUrlMethod(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.UseGetBaseUrlMethod = !toolSettings.UseGetBaseUrlMethod;
-            return toolSettings;
-        }
-        #endregion
-        #region BaseUrlTokenName
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.BaseUrlTokenName"/>.</em></p><p>The token name for injecting the API base URL string (used in the Angular template, default: 'API_BASE_URL').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetBaseUrlTokenName(this NSwagSwaggerToTypeScriptClientSettings toolSettings, string baseUrlTokenName)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.BaseUrlTokenName = baseUrlTokenName;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.BaseUrlTokenName"/>.</em></p><p>The token name for injecting the API base URL string (used in the Angular template, default: 'API_BASE_URL').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetBaseUrlTokenName(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.BaseUrlTokenName = null;
-            return toolSettings;
-        }
-        #endregion
-        #region QueryNullValue
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.QueryNullValue"/>.</em></p><p>The null value used for query parameters which are null (default: '').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetQueryNullValue(this NSwagSwaggerToTypeScriptClientSettings toolSettings, string queryNullValue)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.QueryNullValue = queryNullValue;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.QueryNullValue"/>.</em></p><p>The null value used for query parameters which are null (default: '').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetQueryNullValue(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.QueryNullValue = null;
+            toolSettings.PropertyNameGeneratorType = null;
             return toolSettings;
         }
         #endregion
@@ -9713,42 +9749,6 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameGenerator = null;
-            return toolSettings;
-        }
-        #endregion
-        #region PropertyNameGeneratorType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.PropertyNameGeneratorType"/>.</em></p><p>The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetPropertyNameGeneratorType(this NSwagSwaggerToTypeScriptClientSettings toolSettings, string propertyNameGeneratorType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertyNameGeneratorType = propertyNameGeneratorType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.PropertyNameGeneratorType"/>.</em></p><p>The custom IPropertyNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetPropertyNameGeneratorType(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.PropertyNameGeneratorType = null;
-            return toolSettings;
-        }
-        #endregion
-        #region EnumNameGeneratorType
-        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.EnumNameGeneratorType"/>.</em></p><p>The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings SetEnumNameGeneratorType(this NSwagSwaggerToTypeScriptClientSettings toolSettings, string enumNameGeneratorType)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.EnumNameGeneratorType = enumNameGeneratorType;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.EnumNameGeneratorType"/>.</em></p><p>The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
-        [Pure]
-        public static NSwagSwaggerToTypeScriptClientSettings ResetEnumNameGeneratorType(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.EnumNameGeneratorType = null;
             return toolSettings;
         }
         #endregion
