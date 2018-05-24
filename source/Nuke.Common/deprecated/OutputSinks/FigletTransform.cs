@@ -19,7 +19,7 @@ namespace Nuke.Core.OutputSinks
         {
             integratedFontName = integratedFontName ?? "cybermedium";
 
-            var fullResourceName = $"{typeof(OutputSink).Namespace}.Fonts.{integratedFontName}.flf";
+            var fullResourceName = $"{typeof(Nuke.Common.OutputSinks.OutputSink).Namespace}.Fonts.{integratedFontName}.flf";
             var assembly = typeof(FigletTransform).GetTypeInfo().Assembly;
             var resourceStream = assembly.GetManifestResourceStream(fullResourceName);
 
