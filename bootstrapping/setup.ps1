@@ -1,19 +1,10 @@
 [CmdletBinding()]
-Param()
+Param(
+    [switch]$Default
+)
 
 Set-StrictMode -Version 2.0; $ErrorActionPreference = "Stop"; $ConfirmPreference = "None"; trap { $host.SetShouldExit(1) }
 $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
-
-###########################################################################
-# CONFIGURATION
-###########################################################################
-
-$BootstrappingUrl = "https://raw.githubusercontent.com/nuke-build/nuke/master/bootstrapping"
-$NuGetVersion = "latest"
-$BuildDirectoryName = ".\build"
-$BuildProjectName = ".build"
-$TargetPlatformSelection = 1
-$ProjectFormatSelection = 1
 
 ###########################################################################
 # HELPER FUNCTIONS
@@ -70,51 +61,57 @@ WriteFile "$RootDirectory\.nuke"  ((GetRelative $RootDirectory $SolutionFile) -r
 Write-Host "Using '$(GetRelative $PSScriptRoot $SolutionFile)' as solution file."
 
 ###########################################################################
-# OTHER CONFIGURATIONS
+# CONFIGURATION
 ###########################################################################
 
-$TargetPlatformSelection = $host.ui.PromptForChoice(
-  $null,
-  "Build project target platform:",
-  @(
-    (New-Object System.Management.Automation.Host.ChoiceDescription ".NET &Framework", "boostrapping with MSBuild/Mono."),
-    (New-Object System.Management.Automation.Host.ChoiceDescription ".NET &Core", "bootstrapping with dotnet CLT.")
-  ),
-  $TargetPlatformSelection)
+$BootstrappingUrl = "https://raw.githubusercontent.com/nuke-build/nuke/master/bootstrapping"
+$NukeVersion = $(Invoke-WebRequest -UseBasicParsing https://api-v2v3search-0.nuget.org/query?q=packageid:Nuke.Common | ConvertFrom-Json).data.version
+$NuGetVersion = "latest"
+$BuildDirectoryName = ".\build"
+$BuildProjectName = ".build"
+$TargetPlatformSelection = 1
+$ProjectFormatSelection = 1
+
+if (-not $Default) {
+    $TargetPlatformSelection = $host.ui.PromptForChoice(
+            $null,
+            "Build project target platform:",
+            @(
+            (New-Object System.Management.Automation.Host.ChoiceDescription ".NET &Framework", "boostrapping with MSBuild/Mono."),
+            (New-Object System.Management.Automation.Host.ChoiceDescription ".NET &Core", "bootstrapping with dotnet CLT.")
+            ),
+            $TargetPlatformSelection)
+
+    if ($TargetPlatformSelection -eq 0) {
+        $ProjectFormatSelection = $host.ui.PromptForChoice(
+                $null,
+                "Build project format:",
+                @(
+                (New-Object System.Management.Automation.Host.ChoiceDescription "&Legacy format", "supported by all MSBuild versions."),
+                (New-Object System.Management.Automation.Host.ChoiceDescription "&SDK-based format", "requires MSBuild 15.0.")
+                ),
+                $ProjectFormatSelection)
+
+        $NuGetVersion = (ReadWithDefault "NuGet executable version" $NuGetVersion)
+    }
+
+    if ($TargetPlatformSelection -eq 1 -or $ProjectFormatSelection -eq 1) {
+        # $NukeVersion = "$($NukeVersionArray[0]).$($NukeVersionArray[1]).*"
+        $NukeVersion = (ReadWithDefault "NUKE framework version (use '*' for always latest)" $NukeVersion)
+    }
+    
+    $BuildDirectoryName = (ReadWithDefault "Directory for build project" $BuildDirectoryName)
+    $BuildProjectName = (ReadWithDefault "Name for build project" $BuildProjectName)
+}
 
 $TargetPlatform = @("netfx", "netcore")[$TargetPlatformSelection]
 $TargetFramework = @("net461", "netcoreapp2.0")[$TargetPlatformSelection]
-
-$NukeVersion = $(Invoke-WebRequest -UseBasicParsing https://api-v2v3search-0.nuget.org/query?q=packageid:Nuke.Common | ConvertFrom-Json).data.version
 $NukeVersionParts = $NukeVersion.Split('.')
 $ProjectGuid = [guid]::NewGuid().ToString().ToUpper()
-
-if ($TargetPlatformSelection -eq 0) {
-  $ProjectFormatSelection = $host.ui.PromptForChoice(
-    $null,
-    "Build project format:",
-    @(
-      (New-Object System.Management.Automation.Host.ChoiceDescription "&Legacy format", "supported by all MSBuild versions."),
-      (New-Object System.Management.Automation.Host.ChoiceDescription "&SDK-based format", "requires MSBuild 15.0.")
-    ),
-    $ProjectFormatSelection)
-    
-  $NuGetVersion = (ReadWithDefault "NuGet executable version" $NuGetVersion)
-}
-
-if ($TargetPlatformSelection -eq 1 -or $ProjectFormatSelection -eq 1) {
-  # $NukeVersion = "$($NukeVersionArray[0]).$($NukeVersionArray[1]).*"
-  $NukeVersion = (ReadWithDefault "NUKE framework version (use '*' for always latest)" $NukeVersion)
-}
-
 $ProjectKindGuid = @("FAE04EC0-301F-11D3-BF4B-00C04F79EFBC", "9A19103F-16F7-4668-BE54-9A1E7A4F7556")[$ProjectFormatSelection]
 $ProjectFormat = @("legacy", "sdk")[$ProjectFormatSelection]
-
-$BuildDirectoryName = (ReadWithDefault "Directory for build project" $BuildDirectoryName)
-$BuildProjectName = (ReadWithDefault "Name for build project" $BuildProjectName)
 $BuildDirectory = "$PSScriptRoot\$BuildDirectoryName"
 $BuildProjectFile = "$BuildDirectory\$BuildProjectName.csproj"
-md -force $BuildDirectory > $null
 
 ###########################################################################
 # GENERATE BUILD SCRIPTS
@@ -147,6 +144,7 @@ WriteFile "$(Get-Location)/build.sh" ((New-Object System.Net.WebClient).Download
 
 Write-Host "Generating build project..."
 
+md -force $BuildDirectory > $null
 $SolutionDirectoryRelative = (GetRelative $BuildDirectory $SolutionDirectory)
 
 WriteFile "$BuildProjectFile" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/.build.$($ProjectFormat).csproj") `

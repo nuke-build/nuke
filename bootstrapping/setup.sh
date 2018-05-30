@@ -1,18 +1,12 @@
 #!/usr/bin/env bash
 
+DEFAULT=0
+if [[ $(echo $@ | awk '{print tolower($0)}') == "-default" ]]; then
+    DEFAULT=1
+fi
+
 set -eo pipefail
 SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
-
-###########################################################################
-# CONFIGURATION
-###########################################################################
-
-BOOTSTRAPPING_URL="https://raw.githubusercontent.com/nuke-build/nuke/master/bootstrapping"
-NUGET_VERSION="latest"
-BUILD_DIRECTORY_NAME="./build"
-BUILD_PROJECT_NAME=".build"
-TARGET_PLATFORM_SELECTION=1
-PROJECT_FORMAT_SELECTION=1
 
 ###########################################################################
 # HELPER FUNCTIONS
@@ -71,53 +65,59 @@ printf $(GetRelative "$ROOT_DIRECTORY" "$SOLUTION_FILE") > "$ROOT_DIRECTORY/.nuk
 echo "Using '$(GetRelative "$SCRIPT_DIR" "$SOLUTION_FILE")' as solution file."
 
 ###########################################################################
-# OTHER CONFIGURATIONS
+# CONFIGURATION
 ###########################################################################
 
-while : ; do
-    echo "Build project target platform:"
-    echo "[0] .NET Framework: bootstrapping with MSBuild/Mono."
-    echo "[1] .NET Core: bootstrapping with dotnet CLT."
-    read -p "Target framework id: " TARGET_PLATFORM_SELECTION
-    [[ $TARGET_PLATFORM_SELECTION < 0 || $TARGET_PLATFORM_SELECTION -ge 2 ]] || break
-done
+BOOTSTRAPPING_URL="https://raw.githubusercontent.com/nuke-build/nuke/master/bootstrapping"
+NUKE_VERSION=$(curl -s 'https://api-v2v3search-0.nuget.org/query?q=packageid:Nuke.Common' | python3 -c "import sys, json; print(json.load(sys.stdin)['data'][0]['version'])")
+NUGET_VERSION="latest"
+BUILD_DIRECTORY_NAME="./build"
+BUILD_PROJECT_NAME=".build"
+TARGET_PLATFORM_SELECTION=1
+PROJECT_FORMAT_SELECTION=1
+
+if ! ((DEFAULT)); then
+    while : ; do
+        echo "Build project target platform:"
+        echo "[0] .NET Framework: bootstrapping with MSBuild/Mono."
+        echo "[1] .NET Core: bootstrapping with dotnet CLT."
+        read -p "Target framework id: " TARGET_PLATFORM_SELECTION
+        [[ $TARGET_PLATFORM_SELECTION < 0 || $TARGET_PLATFORM_SELECTION -ge 2 ]] || break
+    done
+        
+    if [ $TARGET_PLATFORM_SELECTION == 0 ]; then
+      while : ; do
+          echo "Which format do you want to use for your build project:"
+          echo "[0] Legacy format: supported by all MSBuild/Mono versions."
+          echo "[1] SDK-based format: requires MSBuild 15.0."
+          read -p "Format id: " PROJECT_FORMAT_SELECTION
+          [[ $PROJECT_FORMAT_SELECTION < 0 || $PROJECT_FORMAT_SELECTION -ge 2 ]] || break
+      done
+    
+      NUGET_VERSION=$(ReadWithDefault "NuGet executable version" $NUGET_VERSION)
+    fi
+    
+    if [[ $TARGET_PLATFORM_SELECTION == 1 || $PROJECT_FORMAT_SELECTION == 1 ]]; then
+      # NUKE_VERSION="${NUKE_VERSION_ARRAY[0]}.${NUKE_VERSION_ARRAY[1]}.*"
+      NUKE_VERSION=$(ReadWithDefault "NUKE framework version (use '*' for always latest)" $NUKE_VERSION)
+    fi
+        
+    BUILD_DIRECTORY_NAME=$(ReadWithDefault "Directory for build project" $BUILD_DIRECTORY_NAME)
+    BUILD_PROJECT_NAME=$(ReadWithDefault "Name for build project" $BUILD_PROJECT_NAME)
+fi
 
 TARGET_PLATFORM_ARRAY=("netfx" "netcore")
 TARGET_PLATFORM=${TARGET_PLATFORM_ARRAY[$TARGET_PLATFORM_SELECTION]}
 TARGET_FRAMEWORK_ARRAY=("net461" "netcoreapp2.0")
 TARGET_FRAMEWORK=${TARGET_FRAMEWORK_ARRAY[$TARGET_PLATFORM_SELECTION]}
-
-NUKE_VERSION=$(curl -s 'https://api-v2v3search-0.nuget.org/query?q=packageid:Nuke.Common' | python3 -c "import sys, json; print(json.load(sys.stdin)['data'][0]['version'])")
 NUKE_VERSION_PARTS=(${NUKE_VERSION//./ })
 PROJECT_GUID=$(python -c "import uuid; print str(uuid.uuid4()).upper()")
-
-if [ $TARGET_PLATFORM_SELECTION == 0 ]; then
-  while : ; do
-      echo "Which format do you want to use for your build project:"
-      echo "[0] Legacy format: supported by all MSBuild/Mono versions."
-      echo "[1] SDK-based format: requires MSBuild 15.0."
-      read -p "Format id: " PROJECT_FORMAT_SELECTION
-      [[ $PROJECT_FORMAT_SELECTION < 0 || $PROJECT_FORMAT_SELECTION -ge 2 ]] || break
-  done
-
-  NUGET_VERSION=$(ReadWithDefault "NuGet executable version" $NUGET_VERSION)
-fi
-
-if [[ $TARGET_PLATFORM_SELECTION == 1 || $PROJECT_FORMAT_SELECTION == 1 ]]; then
-  # NUKE_VERSION="${NUKE_VERSION_ARRAY[0]}.${NUKE_VERSION_ARRAY[1]}.*"
-  NUKE_VERSION=$(ReadWithDefault "NUKE framework version (use '*' for always latest)" $NUKE_VERSION)
-fi
-
 PROJECT_KIND_ARRAY=("FAE04EC0-301F-11D3-BF4B-00C04F79EFBC" "9A19103F-16F7-4668-BE54-9A1E7A4F7556")
 PROJECT_KIND=${PROJECT_KIND_ARRAY[$PROJECT_FORMAT_SELECTION]}
 PROJECT_FORMAT_ARRAY=("legacy" "sdk")
 PROJECT_FORMAT=${PROJECT_FORMAT_ARRAY[$PROJECT_FORMAT_SELECTION]}
-
-BUILD_DIRECTORY_NAME=$(ReadWithDefault "Directory for build project" $BUILD_DIRECTORY_NAME)
-BUILD_PROJECT_NAME=$(ReadWithDefault "Name for build project" $BUILD_PROJECT_NAME)
 BUILD_DIRECTORY="$SCRIPT_DIR/$BUILD_DIRECTORY_NAME"
 BUILD_PROJECT_FILE="$BUILD_DIRECTORY/$BUILD_PROJECT_NAME.csproj"
-mkdir -p $BUILD_DIRECTORY
 
 ###########################################################################
 # GENERATE BUILD SCRIPTS
@@ -152,6 +152,7 @@ curl -Lsfo "$(pwd)/build.cmd" "$BOOTSTRAPPING_URL/../build.cmd"
 
 echo "Generating build project..."
 
+mkdir -p $BUILD_DIRECTORY
 SOLUTION_DIRECTORY_RELATIVE="$(GetRelative "$BUILD_DIRECTORY" "$SOLUTION_DIRECTORY")"
 
 sed -e 's~_TARGET_FRAMEWORK_~'"$TARGET_FRAMEWORK"'~g' \
