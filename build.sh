@@ -2,12 +2,10 @@
 
 echo $(bash --version 2>&1 | head -n 1)
 
-LOCAL=0
 REFEXT="False"
 BUILD_ARGUMENTS=()
 for i in "$@"; do
     case $(echo $1 | awk '{print tolower($0)}') in
-        -local) LOCAL=1;;
         -refext) REFEXT="True";;
         *) BUILD_ARGUMENTS+=("$1") ;;
     esac
@@ -24,8 +22,9 @@ SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 BUILD_PROJECT_FILE="$SCRIPT_DIR/build/.build.csproj"
 TEMP_DIRECTORY="$SCRIPT_DIR/.tmp"
 
-DOTNET_CHANNEL="2.0"
-DOTNET_SCRIPT_URL="https://raw.githubusercontent.com/dotnet/cli/master/scripts/obtain/dotnet-install.sh"
+DOTNET_GLOBAL_FILE="$SCRIPT_DIR/global.json"
+DOTNET_INSTALL_URL="https://raw.githubusercontent.com/dotnet/cli/master/scripts/obtain/dotnet-install.sh"
+DOTNET_RELEASES_URL="https://raw.githubusercontent.com/dotnet/core/master/release-notes/releases.json"
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
@@ -37,21 +36,35 @@ export FrameworkPathOverride=$(dirname $(which mono))/../lib/mono/4.6.1-api/
 # EXECUTION
 ###########################################################################
 
-if ! ((LOCAL)) && [ -x "$(command -v dotnet)" ]; then
+function FirstJsonValue {
+    perl -nle 'print $1 if m{"'$1'": "([^"\-]+)",?}' <<< ${@:2}
+}
+
+# If global.json exists, load expected version
+if [ -f "$DOTNET_GLOBAL_FILE" ]; then
+    DOTNET_VERSION=$(FirstJsonValue "version" $(cat "$DOTNET_GLOBAL_FILE"))
+fi
+
+# If dotnet is installed locally, and expected version is not set or installation matches the expected version
+if [[ -x "$(command -v dotnet)" && (-z ${DOTNET_VERSION+x} || $(dotnet --version) == "$DOTNET_VERSION") ]]; then
     export DOTNET_EXE="$(command -v dotnet)"
 else
     DOTNET_DIRECTORY="$TEMP_DIRECTORY/dotnet-unix"
     export DOTNET_EXE="$DOTNET_DIRECTORY/dotnet"
     
-    DOTNET_SCRIPT_FILE="$TEMP_DIRECTORY/dotnet-install.sh"
-    if [ ! -f "$DOTNET_SCRIPT_FILE" ]; then
-        mkdir -p "$TEMP_DIRECTORY"
-        curl -Lsfo "$DOTNET_SCRIPT_FILE" "$DOTNET_SCRIPT_URL"
+    # If expected version is not set, get latest version
+    if [ -z ${DOTNET_VERSION+x} ]; then
+        DOTNET_VERSION=$(FirstJsonValue "version-sdk" $(curl -s "$DOTNET_RELEASES_URL"))
     fi
     
-    chmod +x "$DOTNET_SCRIPT_FILE"
-    "$DOTNET_SCRIPT_FILE" --install-dir "$DOTNET_DIRECTORY" --channel "$DOTNET_CHANNEL" --no-path
+    # Download and execute install script
+    DOTNET_INSTALL_FILE="$TEMP_DIRECTORY/dotnet-install.sh"
+    mkdir -p "$TEMP_DIRECTORY"
+    curl -Lsfo "$DOTNET_INSTALL_FILE" "$DOTNET_INSTALL_URL"
+    chmod +x "$DOTNET_INSTALL_FILE"
+    "$DOTNET_INSTALL_FILE" --install-dir "$DOTNET_DIRECTORY" --version "$DOTNET_VERSION" --no-path
 fi
+
 echo "Microsoft (R) .NET Core SDK version $("$DOTNET_EXE" --version)"
 
 "$DOTNET_EXE" build "$BUILD_PROJECT_FILE" /p:"ReferenceExternal=$REFEXT"
