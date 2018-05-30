@@ -27,7 +27,7 @@ namespace Nuke.Common.Tests
             solution.Projects.Where(x => x.Is(ProjectType.SolutionFolder)).Select(x => x.Name)
                 .Should().BeEquivalentTo("bootstrapping", "misc");
 
-            solution.Projects.Where(x => x.Is(ProjectType.CSharpProject)).Should().HaveCount(5);
+            solution.Projects.Where(x => x.Is(ProjectType.CSharpProject)).Should().HaveCount(6);
 
             var buildProject = solution.Projects.SingleOrDefault(x => x.Name == ".build");
             buildProject.Should().NotBeNull();

@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>nuke</ToolCommandName>
+  </PropertyGroup>
+
+  <Import Project="..\Package.props" />
+  <Import Project="..\..\shared\Configuration.props" />
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nuke.Common\Nuke.Common.csproj" />
+  </ItemGroup>
+
+</Project>

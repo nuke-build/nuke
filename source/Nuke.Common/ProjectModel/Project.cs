@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.IO;
 
 namespace Nuke.Common.ProjectModel
 {
@@ -24,15 +25,15 @@ namespace Nuke.Common.ProjectModel
         {
             Id = id;
             Name = name;
-            Path = path;
+            Path = (PathConstruction.AbsolutePath) path;
             TypeId = typeId;
             Parent = parent;
         }
 
         public Guid Id { get; }
         public string Name { get; }
-        public string Path { get; }
-        public string Directory => System.IO.Path.GetDirectoryName(Path);
+        public PathConstruction.AbsolutePath Path { get; }
+        public PathConstruction.AbsolutePath Directory => (PathConstruction.AbsolutePath) System.IO.Path.GetDirectoryName(Path).NotNull();
         public Guid TypeId { get; }
 
         [CanBeNull]
