@@ -134,7 +134,7 @@ sed -e 's~_NUGET_VERSION_~'"$NUGET_VERSION"'~g' \
     -e 's~_SOLUTION_DIRECTORY_~'"$SOLUTION_DIRECTORY_RELATIVE"'~g' \
     -e 's~_ROOT_DIRECTORY_~'"$ROOT_DIRECTORY_RELATIVE"'~g' \
     <<<"$(curl -Lsf $BOOTSTRAPPING_URL/build.$TARGET_PLATFORM.sh)" \
-    > build.sh
+    > $(pwd)/build.sh
     
 sed -e 's~_NUGET_VERSION_~'"$NUGET_VERSION"'~g' \
     -e 's~_BUILD_DIRECTORY_NAME_~'"${BUILD_DIRECTORY_NAME//\//\\\\}"'~g' \
@@ -142,9 +142,9 @@ sed -e 's~_NUGET_VERSION_~'"$NUGET_VERSION"'~g' \
     -e 's~_SOLUTION_DIRECTORY_~'"${SOLUTION_DIRECTORY_RELATIVE//\//\\\\}"'~g' \
     -e 's~_ROOT_DIRECTORY_~'"${ROOT_DIRECTORY_RELATIVE//\//\\\\}"'~g' \
     <<<"$(curl -Lsf $BOOTSTRAPPING_URL/build.$TARGET_PLATFORM.ps1)" \
-    > build.ps1
+    > $(pwd)/build.ps1
 
-curl -Lsfo "build.cmd" "$BOOTSTRAPPING_URL/../build.cmd"
+curl -Lsfo "$(pwd)/build.cmd" "$BOOTSTRAPPING_URL/../build.cmd"
 
 ###########################################################################
 # GENERATE PROJECT FILES

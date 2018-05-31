@@ -125,21 +125,21 @@ Write-Host "Generating build scripts..."
 $SolutionDirectoryRelative = (GetRelative $PSScriptRoot $SolutionDirectory)
 $RootDirectoryRelative = (GetRelative $PSScriptRoot $RootDirectory)
 
-WriteFile "build.ps1" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.$($TargetPlatform).ps1") `
+WriteFile "$(Get-Location)/build.ps1" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.$($TargetPlatform).ps1") `
     -replace "_NUGET_VERSION_",$NuGetVersion `
     -replace "_BUILD_DIRECTORY_NAME_",$BuildDirectoryName `
     -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
     -replace "_SOLUTION_DIRECTORY_",$SolutionDirectoryRelative `
     -replace "_ROOT_DIRECTORY_",$RootDirectoryRelative)
 
-WriteFile "build.sh" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.$($TargetPlatform).sh") `
+WriteFile "$(Get-Location)/build.sh" ((New-Object System.Net.WebClient).DownloadString("$BootstrappingUrl/build.$($TargetPlatform).sh") `
     -replace "_NUGET_VERSION_",$NuGetVersion `
     -replace "_BUILD_DIRECTORY_NAME_",($BuildDirectoryName -replace "\\","/") `
     -replace "_BUILD_PROJECT_NAME_",$BuildProjectName `
     -replace "_SOLUTION_DIRECTORY_",($SolutionDirectoryRelative -replace "\\","/") `
     -replace "_ROOT_DIRECTORY_",($RootDirectoryRelative -replace "\\","/"))
 
-(New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/../build.cmd", "build.cmd")
+(New-Object System.Net.WebClient).DownloadFile("$BootstrappingUrl/../build.cmd", "$(Get-Location)/build.cmd")
 
 ###########################################################################
 # GENERATE PROJECT FILES
