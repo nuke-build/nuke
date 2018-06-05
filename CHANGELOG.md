@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [0.5.0] / 2018-06-05
 - Changed build scripts to download .NET Core SDK only if local installation is missing or doesn't match expected version.
 - Added global tool for setup and build invocation.
 - Added version logging for PowerShell, Bash, NuGet and DotNet.
@@ -74,7 +76,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git.
 - Fixed background color in console output.
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.4.0...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.5.0...HEAD
+[0.5.0]: https://github.com/nuke-build/nuke/compare/0.4.0...0.5.0
 [0.4.0]: https://github.com/nuke-build/nuke/compare/0.3.1...0.4.0
 [0.3.1]: https://github.com/nuke-build/nuke/compare/0.2.10...0.3.1
 [0.2.10]: https://github.com/nuke-build/nuke/compare/0.2.0...0.2.10
