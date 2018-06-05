@@ -89,7 +89,7 @@ if ! ((DEFAULT)); then
       while : ; do
           echo "Which format do you want to use for your build project:"
           echo "[0] Legacy format: supported by all MSBuild/Mono versions."
-          echo "[1] SDK-based format: requires MSBuild 15.0."
+          echo "[1] SDK-based format: requires .NET Core SDK."
           read -p "Format id: " PROJECT_FORMAT_SELECTION
           [[ $PROJECT_FORMAT_SELECTION < 0 || $PROJECT_FORMAT_SELECTION -ge 2 ]] || break
       done

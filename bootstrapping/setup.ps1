@@ -87,8 +87,8 @@ if (-not $Default) {
                 $null,
                 "Build project format:",
                 @(
-                (New-Object System.Management.Automation.Host.ChoiceDescription "&Legacy format", "supported by all MSBuild versions."),
-                (New-Object System.Management.Automation.Host.ChoiceDescription "&SDK-based format", "requires MSBuild 15.0.")
+                (New-Object System.Management.Automation.Host.ChoiceDescription "&Legacy format", "supported by all MSBuild/Mono versions."),
+                (New-Object System.Management.Automation.Host.ChoiceDescription "&SDK-based format", "requires .NET Core SDK.")
                 ),
                 $ProjectFormatSelection)
 
