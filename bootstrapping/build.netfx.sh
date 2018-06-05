@@ -2,11 +2,11 @@
 
 echo $(bash --version 2>&1 | head -n 1)
 
-LOCAL=0
+#CUSTOMPARAM=0
 BUILD_ARGUMENTS=()
 for i in "$@"; do
     case $(echo $1 | awk '{print tolower($0)}') in
-        -local) LOCAL=1;;
+        # -custom-param) CUSTOMPARAM=1;;
         *) BUILD_ARGUMENTS+=("$1") ;;
     esac
     shift
@@ -31,17 +31,12 @@ NUGET_URL="https://dist.nuget.org/win-x86-commandline/$NUGET_VERSION/nuget.exe"
 # EXECUTION
 ###########################################################################
 
-if ! ((LOCAL)) && [ -x "$(command -v nuget)" ]; then
-    export NUGET_EXE="$(command -v nuget)"
-else
-    export NUGET_EXE="$TEMP_DIRECTORY/nuget.exe"
-  
-    if [ ! -f "$NUGET_EXE" ]; then
-        mkdir -p "$TEMP_DIRECTORY"
-        curl -Lsfo "$NUGET_EXE" "$NUGET_URL"
-    elif [ "$NUGET_VERSION" == "latest" ]; then
-        mono "$NUGET_EXE" update -Self
-    fi
+export NUGET_EXE="$TEMP_DIRECTORY/nuget.exe"
+if [ ! -f "$NUGET_EXE" ]; then
+    mkdir -p "$TEMP_DIRECTORY"
+    curl -Lsfo "$NUGET_EXE" "$NUGET_URL"
+elif [ "$NUGET_VERSION" == "latest" ]; then
+    mono "$NUGET_EXE" update -Self
 fi
 echo $("$NUGET_EXE" help 2>&1 | head -n 1)
 

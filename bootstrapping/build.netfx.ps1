@@ -1,6 +1,6 @@
 [CmdletBinding()]
 Param(
-    [switch]$Local,
+    #[switch]$CustomParam,
     [Parameter(Position=0,Mandatory=$false,ValueFromRemainingArguments=$true)]
     [string[]]$BuildArguments
 )
@@ -31,19 +31,13 @@ function ExecSafe([scriptblock] $cmd) {
     if ($LASTEXITCODE) { exit $LASTEXITCODE }
 }
 
-if (-not ($Local) -and (Get-Command "nuget" -ErrorAction SilentlyContinue) -ne $null) {
-    $env:NUGET_EXE = (Get-Command "nuget").Path
+$env:NUGET_EXE = "$TempDirectory\nuget.exe"
+if (!(Test-Path $env:NUGET_EXE)) {
+    md -force $TempDirectory > $null
+    (New-Object System.Net.WebClient).DownloadFile($NuGetUrl, $env:NUGET_EXE)
 }
-else {
-    $env:NUGET_EXE = "$TempDirectory\nuget.exe"
-
-    if (!(Test-Path $env:NUGET_EXE)) {
-        md -force $TempDirectory > $null
-        (New-Object System.Net.WebClient).DownloadFile($NuGetUrl, $env:NUGET_EXE)
-    }
-    elseif ($NuGetVersion -eq "latest") {
-        ExecSafe { & $env:NUGET_EXE update -Self }
-    }
+elseif ($NuGetVersion -eq "latest") {
+    ExecSafe { & $env:NUGET_EXE update -Self }
 }
 Write-Output $($env:NUGET_EXE help | select -First 1)
 
