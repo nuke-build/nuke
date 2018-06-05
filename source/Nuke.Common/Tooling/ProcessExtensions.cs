@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 
@@ -32,12 +33,22 @@ namespace Nuke.Common.Tooling
             this IProcess process)
         {
             process.AssertWaitForExit();
-            ControlFlow.Assert(process.ExitCode == 0,
-                new[]
+            if (process.ExitCode != 0)
+            {
+                var messageBuilder = new StringBuilder()
+                    .AppendLine($"Process '{Path.GetFileName(process.FileName)}' exited with code {process.ExitCode}. Verify the invocation.")
+                    .AppendLine($"> {process.FileName.DoubleQuoteIfNeeded()} {process.Arguments}");
+
+                var errorOutput = process.HasOutput ? process.Output.Where(x => x.Type == OutputType.Err).Select(x => x.Text).ToList() : null;
+                if (errorOutput != null && errorOutput.Count > 0)
                 {
-                    $"Process '{Path.GetFileName(process.FileName)}' exited with code {process.ExitCode}. Please verify the invocation.",
-                    $"> {process.FileName.DoubleQuoteIfNeeded()} {process.Arguments}"
-                }.JoinNewLine());
+                    messageBuilder.AppendLine("Error output:");
+                    errorOutput.ForEach(x => messageBuilder.AppendLine(x));
+                }
+
+                ControlFlow.Fail(messageBuilder.ToString());
+            }
+
             return process;
         }
 

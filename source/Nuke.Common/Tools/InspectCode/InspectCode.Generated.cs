@@ -2,14 +2,14 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-// Generated with Nuke.CodeGeneration, LOCAL VERSION.
-// Generated from https://github.com/nuke-build/tools/blob/master/metadata/InspectCode.json.
+// Generated with Nuke.CodeGeneration, Version: Local.
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/InspectCode.json.
 
 using JetBrains.Annotations;
-using Nuke.Common.Tools;
 using Nuke.Common;
 using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
+using Nuke.Common.Tools;
 using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
@@ -27,6 +27,13 @@ namespace Nuke.Common.Tools.InspectCode
     {
         /// <summary><p>Path to the InspectCode executable.</p></summary>
         public static string InspectCodePath => ToolPathResolver.GetPackageExecutable("JetBrains.ReSharper.CommandLineTools", GetPackageExecutable());
+        /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p></summary>
+        public static IEnumerable<string> InspectCode(string arguments, string workingDirectory = null, ProcessSettings processSettings = null)
+        {
+            var process = ProcessTasks.StartProcess(InspectCodePath, arguments, workingDirectory, processSettings?.EnvironmentVariables, processSettings?.ExecutionTimeout, processSettings?.RedirectOutput ?? true);
+            process.AssertZeroExitCode();
+            return process.Output.Select(x => x.Text);
+        }
         static partial void PreProcess(InspectCodeSettings toolSettings);
         static partial void PostProcess(InspectCodeSettings toolSettings);
         /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p><p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p></summary>

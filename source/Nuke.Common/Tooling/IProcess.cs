@@ -37,6 +37,11 @@ namespace Nuke.Common.Tooling
         IEnumerable<Output> Output { get; }
 
         /// <summary>
+        /// Inidicates if the process has any ouput.
+        /// </summary>
+        bool HasOutput { get; }
+
+        /// <summary>
         /// Returns <see cref="Process.ExitCode"/>.
         /// </summary>
         int ExitCode { get; }
@@ -47,8 +52,7 @@ namespace Nuke.Common.Tooling
         void Kill();
 
         /// <summary>
-        /// Waits for the process to exit. The timeout is provided via <see cref="ProcessTasks.StartProcess(string,string,string,System.Collections.Generic.IReadOnlyDictionary{string,string},System.Nullable{int},bool,System.Func{string,string})"/> or <see cref="ToolSettings"/>.
-        /// If the process is not exiting within a given timeout, <see cref="Kill"/> is called.
+        /// Waits for the process to exit. If the process is not exiting within a given timeout, <see cref="Kill"/> is called.
         /// </summary>
         /// <returns>
         /// Returns <c>true</c>, if the process exited on its own.

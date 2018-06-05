@@ -10,17 +10,6 @@ namespace Nuke.Common.Tools.Git
 {
     public static partial class GitTasks
     {
-        private static IProcess StartProcess(GitSettings toolSettings, ProcessSettings processSettings)
-        {
-            return ProcessTasks.StartProcess(
-                toolSettings.ToolPath,
-                toolSettings.Arguments,
-                toolSettings.WorkingDirectory,
-                processSettings?.EnvironmentVariables,
-                processSettings?.ExecutionTimeout,
-                processSettings?.RedirectOutput ?? false);
-        }
-
         public static bool GitIsDetached()
         {
             return GitIsDetached(EnvironmentInfo.WorkingDirectory);
@@ -28,14 +17,7 @@ namespace Nuke.Common.Tools.Git
 
         public static bool GitIsDetached(string workingDirectory)
         {
-            var process = StartProcess(
-                    new GitSettings()
-                        .SetWorkingDirectory(workingDirectory)
-                        .SetArguments("symbolic-ref --short -q HEAD"),
-                    new ProcessSettings().EnableRedirectOutput())
-                .AssertWaitForExit();
-
-            return !process.Output.Any();
+            return !Git("symbolic-ref --short -q HEAD", workingDirectory).Any();
         }
 
         public static bool GitHasUncommitedChanges()
@@ -45,13 +27,7 @@ namespace Nuke.Common.Tools.Git
 
         public static bool GitHasUncommitedChanges(string workingDirectory)
         {
-            var process = StartProcess(
-                    new GitSettings()
-                        .SetWorkingDirectory(workingDirectory)
-                        .SetArguments("status --short"),
-                    new ProcessSettings().EnableRedirectOutput())
-                .AssertZeroExitCode();
-            return process.Output.Any();
+            return Git("status --short", workingDirectory).Any();
         }
     }
 }

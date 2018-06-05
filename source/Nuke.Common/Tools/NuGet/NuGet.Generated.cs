@@ -2,14 +2,14 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-// Generated with Nuke.CodeGeneration, LOCAL VERSION.
-// Generated from https://github.com/nuke-build/tools/blob/master/metadata/NuGet.json.
+// Generated with Nuke.CodeGeneration, Version: Local.
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/NuGet.json.
 
 using JetBrains.Annotations;
-using Nuke.Common.Tools;
 using Nuke.Common;
 using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
+using Nuke.Common.Tools;
 using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
@@ -27,6 +27,13 @@ namespace Nuke.Common.Tools.NuGet
     {
         /// <summary><p>Path to the NuGet executable.</p></summary>
         public static string NuGetPath => GetToolPath();
+        /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p></summary>
+        public static IEnumerable<string> NuGet(string arguments, string workingDirectory = null, ProcessSettings processSettings = null)
+        {
+            var process = ProcessTasks.StartProcess(NuGetPath, arguments, workingDirectory, processSettings?.EnvironmentVariables, processSettings?.ExecutionTimeout, processSettings?.RedirectOutput ?? true);
+            process.AssertZeroExitCode();
+            return process.Output.Select(x => x.Text);
+        }
         static partial void PreProcess(NuGetPushSettings toolSettings);
         static partial void PostProcess(NuGetPushSettings toolSettings);
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>

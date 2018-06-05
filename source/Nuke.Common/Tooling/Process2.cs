@@ -45,6 +45,8 @@ namespace Nuke.Common.Tooling
             }
         }
 
+        public bool HasOutput => _output != null;
+
         public int ExitCode => _process.ExitCode;
 
         public void Dispose()

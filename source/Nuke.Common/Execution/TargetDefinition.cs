@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 
 namespace Nuke.Common.Execution
@@ -62,6 +63,11 @@ namespace Nuke.Common.Execution
         public ITargetDefinition Executes<T>(Func<T> action)
         {
             return Executes(new Action(() => action()));
+        }
+
+        public ITargetDefinition Executes(Func<Task> action)
+        {
+            return Executes(() => action().GetAwaiter().GetResult());
         }
 
         public ITargetDefinition DependsOn(params Target[] targets)

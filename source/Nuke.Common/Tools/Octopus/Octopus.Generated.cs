@@ -2,14 +2,14 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-// Generated with Nuke.CodeGeneration, LOCAL VERSION.
-// Generated from https://github.com/nuke-build/tools/blob/master/metadata/Octopus.json.
+// Generated with Nuke.CodeGeneration, Version: Local.
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Octopus.json.
 
 using JetBrains.Annotations;
-using Nuke.Common.Tools;
 using Nuke.Common;
 using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
+using Nuke.Common.Tools;
 using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
@@ -27,6 +27,13 @@ namespace Nuke.Common.Tools.Octopus
     {
         /// <summary><p>Path to the Octopus executable.</p></summary>
         public static string OctopusPath => ToolPathResolver.GetPackageExecutable("OctopusTools", "Octo.exe");
+        /// <summary><p>Octopus Deploy is an automated deployment server, which you install yourself, much like you would install SQL Server, Team Foundation Server or JetBrains TeamCity. Octopus makes it easy to automate deployment of ASP.NET web applications and Windows Services into development, test and production environments.<para/>Along with the Octopus Deploy server, you'll also install a lightweight agent service on each of the machines that you plan to deploy to, for example your web and application servers. We call this the Tentacle agent; the idea being that one Octopus server controls many Tentacles, potentially a lot more than 8! With Octopus and Tentacle, you can easily deploy to your own servers, or cloud services from providers like Amazon Web Services or Microsoft Azure.</p></summary>
+        public static IEnumerable<string> Octopus(string arguments, string workingDirectory = null, ProcessSettings processSettings = null)
+        {
+            var process = ProcessTasks.StartProcess(OctopusPath, arguments, workingDirectory, processSettings?.EnvironmentVariables, processSettings?.ExecutionTimeout, processSettings?.RedirectOutput ?? true);
+            process.AssertZeroExitCode();
+            return process.Output.Select(x => x.Text);
+        }
         static partial void PreProcess(OctopusPackSettings toolSettings);
         static partial void PostProcess(OctopusPackSettings toolSettings);
         /// <summary><p>The <c>Octo.exe pack</c> command provides a number of other useful parameters that can be used to customize the way your package gets created, such as output folder, files to include and release notes.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>

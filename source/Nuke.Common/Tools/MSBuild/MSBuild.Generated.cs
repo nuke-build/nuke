@@ -2,14 +2,14 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-// Generated with Nuke.CodeGeneration, LOCAL VERSION.
-// Generated from https://github.com/nuke-build/tools/blob/master/metadata/MSBuild.json.
+// Generated with Nuke.CodeGeneration, Version: Local.
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/MSBuild.json.
 
 using JetBrains.Annotations;
-using Nuke.Common.Tools;
 using Nuke.Common;
 using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
+using Nuke.Common.Tools;
 using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
@@ -27,6 +27,13 @@ namespace Nuke.Common.Tools.MSBuild
     {
         /// <summary><p>Path to the MSBuild executable.</p></summary>
         public static string MSBuildPath => GetToolPath();
+        /// <summary><p>The Microsoft Build Engine is a platform for building applications. This engine, which is also known as MSBuild, provides an XML schema for a project file that controls how the build platform processes and builds software. Visual Studio uses MSBuild, but it doesn't depend on Visual Studio. By invoking msbuild.exe on your project or solution file, you can orchestrate and build products in environments where Visual Studio isn't installed. Visual Studio uses MSBuild to load and build managed projects. The project files in Visual Studio (.csproj,.vbproj, vcxproj, and others) contain MSBuild XML code that executes when you build a project by using the IDE. Visual Studio projects import all the necessary settings and build processes to do typical development work, but you can extend or modify them from within Visual Studio or by using an XML editor.</p></summary>
+        public static IEnumerable<string> MSBuild(string arguments, string workingDirectory = null, ProcessSettings processSettings = null)
+        {
+            var process = ProcessTasks.StartProcess(MSBuildPath, arguments, workingDirectory, processSettings?.EnvironmentVariables, processSettings?.ExecutionTimeout, processSettings?.RedirectOutput ?? true);
+            process.AssertZeroExitCode();
+            return process.Output.Select(x => x.Text);
+        }
         static partial void PreProcess(MSBuildSettings toolSettings);
         static partial void PostProcess(MSBuildSettings toolSettings);
         /// <summary><p>The Microsoft Build Engine is a platform for building applications. This engine, which is also known as MSBuild, provides an XML schema for a project file that controls how the build platform processes and builds software. Visual Studio uses MSBuild, but it doesn't depend on Visual Studio. By invoking msbuild.exe on your project or solution file, you can orchestrate and build products in environments where Visual Studio isn't installed. Visual Studio uses MSBuild to load and build managed projects. The project files in Visual Studio (.csproj,.vbproj, vcxproj, and others) contain MSBuild XML code that executes when you build a project by using the IDE. Visual Studio projects import all the necessary settings and build processes to do typical development work, but you can extend or modify them from within Visual Studio or by using an XML editor.</p><p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/ms164311.aspx">official website</a>.</p></summary>

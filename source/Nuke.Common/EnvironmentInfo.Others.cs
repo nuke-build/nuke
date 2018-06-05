@@ -49,7 +49,10 @@ namespace Nuke.Common
         [CanBeNull]
         private static string[] GetSurrogateArguments()
         {
-            var assemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location).NotNull();
+            var entryAssemblyLocation = Assembly.GetEntryAssembly()?.Location;
+            if (entryAssemblyLocation == null) return null;
+
+            var assemblyDirectory = Path.GetDirectoryName(entryAssemblyLocation).NotNull();
             var argumentsFile = Path.Combine(assemblyDirectory, c_nukeTmpFileName);
             if (!File.Exists(argumentsFile))
                 return null;
@@ -66,7 +69,7 @@ namespace Nuke.Common
             }
 
             var splittedArguments = ParseCommandLineArguments(argumentLines.Single());
-            return new[] { Assembly.GetEntryAssembly().Location }.Concat(splittedArguments).ToArray();
+            return new[] { entryAssemblyLocation }.Concat(splittedArguments).ToArray();
         }
 
         public static string[] ParseCommandLineArguments(string commandLine)

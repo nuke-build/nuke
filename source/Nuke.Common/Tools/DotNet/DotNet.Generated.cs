@@ -2,14 +2,14 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-// Generated with Nuke.CodeGeneration, LOCAL VERSION.
-// Generated from https://github.com/nuke-build/tools/blob/master/metadata/DotNet.json.
+// Generated with Nuke.CodeGeneration, Version: Local.
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/DotNet.json.
 
 using JetBrains.Annotations;
-using Nuke.Common.Tools;
 using Nuke.Common;
 using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
+using Nuke.Common.Tools;
 using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
@@ -27,6 +27,12 @@ namespace Nuke.Common.Tools.DotNet
     {
         /// <summary><p>Path to the DotNet executable.</p></summary>
         public static string DotNetPath => GetToolPath();
+        public static IEnumerable<string> DotNet(string arguments, string workingDirectory = null, ProcessSettings processSettings = null)
+        {
+            var process = ProcessTasks.StartProcess(DotNetPath, arguments, workingDirectory, processSettings?.EnvironmentVariables, processSettings?.ExecutionTimeout, processSettings?.RedirectOutput ?? true);
+            process.AssertZeroExitCode();
+            return process.Output.Select(x => x.Text);
+        }
         static partial void PreProcess(DotNetTestSettings toolSettings);
         static partial void PostProcess(DotNetTestSettings toolSettings);
         /// <summary><p>The <c>dotnet test</c> command is used to execute unit tests in a given project. Unit tests are console application projects that have dependencies on the unit test framework (for example, MSTest, NUnit, or xUnit) and the dotnet test runner for the unit testing framework. These are packaged as NuGet packages and are restored as ordinary dependencies for the project.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
@@ -523,7 +529,7 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary><p>Specifies the server URL. This option is required unless <c>DefaultPushSource</c> config value is set in the NuGet config file.</p></summary>
         public virtual string Source { get; internal set; }
         /// <summary><p>Specifies the symbol server URL.</p></summary>
-        public virtual string SymbolsSource { get; internal set; }
+        public virtual string SymbolSource { get; internal set; }
         /// <summary><p>Specifies the timeout for pushing to a server in seconds. Defaults to 300 seconds (5 minutes). Specifying 0 (zero seconds) applies the default value.</p></summary>
         public virtual int? Timeout { get; internal set; }
         /// <summary><p>The API key for the server.</p></summary>
@@ -547,7 +553,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("nuget push")
               .Add("{value}", TargetPath)
               .Add("--source {value}", Source)
-              .Add("--symbols-source {value}", SymbolsSource)
+              .Add("--symbol-source {value}", SymbolSource)
               .Add("--timeout {value}", Timeout)
               .Add("--api-key {value}", ApiKey, secret: true)
               .Add("--symbol-api-key {value}", SymbolApiKey, secret: true)
@@ -3836,21 +3842,21 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
-        #region SymbolsSource
-        /// <summary><p><em>Sets <see cref="DotNetNuGetPushSettings.SymbolsSource"/>.</em></p><p>Specifies the symbol server URL.</p></summary>
+        #region SymbolSource
+        /// <summary><p><em>Sets <see cref="DotNetNuGetPushSettings.SymbolSource"/>.</em></p><p>Specifies the symbol server URL.</p></summary>
         [Pure]
-        public static DotNetNuGetPushSettings SetSymbolsSource(this DotNetNuGetPushSettings toolSettings, string symbolsSource)
+        public static DotNetNuGetPushSettings SetSymbolSource(this DotNetNuGetPushSettings toolSettings, string symbolSource)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.SymbolsSource = symbolsSource;
+            toolSettings.SymbolSource = symbolSource;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DotNetNuGetPushSettings.SymbolsSource"/>.</em></p><p>Specifies the symbol server URL.</p></summary>
+        /// <summary><p><em>Resets <see cref="DotNetNuGetPushSettings.SymbolSource"/>.</em></p><p>Specifies the symbol server URL.</p></summary>
         [Pure]
-        public static DotNetNuGetPushSettings ResetSymbolsSource(this DotNetNuGetPushSettings toolSettings)
+        public static DotNetNuGetPushSettings ResetSymbolSource(this DotNetNuGetPushSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.SymbolsSource = null;
+            toolSettings.SymbolSource = null;
             return toolSettings;
         }
         #endregion

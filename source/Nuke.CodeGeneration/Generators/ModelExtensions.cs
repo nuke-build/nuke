@@ -66,17 +66,17 @@ namespace Nuke.CodeGeneration.Generators
 
         public static bool IsList(this Property property)
         {
-            return property.Type.StartsWith("List");
+            return property.Type.StartsWith("List<");
         }
 
         public static bool IsDictionary(this Property property)
         {
-            return property.Type.StartsWith("Dictionary");
+            return property.Type.StartsWith("Dictionary<");
         }
 
         public static bool IsLookupTable(this Property property)
         {
-            return property.Type.StartsWith("LookupTable");
+            return property.Type.StartsWith("LookupTable<");
         }
 
         public static bool IsBoolean(this Property property)

@@ -45,6 +45,10 @@ class Build : NukeBuild
         ? "https://api.nuget.org/v3/index.json"
         : "https://www.myget.org/F/nukebuild/api/v2/package";
 
+    string SymbolSource => NuGet
+        ? "https://nuget.smbsrc.net/"
+        : "https://www.myget.org/F/nukebuild/symbols/api/v2/package";
+
     [GitVersion] readonly GitVersion GitVersion;
     [GitRepository] readonly GitRepository GitRepository;
     [Solution] readonly Solution Solution;
@@ -70,17 +74,22 @@ class Build : NukeBuild
         {
             DotNetBuild(s => DefaultDotNetBuild);
         });
+    
+    Project GlobalToolProject => Solution.GetProject("Nuke.GlobalTool");
+    Project CodeGenerationProject => Solution.GetProject("Nuke.CodeGeneration");
 
     Target Publish => _ => _
         .DependsOn(Restore)
         .Executes(() =>
         {
-            var project = Solution.GetProject("Nuke.CodeGeneration");
             DotNetPublish(s => DefaultDotNetPublish
-                .SetProject(project)
+                .SetProject(GlobalToolProject));
+            
+            DotNetPublish(s => DefaultDotNetPublish
+                .SetProject(CodeGenerationProject)
                 .SetFramework("netstandard2.0"));
             DotNetPublish(s => DefaultDotNetPublish
-                .SetProject(project)
+                .SetProject(CodeGenerationProject)
                 .SetFramework("net461"));
         });
 
@@ -123,10 +132,11 @@ class Build : NukeBuild
         .Executes(() =>
         {
             GlobFiles(OutputDirectory, "*.nupkg").NotEmpty()
-                .Where(x => !x.EndsWith("symbols.nupkg"))
+                .Where(x => !x.EndsWith(".symbols.nupkg"))
                 .ForEach(x => DotNetNuGetPush(s => s
                     .SetTargetPath(x)
                     .SetSource(Source)
+                    .SetSymbolSource(SymbolSource)
                     .SetApiKey(ApiKey)));
 
             if (NuGet)
@@ -198,7 +208,7 @@ class Build : NukeBuild
         {
             GenerateSchema<Tool>(
                 ToolSchemaFile,
-                GitRepository.GetGitHubDownloadUrl(ToolSchemaFile),
+                GitRepository.GetGitHubDownloadUrl(ToolSchemaFile, "master"),
                 "Tool specification schema file by NUKE");
 
             GenerateCode(
@@ -206,7 +216,7 @@ class Build : NukeBuild
                 GenerationDirectory,
                 baseNamespace: "Nuke.Common.Tools",
                 useNestedNamespaces: true,
-                gitRepository: GitRepository);
+                gitRepository: GitRepository.SetBranch("master"));
         });
 
     Target Full => _ => _

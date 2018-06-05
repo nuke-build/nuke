@@ -1,14 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
+  
   <Import Project="..\Package.props" />
   <Import Project="..\..\shared\Configuration.props" />
+  
   <ItemGroup>
     <EmbeddedResource Include="**\*.flf" />
     <None Remove="graph.html" />
     <EmbeddedResource Include="Execution\graph.html" />
   </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.0.2" />
     <PackageReference Include="Colorful.Console" Version="1.0.7" />
@@ -22,4 +26,5 @@
     <PackageReference Include="System.ValueTuple" Version="4.3.0" />
     <PackageReference Include="YamlDotNet" Version="4.2.1" />
   </ItemGroup>
+  
 </Project>

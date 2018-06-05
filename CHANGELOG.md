@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Changed build scripts to download .NET Core SDK only if local installation is missing or doesn't match expected version.
+- Added global tool for setup and build invocation.
+- Added version logging for PowerShell, Bash, NuGet and DotNet.
+- Added error output for CLT tasks when redirect output is enabled.
+- Added `[Tool]Tasks.[Tool](string arguments)` for all CLTs.
+- Added support for double-dashed arguments.
+- Fixed resolution of `Skip` parameter when using separators.
+- Fixed font resource resolution for deprecated namespace.
+- Fixed saving location of build scripts.
 
 ## [0.4.0] / 2018-05-02
 - Deprecated `Nuke.Core` namespace. All types have been moved to `Nuke.Common`.

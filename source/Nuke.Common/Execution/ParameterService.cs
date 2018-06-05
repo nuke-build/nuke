@@ -134,9 +134,11 @@ namespace Nuke.Common.Execution
                 
                 return shouldSplit;
             }).Join("-");
-            
-            var index = Array.FindLastIndex(_commandLineArguments, 
-                x => x.EqualsOrdinalIgnoreCase($"-{argumentName}") || x.EqualsOrdinalIgnoreCase($"-{splittedName}"));
+
+            var index = Array.FindLastIndex(_commandLineArguments,
+                x => x.StartsWith("-") &&
+                     (x.TrimStart('-').EqualsOrdinalIgnoreCase(argumentName) ||
+                      x.TrimStart('-').EqualsOrdinalIgnoreCase(splittedName)));
 
             if (index == -1 && checkNames)
             {

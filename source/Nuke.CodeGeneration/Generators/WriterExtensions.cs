@@ -15,7 +15,7 @@ namespace Nuke.CodeGeneration.Generators
         public static T WriteSummary<T>(this T writerWrapper, Task task)
             where T : IWriterWrapper
         {
-            return writerWrapper.WriteSummary(task.Help ?? task.Tool.Help, task.Tool.OfficialUrl);
+            return writerWrapper.WriteSummary(task.Help ?? task.Tool.Help, task.OfficialUrl ?? task.Tool.OfficialUrl);
         }
 
         public static T WriteSummary<T>(this T writerWrapper, Property property)

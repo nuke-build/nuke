@@ -198,17 +198,16 @@ namespace Nuke.Common.IO
         [CanBeNull]
         public static string FindParentDirectory(string start, Func<DirectoryInfo, bool> predicate)
         {
-            return FindParentDirectory(new DirectoryInfo(start), predicate);
+            return FindParentDirectory(new DirectoryInfo(start), predicate)?.FullName;
         }
 
         [CanBeNull]
-        public static string FindParentDirectory(DirectoryInfo start, Func<DirectoryInfo, bool> predicate)
+        public static DirectoryInfo FindParentDirectory(DirectoryInfo start, Func<DirectoryInfo, bool> predicate)
         {
             return start
                 .DescendantsAndSelf(x => x.Parent)
                 .Where(x => x != null)
-                .FirstOrDefault(predicate)
-                ?.FullName;
+                .FirstOrDefault(predicate);
         }
     }
 }
