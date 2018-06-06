@@ -45,7 +45,8 @@ namespace Nuke.Common.Git
                 .Skip(count: 1)
                 .TakeWhile(x => !x.StartsWith("["))
                 .SingleOrDefault(x => x.StartsWithOrdinalIgnoreCase("url = "))
-                ?.Split('=')[1];
+                ?.Split('=')[1]
+                .Trim();
             ControlFlow.Assert(url != null, $"Could not parse remote URL for '{remote}'.");
 
             var (endpoint, identifier) = ParseUrl(url);
@@ -63,7 +64,7 @@ namespace Nuke.Common.Git
             var match = new[]
                         {
                             @"git@(?<endpoint>[^:/]+?)(:|/)(?<identifier>.+?)/?(\.git)?$",
-                            @"^https://([^:]+:[^:@]+@)?(?<endpoint>[^/]+?)/(?<identifier>.+?)/?(\.git)?$"
+                            @"^https?://([^:]+:[^:@]+@)?(?<endpoint>[^/]+?)/(?<identifier>.+?)/?(\.git)?$"
                         }
                 .Select(x => Regex.Match(url.Trim(), x))
                 .FirstOrDefault(x => x.Success);
