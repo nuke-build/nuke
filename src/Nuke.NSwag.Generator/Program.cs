@@ -9,13 +9,12 @@ namespace Nuke.NSwag.Generator
 {
     internal class Program
     {
-        private static void Main(string[] args)
+        private static void Main (string[] args)
         {
-            SpecificationParser.WriteSpecifications(new SpecificationGeneratorSettings
-                                                    {
-                                                        OutputFolder = args[0],
-                                                        PackageFolder = args[1]
-                                                    });
+            NSwagSpecificationGenerator.WriteSpecifications(x =>
+                    x.SetOutputFolder(args[0])
+                            .SetPackageFolder(args[1])
+                            .SetGitReference("test"));
         }
     }
 }

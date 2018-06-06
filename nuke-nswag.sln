@@ -11,11 +11,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{5BE76539-1
 	ProjectSection(SolutionItems) = preProject
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
+		build.ps1 = build.ps1
+		build.sh = build.sh
 		CHANGELOG.md = CHANGELOG.md
 		GitVersion.yml = GitVersion.yml
 		Jenkinsfile = Jenkinsfile
 		LICENSE = LICENSE
-		nule-nswag.DotSettings = nule-nswag.DotSettings
+		nuke-nswag.sln.DotSettings = nuke-nswag.sln.DotSettings
 		README.md = README.md
 	EndProjectSection
 EndProject

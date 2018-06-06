@@ -15,37 +15,37 @@ namespace Nuke.NSwag.Generator.Utilities
         private const string c_consoleCommandInterfaceFullName = "NConsole.IConsoleCommand";
         private const string c_commandAttributeTypeFullName = "NConsole.CommandAttribute";
 
-        public static string GetPropertySetName(this TypeDefinition typeDefinition)
+        public static string GetPropertySetName (this TypeDefinition typeDefinition)
         {
             var indexOfGenericSeperator = typeDefinition.Name.IndexOf(value: '`');
             var name = indexOfGenericSeperator < 0
-                ? typeDefinition.Name
-                : typeDefinition.Name.Substring(startIndex: 0, length: indexOfGenericSeperator);
+                    ? typeDefinition.Name
+                    : typeDefinition.Name.Substring(startIndex: 0, length: indexOfGenericSeperator);
             return name.Replace("Base", string.Empty);
         }
 
-        public static bool IsBaseClass(this TypeDefinition typeDefinition)
+        public static bool IsCommandBaseClass (this TypeDefinition typeDefinition)
         {
             if (!typeDefinition.IsAbstract || typeDefinition.IsInterface) return false;
             if (typeDefinition.Interfaces.Any(y => y.InterfaceType.FullName == c_consoleCommandInterfaceFullName)) return true;
-            return typeDefinition.BaseType != null && IsBaseClass(typeDefinition.BaseType.Resolve());
+            return typeDefinition.BaseType != null && IsCommandBaseClass(typeDefinition.BaseType.Resolve());
         }
 
-        public static List<string> GetCommonPropertySets(this TypeDefinition typeDefinition)
+        public static List<string> GetCommonPropertySets (this TypeDefinition typeDefinition)
         {
             var commonPropertySets = new List<string>();
-            if (typeDefinition.IsBaseClass()) commonPropertySets.Add(typeDefinition.GetPropertySetName());
+            if (typeDefinition.IsCommandBaseClass()) commonPropertySets.Add(typeDefinition.GetPropertySetName());
             if (typeDefinition.BaseType != null) commonPropertySets.AddRange(GetCommonPropertySets(typeDefinition.BaseType.Resolve()));
             return commonPropertySets;
         }
 
-        public static CustomAttribute GetCommandAttribute(this TypeDefinition typeDefinition)
+        public static CustomAttribute GetCommandAttribute (this TypeDefinition typeDefinition)
         {
             ControlFlow.Assert(typeDefinition.HasCommandAttribute(), "typeDefinition.HasCommandAttribute()");
             return typeDefinition.CustomAttributes.Single(x => x.AttributeType.FullName == c_commandAttributeTypeFullName);
         }
 
-        public static bool HasCommandAttribute(this TypeDefinition typeDefinition)
+        public static bool HasCommandAttribute (this TypeDefinition typeDefinition)
         {
             return typeDefinition.HasCustomAttributes
                    && typeDefinition.CustomAttributes.Any(x => x.AttributeType.FullName == c_commandAttributeTypeFullName);

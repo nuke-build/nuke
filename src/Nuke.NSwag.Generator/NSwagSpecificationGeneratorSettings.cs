@@ -7,8 +7,9 @@ using System.Linq;
 
 namespace Nuke.NSwag.Generator
 {
-    public class SpecificationGeneratorSettings
+    public class NSwagSpecificationGeneratorSettings : SpecificationGeneratorSettings
     {
-        public string OutputFolder { get; set; }
+        public string PackageFolder { get; set; }
+        public string GitReference { get; set; }
     }
 }

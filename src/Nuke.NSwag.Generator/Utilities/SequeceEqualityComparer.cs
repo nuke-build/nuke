@@ -12,7 +12,7 @@ namespace Nuke.NSwag.Generator.Utilities
     [Serializable]
     internal class SequenceEqualityComparer : IEqualityComparer<List<string>>
     {
-        public bool Equals(List<string> x, List<string> y)
+        public bool Equals (List<string> x, List<string> y)
         {
             if (x.Count != y.Count) return false;
             for (var i = 0; i < x.Count; i++)
@@ -24,7 +24,7 @@ namespace Nuke.NSwag.Generator.Utilities
             return true;
         }
 
-        public int GetHashCode(List<string> obj)
+        public int GetHashCode (List<string> obj)
         {
             var result = 17;
 
@@ -43,12 +43,12 @@ namespace Nuke.NSwag.Generator.Utilities
     [Serializable]
     internal class EnumerationEqualityComparer : IEqualityComparer<Enumeration>
     {
-        public bool Equals(Enumeration x, Enumeration y)
+        public bool Equals (Enumeration x, Enumeration y)
         {
             return x.Name == y.Name && new SequenceEqualityComparer().Equals(x.Values, y.Values);
         }
 
-        public int GetHashCode(Enumeration obj)
+        public int GetHashCode (Enumeration obj)
         {
             var result = 17;
 

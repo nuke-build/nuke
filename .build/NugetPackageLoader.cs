@@ -1,6 +1,9 @@
 ﻿// Copyright Matthias Koch 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/web/blob/master/LICENSE
+// Copyright Sebastian Karasek, Matthias Koch 2018.
+// Distributed under the MIT License.
+// https://github.com/nuke-build/nswag/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
@@ -8,6 +11,7 @@ using System.Linq;
 using System.Threading;
 using System.Xml.Linq;
 using NuGet.Configuration;
+using NuGet.Frameworks;
 using NuGet.PackageManagement;
 using NuGet.Packaging;
 using NuGet.ProjectManagement;
@@ -22,16 +26,24 @@ using Nuke.Common.Utilities.Collections;
 
 class NugetPackageLoader
 {
-    public static void InstallPackages(IEnumerable<string> packageIds, string packageDirectory,  bool includePreReleases = false, DependencyBehavior dependencyBehavior = DependencyBehavior.Ignore)
+    public static void InstallPackages (
+            IEnumerable<string> packageIds,
+            string packageDirectory,
+            bool includePreReleases = false,
+            DependencyBehavior dependencyBehavior = DependencyBehavior.Ignore)
     {
         var packageLoader = new NugetPackageLoader(packageDirectory, includePreReleases, dependencyBehavior);
         packageIds.ForEach(packageLoader.InstallPackage);
     }
-    public static void InstallPackage(string packageId, string packageDirectory, bool includePreReleases = false, DependencyBehavior dependencyBehavior = DependencyBehavior.Ignore)
-    {
-        InstallPackages(new []{packageId},packageDirectory,includePreReleases,dependencyBehavior);
-    }
 
+    public static void InstallPackage (
+            string packageId,
+            string packageDirectory,
+            bool includePreReleases = false,
+            DependencyBehavior dependencyBehavior = DependencyBehavior.Ignore)
+    {
+        InstallPackages(new[] { packageId }, packageDirectory, includePreReleases, dependencyBehavior);
+    }
 
     private readonly NuGetPackageManager _packageManager;
     private readonly FolderNuGetProject _project;
@@ -39,7 +51,10 @@ class NugetPackageLoader
     private readonly ResolutionContext _resolutionContext;
     private readonly IReadOnlyCollection<SourceRepository> _sourceRepositories;
 
-    private NugetPackageLoader(string packagePath, bool includePreReleases = false, DependencyBehavior dependencyBehavior = DependencyBehavior.Ignore)
+    private NugetPackageLoader (
+            string packagePath,
+            bool includePreReleases = false,
+            DependencyBehavior dependencyBehavior = DependencyBehavior.Ignore)
     {
         var resourceProviders = new List<Lazy<INuGetResourceProvider>>(Repository.Provider.GetCoreV3());
 
@@ -47,32 +62,32 @@ class NugetPackageLoader
         _projectContext = new ProjectContext();
         _sourceRepositories = new[] { new SourceRepository(new PackageSource("https://api.nuget.org/v3/index.json"), resourceProviders) };
         _resolutionContext = new ResolutionContext(dependencyBehavior,
-            includePreReleases,
-            includeUnlisted: false,
-            versionConstraints: VersionConstraints.None);
+                includePreReleases,
+                includeUnlisted: false,
+                versionConstraints: VersionConstraints.None);
 
         var settings = Settings.LoadDefaultSettings(packagePath, configFileName: null, machineWideSettings: new XPlatMachineWideSetting());
         var sourceRepositoryProvider = new SourceRepositoryProvider(settings, resourceProviders);
 
         _packageManager = new NuGetPackageManager(sourceRepositoryProvider, settings, packagePath)
                           {
-                              PackagesFolderNuGetProject = _project
+                                  PackagesFolderNuGetProject = _project
                           };
     }
 
-    private void InstallPackage(string packageId)
+    private void InstallPackage (string packageId)
     {
         _packageManager
-            .InstallPackageAsync(_project, packageId, _resolutionContext, _projectContext, _sourceRepositories.First(),
-                _sourceRepositories.Skip(count: 1),
-                CancellationToken.None)
-            .GetAwaiter()
-            .GetResult();
+                .InstallPackageAsync(_project, packageId, _resolutionContext, _projectContext, _sourceRepositories.First(),
+                        _sourceRepositories.Skip(count: 1),
+                        CancellationToken.None)
+                .GetAwaiter()
+                .GetResult();
     }
 
     private class ProjectContext : INuGetProjectContext
     {
-        public void Log(MessageLevel level, string message, params object[] args)
+        public void Log (MessageLevel level, string message, params object[] args)
         {
             switch (level)
             {
@@ -88,7 +103,7 @@ class NugetPackageLoader
             }
         }
 
-        public FileConflictAction ResolveFileConflict(string message) => FileConflictAction.Ignore;
+        public FileConflictAction ResolveFileConflict (string message) => FileConflictAction.Ignore;
 
         public PackageExtractionContext PackageExtractionContext { get; set; }
 
@@ -97,7 +112,7 @@ class NugetPackageLoader
 
         public ISourceControlManagerProvider SourceControlManagerProvider => null;
 
-        public void ReportError(string message)
+        public void ReportError (string message)
         {
             Logger.Error(message);
         }

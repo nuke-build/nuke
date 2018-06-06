@@ -20,7 +20,7 @@ namespace Nuke.NSwag
 
         private bool _isNetCore => NSwagRuntime != null && NSwagRuntime.StartsWith("NetCore", StringComparison.OrdinalIgnoreCase);
 
-        protected override Arguments ConfigureArguments(Arguments arguments)
+        protected override Arguments ConfigureArguments (Arguments arguments)
         {
             ControlFlow.Assert(NSwagRuntime != null, "NSwagRuntime must be defined to detect the proper nswag executable.");
             if (!_isNetCore) return base.ConfigureArguments(arguments);
@@ -31,13 +31,13 @@ namespace Nuke.NSwag
             return base.ConfigureArguments(args);
         }
 
-        protected string GetToolPath()
+        protected string GetToolPath ()
         {
             if (_isNetCore) return DotNetTasks.DotNetPath;
             return NuGetPackageResolver.GetLocalInstalledPackageDirectory("nswag.msbuild") + "/build/Win/NSwag.exe";
         }
 
-        protected string GetNSwagRuntime()
+        protected string GetNSwagRuntime ()
         {
             return string.Empty;
         }

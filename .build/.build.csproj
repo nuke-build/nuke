@@ -1,41 +1,34 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <RootNamespace></RootNamespace>
-    <ReferenceExternal>False</ReferenceExternal>
-    <IsPackable>false</IsPackable>
+    <IsPackable>False</IsPackable>
     <NoWarn>CS0649;CS0169</NoWarn>
-    <NukeGenerateCode>False</NukeGenerateCode>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>DEBUG;NET46</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DefineConstants>RELEASE;NET46</DefineConstants>
+    
+    <!-- NUKE CONFIGURATION -->
+    <NukeVersion>0.5.0</NukeVersion>
+    <NukeCodeGeneration>False</NukeCodeGeneration>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GitVersion.CommandLine" Version="4.0.0-beta0011" />
-    <PackageReference Include="JetBrains.ReSharper.CommandLineTools" Version="2017.1.20170613.162720" />
-    <PackageReference Include="NSwag.Commands" Version="11.15.3" />
-    <PackageReference Include="Nuke.CodeGeneration" Version="0.5.0-alpha0027" />
-    <PackageReference Include="Nuke.Common" Version="0.5.0-alpha0027" />
-    <PackageReference Include="Octokit" Version="0.29.0" />
-    <PackageReference Include="System.Security.Permissions" Version="4.4.1" />
     <PackageReference Include="NuGet.PackageManagement.NetStandard" Version="4.6.0" />
+    <PackageReference Include="Nuke.Common" Version="$(NukeVersion)" />
+    <PackageReference Include="Nuke.CodeGeneration" Version="$(NukeVersion)" />
+    <PackageReference Include="GitVersion.CommandLine" Version="4.0.0-beta0012" />
+    <PackageReference Include="Octokit" Version="0.29.0" />
+    <PackageReference Include="System.Security.Permissions" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NukeMetadata Include="**/*.json" Exclude="bin/**;obj/**" />
+    <None Remove="*.csproj.DotSettings;*.ref.*.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\src\Nuke.NSwag.Generator\Nuke.NSwag.Generator.csproj" />
   </ItemGroup>
-
-
-    
-
 
 </Project>
