@@ -2,8 +2,8 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-// Generated with Nuke.CodeGeneration, Version: 0.5.0-alpha.27 [CommitSha: 1e4928c8].
-// Generated from https://github.com/nuke-build/nswag/blob/master/src/Nuke.NSwag/NSwag.json.
+// Generated with Nuke.CodeGeneration, Version: 0.5.0 [CommitSha: 3eaf2b72].
+// Generated from https://github.com/nuke-build/nswag/blob/master/src/Nuke.NSwag/specifications/NSwag.json.
 
 using JetBrains.Annotations;
 using Nuke.Common;
@@ -9930,6 +9930,8 @@ namespace Nuke.NSwag
     {
         public static CSharpClassStyle Poco = new CSharpClassStyle { Value = "Poco" };
         public static CSharpClassStyle Inpc = new CSharpClassStyle { Value = "Inpc" };
+        public static CSharpClassStyle Prism = new CSharpClassStyle { Value = "Prism" };
+        public static CSharpClassStyle Record = new CSharpClassStyle { Value = "Record" };
     }
     #endregion
     #region CSharpControllerStyle

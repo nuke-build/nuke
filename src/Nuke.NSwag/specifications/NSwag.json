@@ -6,24 +6,23 @@
     "https://github.com/nuke-build/nswag/blob/master/LICENSE"
   ],
   "references": [
-    "https://raw.githubusercontent.com/RSuter/NSwag/5a5e6fb7af2cc4b7071819fa5031daa504c0b6fa/src/NSwag.Commands/Commands/Tooling/VersionCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5a5e6fb7af2cc4b7071819fa5031daa504c0b6fa/src/NSwag.Commands/Commands/SwaggerGeneration/ListTypesCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5a5e6fb7af2cc4b7071819fa5031daa504c0b6fa/src/NSwag.Commands/Commands/SwaggerGeneration/ListWebApiControllersCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5a5e6fb7af2cc4b7071819fa5031daa504c0b6fa/src/NSwag.Commands/Commands/SwaggerGeneration/TypesToSwaggerCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5a5e6fb7af2cc4b7071819fa5031daa504c0b6fa/src/NSwag.Commands/Commands/SwaggerGeneration/WebApi/WebApiToSwaggerCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5a5e6fb7af2cc4b7071819fa5031daa504c0b6fa/src/NSwag.Commands/Commands/SwaggerGeneration/AspNetCore/AspNetCoreToSwaggerCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5a5e6fb7af2cc4b7071819fa5031daa504c0b6fa/src/NSwag.Commands/Commands/Document/CreateDocumentCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5a5e6fb7af2cc4b7071819fa5031daa504c0b6fa/src/NSwag.Commands/Commands/Document/ExecuteDocumentCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5a5e6fb7af2cc4b7071819fa5031daa504c0b6fa/src/NSwag.Commands/Commands/CodeGeneration/JsonSchemaToCSharpCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5a5e6fb7af2cc4b7071819fa5031daa504c0b6fa/src/NSwag.Commands/Commands/CodeGeneration/JsonSchemaToTypeScriptCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5a5e6fb7af2cc4b7071819fa5031daa504c0b6fa/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToCSharpClientCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5a5e6fb7af2cc4b7071819fa5031daa504c0b6fa/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToCSharpControllerCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5a5e6fb7af2cc4b7071819fa5031daa504c0b6fa/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToTypeScriptClientCommand.cs"
+    "https://raw.githubusercontent.com/RSuter/NSwag/57bc77e114/src/NSwag.Commands/Commands/Tooling/VersionCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/57bc77e114/src/NSwag.Commands/Commands/SwaggerGeneration/ListTypesCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/57bc77e114/src/NSwag.Commands/Commands/SwaggerGeneration/ListWebApiControllersCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/57bc77e114/src/NSwag.Commands/Commands/SwaggerGeneration/TypesToSwaggerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/57bc77e114/src/NSwag.Commands/Commands/SwaggerGeneration/WebApi/WebApiToSwaggerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/57bc77e114/src/NSwag.Commands/Commands/SwaggerGeneration/AspNetCore/AspNetCoreToSwaggerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/57bc77e114/src/NSwag.Commands/Commands/Document/CreateDocumentCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/57bc77e114/src/NSwag.Commands/Commands/Document/ExecuteDocumentCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/57bc77e114/src/NSwag.Commands/Commands/CodeGeneration/JsonSchemaToCSharpCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/57bc77e114/src/NSwag.Commands/Commands/CodeGeneration/JsonSchemaToTypeScriptCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/57bc77e114/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToCSharpClientCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/57bc77e114/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToCSharpControllerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/57bc77e114/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToTypeScriptClientCommand.cs"
   ],
   "name": "NSwag",
   "officialUrl": "https://github.com/RSuter/NSwag",
   "help": "The project combines the functionality of Swashbuckle (Swagger generation) and AutoRest (client generation) in one toolchain. This way a lot of incompatibilites can be avoided and features which are not well described by the Swagger specification or JSON Schema are better supported (e.g. <a href=\"https://github.com/NJsonSchema/NJsonSchema/wiki/Inheritance\">inheritance</a>, <a href=\"https://github.com/NJsonSchema/NJsonSchema/wiki/Enums\">enum</a> and reference handling). The NSwag project heavily uses <a href=\"http://njsonschema.org/\">NJsonSchema for .NET</a> for JSON Schema handling and C#/TypeScript class/interface generation.",
-  "packageExecutable": "NSwag.Commandline",
   "customExecutable": true,
   "tasks": [
     {
@@ -1315,7 +1314,9 @@
       "name": "CSharpClassStyle",
       "values": [
         "Poco",
-        "Inpc"
+        "Inpc",
+        "Prism",
+        "Record"
       ]
     },
     {

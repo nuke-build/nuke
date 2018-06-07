@@ -18,8 +18,8 @@ namespace Nuke.NSwag
     {
         /// <summary><p><em>Sets <see cref="NSwagSettings.NSwagRuntime"/>.</em></p></summary>
         [Pure]
-        public static T SetNSwagRuntime<T>(this T toolSettings, string runtime)
-            where T : NSwagSettings
+        public static T SetNSwagRuntime<T> (this T toolSettings, string runtime)
+                where T : NSwagSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NSwagRuntime = runtime;
@@ -28,19 +28,18 @@ namespace Nuke.NSwag
 
         /// <summary><p><em>Sets <see cref="NSwagSettings.NSwagRuntime"/>.</em></p></summary>
         [Pure]
-        public static T SetNSwagRuntime<T>(this T toolSettings, Runtime runtime)
-            where T : NSwagSettings
+        public static T SetNSwagRuntime<T> (this T toolSettings, Runtime runtime)
+                where T : NSwagSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NSwagRuntime = runtime.ToString();
             return toolSettings;
         }
 
-
         /// <summary><p><em>Resets <see cref="NSwagSettings.NSwagRuntime"/>.</em></p></summary>
         [Pure]
-        public static T ResetNSwagRuntime<T>(this T toolSettings)
-            where T : NSwagSettings
+        public static T ResetNSwagRuntime<T> (this T toolSettings)
+                where T : NSwagSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NSwagRuntime = null;
