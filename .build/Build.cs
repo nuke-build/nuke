@@ -68,10 +68,10 @@ class Build : NukeBuild
             .DependsOn(DownloadPackages)
             .Executes(() =>
             {
-                NSwagSpecificationGenerator.WriteSpecifications(x =>
-                        x.SetGitReference(GitHubCommitHashFetcher.FetchShortHashForReference("heads/master"))
-                                .SetOutputFolder(SpecificationDirectory)
-                                .SetPackageFolder(PackageDirectory));
+                NSwagSpecificationGenerator.WriteSpecifications(x => x
+                        .SetGitReference(GitHubCommitHashFetcher.FetchShortHashForReference("heads/master"))
+                        .SetOutputFolder(SpecificationDirectory)
+                        .SetPackageFolder(PackageDirectory));
 
                 CodeGenerator.GenerateCode(SpecificationDirectory, GenerationBaseDirectory, baseNamespace: "Nuke.NSwag",
                         gitRepository: GitRepository);
