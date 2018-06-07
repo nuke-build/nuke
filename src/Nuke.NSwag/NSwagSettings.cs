@@ -16,13 +16,12 @@ namespace Nuke.NSwag
     public class NSwagSettings : ToolSettings
     {
         /// <summary>The runtime of the nswag tool to use.</summary>
-        public string NSwagRuntime { get; set; }
+        public string NSwagRuntime { get; set; } = NSwagTasks.Runtime.Win.ToString();
 
         private bool _isNetCore => NSwagRuntime != null && NSwagRuntime.StartsWith("NetCore", StringComparison.OrdinalIgnoreCase);
 
         protected override Arguments ConfigureArguments (Arguments arguments)
         {
-            ControlFlow.Assert(NSwagRuntime != null, "NSwagRuntime must be defined to detect the proper nswag executable.");
             if (!_isNetCore) return base.ConfigureArguments(arguments);
 
             var args = new Arguments();

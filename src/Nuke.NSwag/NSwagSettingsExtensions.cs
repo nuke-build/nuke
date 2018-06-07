@@ -41,9 +41,7 @@ namespace Nuke.NSwag
         public static T ResetNSwagRuntime<T> (this T toolSettings)
                 where T : NSwagSettings
         {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NSwagRuntime = null;
-            return toolSettings;
+            return toolSettings.SetNSwagRuntime(Runtime.Win);
         }
     }
 }
