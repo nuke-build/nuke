@@ -39,7 +39,7 @@ if (!(Test-Path $env:NUGET_EXE)) {
 elseif ($NuGetVersion -eq "latest") {
     ExecSafe { & $env:NUGET_EXE update -Self }
 }
-Write-Output $($env:NUGET_EXE help | select -First 1)
+Write-Output $(& $env:NUGET_EXE help | select -First 1)
 
 ExecSafe { & $env:NUGET_EXE install Nuke.MSBuildLocator -ExcludeVersion -OutputDirectory $TempDirectory -SolutionDirectory $SolutionDirectory }
 $MSBuildFile = & "$TempDirectory\Nuke.MSBuildLocator\tools\Nuke.MSBuildLocator.exe"
