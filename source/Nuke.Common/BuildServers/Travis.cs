@@ -18,7 +18,7 @@ namespace Nuke.Common.BuildServers
 
         public static Travis Instance => NukeBuild.Instance?.Host == HostType.Travis ? s_instance.Value : null;
 
-        internal static bool IsRunningTravis => Variable("TRAVIS") != null;
+        internal static bool IsRunningTravis => Environment.GetEnvironmentVariable("TRAVIS") != null;
 
         internal Travis()
         {

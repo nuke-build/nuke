@@ -29,16 +29,27 @@ namespace Nuke.Common
         {
             get
             {
-                var environmentVariables = Environment.GetEnvironmentVariables()
-                    .ToGeneric<string, string>(StringComparer.CurrentCulture);
+                try
+                {
+                    var environmentVariables = Environment.GetEnvironmentVariables()
+                        .ToGeneric<string, string>(StringComparer.CurrentCulture);
 
-                var groups = environmentVariables.GroupBy(x => x.Key, StringComparer.OrdinalIgnoreCase).ToList();
-                foreach (var group in groups.Where(x => x.Count() > 1))
-                    Logger.Warn($"Environment variable '{group.Key}' exists multiple times with different casing. Falling back to case-sensitive.");
+                    var groups = environmentVariables.GroupBy(x => x.Key, StringComparer.OrdinalIgnoreCase).ToList();
+                    foreach (var group in groups.Where(x => x.Count() > 1))
+                    {
+                        Console.WriteLine($"Environment variable '{group.Key}' exists multiple times with different casing. Falling back to case-sensitive.");                        
+                        Logger.Warn($"Environment variable '{group.Key}' exists multiple times with different casing. Falling back to case-sensitive.");                        
+                    }
                 
-                return groups.Any(x => x.Count() > 1)
-                    ? environmentVariables.AsReadOnly()
-                    : new Dictionary<string, string>(environmentVariables, StringComparer.OrdinalIgnoreCase).AsReadOnly();
+                    return groups.Any(x => x.Count() > 1)
+                        ? environmentVariables.AsReadOnly()
+                        : new Dictionary<string, string>(environmentVariables, StringComparer.OrdinalIgnoreCase).AsReadOnly();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
             }
         }
 
