@@ -84,13 +84,13 @@ namespace Nuke.Common.OutputSinks
                 switch (target.Status)
                 {
                     case ExecutionStatus.Absent:
-                    case ExecutionStatus.NotRun:
                     case ExecutionStatus.Skipped:
                         Logger.Trace(line);
                         break;
                     case ExecutionStatus.Executed:
                         Logger.Success(line);
-                        break;
+                        break;                  
+                    case ExecutionStatus.NotRun:
                     case ExecutionStatus.Failed:
                         Logger.Error(line);
                         break;
@@ -101,7 +101,7 @@ namespace Nuke.Common.OutputSinks
             Logger.Log(CreateLine("Total", "", ToMinutesAndSeconds(totalDuration)));
             Logger.Log(new string(c: '=', count: allColumns));
             Logger.Log();
-            if (executionList.All(x => x.Status != ExecutionStatus.Failed))
+            if (executionList.All(x => x.Status != ExecutionStatus.Failed && x.Status != ExecutionStatus.NotRun))
                 Logger.Success($"Build succeeded on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}.");
             else
                 Logger.Error($"Build failed on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}.");
