@@ -105,7 +105,9 @@ namespace Nuke.GlobalTool
                     ? $"-File {file} {arguments}"
                     : $"{file} {arguments}");
 
-            process.AssertZeroExitCode();
+            process.AssertWaitForExit();
+            if (process.ExitCode != 0)
+                Environment.Exit(process.ExitCode);
         }
     }
 }
