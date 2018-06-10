@@ -85,7 +85,7 @@ namespace Nuke.Common.OutputSinks
                 {
                     case ExecutionStatus.Absent:
                     case ExecutionStatus.Skipped:
-                        Logger.Trace(line);
+                        Logger.Log(line);
                         break;
                     case ExecutionStatus.Executed:
                         Logger.Success(line);
