@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [0.5.2] / 2018-06-11
 - Changed build summary to log skipped and absent targets unconditionally.
 - Added `HttpTasks` and `FtpTasks` for `netstandard` target framework.
 - Fixed global tool to simply exit if script execution returns non-zero exit codes.
@@ -81,7 +83,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git.
 - Fixed background color in console output.
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.5.0...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.5.2...HEAD
+[0.5.2]: https://github.com/nuke-build/nuke/compare/0.5.0...0.5.2
 [0.5.0]: https://github.com/nuke-build/nuke/compare/0.4.0...0.5.0
 [0.4.0]: https://github.com/nuke-build/nuke/compare/0.3.1...0.4.0
 [0.3.1]: https://github.com/nuke-build/nuke/compare/0.2.10...0.3.1
