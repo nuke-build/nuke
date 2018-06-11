@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Changed build summary to log skipped and absent targets unconditionally.
+- Added `HttpTasks` and `FtpTasks` for `netstandard` target framework.
+- Fixed global tool to simply exit if script execution returns non-zero exit codes.
+- Fixed global tool to search build scripts only within 2-level non-system sub-directories.
+- Fixed build summary to treat `NotRun` as a failure.
 
 ## [0.5.0] / 2018-06-05
 - Changed build scripts to download .NET Core SDK only if local installation is missing or doesn't match expected version.
