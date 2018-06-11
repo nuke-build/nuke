@@ -45,6 +45,7 @@ using Nuke.Common.Tooling;
 [assembly: IconClass(typeof(DupFinderTasks), "code")]
 [assembly: IconClass(typeof(EnvironmentInfo), "chip")]
 [assembly: IconClass(typeof(FileSystemTasks), "folder-open")]
+[assembly: IconClass(typeof(FtpTasks), "sphere2")]
 [assembly: IconClass(typeof(GitTasks), "git")]
 [assembly: IconClass(typeof(GitLinkTasks), "link")]
 [assembly: IconClass(typeof(GitReleaseManagerTasks), "books")]
@@ -53,6 +54,7 @@ using Nuke.Common.Tooling;
 [assembly: IconClass(typeof(GitterTasks), "bubbles")]
 [assembly: IconClass(typeof(GitVersionTasks), "podium")]
 [assembly: IconClass(typeof(GitVersionAttribute), "git")]
+[assembly: IconClass(typeof(HttpTasks), "sphere2")]
 [assembly: IconClass(typeof(InspectCodeTasks), "code")]
 [assembly: IconClass(typeof(Logger), "quill4")]
 [assembly: IconClass(typeof(MSBuildTasks), "sword")]
@@ -77,8 +79,3 @@ using Nuke.Common.Tooling;
 [assembly: IconClass(typeof(WebConfigTransformRunnerTasks), "file-empty2")]
 [assembly: IconClass(typeof(XmlTasks), "file-empty2")]
 [assembly: IconClass(typeof(XunitTasks), "bug2")]
-
-#if !NETCORE
-[assembly: IconClass(typeof(FtpTasks), "sphere2")]
-[assembly: IconClass(typeof(HttpTasks), "sphere2")]
-#endif

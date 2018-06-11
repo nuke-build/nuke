@@ -52,7 +52,9 @@ namespace Nuke.GlobalTool
 
             var currentDirectory = new DirectoryInfo(Directory.GetCurrentDirectory());
             var rootDirectory = FileSystemTasks.FindParentDirectory(currentDirectory, x => x.GetFiles(NukeBuild.ConfigurationFile).Any());
-            var buildScript = rootDirectory?.GetFiles($"build.{ScriptExtension}", SearchOption.AllDirectories).FirstOrDefault()?.FullName;
+            var buildScript = rootDirectory?
+                .EnumerateFiles($"build.{ScriptExtension}", maxDepth: 2)
+                .FirstOrDefault()?.FullName;
 
             if (buildScript == null)
             {
@@ -105,7 +107,9 @@ namespace Nuke.GlobalTool
                     ? $"-File {file} {arguments}"
                     : $"{file} {arguments}");
 
-            process.AssertZeroExitCode();
+            process.AssertWaitForExit();
+            if (process.ExitCode != 0)
+                Environment.Exit(process.ExitCode);
         }
     }
 }

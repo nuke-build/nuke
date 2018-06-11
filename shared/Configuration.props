@@ -2,30 +2,27 @@
 
   <PropertyGroup>
     <NoWarn>1701;1702;1591</NoWarn>
+    <DefineConstants>$(DefineConstants);JETBRAINS_ANNOTATIONS</DefineConstants>
+    <DebugSymbols>True</DebugSymbols>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsPackable)' == ''">
     <IsPackable>False</IsPackable>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0' OR '$(TargetFramework)' == 'netcoreapp2.0'">
-    <DefineConstants>$(DefineConstants);NETCORE</DefineConstants>
-  </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsPackable)' == 'True'">
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <DebugType>full</DebugType>
-    <DebugSymbols>True</DebugSymbols>
-    <DefineConstants>$(DefineConstants);DEBUG;JETBRAINS_ANNOTATIONS</DefineConstants>
+    <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <DebugType>pdbonly</DebugType>
-    <DebugSymbols>True</DebugSymbols>
-    <DefineConstants>$(DefineConstants);RELEASE;JETBRAINS_ANNOTATIONS</DefineConstants>
+    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
     <Optimize>True</Optimize>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>

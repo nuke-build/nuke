@@ -15,7 +15,7 @@ namespace Nuke.Common.Execution
         public static IReadOnlyCollection<TargetDefinition> GetExecutingTargets(NukeBuild build)
         {
             ControlFlow.Assert(build.TargetDefinitions.All(x => !x.Name.EqualsOrdinalIgnoreCase(BuildExecutor.DefaultTarget)),
-                "The name 'default' cannot be used as target name.");
+                $"The name '{BuildExecutor.DefaultTarget}' cannot be used as target name.");
 
             var invokedTargets = build.InvokedTargets.Select(x => GetDefinition(x, build)).ToList();
             var executingTargets = GetUnfilteredExecutingTargets(build, invokedTargets);
