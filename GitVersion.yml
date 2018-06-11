@@ -1,7 +1,9 @@
 assembly-versioning-scheme: MajorMinor
-mode: ContinuousDeployment
+mode: ContinuousDelivery
 
 branches:
+  master:
+    tag: ''
   develop:
     tag: 'alpha'
   release:
