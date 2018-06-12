@@ -181,8 +181,8 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary><p>Specifies the folder in which the created package is stored. If no folder is specified, the current folder is used.</p></summary>
         public virtual string OutputDirectory { get; internal set; }
         /// <summary><p>Specifies a list of properties that override values in the project file; see <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/common-msbuild-project-properties">Common MSBuild Project Properties</a> for property names. The Properties argument here is a list of token=value pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks. Note that for the &quot;Configuration&quot; property, the default is &quot;Debug&quot;. To change to a Release configuration, use <c>-Properties Configuration=Release</c>.</p></summary>
-        public virtual IReadOnlyDictionary<string, string> Properties => PropertiesInternal.AsReadOnly();
-        internal Dictionary<string, string> PropertiesInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
+        internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         /// <summary><p><em>(3.4.4+)</em> Appends a suffix to the internally generated version number, typically used for appending build or other pre-release identifiers. For example, using <c>-suffix nightly</c> will create a package with a version number like <c>1.2.3-nightly</c>. Suffixes must start with a letter to avoid warnings, errors, and potential incompatibilities with different versions of NuGet and the NuGet Package Manager.</p></summary>
         public virtual string Suffix { get; internal set; }
         /// <summary><p>Specifies that the package contains sources and symbols. When used with a <c>.nuspec</c> file, this creates a regular NuGet package file and the corresponding symbols package.</p></summary>
@@ -1034,7 +1034,7 @@ namespace Nuke.Common.Tools.NuGet
         #region Properties
         /// <summary><p><em>Sets <see cref="NuGetPackSettings.Properties"/> to a new dictionary.</em></p><p>Specifies a list of properties that override values in the project file; see <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/common-msbuild-project-properties">Common MSBuild Project Properties</a> for property names. The Properties argument here is a list of token=value pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks. Note that for the &quot;Configuration&quot; property, the default is &quot;Debug&quot;. To change to a Release configuration, use <c>-Properties Configuration=Release</c>.</p></summary>
         [Pure]
-        public static NuGetPackSettings SetProperties(this NuGetPackSettings toolSettings, IDictionary<string, string> properties)
+        public static NuGetPackSettings SetProperties(this NuGetPackSettings toolSettings, IDictionary<string, object> properties)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
@@ -1050,7 +1050,7 @@ namespace Nuke.Common.Tools.NuGet
         }
         /// <summary><p><em>Adds a new key-value-pair <see cref="NuGetPackSettings.Properties"/>.</em></p><p>Specifies a list of properties that override values in the project file; see <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/common-msbuild-project-properties">Common MSBuild Project Properties</a> for property names. The Properties argument here is a list of token=value pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks. Note that for the &quot;Configuration&quot; property, the default is &quot;Debug&quot;. To change to a Release configuration, use <c>-Properties Configuration=Release</c>.</p></summary>
         [Pure]
-        public static NuGetPackSettings AddProperty(this NuGetPackSettings toolSettings, string propertyKey, string propertyValue)
+        public static NuGetPackSettings AddProperty(this NuGetPackSettings toolSettings, string propertyKey, object propertyValue)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
@@ -1066,12 +1066,30 @@ namespace Nuke.Common.Tools.NuGet
         }
         /// <summary><p><em>Sets a key-value-pair in <see cref="NuGetPackSettings.Properties"/>.</em></p><p>Specifies a list of properties that override values in the project file; see <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/common-msbuild-project-properties">Common MSBuild Project Properties</a> for property names. The Properties argument here is a list of token=value pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks. Note that for the &quot;Configuration&quot; property, the default is &quot;Debug&quot;. To change to a Release configuration, use <c>-Properties Configuration=Release</c>.</p></summary>
         [Pure]
-        public static NuGetPackSettings SetProperty(this NuGetPackSettings toolSettings, string propertyKey, string propertyValue)
+        public static NuGetPackSettings SetProperty(this NuGetPackSettings toolSettings, string propertyKey, object propertyValue)
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal[propertyKey] = propertyValue;
             return toolSettings;
         }
+        #region Configuration
+        /// <summary><p><em>Sets <c>Configuration</c> in <see cref="NuGetPackSettings.Properties"/>.</em></p><p>Specifies a list of properties that override values in the project file; see <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/common-msbuild-project-properties">Common MSBuild Project Properties</a> for property names. The Properties argument here is a list of token=value pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks. Note that for the &quot;Configuration&quot; property, the default is &quot;Debug&quot;. To change to a Release configuration, use <c>-Properties Configuration=Release</c>.</p></summary>
+        [Pure]
+        public static NuGetPackSettings SetConfiguration(this NuGetPackSettings toolSettings, string configuration)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["Configuration"] = configuration;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>Configuration</c> in <see cref="NuGetPackSettings.Properties"/>.</em></p><p>Specifies a list of properties that override values in the project file; see <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/common-msbuild-project-properties">Common MSBuild Project Properties</a> for property names. The Properties argument here is a list of token=value pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks. Note that for the &quot;Configuration&quot; property, the default is &quot;Debug&quot;. To change to a Release configuration, use <c>-Properties Configuration=Release</c>.</p></summary>
+        [Pure]
+        public static NuGetPackSettings ResetConfiguration(this NuGetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("Configuration");
+            return toolSettings;
+        }
+        #endregion
         #endregion
         #region Suffix
         /// <summary><p><em>Sets <see cref="NuGetPackSettings.Suffix"/>.</em></p><p><em>(3.4.4+)</em> Appends a suffix to the internally generated version number, typically used for appending build or other pre-release identifiers. For example, using <c>-suffix nightly</c> will create a package with a version number like <c>1.2.3-nightly</c>. Suffixes must start with a letter to avoid warnings, errors, and potential incompatibilities with different versions of NuGet and the NuGet Package Manager.</p></summary>
