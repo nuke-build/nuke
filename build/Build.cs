@@ -1,4 +1,4 @@
-// Copyright Matthias Koch, Sebastian Karasek 2018.
+﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -136,18 +136,20 @@ class Build : NukeBuild
 
             if (NuGet)
             {
-                SendGitterMessage(new StringBuilder()
-                        .AppendLine(":mega::shipit: @/all")
-                        .AppendLine()
-                        .AppendLine($"**NUKE {GitVersion.SemVer} IS OUT!!!**")
-                        .AppendLine()
-                        .AppendLine($"This release includes [{ChangelogSectionNotes.Count()} changes]"
-                                    + $"(https://www.nuget.org/packages/Nuke.Common/{GitVersion.SemVer}). "
-                                    + "Most notably, we have:")
+                var releaseUrl = $"https://www.nuget.org/packages/Nuke.Common/{GitVersion.SemVer}). ";
+                var message = GitVersionAttribute.Bump != GitVersionBump.Patch
+                    ? new StringBuilder()
+                        .AppendLine("@/all :mega::shipit: **NUKE {GitVersion.SemVer} IS OUT!!!**")
+                        .AppendLine($"This release includes [{ChangelogSectionNotes.Count()} changes]({releaseUrl}). Most notably, we have:")
                         .AppendLine(ChangelogSectionNotes
                             .Take(AnnounceChanges ?? 4)
                             .Select(x => x.Replace("- ", "* "))
-                            .JoinNewLine()).ToString(),
+                            .JoinNewLine()).ToString()
+                    : new StringBuilder()
+                        .AppendLine($"@/all :beetle::fire: **BUGFIX RELEASE {GitVersion.SemVer} IS OUT!**")
+                        .AppendLine($"Check out the [release notes]({releaseUrl}) for details!").ToString();
+
+                SendGitterMessage(message,
                     roomId: "593f3dadd73408ce4f66db89",
                     token: GitterAuthToken);
             }
