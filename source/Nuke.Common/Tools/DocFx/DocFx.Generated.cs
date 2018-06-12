@@ -28,11 +28,11 @@ namespace Nuke.Common.Tools.DocFx
         /// <summary><p>Path to the DocFx executable.</p></summary>
         public static string DocFxPath => ToolPathResolver.GetPackageExecutable("docfx.console", "docfx.exe");
         /// <summary><p>DocFX is an API documentation generator for .NET, and currently it supports C# and VB. It generates API reference documentation from triple-slash comments in your source code. It also allows you to use Markdown files to create additional topics such as tutorials and how-tos, and to customize the generated reference documentation. DocFX builds a static HTML website from your source code and Markdown files, which can be easily hosted on any web servers (for example, <em>github.io</em>). Also, DocFX provides you the flexibility to customize the layout and style of your website through templates. If you are interested in creating your own website with your own styles, you can follow <a href="http://dotnet.github.io/docfx/tutorial/howto_create_custom_template.html">how to create custom template</a> to create custom templates.</p></summary>
-        public static IEnumerable<string> DocFx(string arguments, string workingDirectory = null, ProcessSettings processSettings = null)
+        public static IEnumerable<string> DocFx(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool redirectOutput = false, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(DocFxPath, arguments, workingDirectory, processSettings?.EnvironmentVariables, processSettings?.ExecutionTimeout, processSettings?.RedirectOutput ?? true);
+            var process = ProcessTasks.StartProcess(DocFxPath, arguments, workingDirectory, environmentVariables, timeout, redirectOutput, outputFilter);
             process.AssertZeroExitCode();
-            return process.Output.Select(x => x.Text);
+            return process.HasOutput ? process.Output.Select(x => x.Text) : null;
         }
         static partial void PreProcess(DocFxMetadataSettings toolSettings);
         static partial void PostProcess(DocFxMetadataSettings toolSettings);

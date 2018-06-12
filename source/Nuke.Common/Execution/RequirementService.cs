@@ -19,8 +19,7 @@ namespace Nuke.Common.Execution
             {
                 if (requirement is Expression<Func<bool>> boolExpression)
                 {
-                    ControlFlow.Assert(boolExpression.Compile().Invoke(),
-                        $"Assertion failed: {requirement.Body}");
+                    ControlFlow.Assert(boolExpression.Compile().Invoke(), $"Target '{target.Name}' requires '{requirement.Body.ToString()}'.");
                 }
                 else
                 {
@@ -30,7 +29,7 @@ namespace Nuke.Common.Execution
                     var field = (FieldInfo) memberExpression.Member;
 
                     ControlFlow.Assert(field.GetValue(build) != null,
-                        $"Field '{field.Name}' was 'null' but is required for target '{target.Name}'.");
+                        $"Target '{target.Name}' requires that field '{field.Name}' must be not null.");
                 }
             }
         }

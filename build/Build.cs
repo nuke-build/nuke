@@ -22,6 +22,7 @@ using static Nuke.CodeGeneration.CodeGenerator;
 using static Nuke.CodeGeneration.ReferenceUpdater;
 using static Nuke.CodeGeneration.SchemaGenerator;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
+using static Nuke.Common.ControlFlow;
 using static Nuke.Common.Gitter.GitterTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
@@ -53,7 +54,18 @@ class Build : NukeBuild
     [GitRepository] readonly GitRepository GitRepository;
     [Solution] readonly Solution Solution;
 
+    readonly string MasterBranch = "master";
+    readonly string DevelopBranch = "develop";
+
+    Target MergeDevelop => _ => _
+        .OnlyWhen(() => GitRepository.Branch.NotNull().EqualsOrdinalIgnoreCase(MasterBranch))
+        .Executes(() =>
+        {
+            Git($"merge --no-ff {DevelopBranch}");
+        });
+
     Target Clean => _ => _
+        .DependsOn(MergeDevelop)
         .Executes(() =>
         {
             DeleteDirectories(GlobDirectories(SourceDirectory, "*/bin", "*/obj"));
@@ -67,24 +79,19 @@ class Build : NukeBuild
             DotNetRestore(s => DefaultDotNetRestore);
         });
 
+    Project GlobalToolProject => Solution.GetProject("Nuke.GlobalTool").NotNull();
+    Project CodeGenerationProject => Solution.GetProject("Nuke.CodeGeneration").NotNull();
+
     Target Compile => _ => _
         .DependsOn(Restore)
         .Requires(() => IsUnix || GitVersion != null)
         .Executes(() =>
         {
             DotNetBuild(s => DefaultDotNetBuild);
-        });
-    
-    Project GlobalToolProject => Solution.GetProject("Nuke.GlobalTool");
-    Project CodeGenerationProject => Solution.GetProject("Nuke.CodeGeneration");
 
-    Target Publish => _ => _
-        .DependsOn(Restore)
-        .Executes(() =>
-        {
             DotNetPublish(s => DefaultDotNetPublish
                 .SetProject(GlobalToolProject));
-            
+
             DotNetPublish(s => DefaultDotNetPublish
                 .SetProject(CodeGenerationProject)
                 .SetFramework("netstandard2.0"));
@@ -98,18 +105,19 @@ class Build : NukeBuild
     IEnumerable<string> ChangelogSectionNotes => ExtractChangelogSectionNotes(ChangelogFile);
 
     Target Changelog => _ => _
-        .OnlyWhen(() => NuGet || InvokedTargets.Contains(nameof(Changelog)))
+        .OnlyWhen(() => NuGet)
         .Executes(() =>
         {
+            Assert(GitRepository.Branch?.EqualsOrdinalIgnoreCase(MasterBranch) ?? false, $"Must be executed on {MasterBranch}.");
+
             FinalizeChangelog(ChangelogFile, GitVersion.SemVer, GitRepository);
 
             Git($"add {ChangelogFile}");
             Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.SemVer}.\"");
-            Git($"tag -f {GitVersion.SemVer}");
         });
 
     Target Pack => _ => _
-        .DependsOn(Compile, Publish, Changelog)
+        .DependsOn(Compile, Changelog)
         .Executes(() =>
         {
             var releaseNotes = ChangelogSectionNotes
@@ -122,15 +130,22 @@ class Build : NukeBuild
                 .SetPackageReleaseNotes(releaseNotes));
         });
 
-    Target Push => _ => _
+    Target Publish => _ => _
         .DependsOn(Pack)
         .Requires(() => ApiKey)
         .Requires(() => !GitHasUncommitedChanges())
         .Requires(() => !NuGet || GitVersionAttribute.Bump.HasValue)
         .Requires(() => !NuGet || Configuration.EqualsOrdinalIgnoreCase("release"))
-        .Requires(() => !NuGet || GitVersion.BranchName.Equals("master"))
+        .Requires(() => !NuGet || GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch))
         .Executes(() =>
         {
+            if (NuGet)
+            {
+                Git($"tag -f {GitVersion.SemVer}");
+                Git($"update-ref refs/heads/{DevelopBranch} refs/heads/{MasterBranch}");
+                Git($"push --atomic origin {GitVersion.SemVer} {MasterBranch} {DevelopBranch}");
+            }
+
             GlobFiles(OutputDirectory, "*.nupkg").NotEmpty()
                 .Where(x => !x.EndsWith(".symbols.nupkg"))
                 .ForEach(x => DotNetNuGetPush(s => s
@@ -141,18 +156,20 @@ class Build : NukeBuild
 
             if (NuGet)
             {
-                SendGitterMessage(new StringBuilder()
-                        .AppendLine(":mega::shipit: @/all")
-                        .AppendLine()
-                        .AppendLine($"**NUKE {GitVersion.SemVer} IS OUT!!!**")
-                        .AppendLine()
-                        .AppendLine($"This release includes [{ChangelogSectionNotes.Count()} changes]"
-                                    + $"(https://www.nuget.org/packages/Nuke.Common/{GitVersion.SemVer}). "
-                                    + "Most notably, we have:")
+                var releaseUrl = $"https://www.nuget.org/packages/Nuke.Common/{GitVersion.SemVer}). ";
+                var message = GitVersionAttribute.Bump != GitVersionBump.Patch
+                    ? new StringBuilder()
+                        .AppendLine("@/all :mega::shipit: **NUKE {GitVersion.SemVer} IS OUT!!!**")
+                        .AppendLine($"This release includes [{ChangelogSectionNotes.Count()} changes]({releaseUrl}). Most notably, we have:")
                         .AppendLine(ChangelogSectionNotes
                             .Take(AnnounceChanges ?? 4)
                             .Select(x => x.Replace("- ", "* "))
-                            .JoinNewLine()).ToString(),
+                            .JoinNewLine()).ToString()
+                    : new StringBuilder()
+                        .AppendLine($"@/all :beetle::fire: **BUGFIX RELEASE {GitVersion.SemVer} IS OUT!**")
+                        .AppendLine($"Check out the [release notes]({releaseUrl}) for details!").ToString();
+
+                SendGitterMessage(message,
                     roomId: "593f3dadd73408ce4f66db89",
                     token: GitterAuthToken);
             }
@@ -220,5 +237,5 @@ class Build : NukeBuild
         });
 
     Target Full => _ => _
-        .DependsOn(Test, Analysis, Push);
+        .DependsOn(Test, Analysis, Publish);
 }

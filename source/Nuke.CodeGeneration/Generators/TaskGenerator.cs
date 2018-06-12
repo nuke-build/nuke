@@ -69,16 +69,20 @@ namespace Nuke.CodeGeneration.Generators
                              {
                                  "string arguments",
                                  "string workingDirectory = null",
-                                 "ProcessSettings processSettings = null"
+                                 "IReadOnlyDictionary<string, string> environmentVariables = null",
+                                 "int? timeout = null",
+                                 "bool redirectOutput = false",
+                                 "Func<string, string> outputFilter = null"
                              };
             var arguments = new[]
                             {
                                 $"{tool.Name}Path",
                                 "arguments",
                                 "workingDirectory",
-                                "processSettings?.EnvironmentVariables",
-                                "processSettings?.ExecutionTimeout",
-                                "processSettings?.RedirectOutput ?? true"
+                                "environmentVariables",
+                                "timeout",
+                                "redirectOutput",
+                                "outputFilter"
                             };
             writer
                 .WriteSummary(tool.Help)
@@ -86,7 +90,7 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteBlock(w => w
                     .WriteLine($"var process = ProcessTasks.StartProcess({arguments.JoinComma()});")
                     .WriteLine("process.AssertZeroExitCode();")
-                    .WriteLine("return process.Output.Select(x => x.Text);"));
+                    .WriteLine("return process.HasOutput ? process.Output.Select(x => x.Text) : null;"));
         }
 
         private static TaskWriter WriteMainTask(this TaskWriter writer)

@@ -28,11 +28,11 @@ namespace Nuke.Common.Tools.Paket
         /// <summary><p>Path to the Paket executable.</p></summary>
         public static string PaketPath => ToolPathResolver.GetPackageExecutable("Paket", "paket.exe");
         /// <summary><p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href="https://www.nuget.org/">NuGet</a> packages and also enables referencing files directly from <a href="https://fsprojects.github.io/Paket/git-dependencies.html">Git repositories</a> or any <a href="https://fsprojects.github.io/Paket/http-dependencies.html">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href="https://fsprojects.github.io/Paket/getting-started.html"><em>Getting started</em> tutorial</a> and take a look at the <a href="https://fsprojects.github.io/Paket/faq.html">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href="https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion">convert from NuGet</a> section.</p></summary>
-        public static IEnumerable<string> Paket(string arguments, string workingDirectory = null, ProcessSettings processSettings = null)
+        public static IEnumerable<string> Paket(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool redirectOutput = false, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(PaketPath, arguments, workingDirectory, processSettings?.EnvironmentVariables, processSettings?.ExecutionTimeout, processSettings?.RedirectOutput ?? true);
+            var process = ProcessTasks.StartProcess(PaketPath, arguments, workingDirectory, environmentVariables, timeout, redirectOutput, outputFilter);
             process.AssertZeroExitCode();
-            return process.Output.Select(x => x.Text);
+            return process.HasOutput ? process.Output.Select(x => x.Text) : null;
         }
         static partial void PreProcess(PaketUpdateSettings toolSettings);
         static partial void PostProcess(PaketUpdateSettings toolSettings);

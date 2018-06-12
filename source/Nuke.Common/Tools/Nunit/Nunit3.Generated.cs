@@ -28,11 +28,11 @@ namespace Nuke.Common.Tools.Nunit
         /// <summary><p>Path to the Nunit executable.</p></summary>
         public static string NunitPath => ToolPathResolver.GetPackageExecutable("NUnit.ConsoleRunner", "nunit3-console.exe");
         /// <summary><p>NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href="http://www.junit.org/">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.</p></summary>
-        public static IEnumerable<string> Nunit(string arguments, string workingDirectory = null, ProcessSettings processSettings = null)
+        public static IEnumerable<string> Nunit(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool redirectOutput = false, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(NunitPath, arguments, workingDirectory, processSettings?.EnvironmentVariables, processSettings?.ExecutionTimeout, processSettings?.RedirectOutput ?? true);
+            var process = ProcessTasks.StartProcess(NunitPath, arguments, workingDirectory, environmentVariables, timeout, redirectOutput, outputFilter);
             process.AssertZeroExitCode();
-            return process.Output.Select(x => x.Text);
+            return process.HasOutput ? process.Output.Select(x => x.Text) : null;
         }
         static partial void PreProcess(Nunit3Settings toolSettings);
         static partial void PostProcess(Nunit3Settings toolSettings);

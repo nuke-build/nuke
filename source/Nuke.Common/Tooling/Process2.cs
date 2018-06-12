@@ -39,6 +39,7 @@ namespace Nuke.Common.Tooling
         {
             get
             {
+                // TODO: Should not throw exceptions
                 ControlFlow.Assert(_output != null, "_output != null");
                 ControlFlow.Assert(_process.HasExited, "_process.HasExited");
                 return _output.Select(x => new Output { Type = x.Type, Text = _outputFilter(x.Text) });

@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-               sh '/bin/bash ./build.sh Test -Skip -NoInit'
+               sh '/bin/bash ./build.sh Test -Skip'
             }
             post {
                 always {
@@ -20,14 +20,9 @@ pipeline {
                 }
             }
         }
-        stage('Publish') {
-            steps {
-                sh '/bin/bash ./build.sh Publish -Skip -NoInit'
-            }
-        }
         stage('Pack') {
             steps {
-                sh '/bin/bash ./build.sh Pack -Skip -NoInit'
+                sh '/bin/bash ./build.sh Pack -Skip'
             }
         }
         

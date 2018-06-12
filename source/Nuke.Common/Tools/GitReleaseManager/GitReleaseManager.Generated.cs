@@ -28,11 +28,11 @@ namespace Nuke.Common.Tools.GitReleaseManager
         /// <summary><p>Path to the GitReleaseManager executable.</p></summary>
         public static string GitReleaseManagerPath => ToolPathResolver.GetPackageExecutable("gitreleasemanager", "GitReleaseManager.exe");
         /// <summary><p>GitReleaseManager is a tool that will help create a set of release notes for your application/product. It does this using the collection of issues which are stored on the GitHub Issue Tracker for your application/product.<para/>By inspecting the issues that have been assigned to a particular milestone, GitReleaseManager creates a set of release notes, in markdown format, which are then used to create a Release on GitHub.<para/>In addition to creating a Release, GitReleaseManager can be used to publish a release, close a milestone, and also to export the complete set of release notes for your application/product.</p></summary>
-        public static IEnumerable<string> GitReleaseManager(string arguments, string workingDirectory = null, ProcessSettings processSettings = null)
+        public static IEnumerable<string> GitReleaseManager(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool redirectOutput = false, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(GitReleaseManagerPath, arguments, workingDirectory, processSettings?.EnvironmentVariables, processSettings?.ExecutionTimeout, processSettings?.RedirectOutput ?? true);
+            var process = ProcessTasks.StartProcess(GitReleaseManagerPath, arguments, workingDirectory, environmentVariables, timeout, redirectOutput, outputFilter);
             process.AssertZeroExitCode();
-            return process.Output.Select(x => x.Text);
+            return process.HasOutput ? process.Output.Select(x => x.Text) : null;
         }
         static partial void PreProcess(GitReleaseManagerAddAssetsSettings toolSettings);
         static partial void PostProcess(GitReleaseManagerAddAssetsSettings toolSettings);

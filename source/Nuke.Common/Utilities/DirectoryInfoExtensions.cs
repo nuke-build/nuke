@@ -31,12 +31,12 @@ namespace Nuke.Common.Utilities
         /// </exception>
         public static IEnumerable<FileInfo> EnumerateFiles(this DirectoryInfo directoryInfo, string searchPattern, int maxDepth)
         {
-            var searchDirectories = directoryInfo.EnumerateDirectories()
-                .Where(x => (x.Attributes & (FileAttributes.Hidden | FileAttributes.System)) == 0);
-
-            return searchDirectories
-                .SelectMany(x =>
-                    x.EnumerateFiles(searchPattern).Concat(maxDepth == 0 ? new FileInfo[0] : x.EnumerateFiles(searchPattern, maxDepth - 1)));
+            if (maxDepth == 0)
+                return Enumerable.Empty<FileInfo>();
+            
+            var subDirectories = directoryInfo.EnumerateDirectories().Where(x => (x.Attributes & (FileAttributes.Hidden | FileAttributes.System)) == 0);
+            return directoryInfo.EnumerateFiles(searchPattern, SearchOption.TopDirectoryOnly)
+                .Concat(subDirectories.SelectMany(x => x.EnumerateFiles(searchPattern, maxDepth - 1)));
         }
     }
 }

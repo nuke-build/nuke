@@ -186,11 +186,17 @@
           },
           {
             "name": "Properties",
-            "type": "Dictionary<string, string>",
+            "type": "Dictionary<string, object>",
             "format": "-Properties {value}",
             "itemFormat": "{key}={value}",
             "separator": ";",
-            "help": "Specifies a list of properties that override values in the project file; see <a href=\"https://docs.microsoft.com/en-us/visualstudio/msbuild/common-msbuild-project-properties\">Common MSBuild Project Properties</a> for property names. The Properties argument here is a list of token=value pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks. Note that for the &quot;Configuration&quot; property, the default is &quot;Debug&quot;. To change to a Release configuration, use <c>-Properties Configuration=Release</c>."
+            "help": "Specifies a list of properties that override values in the project file; see <a href=\"https://docs.microsoft.com/en-us/visualstudio/msbuild/common-msbuild-project-properties\">Common MSBuild Project Properties</a> for property names. The Properties argument here is a list of token=value pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks. Note that for the &quot;Configuration&quot; property, the default is &quot;Debug&quot;. To change to a Release configuration, use <c>-Properties Configuration=Release</c>.",
+            "delegates": [
+              {
+                "name": "Configuration",
+                "type": "string"
+              }
+            ]
           },
           {
             "name": "Suffix",
