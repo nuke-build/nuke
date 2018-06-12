@@ -31,7 +31,7 @@ namespace Nuke.Common
                 var buildProjectDirectory = new DirectoryInfo(BuildAssemblyDirectory)
                     .DescendantsAndSelf(x => x.Parent)
                     .Select(x => x.GetFiles("*.csproj", SearchOption.TopDirectoryOnly)
-                                .SingleOrDefaultOrError($"Found multiple project files in '{x}'."))
+                        .SingleOrDefaultOrError($"Found multiple project files in '{x}'."))
                     .FirstOrDefault(x => x != null)
                     ?.DirectoryName;
                 return (AbsolutePath) buildProjectDirectory.NotNull("buildProjectDirectory != null");
