@@ -28,11 +28,11 @@ namespace Nuke.Common.Tools.TestCloud
         /// <summary><p>Path to the TestCloud executable.</p></summary>
         public static string TestCloudPath => ToolPathResolver.GetPackageExecutable("Xamarin.UITest", "test-cloud.exe");
         /// <summary><p>Test Cloud is a cloud based service consisting of thousands of physical mobile devices. Users upload their apps and tests to Test Cloud, which will install the apps on the devices and run the tests. When the tests are complete, Test Cloud, the results made available to users through an easy to use and informative web-based front end.</p></summary>
-        public static IEnumerable<string> TestCloud(string arguments, string workingDirectory = null, ProcessSettings processSettings = null)
+        public static IEnumerable<string> TestCloud(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool redirectOutput = false, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(TestCloudPath, arguments, workingDirectory, processSettings?.EnvironmentVariables, processSettings?.ExecutionTimeout, processSettings?.RedirectOutput ?? true);
+            var process = ProcessTasks.StartProcess(TestCloudPath, arguments, workingDirectory, environmentVariables, timeout, redirectOutput, outputFilter);
             process.AssertZeroExitCode();
-            return process.Output.Select(x => x.Text);
+            return process.HasOutput ? process.Output.Select(x => x.Text) : null;
         }
         static partial void PreProcess(TestCloudSettings toolSettings);
         static partial void PostProcess(TestCloudSettings toolSettings);

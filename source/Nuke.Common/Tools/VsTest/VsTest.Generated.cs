@@ -28,11 +28,11 @@ namespace Nuke.Common.Tools.VsTest
         /// <summary><p>Path to the VsTest executable.</p></summary>
         public static string VsTestPath => GetToolPath();
         /// <summary><p>VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.</p></summary>
-        public static IEnumerable<string> VsTest(string arguments, string workingDirectory = null, ProcessSettings processSettings = null)
+        public static IEnumerable<string> VsTest(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool redirectOutput = false, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(VsTestPath, arguments, workingDirectory, processSettings?.EnvironmentVariables, processSettings?.ExecutionTimeout, processSettings?.RedirectOutput ?? true);
+            var process = ProcessTasks.StartProcess(VsTestPath, arguments, workingDirectory, environmentVariables, timeout, redirectOutput, outputFilter);
             process.AssertZeroExitCode();
-            return process.Output.Select(x => x.Text);
+            return process.HasOutput ? process.Output.Select(x => x.Text) : null;
         }
         static partial void PreProcess(VsTestSettings toolSettings);
         static partial void PostProcess(VsTestSettings toolSettings);

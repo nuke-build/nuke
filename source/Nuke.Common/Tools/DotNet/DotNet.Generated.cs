@@ -27,11 +27,11 @@ namespace Nuke.Common.Tools.DotNet
     {
         /// <summary><p>Path to the DotNet executable.</p></summary>
         public static string DotNetPath => GetToolPath();
-        public static IEnumerable<string> DotNet(string arguments, string workingDirectory = null, ProcessSettings processSettings = null)
+        public static IEnumerable<string> DotNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool redirectOutput = false, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(DotNetPath, arguments, workingDirectory, processSettings?.EnvironmentVariables, processSettings?.ExecutionTimeout, processSettings?.RedirectOutput ?? true);
+            var process = ProcessTasks.StartProcess(DotNetPath, arguments, workingDirectory, environmentVariables, timeout, redirectOutput, outputFilter);
             process.AssertZeroExitCode();
-            return process.Output.Select(x => x.Text);
+            return process.HasOutput ? process.Output.Select(x => x.Text) : null;
         }
         static partial void PreProcess(DotNetTestSettings toolSettings);
         static partial void PostProcess(DotNetTestSettings toolSettings);

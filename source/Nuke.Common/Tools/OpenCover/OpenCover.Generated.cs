@@ -28,11 +28,11 @@ namespace Nuke.Common.Tools.OpenCover
         /// <summary><p>Path to the OpenCover executable.</p></summary>
         public static string OpenCoverPath => ToolPathResolver.GetPackageExecutable("OpenCover", "OpenCover.Console.exe");
         /// <summary><p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p></summary>
-        public static IEnumerable<string> OpenCover(string arguments, string workingDirectory = null, ProcessSettings processSettings = null)
+        public static IEnumerable<string> OpenCover(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool redirectOutput = false, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(OpenCoverPath, arguments, workingDirectory, processSettings?.EnvironmentVariables, processSettings?.ExecutionTimeout, processSettings?.RedirectOutput ?? true);
+            var process = ProcessTasks.StartProcess(OpenCoverPath, arguments, workingDirectory, environmentVariables, timeout, redirectOutput, outputFilter);
             process.AssertZeroExitCode();
-            return process.Output.Select(x => x.Text);
+            return process.HasOutput ? process.Output.Select(x => x.Text) : null;
         }
         static partial void PreProcess(OpenCoverSettings toolSettings);
         static partial void PostProcess(OpenCoverSettings toolSettings);

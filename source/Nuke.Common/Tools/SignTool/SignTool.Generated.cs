@@ -28,11 +28,11 @@ namespace Nuke.Common.Tools.SignTool
         /// <summary><p>Path to the SignTool executable.</p></summary>
         public static string SignToolPath => GetToolPath();
         /// <summary><p>Sign Tool is a command-line tool that digitally signs files, verifies signatures in files, and time-stamps files.</p></summary>
-        public static IEnumerable<string> SignTool(string arguments, string workingDirectory = null, ProcessSettings processSettings = null)
+        public static IEnumerable<string> SignTool(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool redirectOutput = false, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(SignToolPath, arguments, workingDirectory, processSettings?.EnvironmentVariables, processSettings?.ExecutionTimeout, processSettings?.RedirectOutput ?? true);
+            var process = ProcessTasks.StartProcess(SignToolPath, arguments, workingDirectory, environmentVariables, timeout, redirectOutput, outputFilter);
             process.AssertZeroExitCode();
-            return process.Output.Select(x => x.Text);
+            return process.HasOutput ? process.Output.Select(x => x.Text) : null;
         }
         static partial void PreProcess(SignToolSettings toolSettings);
         static partial void PostProcess(SignToolSettings toolSettings);

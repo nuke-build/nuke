@@ -28,11 +28,11 @@ namespace Nuke.Common.Tools.NuGet
         /// <summary><p>Path to the NuGet executable.</p></summary>
         public static string NuGetPath => GetToolPath();
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p></summary>
-        public static IEnumerable<string> NuGet(string arguments, string workingDirectory = null, ProcessSettings processSettings = null)
+        public static IEnumerable<string> NuGet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool redirectOutput = false, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(NuGetPath, arguments, workingDirectory, processSettings?.EnvironmentVariables, processSettings?.ExecutionTimeout, processSettings?.RedirectOutput ?? true);
+            var process = ProcessTasks.StartProcess(NuGetPath, arguments, workingDirectory, environmentVariables, timeout, redirectOutput, outputFilter);
             process.AssertZeroExitCode();
-            return process.Output.Select(x => x.Text);
+            return process.HasOutput ? process.Output.Select(x => x.Text) : null;
         }
         static partial void PreProcess(NuGetPushSettings toolSettings);
         static partial void PostProcess(NuGetPushSettings toolSettings);

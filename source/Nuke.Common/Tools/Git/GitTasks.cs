@@ -17,7 +17,7 @@ namespace Nuke.Common.Tools.Git
 
         public static bool GitIsDetached(string workingDirectory)
         {
-            return !Git("symbolic-ref --short -q HEAD", workingDirectory).Any();
+            return !Git("symbolic-ref --short -q HEAD", workingDirectory, redirectOutput: true).Any();
         }
 
         public static bool GitHasUncommitedChanges()
@@ -27,7 +27,7 @@ namespace Nuke.Common.Tools.Git
 
         public static bool GitHasUncommitedChanges(string workingDirectory)
         {
-            return Git("status --short", workingDirectory).Any();
+            return Git("status --short", workingDirectory, redirectOutput: true).Any();
         }
 
         public static string GitCurrentBranch()
@@ -37,7 +37,7 @@ namespace Nuke.Common.Tools.Git
 
         private static string GitCurrentBranch(string workingDirectory)
         {
-            return Git("rev-parse --abbrev-ref HEAD", workingDirectory).Single();
+            return Git("rev-parse --abbrev-ref HEAD", workingDirectory, redirectOutput: true).Single();
         }
     }
 }

@@ -28,11 +28,11 @@ namespace Nuke.Common.Tools.Npm
         /// <summary><p>Path to the Npm executable.</p></summary>
         public static string NpmPath => ToolPathResolver.GetPathExecutable("npm");
         /// <summary><p>npm is the package manager for the Node JavaScript platform. It puts modules in place so that node can find them, and manages dependency conflicts intelligently.<para/>It is extremely configurable to support a wide variety of use cases. Most commonly, it is used to publish, discover, install, and develop node programs.</p></summary>
-        public static IEnumerable<string> Npm(string arguments, string workingDirectory = null, ProcessSettings processSettings = null)
+        public static IEnumerable<string> Npm(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool redirectOutput = false, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(NpmPath, arguments, workingDirectory, processSettings?.EnvironmentVariables, processSettings?.ExecutionTimeout, processSettings?.RedirectOutput ?? true);
+            var process = ProcessTasks.StartProcess(NpmPath, arguments, workingDirectory, environmentVariables, timeout, redirectOutput, outputFilter);
             process.AssertZeroExitCode();
-            return process.Output.Select(x => x.Text);
+            return process.HasOutput ? process.Output.Select(x => x.Text) : null;
         }
         static partial void PreProcess(NpmInstallSettings toolSettings);
         static partial void PostProcess(NpmInstallSettings toolSettings);

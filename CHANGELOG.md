@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 - Fixed global tool to search build scripts also in current directory.
+- Fixed generic tasks to not redirect output by default.
 
 ## [0.5.2] / 2018-06-11
 - Changed build summary to log skipped and absent targets unconditionally.
