@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
+// Copyright Matthias Koch, Sebastian Karasek 2018.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -67,24 +67,19 @@ class Build : NukeBuild
             DotNetRestore(s => DefaultDotNetRestore);
         });
 
+    Project GlobalToolProject => Solution.GetProject("Nuke.GlobalTool").NotNull();
+    Project CodeGenerationProject => Solution.GetProject("Nuke.CodeGeneration").NotNull();
+
     Target Compile => _ => _
         .DependsOn(Restore)
         .Requires(() => IsUnix || GitVersion != null)
         .Executes(() =>
         {
             DotNetBuild(s => DefaultDotNetBuild);
-        });
-    
-    Project GlobalToolProject => Solution.GetProject("Nuke.GlobalTool");
-    Project CodeGenerationProject => Solution.GetProject("Nuke.CodeGeneration");
 
-    Target Publish => _ => _
-        .DependsOn(Restore)
-        .Executes(() =>
-        {
             DotNetPublish(s => DefaultDotNetPublish
                 .SetProject(GlobalToolProject));
-            
+
             DotNetPublish(s => DefaultDotNetPublish
                 .SetProject(CodeGenerationProject)
                 .SetFramework("netstandard2.0"));
@@ -109,7 +104,7 @@ class Build : NukeBuild
         });
 
     Target Pack => _ => _
-        .DependsOn(Compile, Publish, Changelog)
+        .DependsOn(Compile, Changelog)
         .Executes(() =>
         {
             var releaseNotes = ChangelogSectionNotes
@@ -122,7 +117,7 @@ class Build : NukeBuild
                 .SetPackageReleaseNotes(releaseNotes));
         });
 
-    Target Push => _ => _
+    Target Publish => _ => _
         .DependsOn(Pack)
         .Requires(() => ApiKey)
         .Requires(() => !GitHasUncommitedChanges())
@@ -220,5 +215,5 @@ class Build : NukeBuild
         });
 
     Target Full => _ => _
-        .DependsOn(Test, Analysis, Push);
+        .DependsOn(Test, Analysis, Publish);
 }
