@@ -7,6 +7,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.BuildServers;
 using Nuke.Common.Execution;
+using Nuke.Common.Tools.Git;
 
 namespace Nuke.Common.Git
 {
@@ -22,14 +23,18 @@ namespace Nuke.Common.Git
     {
         public static GitRepository Value { get; private set; }
 
+        private static Lazy<string> s_branch = new Lazy<string>(()
+            => AppVeyor.Instance?.RepositoryBranch ??
+               Bitrise.Instance?.GitBranch ??
+               GitLab.Instance?.CommitRefName ??
+               Jenkins.Instance?.GitBranch ??
+               TeamCity.Instance?.BranchName ??
+               TeamServices.Instance?.SourceBranchName ??
+               Travis.Instance?.Branch ??
+               GitTasks.GitCurrentBranch());
+
         [CanBeNull]
-        public string Branch { get; set; } = AppVeyor.Instance?.RepositoryBranch ??
-                                             Bitrise.Instance?.GitBranch ??
-                                             GitLab.Instance?.CommitRefName ??
-                                             Jenkins.Instance?.GitBranch ??
-                                             TeamCity.Instance?.BranchName ??
-                                             TeamServices.Instance?.SourceBranchName ??
-                                             Travis.Instance?.Branch;
+        public string Branch { get; set; } = s_branch.Value;
 
         public string Remote { get; set; } = "origin";
 
