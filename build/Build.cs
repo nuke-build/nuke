@@ -22,6 +22,7 @@ using static Nuke.CodeGeneration.CodeGenerator;
 using static Nuke.CodeGeneration.ReferenceUpdater;
 using static Nuke.CodeGeneration.SchemaGenerator;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
+using static Nuke.Common.ControlFlow;
 using static Nuke.Common.Gitter.GitterTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
@@ -53,7 +54,18 @@ class Build : NukeBuild
     [GitRepository] readonly GitRepository GitRepository;
     [Solution] readonly Solution Solution;
 
+    readonly string MasterBranch = "master";
+    readonly string DevelopBranch = "develop";
+
+    Target MergeDevelop => _ => _
+        .OnlyWhen(() => GitRepository.Branch.NotNull().EqualsOrdinalIgnoreCase(MasterBranch))
+        .Executes(() =>
+        {
+            Git($"merge --no-ff {DevelopBranch}");
+        });
+
     Target Clean => _ => _
+        .DependsOn(MergeDevelop)
         .Executes(() =>
         {
             DeleteDirectories(GlobDirectories(SourceDirectory, "*/bin", "*/obj"));
@@ -93,14 +105,15 @@ class Build : NukeBuild
     IEnumerable<string> ChangelogSectionNotes => ExtractChangelogSectionNotes(ChangelogFile);
 
     Target Changelog => _ => _
-        .OnlyWhen(() => NuGet || InvokedTargets.Contains(nameof(Changelog)))
+        .OnlyWhen(() => NuGet)
         .Executes(() =>
         {
+            Assert(GitRepository.Branch?.EqualsOrdinalIgnoreCase(MasterBranch) ?? false, $"Must be executed on {MasterBranch}.");
+
             FinalizeChangelog(ChangelogFile, GitVersion.SemVer, GitRepository);
 
             Git($"add {ChangelogFile}");
             Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.SemVer}.\"");
-            Git($"tag -f {GitVersion.SemVer}");
         });
 
     Target Pack => _ => _
@@ -123,9 +136,16 @@ class Build : NukeBuild
         .Requires(() => !GitHasUncommitedChanges())
         .Requires(() => !NuGet || GitVersionAttribute.Bump.HasValue)
         .Requires(() => !NuGet || Configuration.EqualsOrdinalIgnoreCase("release"))
-        .Requires(() => !NuGet || GitVersion.BranchName.Equals("master"))
+        .Requires(() => !NuGet || GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch))
         .Executes(() =>
         {
+            if (NuGet)
+            {
+                Git($"tag -f {GitVersion.SemVer}");
+                Git($"update-ref refs/heads/{DevelopBranch} refs/heads/{MasterBranch}");
+                Git($"push --atomic origin {GitVersion.SemVer} {MasterBranch} {DevelopBranch}");
+            }
+
             GlobFiles(OutputDirectory, "*.nupkg").NotEmpty()
                 .Where(x => !x.EndsWith(".symbols.nupkg"))
                 .ForEach(x => DotNetNuGetPush(s => s
