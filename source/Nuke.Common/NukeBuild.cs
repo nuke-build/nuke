@@ -80,12 +80,6 @@ namespace Nuke.Common
         [Parameter("Disables execution of dependent targets.", Name = "Skip", Separator = "+")]
         public string[] SkippedTargets { get; } = EnvironmentInfo.SkippedTargets;
 
-        /// <summary>
-        /// Disables bootstrapper initialization.
-        /// </summary>
-        [Parameter("Disables bootstrapper initialization.", Name = "NoInit")]
-        public bool NoInitialization { get; }
-
         //[Parameter("Specifies that no logo should be printed.")]
         //public bool NoLogo { get; set; }
 
