@@ -29,5 +29,15 @@ namespace Nuke.Common.Tools.Git
         {
             return Git("status --short", workingDirectory).Any();
         }
+
+        public static string GitCurrentBranch()
+        {
+            return GitCurrentBranch(EnvironmentInfo.WorkingDirectory);
+        }
+
+        private static string GitCurrentBranch(string workingDirectory)
+        {
+            return Git("rev-parse --abbrev-ref HEAD", workingDirectory).Single();
+        }
     }
 }
