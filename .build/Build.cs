@@ -148,7 +148,7 @@ class Build : NukeBuild
 
     Target Regenerate => _ => _
         .Requires(() => GitHubApiKey)
-        .Requires(() => LatestNSwagRelease)
+        .Requires(() => LatestNSwagRelease != null)
         .DependsOn(CompilePlugin)
         .Executes(() =>
         {
