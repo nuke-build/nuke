@@ -2,7 +2,7 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-// Generated with Nuke.CodeGeneration, Version: 0.5.0 [CommitSha: 3eaf2b72].
+// Generated with Nuke.CodeGeneration, Version: 0.5.3 [CommitSha: 0aff3c55].
 // Generated from https://github.com/nuke-build/nswag/blob/master/src/Nuke.NSwag/specifications/NSwag.json.
 
 using JetBrains.Annotations;
@@ -28,11 +28,11 @@ namespace Nuke.NSwag
         /// <summary><p>Path to the NSwag executable.</p></summary>
         public static string NSwagPath => GetToolPath();
         /// <summary><p>The project combines the functionality of Swashbuckle (Swagger generation) and AutoRest (client generation) in one toolchain. This way a lot of incompatibilites can be avoided and features which are not well described by the Swagger specification or JSON Schema are better supported (e.g. <a href="https://github.com/NJsonSchema/NJsonSchema/wiki/Inheritance">inheritance</a>, <a href="https://github.com/NJsonSchema/NJsonSchema/wiki/Enums">enum</a> and reference handling). The NSwag project heavily uses <a href="http://njsonschema.org/">NJsonSchema for .NET</a> for JSON Schema handling and C#/TypeScript class/interface generation.</p></summary>
-        public static IEnumerable<string> NSwag(string arguments, string workingDirectory = null, ProcessSettings processSettings = null)
+        public static IEnumerable<string> NSwag(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool redirectOutput = false, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(NSwagPath, arguments, workingDirectory, processSettings?.EnvironmentVariables, processSettings?.ExecutionTimeout, processSettings?.RedirectOutput ?? true);
+            var process = ProcessTasks.StartProcess(NSwagPath, arguments, workingDirectory, environmentVariables, timeout, redirectOutput, outputFilter);
             process.AssertZeroExitCode();
-            return process.Output.Select(x => x.Text);
+            return process.HasOutput ? process.Output.Select(x => x.Text) : null;
         }
         static partial void PreProcess(NSwagVersionSettings toolSettings);
         static partial void PostProcess(NSwagVersionSettings toolSettings);
