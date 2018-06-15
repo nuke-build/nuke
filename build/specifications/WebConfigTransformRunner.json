@@ -18,7 +18,7 @@
       "settingsClass": {
         "properties": [
           {
-            "name": "WebConfigFilename ",
+            "name": "WebConfigFilename",
             "type": "string",
             "assertion": "File",
             "format": "{value}",
