@@ -12,17 +12,11 @@
   <Import Project="..\..\shared\Configuration.props" />
 
   <ItemGroup>
-    <Compile Include="..\Nuke.Common\Tools\MSBuild\MSBuildPlatform.cs" Link="MSBuildPlatform.cs" />
-    <Compile Include="..\Nuke.Common\Tools\MSBuild\MSBuildToolPathResolver.cs" Link="MSBuildToolPathResolver.cs" />
-    <Compile Include="..\Nuke.Common\Tools\MSBuild\MSBuildVersion.cs" Link="MSBuildVersion.cs" />
-    <Compile Include="..\Nuke.Common\EnvironmentInfo.Platform.cs" Link="EnvironmentInfo.Platform.cs" />
-    <Compile Include="..\Nuke.Common\EnvironmentInfo.SpecialFolder.cs" Link="EnvironmentInfo.SpecialFolder.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="10.4.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="System.ValueTuple" Version="4.3.0" />
+    <PackageReference Include="vswhere" Version="2.5.2" />
   </ItemGroup>
 
 </Project>
