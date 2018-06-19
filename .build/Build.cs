@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using NuGet.Resolver;
 using Nuke.CodeGeneration;
 using Nuke.Common.Git;
@@ -24,6 +25,7 @@ using static Nuke.Common.Tools.Git.GitTasks;
 using static GitHubTasks;
 using static RegenerateTasks;
 using Release = Octokit.Release;
+
 class Build : NukeBuild
 {
     public static int Main() => Execute<Build>(x => x.Pack);
@@ -33,7 +35,8 @@ class Build : NukeBuild
 
     public Build()
     {
-        LatestNSwagReleases = new Lazy<IReadOnlyList<Release>>(() => GetLatestReleases(c_nSwagRepoOwner, c_nSwagRepoName, numberOfReleases: 2, token: GitHubApiKey));
+        LatestNSwagReleases = new Lazy<IReadOnlyList<Release>>(() =>
+            GetLatestReleases(c_nSwagRepoOwner, c_nSwagRepoName, numberOfReleases: 2, token: GitHubApiKey));
     }
 
     [GitRepository] readonly GitRepository GitRepository;
@@ -89,7 +92,7 @@ class Build : NukeBuild
                 .SetPackageFolder(PackageDirectory));
 
             CodeGenerator.GenerateCode(SpecificationDirectory, GenerationBaseDirectory, baseNamespace: "Nuke.NSwag",
-                gitRepository: GitRepository);
+                gitRepository: GitRepository.SetBranch("master"));
         });
 
     Target CompilePlugin => _ => _
@@ -160,7 +163,9 @@ class Build : NukeBuild
                 .ToArray();
 
             var bump = GetBump(latestVersion, oldVersion);
+            var buildNumber = Regex.Match(LatestNSwagRelease.Name, "^NSwag Build (?'buildNumber'[0-9]+)$").Groups["buildNumber"].Value;
 
+            UpdateChangeLog(ChangelogFile, latestVersion.ToString(), buildNumber);
             CommitAndPushChanges(latestVersion, NSwagProject.Directory, bump, branch);
             CreatePullRequestIfNeeded(GitRepository.Identifier, branch, $"{message} update.", $"{message} v{latestVersion}.", GitHubApiKey);
         });

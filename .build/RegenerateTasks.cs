@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using Nuke.CodeGeneration.Model;
 using Nuke.Common.IO;
 using Nuke.Common.Tools.Git;
+using Nuke.Common.Utilities;
 using Octokit;
 
 // ReSharper disable ArrangeMethodOrOperatorBody
@@ -38,12 +39,12 @@ internal static class RegenerateTasks
 
         try
         {
-            GitTasks.Git($"checkout -B {branch} --track origin/{branch}");
+            GitTasks.Git($"checkout -B {branch} --track  refs/remotes/origin/{branch}", redirectOutput: true);
         }
         catch (Exception)
         {
             // remote branch does not exist
-            GitTasks.Git($"checkout -B {branch} --no-track origin/master");
+            GitTasks.Git($"checkout -B {branch} --no-track  refs/remotes/origin/master", redirectOutput: true);
         }
 
         GitTasks.Git($"add --all {projectDir}");
@@ -59,5 +60,24 @@ internal static class RegenerateTasks
             .Replace($"https://raw.githubusercontent.com/{repositoryOwner}/{repositoryName}/", string.Empty).Split(separator: '/')
             .First();
         return !latest.TargetCommitish.StartsWith(toolReferenceSha);
+    }
+
+    public static void UpdateChangeLog(string changeLogPath, string version, string buildNumber)
+    {
+        var changeLogLines = TextTasks.ReadAllLines(changeLogPath);
+        var firstVNextVersionLine = Array.FindIndex(changeLogLines, x => x == "## [vNext]") + 1;
+        var latestReleaseSectionLine = Array.FindIndex(changeLogLines, firstVNextVersionLine, x => x.StartsWith("##"));
+        var releaseText = changeLogLines
+            .Skip(firstVNextVersionLine)
+            .Take(latestReleaseSectionLine - firstVNextVersionLine)
+            .Where(x => !string.IsNullOrEmpty(x))
+            .Append(
+                $"- Changed supported version to [NSwag v{version} (Build {buildNumber})](https://github.com/RSuter/NSwag/releases/tag/NSwag-Build-{buildNumber})");
+
+        var updatedChangeLog =
+            changeLogLines.Take(firstVNextVersionLine)
+                .Concat(releaseText)
+                .Concat(changeLogLines.Skip(latestReleaseSectionLine));
+        TextTasks.WriteAllText(changeLogPath, updatedChangeLog.JoinNewLine());
     }
 }
