@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Nuke.Common;
 using Nuke.Common.Utilities.Collections;
 using Octokit;
@@ -28,26 +27,48 @@ internal static class GitHubTasks
     public static IReadOnlyList<Release> GetLatestReleases(string owner, string name, int numberOfReleases, string token = null)
     {
         Logger.Info("Fetching latest releases...");
-        return CreateClient(token).Repository.Release.GetAll(owner, name, new ApiOptions { PageSize = numberOfReleases, PageCount = 1, StartPage = 1})
+        return CreateClient(token).Repository.Release
+            .GetAll(owner, name, new ApiOptions { PageSize = numberOfReleases, PageCount = 1, StartPage = 1 })
             .GetAwaiter()
             .GetResult();
     }
 
-    public static void CreatePullRequestIfNeeded(string repositoryIdentifier, string branch, string head, string body, string token)
+    public static void CreatePullRequestIfNeeded(string repositoryIdentifier, string branch, string title, string body, string token)
     {
         var (owner, name) = repositoryIdentifier.Split(separator: '/');
         try
         {
-            var result = CreateClient(token).PullRequest.Create(owner, name, new NewPullRequest(head, branch, "master") { Body = body })
+            var result = CreateClient(token).PullRequest.Create(owner, name, new NewPullRequest(title, branch, "master") { Body = body })
                 .GetAwaiter()
                 .GetResult();
-            Logger.Info($"Pull request '{result.Head}' with id '{result.Id}' was succesfully created.");
+            Logger.Info($"Pull request '{result.Head}' with id '{result.Id}' was successfully created.");
         }
         catch (ApiException ex)
         {
             if ((int) ex.StatusCode != 422) throw;
             Logger.Info($"Pull request from branch '{branch}' already exists.");
         }
+    }
+
+    public static void CreateRelease(
+        string repositoryIdentifier,
+        string tag,
+        string token,
+        string releaseName,
+        string body,
+        bool preRelease = false)
+    {
+        var (owner, name) = repositoryIdentifier.Split(separator: '/');
+        var release = new NewRelease(tag)
+                      {
+                          Name = releaseName,
+                          Prerelease = preRelease,
+                          Body = body
+                      };
+
+        CreateClient(token).Repository.Release.Create(owner, name, release)
+            .GetAwaiter()
+            .GetResult();
     }
 
     private static GitHubClient CreateClient(string token = null)

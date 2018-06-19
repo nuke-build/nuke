@@ -3,13 +3,17 @@
 // https://github.com/nuke-build/nswag/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using JetBrains.Annotations;
 using Nuke.CodeGeneration.Model;
 using Nuke.Common.IO;
 using Nuke.Common.Tools.Git;
+using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 using Octokit;
 
 // ReSharper disable ArrangeMethodOrOperatorBody
@@ -18,25 +22,39 @@ using Octokit;
 
 internal static class RegenerateTasks
 {
-    public static Version GetVersion(Release release, string repositoryOwner, string repositoryName, string githubApiKey)
+    public struct NSwagRelease
     {
-        var commit = GitHubTasks.GetCommit(repositoryOwner, repositoryName, release.TargetCommitish, githubApiKey);
-        var versionRegex = new Regex("Release v(?'version'\\d+\\.\\d+\\.\\d+)$", RegexOptions.IgnoreCase);
-        var versionString = versionRegex.Match(commit.Message).Groups["version"].Value;
-        return Version.Parse(versionString);
+        public Version Version { get; }
+        public string BuildNumber { get; }
+        public GitVersionBump Bump { get; }
+
+        public NSwagRelease(Version version, string buildNumber, GitVersionBump bump)
+        {
+            Version = version;
+            BuildNumber = buildNumber;
+            Bump = bump;
+        }
     }
 
-    public static string GetBump(Version latest, Version old)
+    public static NSwagRelease GetReleaseInformation(
+        IReadOnlyList<Release> releases,
+        string repositoryOwner,
+        string repositoryName,
+        string gitHubApiKey)
     {
-        if (latest.Major > old.Major) return "major";
-        if (latest.Minor > old.Minor) return "minor";
-        return "patch";
+        var (latestVersion, oldVersion) = releases
+            .Select(x => GetVersion(x, repositoryOwner, repositoryName, gitHubApiKey))
+            .ToArray();
+
+        var bump = GetBump(latestVersion, oldVersion);
+        var buildNumber = Regex.Match(releases[index: 0].Name, "^NSwag Build (?'buildNumber'[0-9]+)$").Groups["buildNumber"].Value;
+
+        return new NSwagRelease(latestVersion, buildNumber, bump);
     }
 
-    public static void CommitAndPushChanges(Version version, string projectDir, string bump, string branch)
+    public static void CheckoutBranchOrCreateNewFrom(string branch, string branchToCreateFrom)
     {
-        var commitmessage = new[] { $"Regenerate for NSwag v{version}", $"+semver: {bump}" };
-
+        var currentBranch = GitTasks.GitCurrentBranch();
         try
         {
             GitTasks.Git($"checkout -B {branch} --track  refs/remotes/origin/{branch}", redirectOutput: true);
@@ -44,12 +62,8 @@ internal static class RegenerateTasks
         catch (Exception)
         {
             // remote branch does not exist
-            GitTasks.Git($"checkout -B {branch} --no-track  refs/remotes/origin/master", redirectOutput: true);
+            GitTasks.Git($"checkout -B {branch} --no-track  refs/remotes/origin/{branchToCreateFrom}", redirectOutput: true);
         }
-
-        GitTasks.Git($"add --all {projectDir}");
-        GitTasks.Git($"commit {commitmessage.Aggregate(string.Empty, (x, y) => $"{x}-m \"{y}\" ").TrimEnd()}");
-        GitTasks.Git($"push --force --set-upstream origin {branch}");
     }
 
     public static bool IsUpdateAvailable(Release latest, string repositoryOwner, string repositoryName, string specificationFile)
@@ -80,4 +94,55 @@ internal static class RegenerateTasks
                 .Concat(changeLogLines.Skip(latestReleaseSectionLine));
         TextTasks.WriteAllText(changeLogPath, updatedChangeLog.JoinNewLine());
     }
+
+    public static void GitAdd(bool addUntracked, params string[] refs)
+    {
+        GitTasks.Git($"add {(addUntracked ? "--all" : string.Empty)} {refs.JoinSpace()}");
+    }
+
+    public static void GitCommit(params string[] message)
+    {
+        GitTasks.Git($"commit {message.Aggregate(string.Empty, (x, y) => $"{x}-m \"{y}\" ").TrimEnd()}");
+    }
+
+    public static string[] GitLastCommitMessage()
+    {
+        return GitTasks.Git("log -1 --pretty=%B", redirectOutput: true).ToArray();
+    }
+    public static void AddAndCommitChanges(string[] message, string[] refs, bool addUntracked = false)
+    {
+        GitAdd(addUntracked, refs);
+        GitCommit(message);
+    }
+
+    private static Version GetVersion(Release release, string repositoryOwner, string repositoryName, string githubApiKey)
+    {
+        var commit = GitHubTasks.GetCommit(repositoryOwner, repositoryName, release.TargetCommitish, githubApiKey);
+        var versionRegex = new Regex("Release v(?'version'\\d+\\.\\d+\\.\\d+)$", RegexOptions.IgnoreCase);
+        var versionString = versionRegex.Match(commit.Message).Groups["version"].Value;
+        return Version.Parse(versionString);
+    }
+
+    private static GitVersionBump GetBump(Version latest, Version old)
+    {
+        if (latest.Major > old.Major) return GitVersionBump.Major;
+        return latest.Minor > old.Minor ? GitVersionBump.Minor : GitVersionBump.Patch;
+    }
+
+    [Pure]
+    public static string NextSemVer(this GitVersion version, GitVersionBump bump)
+    {
+        switch (bump)
+        {
+            case GitVersionBump.Major:
+                return string.Format("{0}.0.0", version.Major + 1);
+            case GitVersionBump.Minor:
+                return string.Format("{0}.{1}.0", version.Major, version.Minor + 1);
+            case GitVersionBump.Patch:
+                return string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Patch + 1);
+            default:
+                throw new ArgumentOutOfRangeException(nameof(bump), bump, null);
+        }
+    }
+
 }

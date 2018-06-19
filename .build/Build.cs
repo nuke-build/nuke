@@ -4,9 +4,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using NuGet.Resolver;
 using Nuke.CodeGeneration;
 using Nuke.Common.Git;
@@ -44,7 +42,7 @@ class Build : NukeBuild
     [Solution] readonly Solution Solution;
 
     [Parameter("ApiKey for the specified source.")] readonly string ApiKey;
-    [Parameter("Indicates to push to nuget.org feed.")] readonly bool NuGet;
+    [Parameter("Indicates that the release is a pre release.")] readonly bool PreRelease;
     [Parameter("Api key to access the github.com api. Must have permissions to create pull-requests.")] readonly string GitHubApiKey;
 
     readonly Lazy<IReadOnlyList<Release>> LatestNSwagReleases;
@@ -56,13 +54,13 @@ class Build : NukeBuild
     string PackageDirectory => TemporaryDirectory / "packages";
     string ChangelogFile => RootDirectory / "CHANGELOG.md";
 
-    string Source => NuGet
-        ? "https://api.nuget.org/v3/index.json"
-        : "https://www.myget.org/F/nukebuild/api/v2/package";
+    string Source => PreRelease
+        ? "https://www.myget.org/F/nukebuild/api/v2/package"
+        : "https://api.nuget.org/v3/index.json";
 
-    string SymbolSource => NuGet
-        ? "https://nuget.smbsrc.net"
-        : "https://www.myget.org/F/nukebuild/symbols/api/v2/package";
+    string SymbolSource => PreRelease
+        ? "https://www.myget.org/F/nukebuild/symbols/api/v2/package"
+        : "https://nuget.smbsrc.net";
 
     Target Clean => _ => _
         .Executes(() =>
@@ -120,24 +118,12 @@ class Build : NukeBuild
                 .SetPackageReleaseNotes(releaseNotes));
         });
 
-    Target Changelog => _ => _
-        .OnlyWhen(() => InvokedTargets.Contains(nameof(Changelog)))
-        .Executes(() =>
-        {
-            FinalizeChangelog(ChangelogFile, GitVersion.SemVer, GitRepository);
-
-            Git($"add {ChangelogFile}");
-            Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.SemVer}.\"");
-            Git($"tag -f {GitVersion.SemVer}");
-        });
-
     Target Push => _ => _
         .DependsOn(Pack)
         .Requires(() => ApiKey)
         .Requires(() => !GitHasUncommitedChanges())
-        .Requires(() => !NuGet || GitVersionAttribute.Bump.HasValue)
-        .Requires(() => !NuGet || Configuration.EqualsOrdinalIgnoreCase("release"))
-        .Requires(() => !NuGet || GitVersion.BranchName.Equals("master"))
+        .Requires(() => !PreRelease || Configuration.EqualsOrdinalIgnoreCase("release"))
+        .Requires(() => !PreRelease || GitVersion.BranchName.Equals("master"))
         .Executes(() =>
         {
             GlobFiles(OutputDirectory, "*.nupkg").NotEmpty()
@@ -155,19 +141,43 @@ class Build : NukeBuild
         .DependsOn(CompilePlugin)
         .Executes(() =>
         {
-            const string branch = "nswag-update";
-            const string message = "Regenerate for NSwag";
+            var release = GetReleaseInformation(LatestNSwagReleases.Value, c_nSwagRepoOwner, c_nSwagRepoName, GitHubApiKey);
 
-            var (latestVersion, oldVersion) = LatestNSwagReleases.Value
-                .Select(x => GetVersion(x, c_nSwagRepoOwner, c_nSwagRepoName, GitHubApiKey))
-                .ToArray();
+            var branch = $"nswag-update-{release.Version}";
+            var versionName = $"NSwag v{release.Version}";
+            var message = $"Regenerate for {versionName}";
+            var commitMessage = new[] { message, $"+semver: {release.Bump.ToString().ToLowerInvariant()}" };
+            var prBody = $"Regenerate for [{versionName}](https://github.com/RSuter/NSwag/releases/tag/NSwag-Build-{release.BuildNumber}).";
 
-            var bump = GetBump(latestVersion, oldVersion);
-            var buildNumber = Regex.Match(LatestNSwagRelease.Name, "^NSwag Build (?'buildNumber'[0-9]+)$").Groups["buildNumber"].Value;
+            CheckoutBranchOrCreateNewFrom(branch, "master");
 
-            UpdateChangeLog(ChangelogFile, latestVersion.ToString(), buildNumber);
-            CommitAndPushChanges(latestVersion, NSwagProject.Directory, bump, branch);
-            CreatePullRequestIfNeeded(GitRepository.Identifier, branch, $"{message} update.", $"{message} v{latestVersion}.", GitHubApiKey);
+            UpdateChangeLog(ChangelogFile, release.Version.ToString(), release.BuildNumber);
+            FinalizeChangelog(ChangelogFile, GitVersion.NextSemVer(release.Bump), GitRepository);
+
+            AddAndCommitChanges(commitMessage, new[] { NSwagProject.Directory, ChangelogFile }, addUntracked: true);
+            Git($"push --force --set-upstream origin {branch}");
+            CreatePullRequestIfNeeded(GitRepository.Identifier, branch, $"{message}", prBody, GitHubApiKey);
+        });
+
+    Target Release => _ => _
+        .Requires(() => GitHubApiKey)
+        .DependsOn(Push)
+        .Executes(() =>
+        {
+            var lastCommitMessage = GitLastCommitMessage();
+            var tagAnnotations = lastCommitMessage.Aggregate(string.Empty, (x, y) => $"{x} -m \"{y}\"").Trim();
+            var tagName = GitVersion.SemVer;
+
+            Git($"tag -a {tagName} {tagAnnotations}");
+            Git($"push origin {tagName}");
+            var releaseMessage = new[] { $"- [Changelog](https://github.com/nuke-build/nswag/blob/{tagName}/CHANGELOG.md)" }.JoinNewLine();
+            CreateRelease(GitRepository.Identifier, tagName, GitHubApiKey, $"Nuke.NSwag v{tagName}", releaseMessage, PreRelease);
+        });
+
+    Target Changelog => _ => _
+        .Executes(() =>
+        {
+            FinalizeChangelog(ChangelogFile, GitVersion.SemVer, GitRepository);
         });
 
     bool ShouldRegenerate() => IsUpdateAvailable(LatestNSwagRelease, c_nSwagRepoOwner, c_nSwagRepoName, SpecificationDirectory / "NSwag.json");
