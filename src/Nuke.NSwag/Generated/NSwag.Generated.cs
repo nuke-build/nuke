@@ -9908,6 +9908,7 @@ namespace Nuke.NSwag
     {
         public static EnumHandling Integer = new EnumHandling { Value = "Integer" };
         public static EnumHandling String = new EnumHandling { Value = "String" };
+        public static EnumHandling CamelCaseString = new EnumHandling { Value = "CamelCaseString" };
     }
     #endregion
     #region OperationGenerationMode
