@@ -170,7 +170,11 @@ class Build : NukeBuild
 
             Git($"tag -a {tagName} {tagAnnotations}");
             Git($"push origin {tagName}");
-            var releaseMessage = new[] { $"- [Changelog](https://github.com/nuke-build/nswag/blob/{tagName}/CHANGELOG.md)" }.JoinNewLine();
+            var releaseMessage = new[]
+                                 {
+                                     "- [Nuget](https://www.nuget.org/packages/Nuke.NSwag/)",
+                                     $"- [Changelog](https://github.com/nuke-build/nswag/blob/{tagName}/CHANGELOG.md)"
+                                 }.JoinNewLine();
             CreateRelease(GitRepository.Identifier, tagName, GitHubApiKey, $"Nuke.NSwag v{tagName}", releaseMessage, PreRelease);
         });
 
