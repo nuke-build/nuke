@@ -45,7 +45,7 @@ namespace Nuke.Common.BuildServers
         [CanBeNull] public string GitTag => Variable("BITRISE_GIT_TAG");
         [CanBeNull] public string GitCommit => Variable("BITRISE_GIT_COMMIT");
         [CanBeNull] public string GitMessage => Variable("BITRISE_GIT_MESSAGE");
-        [CanBeNull] public string PullRequest => Variable("BITRISE_PULL_REQUEST");
+        [CanBeNull] public long? PullRequest => Variable<long?>("BITRISE_PULL_REQUEST");
         [CanBeNull] public string ProvisionUrl => Variable("BITRISE_PROVISION_URL");
         [CanBeNull] public string CertificateUrl => Variable("BITRISE_CERTIFICATE_URL");
         [CanBeNull] public string CertificatePassphrase => Variable("BITRISE_CERTIFICATE_PASSPHRASE");
