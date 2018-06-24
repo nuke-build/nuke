@@ -20,7 +20,7 @@ namespace Nuke.Common.BuildServers
 
         public static Bitrise Instance => NukeBuild.Instance?.Host == HostType.Bitrise ? s_instance.Value : null;
 
-        internal static bool IsRunningBitrise => Variable("BITRISE_BUILD_URL") != null;
+        internal static bool IsRunningBitrise => Environment.GetEnvironmentVariable("BITRISE_BUILD_URL") != null;
 
         private static DateTime ConvertUnixTimestamp(long timestamp)
         {

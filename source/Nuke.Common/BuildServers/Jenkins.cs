@@ -19,7 +19,7 @@ namespace Nuke.Common.BuildServers
 
         public static Jenkins Instance => NukeBuild.Instance?.Host == HostType.Jenkins ? s_instance.Value : null;
 
-        internal static bool IsRunningJenkins => Variable("JENKINS_HOME") != null;
+        internal static bool IsRunningJenkins => Environment.GetEnvironmentVariable("JENKINS_HOME") != null;
 
         internal Jenkins()
         {

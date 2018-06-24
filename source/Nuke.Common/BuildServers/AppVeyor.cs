@@ -20,7 +20,7 @@ namespace Nuke.Common.BuildServers
 
         public static AppVeyor Instance => NukeBuild.Instance?.Host == HostType.AppVeyor ? s_instance.Value : null;
 
-        internal static bool IsRunningAppVeyor => Variable("APPVEYOR") != null;
+        internal static bool IsRunningAppVeyor => Environment.GetEnvironmentVariable("APPVEYOR") != null;
 
         internal AppVeyor()
         {

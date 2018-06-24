@@ -18,7 +18,7 @@ namespace Nuke.Common.BuildServers
 
         public static GitLab Instance => NukeBuild.Instance?.Host == HostType.GitLab ? s_instance.Value : null;
 
-        internal static bool IsRunningGitLab => Variable("GITLAB_CI") != null;
+        internal static bool IsRunningGitLab => Environment.GetEnvironmentVariable("GITLAB_CI") != null;
 
         internal GitLab()
         {

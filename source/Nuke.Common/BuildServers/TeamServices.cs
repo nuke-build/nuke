@@ -20,7 +20,7 @@ namespace Nuke.Common.BuildServers
 
         public static TeamServices Instance => NukeBuild.Instance?.Host == HostType.TeamServices ? s_instance.Value : null;
 
-        internal static bool IsRunningTeamServices => Variable("TF_BUILD") != null;
+        internal static bool IsRunningTeamServices => Environment.GetEnvironmentVariable("TF_BUILD") != null;
 
         private readonly Action<string> _messageSink;
 
