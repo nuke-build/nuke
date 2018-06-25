@@ -14,7 +14,7 @@ namespace Nuke.Common
     {
         private static Lazy<HostType> s_hostType = new Lazy<HostType>(() =>
         {
-            var hostType = Parameter<HostType?>(nameof(NukeBuild.Host));
+            var hostType = Argument<HostType?>(nameof(NukeBuild.Host));
             if (hostType.HasValue)
                 return hostType.Value;
 

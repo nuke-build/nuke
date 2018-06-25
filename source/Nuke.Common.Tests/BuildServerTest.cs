@@ -19,7 +19,7 @@ namespace Nuke.Common.Tests
         [BuildServerFact(typeof(TeamCity))]
         public void TestTeamCityRestClient()
         {
-            CreateBuildServer<TeamCity>().RestClient
+            CreateInstance<TeamCity>().RestClient
                 .GetBuildQueue().Result
                 .Builds.Length.Should().BeGreaterThan(expected: 0);
         }
@@ -80,7 +80,7 @@ namespace Nuke.Common.Tests
 
         public static IEnumerable<object[]> Properties(Type type)
         {
-            var instance = CreateBuildServer(type);
+            var instance = CreateInstance(type);
 
             return type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .Select(x => new[] { x, instance }).ToArray();
@@ -114,12 +114,12 @@ namespace Nuke.Common.Tests
             Guid.TryParse(strValue, out _).Should().BeFalse("Guid");
         }
 
-        private static T CreateBuildServer<T>()
+        private static T CreateInstance<T>()
         {
-            return (T) CreateBuildServer(typeof(T));
+            return (T) CreateInstance(typeof(T));
         }
 
-        private static object CreateBuildServer(Type type)
+        private static object CreateInstance(Type type)
         {
             var bindingFlags = BindingFlags.CreateInstance | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.OptionalParamBinding;
             return Activator.CreateInstance(type, bindingFlags, binder: null, args: new object[0], culture: CultureInfo.CurrentCulture);

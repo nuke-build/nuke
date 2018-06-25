@@ -18,9 +18,8 @@ namespace Nuke.Common.Tooling
     {
         public ProcessSettings()
         {
-            var environmentVariables = Environment.GetEnvironmentVariables();
-            EnvironmentVariablesInternal = environmentVariables.Keys.Cast<string>()
-                .ToDictionary(x => x, x => (string) environmentVariables[x], StringComparer.OrdinalIgnoreCase);
+            var variables = EnvironmentInfo.GetVariables();
+            EnvironmentVariablesInternal = new Dictionary<string, string>(variables, variables.Comparer);
         }
 
         public IReadOnlyDictionary<string, string> EnvironmentVariables => EnvironmentVariablesInternal.AsReadOnly();

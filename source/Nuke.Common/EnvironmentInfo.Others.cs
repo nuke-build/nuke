@@ -25,22 +25,23 @@ namespace Nuke.Common
             => Environment.CurrentDirectory;
 #endif
 
-        public static IReadOnlyDictionary<string, string> Variables
+        internal static Dictionary<string, string> GetVariables()
         {
-            get
-            {
-                var environmentVariables = Environment.GetEnvironmentVariables()
-                    .ToGeneric<string, string>(StringComparer.CurrentCulture);
+            var environmentVariables = Environment.GetEnvironmentVariables()
+                .ToGeneric<string, string>(StringComparer.CurrentCulture);
 
-                var groups = environmentVariables.GroupBy(x => x.Key, StringComparer.OrdinalIgnoreCase).ToList();
-                foreach (var group in groups.Where(x => x.Count() > 1))
-                    Logger.Warn($"Environment variable '{group.Key}' exists multiple times with different casing. Falling back to case-sensitive.");
-                
-                return groups.Any(x => x.Count() > 1)
-                    ? environmentVariables.AsReadOnly()
-                    : new Dictionary<string, string>(environmentVariables, StringComparer.OrdinalIgnoreCase).AsReadOnly();
-            }
+            var groups = environmentVariables.GroupBy(x => x.Key, StringComparer.OrdinalIgnoreCase).ToList();
+            foreach (var group in groups.Where(x => x.Count() > 1))
+                Logger.Warn($"Environment variable '{group.Key}' exists multiple times with different casing. Falling back to case-sensitive.");
+
+            return groups.Any(x => x.Count() > 1)
+                ? environmentVariables
+                : new Dictionary<string, string>(environmentVariables, StringComparer.OrdinalIgnoreCase);
         }
+
+        private static Lazy<Dictionary<string, string>> s_variables = new Lazy<Dictionary<string, string>>(GetVariables); 
+
+        public static IReadOnlyDictionary<string, string> Variables => s_variables.Value.AsReadOnly();
 
         public static string[] CommandLineArguments { get; } = GetSurrogateArguments() ?? Environment.GetCommandLineArgs();
         

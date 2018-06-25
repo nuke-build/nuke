@@ -28,7 +28,7 @@ namespace Nuke.Common.BuildServers
 
         public static TeamCity Instance => NukeBuild.Instance?.Host == HostType.TeamCity ? s_instance.Value : null;
 
-        internal static bool IsRunningTeamCity => Variable("TEAMCITY_VERSION") != null;
+        internal static bool IsRunningTeamCity => Environment.GetEnvironmentVariable("TEAMCITY_VERSION") != null;
 
         public static T CreateRestClient<T>(string serverUrl, string username, string password)
         {
