@@ -36,6 +36,7 @@ using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.Slack;
+using Nuke.Common.Tools.VSWhere;
 
 [assembly: IconClass(typeof(ChangelogTasks), "books")]
 [assembly: IconClass(typeof(ControlFlow), "footprint")]
@@ -78,6 +79,7 @@ using Nuke.Common.Tools.Slack;
 [assembly: IconClass(typeof(TextTasks), "file-text3")]
 [assembly: IconClass(typeof(TestCloudTasks), "bug2")]
 [assembly: IconClass(typeof(VsTestTasks), "bug2")]
+[assembly: IconClass(typeof(VSWhereTasks), "search")]
 [assembly: IconClass(typeof(WebConfigTransformRunnerTasks), "file-empty2")]
 [assembly: IconClass(typeof(XmlTasks), "file-empty2")]
 [assembly: IconClass(typeof(XunitTasks), "bug2")]

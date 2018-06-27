@@ -1,0 +1,262 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "license": [
+    "Copyright Matthias Koch, Sebastian Karasek 2018.",
+    "Distributed under the MIT License.",
+    "https://github.com/nuke-build/tools/blob/master/LICENSE"
+  ],
+  "references": [
+    "https://raw.githubusercontent.com/Microsoft/vswhere/develop/README.md"
+  ],
+  "name": "VSWhere",
+  "officialUrl": "https://github.com/Microsoft/vswhere",
+  "help": "VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.",
+  "packageId": "vswhere",
+  "packageExecutable": "vswhere.exe",
+  "tasks": [
+    {
+      "returnType": "List<VSWhereResult>",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Latest",
+            "type": "bool",
+            "format": "-latest",
+            "help": " Return only the newest version and last installed."
+          },
+          {
+            "name": "Format",
+            "type": "VSWhereFormat",
+            "format": "-format {value}",
+            "help": "A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>."
+          },
+          {
+            "name": "NoLogo",
+            "type": "bool",
+            "format": "-nologo",
+            "help": "Do not show logo information."
+          },
+          {
+            "name": "UTF8",
+            "type": "bool",
+            "format": "-utf8",
+            "help": "Use UTF-8 encoding (recommended for JSON)."
+          },
+          {
+            "name": "Legacy",
+            "type": "bool",
+            "format": "-legacy",
+            "help": "Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>."
+          },
+          {
+            "name": "All",
+            "type": "bool",
+            "format": "-all",
+            "help": "Finds all instances even if they are incomplete and may not launch."
+          },
+          {
+            "name": "Prerelease",
+            "type": "bool",
+            "format": "-prerelease",
+            "help": "Also searches prereleases. By default, only releases are searched."
+          },
+          {
+            "name": "Products",
+            "type": "List<string>",
+            "format": "-products {value}",
+            "separator": " ",
+            "help": "One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed."
+          },
+          {
+            "name": "Requires",
+            "type": "List<string>",
+            "format": "-requires {value}",
+            "separator": " ",
+            "help": "One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href=\"https://aka.ms/vs/workloads\"/> for a list of workload and component IDs."
+          },
+          {
+            "name": "RequiresAny",
+            "type": "bool",
+            "format": "-requiresAny",
+            "help": "Find instances with any one or more workload or components IDs passed to <c>-requires</c>."
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "-version {value}",
+            "help": "A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>."
+          },
+          {
+            "name": "Property",
+            "type": "string",
+            "format": "-property {value}",
+            "help": "The name of a property to return. Use delimiters <c>'.'</c>, <c>'/'</c>, or <c>'_'</c> to separate object and property names. Example: <c>properties.nickname</c> will return the <em>nickname</em> property under <em>properties</em>."
+          }
+        ]
+      }
+    }
+  ],
+  "dataClasses": [
+    {
+      "name": "VSWhereCatalog",
+      "properties": [
+        {
+          "name": "BuildBranch",
+          "type": "string"
+        },
+        {
+          "name": "BuildVersion",
+          "type": "string"
+        },
+        {
+          "name": "Id",
+          "type": "string"
+        },
+        {
+          "name": "LocalBuild",
+          "type": "string"
+        },
+        {
+          "name": "ManifestName",
+          "type": "string"
+        },
+        {
+          "name": "ManifestType",
+          "type": "string"
+        },
+        {
+          "name": "ProductDisplayVersion",
+          "type": "string"
+        },
+        {
+          "name": "ProductLine",
+          "type": "string"
+        },
+        {
+          "name": "ProductLineVersion",
+          "type": "string"
+        },
+        {
+          "name": "ProductMilestone",
+          "type": "string"
+        },
+        {
+          "name": "ProductMilestoneIsPreRelease",
+          "type": "string"
+        },
+        {
+          "name": "ProductName",
+          "type": "string"
+        },
+        {
+          "name": "ProductPatchVersion",
+          "type": "string"
+        },
+        {
+          "name": "ProductPreReleaseMilestoneSuffix",
+          "type": "string"
+        },
+        {
+          "name": "ProductRelease",
+          "type": "string"
+        },
+        {
+          "name": "ProductSemanticVersion",
+          "type": "string"
+        },
+        {
+          "name": "RequiredEngineVersion",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "VSWhereResult",
+      "properties": [
+        {
+          "name": "InstanceId",
+          "type": "string"
+        },
+        {
+          "name": "InstallDate",
+          "type": "DateTime"
+        },
+        {
+          "name": "InstallationName",
+          "type": "string"
+        },
+        {
+          "name": "InstallationPath",
+          "type": "string"
+        },
+        {
+          "name": "InstallationVersion",
+          "type": "string"
+        },
+        {
+          "name": "ProductId",
+          "type": "string"
+        },
+        {
+          "name": "ProductPath",
+          "type": "string"
+        },
+        {
+          "name": "IsPreRelease",
+          "type": "bool"
+        },
+        {
+          "name": "DisplayName",
+          "type": "string"
+        },
+        {
+          "name": "Description",
+          "type": "string"
+        },
+        {
+          "name": "ChannelId",
+          "type": "string"
+        },
+        {
+          "name": "ChannelUri",
+          "type": "string"
+        },
+        {
+          "name": "EnginePath",
+          "type": "string"
+        },
+        {
+          "name": "ReleaseNotes",
+          "type": "string"
+        },
+        {
+          "name": "ThirdPartyNotices",
+          "type": "string"
+        },
+        {
+          "name": "UpdateDate",
+          "type": "DateTime"
+        },
+        {
+          "name": "Catalog",
+          "type": "VSWhereCatalog"
+        },
+        {
+          "name": "Properties",
+          "type": "Dictionary<string, object>"
+        }
+      ]
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "VSWhereFormat",
+      "values": [
+        "json",
+        "text",
+        "value",
+        "xml"
+      ]
+    }
+  ]
+}
