@@ -19,7 +19,7 @@ function ReadWithDefault {
 }
 
 function GetRelative {
-    python -c "import os.path; print os.path.relpath('$2','${1:-$PWD}')"
+    python -c "import os.path; print(os.path.relpath('$2','${1:-$PWD}'))"
 }
 
 function error {
@@ -111,7 +111,7 @@ TARGET_PLATFORM=${TARGET_PLATFORM_ARRAY[$TARGET_PLATFORM_SELECTION]}
 TARGET_FRAMEWORK_ARRAY=("net461" "netcoreapp2.0")
 TARGET_FRAMEWORK=${TARGET_FRAMEWORK_ARRAY[$TARGET_PLATFORM_SELECTION]}
 NUKE_VERSION_PARTS=(${NUKE_VERSION//./ })
-PROJECT_GUID=$(python -c "import uuid; print str(uuid.uuid4()).upper()")
+PROJECT_GUID=$(python -c "import uuid; print(str(uuid.uuid4()).upper())")
 PROJECT_KIND_ARRAY=("FAE04EC0-301F-11D3-BF4B-00C04F79EFBC" "9A19103F-16F7-4668-BE54-9A1E7A4F7556")
 PROJECT_KIND=${PROJECT_KIND_ARRAY[$PROJECT_FORMAT_SELECTION]}
 PROJECT_FORMAT_ARRAY=("legacy" "sdk")
