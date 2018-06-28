@@ -351,7 +351,7 @@ namespace Nuke.NSwag
         public virtual string DefaultUrlTemplate { get; internal set; }
         /// <summary><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
         public virtual bool? AllowReferencesWithProperties { get; internal set; }
-        /// <summary><p>The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        /// <summary><p>DEPRECATED: The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         public virtual string ContractResolver { get; internal set; }
         /// <summary><p>The default enum handling ('String' or 'Integer'), default: Integer.</p></summary>
         public virtual EnumHandling DefaultEnumHandling { get; internal set; }
@@ -377,6 +377,9 @@ namespace Nuke.NSwag
         public virtual bool? GenerateXmlObjects { get; internal set; }
         /// <summary><p>Ignore properties with the ObsoleteAttribute (default: false).</p></summary>
         public virtual bool? IgnoreObsoleteProperties { get; internal set; }
+        /// <summary><p>The included API versions used by the ApiVersionProcessor (default: empty = all).</p></summary>
+        public virtual IReadOnlyList<string> IncludedVersions => IncludedVersionsInternal.AsReadOnly();
+        internal List<string> IncludedVersionsInternal { get; set; } = new List<string>();
         /// <summary><p>Specify the description of the Swagger specification (ignored when DocumentTemplate is set).</p></summary>
         public virtual string InfoDescription { get; internal set; }
         /// <summary><p>Specify the title of the Swagger specification (ignored when DocumentTemplate is set).</p></summary>
@@ -388,6 +391,8 @@ namespace Nuke.NSwag
         internal List<string> OperationProcessorsInternal { get; set; } = new List<string>();
         /// <summary><p>The custom ISchemaNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         public virtual string SchemaNameGenerator { get; internal set; }
+        /// <summary><p>The custom JsonSerializerSettings implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        public virtual string SerializerSettings { get; internal set; }
         /// <summary><p>The basePath of the Swagger specification (optional).</p></summary>
         public virtual string ServiceBasePath { get; internal set; }
         /// <summary><p>Overrides the service host of the web service (optional, use '.' to remove the hostname).</p></summary>
@@ -432,11 +437,13 @@ namespace Nuke.NSwag
               .Add("/GenerateKnownTypes:{value}", GenerateKnownTypes)
               .Add("/GenerateXmlObjects:{value}", GenerateXmlObjects)
               .Add("/IgnoreObsoleteProperties:{value}", IgnoreObsoleteProperties)
+              .Add("/IncludedVersions:{value}", IncludedVersions)
               .Add("/InfoDescription:{value}", InfoDescription)
               .Add("/InfoTitle:{value}", InfoTitle)
               .Add("/InfoVersion:{value}", InfoVersion)
               .Add("/OperationProcessors:{value}", OperationProcessors)
               .Add("/SchemaNameGenerator:{value}", SchemaNameGenerator)
+              .Add("/SerializerSettings:{value}", SerializerSettings)
               .Add("/ServiceBasePath:{value}", ServiceBasePath)
               .Add("/ServiceHost:{value}", ServiceHost)
               .Add("/ServiceSchemes:{value}", ServiceSchemes)
@@ -475,7 +482,7 @@ namespace Nuke.NSwag
         public virtual bool? Verbose { get; internal set; }
         /// <summary><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
         public virtual bool? AllowReferencesWithProperties { get; internal set; }
-        /// <summary><p>The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        /// <summary><p>DEPRECATED: The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         public virtual string ContractResolver { get; internal set; }
         /// <summary><p>The default enum handling ('String' or 'Integer'), default: Integer.</p></summary>
         public virtual EnumHandling DefaultEnumHandling { get; internal set; }
@@ -501,6 +508,9 @@ namespace Nuke.NSwag
         public virtual bool? GenerateXmlObjects { get; internal set; }
         /// <summary><p>Ignore properties with the ObsoleteAttribute (default: false).</p></summary>
         public virtual bool? IgnoreObsoleteProperties { get; internal set; }
+        /// <summary><p>The included API versions used by the ApiVersionProcessor (default: empty = all).</p></summary>
+        public virtual IReadOnlyList<string> IncludedVersions => IncludedVersionsInternal.AsReadOnly();
+        internal List<string> IncludedVersionsInternal { get; set; } = new List<string>();
         /// <summary><p>Specify the description of the Swagger specification (ignored when DocumentTemplate is set).</p></summary>
         public virtual string InfoDescription { get; internal set; }
         /// <summary><p>Specify the title of the Swagger specification (ignored when DocumentTemplate is set).</p></summary>
@@ -512,6 +522,8 @@ namespace Nuke.NSwag
         internal List<string> OperationProcessorsInternal { get; set; } = new List<string>();
         /// <summary><p>The custom ISchemaNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         public virtual string SchemaNameGenerator { get; internal set; }
+        /// <summary><p>The custom JsonSerializerSettings implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        public virtual string SerializerSettings { get; internal set; }
         /// <summary><p>The basePath of the Swagger specification (optional).</p></summary>
         public virtual string ServiceBasePath { get; internal set; }
         /// <summary><p>Overrides the service host of the web service (optional, use '.' to remove the hostname).</p></summary>
@@ -558,11 +570,13 @@ namespace Nuke.NSwag
               .Add("/GenerateKnownTypes:{value}", GenerateKnownTypes)
               .Add("/GenerateXmlObjects:{value}", GenerateXmlObjects)
               .Add("/IgnoreObsoleteProperties:{value}", IgnoreObsoleteProperties)
+              .Add("/IncludedVersions:{value}", IncludedVersions)
               .Add("/InfoDescription:{value}", InfoDescription)
               .Add("/InfoTitle:{value}", InfoTitle)
               .Add("/InfoVersion:{value}", InfoVersion)
               .Add("/OperationProcessors:{value}", OperationProcessors)
               .Add("/SchemaNameGenerator:{value}", SchemaNameGenerator)
+              .Add("/SerializerSettings:{value}", SerializerSettings)
               .Add("/ServiceBasePath:{value}", ServiceBasePath)
               .Add("/ServiceHost:{value}", ServiceHost)
               .Add("/ServiceSchemes:{value}", ServiceSchemes)
@@ -786,6 +800,8 @@ namespace Nuke.NSwag
         public virtual string DictionaryBaseType { get; internal set; }
         /// <summary><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
         public virtual string DictionaryType { get; internal set; }
+        /// <summary><p>Specifies whether enums should be always generated as bit flags (default: false).</p></summary>
+        public virtual bool? EnforceFlagEnums { get; internal set; }
         /// <summary><p>The excluded DTO type names (must be defined in an import or other namespace).</p></summary>
         public virtual IReadOnlyList<string> ExcludedTypeNames => ExcludedTypeNamesInternal.AsReadOnly();
         internal List<string> ExcludedTypeNamesInternal { get; set; } = new List<string>();
@@ -894,6 +910,7 @@ namespace Nuke.NSwag
               .Add("/DateType:{value}", DateType)
               .Add("/DictionaryBaseType:{value}", DictionaryBaseType)
               .Add("/DictionaryType:{value}", DictionaryType)
+              .Add("/EnforceFlagEnums:{value}", EnforceFlagEnums)
               .Add("/ExcludedTypeNames:{value}", ExcludedTypeNames)
               .Add("/GenerateDataAnnotations:{value}", GenerateDataAnnotations)
               .Add("/GenerateDefaultValues:{value}", GenerateDefaultValues)
@@ -968,6 +985,8 @@ namespace Nuke.NSwag
         public virtual string DictionaryBaseType { get; internal set; }
         /// <summary><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
         public virtual string DictionaryType { get; internal set; }
+        /// <summary><p>Specifies whether enums should be always generated as bit flags (default: false).</p></summary>
+        public virtual bool? EnforceFlagEnums { get; internal set; }
         /// <summary><p>The excluded DTO type names (must be defined in an import or other namespace).</p></summary>
         public virtual IReadOnlyList<string> ExcludedTypeNames => ExcludedTypeNamesInternal.AsReadOnly();
         internal List<string> ExcludedTypeNamesInternal { get; set; } = new List<string>();
@@ -1053,6 +1072,7 @@ namespace Nuke.NSwag
               .Add("/DateType:{value}", DateType)
               .Add("/DictionaryBaseType:{value}", DictionaryBaseType)
               .Add("/DictionaryType:{value}", DictionaryType)
+              .Add("/EnforceFlagEnums:{value}", EnforceFlagEnums)
               .Add("/ExcludedTypeNames:{value}", ExcludedTypeNames)
               .Add("/GenerateDataAnnotations:{value}", GenerateDataAnnotations)
               .Add("/GenerateDefaultValues:{value}", GenerateDefaultValues)
@@ -2417,7 +2437,7 @@ namespace Nuke.NSwag
         }
         #endregion
         #region ContractResolver
-        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.ContractResolver"/>.</em></p><p>The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.ContractResolver"/>.</em></p><p>DEPRECATED: The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         [Pure]
         public static NSwagWebApiToSwaggerSettings SetContractResolver(this NSwagWebApiToSwaggerSettings toolSettings, string contractResolver)
         {
@@ -2425,7 +2445,7 @@ namespace Nuke.NSwag
             toolSettings.ContractResolver = contractResolver;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.ContractResolver"/>.</em></p><p>The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.ContractResolver"/>.</em></p><p>DEPRECATED: The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         [Pure]
         public static NSwagWebApiToSwaggerSettings ResetContractResolver(this NSwagWebApiToSwaggerSettings toolSettings)
         {
@@ -2836,6 +2856,66 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
+        #region IncludedVersions
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.IncludedVersions"/> to a new list.</em></p><p>The included API versions used by the ApiVersionProcessor (default: empty = all).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings SetIncludedVersions(this NSwagWebApiToSwaggerSettings toolSettings, params string[] includedVersions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludedVersionsInternal = includedVersions.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.IncludedVersions"/> to a new list.</em></p><p>The included API versions used by the ApiVersionProcessor (default: empty = all).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings SetIncludedVersions(this NSwagWebApiToSwaggerSettings toolSettings, IEnumerable<string> includedVersions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludedVersionsInternal = includedVersions.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagWebApiToSwaggerSettings.IncludedVersions"/>.</em></p><p>The included API versions used by the ApiVersionProcessor (default: empty = all).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings AddIncludedVersions(this NSwagWebApiToSwaggerSettings toolSettings, params string[] includedVersions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludedVersionsInternal.AddRange(includedVersions);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagWebApiToSwaggerSettings.IncludedVersions"/>.</em></p><p>The included API versions used by the ApiVersionProcessor (default: empty = all).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings AddIncludedVersions(this NSwagWebApiToSwaggerSettings toolSettings, IEnumerable<string> includedVersions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludedVersionsInternal.AddRange(includedVersions);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="NSwagWebApiToSwaggerSettings.IncludedVersions"/>.</em></p><p>The included API versions used by the ApiVersionProcessor (default: empty = all).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ClearIncludedVersions(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludedVersionsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagWebApiToSwaggerSettings.IncludedVersions"/>.</em></p><p>The included API versions used by the ApiVersionProcessor (default: empty = all).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings RemoveIncludedVersions(this NSwagWebApiToSwaggerSettings toolSettings, params string[] includedVersions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(includedVersions);
+            toolSettings.IncludedVersionsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagWebApiToSwaggerSettings.IncludedVersions"/>.</em></p><p>The included API versions used by the ApiVersionProcessor (default: empty = all).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings RemoveIncludedVersions(this NSwagWebApiToSwaggerSettings toolSettings, IEnumerable<string> includedVersions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(includedVersions);
+            toolSettings.IncludedVersionsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
         #region InfoDescription
         /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.InfoDescription"/>.</em></p><p>Specify the description of the Swagger specification (ignored when DocumentTemplate is set).</p></summary>
         [Pure]
@@ -2965,6 +3045,24 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SchemaNameGenerator = null;
+            return toolSettings;
+        }
+        #endregion
+        #region SerializerSettings
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.SerializerSettings"/>.</em></p><p>The custom JsonSerializerSettings implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings SetSerializerSettings(this NSwagWebApiToSwaggerSettings toolSettings, string serializerSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SerializerSettings = serializerSettings;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.SerializerSettings"/>.</em></p><p>The custom JsonSerializerSettings implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ResetSerializerSettings(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SerializerSettings = null;
             return toolSettings;
         }
         #endregion
@@ -3481,7 +3579,7 @@ namespace Nuke.NSwag
         }
         #endregion
         #region ContractResolver
-        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.ContractResolver"/>.</em></p><p>The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.ContractResolver"/>.</em></p><p>DEPRECATED: The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         [Pure]
         public static NSwagAspNetCoreToSwaggerSettings SetContractResolver(this NSwagAspNetCoreToSwaggerSettings toolSettings, string contractResolver)
         {
@@ -3489,7 +3587,7 @@ namespace Nuke.NSwag
             toolSettings.ContractResolver = contractResolver;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.ContractResolver"/>.</em></p><p>The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.ContractResolver"/>.</em></p><p>DEPRECATED: The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         [Pure]
         public static NSwagAspNetCoreToSwaggerSettings ResetContractResolver(this NSwagAspNetCoreToSwaggerSettings toolSettings)
         {
@@ -3900,6 +3998,66 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
+        #region IncludedVersions
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.IncludedVersions"/> to a new list.</em></p><p>The included API versions used by the ApiVersionProcessor (default: empty = all).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings SetIncludedVersions(this NSwagAspNetCoreToSwaggerSettings toolSettings, params string[] includedVersions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludedVersionsInternal = includedVersions.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.IncludedVersions"/> to a new list.</em></p><p>The included API versions used by the ApiVersionProcessor (default: empty = all).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings SetIncludedVersions(this NSwagAspNetCoreToSwaggerSettings toolSettings, IEnumerable<string> includedVersions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludedVersionsInternal = includedVersions.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagAspNetCoreToSwaggerSettings.IncludedVersions"/>.</em></p><p>The included API versions used by the ApiVersionProcessor (default: empty = all).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings AddIncludedVersions(this NSwagAspNetCoreToSwaggerSettings toolSettings, params string[] includedVersions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludedVersionsInternal.AddRange(includedVersions);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="NSwagAspNetCoreToSwaggerSettings.IncludedVersions"/>.</em></p><p>The included API versions used by the ApiVersionProcessor (default: empty = all).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings AddIncludedVersions(this NSwagAspNetCoreToSwaggerSettings toolSettings, IEnumerable<string> includedVersions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludedVersionsInternal.AddRange(includedVersions);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="NSwagAspNetCoreToSwaggerSettings.IncludedVersions"/>.</em></p><p>The included API versions used by the ApiVersionProcessor (default: empty = all).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ClearIncludedVersions(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludedVersionsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagAspNetCoreToSwaggerSettings.IncludedVersions"/>.</em></p><p>The included API versions used by the ApiVersionProcessor (default: empty = all).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings RemoveIncludedVersions(this NSwagAspNetCoreToSwaggerSettings toolSettings, params string[] includedVersions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(includedVersions);
+            toolSettings.IncludedVersionsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="NSwagAspNetCoreToSwaggerSettings.IncludedVersions"/>.</em></p><p>The included API versions used by the ApiVersionProcessor (default: empty = all).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings RemoveIncludedVersions(this NSwagAspNetCoreToSwaggerSettings toolSettings, IEnumerable<string> includedVersions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(includedVersions);
+            toolSettings.IncludedVersionsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
         #region InfoDescription
         /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.InfoDescription"/>.</em></p><p>Specify the description of the Swagger specification (ignored when DocumentTemplate is set).</p></summary>
         [Pure]
@@ -4029,6 +4187,24 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SchemaNameGenerator = null;
+            return toolSettings;
+        }
+        #endregion
+        #region SerializerSettings
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.SerializerSettings"/>.</em></p><p>The custom JsonSerializerSettings implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings SetSerializerSettings(this NSwagAspNetCoreToSwaggerSettings toolSettings, string serializerSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SerializerSettings = serializerSettings;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.SerializerSettings"/>.</em></p><p>The custom JsonSerializerSettings implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ResetSerializerSettings(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SerializerSettings = null;
             return toolSettings;
         }
         #endregion
@@ -5974,6 +6150,48 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
+        #region EnforceFlagEnums
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.EnforceFlagEnums"/>.</em></p><p>Specifies whether enums should be always generated as bit flags (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetEnforceFlagEnums(this NSwagSwaggerToCSharpClientSettings toolSettings, bool? enforceFlagEnums)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnforceFlagEnums = enforceFlagEnums;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.EnforceFlagEnums"/>.</em></p><p>Specifies whether enums should be always generated as bit flags (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetEnforceFlagEnums(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnforceFlagEnums = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpClientSettings.EnforceFlagEnums"/>.</em></p><p>Specifies whether enums should be always generated as bit flags (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings EnableEnforceFlagEnums(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnforceFlagEnums = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpClientSettings.EnforceFlagEnums"/>.</em></p><p>Specifies whether enums should be always generated as bit flags (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings DisableEnforceFlagEnums(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnforceFlagEnums = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpClientSettings.EnforceFlagEnums"/>.</em></p><p>Specifies whether enums should be always generated as bit flags (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ToggleEnforceFlagEnums(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnforceFlagEnums = !toolSettings.EnforceFlagEnums;
+            return toolSettings;
+        }
+        #endregion
         #region ExcludedTypeNames
         /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ExcludedTypeNames"/> to a new list.</em></p><p>The excluded DTO type names (must be defined in an import or other namespace).</p></summary>
         [Pure]
@@ -7305,6 +7523,48 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DictionaryType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region EnforceFlagEnums
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.EnforceFlagEnums"/>.</em></p><p>Specifies whether enums should be always generated as bit flags (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetEnforceFlagEnums(this NSwagSwaggerToCSharpControllerSettings toolSettings, bool? enforceFlagEnums)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnforceFlagEnums = enforceFlagEnums;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.EnforceFlagEnums"/>.</em></p><p>Specifies whether enums should be always generated as bit flags (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetEnforceFlagEnums(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnforceFlagEnums = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToCSharpControllerSettings.EnforceFlagEnums"/>.</em></p><p>Specifies whether enums should be always generated as bit flags (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings EnableEnforceFlagEnums(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnforceFlagEnums = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToCSharpControllerSettings.EnforceFlagEnums"/>.</em></p><p>Specifies whether enums should be always generated as bit flags (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings DisableEnforceFlagEnums(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnforceFlagEnums = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToCSharpControllerSettings.EnforceFlagEnums"/>.</em></p><p>Specifies whether enums should be always generated as bit flags (default: false).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ToggleEnforceFlagEnums(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnforceFlagEnums = !toolSettings.EnforceFlagEnums;
             return toolSettings;
         }
         #endregion
