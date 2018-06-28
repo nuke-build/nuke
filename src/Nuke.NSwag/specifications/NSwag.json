@@ -6,19 +6,19 @@
     "https://github.com/nuke-build/nswag/blob/master/LICENSE"
   ],
   "references": [
-    "https://raw.githubusercontent.com/RSuter/NSwag/f0a943ad64/src/NSwag.Commands/Commands/Tooling/VersionCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/f0a943ad64/src/NSwag.Commands/Commands/SwaggerGeneration/ListTypesCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/f0a943ad64/src/NSwag.Commands/Commands/SwaggerGeneration/ListWebApiControllersCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/f0a943ad64/src/NSwag.Commands/Commands/SwaggerGeneration/TypesToSwaggerCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/f0a943ad64/src/NSwag.Commands/Commands/SwaggerGeneration/WebApi/WebApiToSwaggerCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/f0a943ad64/src/NSwag.Commands/Commands/SwaggerGeneration/AspNetCore/AspNetCoreToSwaggerCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/f0a943ad64/src/NSwag.Commands/Commands/Document/CreateDocumentCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/f0a943ad64/src/NSwag.Commands/Commands/Document/ExecuteDocumentCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/f0a943ad64/src/NSwag.Commands/Commands/CodeGeneration/JsonSchemaToCSharpCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/f0a943ad64/src/NSwag.Commands/Commands/CodeGeneration/JsonSchemaToTypeScriptCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/f0a943ad64/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToCSharpClientCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/f0a943ad64/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToCSharpControllerCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/f0a943ad64/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToTypeScriptClientCommand.cs"
+    "https://raw.githubusercontent.com/RSuter/NSwag/a94d7990e0/src/NSwag.Commands/Commands/Tooling/VersionCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/a94d7990e0/src/NSwag.Commands/Commands/SwaggerGeneration/ListTypesCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/a94d7990e0/src/NSwag.Commands/Commands/SwaggerGeneration/ListWebApiControllersCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/a94d7990e0/src/NSwag.Commands/Commands/SwaggerGeneration/TypesToSwaggerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/a94d7990e0/src/NSwag.Commands/Commands/SwaggerGeneration/WebApi/WebApiToSwaggerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/a94d7990e0/src/NSwag.Commands/Commands/SwaggerGeneration/AspNetCore/AspNetCoreToSwaggerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/a94d7990e0/src/NSwag.Commands/Commands/Document/CreateDocumentCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/a94d7990e0/src/NSwag.Commands/Commands/Document/ExecuteDocumentCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/a94d7990e0/src/NSwag.Commands/Commands/CodeGeneration/JsonSchemaToCSharpCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/a94d7990e0/src/NSwag.Commands/Commands/CodeGeneration/JsonSchemaToTypeScriptCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/a94d7990e0/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToCSharpClientCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/a94d7990e0/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToCSharpControllerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/a94d7990e0/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToTypeScriptClientCommand.cs"
   ],
   "name": "NSwag",
   "officialUrl": "https://github.com/RSuter/NSwag",
@@ -920,7 +920,7 @@
         "name": "ContractResolver",
         "type": "string",
         "format": "/ContractResolver:{value}",
-        "help": "The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName')."
+        "help": "DEPRECATED: The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName')."
       },
       {
         "name": "DefaultEnumHandling",
@@ -989,6 +989,12 @@
         "help": "Ignore properties with the ObsoleteAttribute (default: false)."
       },
       {
+        "name": "IncludedVersions",
+        "type": "List<string>",
+        "format": "/IncludedVersions:{value}",
+        "help": "The included API versions used by the ApiVersionProcessor (default: empty = all)."
+      },
+      {
         "name": "InfoDescription",
         "type": "string",
         "format": "/InfoDescription:{value}",
@@ -1017,6 +1023,12 @@
         "type": "string",
         "format": "/SchemaNameGenerator:{value}",
         "help": "The custom ISchemaNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName')."
+      },
+      {
+        "name": "SerializerSettings",
+        "type": "string",
+        "format": "/SerializerSettings:{value}",
+        "help": "The custom JsonSerializerSettings implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName')."
       },
       {
         "name": "ServiceBasePath",
@@ -1129,6 +1141,12 @@
         "type": "string",
         "format": "/DictionaryType:{value}",
         "help": "The generic dictionary .NET type (default: 'Dictionary')."
+      },
+      {
+        "name": "EnforceFlagEnums",
+        "type": "bool?",
+        "format": "/EnforceFlagEnums:{value}",
+        "help": "Specifies whether enums should be always generated as bit flags (default: false)."
       },
       {
         "name": "ExcludedTypeNames",

@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.4.3] / 2018-06-28
+- Changed supported version to [NSwag v11.17.17 (Build 995)](https://github.com/RSuter/NSwag/releases/tag/NSwag-Build-995)
 ## [0.4.2] / 2018-06-20
 - Changed supported version to [NSwag v11.17.14 (Build 993)](https://github.com/RSuter/NSwag/releases/tag/NSwag-Build-993)
 ## [0.4.1] / 2018-06-14
@@ -15,7 +17,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [0.3.1] / 2018-05-22
 - First release.
 
-[vNext]: https://github.com/nuke-build/nswag/compare/0.4.2...HEAD
+[vNext]: https://github.com/nuke-build/nswag/compare/0.4.3...HEAD
+[0.4.3]: https://github.com/nuke-build/nswag/compare/0.4.2...0.4.3
 [0.4.2]: https://github.com/nuke-build/nswag/compare/0.4.1...0.4.2
 [0.4.1]: https://github.com/nuke-build/nswag/compare/0.3.6...0.4.1
 [0.3.6]: https://github.com/nuke-build/nswag/compare/0.3.1...0.3.6
