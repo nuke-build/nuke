@@ -68,6 +68,10 @@
           "description": "Type of the property. I.e., bool, int, string, List<int>, Dictionary<string, object>, Lookup<string, int.>",
           "type": "string"
         },
+        "json": {
+          "description": "Name used when serializing to JSON.",
+          "type": "string"
+        },
         "assertion": {
           "description": "Automatic assertion.",
           "type": "string",
