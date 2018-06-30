@@ -25,7 +25,7 @@ namespace Nuke.Common.BuildServers
         private static DateTime ConvertUnixTimestamp(long timestamp)
         {
             return new DateTime(year: 1970, month: 1, day: 1, hour: 0, minute: 0, second: 0, kind: DateTimeKind.Utc)
-                .AddSeconds(value: 1501444668)
+                .AddSeconds(timestamp)
                 .ToLocalTime();
         }
 
