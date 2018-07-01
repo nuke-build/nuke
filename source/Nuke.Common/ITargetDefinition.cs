@@ -68,5 +68,25 @@ namespace Nuke.Common
         ///   Adds a requirement that will be checked prior to build execution.
         /// </summary>
         ITargetDefinition Requires(params Expression<Func<bool>>[] requirement);
+
+        /// <summary>
+        /// Defines if the dependencies should be skipped if the target is skipped.
+        /// </summary>
+        ITargetDefinition WhenSkipped(DependencyBehavior dependencyBehavior);
+    }
+
+    /// <summary>
+    /// The behavior of dependent targets if the target is skipped.
+    /// </summary>
+    public enum DependencyBehavior
+    {
+        /// <summary>
+        /// Execute all dependencies.
+        /// </summary>
+        Execute,
+        /// <summary>
+        /// Skip all dependencies which are not required by another target.
+        /// </summary>
+        Skip
     }
 }

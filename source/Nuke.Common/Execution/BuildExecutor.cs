@@ -32,7 +32,7 @@ namespace Nuke.Common.Execution
                 InjectionService.InjectValues(build);
                 HandleEarlyExits(build);
 
-                executionList = TargetDefinitionLoader.GetExecutingTargets(build);
+                executionList = TargetDefinitionLoader.GetExecutingTargets(build, build.InvokedTargets);
                 RequirementService.ValidateRequirements(executionList, build);
                 Execute(executionList);
                 
@@ -72,7 +72,7 @@ namespace Nuke.Common.Execution
                     continue;
                 }
 
-                if (target.Conditions.Any(x => !x()))
+                if (target.Skip || target.Conditions.Any(x => !x()))
                 {
                     target.Status = ExecutionStatus.Skipped;
                     continue;

@@ -47,6 +47,8 @@ namespace Nuke.Common.Execution
         internal List<string> ShadowTargetDependencies { get; }
         internal List<TargetDefinition> TargetDefinitionDependencies { get; }
         internal List<Action> Actions { get; }
+        internal DependencyBehavior DependencyBehavior { get; private set; }
+        internal bool Skip { get; set; }
 
         ITargetDefinition ITargetDefinition.Description(string description)
         {
@@ -105,6 +107,12 @@ namespace Nuke.Common.Execution
         public ITargetDefinition Requires(params Expression<Func<bool>>[] requirement)
         {
             Requirements.AddRange(requirement);
+            return this;
+        }
+
+        public ITargetDefinition WhenSkipped(DependencyBehavior dependencyBehavior)
+        {
+            DependencyBehavior = dependencyBehavior;
             return this;
         }
 
