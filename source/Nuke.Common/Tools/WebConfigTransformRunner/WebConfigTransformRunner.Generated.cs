@@ -6,6 +6,7 @@
 // Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/WebConfigTransformRunner.json.
 
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 using Nuke.Common;
 using Nuke.Common.Execution;
 using Nuke.Common.Tooling;

@@ -76,8 +76,17 @@ namespace Nuke.CodeGeneration.Generators
 
             writer
                 .WriteSummary(property)
+                .WriteLine(GetJsonSerializationAttribute(property))
                 .WriteLine(GetPublicPropertyDeclaration(property))
                 .WriteLine(GetInternalPropertyDeclarationOrNull(property));
+        }
+
+        private static string GetJsonSerializationAttribute(Property property)
+        {
+            if (string.IsNullOrWhiteSpace(property.Json))
+                return null;
+
+            return $"[JsonProperty({property.Json.DoubleQuote()})]";
         }
 
         [CanBeNull]

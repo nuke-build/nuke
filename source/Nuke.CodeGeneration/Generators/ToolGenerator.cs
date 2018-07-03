@@ -78,6 +78,7 @@ namespace Nuke.CodeGeneration.Generators
             return new[]
                    {
                        "JetBrains.Annotations",
+                       "Newtonsoft.Json",
                        "Nuke.Common",
                        "Nuke.Common.Execution",
                        "Nuke.Common.Tooling",
@@ -89,7 +90,7 @@ namespace Nuke.CodeGeneration.Generators
                        "System.Diagnostics.CodeAnalysis",
                        "System.IO",
                        "System.Linq",
-                       "System.Text"
+                       "System.Text",
                    };
         }
     }
