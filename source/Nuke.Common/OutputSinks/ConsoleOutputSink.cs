@@ -18,7 +18,7 @@ namespace Nuke.Common.OutputSinks
     {
         public virtual void Write(string text)
         {
-            WriteWithColors(text, ConsoleColor.White);
+            WriteWithColors(text, Console.ForegroundColor);
         }
 
         public virtual IDisposable WriteBlock(string text)
@@ -32,12 +32,12 @@ namespace Nuke.Common.OutputSinks
 
         public virtual void Trace(string text)
         {
-            WriteWithColors(text, ConsoleColor.DarkGray);
+            WriteWithColors(text, ConsoleColor.Gray);
         }
 
         public virtual void Info(string text)
         {
-            WriteWithColors(text, ConsoleColor.White);
+            WriteWithColors(text, Console.ForegroundColor);
         }
 
         public virtual void Warn(string text, string details = null)
