@@ -30,8 +30,6 @@
   "dataClasses": [
     {
       "name": "GitVersion",
-      "noExtensionMethods": true,
-      "noArguments": true,
       "properties": [
         {
           "name": "Major",

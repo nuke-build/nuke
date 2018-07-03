@@ -19,7 +19,7 @@ namespace Nuke.CodeGeneration.Generators
     {
         public static void Run(DataClass dataClass, ToolWriter toolWriter)
         {
-            if (!dataClass.NoArguments)
+            if (dataClass.ArgumentConstruction)
             {
                 foreach (var property in dataClass.Properties)
                 {

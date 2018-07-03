@@ -15,12 +15,12 @@
           "description": "The base class to inherit from.",
           "type": "string"
         },
-        "noExtensionMethods": {
-          "description": "Skips appendig of extension methods.",
+        "extensionMethods": {
+          "description": "Enables generation of extension methods for modification.",
           "type": "boolean"
         },
-        "noArguments": {
-          "description": "Omits argument parsing.",
+        "argumentConstruction": {
+          "description": "Enables argument construction.",
           "type": "boolean"
         },
         "properties": {
@@ -99,10 +99,6 @@
           "description": "Custom implementation of the property.",
           "type": "boolean"
         },
-        "noExtensionMethod": {
-          "description": "Skips appendig of extension methods.",
-          "type": "boolean"
-        },
         "separator": {
           "description": "Separator used for items of collection types.",
           "type": "string"
@@ -164,12 +160,12 @@
           "description": "The base class to inherit from.",
           "type": "string"
         },
-        "noExtensionMethods": {
-          "description": "Skips appendig of extension methods.",
+        "extensionMethods": {
+          "description": "Enables generation of extension methods for modification.",
           "type": "boolean"
         },
-        "noArguments": {
-          "description": "Omits argument parsing.",
+        "argumentConstruction": {
+          "description": "Enables argument construction.",
           "type": "boolean"
         },
         "properties": {
