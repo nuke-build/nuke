@@ -29,4 +29,8 @@
     <None Include="bin\$(Configuration)\net461\publish\**\*.*" PackagePath="build\net461" Pack="true" />
   </ItemGroup>
   
+  <ItemGroup>
+    <Nuke Include="..\..\build\CodeGenerator.*.cs" />
+  </ItemGroup>
+  
 </Project>
