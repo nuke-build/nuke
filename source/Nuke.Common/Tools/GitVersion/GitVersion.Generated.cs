@@ -35,16 +35,12 @@ namespace Nuke.Common.Tools.GitVersion
             process.AssertZeroExitCode();
             return process.HasOutput ? process.Output.Select(x => x.Text) : null;
         }
-        static partial void PreProcess(GitVersionSettings toolSettings);
-        static partial void PostProcess(GitVersionSettings toolSettings);
         /// <summary><p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p><p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p></summary>
         public static GitVersion GitVersion(Configure<GitVersionSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitVersionSettings());
-            PreProcess(toolSettings);
             var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
             return GetResult(process, toolSettings, processSettings);
         }
     }

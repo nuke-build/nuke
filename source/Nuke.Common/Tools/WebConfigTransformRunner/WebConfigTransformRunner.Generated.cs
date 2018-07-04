@@ -35,16 +35,12 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
             process.AssertZeroExitCode();
             return process.HasOutput ? process.Output.Select(x => x.Text) : null;
         }
-        static partial void PreProcess(WebConfigTransformRunnerSettings toolSettings);
-        static partial void PostProcess(WebConfigTransformRunnerSettings toolSettings);
         /// <summary><p>This is a commandline tool to run an ASP.Net web.config tranformation.</p><p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p></summary>
         public static void WebConfigTransformRunner(Configure<WebConfigTransformRunnerSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new WebConfigTransformRunnerSettings());
-            PreProcess(toolSettings);
             var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
         }
     }
     #region WebConfigTransformRunnerSettings

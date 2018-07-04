@@ -35,27 +35,19 @@ namespace Nuke.Common.Tools.NuGet
             process.AssertZeroExitCode();
             return process.HasOutput ? process.Output.Select(x => x.Text) : null;
         }
-        static partial void PreProcess(NuGetPushSettings toolSettings);
-        static partial void PostProcess(NuGetPushSettings toolSettings);
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
         public static void NuGetPush(Configure<NuGetPushSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new NuGetPushSettings());
-            PreProcess(toolSettings);
             var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
         }
-        static partial void PreProcess(NuGetPackSettings toolSettings);
-        static partial void PostProcess(NuGetPackSettings toolSettings);
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
         public static void NuGetPack(Configure<NuGetPackSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new NuGetPackSettings());
-            PreProcess(toolSettings);
             var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
         public static void NuGetPack(string targetPath, Configure<NuGetPackSettings> configurator = null, ProcessSettings processSettings = null)
@@ -69,16 +61,12 @@ namespace Nuke.Common.Tools.NuGet
             configurator = configurator ?? (x => x);
             NuGetPack(targetPath, x => configurator(x).SetVersion(version));
         }
-        static partial void PreProcess(NuGetRestoreSettings toolSettings);
-        static partial void PostProcess(NuGetRestoreSettings toolSettings);
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
         public static void NuGetRestore(Configure<NuGetRestoreSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new NuGetRestoreSettings());
-            PreProcess(toolSettings);
             var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
         public static void NuGetRestore(string targetPath, Configure<NuGetRestoreSettings> configurator = null, ProcessSettings processSettings = null)

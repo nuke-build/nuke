@@ -35,16 +35,12 @@ namespace Nuke.Common.Tools.TestCloud
             process.AssertZeroExitCode();
             return process.HasOutput ? process.Output.Select(x => x.Text) : null;
         }
-        static partial void PreProcess(TestCloudSettings toolSettings);
-        static partial void PostProcess(TestCloudSettings toolSettings);
         /// <summary><p>Test Cloud is a cloud based service consisting of thousands of physical mobile devices. Users upload their apps and tests to Test Cloud, which will install the apps on the devices and run the tests. When the tests are complete, Test Cloud, the results made available to users through an easy to use and informative web-based front end.</p><p>For more details, visit the <a href="https://developer.xamarin.com/guides/testcloud/">official website</a>.</p></summary>
         public static void TestCloud(Configure<TestCloudSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new TestCloudSettings());
-            PreProcess(toolSettings);
             var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
         }
     }
     #region TestCloudSettings

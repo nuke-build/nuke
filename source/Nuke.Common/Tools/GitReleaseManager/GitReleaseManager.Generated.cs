@@ -35,60 +35,40 @@ namespace Nuke.Common.Tools.GitReleaseManager
             process.AssertZeroExitCode();
             return process.HasOutput ? process.Output.Select(x => x.Text) : null;
         }
-        static partial void PreProcess(GitReleaseManagerAddAssetsSettings toolSettings);
-        static partial void PostProcess(GitReleaseManagerAddAssetsSettings toolSettings);
         /// <summary><p>Adds an asset to an existing release.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
         public static void GitReleaseManagerAddAssets(Configure<GitReleaseManagerAddAssetsSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitReleaseManagerAddAssetsSettings());
-            PreProcess(toolSettings);
             var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
         }
-        static partial void PreProcess(GitReleaseManagerCloseSettings toolSettings);
-        static partial void PostProcess(GitReleaseManagerCloseSettings toolSettings);
         /// <summary><p>Closes the milestone.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
         public static void GitReleaseManagerClose(Configure<GitReleaseManagerCloseSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitReleaseManagerCloseSettings());
-            PreProcess(toolSettings);
             var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
         }
-        static partial void PreProcess(GitReleaseManagerCreateSettings toolSettings);
-        static partial void PostProcess(GitReleaseManagerCreateSettings toolSettings);
         /// <summary><p>Creates a draft release notes from a milestone.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
         public static void GitReleaseManagerCreate(Configure<GitReleaseManagerCreateSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitReleaseManagerCreateSettings());
-            PreProcess(toolSettings);
             var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
         }
-        static partial void PreProcess(GitReleaseManagerExportSettings toolSettings);
-        static partial void PostProcess(GitReleaseManagerExportSettings toolSettings);
         /// <summary><p>Exports all the Release Notes in markdown format.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
         public static void GitReleaseManagerExport(Configure<GitReleaseManagerExportSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitReleaseManagerExportSettings());
-            PreProcess(toolSettings);
             var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
         }
-        static partial void PreProcess(GitReleaseManagerPublishSettings toolSettings);
-        static partial void PostProcess(GitReleaseManagerPublishSettings toolSettings);
         /// <summary><p>Publishes the GitHub Release.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
         public static void GitReleaseManagerPublish(Configure<GitReleaseManagerPublishSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitReleaseManagerPublishSettings());
-            PreProcess(toolSettings);
             var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
         }
     }
     #region GitReleaseManagerAddAssetsSettings

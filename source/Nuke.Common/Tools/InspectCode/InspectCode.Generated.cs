@@ -35,13 +35,11 @@ namespace Nuke.Common.Tools.InspectCode
             process.AssertZeroExitCode();
             return process.HasOutput ? process.Output.Select(x => x.Text) : null;
         }
-        static partial void PreProcess(InspectCodeSettings toolSettings);
-        static partial void PostProcess(InspectCodeSettings toolSettings);
         /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p><p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p></summary>
         public static void InspectCode(Configure<InspectCodeSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new InspectCodeSettings());
-            PreProcess(toolSettings);
+            PreProcess(ref toolSettings);
             var process = StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
             PostProcess(toolSettings);

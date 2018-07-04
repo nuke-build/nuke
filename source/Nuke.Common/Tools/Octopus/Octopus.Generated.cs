@@ -35,49 +35,33 @@ namespace Nuke.Common.Tools.Octopus
             process.AssertZeroExitCode();
             return process.HasOutput ? process.Output.Select(x => x.Text) : null;
         }
-        static partial void PreProcess(OctopusPackSettings toolSettings);
-        static partial void PostProcess(OctopusPackSettings toolSettings);
         /// <summary><p>The <c>Octo.exe pack</c> command provides a number of other useful parameters that can be used to customize the way your package gets created, such as output folder, files to include and release notes.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
         public static void OctopusPack(Configure<OctopusPackSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new OctopusPackSettings());
-            PreProcess(toolSettings);
             var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
         }
-        static partial void PreProcess(OctopusPushSettings toolSettings);
-        static partial void PostProcess(OctopusPushSettings toolSettings);
         /// <summary><p>The <c>Octo.exe push</c> command can push any of the supported packages types listed on this <a href="https://octopus.com/docs/packaging-applications/supported-packages">page</a>.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
         public static void OctopusPush(Configure<OctopusPushSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new OctopusPushSettings());
-            PreProcess(toolSettings);
             var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
         }
-        static partial void PreProcess(OctopusCreateReleaseSettings toolSettings);
-        static partial void PostProcess(OctopusCreateReleaseSettings toolSettings);
         /// <summary><p>The <c>Octo.exe create-release</c> can be used to automate the creation of releases. This allows you to easily integrate Octopus with other continuous integration servers.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
         public static void OctopusCreateRelease(Configure<OctopusCreateReleaseSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new OctopusCreateReleaseSettings());
-            PreProcess(toolSettings);
             var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
         }
-        static partial void PreProcess(OctopusDeployReleaseSettings toolSettings);
-        static partial void PostProcess(OctopusDeployReleaseSettings toolSettings);
         /// <summary><p>The <c>Octo.exe deploy-release</c> can be used to automate the deployment of releases to environments. This allows you to easily integrate Octopus with other continuous integration servers.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
         public static void OctopusDeployRelease(Configure<OctopusDeployReleaseSettings> configurator = null, ProcessSettings processSettings = null)
         {
             var toolSettings = configurator.InvokeSafe(new OctopusDeployReleaseSettings());
-            PreProcess(toolSettings);
             var process = ProcessTasks.StartProcess(toolSettings, processSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
         }
     }
     #region OctopusPackSettings
