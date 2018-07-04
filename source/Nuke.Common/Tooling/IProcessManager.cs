@@ -13,7 +13,7 @@ namespace Nuke.Common.Tooling
     public interface IProcessManager
     {
         [CanBeNull]
-        IProcess StartProcess(ToolSettings toolSettings, ProcessSettings processSettings = null);
+        IProcess StartProcess(ToolSettings toolSettings);
 
         [CanBeNull]
         IProcess StartProcess(

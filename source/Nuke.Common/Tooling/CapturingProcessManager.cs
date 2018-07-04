@@ -15,7 +15,7 @@ namespace Nuke.Common.Tooling
         public CapturedProcessStartInfo CapturedProcessStartInfo { get; private set; }
 
         [NotNull]
-        public override IProcess StartProcess(ToolSettings toolSettings, ProcessSettings processSettings = null)
+        public override IProcess StartProcess(ToolSettings toolSettings)
         {
             var toolPath = toolSettings.ToolPath;
             var arguments = toolSettings.GetArguments();
@@ -23,15 +23,14 @@ namespace Nuke.Common.Tooling
             ControlFlow.Assert(toolPath != null, "ToolPath was not set.");
             ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
 
-            processSettings = processSettings ?? new ProcessSettings();
             return StartProcess(
                 toolPath,
                 arguments.RenderForExecution(),
                 toolSettings.WorkingDirectory,
-                processSettings.EnvironmentVariables,
-                processSettings.ExecutionTimeout,
-                processSettings.RedirectOutput,
-                processSettings.RedirectOutput ? new Func<string, string>(arguments.Filter) : null);
+                toolSettings.EnvironmentVariables,
+                toolSettings.ExecutionTimeout,
+                toolSettings.RedirectOutput,
+                toolSettings.RedirectOutput ? new Func<string, string>(arguments.Filter) : null);
         }
 
         [NotNull]

@@ -31,7 +31,7 @@ namespace Nuke.Common.Tooling
         }
 
         [CanBeNull]
-        public virtual IProcess StartProcess(ToolSettings toolSettings, ProcessSettings processSettings = null)
+        public virtual IProcess StartProcess(ToolSettings toolSettings)
         {
             var toolPath = toolSettings.ToolPath;
             var arguments = toolSettings.GetArguments();
@@ -51,14 +51,13 @@ namespace Nuke.Common.Tooling
             ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
             Logger.Info($"> {Path.GetFullPath(toolPath).DoubleQuoteIfNeeded()} {argumentsForOutput}");
 
-            processSettings = processSettings ?? new ProcessSettings();
             return StartProcessInternal(
                 toolPath,
                 argumentsForExecution,
                 toolSettings.WorkingDirectory,
-                processSettings.EnvironmentVariables,
-                processSettings.ExecutionTimeout,
-                processSettings.RedirectOutput,
+                toolSettings.EnvironmentVariables,
+                toolSettings.ExecutionTimeout,
+                toolSettings.RedirectOutput,
                 arguments.Filter);
         }
 

@@ -3,10 +3,12 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Tooling
 {
@@ -15,8 +17,19 @@ namespace Nuke.Common.Tooling
     [ExcludeFromCodeCoverage]
     public class ToolSettings : ISettingsEntity
     {
+        public ToolSettings()
+        {
+            var variables = EnvironmentInfo.GetVariables();
+            EnvironmentVariablesInternal = new Dictionary<string, string>(variables, variables.Comparer);
+        }
+        
         public virtual string ToolPath { get; internal set; }
         public virtual string WorkingDirectory { get; internal set; }
+        
+        public IReadOnlyDictionary<string, string> EnvironmentVariables => EnvironmentVariablesInternal.AsReadOnly();
+        internal Dictionary<string, string> EnvironmentVariablesInternal { get; set; }
+        public int? ExecutionTimeout { get; internal set; }
+        public bool RedirectOutput { get; internal set; }
 
         [NonSerialized]
         private Func<Arguments, Arguments> _argumentConfigurator = x => x;

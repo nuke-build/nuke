@@ -39,9 +39,9 @@ namespace Nuke.Common.Tooling
         /// Starts a process using <see cref="Process"/>.
         /// </summary>
         [CanBeNull]
-        public static IProcess StartProcess(ToolSettings toolSettings, ProcessSettings processSettings = null)
+        public static IProcess StartProcess(ToolSettings toolSettings)
         {
-            return ProcessManager.Instance.StartProcess(toolSettings, processSettings);
+            return ProcessManager.Instance.StartProcess(toolSettings);
         }
 
         public static CapturedProcessStartInfo CaptureProcessStartInfo(Action action)

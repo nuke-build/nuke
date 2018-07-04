@@ -9,7 +9,6 @@ using System.Linq;
 using Nuke.CodeGeneration.Model;
 using Nuke.CodeGeneration.Writers;
 using Nuke.Common.Utilities;
-using Nuke.Core.Tooling;
 
 // ReSharper disable UnusedMethodReturnValue.Local
 
@@ -56,7 +55,7 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteLine(GetTaskSignature(writer.Task, additionalParameterDeclarations))
                 .WriteBlock(w => w
                     .WriteLine("configurator = configurator ?? (x => x);")
-                    .WriteLine($"{taskCallPrefix}{task.GetTaskMethodName()}({allArguments.JoinComma()});"));
+                    .WriteLine($"return {taskCallPrefix}{task.GetTaskMethodName()}({allArguments.JoinComma()});"));
 
             return writer.WriteTaskOverloads(index + 1);
         }
@@ -102,15 +101,15 @@ namespace Nuke.CodeGeneration.Generators
 
         private static string GetTaskSignature(Task task, IEnumerable<string> additionalParameterDeclarations = null)
         {
-            var parameterDeclarations =
-                (additionalParameterDeclarations ?? Enumerable.Empty<string>())
-                .Concat(new[]
-                        {
-                            $"Configure<{task.SettingsClass.Name}> configurator = null",
-                            "ProcessSettings processSettings = null"
-                        });
+            var parameterDeclarations = new List<string>();
 
-            return $"public static {task.GetReturnType()} {task.GetTaskMethodName()}({parameterDeclarations.JoinComma()})";
+            if (task.HasReturnValue())
+                parameterDeclarations.Add($"out {task.ReturnType} result");
+
+            parameterDeclarations.AddRange(additionalParameterDeclarations ?? new List<string>());            
+            parameterDeclarations.Add($"Configure<{task.SettingsClass.Name}> configurator = null");
+
+            return $"public static IProcess {task.GetTaskMethodName()}({parameterDeclarations.JoinComma()})";
         }
 
         private static void WriteMainTaskBlock(TaskWriter writer)
@@ -122,14 +121,15 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteLine($"var process = {GetProcessStart(task)};")
                 .WriteLine(GetProcessAssertion(task))
                 .WriteLineIfTrue(task.PostProcess, $"PostProcess(toolSettings);")
-                .WriteLineIfTrue(task.HasReturnValue(), "return GetResult(process, toolSettings, processSettings);");
+                .WriteLineIfTrue(task.HasReturnValue(), "result = GetResult(process, toolSettings);")
+                .WriteLine("return process;");
         }
 
         private static string GetProcessStart(Task task)
         {
             return !task.CustomStart
-                ? "ProcessTasks.StartProcess(toolSettings, processSettings)"
-                : "StartProcess(toolSettings, processSettings)";
+                ? "ProcessTasks.StartProcess(toolSettings)"
+                : "StartProcess(toolSettings)";
         }
 
         private static string GetProcessAssertion(Task task)
