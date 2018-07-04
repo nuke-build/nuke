@@ -37,6 +37,12 @@ namespace Nuke.CodeGeneration.Model
         [Description("Appends the properties of the named property sets.")]
         public List<string> CommonPropertySets { get; set; } = new List<string>();
 
+        [Description("Generates a pre-process hook")]
+        public bool PreProcess { get; set; }
+        
+        [Description("Generates a post-process hook")]
+        public bool PostProcess { get; set; }
+        
         [Description("Custom start implementation.")]
         public bool CustomStart { get; set; }
 

@@ -204,6 +204,14 @@
             "type": "string"
           }
         },
+        "preProcess": {
+          "description": "Generates a pre-process hook",
+          "type": "boolean"
+        },
+        "postProcess": {
+          "description": "Generates a post-process hook",
+          "type": "boolean"
+        },
         "customStart": {
           "description": "Custom start implementation.",
           "type": "boolean"

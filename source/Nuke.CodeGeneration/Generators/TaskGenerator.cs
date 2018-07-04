@@ -31,7 +31,6 @@ namespace Nuke.CodeGeneration.Generators
                     w.WriteToolPath();
                     w.WriteGenericTask();
                     tool.Tasks.ForEach(x => new TaskWriter(x, toolWriter)
-                        .WritePreAndPostProcess()
                         .WriteMainTask()
                         .WriteTaskOverloads());
                 });
@@ -116,13 +115,14 @@ namespace Nuke.CodeGeneration.Generators
 
         private static void WriteMainTaskBlock(TaskWriter writer)
         {
+            var task = writer.Task;
             writer
-                .WriteLine($"var toolSettings = configurator.InvokeSafe(new {writer.Task.SettingsClass.Name}());")
-                .WriteLine($"PreProcess(toolSettings);")
-                .WriteLine($"var process = {GetProcessStart(writer.Task)};")
-                .WriteLine(GetProcessAssertion(writer.Task))
-                .WriteLine($"PostProcess(toolSettings);")
-                .WriteLineIfTrue(writer.Task.HasReturnValue(), "return GetResult(process, toolSettings, processSettings);");
+                .WriteLine($"var toolSettings = configurator.InvokeSafe(new {task.SettingsClass.Name}());")
+                .WriteLineIfTrue(task.PreProcess, $"PreProcess(ref toolSettings);")
+                .WriteLine($"var process = {GetProcessStart(task)};")
+                .WriteLine(GetProcessAssertion(task))
+                .WriteLineIfTrue(task.PostProcess, $"PostProcess(toolSettings);")
+                .WriteLineIfTrue(task.HasReturnValue(), "return GetResult(process, toolSettings, processSettings);");
         }
 
         private static string GetProcessStart(Task task)
@@ -165,14 +165,6 @@ namespace Nuke.CodeGeneration.Generators
             return writer
                 .WriteSummary($"Path to the {tool.Name} executable.")
                 .WriteLine($"public static string {tool.Name}Path => {resolvers.Single()};");
-        }
-
-        private static TaskWriter WritePreAndPostProcess(this TaskWriter writer)
-        {
-            var settingsClass = writer.Task.SettingsClass.Name;
-            return writer
-                .WriteLine($"static partial void PreProcess({settingsClass} toolSettings);")
-                .WriteLine($"static partial void PostProcess({settingsClass} toolSettings);");
         }
     }
 }
