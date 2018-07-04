@@ -23,6 +23,7 @@ namespace Nuke.Common.Tooling
             IReadOnlyDictionary<string, string> environmentVariables = null,
             int? timeout = null,
             bool logOutput = true,
+            Func<string, LogLevel> logLevelParser = null,
             Func<string, string> outputFilter = null);
 
         CapturedProcessStartInfo CaptureProcessStartInfo(Action action);

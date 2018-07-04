@@ -31,6 +31,8 @@ namespace Nuke.Common.Tooling
         internal Dictionary<string, string> EnvironmentVariablesInternal { get; set; }
         public int? ExecutionTimeout { get; internal set; }
         public bool LogOutput { get; internal set; }
+        
+        internal virtual Func<string, LogLevel> LogLevelParser => null;
 
         [NonSerialized]
         private Func<Arguments, Arguments> _argumentConfigurator = x => x;

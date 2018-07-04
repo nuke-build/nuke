@@ -212,6 +212,10 @@
           "description": "Generates a post-process hook",
           "type": "boolean"
         },
+        "logLevelParsing": {
+          "description": "Enables log level parsing",
+          "type": "boolean"
+        },
         "customStart": {
           "description": "Custom start implementation.",
           "type": "boolean"
@@ -284,6 +288,10 @@
     },
     "customExecutable": {
       "description": "Defines that locating the executable is implemented customly.",
+      "type": "boolean"
+    },
+    "logLevelParsing": {
+      "description": "Enables custom log level parsing.",
       "type": "boolean"
     },
     "tasks": {

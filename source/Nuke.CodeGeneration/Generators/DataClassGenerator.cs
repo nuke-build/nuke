@@ -48,6 +48,7 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteLine($"public partial class {dataClass.Name} : {baseType}")
                 .WriteBlock(w => w
                     .WriteToolPath()
+                    .WriteLogLevelParser()
                     .ForEach(dataClass.Properties, WritePropertyDeclaration)
                     .WriteAssertValid()
                     .WriteConfigureArguments())
@@ -67,6 +68,16 @@ namespace Nuke.CodeGeneration.Generators
             return writer
                 .WriteSummary($"Path to the {tool.Name} executable.")
                 .WriteLine($"public override string ToolPath => base.ToolPath ?? {resolver};");
+        }
+
+        private static DataClassWriter WriteLogLevelParser(this DataClassWriter writer)
+        {
+            var tool = writer.DataClass.Tool;
+            if (!tool.LogLevelParsing)
+                return writer;
+            
+            var logLevelParser = $"{tool.GetClassName()}.ParseLogLevel";
+            return writer.WriteLine($"internal override Func<string, LogLevel> LogLevelParser => {logLevelParser};");
         }
 
         private static void WritePropertyDeclaration(DataClassWriter writer, Property property)

@@ -43,6 +43,9 @@ namespace Nuke.CodeGeneration.Model
         [Description("Generates a post-process hook")]
         public bool PostProcess { get; set; }
         
+        [Description("Enables log level parsing")]
+        public bool LogLevelParsing { get; set; }
+        
         [Description("Custom start implementation.")]
         public bool CustomStart { get; set; }
 

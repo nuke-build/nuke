@@ -57,6 +57,9 @@ namespace Nuke.CodeGeneration.Model
         [Description("Defines that locating the executable is implemented customly.")]
         public bool CustomExecutable { get; set; }
 
+        [Description("Enables custom log level parsing.")]
+        public bool LogLevelParsing { get; set; }
+
         [Description("Help or introduction text to for the tool. Can contain HTML tags for better formatting.")]
         public List<Task> Tasks { get; set; } = new List<Task>();
 

@@ -57,6 +57,7 @@ namespace Nuke.Common.Tooling
                 toolSettings.EnvironmentVariables,
                 toolSettings.ExecutionTimeout,
                 toolSettings.LogOutput,
+                toolSettings.LogLevelParser,
                 arguments.Filter);
         }
 
@@ -67,6 +68,7 @@ namespace Nuke.Common.Tooling
             IReadOnlyDictionary<string, string> environmentVariables = null,
             int? timeout = null,
             bool logOutput = true,
+            Func<string, LogLevel> logLevelParser = null,
             Func<string, string> outputFilter = null)
         {
             ControlFlow.Assert(toolPath != null, "ToolPath was not set.");
@@ -82,6 +84,7 @@ namespace Nuke.Common.Tooling
                 environmentVariables,
                 timeout,
                 logOutput,
+                logLevelParser,
                 outputFilter ?? (x => x));
         }
 
@@ -93,6 +96,7 @@ namespace Nuke.Common.Tooling
             [CanBeNull] IReadOnlyDictionary<string, string> environmentVariables,
             int? timeout,
             bool logOutput,
+            [CanBeNull] Func<string, LogLevel> logLevelParser,
             [CanBeNull] Func<string, string> outputFilter)
         {
             ControlFlow.Assert(workingDirectory == null || Directory.Exists(workingDirectory),
@@ -119,7 +123,7 @@ namespace Nuke.Common.Tooling
             if (process == null)
                 return null;
 
-            var output = GetOutputCollection(process, logOutput, outputFilter);
+            var output = GetOutputCollection(process, logOutput, logLevelParser, outputFilter);
             return new Process2(process, timeout, output);
         }
 
@@ -136,9 +140,14 @@ namespace Nuke.Common.Tooling
                 startInfo.Environment[pair.Key] = pair.Value;
         }
 
-        private static BlockingCollection<Output> GetOutputCollection(Process process, bool logOutput, Func<string, string> outputFilter)
+        private static BlockingCollection<Output> GetOutputCollection(
+            Process process,
+            bool logOutput,
+            Func<string, LogLevel> logLevelParser,
+            Func<string, string> outputFilter)
         {
             var output = new BlockingCollection<Output>();
+            logLevelParser = logLevelParser ?? (x => LogLevel.Information);
 
             process.OutputDataReceived += (s, e) =>
             {
@@ -146,9 +155,27 @@ namespace Nuke.Common.Tooling
                     return;
                 
                 output.Add(new Output { Text = e.Data, Type = OutputType.Std });
-                
+
                 if (logOutput)
-                    Logger.Log(outputFilter(e.Data));
+                {
+                    var logLevel = logLevelParser(e.Data);
+                    var text = outputFilter(e.Data);
+                    switch (logLevel)
+                    {
+                        case LogLevel.Trace:
+                            Logger.Trace(text);
+                            break;
+                        case LogLevel.Information:
+                            Logger.Info(text);
+                            break;
+                        case LogLevel.Warning:
+                            Logger.Warn(text);
+                            break;
+                        case LogLevel.Error:
+                            Logger.Error(text);
+                            break;
+                    }
+                }
             };
             process.ErrorDataReceived += (s, e) =>
             {

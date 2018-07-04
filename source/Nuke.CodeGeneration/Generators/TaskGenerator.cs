@@ -80,6 +80,7 @@ namespace Nuke.CodeGeneration.Generators
                                 "environmentVariables",
                                 "timeout",
                                 "logOutput",
+                                writer.Tool.LogLevelParsing ? "ParseLogLevel" : "null",
                                 "outputFilter"
                             };
             writer
