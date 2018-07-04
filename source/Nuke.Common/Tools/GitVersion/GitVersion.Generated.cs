@@ -29,11 +29,11 @@ namespace Nuke.Common.Tools.GitVersion
         /// <summary><p>Path to the GitVersion executable.</p></summary>
         public static string GitVersionPath => ToolPathResolver.GetPackageExecutable("GitVersion.CommandLine", "GitVersion.exe");
         /// <summary><p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p></summary>
-        public static IEnumerable<string> GitVersion(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool redirectOutput = false, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> GitVersion(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(GitVersionPath, arguments, workingDirectory, environmentVariables, timeout, redirectOutput, outputFilter);
+            var process = ProcessTasks.StartProcess(GitVersionPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, outputFilter);
             process.AssertZeroExitCode();
-            return process.HasOutput ? process.Output.Select(x => x.Text) : null;
+            return process.Output;
         }
         /// <summary><p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p><p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p></summary>
         public static IProcess GitVersion(out GitVersion result, Configure<GitVersionSettings> configurator = null)
