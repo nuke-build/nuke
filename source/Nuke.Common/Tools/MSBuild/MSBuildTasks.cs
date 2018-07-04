@@ -70,7 +70,7 @@ namespace Nuke.Common.Tools.MSBuild
             ControlFlow.Assert((isSdkProject || isLegacyProject) && (!isSdkProject || !isLegacyProject), "Unknown format.");
 
             var toolSettings = configurator.InvokeSafe(new MSBuildSettings())
-                .EnableRedirectOutput()
+                .DisableLogOutput()
                 .SetProjectFile(projectFile)
                 .SetVerbosity(MSBuildVerbosity.Diagnostic)
                 .SetTargets(Guid.NewGuid().ToString());

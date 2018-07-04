@@ -21,6 +21,7 @@ namespace Nuke.Common.Tooling
         {
             var variables = EnvironmentInfo.GetVariables();
             EnvironmentVariablesInternal = new Dictionary<string, string>(variables, variables.Comparer);
+            LogOutput = true; // TODO: could be controlled by NukeBuild parameter
         }
         
         public virtual string ToolPath { get; internal set; }
@@ -29,7 +30,7 @@ namespace Nuke.Common.Tooling
         public IReadOnlyDictionary<string, string> EnvironmentVariables => EnvironmentVariablesInternal.AsReadOnly();
         internal Dictionary<string, string> EnvironmentVariablesInternal { get; set; }
         public int? ExecutionTimeout { get; internal set; }
-        public bool RedirectOutput { get; internal set; }
+        public bool LogOutput { get; internal set; }
 
         [NonSerialized]
         private Func<Arguments, Arguments> _argumentConfigurator = x => x;

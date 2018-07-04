@@ -30,7 +30,6 @@ namespace Nuke.Common.Tooling
             }
         }
 
-        [CanBeNull]
         public virtual IProcess StartProcess(ToolSettings toolSettings)
         {
             var toolPath = toolSettings.ToolPath;
@@ -57,18 +56,17 @@ namespace Nuke.Common.Tooling
                 toolSettings.WorkingDirectory,
                 toolSettings.EnvironmentVariables,
                 toolSettings.ExecutionTimeout,
-                toolSettings.RedirectOutput,
+                toolSettings.LogOutput,
                 arguments.Filter);
         }
 
-        [CanBeNull]
         public virtual IProcess StartProcess(
             string toolPath,
             string arguments = null,
             string workingDirectory = null,
             IReadOnlyDictionary<string, string> environmentVariables = null,
             int? timeout = null,
-            bool redirectOutput = false,
+            bool logOutput = true,
             Func<string, string> outputFilter = null)
         {
             ControlFlow.Assert(toolPath != null, "ToolPath was not set.");
@@ -83,19 +81,18 @@ namespace Nuke.Common.Tooling
                 workingDirectory,
                 environmentVariables,
                 timeout,
-                redirectOutput,
+                logOutput,
                 outputFilter ?? (x => x));
         }
 
         // TODO: add default values
-        [CanBeNull]
         internal static IProcess StartProcessInternal(
             string toolPath,
             [CanBeNull] string arguments,
             [CanBeNull] string workingDirectory,
             [CanBeNull] IReadOnlyDictionary<string, string> environmentVariables,
             int? timeout,
-            bool redirectOutput,
+            bool logOutput,
             [CanBeNull] Func<string, string> outputFilter)
         {
             ControlFlow.Assert(workingDirectory == null || Directory.Exists(workingDirectory),
@@ -106,8 +103,8 @@ namespace Nuke.Common.Tooling
                                 FileName = toolPath,
                                 Arguments = arguments ?? string.Empty,
                                 WorkingDirectory = workingDirectory ?? string.Empty,
-                                RedirectStandardOutput = redirectOutput,
-                                RedirectStandardError = redirectOutput,
+                                RedirectStandardOutput = true,
+                                RedirectStandardError = true,
                                 UseShellExecute = false
                             };
 
@@ -122,7 +119,8 @@ namespace Nuke.Common.Tooling
             if (process == null)
                 return null;
 
-            return new Process2(process, timeout, GetOutputSink(redirectOutput, process), outputFilter ?? (x => x));
+            var output = GetOutputCollection(process, logOutput, outputFilter);
+            return new Process2(process, timeout, output);
         }
 
         private static void ApplyEnvironmentVariables(
@@ -138,22 +136,31 @@ namespace Nuke.Common.Tooling
                 startInfo.Environment[pair.Key] = pair.Value;
         }
 
-        [CanBeNull]
-        private static BlockingCollection<Output> GetOutputSink(bool redirectOutput, Process process)
+        private static BlockingCollection<Output> GetOutputCollection(Process process, bool logOutput, Func<string, string> outputFilter)
         {
-            if (!redirectOutput)
-                return null;
-
             var output = new BlockingCollection<Output>();
 
-            void AddNotNullData(DataReceivedEventArgs e, OutputType outputType)
+            process.OutputDataReceived += (s, e) =>
             {
-                if (e.Data != null)
-                    output.Add(new Output { Text = e.Data, Type = outputType });
-            }
-
-            process.OutputDataReceived += (s, e) => AddNotNullData(e, OutputType.Std);
-            process.ErrorDataReceived += (s, e) => AddNotNullData(e, OutputType.Err);
+                if (e.Data == null)
+                    return;
+                
+                output.Add(new Output { Text = e.Data, Type = OutputType.Std });
+                
+                if (logOutput)
+                    Logger.Log(outputFilter(e.Data));
+            };
+            process.ErrorDataReceived += (s, e) =>
+            {
+                if (e.Data == null)
+                    return;
+                
+                output.Add(new Output { Text = e.Data, Type = OutputType.Err });
+                
+                if (logOutput)
+                    Logger.Error(outputFilter(e.Data));
+            };
+            
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
 

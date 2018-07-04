@@ -23,7 +23,7 @@ namespace Nuke.Common.Tooling
             string workingDirectory = null,
             IReadOnlyDictionary<string, string> environmentVariables = null,
             int? timeout = null,
-            bool redirectOutput = false,
+            bool logOutput = true,
             Func<string, string> outputFilter = null)
         {
             return ProcessManager.Instance.StartProcess(toolPath,
@@ -31,7 +31,7 @@ namespace Nuke.Common.Tooling
                 workingDirectory,
                 environmentVariables,
                 timeout,
-                redirectOutput,
+                logOutput,
                 outputFilter);
         }
 

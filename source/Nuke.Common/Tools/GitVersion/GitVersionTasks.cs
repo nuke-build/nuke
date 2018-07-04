@@ -16,18 +16,11 @@ namespace Nuke.Common.Tools.GitVersion
     {
         public static GitVersionSettings DefaultGitVersion => new GitVersionSettings()
             .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
-            .EnableRedirectOutput();
+            .DisableLogOutput();
 
         [CanBeNull]
         private static GitVersion GetResult(IProcess process, GitVersionSettings toolSettings)
         {
-            if (!toolSettings.RedirectOutput)
-            {
-                Logger.Warn(
-                    $"{nameof(GitVersionTasks)}.{nameof(GitVersion)} can only calculate a return value when 'RedirectOutput' is set to true.");
-                return null;
-            }
-
             var output = process.Output.EnsureOnlyStd().Select(x => x.Text).ToList();
             var settings = new JsonSerializerSettings { ContractResolver = new AllWritableContractResolver() };
             return JsonConvert.DeserializeObject<GitVersion>(string.Join("\r\n", output), settings);

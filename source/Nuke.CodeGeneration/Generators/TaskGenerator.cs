@@ -69,7 +69,7 @@ namespace Nuke.CodeGeneration.Generators
                                  "string workingDirectory = null",
                                  "IReadOnlyDictionary<string, string> environmentVariables = null",
                                  "int? timeout = null",
-                                 "bool redirectOutput = false",
+                                 "bool logOutput = true",
                                  "Func<string, string> outputFilter = null"
                              };
             var arguments = new[]
@@ -79,16 +79,16 @@ namespace Nuke.CodeGeneration.Generators
                                 "workingDirectory",
                                 "environmentVariables",
                                 "timeout",
-                                "redirectOutput",
+                                "logOutput",
                                 "outputFilter"
                             };
             writer
                 .WriteSummary(tool.Help)
-                .WriteLine($"public static IEnumerable<string> {tool.Name}({parameters.JoinComma()})")
+                .WriteLine($"public static IReadOnlyCollection<Output> {tool.Name}({parameters.JoinComma()})")
                 .WriteBlock(w => w
                     .WriteLine($"var process = ProcessTasks.StartProcess({arguments.JoinComma()});")
                     .WriteLine("process.AssertZeroExitCode();")
-                    .WriteLine("return process.HasOutput ? process.Output.Select(x => x.Text) : null;"));
+                    .WriteLine("return process.Output;"));
         }
 
         private static TaskWriter WriteMainTask(this TaskWriter writer)

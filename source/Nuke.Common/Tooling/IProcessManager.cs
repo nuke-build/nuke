@@ -22,7 +22,7 @@ namespace Nuke.Common.Tooling
             string workingDirectory = null,
             IReadOnlyDictionary<string, string> environmentVariables = null,
             int? timeout = null,
-            bool redirectOutput = false,
+            bool logOutput = true,
             Func<string, string> outputFilter = null);
 
         CapturedProcessStartInfo CaptureProcessStartInfo(Action action);

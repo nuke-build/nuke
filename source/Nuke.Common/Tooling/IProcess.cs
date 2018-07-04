@@ -34,12 +34,7 @@ namespace Nuke.Common.Tooling
         /// <summary>
         /// Contains the output of the process execution.
         /// </summary>
-        IEnumerable<Output> Output { get; }
-
-        /// <summary>
-        /// Inidicates if the process has any ouput.
-        /// </summary>
-        bool HasOutput { get; }
+        IReadOnlyCollection<Output> Output { get; }
 
         /// <summary>
         /// Returns <see cref="Process.ExitCode"/>.

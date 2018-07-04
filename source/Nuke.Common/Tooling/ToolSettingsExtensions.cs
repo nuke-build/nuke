@@ -65,33 +65,33 @@ namespace Nuke.Common.Tooling
             return newToolSettings;
         }
 
-        ///<summary>Sets <see cref="ToolSettings.RedirectOutput"/> -- <inheritdoc cref="ToolSettings.RedirectOutput" /></summary>
+        ///<summary>Sets <see cref="ToolSettings.LogOutput"/> -- <inheritdoc cref="ToolSettings.LogOutput" /></summary>
         [Pure]
-        public static T SetRedirectOutput<T>(this T toolSettings, bool redirectOutput)
+        public static T SetLogOutput<T>(this T toolSettings, bool enableOutput)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.RedirectOutput = redirectOutput;
+            newToolSettings.LogOutput = enableOutput;
             return newToolSettings;
         }
 
-        ///<summary>Enables <see cref="ToolSettings.RedirectOutput"/> -- <inheritdoc cref="ToolSettings.RedirectOutput" /></summary>
+        ///<summary>Enables <see cref="ToolSettings.LogOutput"/> -- <inheritdoc cref="ToolSettings.LogOutput" /></summary>
         [Pure]
-        public static T EnableRedirectOutput<T>(this T toolSettings)
+        public static T EnableLogOutput<T>(this T toolSettings)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.RedirectOutput = true;
+            newToolSettings.LogOutput = true;
             return newToolSettings;
         }
 
-        ///<summary>Disables <see cref="ToolSettings.RedirectOutput"/> -- <inheritdoc cref="ToolSettings.RedirectOutput" /></summary>
+        ///<summary>Disables <see cref="ToolSettings.LogOutput"/> -- <inheritdoc cref="ToolSettings.LogOutput" /></summary>
         [Pure]
-        public static T DisableRedirectOutput<T>(this T toolSettings)
+        public static T DisableLogOutput<T>(this T toolSettings)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.RedirectOutput = false;
+            newToolSettings.LogOutput = false;
             return newToolSettings;
         }
         

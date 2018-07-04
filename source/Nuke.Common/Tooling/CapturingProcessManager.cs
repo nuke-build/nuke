@@ -14,7 +14,6 @@ namespace Nuke.Common.Tooling
     {
         public CapturedProcessStartInfo CapturedProcessStartInfo { get; private set; }
 
-        [NotNull]
         public override IProcess StartProcess(ToolSettings toolSettings)
         {
             var toolPath = toolSettings.ToolPath;
@@ -29,24 +28,22 @@ namespace Nuke.Common.Tooling
                 toolSettings.WorkingDirectory,
                 toolSettings.EnvironmentVariables,
                 toolSettings.ExecutionTimeout,
-                toolSettings.RedirectOutput,
-                toolSettings.RedirectOutput ? new Func<string, string>(arguments.Filter) : null);
+                toolSettings.LogOutput,
+                outputFilter: arguments.Filter);
         }
 
-        [NotNull]
         public override IProcess StartProcess(
             string toolPath,
             string arguments = null,
             string workingDirectory = null,
             IReadOnlyDictionary<string, string> environmentVariables = null,
             int? timeout = null,
-            bool redirectOutput = false,
+            bool logOutput = true,
             Func<string, string> outputFilter = null)
         {
             // TODO: check environment variables
             //ControlFlow.Assert(environmentVariables == null, "environmentVariables == null");
             ControlFlow.Assert(timeout == null, "timeout == null");
-            ControlFlow.Assert(!redirectOutput, "!redirectOutput");
             ControlFlow.Assert(outputFilter == null, "outputFilter == null");
 
             var fakeProcessStartInfo =
