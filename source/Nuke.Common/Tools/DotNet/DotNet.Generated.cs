@@ -30,7 +30,7 @@ namespace Nuke.Common.Tools.DotNet
         public static string DotNetPath => GetToolPath();
         public static IReadOnlyCollection<Output> DotNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(DotNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, outputFilter);
+            var process = ProcessTasks.StartProcess(DotNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, ParseLogLevel, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -132,6 +132,7 @@ namespace Nuke.Common.Tools.DotNet
     {
         /// <summary><p>Path to the DotNet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
+        internal override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
         /// <summary><p>Specifies a path to the test project. If omitted, it defaults to current directory.</p></summary>
         public virtual string ProjectFile { get; internal set; }
         /// <summary><p>Use the custom test adapters from the specified path in the test run.</p></summary>
@@ -194,6 +195,7 @@ namespace Nuke.Common.Tools.DotNet
     {
         /// <summary><p>Path to the DotNet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
+        internal override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
         /// <summary><p>Configuration to use for building the project. The default value is Debug.</p></summary>
         public virtual string Configuration { get; internal set; }
         /// <summary><p>Builds and runs the app using the specified framework. The framework must be specified in the project file.</p></summary>
@@ -244,6 +246,7 @@ namespace Nuke.Common.Tools.DotNet
     {
         /// <summary><p>Path to the DotNet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
+        internal override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
         /// <summary><p>Optional path to the project file to restore.</p></summary>
         public virtual string ProjectFile { get; internal set; }
         /// <summary><p>The NuGet configuration file (<em>NuGet.config</em>) to use for the restore operation.</p></summary>
@@ -295,6 +298,7 @@ namespace Nuke.Common.Tools.DotNet
     {
         /// <summary><p>Path to the DotNet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
+        internal override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
         /// <summary><p>The project to pack. It's either a path to a csproj file or to a directory. If omitted, it defaults to the current directory.</p></summary>
         public virtual string Project { get; internal set; }
         /// <summary><p>Configuration to use when building the project. If not specified, configuration defaults to <c>Debug</c>.</p></summary>
@@ -355,6 +359,7 @@ namespace Nuke.Common.Tools.DotNet
     {
         /// <summary><p>Path to the DotNet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
+        internal override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
         /// <summary><p>The project file to build. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in proj and uses that file.</p></summary>
         public virtual string ProjectFile { get; internal set; }
         /// <summary><p>Defines the build configuration. If omitted, the build configuration defaults to <c>Debug</c>. Use <c>Release</c> build a Release configuration.</p></summary>
@@ -409,6 +414,7 @@ namespace Nuke.Common.Tools.DotNet
     {
         /// <summary><p>Path to the DotNet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
+        internal override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
         /// <summary><p>The MSBuild project to clean. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in <em>proj</em> and uses that file.</p></summary>
         public virtual string Project { get; internal set; }
         /// <summary><p>Defines the build configuration. The default value is <c>Debug</c>. This option is only required when cleaning if you specified it during build time.</p></summary>
@@ -444,6 +450,7 @@ namespace Nuke.Common.Tools.DotNet
     {
         /// <summary><p>Path to the DotNet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
+        internal override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
         /// <summary><p>The project to publish, which defaults to the current directory if not specified.</p></summary>
         public virtual string Project { get; internal set; }
         /// <summary><p>Defines the build configuration. The default value is <c>Debug</c>.</p></summary>
@@ -501,6 +508,7 @@ namespace Nuke.Common.Tools.DotNet
     {
         /// <summary><p>Path to the DotNet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
+        internal override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
         /// <summary><p>Path of the package to push.</p></summary>
         public virtual string TargetPath { get; internal set; }
         /// <summary><p>Specifies the server URL. This option is required unless <c>DefaultPushSource</c> config value is set in the NuGet config file.</p></summary>

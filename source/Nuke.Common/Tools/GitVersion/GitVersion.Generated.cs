@@ -31,7 +31,7 @@ namespace Nuke.Common.Tools.GitVersion
         /// <summary><p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p></summary>
         public static IReadOnlyCollection<Output> GitVersion(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(GitVersionPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, outputFilter);
+            var process = ProcessTasks.StartProcess(GitVersionPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

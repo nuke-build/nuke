@@ -31,7 +31,7 @@ namespace Nuke.Common.Tools.Nunit
         /// <summary><p>NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href="http://www.junit.org/">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.</p></summary>
         public static IReadOnlyCollection<Output> Nunit(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(NunitPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, outputFilter);
+            var process = ProcessTasks.StartProcess(NunitPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
