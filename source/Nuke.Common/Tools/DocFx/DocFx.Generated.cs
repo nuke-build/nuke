@@ -36,30 +36,32 @@ namespace Nuke.Common.Tools.DocFx
             return process.HasOutput ? process.Output.Select(x => x.Text) : null;
         }
         /// <summary><p>DocFX is an API documentation generator for .NET, and currently it supports C# and VB. It generates API reference documentation from triple-slash comments in your source code. It also allows you to use Markdown files to create additional topics such as tutorials and how-tos, and to customize the generated reference documentation. DocFX builds a static HTML website from your source code and Markdown files, which can be easily hosted on any web servers (for example, <em>github.io</em>). Also, DocFX provides you the flexibility to customize the layout and style of your website through templates. If you are interested in creating your own website with your own styles, you can follow <a href="http://dotnet.github.io/docfx/tutorial/howto_create_custom_template.html">how to create custom template</a> to create custom templates.</p><p>For more details, visit the <a href="https://dotnet.github.io/docfx/">official website</a>.</p></summary>
-        public static void DocFxMetadata(Configure<DocFxMetadataSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IProcess DocFxMetadata(Configure<DocFxMetadataSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DocFxMetadataSettings());
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
+            return process;
         }
         /// <summary><p>DocFX is an API documentation generator for .NET, and currently it supports C# and VB. It generates API reference documentation from triple-slash comments in your source code. It also allows you to use Markdown files to create additional topics such as tutorials and how-tos, and to customize the generated reference documentation. DocFX builds a static HTML website from your source code and Markdown files, which can be easily hosted on any web servers (for example, <em>github.io</em>). Also, DocFX provides you the flexibility to customize the layout and style of your website through templates. If you are interested in creating your own website with your own styles, you can follow <a href="http://dotnet.github.io/docfx/tutorial/howto_create_custom_template.html">how to create custom template</a> to create custom templates.</p><p>For more details, visit the <a href="https://dotnet.github.io/docfx/">official website</a>.</p></summary>
-        public static void DocFxMetadata(string configPath, Configure<DocFxMetadataSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IProcess DocFxMetadata(string configPath, Configure<DocFxMetadataSettings> configurator = null)
         {
             configurator = configurator ?? (x => x);
-            DocFxMetadata(x => configurator(x).SetConfigPath(configPath));
+            return DocFxMetadata(x => configurator(x).SetConfigPath(configPath));
         }
         /// <summary><p>DocFX is an API documentation generator for .NET, and currently it supports C# and VB. It generates API reference documentation from triple-slash comments in your source code. It also allows you to use Markdown files to create additional topics such as tutorials and how-tos, and to customize the generated reference documentation. DocFX builds a static HTML website from your source code and Markdown files, which can be easily hosted on any web servers (for example, <em>github.io</em>). Also, DocFX provides you the flexibility to customize the layout and style of your website through templates. If you are interested in creating your own website with your own styles, you can follow <a href="http://dotnet.github.io/docfx/tutorial/howto_create_custom_template.html">how to create custom template</a> to create custom templates.</p><p>For more details, visit the <a href="https://dotnet.github.io/docfx/">official website</a>.</p></summary>
-        public static void DocFxBuild(Configure<DocFxBuildSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IProcess DocFxBuild(Configure<DocFxBuildSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DocFxBuildSettings());
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
+            return process;
         }
         /// <summary><p>DocFX is an API documentation generator for .NET, and currently it supports C# and VB. It generates API reference documentation from triple-slash comments in your source code. It also allows you to use Markdown files to create additional topics such as tutorials and how-tos, and to customize the generated reference documentation. DocFX builds a static HTML website from your source code and Markdown files, which can be easily hosted on any web servers (for example, <em>github.io</em>). Also, DocFX provides you the flexibility to customize the layout and style of your website through templates. If you are interested in creating your own website with your own styles, you can follow <a href="http://dotnet.github.io/docfx/tutorial/howto_create_custom_template.html">how to create custom template</a> to create custom templates.</p><p>For more details, visit the <a href="https://dotnet.github.io/docfx/">official website</a>.</p></summary>
-        public static void DocFxBuild(string configPath, Configure<DocFxBuildSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IProcess DocFxBuild(string configPath, Configure<DocFxBuildSettings> configurator = null)
         {
             configurator = configurator ?? (x => x);
-            DocFxBuild(x => configurator(x).SetConfigPath(configPath));
+            return DocFxBuild(x => configurator(x).SetConfigPath(configPath));
         }
     }
     #region DocFxMetadataSettings

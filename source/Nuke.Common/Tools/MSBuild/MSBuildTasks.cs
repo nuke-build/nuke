@@ -70,12 +70,11 @@ namespace Nuke.Common.Tools.MSBuild
             ControlFlow.Assert((isSdkProject || isLegacyProject) && (!isSdkProject || !isLegacyProject), "Unknown format.");
 
             var toolSettings = configurator.InvokeSafe(new MSBuildSettings())
+                .EnableRedirectOutput()
                 .SetProjectFile(projectFile)
                 .SetVerbosity(MSBuildVerbosity.Diagnostic)
                 .SetTargets(Guid.NewGuid().ToString());
-            var processSettings = new ProcessSettings()
-                .SetRedirectOutput(redirectOutput: true);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertWaitForExit();
 
             var lines = process.Output.Select(x => x.Text).ToArray();

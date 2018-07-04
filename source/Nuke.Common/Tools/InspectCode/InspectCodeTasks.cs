@@ -48,7 +48,7 @@ namespace Nuke.Common.Tools.InspectCode
         }
 
         [CanBeNull]
-        private static IProcess StartProcess(InspectCodeSettings toolSettings, ProcessSettings processSettings)
+        private static IProcess StartProcess(InspectCodeSettings toolSettings)
         {
             var installedPackages = GetInstalledPlugins();
             if (toolSettings.Extensions.Count > 0 || installedPackages.Count > 0)
@@ -59,7 +59,7 @@ namespace Nuke.Common.Tools.InspectCode
                         GetPackageExecutable()));
             }
 
-            return ProcessTasks.StartProcess(toolSettings, processSettings);
+            return ProcessTasks.StartProcess(toolSettings);
         }
 
         private static void PostProcess(InspectCodeSettings toolSettings)

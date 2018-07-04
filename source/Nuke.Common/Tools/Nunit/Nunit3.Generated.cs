@@ -36,17 +36,18 @@ namespace Nuke.Common.Tools.Nunit
             return process.HasOutput ? process.Output.Select(x => x.Text) : null;
         }
         /// <summary><p>NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href="http://www.junit.org/">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.</p><p>For more details, visit the <a href="https://www.nunit.org/">official website</a>.</p></summary>
-        public static void Nunit3(Configure<Nunit3Settings> configurator = null, ProcessSettings processSettings = null)
+        public static IProcess Nunit3(Configure<Nunit3Settings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new Nunit3Settings());
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
+            return process;
         }
         /// <summary><p>NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href="http://www.junit.org/">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.</p><p>For more details, visit the <a href="https://www.nunit.org/">official website</a>.</p></summary>
-        public static void Nunit3(List<string> inputFiles, Configure<Nunit3Settings> configurator = null, ProcessSettings processSettings = null)
+        public static IProcess Nunit3(List<string> inputFiles, Configure<Nunit3Settings> configurator = null)
         {
             configurator = configurator ?? (x => x);
-            Nunit3(x => configurator(x).SetInputFiles(inputFiles));
+            return Nunit3(x => configurator(x).SetInputFiles(inputFiles));
         }
     }
     #region Nunit3Settings

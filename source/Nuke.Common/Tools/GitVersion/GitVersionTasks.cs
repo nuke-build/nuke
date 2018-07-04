@@ -15,12 +15,13 @@ namespace Nuke.Common.Tools.GitVersion
     partial class GitVersionTasks
     {
         public static GitVersionSettings DefaultGitVersion => new GitVersionSettings()
-            .SetWorkingDirectory(NukeBuild.Instance.RootDirectory);
+            .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
+            .EnableRedirectOutput();
 
         [CanBeNull]
-        private static GitVersion GetResult(IProcess process, GitVersionSettings toolSettings, [CanBeNull] ProcessSettings processSettings)
+        private static GitVersion GetResult(IProcess process, GitVersionSettings toolSettings)
         {
-            if (!(processSettings?.RedirectOutput ?? false))
+            if (!toolSettings.RedirectOutput)
             {
                 Logger.Warn(
                     $"{nameof(GitVersionTasks)}.{nameof(GitVersion)} can only calculate a return value when 'RedirectOutput' is set to true.");

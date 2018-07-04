@@ -36,11 +36,12 @@ namespace Nuke.Common.Tools.CoverallsNet
             return process.HasOutput ? process.Output.Select(x => x.Text) : null;
         }
         /// <summary><p>Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.</p><p>For more details, visit the <a href="https://coverallsnet.readthedocs.io">official website</a>.</p></summary>
-        public static void CoverallsNet(Configure<CoverallsNetSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IProcess CoverallsNet(Configure<CoverallsNetSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new CoverallsNetSettings());
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
+            return process;
         }
     }
     #region CoverallsNetSettings

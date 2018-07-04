@@ -36,11 +36,12 @@ namespace Nuke.Common.Tools.VsTest
             return process.HasOutput ? process.Output.Select(x => x.Text) : null;
         }
         /// <summary><p>VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.</p><p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/jj155796.aspx">official website</a>.</p></summary>
-        public static void VsTest(Configure<VsTestSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IProcess VsTest(Configure<VsTestSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new VsTestSettings());
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
+            return process;
         }
     }
     #region VsTestSettings
