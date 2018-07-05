@@ -16,6 +16,7 @@ using Nuke.Common.Tools.InspectCode;
 using Nuke.Common.Tools.OpenCover;
 using Nuke.Common.Tools.Xunit;
 using Nuke.Common;
+using Nuke.Common.Tools.ReportGenerator;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.CodeGeneration.CodeGenerator;
@@ -32,6 +33,7 @@ using static Nuke.Common.Tools.Xunit.XunitTasks;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.EnvironmentInfo;
+using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
 
 class Build : NukeBuild
 {
@@ -200,7 +202,14 @@ class Build : NukeBuild
             {
                 OpenCover(s => DefaultOpenCover
                     .SetOutput(OutputDirectory / "coverage.xml")
-                    .SetTargetSettings(xunitSettings));
+                    .SetTargetSettings(xunitSettings)
+                    .SetSearchDirectories(xunitSettings.TargetAssemblyWithConfigs.Select(x => Path.GetDirectoryName(x.Key)))
+                    .AddFilters("-[Nuke.Common]Nuke.Core.*"));
+
+                ReportGenerator(s => s
+                    .AddReports(OutputDirectory / "coverage.xml")
+                    .AddReportTypes(ReportTypes.Html)
+                    .SetTargetDirectory(OutputDirectory / "coverage"));
             }
             else
                 Xunit2(s => xunitSettings);
