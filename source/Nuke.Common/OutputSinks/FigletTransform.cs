@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -11,6 +12,7 @@ using Nuke.Common.Utilities;
 
 namespace Nuke.Common.OutputSinks
 {
+    [ExcludeFromCodeCoverage]
     public static class FigletTransform
     {
         public static string GetText(string text, string integratedFontName = null)

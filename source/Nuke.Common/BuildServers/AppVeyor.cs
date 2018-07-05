@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
 using static Nuke.Common.EnvironmentInfo;
@@ -14,6 +15,7 @@ namespace Nuke.Common.BuildServers
     /// </summary>
     [PublicAPI]
     [BuildServer]
+    [ExcludeFromCodeCoverage]
     public class AppVeyor
     {
         private static Lazy<AppVeyor> s_instance = new Lazy<AppVeyor>(() => new AppVeyor());

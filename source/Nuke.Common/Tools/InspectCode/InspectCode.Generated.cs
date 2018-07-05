@@ -527,6 +527,7 @@ namespace Nuke.Common.Tools.InspectCode
     /// <summary><p>Used within <see cref="InspectCodeTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class InspectCodeSettingsLayers : Enumeration
     {
         public static InspectCodeSettingsLayers GlobalAll = new InspectCodeSettingsLayers { Value = "GlobalAll" };
@@ -539,6 +540,7 @@ namespace Nuke.Common.Tools.InspectCode
     /// <summary><p>Used within <see cref="InspectCodeTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class InspectCodeMSBuildToolset : Enumeration
     {
         public static InspectCodeMSBuildToolset _12_0 = new InspectCodeMSBuildToolset { Value = "12.0" };

@@ -1030,6 +1030,7 @@ namespace Nuke.Common.Tools.Xunit
     /// <summary><p>Used within <see cref="XunitTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class Xunit2ReporterType : Enumeration
     {
         public static Xunit2ReporterType AppVeyor = new Xunit2ReporterType { Value = "AppVeyor" };
@@ -1043,6 +1044,7 @@ namespace Nuke.Common.Tools.Xunit
     /// <summary><p>Used within <see cref="XunitTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class Xunit2ResultFormat : Enumeration
     {
         public static Xunit2ResultFormat Xml = new Xunit2ResultFormat { Value = "Xml" };
@@ -1055,6 +1057,7 @@ namespace Nuke.Common.Tools.Xunit
     /// <summary><p>Used within <see cref="XunitTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class Xunit2ParallelOption : Enumeration
     {
         public static Xunit2ParallelOption None = new Xunit2ParallelOption { Value = "None" };
@@ -1067,6 +1070,7 @@ namespace Nuke.Common.Tools.Xunit
     /// <summary><p>Used within <see cref="XunitTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class Xunit2AppDomainMode : Enumeration
     {
         public static Xunit2AppDomainMode IfAvailable = new Xunit2AppDomainMode { Value = "IfAvailable" };

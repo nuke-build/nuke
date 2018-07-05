@@ -1659,6 +1659,7 @@ namespace Nuke.Common.Tools.MSBuild
     /// <summary><p>Used within <see cref="MSBuildTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class MSBuildToolsVersion : Enumeration
     {
         public static MSBuildToolsVersion _2_0 = new MSBuildToolsVersion { Value = "2.0" };
@@ -1673,6 +1674,7 @@ namespace Nuke.Common.Tools.MSBuild
     /// <summary><p>Used within <see cref="MSBuildTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class MSBuildVerbosity : Enumeration
     {
         public static MSBuildVerbosity Quiet = new MSBuildVerbosity { Value = "Quiet" };
@@ -1686,6 +1688,7 @@ namespace Nuke.Common.Tools.MSBuild
     /// <summary><p>Used within <see cref="MSBuildTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class MSBuildTargetPlatform : Enumeration
     {
         public static MSBuildTargetPlatform MSIL = new MSBuildTargetPlatform { Value = "MSIL" };

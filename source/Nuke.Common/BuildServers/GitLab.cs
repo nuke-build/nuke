@@ -3,7 +3,9 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using JetBrains.Annotations;
 using static Nuke.Common.EnvironmentInfo;
 
 namespace Nuke.Common.BuildServers
@@ -11,7 +13,9 @@ namespace Nuke.Common.BuildServers
     /// <summary>
     ///     Interface according to the <a href="https://docs.gitlab.com/ce/ci/variables/README.html">official website</a>.
     /// </summary>
+    [PublicAPI]
     [BuildServer]
+    [ExcludeFromCodeCoverage]
     public class GitLab
     {
         private static Lazy<GitLab> s_instance = new Lazy<GitLab>(() => new GitLab());

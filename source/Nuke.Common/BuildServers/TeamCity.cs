@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -22,6 +23,7 @@ namespace Nuke.Common.BuildServers
     /// </summary>
     [PublicAPI]
     [BuildServer]
+    [ExcludeFromCodeCoverage]
     public class TeamCity
     {
         private static Lazy<TeamCity> s_instance = new Lazy<TeamCity>(() => new TeamCity());

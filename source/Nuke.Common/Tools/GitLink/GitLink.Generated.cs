@@ -629,6 +629,7 @@ namespace Nuke.Common.Tools.GitLink
     /// <summary><p>Used within <see cref="GitLinkTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class GitLinkSourceCodeRetrieval : Enumeration
     {
         public static GitLinkSourceCodeRetrieval Http = new GitLinkSourceCodeRetrieval { Value = "Http" };

@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -14,6 +15,7 @@ using Nuke.Common.Utilities;
 namespace Nuke.Common.OutputSinks
 {
     [UsedImplicitly]
+    [ExcludeFromCodeCoverage]
     internal class ConsoleOutputSink : IOutputSink
     {
         public virtual void Write(string text)

@@ -3358,6 +3358,7 @@ namespace Nuke.Common.Tools.Octopus
     /// <summary><p>Used within <see cref="OctopusTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class OctopusPackFormat : Enumeration
     {
         public static OctopusPackFormat NuPkg = new OctopusPackFormat { Value = "NuPkg" };

@@ -1102,6 +1102,7 @@ namespace Nuke.Common.Tools.OpenCover
     /// <summary><p>Used within <see cref="OpenCoverTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class OpenCoverVerbosity : Enumeration
     {
         public static OpenCoverVerbosity Off = new OpenCoverVerbosity { Value = "Off" };
@@ -1118,6 +1119,7 @@ namespace Nuke.Common.Tools.OpenCover
     /// <summary><p>Used within <see cref="OpenCoverTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class OpenCoverSkipping : Enumeration
     {
         public static OpenCoverSkipping File = new OpenCoverSkipping { Value = "File" };
@@ -1130,6 +1132,7 @@ namespace Nuke.Common.Tools.OpenCover
     /// <summary><p>Used within <see cref="OpenCoverTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class RegistrationType : Enumeration
     {
         public static RegistrationType User = new RegistrationType { Value = "User" };

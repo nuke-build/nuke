@@ -525,6 +525,7 @@ namespace Nuke.Common.Tools.DocFx
     /// <summary><p>Used within <see cref="DocFxTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class DocFxLogLevel : Enumeration
     {
         public static DocFxLogLevel Verbose = new DocFxLogLevel { Value = "Verbose" };

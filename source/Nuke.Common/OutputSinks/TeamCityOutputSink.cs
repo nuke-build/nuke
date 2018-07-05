@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.BuildServers;
@@ -11,6 +12,7 @@ using Nuke.Common.Utilities;
 namespace Nuke.Common.OutputSinks
 {
     [UsedImplicitly]
+    [ExcludeFromCodeCoverage]
     internal class TeamCityOutputSink : ConsoleOutputSink
     {
         private readonly TeamCity _teamCity;

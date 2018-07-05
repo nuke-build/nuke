@@ -2261,6 +2261,7 @@ namespace Nuke.Common.Tools.DotCover
     /// <summary><p>Used within <see cref="DotCoverTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class DotCoverReportType : Enumeration
     {
         public static DotCoverReportType Html = new DotCoverReportType { Value = "Html" };

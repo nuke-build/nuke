@@ -4047,6 +4047,7 @@ namespace Nuke.Common.Tools.DotNet
     /// <summary><p>Used within <see cref="DotNetTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class DotNetVerbosity : Enumeration
     {
         public static DotNetVerbosity Quiet = new DotNetVerbosity { Value = "Quiet" };

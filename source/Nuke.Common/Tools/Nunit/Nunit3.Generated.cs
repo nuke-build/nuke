@@ -1460,6 +1460,7 @@ namespace Nuke.Common.Tools.Nunit
     /// <summary><p>Used within <see cref="NunitTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class NunitProcessType : Enumeration
     {
         public static NunitProcessType Single = new NunitProcessType { Value = "Single" };
@@ -1471,6 +1472,7 @@ namespace Nuke.Common.Tools.Nunit
     /// <summary><p>Used within <see cref="NunitTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class NunitPrincipalPolicy : Enumeration
     {
         public static NunitPrincipalPolicy UnauthenticatedPrincipal = new NunitPrincipalPolicy { Value = "UnauthenticatedPrincipal" };
@@ -1482,6 +1484,7 @@ namespace Nuke.Common.Tools.Nunit
     /// <summary><p>Used within <see cref="NunitTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class NunitLabelType : Enumeration
     {
         public static NunitLabelType Off = new NunitLabelType { Value = "Off" };
@@ -1493,6 +1496,7 @@ namespace Nuke.Common.Tools.Nunit
     /// <summary><p>Used within <see cref="NunitTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class NunitTraceLevel : Enumeration
     {
         public static NunitTraceLevel Off = new NunitTraceLevel { Value = "Off" };

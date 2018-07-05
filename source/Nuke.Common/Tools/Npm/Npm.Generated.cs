@@ -753,6 +753,7 @@ namespace Nuke.Common.Tools.Npm
     /// <summary><p>Used within <see cref="NpmTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class NpmOnlyMode : Enumeration
     {
         public static NpmOnlyMode production = new NpmOnlyMode { Value = "production" };

@@ -756,6 +756,7 @@ namespace Nuke.Common.Tools.VsTest
     /// <summary><p>Used within <see cref="VsTestTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class VsTestPlatform : Enumeration
     {
         public static VsTestPlatform x86 = new VsTestPlatform { Value = "x86" };
@@ -767,6 +768,7 @@ namespace Nuke.Common.Tools.VsTest
     /// <summary><p>Used within <see cref="VsTestTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class VsTestFramework : Enumeration
     {
         public static VsTestFramework Framework35 = new VsTestFramework { Value = "Framework35" };

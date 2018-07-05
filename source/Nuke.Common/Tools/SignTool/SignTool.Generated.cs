@@ -1452,6 +1452,7 @@ namespace Nuke.Common.Tools.SignTool
     /// <summary><p>Used within <see cref="SignToolTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class SignToolContentMethod : Enumeration
     {
         public static SignToolContentMethod Embedded = new SignToolContentMethod { Value = "Embedded" };

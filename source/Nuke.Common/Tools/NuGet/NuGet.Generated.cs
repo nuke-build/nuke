@@ -1880,6 +1880,7 @@ namespace Nuke.Common.Tools.NuGet
     /// <summary><p>Used within <see cref="NuGetTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class NuGetVerbosity : Enumeration
     {
         public static NuGetVerbosity Normal = new NuGetVerbosity { Value = "Normal" };
@@ -1891,6 +1892,7 @@ namespace Nuke.Common.Tools.NuGet
     /// <summary><p>Used within <see cref="NuGetTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class PackageSaveMode : Enumeration
     {
         public static PackageSaveMode Nuspec = new PackageSaveMode { Value = "Nuspec" };
@@ -1901,6 +1903,7 @@ namespace Nuke.Common.Tools.NuGet
     /// <summary><p>Used within <see cref="NuGetTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class NuGetMSBuildVersion : Enumeration
     {
         public static NuGetMSBuildVersion _4 = new NuGetMSBuildVersion { Value = "4" };
