@@ -16,6 +16,7 @@ using Nuke.Common.Tools.InspectCode;
 using Nuke.Common.Tools.OpenCover;
 using Nuke.Common.Tools.Xunit;
 using Nuke.Common;
+using Nuke.Common.Tools.Git;
 using Nuke.Common.Tools.ReportGenerator;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -23,7 +24,6 @@ using static Nuke.CodeGeneration.CodeGenerator;
 using static Nuke.CodeGeneration.ReferenceUpdater;
 using static Nuke.CodeGeneration.SchemaGenerator;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
-using static Nuke.Common.ControlFlow;
 using static Nuke.Common.Gitter.GitterTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
@@ -55,19 +55,11 @@ class Build : NukeBuild
     [GitVersion] readonly GitVersion GitVersion;
     [GitRepository] readonly GitRepository GitRepository;
     [Solution] readonly Solution Solution;
-
+    
     readonly string MasterBranch = "master";
     readonly string DevelopBranch = "develop";
-
-    Target MergeDevelop => _ => _
-        .OnlyWhen(() => GitRepository.Branch.NotNull().EqualsOrdinalIgnoreCase(MasterBranch))
-        .Executes(() =>
-        {
-            Git($"merge --no-ff {DevelopBranch}");
-        });
-
+    
     Target Clean => _ => _
-        .DependsOn(MergeDevelop)
         .Executes(() =>
         {
             DeleteDirectories(GlobDirectories(SourceDirectory, "*/bin", "*/obj"));
@@ -103,23 +95,11 @@ class Build : NukeBuild
         });
 
     string ChangelogFile => RootDirectory / "CHANGELOG.md";
-
+    
     IEnumerable<string> ChangelogSectionNotes => ExtractChangelogSectionNotes(ChangelogFile);
 
-    Target Changelog => _ => _
-        .OnlyWhen(() => NuGet)
-        .Executes(() =>
-        {
-            Assert(GitRepository.Branch?.EqualsOrdinalIgnoreCase(MasterBranch) ?? false, $"Must be executed on {MasterBranch}.");
-
-            FinalizeChangelog(ChangelogFile, GitVersion.SemVer, GitRepository);
-
-            Git($"add {ChangelogFile}");
-            Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.SemVer}.\"");
-        });
-
     Target Pack => _ => _
-        .DependsOn(Compile, Changelog)
+        .DependsOn(Compile)
         .Executes(() =>
         {
             var releaseNotes = ChangelogSectionNotes
@@ -136,18 +116,10 @@ class Build : NukeBuild
         .DependsOn(Pack)
         .Requires(() => ApiKey)
         .Requires(() => !GitHasUncommitedChanges())
-        .Requires(() => !NuGet || GitVersionAttribute.Bump.HasValue)
         .Requires(() => !NuGet || Configuration.EqualsOrdinalIgnoreCase("release"))
         .Requires(() => !NuGet || GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch))
         .Executes(() =>
         {
-            if (NuGet)
-            {
-                Git($"tag -f {GitVersion.SemVer}");
-                Git($"update-ref refs/heads/{DevelopBranch} refs/heads/{MasterBranch}");
-                Git($"push --atomic origin {GitVersion.SemVer} {MasterBranch} {DevelopBranch}");
-            }
-
             GlobFiles(OutputDirectory, "*.nupkg").NotEmpty()
                 .Where(x => !x.EndsWith(".symbols.nupkg"))
                 .ForEach(x => DotNetNuGetPush(s => s
@@ -155,9 +127,11 @@ class Build : NukeBuild
                     .SetSource(Source)
                     .SetSymbolSource(SymbolSource)
                     .SetApiKey(ApiKey)));
-
-            if (NuGet)
+            
+            if (GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch))
             {
+                Git($"push origin {MasterBranch} {DevelopBranch} {GitVersion.SemVer}");
+                
                 var releaseUrl = $"https://www.nuget.org/packages/Nuke.Common/{GitVersion.SemVer}). ";
                 var message = GitVersionAttribute.Bump != GitVersionBump.Patch
                     ? new StringBuilder()
@@ -175,19 +149,6 @@ class Build : NukeBuild
                     roomId: "593f3dadd73408ce4f66db89",
                     token: GitterAuthToken);
             }
-        });
-
-    Target Analysis => _ => _
-        .DependsOn(Restore)
-        .Executes(() =>
-        {
-            InspectCode(s => DefaultInspectCode
-                .AddExtensions(
-                    "EtherealCode.ReSpeller",
-                    "PowerToys.CyclomaticComplexity",
-                    "ReSharper.ImplicitNullability",
-                    "ReSharper.SerializationInspections",
-                    "ReSharper.XmlDocInspections"));
         });
 
     Target Test => _ => _
@@ -213,6 +174,48 @@ class Build : NukeBuild
             }
             else
                 Xunit2(s => xunitSettings);
+        });
+
+    Target Analysis => _ => _
+        .DependsOn(Restore)
+        .Executes(() =>
+        {
+            InspectCode(s => DefaultInspectCode
+                .AddExtensions(
+                    "EtherealCode.ReSpeller",
+                    "PowerToys.CyclomaticComplexity",
+                    "ReSharper.ImplicitNullability",
+                    "ReSharper.SerializationInspections",
+                    "ReSharper.XmlDocInspections"));
+        });
+
+    Target Release => _ => _
+        .Requires(() => !GitHasUncommitedChanges())
+        .Executes(() =>
+        {
+            if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase("release"))
+            {
+                Git($"checkout -b release/{GitVersion.MajorMinorPatch} {DevelopBranch}");
+            }
+            else
+            {
+                Git($"checkout {DevelopBranch}");
+                Git($"merge --no-ff --no-edit release/{GitVersion.MajorMinorPatch}");
+                Git($"checkout {MasterBranch}");
+                Git($"merge --no-ff --no-edit release/{GitVersion.MajorMinorPatch}");
+                Git($"tag {GitVersion.MajorMinorPatch}");
+                Git($"branch -d release/{GitVersion.MajorMinorPatch}");
+            }
+        });
+    
+    Target Changelog => _ => _
+        .Requires(() => GitRepository.Branch.StartsWithOrdinalIgnoreCase("release"))
+        .Executes(() =>
+        {
+            FinalizeChangelog(ChangelogFile, GitVersion.SemVer, GitRepository);
+
+            Git($"add {ChangelogFile}");
+            Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.MajorMinorPatch}\"");
         });
 
     string SpecificationsDirectory => BuildProjectDirectory / "specifications";
