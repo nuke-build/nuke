@@ -16,7 +16,6 @@ using Nuke.Common.Tools.InspectCode;
 using Nuke.Common.Tools.OpenCover;
 using Nuke.Common.Tools.Xunit;
 using Nuke.Common;
-using Nuke.Common.Tools.Git;
 using Nuke.Common.Tools.ReportGenerator;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -24,6 +23,7 @@ using static Nuke.CodeGeneration.CodeGenerator;
 using static Nuke.CodeGeneration.ReferenceUpdater;
 using static Nuke.CodeGeneration.SchemaGenerator;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
+using static Nuke.Common.ControlFlow;
 using static Nuke.Common.Gitter.GitterTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
@@ -43,6 +43,7 @@ partial class Build : NukeBuild
     [Parameter("ApiKey for the specified source.")] readonly string ApiKey;
     [Parameter("Gitter authentication token.")] readonly string GitterAuthToken;
     [Parameter("Amount of changes to announce in Gitter.")] readonly int? AnnounceChanges;
+    [Parameter("Install global tool.")] readonly bool InstallGlobalTool;
 
     string Source => NuGet
         ? "https://api.nuget.org/v3/index.json"
@@ -110,6 +111,12 @@ partial class Build : NukeBuild
 
             DotNetPack(s => DefaultDotNetPack
                 .SetPackageReleaseNotes(releaseNotes));
+
+            if (InstallGlobalTool)
+            {
+                SuppressErrors(() => DotNet($"tool uninstall -g {GlobalToolProject.Name}"));
+                DotNet($"tool install -g {GlobalToolProject.Name} --add-source {OutputDirectory} --version {GitVersion.NuGetVersionV2}");
+            }
         });
 
     Target Publish => _ => _
