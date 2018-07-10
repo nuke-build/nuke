@@ -103,14 +103,14 @@ namespace Nuke.CodeGeneration.Generators
         private static string GetTaskSignature(Task task, IEnumerable<string> additionalParameterDeclarations = null)
         {
             var parameterDeclarations = new List<string>();
-
-            if (task.HasReturnValue())
-                parameterDeclarations.Add($"out {task.ReturnType} result");
-
             parameterDeclarations.AddRange(additionalParameterDeclarations ?? new List<string>());            
             parameterDeclarations.Add($"Configure<{task.SettingsClass.Name}> configurator = null");
 
-            return $"public static IProcess {task.GetTaskMethodName()}({parameterDeclarations.JoinComma()})";
+            var returnType = task.HasReturnValue()
+                ? $"({task.ReturnType} Result, IReadOnlyCollection<Output> Output)"
+                : "IReadOnlyCollection<Output>";
+
+            return $"public static {returnType} {task.GetTaskMethodName()}({parameterDeclarations.JoinComma()})";
         }
 
         private static void WriteMainTaskBlock(TaskWriter writer)
@@ -122,8 +122,9 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteLine($"var process = {GetProcessStart(task)};")
                 .WriteLine(GetProcessAssertion(task))
                 .WriteLineIfTrue(task.PostProcess, $"PostProcess(toolSettings);")
-                .WriteLineIfTrue(task.HasReturnValue(), "result = GetResult(process, toolSettings);")
-                .WriteLine("return process;");
+                .WriteLine(task.HasReturnValue()
+                    ? "return (GetResult(process, toolSettings), process.Output);"
+                    : "return process.Output;");
         }
 
         private static string GetProcessStart(Task task)
