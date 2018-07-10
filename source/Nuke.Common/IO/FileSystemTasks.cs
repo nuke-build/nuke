@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities.Collections;
 
@@ -50,8 +52,7 @@ namespace Nuke.Common.IO
             else
             {
                 Logger.Info($"Cleaning directory '{directory}'...");
-                Directory.GetDirectories(directory).ForEach(DeleteDirectoryInternal);
-                Directory.GetFiles(directory).ForEach(DeleteFile);
+                DeleteDirectoryInternal(directory);
             }
         }
 
@@ -85,8 +86,8 @@ namespace Nuke.Common.IO
         {
             if (!Directory.Exists(directory))
                 return;
-            
-            Directory.GetFiles(directory).ForEach(DeleteFile);
+
+            Directory.GetFiles(directory).ForEach(DeleteFileInternal);
             Directory.GetDirectories(directory).ForEach(DeleteDirectoryInternal);
 
             Logger.Trace($"Deleting directory '{directory}'...");
@@ -94,13 +95,56 @@ namespace Nuke.Common.IO
             ControlFlow.Assert(!Directory.Exists(directory), $"Cannot delete directory '{directory}'.");
         }
 
-        private static void DeleteFile(string file)
+        private static void DeleteFileInternal(string file)
         {
             Logger.Trace($"Deleting file '{file}'...");
             EnsureFileAttributes(file);
             File.Delete(file);
         }
 
+        public static void DeleteFile(string file)
+        {
+            if (!File.Exists(file))
+                return;
+            
+            Logger.Info($"Deleting file '{file}'...");
+            EnsureFileAttributes(file);
+            File.Delete(file);
+        }
+
+        public static void CopyFile(string source, string target, FileExistsPolicy policy = FileExistsPolicy.Fail)
+        {
+            if (!ShouldCopyFile(source, target, policy))
+                return;
+
+            Logger.Info($"Copying file '{source}' to '{target}'...");
+            File.Copy(source, target, overwrite: ShouldCopyFile(source, target, policy));
+        }
+
+        public static void MoveFile(string source, string target, FileExistsPolicy policy = FileExistsPolicy.Fail)
+        {
+            if (!ShouldCopyFile(source, target, policy))
+                return;
+
+            Logger.Info($"Moving file from '{source}' to '{target}'...");
+            if (File.Exists(target))
+                File.Delete(target);
+
+            File.Move(source, target);
+        }
+
+        public static void MoveDirectory(string source, string target)
+        {
+            Logger.Info($"Moving directory from '{source}' to '{target}'...");
+            Directory.Move(source, target);
+        }
+
+        public static void CopyDirectoryRecursively(string source, string target, FileExistsPolicy policy = FileExistsPolicy.Fail)
+        {
+            CopyRecursively(source, target, policy);
+        }
+
+        [Obsolete("Use " + nameof(CopyDirectoryRecursively))]
         public static void CopyRecursively(string source, string target, FileExistsPolicy policy = FileExistsPolicy.Fail)
         {
             ControlFlow.Assert(Directory.Exists(source), $"Directory.Exists({source})");
@@ -208,6 +252,43 @@ namespace Nuke.Common.IO
                 .DescendantsAndSelf(x => x.Parent)
                 .Where(x => x != null)
                 .FirstOrDefault(predicate);
+        }
+
+        public static string GetFileHash(string file)
+        {
+            ControlFlow.Assert(File.Exists(file), $"File.Exists({file})");
+
+            using (var md5 = MD5.Create())
+            using (var stream = File.OpenRead(file))
+            {
+                var hash = md5.ComputeHash(stream);
+                return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+            }
+        }
+
+        public static string GetDirectoryHash(string directory)
+        {
+            ControlFlow.Assert(Directory.Exists(directory), $"Directory.Exists({directory})");
+
+            var files = Directory.GetFiles(directory, "*", SearchOption.AllDirectories).OrderBy(x => x).ToList();
+
+            using (var md5 = MD5.Create())
+            {
+                foreach (var file in files)
+                {
+                    var relativePath = PathConstruction.GetRelativePath(directory, file);
+                    var unixNormalizedPath = PathConstruction.NormalizePath(relativePath, separator: '/');
+                    var pathBytes = Encoding.UTF8.GetBytes(unixNormalizedPath);
+                    md5.TransformBlock(pathBytes, inputOffset: 0, inputCount: pathBytes.Length, outputBuffer: pathBytes, outputOffset: 0);
+
+                    var contentBytes = File.ReadAllBytes(file);
+                    md5.TransformBlock(contentBytes, inputOffset: 0, inputCount: contentBytes.Length, outputBuffer: contentBytes, outputOffset: 0);
+                }
+
+                md5.TransformFinalBlock(new byte[0], inputOffset: 0, inputCount: 0);
+
+                return BitConverter.ToString(md5.Hash).Replace("-", "").ToLower();
+            }
         }
     }
 }
