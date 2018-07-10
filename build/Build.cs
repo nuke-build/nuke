@@ -135,12 +135,12 @@ partial class Build : NukeBuild
                     .SetSymbolSource(SymbolSource)
                     .SetApiKey(ApiKey)));
             
-            if (GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch))
+            if (NuGet)
             {
                 Git($"push origin {MasterBranch} {DevelopBranch} {GitVersion.SemVer}");
                 
                 var releaseUrl = $"https://www.nuget.org/packages/Nuke.Common/{GitVersion.SemVer}). ";
-                var message = GitVersionAttribute.Bump != GitVersionBump.Patch
+                var message = GitVersion.Patch == 0
                     ? new StringBuilder()
                         .AppendLine("@/all :mega::shipit: **NUKE {GitVersion.SemVer} IS OUT!!!**")
                         .AppendLine($"This release includes [{ChangelogSectionNotes.Count()} changes]({releaseUrl}). Most notably, we have:")
