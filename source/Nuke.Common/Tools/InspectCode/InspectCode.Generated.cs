@@ -36,23 +36,23 @@ namespace Nuke.Common.Tools.InspectCode
             return process.Output;
         }
         /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p><p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p></summary>
-        public static IProcess InspectCode(Configure<InspectCodeSettings> configurator = null)
+        public static IReadOnlyCollection<Output> InspectCode(Configure<InspectCodeSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new InspectCodeSettings());
             PreProcess(ref toolSettings);
             var process = StartProcess(toolSettings);
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
-            return process;
+            return process.Output;
         }
         /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p><p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p></summary>
-        public static IProcess InspectCode(string targetPath, Configure<InspectCodeSettings> configurator = null)
+        public static IReadOnlyCollection<Output> InspectCode(string targetPath, Configure<InspectCodeSettings> configurator = null)
         {
             configurator = configurator ?? (x => x);
             return InspectCode(x => configurator(x).SetTargetPath(targetPath));
         }
         /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p><p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p></summary>
-        public static IProcess InspectCode(string targetPath, string output, Configure<InspectCodeSettings> configurator = null)
+        public static IReadOnlyCollection<Output> InspectCode(string targetPath, string output, Configure<InspectCodeSettings> configurator = null)
         {
             configurator = configurator ?? (x => x);
             return InspectCode(targetPath, x => configurator(x).SetOutput(output));

@@ -36,12 +36,12 @@ namespace Nuke.Common.Tools.OpenCover
             return process.Output;
         }
         /// <summary><p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p><p>For more details, visit the <a href="https://github.com/OpenCover/opencover">official website</a>.</p></summary>
-        public static IProcess OpenCover(Configure<OpenCoverSettings> configurator = null)
+        public static IReadOnlyCollection<Output> OpenCover(Configure<OpenCoverSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new OpenCoverSettings());
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            return process;
+            return process.Output;
         }
     }
     #region OpenCoverSettings

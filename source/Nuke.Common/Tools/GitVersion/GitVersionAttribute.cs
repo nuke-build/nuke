@@ -54,8 +54,7 @@ namespace Nuke.Common.Tools.GitVersion
 
         private static GitVersion GetVersion()
         {
-            GitVersionTasks.GitVersion(out var result, s => GitVersionTasks.DefaultGitVersion);
-            return result;
+            return GitVersionTasks.GitVersion(s => GitVersionTasks.DefaultGitVersion).Result;
         }
 
         [CanBeNull]

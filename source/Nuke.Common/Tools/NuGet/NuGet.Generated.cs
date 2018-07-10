@@ -36,43 +36,43 @@ namespace Nuke.Common.Tools.NuGet
             return process.Output;
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IProcess NuGetPush(Configure<NuGetPushSettings> configurator = null)
+        public static IReadOnlyCollection<Output> NuGetPush(Configure<NuGetPushSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new NuGetPushSettings());
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            return process;
+            return process.Output;
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IProcess NuGetPack(Configure<NuGetPackSettings> configurator = null)
+        public static IReadOnlyCollection<Output> NuGetPack(Configure<NuGetPackSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new NuGetPackSettings());
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            return process;
+            return process.Output;
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IProcess NuGetPack(string targetPath, Configure<NuGetPackSettings> configurator = null)
+        public static IReadOnlyCollection<Output> NuGetPack(string targetPath, Configure<NuGetPackSettings> configurator = null)
         {
             configurator = configurator ?? (x => x);
             return NuGetPack(x => configurator(x).SetTargetPath(targetPath));
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IProcess NuGetPack(string targetPath, string version, Configure<NuGetPackSettings> configurator = null)
+        public static IReadOnlyCollection<Output> NuGetPack(string targetPath, string version, Configure<NuGetPackSettings> configurator = null)
         {
             configurator = configurator ?? (x => x);
             return NuGetPack(targetPath, x => configurator(x).SetVersion(version));
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IProcess NuGetRestore(Configure<NuGetRestoreSettings> configurator = null)
+        public static IReadOnlyCollection<Output> NuGetRestore(Configure<NuGetRestoreSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new NuGetRestoreSettings());
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            return process;
+            return process.Output;
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IProcess NuGetRestore(string targetPath, Configure<NuGetRestoreSettings> configurator = null)
+        public static IReadOnlyCollection<Output> NuGetRestore(string targetPath, Configure<NuGetRestoreSettings> configurator = null)
         {
             configurator = configurator ?? (x => x);
             return NuGetRestore(x => configurator(x).SetTargetPath(targetPath));

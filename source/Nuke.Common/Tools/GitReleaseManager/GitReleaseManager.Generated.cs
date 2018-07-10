@@ -36,44 +36,44 @@ namespace Nuke.Common.Tools.GitReleaseManager
             return process.Output;
         }
         /// <summary><p>Adds an asset to an existing release.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
-        public static IProcess GitReleaseManagerAddAssets(Configure<GitReleaseManagerAddAssetsSettings> configurator = null)
+        public static IReadOnlyCollection<Output> GitReleaseManagerAddAssets(Configure<GitReleaseManagerAddAssetsSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitReleaseManagerAddAssetsSettings());
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            return process;
+            return process.Output;
         }
         /// <summary><p>Closes the milestone.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
-        public static IProcess GitReleaseManagerClose(Configure<GitReleaseManagerCloseSettings> configurator = null)
+        public static IReadOnlyCollection<Output> GitReleaseManagerClose(Configure<GitReleaseManagerCloseSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitReleaseManagerCloseSettings());
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            return process;
+            return process.Output;
         }
         /// <summary><p>Creates a draft release notes from a milestone.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
-        public static IProcess GitReleaseManagerCreate(Configure<GitReleaseManagerCreateSettings> configurator = null)
+        public static IReadOnlyCollection<Output> GitReleaseManagerCreate(Configure<GitReleaseManagerCreateSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitReleaseManagerCreateSettings());
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            return process;
+            return process.Output;
         }
         /// <summary><p>Exports all the Release Notes in markdown format.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
-        public static IProcess GitReleaseManagerExport(Configure<GitReleaseManagerExportSettings> configurator = null)
+        public static IReadOnlyCollection<Output> GitReleaseManagerExport(Configure<GitReleaseManagerExportSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitReleaseManagerExportSettings());
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            return process;
+            return process.Output;
         }
         /// <summary><p>Publishes the GitHub Release.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
-        public static IProcess GitReleaseManagerPublish(Configure<GitReleaseManagerPublishSettings> configurator = null)
+        public static IReadOnlyCollection<Output> GitReleaseManagerPublish(Configure<GitReleaseManagerPublishSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitReleaseManagerPublishSettings());
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            return process;
+            return process.Output;
         }
     }
     #region GitReleaseManagerAddAssetsSettings

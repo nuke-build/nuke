@@ -36,52 +36,52 @@ namespace Nuke.Common.Tools.DotCover
             return process.Output;
         }
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
-        public static IProcess DotCoverAnalyse(Configure<DotCoverAnalyseSettings> configurator = null)
+        public static IReadOnlyCollection<Output> DotCoverAnalyse(Configure<DotCoverAnalyseSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DotCoverAnalyseSettings());
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            return process;
+            return process.Output;
         }
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
-        public static IProcess DotCoverCover(Configure<DotCoverCoverSettings> configurator = null)
+        public static IReadOnlyCollection<Output> DotCoverCover(Configure<DotCoverCoverSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DotCoverCoverSettings());
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            return process;
+            return process.Output;
         }
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
-        public static IProcess DotCoverDelete(Configure<DotCoverDeleteSettings> configurator = null)
+        public static IReadOnlyCollection<Output> DotCoverDelete(Configure<DotCoverDeleteSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DotCoverDeleteSettings());
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            return process;
+            return process.Output;
         }
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
-        public static IProcess DotCoverMerge(Configure<DotCoverMergeSettings> configurator = null)
+        public static IReadOnlyCollection<Output> DotCoverMerge(Configure<DotCoverMergeSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DotCoverMergeSettings());
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            return process;
+            return process.Output;
         }
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
-        public static IProcess DotCoverReport(Configure<DotCoverReportSettings> configurator = null)
+        public static IReadOnlyCollection<Output> DotCoverReport(Configure<DotCoverReportSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DotCoverReportSettings());
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            return process;
+            return process.Output;
         }
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
-        public static IProcess DotCoverZip(Configure<DotCoverZipSettings> configurator = null)
+        public static IReadOnlyCollection<Output> DotCoverZip(Configure<DotCoverZipSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new DotCoverZipSettings());
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            return process;
+            return process.Output;
         }
     }
     #region DotCoverAnalyseSettings

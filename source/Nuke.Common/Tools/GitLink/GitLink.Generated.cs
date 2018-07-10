@@ -36,22 +36,22 @@ namespace Nuke.Common.Tools.GitLink
             return process.Output;
         }
         /// <summary><p>GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.</p><p>For more details, visit the <a href="https://github.com/GitTools/GitLink/">official website</a>.</p></summary>
-        public static IProcess GitLink2(Configure<GitLink2Settings> configurator = null)
+        public static IReadOnlyCollection<Output> GitLink2(Configure<GitLink2Settings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitLink2Settings());
             PreProcess(ref toolSettings);
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            return process;
+            return process.Output;
         }
         /// <summary><p>GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.</p><p>For more details, visit the <a href="https://github.com/GitTools/GitLink/">official website</a>.</p></summary>
-        public static IProcess GitLink3(Configure<GitLink3Settings> configurator = null)
+        public static IReadOnlyCollection<Output> GitLink3(Configure<GitLink3Settings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new GitLink3Settings());
             PreProcess(ref toolSettings);
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            return process;
+            return process.Output;
         }
     }
     #region GitLink2Settings
