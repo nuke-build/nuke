@@ -157,7 +157,7 @@ namespace Nuke.Common
             get
             {
                 var temporaryDirectory = Path.Combine(RootDirectory, ".tmp");
-                ControlFlow.Assert(Directory.Exists(temporaryDirectory), $"Directory.Exists({temporaryDirectory})");
+                FileSystemTasks.EnsureExistingDirectory(temporaryDirectory);
                 return (PathConstruction.AbsolutePath) temporaryDirectory;
             }
         }
