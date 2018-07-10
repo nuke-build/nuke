@@ -20,11 +20,23 @@ namespace Nuke.Common.Tools.Git
             return !Git("symbolic-ref --short -q HEAD", workingDirectory, logOutput: false).Any();
         }
 
+        public static bool GitHasCleanWorkingCopy()
+        {
+            return GitHasCleanWorkingCopy(EnvironmentInfo.WorkingDirectory);
+        }
+        
+        public static bool GitHasCleanWorkingCopy(string workingDirectory)
+        {
+            return !Git("status --short", workingDirectory, logOutput: false).Any();
+        }
+        
+        [Obsolete("Use " + nameof(GitHasCleanWorkingCopy))]
         public static bool GitHasUncommitedChanges()
         {
             return GitHasUncommitedChanges(EnvironmentInfo.WorkingDirectory);
         }
 
+        [Obsolete("Use " + nameof(GitHasCleanWorkingCopy))]
         public static bool GitHasUncommitedChanges(string workingDirectory)
         {
             return Git("status --short", workingDirectory, logOutput: false).Any();

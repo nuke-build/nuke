@@ -20,7 +20,7 @@ partial class Build
     string ToolSchemaFile => SourceDirectory / "Nuke.CodeGeneration" / "schema.json";
 
     Target References => _ => _
-        .Requires(() => !GitHasUncommitedChanges())
+        .Requires(() => GitHasCleanWorkingCopy())
         .Executes(() =>
         {
             EnsureCleanDirectory(ReferencesDirectory);

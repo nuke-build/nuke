@@ -122,7 +122,7 @@ partial class Build : NukeBuild
     Target Publish => _ => _
         .DependsOn(Pack)
         .Requires(() => ApiKey)
-        .Requires(() => !GitHasUncommitedChanges())
+        .Requires(() => GitHasCleanWorkingCopy())
         .Requires(() => !NuGet || Configuration.EqualsOrdinalIgnoreCase("release"))
         .Requires(() => !NuGet || GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch))
         .Executes(() =>
@@ -197,7 +197,7 @@ partial class Build : NukeBuild
         });
 
     Target Release => _ => _
-        .Requires(() => !GitHasUncommitedChanges())
+        .Requires(() => GitHasCleanWorkingCopy())
         .Executes(() =>
         {
             if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase("release"))
