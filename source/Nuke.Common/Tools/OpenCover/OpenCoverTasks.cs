@@ -29,22 +29,5 @@ namespace Nuke.Common.Tools.OpenCover
                 "*/*.Designer.cs",
                 "*/*.g.cs",
                 "*/*.g.i.cs");
-
-        [Obsolete("Use " + nameof(OpenCoverSettings) + "." + nameof(OpenCoverSettingsExtensions.SetTargetSettings) + " instead.")]
-        public static void OpenCover(Action testAction, Configure<OpenCoverSettings> configurator = null)
-        {
-            configurator = configurator ?? (x => x);
-            OpenCover(x => configurator(x).SetTestAction(testAction));
-        }
-
-        [Obsolete("Use " + nameof(OpenCoverSettings) + "." + nameof(OpenCoverSettingsExtensions.SetTargetSettings) + " instead.")]
-        public static void OpenCover(
-            Action testAction,
-            string output,
-            Configure<OpenCoverSettings> configurator = null)
-        {
-            configurator = configurator ?? (x => x);
-            OpenCover(testAction, x => configurator(x).SetOutput(output));
-        }
     }
 }

@@ -18,13 +18,6 @@ namespace Nuke.Common.Tooling
     [PublicAPI]
     public static class NuGetPackageResolver
     {
-        [Obsolete("Use GetLocalInstalledPackage(...).Directory instead.")]
-        [CanBeNull]
-        public static string GetLocalInstalledPackageDirectory(string packageId, string packagesConfigFile = null)
-        {
-            return Path.GetDirectoryName(GetLocalInstalledPackage(packageId, packagesConfigFile)?.FileName);
-        }
-
         [CanBeNull]
         public static InstalledPackage GetLocalInstalledPackage(string packageId, string packagesConfigFile = null)
         {
