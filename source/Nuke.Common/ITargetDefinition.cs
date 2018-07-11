@@ -45,7 +45,7 @@ namespace Nuke.Common
         ///   Adds a set of dependent shadow targets that will be executed before this target.
         ///   Non-existent shadow targets will automatically being skipped.
         /// </summary>
-        ITargetDefinition DependsOn(params string[] shadowTargets);
+        ITargetDefinition DependsOn(params string[] targets);
 
         /// <summary>
         ///   Adds a set of conditions that will be checked before executing this target.
@@ -73,6 +73,16 @@ namespace Nuke.Common
         /// Defines if the dependencies should be skipped if the target is skipped.
         /// </summary>
         ITargetDefinition WhenSkipped(DependencyBehavior dependencyBehavior);
+
+        /// <summary>
+        ///  Defines if this target should run before other targets.
+        /// </summary>
+        ITargetDefinition Before(params Target[] targets);
+
+        /// <summary>
+        ///  Defines if this target should run after other targets.
+        /// </summary>
+        ITargetDefinition After(params Target[] targets);
     }
 
     /// <summary>
