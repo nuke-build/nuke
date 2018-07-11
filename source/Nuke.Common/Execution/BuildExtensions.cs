@@ -31,6 +31,10 @@ namespace Nuke.Common.Execution
                 var dependencies = GetDependencies(targetDefinition, nameDictionary, factoryDictionary);
                 targetDefinition.TargetDefinitionDependencies.AddRange(dependencies);
                 targetDefinition.IsDefault = targetDefinition.Factory == defaultTarget;
+                
+                targetDefinition.TargetDefinitionDependencies.AddRange(targetDefinition.RunAfterTargets.Select(x => factoryDictionary[x]));
+                targetDefinition.TargetDefinitionDependencies.AddRange(
+                    targetDefinitions.Where(x => x.RunBeforeTargets.Any(y => y == targetDefinition.Factory)));
             }
 
             return targetDefinitions;
@@ -47,11 +51,11 @@ namespace Nuke.Common.Execution
             IReadOnlyDictionary<string, TargetDefinition> nameDictionary,
             IReadOnlyDictionary<Target, TargetDefinition> factoryDictionary)
         {
-            return targetDefinition.ShadowTargetDependencies
-                .Select(shadowTargetName => nameDictionary.TryGetValue(shadowTargetName, out var shadowTarget)
-                    ? shadowTarget
-                    : TargetDefinition.Create(shadowTargetName))
-                .Concat(targetDefinition.TargetDependencies.Select(x => factoryDictionary[x]));
+            return targetDefinition.NamedDependencies
+                .Select(x => nameDictionary.TryGetValue(x, out var namedTarget)
+                    ? namedTarget
+                    : TargetDefinition.Create(x))
+                .Concat(targetDefinition.FactoryDependencies.Select(x => factoryDictionary[x]));
         }
 
         public static IReadOnlyCollection<MemberInfo> GetParameterMembers(this NukeBuild build)

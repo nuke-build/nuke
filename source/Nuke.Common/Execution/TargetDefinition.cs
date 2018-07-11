@@ -22,12 +22,14 @@ namespace Nuke.Common.Execution
         {
             Name = name;
             Factory = factory;
-            TargetDependencies = new List<Target>();
-            ShadowTargetDependencies = new List<string>();
+            FactoryDependencies = new List<Target>();
+            NamedDependencies = new List<string>();
             Actions = new List<Action>();
             Conditions = new List<Func<bool>>();
             Requirements = new List<LambdaExpression>();
             TargetDefinitionDependencies = new List<TargetDefinition>();
+            RunBeforeTargets = new List<Target>();
+            RunAfterTargets = new List<Target>();
 
             factory?.Invoke(this);
         }
@@ -43,12 +45,14 @@ namespace Nuke.Common.Execution
         internal ExecutionStatus Status { get; set; }
         internal List<Func<bool>> Conditions { get; }
         internal List<LambdaExpression> Requirements { get; }
-        internal List<Target> TargetDependencies { get; }
-        internal List<string> ShadowTargetDependencies { get; }
+        internal List<Target> FactoryDependencies { get; }
+        internal List<string> NamedDependencies { get; }
         internal List<TargetDefinition> TargetDefinitionDependencies { get; }
         internal List<Action> Actions { get; }
         internal DependencyBehavior DependencyBehavior { get; private set; }
         internal bool Skip { get; set; }
+        internal List<Target> RunBeforeTargets { get; private set; }
+        internal List<Target> RunAfterTargets { get; private set; }
 
         ITargetDefinition ITargetDefinition.Description(string description)
         {
@@ -74,13 +78,13 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition DependsOn(params Target[] targets)
         {
-            TargetDependencies.AddRange(targets);
+            FactoryDependencies.AddRange(targets);
             return this;
         }
 
-        public ITargetDefinition DependsOn(params string[] shadowTargets)
+        public ITargetDefinition DependsOn(params string[] targets)
         {
-            ShadowTargetDependencies.AddRange(shadowTargets);
+            NamedDependencies.AddRange(targets);
             return this;
         }
 
@@ -113,6 +117,18 @@ namespace Nuke.Common.Execution
         public ITargetDefinition WhenSkipped(DependencyBehavior dependencyBehavior)
         {
             DependencyBehavior = dependencyBehavior;
+            return this;
+        }
+
+        public ITargetDefinition Before(params Target[] targets)
+        {
+            RunBeforeTargets.AddRange(targets);
+            return this;
+        }
+
+        public ITargetDefinition After(params Target[] targets)
+        {
+            RunAfterTargets.AddRange(targets);
             return this;
         }
 
