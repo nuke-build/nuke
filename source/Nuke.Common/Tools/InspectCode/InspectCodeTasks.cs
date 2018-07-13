@@ -26,7 +26,7 @@ namespace Nuke.Common.Tools.InspectCode
             .SetTargetPath(NukeBuild.Instance.SolutionFile)
             .SetOutput(Path.Combine(NukeBuild.Instance.OutputDirectory, "inspectCode.xml"));
 
-        static partial void PreProcess(InspectCodeSettings toolSettings)
+        private static void PreProcess(ref InspectCodeSettings toolSettings)
         {
             var installedPlugins = GetInstalledPlugins();
             if (installedPlugins.Count == 0 && toolSettings.Extensions.Count == 0)
@@ -48,7 +48,7 @@ namespace Nuke.Common.Tools.InspectCode
         }
 
         [CanBeNull]
-        private static IProcess StartProcess(InspectCodeSettings toolSettings, ProcessSettings processSettings)
+        private static IProcess StartProcess(InspectCodeSettings toolSettings)
         {
             var installedPackages = GetInstalledPlugins();
             if (toolSettings.Extensions.Count > 0 || installedPackages.Count > 0)
@@ -59,10 +59,10 @@ namespace Nuke.Common.Tools.InspectCode
                         GetPackageExecutable()));
             }
 
-            return ProcessTasks.StartProcess(toolSettings, processSettings);
+            return ProcessTasks.StartProcess(toolSettings);
         }
 
-        static partial void PostProcess(InspectCodeSettings toolSettings)
+        private static void PostProcess(InspectCodeSettings toolSettings)
         {
             TeamCity.Instance?.ImportData(TeamCityImportType.ReSharperInspectCode, toolSettings.Output);
         }

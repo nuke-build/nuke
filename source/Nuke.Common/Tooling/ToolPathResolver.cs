@@ -48,7 +48,8 @@ namespace Nuke.Common.Tooling
                 workingDirectory: null,
                 environmentVariables: null,
                 timeout: null,
-                redirectOutput: true,
+                logOutput: false,
+                logLevelParser: null,
                 outputFilter: null);
             locateProcess.AssertWaitForExit();
 

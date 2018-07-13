@@ -35,7 +35,7 @@ using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
 
-class Build : NukeBuild
+partial class Build : NukeBuild
 {
     public static int Main() => Execute<Build>(x => x.Pack);
 
@@ -216,36 +216,6 @@ class Build : NukeBuild
 
             Git($"add {ChangelogFile}");
             Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.MajorMinorPatch}\"");
-        });
-
-    string SpecificationsDirectory => BuildProjectDirectory / "specifications";
-    string ReferencesDirectory => BuildProjectDirectory / "references";
-    string GenerationDirectory => RootDirectory / "source" / "Nuke.Common" / "Tools";
-    string ToolSchemaFile => SourceDirectory / "Nuke.CodeGeneration" / "schema.json";
-
-    Target References => _ => _
-        .Requires(() => !GitHasUncommitedChanges())
-        .Executes(() =>
-        {
-            EnsureCleanDirectory(ReferencesDirectory);
-            
-            UpdateReferences(SpecificationsDirectory, ReferencesDirectory);
-        });
-    
-    Target Generate => _ => _
-        .Executes(() =>
-        {
-            GenerateSchema<Tool>(
-                ToolSchemaFile,
-                GitRepository.GetGitHubDownloadUrl(ToolSchemaFile, "master"),
-                "Tool specification schema file by NUKE");
-
-            GenerateCode(
-                SpecificationsDirectory,
-                GenerationDirectory,
-                baseNamespace: "Nuke.Common.Tools",
-                useNestedNamespaces: true,
-                gitRepository: GitRepository.SetBranch("master"));
         });
 
     Target Full => _ => _

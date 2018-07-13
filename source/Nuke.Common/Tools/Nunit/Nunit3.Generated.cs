@@ -29,28 +29,25 @@ namespace Nuke.Common.Tools.Nunit
         /// <summary><p>Path to the Nunit executable.</p></summary>
         public static string NunitPath => ToolPathResolver.GetPackageExecutable("NUnit.ConsoleRunner", "nunit3-console.exe");
         /// <summary><p>NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href="http://www.junit.org/">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.</p></summary>
-        public static IEnumerable<string> Nunit(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool redirectOutput = false, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Nunit(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(NunitPath, arguments, workingDirectory, environmentVariables, timeout, redirectOutput, outputFilter);
+            var process = ProcessTasks.StartProcess(NunitPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
             process.AssertZeroExitCode();
-            return process.HasOutput ? process.Output.Select(x => x.Text) : null;
+            return process.Output;
         }
-        static partial void PreProcess(Nunit3Settings toolSettings);
-        static partial void PostProcess(Nunit3Settings toolSettings);
         /// <summary><p>NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href="http://www.junit.org/">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.</p><p>For more details, visit the <a href="https://www.nunit.org/">official website</a>.</p></summary>
-        public static void Nunit3(Configure<Nunit3Settings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> Nunit3(Configure<Nunit3Settings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new Nunit3Settings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
         /// <summary><p>NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href="http://www.junit.org/">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.</p><p>For more details, visit the <a href="https://www.nunit.org/">official website</a>.</p></summary>
-        public static void Nunit3(List<string> inputFiles, Configure<Nunit3Settings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> Nunit3(List<string> inputFiles, Configure<Nunit3Settings> configurator = null)
         {
             configurator = configurator ?? (x => x);
-            Nunit3(x => configurator(x).SetInputFiles(inputFiles));
+            return Nunit3(x => configurator(x).SetInputFiles(inputFiles));
         }
     }
     #region Nunit3Settings

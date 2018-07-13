@@ -29,34 +29,33 @@ namespace Nuke.Common.Tools.InspectCode
         /// <summary><p>Path to the InspectCode executable.</p></summary>
         public static string InspectCodePath => ToolPathResolver.GetPackageExecutable("JetBrains.ReSharper.CommandLineTools", GetPackageExecutable());
         /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p></summary>
-        public static IEnumerable<string> InspectCode(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool redirectOutput = false, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> InspectCode(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(InspectCodePath, arguments, workingDirectory, environmentVariables, timeout, redirectOutput, outputFilter);
+            var process = ProcessTasks.StartProcess(InspectCodePath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
             process.AssertZeroExitCode();
-            return process.HasOutput ? process.Output.Select(x => x.Text) : null;
+            return process.Output;
         }
-        static partial void PreProcess(InspectCodeSettings toolSettings);
-        static partial void PostProcess(InspectCodeSettings toolSettings);
         /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p><p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p></summary>
-        public static void InspectCode(Configure<InspectCodeSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> InspectCode(Configure<InspectCodeSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new InspectCodeSettings());
-            PreProcess(toolSettings);
-            var process = StartProcess(toolSettings, processSettings);
+            PreProcess(ref toolSettings);
+            var process = StartProcess(toolSettings);
             process.AssertZeroExitCode();
             PostProcess(toolSettings);
+            return process.Output;
         }
         /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p><p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p></summary>
-        public static void InspectCode(string targetPath, Configure<InspectCodeSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> InspectCode(string targetPath, Configure<InspectCodeSettings> configurator = null)
         {
             configurator = configurator ?? (x => x);
-            InspectCode(x => configurator(x).SetTargetPath(targetPath));
+            return InspectCode(x => configurator(x).SetTargetPath(targetPath));
         }
         /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p><p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p></summary>
-        public static void InspectCode(string targetPath, string output, Configure<InspectCodeSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> InspectCode(string targetPath, string output, Configure<InspectCodeSettings> configurator = null)
         {
             configurator = configurator ?? (x => x);
-            InspectCode(targetPath, x => configurator(x).SetOutput(output));
+            return InspectCode(targetPath, x => configurator(x).SetOutput(output));
         }
     }
     #region InspectCodeSettings

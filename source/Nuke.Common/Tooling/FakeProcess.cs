@@ -20,9 +20,7 @@ namespace Nuke.Common.Tooling
 
         public string WorkingDirectory => throw new NotSupportedException();
 
-        public IEnumerable<Output> Output => Enumerable.Empty<Output>();
-
-        public bool HasOutput => false;
+        public IReadOnlyCollection<Output> Output => new List<Output>();
 
         public int ExitCode => 0;
 

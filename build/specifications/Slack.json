@@ -15,7 +15,7 @@
   "dataClasses": [
     {
       "name": "SlackMessage",
-      "noArguments": true,
+      "extensionMethods": true,
       "properties": [
         {
           "name": "Channel",
@@ -59,7 +59,7 @@
     },
     {
       "name": "SlackMessageAttachment",
-      "noArguments": true,
+      "extensionMethods": true,
       "properties": [
         {
           "name": "Title",
@@ -161,7 +161,7 @@
     },
     {
       "name": "SlackMessageField",
-      "noArguments": true,
+      "extensionMethods": true,
       "properties": [
         {
           "name": "Title",

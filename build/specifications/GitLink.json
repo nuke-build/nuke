@@ -16,6 +16,7 @@
   "tasks": [
     {
       "postfix": "2",
+      "preProcess": true,
       "settingsClass": {
         "properties": [
           {
@@ -101,6 +102,7 @@
     },
     {
       "postfix": "3",
+      "preProcess": true,
       "settingsClass": {
         "properties": [
           {

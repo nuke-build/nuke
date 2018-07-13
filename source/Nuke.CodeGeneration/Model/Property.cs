@@ -55,9 +55,6 @@ namespace Nuke.CodeGeneration.Model
         [Description("Custom implementation of the property.")]
         public bool CustomImpl { get; set; }
 
-        [Description("Skips appendig of extension methods.")]
-        public bool NoExtensionMethod { get; set; }
-
         [Description("Separator used for items of collection types.")]
         public char? Separator { get; set; }
 

@@ -14,8 +14,7 @@ namespace Nuke.Common.Tooling
     {
         public CapturedProcessStartInfo CapturedProcessStartInfo { get; private set; }
 
-        [NotNull]
-        public override IProcess StartProcess(ToolSettings toolSettings, ProcessSettings processSettings = null)
+        public override IProcess StartProcess(ToolSettings toolSettings)
         {
             var toolPath = toolSettings.ToolPath;
             var arguments = toolSettings.GetArguments();
@@ -23,31 +22,29 @@ namespace Nuke.Common.Tooling
             ControlFlow.Assert(toolPath != null, "ToolPath was not set.");
             ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
 
-            processSettings = processSettings ?? new ProcessSettings();
             return StartProcess(
                 toolPath,
                 arguments.RenderForExecution(),
                 toolSettings.WorkingDirectory,
-                processSettings.EnvironmentVariables,
-                processSettings.ExecutionTimeout,
-                processSettings.RedirectOutput,
-                processSettings.RedirectOutput ? new Func<string, string>(arguments.Filter) : null);
+                toolSettings.EnvironmentVariables,
+                toolSettings.ExecutionTimeout,
+                toolSettings.LogOutput,
+                outputFilter: arguments.Filter);
         }
 
-        [NotNull]
         public override IProcess StartProcess(
             string toolPath,
             string arguments = null,
             string workingDirectory = null,
             IReadOnlyDictionary<string, string> environmentVariables = null,
             int? timeout = null,
-            bool redirectOutput = false,
+            bool logOutput = true,
+            Func<string, LogLevel> logLevelParser = null,
             Func<string, string> outputFilter = null)
         {
             // TODO: check environment variables
             //ControlFlow.Assert(environmentVariables == null, "environmentVariables == null");
             ControlFlow.Assert(timeout == null, "timeout == null");
-            ControlFlow.Assert(!redirectOutput, "!redirectOutput");
             ControlFlow.Assert(outputFilter == null, "outputFilter == null");
 
             var fakeProcessStartInfo =

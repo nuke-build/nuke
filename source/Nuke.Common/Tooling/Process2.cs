@@ -16,37 +16,20 @@ namespace Nuke.Common.Tooling
         private readonly Process _process;
         private readonly int? _timeout;
 
-        [CanBeNull]
-        private readonly BlockingCollection<Output> _output;
-
-        private readonly Func<string, string> _outputFilter;
-
-        public Process2(Process process, int? timeout, [CanBeNull] BlockingCollection<Output> output, Func<string, string> outputFilter)
+        public Process2(Process process, int? timeout, IReadOnlyCollection<Output> output)
         {
             _process = process;
             _timeout = timeout;
-            _output = output;
-            _outputFilter = outputFilter;
+            Output = output;
         }
 
         public string FileName => _process.StartInfo.FileName;
 
-        public string Arguments => _outputFilter(_process.StartInfo.Arguments);
+        public string Arguments => _process.StartInfo.Arguments;
 
         public string WorkingDirectory => _process.StartInfo.WorkingDirectory;
 
-        public IEnumerable<Output> Output
-        {
-            get
-            {
-                // TODO: Should not throw exceptions
-                ControlFlow.Assert(_output != null, "_output != null");
-                ControlFlow.Assert(_process.HasExited, "_process.HasExited");
-                return _output.Select(x => new Output { Type = x.Type, Text = _outputFilter(x.Text) });
-            }
-        }
-
-        public bool HasOutput => _output != null;
+        public IReadOnlyCollection<Output> Output { get; private set; }
 
         public int ExitCode => _process.ExitCode;
 
@@ -62,6 +45,8 @@ namespace Nuke.Common.Tooling
 
         public bool WaitForExit()
         {
+            // TODO: we are assuming that this method is called directly after process creation
+            // use _process.StartTime
             var hasExited = _process.WaitForExit(_timeout ?? -1);
             if (!hasExited)
                 _process.Kill();

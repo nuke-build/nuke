@@ -53,5 +53,39 @@ namespace Nuke.Common.Tools.DotNet
             .EnableNoBuild()
             .SetConfiguration(NukeBuild.Instance.Configuration)
             .SetProjectFile(NukeBuild.Instance.SolutionFile);
+
+        internal static LogLevel ParseLogLevel(string arg)
+        {
+            var spaces = 0;
+            for (var i = 0; i < arg.Length && spaces < 3; i++)
+            {
+                if (arg[i] == ' ')
+                {
+                    spaces++;
+                    continue;
+                }
+
+                if (i >= 4 && 
+                    'e' == arg[i - 4] &&
+                    'r' == arg[i - 3] &&
+                    'r' == arg[i - 2] &&
+                    'o' == arg[i - 1] &&
+                    'r' == arg[i])
+                    return LogLevel.Error;
+
+                if (i >= 6 && 
+                    'w' == arg[i - 6] &&
+                    'a' == arg[i - 5] &&
+                    'r' == arg[i - 4] &&
+                    'n' == arg[i - 3] &&
+                    'i' == arg[i - 2] &&
+                    'n' == arg[i - 1] &&
+                    'g' == arg[i])
+                    return LogLevel.Warning;
+                    
+            }
+            
+            return LogLevel.Information;
+        }
     }
 }
