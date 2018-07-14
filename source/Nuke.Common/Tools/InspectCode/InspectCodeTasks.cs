@@ -34,7 +34,7 @@ namespace Nuke.Common.Tools.InspectCode
 
             var shadowDirectory = GetShadowDirectory(toolSettings, installedPlugins);
 
-            FileSystemTasks.CopyRecursively(
+            FileSystemTasks.CopyDirectoryRecursively(
                 Path.GetDirectoryName(toolSettings.ToolPath).NotNull(),
                 shadowDirectory,
                 FileSystemTasks.FileExistsPolicy.OverwriteIfNewer);

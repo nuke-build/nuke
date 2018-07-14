@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Nuke.CodeGeneration.Model;
 using Nuke.Common.Git;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.DotNet;
@@ -19,9 +18,6 @@ using Nuke.Common;
 using Nuke.Common.Tools.ReportGenerator;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
-using static Nuke.CodeGeneration.CodeGenerator;
-using static Nuke.CodeGeneration.ReferenceUpdater;
-using static Nuke.CodeGeneration.SchemaGenerator;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.ControlFlow;
 using static Nuke.Common.Gitter.GitterTasks;
@@ -120,7 +116,7 @@ partial class Build : NukeBuild
         });
 
     Target Publish => _ => _
-        .DependsOn(Pack)
+        .DependsOn(Test, Pack)
         .Requires(() => ApiKey)
         .Requires(() => GitHasCleanWorkingCopy())
         .Requires(() => !NuGet || Configuration.EqualsOrdinalIgnoreCase("release"))
@@ -137,7 +133,7 @@ partial class Build : NukeBuild
             
             if (NuGet)
             {
-                Git($"push origin {MasterBranch} {DevelopBranch} {GitVersion.SemVer}");
+                Git($"push origin {MasterBranch} {DevelopBranch} {GitVersion.MajorMinorPatch}");
                 
                 var releaseUrl = $"https://www.nuget.org/packages/Nuke.Common/{GitVersion.SemVer}). ";
                 var message = GitVersion.Patch == 0
@@ -197,15 +193,20 @@ partial class Build : NukeBuild
         });
 
     Target Release => _ => _
-        .Requires(() => GitHasCleanWorkingCopy())
         .Executes(() =>
         {
             if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase("release"))
             {
+                Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
                 Git($"checkout -b release/{GitVersion.MajorMinorPatch} {DevelopBranch}");
             }
             else
             {
+                FinalizeChangelog(ChangelogFile, GitVersion.MajorMinorPatch, GitRepository);
+                Git($"add {ChangelogFile}");
+                Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.MajorMinorPatch}\"");
+                Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
+
                 Git($"checkout {DevelopBranch}");
                 Git($"merge --no-ff --no-edit release/{GitVersion.MajorMinorPatch}");
                 Git($"checkout {MasterBranch}");
@@ -214,17 +215,4 @@ partial class Build : NukeBuild
                 Git($"branch -d release/{GitVersion.MajorMinorPatch}");
             }
         });
-    
-    Target Changelog => _ => _
-        .Requires(() => GitRepository.Branch.StartsWithOrdinalIgnoreCase("release"))
-        .Executes(() =>
-        {
-            FinalizeChangelog(ChangelogFile, GitVersion.SemVer, GitRepository);
-
-            Git($"add {ChangelogFile}");
-            Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.MajorMinorPatch}\"");
-        });
-
-    Target Full => _ => _
-        .DependsOn(Test, Analysis, Publish);
 }

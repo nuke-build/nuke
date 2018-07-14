@@ -141,7 +141,9 @@ namespace Nuke.Common.IO
 
         public static void CopyDirectoryRecursively(string source, string target, FileExistsPolicy policy = FileExistsPolicy.Fail)
         {
+#pragma warning disable 618
             CopyRecursively(source, target, policy);
+#pragma warning restore 618
         }
 
         [Obsolete("Use " + nameof(CopyDirectoryRecursively))]
