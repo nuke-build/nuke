@@ -26,11 +26,17 @@ namespace Nuke.Common
     ///     public static int Main () => Execute&lt;DefaultBuild&gt;(x => x.Compile);
     /// 
     ///     Target Clean =&gt; _ =&gt; _
-    ///             .Executes(() =&gt; EnsureCleanDirectory(OutputDirectory));
+    ///         .Executes(() =&gt;
+    ///         {
+    ///             EnsureCleanDirectory(OutputDirectory);
+    ///         });
     /// 
     ///     Target Compile =&gt; _ =&gt; _
-    ///             .DependsOn(Clean)
-    ///             .Executes(() =&gt; MSBuild(SolutionFile);
+    ///         .DependsOn(Clean)
+    ///         .Executes(() =&gt;
+    ///         {
+    ///             MSBuild(SolutionFile);
+    ///         });
     /// }
     /// </code>
     /// </example>
@@ -57,7 +63,7 @@ namespace Nuke.Common
         internal IReadOnlyCollection<TargetDefinition> TargetDefinitions { get; set; }
 
         /// <summary>
-        /// Logging verbosity while building. Default is <see cref="Core.Verbosity.Normal"/>.
+        /// Logging verbosity while building. Default is <see cref="Nuke.Common.Verbosity.Normal"/>.
         /// </summary>
         [Parameter("Logging verbosity while building. Default is 'Normal'.")]
         public Verbosity Verbosity { get; set; } = Verbosity.Normal;
@@ -79,9 +85,6 @@ namespace Nuke.Common
         /// </summary>
         [Parameter("Disables execution of dependent targets.", Name = "Skip", Separator = "+")]
         public string[] SkippedTargets { get; } = EnvironmentInfo.SkippedTargets;
-
-        //[Parameter("Specifies that no logo should be printed.")]
-        //public bool NoLogo { get; set; }
 
         /// <summary>
         /// Enables sanity checks for the <c>PATH</c> environment variable.
