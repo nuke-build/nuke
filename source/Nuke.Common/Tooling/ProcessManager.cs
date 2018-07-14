@@ -38,10 +38,10 @@ namespace Nuke.Common.Tooling
             var argumentsForOutput = arguments.RenderForOutput();
 
 #if NETCORE
-            if (EnvironmentInfo.IsUnix && toolPath.EndsWithOrdinalIgnoreCase("exe"))
+            if (EnvironmentInfo.IsUnix && toolPath.EndsWithOrdinalIgnoreCase(".exe"))
             {
-                argumentsForExecution = $"{toolPath.DoubleQuoteIfNeeded()} {argumentsForExecution}";
-                argumentsForOutput = $"{toolPath.DoubleQuoteIfNeeded()} {argumentsForOutput}";
+                argumentsForExecution = $"{toolPath.DoubleQuoteIfNeeded()} {argumentsForExecution}".TrimEnd();
+                argumentsForOutput = $"{toolPath.DoubleQuoteIfNeeded()} {argumentsForOutput}".TrimEnd();
                 toolPath = ToolPathResolver.GetPathExecutable("mono");
             }
 #endif
@@ -74,6 +74,14 @@ namespace Nuke.Common.Tooling
             ControlFlow.Assert(toolPath != null, "ToolPath was not set.");
             if (!Path.IsPathRooted(toolPath) && !toolPath.Contains(Path.DirectorySeparatorChar))
                 toolPath = ToolPathResolver.GetPathExecutable(toolPath);
+
+#if NETCORE
+            if (EnvironmentInfo.IsUnix && toolPath.EndsWithOrdinalIgnoreCase(".exe"))
+            {
+                arguments = $"{toolPath.DoubleQuoteIfNeeded()} {arguments}".TrimEnd();
+                toolPath = ToolPathResolver.GetPathExecutable("mono");
+            }
+#endif
 
             ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
             Logger.Info($"> {Path.GetFullPath(toolPath).DoubleQuoteIfNeeded()} {arguments}");
