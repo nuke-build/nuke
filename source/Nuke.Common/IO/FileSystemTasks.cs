@@ -45,14 +45,15 @@ namespace Nuke.Common.IO
 
         public static void EnsureCleanDirectory(string directory)
         {
-            if (!Directory.Exists(directory))
-            {
-                EnsureExistingDirectory(directory);
-            }
-            else
+            if (Directory.Exists(directory))
             {
                 Logger.Info($"Cleaning directory '{directory}'...");
                 DeleteDirectoryInternal(directory);
+                Directory.CreateDirectory(directory);
+            }
+            else
+            {
+                EnsureExistingDirectory(directory);
             }
         }
 
