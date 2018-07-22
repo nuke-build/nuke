@@ -17,5 +17,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Nuke.Common\Nuke.Common.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Remove="templates\*.cs" />
+    <EmbeddedResource Include="templates\*" />
+  </ItemGroup>
 
 </Project>
