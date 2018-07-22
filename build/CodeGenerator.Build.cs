@@ -33,7 +33,7 @@ partial class Build
         {
             GenerateSchema<Tool>(
                 ToolSchemaFile,
-                GitRepository.GetGitHubDownloadUrl(ToolSchemaFile, "master"),
+                GitRepository.GetGitHubDownloadUrl(ToolSchemaFile, MasterBranch),
                 "Tool specification schema file by NUKE");
 
             GenerateCode(
@@ -41,6 +41,6 @@ partial class Build
                 GenerationDirectory,
                 baseNamespace: "Nuke.Common.Tools",
                 useNestedNamespaces: true,
-                gitRepository: GitRepository.SetBranch("master"));
+                gitRepository: GitRepository.SetBranch(MasterBranch));
         });
 }

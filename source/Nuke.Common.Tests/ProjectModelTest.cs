@@ -29,7 +29,7 @@ namespace Nuke.Common.Tests
 
             solution.Projects.Where(x => x.Is(ProjectType.CSharpProject)).Should().HaveCount(6);
 
-            var buildProject = solution.Projects.SingleOrDefault(x => x.Name == ".build");
+            var buildProject = solution.Projects.SingleOrDefault(x => x.Name == "_build");
             buildProject.Should().NotBeNull();
             buildProject.Is(ProjectType.CSharpProject).Should().BeTrue();
         }

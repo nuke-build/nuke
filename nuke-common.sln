@@ -1,9 +1,9 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = ".build", "build\.build.csproj", "{BB6A9024-24DB-4170-A09B-02349148A78F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{BB6A9024-24DB-4170-A09B-02349148A78F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Common", "source\Nuke.Common\Nuke.Common.csproj", "{B6D4E654-6822-42FF-86AD-DB07BE759760}"
 EndProject
