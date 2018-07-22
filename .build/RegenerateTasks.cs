@@ -24,7 +24,9 @@ internal static class RegenerateTasks
 {
     public struct NSwagRelease
     {
+        [CanBeNull]
         public Version Version { get; }
+
         public string BuildNumber { get; }
         public GitVersionBump Bump { get; }
 
@@ -54,7 +56,6 @@ internal static class RegenerateTasks
 
     public static void CheckoutBranchOrCreateNewFrom(string branch, string branchToCreateFrom)
     {
-        var currentBranch = GitTasks.GitCurrentBranch();
         try
         {
             GitTasks.Git($"checkout -B {branch} --track  refs/remotes/origin/{branch}", redirectOutput: true);
@@ -109,22 +110,26 @@ internal static class RegenerateTasks
     {
         return GitTasks.Git("log -1 --pretty=%B", redirectOutput: true).ToArray();
     }
+
     public static void AddAndCommitChanges(string[] message, string[] refs, bool addUntracked = false)
     {
         GitAdd(addUntracked, refs);
         GitCommit(message);
     }
 
+    [CanBeNull]
     private static Version GetVersion(Release release, string repositoryOwner, string repositoryName, string githubApiKey)
     {
         var commit = GitHubTasks.GetCommit(repositoryOwner, repositoryName, release.TargetCommitish, githubApiKey);
         var versionRegex = new Regex("Release v(?'version'\\d+\\.\\d+\\.\\d+)$", RegexOptions.IgnoreCase);
         var versionString = versionRegex.Match(commit.Message).Groups["version"].Value;
-        return Version.Parse(versionString);
+        Version.TryParse(versionString, out var version);
+        return version;
     }
 
-    private static GitVersionBump GetBump(Version latest, Version old)
+    private static GitVersionBump GetBump([CanBeNull] Version latest, [CanBeNull] Version old)
     {
+        if (old == null || latest == null) return GitVersionBump.Patch;
         if (latest.Major > old.Major) return GitVersionBump.Major;
         return latest.Minor > old.Minor ? GitVersionBump.Minor : GitVersionBump.Patch;
     }
@@ -144,5 +149,4 @@ internal static class RegenerateTasks
                 throw new ArgumentOutOfRangeException(nameof(bump), bump, null);
         }
     }
-
 }

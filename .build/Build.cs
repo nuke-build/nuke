@@ -142,6 +142,11 @@ class Build : NukeBuild
         .Executes(() =>
         {
             var release = GetReleaseInformation(LatestNSwagReleases.Value, c_nSwagRepoOwner, c_nSwagRepoName, GitHubApiKey);
+            if (release.Version == null)
+            {
+                Logger.Info($"Build {release.BuildNumber} was not published to nuGet. PR will not be created.");
+                return;
+            }
 
             var branch = $"nswag-update-{release.Version}";
             var versionName = $"NSwag v{release.Version}";
