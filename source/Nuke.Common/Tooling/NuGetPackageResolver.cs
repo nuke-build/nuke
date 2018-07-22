@@ -168,9 +168,12 @@ namespace Nuke.Common.Tooling
             return packagesDirectory.NotNull("GetPackagesDirectory != null");
         }
 
+        [CanBeNull]
         public static string GetBuildPackagesConfigFile()
         {
-            return GetPackageConfigFile(EnvironmentInfo.BuildProjectDirectory).NotNull("GetBuildPackagesConfigFile != null");
+            return NukeBuild.Instance != null
+                ? GetPackageConfigFile(EnvironmentInfo.BuildProjectDirectory).NotNull("GetBuildPackagesConfigFile != null")
+                : null;
         }
 
         private static bool IsLegacyFile(string packagesConfigFile)
