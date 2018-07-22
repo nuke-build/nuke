@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <NukeExternalFiles Include="**\*.*.ext" Exclude="bin/**;obj/**" />
     <NukeMetadata Include="**/*.json" Exclude="bin/**;obj/**" />
     <None Remove="*.csproj.DotSettings;*.ref.*.txt" />
   </ItemGroup>
