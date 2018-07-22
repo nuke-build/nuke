@@ -3,20 +3,22 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
+using System.Reflection;
 using Nuke.Common;
 using Nuke.Common.IO;
-using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 
 namespace Nuke.GlobalTool
 {
-    public class Program
+    public static partial class Program
     {
         private static string ScriptHost => EnvironmentInfo.IsWin ? "powershell" : "bash";
         private static string ScriptExtension => EnvironmentInfo.IsWin ? "ps1" : "sh";
+        
+        private const char c_commandPrefix = ':';
 
         private static void Main(string[] args)
         {
@@ -33,56 +35,56 @@ namespace Nuke.GlobalTool
 
         private static void Handle(string[] args)
         {
-            var hasCommand = args.FirstOrDefault()?.StartsWithOrdinalIgnoreCase("!") ?? false;
+            var rootDirectory = FileSystemTasks.FindParentDirectory(
+                Directory.GetCurrentDirectory(),
+                x => x.GetFiles(NukeBuild.ConfigurationFile).Any());
+            
+            var hasCommand = args.FirstOrDefault()?.StartsWithOrdinalIgnoreCase(c_commandPrefix.ToString()) ?? false;
             if (hasCommand)
             {
-                var command = args.First().Trim(trimChar: '!');
+                var command = args.First().Trim(trimChar: c_commandPrefix);
                 if (string.IsNullOrWhiteSpace(command))
-                    ControlFlow.Fail("No command specified. Usage is: nuke !<command> [args]");
+                    ControlFlow.Fail($"No command specified. Usage is: nuke {c_commandPrefix}<command> [args]");
 
-                var arguments = args.Skip(count: 1).JoinSpace();
-                if (command.EqualsOrdinalIgnoreCase("setup"))
+                var commandHandler = typeof(Program).GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
+                    .SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(command));
+                ControlFlow.Assert(commandHandler != null, $"Command '{command}' is not supported.");
+
+                try
                 {
-                    Setup(arguments);
+                    commandHandler.Invoke(obj: null, parameters: new object[] { rootDirectory, args.Skip(count: 1).ToArray() });
                     return;
                 }
-
-                ControlFlow.Fail($"Command '{command}' is not supported.");
+                catch (TargetInvocationException ex)
+                {
+                    ControlFlow.Fail(ex.InnerException.Message);
+                }
             }
 
-            var currentDirectory = new DirectoryInfo(Directory.GetCurrentDirectory());
-            var rootDirectory = FileSystemTasks.FindParentDirectory(currentDirectory, x => x.GetFiles(NukeBuild.ConfigurationFile).Any());
-            var buildScript = rootDirectory?
-                .EnumerateFiles($"build.{ScriptExtension}", maxDepth: 2)
-                .FirstOrDefault()?.FullName;
+            var buildScript = rootDirectory != null
+                ? new DirectoryInfo(rootDirectory)
+                    .EnumerateFiles($"build.{ScriptExtension}", maxDepth: 2)
+                    .FirstOrDefault()?.FullName.DoubleQuoteIfNeeded()
+                : null;
 
             if (buildScript == null)
             {
                 if (UserConfirms($"Could not find {NukeBuild.ConfigurationFile} file. Do you want to setup a build?"))
-                    Setup();
+                    Setup(rootDirectory, new string[0]);
                 return;
             }
 
             // TODO: docker
-            RunScript(buildScript, args.Select(x => x.DoubleQuoteIfNeeded()).JoinSpace());
-        }
 
-        private static void Setup(string args = null)
-        {
-            // TODO: embed all bootstrapping files and reimplement setup for offline usage?
-            // TODO: alternatively, use a similar approach as in SetupIntegrationTest
-            var setupScript = Path.Combine(Directory.GetCurrentDirectory(), $"setup.{ScriptExtension}");
-            if (!File.Exists(setupScript))
-            {
-                using (var webClient = new WebClient())
-                {
-                    var setupScriptUrl = $"https://nuke.build/{ScriptHost}";
-                    Logger.Log($"Downloading setup script from {setupScriptUrl}");
-                    webClient.DownloadFile(setupScriptUrl, setupScript);
-                }
-            }
+            var arguments = args.Select(x => x.DoubleQuoteIfNeeded()).JoinSpace();
+            var process = Process.Start(
+                ScriptHost,
+                EnvironmentInfo.IsWin
+                    ? $"-File {buildScript} {arguments}"
+                    : $"{buildScript} {arguments}").NotNull();
 
-            RunScript(setupScript, args);
+            process.WaitForExit();
+            Environment.Exit(process.ExitCode);
         }
 
         private static bool UserConfirms(string question)
@@ -95,21 +97,6 @@ namespace Nuke.GlobalTool
             } while (response != ConsoleKey.Y && response != ConsoleKey.N);
 
             return response == ConsoleKey.Y;
-        }
-
-        private static void RunScript(string file, string arguments = null)
-        {
-            file = file.DoubleQuoteIfNeeded();
-            
-            var process = ProcessTasks.StartProcess(
-                ScriptHost,
-                EnvironmentInfo.IsWin
-                    ? $"-File {file} {arguments}"
-                    : $"{file} {arguments}");
-
-            process.AssertWaitForExit();
-            if (process.ExitCode != 0)
-                Environment.Exit(process.ExitCode);
         }
     }
 }

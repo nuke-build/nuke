@@ -25,7 +25,7 @@ namespace Nuke.Common.Tests
             var solution = ProjectModelTasks.ParseSolution(SolutionFile);
 
             solution.Projects.Where(x => x.Is(ProjectType.SolutionFolder)).Select(x => x.Name)
-                .Should().BeEquivalentTo("bootstrapping", "misc");
+                .Should().BeEquivalentTo("misc");
 
             solution.Projects.Where(x => x.Is(ProjectType.CSharpProject)).Should().HaveCount(6);
 

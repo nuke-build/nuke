@@ -15,8 +15,8 @@ $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 ###########################################################################
 
 $SolutionDirectory = "$PSScriptRoot\_SOLUTION_DIRECTORY_"
-$BuildProjectFile = "$PSScriptRoot\_BUILD_DIRECTORY_NAME_\_BUILD_PROJECT_NAME_.csproj"
-$BuildExeFile = "$PSScriptRoot\_BUILD_DIRECTORY_NAME_\bin\debug\_BUILD_PROJECT_NAME_.exe"
+$BuildProjectFile = "$PSScriptRoot\_BUILD_DIRECTORY_\_BUILD_PROJECT_NAME_.csproj"
+$BuildExeFile = "$PSScriptRoot\_BUILD_DIRECTORY_\bin\debug\_BUILD_PROJECT_NAME_.exe"
 $TempDirectory = "$PSScriptRoot\_ROOT_DIRECTORY_\.tmp"
 
 $NuGetVersion = "_NUGET_VERSION_"
