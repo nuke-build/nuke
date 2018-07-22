@@ -6,7 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NuGet.Packaging;
 using NuGet.Versioning;
 using Nuke.Common.IO;
@@ -18,6 +21,21 @@ namespace Nuke.Common.Tooling
     [PublicAPI]
     public static class NuGetPackageResolver
     {
+        public static async Task<string> GetLatestPackageVersion(string packageId, bool includePrereleases, int? timeout = null)
+        {
+            try
+            {
+                var url = $"https://api-v2v3search-0.nuget.org/query?q=packageid:{packageId}&prerelease={includePrereleases}";
+                var response = await HttpTasks.HttpDownloadStringAsync(url, requestConfigurator: x => x.Timeout = timeout ?? int.MaxValue);
+                var packageObject = JsonConvert.DeserializeObject<JObject>(response);
+                return packageObject["data"].Single()["version"].ToString();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         [CanBeNull]
         public static InstalledPackage GetLocalInstalledPackage(string packageId, string packagesConfigFile = null)
         {
@@ -148,7 +166,7 @@ namespace Nuke.Common.Tooling
             if (packagesDirectory != null)
                 return packagesDirectory;
 
-            if (!IsLegacyFile(packagesConfigFile))
+            if (packagesConfigFile == null || !IsLegacyFile(packagesConfigFile))
             {
                 return Path.Combine(
                     EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile)
