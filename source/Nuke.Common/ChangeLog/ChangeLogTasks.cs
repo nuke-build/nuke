@@ -68,7 +68,7 @@ namespace Nuke.Common.ChangeLog
 
             content.Add(string.Empty);
 
-            TextTasks.WriteAllText(changelogFile, content);
+            TextTasks.WriteAllLines(changelogFile, content);
         }
 
         private static IEnumerable<ReleaseSection> GetReleaseSections(List<string> content)

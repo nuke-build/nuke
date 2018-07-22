@@ -14,16 +14,17 @@ namespace Nuke.Common.IO
     [PublicAPI]
     public static class TextTasks
     {
-        private static UTF8Encoding UTF8NoBom => new UTF8Encoding(encoderShouldEmitUTF8Identifier: false, throwOnInvalidBytes: true);
+        public static UTF8Encoding UTF8NoBom => new UTF8Encoding(encoderShouldEmitUTF8Identifier: false, throwOnInvalidBytes: true);
 
-        public static void WriteAllText(string path, IEnumerable<string> lines, Encoding encoding = null)
+        public static void WriteAllLines(string path, IEnumerable<string> lines, Encoding encoding = null)
         {
-            WriteAllText(path, lines.ToArray(), encoding);
+            WriteAllLines(path, lines.ToArray(), encoding);
         }
 
-        public static void WriteAllText(string path, string[] lines, Encoding encoding = null)
+        public static void WriteAllLines(string path, string[] lines, Encoding encoding = null)
         {
-            WriteAllText(path, string.Join(EnvironmentInfo.NewLine, lines), encoding);
+            FileSystemTasks.EnsureExistingParentDirectory(path);
+            File.WriteAllLines(path, lines, encoding);
         }
 
         public static void WriteAllText(string path, string content, Encoding encoding = null)
