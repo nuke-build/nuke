@@ -5,9 +5,9 @@
 using System;
 using System.Linq;
 
-namespace Nuke.Common.Tools.VsTest
+namespace Nuke.Common.Tools.VSTest
 {
-    public static partial class VsTestTasks
+    partial class VSTestTasks
     {
         private static string GetToolPath()
         {
