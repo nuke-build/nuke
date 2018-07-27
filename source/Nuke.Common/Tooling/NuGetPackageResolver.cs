@@ -63,6 +63,7 @@ namespace Nuke.Common.Tooling
             var installedPackages = new HashSet<InstalledPackage>(InstalledPackage.Comparer.Instance);
             foreach (var packageId in packageIds)
             {
+                // TODO: use xml namespaces
                 // TODO: version as tag
                 var version = XmlTasks.XmlPeekSingle(
                         packagesConfigFile,
@@ -166,6 +167,21 @@ namespace Nuke.Common.Tooling
             if (packagesDirectory != null)
                 return packagesDirectory;
 
+            var configSetting = GetConfigFiles(packagesConfigFile)
+                .Select(x => new
+                             {
+                                 File = x,
+                                 Setting = XmlTasks.XmlPeek(x, ".//add[@key='globalPackagesFolder']/@value").FirstOrDefault()
+                             })
+                .Where(x => x.Setting != null)
+                .FirstOrDefault();
+            if (configSetting != null)
+            {
+                return Path.IsPathRooted(configSetting.Setting)
+                    ? configSetting.Setting
+                    : Path.Combine(Path.GetDirectoryName(configSetting.File).NotNull(), configSetting.Setting);
+            }
+
             if (packagesConfigFile == null || !IsLegacyFile(packagesConfigFile))
             {
                 return Path.Combine(
@@ -202,6 +218,63 @@ namespace Nuke.Common.Tooling
         private static bool IncludesDependencies(string packagesConfigFile)
         {
             return IsLegacyFile(packagesConfigFile);
+        }
+
+        public static IEnumerable<string> GetConfigFiles([CanBeNull] string packagesConfigFile)
+        {
+            var directories = new List<string>();
+
+            if (packagesConfigFile != null)
+            {
+                directories.AddRange(Directory.GetParent(packagesConfigFile)
+                    .DescendantsAndSelf(x => x.Parent)
+                    .Select(x => x.FullName));
+            }
+
+            if (EnvironmentInfo.IsWin)
+            {
+                directories.Add(Path.Combine(
+                    EnvironmentInfo.SpecialFolder(SpecialFolders.ApplicationData).NotNull(),
+                    "NuGet"));
+                
+                directories.Add(Path.Combine(
+                    EnvironmentInfo.SpecialFolder(SpecialFolders.ProgramFilesX86).NotNull(),
+                    "NuGet",
+                    "Config"));
+            }
+            
+            if (EnvironmentInfo.IsUnix)
+            {
+                directories.Add(Path.Combine(
+                    EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile).NotNull(),
+                    ".config",
+                    "NuGet"));
+                
+                directories.Add(Path.Combine(
+                    EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile).NotNull(),
+                    ".nuget",
+                    "NuGet"));
+             
+                var dataHomeDirectoy = EnvironmentInfo.Variable("XDG_DATA_HOME");
+                if (!string.IsNullOrEmpty(dataHomeDirectoy))
+                {
+                    directories.Add(dataHomeDirectoy);
+                }
+                else
+                {
+                    directories.Add(Path.Combine(
+                        EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile).NotNull(),
+                        ".local",
+                        "share"));
+                    
+                    // TODO: /usr/local/share
+                }
+            }
+
+            return directories
+                .Where(Directory.Exists)
+                .SelectMany(x => Directory.GetFiles(x, "nuget.config", SearchOption.TopDirectoryOnly))
+                .Where(File.Exists);
         }
 
         // TODO: move out of class
