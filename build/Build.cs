@@ -166,8 +166,10 @@ partial class Build : NukeBuild
         .DependsOn(Compile)
         .Executes(() =>
         {
+            var framework = "net461";
             var xunitSettings = new Xunit2Settings()
-                .AddTargetAssemblies(GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/net4*/Nuke.*.Tests.dll").NotEmpty())
+                .SetFramework(framework)
+                .AddTargetAssemblies(GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/{framework}/Nuke.*.Tests.dll").NotEmpty())
                 .AddResultReport(Xunit2ResultFormat.Xml, OutputDirectory / "tests.xml");
 
             if (IsWin)

@@ -9,11 +9,22 @@ using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.Xunit
 {
-    public static partial class XunitTasks
+    partial class Xunit2Settings
     {
-        private static string GetPackageExecutable()
+        private string GetToolPath()
         {
-            return EnvironmentInfo.Is64Bit ? "xunit.console.exe" : "xunit.console.x86.exe";
+            return XunitTasks.GetToolPath(Framework);
+        }
+    }
+    
+    partial class XunitTasks
+    {
+        internal static string GetToolPath(string framework = null)
+        {
+            return ToolPathResolver.GetPackageExecutable(
+                packageId: "xunit.runner.console", 
+                packageExecutable: EnvironmentInfo.Is64Bit ? "xunit.console.exe" : "xunit.console.x86.exe", 
+                framework);
         }
 
         public static void Xunit2(
