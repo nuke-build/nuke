@@ -27,7 +27,7 @@ namespace Nuke.Common.Tools.Xunit
     public static partial class XunitTasks
     {
         /// <summary><p>Path to the Xunit executable.</p></summary>
-        public static string XunitPath => ToolPathResolver.GetPackageExecutable("xunit.runner.console", GetPackageExecutable());
+        public static string XunitPath => GetToolPath();
         /// <summary><p>xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Written by the original inventor of NUnit v2, xUnit.net is the latest technology for unit testing C#, F#, VB.NET and other .NET languages. xUnit.net works with ReSharper, CodeRush, TestDriven.NET and Xamarin. It is part of the <a href="https://www.dotnetfoundation.org/">.NET Foundation</a>, and operates under their <a href="https://www.dotnetfoundation.org/code-of-conduct">code of conduct</a>. It is licensed under <a href="https://opensource.org/licenses/Apache-2.0">Apache 2</a> (an OSI approved license).</p></summary>
         public static IReadOnlyCollection<Output> Xunit(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
@@ -52,7 +52,7 @@ namespace Nuke.Common.Tools.Xunit
     public partial class Xunit2Settings : ToolSettings
     {
         /// <summary><p>Path to the Xunit executable.</p></summary>
-        public override string ToolPath => base.ToolPath ?? XunitTasks.XunitPath;
+        public override string ToolPath => base.ToolPath ?? GetToolPath();
         /// <summary><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
         public virtual ILookup<string, string> TargetAssemblyWithConfigs => TargetAssemblyWithConfigsInternal.AsReadOnly();
         internal LookupTable<string, string> TargetAssemblyWithConfigsInternal { get; set; } = new LookupTable<string, string>(StringComparer.OrdinalIgnoreCase);
@@ -104,6 +104,7 @@ namespace Nuke.Common.Tools.Xunit
         /// <summary><p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p></summary>
         public virtual IReadOnlyDictionary<Xunit2ResultFormat, string> ResultReports => ResultReportsInternal.AsReadOnly();
         internal Dictionary<Xunit2ResultFormat, string> ResultReportsInternal { get; set; } = new Dictionary<Xunit2ResultFormat, string>(EqualityComparer<Xunit2ResultFormat>.Default);
+        public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -1018,6 +1019,24 @@ namespace Nuke.Common.Tools.Xunit
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ResultReportsInternal[resultReportKey] = resultReportValue;
+            return toolSettings;
+        }
+        #endregion
+        #region Framework
+        /// <summary><p><em>Sets <see cref="Xunit2Settings.Framework"/>.</em></p></summary>
+        [Pure]
+        public static Xunit2Settings SetFramework(this Xunit2Settings toolSettings, string framework)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = framework;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="Xunit2Settings.Framework"/>.</em></p></summary>
+        [Pure]
+        public static Xunit2Settings ResetFramework(this Xunit2Settings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = null;
             return toolSettings;
         }
         #endregion
