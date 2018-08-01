@@ -34,16 +34,6 @@ namespace Nuke.Common.OutputSinks
                 () => _teamCity.CloseBlock(text));
         }
 
-        public override void Trace(string text)
-        {
-            _teamCity.WriteMessage(text);
-        }
-
-        public override void Info(string text)
-        {
-            _teamCity.WriteMessage(text);
-        }
-
         public override void Warn(string text, string details = null)
         {
             _teamCity.WriteWarning(text);
