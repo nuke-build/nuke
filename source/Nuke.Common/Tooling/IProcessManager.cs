@@ -25,7 +25,5 @@ namespace Nuke.Common.Tooling
             bool logOutput = true,
             Func<string, LogLevel> logLevelParser = null,
             Func<string, string> outputFilter = null);
-
-        CapturedProcessStartInfo CaptureProcessStartInfo(Action action);
     }
 }

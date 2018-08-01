@@ -18,18 +18,6 @@ namespace Nuke.Common.Tooling
     {
         public static IProcessManager Instance { get; private set; } = new ProcessManager();
 
-        public CapturedProcessStartInfo CaptureProcessStartInfo(Action action)
-        {
-            var fakeProcessManager = new CapturingProcessManager();
-            using (DelegateDisposable.CreateBracket(
-                () => Instance = fakeProcessManager,
-                () => Instance = this))
-            {
-                action();
-                return fakeProcessManager.CapturedProcessStartInfo;
-            }
-        }
-
         public virtual IProcess StartProcess(ToolSettings toolSettings)
         {
             var toolPath = toolSettings.ToolPath;

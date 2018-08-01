@@ -45,10 +45,5 @@ namespace Nuke.Common.Tooling
         {
             return ProcessManager.Instance.StartProcess(toolSettings);
         }
-
-        public static CapturedProcessStartInfo CaptureProcessStartInfo(Action action)
-        {
-            return ProcessManager.Instance.CaptureProcessStartInfo(action);
-        }
     }
 }
