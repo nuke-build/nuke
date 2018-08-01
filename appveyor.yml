@@ -1,13 +1,4 @@
 image: Visual Studio 2017
 
 build_script:
-  - ps: .\build.ps1 publish
-
-branches:
-  only:
-    - develop
-    - master
-
-environment:
-  apikey:
-    secure: lKkxA6MJ2bc7Cl5E9ghzD8dI4J5uD5oXhtkeUAIkn1vL2afoWwwgY3G5fYCRhaYe
+  - ps: .\build.ps1 test+pack
