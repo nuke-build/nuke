@@ -30,7 +30,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Nuke Include="..\..\build\CodeGenerator.*.cs" />
+    <Nuke Include="..\..\build\Build.CodeGeneration.cs" />
   </ItemGroup>
   
 </Project>
