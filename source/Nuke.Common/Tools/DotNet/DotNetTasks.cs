@@ -9,6 +9,14 @@ using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.DotNet
 {
+    partial class DotNetRunSettings
+    {
+        private string GetApplicationArguments()
+        {
+            return ApplicationArguments;
+        }
+    }
+    
     public static partial class DotNetTasks
     {
         public static string GetToolPath()

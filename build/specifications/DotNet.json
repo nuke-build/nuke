@@ -188,6 +188,7 @@
             "name": "ApplicationArguments",
             "type": "string",
             "format": "-- {value}",
+            "customValue": true,
             "help": "Arguments passed to the application being run."
           }
         ]

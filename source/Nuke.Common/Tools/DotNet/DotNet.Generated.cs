@@ -232,7 +232,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--no-restore", NoRestore)
               .Add("--project {value}", ProjectFile)
               .Add("--runtime {value}", Runtime)
-              .Add("-- {value}", ApplicationArguments);
+              .Add("-- {value}", GetApplicationArguments(), customValue: true);
             return base.ConfigureArguments(arguments);
         }
     }

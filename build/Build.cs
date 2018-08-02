@@ -55,7 +55,7 @@ partial class Build : NukeBuild
 
     Target Clean => _ => _
         .Executes(() =>
-        { 
+        {
             DeleteDirectories(GlobDirectories(SourceDirectory, "*/bin", "*/obj"));
             EnsureCleanDirectory(OutputDirectory);
         });
