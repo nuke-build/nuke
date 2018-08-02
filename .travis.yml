@@ -27,4 +27,4 @@ git:
   depth: false
 
 script:
-  - ./build.sh
+  - ./build.sh pack+test
