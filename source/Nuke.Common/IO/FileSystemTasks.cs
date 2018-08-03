@@ -142,20 +142,18 @@ namespace Nuke.Common.IO
 
         public static void CopyDirectoryRecursively(string source, string target, FileExistsPolicy policy = FileExistsPolicy.Fail)
         {
-#pragma warning disable 618
-            CopyRecursively(source, target, policy);
-#pragma warning restore 618
-        }
-
-        [Obsolete("Use " + nameof(CopyDirectoryRecursively))]
-        public static void CopyRecursively(string source, string target, FileExistsPolicy policy = FileExistsPolicy.Fail)
-        {
             ControlFlow.Assert(Directory.Exists(source), $"Directory.Exists({source})");
             ControlFlow.Assert(!Contains(target, source), $"Source '{source}' is not contained in target '{target}'.");
             //ControlFlow.Assert(!Contains(source, target), $"Target '{target}' is not contained in source '{source}'.");
 
             Logger.Info($"Copying recursively from '{source}' to '{target}'...");
             CopyRecursivelyInternal(source, target, policy);
+        }
+
+        [Obsolete("Use " + nameof(CopyDirectoryRecursively))]
+        public static void CopyRecursively(string source, string target, FileExistsPolicy policy = FileExistsPolicy.Fail)
+        {
+            CopyDirectoryRecursively(source, target, policy);
         }
 
         private static bool ShouldCopyFile(string sourceFile, string targetFile, FileExistsPolicy policy)
@@ -269,12 +267,15 @@ namespace Nuke.Common.IO
             }
         }
 
-        public static string GetDirectoryHash(string directory)
+        public static string GetDirectoryHash(string directory, params string[] fileGlobPatterns)
         {
             ControlFlow.Assert(Directory.Exists(directory), $"Directory.Exists({directory})");
 
-            var files = Directory.GetFiles(directory, "*", SearchOption.AllDirectories).OrderBy(x => x).ToList();
-
+            var files = (fileGlobPatterns.Length == 0
+                    ? Directory.GetFiles(directory, "*", SearchOption.AllDirectories)
+                    : PathConstruction.GlobFiles(directory, fileGlobPatterns))
+                .OrderBy(x => x).ToList();
+            
             using (var md5 = MD5.Create())
             {
                 foreach (var file in files)
