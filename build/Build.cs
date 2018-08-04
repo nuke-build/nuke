@@ -42,7 +42,7 @@ partial class Build : NukeBuild
     [Parameter] string SymbolSource = "https://nuget.smbsrc.net/";
     
     [Parameter("Gitter authtoken.")] readonly string GitterAuthToken;
-    [Parameter("Slack webhook.")] readonly string SlackWebhook = "https://hooks.slack.com/services/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";
+    [Parameter("Slack webhook.")] readonly string SlackWebhook;
     
     [Parameter("Install global tool.")] readonly bool InstallGlobalTool;
 
