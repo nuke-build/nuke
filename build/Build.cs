@@ -64,7 +64,8 @@ partial class Build : NukeBuild
         .DependsOn(Clean)
         .Executes(() =>
         {
-            DotNetRestore(s => DefaultDotNetRestore);
+            DotNetRestore(s => s
+                .SetProjectFile(Solution));
         });
 
     Project CommonProject => Solution.GetProject("Nuke.Common").NotNull();
@@ -76,22 +77,35 @@ partial class Build : NukeBuild
         .Requires(() => IsUnix || GitVersion != null)
         .Executes(() =>
         {
-            DotNetBuild(s => DefaultDotNetBuild);
+            DotNetBuild(s => s
+                .SetProjectFile(Solution)
+                .EnableNoRestore()
+                .SetConfiguration(Configuration)
+                .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())
+                .SetFileVersion(GitVersion.GetNormalizedFileVersion())
+                .SetInformationalVersion(GitVersion.InformationalVersion));
 
-            DotNetPublish(s => DefaultDotNetPublish
+            var publishSettings = new DotNetPublishSettings()
+                .EnableNoRestore()
+                .SetConfiguration(Configuration)
+                .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())
+                .SetFileVersion(GitVersion.GetNormalizedFileVersion())
+                .SetInformationalVersion(GitVersion.InformationalVersion);
+
+            DotNetPublish(s => publishSettings
                 .SetProject(GlobalToolProject));
 
-            DotNetPublish(s => DefaultDotNetPublish
+            DotNetPublish(s => publishSettings
                 .SetProject(CommonProject)
                 .SetFramework("netstandard2.0"));
-            DotNetPublish(s => DefaultDotNetPublish
+            DotNetPublish(s => publishSettings
                 .SetProject(CommonProject)
                 .SetFramework("net461"));
 
-            DotNetPublish(s => DefaultDotNetPublish
+            DotNetPublish(s => publishSettings
                 .SetProject(CodeGenerationProject)
                 .SetFramework("netstandard2.0"));
-            DotNetPublish(s => DefaultDotNetPublish
+            DotNetPublish(s => publishSettings
                 .SetProject(CodeGenerationProject)
                 .SetFramework("net461"));
         });
@@ -110,7 +124,13 @@ partial class Build : NukeBuild
                 .Concat($"Full changelog at {GitRepository.GetGitHubBrowseUrl(ChangelogFile)}")
                 .JoinNewLine();
 
-            DotNetPack(s => DefaultDotNetPack
+            DotNetPack(s => s
+                .SetProject(Solution)
+                .EnableNoBuild()
+                .SetConfiguration(Configuration)
+                .EnableIncludeSymbols()
+                .SetOutputDirectory(OutputDirectory)
+                .SetVersion(GitVersion.NuGetVersionV2)
                 .SetPackageReleaseNotes(releaseNotes));
 
             if (InstallGlobalTool)
@@ -132,11 +152,17 @@ partial class Build : NukeBuild
 
             if (IsWin)
             {
-                OpenCover(s => DefaultOpenCover
-                    .SetOutput(OutputDirectory / "coverage.xml")
+                OpenCover(s => s
                     .SetTargetSettings(xunitSettings)
+                    .SetOutput(OutputDirectory / "coverage.xml")
                     .SetSearchDirectories(xunitSettings.TargetAssemblyWithConfigs.Select(x => Path.GetDirectoryName(x.Key)))
-                    .AddFilters("-[Nuke.Common]Nuke.Core.*"));
+                    .SetRegistration(RegistrationType.User)
+                    .SetTargetExitCodeOffset(targetExitCodeOffset: 0)
+                    .SetFilters(
+                        "+[*]*",
+                        "-[xunit.*]*",
+                        "-[FluentAssertions.*]*")
+                    .SetExcludeByAttributes("System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute"));
 
                 ReportGenerator(s => s
                     .AddReports(OutputDirectory / "coverage.xml")
@@ -151,7 +177,9 @@ partial class Build : NukeBuild
         .DependsOn(Restore)
         .Executes(() =>
         {
-            InspectCode(s => DefaultInspectCode
+            InspectCode(s => s
+                .SetTargetPath(Solution)
+                .SetOutput(OutputDirectory / "inspectCode.xml")
                 .AddExtensions(
                     "EtherealCode.ReSpeller",
                     "PowerToys.CyclomaticComplexity",
