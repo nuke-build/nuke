@@ -12,13 +12,6 @@ namespace Nuke.NSwag
 {
     public static partial class NSwagTasks
     {
-        public static string GetNetCoreDllPath (string runtime)
-        {
-            var packageDir = (PathConstruction.AbsolutePath) NuGetPackageResolver.GetLocalInstalledPackageDirectory("nswag.msbuild")
-                    .NotNull("Package NSwag.MSBuild not found. Please install the package to your build project.");
-            return packageDir / "build" / runtime / "dotnet-nswag.dll";
-        }
-
         public static string GetToolPath ()
         {
             ControlFlow.Fail("Settings.NSwagRuntime must be defined to detect the proper nswag executable.");

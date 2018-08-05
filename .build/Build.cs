@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NuGet.Resolver;
 using Nuke.CodeGeneration;
 using Nuke.Common.Git;
 using Nuke.Common.ProjectModel;
@@ -74,7 +73,7 @@ class Build : NukeBuild
         .DependsOn(Clean)
         .Executes(() =>
         {
-            NugetPackageLoader.InstallPackage("Nswag.Commands", PackageDirectory, dependencyBehavior: DependencyBehavior.Highest);
+            NugetPackageLoader.InstallPackage("Nswag.Commands", PackageDirectory, dependencyBehavior: NuGet.Resolver.DependencyBehavior.Highest);
         });
 
     Target Generate => _ => _
@@ -121,7 +120,7 @@ class Build : NukeBuild
     Target Push => _ => _
         .DependsOn(Pack)
         .Requires(() => ApiKey)
-        .Requires(() => !GitHasUncommitedChanges())
+        .Requires(() => GitHasCleanWorkingCopy())
         .Requires(() => !PreRelease || Configuration.EqualsOrdinalIgnoreCase("release"))
         .Requires(() => !PreRelease || GitVersion.BranchName.Equals("master"))
         .Executes(() =>
@@ -139,6 +138,8 @@ class Build : NukeBuild
         .Requires(() => GitHubApiKey)
         .Requires(() => LatestNSwagRelease != null)
         .DependsOn(CompilePlugin)
+        .OnlyWhen(ShouldRegenerate)
+        .WhenSkipped(DependencyBehavior.Skip)
         .Executes(() =>
         {
             var release = GetReleaseInformation(LatestNSwagReleases.Value, c_nSwagRepoOwner, c_nSwagRepoName, GitHubApiKey);

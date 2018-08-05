@@ -2,10 +2,11 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-// Generated with Nuke.CodeGeneration, Version: 0.5.3 [CommitSha: 0aff3c55].
+// Generated with Nuke.CodeGeneration, Version: 0.6.0 [CommitSha: 5a428f0d].
 // Generated from https://github.com/nuke-build/nswag/blob/master/src/Nuke.NSwag/specifications/NSwag.json.
 
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 using Nuke.Common;
 using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
@@ -28,154 +29,115 @@ namespace Nuke.NSwag
         /// <summary><p>Path to the NSwag executable.</p></summary>
         public static string NSwagPath => GetToolPath();
         /// <summary><p>The project combines the functionality of Swashbuckle (Swagger generation) and AutoRest (client generation) in one toolchain. This way a lot of incompatibilites can be avoided and features which are not well described by the Swagger specification or JSON Schema are better supported (e.g. <a href="https://github.com/NJsonSchema/NJsonSchema/wiki/Inheritance">inheritance</a>, <a href="https://github.com/NJsonSchema/NJsonSchema/wiki/Enums">enum</a> and reference handling). The NSwag project heavily uses <a href="http://njsonschema.org/">NJsonSchema for .NET</a> for JSON Schema handling and C#/TypeScript class/interface generation.</p></summary>
-        public static IEnumerable<string> NSwag(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool redirectOutput = false, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> NSwag(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(NSwagPath, arguments, workingDirectory, environmentVariables, timeout, redirectOutput, outputFilter);
+            var process = ProcessTasks.StartProcess(NSwagPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
             process.AssertZeroExitCode();
-            return process.HasOutput ? process.Output.Select(x => x.Text) : null;
+            return process.Output;
         }
-        static partial void PreProcess(NSwagVersionSettings toolSettings);
-        static partial void PostProcess(NSwagVersionSettings toolSettings);
         /// <summary><p>Prints the toolchain version.</p><p>For more details, visit the <a href="https://github.com/RSuter/NSwag">official website</a>.</p></summary>
-        public static void NSwagVersion(Configure<NSwagVersionSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> NSwagVersion(Configure<NSwagVersionSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new NSwagVersionSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(NSwagListTypesSettings toolSettings);
-        static partial void PostProcess(NSwagListTypesSettings toolSettings);
         /// <summary><p>List all types for the given assembly and settings.</p><p>For more details, visit the <a href="https://github.com/RSuter/NSwag">official website</a>.</p></summary>
-        public static void NSwagListTypes(Configure<NSwagListTypesSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> NSwagListTypes(Configure<NSwagListTypesSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new NSwagListTypesSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(NSwagListWebApiControllersSettings toolSettings);
-        static partial void PostProcess(NSwagListWebApiControllersSettings toolSettings);
         /// <summary><p>List all controllers classes for the given assembly and settings.</p><p>For more details, visit the <a href="https://github.com/RSuter/NSwag">official website</a>.</p></summary>
-        public static void NSwagListWebApiControllers(Configure<NSwagListWebApiControllersSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> NSwagListWebApiControllers(Configure<NSwagListWebApiControllersSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new NSwagListWebApiControllersSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(NSwagTypesToSwaggerSettings toolSettings);
-        static partial void PostProcess(NSwagTypesToSwaggerSettings toolSettings);
         /// <summary><p>The project combines the functionality of Swashbuckle (Swagger generation) and AutoRest (client generation) in one toolchain. This way a lot of incompatibilites can be avoided and features which are not well described by the Swagger specification or JSON Schema are better supported (e.g. <a href="https://github.com/NJsonSchema/NJsonSchema/wiki/Inheritance">inheritance</a>, <a href="https://github.com/NJsonSchema/NJsonSchema/wiki/Enums">enum</a> and reference handling). The NSwag project heavily uses <a href="http://njsonschema.org/">NJsonSchema for .NET</a> for JSON Schema handling and C#/TypeScript class/interface generation.</p><p>For more details, visit the <a href="https://github.com/RSuter/NSwag">official website</a>.</p></summary>
-        public static void NSwagTypesToSwagger(Configure<NSwagTypesToSwaggerSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> NSwagTypesToSwagger(Configure<NSwagTypesToSwaggerSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new NSwagTypesToSwaggerSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(NSwagWebApiToSwaggerSettings toolSettings);
-        static partial void PostProcess(NSwagWebApiToSwaggerSettings toolSettings);
         /// <summary><p>Generates a Swagger specification for a controller or controlles contained in a .NET Web API assembly.</p><p>For more details, visit the <a href="https://github.com/RSuter/NSwag">official website</a>.</p></summary>
-        public static void NSwagWebApiToSwagger(Configure<NSwagWebApiToSwaggerSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> NSwagWebApiToSwagger(Configure<NSwagWebApiToSwaggerSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new NSwagWebApiToSwaggerSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(NSwagAspNetCoreToSwaggerSettings toolSettings);
-        static partial void PostProcess(NSwagAspNetCoreToSwaggerSettings toolSettings);
         /// <summary><p>Generates a Swagger specification ASP.NET Core Mvc application using ApiExplorer (experimental).</p><p>For more details, visit the <a href="https://github.com/RSuter/NSwag">official website</a>.</p></summary>
-        public static void NSwagAspNetCoreToSwagger(Configure<NSwagAspNetCoreToSwaggerSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> NSwagAspNetCoreToSwagger(Configure<NSwagAspNetCoreToSwaggerSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new NSwagAspNetCoreToSwaggerSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(NSwagCreateDocumentSettings toolSettings);
-        static partial void PostProcess(NSwagCreateDocumentSettings toolSettings);
         /// <summary><p>Creates a new nswag.json file in the current directory.</p><p>For more details, visit the <a href="https://github.com/RSuter/NSwag">official website</a>.</p></summary>
-        public static void NSwagCreateDocument(Configure<NSwagCreateDocumentSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> NSwagCreateDocument(Configure<NSwagCreateDocumentSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new NSwagCreateDocumentSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(NSwagExecuteDocumentSettings toolSettings);
-        static partial void PostProcess(NSwagExecuteDocumentSettings toolSettings);
         /// <summary><p>Executes an .nswag file. If 'input' is not specified then all *.nswag files and the nswag.json file is executed.</p><p>For more details, visit the <a href="https://github.com/RSuter/NSwag">official website</a>.</p></summary>
-        public static void NSwagExecuteDocument(Configure<NSwagExecuteDocumentSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> NSwagExecuteDocument(Configure<NSwagExecuteDocumentSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new NSwagExecuteDocumentSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(NSwagJsonSchemaToCSharpSettings toolSettings);
-        static partial void PostProcess(NSwagJsonSchemaToCSharpSettings toolSettings);
         /// <summary><p>Generates CSharp classes from a JSON Schema.</p><p>For more details, visit the <a href="https://github.com/RSuter/NSwag">official website</a>.</p></summary>
-        public static void NSwagJsonSchemaToCSharp(Configure<NSwagJsonSchemaToCSharpSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> NSwagJsonSchemaToCSharp(Configure<NSwagJsonSchemaToCSharpSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new NSwagJsonSchemaToCSharpSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(NSwagJsonSchemaToTypeScriptSettings toolSettings);
-        static partial void PostProcess(NSwagJsonSchemaToTypeScriptSettings toolSettings);
         /// <summary><p>Generates TypeScript interfaces from a JSON Schema.</p><p>For more details, visit the <a href="https://github.com/RSuter/NSwag">official website</a>.</p></summary>
-        public static void NSwagJsonSchemaToTypeScript(Configure<NSwagJsonSchemaToTypeScriptSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> NSwagJsonSchemaToTypeScript(Configure<NSwagJsonSchemaToTypeScriptSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new NSwagJsonSchemaToTypeScriptSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(NSwagSwaggerToCSharpClientSettings toolSettings);
-        static partial void PostProcess(NSwagSwaggerToCSharpClientSettings toolSettings);
         /// <summary><p>Generates CSharp client code from a Swagger specification.</p><p>For more details, visit the <a href="https://github.com/RSuter/NSwag">official website</a>.</p></summary>
-        public static void NSwagSwaggerToCSharpClient(Configure<NSwagSwaggerToCSharpClientSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> NSwagSwaggerToCSharpClient(Configure<NSwagSwaggerToCSharpClientSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new NSwagSwaggerToCSharpClientSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(NSwagSwaggerToCSharpControllerSettings toolSettings);
-        static partial void PostProcess(NSwagSwaggerToCSharpControllerSettings toolSettings);
         /// <summary><p>Generates CSharp Web API controller code from a Swagger specification.</p><p>For more details, visit the <a href="https://github.com/RSuter/NSwag">official website</a>.</p></summary>
-        public static void NSwagSwaggerToCSharpController(Configure<NSwagSwaggerToCSharpControllerSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> NSwagSwaggerToCSharpController(Configure<NSwagSwaggerToCSharpControllerSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new NSwagSwaggerToCSharpControllerSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
-        static partial void PreProcess(NSwagSwaggerToTypeScriptClientSettings toolSettings);
-        static partial void PostProcess(NSwagSwaggerToTypeScriptClientSettings toolSettings);
         /// <summary><p>Generates TypeScript client code from a Swagger specification.</p><p>For more details, visit the <a href="https://github.com/RSuter/NSwag">official website</a>.</p></summary>
-        public static void NSwagSwaggerToTypeScriptClient(Configure<NSwagSwaggerToTypeScriptClientSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> NSwagSwaggerToTypeScriptClient(Configure<NSwagSwaggerToTypeScriptClientSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new NSwagSwaggerToTypeScriptClientSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
     }
     #region NSwagVersionSettings
@@ -472,6 +434,8 @@ namespace Nuke.NSwag
         public virtual string MSBuildProjectExtensionsPath { get; internal set; }
         /// <summary><p>Don't build the project. Only use this when the build is up-to-date.</p></summary>
         public virtual bool? NoBuild { get; internal set; }
+        /// <summary><p>The working directory to use.</p></summary>
+        public virtual string NSwagWorkingDirectory { get; internal set; }
         /// <summary><p>The project to use.</p></summary>
         public virtual string Project { get; internal set; }
         /// <summary><p>The runtime to use.</p></summary>
@@ -552,6 +516,7 @@ namespace Nuke.NSwag
               .Add("/Configuration:{value}", Configuration)
               .Add("/MSBuildProjectExtensionsPath:{value}", MSBuildProjectExtensionsPath)
               .Add("/NoBuild:{value}", NoBuild)
+              .Add("/WorkingDirectory:{value}", NSwagWorkingDirectory)
               .Add("/Project:{value}", Project)
               .Add("/Runtime:{value}", Runtime)
               .Add("/TargetFramework:{value}", TargetFramework)
@@ -961,6 +926,8 @@ namespace Nuke.NSwag
         public virtual string ControllerBaseClass { get; internal set; }
         /// <summary><p>The controller generation style (partial, abstract; default: partial).</p></summary>
         public virtual CSharpControllerStyle ControllerStyle { get; internal set; }
+        /// <summary><p>The strategy for naming controller routes (none, operationid; default: none).</p></summary>
+        public virtual CSharpControllerRouteNamingStrategy RouteNamingStrategy { get; internal set; }
         /// <summary><p>Add a cancellation token parameter (default: false).</p></summary>
         public virtual bool? UseCancellationToken { get; internal set; }
         /// <summary><p>The additional contract namespace usages.</p></summary>
@@ -1060,6 +1027,7 @@ namespace Nuke.NSwag
               .Add("/AspNetNamespace:{value}", AspNetNamespace)
               .Add("/ControllerBaseClass:{value}", ControllerBaseClass)
               .Add("/ControllerStyle:{value}", ControllerStyle)
+              .Add("/RouteNamingStrategy:{value}", RouteNamingStrategy)
               .Add("/UseCancellationToken:{value}", UseCancellationToken)
               .Add("{value}", GetNSwagRuntime(), customValue: true)
               .Add("/AdditionalContractNamespaceUsages:{value}", AdditionalContractNamespaceUsages)
@@ -3437,6 +3405,24 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = !toolSettings.NoBuild;
+            return toolSettings;
+        }
+        #endregion
+        #region NSwagWorkingDirectory
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.NSwagWorkingDirectory"/>.</em></p><p>The working directory to use.</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings SetNSwagWorkingDirectory(this NSwagAspNetCoreToSwaggerSettings toolSettings, string nswagWorkingDirectory)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NSwagWorkingDirectory = nswagWorkingDirectory;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.NSwagWorkingDirectory"/>.</em></p><p>The working directory to use.</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ResetNSwagWorkingDirectory(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NSwagWorkingDirectory = null;
             return toolSettings;
         }
         #endregion
@@ -7220,6 +7206,24 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
+        #region RouteNamingStrategy
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.RouteNamingStrategy"/>.</em></p><p>The strategy for naming controller routes (none, operationid; default: none).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetRouteNamingStrategy(this NSwagSwaggerToCSharpControllerSettings toolSettings, CSharpControllerRouteNamingStrategy routeNamingStrategy)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RouteNamingStrategy = routeNamingStrategy;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.RouteNamingStrategy"/>.</em></p><p>The strategy for naming controller routes (none, operationid; default: none).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetRouteNamingStrategy(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RouteNamingStrategy = null;
+            return toolSettings;
+        }
+        #endregion
         #region UseCancellationToken
         /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.UseCancellationToken"/>.</em></p><p>Add a cancellation token parameter (default: false).</p></summary>
         [Pure]
@@ -10132,6 +10136,7 @@ namespace Nuke.NSwag
     /// <summary><p>Used within <see cref="NSwagTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class SchemaType : Enumeration
     {
         public static SchemaType JsonSchema = new SchemaType { Value = "JsonSchema" };
@@ -10143,6 +10148,7 @@ namespace Nuke.NSwag
     /// <summary><p>Used within <see cref="NSwagTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class PropertyNameHandling : Enumeration
     {
         public static PropertyNameHandling Default = new PropertyNameHandling { Value = "Default" };
@@ -10154,6 +10160,7 @@ namespace Nuke.NSwag
     /// <summary><p>Used within <see cref="NSwagTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class ReferenceTypeNullHandling : Enumeration
     {
         public static ReferenceTypeNullHandling Null = new ReferenceTypeNullHandling { Value = "Null" };
@@ -10164,6 +10171,7 @@ namespace Nuke.NSwag
     /// <summary><p>Used within <see cref="NSwagTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class EnumHandling : Enumeration
     {
         public static EnumHandling Integer = new EnumHandling { Value = "Integer" };
@@ -10175,6 +10183,7 @@ namespace Nuke.NSwag
     /// <summary><p>Used within <see cref="NSwagTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class OperationGenerationMode : Enumeration
     {
         public static OperationGenerationMode MultipleClientsFromOperationId = new OperationGenerationMode { Value = "MultipleClientsFromOperationId" };
@@ -10187,6 +10196,7 @@ namespace Nuke.NSwag
     /// <summary><p>Used within <see cref="NSwagTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class CSharpClassStyle : Enumeration
     {
         public static CSharpClassStyle Poco = new CSharpClassStyle { Value = "Poco" };
@@ -10199,16 +10209,29 @@ namespace Nuke.NSwag
     /// <summary><p>Used within <see cref="NSwagTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class CSharpControllerStyle : Enumeration
     {
         public static CSharpControllerStyle Partial = new CSharpControllerStyle { Value = "Partial" };
         public static CSharpControllerStyle Abstract = new CSharpControllerStyle { Value = "Abstract" };
     }
     #endregion
+    #region CSharpControllerRouteNamingStrategy
+    /// <summary><p>Used within <see cref="NSwagTasks"/>.</p></summary>
+    [PublicAPI]
+    [Serializable]
+    [ExcludeFromCodeCoverage]
+    public partial class CSharpControllerRouteNamingStrategy : Enumeration
+    {
+        public static CSharpControllerRouteNamingStrategy None = new CSharpControllerRouteNamingStrategy { Value = "None" };
+        public static CSharpControllerRouteNamingStrategy OperationId = new CSharpControllerRouteNamingStrategy { Value = "OperationId" };
+    }
+    #endregion
     #region TypeScriptTemplate
     /// <summary><p>Used within <see cref="NSwagTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class TypeScriptTemplate : Enumeration
     {
         public static TypeScriptTemplate JQueryCallbacks = new TypeScriptTemplate { Value = "JQueryCallbacks" };
@@ -10223,6 +10246,7 @@ namespace Nuke.NSwag
     /// <summary><p>Used within <see cref="NSwagTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class PromiseType : Enumeration
     {
         public static PromiseType Promise = new PromiseType { Value = "Promise" };
@@ -10233,6 +10257,7 @@ namespace Nuke.NSwag
     /// <summary><p>Used within <see cref="NSwagTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class HttpClass : Enumeration
     {
         public static HttpClass Http = new HttpClass { Value = "Http" };
@@ -10243,6 +10268,7 @@ namespace Nuke.NSwag
     /// <summary><p>Used within <see cref="NSwagTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class InjectionTokenType : Enumeration
     {
         public static InjectionTokenType OpaqueToken = new InjectionTokenType { Value = "OpaqueToken" };
@@ -10253,6 +10279,7 @@ namespace Nuke.NSwag
     /// <summary><p>Used within <see cref="NSwagTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class TypeScriptDateTimeType : Enumeration
     {
         public static TypeScriptDateTimeType Date = new TypeScriptDateTimeType { Value = "Date" };
@@ -10265,6 +10292,7 @@ namespace Nuke.NSwag
     /// <summary><p>Used within <see cref="NSwagTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class TypeScriptNullValue : Enumeration
     {
         public static TypeScriptNullValue Null = new TypeScriptNullValue { Value = "Null" };
@@ -10275,6 +10303,7 @@ namespace Nuke.NSwag
     /// <summary><p>Used within <see cref="NSwagTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class TypeScriptTypeStyle : Enumeration
     {
         public static TypeScriptTypeStyle Interface = new TypeScriptTypeStyle { Value = "Interface" };

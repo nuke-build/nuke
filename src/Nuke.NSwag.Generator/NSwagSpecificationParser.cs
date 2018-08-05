@@ -10,7 +10,7 @@ using Mono.Cecil;
 using Nuke.CodeGeneration.Model;
 using Nuke.Common;
 using Nuke.Common.IO;
-using Nuke.Core.Utilities.Collections;
+using Nuke.Common.Utilities.Collections;
 using Nuke.NSwag.Generator.Utilities;
 
 namespace Nuke.NSwag.Generator
@@ -184,7 +184,7 @@ namespace Nuke.NSwag.Generator
 
                         return new Property
                                {
-                                       Name = name,
+                                       Name = name == "WorkingDirectory" ? "NSwagWorkingDirectory" : name,
                                        Type = type,
                                        Help = argumentAttribute.GetPropertyValue<string>("Description"),
                                        Format = $"/{name}:{{value}}",
