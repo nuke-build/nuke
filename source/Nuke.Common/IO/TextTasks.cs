@@ -24,7 +24,7 @@ namespace Nuke.Common.IO
         public static void WriteAllLines(string path, string[] lines, Encoding encoding = null)
         {
             FileSystemTasks.EnsureExistingParentDirectory(path);
-            File.WriteAllLines(path, lines, encoding);
+            File.WriteAllLines(path, lines, encoding ?? UTF8NoBom);
         }
 
         public static void WriteAllText(string path, string content, Encoding encoding = null)
