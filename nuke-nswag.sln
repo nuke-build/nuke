@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{5BE76539-1
 		build.sh = build.sh
 		CHANGELOG.md = CHANGELOG.md
 		GitVersion.yml = GitVersion.yml
+		global.json = global.json
 		Jenkinsfile = Jenkinsfile
 		LICENSE = LICENSE
 		nuke-nswag.sln.DotSettings = nuke-nswag.sln.DotSettings

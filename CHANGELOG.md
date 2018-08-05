@@ -5,7 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
-
+- Changed minmum required Nuke version to 0.6.
+- Changed `NSwagAspNetCoreToSwaggerSettings.WorkingDirectory` was renamed to `NSwagAspNetCoreToSwaggerSettings.NSwagWorkingDirectory.
 ## [0.4.3] / 2018-06-28
 - Changed supported version to [NSwag v11.17.17 (Build 995)](https://github.com/RSuter/NSwag/releases/tag/NSwag-Build-995)
 ## [0.4.2] / 2018-06-20
