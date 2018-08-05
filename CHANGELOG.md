@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [0.5.2-beta.4] / 2018-08-05
+- Changed supported version to [NSwag v11.18.1 (Build 1016)](https://github.com/RSuter/NSwag/releases/tag/NSwag-Build-1016).
 - Changed minmum required Nuke version to 0.6.
 - Changed `NSwagAspNetCoreToSwaggerSettings.WorkingDirectory` was renamed to `NSwagAspNetCoreToSwaggerSettings.NSwagWorkingDirectory.
 ## [0.4.3] / 2018-06-28
@@ -18,9 +21,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [0.3.1] / 2018-05-22
 - First release.
 
-[vNext]: https://github.com/nuke-build/nswag/compare/0.4.3...HEAD
+[vNext]: https://github.com/nuke-build/nswag/compare/0.5.2-beta.4...HEAD
+[0.5.2-beta.4]: https://github.com/nuke-build/nswag/compare/0.4.3...0.5.2-beta.4
 [0.4.3]: https://github.com/nuke-build/nswag/compare/0.4.2...0.4.3
 [0.4.2]: https://github.com/nuke-build/nswag/compare/0.4.1...0.4.2
 [0.4.1]: https://github.com/nuke-build/nswag/compare/0.3.6...0.4.1
 [0.3.6]: https://github.com/nuke-build/nswag/compare/0.3.1...0.3.6
 [0.3.1]: https://github.com/nuke-build/nswag/tree/0.3.1
+
