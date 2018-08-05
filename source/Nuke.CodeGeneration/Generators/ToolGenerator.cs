@@ -31,7 +31,7 @@ namespace Nuke.CodeGeneration.Generators
                     .WriteLine("// Distributed under the MIT License.")
                     .WriteLine("// https://github.com/nuke-build/nuke/blob/master/LICENSE")
                     .WriteLine(string.Empty)
-                    .WriteLine($"// Generated with {s_assembly.GetName().Name}, Version: {s_assembly.GetVersionText()}.")
+                    .WriteLine($"// Generated with {s_assembly.GetName().Name}, Version: {s_assembly.GetInformationalText()}.")
                     .WriteLineIfTrue(tool.RepositoryUrl != null, $"// Generated from {tool.RepositoryUrl}.")
                     .WriteLine(string.Empty)
                     .ForEach(GetNamespaceImports(), x => writer.WriteLine($"using {x};"))
