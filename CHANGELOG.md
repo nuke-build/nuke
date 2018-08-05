@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [vNext]
 - Removed setup scripts in favor of `:setup` command in global tool
 - Removed `ProcessSettings` in favor of integrating related properties into `ToolSettings`
-- Removed obsolete APIs
+- Removed deprecated APIs
 - Changed tasks with return type to return value tuple
 - Changed tasks to redirect output by default
 - Added `ITargetDefinition.WhenSkipped` to specify dependency behavior for skipped targets
@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Fixed various build server properties
 - Fixed output color for `Logger.Info` to be `Console.ForegroundColor`
 - Fixed naming of `VSTestTasks`
-- Fixed build script to use vswhere for locating msbuild
+- Fixed build script to use VSWhere for locating MSBuild
 - Fixed `NuGetPackageResolver` to determine `globalPackagesFolder` from config files
 - Fixed `Xunit2Settings` to specify framework of console executable
 - Fixed `DotNetRunSettings` to not quote `ApplicationArguments`
