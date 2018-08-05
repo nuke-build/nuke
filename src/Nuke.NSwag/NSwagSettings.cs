@@ -36,7 +36,7 @@ namespace Nuke.NSwag
         protected string GetToolPath ()
         {
             if (_isNetCore) return DotNetTasks.DotNetPath;
-            return GetPackageFrameworkDir() / "build"/"Win"/"NSwag.exe";
+            return GetPackageFrameworkDir() / "Win" / "NSwag.exe";
         }
 
         protected string GetNSwagRuntime ()
@@ -46,7 +46,7 @@ namespace Nuke.NSwag
 
         private string GetNetCoreDllPath(string runtime)
         {
-            return GetPackageFrameworkDir() / "build" / runtime / "dotnet-nswag.dll";
+            return GetPackageFrameworkDir() / runtime / "dotnet-nswag.dll";
         }
 
         private PathConstruction.AbsolutePath GetPackageFrameworkDir()
