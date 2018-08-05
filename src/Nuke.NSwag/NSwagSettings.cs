@@ -51,9 +51,10 @@ namespace Nuke.NSwag
 
         private PathConstruction.AbsolutePath GetPackageFrameworkDir()
         {
-            return NuGetPackageResolver.GetLocalInstalledPackage("nswag.msbuild")
-                .NotNull("Package NSwag.MSBuild not found. Please install the package to your build project.")
-                .Directory / "build";
+            var package = NuGetPackageResolver.GetLocalInstalledPackage("nswag.msbuild")
+                .NotNull("Package NSwag.MSBuild not found. Please install the package to your build project.");
+
+            return package.Directory / (package.Version.Version >= new Version(major: 11, minor: 18, build: 1) ? "tools" : "build");
         }
     }
 }
