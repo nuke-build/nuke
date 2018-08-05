@@ -9,7 +9,6 @@ using System.Linq;
 using Nuke.CodeGeneration.Model;
 using Nuke.CodeGeneration.Writers;
 using Nuke.Common.Utilities;
-using Nuke.Core.Tooling;
 
 // ReSharper disable UnusedMethodReturnValue.Local
 
@@ -31,7 +30,6 @@ namespace Nuke.CodeGeneration.Generators
                     w.WriteToolPath();
                     w.WriteGenericTask();
                     tool.Tasks.ForEach(x => new TaskWriter(x, toolWriter)
-                        .WritePreAndPostProcess()
                         .WriteMainTask()
                         .WriteTaskOverloads());
                 });
@@ -57,7 +55,7 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteLine(GetTaskSignature(writer.Task, additionalParameterDeclarations))
                 .WriteBlock(w => w
                     .WriteLine("configurator = configurator ?? (x => x);")
-                    .WriteLine($"{taskCallPrefix}{task.GetTaskMethodName()}({allArguments.JoinComma()});"));
+                    .WriteLine($"return {taskCallPrefix}{task.GetTaskMethodName()}({allArguments.JoinComma()});"));
 
             return writer.WriteTaskOverloads(index + 1);
         }
@@ -71,7 +69,7 @@ namespace Nuke.CodeGeneration.Generators
                                  "string workingDirectory = null",
                                  "IReadOnlyDictionary<string, string> environmentVariables = null",
                                  "int? timeout = null",
-                                 "bool redirectOutput = false",
+                                 "bool logOutput = true",
                                  "Func<string, string> outputFilter = null"
                              };
             var arguments = new[]
@@ -81,16 +79,17 @@ namespace Nuke.CodeGeneration.Generators
                                 "workingDirectory",
                                 "environmentVariables",
                                 "timeout",
-                                "redirectOutput",
+                                "logOutput",
+                                writer.Tool.LogLevelParsing ? "ParseLogLevel" : "null",
                                 "outputFilter"
                             };
             writer
                 .WriteSummary(tool.Help)
-                .WriteLine($"public static IEnumerable<string> {tool.Name}({parameters.JoinComma()})")
+                .WriteLine($"public static IReadOnlyCollection<Output> {tool.Name}({parameters.JoinComma()})")
                 .WriteBlock(w => w
                     .WriteLine($"var process = ProcessTasks.StartProcess({arguments.JoinComma()});")
                     .WriteLine("process.AssertZeroExitCode();")
-                    .WriteLine("return process.HasOutput ? process.Output.Select(x => x.Text) : null;"));
+                    .WriteLine("return process.Output;"));
         }
 
         private static TaskWriter WriteMainTask(this TaskWriter writer)
@@ -103,33 +102,36 @@ namespace Nuke.CodeGeneration.Generators
 
         private static string GetTaskSignature(Task task, IEnumerable<string> additionalParameterDeclarations = null)
         {
-            var parameterDeclarations =
-                (additionalParameterDeclarations ?? Enumerable.Empty<string>())
-                .Concat(new[]
-                        {
-                            $"Configure<{task.SettingsClass.Name}> configurator = null",
-                            "ProcessSettings processSettings = null"
-                        });
+            var parameterDeclarations = new List<string>();
+            parameterDeclarations.AddRange(additionalParameterDeclarations ?? new List<string>());            
+            parameterDeclarations.Add($"Configure<{task.SettingsClass.Name}> configurator = null");
 
-            return $"public static {task.GetReturnType()} {task.GetTaskMethodName()}({parameterDeclarations.JoinComma()})";
+            var returnType = task.HasReturnValue()
+                ? $"({task.ReturnType} Result, IReadOnlyCollection<Output> Output)"
+                : "IReadOnlyCollection<Output>";
+
+            return $"public static {returnType} {task.GetTaskMethodName()}({parameterDeclarations.JoinComma()})";
         }
 
         private static void WriteMainTaskBlock(TaskWriter writer)
         {
+            var task = writer.Task;
             writer
-                .WriteLine($"var toolSettings = configurator.InvokeSafe(new {writer.Task.SettingsClass.Name}());")
-                .WriteLine($"PreProcess(toolSettings);")
-                .WriteLine($"var process = {GetProcessStart(writer.Task)};")
-                .WriteLine(GetProcessAssertion(writer.Task))
-                .WriteLine($"PostProcess(toolSettings);")
-                .WriteLineIfTrue(writer.Task.HasReturnValue(), "return GetResult(process, toolSettings, processSettings);");
+                .WriteLine($"var toolSettings = configurator.InvokeSafe(new {task.SettingsClass.Name}());")
+                .WriteLineIfTrue(task.PreProcess, $"PreProcess(ref toolSettings);")
+                .WriteLine($"var process = {GetProcessStart(task)};")
+                .WriteLine(GetProcessAssertion(task))
+                .WriteLineIfTrue(task.PostProcess, $"PostProcess(toolSettings);")
+                .WriteLine(task.HasReturnValue()
+                    ? "return (GetResult(process, toolSettings), process.Output);"
+                    : "return process.Output;");
         }
 
         private static string GetProcessStart(Task task)
         {
             return !task.CustomStart
-                ? "ProcessTasks.StartProcess(toolSettings, processSettings)"
-                : "StartProcess(toolSettings, processSettings)";
+                ? "ProcessTasks.StartProcess(toolSettings)"
+                : "StartProcess(toolSettings)";
         }
 
         private static string GetProcessAssertion(Task task)
@@ -165,14 +167,6 @@ namespace Nuke.CodeGeneration.Generators
             return writer
                 .WriteSummary($"Path to the {tool.Name} executable.")
                 .WriteLine($"public static string {tool.Name}Path => {resolvers.Single()};");
-        }
-
-        private static TaskWriter WritePreAndPostProcess(this TaskWriter writer)
-        {
-            var settingsClass = writer.Task.SettingsClass.Name;
-            return writer
-                .WriteLine($"static partial void PreProcess({settingsClass} toolSettings);")
-                .WriteLine($"static partial void PostProcess({settingsClass} toolSettings);");
         }
     }
 }

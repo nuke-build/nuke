@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
@@ -26,11 +27,11 @@ namespace Nuke.CodeGeneration.Model
         [Description("The base class to inherit from.")]
         public string BaseClass { get; set; }
 
-        [Description("Skips appendig of extension methods.")]
-        public bool NoExtensionMethods { get; set; }
+        [Description("Enables generation of extension methods for modification.")]
+        public bool ExtensionMethods { get; set; }
 
-        [Description("Omits argument parsing.")]
-        public bool NoArguments { get; set; }
+        [Description("Enables argument construction.")]
+        public bool ArgumentConstruction { get; set; }
 
         [Description("Properties of the data class.")]
         public List<Property> Properties { get; set; } = new List<Property>();
@@ -39,6 +40,12 @@ namespace Nuke.CodeGeneration.Model
     [UsedImplicitly]
     public class SettingsClass : DataClass
     {
+        public SettingsClass()
+        {
+            ExtensionMethods = true;
+            ArgumentConstruction = true;
+        }
+        
         [JsonIgnore]
         public Task Task { get; set; }
 

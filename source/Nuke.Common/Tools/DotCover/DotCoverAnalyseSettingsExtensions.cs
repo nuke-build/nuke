@@ -10,16 +10,6 @@ namespace Nuke.Common.Tools.DotCover
 {
     partial class DotCoverAnalyseSettingsExtensions
     {
-        [Obsolete("Use " + nameof(SetTargetSettings) + " instead.")]
-        public static DotCoverAnalyseSettings SetTestAction(this DotCoverAnalyseSettings toolSettings, Action testAction)
-        {
-            var capturedStartInfo = ProcessTasks.CaptureProcessStartInfo(testAction);
-            return toolSettings
-                .SetTargetExecutable(capturedStartInfo.ToolPath)
-                .SetTargetArguments(capturedStartInfo.Arguments)
-                .SetTargetWorkingDirectory(capturedStartInfo.WorkingDirectory);
-        }
-
         public static DotCoverAnalyseSettings SetTargetSettings(this DotCoverAnalyseSettings toolSettings, ToolSettings targetSettings)
         {
             return toolSettings

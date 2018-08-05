@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Nuke.CodeGeneration.Model;
 using Nuke.Common;
+using Nuke.Common.Utilities;
 
 namespace Nuke.CodeGeneration
 {
@@ -61,8 +62,18 @@ namespace Nuke.CodeGeneration
                     if (propertyInfo.GetSetMethod(nonPublic: true) == null)
                         return false;
 
-                    if (typeof(IEnumerable).IsAssignableFrom(property.PropertyType) && property.PropertyType != typeof(string))
+                    if (property.PropertyType == typeof(string))
+                        return true;
+
+                    if (typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
                         return ((IEnumerable) propertyInfo.GetValue(x)).GetEnumerator().MoveNext();
+
+                    if (x is SettingsClass && property.PropertyType == typeof(bool))
+                    {
+                        var defaultTrueProperties = new [] { nameof(DataClass.ArgumentConstruction), nameof(DataClass.ExtensionMethods) };
+                        if (defaultTrueProperties.Any(y => y.EqualsOrdinalIgnoreCase(property.PropertyName)))
+                            return false;
+                    }
 
                     return true;
                 };

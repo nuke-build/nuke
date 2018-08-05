@@ -63,7 +63,7 @@ namespace Nuke.CodeGeneration.Generators
         {
             var dataClasses = writer.Tool.Tasks.Select(x => x.SettingsClass).Concat(writer.Tool.DataClasses).ToList();
             dataClasses.ForEach(x => DataClassGenerator.Run(x, writer));
-            dataClasses.Where(x => !x.NoExtensionMethods).ForEach(x => DataClassExtensionGenerator.Run(x, writer));
+            dataClasses.Where(x => x.ExtensionMethods).ForEach(x => DataClassExtensionGenerator.Run(x, writer));
             return writer;
         }
 
@@ -78,6 +78,7 @@ namespace Nuke.CodeGeneration.Generators
             return new[]
                    {
                        "JetBrains.Annotations",
+                       "Newtonsoft.Json",
                        "Nuke.Common",
                        "Nuke.Common.Execution",
                        "Nuke.Common.Tooling",
@@ -89,7 +90,7 @@ namespace Nuke.CodeGeneration.Generators
                        "System.Diagnostics.CodeAnalysis",
                        "System.IO",
                        "System.Linq",
-                       "System.Text"
+                       "System.Text",
                    };
         }
     }

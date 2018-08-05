@@ -101,10 +101,10 @@ namespace Nuke.Common
         /// Asserts a collection to be not empty, halts otherwise.
         /// </summary>
         [ContractAnnotation("enumerable: null => halt")]
-        public static IReadOnlyCollection<T> NotEmpty<T>([CanBeNull] this IEnumerable<T> enumerable)
+        public static IReadOnlyCollection<T> NotEmpty<T>([CanBeNull] this IEnumerable<T> enumerable, string message = null)
         {
             var collection = enumerable.NotNull("enumerable != null").ToList().AsReadOnly();
-            Assert(collection.Count > 0, "collection.Count > 0");
+            Assert(collection.Count > 0, message ?? "collection.Count > 0");
             return collection;
         }
 

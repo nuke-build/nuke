@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Nuke.Common.BuildServers;
 using Nuke.Common.Execution;
@@ -24,6 +25,7 @@ namespace Nuke.Common.OutputSinks
         void WriteSummary(IReadOnlyCollection<TargetDefinition> executionList);
     }
 
+    [ExcludeFromCodeCoverage]
     internal static class OutputSink
     {
         internal static IOutputSink Instance { get; } = GetOutputSink(EnvironmentInfo.HostType);

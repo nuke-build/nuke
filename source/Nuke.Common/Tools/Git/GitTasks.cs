@@ -17,17 +17,29 @@ namespace Nuke.Common.Tools.Git
 
         public static bool GitIsDetached(string workingDirectory)
         {
-            return !Git("symbolic-ref --short -q HEAD", workingDirectory, redirectOutput: true).Any();
+            return !Git("symbolic-ref --short -q HEAD", workingDirectory, logOutput: false).Any();
         }
 
+        public static bool GitHasCleanWorkingCopy()
+        {
+            return GitHasCleanWorkingCopy(EnvironmentInfo.WorkingDirectory);
+        }
+        
+        public static bool GitHasCleanWorkingCopy(string workingDirectory)
+        {
+            return !Git("status --short", workingDirectory, logOutput: false).Any();
+        }
+        
+        [Obsolete("Use " + nameof(GitHasCleanWorkingCopy))]
         public static bool GitHasUncommitedChanges()
         {
             return GitHasUncommitedChanges(EnvironmentInfo.WorkingDirectory);
         }
 
+        [Obsolete("Use " + nameof(GitHasCleanWorkingCopy))]
         public static bool GitHasUncommitedChanges(string workingDirectory)
         {
-            return Git("status --short", workingDirectory, redirectOutput: true).Any();
+            return Git("status --short", workingDirectory, logOutput: false).Any();
         }
 
         public static string GitCurrentBranch()
@@ -37,7 +49,7 @@ namespace Nuke.Common.Tools.Git
 
         private static string GitCurrentBranch(string workingDirectory)
         {
-            return Git("rev-parse --abbrev-ref HEAD", workingDirectory, redirectOutput: true).Single();
+            return Git("rev-parse --abbrev-ref HEAD", workingDirectory, logOutput: false).Select(x => x.Text).Single();
         }
     }
 }

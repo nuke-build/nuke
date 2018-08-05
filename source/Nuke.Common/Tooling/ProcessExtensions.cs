@@ -39,8 +39,8 @@ namespace Nuke.Common.Tooling
                     .AppendLine($"Process '{Path.GetFileName(process.FileName)}' exited with code {process.ExitCode}. Verify the invocation.")
                     .AppendLine($"> {process.FileName.DoubleQuoteIfNeeded()} {process.Arguments}");
 
-                var errorOutput = process.HasOutput ? process.Output.Where(x => x.Type == OutputType.Err).Select(x => x.Text).ToList() : null;
-                if (errorOutput != null && errorOutput.Count > 0)
+                var errorOutput = process.Output.Where(x => x.Type == OutputType.Err).Select(x => x.Text).ToList();
+                if (errorOutput.Count > 0)
                 {
                     messageBuilder.AppendLine("Error output:");
                     errorOutput.ForEach(x => messageBuilder.AppendLine(x));
@@ -52,13 +52,12 @@ namespace Nuke.Common.Tooling
             return process;
         }
 
-        public static IEnumerable<Output> EnsureOnlyStd(this IEnumerable<Output> output)
+        public static IReadOnlyCollection<Output> EnsureOnlyStd(this IReadOnlyCollection<Output> output)
         {
-            var outputList = output.ToList();
-            foreach (var o in outputList)
+            foreach (var o in output)
                 ControlFlow.Assert(o.Type == OutputType.Std, "o.Type == OutputType.Std");
 
-            return outputList;
+            return output;
         }
     }
 }

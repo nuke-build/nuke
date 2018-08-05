@@ -23,7 +23,8 @@ namespace Nuke.Common.Tooling
             string workingDirectory = null,
             IReadOnlyDictionary<string, string> environmentVariables = null,
             int? timeout = null,
-            bool redirectOutput = false,
+            bool logOutput = true,
+            Func<string, LogLevel> logLevelParser = null,
             Func<string, string> outputFilter = null)
         {
             return ProcessManager.Instance.StartProcess(toolPath,
@@ -31,7 +32,8 @@ namespace Nuke.Common.Tooling
                 workingDirectory,
                 environmentVariables,
                 timeout,
-                redirectOutput,
+                logOutput,
+                logLevelParser,
                 outputFilter);
         }
 
@@ -39,14 +41,9 @@ namespace Nuke.Common.Tooling
         /// Starts a process using <see cref="Process"/>.
         /// </summary>
         [CanBeNull]
-        public static IProcess StartProcess(ToolSettings toolSettings, ProcessSettings processSettings = null)
+        public static IProcess StartProcess(ToolSettings toolSettings)
         {
-            return ProcessManager.Instance.StartProcess(toolSettings, processSettings);
-        }
-
-        public static CapturedProcessStartInfo CaptureProcessStartInfo(Action action)
-        {
-            return ProcessManager.Instance.CaptureProcessStartInfo(action);
+            return ProcessManager.Instance.StartProcess(toolSettings);
         }
     }
 }

@@ -7,20 +7,18 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Nuke.CodeGeneration.Model;
+using Nuke.Common;
 using Nuke.Common.Git;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.InspectCode;
 using Nuke.Common.Tools.OpenCover;
+using Nuke.Common.Tools.ReportGenerator;
+using Nuke.Common.Tools.Slack;
 using Nuke.Common.Tools.Xunit;
-using Nuke.Common;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
-using static Nuke.CodeGeneration.CodeGenerator;
-using static Nuke.CodeGeneration.ReferenceUpdater;
-using static Nuke.CodeGeneration.SchemaGenerator;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.ControlFlow;
 using static Nuke.Common.Gitter.GitterTasks;
@@ -32,23 +30,21 @@ using static Nuke.Common.Tools.Xunit.XunitTasks;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.EnvironmentInfo;
+using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
+using static Nuke.Common.Tools.Slack.SlackTasks;
 
-class Build : NukeBuild
+partial class Build : NukeBuild
 {
     public static int Main() => Execute<Build>(x => x.Pack);
 
-    [Parameter("Indicates to push to nuget.org feed.")] readonly bool NuGet;
     [Parameter("ApiKey for the specified source.")] readonly string ApiKey;
-    [Parameter("Gitter authentication token.")] readonly string GitterAuthToken;
-    [Parameter("Amount of changes to announce in Gitter.")] readonly int? AnnounceChanges;
-
-    string Source => NuGet
-        ? "https://api.nuget.org/v3/index.json"
-        : "https://www.myget.org/F/nukebuild/api/v2/package";
-
-    string SymbolSource => NuGet
-        ? "https://nuget.smbsrc.net/"
-        : "https://www.myget.org/F/nukebuild/symbols/api/v2/package";
+    [Parameter] string Source = "https://api.nuget.org/v3/index.json";
+    [Parameter] string SymbolSource = "https://nuget.smbsrc.net/";
+    
+    [Parameter("Gitter authtoken.")] readonly string GitterAuthToken;
+    [Parameter("Slack webhook.")] readonly string SlackWebhook;
+    
+    [Parameter("Install global tool.")] readonly bool InstallGlobalTool;
 
     [GitVersion] readonly GitVersion GitVersion;
     [GitRepository] readonly GitRepository GitRepository;
@@ -57,15 +53,7 @@ class Build : NukeBuild
     readonly string MasterBranch = "master";
     readonly string DevelopBranch = "develop";
 
-    Target MergeDevelop => _ => _
-        .OnlyWhen(() => GitRepository.Branch.NotNull().EqualsOrdinalIgnoreCase(MasterBranch))
-        .Executes(() =>
-        {
-            Git($"merge --no-ff {DevelopBranch}");
-        });
-
     Target Clean => _ => _
-        .DependsOn(MergeDevelop)
         .Executes(() =>
         {
             DeleteDirectories(GlobDirectories(SourceDirectory, "*/bin", "*/obj"));
@@ -79,6 +67,7 @@ class Build : NukeBuild
             DotNetRestore(s => DefaultDotNetRestore);
         });
 
+    Project CommonProject => Solution.GetProject("Nuke.Common").NotNull();
     Project GlobalToolProject => Solution.GetProject("Nuke.GlobalTool").NotNull();
     Project CodeGenerationProject => Solution.GetProject("Nuke.CodeGeneration").NotNull();
 
@@ -93,6 +82,13 @@ class Build : NukeBuild
                 .SetProject(GlobalToolProject));
 
             DotNetPublish(s => DefaultDotNetPublish
+                .SetProject(CommonProject)
+                .SetFramework("netstandard2.0"));
+            DotNetPublish(s => DefaultDotNetPublish
+                .SetProject(CommonProject)
+                .SetFramework("net461"));
+
+            DotNetPublish(s => DefaultDotNetPublish
                 .SetProject(CodeGenerationProject)
                 .SetFramework("netstandard2.0"));
             DotNetPublish(s => DefaultDotNetPublish
@@ -104,20 +100,8 @@ class Build : NukeBuild
 
     IEnumerable<string> ChangelogSectionNotes => ExtractChangelogSectionNotes(ChangelogFile);
 
-    Target Changelog => _ => _
-        .OnlyWhen(() => NuGet)
-        .Executes(() =>
-        {
-            Assert(GitRepository.Branch?.EqualsOrdinalIgnoreCase(MasterBranch) ?? false, $"Must be executed on {MasterBranch}.");
-
-            FinalizeChangelog(ChangelogFile, GitVersion.SemVer, GitRepository);
-
-            Git($"add {ChangelogFile}");
-            Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.SemVer}.\"");
-        });
-
     Target Pack => _ => _
-        .DependsOn(Compile, Changelog)
+        .DependsOn(Compile)
         .Executes(() =>
         {
             var releaseNotes = ChangelogSectionNotes
@@ -128,51 +112,39 @@ class Build : NukeBuild
 
             DotNetPack(s => DefaultDotNetPack
                 .SetPackageReleaseNotes(releaseNotes));
+
+            if (InstallGlobalTool)
+            {
+                SuppressErrors(() => DotNet($"tool uninstall -g {GlobalToolProject.Name}"));
+                DotNet($"tool install -g {GlobalToolProject.Name} --add-source {OutputDirectory} --version {GitVersion.NuGetVersionV2}");
+            }
         });
 
-    Target Publish => _ => _
-        .DependsOn(Pack)
-        .Requires(() => ApiKey)
-        .Requires(() => !GitHasUncommitedChanges())
-        .Requires(() => !NuGet || GitVersionAttribute.Bump.HasValue)
-        .Requires(() => !NuGet || Configuration.EqualsOrdinalIgnoreCase("release"))
-        .Requires(() => !NuGet || GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch))
+    Target Test => _ => _
+        .DependsOn(Compile)
         .Executes(() =>
         {
-            if (NuGet)
+            var framework = "net461";
+            var xunitSettings = new Xunit2Settings()
+                .SetFramework(framework)
+                .AddTargetAssemblies(GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/{framework}/Nuke.*.Tests.dll").NotEmpty())
+                .AddResultReport(Xunit2ResultFormat.Xml, OutputDirectory / "tests.xml");
+
+            if (IsWin)
             {
-                Git($"tag -f {GitVersion.SemVer}");
-                Git($"update-ref refs/heads/{DevelopBranch} refs/heads/{MasterBranch}");
-                Git($"push --atomic origin {GitVersion.SemVer} {MasterBranch} {DevelopBranch}");
+                OpenCover(s => DefaultOpenCover
+                    .SetOutput(OutputDirectory / "coverage.xml")
+                    .SetTargetSettings(xunitSettings)
+                    .SetSearchDirectories(xunitSettings.TargetAssemblyWithConfigs.Select(x => Path.GetDirectoryName(x.Key)))
+                    .AddFilters("-[Nuke.Common]Nuke.Core.*"));
+
+                ReportGenerator(s => s
+                    .AddReports(OutputDirectory / "coverage.xml")
+                    .AddReportTypes(ReportTypes.Html)
+                    .SetTargetDirectory(OutputDirectory / "coverage"));
             }
-
-            GlobFiles(OutputDirectory, "*.nupkg").NotEmpty()
-                .Where(x => !x.EndsWith(".symbols.nupkg"))
-                .ForEach(x => DotNetNuGetPush(s => s
-                    .SetTargetPath(x)
-                    .SetSource(Source)
-                    .SetSymbolSource(SymbolSource)
-                    .SetApiKey(ApiKey)));
-
-            if (NuGet)
-            {
-                var releaseUrl = $"https://www.nuget.org/packages/Nuke.Common/{GitVersion.SemVer}). ";
-                var message = GitVersionAttribute.Bump != GitVersionBump.Patch
-                    ? new StringBuilder()
-                        .AppendLine("@/all :mega::shipit: **NUKE {GitVersion.SemVer} IS OUT!!!**")
-                        .AppendLine($"This release includes [{ChangelogSectionNotes.Count()} changes]({releaseUrl}). Most notably, we have:")
-                        .AppendLine(ChangelogSectionNotes
-                            .Take(AnnounceChanges ?? 4)
-                            .Select(x => x.Replace("- ", "* "))
-                            .JoinNewLine()).ToString()
-                    : new StringBuilder()
-                        .AppendLine($"@/all :beetle::fire: **BUGFIX RELEASE {GitVersion.SemVer} IS OUT!**")
-                        .AppendLine($"Check out the [release notes]({releaseUrl}) for details!").ToString();
-
-                SendGitterMessage(message,
-                    roomId: "593f3dadd73408ce4f66db89",
-                    token: GitterAuthToken);
-            }
+            else
+                Xunit2(s => xunitSettings);
         });
 
     Target Analysis => _ => _
@@ -188,54 +160,64 @@ class Build : NukeBuild
                     "ReSharper.XmlDocInspections"));
         });
 
-    Target Test => _ => _
-        .DependsOn(Compile)
+    Target Publish => _ => _
+        .DependsOn(Test, Pack)
+        .Requires(() => ApiKey, () => SlackWebhook, () => GitterAuthToken)
+        .Requires(() => GitHasCleanWorkingCopy())
+        .Requires(() => Configuration.EqualsOrdinalIgnoreCase("release"))
+        .Requires(() => GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch) ||
+                        GitRepository.Branch.EqualsOrdinalIgnoreCase(DevelopBranch))
         .Executes(() =>
         {
-            var xunitSettings = new Xunit2Settings()
-                .AddTargetAssemblies(GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/net4*/Nuke.*.Tests.dll").NotEmpty())
-                .AddResultReport(Xunit2ResultFormat.Xml, OutputDirectory / "tests.xml");
-
-            if (IsWin)
+            GlobFiles(OutputDirectory, "*.nupkg").NotEmpty()
+                .Where(x => !x.EndsWith(".symbols.nupkg"))
+                .ForEach(x => DotNetNuGetPush(s => s
+                    .SetTargetPath(x)
+                    .SetSource(Source)
+                    .SetSymbolSource(SymbolSource)
+                    .SetApiKey(ApiKey)));
+            
+            if (GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch))
             {
-                OpenCover(s => DefaultOpenCover
-                    .SetOutput(OutputDirectory / "coverage.xml")
-                    .SetTargetSettings(xunitSettings));
+                SendSlackMessage(m => m
+                        .SetText(new StringBuilder()
+                            .AppendLine($"<!here> :mega::shipit: *NUKE {GitVersion.SemVer} IS OUT!!!*")
+                            .AppendLine()
+                            .AppendLine(ChangelogSectionNotes.Select(x => x.Replace("- ", "• ")).JoinNewLine()).ToString()),
+                    SlackWebhook);
+
+                SendGitterMessage(new StringBuilder()
+                        .AppendLine($"@/all :mega::shipit: **NUKE {GitVersion.SemVer} IS OUT!!!**")
+                        .AppendLine()
+                        .AppendLine(ChangelogSectionNotes.Select(x => x.Replace("- ", "* ")).JoinNewLine()).ToString(),
+                    "593f3dadd73408ce4f66db89",
+                    GitterAuthToken);
+            }
+        });
+
+    Target Release => _ => _
+        .Executes(() =>
+        {
+            if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase("release"))
+            {
+                Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
+                Git($"checkout -b release/{GitVersion.MajorMinorPatch} {DevelopBranch}");
             }
             else
-                Xunit2(s => xunitSettings);
+            {
+                FinalizeChangelog(ChangelogFile, GitVersion.MajorMinorPatch, GitRepository);
+                Git($"add {ChangelogFile}");
+                Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.MajorMinorPatch}\"");
+                Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
+
+                Git($"checkout {DevelopBranch}");
+                Git($"merge --no-ff --no-edit release/{GitVersion.MajorMinorPatch}");
+                Git($"checkout {MasterBranch}");
+                Git($"merge --no-ff --no-edit release/{GitVersion.MajorMinorPatch}");
+                Git($"tag {GitVersion.MajorMinorPatch}");
+                Git($"branch -d release/{GitVersion.MajorMinorPatch}");
+                
+                Git($"push origin {MasterBranch} {DevelopBranch} {GitVersion.MajorMinorPatch}");
+            }
         });
-
-    string SpecificationsDirectory => BuildProjectDirectory / "specifications";
-    string ReferencesDirectory => BuildProjectDirectory / "references";
-    string GenerationDirectory => RootDirectory / "source" / "Nuke.Common" / "Tools";
-    string ToolSchemaFile => SourceDirectory / "Nuke.CodeGeneration" / "schema.json";
-
-    Target References => _ => _
-        .Requires(() => !GitHasUncommitedChanges())
-        .Executes(() =>
-        {
-            EnsureCleanDirectory(ReferencesDirectory);
-            
-            UpdateReferences(SpecificationsDirectory, ReferencesDirectory);
-        });
-    
-    Target Generate => _ => _
-        .Executes(() =>
-        {
-            GenerateSchema<Tool>(
-                ToolSchemaFile,
-                GitRepository.GetGitHubDownloadUrl(ToolSchemaFile, "master"),
-                "Tool specification schema file by NUKE");
-
-            GenerateCode(
-                SpecificationsDirectory,
-                GenerationDirectory,
-                baseNamespace: "Nuke.Common.Tools",
-                useNestedNamespaces: true,
-                gitRepository: GitRepository.SetBranch("master"));
-        });
-
-    Target Full => _ => _
-        .DependsOn(Test, Analysis, Publish);
 }

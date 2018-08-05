@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
 using static Nuke.Common.EnvironmentInfo;
@@ -14,13 +15,14 @@ namespace Nuke.Common.BuildServers
     /// </summary>
     [PublicAPI]
     [BuildServer]
+    [ExcludeFromCodeCoverage]
     public class TeamServices
     {
         private static Lazy<TeamServices> s_instance = new Lazy<TeamServices>(() => new TeamServices());
 
         public static TeamServices Instance => NukeBuild.Instance?.Host == HostType.TeamServices ? s_instance.Value : null;
 
-        internal static bool IsRunningTeamServices => Variable("TF_BUILD") != null;
+        internal static bool IsRunningTeamServices => Environment.GetEnvironmentVariable("TF_BUILD") != null;
 
         private readonly Action<string> _messageSink;
 

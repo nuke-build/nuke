@@ -6,6 +6,7 @@
 // Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/SignTool.json.
 
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 using Nuke.Common;
 using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
@@ -28,22 +29,19 @@ namespace Nuke.Common.Tools.SignTool
         /// <summary><p>Path to the SignTool executable.</p></summary>
         public static string SignToolPath => GetToolPath();
         /// <summary><p>Sign Tool is a command-line tool that digitally signs files, verifies signatures in files, and time-stamps files.</p></summary>
-        public static IEnumerable<string> SignTool(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool redirectOutput = false, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> SignTool(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(SignToolPath, arguments, workingDirectory, environmentVariables, timeout, redirectOutput, outputFilter);
+            var process = ProcessTasks.StartProcess(SignToolPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
             process.AssertZeroExitCode();
-            return process.HasOutput ? process.Output.Select(x => x.Text) : null;
+            return process.Output;
         }
-        static partial void PreProcess(SignToolSettings toolSettings);
-        static partial void PostProcess(SignToolSettings toolSettings);
         /// <summary><p>Use the <c>sign</c> command to sign files using embedded signatures. Signing protects a file from tampering, and allows users to verify the signer (you) based on a signing certificate. The options below allow you to specify signing parameters and to select the signing certificate you wish to use.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe">official website</a>.</p></summary>
-        public static void SignTool(Configure<SignToolSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> SignTool(Configure<SignToolSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new SignToolSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
     }
     #region SignToolSettings
@@ -1451,6 +1449,7 @@ namespace Nuke.Common.Tools.SignTool
     /// <summary><p>Used within <see cref="SignToolTasks"/>.</p></summary>
     [PublicAPI]
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public partial class SignToolContentMethod : Enumeration
     {
         public static SignToolContentMethod Embedded = new SignToolContentMethod { Value = "Embedded" };

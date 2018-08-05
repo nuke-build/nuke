@@ -31,7 +31,7 @@ namespace Nuke.CodeGeneration.Generators
         // TODO [3]: less naming? -> value
         private static void WriteMethods(DataClassWriter writer, Property property)
         {
-            if (property.CustomImpl || property.NoExtensionMethod)
+            if (property.CustomImpl)
                 return;
 
             writer.WriteLine($"#region {property.Name}");

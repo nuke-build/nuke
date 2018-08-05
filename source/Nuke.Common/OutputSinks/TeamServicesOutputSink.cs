@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.BuildServers;
@@ -10,6 +11,7 @@ using Nuke.Common.BuildServers;
 namespace Nuke.Common.OutputSinks
 {
     [UsedImplicitly]
+    [ExcludeFromCodeCoverage]
     internal class TeamServicesOutputSink : ConsoleOutputSink
     {
         private readonly TeamServices _teamServices;

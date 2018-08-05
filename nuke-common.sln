@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = ".build", "build\.build.csproj", "{BB6A9024-24DB-4170-A09B-02349148A78F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{BB6A9024-24DB-4170-A09B-02349148A78F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Common", "source\Nuke.Common\Nuke.Common.csproj", "{B6D4E654-6822-42FF-86AD-DB07BE759760}"
 EndProject
@@ -11,42 +11,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Common.Tests", "source
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.MSBuildLocator", "source\Nuke.MSBuildLocator\Nuke.MSBuildLocator.csproj", "{656F585C-0B2D-429D-95A7-226EF59DAB79}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bootstrapping", "bootstrapping", "{76BF44AE-484F-4441-BC36-B498F44E4F94}"
-	ProjectSection(SolutionItems) = preProject
-		bootstrapping\.build.legacy.csproj = bootstrapping\.build.legacy.csproj
-		bootstrapping\.build.legacy.packages.config = bootstrapping\.build.legacy.packages.config
-		bootstrapping\.build.sdk.csproj = bootstrapping\.build.sdk.csproj
-		bootstrapping\Build.netcore.cs = bootstrapping\Build.netcore.cs
-		bootstrapping\build.netcore.ps1 = bootstrapping\build.netcore.ps1
-		bootstrapping\build.netcore.sh = bootstrapping\build.netcore.sh
-		bootstrapping\Build.netfx.cs = bootstrapping\Build.netfx.cs
-		bootstrapping\build.netfx.ps1 = bootstrapping\build.netfx.ps1
-		bootstrapping\build.netfx.sh = bootstrapping\build.netfx.sh
-		bootstrapping\setup.ps1 = bootstrapping\setup.ps1
-		bootstrapping\setup.sh = bootstrapping\setup.sh
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{B43B0E45-8A89-4516-BAD3-2DA4C6660D3A}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
-		.nuke = .nuke
-		.travis.yml = .travis.yml
-		appveyor.yml = appveyor.yml
-		build.ps1 = build.ps1
-		build.sh = build.sh
 		CHANGELOG.md = CHANGELOG.md
-		GitVersion.yml = GitVersion.yml
-		.github\ISSUE_TEMPLATE.md = .github\ISSUE_TEMPLATE.md
-		Jenkinsfile = Jenkinsfile
 		LICENSE = LICENSE
-		.github\PULL_REQUEST_TEMPLATE.md = .github\PULL_REQUEST_TEMPLATE.md
 		README.md = README.md
 		nuke-common.sln.DotSettings = nuke-common.sln.DotSettings
-		nuke-common.sln.DotSettings.user = nuke-common.sln.DotSettings.user
-		NuGet.config = NuGet.config
-		global.json = global.json
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.CodeGeneration", "source\Nuke.CodeGeneration\Nuke.CodeGeneration.csproj", "{34FBD413-AD5D-493E-BD61-ED8497D314A0}"

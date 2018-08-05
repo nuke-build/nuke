@@ -17,6 +17,7 @@
   ],
   "name": "DotNet",
   "officialUrl": "https://docs.microsoft.com/en-us/dotnet/core/tools/",
+  "logLevelParsing": true,
   "tasks": [
     {
       "help": "The <c>dotnet test</c> command is used to execute unit tests in a given project. Unit tests are console application projects that have dependencies on the unit test framework (for example, MSTest, NUnit, or xUnit) and the dotnet test runner for the unit testing framework. These are packaged as NuGet packages and are restored as ordinary dependencies for the project.",
@@ -187,6 +188,7 @@
             "name": "ApplicationArguments",
             "type": "string",
             "format": "-- {value}",
+            "customValue": true,
             "help": "Arguments passed to the application being run."
           }
         ]

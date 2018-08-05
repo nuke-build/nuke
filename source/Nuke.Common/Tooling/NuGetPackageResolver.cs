@@ -6,7 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NuGet.Packaging;
 using NuGet.Versioning;
 using Nuke.Common.IO;
@@ -18,10 +21,19 @@ namespace Nuke.Common.Tooling
     [PublicAPI]
     public static class NuGetPackageResolver
     {
-        [CanBeNull]
-        public static string GetLocalInstalledPackageDirectory(string packageId, string packagesConfigFile = null)
+        public static async Task<string> GetLatestPackageVersion(string packageId, bool includePrereleases, int? timeout = null)
         {
-            return Path.GetDirectoryName(GetLocalInstalledPackage(packageId, packagesConfigFile)?.FileName);
+            try
+            {
+                var url = $"https://api-v2v3search-0.nuget.org/query?q=packageid:{packageId}&prerelease={includePrereleases}";
+                var response = await HttpTasks.HttpDownloadStringAsync(url, requestConfigurator: x => x.Timeout = timeout ?? int.MaxValue);
+                var packageObject = JsonConvert.DeserializeObject<JObject>(response);
+                return packageObject["data"].Single()["version"].ToString();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         [CanBeNull]
@@ -51,6 +63,7 @@ namespace Nuke.Common.Tooling
             var installedPackages = new HashSet<InstalledPackage>(InstalledPackage.Comparer.Instance);
             foreach (var packageId in packageIds)
             {
+                // TODO: use xml namespaces
                 // TODO: version as tag
                 var version = XmlTasks.XmlPeekSingle(
                         packagesConfigFile,
@@ -154,7 +167,22 @@ namespace Nuke.Common.Tooling
             if (packagesDirectory != null)
                 return packagesDirectory;
 
-            if (!IsLegacyFile(packagesConfigFile))
+            var configSetting = GetConfigFiles(packagesConfigFile)
+                .Select(x => new
+                             {
+                                 File = x,
+                                 Setting = XmlTasks.XmlPeek(x, ".//add[@key='globalPackagesFolder']/@value").FirstOrDefault()
+                             })
+                .Where(x => x.Setting != null)
+                .FirstOrDefault();
+            if (configSetting != null)
+            {
+                return Path.IsPathRooted(configSetting.Setting)
+                    ? configSetting.Setting
+                    : Path.Combine(Path.GetDirectoryName(configSetting.File).NotNull(), configSetting.Setting);
+            }
+
+            if (packagesConfigFile == null || !IsLegacyFile(packagesConfigFile))
             {
                 return Path.Combine(
                     EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile)
@@ -174,9 +202,12 @@ namespace Nuke.Common.Tooling
             return packagesDirectory.NotNull("GetPackagesDirectory != null");
         }
 
+        [CanBeNull]
         public static string GetBuildPackagesConfigFile()
         {
-            return GetPackageConfigFile(EnvironmentInfo.BuildProjectDirectory).NotNull("GetBuildPackagesConfigFile != null");
+            return NukeBuild.Instance != null
+                ? GetPackageConfigFile(EnvironmentInfo.BuildProjectDirectory).NotNull("GetBuildPackagesConfigFile != null")
+                : null;
         }
 
         private static bool IsLegacyFile(string packagesConfigFile)
@@ -187,6 +218,63 @@ namespace Nuke.Common.Tooling
         private static bool IncludesDependencies(string packagesConfigFile)
         {
             return IsLegacyFile(packagesConfigFile);
+        }
+
+        public static IEnumerable<string> GetConfigFiles([CanBeNull] string packagesConfigFile)
+        {
+            var directories = new List<string>();
+
+            if (packagesConfigFile != null)
+            {
+                directories.AddRange(Directory.GetParent(packagesConfigFile)
+                    .DescendantsAndSelf(x => x.Parent)
+                    .Select(x => x.FullName));
+            }
+
+            if (EnvironmentInfo.IsWin)
+            {
+                directories.Add(Path.Combine(
+                    EnvironmentInfo.SpecialFolder(SpecialFolders.ApplicationData).NotNull(),
+                    "NuGet"));
+                
+                directories.Add(Path.Combine(
+                    EnvironmentInfo.SpecialFolder(SpecialFolders.ProgramFilesX86).NotNull(),
+                    "NuGet",
+                    "Config"));
+            }
+            
+            if (EnvironmentInfo.IsUnix)
+            {
+                directories.Add(Path.Combine(
+                    EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile).NotNull(),
+                    ".config",
+                    "NuGet"));
+                
+                directories.Add(Path.Combine(
+                    EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile).NotNull(),
+                    ".nuget",
+                    "NuGet"));
+             
+                var dataHomeDirectoy = EnvironmentInfo.Variable("XDG_DATA_HOME");
+                if (!string.IsNullOrEmpty(dataHomeDirectoy))
+                {
+                    directories.Add(dataHomeDirectoy);
+                }
+                else
+                {
+                    directories.Add(Path.Combine(
+                        EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile).NotNull(),
+                        ".local",
+                        "share"));
+                    
+                    // TODO: /usr/local/share
+                }
+            }
+
+            return directories
+                .Where(Directory.Exists)
+                .SelectMany(x => Directory.GetFiles(x, "nuget.config", SearchOption.TopDirectoryOnly))
+                .Where(File.Exists);
         }
 
         // TODO: move out of class
@@ -222,6 +310,7 @@ namespace Nuke.Common.Tooling
             }
 
             public string FileName { get; }
+            public PathConstruction.AbsolutePath Directory => (PathConstruction.AbsolutePath) Path.GetDirectoryName(FileName).NotNull();
             public NuspecReader Metadata { get; }
             public string Id => Metadata.GetIdentity().Id;
             public NuGetVersion Version => Metadata.GetIdentity().Version;

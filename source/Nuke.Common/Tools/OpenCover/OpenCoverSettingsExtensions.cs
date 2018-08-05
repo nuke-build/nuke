@@ -10,16 +10,6 @@ namespace Nuke.Common.Tools.OpenCover
 {
     partial class OpenCoverSettingsExtensions
     {
-        [Obsolete("Use " + nameof(SetTargetSettings) + " instead.")]
-        public static OpenCoverSettings SetTestAction(this OpenCoverSettings toolSettings, Action testAction)
-        {
-            var capturedStartInfo = ProcessTasks.CaptureProcessStartInfo(testAction);
-            return toolSettings
-                .SetTargetPath(capturedStartInfo.ToolPath)
-                .SetTargetArguments(capturedStartInfo.Arguments)
-                .SetTargetDirectory(capturedStartInfo.WorkingDirectory);
-        }
-
         public static OpenCoverSettings SetTargetSettings(this OpenCoverSettings toolSettings, ToolSettings targetSettings)
         {
             return toolSettings

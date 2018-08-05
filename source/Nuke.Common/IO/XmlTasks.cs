@@ -16,26 +16,26 @@ namespace Nuke.Common.IO
     [PublicAPI]
     public static class XmlTasks
     {
-        public static IEnumerable<string> XmlPeek(string path, string xpath)
+        public static IEnumerable<string> XmlPeek(string path, string xpath, params (string prefix, string uri)[] namespaces)
         {
-            var (elements, attributes) = GetObjects(XDocument.Load(path), xpath);
+            var (elements, attributes) = GetObjects(XDocument.Load(path), xpath, namespaces);
             ControlFlow.Assert(elements.Count == 0 || attributes.Count == 0, "elements.Count == 0 || attributes.Count == 0");
 
             return elements.Count != 0 ? elements.Select(x => x.Value) : attributes.Select(x => x.Value);
         }
 
         [CanBeNull]
-        public static string XmlPeekSingle(string path, string xpath)
+        public static string XmlPeekSingle(string path, string xpath, params (string prefix, string uri)[] namespaces)
         {
-            var values = XmlPeek(path, xpath).ToList();
+            var values = XmlPeek(path, xpath, namespaces).ToList();
             ControlFlow.Assert(values.Count <= 1, "values.Count <= 1");
             return values.SingleOrDefault();
         }
 
-        public static void XmlPoke(string path, string xpath, object value)
+        public static void XmlPoke(string path, string xpath, object value, params (string prefix, string uri)[] namespaces)
         {
             var document = XDocument.Load(path, LoadOptions.PreserveWhitespace);
-            var (elements, attributes) = GetObjects(document, xpath);
+            var (elements, attributes) = GetObjects(document, xpath, namespaces);
 
             ControlFlow.Assert((elements.Count == 1 || attributes.Count == 1) && !(elements.Count == 0 && attributes.Count == 0),
                 "(elements.Count == 1 || attributes.Count == 1) && !(elements.Count == 0 && attributes.Count == 0)");
@@ -52,9 +52,25 @@ namespace Nuke.Common.IO
 
         private static (IReadOnlyCollection<XElement> Elements, IReadOnlyCollection<XAttribute> Attributes) GetObjects(
             XDocument document,
-            string xpath)
+            string xpath,
+            params (string prefix, string uri)[] namespaces)
         {
-            var objects = ((IEnumerable) document.XPathEvaluate(xpath)).Cast<XObject>().ToList();
+            XmlNamespaceManager xmlNamespaceManager = null;
+
+            if (namespaces?.Length > 0)
+            {
+                var reader = document.CreateReader();
+                if (reader.NameTable != null)
+                {
+                    xmlNamespaceManager = new XmlNamespaceManager(reader.NameTable);
+                    foreach (var (prefix, uri) in namespaces)
+                    {
+                        xmlNamespaceManager.AddNamespace(prefix, uri);
+                    }
+                }
+            }
+
+            var objects = ((IEnumerable)document.XPathEvaluate(xpath, xmlNamespaceManager)).Cast<XObject>().ToList();
             return (objects.OfType<XElement>().ToList().AsReadOnly(),
                 objects.OfType<XAttribute>().ToList().AsReadOnly());
         }

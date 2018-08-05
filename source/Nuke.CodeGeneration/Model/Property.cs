@@ -34,6 +34,9 @@ namespace Nuke.CodeGeneration.Model
         [JsonProperty(Required = Required.Always)]
         [Description("Type of the property. I.e., bool, int, string, List<int>, Dictionary<string, object>, Lookup<string, int.>")]
         public string Type { get; set; }
+        
+        [Description("Name used when serializing to JSON.")]
+        public string Json { get; set; }
 
         [EnumDataType(typeof(AssertionType))]
         [Description("Automatic assertion.")]
@@ -51,9 +54,6 @@ namespace Nuke.CodeGeneration.Model
 
         [Description("Custom implementation of the property.")]
         public bool CustomImpl { get; set; }
-
-        [Description("Skips appendig of extension methods.")]
-        public bool NoExtensionMethod { get; set; }
 
         [Description("Separator used for items of collection types.")]
         public char? Separator { get; set; }

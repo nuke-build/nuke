@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -22,13 +23,14 @@ namespace Nuke.Common.BuildServers
     /// </summary>
     [PublicAPI]
     [BuildServer]
+    [ExcludeFromCodeCoverage]
     public class TeamCity
     {
         private static Lazy<TeamCity> s_instance = new Lazy<TeamCity>(() => new TeamCity());
 
         public static TeamCity Instance => NukeBuild.Instance?.Host == HostType.TeamCity ? s_instance.Value : null;
 
-        internal static bool IsRunningTeamCity => Variable("TEAMCITY_VERSION") != null;
+        internal static bool IsRunningTeamCity => Environment.GetEnvironmentVariable("TEAMCITY_VERSION") != null;
 
         public static T CreateRestClient<T>(string serverUrl, string username, string password)
         {
@@ -108,7 +110,7 @@ namespace Nuke.Common.BuildServers
         public string Version => Variable("TEAMCITY_VERSION");
         public string ProjectName => Variable("TEAMCITY_PROJECT_NAME");
         public string ServerUrl => ConfigurationProperties?["TEAMCITY_SERVERURL"];
-        public string BranchName => ConfigurationProperties?["TEAMCITY_BUILD_BRANCH"];
+        [NoConvert] public string BranchName => ConfigurationProperties?["TEAMCITY_BUILD_BRANCH"];
 
         public void DisableServiceMessages()
         {

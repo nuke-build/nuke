@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
 using static Nuke.Common.EnvironmentInfo;
@@ -14,18 +15,19 @@ namespace Nuke.Common.BuildServers
     /// </summary>
     [PublicAPI]
     [BuildServer]
+    [ExcludeFromCodeCoverage]
     public class Bitrise
     {
         private static Lazy<Bitrise> s_instance = new Lazy<Bitrise>(() => new Bitrise());
 
         public static Bitrise Instance => NukeBuild.Instance?.Host == HostType.Bitrise ? s_instance.Value : null;
 
-        internal static bool IsRunningBitrise => Variable("BITRISE_BUILD_URL") != null;
+        internal static bool IsRunningBitrise => Environment.GetEnvironmentVariable("BITRISE_BUILD_URL") != null;
 
         private static DateTime ConvertUnixTimestamp(long timestamp)
         {
             return new DateTime(year: 1970, month: 1, day: 1, hour: 0, minute: 0, second: 0, kind: DateTimeKind.Utc)
-                .AddSeconds(value: 1501444668)
+                .AddSeconds(timestamp)
                 .ToLocalTime();
         }
 
@@ -45,7 +47,7 @@ namespace Nuke.Common.BuildServers
         [CanBeNull] public string GitTag => Variable("BITRISE_GIT_TAG");
         [CanBeNull] public string GitCommit => Variable("BITRISE_GIT_COMMIT");
         [CanBeNull] public string GitMessage => Variable("BITRISE_GIT_MESSAGE");
-        [CanBeNull] public string PullRequest => Variable("BITRISE_PULL_REQUEST");
+        [CanBeNull] public long? PullRequest => Variable<long?>("BITRISE_PULL_REQUEST");
         [CanBeNull] public string ProvisionUrl => Variable("BITRISE_PROVISION_URL");
         [CanBeNull] public string CertificateUrl => Variable("BITRISE_CERTIFICATE_URL");
         [CanBeNull] public string CertificatePassphrase => Variable("BITRISE_CERTIFICATE_PASSPHRASE");

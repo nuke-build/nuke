@@ -14,7 +14,7 @@
   "dataClasses": [
     {
       "name": "NuGetPackage",
-      "noArguments": true,
+      "extensionMethods": true,
       "properties": [
         {
           "name": "Id",
@@ -114,8 +114,6 @@
     },
     {
       "name": "PackageContentFile",
-      "noExtensionMethods": true,
-      "noArguments": true,
       "properties": [
         {
           "name": "Source",
@@ -133,8 +131,6 @@
     },
     {
       "name": "PackageDependencySet",
-      "noExtensionMethods": true,
-      "noArguments": true,
       "properties": [
         {
           "name": "TargetFramework",
@@ -148,8 +144,6 @@
     },
     {
       "name": "PackageDependency",
-      "noExtensionMethods": true,
-      "noArguments": true,
       "properties": [
         {
           "name": "Id",

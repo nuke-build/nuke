@@ -28,13 +28,15 @@ using Nuke.Common.Tools.Paket;
 using Nuke.Common.Tools.ReportGenerator;
 using Nuke.Common.Tools.SignTool;
 using Nuke.Common.Tools.TestCloud;
-using Nuke.Common.Tools.VsTest;
+using Nuke.Common.Tools.VSTest;
 using Nuke.Common.Tools.WebConfigTransformRunner;
 using Nuke.Common.Tools.Xunit;
 using Nuke.Common;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
+using Nuke.Common.Tools.Slack;
+using Nuke.Common.Tools.VSWhere;
 
 [assembly: IconClass(typeof(ChangelogTasks), "books")]
 [assembly: IconClass(typeof(ControlFlow), "footprint")]
@@ -72,10 +74,12 @@ using Nuke.Common.Tooling;
 [assembly: IconClass(typeof(ReportGeneratorTasks), "pie-chart4")]
 [assembly: IconClass(typeof(SerializationTasks), "transmission2")]
 [assembly: IconClass(typeof(SignToolTasks), "key")]
+[assembly: IconClass(typeof(SlackTasks), "bubbles")]
 [assembly: IconClass(typeof(SolutionAttribute), "tree7")]
 [assembly: IconClass(typeof(TextTasks), "file-text3")]
 [assembly: IconClass(typeof(TestCloudTasks), "bug2")]
-[assembly: IconClass(typeof(VsTestTasks), "bug2")]
+[assembly: IconClass(typeof(VSTestTasks), "bug2")]
+[assembly: IconClass(typeof(VSWhereTasks), "search")]
 [assembly: IconClass(typeof(WebConfigTransformRunnerTasks), "file-empty2")]
 [assembly: IconClass(typeof(XmlTasks), "file-empty2")]
 [assembly: IconClass(typeof(XunitTasks), "bug2")]

@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using Nuke.Common.BuildServers;
 
 namespace Nuke.Common.Tools.MSBuild
 {
@@ -19,6 +20,15 @@ namespace Nuke.Common.Tools.MSBuild
         public static MSBuildSettings SetProjectFile(this MSBuildSettings toolSettings, string projectFile)
         {
             return toolSettings.SetTargetPath(projectFile);
+        }
+        
+        public static MSBuildSettings AddTeamCityLogger(this MSBuildSettings toolSettings)
+        {
+            var teamCity = TeamCity.Instance.NotNull("TeamCity.Instance != null");
+            var teamCityLogger = teamCity.ConfigurationProperties["TEAMCITY_DOTNET_MSBUILD_EXTENSIONS4_0"];
+            return toolSettings
+                .AddLoggers($"JetBrains.BuildServer.MSBuildLoggers.MSBuildLogger,{teamCityLogger}")
+                .EnableNoConsoleLogger();
         }
     }
 }

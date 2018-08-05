@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <RootNamespace></RootNamespace>
+    <ReferenceExternal>False</ReferenceExternal>
+    <IsPackable>false</IsPackable>
+    <NoWarn>CS0649;CS0169</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DefineConstants>$(Configuration.ToUpper())</DefineConstants>
+    <DefineConstants Condition="'$(OS)' == 'Windows_NT'">$(DefineConstants);WIN</DefineConstants>
+    <DefineConstants Condition="'$(OS)' != 'Windows_NT'">$(DefineConstants);UNIX</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GitVersion.CommandLine" Version="4.0.0-beta0012" />
+    <PackageReference Include="JetBrains.ReSharper.CommandLineTools" Version="2017.1.20170613.162720" />
+    <PackageReference Include="OpenCover" Version="4.6.519" />
+    <PackageReference Include="ReportGenerator" Version="2.5.6" />
+    <PackageReference Include="xunit.runner.console" Version="2.4.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(ReferenceExternal)'=='True'">
+    <PackageReference Include="Nuke.CodeGeneration" Version="*" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(ReferenceExternal)'!='True'">
+    <ProjectReference Include="..\source\Nuke.Common\Nuke.Common.csproj" />
+    <ProjectReference Include="..\source\Nuke.CodeGeneration\Nuke.CodeGeneration.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="*.csproj.DotSettings" />
+
+    <None Include="..\build.ps1" />
+    <None Include="..\build.sh" />
+    <None Include="..\.nuke" />
+    <None Include="..\global.json" Condition="Exists('..\global.json')" />
+    <None Include="..\nuget.config" Condition="Exists('..\nuget.config')" />
+    <None Include="..\Jenkinsfile" Condition="Exists('..\Jenkinsfile')" />
+    <None Include="..\appveyor.yml" Condition="Exists('..\appveyor.yml')" />
+    <None Include="..\.travis.yml" Condition="Exists('..\.travis.yml')" />
+    <None Include="..\GitVersion.yml" Condition="Exists('..\GitVersion.yml')" />
+  </ItemGroup>
+
+</Project>

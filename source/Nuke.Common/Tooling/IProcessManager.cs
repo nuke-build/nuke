@@ -13,7 +13,7 @@ namespace Nuke.Common.Tooling
     public interface IProcessManager
     {
         [CanBeNull]
-        IProcess StartProcess(ToolSettings toolSettings, ProcessSettings processSettings = null);
+        IProcess StartProcess(ToolSettings toolSettings);
 
         [CanBeNull]
         IProcess StartProcess(
@@ -22,9 +22,8 @@ namespace Nuke.Common.Tooling
             string workingDirectory = null,
             IReadOnlyDictionary<string, string> environmentVariables = null,
             int? timeout = null,
-            bool redirectOutput = false,
+            bool logOutput = true,
+            Func<string, LogLevel> logLevelParser = null,
             Func<string, string> outputFilter = null);
-
-        CapturedProcessStartInfo CaptureProcessStartInfo(Action action);
     }
 }

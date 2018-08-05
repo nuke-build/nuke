@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <NukeContinueOnError Condition="'$(NukeContinueOnError)' == ''">False</NukeContinueOnError>
+    <NukeTimeout Condition="'$(NukeTimeout)' == ''">5000</NukeTimeout>
+  </PropertyGroup>
+  
+  <UsingTask
+    TaskName="Nuke.Common.BuildTasks.ExternalFilesTask"
+    AssemblyFile="$(MSBuildThisFileDirectory)\Nuke.Common.dll" />
+  
+  <Target Name="NukeExternalFiles" BeforeTargets="CoreCompile">
+    <ExternalFilesTask 
+      ExternalFiles="@(NukeExternalFiles)"
+      Timeout="$(NukeTimeout)"
+      ContinueOnError="$(NukeContinueOnError)" />
+  </Target>
+</Project>

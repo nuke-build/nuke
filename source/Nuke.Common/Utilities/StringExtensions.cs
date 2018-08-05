@@ -223,5 +223,18 @@ namespace Nuke.Common.Utilities
 
             yield return str.Substring(next);
         }
+
+        [Pure]
+        public static IEnumerable<string> SplitCamelHumps(this string str)
+        {
+            var hadLower = false;
+            return str.Split(c =>
+            {
+                var shouldSplit = hadLower && char.IsUpper(c);
+                hadLower = char.IsLower(c) && !shouldSplit;
+
+                return shouldSplit;
+            });
+        }
     }
 }

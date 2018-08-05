@@ -6,6 +6,7 @@
 // Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/WebConfigTransformRunner.json.
 
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 using Nuke.Common;
 using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
@@ -28,22 +29,19 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         /// <summary><p>Path to the WebConfigTransformRunner executable.</p></summary>
         public static string WebConfigTransformRunnerPath => ToolPathResolver.GetPackageExecutable("WebConfigTransformRunner", "WebConfigTransformRunner.exe");
         /// <summary><p>This is a commandline tool to run an ASP.Net web.config tranformation.</p></summary>
-        public static IEnumerable<string> WebConfigTransformRunner(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool redirectOutput = false, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> WebConfigTransformRunner(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(WebConfigTransformRunnerPath, arguments, workingDirectory, environmentVariables, timeout, redirectOutput, outputFilter);
+            var process = ProcessTasks.StartProcess(WebConfigTransformRunnerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
             process.AssertZeroExitCode();
-            return process.HasOutput ? process.Output.Select(x => x.Text) : null;
+            return process.Output;
         }
-        static partial void PreProcess(WebConfigTransformRunnerSettings toolSettings);
-        static partial void PostProcess(WebConfigTransformRunnerSettings toolSettings);
         /// <summary><p>This is a commandline tool to run an ASP.Net web.config tranformation.</p><p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p></summary>
-        public static void WebConfigTransformRunner(Configure<WebConfigTransformRunnerSettings> configurator = null, ProcessSettings processSettings = null)
+        public static IReadOnlyCollection<Output> WebConfigTransformRunner(Configure<WebConfigTransformRunnerSettings> configurator = null)
         {
             var toolSettings = configurator.InvokeSafe(new WebConfigTransformRunnerSettings());
-            PreProcess(toolSettings);
-            var process = ProcessTasks.StartProcess(toolSettings, processSettings);
+            var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
-            PostProcess(toolSettings);
+            return process.Output;
         }
     }
     #region WebConfigTransformRunnerSettings
@@ -56,7 +54,7 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         /// <summary><p>Path to the WebConfigTransformRunner executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? WebConfigTransformRunnerTasks.WebConfigTransformRunnerPath;
         /// <summary><p>The base web.config file</p></summary>
-        public virtual string WebConfigFilename  { get; internal set; }
+        public virtual string WebConfigFilename { get; internal set; }
         /// <summary><p>The transformation web.config file</p></summary>
         public virtual string TransformFilename { get; internal set; }
         /// <summary><p>The path to the output web.config file</p></summary>
@@ -64,14 +62,14 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         protected override void AssertValid()
         {
             base.AssertValid();
-            ControlFlow.Assert(File.Exists(WebConfigFilename ), "File.Exists(WebConfigFilename )");
+            ControlFlow.Assert(File.Exists(WebConfigFilename), "File.Exists(WebConfigFilename)");
             ControlFlow.Assert(File.Exists(TransformFilename), "File.Exists(TransformFilename)");
             ControlFlow.Assert(OutputFilename != null, "OutputFilename != null");
         }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
-              .Add("{value}", WebConfigFilename )
+              .Add("{value}", WebConfigFilename)
               .Add("{value}", TransformFilename)
               .Add("{value}", OutputFilename);
             return base.ConfigureArguments(arguments);
@@ -84,21 +82,21 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
     [ExcludeFromCodeCoverage]
     public static partial class WebConfigTransformRunnerSettingsExtensions
     {
-        #region WebConfigFilename 
-        /// <summary><p><em>Sets <see cref="WebConfigTransformRunnerSettings.WebConfigFilename "/>.</em></p><p>The base web.config file</p></summary>
+        #region WebConfigFilename
+        /// <summary><p><em>Sets <see cref="WebConfigTransformRunnerSettings.WebConfigFilename"/>.</em></p><p>The base web.config file</p></summary>
         [Pure]
-        public static WebConfigTransformRunnerSettings SetWebConfigFilename (this WebConfigTransformRunnerSettings toolSettings, string webConfigFilename )
+        public static WebConfigTransformRunnerSettings SetWebConfigFilename(this WebConfigTransformRunnerSettings toolSettings, string webConfigFilename)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.WebConfigFilename  = webConfigFilename ;
+            toolSettings.WebConfigFilename = webConfigFilename;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="WebConfigTransformRunnerSettings.WebConfigFilename "/>.</em></p><p>The base web.config file</p></summary>
+        /// <summary><p><em>Resets <see cref="WebConfigTransformRunnerSettings.WebConfigFilename"/>.</em></p><p>The base web.config file</p></summary>
         [Pure]
-        public static WebConfigTransformRunnerSettings ResetWebConfigFilename (this WebConfigTransformRunnerSettings toolSettings)
+        public static WebConfigTransformRunnerSettings ResetWebConfigFilename(this WebConfigTransformRunnerSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.WebConfigFilename  = null;
+            toolSettings.WebConfigFilename = null;
             return toolSettings;
         }
         #endregion

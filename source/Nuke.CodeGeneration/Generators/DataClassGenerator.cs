@@ -19,7 +19,7 @@ namespace Nuke.CodeGeneration.Generators
     {
         public static void Run(DataClass dataClass, ToolWriter toolWriter)
         {
-            if (!dataClass.NoArguments)
+            if (dataClass.ArgumentConstruction)
             {
                 foreach (var property in dataClass.Properties)
                 {
@@ -48,6 +48,7 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteLine($"public partial class {dataClass.Name} : {baseType}")
                 .WriteBlock(w => w
                     .WriteToolPath()
+                    .WriteLogLevelParser()
                     .ForEach(dataClass.Properties, WritePropertyDeclaration)
                     .WriteAssertValid()
                     .WriteConfigureArguments())
@@ -69,6 +70,16 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteLine($"public override string ToolPath => base.ToolPath ?? {resolver};");
         }
 
+        private static DataClassWriter WriteLogLevelParser(this DataClassWriter writer)
+        {
+            var tool = writer.DataClass.Tool;
+            if (!tool.LogLevelParsing)
+                return writer;
+            
+            var logLevelParser = $"{tool.GetClassName()}.ParseLogLevel";
+            return writer.WriteLine($"internal override Func<string, LogLevel> LogLevelParser => {logLevelParser};");
+        }
+
         private static void WritePropertyDeclaration(DataClassWriter writer, Property property)
         {
             if (property.CustomImpl)
@@ -76,8 +87,17 @@ namespace Nuke.CodeGeneration.Generators
 
             writer
                 .WriteSummary(property)
+                .WriteLine(GetJsonSerializationAttribute(property))
                 .WriteLine(GetPublicPropertyDeclaration(property))
                 .WriteLine(GetInternalPropertyDeclarationOrNull(property));
+        }
+
+        private static string GetJsonSerializationAttribute(Property property)
+        {
+            if (string.IsNullOrWhiteSpace(property.Json))
+                return null;
+
+            return $"[JsonProperty({property.Json.DoubleQuote()})]";
         }
 
         [CanBeNull]

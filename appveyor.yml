@@ -2,8 +2,3 @@ image: Visual Studio 2017
 
 build_script:
   - ps: .\build.ps1 test+pack
-
-branches:
-  only:
-    - develop
-    - main

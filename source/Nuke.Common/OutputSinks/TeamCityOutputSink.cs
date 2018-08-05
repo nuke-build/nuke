@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.BuildServers;
@@ -11,6 +12,7 @@ using Nuke.Common.Utilities;
 namespace Nuke.Common.OutputSinks
 {
     [UsedImplicitly]
+    [ExcludeFromCodeCoverage]
     internal class TeamCityOutputSink : ConsoleOutputSink
     {
         private readonly TeamCity _teamCity;
@@ -30,16 +32,6 @@ namespace Nuke.Common.OutputSinks
             return DelegateDisposable.CreateBracket(
                 () => _teamCity.OpenBlock(text),
                 () => _teamCity.CloseBlock(text));
-        }
-
-        public override void Trace(string text)
-        {
-            _teamCity.WriteMessage(text);
-        }
-
-        public override void Info(string text)
-        {
-            _teamCity.WriteMessage(text);
         }
 
         public override void Warn(string text, string details = null)
