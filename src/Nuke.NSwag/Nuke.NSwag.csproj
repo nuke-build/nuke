@@ -19,6 +19,6 @@
   <Import Project="..\..\shared\Configuration.props" />
 
   <ItemGroup>
-    <PackageReference Include="Nuke.Common" Version="[0.5.3,1)" />
+    <PackageReference Include="Nuke.Common" Version="[0.6,1)" />
   </ItemGroup>
 </Project>

@@ -20,6 +20,7 @@ using NuGet.Protocol.Core.Types;
 using NuGet.Resolver;
 using Nuke.Common;
 using Nuke.Common.Utilities.Collections;
+using DependencyBehavior = NuGet.Resolver.DependencyBehavior;
 
 // ReSharper disable ArrangeTypeMemberModifiers
 // ReSharper disable InconsistentNaming
