@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
+﻿// Copyright 2018 Maintainers and Contributors of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -119,7 +119,8 @@ namespace Nuke.Common
         {
             get
             {
-                var rootDirectory = FileSystemTasks.FindParentDirectory(EnvironmentInfo.BuildProjectDirectory, x => x.GetFiles(ConfigurationFile).Any());
+                var rootDirectory =
+                    FileSystemTasks.FindParentDirectory(EnvironmentInfo.BuildProjectDirectory, x => x.GetFiles(ConfigurationFile).Any());
                 ControlFlow.Assert(rootDirectory != null,
                     $"Could not locate '{ConfigurationFile}' file while traversing up from '{EnvironmentInfo.BuildProjectDirectory}'.");
 

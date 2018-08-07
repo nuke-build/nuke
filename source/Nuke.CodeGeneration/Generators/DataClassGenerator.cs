@@ -1,4 +1,4 @@
-// Copyright Matthias Koch, Sebastian Karasek 2018.
+// Copyright 2018 Maintainers and Contributors of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -75,7 +75,7 @@ namespace Nuke.CodeGeneration.Generators
             var tool = writer.DataClass.Tool;
             if (!tool.LogLevelParsing)
                 return writer;
-            
+
             var logLevelParser = $"{tool.GetClassName()}.ParseLogLevel";
             return writer.WriteLine($"internal override Func<string, LogLevel> LogLevelParser => {logLevelParser};");
         }

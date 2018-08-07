@@ -1,4 +1,4 @@
-// Copyright Matthias Koch, Sebastian Karasek 2018.
+// Copyright 2018 Maintainers and Contributors of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -18,7 +18,7 @@ namespace Nuke.Common.Tooling
             this T toolSettings,
             string environmentVariableKey,
             string environmentVariableValue)
-        where T : ToolSettings
+            where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
             newToolSettings.EnvironmentVariablesInternal.Add(environmentVariableKey, environmentVariableValue);
@@ -94,7 +94,7 @@ namespace Nuke.Common.Tooling
             newToolSettings.LogOutput = false;
             return newToolSettings;
         }
-        
+
         ///<summary>Sets <see cref="ToolSettings.ToolPath"/> -- <inheritdoc cref="ToolSettings.ToolPath" /></summary>
         [Pure]
         public static T SetToolPath<T>(this T toolSettings, [CanBeNull] string toolPath)

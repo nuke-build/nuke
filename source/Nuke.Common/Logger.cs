@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
+﻿// Copyright 2018 Maintainers and Contributors of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -221,7 +221,7 @@ namespace Nuke.Common
         }
 
         #endregion
-        
+
         #region Success
 
         /// <summary>

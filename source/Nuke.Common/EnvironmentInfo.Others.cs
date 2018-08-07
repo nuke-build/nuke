@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
+﻿// Copyright 2018 Maintainers and Contributors of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -39,28 +39,29 @@ namespace Nuke.Common
                 : new Dictionary<string, string>(environmentVariables, StringComparer.OrdinalIgnoreCase);
         }
 
-        private static Lazy<Dictionary<string, string>> s_variables = new Lazy<Dictionary<string, string>>(GetVariables); 
+        private static Lazy<Dictionary<string, string>> s_variables = new Lazy<Dictionary<string, string>>(GetVariables);
 
         public static IReadOnlyDictionary<string, string> Variables => s_variables.Value.AsReadOnly();
 
         public static string[] CommandLineArguments { get; } = GetSurrogateArguments() ?? Environment.GetCommandLineArgs();
-        
+
         private const string c_nukeTmpFileName = "nuke.tmp";
-        
+
         [CanBeNull]
         private static string[] GetSurrogateArguments()
         {
             var entryAssemblyLocation = Assembly.GetEntryAssembly()?.Location;
-            if (entryAssemblyLocation == null) return null;
+            if (entryAssemblyLocation == null)
+                return null;
 
             var assemblyDirectory = Path.GetDirectoryName(entryAssemblyLocation).NotNull();
             var argumentsFile = Path.Combine(assemblyDirectory, c_nukeTmpFileName);
             if (!File.Exists(argumentsFile))
                 return null;
-            
+
             var argumentLines = File.ReadAllLines(argumentsFile);
             var lastWriteTime = File.GetLastWriteTime(argumentsFile);
-            
+
             ControlFlow.Assert(argumentLines.Length == 1, $"{c_nukeTmpFileName} must have only one single line");
             File.Delete(argumentsFile);
             if (lastWriteTime.AddMinutes(value: 1) < DateTime.Now)

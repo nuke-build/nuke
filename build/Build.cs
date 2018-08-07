@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
+﻿// Copyright 2018 Maintainers and Contributors of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -42,10 +42,10 @@ partial class Build : NukeBuild
     [Parameter("ApiKey for the specified source.")] readonly string ApiKey;
     [Parameter] string Source = "https://api.nuget.org/v3/index.json";
     [Parameter] string SymbolSource = "https://nuget.smbsrc.net/";
-    
+
     [Parameter("Gitter authtoken.")] readonly string GitterAuthToken;
     [Parameter("Slack webhook.")] readonly string SlackWebhook;
-    
+
     [Parameter("Install global tool.")] readonly bool InstallGlobalTool;
 
     [GitVersion] readonly GitVersion GitVersion;
@@ -206,7 +206,7 @@ partial class Build : NukeBuild
                     .SetSource(Source)
                     .SetSymbolSource(SymbolSource)
                     .SetApiKey(ApiKey)));
-            
+
             if (GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch))
             {
                 SendSlackMessage(m => m

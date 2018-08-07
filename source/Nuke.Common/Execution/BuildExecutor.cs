@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
+﻿// Copyright 2018 Maintainers and Contributors of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -35,7 +35,7 @@ namespace Nuke.Common.Execution
                 executionList = TargetDefinitionLoader.GetExecutingTargets(build, build.InvokedTargets);
                 RequirementService.ValidateRequirements(executionList, build);
                 Execute(executionList);
-                
+
                 return 0;
             }
             catch (AggregateException exception)

@@ -1,4 +1,4 @@
-// Copyright Matthias Koch, Sebastian Karasek 2018.
+// Copyright 2018 Maintainers and Contributors of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -19,7 +19,7 @@ namespace Nuke.GlobalTool
             string templateName,
             IReadOnlyCollection<string> definitions = null,
             T replacements = null)
-        where T : class
+            where T : class
         {
             var template = GetTemplate(templateName);
 

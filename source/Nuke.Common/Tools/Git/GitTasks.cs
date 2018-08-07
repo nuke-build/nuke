@@ -1,4 +1,4 @@
-// Copyright Matthias Koch, Sebastian Karasek 2018.
+// Copyright 2018 Maintainers and Contributors of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -24,12 +24,12 @@ namespace Nuke.Common.Tools.Git
         {
             return GitHasCleanWorkingCopy(EnvironmentInfo.WorkingDirectory);
         }
-        
+
         public static bool GitHasCleanWorkingCopy(string workingDirectory)
         {
             return !Git("status --short", workingDirectory, logOutput: false).Any();
         }
-        
+
         [Obsolete("Use " + nameof(GitHasCleanWorkingCopy))]
         public static bool GitHasUncommitedChanges()
         {

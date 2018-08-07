@@ -1,4 +1,4 @@
-// Copyright Matthias Koch, Sebastian Karasek 2018.
+// Copyright 2018 Maintainers and Contributors of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -103,7 +103,7 @@ namespace Nuke.CodeGeneration.Generators
         private static string GetTaskSignature(Task task, IEnumerable<string> additionalParameterDeclarations = null)
         {
             var parameterDeclarations = new List<string>();
-            parameterDeclarations.AddRange(additionalParameterDeclarations ?? new List<string>());            
+            parameterDeclarations.AddRange(additionalParameterDeclarations ?? new List<string>());
             parameterDeclarations.Add($"Configure<{task.SettingsClass.Name}> configurator = null");
 
             var returnType = task.HasReturnValue()

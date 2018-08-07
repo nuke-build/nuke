@@ -1,4 +1,4 @@
-// Copyright Matthias Koch, Sebastian Karasek 2018.
+// Copyright 2018 Maintainers and Contributors of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -31,7 +31,7 @@ namespace Nuke.Common.Execution
                 var dependencies = GetDependencies(targetDefinition, nameDictionary, factoryDictionary);
                 targetDefinition.TargetDefinitionDependencies.AddRange(dependencies);
                 targetDefinition.IsDefault = targetDefinition.Factory == defaultTarget;
-                
+
                 targetDefinition.TargetDefinitionDependencies.AddRange(targetDefinition.RunAfterTargets.Select(x => factoryDictionary[x]));
                 targetDefinition.TargetDefinitionDependencies.AddRange(
                     targetDefinitions.Where(x => x.RunBeforeTargets.Any(y => y == targetDefinition.Factory)));

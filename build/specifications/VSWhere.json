@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
   "license": [
-    "Copyright Matthias Koch, Sebastian Karasek 2018.",
+    "Copyright 2018 Maintainers and Contributors of NUKE.",
     "Distributed under the MIT License.",
     "https://github.com/nuke-build/tools/blob/master/LICENSE"
   ],

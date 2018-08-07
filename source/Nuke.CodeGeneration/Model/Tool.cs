@@ -1,4 +1,4 @@
-// Copyright Matthias Koch, Sebastian Karasek 2018.
+// Copyright 2018 Maintainers and Contributors of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -39,7 +39,8 @@ namespace Nuke.CodeGeneration.Model
         [Description("Url to the official website.")]
         public string OfficialUrl { get; set; }
 
-        [Description("Help or introduction text to for the tool. Supports 'a-href', 'c', 'em', 'b', 'ul', 'li' and 'para' tags for better formatting.")]
+        [Description(
+            "Help or introduction text to for the tool. Supports 'a-href', 'c', 'em', 'b', 'ul', 'li' and 'para' tags for better formatting.")]
         public string Help { get; set; }
 
         [Description("ID for the NuGet package.")]

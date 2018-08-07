@@ -1,4 +1,4 @@
-// Copyright Matthias Koch, Sebastian Karasek 2018.
+// Copyright 2018 Maintainers and Contributors of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -16,7 +16,7 @@ namespace Nuke.Common.Tools.DotNet
             return ApplicationArguments;
         }
     }
-    
+
     public static partial class DotNetTasks
     {
         public static string GetToolPath()
@@ -73,7 +73,7 @@ namespace Nuke.Common.Tools.DotNet
                     continue;
                 }
 
-                if (i >= 4 && 
+                if (i >= 4 &&
                     'e' == arg[i - 4] &&
                     'r' == arg[i - 3] &&
                     'r' == arg[i - 2] &&
@@ -81,7 +81,7 @@ namespace Nuke.Common.Tools.DotNet
                     'r' == arg[i])
                     return LogLevel.Error;
 
-                if (i >= 6 && 
+                if (i >= 6 &&
                     'w' == arg[i - 6] &&
                     'a' == arg[i - 5] &&
                     'r' == arg[i - 4] &&
@@ -90,9 +90,8 @@ namespace Nuke.Common.Tools.DotNet
                     'n' == arg[i - 1] &&
                     'g' == arg[i])
                     return LogLevel.Warning;
-                    
             }
-            
+
             return LogLevel.Information;
         }
     }

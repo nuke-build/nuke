@@ -1,4 +1,4 @@
-// Copyright Matthias Koch, Sebastian Karasek 2018.
+// Copyright 2018 Maintainers and Contributors of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -23,15 +23,15 @@ namespace Nuke.Common.Tooling
             EnvironmentVariablesInternal = new Dictionary<string, string>(variables, variables.Comparer);
             LogOutput = true; // TODO: could be controlled by NukeBuild parameter
         }
-        
+
         public virtual string ToolPath { get; internal set; }
         public virtual string WorkingDirectory { get; internal set; }
-        
+
         public IReadOnlyDictionary<string, string> EnvironmentVariables => EnvironmentVariablesInternal.AsReadOnly();
         internal Dictionary<string, string> EnvironmentVariablesInternal { get; set; }
         public int? ExecutionTimeout { get; internal set; }
         public bool LogOutput { get; internal set; }
-        
+
         internal virtual Func<string, LogLevel> LogLevelParser => null;
 
         [NonSerialized]

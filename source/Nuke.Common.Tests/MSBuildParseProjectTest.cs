@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
+﻿// Copyright 2018 Maintainers and Contributors of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,7 +25,7 @@ namespace Nuke.Common.Tests
             project.Properties["TargetFramework"].Should().Be("netstandard2.0");
 
             project = MSBuildTasks.MSBuildParseProject(projectFile, x => x.SetProperty("TargetFramework", "net461").SetConfiguration("Release"));
-            project.Properties["Configuration"].Should().Be("Release");        
+            project.Properties["Configuration"].Should().Be("Release");
             project.Properties["TargetFramework"].Should().Be("net461");
         }
     }

@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
+﻿// Copyright 2018 Maintainers and Contributors of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -24,7 +24,7 @@ namespace Nuke.MSBuildLocator
             var vsWherePath = args.FirstOrDefault();
             if (vsWherePath != null && !vsWherePath.EndsWith(c_vsWhereExecutableName))
                 vsWherePath = Path.Combine(vsWherePath, c_vsWhereExecutableName);
-            
+
             Trace.Assert(vsWherePath != null, $"Path to {c_vsWhereExecutableName} must be passed");
             Trace.Assert(File.Exists(vsWherePath), $"File '{vsWherePath}' does not exists");
 
@@ -84,8 +84,8 @@ namespace Nuke.MSBuildLocator
             }
 
             private (string Path, string Version) GetVSWhereInstallation(
-                [CanBeNull] string products, 
-                [CanBeNull] IReadOnlyCollection<string> requires, 
+                [CanBeNull] string products,
+                [CanBeNull] IReadOnlyCollection<string> requires,
                 bool legacy)
             {
                 var arguments = new StringBuilder("-latest -format text");
@@ -107,7 +107,7 @@ namespace Nuke.MSBuildLocator
                     return line.Substring(identifier.Length).TrimStart(':', ' ');
                 }
 
-                return (GetValue("installationPath"), GetValue("installationVersion")); 
+                return (GetValue("installationPath"), GetValue("installationVersion"));
             }
 
             private string GetProcessOutput(string arguments)

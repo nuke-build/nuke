@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
+﻿// Copyright 2018 Maintainers and Contributors of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -70,7 +70,7 @@ namespace Nuke.Common.IO
                 }
             }
 
-            var objects = ((IEnumerable)document.XPathEvaluate(xpath, xmlNamespaceManager)).Cast<XObject>().ToList();
+            var objects = ((IEnumerable) document.XPathEvaluate(xpath, xmlNamespaceManager)).Cast<XObject>().ToList();
             return (objects.OfType<XElement>().ToList().AsReadOnly(),
                 objects.OfType<XAttribute>().ToList().AsReadOnly());
         }

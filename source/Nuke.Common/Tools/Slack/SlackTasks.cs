@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
+﻿// Copyright 2018 Maintainers and Contributors of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -23,7 +23,7 @@ namespace Nuke.Common.Tools.Slack
         {
             SendSlackMessageAsync(configurator, webhook).Wait();
         }
-        
+
         public static async Task SendSlackMessageAsync(Configure<SlackMessage> configurator, string webhook)
         {
             var message = configurator(new SlackMessage());
@@ -43,9 +43,10 @@ namespace Nuke.Common.Tools.Slack
                         .Append(HttpUtility.UrlEncode(key))
                         .Append(value: '=')
                         .Append(HttpUtility.UrlEncode(data[key]));
-                    
+
                     str = "&";
                 }
+
                 var bytes = Encoding.ASCII.GetBytes(stringBuilder.ToString());
 
                 var response = await client.UploadDataTaskAsync(webhook, "POST", bytes);
