@@ -101,7 +101,7 @@ namespace Nuke.Common.BuildServers
         /// <summary>
         /// <c>TRAVIS_PULL_REQUEST</c> is set to the pull request number if the current job is a pull request build, or <c>false</c> if it’s not.
         /// </summary>
-        public bool PullRequest => Variable<bool>("TRAVIS_PULL_REQUEST");
+        [NoConvert] public long PullRequest => Variable<long>("TRAVIS_PULL_REQUEST");
 
         /// <summary>
         /// If the current job is a pull request, the name of the branch from which the PR originated.
