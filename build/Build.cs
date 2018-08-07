@@ -194,30 +194,4 @@ partial class Build : NukeBuild
                     GitterAuthToken);
             }
         });
-
-    Target Release => _ => _
-        .Executes(() =>
-        {
-            if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase("release"))
-            {
-                Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
-                Git($"checkout -b release/{GitVersion.MajorMinorPatch} {DevelopBranch}");
-            }
-            else
-            {
-                FinalizeChangelog(ChangelogFile, GitVersion.MajorMinorPatch, GitRepository);
-                Git($"add {ChangelogFile}");
-                Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.MajorMinorPatch}\"");
-                Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
-
-                Git($"checkout {DevelopBranch}");
-                Git($"merge --no-ff --no-edit release/{GitVersion.MajorMinorPatch}");
-                Git($"checkout {MasterBranch}");
-                Git($"merge --no-ff --no-edit release/{GitVersion.MajorMinorPatch}");
-                Git($"tag {GitVersion.MajorMinorPatch}");
-                Git($"branch -d release/{GitVersion.MajorMinorPatch}");
-                
-                Git($"push origin {MasterBranch} {DevelopBranch} {GitVersion.MajorMinorPatch}");
-            }
-        });
 }
