@@ -80,7 +80,7 @@ namespace Nuke.GlobalTool
             var process = Process.Start(
                 ScriptHost,
                 EnvironmentInfo.IsWin
-                    ? $"-NoProfile -File {buildScript} {arguments}"
+                    ? $"-ExecutionPolicy ByPass -NoProfile -File {buildScript} {arguments}"
                     : $"{buildScript} {arguments}").NotNull();
 
             process.WaitForExit();
