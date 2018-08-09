@@ -23,7 +23,7 @@ partial class Build
             }
             else
             {
-                ReleaseFrom($"release/{GitVersion.MajorMinorPatch}");
+                FinishReleaseOrHotfix();
             }
         });
 
@@ -32,29 +32,30 @@ partial class Build
         {
             if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase("hotfix"))
             {
-                Assert(CommandLineArguments.Length == 3, "CommandLineArguments.Length == 3");
                 Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
-                Git($"checkout -b hotfix/{CommandLineArguments.ElementAt(index: 2)} {MasterBranch}");
+                Git($"checkout -b hotfix/{GitVersion.Major}.{GitVersion.Minor}.{GitVersion.Patch + 1} {MasterBranch}");
             }
             else
             {
-                ReleaseFrom(GitRepository.Branch);
+                FinishReleaseOrHotfix();
             }
         });
 
-    void ReleaseFrom(string branch)
+    void FinishReleaseOrHotfix()
     {
         FinalizeChangelog(ChangelogFile, GitVersion.MajorMinorPatch, GitRepository);
         Git($"add {ChangelogFile}");
         Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.MajorMinorPatch}\"");
         Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
 
-        Git($"checkout {DevelopBranch}");
-        Git($"merge --no-ff --no-edit {branch}");
         Git($"checkout {MasterBranch}");
-        Git($"merge --no-ff --no-edit {branch}");
+        Git($"merge --no-ff --no-edit {GitRepository.Branch}");
         Git($"tag {GitVersion.MajorMinorPatch}");
-        Git($"branch -D {branch}");
+        
+        Git($"checkout {DevelopBranch}");
+        Git($"merge --no-ff --no-edit {GitRepository.Branch}");
+        
+        Git($"branch -D {GitRepository.Branch}");
 
         Git($"push origin {MasterBranch} {DevelopBranch} {GitVersion.MajorMinorPatch}");
     }
