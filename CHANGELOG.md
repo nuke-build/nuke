@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.6.1] / 2018-08-09
+- Fixed global tool to have 'same as global tool' as fallback version
+- Fixed PowerShell invocation to use `-ExecutionPolicy ByPass` and `-NoProfile` 
+
 ## [0.6.0] / 2018-08-05
 - Removed setup scripts in favor of `:setup` command in global tool
 - Removed `ProcessSettings` in favor of integrating related properties into `ToolSettings`
@@ -106,7 +110,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.6.0...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.6.1...HEAD
+[0.6.1]: https://github.com/nuke-build/nuke/compare/0.6.0...0.6.1
 [0.6.0]: https://github.com/nuke-build/nuke/compare/0.5.3...0.6.0
 [0.5.3]: https://github.com/nuke-build/nuke/compare/0.5.2...0.5.3
 [0.5.2]: https://github.com/nuke-build/nuke/compare/0.5.0...0.5.2

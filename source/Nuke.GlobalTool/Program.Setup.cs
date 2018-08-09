@@ -40,7 +40,7 @@ namespace Nuke.GlobalTool
         {
             #region Basic
             
-            var nukeLatestLocalVersion = NuGetPackageResolver.GetGlobalInstalledPackage("Nuke.Common", version: null).NotNull().Version.ToString();
+            var nukeLatestLocalVersion = NuGetPackageResolver.GetGlobalInstalledPackage("Nuke.Common", version: null)?.Version.ToString();
             var nukeLatestReleaseVersion = NuGetPackageResolver.GetLatestPackageVersion("Nuke.Common", includePrereleases: false);
             var nukeLatestPrereleaseVersion = NuGetPackageResolver.GetLatestPackageVersion("Nuke.Common", includePrereleases: true);
 
@@ -90,6 +90,7 @@ namespace Nuke.GlobalTool
                         ("latest release", nukeLatestReleaseVersion.GetAwaiter().GetResult()),
                         ("latest prerelease", nukeLatestPrereleaseVersion.GetAwaiter().GetResult()),
                         ("latest local", nukeLatestLocalVersion),
+                        ("same as global tool", typeof(Program).GetTypeInfo().Assembly.GetVersionText())
                     }
                     .Where(x => x.Item2 != null)
                     .Distinct(x => x.Item2)
