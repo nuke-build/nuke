@@ -17,7 +17,7 @@ namespace Nuke.GlobalTool
     {
         private static string ScriptHost => EnvironmentInfo.IsWin ? "powershell" : "bash";
         private static string ScriptExtension => EnvironmentInfo.IsWin ? "ps1" : "sh";
-        
+
         private const char c_commandPrefix = ':';
 
         private static void Main(string[] args)
@@ -38,7 +38,7 @@ namespace Nuke.GlobalTool
             var rootDirectory = FileSystemTasks.FindParentDirectory(
                 Directory.GetCurrentDirectory(),
                 x => x.GetFiles(NukeBuild.ConfigurationFile).Any());
-            
+
             var hasCommand = args.FirstOrDefault()?.StartsWithOrdinalIgnoreCase(c_commandPrefix.ToString()) ?? false;
             if (hasCommand)
             {
@@ -80,7 +80,7 @@ namespace Nuke.GlobalTool
             var process = Process.Start(
                 ScriptHost,
                 EnvironmentInfo.IsWin
-                    ? $"-File {buildScript} {arguments}"
+                    ? $"-ExecutionPolicy ByPass -NoProfile -File {buildScript} {arguments}"
                     : $"{buildScript} {arguments}").NotNull();
 
             process.WaitForExit();
