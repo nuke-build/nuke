@@ -1,0 +1,51 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "license": [
+    "Copyright 2018 Maintainers and Contributors of NUKE.",
+    "Distributed under the MIT License.",
+    "https://github.com/nuke-build/tools/blob/master/LICENSE"
+  ],
+  "references": [
+    "https://github.com/Squirrel/Squirrel.Windows/blob/master/docs/getting-started/0-overview.md"
+  ],
+  "name": "Squirrel",
+  "officialUrl": "https://github.com/Squirrel/Squirrel.Windows",
+  "help": "Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).",
+  "packageId": "Squirrel.Windows",
+  "packageExecutable": "Squirrel.exe",
+  "tasks": [
+    {
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Releasify",
+            "type": "string",
+            "assertion": "File",
+            "format": "--releasify={value}",
+            "help": "Update or generate a releases directory with a given NuGet package."
+          },
+          {
+            "name": "ReleaseDir",
+            "type": "string",
+            "format": "--releaseDir={value}",
+            "help": "Path to a release directory to use with releasify."
+          },
+          {
+            "name": "Icon",
+            "type": "string",
+            "assertion": "FileOrNull",
+            "format": "--icon={value}",
+            "help": "Path to an ICO file that will be used for icon shortcuts."
+          },
+          {
+            "name": "LoadingGif",
+            "type": "string",
+            "assertion": "FileOrNull",
+            "format": "--loadingGif={value}",
+            "help": "Path to an animated GIF to be displayed during installation."
+          }
+        ]
+      }
+    }
+  ]
+}
