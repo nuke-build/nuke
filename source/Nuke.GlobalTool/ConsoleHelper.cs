@@ -14,9 +14,12 @@ namespace Nuke.GlobalTool
 {
     public class ConsoleHelper
     {
-        private const char c_carriageReturn = '\u23CE';
-        private const char c_checkMark = '\u2714';
-        private const char c_pointer = '\u279C';
+        private static int BufferWidth => EnvironmentInfo.IsWin ? Console.BufferWidth - 1 : Console.BufferWidth;
+
+        private static string AcceptDefault => $"{(EnvironmentInfo.IsWin ? "enter" : "\u23CE")} for default";
+        private static string Confirmed => EnvironmentInfo.IsWin ? "\u2665" : "\u2714";
+        private static string Selected => EnvironmentInfo.IsWin ? "\u25BA" : "\u279C";
+        private static string Unselected => " ";
 
         private const ConsoleKey c_confirmationKey = ConsoleKey.Enter;
         private const ConsoleKey c_interruptKey = ConsoleKey.F8;
@@ -36,7 +39,7 @@ namespace Nuke.GlobalTool
             do
             {
                 Console.CursorLeft = 0;
-                Console.WriteLine(c_pointer.ToString().PadRight(Console.BufferWidth), Color.DeepSkyBlue);
+                Console.WriteLine(Selected.ToString().PadRight(BufferWidth), Color.DeepSkyBlue);
                 Console.CursorTop--;
                 Console.CursorLeft = 3;
 
@@ -46,7 +49,7 @@ namespace Nuke.GlobalTool
                 }
                 else if (defaultValue != null)
                 {
-                    Console.Write(defaultValue.PadRight(totalWidth: 15) + $" {c_carriageReturn} for default", Color.DarkGray);
+                    Console.Write(defaultValue.PadRight(totalWidth: 15) + $" {AcceptDefault} for default", Color.DarkGray);
                     Console.CursorLeft = 3;
                 }
 
@@ -62,7 +65,7 @@ namespace Nuke.GlobalTool
 
             var result = inputBuilder.Length > 0 ? inputBuilder.ToString() : defaultValue;
             Console.CursorLeft = 0;
-            Console.WriteLine($"{c_checkMark}  {result ?? "<null>"}".PadRight(Console.BufferWidth), Color.Lime);
+            Console.WriteLine($"{Confirmed}  {result ?? "<null>"}".PadRight(BufferWidth), Color.Lime);
             return result;
         }
 
@@ -81,7 +84,7 @@ namespace Nuke.GlobalTool
                 {
                     var option = options[i];
                     var selected = i == selection;
-                    var prefix = selected ? c_pointer : ' ';
+                    var prefix = selected ? Selected : Unselected;
                     var color = selected ? Color.DeepSkyBlue : Color.DarkGray;
                     Console.WriteLine($"{prefix}  {option.Description}", color);
                 }
@@ -97,11 +100,11 @@ namespace Nuke.GlobalTool
 
                 Console.CursorTop -= options.Length;
                 foreach (var option in options)
-                    Console.WriteLine(new string(c: ' ', Console.BufferWidth));
+                    Console.WriteLine(new string(c: ' ', BufferWidth));
                 Console.CursorTop -= options.Length;
             } while (!(input == c_confirmationKey || input == c_interruptKey));
 
-            Console.WriteLine($"{c_checkMark}  {options[selection].Description}", Color.Lime);
+            Console.WriteLine($"{Confirmed}  {options[selection].Description}", Color.Lime);
 
             return options[selection].Value;
         }
