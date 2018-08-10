@@ -24,7 +24,7 @@ namespace Nuke.GlobalTool
         private const ConsoleKey c_confirmationKey = ConsoleKey.Enter;
         private const ConsoleKey c_interruptKey = ConsoleKey.F8;
 
-        private static bool s_interrupted = false;
+        private static bool s_interrupted;
 
         [CanBeNull]
         public static string PromptForInput(string question, string defaultValue)
@@ -39,7 +39,7 @@ namespace Nuke.GlobalTool
             do
             {
                 Console.CursorLeft = 0;
-                Console.WriteLine(Selected.ToString().PadRight(BufferWidth), Color.DeepSkyBlue);
+                Console.WriteLine(Selected.PadRight(BufferWidth), Color.DeepSkyBlue);
                 Console.CursorTop--;
                 Console.CursorLeft = 3;
 
@@ -96,7 +96,7 @@ namespace Nuke.GlobalTool
                     selection++;
                 else if (input == c_interruptKey)
                     s_interrupted = true;
-                selection = Math.Max(0, Math.Min(options.Length - 1, selection));
+                selection = Math.Max(val1: 0, Math.Min(options.Length - 1, selection));
 
                 Console.CursorTop -= options.Length;
                 foreach (var option in options)
