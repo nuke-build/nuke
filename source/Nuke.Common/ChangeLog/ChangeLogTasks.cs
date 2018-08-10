@@ -18,6 +18,20 @@ namespace Nuke.Common.ChangeLog
     [PublicAPI]
     public static class ChangelogTasks
     {
+        public static string GetNuGetReleaseNotes(string changelogFile, GitRepository repository = null)
+        {
+            var changelogSectionNotes = ExtractChangelogSectionNotes(changelogFile)
+                .Select(x => x.Replace("- ", "\u2022 ").Replace("`", string.Empty).Replace(",", "%2C")).ToList();
+            
+            if (repository.IsGitHubRepository())
+            {
+                changelogSectionNotes.Add(string.Empty);
+                changelogSectionNotes.Add($"Full changelog at {repository.GetGitHubBrowseUrl(changelogFile)}");
+            }
+
+            return changelogSectionNotes.JoinNewLine();
+        }
+
         /// <summary>
         /// Reads the release notes from the given changelog file and returns the result.
         /// </summary>
