@@ -134,12 +134,14 @@ partial class Build : NukeBuild
                 .SetOutputDirectory(OutputDirectory)
                 .SetVersion(GitVersion.NuGetVersionV2)
                 .SetPackageReleaseNotes(releaseNotes));
+        });
 
-            if (InstallGlobalTool)
-            {
-                SuppressErrors(() => DotNet($"tool uninstall -g {GlobalToolProject.Name}"));
-                DotNet($"tool install -g {GlobalToolProject.Name} --add-source {OutputDirectory} --version {GitVersion.NuGetVersionV2}");
-            }
+    Target Install => _ => _
+        .DependsOn(Pack)
+        .Executes(() =>
+        {
+            SuppressErrors(() => DotNet($"tool uninstall -g {GlobalToolProject.Name}"));
+            DotNet($"tool install -g {GlobalToolProject.Name} --add-source {OutputDirectory} --version {GitVersion.NuGetVersionV2}");
         });
 
     Target Test => _ => _
