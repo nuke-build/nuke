@@ -169,25 +169,28 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteBlock(w => w
                     .WriteLine("base.AssertValid();")
                     .ForEach(
-                        validatedProperties.Select(GetAssertion),
-                        assertion => w.WriteLine($"ControlFlow.Assert({assertion}, {assertion.DoubleQuote()});"))
+                        validatedProperties.Select(GetAssertedProperty),
+                        assertedProperty => w.WriteLine($"ControlFlow.Assert({assertedProperty.assertion}, {AssertionWithValue(assertedProperty.assertion, assertedProperty.propertyName)});"))
                 );
         }
 
-        private static string GetAssertion(Property property)
+        private static string AssertionWithValue(string assertion, string propertyName)
+            => $"{assertion} [{propertyName} = {{{propertyName}}}]".DoubleQuoteInterpolated();
+
+        private static (string assertion, string propertyName) GetAssertedProperty(Property property)
         {
             switch (property.Assertion)
             {
                 case AssertionType.NotNull:
-                    return $"{property.Name} != null";
+                    return ($"{property.Name} != null", property.Name);
                 case AssertionType.File:
-                    return $"File.Exists({property.Name})";
+                    return ($"File.Exists({property.Name})", property.Name);
                 case AssertionType.Directory:
-                    return $"Directory.Exists({property.Name})";
+                    return ($"Directory.Exists({property.Name})", property.Name);
                 case AssertionType.FileOrNull:
-                    return $"File.Exists({property.Name}) || {property.Name} == null";
+                    return ($"File.Exists({property.Name}) || {property.Name} == null", property.Name);
                 case AssertionType.DirectoryOrNull:
-                    return $"Directory.Exists({property.Name}) || {property.Name} == null";
+                    return ($"Directory.Exists({property.Name}) || {property.Name} == null", property.Name);
                 default:
                     throw new NotSupportedException(property.Assertion.ToString());
             }
