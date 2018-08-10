@@ -168,18 +168,11 @@ namespace Nuke.GlobalTool
                                        [FORMAT_SDK] = "9A19103F-16F7-4668-BE54-9A1E7A4F7556"
                                    }[projectFormat];
 
-            var solutionFileContent = TextTasks.ReadAllLines(solutionFile).ToList();
             var buildProjectFileRelative = (WinRelativePath) GetRelativePath(solutionDirectory, buildProjectFile);
-            if (!solutionFileContent.Any(x => x.Contains(buildProjectFileRelative)))
-            {
-                var globalIndex = solutionFileContent.IndexOf("Global");
-                solutionFileContent.Insert(globalIndex,
-                    $"Project(\"{{{buildProjectKind}}}\") = \"{buildProjectName}\", \"{buildProjectFileRelative}\", \"{{{buildProjectGuid}}}\"");
-                solutionFileContent.Insert(globalIndex + 1,
-                    "EndProject");
-
-                TextTasks.WriteAllLines(solutionFile, solutionFileContent, Encoding.UTF8);
-            }
+            
+            var solutionFileContent = TextTasks.ReadAllLines(solutionFile).ToList();
+            UpdateSolutionFileContent(solutionFileContent, buildProjectFileRelative, buildProjectGuid, buildProjectKind, buildProjectName);
+            TextTasks.WriteAllLines(solutionFile, solutionFileContent, Encoding.UTF8);
 
             TextTasks.WriteAllText(
                 Path.Combine(rootDirectory, NukeBuild.ConfigurationFile),
@@ -316,6 +309,49 @@ namespace Nuke.GlobalTool
             }
 
             #endregion
+        }
+
+        public static void UpdateSolutionFileContent(
+            List<string> content,
+            string buildProjectFileRelative,
+            string buildProjectGuid,
+            string buildProjectKind,
+            string buildProjectName)
+        {
+            if (content.Any(x => x.Contains(buildProjectFileRelative)))
+                return;
+            
+            var globalIndex = content.IndexOf("Global");
+
+            var projectConfigurationIndex = content.FindIndex(x => x.Contains("GlobalSection(ProjectConfigurationPlatforms)"));
+            if (projectConfigurationIndex == -1)
+            {
+                var solutionConfigurationIndex = content.FindIndex(x => x.Contains("GlobalSection(SolutionConfigurationPlatforms)"));
+                if (solutionConfigurationIndex == -1)
+                {
+                    content.Insert(globalIndex + 1, "\tGlobalSection(SolutionConfigurationPlatforms) = preSolution");
+                    content.Insert(globalIndex + 2, "\t\tDebug|Any CPU = Debug|Any CPU");
+                    content.Insert(globalIndex + 3, "\t\tRelease|Any CPU = Release|Any CPU");
+                    content.Insert(globalIndex + 4, "\tEndGlobalSection");
+
+                    solutionConfigurationIndex = globalIndex + 1;
+                }
+
+                var endGlobalSectionIndex = content.FindIndex(solutionConfigurationIndex, x => x.Contains("EndGlobalSection"));
+
+                content.Insert(endGlobalSectionIndex + 1, "\tGlobalSection(ProjectConfigurationPlatforms) = postSolution");
+                content.Insert(endGlobalSectionIndex + 2, "\tEndGlobalSection");
+
+                projectConfigurationIndex = endGlobalSectionIndex + 1;
+            }
+
+            content.Insert(projectConfigurationIndex + 1, $"\t\t{{{buildProjectGuid}}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU");
+            content.Insert(projectConfigurationIndex + 2, $"\t\t{{{buildProjectGuid}}}.Release|Any CPU.ActiveCfg = Release|Any CPU");
+
+            content.Insert(globalIndex,
+                $"Project(\"{{{buildProjectKind}}}\") = \"{buildProjectName}\", \"{buildProjectFileRelative}\", \"{{{buildProjectGuid}}}\"");
+            content.Insert(globalIndex + 1,
+                "EndProject");
         }
     }
 }
