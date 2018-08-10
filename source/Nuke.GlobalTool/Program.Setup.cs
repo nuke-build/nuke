@@ -169,7 +169,7 @@ namespace Nuke.GlobalTool
                                    }[projectFormat];
 
             var solutionFileContent = TextTasks.ReadAllLines(solutionFile).ToList();
-            var buildProjectFileRelative = (WinRelativePath) GetRelativePath(rootDirectory, buildProjectFile);
+            var buildProjectFileRelative = (WinRelativePath) GetRelativePath(solutionDirectory, buildProjectFile);
             if (!solutionFileContent.Any(x => x.Contains(buildProjectFileRelative)))
             {
                 var globalIndex = solutionFileContent.IndexOf("Global");
