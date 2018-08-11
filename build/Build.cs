@@ -48,9 +48,10 @@ partial class Build : NukeBuild
 
     [Parameter("Install global tool.")] readonly bool InstallGlobalTool;
 
-    [GitVersion] readonly GitVersion GitVersion;
+    [Solution("nuke-common.sln")] readonly Solution Solution;
+
     [GitRepository] readonly GitRepository GitRepository;
-    [Solution] readonly Solution Solution;
+    [GitVersion] readonly GitVersion GitVersion;
 
     readonly string MasterBranch = "master";
     readonly string DevelopBranch = "develop";

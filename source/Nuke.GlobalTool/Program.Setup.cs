@@ -63,10 +63,10 @@ namespace Nuke.GlobalTool
                 options: new DirectoryInfo(rootDirectory)
                     .EnumerateFiles("*", SearchOption.AllDirectories)
                     .Where(x => x.FullName.EndsWithOrdinalIgnoreCase(".sln"))
-                    .NotEmpty("No solution file found.")
                     .OrderByDescending(x => x.FullName)
-                    .Select(x => (x, GetRelativePath(rootDirectory, x.FullName))).ToArray()).FullName;
-            var solutionDirectory = Path.GetDirectoryName(solutionFile);
+                    .Select(x => (x, GetRelativePath(rootDirectory, x.FullName)))
+                    .Concat((null, "None")).ToArray())?.FullName;
+            var solutionDirectory = solutionFile != null ? Path.GetDirectoryName(solutionFile) : null;
 
             var targetPlatform = ConsoleHelper.PromptForChoice("How should the build project be bootstrapped?",
                 (PLATFORM_NETCORE, ".NET Core SDK"),
@@ -101,7 +101,7 @@ namespace Nuke.GlobalTool
 
             #endregion
 
-            #region Wizard
+            #region Additional
 
             var defaultBuildDefinitions = new List<string>();
 
@@ -168,15 +168,17 @@ namespace Nuke.GlobalTool
                                        [FORMAT_SDK] = "9A19103F-16F7-4668-BE54-9A1E7A4F7556"
                                    }[projectFormat];
 
-            var buildProjectFileRelative = (WinRelativePath) GetRelativePath(solutionDirectory, buildProjectFile);
-            
-            var solutionFileContent = TextTasks.ReadAllLines(solutionFile).ToList();
-            UpdateSolutionFileContent(solutionFileContent, buildProjectFileRelative, buildProjectGuid, buildProjectKind, buildProjectName);
-            TextTasks.WriteAllLines(solutionFile, solutionFileContent, Encoding.UTF8);
+            if (solutionFile != null)
+            {
+                defaultBuildDefinitions.Add("SOLUTION_FILE");
+                
+                var solutionFileContent = TextTasks.ReadAllLines(solutionFile).ToList();
+                var buildProjectFileRelative = (WinRelativePath) GetRelativePath(solutionDirectory, buildProjectFile);
+                UpdateSolutionFileContent(solutionFileContent, buildProjectFileRelative, buildProjectGuid, buildProjectKind, buildProjectName);
+                TextTasks.WriteAllLines(solutionFile, solutionFileContent, Encoding.UTF8);
+            }
 
-            TextTasks.WriteAllText(
-                Path.Combine(rootDirectory, NukeBuild.ConfigurationFile),
-                GetRelativePath(rootDirectory, solutionFile).Replace(oldChar: '\\', newChar: '/'));
+            FileSystemTasks.Touch(Path.Combine(rootDirectory, NukeBuild.ConfigurationFile));
 
             TextTasks.WriteAllText(
                 buildProjectFile,
@@ -186,7 +188,7 @@ namespace Nuke.GlobalTool
                     replacements:
                     new
                     {
-                        solutionDirectory = (WinRelativePath) GetRelativePath(buildDirectory, solutionDirectory),
+                        solutionDirectory = (WinRelativePath) GetRelativePath(buildDirectory, solutionDirectory ?? rootDirectory),
                         rootDirectory = (WinRelativePath) GetRelativePath(buildDirectory, rootDirectory),
                         scriptDirectory = (WinRelativePath) GetRelativePath(buildDirectory, EnvironmentInfo.WorkingDirectory),
                         buildProjectName,
@@ -218,7 +220,11 @@ namespace Nuke.GlobalTool
                 TemplateEngine.FillOutTemplate(
                     "Build.cs",
                     defaultBuildDefinitions,
-                    replacements: new { }));
+                    replacements:
+                    new
+                    {
+                        solutionFile = (UnixRelativePath) GetRelativePath(rootDirectory, solutionFile)
+                    }));
 
             TextTasks.WriteAllText(
                 Path.Combine(EnvironmentInfo.WorkingDirectory, "build.ps1"),
@@ -229,7 +235,7 @@ namespace Nuke.GlobalTool
                     new
                     {
                         rootDirectory = (WinRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, rootDirectory),
-                        solutionDirectory = (WinRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, solutionDirectory),
+                        solutionDirectory = (WinRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, solutionDirectory ?? rootDirectory),
                         scriptDirectory = (WinRelativePath) GetRelativePath(buildDirectory, EnvironmentInfo.WorkingDirectory),
                         buildDirectory = (WinRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, buildDirectory),
                         buildProjectName,
@@ -245,7 +251,7 @@ namespace Nuke.GlobalTool
                     new
                     {
                         rootDirectory = (UnixRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, rootDirectory),
-                        solutionDirectory = (UnixRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, solutionDirectory),
+                        solutionDirectory = (UnixRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, solutionDirectory ?? rootDirectory),
                         scriptDirectory = (UnixRelativePath) GetRelativePath(buildDirectory, EnvironmentInfo.WorkingDirectory),
                         buildDirectory = (UnixRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, buildDirectory),
                         buildProjectName,

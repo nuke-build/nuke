@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
+using Nuke.Common.IO;
 
 namespace Nuke.Common.ProjectModel
 {
@@ -25,7 +26,7 @@ namespace Nuke.Common.ProjectModel
             string ProjectPattern()
                 => $@"^Project\(""{GuidPattern("typeId")}""\)\s*=\s*{TextPattern("name")},\s*{TextPattern("path")},\s*""{GuidPattern("id")}""$";
 
-            var lines = File.ReadAllLines(solutionFile);
+            var lines = TextTasks.ReadAllLines(solutionFile);
 
             var childToParent = lines
                 .SkipWhile(x => !Regex.IsMatch(x, @"^\s*GlobalSection\(NestedProjects\) = preSolution$"))
