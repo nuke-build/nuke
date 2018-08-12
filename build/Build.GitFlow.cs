@@ -5,11 +5,13 @@
 using System.IO;
 using System.Linq;
 using Nuke.Common;
+using Nuke.Common.Tooling;
+using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Utilities;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.ControlFlow;
-using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.Tools.Git.GitTasks;
+using static Nuke.Common.Tools.GitVersion.GitVersionTasks;
 
 partial class Build
 {
@@ -33,7 +35,12 @@ partial class Build
             if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase("hotfix"))
             {
                 Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
-                Git($"checkout -b hotfix/{GitVersion.Major}.{GitVersion.Minor}.{GitVersion.Patch + 1} {MasterBranch}");
+                
+                var masterVersion = GitVersion(s => s
+                    .SetUrl(RootDirectory)
+                    .SetBranch(MasterBranch)
+                    .DisableLogOutput()).Result;
+                Git($"checkout -b hotfix/{masterVersion.Major}.{masterVersion.Minor}.{masterVersion.Patch + 1} {MasterBranch}");
             }
             else
             {
