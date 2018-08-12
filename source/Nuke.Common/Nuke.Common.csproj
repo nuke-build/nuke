@@ -17,7 +17,7 @@
     <PackageReference Include="AutoMapper" Version="6.0.2" />
     <PackageReference Include="Colorful.Console" Version="1.2.9" />
     <PackageReference Include="Glob" Version="0.3.2" />
-    <PackageReference Include="JetBrains.Annotations" Version="10.4.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" />
     <PackageReference Include="Microsoft.Build.Framework" Version="15.5.180" />
     <PackageReference Include="Newtonsoft.Json" Version="10.*" />
     <PackageReference Include="NuGet.Packaging" Version="4.5.0" />

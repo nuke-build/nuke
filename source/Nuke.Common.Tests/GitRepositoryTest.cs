@@ -16,7 +16,6 @@ namespace Nuke.Common.Tests
     {
         [Theory]
         [InlineData("https://github.com/nuke-build", "github.com", "nuke-build")]
-        [InlineData("https://github.com/nuke-build", "github.com", "nuke-build")]
         [InlineData("https://github.com/nuke-build/", "github.com", "nuke-build")]
         [InlineData("https://github.com/nuke-build/nuke", "github.com", "nuke-build/nuke")]
         [InlineData("https://github.com/nuke-build/nuke.git", "github.com", "nuke-build/nuke")]
