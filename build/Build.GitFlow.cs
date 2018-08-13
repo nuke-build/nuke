@@ -18,10 +18,10 @@ partial class Build
     Target Release => _ => _
         .Executes(() =>
         {
-            if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase("release"))
+            if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase(ReleaseBranchPrefix))
             {
                 Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
-                Git($"checkout -b release/{GitVersion.MajorMinorPatch} {DevelopBranch}");
+                Git($"checkout -b {ReleaseBranchPrefix}/{GitVersion.MajorMinorPatch} {DevelopBranch}");
             }
             else
             {
@@ -32,7 +32,7 @@ partial class Build
     Target Hotfix => _ => _
         .Executes(() =>
         {
-            if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase("hotfix"))
+            if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase(HotfixBranchPrefix))
             {
                 Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
                 
@@ -40,7 +40,7 @@ partial class Build
                     .SetUrl(RootDirectory)
                     .SetBranch(MasterBranch)
                     .DisableLogOutput()).Result;
-                Git($"checkout -b hotfix/{masterVersion.Major}.{masterVersion.Minor}.{masterVersion.Patch + 1} {MasterBranch}");
+                Git($"checkout -b {HotfixBranchPrefix}/{masterVersion.Major}.{masterVersion.Minor}.{masterVersion.Patch + 1} {MasterBranch}");
             }
             else
             {
