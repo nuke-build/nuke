@@ -9,6 +9,7 @@ using System.Linq;
 using Humanizer;
 using JetBrains.Annotations;
 using Nuke.Common;
+using Nuke.Common.Utilities;
 
 namespace Nuke.CodeGeneration.Generators
 {
@@ -112,12 +113,16 @@ namespace Nuke.CodeGeneration.Generators
             return s_reservedWords.Contains(propertyName) ? propertyName + "_" : propertyName;
         }
 
-        public static string Paragraph([CanBeNull] this string text)
+        public static string Paragraph(this string text)
         {
-            if (text == null)
-                return string.Empty;
+            return text == null || text.StartsWith("<p>") && text.EndsWith("</p>")
+                ? text
+                : $"<p>{text}</p>";
+        }
 
-            return !text.StartsWith("<p>") ? $"<p>{text}</p>" : text;
+        public static string Emphasize(this string text)
+        {
+            return $"<em>{text}</em>";
         }
 
         public static string ToSingular(this string name)

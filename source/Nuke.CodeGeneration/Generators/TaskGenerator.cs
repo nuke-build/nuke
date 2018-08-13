@@ -103,6 +103,7 @@ namespace Nuke.CodeGeneration.Generators
 
             return writer
                 .WriteSummary(task)
+                .WriteRemarks(task)
                 .WriteObsoleteAttributeWhenObsolete(task)
                 .WriteLine($"public static {returnType} {task.GetTaskMethodName()}(Configure<{task.SettingsClass.Name}> configurator)")
                 .WriteBlock(w => w
@@ -126,6 +127,7 @@ namespace Nuke.CodeGeneration.Generators
             
             return writer
                 .WriteSummary(task)
+                .WriteRemarks(task)
                 .WriteObsoleteAttributeWhenObsolete(task)
                 .WriteLine($"public static {returnType} {task.GetTaskMethodName()}({parameters})")
                 .WriteBlock(w => w
