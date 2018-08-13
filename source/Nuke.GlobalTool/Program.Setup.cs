@@ -113,24 +113,24 @@ namespace Nuke.GlobalTool
                     ConsoleHelper.PromptForChoice("Restore, compile, pack using ...",
                         ("DOTNET", "dotnet CLI"),
                         ("MSBUILD", "MSBuild/Mono"),
-                        (null, "None of both")));
+                        (null, "Neither")));
 
                 definitions.Add(
                     ConsoleHelper.PromptForChoice("Source files are located in ...",
                         ("SOURCE_DIR", "./source"),
                         ("SRC_DIR", "./src"),
-                        (null, "None of both")));
+                        (null, "Neither")));
 
                 definitions.Add(
                     ConsoleHelper.PromptForChoice("Move packages to ...",
                         ("OUTPUT_DIR", "./output"),
                         ("ARTIFACTS_DIR", "./artifacts"),
-                        (null, "None of both")));
+                        (null, "Neither")));
 
                 definitions.Add(
                     ConsoleHelper.PromptForChoice("Where do test projects go?",
                         ("TESTS_DIR", "./tests"),
-                        (null, "Same where source goes")));
+                        (null, "Same as source")));
 
                 if (Directory.Exists(Path.Combine(rootDirectory, ".git")))
                     definitions.Add("GIT");
