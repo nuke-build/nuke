@@ -72,7 +72,7 @@ namespace Nuke.Common.Execution
                     continue;
                 }
 
-                if (target.Skip || target.Conditions.Any(x => !x()))
+                if (target.Skip || target.DependencyBehavior == DependencyBehavior.Execute && target.Conditions.Any(x => !x()))
                 {
                     target.Status = ExecutionStatus.Skipped;
                     continue;
