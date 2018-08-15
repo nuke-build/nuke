@@ -43,6 +43,25 @@
             "assertion": "FileOrNull",
             "format": "--loadingGif={value}",
             "help": "Path to an animated GIF to be displayed during installation."
+          },
+          {
+            "name": "Install",
+            "type": "string",
+            "assertion": "DirectoryOrNull",
+            "format": "--install={value}",
+            "help": "Install the app whose package is in the specified directory."
+          },
+          {
+            "name": "Download",
+            "type": "string",
+            "format": "--download={value}",
+            "help": "Download the releases specified by the URL and write new results to stdout as JSON."
+          },
+          {
+            "name": "CheckForUpdate",
+            "type": "string",
+            "format": "--checkForUpdate={value}",
+            "help": "Check for one available update and writes new results to stdout as JSON"
           }
         ]
       }
