@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Nuke.CodeGeneration.Model;
+using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Tools.Git;
 using Nuke.Common.Utilities;
@@ -56,6 +57,7 @@ internal static class RegenerateTasks
 
     public static bool IsUpdateAvailable(Release latest, string repositoryOwner, string repositoryName, string specificationFile)
     {
+        Logger.Log("Is Update Available?");
         if (!File.Exists(specificationFile)) return true;
         var tool = SerializationTasks.JsonDeserializeFromFile<Tool>(specificationFile);
         var toolReferenceSha = tool.References.First()

@@ -151,7 +151,7 @@ class Build : NukeBuild
 
     Target Regenerate => _ => _
         .Requires(() => GitHubApiKey)
-        .Requires(() => LatestNSwagRelease)
+        .Requires(() => LatestNSwagRelease != null)
         .DependsOn(CompilePlugin, GenerateSpecifications)
         .OnlyWhen(ShouldRegenerate)
         .WhenSkipped(DependencyBehavior.Skip)
@@ -276,5 +276,5 @@ class Build : NukeBuild
     bool IsMasterBranch => GitRepository.Branch == "master";
 
     bool ShouldRegenerate() =>
-        IsUpdateAvailable(LatestNSwagRelease, c_regenerationRepoOwner, c_regenerationRepoName, SpecificationDirectory / "NSwag.json");
+        IsUpdateAvailable(LatestNSwagRelease, c_regenerationRepoOwner, c_regenerationRepoName, SpecificationDirectory / "NSwag.json") || true;
 }
