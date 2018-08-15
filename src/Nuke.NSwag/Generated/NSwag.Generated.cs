@@ -2,7 +2,7 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-// Generated with Nuke.CodeGeneration, Version: 0.6.0 [CommitSha: 5a428f0d].
+// Generated with Nuke.CodeGeneration, Version: 0.6.1 [CommitSha: 8eca516b].
 // Generated from https://github.com/nuke-build/nswag/blob/master/src/Nuke.NSwag/specifications/NSwag.json.
 
 using JetBrains.Annotations;
