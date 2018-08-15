@@ -21,7 +21,8 @@ namespace Nuke.NSwag.Generator.Utilities
             var name = indexOfGenericSeperator < 0
                     ? typeDefinition.Name
                     : typeDefinition.Name.Substring(startIndex: 0, length: indexOfGenericSeperator);
-            return name.Replace("Base", string.Empty);
+            name =  name.Replace("Base", string.Empty);
+            return char.ToLower(name[index: 0]) + name.Substring(startIndex: 1);
         }
 
         public static bool IsCommandBaseClass (this TypeDefinition typeDefinition)

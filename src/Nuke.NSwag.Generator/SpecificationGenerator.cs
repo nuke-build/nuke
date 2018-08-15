@@ -3,8 +3,11 @@
 // https://github.com/nuke-build/nswag/blob/master/LICENSE
 
 using System;
+using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using Nuke.CodeGeneration;
 using Nuke.CodeGeneration.Model;
 using Nuke.Common.IO;
 
@@ -14,7 +17,7 @@ namespace Nuke.NSwag.Generator
     {
         private readonly string _outputFolder;
 
-        protected SpecificationGenerator (string outputFolder)
+        protected SpecificationGenerator(string outputFolder)
         {
             _outputFolder = outputFolder;
         }
@@ -24,13 +27,13 @@ namespace Nuke.NSwag.Generator
         protected abstract string OfficialUrl { get; }
         protected abstract string[] License { get; }
 
-        protected abstract ISpecificationParser CreateSpecificationParser ();
+        protected abstract ISpecificationParser CreateSpecificationParser();
 
-        public void GenerateSpecifications ()
+        public void GenerateSpecifications()
         {
             Console.WriteLine($"Generating {ToolName} specifications...");
 
-            var tool = GenerateTool();
+            var tool = GenerateTool(PathConstruction.Combine(_outputFolder, $"{ToolName}.json"));
             using (var parser = CreateSpecificationParser())
             {
                 parser.Populate(tool);
@@ -38,15 +41,9 @@ namespace Nuke.NSwag.Generator
 
             PopulateReferences(tool);
 
-            var specification = JsonConvert.SerializeObject(tool,
-                    new JsonSerializerSettings
-                    {
-                            NullValueHandling = NullValueHandling.Ignore,
-                            Formatting = Formatting.Indented,
-                            DefaultValueHandling = DefaultValueHandling.Include
-                    });
+            Directory.CreateDirectory(_outputFolder);
+            ToolSerializer.Save(tool);
 
-            TextTasks.WriteAllText(PathConstruction.Combine(_outputFolder, $"{ToolName}.json"), specification);
             Console.WriteLine();
             Console.WriteLine("Generation finished.");
             Console.WriteLine($"Created Tasks: {tool.Tasks.Count}");
@@ -62,24 +59,25 @@ namespace Nuke.NSwag.Generator
         protected virtual string PackageExecutable => null;
         protected virtual bool CustomExecutable => false;
 
-        private Tool GenerateTool ()
+        private Tool GenerateTool(string specificationFilePath)
         {
             var tool = new Tool
                        {
-                               Name = ToolName,
-                               CustomExecutable = CustomExecutable,
-                               License = License,
-                               OfficialUrl = OfficialUrl,
-                               EnvironmentExecutable = EnvironmentExecutable,
-                               PackageExecutable = PackageExecutable,
-                               PathExecutable = PathExecutable,
-                               PackageId = PackageId,
-                               Help = Help
+                           Name = ToolName,
+                           CustomExecutable = CustomExecutable,
+                           License = License,
+                           OfficialUrl = OfficialUrl,
+                           EnvironmentExecutable = EnvironmentExecutable,
+                           PackageExecutable = PackageExecutable,
+                           PathExecutable = PathExecutable,
+                           PackageId = PackageId,
+                           DefinitionFile = specificationFilePath,
+                           Help = Help
                        };
             return tool;
         }
 
-        private void PopulateReferences (Tool tool)
+        private void PopulateReferences(Tool tool)
         {
             foreach (var x in tool.DataClasses)
             {

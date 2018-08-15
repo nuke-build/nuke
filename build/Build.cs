@@ -223,7 +223,7 @@ class Build : NukeBuild
             var releaseNotes = new[]
                                {
                                    $"- [Nuget](https://www.nuget.org/packages/{c_toolNamespace}/{GitVersion.SemVer})",
-                                   $"- [Changelog](https://github.com/{c_addonRepoOwner}/{c_addonRepoName}/blob/{GitVersion.SemVer}/CHANGELOG.md)"
+                                   $"- [Changelog](https://github.com/{c_addonRepoOwner}/{c_addonRepoName}/blob/{GitVersion.MajorMinorPatch}/CHANGELOG.md)"
                                };
 
             await PublishRelease(x => x.SetToken(GitHubApiKey)
