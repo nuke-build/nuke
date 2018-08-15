@@ -1,4 +1,4 @@
-﻿pipeline {
+pipeline {
     agent { node { label 'linux'} }
     parameters {
         string(name: 'GitBranchOrCommit', defaultValue: 'master', description: 'Git branch or commit to build.  If a branch, builds the HEAD of that branch.  If a commit, then checks out that specific commit.')
