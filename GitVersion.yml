@@ -1,4 +1,11 @@
-mode: Mainline
-branches: {}
+assembly-versioning-scheme: MajorMinorPatch
+mode: ContinuousDelivery
+
+branches:
+  develop:
+    tag: 'alpha'
+  release:
+    tag: 'beta'
+
 ignore:
   sha: []

@@ -9,6 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.NSwag", "src\Nuke.NSwa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{5BE76539-1042-403D-8082-DB2B709F5CE3}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		build.ps1 = build.ps1
@@ -16,7 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{5BE76539-1
 		CHANGELOG.md = CHANGELOG.md
 		GitVersion.yml = GitVersion.yml
 		global.json = global.json
-		Jenkinsfile = Jenkinsfile
 		LICENSE = LICENSE
 		nuke-nswag.sln.DotSettings = nuke-nswag.sln.DotSettings
 		README.md = README.md

@@ -3,32 +3,20 @@ pipeline {
     options {
         buildDiscarder(logRotator(numToKeepStr:'10'))
         timeout(time: 15, unit: 'MINUTES')
+        skipDefaultCheckout()
     }
     stages { 
-		stage('DownloadPackages') {
+        stage('Checkout') {
             steps {
-                sh '/bin/bash ./build.sh DownloadPackages'
-            }
-        }
-        stage('Generate') {
-            steps {
-                sh '/bin/bash ./build.sh Generate -Skip -NoInit'
-            }
-        }
-        stage('CompilePlugin') {
-            steps {
-                sh '/bin/bash ./build.sh CompilePlugin -Skip -NoInit'
+				sh 'git config --global user.email "34026207+nuke-bot@users.noreply.github.com" && git config --global user.name "nuke-bot"'
+				checkout scm
             }
         }
         stage('Pack') {
             steps {
-                sh '/bin/bash ./build.sh Pack -Skip -NoInit'
+                sh '/bin/bash ./build.sh Pack'
+                archiveArtifacts 'output/*'
             }
-			post {
-				success {
-					archiveArtifacts 'output/*'
-				}
-			}
         }
         
     }
