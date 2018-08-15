@@ -19,7 +19,7 @@ SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 # CONFIGURATION
 ###########################################################################
 
-BUILD_PROJECT_FILE="$SCRIPT_DIR/.build/.build.csproj"
+BUILD_PROJECT_FILE="$SCRIPT_DIR/build/.build.csproj"
 TEMP_DIRECTORY="$SCRIPT_DIR/./.tmp"
 
 DOTNET_GLOBAL_FILE="$SCRIPT_DIR/./global.json"
