@@ -6,19 +6,19 @@
     "https://github.com/nuke-build/nswag/blob/master/LICENSE"
   ],
   "references": [
-    "https://raw.githubusercontent.com/RSuter/NSwag/d6bf4524b7/src/NSwag.Commands/Commands/Tooling/VersionCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/d6bf4524b7/src/NSwag.Commands/Commands/SwaggerGeneration/ListTypesCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/d6bf4524b7/src/NSwag.Commands/Commands/SwaggerGeneration/ListWebApiControllersCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/d6bf4524b7/src/NSwag.Commands/Commands/SwaggerGeneration/TypesToSwaggerCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/d6bf4524b7/src/NSwag.Commands/Commands/SwaggerGeneration/WebApi/WebApiToSwaggerCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/d6bf4524b7/src/NSwag.Commands/Commands/SwaggerGeneration/AspNetCore/AspNetCoreToSwaggerCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/d6bf4524b7/src/NSwag.Commands/Commands/Document/CreateDocumentCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/d6bf4524b7/src/NSwag.Commands/Commands/Document/ExecuteDocumentCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/d6bf4524b7/src/NSwag.Commands/Commands/CodeGeneration/JsonSchemaToCSharpCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/d6bf4524b7/src/NSwag.Commands/Commands/CodeGeneration/JsonSchemaToTypeScriptCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/d6bf4524b7/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToCSharpClientCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/d6bf4524b7/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToCSharpControllerCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/d6bf4524b7/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToTypeScriptClientCommand.cs"
+    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/Tooling/VersionCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/SwaggerGeneration/ListTypesCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/SwaggerGeneration/ListWebApiControllersCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/SwaggerGeneration/TypesToSwaggerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/SwaggerGeneration/WebApi/WebApiToSwaggerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/SwaggerGeneration/AspNetCore/AspNetCoreToSwaggerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/Document/CreateDocumentCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/Document/ExecuteDocumentCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/CodeGeneration/JsonSchemaToCSharpCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/CodeGeneration/JsonSchemaToTypeScriptCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToCSharpClientCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToCSharpControllerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToTypeScriptClientCommand.cs"
   ],
   "name": "NSwag",
   "officialUrl": "https://github.com/RSuter/NSwag",
@@ -37,7 +37,7 @@
       "help": "List all types for the given assembly and settings.",
       "postfix": "ListTypes",
       "commonPropertySets": [
-        "IsolatedCommand"
+        "isolatedCommand"
       ],
       "definiteArgument": "list-types",
       "settingsClass": {
@@ -62,7 +62,7 @@
       "help": "List all controllers classes for the given assembly and settings.",
       "postfix": "ListWebApiControllers",
       "commonPropertySets": [
-        "IsolatedCommand"
+        "isolatedCommand"
       ],
       "definiteArgument": "list-controllers",
       "settingsClass": {
@@ -86,8 +86,8 @@
     {
       "postfix": "TypesToSwagger",
       "commonPropertySets": [
-        "IsolatedSwaggerOutputCommand",
-        "IsolatedCommand"
+        "isolatedSwaggerOutputCommand",
+        "isolatedCommand"
       ],
       "definiteArgument": "types2swagger",
       "settingsClass": {
@@ -154,9 +154,9 @@
       "help": "Generates a Swagger specification for a controller or controlles contained in a .NET Web API assembly.",
       "postfix": "WebApiToSwagger",
       "commonPropertySets": [
-        "SwaggerGeneratorCommand",
-        "IsolatedSwaggerOutputCommand",
-        "IsolatedCommand"
+        "swaggerGeneratorCommand",
+        "isolatedSwaggerOutputCommand",
+        "isolatedCommand"
       ],
       "definiteArgument": "webapi2swagger",
       "settingsClass": {
@@ -199,9 +199,9 @@
       "help": "Generates a Swagger specification ASP.NET Core Mvc application using ApiExplorer (experimental).",
       "postfix": "AspNetCoreToSwagger",
       "commonPropertySets": [
-        "SwaggerGeneratorCommand",
-        "IsolatedSwaggerOutputCommand",
-        "IsolatedCommand"
+        "swaggerGeneratorCommand",
+        "isolatedSwaggerOutputCommand",
+        "isolatedCommand"
       ],
       "definiteArgument": "aspnetcore2swagger",
       "settingsClass": {
@@ -291,8 +291,8 @@
       "help": "Generates CSharp classes from a JSON Schema.",
       "postfix": "JsonSchemaToCSharp",
       "commonPropertySets": [
-        "InputOutputCommand",
-        "OutputCommand"
+        "inputOutputCommand",
+        "outputCommand"
       ],
       "definiteArgument": "jsonschema2csclient",
       "settingsClass": {
@@ -341,8 +341,8 @@
       "help": "Generates TypeScript interfaces from a JSON Schema.",
       "postfix": "JsonSchemaToTypeScript",
       "commonPropertySets": [
-        "InputOutputCommand",
-        "OutputCommand"
+        "inputOutputCommand",
+        "outputCommand"
       ],
       "definiteArgument": "jsonschema2tsclient",
       "settingsClass": {
@@ -361,10 +361,10 @@
       "help": "Generates CSharp client code from a Swagger specification.",
       "postfix": "SwaggerToCSharpClient",
       "commonPropertySets": [
-        "SwaggerToCSharpCommand",
-        "CodeGeneratorCommand",
-        "InputOutputCommand",
-        "OutputCommand"
+        "swaggerToCSharpCommand",
+        "codeGeneratorCommand",
+        "inputOutputCommand",
+        "outputCommand"
       ],
       "definiteArgument": "swagger2csclient",
       "settingsClass": {
@@ -539,10 +539,10 @@
       "help": "Generates CSharp Web API controller code from a Swagger specification.",
       "postfix": "SwaggerToCSharpController",
       "commonPropertySets": [
-        "SwaggerToCSharpCommand",
-        "CodeGeneratorCommand",
-        "InputOutputCommand",
-        "OutputCommand"
+        "swaggerToCSharpCommand",
+        "codeGeneratorCommand",
+        "inputOutputCommand",
+        "outputCommand"
       ],
       "definiteArgument": "swagger2cscontroller",
       "settingsClass": {
@@ -585,9 +585,9 @@
       "help": "Generates TypeScript client code from a Swagger specification.",
       "postfix": "SwaggerToTypeScriptClient",
       "commonPropertySets": [
-        "CodeGeneratorCommand",
-        "InputOutputCommand",
-        "OutputCommand"
+        "codeGeneratorCommand",
+        "inputOutputCommand",
+        "outputCommand"
       ],
       "definiteArgument": "swagger2tsclient",
       "settingsClass": {
