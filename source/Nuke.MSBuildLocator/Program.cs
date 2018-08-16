@@ -34,7 +34,7 @@ namespace Nuke.MSBuildLocator
             Console.WriteLine(msBuildPath);
         }
 
-        class MSBuildLocator
+        private class MSBuildLocator
         {
             private readonly string _vsWherePath;
 
@@ -43,6 +43,7 @@ namespace Nuke.MSBuildLocator
                 _vsWherePath = vsWherePath;
             }
 
+            [CanBeNull]
             public string Resolve()
             {
                 return IsUnixOperatingSystem()
@@ -69,13 +70,13 @@ namespace Nuke.MSBuildLocator
                 bool legacy)
             {
                 var installation = GetVSWhereInstallation(products, requires, legacy);
-                if (installation.Path == null || installation.Version == null)
+                if (installation?.Version == null)
                     return null;
 
                 var msbuildPath = Path.Combine(
-                    installation.Path,
+                    installation.Value.Path,
                     "MSBuild",
-                    $"{installation.Version.Split('.')[0]}.0",
+                    $"{installation.Value.Version.Split('.')[0]}.0",
                     "Bin",
                     Environment.Is64BitOperatingSystem ? "amd64" : ".",
                     "MSBuild.exe");
@@ -83,9 +84,10 @@ namespace Nuke.MSBuildLocator
                 return msbuildPath;
             }
 
-            private (string Path, string Version) GetVSWhereInstallation(
-                [CanBeNull] string products, 
-                [CanBeNull] IReadOnlyCollection<string> requires, 
+
+            private VSWhereInstallation? GetVSWhereInstallation(
+                [CanBeNull] string products,
+                [CanBeNull] IReadOnlyCollection<string> requires,
                 bool legacy)
             {
                 var arguments = new StringBuilder("-latest -format text");
@@ -97,9 +99,9 @@ namespace Nuke.MSBuildLocator
                     arguments.Append(" -legacy");
 
                 var output = GetProcessOutput(arguments.ToString());
-                var lines = output?.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-                if (lines == null)
-                    return (null, null);
+                var lines = output.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                if (lines.Length == 0)
+                    return null;
 
                 string GetValue(string identifier)
                 {
@@ -107,7 +109,7 @@ namespace Nuke.MSBuildLocator
                     return line.Substring(identifier.Length).TrimStart(':', ' ');
                 }
 
-                return (GetValue("installationPath"), GetValue("installationVersion")); 
+                return new VSWhereInstallation(GetValue("installationPath"), GetValue("installationVersion"));
             }
 
             private string GetProcessOutput(string arguments)
@@ -127,6 +129,19 @@ namespace Nuke.MSBuildLocator
                 Trace.Assert(process.ExitCode == 0, "process.ExitCode == 0");
 
                 return process.StandardOutput.ReadToEnd();
+            }
+
+            private struct VSWhereInstallation
+            {
+                public string Path { get; set; }
+                public string Version { get; set; }
+
+                public VSWhereInstallation(string path, string version)
+                {
+                    Path = path;
+                    Version = version;
+                }
+
             }
         }
     }
