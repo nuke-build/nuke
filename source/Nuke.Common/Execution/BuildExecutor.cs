@@ -62,7 +62,7 @@ namespace Nuke.Common.Execution
             }
         }
 
-        private static void Execute(IEnumerable<TargetDefinition> executionList)
+        internal static void Execute(IEnumerable<TargetDefinition> executionList)
         {
             foreach (var target in executionList)
             {
