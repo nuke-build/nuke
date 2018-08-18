@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed `MSBuildLocator` to not use `System.ValueTuple`
+- Fixed typo in `OctopusCreateReleaseSettings`
+- Fixed adaptation of solution file in global tool
+- Fixed output of global tool on Windows
 
 ## [0.6.1] / 2018-08-09
 - Fixed global tool to have 'same as global tool' as fallback version
