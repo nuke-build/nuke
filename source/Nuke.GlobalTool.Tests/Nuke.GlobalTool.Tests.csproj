@@ -4,7 +4,7 @@
     <TargetFrameworks>netcoreapp2.1</TargetFrameworks>
   </PropertyGroup>
 
-  <Import Project="..\..\shared\Configuration.props" />
+  <Import Project="..\Configuration.props" />
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.4.1" />
