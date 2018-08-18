@@ -64,7 +64,7 @@ namespace Nuke.GlobalTool
                     .EnumerateFiles("*", SearchOption.AllDirectories)
                     .Where(x => x.FullName.EndsWithOrdinalIgnoreCase(".sln"))
                     .NotEmpty("No solution file found.")
-                    .OrderBy(x => x.FullName)
+                    .OrderByDescending(x => x.FullName)
                     .Select(x => (x, GetRelativePath(rootDirectory, x.FullName))).ToArray()).FullName;
             var solutionDirectory = Path.GetDirectoryName(solutionFile);
 
