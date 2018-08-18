@@ -10,11 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{5BE76539-1
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
-		build.ps1 = build.ps1
-		build.sh = build.sh
 		CHANGELOG.md = CHANGELOG.md
-		GitVersion.yml = GitVersion.yml
-		global.json = global.json
 		LICENSE = LICENSE
 		nuke-nswag.sln.DotSettings = nuke-nswag.sln.DotSettings
 		README.md = README.md
@@ -22,7 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{5BE76539-1
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.NSwag.Generator", "src\Nuke.NSwag.Generator\Nuke.NSwag.Generator.csproj", "{ADE3316F-31EA-4C5F-8C8B-02665CFE9722}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = ".build", "build\.build.csproj", "{830B0F1D-BB65-49F3-B076-942D0B0BE6B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{830B0F1D-BB65-49F3-B076-942D0B0BE6B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

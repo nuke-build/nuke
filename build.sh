@@ -19,7 +19,7 @@ SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 # CONFIGURATION
 ###########################################################################
 
-BUILD_PROJECT_FILE="$SCRIPT_DIR/build/.build.csproj"
+BUILD_PROJECT_FILE="$SCRIPT_DIR/build/_build.csproj"
 TEMP_DIRECTORY="$SCRIPT_DIR/./.tmp"
 
 DOTNET_GLOBAL_FILE="$SCRIPT_DIR/./global.json"
@@ -67,4 +67,4 @@ fi
 
 echo "Microsoft (R) .NET Core SDK version $("$DOTNET_EXE" --version)"
 
-"$DOTNET_EXE" run --project "$BUILD_PROJECT_FILE" -- ${BUILD_ARGUMENTS[@]}
+"$DOTNET_EXE" run --project "$BUILD_PROJECT_FILE" --verbosity detailed -- ${BUILD_ARGUMENTS[@]}
