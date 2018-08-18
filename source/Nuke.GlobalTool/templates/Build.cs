@@ -73,7 +73,7 @@ class Build : NukeBuild
                 .EnableNoRestore());                                                            // DOTNET
         });
 
-    private Target Pack => _ => _
+    Target Pack => _ => _
         .DependsOn(Compile)
         .Executes(() =>
         {
