@@ -20,7 +20,7 @@ namespace Nuke.Common.Tests
         {
             var obj = new Data
                       {
-                          String = "mytext",
+                          String = name,
                           Number = 5,
                           Boolean = true,
                           Nested = new Data

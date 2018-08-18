@@ -34,7 +34,7 @@ namespace Nuke.MSBuildLocator
             Console.WriteLine(msBuildPath);
         }
 
-        class MSBuildLocator
+        private class MSBuildLocator
         {
             private readonly string _vsWherePath;
 
@@ -43,6 +43,7 @@ namespace Nuke.MSBuildLocator
                 _vsWherePath = vsWherePath;
             }
 
+            [CanBeNull]
             public string Resolve()
             {
                 return IsUnixOperatingSystem()
@@ -83,7 +84,7 @@ namespace Nuke.MSBuildLocator
                 return msbuildPath;
             }
 
-            private (string Path, string Version) GetVSWhereInstallation(
+            private VSWhereInstallation GetVSWhereInstallation(
                 [CanBeNull] string products,
                 [CanBeNull] IReadOnlyCollection<string> requires,
                 bool legacy)
@@ -97,9 +98,9 @@ namespace Nuke.MSBuildLocator
                     arguments.Append(" -legacy");
 
                 var output = GetProcessOutput(arguments.ToString());
-                var lines = output?.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-                if (lines == null)
-                    return (null, null);
+                var lines = output.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                if (lines.Length == 0)
+                    return null;
 
                 string GetValue(string identifier)
                 {
@@ -107,7 +108,7 @@ namespace Nuke.MSBuildLocator
                     return line.Substring(identifier.Length).TrimStart(':', ' ');
                 }
 
-                return (GetValue("installationPath"), GetValue("installationVersion"));
+                return new VSWhereInstallation(GetValue("installationPath"), GetValue("installationVersion"));
             }
 
             private string GetProcessOutput(string arguments)
@@ -127,6 +128,18 @@ namespace Nuke.MSBuildLocator
                 Trace.Assert(process.ExitCode == 0, "process.ExitCode == 0");
 
                 return process.StandardOutput.ReadToEnd();
+            }
+
+            private class VSWhereInstallation
+            {
+                public VSWhereInstallation(string path, string version)
+                {
+                    Path = path;
+                    Version = version;
+                }
+
+                public string Path { get; }
+                public string Version { get; }
             }
         }
     }

@@ -15,7 +15,18 @@ using static Nuke.Common.Tools.GitVersion.GitVersionTasks;
 
 partial class Build
 {
+    Target Changelog => _ => _
+        .Requires(() => GitRepository.Branch.StartsWith("release") ||
+                        GitRepository.Branch.StartsWith("hotfix"))
+        .Executes(() =>
+        {
+            FinalizeChangelog(ChangelogFile, GitVersion.MajorMinorPatch, GitRepository);
+            Git($"add {ChangelogFile}");
+            Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.MajorMinorPatch}\"");
+        });
+    
     Target Release => _ => _
+        .DependsOn(Changelog)
         .Executes(() =>
         {
             if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase(ReleaseBranchPrefix))
@@ -50,9 +61,6 @@ partial class Build
 
     void FinishReleaseOrHotfix()
     {
-        FinalizeChangelog(ChangelogFile, GitVersion.MajorMinorPatch, GitRepository);
-        Git($"add {ChangelogFile}");
-        Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.MajorMinorPatch}\"");
         Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
 
         Git($"checkout {MasterBranch}");

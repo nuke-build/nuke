@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net461;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.1</TargetFrameworks>
   </PropertyGroup>
 
-  <Import Project="..\Configuration.props" />
+  <Import Project="..\..\shared\Configuration.props" />
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.4.1" />
@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Nuke.Common\Nuke.Common.csproj" />
+    <ProjectReference Include="..\Nuke.GlobalTool\Nuke.GlobalTool.csproj" />
   </ItemGroup>
   
 </Project>
