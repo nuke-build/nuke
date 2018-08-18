@@ -13,27 +13,36 @@ using static Nuke.Common.Tools.Git.GitTasks;
 
 partial class Build
 {
-    Target Release => _ => _
+    Target Changelog => _ => _
+        .Requires(() => GitRepository.Branch.StartsWith("release") ||
+                        GitRepository.Branch.StartsWith("hotfix"))
         .Executes(() =>
         {
+            FinalizeChangelog(ChangelogFile, GitVersion.MajorMinorPatch, GitRepository);
+            Git($"add {ChangelogFile}");
+            Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.MajorMinorPatch}\"");
+        });
+    
+    Target Release => _ => _
+        .DependsOn(Changelog)
+        .Executes(() =>
+        {
+            Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
+
             if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase("release"))
-            {
-                Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
                 Git($"checkout -b release/{GitVersion.MajorMinorPatch} {DevelopBranch}");
-            }
             else
-            {
                 ReleaseFrom($"release/{GitVersion.MajorMinorPatch}");
-            }
         });
 
     Target Hotfix => _ => _
         .Executes(() =>
         {
+            Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
+
             if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase("hotfix"))
             {
                 Assert(CommandLineArguments.Length == 3, "CommandLineArguments.Length == 3");
-                Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
                 Git($"checkout -b hotfix/{CommandLineArguments.ElementAt(index: 2)} {MasterBranch}");
             }
             else
@@ -44,9 +53,6 @@ partial class Build
 
     void ReleaseFrom(string branch)
     {
-        FinalizeChangelog(ChangelogFile, GitVersion.MajorMinorPatch, GitRepository);
-        Git($"add {ChangelogFile}");
-        Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.MajorMinorPatch}\"");
         Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
 
         Git($"checkout {DevelopBranch}");
