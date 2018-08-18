@@ -27,42 +27,33 @@ partial class Build
     
     Target Release => _ => _
         .DependsOn(Changelog)
+        .Requires(() => GitHasCleanWorkingCopy())
         .Executes(() =>
         {
             if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase(ReleaseBranchPrefix))
-            {
-                Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
                 Git($"checkout -b {ReleaseBranchPrefix}/{GitVersion.MajorMinorPatch} {DevelopBranch}");
-            }
             else
-            {
                 FinishReleaseOrHotfix();
-            }
         });
 
     Target Hotfix => _ => _
+        .DependsOn(Changelog)
+        .Requires(() => GitHasCleanWorkingCopy())
         .Executes(() =>
         {
+            var masterVersion = GitVersion(s => s
+                .SetUrl(RootDirectory)
+                .SetBranch(MasterBranch)
+                .DisableLogOutput()).Result;
+
             if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase(HotfixBranchPrefix))
-            {
-                Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
-                
-                var masterVersion = GitVersion(s => s
-                    .SetUrl(RootDirectory)
-                    .SetBranch(MasterBranch)
-                    .DisableLogOutput()).Result;
                 Git($"checkout -b {HotfixBranchPrefix}/{masterVersion.Major}.{masterVersion.Minor}.{masterVersion.Patch + 1} {MasterBranch}");
-            }
             else
-            {
                 FinishReleaseOrHotfix();
-            }
         });
 
     void FinishReleaseOrHotfix()
     {
-        Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
-
         Git($"checkout {MasterBranch}");
         Git($"merge --no-ff --no-edit {GitRepository.Branch}");
         Git($"tag {GitVersion.MajorMinorPatch}");
