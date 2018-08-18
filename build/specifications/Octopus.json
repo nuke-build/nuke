@@ -218,7 +218,7 @@
             "help": "Whether to force downloading of already installed packages (flag, default false)."
           },
           {
-            "name": "WaitForDepployment",
+            "name": "WaitForDeployment",
             "type": "bool",
             "format": "--waitfordeployment",
             "help": "Whether to wait synchronously for deployment to finish."

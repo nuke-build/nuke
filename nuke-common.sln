@@ -26,6 +26,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.CodeGeneration", "sour
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.GlobalTool", "source\Nuke.GlobalTool\Nuke.GlobalTool.csproj", "{140A4F0D-C21D-4212-BB75-EFDBDBBD5E1B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.GlobalTool.Tests", "source\Nuke.GlobalTool.Tests\Nuke.GlobalTool.Tests.csproj", "{BD416DD4-06F4-4246-B92C-B261B026B6E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +56,10 @@ Global
 		{140A4F0D-C21D-4212-BB75-EFDBDBBD5E1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{140A4F0D-C21D-4212-BB75-EFDBDBBD5E1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{140A4F0D-C21D-4212-BB75-EFDBDBBD5E1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD416DD4-06F4-4246-B92C-B261B026B6E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD416DD4-06F4-4246-B92C-B261B026B6E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD416DD4-06F4-4246-B92C-B261B026B6E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD416DD4-06F4-4246-B92C-B261B026B6E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

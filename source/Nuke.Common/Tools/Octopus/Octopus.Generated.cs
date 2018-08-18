@@ -224,7 +224,7 @@ namespace Nuke.Common.Tools.Octopus
         /// <summary><p>Whether to force downloading of already installed packages (flag, default false).</p></summary>
         public virtual bool? ForcePackageDownload { get; internal set; }
         /// <summary><p>Whether to wait synchronously for deployment to finish.</p></summary>
-        public virtual bool? WaitForDepployment { get; internal set; }
+        public virtual bool? WaitForDeployment { get; internal set; }
         /// <summary><p>Specifies maximum time (timespan format) that the console session will wait for the deployment to finish(default 00:10:00). This will not stop the deployment. Requires <c>--waitfordeployment</c> parameter set.</p></summary>
         public virtual string DeploymentTimeout { get; internal set; }
         /// <summary><p>Whether to cancel the deployment if the deployment timeout is reached (flag, default false).</p></summary>
@@ -298,7 +298,7 @@ namespace Nuke.Common.Tools.Octopus
               .Add("--whatif", WhatIf)
               .Add("--progress", Progress)
               .Add("--forcepackagedownload", ForcePackageDownload)
-              .Add("--waitfordeployment", WaitForDepployment)
+              .Add("--waitfordeployment", WaitForDeployment)
               .Add("--deploymenttimeout={value}", DeploymentTimeout)
               .Add("--cancelontimeout", CancelOnTimeout)
               .Add("--deploymentchecksleepcycle={value}", DeploymentCheckSleepCycle)
@@ -1580,45 +1580,45 @@ namespace Nuke.Common.Tools.Octopus
             return toolSettings;
         }
         #endregion
-        #region WaitForDepployment
-        /// <summary><p><em>Sets <see cref="OctopusCreateReleaseSettings.WaitForDepployment"/>.</em></p><p>Whether to wait synchronously for deployment to finish.</p></summary>
+        #region WaitForDeployment
+        /// <summary><p><em>Sets <see cref="OctopusCreateReleaseSettings.WaitForDeployment"/>.</em></p><p>Whether to wait synchronously for deployment to finish.</p></summary>
         [Pure]
-        public static OctopusCreateReleaseSettings SetWaitForDepployment(this OctopusCreateReleaseSettings toolSettings, bool? waitForDepployment)
+        public static OctopusCreateReleaseSettings SetWaitForDeployment(this OctopusCreateReleaseSettings toolSettings, bool? waitForDeployment)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.WaitForDepployment = waitForDepployment;
+            toolSettings.WaitForDeployment = waitForDeployment;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="OctopusCreateReleaseSettings.WaitForDepployment"/>.</em></p><p>Whether to wait synchronously for deployment to finish.</p></summary>
+        /// <summary><p><em>Resets <see cref="OctopusCreateReleaseSettings.WaitForDeployment"/>.</em></p><p>Whether to wait synchronously for deployment to finish.</p></summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ResetWaitForDepployment(this OctopusCreateReleaseSettings toolSettings)
+        public static OctopusCreateReleaseSettings ResetWaitForDeployment(this OctopusCreateReleaseSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.WaitForDepployment = null;
+            toolSettings.WaitForDeployment = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="OctopusCreateReleaseSettings.WaitForDepployment"/>.</em></p><p>Whether to wait synchronously for deployment to finish.</p></summary>
+        /// <summary><p><em>Enables <see cref="OctopusCreateReleaseSettings.WaitForDeployment"/>.</em></p><p>Whether to wait synchronously for deployment to finish.</p></summary>
         [Pure]
-        public static OctopusCreateReleaseSettings EnableWaitForDepployment(this OctopusCreateReleaseSettings toolSettings)
+        public static OctopusCreateReleaseSettings EnableWaitForDeployment(this OctopusCreateReleaseSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.WaitForDepployment = true;
+            toolSettings.WaitForDeployment = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="OctopusCreateReleaseSettings.WaitForDepployment"/>.</em></p><p>Whether to wait synchronously for deployment to finish.</p></summary>
+        /// <summary><p><em>Disables <see cref="OctopusCreateReleaseSettings.WaitForDeployment"/>.</em></p><p>Whether to wait synchronously for deployment to finish.</p></summary>
         [Pure]
-        public static OctopusCreateReleaseSettings DisableWaitForDepployment(this OctopusCreateReleaseSettings toolSettings)
+        public static OctopusCreateReleaseSettings DisableWaitForDeployment(this OctopusCreateReleaseSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.WaitForDepployment = false;
+            toolSettings.WaitForDeployment = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="OctopusCreateReleaseSettings.WaitForDepployment"/>.</em></p><p>Whether to wait synchronously for deployment to finish.</p></summary>
+        /// <summary><p><em>Toggles <see cref="OctopusCreateReleaseSettings.WaitForDeployment"/>.</em></p><p>Whether to wait synchronously for deployment to finish.</p></summary>
         [Pure]
-        public static OctopusCreateReleaseSettings ToggleWaitForDepployment(this OctopusCreateReleaseSettings toolSettings)
+        public static OctopusCreateReleaseSettings ToggleWaitForDeployment(this OctopusCreateReleaseSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.WaitForDepployment = !toolSettings.WaitForDepployment;
+            toolSettings.WaitForDeployment = !toolSettings.WaitForDeployment;
             return toolSettings;
         }
         #endregion
