@@ -276,5 +276,5 @@ class Build : NukeBuild
     bool IsMasterBranch => GitRepository.Branch == "master";
 
     bool ShouldRegenerate() =>
-        IsUpdateAvailable(LatestNSwagRelease, c_regenerationRepoOwner, c_regenerationRepoName, SpecificationDirectory / "NSwag.json") || true;
+        IsUpdateAvailable(LatestNSwagRelease, c_regenerationRepoOwner, c_regenerationRepoName, SpecificationDirectory / "NSwag.json");
 }
