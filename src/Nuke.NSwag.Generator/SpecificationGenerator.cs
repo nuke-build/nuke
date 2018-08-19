@@ -5,8 +5,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Nuke.CodeGeneration;
 using Nuke.CodeGeneration.Model;
 using Nuke.Common.IO;

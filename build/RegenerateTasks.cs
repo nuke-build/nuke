@@ -10,7 +10,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Nuke.CodeGeneration.Model;
-using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Tools.Git;
 using Nuke.Common.Utilities;
