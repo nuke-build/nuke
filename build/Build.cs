@@ -54,6 +54,8 @@ partial class Build : NukeBuild
 
     readonly string MasterBranch = "master";
     readonly string DevelopBranch = "develop";
+    readonly string ReleaseBranchPrefix = "release";
+    readonly string HotfixBranchPrefix = "hotfix";
 
     Target Clean => _ => _
         .Executes(() =>
@@ -134,12 +136,14 @@ partial class Build : NukeBuild
                 .SetOutputDirectory(OutputDirectory)
                 .SetVersion(GitVersion.NuGetVersionV2)
                 .SetPackageReleaseNotes(releaseNotes));
+        });
 
-            if (InstallGlobalTool)
-            {
-                SuppressErrors(() => DotNet($"tool uninstall -g {GlobalToolProject.Name}"));
-                DotNet($"tool install -g {GlobalToolProject.Name} --add-source {OutputDirectory} --version {GitVersion.NuGetVersionV2}");
-            }
+    Target Install => _ => _
+        .DependsOn(Pack)
+        .Executes(() =>
+        {
+            SuppressErrors(() => DotNet($"tool uninstall -g {GlobalToolProject.Name}"));
+            DotNet($"tool install -g {GlobalToolProject.Name} --add-source {OutputDirectory} --version {GitVersion.NuGetVersionV2}");
         });
 
     Target Test => _ => _
@@ -196,7 +200,9 @@ partial class Build : NukeBuild
         .Requires(() => GitHasCleanWorkingCopy())
         .Requires(() => Configuration.EqualsOrdinalIgnoreCase("release"))
         .Requires(() => GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch) ||
-                        GitRepository.Branch.EqualsOrdinalIgnoreCase(DevelopBranch))
+                        GitRepository.Branch.EqualsOrdinalIgnoreCase(DevelopBranch) ||
+                        GitRepository.Branch.StartsWithOrdinalIgnoreCase(ReleaseBranchPrefix) ||
+                        GitRepository.Branch.StartsWithOrdinalIgnoreCase(HotfixBranchPrefix))
         .Executes(() =>
         {
             GlobFiles(OutputDirectory, "*.nupkg").NotEmpty()

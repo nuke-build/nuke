@@ -203,14 +203,18 @@ namespace Nuke.CodeGeneration.Generators
                 return writer;
 
             var argumentAdditions = formatProperties.Select(GetArgumentAddition).ToArray();
-            ref var last = ref argumentAdditions[argumentAdditions.Length - 1];
-            last += ";";
+
+            var hasArguments = argumentAdditions.Length > 0;
+            if (hasArguments)
+            {
+                argumentAdditions[argumentAdditions.Length - 1] += ";";
+            }
 
             return writer
                 .WriteLine("protected override Arguments ConfigureArguments(Arguments arguments)")
                 .WriteBlock(w => w
                     .WriteLine("arguments")
-                    .WriteLine(GetCommandAdditionOrNull(writer.DataClass))
+                    .WriteLine($"{GetCommandAdditionOrNull(writer.DataClass)}{(hasArguments ? string.Empty : ";")}")
                     .ForEachWriteLine(argumentAdditions)
                     .WriteLine("return base.ConfigureArguments(arguments);"));
         }

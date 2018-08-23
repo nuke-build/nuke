@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.6.2] / 2018-08-18
+- Fixed `MSBuildLocator` to not use `System.ValueTuple`
+- Fixed typo in `OctopusCreateReleaseSettings`
+- Fixed adaptation of solution file in global tool
+- Fixed output of global tool on Windows
+
 ## [0.6.1] / 2018-08-09
 - Fixed global tool to have 'same as global tool' as fallback version
 - Fixed PowerShell invocation to use `-ExecutionPolicy ByPass` and `-NoProfile` 
@@ -110,7 +116,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.6.1...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.6.2...HEAD
+[0.6.2]: https://github.com/nuke-build/nuke/compare/0.6.1...0.6.2
 [0.6.1]: https://github.com/nuke-build/nuke/compare/0.6.0...0.6.1
 [0.6.0]: https://github.com/nuke-build/nuke/compare/0.5.3...0.6.0
 [0.5.3]: https://github.com/nuke-build/nuke/compare/0.5.2...0.5.3

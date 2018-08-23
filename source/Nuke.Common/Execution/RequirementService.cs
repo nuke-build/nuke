@@ -14,7 +14,7 @@ namespace Nuke.Common.Execution
     {
         public static void ValidateRequirements(IReadOnlyCollection<TargetDefinition> executionList, NukeBuild build)
         {
-            foreach (var target in executionList)
+            foreach (var target in executionList.Where(x => !x.Skip))
             foreach (var requirement in target.Requirements)
             {
                 if (requirement is Expression<Func<bool>> boolExpression)
