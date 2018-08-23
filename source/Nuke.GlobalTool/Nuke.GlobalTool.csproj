@@ -11,7 +11,7 @@
   <Import Project="..\Configuration.props" />
 
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" />
   </ItemGroup>
 
   <ItemGroup>

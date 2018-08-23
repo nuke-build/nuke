@@ -5,44 +5,55 @@
 using System.IO;
 using System.Linq;
 using Nuke.Common;
+using Nuke.Common.Tooling;
+using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Utilities;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.ControlFlow;
-using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.Tools.Git.GitTasks;
+using static Nuke.Common.Tools.GitVersion.GitVersionTasks;
 
 partial class Build
 {
-    Target Release => _ => _
+    Target Changelog => _ => _
+        .Requires(() => GitRepository.Branch.StartsWith("release") ||
+                        GitRepository.Branch.StartsWith("hotfix"))
         .Executes(() =>
         {
-            if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase("release"))
-            {
-                Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
-                Git($"checkout -b release/{GitVersion.MajorMinorPatch} {DevelopBranch}");
-            }
+            FinalizeChangelog(ChangelogFile, GitVersion.MajorMinorPatch, GitRepository);
+            Git($"add {ChangelogFile}");
+            Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.MajorMinorPatch}\"");
+        });
+    
+    Target Release => _ => _
+        .DependsOn(Changelog)
+        .Requires(() => GitHasCleanWorkingCopy())
+        .Executes(() =>
+        {
+            if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase(ReleaseBranchPrefix))
+                Git($"checkout -b {ReleaseBranchPrefix}/{GitVersion.MajorMinorPatch} {DevelopBranch}");
             else
-            {
                 FinishReleaseOrHotfix();
-            }
         });
 
     Target Hotfix => _ => _
+        .DependsOn(Changelog)
+        .Requires(() => GitHasCleanWorkingCopy())
         .Executes(() =>
         {
-            if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase("hotfix"))
-                Git($"checkout -b hotfix/{GitVersion.Major}.{GitVersion.Minor}.{GitVersion.Patch + 1} {MasterBranch}");
+            var masterVersion = GitVersion(s => s
+                .SetUrl(RootDirectory)
+                .SetBranch(MasterBranch)
+                .DisableLogOutput()).Result;
+
+            if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase(HotfixBranchPrefix))
+                Git($"checkout -b {HotfixBranchPrefix}/{masterVersion.Major}.{masterVersion.Minor}.{masterVersion.Patch + 1} {MasterBranch}");
             else
                 FinishReleaseOrHotfix();
         });
 
     void FinishReleaseOrHotfix()
     {
-        FinalizeChangelog(ChangelogFile, GitVersion.MajorMinorPatch, GitRepository);
-        Git($"add {ChangelogFile}");
-        Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.MajorMinorPatch}\"");
-        Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
-
         Git($"checkout {MasterBranch}");
         Git($"merge --no-ff --no-edit {GitRepository.Branch}");
         Git($"tag {GitVersion.MajorMinorPatch}");
