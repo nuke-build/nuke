@@ -62,7 +62,7 @@ namespace Nuke.Common.Execution
             }
         }
 
-        private static void Execute(IEnumerable<TargetDefinition> executionList)
+        internal static void Execute(IEnumerable<TargetDefinition> executionList)
         {
             foreach (var target in executionList)
             {
@@ -72,7 +72,7 @@ namespace Nuke.Common.Execution
                     continue;
                 }
 
-                if (target.Skip || target.Conditions.Any(x => !x()))
+                if (target.Skip || target.DependencyBehavior == DependencyBehavior.Execute && target.Conditions.Any(x => !x()))
                 {
                     target.Status = ExecutionStatus.Skipped;
                     continue;

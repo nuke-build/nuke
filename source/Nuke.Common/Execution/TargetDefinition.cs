@@ -30,6 +30,7 @@ namespace Nuke.Common.Execution
             TargetDefinitionDependencies = new List<TargetDefinition>();
             RunBeforeTargets = new List<Target>();
             RunAfterTargets = new List<Target>();
+            DependencyBehavior = DependencyBehavior.Execute;
 
             factory?.Invoke(this);
         }
