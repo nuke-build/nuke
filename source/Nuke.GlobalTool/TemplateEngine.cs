@@ -21,13 +21,17 @@ namespace Nuke.GlobalTool
             T replacements = null)
             where T : class
         {
+            definitions = definitions ?? new List<string>();
+            
             var template = GetTemplate(templateName);
+            definitions.ForEach(x => ControlFlow.Assert(template.Contains(x), 
+                $"Definition '{x}' is not contained in '{templateName}'. Please raise an issue"));
 
             var crCount = template.Count(x => x == '\r');
             var lfCount = template.Count(x => x == '\n');
             var lineEnding = crCount == lfCount ? "\r\n" : "\n";
             var lines = template.Split(lineEnding)
-                .Select(x => HandleLine(x, definitions ?? new List<string>()))
+                .Select(x => HandleLine(x, definitions))
                 .Where(x => x != null)
                 .ToList();
 
