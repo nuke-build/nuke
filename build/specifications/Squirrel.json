@@ -32,13 +32,13 @@
           },
           {
             "name": "Download",
-            "type": "string",
+            "type": "bool",
             "format": "--download",
             "help": "Download the releases specified by the URL and write new results to stdout as JSON."
           },
           {
             "name": "CheckForUpdate",
-            "type": "string",
+            "type": "bool",
             "format": "--checkForUpdate",
             "help": "Check for one available update and writes new results to stdout as JSON."
           },
