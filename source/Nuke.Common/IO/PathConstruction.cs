@@ -340,7 +340,7 @@ namespace Nuke.Common.IO
 
             public static implicit operator string(AbsolutePath path)
             {
-                return NormalizePath(path._path);
+                return path.ToString();
             }
 
             public static AbsolutePath operator /(AbsolutePath path1, string path2)
@@ -355,7 +355,7 @@ namespace Nuke.Common.IO
 
             public override string ToString()
             {
-                return _path;
+                return NormalizePath(_path);
             }
         }
     }
