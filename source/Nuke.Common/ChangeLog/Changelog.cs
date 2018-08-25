@@ -1,22 +1,21 @@
 // Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
+using System.Collections.Generic;
+using System.Linq;
+using JetBrains.Annotations;
+using NuGet.Versioning;
 
 namespace Nuke.Common.ChangeLog
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using JetBrains.Annotations;
-    using NuGet.Versioning;
-
     [PublicAPI]
     public class Changelog
     {
-        public Changelog(string path, ReleaseNotes unreleased, IReadOnlyList<ReleaseNotes> releaseNotes)
+        public Changelog(string path, [CanBeNull] ReleaseNotes unreleased, IReadOnlyList<ReleaseNotes> releaseNotes)
         {
             Path = path;
             Unreleased = unreleased;
-            ReleaseNotes = releaseNotes.Where(rn => !rn.Unreleased).OrderBy(rn => rn.Version).ToList().AsReadOnly();
+            ReleaseNotes = releaseNotes.Where(x => !x.Unreleased).OrderBy(x => x.Version).ToList().AsReadOnly();
         }
 
         public Changelog(string path, IReadOnlyList<ReleaseNotes> releaseNotes)

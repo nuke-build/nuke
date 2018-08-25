@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
@@ -13,44 +14,31 @@ using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 
 // ReSharper disable ArgumentsStyleLiteral
-
 namespace Nuke.Common.ChangeLog
 {
-    using System.IO;
 
     public static class ChangelogTasks
     {
         [Pure]
         public static IReadOnlyList<ReleaseNotes> ReadReleaseNotes(string changelogFile)
         {
-            if (changelogFile == null)
-            {
-                throw new ArgumentNullException(nameof(changelogFile));
-            }
-
-            if (!File.Exists(changelogFile))
-            {
-                throw new FileNotFoundException("Changelog not found", changelogFile);
-            }
-
-            var lines = File.ReadAllLines(changelogFile).ToList();
+            var lines = TextTasks.ReadAllLines(changelogFile).ToList();
             var releaseSections = GetReleaseSections(lines).ToList();
             
             ControlFlow.Assert(releaseSections.Any(), "Changelog should have at least one release note section");
-            return releaseSections.Select(Cast).ToList().AsReadOnly();
+            return releaseSections.Select(Parse).ToList().AsReadOnly();
             
-            ReleaseNotes Cast(ReleaseSection section)
+            ReleaseNotes Parse(ReleaseSection section)
             {
-                var coordinats = (section.StartIndex, section.EndIndex);
                 var releaseNotes = lines
-                    .Skip(coordinats.StartIndex + 1)
-                    .Take(coordinats.EndIndex - coordinats.StartIndex)
+                    .Skip(section.StartIndex + 1)
+                    .Take(section.EndIndex - section.StartIndex)
                     .ToList()
                     .AsReadOnly();
                 
                 return NuGetVersion.TryParse(section.Caption, out var version)
-                    ? new ReleaseNotes(version, releaseNotes, coordinats)
-                    : new ReleaseNotes(releaseNotes, coordinats);
+                    ? new ReleaseNotes(version, releaseNotes, section.StartIndex, section.EndIndex)
+                    : new ReleaseNotes(releaseNotes, section.StartIndex, section.EndIndex);
             }
         }
 
@@ -58,14 +46,14 @@ namespace Nuke.Common.ChangeLog
         public static Changelog ReadChangelog(string changelogFile)
         {
             var releaseNotes = ReadReleaseNotes(changelogFile);
-            var unreleased = releaseNotes.Where(rn => rn.Unreleased).ToArray();
+            var unreleased = releaseNotes.Where(x => x.Unreleased).ToArray();
 
             if (unreleased.Length > 0)
             {
                 ControlFlow.Assert(unreleased.Length == 1, "Changelog should have only one draft section.");
                 return new Changelog(changelogFile, unreleased.First(), releaseNotes);
             }
-            ControlFlow.Assert(releaseNotes.Count(rn => !rn.Unreleased) > 1, "Changelog should have at lease one released version section.");
+            ControlFlow.Assert(releaseNotes.Count(x => !x.Unreleased) > 1, "Changelog should have at lease one released version section.");
             return new Changelog(changelogFile, releaseNotes);
         }
         
@@ -77,17 +65,16 @@ namespace Nuke.Common.ChangeLog
             var releaseNotes = changelogFile.ReleaseNotes;
             var lastReleased = changelogFile.LatestVersion;
 
-            ControlFlow.Assert(unreleasedNotes != null, $"Changelog should have draft section.");
+            ControlFlow.Assert(unreleasedNotes != null, "Changelog should have draft section.");
             ControlFlow.Assert(releaseNotes.Any(x => x.Version != null && x.Version.Equals(tag)), $"Tag '{tag}' already exists.");
             ControlFlow.Assert(tag.CompareTo(lastReleased.Version) > 0, $"Tag '{tag}' is not greater compared to last tag '{lastReleased.Version}'.");
 
             var path = changelogFile.Path;
             
             var content = TextTasks.ReadAllLines(path).ToList();
-            var unreleasedNotesSection = unreleasedNotes.Section;
             
-            content.Insert(unreleasedNotesSection.startIdx + 1, string.Empty);
-            content.Insert(unreleasedNotesSection.stopIdx + 2, $"## [{tag}] / {DateTime.Now:yyyy-MM-dd}");
+            content.Insert(unreleasedNotes.StartIndex + 1, string.Empty);
+            content.Insert(unreleasedNotes.EndIndex + 2, $"## [{tag}] / {DateTime.Now:yyyy-MM-dd}");
             content.Add(string.Empty);
 
             TextTasks.WriteAllLines(path, content);
