@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers and Contributors of NUKE.
+// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -27,7 +27,7 @@ namespace Nuke.CodeGeneration.Generators
             {
                 writer
                     // TODO [3]: extract license from dotsettings file
-                    .WriteLine($"// Copyright {DateTime.Now.Year} Maintainers and Contributors of NUKE.")
+                    .WriteLine($"// Copyright {DateTime.Now.Year} Maintainers of NUKE.")
                     .WriteLine("// Distributed under the MIT License.")
                     .WriteLine("// https://github.com/nuke-build/nuke/blob/master/LICENSE")
                     .WriteLine(string.Empty)
