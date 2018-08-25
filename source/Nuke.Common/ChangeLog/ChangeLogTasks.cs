@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
@@ -13,11 +14,72 @@ using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 
 // ReSharper disable ArgumentsStyleLiteral
-
 namespace Nuke.Common.ChangeLog
 {
+
     public static class ChangelogTasks
     {
+        [Pure]
+        public static IReadOnlyList<ReleaseNotes> ReadReleaseNotes(string changelogFile)
+        {
+            var lines = TextTasks.ReadAllLines(changelogFile).ToList();
+            var releaseSections = GetReleaseSections(lines).ToList();
+            
+            ControlFlow.Assert(releaseSections.Any(), "Changelog should have at least one release note section");
+            return releaseSections.Select(Parse).ToList().AsReadOnly();
+            
+            ReleaseNotes Parse(ReleaseSection section)
+            {
+                var releaseNotes = lines
+                    .Skip(section.StartIndex + 1)
+                    .Take(section.EndIndex - section.StartIndex)
+                    .ToList()
+                    .AsReadOnly();
+                
+                return NuGetVersion.TryParse(section.Caption, out var version)
+                    ? new ReleaseNotes(version, releaseNotes, section.StartIndex, section.EndIndex)
+                    : new ReleaseNotes(releaseNotes, section.StartIndex, section.EndIndex);
+            }
+        }
+
+        [Pure]
+        public static Changelog ReadChangelog(string changelogFile)
+        {
+            var releaseNotes = ReadReleaseNotes(changelogFile);
+            var unreleased = releaseNotes.Where(x => x.Unreleased).ToArray();
+
+            if (unreleased.Length > 0)
+            {
+                ControlFlow.Assert(unreleased.Length == 1, "Changelog should have only one draft section.");
+                return new Changelog(changelogFile, unreleased.First(), releaseNotes);
+            }
+            ControlFlow.Assert(releaseNotes.Count(x => !x.Unreleased) > 1, "Changelog should have at lease one released version section.");
+            return new Changelog(changelogFile, releaseNotes);
+        }
+        
+        public static void FinalizeChangelog(Changelog changelogFile, NuGetVersion tag)
+        {
+            Logger.Info($"Finalizing {PathConstruction.GetRootRelativePath(changelogFile.Path)} for '{tag}'...");
+
+            var unreleasedNotes = changelogFile.Unreleased;
+            var releaseNotes = changelogFile.ReleaseNotes;
+            var lastReleased = changelogFile.LatestVersion;
+
+            ControlFlow.Assert(unreleasedNotes != null, "Changelog should have draft section.");
+            ControlFlow.Assert(releaseNotes.Any(x => x.Version != null && x.Version.Equals(tag)), $"Tag '{tag}' already exists.");
+            ControlFlow.Assert(tag.CompareTo(lastReleased.Version) > 0, $"Tag '{tag}' is not greater compared to last tag '{lastReleased.Version}'.");
+
+            var path = changelogFile.Path;
+            
+            var content = TextTasks.ReadAllLines(path).ToList();
+            
+            content.Insert(unreleasedNotes.StartIndex + 1, string.Empty);
+            content.Insert(unreleasedNotes.EndIndex + 2, $"## [{tag}] / {DateTime.Now:yyyy-MM-dd}");
+            content.Add(string.Empty);
+
+            TextTasks.WriteAllLines(path, content);
+        }
+        
         [Pure]
         public static IEnumerable<string> ExtractChangelogSectionNotes(string changelogFile, string tag = null)
         {
