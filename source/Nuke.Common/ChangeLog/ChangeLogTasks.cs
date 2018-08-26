@@ -43,7 +43,7 @@ namespace Nuke.Common.ChangeLog
         }
 
         [Pure]
-        public static Changelog ReadChangelog(string changelogFile)
+        public static ChangeLog ReadChangelog(string changelogFile)
         {
             var releaseNotes = ReadReleaseNotes(changelogFile);
             var unreleased = releaseNotes.Where(x => x.Unreleased).ToArray();
@@ -51,25 +51,25 @@ namespace Nuke.Common.ChangeLog
             if (unreleased.Length > 0)
             {
                 ControlFlow.Assert(unreleased.Length == 1, "Changelog should have only one draft section.");
-                return new Changelog(changelogFile, unreleased.First(), releaseNotes);
+                return new ChangeLog(changelogFile, unreleased.First(), releaseNotes);
             }
             ControlFlow.Assert(releaseNotes.Count(x => !x.Unreleased) > 1, "Changelog should have at lease one released version section.");
-            return new Changelog(changelogFile, releaseNotes);
+            return new ChangeLog(changelogFile, releaseNotes);
         }
         
-        public static void FinalizeChangelog(Changelog changelogFile, NuGetVersion tag)
+        public static void FinalizeChangelog(ChangeLog changeLogFile, NuGetVersion tag)
         {
-            Logger.Info($"Finalizing {PathConstruction.GetRootRelativePath(changelogFile.Path)} for '{tag}'...");
+            Logger.Info($"Finalizing {PathConstruction.GetRootRelativePath(changeLogFile.Path)} for '{tag}'...");
 
-            var unreleasedNotes = changelogFile.Unreleased;
-            var releaseNotes = changelogFile.ReleaseNotes;
-            var lastReleased = changelogFile.LatestVersion;
+            var unreleasedNotes = changeLogFile.Unreleased;
+            var releaseNotes = changeLogFile.ReleaseNotes;
+            var lastReleased = changeLogFile.LatestVersion;
 
             ControlFlow.Assert(unreleasedNotes != null, "Changelog should have draft section.");
             ControlFlow.Assert(releaseNotes.Any(x => x.Version != null && x.Version.Equals(tag)), $"Tag '{tag}' already exists.");
             ControlFlow.Assert(tag.CompareTo(lastReleased.Version) > 0, $"Tag '{tag}' is not greater compared to last tag '{lastReleased.Version}'.");
 
-            var path = changelogFile.Path;
+            var path = changeLogFile.Path;
             
             var content = TextTasks.ReadAllLines(path).ToList();
             

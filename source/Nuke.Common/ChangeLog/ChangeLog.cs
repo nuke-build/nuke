@@ -9,16 +9,16 @@ using NuGet.Versioning;
 namespace Nuke.Common.ChangeLog
 {
     [PublicAPI]
-    public class Changelog
+    public class ChangeLog
     {
-        public Changelog(string path, [CanBeNull] ReleaseNotes unreleased, IReadOnlyList<ReleaseNotes> releaseNotes)
+        public ChangeLog(string path, [CanBeNull] ReleaseNotes unreleased, IReadOnlyList<ReleaseNotes> releaseNotes)
         {
             Path = path;
             Unreleased = unreleased;
             ReleaseNotes = releaseNotes.Where(x => !x.Unreleased).OrderBy(x => x.Version).ToList().AsReadOnly();
         }
 
-        public Changelog(string path, IReadOnlyList<ReleaseNotes> releaseNotes)
+        public ChangeLog(string path, IReadOnlyList<ReleaseNotes> releaseNotes)
             : this(path, unreleased: null, releaseNotes)
         {
         }
