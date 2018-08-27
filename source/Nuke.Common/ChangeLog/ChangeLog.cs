@@ -25,7 +25,11 @@ namespace Nuke.Common.ChangeLog
 
         public string Path { get; }
         [CanBeNull] public ReleaseNotes Unreleased { get; }
+        
+        /// <summary>
+        /// Release notes sorted by version.
+        /// </summary>
         public IReadOnlyList<ReleaseNotes> ReleaseNotes { get; }
-        public NuGetVersion LatestVersion => ReleaseNotes.First().Version;
+        public NuGetVersion LatestVersion => ReleaseNotes.First().Version.NotNull();
     }
 }

@@ -53,7 +53,7 @@ namespace Nuke.Common.ChangeLog
                 ControlFlow.Assert(unreleased.Length == 1, "Changelog should have only one draft section.");
                 return new ChangeLog(changelogFile, unreleased.First(), releaseNotes);
             }
-            ControlFlow.Assert(releaseNotes.Count(x => !x.Unreleased) > 1, "Changelog should have at lease one released version section.");
+            ControlFlow.Assert(releaseNotes.Count(x => !x.Unreleased) >= 1, "Changelog should have at lease one released version section.");
             return new ChangeLog(changelogFile, releaseNotes);
         }
         
