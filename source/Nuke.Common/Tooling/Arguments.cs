@@ -94,7 +94,6 @@ namespace Nuke.Common.Tooling
             char? separator = null,
             char? disallowed = null,
             bool quoteMultiple = false)
-            where TValue : class
         {
             if (dictionary == null || dictionary.Count == 0)
                 return this;
