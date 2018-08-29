@@ -7,14 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [vNext]
 
 ## [0.7.0] / 2018-08-29
-- Changed assertion of `DataClass` properties print our value on failure
+- Changed assertion of `DataClass` properties print out value on failure
 - Added `SquirrelTasks`
 - Added `UnityTasks`
 - Added tasks to update the changelog and get the latest version to `ChangeLogTasks`
 - Fixed global tool to order solutions descending
 - Fixed global tool setup to use correct definitions and error about broken solution
 - Fixed validation of requirements of skipped targets
-- Fixed double evaluation of conditionds with `DependencyBehavior.Skip`
+- Fixed double evaluation of conditions with `DependencyBehavior.Skip`
 
 ## [0.6.2] / 2018-08-18
 - Fixed `MSBuildLocator` to not use `System.ValueTuple`
