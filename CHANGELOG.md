@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Changed assertion of `DataClass` properties print our value on failure
+- Added `SquirrelTasks`
+- Added `UnityTasks`
+- Added tasks to update the changelog and get the latest version to `ChangeLogTasks`
+- Fixed global tool to order solutions descending
+- Fixed global tool setup to use correct definitions and error about broken solution
+- Fixed validation of requirements of skipped targets
+- Fixed double evaluation of conditionds with `DependencyBehavior.Skip`
 
 ## [0.6.2] / 2018-08-18
 - Fixed `MSBuildLocator` to not use `System.ValueTuple`
