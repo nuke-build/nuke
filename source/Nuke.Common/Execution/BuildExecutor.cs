@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
+﻿// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -35,7 +35,7 @@ namespace Nuke.Common.Execution
                 executionList = TargetDefinitionLoader.GetExecutingTargets(build, build.InvokedTargets);
                 RequirementService.ValidateRequirements(executionList, build);
                 Execute(executionList);
-                
+
                 return 0;
             }
             catch (AggregateException exception)
@@ -62,7 +62,7 @@ namespace Nuke.Common.Execution
             }
         }
 
-        private static void Execute(IEnumerable<TargetDefinition> executionList)
+        internal static void Execute(IEnumerable<TargetDefinition> executionList)
         {
             foreach (var target in executionList)
             {
@@ -72,7 +72,7 @@ namespace Nuke.Common.Execution
                     continue;
                 }
 
-                if (target.Skip || target.Conditions.Any(x => !x()))
+                if (target.Skip || target.DependencyBehavior == DependencyBehavior.Execute && target.Conditions.Any(x => !x()))
                 {
                     target.Status = ExecutionStatus.Skipped;
                     continue;

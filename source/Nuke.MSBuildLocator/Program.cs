@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
+﻿// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -24,7 +24,7 @@ namespace Nuke.MSBuildLocator
             var vsWherePath = args.FirstOrDefault();
             if (vsWherePath != null && !vsWherePath.EndsWith(c_vsWhereExecutableName))
                 vsWherePath = Path.Combine(vsWherePath, c_vsWhereExecutableName);
-            
+
             Trace.Assert(vsWherePath != null, $"Path to {c_vsWhereExecutableName} must be passed");
             Trace.Assert(File.Exists(vsWherePath), $"File '{vsWherePath}' does not exists");
 
@@ -70,13 +70,13 @@ namespace Nuke.MSBuildLocator
                 bool legacy)
             {
                 var installation = GetVSWhereInstallation(products, requires, legacy);
-                if (installation?.Version == null)
+                if (installation.Path == null || installation.Version == null)
                     return null;
 
                 var msbuildPath = Path.Combine(
-                    installation.Value.Path,
+                    installation.Path,
                     "MSBuild",
-                    $"{installation.Value.Version.Split('.')[0]}.0",
+                    $"{installation.Version.Split('.')[0]}.0",
                     "Bin",
                     Environment.Is64BitOperatingSystem ? "amd64" : ".",
                     "MSBuild.exe");
@@ -84,8 +84,7 @@ namespace Nuke.MSBuildLocator
                 return msbuildPath;
             }
 
-
-            private VSWhereInstallation? GetVSWhereInstallation(
+            private VSWhereInstallation GetVSWhereInstallation(
                 [CanBeNull] string products,
                 [CanBeNull] IReadOnlyCollection<string> requires,
                 bool legacy)
@@ -131,17 +130,16 @@ namespace Nuke.MSBuildLocator
                 return process.StandardOutput.ReadToEnd();
             }
 
-            private struct VSWhereInstallation
+            private class VSWhereInstallation
             {
-                public string Path { get; set; }
-                public string Version { get; set; }
-
                 public VSWhereInstallation(string path, string version)
                 {
                     Path = path;
                     Version = version;
                 }
 
+                public string Path { get; }
+                public string Version { get; }
             }
         }
     }

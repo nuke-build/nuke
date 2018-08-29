@@ -5,11 +5,13 @@
 using System.IO;
 using System.Linq;
 using Nuke.Common;
+using Nuke.Common.Tooling;
+using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Utilities;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.ControlFlow;
-using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.Tools.Git.GitTasks;
+using static Nuke.Common.Tools.GitVersion.GitVersionTasks;
 
 partial class Build
 {
@@ -25,42 +27,41 @@ partial class Build
     
     Target Release => _ => _
         .DependsOn(Changelog)
+        .Requires(() => GitHasCleanWorkingCopy())
         .Executes(() =>
         {
-            Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
-
-            if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase("release"))
-                Git($"checkout -b release/{GitVersion.MajorMinorPatch} {DevelopBranch}");
+            if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase(ReleaseBranchPrefix))
+                Git($"checkout -b {ReleaseBranchPrefix}/{GitVersion.MajorMinorPatch} {DevelopBranch}");
             else
-                ReleaseFrom($"release/{GitVersion.MajorMinorPatch}");
+                FinishReleaseOrHotfix();
         });
 
     Target Hotfix => _ => _
+        .DependsOn(Changelog)
+        .Requires(() => GitHasCleanWorkingCopy())
         .Executes(() =>
         {
-            Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
+            var masterVersion = GitVersion(s => s
+                .SetUrl(RootDirectory)
+                .SetBranch(MasterBranch)
+                .DisableLogOutput()).Result;
 
-            if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase("hotfix"))
-            {
-                Assert(CommandLineArguments.Length == 3, "CommandLineArguments.Length == 3");
-                Git($"checkout -b hotfix/{CommandLineArguments.ElementAt(index: 2)} {MasterBranch}");
-            }
+            if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase(HotfixBranchPrefix))
+                Git($"checkout -b {HotfixBranchPrefix}/{masterVersion.Major}.{masterVersion.Minor}.{masterVersion.Patch + 1} {MasterBranch}");
             else
-            {
-                ReleaseFrom(GitRepository.Branch);
-            }
+                FinishReleaseOrHotfix();
         });
 
-    void ReleaseFrom(string branch)
+    void FinishReleaseOrHotfix()
     {
-        Assert(GitHasCleanWorkingCopy(), "GitHasCleanWorkingCopy()");
-
-        Git($"checkout {DevelopBranch}");
-        Git($"merge --no-ff --no-edit {branch}");
         Git($"checkout {MasterBranch}");
-        Git($"merge --no-ff --no-edit {branch}");
+        Git($"merge --no-ff --no-edit {GitRepository.Branch}");
         Git($"tag {GitVersion.MajorMinorPatch}");
-        Git($"branch -D {branch}");
+        
+        Git($"checkout {DevelopBranch}");
+        Git($"merge --no-ff --no-edit {GitRepository.Branch}");
+        
+        Git($"branch -D {GitRepository.Branch}");
 
         Git($"push origin {MasterBranch} {DevelopBranch} {GitVersion.MajorMinorPatch}");
     }

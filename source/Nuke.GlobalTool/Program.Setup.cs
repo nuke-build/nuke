@@ -1,4 +1,4 @@
-// Copyright Matthias Koch, Sebastian Karasek 2018.
+// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -64,7 +64,7 @@ namespace Nuke.GlobalTool
                     .EnumerateFiles("*", SearchOption.AllDirectories)
                     .Where(x => x.FullName.EndsWithOrdinalIgnoreCase(".sln"))
                     .NotEmpty("No solution file found.")
-                    .OrderBy(x => x.FullName)
+                    .OrderByDescending(x => x.FullName)
                     .Select(x => (x, GetRelativePath(rootDirectory, x.FullName))).ToArray()).FullName;
             var solutionDirectory = Path.GetDirectoryName(solutionFile);
 
@@ -103,57 +103,57 @@ namespace Nuke.GlobalTool
 
             #region Wizard
 
-            var definitions = new List<string>();
+            var defaultBuildDefinitions = new List<string>();
 
             if (ConsoleHelper.PromptForChoice("Do you need help getting started with a basic build?",
                 (true, "Yes, get me started!"),
                 (false, "No, I can do this myself...")))
             {
-                definitions.Add(
+                defaultBuildDefinitions.Add(
                     ConsoleHelper.PromptForChoice("Restore, compile, pack using ...",
                         ("DOTNET", "dotnet CLI"),
                         ("MSBUILD", "MSBuild/Mono"),
                         (null, "Neither")));
 
-                definitions.Add(
+                defaultBuildDefinitions.Add(
                     ConsoleHelper.PromptForChoice("Source files are located in ...",
                         ("SOURCE_DIR", "./source"),
                         ("SRC_DIR", "./src"),
                         (null, "Neither")));
 
-                definitions.Add(
+                defaultBuildDefinitions.Add(
                     ConsoleHelper.PromptForChoice("Move packages to ...",
                         ("OUTPUT_DIR", "./output"),
                         ("ARTIFACTS_DIR", "./artifacts"),
                         (null, "Neither")));
 
-                definitions.Add(
+                defaultBuildDefinitions.Add(
                     ConsoleHelper.PromptForChoice("Where do test projects go?",
                         ("TESTS_DIR", "./tests"),
                         (null, "Same as source")));
 
                 if (Directory.Exists(Path.Combine(rootDirectory, ".git")))
-                    definitions.Add("GIT");
+                    defaultBuildDefinitions.Add("GIT");
                 else
                 {
-                    definitions.Add(
+                    defaultBuildDefinitions.Add(
                         ConsoleHelper.PromptForChoice("Do you use git?",
                             ("GIT", "Yes, just not setup yet"),
                             (null, "No, something else")));
                 }
 
                 if (File.Exists(Path.Combine(rootDirectory, "GitVersion.yml")))
-                    definitions.Add("GIT_VERSION");
-                else if (definitions.Contains("GIT"))
+                    defaultBuildDefinitions.Add("GITVERSION");
+                else if (defaultBuildDefinitions.Contains("GIT"))
                 {
-                    definitions.Add(
+                    defaultBuildDefinitions.Add(
                         ConsoleHelper.PromptForChoice("Do you use GitVersion?",
                             ("GITVERSION", "Yes, just not setup yet"),
                             (null, "No, custom versioning")));
                 }
             }
 
-            definitions.RemoveAll(x => x == null);
+            defaultBuildDefinitions.RemoveAll(x => x == null);
 
             #endregion
 
@@ -182,7 +182,7 @@ namespace Nuke.GlobalTool
                 buildProjectFile,
                 TemplateEngine.FillOutTemplate(
                     $"_build.{projectFormat}.csproj",
-                    definitions,
+                    definitions: null,
                     replacements:
                     new
                     {
@@ -217,7 +217,7 @@ namespace Nuke.GlobalTool
                 Path.Combine(buildDirectory, "Build.cs"),
                 TemplateEngine.FillOutTemplate(
                     "Build.cs",
-                    definitions,
+                    defaultBuildDefinitions,
                     replacements: new { }));
 
             TextTasks.WriteAllText(
@@ -258,7 +258,7 @@ namespace Nuke.GlobalTool
 
             if (new[]{"addon", "addin", "plugin"}.Any(x => x.EqualsOrdinalIgnoreCase(args.FirstOrDefault())))
             {
-                ControlFlow.Assert(definitions.Contains("SOURCE_DIR"), "definitions.Contains('SOURCE_DIR')");
+                ControlFlow.Assert(defaultBuildDefinitions.Contains("SOURCE_DIR"), "definitions.Contains('SOURCE_DIR')");
 
                 var organization = ConsoleHelper.PromptForInput("Organization name:", defaultValue: "nuke-build");
                 var addonName = ConsoleHelper.PromptForInput("Organization name:", defaultValue: null);
@@ -322,6 +322,7 @@ namespace Nuke.GlobalTool
                 return;
             
             var globalIndex = content.IndexOf("Global");
+            ControlFlow.Assert(globalIndex != -1, "Could not find a 'Global' section in solution file.");
 
             var projectConfigurationIndex = content.FindIndex(x => x.Contains("GlobalSection(ProjectConfigurationPlatforms)"));
             if (projectConfigurationIndex == -1)

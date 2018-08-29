@@ -6,7 +6,7 @@
     <Description>Cross-platform build automation system</Description> 
 
     <Authors>Matthias Koch, Sebastian Karasek</Authors>
-    <Copyright>Copyright © Matthias Koch, Sebastian Karasek $([System.DateTime]::Now.Year)</Copyright>
+    <Copyright>Copyright $([System.DateTime]::Now.Year) Maintainers of NUKE</Copyright>
     <PackageTags>build automation continuous-integration tools orchestration</PackageTags>
 
     <PackageProjectUrl>https://nuke.build</PackageProjectUrl>

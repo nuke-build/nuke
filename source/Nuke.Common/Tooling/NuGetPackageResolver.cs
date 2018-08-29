@@ -1,4 +1,4 @@
-// Copyright Matthias Koch, Sebastian Karasek 2018.
+// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -236,25 +236,25 @@ namespace Nuke.Common.Tooling
                 directories.Add(Path.Combine(
                     EnvironmentInfo.SpecialFolder(SpecialFolders.ApplicationData).NotNull(),
                     "NuGet"));
-                
+
                 directories.Add(Path.Combine(
                     EnvironmentInfo.SpecialFolder(SpecialFolders.ProgramFilesX86).NotNull(),
                     "NuGet",
                     "Config"));
             }
-            
+
             if (EnvironmentInfo.IsUnix)
             {
                 directories.Add(Path.Combine(
                     EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile).NotNull(),
                     ".config",
                     "NuGet"));
-                
+
                 directories.Add(Path.Combine(
                     EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile).NotNull(),
                     ".nuget",
                     "NuGet"));
-             
+
                 var dataHomeDirectoy = EnvironmentInfo.Variable("XDG_DATA_HOME");
                 if (!string.IsNullOrEmpty(dataHomeDirectoy))
                 {
@@ -266,7 +266,7 @@ namespace Nuke.Common.Tooling
                         EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile).NotNull(),
                         ".local",
                         "share"));
-                    
+
                     // TODO: /usr/local/share
                 }
             }

@@ -1,4 +1,4 @@
-// Copyright Matthias Koch, Sebastian Karasek 2018.
+// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -19,7 +19,8 @@ namespace Nuke.CodeGeneration.Model
         public Tool Tool { get; set; }
 
         [CanBeNull]
-        [Description("Help or introduction text to for the tool. Supports 'a-href', 'c', 'em', 'b', 'ul', 'li' and 'para' tags for better formatting.")]
+        [Description(
+            "Help or introduction text to for the tool. Supports 'a-href', 'c', 'em', 'b', 'ul', 'li' and 'para' tags for better formatting.")]
         public string Help { get; set; }
 
         [CanBeNull]
@@ -39,13 +40,13 @@ namespace Nuke.CodeGeneration.Model
 
         [Description("Generates a pre-process hook")]
         public bool PreProcess { get; set; }
-        
+
         [Description("Generates a post-process hook")]
         public bool PostProcess { get; set; }
-        
+
         [Description("Enables log level parsing")]
         public bool LogLevelParsing { get; set; }
-        
+
         [Description("Custom start implementation.")]
         public bool CustomStart { get; set; }
 

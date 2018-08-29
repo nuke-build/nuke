@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
+﻿// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -33,6 +33,8 @@ using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
 using static Nuke.Common.Tools.Slack.SlackTasks;
 
+// ReSharper disable HeapView.DelegateAllocation
+
 partial class Build : NukeBuild
 {
     public static int Main() => Execute<Build>(x => x.Pack);
@@ -40,10 +42,10 @@ partial class Build : NukeBuild
     [Parameter("ApiKey for the specified source.")] readonly string ApiKey;
     [Parameter] string Source = "https://api.nuget.org/v3/index.json";
     [Parameter] string SymbolSource = "https://nuget.smbsrc.net/";
-    
+
     [Parameter("Gitter authtoken.")] readonly string GitterAuthToken;
     [Parameter("Slack webhook.")] readonly string SlackWebhook;
-    
+
     [Parameter("Install global tool.")] readonly bool InstallGlobalTool;
 
     [GitVersion] readonly GitVersion GitVersion;
@@ -66,7 +68,8 @@ partial class Build : NukeBuild
         .DependsOn(Clean)
         .Executes(() =>
         {
-            DotNetRestore(s => DefaultDotNetRestore);
+            DotNetRestore(s => s
+                .SetProjectFile(Solution));
         });
 
     Project CommonProject => Solution.GetProject("Nuke.Common").NotNull();
@@ -78,22 +81,35 @@ partial class Build : NukeBuild
         .Requires(() => IsUnix || GitVersion != null)
         .Executes(() =>
         {
-            DotNetBuild(s => DefaultDotNetBuild);
+            DotNetBuild(s => s
+                .SetProjectFile(Solution)
+                .EnableNoRestore()
+                .SetConfiguration(Configuration)
+                .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())
+                .SetFileVersion(GitVersion.GetNormalizedFileVersion())
+                .SetInformationalVersion(GitVersion.InformationalVersion));
 
-            DotNetPublish(s => DefaultDotNetPublish
+            var publishSettings = new DotNetPublishSettings()
+                .EnableNoRestore()
+                .SetConfiguration(Configuration)
+                .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())
+                .SetFileVersion(GitVersion.GetNormalizedFileVersion())
+                .SetInformationalVersion(GitVersion.InformationalVersion);
+
+            DotNetPublish(s => publishSettings
                 .SetProject(GlobalToolProject));
 
-            DotNetPublish(s => DefaultDotNetPublish
+            DotNetPublish(s => publishSettings
                 .SetProject(CommonProject)
                 .SetFramework("netstandard2.0"));
-            DotNetPublish(s => DefaultDotNetPublish
+            DotNetPublish(s => publishSettings
                 .SetProject(CommonProject)
                 .SetFramework("net461"));
 
-            DotNetPublish(s => DefaultDotNetPublish
+            DotNetPublish(s => publishSettings
                 .SetProject(CodeGenerationProject)
                 .SetFramework("netstandard2.0"));
-            DotNetPublish(s => DefaultDotNetPublish
+            DotNetPublish(s => publishSettings
                 .SetProject(CodeGenerationProject)
                 .SetFramework("net461"));
         });
@@ -112,14 +128,22 @@ partial class Build : NukeBuild
                 .Concat($"Full changelog at {GitRepository.GetGitHubBrowseUrl(ChangelogFile)}")
                 .JoinNewLine();
 
-            DotNetPack(s => DefaultDotNetPack
+            DotNetPack(s => s
+                .SetProject(Solution)
+                .EnableNoBuild()
+                .SetConfiguration(Configuration)
+                .EnableIncludeSymbols()
+                .SetOutputDirectory(OutputDirectory)
+                .SetVersion(GitVersion.NuGetVersionV2)
                 .SetPackageReleaseNotes(releaseNotes));
+        });
 
-            if (InstallGlobalTool)
-            {
-                SuppressErrors(() => DotNet($"tool uninstall -g {GlobalToolProject.Name}"));
-                DotNet($"tool install -g {GlobalToolProject.Name} --add-source {OutputDirectory} --version {GitVersion.NuGetVersionV2}");
-            }
+    Target Install => _ => _
+        .DependsOn(Pack)
+        .Executes(() =>
+        {
+            SuppressErrors(() => DotNet($"tool uninstall -g {GlobalToolProject.Name}"));
+            DotNet($"tool install -g {GlobalToolProject.Name} --add-source {OutputDirectory} --version {GitVersion.NuGetVersionV2}");
         });
 
     Target Test => _ => _
@@ -134,11 +158,17 @@ partial class Build : NukeBuild
 
             if (IsWin)
             {
-                OpenCover(s => DefaultOpenCover
-                    .SetOutput(OutputDirectory / "coverage.xml")
+                OpenCover(s => s
                     .SetTargetSettings(xunitSettings)
+                    .SetOutput(OutputDirectory / "coverage.xml")
                     .SetSearchDirectories(xunitSettings.TargetAssemblyWithConfigs.Select(x => Path.GetDirectoryName(x.Key)))
-                    .AddFilters("-[Nuke.Common]Nuke.Core.*"));
+                    .SetRegistration(RegistrationType.User)
+                    .SetTargetExitCodeOffset(targetExitCodeOffset: 0)
+                    .SetFilters(
+                        "+[*]*",
+                        "-[xunit.*]*",
+                        "-[FluentAssertions.*]*")
+                    .SetExcludeByAttributes("System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute"));
 
                 ReportGenerator(s => s
                     .AddReports(OutputDirectory / "coverage.xml")
@@ -153,7 +183,9 @@ partial class Build : NukeBuild
         .DependsOn(Restore)
         .Executes(() =>
         {
-            InspectCode(s => DefaultInspectCode
+            InspectCode(s => s
+                .SetTargetPath(Solution)
+                .SetOutput(OutputDirectory / "inspectCode.xml")
                 .AddExtensions(
                     "EtherealCode.ReSpeller",
                     "PowerToys.CyclomaticComplexity",
@@ -180,7 +212,7 @@ partial class Build : NukeBuild
                     .SetSource(Source)
                     .SetSymbolSource(SymbolSource)
                     .SetApiKey(ApiKey)));
-            
+
             if (GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch))
             {
                 SendSlackMessage(m => m

@@ -1,12 +1,13 @@
 {
   "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
   "license": [
-    "Copyright Matthias Koch 2017.",
+    "Copyright 2018 Maintainers of NUKE.",
     "Distributed under the MIT License.",
     "https://github.com/nuke-build/tools/blob/master/LICENSE"
   ],
   "references": [
-    "https://raw.githubusercontent.com/GitTools/GitVersion/master/docs/more-info/variables.md"
+    "https://raw.githubusercontent.com/GitTools/GitVersion/master/docs/more-info/variables.md",
+    "https://raw.githubusercontent.com/GitTools/GitVersion/master/src/GitVersionExe/HelpWriter.cs"
   ],
   "name": "GitVersion",
   "officialUrl": "http://gitversion.readthedocs.io/en/stable/",
@@ -19,9 +20,149 @@
       "settingsClass": {
         "properties": [
           {
+            "name": "TargetPath",
+            "type": "string",
+            "format": "{value}",
+            "help": "The directory containing .git. If not defined current directory is used. (Must be first argument)."
+          },
+          {
+            "name": "Version",
+            "type": "bool",
+            "format": "/version",
+            "help": "Displays the version of GitVersion."
+          },
+          {
+            "name": "Diagnostics",
+            "type": "bool",
+            "format": "/diag",
+            "help": "Runs GitVersion with additional diagnostic information (requires git.exe to be installed)."
+          },
+          {
+            "name": "Output",
+            "type": "GitVersionOutput",
+            "format": "/output {value}",
+            "help": "Determines the output to the console. Can be either <em>json</em> or <em>buildserver</em>, will default to <em>json</em>."
+          },
+          {
+            "name": "ShowVariable",
+            "type": "string",
+            "format": "/showvariable {value}",
+            "help": "Used in conjuntion with <c>/output</c> json, will output just a particular variable. E.g., <c>/output json /showvariable SemVer</c> - will output <c>1.2.3+beta.4</c>."
+          },
+          {
+            "name": "LogFile",
+            "type": "string",
+            "format": "/l {value}",
+            "help": "Path to logfile."
+          },
+          {
+            "name": "ShowConfig",
+            "type": "bool",
+            "format": "/showconfig",
+            "help": "Outputs the effective GitVersion config (defaults + custom from GitVersion.yml) in yaml format."
+          },
+          {
+            "name": "ConfigurationOverride",
+            "type": "Dictionary<string, object>",
+            "format": "/overrideconfig {value}",
+            "itemFormat": "{key}={value}",
+            "help": "Overrides GitVersion config values inline (semicolon-separated key value pairs e.g. <c>/overrideconfig tag-prefix=Foo</c>). Currently supported config overrides: <c>tag-prefix</c>."
+          },
+          {
+            "name": "NoCache",
+            "type": "bool",
+            "format": "/nocache",
+            "help": "Bypasses the cache, result will not be written to the cache."
+          },
+          {
             "name": "UpdateAssemblyInfo",
             "type": "bool",
-            "format": "/updateassemblyinfo"
+            "format": "/updateassemblyinfo",
+            "help": "Will recursively search for all 'AssemblyInfo.cs' files in the git repo and update them."
+          },
+          {
+            "name": "UpdateAssemblyInfoFileName",
+            "type": "bool",
+            "format": "/updateassemblyinfofilename {value}",
+            "help": "Specify name of AssemblyInfo file."
+          },
+          {
+            "name": "EnsureAssemblyInfo",
+            "type": "bool",
+            "format": "/ensureassemblyinfo",
+            "help": "If the assembly info file specified with <c>/updateassemblyinfo</c> or <c>/updateassemblyinfofilename</c> is not found, it will be created with these attributes: AssemblyFileVersion, AssemblyVersion and AssemblyInformationalVersion."
+          },
+          {
+            "name": "Url",
+            "type": "string",
+            "format": "/url {value}",
+            "help": "Url to remote git repository."
+          },
+          {
+            "name": "Branch",
+            "type": "string",
+            "format": "/b {value}",
+            "help": "Name of the branch to use on the remote repository, must be used in combination with <c>/url</c>."
+          },
+          {
+            "name": "Username",
+            "type": "string",
+            "format": "/u {value}",
+            "help": "Username in case authentication is required."
+          },
+          {
+            "name": "Password",
+            "type": "string",
+            "format": "/p {value}",
+            "help": "Password in case authentication is required."
+          },
+          {
+            "name": "Commit",
+            "type": "string",
+            "format": "/c {value}",
+            "help": "The commit id to check. If not specified, the latest available commit on the specified branch will be used."
+          },
+          {
+            "name": "DynamicRepositoryLocation",
+            "type": "string",
+            "format": "/dynamicRepoLocation {value}",
+            "help": "By default dynamic repositories will be cloned to %tmp%. Use this switch to override."
+          },
+          {
+            "name": "NoFetch",
+            "type": "bool",
+            "format": "/nofetch",
+            "help": "Disables <c>git fetch</c> during version calculation. Might cause GitVersion to not calculate your version as expected."
+          },
+          {
+            "name": "Executable",
+            "type": "string",
+            "format": "/exec {value}",
+            "help": "Executes target executable making GitVersion variables available as environmental variables."
+          },
+          {
+            "name": "ExecutableArguments",
+            "type": "string",
+            "format": "/execargs {value}",
+            "help": "Arguments for the executable specified by <c>/exec</c>."
+          },
+          {
+            "name": "MSBuildProject",
+            "type": "string",
+            "format": "/proj {value}",
+            "help": "Build an MSBuild file, GitVersion variables will be passed as MSBuild properties."
+          },
+          {
+            "name": "MSBuildProjectArguments",
+            "type": "string",
+            "format": "/projargs {value}",
+            "help": "Additional arguments to pass to MSBuild."
+          },
+          {
+            "name": "Verbosity",
+            "type": "GitVersionVerbosity",
+            "format": "/verbosity {value}",
+            "help": "Set Verbosity level (<c>debug</c>, <c>info</c>, <c>warn</c>, <c>error</c>, <c>none</c>). Default is <c>info</c>."
           }
         ]
       }
@@ -135,6 +276,25 @@
           "name": "CommitDate",
           "type": "string"
         }
+      ]
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "GitVersionOutput",
+      "values": [
+        "json",
+        "buildserver"
+      ]
+    },
+    {
+      "name": "GitVersionVerbosity",
+      "values": [
+        "debug",
+        "info",
+        "warn",
+        "error",
+        "none"
       ]
     }
   ]

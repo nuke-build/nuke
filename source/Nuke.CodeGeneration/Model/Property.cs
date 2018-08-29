@@ -1,4 +1,4 @@
-// Copyright Matthias Koch, Sebastian Karasek 2018.
+// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -34,7 +34,7 @@ namespace Nuke.CodeGeneration.Model
         [JsonProperty(Required = Required.Always)]
         [Description("Type of the property. I.e., bool, int, string, List<int>, Dictionary<string, object>, Lookup<string, int.>")]
         public string Type { get; set; }
-        
+
         [Description("Name used when serializing to JSON.")]
         public string Json { get; set; }
 

@@ -1,4 +1,4 @@
-// Copyright Matthias Koch, Sebastian Karasek 2018.
+// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -21,7 +21,7 @@ namespace Nuke.Common.Tools.MSBuild
         {
             return toolSettings.SetTargetPath(projectFile);
         }
-        
+
         public static MSBuildSettings AddTeamCityLogger(this MSBuildSettings toolSettings)
         {
             var teamCity = TeamCity.Instance.NotNull("TeamCity.Instance != null");

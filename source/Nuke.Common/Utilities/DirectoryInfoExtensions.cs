@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
+﻿// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -33,8 +33,9 @@ namespace Nuke.Common.Utilities
         {
             if (maxDepth == 0)
                 return Enumerable.Empty<FileInfo>();
-            
-            var subDirectories = directoryInfo.EnumerateDirectories().Where(x => (x.Attributes & (FileAttributes.Hidden | FileAttributes.System)) == 0);
+
+            var subDirectories = directoryInfo.EnumerateDirectories()
+                .Where(x => (x.Attributes & (FileAttributes.Hidden | FileAttributes.System)) == 0);
             return directoryInfo.EnumerateFiles(searchPattern, SearchOption.TopDirectoryOnly)
                 .Concat(subDirectories.SelectMany(x => x.EnumerateFiles(searchPattern, maxDepth - 1)));
         }

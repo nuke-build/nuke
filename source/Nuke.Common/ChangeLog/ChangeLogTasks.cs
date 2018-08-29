@@ -1,9 +1,10 @@
-﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
+﻿// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
@@ -13,11 +14,72 @@ using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 
 // ReSharper disable ArgumentsStyleLiteral
-
 namespace Nuke.Common.ChangeLog
 {
+
     public static class ChangelogTasks
     {
+        [Pure]
+        public static IReadOnlyList<ReleaseNotes> ReadReleaseNotes(string changelogFile)
+        {
+            var lines = TextTasks.ReadAllLines(changelogFile).ToList();
+            var releaseSections = GetReleaseSections(lines).ToList();
+            
+            ControlFlow.Assert(releaseSections.Any(), "Changelog should have at least one release note section");
+            return releaseSections.Select(Parse).ToList().AsReadOnly();
+            
+            ReleaseNotes Parse(ReleaseSection section)
+            {
+                var releaseNotes = lines
+                    .Skip(section.StartIndex + 1)
+                    .Take(section.EndIndex - section.StartIndex)
+                    .ToList()
+                    .AsReadOnly();
+                
+                return NuGetVersion.TryParse(section.Caption, out var version)
+                    ? new ReleaseNotes(version, releaseNotes, section.StartIndex, section.EndIndex)
+                    : new ReleaseNotes(releaseNotes, section.StartIndex, section.EndIndex);
+            }
+        }
+
+        [Pure]
+        public static ChangeLog ReadChangelog(string changelogFile)
+        {
+            var releaseNotes = ReadReleaseNotes(changelogFile);
+            var unreleased = releaseNotes.Where(x => x.Unreleased).ToArray();
+
+            if (unreleased.Length > 0)
+            {
+                ControlFlow.Assert(unreleased.Length == 1, "Changelog should have only one draft section.");
+                return new ChangeLog(changelogFile, unreleased.First(), releaseNotes);
+            }
+            ControlFlow.Assert(releaseNotes.Count(x => !x.Unreleased) >= 1, "Changelog should have at lease one released version section.");
+            return new ChangeLog(changelogFile, releaseNotes);
+        }
+        
+        public static void FinalizeChangelog(ChangeLog changeLogFile, NuGetVersion tag)
+        {
+            Logger.Info($"Finalizing {PathConstruction.GetRootRelativePath(changeLogFile.Path)} for '{tag}'...");
+
+            var unreleasedNotes = changeLogFile.Unreleased;
+            var releaseNotes = changeLogFile.ReleaseNotes;
+            var lastReleased = changeLogFile.LatestVersion;
+
+            ControlFlow.Assert(unreleasedNotes != null, "Changelog should have draft section.");
+            ControlFlow.Assert(releaseNotes.Any(x => x.Version != null && x.Version.Equals(tag)), $"Tag '{tag}' already exists.");
+            ControlFlow.Assert(tag.CompareTo(lastReleased.Version) > 0, $"Tag '{tag}' is not greater compared to last tag '{lastReleased.Version}'.");
+
+            var path = changeLogFile.Path;
+            
+            var content = TextTasks.ReadAllLines(path).ToList();
+            
+            content.Insert(unreleasedNotes.StartIndex + 1, string.Empty);
+            content.Insert(unreleasedNotes.EndIndex + 2, $"## [{tag}] / {DateTime.Now:yyyy-MM-dd}");
+            content.Add(string.Empty);
+
+            TextTasks.WriteAllLines(path, content);
+        }
+        
         [Pure]
         public static IEnumerable<string> ExtractChangelogSectionNotes(string changelogFile, string tag = null)
         {
@@ -32,7 +94,7 @@ namespace Nuke.Common.ChangeLog
                 .Take(section.EndIndex - section.StartIndex);
         }
 
-        public static void FinalizeChangelog(string changelogFile, string tag, GitRepository repository = null)
+        public static void FinalizeChangelog(string changelogFile, string tag, [CanBeNull] GitRepository repository = null)
         {
             Logger.Info($"Finalizing {PathConstruction.GetRootRelativePath(changelogFile)} for '{tag}'...");
 
@@ -51,7 +113,7 @@ namespace Nuke.Common.ChangeLog
             content.Insert(firstSection.StartIndex + 1, string.Empty);
             content.Insert(firstSection.StartIndex + 2, $"## [{tag}] / {DateTime.Now:yyyy-MM-dd}");
 
-            if (repository.IsGitHubRepository())
+            if (repository != null && repository.IsGitHubRepository())
             {
                 sections = GetReleaseSections(content).ToList();
                 firstSection = sections.First();

@@ -1,4 +1,4 @@
-// Copyright Matthias Koch, Sebastian Karasek 2018.
+// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -75,7 +75,7 @@ namespace Nuke.CodeGeneration.Generators
             var tool = writer.DataClass.Tool;
             if (!tool.LogLevelParsing)
                 return writer;
-            
+
             var logLevelParser = $"{tool.GetClassName()}.ParseLogLevel";
             return writer.WriteLine($"internal override Func<string, LogLevel> LogLevelParser => {logLevelParser};");
         }
@@ -169,25 +169,28 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteBlock(w => w
                     .WriteLine("base.AssertValid();")
                     .ForEach(
-                        validatedProperties.Select(GetAssertion),
-                        assertion => w.WriteLine($"ControlFlow.Assert({assertion}, {assertion.DoubleQuote()});"))
+                        validatedProperties.Select(GetAssertedProperty),
+                        assertedProperty => w.WriteLine($"ControlFlow.Assert({assertedProperty.assertion}, {AssertionWithValue(assertedProperty.assertion, assertedProperty.propertyName)});"))
                 );
         }
 
-        private static string GetAssertion(Property property)
+        private static string AssertionWithValue(string assertion, string propertyName)
+            => $"{assertion} [{propertyName} = {{{propertyName}}}]".DoubleQuoteInterpolated();
+
+        private static (string assertion, string propertyName) GetAssertedProperty(Property property)
         {
             switch (property.Assertion)
             {
                 case AssertionType.NotNull:
-                    return $"{property.Name} != null";
+                    return ($"{property.Name} != null", property.Name);
                 case AssertionType.File:
-                    return $"File.Exists({property.Name})";
+                    return ($"File.Exists({property.Name})", property.Name);
                 case AssertionType.Directory:
-                    return $"Directory.Exists({property.Name})";
+                    return ($"Directory.Exists({property.Name})", property.Name);
                 case AssertionType.FileOrNull:
-                    return $"File.Exists({property.Name}) || {property.Name} == null";
+                    return ($"File.Exists({property.Name}) || {property.Name} == null", property.Name);
                 case AssertionType.DirectoryOrNull:
-                    return $"Directory.Exists({property.Name}) || {property.Name} == null";
+                    return ($"Directory.Exists({property.Name}) || {property.Name} == null", property.Name);
                 default:
                     throw new NotSupportedException(property.Assertion.ToString());
             }
@@ -200,14 +203,18 @@ namespace Nuke.CodeGeneration.Generators
                 return writer;
 
             var argumentAdditions = formatProperties.Select(GetArgumentAddition).ToArray();
-            ref var last = ref argumentAdditions[argumentAdditions.Length - 1];
-            last += ";";
+
+            var hasArguments = argumentAdditions.Length > 0;
+            if (hasArguments)
+            {
+                argumentAdditions[argumentAdditions.Length - 1] += ";";
+            }
 
             return writer
                 .WriteLine("protected override Arguments ConfigureArguments(Arguments arguments)")
                 .WriteBlock(w => w
                     .WriteLine("arguments")
-                    .WriteLine(GetCommandAdditionOrNull(writer.DataClass))
+                    .WriteLine($"{GetCommandAdditionOrNull(writer.DataClass)}{(hasArguments ? string.Empty : ";")}")
                     .ForEachWriteLine(argumentAdditions)
                     .WriteLine("return base.ConfigureArguments(arguments);"));
         }

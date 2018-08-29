@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
+﻿// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -47,7 +47,7 @@ namespace Nuke.Common.BuildTasks
 
                 var outputFile = file.Substring(0, file.Length - 4);
                 await HttpTasks.HttpDownloadFileAsync(uri.AbsolutePath, outputFile);
-                
+
                 BuildEngine.LogMessageEvent(new BuildMessageEventArgs(
                     $"Successfully downloaded external file '{outputFile}' from '{uri}'.",
                     helpKeyword: null,

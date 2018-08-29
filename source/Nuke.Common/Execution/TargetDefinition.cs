@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
+﻿// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -30,6 +30,7 @@ namespace Nuke.Common.Execution
             TargetDefinitionDependencies = new List<TargetDefinition>();
             RunBeforeTargets = new List<Target>();
             RunAfterTargets = new List<Target>();
+            DependencyBehavior = DependencyBehavior.Execute;
 
             factory?.Invoke(this);
         }

@@ -1,4 +1,4 @@
-// Copyright Matthias Koch, Sebastian Karasek 2018.
+// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -32,7 +32,7 @@ namespace Nuke.Common.Tooling
             var installedPackage = NuGetPackageResolver.GetLocalInstalledPackage(packageId, packagesConfigFile)
                 .NotNull($"Could not find package '{packageId}' via '{packagesConfigFile}'.");
             var packageDirectory = Path.GetDirectoryName(installedPackage.FileName).NotNull("packageDirectory != null");
-            
+
             var executables = Directory.GetFiles(packageDirectory, packageExecutable, SearchOption.AllDirectories);
             ControlFlow.Assert(executables.Length > 0, $"Could not find '{packageExecutable}' inside '{packageDirectory}'.");
             if (executables.Length == 1 && framework == null)
@@ -41,7 +41,7 @@ namespace Nuke.Common.Tooling
             var frameworks = executables.Select(x => new FileInfo(x).Directory.NotNull().Name).ToList();
             ControlFlow.Assert(frameworks.Contains(framework, StringComparer.OrdinalIgnoreCase),
                 $"Package executable {packageExecutable} [{packageId}] requires a framework: {frameworks.JoinComma()}");
-            
+
             return executables.Single(x => new FileInfo(x).Directory.NotNull().Name.EqualsOrdinalIgnoreCase(framework));
         }
 

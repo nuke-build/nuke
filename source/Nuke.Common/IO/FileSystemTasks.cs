@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
+﻿// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -93,7 +93,6 @@ namespace Nuke.Common.IO
 
             Logger.Trace($"Deleting directory '{directory}'...");
             Directory.Delete(directory, recursive: false);
-            ControlFlow.Assert(!Directory.Exists(directory), $"Cannot delete directory '{directory}'.");
         }
 
         private static void DeleteFileInternal(string file)
@@ -107,7 +106,7 @@ namespace Nuke.Common.IO
         {
             if (!File.Exists(file))
                 return;
-            
+
             Logger.Info($"Deleting file '{file}'...");
             EnsureFileAttributes(file);
             File.Delete(file);
@@ -275,7 +274,7 @@ namespace Nuke.Common.IO
                     ? Directory.GetFiles(directory, "*", SearchOption.AllDirectories)
                     : PathConstruction.GlobFiles(directory, fileGlobPatterns))
                 .OrderBy(x => x).ToList();
-            
+
             using (var md5 = MD5.Create())
             {
                 foreach (var file in files)

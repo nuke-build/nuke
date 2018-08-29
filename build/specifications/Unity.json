@@ -1,0 +1,426 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "license": [
+    "Copyright 2018 Maintainers and Contributors of NUKE.",
+    "Distributed under the MIT License.",
+    "https://github.com/nuke-build/tools/blob/master/LICENSE"
+  ],
+  "references": [
+    "https://docs.unity3d.com/Manual/CommandLineArguments.html#//div[@class='content']//table[1]"
+  ],
+  "name": "Unity",
+  "officialUrl": "https://unity3d.com/",
+  "help": "Unity is usually launched by double-clicking its icon from the desktop. However, it is also possible to run it from the command line (from the macOS Terminal or the Windows Command Prompt). When launched in this way, Unity can receive commands and information on startup, which can be very useful for test suites, automated builds and other production tasks.",
+  "customExecutable": true,
+  "tasks": [
+    {
+      "help": "(2018.2+) Exports the currently activated license to the path of the Unity executable or either the default Unity license location, see the logs or <a href=\"https://docs.unity3d.com/Manual/ActivationFAQ.html\">Activation FAQ</a> for more information.",
+      "postfix": "CreateManualActivationFile",
+      "preProcess": true,
+      "customStart": true,
+      "customAssertion": true,
+      "definiteArgument": "-createManualActivationFile",
+      "settingsClass": {
+        "baseClass": "UnityBaseSettings"
+      }
+    },
+    {
+      "help": "(2018.2+) Activates Unity with a license file.",
+      "postfix": "ManualLicenseFile",
+      "preProcess": true,
+      "customStart": true,
+      "customAssertion": true,
+      "settingsClass": {
+        "baseClass": "UnityBaseSettings",
+        "properties": [
+          {
+            "name": "LicenseFile",
+            "type": "string",
+            "assertion": "File",
+            "format": "-manualLicenseFile {value}",
+            "help": "The path to the license file."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Execute Unity.",
+      "preProcess": true,
+      "customStart": true,
+      "customAssertion": true,
+      "settingsClass": {
+        "baseClass": "UnityBaseSettings",
+        "properties": [
+          {
+            "name": "AssetServerUpdate",
+            "type": "string",
+            "format": "-assetServerUpdate {value}",
+            "help": "Force an update of the project in the <a href=\"https://docs.unity3d.com/Manual/AssetServer.html\">Asset Server</a> given by <c>IP:port</c>. The port is optional, and if not given it is assumed to be the standard one (10733). It is advisable to use this command in conjunction with the <c>-projectPath</c> argument to ensure you are working with the correct project. If no project name is given, then the last project opened by Unity is used. If no project exists at the path given by <c>-projectPath</c>, then one is created automatically."
+          },
+          {
+            "name": "BuildLinux32Player",
+            "type": "string",
+            "format": "-buildLinux32Player {value}",
+            "help": "Build a 32-bit standalone Linux player (for example, <c>-buildLinux32Player path/to/your/build</c>)."
+          },
+          {
+            "name": "BuildLinux64Player",
+            "type": "string",
+            "format": "-buildLinux64Player {value}",
+            "help": "Build a 64-bit standalone Linux player (for example, <c>-buildLinux64Player path/to/your/build</c>)."
+          },
+          {
+            "name": "BuildLinuxUniversalPlayer",
+            "type": "string",
+            "format": "-buildLinuxUniversalPlayer {value}",
+            "help": "Build a combined 32-bit and 64-bit standalone Linux player (for example, <c>-buildLinuxUniversalPlayer path/to/your/build</c>)."
+          },
+          {
+            "name": "BuildOSXPlayer",
+            "type": "string",
+            "format": "-buildOSXPlayer {value}",
+            "help": "Build a 32-bit standalone Mac OSX player (for example, <c>-buildOSXPlayer path/to/your/build.app</c>)."
+          },
+          {
+            "name": "BuildOSX64Player",
+            "type": "string",
+            "format": "-buildOSX64Player {value}",
+            "help": "Build a 64-bit standalone Mac OSX player (for example, <c>-buildOSX64Player path/to/your/build.app</c>)."
+          },
+          {
+            "name": "BuildOSXUniversalPlayer",
+            "type": "string",
+            "format": "-buildOSXUniversalPlayer {value}",
+            "help": "Build a combined 32-bit and 64-bit standalone Mac OSX player (for example, <c>-buildOSXUniversalPlayer path/to/your/build.app</c>)."
+          },
+          {
+            "name": "BuildTarget",
+            "type": "string",
+            "format": "-buildTarget {value}",
+            "help": "Allows the selection of an active build target before a project is loaded."
+          },
+          {
+            "name": "BuildWindowsPlayer",
+            "type": "string",
+            "format": "-buildWindowsPlayer {value}",
+            "help": "Build a 32-bit standalone Windows player (for example, <c>-buildWindowsPlayer path/to/your/build.exe</c>)."
+          },
+          {
+            "name": "BuildWindows64Player",
+            "type": "string",
+            "format": "-buildWindows64Player {value}",
+            "help": "Build a 64-bit standalone Windows player (for example, <c>-buildWindows64Player path/to/your/build.exe</c>)."
+          },
+          {
+            "name": "CreateProject",
+            "type": "string",
+            "format": "-createProject {value}",
+            "help": "Create an empty project at the given path."
+          },
+          {
+            "name": "ExecuteMethod",
+            "type": "string",
+            "format": "-executeMethod {value}",
+            "help": "Execute the static method as soon as Unity is started, the project is open and after the optional Asset server update has been performed. This can be used to do tasks such as continous integration, performing Unit Tests, making builds or preparing data. To return an error from the command line process, either throw an exception which causes Unity to exit with return code <b>1</b>, or call <a href=\"https:/docs.unity3d.com/ScriptReference/EditorApplication.Exit.html\">EditorApplication.Exit</a> with a non-zero return code.To use <b>ExecuteMethod</b>, you need to place the enclosing script in an Editor folder. The method to be executed must be defined as <c>static</c>."
+          },
+          {
+            "name": "ForceD3d11",
+            "type": "bool",
+            "format": "-force-d3d11",
+            "help": "(Windows only) Make the Editor use Direct3D 11 for rendering. Normally the graphics API depends on player settings (typically defaults to D3D11)."
+          },
+          {
+            "name": "ForceDeviceIndex",
+            "type": "bool",
+            "format": "-force-device-index",
+            "help": "(macOS only) When using Metal, make the Editor use a particular GPU device by passing it the index of that GPU."
+          },
+          {
+            "name": "ForceGfxMetal",
+            "type": "bool",
+            "format": "-force-gfx-metal",
+            "help": "(macOS only) Make the Editor use Metal as the default graphics API."
+          },
+          {
+            "name": "ForceGLCore",
+            "type": "bool",
+            "format": "-force-glcore",
+            "help": "(Windows only) Make the Editor use OpenGL 3/4 core profile for rendering. The Editor tries to use the best OpenGL version available and all OpenGL extensions exposed by the OpenGL drivers. If the platform isn't supported, Direct3D is used."
+          },
+          {
+            "name": "ForceGLCoreXY",
+            "type": "UnityGLCore",
+            "format": "-force-glcore{value}",
+            "help": "(Windows only) Similar to <c>-force-glcore</c>, but requests a specific OpenGL context version. Accepted values for XY: 32, 33, 40, 41, 42, 43, 44 or 45."
+          },
+          {
+            "name": "ForceGLES",
+            "type": "bool",
+            "format": "-force-gles",
+            "help": "(Windows only) Make the Editor use OpenGL for Embedded Systems for rendering. The Editor tries to use the best OpenGL ES version available, and all OpenGL ES extensions exposed by the OpenGL drivers."
+          },
+          {
+            "name": "ForceGLESXY",
+            "type": "UnityGLES",
+            "format": "-force-gles{value}",
+            "help": "(Windows only) Similar to <c>-force-gles</c>, but requests a specific OpenGL ES context version. Accepted values for XY: 30, 31 or 32."
+          },
+          {
+            "name": "ForceClamped",
+            "type": "bool",
+            "format": "-force-clamped",
+            "help": "(2017.3+) (Windows only) Used with <c>-force-glcoreXY</c> to prevent checking for additional OpenGL extensions, allowing it to run between platforms with the same code paths."
+          },
+          {
+            "name": "ForceLowPowerDevice",
+            "type": "bool",
+            "format": "-force-low-power-device",
+            "help": "(macOS only) When using Metal, make the Editor use a low power device."
+          },
+          {
+            "name": "ImportPackage",
+            "type": "string",
+            "format": "-importPackage {value}",
+            "help": "Import the given <a href=\"https://docs.unity3d.com/Manual/HOWTO-exportpackage.html\">package</a>. No import dialog is shown."
+          },
+          {
+            "name": "DefaultPlatformTextureFormat",
+            "type": "string",
+            "format": "-setDefaultPlatformTextureFormat {value}",
+            "help": "(2018.1+) Sets the default texture compression to the desired format before importing a texture or building the project. This is so you don’t have to import the texture again with the format you want. The available formats are dxt, pvrtc, atc, etc, etc2, and astc. Note that this is only supported on Android."
+          },
+          {
+            "name": "DisableAssemblyUpdater",
+            "type": "List<string>",
+            "format": "-disable-assembly-updater {value}",
+            "separator": " ",
+            "help": "Specify a space-separated list of assembly names as parameters for Unity to ignore on automatic updates. The space-separated list of assembly names is optional: Pass the command line options without any assembly names to ignore all assemblies."
+          },
+          {
+            "name": "CacheServerIPAddress",
+            "type": "string",
+            "format": "-cacheServerIPAddress {value}",
+            "help": "(2018.1+) Connect to the Cache Server given by <c>IP:port</c> on startup, overriding any configuration stored in the Editor Preferences. Use this to connect multiple instances of Unity to different Cache Servers."
+          },
+          {
+            "name": "NoUpm",
+            "type": "bool",
+            "format": "-noUpm",
+            "help": "(2018.1+) Disables the Unity Package Manager."
+          },
+          {
+            "name": "AcceptApiUpdate",
+            "type": "bool",
+            "format": "-accept-apiupdate",
+            "help": "(2017.2+) Use this command line option to specify that APIUpdater should run when Unity is launched in batch mode. Omitting this command line argument when launching Unity in batch mode results in APIUpdater not running which can lead to compiler errors. Note that in versions prior to 2017.2 there’s no way to not run APIUpdater when Unity is launched in batch mode."
+          },
+          {
+            "name": "RunEditorTests",
+            "type": "bool",
+            "format": "-runEditorTests",
+            "help": "Run Editor tests from the project. This argument requires the <c>projectPath</c>, and it’s good practice to run it with <c>batchmode</c> argument. <c>quit</c> is not required, because the Editor automatically closes down after the run is finished."
+          },
+          {
+            "name": "EditorTestsCategories",
+            "type": "List<string>",
+            "format": "-editorTestsCategories {value}",
+            "separator": ",",
+            "help": "Filter editor tests by categories."
+          },
+          {
+            "name": "EditorTestsFilter",
+            "type": "List<string>",
+            "format": "-editorTestsFilter {value}",
+            "separator": ",",
+            "help": "Filter editor tests by names."
+          },
+          {
+            "name": "EditorTestsResultFile",
+            "type": "string",
+            "format": "-editorTestsResultFile {value}",
+            "help": "Path where the result file should be placed. If the path is a folder, a default file name is used. If not specified, the results are placed in the project's root folder."
+          },
+          {
+            "name": "ExportPackage",
+            "type": "List<string>",
+            "format": "-exportPackage {value}",
+            "separator": " ",
+            "help": "Export a package, given a path (or set of given paths).<c>-exportPackage &lt;exportAssetPath&gt; &lt;exportFileName&gt;</c> In this example exportAssetPath is a folder (relative to to the Unity project root) to export from the Unity project, and exportFileName is the package name. Currently, this option only exports whole folders at a time. You normally need to use this command with the -projectPath argument."
+          },
+          {
+            "name": "CustomArguments",
+            "type": "List<string>",
+            "format": "{value}",
+            "separator": " ",
+            "help": "Custom parameters. To pass parameters, add them to the command line and retrieve them inside the function using <c>System.Environment.GetCommandLineArgs</c>. "
+          },
+          {
+            "name": "StackTraceLogType",
+            "type": "UnityStackTraceLogType",
+            "format": "-stackTraceLogType {value}",
+            "help": "Detailed debugging feature. StackTraceLogging allows you to allow detailed logging."
+          },
+          {
+            "name": "ProjectPath",
+            "type": "string",
+            "assertion": "DirectoryOrNull",
+            "format": "-projectPath {value}",
+            "help": "Specify the path of the unity project."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Return the currenlty activated Unity license.",
+      "postfix": "ReturnLicense",
+      "preProcess": true,
+      "customStart": true,
+      "customAssertion": true,
+      "definiteArgument": "-returnlicense",
+      "settingsClass": {
+        "baseClass": "UnityBaseSettings"
+      }
+    }
+  ],
+  "commonTaskProperties": [
+    {
+      "name": "Username",
+      "type": "string",
+      "format": "-username {value}",
+      "help": "Enter a username into the log-in form during activation of the Unity Editor."
+    },
+    {
+      "name": "Password",
+      "type": "string",
+      "format": "-password {value}",
+      "secret": true,
+      "help": "Enter a password into the log-in form during activation of the Unity Editor."
+    },
+    {
+      "name": "Serial",
+      "type": "string",
+      "format": "-serial {value}",
+      "secret": true,
+      "help": "Activate Unity with the specified serial key. It is good practice to pass the <c>-batchmode</c> and <c>-quit</c> arguments as well, in order to quit Unity when done, if using this for automated activation of Unity. Please allow a few seconds before the license file is created, because Unity needs to communicate with the license server. Make sure that license file folder exists, and has appropriate permissions before running Unity with this argument. If activation fails, see the <a href=\"https://docs.unity3d.com/Manual/LogFiles.html\">Editor.log</a> for info."
+    },
+    {
+      "name": "BatchMode",
+      "type": "bool",
+      "format": "-batchmode",
+      "help": "Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href=\"https://docs.unity3d.com/Manual/LogFiles.html\">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time."
+    },
+    {
+      "name": "SilentCrashes",
+      "type": "bool",
+      "format": "-silent-crashes",
+      "help": "Don't display a crash dialog."
+    },
+    {
+      "name": "NoGraphics",
+      "type": "bool",
+      "format": "-nographics",
+      "help": "When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration."
+    },
+    {
+      "name": "Quit",
+      "type": "bool",
+      "format": "-quit",
+      "help": "Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file)."
+    }
+  ],
+  "dataClasses": [
+    {
+      "name": "UnityBaseSettings",
+      "extensionMethods": true,
+      "argumentConstruction": true,
+      "properties": [
+        {
+          "name": "LogFile",
+          "type": "string",
+          "format": "-logFile {value}",
+          "customValue": true,
+          "help": "Specify where the Editor or Windows/Linux/OSX standalone log file are written."
+        },
+        {
+          "name": "MinimalOutput",
+          "type": "bool",
+          "noArgument": true,
+          "help": "(experimental) If set to true only warnings and errors will be printed to the output."
+        },
+        {
+          "name": "StableExitCodes",
+          "type": "List<int>",
+          "noArgument": true,
+          "help": "Define exit codes which will not fail the build."
+        }
+      ]
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "UnityBuildTarget",
+      "values": [
+        "standalone",
+        "Win",
+        "Win64",
+        "OSXUniversal",
+        "Linux",
+        "Linux64",
+        "LinuxUniversal",
+        "iOS",
+        "Android",
+        "Web",
+        "WebStreamed",
+        "WebGL",
+        "XboxOne",
+        "PS4",
+        "PSP2",
+        "WindowsStoreApps",
+        "Switch",
+        "N3DS",
+        "tvOS",
+        "PSM"
+      ]
+    },
+    {
+      "name": "UnityGLCore",
+      "values": [
+        "32",
+        "33",
+        "40",
+        "41",
+        "42",
+        "43",
+        "44",
+        "45"
+      ]
+    },
+    {
+      "name": "UnityGLES",
+      "values": [
+        "30",
+        "31",
+        "32"
+      ]
+    },
+    {
+      "name": "UnityStackTraceLogType",
+      "values": [
+        "None",
+        "Script Only",
+        "Full"
+      ]
+    },
+    {
+      "name": "UnityPlatformTextureFormat",
+      "values": [
+        "dxt",
+        "pvrtc",
+        "atc",
+        "etc",
+        "etc2",
+        "astc"
+      ]
+    }
+  ]
+}

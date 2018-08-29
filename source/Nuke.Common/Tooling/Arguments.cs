@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
+﻿// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -94,7 +94,6 @@ namespace Nuke.Common.Tooling
             char? separator = null,
             char? disallowed = null,
             bool quoteMultiple = false)
-            where TValue : class
         {
             if (dictionary == null || dictionary.Count == 0)
                 return this;

@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
+﻿// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -43,6 +43,16 @@ namespace Nuke.Common
         /// Returns whether the operating system is a Windows system.
         /// </summary>
         public static bool IsWin => !IsUnix;
+
+        /// <summary>
+        /// Returns whether the operating system is a Linux system.
+        /// </summary>
+        public static bool IsLinux => Platform == PlatformFamily.Linux;
+
+        /// <summary>
+        /// Returns whether the operating system is a OSX system.
+        /// </summary>
+        public static bool IsOsx => Platform == PlatformFamily.OSX;
 
         /// <summary>
         /// Returns the framework the build is running on.

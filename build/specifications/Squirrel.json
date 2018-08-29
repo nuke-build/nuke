@@ -1,0 +1,175 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "license": [
+    "Copyright 2018 Maintainers and Contributors of NUKE.",
+    "Distributed under the MIT License.",
+    "https://github.com/nuke-build/tools/blob/master/LICENSE"
+  ],
+  "references": [
+    "https://github.com/Squirrel/Squirrel.Windows/blob/master/src/Update/Program.cs"
+  ],
+  "name": "Squirrel",
+  "officialUrl": "https://github.com/Squirrel/Squirrel.Windows",
+  "help": "Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).",
+  "packageId": "Squirrel.Windows",
+  "packageExecutable": "Squirrel.exe",
+  "tasks": [
+    {
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Install",
+            "type": "string",
+            "assertion": "DirectoryOrNull",
+            "format": "--install={value}",
+            "help": "Install the app whose package is in the specified directory."
+          },
+          {
+            "name": "Uninstall",
+            "type": "bool",
+            "format": "--uninstall",
+            "help": "Uninstall the app the same dir as Update.exe."
+          },
+          {
+            "name": "Download",
+            "type": "bool",
+            "format": "--download",
+            "help": "Download the releases specified by the URL and write new results to stdout as JSON."
+          },
+          {
+            "name": "CheckForUpdate",
+            "type": "bool",
+            "format": "--checkForUpdate",
+            "help": "Check for one available update and writes new results to stdout as JSON."
+          },
+          {
+            "name": "Update",
+            "type": "string",
+            "format": "--update={value}",
+            "help": "Update the application to the latest remote version specified by URL."
+          },
+          {
+            "name": "Releasify",
+            "type": "string",
+            "assertion": "File",
+            "format": "--releasify={value}",
+            "help": "Update or generate a releases directory with a given NuGet package."
+          },
+          {
+            "name": "CreateShortcut",
+            "type": "string",
+            "format": "--createShortcut={value}",
+            "help": "Create a shortcut for the given executable name."
+          },
+          {
+            "name": "RemoveShortcut",
+            "type": "string",
+            "format": "--removeShortcut={value}",
+            "help": "Remove a shortcut for the given executable name."
+          },
+          {
+            "name": "UpdateSelf",
+            "type": "string",
+            "format": "--updateSelf={value}",
+            "help": "Copy the currently executing Update.exe into the default location."
+          },
+          {
+            "name": "ProcessStart",
+            "type": "string",
+            "format": "--processStart={value}",
+            "help": "Start an executable in the latest version of the app package."
+          },
+          {
+            "name": "ProcessStartAndWait",
+            "type": "string",
+            "format": "--processStartAndWait={value}",
+            "help": "Start an executable in the latest version of the app package."
+          },
+          {
+            "name": "ReleaseDirectory",
+            "type": "string",
+            "format": "--releaseDir={value}",
+            "help": "Path to a release directory to use with releasify."
+          },
+          {
+            "name": "PackagesDirectory",
+            "type": "string",
+            "format": "--packagesDir={value}",
+            "help": "Path to the NuGet Packages directory for C# apps."
+          },
+          {
+            "name": "BootstrapperExecutable",
+            "type": "string",
+            "assertion": "FileOrNull",
+            "format": "--bootstrapperExe={value}",
+            "help": "Path to the Setup.exe to use as a template."
+          },
+          {
+            "name": "LoadingGif",
+            "type": "string",
+            "assertion": "FileOrNull",
+            "format": "--loadingGif={value}",
+            "help": "Path to an animated GIF to be displayed during installation."
+          },
+          {
+            "name": "Icon",
+            "type": "string",
+            "assertion": "FileOrNull",
+            "format": "--icon={value}",
+            "help": "Path to an ICO file that will be used for icon shortcuts."
+          },
+          {
+            "name": "SetupIcon",
+            "type": "string",
+            "assertion": "FileOrNull",
+            "format": "--setupIcon={value}",
+            "help": "Path to an ICO file that will be used for the Setup executable's icon."
+          },
+          {
+            "name": "SignWithParameters",
+            "type": "string",
+            "format": "--signWithParams={value}",
+            "help": "Sign the installer via SignTool.exe with the parameters given."
+          },
+          {
+            "name": "BaseUrl",
+            "type": "string",
+            "format": "--baseUrl={value}",
+            "help": "Provides a base URL to prefix the RELEASES file packages with."
+          },
+          {
+            "name": "ProcessStartArguments",
+            "type": "string",
+            "format": "--process-start-args={value}",
+            "help": "Arguments that will be used when starting executable."
+          },
+          {
+            "name": "ShortcutLocations",
+            "type": "List<string>",
+            "format": "--shortcut-locations={value}",
+            "separator": ",",
+            "help": "Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'."
+          },
+          {
+            "name": "GenerateNoMsi",
+            "type": "bool",
+            "format": "--no-msi",
+            "help": "Don't generate an MSI package."
+          },
+          {
+            "name": "GenerateNoDelta",
+            "type": "bool",
+            "format": "--no-delta",
+            "help": "Don't generate delta packages to save time"
+          },
+          {
+            "name": "FrameworkVersion",
+            "type": "string",
+            "format": "--framework-version={value}",
+            "help": "Set the required .NET framework version, e.g. net461"
+          }
+        ]
+      }
+    }
+  ]
+}

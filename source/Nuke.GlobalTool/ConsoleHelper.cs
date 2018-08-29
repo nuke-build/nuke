@@ -1,4 +1,4 @@
-// Copyright Matthias Koch, Sebastian Karasek 2018.
+// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
 using Nuke.Common;
-using Console=Colorful.Console;
+using Console = Colorful.Console;
 
 namespace Nuke.GlobalTool
 {

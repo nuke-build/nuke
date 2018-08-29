@@ -1,4 +1,4 @@
-// Copyright Matthias Koch, Sebastian Karasek 2018.
+// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -149,7 +149,7 @@ namespace Nuke.Common.Tooling
             {
                 if (e.Data == null)
                     return;
-                
+
                 output.Add(new Output { Text = e.Data, Type = OutputType.Std });
 
                 if (logOutput)
@@ -177,13 +177,13 @@ namespace Nuke.Common.Tooling
             {
                 if (e.Data == null)
                     return;
-                
+
                 output.Add(new Output { Text = e.Data, Type = OutputType.Err });
-                
+
                 if (logOutput)
                     Logger.Error(outputFilter(e.Data));
             };
-            
+
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
 

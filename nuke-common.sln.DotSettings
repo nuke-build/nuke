@@ -5,14 +5,14 @@
 	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=MissingXmlDoc/@EntryIndexedValue">DO_NOT_SHOW</s:String>
 	<s:Boolean x:Key="/Default/CodeInspection/ImplicitNullability/Enabled/@EntryValue">True</s:Boolean>
 	<s:String x:Key="/Default/CodeInspection/XmlDocInspections/TypeMemberAccessibility/@EntryValue">Public</s:String>
-	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">Copyright Matthias Koch, Sebastian Karasek $CURRENT_YEAR$.&#xD;
+	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">Copyright $CURRENT_YEAR$ Maintainers of NUKE.&#xD;
 Distributed under the MIT License.&#xD;
 https://github.com/nuke-build/nuke/blob/master/LICENSE</s:String>
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=971D2D0D6A22C84E9A514D1166017346/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=971D2D0D6A22C84E9A514D1166017346/AbsolutePath/@EntryValue">C:\code\nuke-build\nuke\shared\Inspections.DotSettings</s:String>
-	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=971D2D0D6A22C84E9A514D1166017346/RelativePath/@EntryValue">..\shared\Inspections.DotSettings</s:String>
+	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=971D2D0D6A22C84E9A514D1166017346/RelativePath/@EntryValue">..\source\Inspections.DotSettings</s:String>
 	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=A68CFA51EFE4364DA61BFD270E021A11/AbsolutePath/@EntryValue">C:\code\nuke-build\nuke\shared\CodeStyle.DotSettings</s:String>
-	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=A68CFA51EFE4364DA61BFD270E021A11/RelativePath/@EntryValue">..\shared\CodeStyle.DotSettings</s:String>
+	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=A68CFA51EFE4364DA61BFD270E021A11/RelativePath/@EntryValue">..\source\CodeStyle.DotSettings</s:String>
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=A68CFA51EFE4364DA61BFD270E021A11/@KeyIndexDefined">True</s:Boolean>
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File971D2D0D6A22C84E9A514D1166017346/@KeyIndexDefined">True</s:Boolean>
 	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File971D2D0D6A22C84E9A514D1166017346/RelativePriority/@EntryValue">2</s:Double>

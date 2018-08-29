@@ -1,4 +1,4 @@
-// Copyright Matthias Koch, Sebastian Karasek 2018.
+// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -131,7 +131,7 @@ namespace Nuke.Common.Execution
             {
                 var shouldSplit = hadLower && char.IsUpper(c);
                 hadLower = char.IsLower(c) && !shouldSplit;
-                
+
                 return shouldSplit;
             }).Join("-");
 
@@ -272,17 +272,17 @@ namespace Nuke.Common.Execution
 
         private int GetLevenshteinDistance(string a, string b)
         {
-            if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b)) 
+            if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b))
                 return 0;
 
             var lengthA = a.Length;
             var lengthB = b.Length;
             var distances = new int[lengthA + 1, lengthB + 1];
-            
+
             for (var i = 0; i <= lengthA; distances[i, 0] = i++)
             {
             }
-            
+
             for (var j = 0; j <= lengthB; distances[0, j] = j++)
             {
             }

@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
+﻿// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -50,21 +50,21 @@ namespace Nuke.Common.Execution
             IDictionary<TargetDefinition, List<TargetDefinition>> skipRequestDictionary = null)
         {
             skipRequestDictionary = skipRequestDictionary ?? new Dictionary<TargetDefinition, List<TargetDefinition>>();
-            
+
             targetDefinition.Skip = true;
             foreach (var dependency in targetDefinition.TargetDefinitionDependencies)
             {
                 if (invokedTargets.Contains(dependency))
                     continue;
-                
+
                 var skipRequests = skipRequestDictionary.GetValueOrDefault(dependency);
                 if (skipRequests == null)
                     skipRequests = skipRequestDictionary[dependency] = new List<TargetDefinition>();
-                
+
                 var executingDependentTargets = executingTargets
                     .Where(x => x != targetDefinition)
                     .Where(x => x.TargetDefinitionDependencies.Contains(dependency) && !skipRequests.Contains(x));
-                
+
                 if (executingDependentTargets.Any())
                     skipRequests.Add(targetDefinition);
                 else
