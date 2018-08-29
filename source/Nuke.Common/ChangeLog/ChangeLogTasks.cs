@@ -94,7 +94,7 @@ namespace Nuke.Common.ChangeLog
                 .Take(section.EndIndex - section.StartIndex);
         }
 
-        public static void FinalizeChangelog(string changelogFile, string tag, GitRepository repository = null)
+        public static void FinalizeChangelog(string changelogFile, string tag, [CanBeNull] GitRepository repository = null)
         {
             Logger.Info($"Finalizing {PathConstruction.GetRootRelativePath(changelogFile)} for '{tag}'...");
 
@@ -113,7 +113,7 @@ namespace Nuke.Common.ChangeLog
             content.Insert(firstSection.StartIndex + 1, string.Empty);
             content.Insert(firstSection.StartIndex + 2, $"## [{tag}] / {DateTime.Now:yyyy-MM-dd}");
 
-            if (repository.IsGitHubRepository())
+            if (repository != null && repository.IsGitHubRepository())
             {
                 sections = GetReleaseSections(content).ToList();
                 firstSection = sections.First();
