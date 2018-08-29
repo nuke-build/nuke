@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [0.7.0] / 2018-08-29
 - Changed assertion of `DataClass` properties print our value on failure
 - Added `SquirrelTasks`
 - Added `UnityTasks`
@@ -124,7 +126,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.6.2...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.7.0...HEAD
+[0.7.0]: https://github.com/nuke-build/nuke/compare/0.6.2...0.7.0
 [0.6.2]: https://github.com/nuke-build/nuke/compare/0.6.1...0.6.2
 [0.6.1]: https://github.com/nuke-build/nuke/compare/0.6.0...0.6.1
 [0.6.0]: https://github.com/nuke-build/nuke/compare/0.5.3...0.6.0
