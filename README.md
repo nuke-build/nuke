@@ -9,7 +9,7 @@
 - Extensive wizard for setup of initial build implementation
 - Bootstrapping for .NET Core and .NET Framework/Mono
 - CLT wrappers for over 30+ of the most popular .NET tools
-- Extensions for [ReSharper](https://resharper-plugins.jetbrains.com/packages/ReSharper.Nuke/) and [Rider](https://plugins.jetbrains.com/plugin/10803-nuke-support) for improved build experience
+- Extensions for [ReSharper](https://resharper-plugins.jetbrains.com/packages/ReSharper.Nuke/), [Rider](https://plugins.jetbrains.com/plugin/10803-nuke-support) and [VS Code](https://marketplace.visualstudio.com/items?itemName=nuke.support) for improved build experience
 
 ## :mortar_board: Getting Started
 
