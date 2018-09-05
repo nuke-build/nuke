@@ -66,7 +66,7 @@ namespace Nuke.Common.Tooling
 
             outputArguments = outputArguments ?? (outputFilter == null ? executionArguments : outputFilter(executionArguments));
             ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
-            Logger.Info($"> {Path.GetFullPath(toolPath).DoubleQuoteIfNeeded()} {outputArguments ?? executionArguments}");
+            Logger.Info($"> {Path.GetFullPath(toolPath).DoubleQuoteIfNeeded()} {outputArguments}");
 
             return StartProcessInternal(toolPath,
                 executionArguments,
