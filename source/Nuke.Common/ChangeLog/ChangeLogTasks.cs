@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
@@ -16,18 +15,23 @@ using Nuke.Common.Utilities;
 // ReSharper disable ArgumentsStyleLiteral
 namespace Nuke.Common.ChangeLog
 {
-
+    [PublicAPI]
     public static class ChangelogTasks
     {
+        /// <summary>
+        /// Reads the release notes from the given changelog file and returns the result.
+        /// </summary>
+        /// <param name="changelogFile">The path to the changelog file.</param>
+        /// <returns>A readonly list of the release sections contained in the changelog.</returns>
         [Pure]
         public static IReadOnlyList<ReleaseNotes> ReadReleaseNotes(string changelogFile)
         {
             var lines = TextTasks.ReadAllLines(changelogFile).ToList();
             var releaseSections = GetReleaseSections(lines).ToList();
-            
+
             ControlFlow.Assert(releaseSections.Any(), "Changelog should have at least one release note section");
             return releaseSections.Select(Parse).ToList().AsReadOnly();
-            
+
             ReleaseNotes Parse(ReleaseSection section)
             {
                 var releaseNotes = lines
@@ -35,13 +39,18 @@ namespace Nuke.Common.ChangeLog
                     .Take(section.EndIndex - section.StartIndex)
                     .ToList()
                     .AsReadOnly();
-                
+
                 return NuGetVersion.TryParse(section.Caption, out var version)
                     ? new ReleaseNotes(version, releaseNotes, section.StartIndex, section.EndIndex)
                     : new ReleaseNotes(releaseNotes, section.StartIndex, section.EndIndex);
             }
         }
 
+        /// <summary>
+        /// Reads the specified changelog.
+        /// </summary>
+        /// <param name="changelogFile">The path to the changelog file.</param>
+        /// <returns>A <see cref="ChangeLog"/> object to work with the changelog.</returns>
         [Pure]
         public static ChangeLog ReadChangelog(string changelogFile)
         {
@@ -53,47 +62,53 @@ namespace Nuke.Common.ChangeLog
                 ControlFlow.Assert(unreleased.Length == 1, "Changelog should have only one draft section.");
                 return new ChangeLog(changelogFile, unreleased.First(), releaseNotes);
             }
+
             ControlFlow.Assert(releaseNotes.Count(x => !x.Unreleased) >= 1, "Changelog should have at lease one released version section.");
             return new ChangeLog(changelogFile, releaseNotes);
         }
-        
-        public static void FinalizeChangelog(ChangeLog changeLogFile, NuGetVersion tag)
-        {
-            Logger.Info($"Finalizing {PathConstruction.GetRootRelativePath(changeLogFile.Path)} for '{tag}'...");
 
-            var unreleasedNotes = changeLogFile.Unreleased;
-            var releaseNotes = changeLogFile.ReleaseNotes;
-            var lastReleased = changeLogFile.LatestVersion;
+        /// <summary>
+        /// Finalizes the changelog by moving all entries from `[vNext]` to the version specified by release.
+        /// <p>If <paramref name="repository"/> is specified a summary with all versions and links to list the changes directly on GitHub is appended to the end of the changelog.</p>
+        /// </summary>
+        /// <param name="changelogFile">The path to the changelog file.</param>
+        /// <param name="tag">The <see cref="NuGetVersion"/> to finalize the changelog.</param>
+        /// <param name="repository">The repository to create the version overview for.</param>
+        /// <seealso cref="FinalizeChangelog(ChangeLog,NuGetVersion,GitRepository)"/>
+        public static void FinalizeChangelog(ChangeLog changelogFile, NuGetVersion tag, [CanBeNull] GitRepository repository = null)
+        {
+            Logger.Info($"Finalizing {PathConstruction.GetRootRelativePath(changelogFile.Path)} for '{tag}'...");
+
+            var unreleasedNotes = changelogFile.Unreleased;
+            var releaseNotes = changelogFile.ReleaseNotes;
+            var lastReleased = changelogFile.LatestVersion;
 
             ControlFlow.Assert(unreleasedNotes != null, "Changelog should have draft section.");
             ControlFlow.Assert(releaseNotes.Any(x => x.Version != null && x.Version.Equals(tag)), $"Tag '{tag}' already exists.");
-            ControlFlow.Assert(tag.CompareTo(lastReleased.Version) > 0, $"Tag '{tag}' is not greater compared to last tag '{lastReleased.Version}'.");
+            ControlFlow.Assert(lastReleased != null && tag.CompareTo(lastReleased.Version) > 0, $"Tag '{tag}' is not greater compared to last tag '{lastReleased.NotNull().Version}'.");
 
-            var path = changeLogFile.Path;
-            
+            var path = changelogFile.Path;
+
             var content = TextTasks.ReadAllLines(path).ToList();
-            
+
             content.Insert(unreleasedNotes.StartIndex + 1, string.Empty);
             content.Insert(unreleasedNotes.EndIndex + 2, $"## [{tag}] / {DateTime.Now:yyyy-MM-dd}");
+
+            UpdateVersionSummary(tag.ToString(), content, repository);
+
             content.Add(string.Empty);
 
             TextTasks.WriteAllLines(path, content);
         }
-        
-        [Pure]
-        public static IEnumerable<string> ExtractChangelogSectionNotes(string changelogFile, string tag = null)
-        {
-            var content = TextTasks.ReadAllLines(changelogFile).ToList();
-            var sections = GetReleaseSections(content);
-            var section = tag == null
-                ? sections.First(x => x.StartIndex < x.EndIndex)
-                : sections.First(x => x.Caption.EqualsOrdinalIgnoreCase(tag)).NotNull($"Could not find release section for '{tag}'.");
 
-            return content
-                .Skip(section.StartIndex + 1)
-                .Take(section.EndIndex - section.StartIndex);
-        }
-
+        /// <summary>
+        /// Finalizes the changelog by moving all entries from `[vNext]` to the version specified by release.
+        /// <p>If <paramref name="repository"/> is specified a summary with all versions and links to list the changes directly on GitHub is appended to the end of the changelog.</p>
+        /// </summary>
+        /// <param name="changelogFile">The path to the changelog file.</param>
+        /// <param name="tag">The version to finalize the changelog.</param>
+        /// <param name="repository">The repository to create the version overview for.</param>
+        /// <seealso cref="FinalizeChangelog(ChangeLog,NuGetVersion,GitRepository)"/>
         public static void FinalizeChangelog(string changelogFile, string tag, [CanBeNull] GitRepository repository = null)
         {
             Logger.Info($"Finalizing {PathConstruction.GetRootRelativePath(changelogFile)} for '{tag}'...");
@@ -113,24 +128,31 @@ namespace Nuke.Common.ChangeLog
             content.Insert(firstSection.StartIndex + 1, string.Empty);
             content.Insert(firstSection.StartIndex + 2, $"## [{tag}] / {DateTime.Now:yyyy-MM-dd}");
 
-            if (repository != null && repository.IsGitHubRepository())
-            {
-                sections = GetReleaseSections(content).ToList();
-                firstSection = sections.First();
-                var lastSection = sections.Last();
-
-                content.RemoveRange(lastSection.EndIndex + 1, content.Count - lastSection.EndIndex - 1);
-
-                content.Add(string.Empty);
-                content.Add($"[{firstSection.Caption}]: {repository}/compare/{tag}...HEAD");
-                for (var i = 1; i + 1 < sections.Count; i++)
-                    content.Add($"[{sections[i].Caption}]: {repository}/compare/{sections[i + 1].Caption}...{sections[i].Caption}");
-                content.Add($"[{lastSection.Caption}]: {repository}/tree/{lastSection.Caption}");
-            }
+            UpdateVersionSummary(tag, content, repository);
 
             content.Add(string.Empty);
 
             TextTasks.WriteAllLines(changelogFile, content);
+        }
+
+        /// <summary>
+        /// Extracts the notes of the specified changelog section.
+        /// </summary>
+        /// <param name="changelogFile">The path to the changelog file.</param>
+        /// <param name="tag">The tag which release notes should get extracted.</param>
+        /// <returns>A collection of the release notes.</returns>
+        [Pure]
+        public static IEnumerable<string> ExtractChangelogSectionNotes(string changelogFile, string tag = null)
+        {
+            var content = TextTasks.ReadAllLines(changelogFile).ToList();
+            var sections = GetReleaseSections(content);
+            var section = tag == null
+                ? sections.First(x => x.StartIndex < x.EndIndex)
+                : sections.First(x => x.Caption.EqualsOrdinalIgnoreCase(tag)).NotNull($"Could not find release section for '{tag}'.");
+
+            return content
+                .Skip(section.StartIndex + 1)
+                .Take(section.EndIndex - section.StartIndex);
         }
 
         private static IEnumerable<ReleaseSection> GetReleaseSections(List<string> content)
@@ -186,6 +208,24 @@ namespace Nuke.Common.ChangeLog
                 Logger.Trace($"Found section '{caption}' [{index}-{releaseData.EndIndex}].");
 
                 index = releaseData.EndIndex + 1;
+            }
+        }
+
+        private static void UpdateVersionSummary(string tag, List<string> content, [CanBeNull] GitRepository repository)
+        {
+            if (repository != null && repository.IsGitHubRepository())
+            {
+                var sections = GetReleaseSections(content).ToList();
+                var firstSection = sections.First();
+                var lastSection = sections.Last();
+
+                content.RemoveRange(lastSection.EndIndex + 1, content.Count - lastSection.EndIndex - 1);
+
+                content.Add(string.Empty);
+                content.Add($"[{firstSection.Caption}]: {repository}/compare/{tag}...HEAD");
+                for (var i = 1; i + 1 < sections.Count; i++)
+                    content.Add($"[{sections[i].Caption}]: {repository}/compare/{sections[i + 1].Caption}...{sections[i].Caption}");
+                content.Add($"[{lastSection.Caption}]: {repository}/tree/{lastSection.Caption}");
             }
         }
 
