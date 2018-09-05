@@ -104,11 +104,18 @@ namespace Nuke.MSBuildLocator
 
                 string GetValue(string identifier)
                 {
-                    var line = lines.Single(x => x.StartsWith(identifier));
-                    return line.Substring(identifier.Length).TrimStart(':', ' ');
+                    var line = lines.SingleOrDefault(x => x.StartsWith(identifier));
+                    return line?.Substring(identifier.Length).TrimStart(':', ' ');
                 }
 
-                return new VSWhereInstallation(GetValue("installationPath"), GetValue("installationVersion"));
+                var instPath = GetValue("installationPath");
+                var instVersion = GetValue("installationVersion");
+
+                if (instPath == null || instVersion == null)
+                {
+                    return null;
+                }
+                return new VSWhereInstallation(instPath, instVersion);
             }
 
             private string GetProcessOutput(string arguments)
