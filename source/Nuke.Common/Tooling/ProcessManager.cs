@@ -58,9 +58,9 @@ namespace Nuke.Common.Tooling
 
             if (!string.IsNullOrEmpty(toolPathOverride))
             {
-                toolPath = toolPathOverride;
                 executionArguments = $"{toolPath.DoubleQuoteIfNeeded()} {executionArguments}".TrimEnd();
                 outputArguments = $"{toolPath.DoubleQuoteIfNeeded()} {outputArguments}".TrimEnd();
+                toolPath = toolPathOverride;
             }
 #endif
 
