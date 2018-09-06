@@ -111,13 +111,12 @@ namespace Nuke.MSBuildLocator
                     return value != null;
                 }
 
-                if (TryGetSingleValue("installationPath", out string instPath)
-                    && TryGetSingleValue("installationVersion", out string instVersion))
+                if (!TryGetSingleValue("installationPath", out string instPath)
+                    || !TryGetSingleValue("installationVersion", out string instVersion))
                 {
-                    return new VSWhereInstallation(instPath, instVersion);
+                    return null;
                 }
-
-                return null;
+                return new VSWhereInstallation(instPath, instVersion);
             }
 
             private string GetProcessOutput(string arguments)
