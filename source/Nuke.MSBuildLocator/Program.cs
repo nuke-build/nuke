@@ -99,23 +99,25 @@ namespace Nuke.MSBuildLocator
 
                 var output = GetProcessOutput(arguments.ToString());
                 var lines = output.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-                if (lines.Length == 0)
-                    return null;
+                var lookup = (from line in lines
+                        let parts = line.Split(new[] { ':' }, 2) // allow values to contain ':'
+                        where parts.Length == 2 // only lines with key: value
+                        select (Key: parts[0], Value: parts[1].TrimStart(' ')))
+                    .ToLookup(_ => _.Key, _ => _.Value);
 
-                string GetValue(string identifier)
+                bool TryGetSingleValue(string identifier, out string value)
                 {
-                    var line = lines.SingleOrDefault(x => x.StartsWith(identifier));
-                    return line?.Substring(identifier.Length).TrimStart(':', ' ');
+                    value = lookup[identifier].SingleOrDefault();
+                    return value != null;
                 }
 
-                var instPath = GetValue("installationPath");
-                var instVersion = GetValue("installationVersion");
-
-                if (instPath == null || instVersion == null)
+                if (TryGetSingleValue("installationPath", out string instPath)
+                    && TryGetSingleValue("installationVersion", out string instVersion))
                 {
-                    return null;
+                    return new VSWhereInstallation(instPath, instVersion);
                 }
-                return new VSWhereInstallation(instPath, instVersion);
+
+                return null;
             }
 
             private string GetProcessOutput(string arguments)
