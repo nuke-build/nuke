@@ -29,6 +29,7 @@ namespace Nuke.Common.Tooling
         {
             return ProcessManager.Instance.StartProcess(toolPath,
                 arguments,
+                outputArguments: null,
                 workingDirectory,
                 environmentVariables,
                 timeout,

@@ -18,7 +18,8 @@ namespace Nuke.Common.Tooling
         [CanBeNull]
         IProcess StartProcess(
             string toolPath,
-            string arguments = null,
+            string executionArguments = null,
+            string outputArguments = null,
             string workingDirectory = null,
             IReadOnlyDictionary<string, string> environmentVariables = null,
             int? timeout = null,
