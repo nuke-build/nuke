@@ -11,8 +11,8 @@
 
   <ItemGroup>
     <PackageReference Include="Nuke.Common" Version="_NUKE_VERSION_" />
-    <PackageReference Include="Nuke.CodeGeneration" Version="_NUKE_VERSION_" />               // CODE_GENERATION
-    <PackageReference Include="GitVersion.CommandLine" Version="3.6.5" />
+    <PackageReference Include="Nuke.CodeGeneration" Version="_NUKE_VERSION_" />               // GENERATION
+    <PackageReference Include="GitVersion.CommandLine" Version="3.6.5" />                     // GITVERSION
   </ItemGroup>
 
   <ItemGroup>

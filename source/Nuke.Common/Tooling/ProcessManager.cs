@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -20,27 +21,11 @@ namespace Nuke.Common.Tooling
 
         public virtual IProcess StartProcess(ToolSettings toolSettings)
         {
-            var toolPath = toolSettings.ToolPath;
             var arguments = toolSettings.GetArguments();
-            var argumentsForExecution = arguments.RenderForExecution();
-            var argumentsForOutput = arguments.RenderForOutput();
 
-#if NETCORE
-            if (EnvironmentInfo.IsUnix && toolPath.EndsWithOrdinalIgnoreCase(".exe"))
-            {
-                argumentsForExecution = $"{toolPath.DoubleQuoteIfNeeded()} {argumentsForExecution}".TrimEnd();
-                argumentsForOutput = $"{toolPath.DoubleQuoteIfNeeded()} {argumentsForOutput}".TrimEnd();
-                toolPath = ToolPathResolver.GetPathExecutable("mono");
-            }
-#endif
-
-            ControlFlow.Assert(toolPath != null, "ToolPath was not set.");
-            ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
-            Logger.Info($"> {Path.GetFullPath(toolPath).DoubleQuoteIfNeeded()} {argumentsForOutput}");
-
-            return StartProcessInternal(
-                toolPath,
-                argumentsForExecution,
+            return StartProcess(toolSettings.ToolPath,
+                arguments.RenderForExecution(),
+                arguments.RenderForOutput(),
                 toolSettings.WorkingDirectory,
                 toolSettings.EnvironmentVariables,
                 toolSettings.ExecutionTimeout,
@@ -51,7 +36,8 @@ namespace Nuke.Common.Tooling
 
         public virtual IProcess StartProcess(
             string toolPath,
-            string arguments = null,
+            string executionArguments = null,
+            string outputArguments = null,
             string workingDirectory = null,
             IReadOnlyDictionary<string, string> environmentVariables = null,
             int? timeout = null,
@@ -64,18 +50,26 @@ namespace Nuke.Common.Tooling
                 toolPath = ToolPathResolver.GetPathExecutable(toolPath);
 
 #if NETCORE
-            if (EnvironmentInfo.IsUnix && toolPath.EndsWithOrdinalIgnoreCase(".exe"))
+            string toolPathOverride = null;
+            if (toolPath.EndsWith(".dll"))
+                toolPathOverride = DotNetTasks.GetToolPath();
+            else if (EnvironmentInfo.IsUnix && toolPath.EndsWithOrdinalIgnoreCase(".exe"))
+                toolPathOverride = ToolPathResolver.GetPathExecutable("mono");
+
+            if (!string.IsNullOrEmpty(toolPathOverride))
             {
-                arguments = $"{toolPath.DoubleQuoteIfNeeded()} {arguments}".TrimEnd();
-                toolPath = ToolPathResolver.GetPathExecutable("mono");
+                executionArguments = $"{toolPath.DoubleQuoteIfNeeded()} {executionArguments}".TrimEnd();
+                outputArguments = $"{toolPath.DoubleQuoteIfNeeded()} {outputArguments}".TrimEnd();
+                toolPath = toolPathOverride;
             }
 #endif
 
+            outputArguments = outputArguments ?? (outputFilter == null ? executionArguments : outputFilter(executionArguments));
             ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
-            Logger.Info($"> {Path.GetFullPath(toolPath).DoubleQuoteIfNeeded()} {arguments}");
+            Logger.Info($"> {Path.GetFullPath(toolPath).DoubleQuoteIfNeeded()} {outputArguments}");
 
             return StartProcessInternal(toolPath,
-                arguments,
+                executionArguments,
                 workingDirectory,
                 environmentVariables,
                 timeout,
