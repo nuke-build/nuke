@@ -16,9 +16,9 @@ namespace Nuke.GlobalTool
     {
         private static int BufferWidth => EnvironmentInfo.IsWin ? Console.BufferWidth - 1 : Console.BufferWidth;
 
-        private static string AcceptDefault => $"{(EnvironmentInfo.IsWin ? "enter" : "\u23CE")} for default";
-        private static string Confirmed => EnvironmentInfo.IsWin ? "\u2665" : "\u2714";
-        private static string Selected => EnvironmentInfo.IsWin ? "\u25BA" : "\u279C";
+        private static string EnterForDefault => "[enter for default]";
+        private static string Confirmed => "¬";
+        private static string Selected => "»";
         private static string Unselected => " ";
 
         private const ConsoleKey c_confirmationKey = ConsoleKey.Enter;
@@ -49,7 +49,7 @@ namespace Nuke.GlobalTool
                 }
                 else if (defaultValue != null)
                 {
-                    Console.Write(defaultValue.PadRight(totalWidth: 15) + $" {AcceptDefault} for default", Color.DarkGray);
+                    Console.Write($"{defaultValue.PadRight(totalWidth: 15)}   {EnterForDefault}", Color.DarkGray);
                     Console.CursorLeft = 3;
                 }
 
