@@ -70,7 +70,7 @@ namespace Nuke.MSBuildLocator
                 bool legacy)
             {
                 var installation = GetVSWhereInstallation(products, requires, legacy);
-                if (installation.Path == null || installation.Version == null)
+                if (installation == null)
                     return null;
 
                 var msbuildPath = Path.Combine(
@@ -84,6 +84,7 @@ namespace Nuke.MSBuildLocator
                 return msbuildPath;
             }
 
+            [CanBeNull]
             private VSWhereInstallation GetVSWhereInstallation(
                 [CanBeNull] string products,
                 [CanBeNull] IReadOnlyCollection<string> requires,
@@ -99,16 +100,24 @@ namespace Nuke.MSBuildLocator
 
                 var output = GetProcessOutput(arguments.ToString());
                 var lines = output.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-                if (lines.Length == 0)
-                    return null;
 
-                string GetValue(string identifier)
+                var lookup = lines
+                    .Select(x => x.Split(new[] { ':' }, count: 2))
+                    .Where(x => x.Length == 2)
+                    .Select(x => new KeyValuePair<string, string>(x[0], x[1].TrimStart()))
+                    .ToLookup(x => x.Key, x => x.Value);
+
+                bool TryGetSingleValue(string identifier, out string value)
                 {
-                    var line = lines.Single(x => x.StartsWith(identifier));
-                    return line.Substring(identifier.Length).TrimStart(':', ' ');
+                    value = lookup[identifier].SingleOrDefault();
+                    return value != null;
                 }
 
-                return new VSWhereInstallation(GetValue("installationPath"), GetValue("installationVersion"));
+                if (TryGetSingleValue("installationPath", out var installationPath)
+                    && TryGetSingleValue("installationVersion", out var installationVersion))
+                    return new VSWhereInstallation(installationPath, installationVersion);
+
+                return null;
             }
 
             private string GetProcessOutput(string arguments)
