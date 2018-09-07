@@ -70,7 +70,7 @@ namespace Nuke.MSBuildLocator
                 bool legacy)
             {
                 var installation = GetVSWhereInstallation(products, requires, legacy);
-                if (installation.Path == null || installation.Version == null)
+                if (installation == null)
                     return null;
 
                 var msbuildPath = Path.Combine(
@@ -84,6 +84,7 @@ namespace Nuke.MSBuildLocator
                 return msbuildPath;
             }
 
+            [CanBeNull]
             private VSWhereInstallation GetVSWhereInstallation(
                 [CanBeNull] string products,
                 [CanBeNull] IReadOnlyCollection<string> requires,
@@ -99,11 +100,12 @@ namespace Nuke.MSBuildLocator
 
                 var output = GetProcessOutput(arguments.ToString());
                 var lines = output.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-                var lookup = (from line in lines
-                        let parts = line.Split(new[] { ':' }, 2) // allow values to contain ':'
-                        where parts.Length == 2 // only lines with key: value
-                        select (Key: parts[0], Value: parts[1].TrimStart(' ')))
-                    .ToLookup(_ => _.Key, _ => _.Value);
+
+                var lookup = lines
+                    .Select(x => x.Split(new[] { ':' }, count: 2))
+                    .Where(x => x.Length == 2)
+                    .Select(x => new KeyValuePair<string, string>(x[0], x[1].TrimStart()))
+                    .ToLookup(x => x.Key, x => x.Value);
 
                 bool TryGetSingleValue(string identifier, out string value)
                 {
@@ -111,11 +113,9 @@ namespace Nuke.MSBuildLocator
                     return value != null;
                 }
 
-                if (TryGetSingleValue("installationPath", out string instPath)
-                    && TryGetSingleValue("installationVersion", out string instVersion))
-                {
-                    return new VSWhereInstallation(instPath, instVersion);
-                }
+                if (TryGetSingleValue("installationPath", out var installationPath)
+                    && TryGetSingleValue("installationVersion", out var installationVersion))
+                    return new VSWhereInstallation(installationPath, installationVersion);
 
                 return null;
             }
