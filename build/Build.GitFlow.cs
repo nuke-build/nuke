@@ -16,7 +16,7 @@ using static Nuke.Common.Tools.GitVersion.GitVersionTasks;
 partial class Build
 {
     Target Changelog => _ => _
-        .Requires(() => GitRepository.Branch.StartsWith("release") ||
+        .OnlyWhen(() => GitRepository.Branch.NotNull().StartsWith("release") ||
                         GitRepository.Branch.StartsWith("hotfix"))
         .Executes(() =>
         {
