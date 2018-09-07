@@ -5,7 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Changed `ProcessTasks` to automatically invoke .NET Core DLLs with `dotnet.exe`
+- Added `CoverletTask`
 - Fixed exception in `ChangelogTasks.ReadChangelog` when `vNext` section was empty
+- Fixed console output to use ASCII instead of Unicode
+- Fixed `MSBuildLocator` to use fallbacks when no VS instance with .NET Core is installed
 
 ## [0.7.0] / 2018-08-29
 - Changed assertion of `DataClass` properties print out value on failure
