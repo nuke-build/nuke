@@ -1,0 +1,111 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "license": [
+    "Copyright 2018 Maintainers of NUKE.",
+    "Distributed under the MIT License.",
+    "https://github.com/nuke-build/tools/blob/master/LICENSE"
+  ],
+  "references": [
+    "https://raw.githubusercontent.com/tonerdo/coverlet/master/README.md#global-tool"
+  ],
+  "name": "Coverlet",
+  "officialUrl": "https://github.com/tonerdo/coverlet/",
+  "help": "<c>Coverlet</c> is a cross platform code coverage library for .NET Core, with support for line, branch and method coverage.The <c>dotnet test</c> command is used to execute unit tests in a given project. Unit tests are console application projects that have dependencies on the unit test framework (for example, MSTest, NUnit, or xUnit) and the dotnet test runner for the unit testing framework. These are packaged as NuGet packages and are restored as ordinary dependencies for the project.",
+  "packageId": "coverlet.console",
+  "packageExecutable": "coverlet.console.dll",
+  "tasks": [
+    {
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Assembly",
+            "type": "string",
+            "format": "{value}",
+            "help": "Path to the test assembly."
+          },
+          {
+            "name": "Target",
+            "type": "string",
+            "format": "--target {value}",
+            "help": "Path to the test runner application."
+          },
+          {
+            "name": "TargetArgs",
+            "type": "List<string>",
+            "format": "--targetargs {value}",
+            "separator": " ",
+            "quoteMultiple": true,
+            "help": "Arguments to be passed to the test runner."
+          },
+          {
+            "name": "Output",
+            "type": "string",
+            "format": "--output {value}",
+            "help": "Output of the generated coverage report"
+          },
+          {
+            "name": "Format",
+            "type": "List<CoverletOutputFormat>",
+            "format": "--format {value}",
+            "help": "Format of the generated coverage report.Can be specified multiple times to output multiple formats in a single run."
+          },
+          {
+            "name": "Threshold",
+            "type": "int",
+            "format": "--threshold {value}",
+            "help": "Exits with error if the coverage % is below value."
+          },
+          {
+            "name": "ThresholdType",
+            "type": "CoverletThresholdType",
+            "format": "--threshold-type {value}",
+            "help": "Coverage type to apply the threshold to."
+          },
+          {
+            "name": "Exclude",
+            "type": "List<string>",
+            "format": "--exclude {value}",
+            "help": "Filter expressions to exclude specific modules and types."
+          },
+          {
+            "name": "Include",
+            "type": "List<string>",
+            "format": "--include {value}",
+            "help": "Filter expressions to include specific modules and types."
+          },
+          {
+            "name": "ExcludeByFile",
+            "type": "List<string>",
+            "format": "--exclude-by-file {value}",
+            "help": "Glob patterns specifying source files to exclude."
+          },
+          {
+            "name": "Version",
+            "type": "bool",
+            "format": "--version",
+            "help": "Show version information."
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "CoverletOutputFormat",
+      "values": [
+        "json",
+        "Icov",
+        "opencover",
+        "cobertura"
+      ]
+    },
+    {
+      "name": "CoverletThresholdType",
+      "values": [
+        "line",
+        "branch",
+        "method"
+      ]
+    }
+  ]
+}
