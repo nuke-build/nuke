@@ -21,8 +21,6 @@ namespace Nuke.Common.OutputSinks
         void Warn(string text, string details = null);
         void Error(string text, string details = null);
         void Success(string text);
-
-        void WriteSummary(IReadOnlyCollection<TargetDefinition> executionList);
     }
 
     [ExcludeFromCodeCoverage]
@@ -95,33 +93,29 @@ namespace Nuke.Common.OutputSinks
             Instance.Success(text);
         }
 
-        public static void WriteSummary(IReadOnlyCollection<TargetDefinition> executionList)
+        public static void RepeatWarningsAndErrors()
         {
-            Write(string.Empty);
+            if (s_severeMessages.Count <= 0)
+                return;
+            
+            Write("Repeating warnings and errors:");
 
-            if (s_severeMessages.Count > 0)
+            foreach (var severeMessage in s_severeMessages)
             {
-                Write("Repeating warnings and errors:");
-
-                foreach (var severeMessage in s_severeMessages)
+                switch (severeMessage.Item1)
                 {
-                    switch (severeMessage.Item1)
-                    {
-                        case LogLevel.Warning:
-                            Instance.Warn(severeMessage.Item2);
-                            break;
-                        case LogLevel.Error:
-                            Instance.Error(severeMessage.Item2);
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
+                    case LogLevel.Warning:
+                        Instance.Warn(severeMessage.Item2);
+                        break;
+                    case LogLevel.Error:
+                        Instance.Error(severeMessage.Item2);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
-
-                Write(string.Empty);
             }
-
-            Instance.WriteSummary(executionList);
+            
+            Write(string.Empty);
         }
     }
 }
