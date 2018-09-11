@@ -227,7 +227,7 @@
         "name": "ReportFile",
         "type": "string",
         "format": "/report:{value}",
-        "help": "Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para>"
+        "help": "Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt;</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para>"
       },
       {
         "name": "Filter",

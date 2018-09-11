@@ -230,7 +230,7 @@ namespace Nuke.Common.Tools.SpecFlow
         public virtual string OutputFolder { get; internal set; }
         /// <summary><p>Specifies the target log file. This path is relative to your output folder.</p></summary>
         public virtual string LogFile { get; internal set; }
-        /// <summary><p>Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para></p></summary>
+        /// <summary><p>Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt;</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para></p></summary>
         public virtual string ReportFile { get; internal set; }
         /// <summary><p>Applies a filter to your tests and only executes those that match your expression. This overrides the <c>filter</c> entry in your <c>.srprofile</c> file. An overview of the syntax can be found <a href="https://specflow.org/plus/documentation/Filter/">here</a>.</p></summary>
         public virtual string Filter { get; internal set; }
@@ -268,7 +268,7 @@ namespace Nuke.Common.Tools.SpecFlow
         public virtual string OutputFolder { get; internal set; }
         /// <summary><p>Specifies the target log file. This path is relative to your output folder.</p></summary>
         public virtual string LogFile { get; internal set; }
-        /// <summary><p>Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para></p></summary>
+        /// <summary><p>Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt;</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para></p></summary>
         public virtual string ReportFile { get; internal set; }
         /// <summary><p>Applies a filter to your tests and only executes those that match your expression. This overrides the <c>filter</c> entry in your <c>.srprofile</c> file. An overview of the syntax can be found <a href="https://specflow.org/plus/documentation/Filter/">here</a>.</p></summary>
         public virtual string Filter { get; internal set; }
@@ -770,7 +770,7 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region ReportFile
-        /// <summary><p><em>Sets <see cref="SpecFlowRunSettings.ReportFile"/>.</em></p><p>Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para></p></summary>
+        /// <summary><p><em>Sets <see cref="SpecFlowRunSettings.ReportFile"/>.</em></p><p>Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt;</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para></p></summary>
         [Pure]
         public static SpecFlowRunSettings SetReportFile(this SpecFlowRunSettings toolSettings, string reportFile)
         {
@@ -778,7 +778,7 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.ReportFile = reportFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowRunSettings.ReportFile"/>.</em></p><p>Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para></p></summary>
+        /// <summary><p><em>Resets <see cref="SpecFlowRunSettings.ReportFile"/>.</em></p><p>Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt;</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para></p></summary>
         [Pure]
         public static SpecFlowRunSettings ResetReportFile(this SpecFlowRunSettings toolSettings)
         {
@@ -904,7 +904,7 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region ReportFile
-        /// <summary><p><em>Sets <see cref="SpecFlowBuildServerRunSettings.ReportFile"/>.</em></p><p>Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para></p></summary>
+        /// <summary><p><em>Sets <see cref="SpecFlowBuildServerRunSettings.ReportFile"/>.</em></p><p>Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt;</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para></p></summary>
         [Pure]
         public static SpecFlowBuildServerRunSettings SetReportFile(this SpecFlowBuildServerRunSettings toolSettings, string reportFile)
         {
@@ -912,7 +912,7 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.ReportFile = reportFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowBuildServerRunSettings.ReportFile"/>.</em></p><p>Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para></p></summary>
+        /// <summary><p><em>Resets <see cref="SpecFlowBuildServerRunSettings.ReportFile"/>.</em></p><p>Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt;</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para></p></summary>
         [Pure]
         public static SpecFlowBuildServerRunSettings ResetReportFile(this SpecFlowBuildServerRunSettings toolSettings)
         {
