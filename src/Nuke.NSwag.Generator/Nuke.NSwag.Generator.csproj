@@ -8,8 +8,7 @@
   <ItemGroup>
     <PackageReference Include="Mono.Cecil" Version="0.10.0" />
     <PackageReference Include="NuGet.PackageManagement.NetStandard" Version="4.6.0" />
-    <PackageReference Include="Nuke.CodeGeneration" Version="0.6.1" />
-    <PackageReference Include="Nuke.Common" Version="0.6.1" />
+    <PackageReference Include="Nuke.CodeGeneration" Version="0.8.0" />
   </ItemGroup>
 
 
