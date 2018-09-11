@@ -1,8 +1,8 @@
-// Copyright Matthias Koch, Sebastian Karasek 2018.
+// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-// Generated with Nuke.CodeGeneration, Version: 0.6.1 [CommitSha: 8eca516b].
+// Generated with Nuke.CodeGeneration, Version: 0.8.0 [CommitSha: 0a204764].
 // Generated from https://github.com/nuke-build/nswag/blob/master/src/Nuke.NSwag/specifications/NSwag.json.
 
 using JetBrains.Annotations;
@@ -179,6 +179,8 @@ namespace Nuke.NSwag
         /// <summary><p>The paths to search for referenced assembly files (comma separated).</p></summary>
         public virtual IReadOnlyList<string> ReferencePaths => ReferencePathsInternal.AsReadOnly();
         internal List<string> ReferencePathsInternal { get; set; } = new List<string>();
+        /// <summary><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        public virtual bool? UseNuGetCache { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -188,7 +190,8 @@ namespace Nuke.NSwag
               .Add("{value}", GetNSwagRuntime(), customValue: true)
               .Add("/Assembly:{value}", Assembly)
               .Add("/AssemblyConfig:{value}", AssemblyConfig)
-              .Add("/ReferencePaths:{value}", ReferencePaths);
+              .Add("/ReferencePaths:{value}", ReferencePaths)
+              .Add("/UseNuGetCache:{value}", UseNuGetCache);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -214,6 +217,8 @@ namespace Nuke.NSwag
         /// <summary><p>The paths to search for referenced assembly files (comma separated).</p></summary>
         public virtual IReadOnlyList<string> ReferencePaths => ReferencePathsInternal.AsReadOnly();
         internal List<string> ReferencePathsInternal { get; set; } = new List<string>();
+        /// <summary><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        public virtual bool? UseNuGetCache { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -223,7 +228,8 @@ namespace Nuke.NSwag
               .Add("{value}", GetNSwagRuntime(), customValue: true)
               .Add("/Assembly:{value}", Assembly)
               .Add("/AssemblyConfig:{value}", AssemblyConfig)
-              .Add("/ReferencePaths:{value}", ReferencePaths);
+              .Add("/ReferencePaths:{value}", ReferencePaths)
+              .Add("/UseNuGetCache:{value}", UseNuGetCache);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -268,6 +274,8 @@ namespace Nuke.NSwag
         /// <summary><p>The paths to search for referenced assembly files (comma separated).</p></summary>
         public virtual IReadOnlyList<string> ReferencePaths => ReferencePathsInternal.AsReadOnly();
         internal List<string> ReferencePathsInternal { get; set; } = new List<string>();
+        /// <summary><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        public virtual bool? UseNuGetCache { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -286,7 +294,8 @@ namespace Nuke.NSwag
               .Add("/OutputType:{value}", OutputType)
               .Add("/Assembly:{value}", Assembly)
               .Add("/AssemblyConfig:{value}", AssemblyConfig)
-              .Add("/ReferencePaths:{value}", ReferencePaths);
+              .Add("/ReferencePaths:{value}", ReferencePaths)
+              .Add("/UseNuGetCache:{value}", UseNuGetCache);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -311,6 +320,8 @@ namespace Nuke.NSwag
         internal List<string> ControllersInternal { get; set; } = new List<string>();
         /// <summary><p>The Web API default URL template (default for Web API: 'api/{controller}/{id}'; for MVC projects: '{controller}/{action}/{id?}').</p></summary>
         public virtual string DefaultUrlTemplate { get; internal set; }
+        /// <summary><p>Specifies whether to resolve MvcJsonOptions to infer serializer settings (recommended, default: false, only available when IsAspNetCore is set).</p></summary>
+        public virtual bool? ResolveJsonOptions { get; internal set; }
         /// <summary><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
         public virtual bool? AllowReferencesWithProperties { get; internal set; }
         /// <summary><p>DEPRECATED: The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
@@ -362,8 +373,12 @@ namespace Nuke.NSwag
         /// <summary><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
         public virtual IReadOnlyList<string> ServiceSchemes => ServiceSchemesInternal.AsReadOnly();
         internal List<string> ServiceSchemesInternal { get; set; } = new List<string>();
+        /// <summary><p>The Startup class type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        public virtual string Startup { get; internal set; }
         /// <summary><p>The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         public virtual string TypeNameGenerator { get; internal set; }
+        /// <summary><p>.</p></summary>
+        public virtual bool? UseDocumentProvider { get; internal set; }
         /// <summary><p>The output file path (optional).</p></summary>
         public virtual string Output { get; internal set; }
         /// <summary><p>Specifies the output schema type (Swagger2|OpenApi3, default: Swagger2).</p></summary>
@@ -376,6 +391,8 @@ namespace Nuke.NSwag
         /// <summary><p>The paths to search for referenced assembly files (comma separated).</p></summary>
         public virtual IReadOnlyList<string> ReferencePaths => ReferencePathsInternal.AsReadOnly();
         internal List<string> ReferencePathsInternal { get; set; } = new List<string>();
+        /// <summary><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        public virtual bool? UseNuGetCache { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -385,6 +402,7 @@ namespace Nuke.NSwag
               .Add("/Controller:{value}", Controller)
               .Add("/Controllers:{value}", Controllers)
               .Add("/DefaultUrlTemplate:{value}", DefaultUrlTemplate)
+              .Add("/ResolveJsonOptions:{value}", ResolveJsonOptions)
               .Add("{value}", GetNSwagRuntime(), customValue: true)
               .Add("/AllowReferencesWithProperties:{value}", AllowReferencesWithProperties)
               .Add("/ContractResolver:{value}", ContractResolver)
@@ -409,12 +427,15 @@ namespace Nuke.NSwag
               .Add("/ServiceBasePath:{value}", ServiceBasePath)
               .Add("/ServiceHost:{value}", ServiceHost)
               .Add("/ServiceSchemes:{value}", ServiceSchemes)
+              .Add("/Startup:{value}", Startup)
               .Add("/TypeNameGenerator:{value}", TypeNameGenerator)
+              .Add("/UseDocumentProvider:{value}", UseDocumentProvider)
               .Add("/Output:{value}", Output)
               .Add("/OutputType:{value}", OutputType)
               .Add("/Assembly:{value}", Assembly)
               .Add("/AssemblyConfig:{value}", AssemblyConfig)
-              .Add("/ReferencePaths:{value}", ReferencePaths);
+              .Add("/ReferencePaths:{value}", ReferencePaths)
+              .Add("/UseNuGetCache:{value}", UseNuGetCache);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -495,8 +516,12 @@ namespace Nuke.NSwag
         /// <summary><p>Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss').</p></summary>
         public virtual IReadOnlyList<string> ServiceSchemes => ServiceSchemesInternal.AsReadOnly();
         internal List<string> ServiceSchemesInternal { get; set; } = new List<string>();
+        /// <summary><p>The Startup class type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        public virtual string Startup { get; internal set; }
         /// <summary><p>The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         public virtual string TypeNameGenerator { get; internal set; }
+        /// <summary><p>.</p></summary>
+        public virtual bool? UseDocumentProvider { get; internal set; }
         /// <summary><p>The output file path (optional).</p></summary>
         public virtual string Output { get; internal set; }
         /// <summary><p>Specifies the output schema type (Swagger2|OpenApi3, default: Swagger2).</p></summary>
@@ -509,6 +534,8 @@ namespace Nuke.NSwag
         /// <summary><p>The paths to search for referenced assembly files (comma separated).</p></summary>
         public virtual IReadOnlyList<string> ReferencePaths => ReferencePathsInternal.AsReadOnly();
         internal List<string> ReferencePathsInternal { get; set; } = new List<string>();
+        /// <summary><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        public virtual bool? UseNuGetCache { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -545,12 +572,15 @@ namespace Nuke.NSwag
               .Add("/ServiceBasePath:{value}", ServiceBasePath)
               .Add("/ServiceHost:{value}", ServiceHost)
               .Add("/ServiceSchemes:{value}", ServiceSchemes)
+              .Add("/Startup:{value}", Startup)
               .Add("/TypeNameGenerator:{value}", TypeNameGenerator)
+              .Add("/UseDocumentProvider:{value}", UseDocumentProvider)
               .Add("/Output:{value}", Output)
               .Add("/OutputType:{value}", OutputType)
               .Add("/Assembly:{value}", Assembly)
               .Add("/AssemblyConfig:{value}", AssemblyConfig)
-              .Add("/ReferencePaths:{value}", ReferencePaths);
+              .Add("/ReferencePaths:{value}", ReferencePaths)
+              .Add("/UseNuGetCache:{value}", UseNuGetCache);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -605,10 +635,14 @@ namespace Nuke.NSwag
     {
         /// <summary><p>Path to the NSwag executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? GetToolPath();
+        /// <summary><p>The generic array .NET instance type (default: empty = ArrayType).</p></summary>
+        public virtual string ArrayInstanceType { get; internal set; }
         /// <summary><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
         public virtual string ArrayType { get; internal set; }
         /// <summary><p>The date time .NET type (default: 'DateTime').</p></summary>
         public virtual string DateTimeType { get; internal set; }
+        /// <summary><p>The generic dictionary .NET instance type (default: empty = DictionaryType).</p></summary>
+        public virtual string DictionaryInstanceType { get; internal set; }
         /// <summary><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
         public virtual string DictionaryType { get; internal set; }
         /// <summary><p>The class name of the root schema.</p></summary>
@@ -630,8 +664,10 @@ namespace Nuke.NSwag
         {
             arguments
               .Add("jsonschema2csclient")
+              .Add("/ArrayInstanceType:{value}", ArrayInstanceType)
               .Add("/ArrayType:{value}", ArrayType)
               .Add("/DateTimeType:{value}", DateTimeType)
+              .Add("/DictionaryInstanceType:{value}", DictionaryInstanceType)
               .Add("/DictionaryType:{value}", DictionaryType)
               .Add("/Name:{value}", Name)
               .Add("/Namespace:{value}", Namespace)
@@ -751,6 +787,8 @@ namespace Nuke.NSwag
         internal List<string> AdditionalNamespaceUsagesInternal { get; set; } = new List<string>();
         /// <summary><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
         public virtual string ArrayBaseType { get; internal set; }
+        /// <summary><p>The generic array .NET instance type (default: empty = ArrayType).</p></summary>
+        public virtual string ArrayInstanceType { get; internal set; }
         /// <summary><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
         public virtual string ArrayType { get; internal set; }
         /// <summary><p>The class name of the generated client.</p></summary>
@@ -763,6 +801,8 @@ namespace Nuke.NSwag
         public virtual string DateType { get; internal set; }
         /// <summary><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
         public virtual string DictionaryBaseType { get; internal set; }
+        /// <summary><p>The generic dictionary .NET instance type (default: empty = DictionaryType).</p></summary>
+        public virtual string DictionaryInstanceType { get; internal set; }
         /// <summary><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
         public virtual string DictionaryType { get; internal set; }
         /// <summary><p>Specifies whether enums should be always generated as bit flags (default: false).</p></summary>
@@ -868,12 +908,14 @@ namespace Nuke.NSwag
               .Add("/AdditionalContractNamespaceUsages:{value}", AdditionalContractNamespaceUsages)
               .Add("/AdditionalNamespaceUsages:{value}", AdditionalNamespaceUsages)
               .Add("/ArrayBaseType:{value}", ArrayBaseType)
+              .Add("/ArrayInstanceType:{value}", ArrayInstanceType)
               .Add("/ArrayType:{value}", ArrayType)
               .Add("/ClassName:{value}", ClassName)
               .Add("/ClassStyle:{value}", ClassStyle)
               .Add("/DateTimeType:{value}", DateTimeType)
               .Add("/DateType:{value}", DateType)
               .Add("/DictionaryBaseType:{value}", DictionaryBaseType)
+              .Add("/DictionaryInstanceType:{value}", DictionaryInstanceType)
               .Add("/DictionaryType:{value}", DictionaryType)
               .Add("/EnforceFlagEnums:{value}", EnforceFlagEnums)
               .Add("/ExcludedTypeNames:{value}", ExcludedTypeNames)
@@ -938,6 +980,8 @@ namespace Nuke.NSwag
         internal List<string> AdditionalNamespaceUsagesInternal { get; set; } = new List<string>();
         /// <summary><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
         public virtual string ArrayBaseType { get; internal set; }
+        /// <summary><p>The generic array .NET instance type (default: empty = ArrayType).</p></summary>
+        public virtual string ArrayInstanceType { get; internal set; }
         /// <summary><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
         public virtual string ArrayType { get; internal set; }
         /// <summary><p>The class name of the generated client.</p></summary>
@@ -950,6 +994,8 @@ namespace Nuke.NSwag
         public virtual string DateType { get; internal set; }
         /// <summary><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
         public virtual string DictionaryBaseType { get; internal set; }
+        /// <summary><p>The generic dictionary .NET instance type (default: empty = DictionaryType).</p></summary>
+        public virtual string DictionaryInstanceType { get; internal set; }
         /// <summary><p>The generic dictionary .NET type (default: 'Dictionary').</p></summary>
         public virtual string DictionaryType { get; internal set; }
         /// <summary><p>Specifies whether enums should be always generated as bit flags (default: false).</p></summary>
@@ -1033,12 +1079,14 @@ namespace Nuke.NSwag
               .Add("/AdditionalContractNamespaceUsages:{value}", AdditionalContractNamespaceUsages)
               .Add("/AdditionalNamespaceUsages:{value}", AdditionalNamespaceUsages)
               .Add("/ArrayBaseType:{value}", ArrayBaseType)
+              .Add("/ArrayInstanceType:{value}", ArrayInstanceType)
               .Add("/ArrayType:{value}", ArrayType)
               .Add("/ClassName:{value}", ClassName)
               .Add("/ClassStyle:{value}", ClassStyle)
               .Add("/DateTimeType:{value}", DateTimeType)
               .Add("/DateType:{value}", DateType)
               .Add("/DictionaryBaseType:{value}", DictionaryBaseType)
+              .Add("/DictionaryInstanceType:{value}", DictionaryInstanceType)
               .Add("/DictionaryType:{value}", DictionaryType)
               .Add("/EnforceFlagEnums:{value}", EnforceFlagEnums)
               .Add("/ExcludedTypeNames:{value}", ExcludedTypeNames)
@@ -1103,6 +1151,8 @@ namespace Nuke.NSwag
         /// <summary><p>The excluded DTO type names (must be defined in an import or other namespace).</p></summary>
         public virtual IReadOnlyList<string> ExcludedTypeNames => ExcludedTypeNamesInternal.AsReadOnly();
         internal List<string> ExcludedTypeNamesInternal { get; set; } = new List<string>();
+        /// <summary><p>Specifies whether the export keyword should be added to all classes, interfaces and enums (default: true).</p></summary>
+        public virtual bool? ExportTypes { get; internal set; }
         /// <summary><p>The list of extended classes.</p></summary>
         public virtual IReadOnlyList<string> ExtendedClasses => ExtendedClassesInternal.AsReadOnly();
         internal List<string> ExtendedClassesInternal { get; set; } = new List<string>();
@@ -1203,6 +1253,7 @@ namespace Nuke.NSwag
               .Add("/ConvertConstructorInterfaceData:{value}", ConvertConstructorInterfaceData)
               .Add("/DateTimeType:{value}", DateTimeType)
               .Add("/ExcludedTypeNames:{value}", ExcludedTypeNames)
+              .Add("/ExportTypes:{value}", ExportTypes)
               .Add("/ExtendedClasses:{value}", ExtendedClasses)
               .Add("/ExtensionCode:{value}", ExtensionCode)
               .Add("/GenerateClientClasses:{value}", GenerateClientClasses)
@@ -1462,6 +1513,48 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
+        #region UseNuGetCache
+        /// <summary><p><em>Sets <see cref="NSwagListTypesSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagListTypesSettings SetUseNuGetCache(this NSwagListTypesSettings toolSettings, bool? useNuGetCache)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = useNuGetCache;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagListTypesSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagListTypesSettings ResetUseNuGetCache(this NSwagListTypesSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagListTypesSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagListTypesSettings EnableUseNuGetCache(this NSwagListTypesSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagListTypesSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagListTypesSettings DisableUseNuGetCache(this NSwagListTypesSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagListTypesSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagListTypesSettings ToggleUseNuGetCache(this NSwagListTypesSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = !toolSettings.UseNuGetCache;
+            return toolSettings;
+        }
+        #endregion
     }
     #endregion
     #region NSwagListWebApiControllersSettingsExtensions
@@ -1665,6 +1758,48 @@ namespace Nuke.NSwag
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(referencePaths);
             toolSettings.ReferencePathsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region UseNuGetCache
+        /// <summary><p><em>Sets <see cref="NSwagListWebApiControllersSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagListWebApiControllersSettings SetUseNuGetCache(this NSwagListWebApiControllersSettings toolSettings, bool? useNuGetCache)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = useNuGetCache;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagListWebApiControllersSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagListWebApiControllersSettings ResetUseNuGetCache(this NSwagListWebApiControllersSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagListWebApiControllersSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagListWebApiControllersSettings EnableUseNuGetCache(this NSwagListWebApiControllersSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagListWebApiControllersSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagListWebApiControllersSettings DisableUseNuGetCache(this NSwagListWebApiControllersSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagListWebApiControllersSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagListWebApiControllersSettings ToggleUseNuGetCache(this NSwagListWebApiControllersSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = !toolSettings.UseNuGetCache;
             return toolSettings;
         }
         #endregion
@@ -2174,6 +2309,48 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
+        #region UseNuGetCache
+        /// <summary><p><em>Sets <see cref="NSwagTypesToSwaggerSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagTypesToSwaggerSettings SetUseNuGetCache(this NSwagTypesToSwaggerSettings toolSettings, bool? useNuGetCache)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = useNuGetCache;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagTypesToSwaggerSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagTypesToSwaggerSettings ResetUseNuGetCache(this NSwagTypesToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagTypesToSwaggerSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagTypesToSwaggerSettings EnableUseNuGetCache(this NSwagTypesToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagTypesToSwaggerSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagTypesToSwaggerSettings DisableUseNuGetCache(this NSwagTypesToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagTypesToSwaggerSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagTypesToSwaggerSettings ToggleUseNuGetCache(this NSwagTypesToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = !toolSettings.UseNuGetCache;
+            return toolSettings;
+        }
+        #endregion
     }
     #endregion
     #region NSwagWebApiToSwaggerSettingsExtensions
@@ -2359,6 +2536,48 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DefaultUrlTemplate = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ResolveJsonOptions
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.ResolveJsonOptions"/>.</em></p><p>Specifies whether to resolve MvcJsonOptions to infer serializer settings (recommended, default: false, only available when IsAspNetCore is set).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings SetResolveJsonOptions(this NSwagWebApiToSwaggerSettings toolSettings, bool? resolveJsonOptions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResolveJsonOptions = resolveJsonOptions;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.ResolveJsonOptions"/>.</em></p><p>Specifies whether to resolve MvcJsonOptions to infer serializer settings (recommended, default: false, only available when IsAspNetCore is set).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ResetResolveJsonOptions(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResolveJsonOptions = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagWebApiToSwaggerSettings.ResolveJsonOptions"/>.</em></p><p>Specifies whether to resolve MvcJsonOptions to infer serializer settings (recommended, default: false, only available when IsAspNetCore is set).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings EnableResolveJsonOptions(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResolveJsonOptions = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagWebApiToSwaggerSettings.ResolveJsonOptions"/>.</em></p><p>Specifies whether to resolve MvcJsonOptions to infer serializer settings (recommended, default: false, only available when IsAspNetCore is set).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings DisableResolveJsonOptions(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResolveJsonOptions = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagWebApiToSwaggerSettings.ResolveJsonOptions"/>.</em></p><p>Specifies whether to resolve MvcJsonOptions to infer serializer settings (recommended, default: false, only available when IsAspNetCore is set).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ToggleResolveJsonOptions(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ResolveJsonOptions = !toolSettings.ResolveJsonOptions;
             return toolSettings;
         }
         #endregion
@@ -3130,6 +3349,24 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
+        #region Startup
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.Startup"/>.</em></p><p>The Startup class type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings SetStartup(this NSwagWebApiToSwaggerSettings toolSettings, string startup)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Startup = startup;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.Startup"/>.</em></p><p>The Startup class type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ResetStartup(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Startup = null;
+            return toolSettings;
+        }
+        #endregion
         #region TypeNameGenerator
         /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.TypeNameGenerator"/>.</em></p><p>The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         [Pure]
@@ -3145,6 +3382,48 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameGenerator = null;
+            return toolSettings;
+        }
+        #endregion
+        #region UseDocumentProvider
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.UseDocumentProvider"/>.</em></p><p>.</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings SetUseDocumentProvider(this NSwagWebApiToSwaggerSettings toolSettings, bool? useDocumentProvider)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseDocumentProvider = useDocumentProvider;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.UseDocumentProvider"/>.</em></p><p>.</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ResetUseDocumentProvider(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseDocumentProvider = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagWebApiToSwaggerSettings.UseDocumentProvider"/>.</em></p><p>.</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings EnableUseDocumentProvider(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseDocumentProvider = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagWebApiToSwaggerSettings.UseDocumentProvider"/>.</em></p><p>.</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings DisableUseDocumentProvider(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseDocumentProvider = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagWebApiToSwaggerSettings.UseDocumentProvider"/>.</em></p><p>.</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ToggleUseDocumentProvider(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseDocumentProvider = !toolSettings.UseDocumentProvider;
             return toolSettings;
         }
         #endregion
@@ -3319,6 +3598,48 @@ namespace Nuke.NSwag
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(referencePaths);
             toolSettings.ReferencePathsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region UseNuGetCache
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings SetUseNuGetCache(this NSwagWebApiToSwaggerSettings toolSettings, bool? useNuGetCache)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = useNuGetCache;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ResetUseNuGetCache(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagWebApiToSwaggerSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings EnableUseNuGetCache(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagWebApiToSwaggerSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings DisableUseNuGetCache(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagWebApiToSwaggerSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ToggleUseNuGetCache(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = !toolSettings.UseNuGetCache;
             return toolSettings;
         }
         #endregion
@@ -4290,6 +4611,24 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
+        #region Startup
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.Startup"/>.</em></p><p>The Startup class type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings SetStartup(this NSwagAspNetCoreToSwaggerSettings toolSettings, string startup)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Startup = startup;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.Startup"/>.</em></p><p>The Startup class type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ResetStartup(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Startup = null;
+            return toolSettings;
+        }
+        #endregion
         #region TypeNameGenerator
         /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.TypeNameGenerator"/>.</em></p><p>The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
         [Pure]
@@ -4305,6 +4644,48 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TypeNameGenerator = null;
+            return toolSettings;
+        }
+        #endregion
+        #region UseDocumentProvider
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.UseDocumentProvider"/>.</em></p><p>.</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings SetUseDocumentProvider(this NSwagAspNetCoreToSwaggerSettings toolSettings, bool? useDocumentProvider)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseDocumentProvider = useDocumentProvider;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.UseDocumentProvider"/>.</em></p><p>.</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ResetUseDocumentProvider(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseDocumentProvider = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagAspNetCoreToSwaggerSettings.UseDocumentProvider"/>.</em></p><p>.</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings EnableUseDocumentProvider(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseDocumentProvider = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagAspNetCoreToSwaggerSettings.UseDocumentProvider"/>.</em></p><p>.</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings DisableUseDocumentProvider(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseDocumentProvider = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagAspNetCoreToSwaggerSettings.UseDocumentProvider"/>.</em></p><p>.</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ToggleUseDocumentProvider(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseDocumentProvider = !toolSettings.UseDocumentProvider;
             return toolSettings;
         }
         #endregion
@@ -4482,6 +4863,48 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
+        #region UseNuGetCache
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings SetUseNuGetCache(this NSwagAspNetCoreToSwaggerSettings toolSettings, bool? useNuGetCache)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = useNuGetCache;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ResetUseNuGetCache(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagAspNetCoreToSwaggerSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings EnableUseNuGetCache(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagAspNetCoreToSwaggerSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings DisableUseNuGetCache(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagAspNetCoreToSwaggerSettings.UseNuGetCache"/>.</em></p><p>Determines if local Nuget's cache folder should be put in the ReferencePaths by default</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ToggleUseNuGetCache(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseNuGetCache = !toolSettings.UseNuGetCache;
+            return toolSettings;
+        }
+        #endregion
     }
     #endregion
     #region NSwagCreateDocumentSettingsExtensions
@@ -4566,6 +4989,24 @@ namespace Nuke.NSwag
     [ExcludeFromCodeCoverage]
     public static partial class NSwagJsonSchemaToCSharpSettingsExtensions
     {
+        #region ArrayInstanceType
+        /// <summary><p><em>Sets <see cref="NSwagJsonSchemaToCSharpSettings.ArrayInstanceType"/>.</em></p><p>The generic array .NET instance type (default: empty = ArrayType).</p></summary>
+        [Pure]
+        public static NSwagJsonSchemaToCSharpSettings SetArrayInstanceType(this NSwagJsonSchemaToCSharpSettings toolSettings, string arrayInstanceType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ArrayInstanceType = arrayInstanceType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagJsonSchemaToCSharpSettings.ArrayInstanceType"/>.</em></p><p>The generic array .NET instance type (default: empty = ArrayType).</p></summary>
+        [Pure]
+        public static NSwagJsonSchemaToCSharpSettings ResetArrayInstanceType(this NSwagJsonSchemaToCSharpSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ArrayInstanceType = null;
+            return toolSettings;
+        }
+        #endregion
         #region ArrayType
         /// <summary><p><em>Sets <see cref="NSwagJsonSchemaToCSharpSettings.ArrayType"/>.</em></p><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
         [Pure]
@@ -4599,6 +5040,24 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DateTimeType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region DictionaryInstanceType
+        /// <summary><p><em>Sets <see cref="NSwagJsonSchemaToCSharpSettings.DictionaryInstanceType"/>.</em></p><p>The generic dictionary .NET instance type (default: empty = DictionaryType).</p></summary>
+        [Pure]
+        public static NSwagJsonSchemaToCSharpSettings SetDictionaryInstanceType(this NSwagJsonSchemaToCSharpSettings toolSettings, string dictionaryInstanceType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DictionaryInstanceType = dictionaryInstanceType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagJsonSchemaToCSharpSettings.DictionaryInstanceType"/>.</em></p><p>The generic dictionary .NET instance type (default: empty = DictionaryType).</p></summary>
+        [Pure]
+        public static NSwagJsonSchemaToCSharpSettings ResetDictionaryInstanceType(this NSwagJsonSchemaToCSharpSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DictionaryInstanceType = null;
             return toolSettings;
         }
         #endregion
@@ -6010,6 +6469,24 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
+        #region ArrayInstanceType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ArrayInstanceType"/>.</em></p><p>The generic array .NET instance type (default: empty = ArrayType).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetArrayInstanceType(this NSwagSwaggerToCSharpClientSettings toolSettings, string arrayInstanceType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ArrayInstanceType = arrayInstanceType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.ArrayInstanceType"/>.</em></p><p>The generic array .NET instance type (default: empty = ArrayType).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetArrayInstanceType(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ArrayInstanceType = null;
+            return toolSettings;
+        }
+        #endregion
         #region ArrayType
         /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.ArrayType"/>.</em></p><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
         [Pure]
@@ -6115,6 +6592,24 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DictionaryBaseType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region DictionaryInstanceType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpClientSettings.DictionaryInstanceType"/>.</em></p><p>The generic dictionary .NET instance type (default: empty = DictionaryType).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings SetDictionaryInstanceType(this NSwagSwaggerToCSharpClientSettings toolSettings, string dictionaryInstanceType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DictionaryInstanceType = dictionaryInstanceType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpClientSettings.DictionaryInstanceType"/>.</em></p><p>The generic dictionary .NET instance type (default: empty = DictionaryType).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpClientSettings ResetDictionaryInstanceType(this NSwagSwaggerToCSharpClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DictionaryInstanceType = null;
             return toolSettings;
         }
         #endregion
@@ -7404,6 +7899,24 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
+        #region ArrayInstanceType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.ArrayInstanceType"/>.</em></p><p>The generic array .NET instance type (default: empty = ArrayType).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetArrayInstanceType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string arrayInstanceType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ArrayInstanceType = arrayInstanceType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.ArrayInstanceType"/>.</em></p><p>The generic array .NET instance type (default: empty = ArrayType).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetArrayInstanceType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ArrayInstanceType = null;
+            return toolSettings;
+        }
+        #endregion
         #region ArrayType
         /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.ArrayType"/>.</em></p><p>The generic array .NET type (default: 'ObservableCollection').</p></summary>
         [Pure]
@@ -7509,6 +8022,24 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DictionaryBaseType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region DictionaryInstanceType
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToCSharpControllerSettings.DictionaryInstanceType"/>.</em></p><p>The generic dictionary .NET instance type (default: empty = DictionaryType).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings SetDictionaryInstanceType(this NSwagSwaggerToCSharpControllerSettings toolSettings, string dictionaryInstanceType)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DictionaryInstanceType = dictionaryInstanceType;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToCSharpControllerSettings.DictionaryInstanceType"/>.</em></p><p>The generic dictionary .NET instance type (default: empty = DictionaryType).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToCSharpControllerSettings ResetDictionaryInstanceType(this NSwagSwaggerToCSharpControllerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DictionaryInstanceType = null;
             return toolSettings;
         }
         #endregion
@@ -8795,6 +9326,48 @@ namespace Nuke.NSwag
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(excludedTypeNames);
             toolSettings.ExcludedTypeNamesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region ExportTypes
+        /// <summary><p><em>Sets <see cref="NSwagSwaggerToTypeScriptClientSettings.ExportTypes"/>.</em></p><p>Specifies whether the export keyword should be added to all classes, interfaces and enums (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings SetExportTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings, bool? exportTypes)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExportTypes = exportTypes;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagSwaggerToTypeScriptClientSettings.ExportTypes"/>.</em></p><p>Specifies whether the export keyword should be added to all classes, interfaces and enums (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ResetExportTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExportTypes = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagSwaggerToTypeScriptClientSettings.ExportTypes"/>.</em></p><p>Specifies whether the export keyword should be added to all classes, interfaces and enums (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings EnableExportTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExportTypes = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagSwaggerToTypeScriptClientSettings.ExportTypes"/>.</em></p><p>Specifies whether the export keyword should be added to all classes, interfaces and enums (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings DisableExportTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExportTypes = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagSwaggerToTypeScriptClientSettings.ExportTypes"/>.</em></p><p>Specifies whether the export keyword should be added to all classes, interfaces and enums (default: true).</p></summary>
+        [Pure]
+        public static NSwagSwaggerToTypeScriptClientSettings ToggleExportTypes(this NSwagSwaggerToTypeScriptClientSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExportTypes = !toolSettings.ExportTypes;
             return toolSettings;
         }
         #endregion

@@ -6,19 +6,19 @@
     "https://github.com/nuke-build/nswag/blob/master/LICENSE"
   ],
   "references": [
-    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/Tooling/VersionCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/SwaggerGeneration/ListTypesCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/SwaggerGeneration/ListWebApiControllersCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/SwaggerGeneration/TypesToSwaggerCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/SwaggerGeneration/WebApi/WebApiToSwaggerCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/SwaggerGeneration/AspNetCore/AspNetCoreToSwaggerCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/Document/CreateDocumentCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/Document/ExecuteDocumentCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/CodeGeneration/JsonSchemaToCSharpCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/CodeGeneration/JsonSchemaToTypeScriptCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToCSharpClientCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToCSharpControllerCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/eca777966b/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToTypeScriptClientCommand.cs"
+    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/Tooling/VersionCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/SwaggerGeneration/ListTypesCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/SwaggerGeneration/ListWebApiControllersCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/SwaggerGeneration/TypesToSwaggerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/SwaggerGeneration/WebApi/WebApiToSwaggerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/SwaggerGeneration/AspNetCore/AspNetCoreToSwaggerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/Document/CreateDocumentCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/Document/ExecuteDocumentCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/CodeGeneration/JsonSchemaToCSharpCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/CodeGeneration/JsonSchemaToTypeScriptCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToCSharpClientCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToCSharpControllerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToTypeScriptClientCommand.cs"
   ],
   "name": "NSwag",
   "officialUrl": "https://github.com/RSuter/NSwag",
@@ -191,6 +191,12 @@
             "type": "string",
             "format": "/DefaultUrlTemplate:{value}",
             "help": "The Web API default URL template (default for Web API: 'api/{controller}/{id}'; for MVC projects: '{controller}/{action}/{id?}')."
+          },
+          {
+            "name": "ResolveJsonOptions",
+            "type": "bool?",
+            "format": "/ResolveJsonOptions:{value}",
+            "help": "Specifies whether to resolve MvcJsonOptions to infer serializer settings (recommended, default: false, only available when IsAspNetCore is set)."
           }
         ]
       }
@@ -299,6 +305,12 @@
         "baseClass": "NSwagSettings",
         "properties": [
           {
+            "name": "ArrayInstanceType",
+            "type": "string",
+            "format": "/ArrayInstanceType:{value}",
+            "help": "The generic array .NET instance type (default: empty = ArrayType)."
+          },
+          {
             "name": "ArrayType",
             "type": "string",
             "format": "/ArrayType:{value}",
@@ -309,6 +321,12 @@
             "type": "string",
             "format": "/DateTimeType:{value}",
             "help": "The date time .NET type (default: 'DateTime')."
+          },
+          {
+            "name": "DictionaryInstanceType",
+            "type": "string",
+            "format": "/DictionaryInstanceType:{value}",
+            "help": "The generic dictionary .NET instance type (default: empty = DictionaryType)."
           },
           {
             "name": "DictionaryType",
@@ -642,6 +660,12 @@
             "help": "The excluded DTO type names (must be defined in an import or other namespace)."
           },
           {
+            "name": "ExportTypes",
+            "type": "bool?",
+            "format": "/ExportTypes:{value}",
+            "help": "Specifies whether the export keyword should be added to all classes, interfaces and enums (default: true)."
+          },
+          {
             "name": "ExtendedClasses",
             "type": "List<string>",
             "format": "/ExtendedClasses:{value}",
@@ -897,6 +921,12 @@
         "type": "List<string>",
         "format": "/ReferencePaths:{value}",
         "help": "The paths to search for referenced assembly files (comma separated)."
+      },
+      {
+        "name": "UseNuGetCache",
+        "type": "bool?",
+        "format": "/UseNuGetCache:{value}",
+        "help": "Determines if local Nuget's cache folder should be put in the ReferencePaths by default"
       }
     ],
     "isolatedSwaggerOutputCommand": [
@@ -1061,10 +1091,22 @@
         "help": "Overrides the allowed schemes of the web service (optional, comma separated, 'http', 'https', 'ws', 'wss')."
       },
       {
+        "name": "Startup",
+        "type": "string",
+        "format": "/Startup:{value}",
+        "help": "The Startup class type in the form 'assemblyName:fullTypeName' or 'fullTypeName')."
+      },
+      {
         "name": "TypeNameGenerator",
         "type": "string",
         "format": "/TypeNameGenerator:{value}",
         "help": "The custom ITypeNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName')."
+      },
+      {
+        "name": "UseDocumentProvider",
+        "type": "bool?",
+        "format": "/UseDocumentProvider:{value}",
+        "help": "."
       }
     ],
     "codeGeneratorCommand": [
@@ -1113,6 +1155,12 @@
         "help": "The generic array .NET type (default: 'ObservableCollection')."
       },
       {
+        "name": "ArrayInstanceType",
+        "type": "string",
+        "format": "/ArrayInstanceType:{value}",
+        "help": "The generic array .NET instance type (default: empty = ArrayType)."
+      },
+      {
         "name": "ArrayType",
         "type": "string",
         "format": "/ArrayType:{value}",
@@ -1147,6 +1195,12 @@
         "type": "string",
         "format": "/DictionaryBaseType:{value}",
         "help": "The generic dictionary .NET type (default: 'Dictionary')."
+      },
+      {
+        "name": "DictionaryInstanceType",
+        "type": "string",
+        "format": "/DictionaryInstanceType:{value}",
+        "help": "The generic dictionary .NET instance type (default: empty = DictionaryType)."
       },
       {
         "name": "DictionaryType",
