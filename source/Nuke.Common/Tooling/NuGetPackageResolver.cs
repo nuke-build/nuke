@@ -206,7 +206,7 @@ namespace Nuke.Common.Tooling
         public static string GetBuildPackagesConfigFile()
         {
             return NukeBuild.Instance != null
-                ? GetPackageConfigFile(EnvironmentInfo.BuildProjectDirectory).NotNull("GetBuildPackagesConfigFile != null")
+                ? GetPackageConfigFile(NukeBuild.BuildProjectDirectory).NotNull("GetBuildPackagesConfigFile != null")
                 : null;
         }
 
