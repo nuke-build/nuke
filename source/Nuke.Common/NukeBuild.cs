@@ -129,8 +129,20 @@ namespace Nuke.Common
         }
 
         /// <summary>
-        /// Full path to the solution file that is referenced in the <c>.nuke</c> file.
+        /// Full path to <c>/.tmp</c>.
         /// </summary>
+        public virtual PathConstruction.AbsolutePath TemporaryDirectory
+        {
+            get
+            {
+                var temporaryDirectory = Path.Combine(RootDirectory, ".tmp");
+                FileSystemTasks.EnsureExistingDirectory(temporaryDirectory);
+                return (PathConstruction.AbsolutePath) temporaryDirectory;
+            }
+        }
+
+        [Obsolete("Property will be removed in a following version. Please define it yourself, i.e.: "
+                  + "[Solution(\"solution.sln\")] readonly Solution Solution;")]
         public virtual PathConstruction.AbsolutePath SolutionFile
         {
             get
@@ -148,37 +160,20 @@ namespace Nuke.Common
             }
         }
 
-        /// <summary>
-        /// Full path to the solution directory derived the <c>.nuke</c> file.
-        /// </summary>
+        [Obsolete("Property will be removed in a following version. Please define it yourself, i.e.: "
+                  + "[Solution(\"solution.sln\")] readonly Solution Solution;")]
         public virtual PathConstruction.AbsolutePath SolutionDirectory => (PathConstruction.AbsolutePath) Path.GetDirectoryName(SolutionFile);
 
-        /// <summary>
-        /// Full path to <c>/.tmp</c>.
-        /// </summary>
-        public virtual PathConstruction.AbsolutePath TemporaryDirectory
-        {
-            get
-            {
-                var temporaryDirectory = Path.Combine(RootDirectory, ".tmp");
-                FileSystemTasks.EnsureExistingDirectory(temporaryDirectory);
-                return (PathConstruction.AbsolutePath) temporaryDirectory;
-            }
-        }
-
-        /// <summary>
-        /// Full path to <c>/output</c>.
-        /// </summary>
+        [Obsolete("Property will be removed in a following version. Please define it yourself, i.e.: "
+                  + "AbsolutePath OutputDirectory => RootDirectory / \"output\";")]
         public virtual PathConstruction.AbsolutePath OutputDirectory => (PathConstruction.AbsolutePath) Path.Combine(RootDirectory, "output");
 
-        /// <summary>
-        /// Full path to <c>/artifacts</c>.
-        /// </summary>
+        [Obsolete("Property will be removed in a following version. Please define it yourself, i.e.: "
+                  + "AbsolutePath ArtifactsDirectory => RootDirectory / \"artifacts\";")]
         public virtual PathConstruction.AbsolutePath ArtifactsDirectory => (PathConstruction.AbsolutePath) Path.Combine(RootDirectory, "artifacts");
 
-        /// <summary>
-        /// Full path to either <c>/src</c> or <c>/source</c>. Throws an exception if either none or both exist.
-        /// </summary>
+        [Obsolete("Property will be removed in a following version. Please define it yourself, i.e.: "
+                  + "AbsolutePath SourceDirectory => RootDirectory / \"source\";")]
         public virtual PathConstruction.AbsolutePath SourceDirectory
         {
             get

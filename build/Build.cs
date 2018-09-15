@@ -53,6 +53,9 @@ partial class Build : NukeBuild
     [GitRepository] readonly GitRepository GitRepository;
     [GitVersion] readonly GitVersion GitVersion;
 
+    new AbsolutePath OutputDirectory => RootDirectory / "output";
+    new AbsolutePath SourceDirectory => RootDirectory / "source";
+
     readonly string MasterBranch = "master";
     readonly string DevelopBranch = "develop";
     readonly string ReleaseBranchPrefix = "release";
@@ -170,7 +173,7 @@ partial class Build : NukeBuild
             var framework = "net461";
             var xunitSettings = new Xunit2Settings()
                 .SetFramework(framework)
-                .AddTargetAssemblies(GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/{framework}/Nuke.*.Tests.dll").NotEmpty())
+                .AddTargetAssemblies(GlobFiles(Solution.Directory, $"*/bin/{Configuration}/{framework}/Nuke.*.Tests.dll").NotEmpty())
                 .AddResultReport(Xunit2ResultFormat.Xml, OutputDirectory / "tests.xml");
 
             if (IsWin)

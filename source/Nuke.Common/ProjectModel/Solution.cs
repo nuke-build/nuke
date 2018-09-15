@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
+using Nuke.Common.IO;
 
 namespace Nuke.Common.ProjectModel
 {
@@ -20,6 +21,7 @@ namespace Nuke.Common.ProjectModel
         }
 
         public string Path { get; }
+        public PathConstruction.AbsolutePath Directory => (PathConstruction.AbsolutePath) System.IO.Path.GetDirectoryName(Path).NotNull();
         public IReadOnlyCollection<Project> Projects { get; }
 
         public static implicit operator string(Solution solution)
