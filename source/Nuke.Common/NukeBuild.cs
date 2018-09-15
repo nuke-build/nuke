@@ -41,7 +41,7 @@ namespace Nuke.Common
     /// </code>
     /// </example>
     [PublicAPI]
-    public abstract class NukeBuild
+    public abstract partial class NukeBuild
     {
         public const string ConfigurationFile = ".nuke";
 
@@ -72,19 +72,19 @@ namespace Nuke.Common
         /// Host for execution. Default is <em>automatic</em>.
         /// </summary>
         [Parameter("Host for execution. Default is 'automatic'.")]
-        public HostType Host { get; } = EnvironmentInfo.HostType;
+        public HostType Host { get; } = GetHostType();
 
         /// <summary>
         /// Configuration to build. Default is <em>Debug</em> (local) or <em>Release</em> (server).
         /// </summary>
         [Parameter("Configuration to build. Default is 'Debug' (local) or 'Release' (server).")]
-        public virtual string Configuration { get; } = EnvironmentInfo.IsLocalBuild ? "Debug" : "Release";
+        public virtual string Configuration { get; } = GetHostType() == HostType.Console ? "Debug" : "Release";
 
         /// <summary>
         /// Disables execution of target dependencies.
         /// </summary>
         [Parameter("Disables execution of dependent targets.", Name = "Skip", Separator = "+")]
-        public string[] SkippedTargets { get; } = EnvironmentInfo.SkippedTargets;
+        public string[] SkippedTargets { get; } = GetSkippedTargets();
 
         /// <summary>
         /// Enables sanity checks for the <c>PATH</c> environment variable.
@@ -104,12 +104,12 @@ namespace Nuke.Common
         [Parameter("Shows the help text for this build assembly.")]
         public bool Help { get; }
 
-        public bool IsLocalBuild { get; } = EnvironmentInfo.IsLocalBuild;
-        public bool IsServerBuild { get; } = !EnvironmentInfo.IsLocalBuild;
+        public bool IsLocalBuild => Host == HostType.Console;
+        public bool IsServerBuild => Host != HostType.Console;
 
         public LogLevel LogLevel => (LogLevel) Verbosity;
 
-        public string[] InvokedTargets { get; } = EnvironmentInfo.InvokedTargets;
+        public string[] InvokedTargets { get; } = GetInvokedTargets();
         public string[] ExecutingTargets { get; }
 
         /// <summary>
