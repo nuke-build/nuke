@@ -50,6 +50,7 @@ namespace Nuke.MSBuildLocator
                     ? new[]
                       {
                           "/usr/bin/msbuild",
+                          "/usr/local/bin/msbuild",
                           "/Library/Frameworks/Mono.framework/Versions/Current/Commands/msbuild"
                       }.FirstOrDefault(File.Exists)
                     : TryGetMSBuildPath(products: "*", requires: new[] { c_msBuildComponent, c_netCoreComponent }, legacy: false) ??
