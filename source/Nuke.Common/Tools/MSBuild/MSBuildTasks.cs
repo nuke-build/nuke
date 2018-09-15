@@ -19,6 +19,7 @@ namespace Nuke.Common.Tools.MSBuild
             return MSBuildToolPathResolver.Resolve();
         }
 
+        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
         public static MSBuildSettings DefaultMSBuild
         {
             get
@@ -42,15 +43,18 @@ namespace Nuke.Common.Tools.MSBuild
             }
         }
 
+        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
         public static MSBuildSettings DefaultMSBuildRestore => DefaultMSBuild
             .SetTargets("Restore");
 
+        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
         public static MSBuildSettings DefaultMSBuildCompile => DefaultMSBuild
             .SetTargets("Rebuild")
             .SetAssemblyVersion(GitVersionAttribute.Value?.GetNormalizedAssemblyVersion())
             .SetFileVersion(GitVersionAttribute.Value?.GetNormalizedFileVersion())
             .SetInformationalVersion(GitVersionAttribute.Value?.InformationalVersion);
 
+        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
         public static MSBuildSettings DefaultMSBuildPack => DefaultMSBuild
             .SetTargets("Restore", "Pack")
             .EnableIncludeSymbols()

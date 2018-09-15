@@ -21,6 +21,7 @@ namespace Nuke.Common.Tools.InspectCode
             return EnvironmentInfo.Is64Bit ? "inspectcode.exe" : "inspectcode.x86.exe";
         }
 
+        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
         public static InspectCodeSettings DefaultInspectCode => new InspectCodeSettings()
             .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
             .SetTargetPath(NukeBuild.Instance.SolutionFile)
