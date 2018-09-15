@@ -61,22 +61,6 @@ partial class Build : NukeBuild
     readonly string ReleaseBranchPrefix = "release";
     readonly string HotfixBranchPrefix = "hotfix";
 
-    Target Foo => _ => _
-        .Executes(() =>
-        {
-        });
-    Target Bar => _ => _
-        .DependsOn(Foo)
-        .WhenSkipped(DependencyBehavior.Skip)
-        .Executes(() =>
-        {
-        });
-    Target Foobar => _ => _
-        .DependsOn(Bar)
-        .Executes(() =>
-        {
-        });
-
     Target Clean => _ => _
         .Executes(() =>
         {
