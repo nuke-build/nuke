@@ -22,11 +22,6 @@ namespace Nuke.Common.OutputSinks
             _teamCity = teamCity;
         }
 
-        public override void Write(string text)
-        {
-            _teamCity.WriteMessage(text);
-        }
-
         public override IDisposable WriteBlock(string text)
         {
             return DelegateDisposable.CreateBracket(
@@ -45,11 +40,6 @@ namespace Nuke.Common.OutputSinks
         {
             _teamCity.WriteError(text, details);
             _teamCity.AddBuildProblem(text);
-        }
-
-        public override void Success(string text)
-        {
-            _teamCity.WriteMessage(text);
         }
     }
 }
