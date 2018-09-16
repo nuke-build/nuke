@@ -11,29 +11,18 @@ namespace Nuke.Common.Utilities
 {
     public class TemplateUtility
     {
-        public static string FillTemplate<T>(
-            string template,
-            IReadOnlyCollection<string> definitions,
-            T replacements)
-            where T : class
-        {
-            var dictionary = replacements != null
-                ? replacements.ToPropertyDictionary(
-                    x => $"_{x.Name.SplitCamelHumps().Join(separator: '_').ToUpper()}_",
-                    x => x?.ToString() ?? string.Empty)
-                : new Dictionary<string, string>();
-
-            return FillTemplate(template, definitions, dictionary);
-        }
-
         public static string FillTemplate(
             string template, 
-            IReadOnlyCollection<string> definitions,
-            IReadOnlyDictionary<string, string> replacements)
+            IReadOnlyCollection<string> definitions = null,
+            IReadOnlyDictionary<string, string> replacements = null)
         {
             definitions = definitions ?? new List<string>();
+            replacements = replacements ?? new Dictionary<string, string>();
+            
             definitions.ForEach(x => ControlFlow.Assert(template.Contains(x),
                 $"Definition '{x}' is not contained in template."));
+            replacements.Keys.ForEach(x => ControlFlow.Assert(template.Contains(x),
+                $"Replacement for '{x}' is not contained in template."));
 
             var crCount = template.Count(x => x == '\r');
             var lfCount = template.Count(x => x == '\n');
