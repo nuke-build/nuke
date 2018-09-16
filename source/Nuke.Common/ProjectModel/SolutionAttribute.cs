@@ -42,7 +42,9 @@ namespace Nuke.Common.ProjectModel
         {
             var solutionFile = _solutionFileRootRelativePath != null
                 ? Path.Combine(NukeBuild.Instance.RootDirectory, _solutionFileRootRelativePath)
+#pragma warning disable 618
                 : NukeBuild.Instance.SolutionFile;
+#pragma warning restore 618
             
             return Value = Value ??
                            ProjectModelTasks.ParseSolution(
