@@ -28,14 +28,16 @@ namespace Nuke.Common.BuildTasks
         public bool Execute()
         {
             return ExternalFiles
-                .Select(x => DownloadExternalFile(x.GetMetadata("Fullpath"), Timeout))
-                .WhereNotNull()
+                .Select(x => DownloadExternalFile(x.GetMetadata("Fullpath"), Timeout, ReportWarning, ReportError))
                 .ToList()
                 .All(x => x.Result);
         }
 
-        [CanBeNull]
-        private async Task<bool> DownloadExternalFile(string externalFile, int timeout)
+        public static async Task<bool> DownloadExternalFile(
+            string externalFile,
+            int timeout,
+            Action<string, string> warningSink,
+            Action<string, string> errorSink)
         {
             try
             {
@@ -46,7 +48,7 @@ namespace Nuke.Common.BuildTasks
                 var outputFile = externalFile.Substring(0, externalFile.Length - 4);
                 var previousHash = File.Exists(outputFile) ? FileSystemTasks.GetFileHash(outputFile) : null;
                 
-                var template = await HttpTasks.HttpDownloadStringAsync(uri.AbsolutePath);
+                var template = await HttpTasks.HttpDownloadStringAsync(uri.OriginalString);
                 var replacements = lines.Skip(1)
                     .Where(x => x.Contains('='))
                     .Select(x => x.Split('='))
@@ -63,26 +65,21 @@ namespace Nuke.Common.BuildTasks
                 var newHash = FileSystemTasks.GetFileHash(outputFile);
 
                 if (newHash != previousHash)
-                {
-                    BuildEngine.LogWarningEvent(
-                        new BuildWarningEventArgs(
-                            subcategory: "Build",
-                            code: null,
-                            file: externalFile,
-                            lineNumber: 0,
-                            columnNumber: 0,
-                            endLineNumber: 0,
-                            endColumnNumber: 0,
-                            message: $"External file '{outputFile}' has been updated from '{uri}'.",
-                            helpKeyword: null,
-                            senderName: typeof(ExternalFilesTask).FullName));
-                }
+                    warningSink(externalFile, "External file has been updated.");
 
                 return true;
             }
             catch (Exception exception)
             {
-                BuildEngine.LogErrorEvent(new BuildErrorEventArgs(
+                errorSink(externalFile, exception.Message);
+                return false;
+            }
+        }
+
+        private void ReportWarning(string externalFile, string message)
+        {
+            BuildEngine.LogWarningEvent(
+                new BuildWarningEventArgs(
                     subcategory: "Build",
                     code: null,
                     file: externalFile,
@@ -90,11 +87,24 @@ namespace Nuke.Common.BuildTasks
                     columnNumber: 0,
                     endLineNumber: 0,
                     endColumnNumber: 0,
-                    message: exception.Message,
+                    message: message,
                     helpKeyword: null,
                     senderName: typeof(ExternalFilesTask).FullName));
-                return false;
-            }
+        }
+
+        private void ReportError(string externalFile, string message)
+        {
+            BuildEngine.LogErrorEvent(new BuildErrorEventArgs(
+                subcategory: "Build",
+                code: null,
+                file: externalFile,
+                lineNumber: 0,
+                columnNumber: 0,
+                endLineNumber: 0,
+                endColumnNumber: 0,
+                message: message,
+                helpKeyword: null,
+                senderName: typeof(ExternalFilesTask).FullName));
         }
     }
 }
