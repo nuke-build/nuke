@@ -182,8 +182,8 @@ namespace Nuke.GlobalTool
 
             TextTasks.WriteAllText(
                 buildProjectFile,
-                TemplateEngine.FillOutTemplate(
-                    $"_build.{projectFormat}.csproj",
+                TemplateUtility.FillTemplate(
+                    GetTemplate($"_build.{projectFormat}.csproj"),
                     definitions: null,
                     replacements:
                     new
@@ -202,23 +202,23 @@ namespace Nuke.GlobalTool
             {
                 TextTasks.WriteAllText(
                     Path.Combine(buildDirectory, "packages.config"),
-                    TemplateEngine.FillOutTemplate(
-                        "_build.legacy.packages.config",
+                    TemplateUtility.FillTemplate(
+                        GetTemplate("_build.legacy.packages.config"),
                         definitions: null,
                         replacements: new { nukeVersion }));
             }
 
             TextTasks.WriteAllText(
                 $"{buildProjectFile}.DotSettings",
-                TemplateEngine.FillOutTemplate(
-                    "_build.csproj.DotSettings",
+                TemplateUtility.FillTemplate(
+                    GetTemplate("_build.csproj.DotSettings"),
                     definitions: null,
                     replacements: new { }));
 
             TextTasks.WriteAllText(
                 Path.Combine(buildDirectory, "Build.cs"),
-                TemplateEngine.FillOutTemplate(
-                    "Build.cs",
+                TemplateUtility.FillTemplate(
+                    GetTemplate("Build.cs"),
                     defaultBuildDefinitions,
                     replacements:
                     new
@@ -228,8 +228,8 @@ namespace Nuke.GlobalTool
 
             TextTasks.WriteAllText(
                 Path.Combine(EnvironmentInfo.WorkingDirectory, "build.ps1"),
-                TemplateEngine.FillOutTemplate(
-                    $"build.{targetPlatform}.ps1",
+                TemplateUtility.FillTemplate(
+                    GetTemplate($"build.{targetPlatform}.ps1"),
                     definitions: null,
                     replacements:
                     new
@@ -244,8 +244,8 @@ namespace Nuke.GlobalTool
 
             TextTasks.WriteAllText(
                 Path.Combine(EnvironmentInfo.WorkingDirectory, "build.sh"),
-                TemplateEngine.FillOutTemplate(
-                    $"build.{targetPlatform}.sh",
+                TemplateUtility.FillTemplate(
+                    GetTemplate($"build.{targetPlatform}.sh"),
                     definitions: null,
                     replacements:
                     new
@@ -273,8 +273,8 @@ namespace Nuke.GlobalTool
 
                 TextTasks.WriteAllText(
                     Path.Combine(rootDirectory, "README.md"),
-                    TemplateEngine.FillOutTemplate(
-                        "README.md",
+                    TemplateUtility.FillTemplate(
+                        GetTemplate("README.md"),
                         definitions: null,
                         new
                         {
@@ -285,8 +285,8 @@ namespace Nuke.GlobalTool
                         }));
                 TextTasks.WriteAllText(
                     Path.Combine(rootDirectory, "LICENSE"),
-                    TemplateEngine.FillOutTemplate(
-                        "LICENSE",
+                    TemplateUtility.FillTemplate(
+                        GetTemplate("LICENSE"),
                         definitions: null,
                         new
                         {
@@ -295,8 +295,8 @@ namespace Nuke.GlobalTool
                         }));
                 TextTasks.WriteAllText(
                     Path.Combine(rootDirectory, "CHANGELOG.md"),
-                    TemplateEngine.FillOutTemplate(
-                        "CHANGELOG.md",
+                    TemplateUtility.FillTemplate(
+                        GetTemplate("CHANGELOG.md"),
                         definitions: null,
                         replacements: new { }));
 
@@ -359,6 +359,11 @@ namespace Nuke.GlobalTool
                 $"Project(\"{{{buildProjectKind}}}\") = \"{buildProjectName}\", \"{buildProjectFileRelative}\", \"{{{buildProjectGuid}}}\"");
             content.Insert(globalIndex + 1,
                 "EndProject");
+        }
+
+        private static string GetTemplate(string templateName)
+        {
+            return new StreamReader(ResourceUtility.GetResource<Program>($"templates.{templateName}")).ReadToEnd();
         }
     }
 }

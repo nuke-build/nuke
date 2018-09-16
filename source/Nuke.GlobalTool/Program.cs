@@ -13,7 +13,7 @@ using Nuke.Common.Utilities;
 
 namespace Nuke.GlobalTool
 {
-    public static partial class Program
+    public partial class Program
     {
         private static string ScriptHost => EnvironmentInfo.IsWin ? "powershell" : "bash";
         private static string ScriptExtension => EnvironmentInfo.IsWin ? "ps1" : "sh";

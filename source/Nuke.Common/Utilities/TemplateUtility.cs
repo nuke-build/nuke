@@ -1,36 +1,44 @@
-// Copyright 2018 Maintainers of NUKE.
+// Copyright 2018 Maintainers and Contributors of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using Nuke.Common;
-using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
-namespace Nuke.GlobalTool
+namespace Nuke.Common.Utilities
 {
-    public class TemplateEngine
+    public class TemplateUtility
     {
-        public static string FillOutTemplate<T>(
-            string templateName,
-            IReadOnlyCollection<string> definitions = null,
-            T replacements = null)
+        public static string FillTemplate<T>(
+            string template,
+            IReadOnlyCollection<string> definitions,
+            T replacements)
             where T : class
         {
+            var dictionary = replacements != null
+                ? replacements.ToPropertyDictionary(
+                    x => $"_{x.Name.SplitCamelHumps().Join(separator: '_').ToUpper()}_",
+                    x => x?.ToString() ?? string.Empty)
+                : new Dictionary<string, string>();
+
+            return FillTemplate(template, definitions, dictionary);
+        }
+
+        public static string FillTemplate(
+            string template, 
+            IReadOnlyCollection<string> definitions,
+            IReadOnlyDictionary<string, string> replacements)
+        {
             definitions = definitions ?? new List<string>();
-            
-            var template = GetTemplate(templateName);
-            definitions.ForEach(x => ControlFlow.Assert(template.Contains(x), 
-                $"Definition '{x}' is not contained in '{templateName}'. Please raise an issue"));
+            definitions.ForEach(x => ControlFlow.Assert(template.Contains(x),
+                $"Definition '{x}' is not contained in template."));
 
             var crCount = template.Count(x => x == '\r');
             var lfCount = template.Count(x => x == '\n');
             var lineEnding = crCount == lfCount ? "\r\n" : "\n";
-            var lines = template.Split(lineEnding)
+            var lines = template.Split(new[] { lineEnding }, StringSplitOptions.None)
                 .Select(x => HandleLine(x, definitions))
                 .Where(x => x != null)
                 .ToList();
@@ -46,21 +54,7 @@ namespace Nuke.GlobalTool
                 }
             }
 
-            var dictionary = replacements != null
-                ? replacements.ToPropertyDictionary(
-                    x => $"_{x.Name.SplitCamelHumps().Join(separator: '_').ToUpper()}_",
-                    x => x?.ToString() ?? string.Empty)
-                : new Dictionary<string, string>();
-            return dictionary.Aggregate(lines.Join(lineEnding), (t, r) => t.Replace(r.Key, r.Value));
-        }
-
-        private static string GetTemplate(string templateName)
-        {
-            var fullResourceName = $"{typeof(Program).Namespace}.templates.{templateName}";
-            var assembly = typeof(Program).GetTypeInfo().Assembly;
-            var resourceStream = assembly.GetManifestResourceStream(fullResourceName).NotNull(
-                $"assembly.GetManifestResourceStream({fullResourceName}) != null");
-            return new StreamReader(resourceStream).ReadToEnd();
+            return replacements.Aggregate(lines.Join(lineEnding), (t, r) => t.Replace(r.Key, r.Value));
         }
 
         private static string HandleLine(string line, IReadOnlyCollection<string> definitions)
@@ -79,7 +73,7 @@ namespace Nuke.GlobalTool
                   !andConjunction && requiredDefinitions.Any(x => definitions.Contains(x))))
                 return null;
 
-            return line.Substring(0, commentIndex).TrimEnd();
+            return line.Substring(startIndex: 0, commentIndex).TrimEnd();
         }
     }
 }
