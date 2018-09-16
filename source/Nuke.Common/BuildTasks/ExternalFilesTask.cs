@@ -57,7 +57,7 @@ namespace Nuke.Common.BuildTasks
                         x => $"_{x.First().Trim('_').ToUpperInvariant()}_",
                         x => x.ElementAt(1));
                 var definitions = lines.Skip(1)
-                    .Where(x => !x.Contains(x) && !string.IsNullOrWhiteSpace(x))
+                    .Where(x => !x.Contains('=') && !string.IsNullOrWhiteSpace(x))
                     .Select(x => x.ToUpperInvariant())
                     .ToList();
                 
