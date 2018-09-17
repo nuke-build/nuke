@@ -1,11 +1,11 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.NSwag", "src\Nuke.NSwag\Nuke.NSwag.csproj", "{30EC604D-8723-4800-9527-92D8FDD60AD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.NSwag", "src\Nuke.NSwag\Nuke.NSwag.csproj", "{7BD95416-4336-4781-867E-F6184294274D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{5BE76539-1042-403D-8082-DB2B709F5CE3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{9624D67A-7988-487C-AEA3-BC2C1F394862}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
@@ -16,9 +16,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{5BE76539-1
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.NSwag.Generator", "src\Nuke.NSwag.Generator\Nuke.NSwag.Generator.csproj", "{ADE3316F-31EA-4C5F-8C8B-02665CFE9722}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.NSwag.Generator", "src\Nuke.NSwag.Generator\Nuke.NSwag.Generator.csproj", "{1A15351C-E174-4156-863B-198B2302E7FB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{830B0F1D-BB65-49F3-B076-942D0B0BE6B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{CADAEE80-7E19-411E-B851-A52105EB65F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,16 +26,16 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{30EC604D-8723-4800-9527-92D8FDD60AD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{30EC604D-8723-4800-9527-92D8FDD60AD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{30EC604D-8723-4800-9527-92D8FDD60AD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{30EC604D-8723-4800-9527-92D8FDD60AD5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ADE3316F-31EA-4C5F-8C8B-02665CFE9722}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ADE3316F-31EA-4C5F-8C8B-02665CFE9722}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ADE3316F-31EA-4C5F-8C8B-02665CFE9722}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ADE3316F-31EA-4C5F-8C8B-02665CFE9722}.Release|Any CPU.Build.0 = Release|Any CPU
-		{830B0F1D-BB65-49F3-B076-942D0B0BE6B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{830B0F1D-BB65-49F3-B076-942D0B0BE6B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BD95416-4336-4781-867E-F6184294274D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BD95416-4336-4781-867E-F6184294274D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BD95416-4336-4781-867E-F6184294274D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BD95416-4336-4781-867E-F6184294274D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A15351C-E174-4156-863B-198B2302E7FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A15351C-E174-4156-863B-198B2302E7FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A15351C-E174-4156-863B-198B2302E7FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A15351C-E174-4156-863B-198B2302E7FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CADAEE80-7E19-411E-B851-A52105EB65F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CADAEE80-7E19-411E-B851-A52105EB65F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
