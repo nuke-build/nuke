@@ -4,12 +4,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
+using Nuke.Common.BuildServers;
 using Nuke.Common.Execution;
-using Nuke.Common.IO;
+using Nuke.Common.OutputSinks;
 
 // ReSharper disable VirtualMemberNeverOverridden.Global
 
@@ -111,5 +111,31 @@ namespace Nuke.Common
 
         public string[] InvokedTargets { get; } = GetInvokedTargets();
         public string[] ExecutingTargets { get; }
+                
+        protected internal virtual IOutputSink OutputSink
+        {
+            get
+            {
+                IOutputSink innerOutputSink;
+                
+                switch (Host)
+                {
+                    case HostType.Bitrise:
+                        innerOutputSink = new BitriseOutputSink();
+                        break;
+                    case HostType.TeamCity:
+                        innerOutputSink = new TeamCityOutputSink(new TeamCity());
+                        break;
+                    case HostType.TeamServices:
+                        innerOutputSink = new TeamServicesOutputSink(new TeamServices());
+                        break;
+                    default:
+                        innerOutputSink = new ConsoleOutputSink();
+                        break;
+                }
+
+                return new SevereMessagesOutputSink(innerOutputSink);
+            }
+        }
     }
 }

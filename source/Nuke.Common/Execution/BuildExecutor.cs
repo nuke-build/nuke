@@ -27,7 +27,7 @@ namespace Nuke.Common.Execution
             {
                 var build = CreateBuildInstance(defaultTargetExpression);
 
-                Logger.OutputSink = new SevereMessagesOutputSink(GetOutputSink(build));
+                Logger.OutputSink = build.OutputSink;
                 Logger.LogLevel = build.LogLevel;
                 
                 Logger.Log(FigletTransform.GetText("NUKE"));
@@ -132,21 +132,6 @@ namespace Nuke.Common.Execution
             NukeBuild.Instance = build;
 
             return build;
-        }
-        
-        internal static IOutputSink GetOutputSink(NukeBuild build)
-        {
-            switch (build.Host)
-            {
-                case HostType.Bitrise:
-                    return new BitriseOutputSink();
-                case HostType.TeamCity:
-                    return new TeamCityOutputSink(new TeamCity());
-                case HostType.TeamServices:
-                    return new TeamServicesOutputSink(new TeamServices());
-                default:
-                    return new ConsoleOutputSink();
-            }
         }
         
         private static void WriteSummary(IReadOnlyCollection<TargetDefinition> executionList)
