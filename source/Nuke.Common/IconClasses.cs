@@ -41,7 +41,6 @@ using Nuke.Common.Tools.VSWhere;
 [assembly: IconClass(typeof(ChangelogTasks), "books")]
 [assembly: IconClass(typeof(ControlFlow), "footprint")]
 [assembly: IconClass(typeof(CoverallsNetTasks), "pie-chart4")]
-[assembly: IconClass(typeof(DocFxTasks), "books")]
 [assembly: IconClass(typeof(DotCoverTasks), "shield2")]
 [assembly: IconClass(typeof(DotNetTasks), "fire")]
 [assembly: IconClass(typeof(DupFinderTasks), "code")]
