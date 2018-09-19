@@ -46,7 +46,7 @@ internal static class RegenerateTasks
         string gitHubApiKey)
     {
         var releaseTasks = releases.Select(x => GetVersion(x, repositoryOwner, repositoryName, gitHubApiKey));
-        var (latestVersion, oldVersion) = await System.Threading.Tasks.Task.WhenAll(releaseTasks);
+        var (latestVersion, oldVersion) = (await System.Threading.Tasks.Task.WhenAll(releaseTasks)).Where(x => x != null).ToArray();
 
         var bump = GetBump(latestVersion, oldVersion);
         var buildNumber = Regex.Match(releases[index: 0].Name, "^NSwag Build (?'buildNumber'[0-9]+)$").Groups["buildNumber"].Value;

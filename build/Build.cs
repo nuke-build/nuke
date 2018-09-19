@@ -160,7 +160,7 @@ class Build : NukeBuild
             var release = await GetReleaseInformation(LatestNSwagReleases.Value, c_regenerationRepoOwner, c_regenerationRepoName, GitHubApiKey);
             if (release.Version == null)
             {
-                Logger.Info($"Build {release.BuildNumber} was not published to nuGet. PR will not be created.");
+                Logger.Info($"Build {release.BuildNumber} was not published to NuGet. PR will not be created.");
                 return;
             }
 
