@@ -648,7 +648,7 @@
             "name": "NoBuild",
             "type": "bool",
             "format": "--no-build",
-            "help": "Does not build the project prior to publishing it."
+            "help": "Doesn't build the project before publishing. It also implicitly sets the <c>--no-restore</c> flag."
           },
           {
             "name": "Output",
