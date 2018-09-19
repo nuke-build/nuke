@@ -645,6 +645,12 @@
             "help": "Doesn't perform an implicit restore when running the command."
           },
           {
+            "name": "NoBuild",
+            "type": "bool",
+            "format": "--no-build",
+            "help": "Does not build the project prior to publishing it."
+          },
+          {
             "name": "Output",
             "type": "string",
             "format": "--output {value}",
