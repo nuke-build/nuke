@@ -3,10 +3,14 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.XPath;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -36,20 +40,12 @@ namespace Nuke.Common.Tooling
             }
         }
 
-        [CanBeNull]
-        public static InstalledPackage GetLocalInstalledPackage(string packageId, string packagesConfigFile = null)
-        {
-            return GetLocalInstalledPackages(packagesConfigFile)
-                .FirstOrDefault(x => x.Id.EqualsOrdinalIgnoreCase(packageId));
-        }
-
         // TODO: add HasLocalInstalledPackage() ?
         // ReSharper disable once CyclomaticComplexity
         public static IEnumerable<InstalledPackage> GetLocalInstalledPackages(
-            string packagesConfigFile = null,
+            string packagesConfigFile,
             bool includeDependencies = false)
         {
-            packagesConfigFile = packagesConfigFile ?? GetBuildPackagesConfigFile();
             ControlFlow.Assert(!IncludesDependencies(packagesConfigFile) || includeDependencies,
                 $"!IncludesDependencies({packagesConfigFile}) || includeDependencies");
             var packagesDirectory = GetPackagesDirectory(packagesConfigFile);
@@ -66,12 +62,11 @@ namespace Nuke.Common.Tooling
                 // TODO: use xml namespaces
                 // TODO: version as tag
                 var version = XmlTasks.XmlPeekSingle(
-                        packagesConfigFile,
-                        IsLegacyFile(packagesConfigFile)
-                            ? $".//package[@id='{packageId}']/@version"
-                            : $".//*[local-name() = 'PackageReference'][@Include='{packageId}']/@Version")
-                    .NotNull("version != null");
-
+                    packagesConfigFile,
+                    IsLegacyFile(packagesConfigFile)
+                        ? $".//package[@id='{packageId}']/@version"
+                        : $".//*[local-name() = 'PackageReference'][@Include='{packageId}']/@Version");
+                
                 var packageData = GetGlobalInstalledPackage(packageId, version, packagesDirectory);
                 if (packageData == null)
                     continue;
@@ -127,7 +122,7 @@ namespace Nuke.Common.Tooling
             bool? includePrereleases = null)
         {
             packageId = packageId.ToLowerInvariant();
-            packagesDirectory = packagesDirectory ?? GetPackagesDirectory(GetBuildPackagesConfigFile());
+            packagesDirectory = packagesDirectory ?? GetPackagesDirectory();
 
             var packagesDirectoryInfo = new DirectoryInfo(packagesDirectory);
             var packageFiles = packagesDirectoryInfo
@@ -150,72 +145,62 @@ namespace Nuke.Common.Tooling
                 : candidatePackages.SingleOrDefault(x => x.Version == versionRange.FindBestMatch(candidatePackages.Select(y => y.Version)));
         }
 
-        // TODO: support for multiple projects per folder
         [CanBeNull]
-        private static string GetPackageConfigFile(string projectDirectory)
+        public static string GetPackageConfigFile(string projectDirectory)
         {
             var projectDirectoryInfo = new DirectoryInfo(projectDirectory);
             var packageConfigFile = projectDirectoryInfo.GetFiles("packages.config").SingleOrDefault()
-                                    ?? projectDirectoryInfo.GetFiles("*.csproj").SingleOrDefault();
+                                    ?? projectDirectoryInfo.GetFiles("*.csproj").SingleOrDefaultOrError("Directory contains multiple project files.");
             return packageConfigFile?.FullName;
         }
 
         // TODO: check for config ( repositoryPath / globalPackagesFolder )
-        public static string GetPackagesDirectory(string packagesConfigFile)
+        public static string GetPackagesDirectory(string packagesConfigFile = null)
         {
-            var packagesDirectory = EnvironmentInfo.Variable("NUGET_PACKAGES");
-            if (packagesDirectory != null)
-                return packagesDirectory;
+            string TryGetFromEnvironmentVariable()
+                => EnvironmentInfo.Variable("NUGET_PACKAGES");
 
-            var configSetting = GetConfigFiles(packagesConfigFile)
-                .Select(x => new
-                             {
-                                 File = x,
-                                 Setting = XmlTasks.XmlPeek(x, ".//add[@key='globalPackagesFolder']/@value").FirstOrDefault()
-                             })
-                .Where(x => x.Setting != null)
-                .FirstOrDefault();
-            if (configSetting != null)
-            {
-                return Path.IsPathRooted(configSetting.Setting)
-                    ? configSetting.Setting
-                    : Path.Combine(Path.GetDirectoryName(configSetting.File).NotNull(), configSetting.Setting);
-            }
+            string TryGetGlobalDirectoryFromConfig()
+                => GetConfigFiles(packagesConfigFile)
+                    .Select(x => new
+                                 {
+                                     File = x,
+                                     Setting = XmlTasks.XmlPeekSingle(x, ".//add[@key='globalPackagesFolder']/@value")
+                                 })
+                    .Where(x => x.Setting != null)
+                    .Select(x => Path.IsPathRooted(x.Setting)
+                        ? x.Setting
+                        : Path.Combine(Path.GetDirectoryName(x.File).NotNull(), x.Setting))
+                    .FirstOrDefault();
 
-            if (packagesConfigFile == null || !IsLegacyFile(packagesConfigFile))
-            {
-                return Path.Combine(
-                    EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile)
-                        .NotNull("EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile) != null"),
-                    ".nuget",
-                    "packages");
-            }
+            string TryGetDefaultGlobalDirectory()
+                => packagesConfigFile == null || !IsLegacyFile(packagesConfigFile)
+                    ? Path.Combine(
+                        EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile)
+                            .NotNull("EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile) != null"),
+                        ".nuget",
+                        "packages")
+                    : null;
 
-            if (NukeBuild.Instance != null)
-                // TODO SK
-#pragma warning disable 618
-                return Path.Combine(Path.GetDirectoryName(NukeBuild.Instance.SolutionFile).NotNull(), "packages");
-#pragma warning restore 618
+            string TryGetLocalDirectory()
+                => packagesConfigFile != null
+                    ? new FileInfo(packagesConfigFile).Directory.NotNull()
+                        .DescendantsAndSelf(x => x.Parent)
+                        .SingleOrDefault(x => x.GetFiles("*.sln").Any() && x.GetDirectories("packages").Any())
+                        ?.FullName
+                    : null;
 
-            packagesDirectory = new FileInfo(packagesConfigFile).Directory.NotNull()
-                .DescendantsAndSelf(x => x.Parent)
-                .SingleOrDefault(x => x.GetFiles("*.sln").Any() && x.GetDirectories("packages").Any())
-                ?.FullName;
-
-            return packagesDirectory.NotNull("GetPackagesDirectory != null");
-        }
-
-        [CanBeNull]
-        public static string GetBuildPackagesConfigFile()
-        {
-            return NukeBuild.Instance != null
-                ? GetPackageConfigFile(NukeBuild.BuildProjectDirectory).NotNull("GetBuildPackagesConfigFile != null")
-                : null;
+            var packagesDirectory = TryGetFromEnvironmentVariable() ?? 
+                                    TryGetGlobalDirectoryFromConfig() ?? 
+                                    TryGetDefaultGlobalDirectory() ?? 
+                                    TryGetLocalDirectory();
+            ControlFlow.Assert(Directory.Exists(packagesDirectory), $"Directory.Exists({packagesDirectory})");
+            return packagesDirectory;
         }
 
         private static bool IsLegacyFile(string packagesConfigFile)
         {
-            return packagesConfigFile.EndsWith(".config");
+            return packagesConfigFile.EndsWithOrdinalIgnoreCase(".config");
         }
 
         private static bool IncludesDependencies(string packagesConfigFile)
@@ -223,7 +208,7 @@ namespace Nuke.Common.Tooling
             return IsLegacyFile(packagesConfigFile);
         }
 
-        public static IEnumerable<string> GetConfigFiles([CanBeNull] string packagesConfigFile)
+        private static IEnumerable<string> GetConfigFiles([CanBeNull] string packagesConfigFile)
         {
             var directories = new List<string>();
 

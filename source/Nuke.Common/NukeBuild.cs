@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using Nuke.Common.BuildServers;
 using Nuke.Common.Execution;
 using Nuke.Common.OutputSinks;
+using Nuke.Common.Tooling;
 
 // ReSharper disable VirtualMemberNeverOverridden.Global
 
@@ -137,5 +138,7 @@ namespace Nuke.Common
                 return new SevereMessagesOutputSink(innerOutputSink);
             }
         }
+
+        protected internal virtual string PackagesConfigFile => NuGetPackageResolver.GetPackageConfigFile(BuildProjectDirectory);
     }
 }

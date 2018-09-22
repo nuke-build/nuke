@@ -13,6 +13,8 @@ namespace Nuke.Common.Tooling
     [PublicAPI]
     public static class ToolPathResolver
     {
+        public static string PackagesConfigFile;
+        
         [CanBeNull]
         public static string TryGetEnvironmentExecutable(string environmentExecutable)
         {
@@ -28,9 +30,9 @@ namespace Nuke.Common.Tooling
         public static string GetPackageExecutable(string packageId, string packageExecutable, string framework = null)
         {
             ControlFlow.Assert(packageId != null && packageExecutable != null, "packageId != null && packageExecutable != null");
-            var packagesConfigFile = NuGetPackageResolver.GetBuildPackagesConfigFile();
-            var installedPackage = NuGetPackageResolver.GetLocalInstalledPackage(packageId, packagesConfigFile)
-                .NotNull($"Could not find package '{packageId}' via '{packagesConfigFile}'.");
+            var installedPackage = NuGetPackageResolver.GetLocalInstalledPackages(PackagesConfigFile)
+                .FirstOrDefault(x => x.Id.EqualsOrdinalIgnoreCase(packageId))
+                .NotNull($"Could not find package '{packageId}' via '{PackagesConfigFile}'.");
             var packageDirectory = Path.GetDirectoryName(installedPackage.FileName).NotNull("packageDirectory != null");
 
             var executables = Directory.GetFiles(packageDirectory, packageExecutable, SearchOption.AllDirectories);

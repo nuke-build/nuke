@@ -11,6 +11,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Nuke.Common.BuildServers;
 using Nuke.Common.OutputSinks;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Execution
@@ -29,6 +30,7 @@ namespace Nuke.Common.Execution
 
                 Logger.OutputSink = build.OutputSink;
                 Logger.LogLevel = build.LogLevel;
+                ToolPathResolver.PackagesConfigFile = build.PackagesConfigFile;
                 
                 Logger.Log(FigletTransform.GetText("NUKE"));
                 Logger.Log($"Version: {typeof(BuildExecutor).GetTypeInfo().Assembly.GetInformationalText()}");
