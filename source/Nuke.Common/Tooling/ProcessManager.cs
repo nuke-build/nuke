@@ -52,7 +52,10 @@ namespace Nuke.Common.Tooling
 #if NETCORE
             string toolPathOverride = null;
             if (toolPath.EndsWith(".dll"))
-                toolPathOverride = DotNetTasks.GetToolPath();
+            {
+                toolPathOverride = ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE") ??
+                                   ToolPathResolver.GetPathExecutable("dotnet");
+            }
             else if (EnvironmentInfo.IsUnix && toolPath.EndsWithOrdinalIgnoreCase(".exe"))
                 toolPathOverride = ToolPathResolver.GetPathExecutable("mono");
 
@@ -103,11 +106,8 @@ namespace Nuke.Common.Tooling
                             };
 
             ApplyEnvironmentVariables(environmentVariables, startInfo);
-            if (NukeBuild.Instance?.CheckPath == true)
-            {
-                PrintEnvironmentVariables(startInfo);
-                CheckPathEnvironmentVariable(startInfo);
-            }
+            PrintEnvironmentVariables(startInfo);
+            CheckPathEnvironmentVariable(startInfo);
 
             var process = Process.Start(startInfo);
             if (process == null)
