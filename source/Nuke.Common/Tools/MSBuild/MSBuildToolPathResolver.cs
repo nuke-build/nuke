@@ -34,6 +34,7 @@ namespace Nuke.Common.Tools.MSBuild
                 return new[]
                        {
                            "/usr/bin/msbuild",
+                           "/usr/local/bin/msbuild",
                            "/Library/Frameworks/Mono.framework/Versions/Current/Commands/msbuild"
                        }.Where(File.Exists);
             }

@@ -5,9 +5,10 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
-using Nuke.Common.BuildServers;
 using Nuke.Common.OutputSinks;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common
 {
@@ -16,17 +17,9 @@ namespace Nuke.Common
     [DebuggerStepThrough]
     public static class Logger
     {
-        /// <summary>
-        /// Provides a logging block for better readability. The actual output is dependent on the executing environment.
-        /// <ul>
-        ///   <li><b>Console:</b> logs message with figlet font <em>cybermedium</em></li>
-        ///   <li><b>TeamCity:</b> calls <see cref="TeamCity.OpenBlock"/> and <see cref="TeamCity.CloseBlock"/></li>
-        ///   <li><b>Bitrise:</b> logs message with figlet font <em>ansi-shadow</em></li>
-        /// </ul>
-        /// </summary>
-        /// <returns>
-        /// Returns an <see cref="IDisposable"/> which will automatically end the block.
-        /// </returns>
+        public static IOutputSink OutputSink = new ConsoleOutputSink();
+        public static LogLevel LogLevel = LogLevel.Information;
+        
         public static IDisposable Block(string text)
         {
             return OutputSink.WriteBlock(text);
@@ -59,169 +52,8 @@ namespace Nuke.Common
             OutputSink.Write(text ?? string.Empty);
         }
 
-        /// <summary>
-        /// Logs a message unconditionally.
-        /// </summary>
-        public static T Log<T>(this T obj, Func<T, string> text)
-        {
-            Log(text(obj));
-            return obj;
-        }
-
         #endregion
-
-        #region Trace
-
-        /// <summary>
-        /// Logs a message as trace if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Trace"/>.
-        /// </summary>
-        [StringFormatMethod("format")]
-        public static void Trace(string format, params object[] args)
-        {
-            Trace(string.Format(format, args));
-        }
-
-        /// <summary>
-        /// Logs a message as trace if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Trace"/>.
-        /// </summary>
-        public static void Trace(object value)
-        {
-            Trace(value?.ToString());
-        }
-
-        /// <summary>
-        /// Logs a message as trace if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Trace"/>.
-        /// </summary>
-        public static void Trace(string text = null)
-        {
-            OutputSink.Trace(text ?? string.Empty);
-        }
-
-        /// <summary>
-        /// Logs a message as trace if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Trace"/>.
-        /// </summary>
-        public static T Trace<T>(this T obj, Func<T, string> text)
-        {
-            Trace(text(obj));
-            return obj;
-        }
-
-        #endregion
-
-        #region Info
-
-        /// <summary>
-        /// Logs a message as information if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Information"/>.
-        /// </summary>
-        [StringFormatMethod("format")]
-        public static void Info(string format, params object[] args)
-        {
-            Info(string.Format(format, args));
-        }
-
-        /// <summary>
-        /// Logs a message as information if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Information"/>.
-        /// </summary>
-        public static void Info(object value)
-        {
-            Info(value?.ToString());
-        }
-
-        /// <summary>
-        /// Logs a message as information if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Information"/>.
-        /// </summary>
-        public static void Info(string text = null)
-        {
-            OutputSink.Info(text ?? string.Empty);
-        }
-
-        /// <summary>
-        /// Logs a message as information if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Information"/>.
-        /// </summary>
-        public static T Info<T>(this T obj, Func<T, string> text)
-        {
-            Info(text(obj));
-            return obj;
-        }
-
-        #endregion
-
-        #region Warn
-
-        /// <summary>
-        /// Logs a message as warning if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Warning"/>.
-        /// </summary>
-        [StringFormatMethod("format")]
-        public static void Warn(string format, params object[] args)
-        {
-            Warn(string.Format(format, args));
-        }
-
-        /// <summary>
-        /// Logs a message as warning if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Warning"/>.
-        /// </summary>
-        public static void Warn(object value)
-        {
-            Warn(value?.ToString());
-        }
-
-        /// <summary>
-        /// Logs a message as warning if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Warning"/>.
-        /// </summary>
-        public static void Warn(string text = null)
-        {
-            OutputSink.Warn(text ?? string.Empty);
-        }
-
-        /// <summary>
-        /// Logs a message as warning if <see cref="NukeBuild.LogLevel"/> is greater or equal to <see cref="LogLevel.Warning"/>.
-        /// </summary>
-        public static T Warn<T>(this T obj, Func<T, string> text)
-        {
-            Warn(text(obj));
-            return obj;
-        }
-
-        #endregion
-
-        #region Error
-
-        /// <summary>
-        /// Logs a message as error.
-        /// </summary>
-        [StringFormatMethod("format")]
-        public static void Error(string format, params object[] args)
-        {
-            Error(string.Format(format, args));
-        }
-
-        /// <summary>
-        /// Logs a message as error.
-        /// </summary>
-        public static void Error(object value)
-        {
-            Error(value?.ToString());
-        }
-
-        /// <summary>
-        /// Logs a message as error.
-        /// </summary>
-        public static void Error(string text = null)
-        {
-            OutputSink.Error(text ?? string.Empty);
-        }
-
-        /// <summary>
-        /// Logs a message as error.
-        /// </summary>
-        public static T Error<T>(this T obj, Func<T, string> text)
-        {
-            Error(text(obj));
-            return obj;
-        }
-
-        #endregion
-
+        
         #region Success
 
         /// <summary>
@@ -249,15 +81,164 @@ namespace Nuke.Common
             OutputSink.Success(text ?? string.Empty);
         }
 
+        #endregion
+
+        #region Trace
+
         /// <summary>
-        /// Logs a message as Success.
+        /// Logs a message as trace if <see cref="LogLevel"/> is equal to <see cref="Nuke.Common.LogLevel.Trace"/>.
         /// </summary>
-        public static T Success<T>(this T obj, Func<T, string> text)
+        [StringFormatMethod("format")]
+        public static void Trace(string format, params object[] args)
         {
-            Success(text(obj));
-            return obj;
+            Trace(string.Format(format, args));
+        }
+
+        /// <summary>
+        /// Logs a message as trace if <see cref="LogLevel"/> is equal to <see cref="Nuke.Common.LogLevel.Trace"/>.
+        /// </summary>
+        public static void Trace(object value)
+        {
+            Trace(value?.ToString());
+        }
+
+        /// <summary>
+        /// Logs a message as trace if <see cref="LogLevel"/> is equal to <see cref="Nuke.Common.LogLevel.Trace"/>.
+        /// </summary>
+        public static void Trace(string text = null)
+        {
+            if (LogLevel <= LogLevel.Trace)
+                OutputSink.Trace(text ?? string.Empty);
         }
 
         #endregion
+
+        #region Info
+
+        /// <summary>
+        /// Logs a message as information if <see cref="LogLevel"/> is lower or equal to <see cref="Nuke.Common.LogLevel.Information"/>.
+        /// </summary>
+        [StringFormatMethod("format")]
+        public static void Info(string format, params object[] args)
+        {
+            Info(string.Format(format, args));
+        }
+
+        /// <summary>
+        /// Logs a message as information if <see cref="LogLevel"/> is lower or equal to <see cref="Nuke.Common.LogLevel.Information"/>.
+        /// </summary>
+        public static void Info(object value)
+        {
+            Info(value?.ToString());
+        }
+
+        /// <summary>
+        /// Logs a message as information if <see cref="LogLevel"/> is lower or equal to <see cref="Nuke.Common.LogLevel.Information"/>.
+        /// </summary>
+        public static void Info(string text = null)
+        {
+            if (LogLevel <= LogLevel.Information)
+                OutputSink.Info(text ?? string.Empty);
+        }
+
+        #endregion
+
+        #region Warn
+
+        /// <summary>
+        /// Logs a message as warning if <see cref="LogLevel"/> is lower or equal to <see cref="Nuke.Common.LogLevel.Warning"/>.
+        /// </summary>
+        [StringFormatMethod("format")]
+        public static void Warn(string format, params object[] args)
+        {
+            Warn(string.Format(format, args));
+        }
+
+        /// <summary>
+        /// Logs a message as warning if <see cref="LogLevel"/> is lower or equal to <see cref="Nuke.Common.LogLevel.Warning"/>.
+        /// </summary>
+        public static void Warn(object value)
+        {
+            Warn(value?.ToString());
+        }
+
+        /// <summary>
+        /// Logs a message as warning if <see cref="LogLevel"/> is lower or equal to <see cref="Nuke.Common.LogLevel.Warning"/>.
+        /// </summary>
+        public static void Warn(string text = null)
+        {
+            if (LogLevel <= LogLevel.Warning)
+                OutputSink.Warn(text ?? string.Empty);
+        }
+
+        /// <summary>
+        /// Logs an exception as warning if <see cref="LogLevel"/> is lower or equal to <see cref="Nuke.Common.LogLevel.Warning"/>.
+        /// </summary>
+        public static void Warn(Exception exception)
+        {
+            if (LogLevel <= LogLevel.Warning)
+                HandleException(exception, OutputSink.Warn);
+        }
+        
+        #endregion
+
+        #region Error
+
+        /// <summary>
+        /// Logs a message as error.
+        /// </summary>
+        [StringFormatMethod("format")]
+        public static void Error(string format, params object[] args)
+        {
+            Error(string.Format(format, args));
+        }
+
+        /// <summary>
+        /// Logs a message as error.
+        /// </summary>
+        public static void Error(object value)
+        {
+            Error(value?.ToString());
+        }
+
+        /// <summary>
+        /// Logs a message as error.
+        /// </summary>
+        public static void Error(string text = null)
+        {
+            if (LogLevel <= LogLevel.Error)
+                OutputSink.Error(text ?? string.Empty);
+        }
+
+        /// <summary>
+        /// Logs an exception as error.
+        /// </summary>
+        public static void Error(Exception exception)
+        {
+            if (LogLevel <= LogLevel.Error)
+                HandleException(exception, OutputSink.Error);
+        }
+
+        #endregion
+
+        private static void HandleException(Exception exception, Action<string, string> exceptionOutput)
+        {
+            switch (exception)
+            {
+                case AggregateException ex:
+                    ex.Flatten().InnerExceptions.ForEach(x => HandleException(x, exceptionOutput));
+                    break;
+                case TargetInvocationException ex:
+                    HandleException(ex.InnerException, exceptionOutput);
+                    break;
+                case TypeInitializationException ex:
+                    HandleException(ex.InnerException, exceptionOutput);
+                    break;
+                default:
+                    exceptionOutput(exception.Message, exception.StackTrace);
+                    break;
+            }
+        }
+
     }
 }

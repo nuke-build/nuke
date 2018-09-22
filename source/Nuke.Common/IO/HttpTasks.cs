@@ -76,7 +76,7 @@ namespace Nuke.Common.IO
             protected override WebRequest GetWebRequest(Uri address)
             {
                 var webRequest = base.GetWebRequest(address);
-                _requestConfigurator(webRequest);
+                _requestConfigurator?.Invoke(webRequest);
                 return webRequest;
             }
         }

@@ -38,7 +38,6 @@ namespace Nuke.Common
                 ? environmentVariables
                 : new Dictionary<string, string>(environmentVariables, StringComparer.OrdinalIgnoreCase);
         }
-
         private static Lazy<Dictionary<string, string>> s_variables = new Lazy<Dictionary<string, string>>(GetVariables);
 
         public static IReadOnlyDictionary<string, string> Variables => s_variables.Value.AsReadOnly();

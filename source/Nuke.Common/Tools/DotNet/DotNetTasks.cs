@@ -25,10 +25,12 @@ namespace Nuke.Common.Tools.DotNet
                    ?? ToolPathResolver.GetPathExecutable("dotnet");
         }
 
+        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
         public static DotNetRestoreSettings DefaultDotNetRestore => new DotNetRestoreSettings()
             .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
             .SetProjectFile(NukeBuild.Instance.SolutionFile);
 
+        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
         public static DotNetBuildSettings DefaultDotNetBuild => new DotNetBuildSettings()
             .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
             .SetProjectFile(NukeBuild.Instance.SolutionFile)
@@ -38,6 +40,7 @@ namespace Nuke.Common.Tools.DotNet
             .SetFileVersion(GitVersionAttribute.Value?.GetNormalizedFileVersion())
             .SetInformationalVersion(GitVersionAttribute.Value?.InformationalVersion);
 
+        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
         public static DotNetPublishSettings DefaultDotNetPublish => new DotNetPublishSettings()
             .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
             .SetProject(NukeBuild.Instance.SolutionFile)
@@ -47,6 +50,7 @@ namespace Nuke.Common.Tools.DotNet
             .SetFileVersion(GitVersionAttribute.Value?.GetNormalizedFileVersion())
             .SetInformationalVersion(GitVersionAttribute.Value?.InformationalVersion);
 
+        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
         public static DotNetPackSettings DefaultDotNetPack => new DotNetPackSettings()
             .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
             .SetProject(NukeBuild.Instance.SolutionFile)
@@ -56,6 +60,7 @@ namespace Nuke.Common.Tools.DotNet
             .SetOutputDirectory(NukeBuild.Instance.OutputDirectory)
             .SetVersion(GitVersionAttribute.Value?.NuGetVersionV2);
 
+        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
         public static DotNetTestSettings DefaultDotNetTest => new DotNetTestSettings()
             .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
             .EnableNoBuild()

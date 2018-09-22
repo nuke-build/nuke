@@ -5,9 +5,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Nuke.Common.BuildServers;
 using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities;
 
@@ -20,15 +22,19 @@ namespace Nuke.Common.Execution
         public static int Execute<T>(Expression<Func<T, Target>> defaultTargetExpression)
             where T : NukeBuild
         {
-            Logger.Log(FigletTransform.GetText("NUKE"));
-            Logger.Log($"Version: {typeof(BuildExecutor).GetTypeInfo().Assembly.GetInformationalText()}");
-            Logger.Log($"Host: {EnvironmentInfo.HostType}");
-            Logger.Log();
-
             var executionList = default(IReadOnlyCollection<TargetDefinition>);
             try
             {
                 var build = CreateBuildInstance(defaultTargetExpression);
+
+                Logger.OutputSink = build.OutputSink;
+                Logger.LogLevel = build.LogLevel;
+                
+                Logger.Log(FigletTransform.GetText("NUKE"));
+                Logger.Log($"Version: {typeof(BuildExecutor).GetTypeInfo().Assembly.GetInformationalText()}");
+                Logger.Log($"Host: {build.Host}");
+                Logger.Log();
+                
                 InjectionService.InjectValues(build);
                 HandleEarlyExits(build);
 
@@ -38,27 +44,24 @@ namespace Nuke.Common.Execution
 
                 return 0;
             }
-            catch (AggregateException exception)
-            {
-                foreach (var innerException in exception.Flatten().InnerExceptions)
-                    OutputSink.Error(innerException.Message, innerException.StackTrace);
-                return -exception.Message.GetHashCode();
-            }
-            catch (TargetInvocationException exception)
-            {
-                var innerException = exception.InnerException.NotNull();
-                OutputSink.Error(innerException.Message, innerException.StackTrace);
-                return -exception.Message.GetHashCode();
-            }
             catch (Exception exception)
             {
-                OutputSink.Error(exception.Message, exception.StackTrace);
-                return -exception.Message.GetHashCode();
+                Logger.Error(exception);
+                return -1;
             }
             finally
             {
+                if (Logger.OutputSink is SevereMessagesOutputSink outputSink)
+                {
+                    Logger.Log();
+                    WriteWarningsAndErrors(outputSink);
+                }
+
                 if (executionList != null)
-                    OutputSink.WriteSummary(executionList);
+                {
+                    Logger.Log();
+                    WriteSummary(executionList);
+                }
             }
         }
 
@@ -129,6 +132,78 @@ namespace Nuke.Common.Execution
             NukeBuild.Instance = build;
 
             return build;
+        }
+        
+        private static void WriteSummary(IReadOnlyCollection<TargetDefinition> executionList)
+        {
+            var firstColumn = Math.Max(executionList.Max(x => x.Name.Length) + 4, val2: 20);
+            var secondColumn = 10;
+            var thirdColumn = 10;
+            var allColumns = firstColumn + secondColumn + thirdColumn;
+            var totalDuration = executionList.Aggregate(TimeSpan.Zero, (t, x) => t.Add(x.Duration));
+
+            string CreateLine(string target, string executionStatus, string duration)
+                => target.PadRight(firstColumn, paddingChar: ' ')
+                   + executionStatus.PadRight(secondColumn, paddingChar: ' ')
+                   + duration.PadLeft(thirdColumn, paddingChar: ' ');
+
+            string ToMinutesAndSeconds(TimeSpan duration)
+                => $"{(int) duration.TotalMinutes}:{duration:ss}";
+
+            Logger.Log(new string(c: '=', count: allColumns));
+            Logger.Log(CreateLine("Target", "Status", "Duration"));
+            Logger.Log(new string(c: '-', count: allColumns));
+            foreach (var target in executionList)
+            {
+                var line = CreateLine(target.Name, target.Status.ToString(), ToMinutesAndSeconds(target.Duration));
+                switch (target.Status)
+                {
+                    case ExecutionStatus.Absent:
+                    case ExecutionStatus.Skipped:
+                        Logger.Log(line);
+                        break;
+                    case ExecutionStatus.Executed:
+                        Logger.Success(line);
+                        break;
+                    case ExecutionStatus.NotRun:
+                    case ExecutionStatus.Failed:
+                        Logger.Error(line);
+                        break;
+                }
+            }
+
+            Logger.Log(new string(c: '-', count: allColumns));
+            Logger.Log(CreateLine("Total", "", ToMinutesAndSeconds(totalDuration)));
+            Logger.Log(new string(c: '=', count: allColumns));
+            Logger.Log();
+            if (executionList.All(x => x.Status != ExecutionStatus.Failed && x.Status != ExecutionStatus.NotRun))
+                Logger.Success($"Build succeeded on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}.");
+            else
+                Logger.Error($"Build failed on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}.");
+            Logger.Log();
+        }
+        
+        public static void WriteWarningsAndErrors(SevereMessagesOutputSink outputSink)
+        {
+            if (outputSink.SevereMessages.Count <= 0)
+                return;
+            
+            Logger.Log("Repeating warnings and errors:");
+
+            foreach (var severeMessage in outputSink.SevereMessages.ToList())
+            {
+                switch (severeMessage.Item1)
+                {
+                    case LogLevel.Warning:
+                        Logger.Warn(severeMessage.Item2);
+                        break;
+                    case LogLevel.Error:
+                        Logger.Error(severeMessage.Item2);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
         }
     }
 }

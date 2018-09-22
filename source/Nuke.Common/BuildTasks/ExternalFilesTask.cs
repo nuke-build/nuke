@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Build.Framework;
 using Nuke.Common.IO;
+using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.BuildTasks
@@ -27,50 +28,83 @@ namespace Nuke.Common.BuildTasks
         public bool Execute()
         {
             return ExternalFiles
-                .Select(x => DownloadExternalFile(x.GetMetadata("Fullpath"), Timeout))
-                .WhereNotNull()
+                .Select(x => DownloadExternalFile(x.GetMetadata("Fullpath"), Timeout, ReportWarning, ReportError))
                 .ToList()
                 .All(x => x.Result);
         }
 
-        [CanBeNull]
-        private async Task<bool> DownloadExternalFile(string file, int timeout)
+        public static async Task<bool> DownloadExternalFile(
+            string externalFile,
+            int timeout,
+            Action<string, string> warningSink,
+            Action<string, string> errorSink)
         {
             try
             {
-                var lines = File.ReadAllLines(file).Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
-                ControlFlow.Assert(lines.Count == 1, $"External file '{file}' must contain single URI.");
+                var lines = File.ReadAllLines(externalFile).Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
+                var uriConversion = Uri.TryCreate(lines.FirstOrDefault(), UriKind.Absolute, out var uri);
+                ControlFlow.Assert(uriConversion, $"Could not parse URI for external file from first line of '{externalFile}'.");
 
-                var uriString = lines.FirstOrDefault();
-                if (!Uri.TryCreate(uriString, UriKind.Absolute, out var uri))
-                    ControlFlow.Fail($"Could not parse '{uriString}' from external file '{file}'.");
+                var outputFile = externalFile.Substring(0, externalFile.Length - 4);
+                var previousHash = File.Exists(outputFile) ? FileSystemTasks.GetFileHash(outputFile) : null;
+                
+                var template = await HttpTasks.HttpDownloadStringAsync(uri.OriginalString);
+                var replacements = lines.Skip(1)
+                    .Where(x => x.Contains('='))
+                    .Select(x => x.Split('='))
+                    .Where(x => x.Length == 2)
+                    .ToDictionary(
+                        x => $"_{x.First().Trim('_').ToUpperInvariant()}_",
+                        x => x.ElementAt(1));
+                var definitions = lines.Skip(1)
+                    .Where(x => !x.Contains('=') && !string.IsNullOrWhiteSpace(x))
+                    .Select(x => x.ToUpperInvariant())
+                    .ToList();
+                
+                File.WriteAllText(outputFile, TemplateUtility.FillTemplate(template, definitions, replacements));
+                var newHash = FileSystemTasks.GetFileHash(outputFile);
 
-                var outputFile = file.Substring(0, file.Length - 4);
-                await HttpTasks.HttpDownloadFileAsync(uri.AbsolutePath, outputFile);
-
-                BuildEngine.LogMessageEvent(new BuildMessageEventArgs(
-                    $"Successfully downloaded external file '{outputFile}' from '{uri}'.",
-                    helpKeyword: null,
-                    senderName: typeof(ExternalFilesTask).FullName,
-                    importance: MessageImportance.Normal));
+                if (newHash != previousHash)
+                    warningSink(externalFile, "External file has been updated.");
 
                 return true;
             }
             catch (Exception exception)
             {
-                BuildEngine.LogErrorEvent(new BuildErrorEventArgs(
+                errorSink(externalFile, exception.Message);
+                return false;
+            }
+        }
+
+        private void ReportWarning(string externalFile, string message)
+        {
+            BuildEngine.LogWarningEvent(
+                new BuildWarningEventArgs(
                     subcategory: "Build",
                     code: null,
-                    file: file,
+                    file: externalFile,
                     lineNumber: 0,
                     columnNumber: 0,
                     endLineNumber: 0,
                     endColumnNumber: 0,
-                    message: exception.Message,
+                    message: message,
                     helpKeyword: null,
                     senderName: typeof(ExternalFilesTask).FullName));
-                return false;
-            }
+        }
+
+        private void ReportError(string externalFile, string message)
+        {
+            BuildEngine.LogErrorEvent(new BuildErrorEventArgs(
+                subcategory: "Build",
+                code: null,
+                file: externalFile,
+                lineNumber: 0,
+                columnNumber: 0,
+                endLineNumber: 0,
+                endColumnNumber: 0,
+                message: message,
+                helpKeyword: null,
+                senderName: typeof(ExternalFilesTask).FullName));
         }
     }
 }

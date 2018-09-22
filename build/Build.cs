@@ -48,9 +48,13 @@ partial class Build : NukeBuild
 
     [Parameter("Install global tool.")] readonly bool InstallGlobalTool;
 
-    [GitVersion] readonly GitVersion GitVersion;
+    [Solution("nuke-common.sln")] readonly Solution Solution;
+
     [GitRepository] readonly GitRepository GitRepository;
-    [Solution] readonly Solution Solution;
+    [GitVersion] readonly GitVersion GitVersion;
+
+    new AbsolutePath OutputDirectory => RootDirectory / "output";
+    new AbsolutePath SourceDirectory => RootDirectory / "source";
 
     readonly string MasterBranch = "master";
     readonly string DevelopBranch = "develop";
@@ -153,7 +157,7 @@ partial class Build : NukeBuild
             var framework = "net461";
             var xunitSettings = new Xunit2Settings()
                 .SetFramework(framework)
-                .AddTargetAssemblies(GlobFiles(SolutionDirectory, $"*/bin/{Configuration}/{framework}/Nuke.*.Tests.dll").NotEmpty())
+                .AddTargetAssemblies(GlobFiles(Solution.Directory, $"*/bin/{Configuration}/{framework}/Nuke.*.Tests.dll").NotEmpty())
                 .AddResultReport(Xunit2ResultFormat.Xml, OutputDirectory / "tests.xml");
 
             if (IsWin)

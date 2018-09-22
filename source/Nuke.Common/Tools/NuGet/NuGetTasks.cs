@@ -17,12 +17,14 @@ namespace Nuke.Common.Tools.NuGet
                    ?? ToolPathResolver.GetPackageExecutable("NuGet.CommandLine", "nuget.exe");
         }
 
+        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
         public static NuGetPackSettings DefaultNuGetPack => new NuGetPackSettings()
             .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
             .SetOutputDirectory(NukeBuild.Instance.OutputDirectory)
             .SetConfiguration(NukeBuild.Instance.Configuration)
             .SetVersion(GitVersionAttribute.Value?.NuGetVersionV2);
 
+        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
         public static NuGetRestoreSettings DefaultNuGetRestore => new NuGetRestoreSettings()
             .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
             .SetTargetPath(NukeBuild.Instance.SolutionFile);

@@ -20,7 +20,7 @@ class Build : NukeBuild
     [Parameter] readonly string SymbolSource = "https://nuget.smbsrc.net/";                     // NUGET
     [Parameter] readonly string ApiKey;                                                         // NUGET
 
-    [Solution] readonly Solution Solution;
+    [Solution("_SOLUTION_FILE_")] readonly Solution Solution;                                   // SOLUTION_FILE
     [GitRepository] readonly GitRepository GitRepository;                                       // GIT
     [GitVersion] readonly GitVersion GitVersion;                                                // GITVERSION
 

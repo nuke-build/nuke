@@ -12,6 +12,7 @@ namespace Nuke.Common.Tools.GitLink
 {
     public static partial class GitLinkTasks
     {
+        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
         public static GitLink2Settings DefaultGitLink2 => new GitLink2Settings()
             .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
             .SetSolutionDirectory(NukeBuild.Instance.SolutionDirectory)
@@ -19,6 +20,7 @@ namespace Nuke.Common.Tools.GitLink
             .SetBranchName(GitVersionAttribute.Value?.BranchName)
             .SetRepositoryUrl(GitRepositoryAttribute.Value?.ToString());
 
+        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
         public static GitLink3Settings DefaultGitLink3 => new GitLink3Settings()
             .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
             .SetBaseDirectory(NukeBuild.Instance.RootDirectory)

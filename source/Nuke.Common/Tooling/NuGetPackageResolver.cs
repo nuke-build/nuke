@@ -192,7 +192,10 @@ namespace Nuke.Common.Tooling
             }
 
             if (NukeBuild.Instance != null)
+                // TODO SK
+#pragma warning disable 618
                 return Path.Combine(Path.GetDirectoryName(NukeBuild.Instance.SolutionFile).NotNull(), "packages");
+#pragma warning restore 618
 
             packagesDirectory = new FileInfo(packagesConfigFile).Directory.NotNull()
                 .DescendantsAndSelf(x => x.Parent)
@@ -206,7 +209,7 @@ namespace Nuke.Common.Tooling
         public static string GetBuildPackagesConfigFile()
         {
             return NukeBuild.Instance != null
-                ? GetPackageConfigFile(EnvironmentInfo.BuildProjectDirectory).NotNull("GetBuildPackagesConfigFile != null")
+                ? GetPackageConfigFile(NukeBuild.BuildProjectDirectory).NotNull("GetBuildPackagesConfigFile != null")
                 : null;
         }
 

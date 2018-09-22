@@ -4,12 +4,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
+using Nuke.Common.BuildServers;
 using Nuke.Common.Execution;
-using Nuke.Common.IO;
+using Nuke.Common.OutputSinks;
 
 // ReSharper disable VirtualMemberNeverOverridden.Global
 
@@ -41,7 +41,7 @@ namespace Nuke.Common
     /// </code>
     /// </example>
     [PublicAPI]
-    public abstract class NukeBuild
+    public abstract partial class NukeBuild
     {
         public const string ConfigurationFile = ".nuke";
 
@@ -72,19 +72,19 @@ namespace Nuke.Common
         /// Host for execution. Default is <em>automatic</em>.
         /// </summary>
         [Parameter("Host for execution. Default is 'automatic'.")]
-        public HostType Host { get; } = EnvironmentInfo.HostType;
+        public HostType Host { get; } = GetHostType();
 
         /// <summary>
         /// Configuration to build. Default is <em>Debug</em> (local) or <em>Release</em> (server).
         /// </summary>
         [Parameter("Configuration to build. Default is 'Debug' (local) or 'Release' (server).")]
-        public virtual string Configuration { get; } = EnvironmentInfo.IsLocalBuild ? "Debug" : "Release";
+        public virtual string Configuration { get; } = GetHostType() == HostType.Console ? "Debug" : "Release";
 
         /// <summary>
         /// Disables execution of target dependencies.
         /// </summary>
         [Parameter("Disables execution of dependent targets.", Name = "Skip", Separator = "+")]
-        public string[] SkippedTargets { get; } = EnvironmentInfo.SkippedTargets;
+        public string[] SkippedTargets { get; } = GetSkippedTargets();
 
         /// <summary>
         /// Enables sanity checks for the <c>PATH</c> environment variable.
@@ -104,88 +104,37 @@ namespace Nuke.Common
         [Parameter("Shows the help text for this build assembly.")]
         public bool Help { get; }
 
-        public bool IsLocalBuild { get; } = EnvironmentInfo.IsLocalBuild;
-        public bool IsServerBuild { get; } = !EnvironmentInfo.IsLocalBuild;
+        public bool IsLocalBuild => Host == HostType.Console;
+        public bool IsServerBuild => Host != HostType.Console;
 
         public LogLevel LogLevel => (LogLevel) Verbosity;
 
-        public string[] InvokedTargets { get; } = EnvironmentInfo.InvokedTargets;
+        public string[] InvokedTargets { get; } = GetInvokedTargets();
         public string[] ExecutingTargets { get; }
-
-        /// <summary>
-        /// Gets the full path to the root directory where the <c>.nuke</c> file is located.
-        /// </summary>
-        public virtual PathConstruction.AbsolutePath RootDirectory
+                
+        protected internal virtual IOutputSink OutputSink
         {
             get
             {
-                var rootDirectory =
-                    FileSystemTasks.FindParentDirectory(EnvironmentInfo.BuildProjectDirectory, x => x.GetFiles(ConfigurationFile).Any());
-                ControlFlow.Assert(rootDirectory != null,
-                    $"Could not locate '{ConfigurationFile}' file while traversing up from '{EnvironmentInfo.BuildProjectDirectory}'.");
+                IOutputSink innerOutputSink;
+                
+                switch (Host)
+                {
+                    case HostType.Bitrise:
+                        innerOutputSink = new BitriseOutputSink();
+                        break;
+                    case HostType.TeamCity:
+                        innerOutputSink = new TeamCityOutputSink(new TeamCity());
+                        break;
+                    case HostType.TeamServices:
+                        innerOutputSink = new TeamServicesOutputSink(new TeamServices());
+                        break;
+                    default:
+                        innerOutputSink = new ConsoleOutputSink();
+                        break;
+                }
 
-                return (PathConstruction.AbsolutePath) rootDirectory;
-            }
-        }
-
-        /// <summary>
-        /// Full path to the solution file that is referenced in the <c>.nuke</c> file.
-        /// </summary>
-        public virtual PathConstruction.AbsolutePath SolutionFile
-        {
-            get
-            {
-                var nukeFile = Path.Combine(RootDirectory, ConfigurationFile);
-                ControlFlow.Assert(File.Exists(nukeFile), $"File.Exists({ConfigurationFile})");
-
-                var solutionFileRelative = File.ReadAllLines(nukeFile)[0];
-                ControlFlow.Assert(!solutionFileRelative.Contains(value: '\\'), $"{ConfigurationFile} must use unix-styled separators");
-
-                var solutionFile = Path.GetFullPath(Path.Combine(RootDirectory, solutionFileRelative));
-                ControlFlow.Assert(File.Exists(solutionFile), "File.Exists(solutionFile)");
-
-                return (PathConstruction.AbsolutePath) solutionFile;
-            }
-        }
-
-        /// <summary>
-        /// Full path to the solution directory derived the <c>.nuke</c> file.
-        /// </summary>
-        public virtual PathConstruction.AbsolutePath SolutionDirectory => (PathConstruction.AbsolutePath) Path.GetDirectoryName(SolutionFile);
-
-        /// <summary>
-        /// Full path to <c>/.tmp</c>.
-        /// </summary>
-        public virtual PathConstruction.AbsolutePath TemporaryDirectory
-        {
-            get
-            {
-                var temporaryDirectory = Path.Combine(RootDirectory, ".tmp");
-                FileSystemTasks.EnsureExistingDirectory(temporaryDirectory);
-                return (PathConstruction.AbsolutePath) temporaryDirectory;
-            }
-        }
-
-        /// <summary>
-        /// Full path to <c>/output</c>.
-        /// </summary>
-        public virtual PathConstruction.AbsolutePath OutputDirectory => (PathConstruction.AbsolutePath) Path.Combine(RootDirectory, "output");
-
-        /// <summary>
-        /// Full path to <c>/artifacts</c>.
-        /// </summary>
-        public virtual PathConstruction.AbsolutePath ArtifactsDirectory => (PathConstruction.AbsolutePath) Path.Combine(RootDirectory, "artifacts");
-
-        /// <summary>
-        /// Full path to either <c>/src</c> or <c>/source</c>. Throws an exception if either none or both exist.
-        /// </summary>
-        public virtual PathConstruction.AbsolutePath SourceDirectory
-        {
-            get
-            {
-                var directories = new[] { "src", "source" }.SelectMany(x => Directory.GetDirectories(RootDirectory, x)).ToList();
-                ControlFlow.Assert(directories.Count == 1, "Could not locate a single source directory. Candidates are '/src' and '/source'.");
-                return (PathConstruction.AbsolutePath) directories.Single();
+                return new SevereMessagesOutputSink(innerOutputSink);
             }
         }
     }

@@ -63,10 +63,10 @@ namespace Nuke.GlobalTool
                 options: new DirectoryInfo(rootDirectory)
                     .EnumerateFiles("*", SearchOption.AllDirectories)
                     .Where(x => x.FullName.EndsWithOrdinalIgnoreCase(".sln"))
-                    .NotEmpty("No solution file found.")
                     .OrderByDescending(x => x.FullName)
-                    .Select(x => (x, GetRelativePath(rootDirectory, x.FullName))).ToArray()).FullName;
-            var solutionDirectory = Path.GetDirectoryName(solutionFile);
+                    .Select(x => (x, GetRelativePath(rootDirectory, x.FullName)))
+                    .Concat((null, "None")).ToArray())?.FullName;
+            var solutionDirectory = solutionFile != null ? Path.GetDirectoryName(solutionFile) : null;
 
             var targetPlatform = ConsoleHelper.PromptForChoice("How should the build project be bootstrapped?",
                 (PLATFORM_NETCORE, ".NET Core SDK"),
@@ -101,7 +101,7 @@ namespace Nuke.GlobalTool
 
             #endregion
 
-            #region Wizard
+            #region Additional
 
             var defaultBuildDefinitions = new List<string>();
 
@@ -168,89 +168,91 @@ namespace Nuke.GlobalTool
                                        [FORMAT_SDK] = "9A19103F-16F7-4668-BE54-9A1E7A4F7556"
                                    }[projectFormat];
 
-            var buildProjectFileRelative = (WinRelativePath) GetRelativePath(solutionDirectory, buildProjectFile);
-            
-            var solutionFileContent = TextTasks.ReadAllLines(solutionFile).ToList();
-            UpdateSolutionFileContent(solutionFileContent, buildProjectFileRelative, buildProjectGuid, buildProjectKind, buildProjectName);
-            TextTasks.WriteAllLines(solutionFile, solutionFileContent, Encoding.UTF8);
+            if (solutionFile != null)
+            {
+                defaultBuildDefinitions.Add("SOLUTION_FILE");
+                
+                var solutionFileContent = TextTasks.ReadAllLines(solutionFile).ToList();
+                var buildProjectFileRelative = (WinRelativePath) GetRelativePath(solutionDirectory, buildProjectFile);
+                UpdateSolutionFileContent(solutionFileContent, buildProjectFileRelative, buildProjectGuid, buildProjectKind, buildProjectName);
+                TextTasks.WriteAllLines(solutionFile, solutionFileContent, Encoding.UTF8);
+            }
 
-            TextTasks.WriteAllText(
-                Path.Combine(rootDirectory, NukeBuild.ConfigurationFile),
-                GetRelativePath(rootDirectory, solutionFile).Replace(oldChar: '\\', newChar: '/'));
+            FileSystemTasks.Touch(Path.Combine(rootDirectory, NukeBuild.ConfigurationFile));
 
             TextTasks.WriteAllText(
                 buildProjectFile,
-                TemplateEngine.FillOutTemplate(
-                    $"_build.{projectFormat}.csproj",
-                    definitions: null,
-                    replacements:
-                    new
-                    {
-                        solutionDirectory = (WinRelativePath) GetRelativePath(buildDirectory, solutionDirectory),
-                        rootDirectory = (WinRelativePath) GetRelativePath(buildDirectory, rootDirectory),
-                        scriptDirectory = (WinRelativePath) GetRelativePath(buildDirectory, EnvironmentInfo.WorkingDirectory),
-                        buildProjectName,
-                        buildProjectGuid,
-                        targetFramework,
-                        nukeVersion,
-                        nukeVersionMajorMinor = nukeVersion.Substring(0, nukeVersion.IndexOf(".", 0, 2, StringComparison.OrdinalIgnoreCase))
-                    }));
+                TemplateUtility.FillTemplate(
+                    GetTemplate($"_build.{projectFormat}.csproj"),
+                    replacements: GetDictionary(
+                        new
+                        {
+                            solutionDirectory = (WinRelativePath) GetRelativePath(buildDirectory, solutionDirectory ?? rootDirectory),
+                            rootDirectory = (WinRelativePath) GetRelativePath(buildDirectory, rootDirectory),
+                            scriptDirectory = (WinRelativePath) GetRelativePath(buildDirectory, EnvironmentInfo.WorkingDirectory),
+                            buildProjectName,
+                            buildProjectGuid,
+                            targetFramework,
+                            nukeVersion,
+                            nukeVersionMajorMinor = nukeVersion.Substring(0, nukeVersion.IndexOf(".", 0, 2, StringComparison.OrdinalIgnoreCase))
+                        })));
 
             if (projectFormat == FORMAT_LEGACY)
             {
                 TextTasks.WriteAllText(
                     Path.Combine(buildDirectory, "packages.config"),
-                    TemplateEngine.FillOutTemplate(
-                        "_build.legacy.packages.config",
-                        definitions: null,
-                        replacements: new { nukeVersion }));
+                    TemplateUtility.FillTemplate(
+                        GetTemplate("_build.legacy.packages.config"),
+                        replacements: GetDictionary(new { nukeVersion })));
             }
 
             TextTasks.WriteAllText(
                 $"{buildProjectFile}.DotSettings",
-                TemplateEngine.FillOutTemplate(
-                    "_build.csproj.DotSettings",
-                    definitions: null,
-                    replacements: new { }));
+                TemplateUtility.FillTemplate(
+                    GetTemplate("_build.csproj.DotSettings")));
 
             TextTasks.WriteAllText(
                 Path.Combine(buildDirectory, "Build.cs"),
-                TemplateEngine.FillOutTemplate(
-                    "Build.cs",
+                TemplateUtility.FillTemplate(
+                    GetTemplate("Build.cs"),
                     defaultBuildDefinitions,
-                    replacements: new { }));
+                    replacements: GetDictionary(
+                        new
+                        {
+                            solutionFile = (UnixRelativePath) GetRelativePath(rootDirectory, solutionFile)
+                        })));
 
             TextTasks.WriteAllText(
                 Path.Combine(EnvironmentInfo.WorkingDirectory, "build.ps1"),
-                TemplateEngine.FillOutTemplate(
-                    $"build.{targetPlatform}.ps1",
+                TemplateUtility.FillTemplate(
+                    GetTemplate($"build.{targetPlatform}.ps1"),
                     definitions: null,
-                    replacements:
-                    new
-                    {
-                        rootDirectory = (WinRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, rootDirectory),
-                        solutionDirectory = (WinRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, solutionDirectory),
-                        scriptDirectory = (WinRelativePath) GetRelativePath(buildDirectory, EnvironmentInfo.WorkingDirectory),
-                        buildDirectory = (WinRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, buildDirectory),
-                        buildProjectName,
-                        nugetVersion = "latest"
-                    }));
+                    replacements: GetDictionary(
+                        new
+                        {
+                            rootDirectory = (WinRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, rootDirectory),
+                            solutionDirectory = (WinRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, solutionDirectory ?? rootDirectory),
+                            scriptDirectory = (WinRelativePath) GetRelativePath(buildDirectory, EnvironmentInfo.WorkingDirectory),
+                            buildDirectory = (WinRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, buildDirectory),
+                            buildProjectName,
+                            nugetVersion = "latest"
+                        })));
 
             TextTasks.WriteAllText(
                 Path.Combine(EnvironmentInfo.WorkingDirectory, "build.sh"),
-                TemplateEngine.FillOutTemplate(
-                    $"build.{targetPlatform}.sh",
+                TemplateUtility.FillTemplate(
+                    GetTemplate($"build.{targetPlatform}.sh"),
                     definitions: null,
-                    replacements:
-                    new
-                    {
-                        rootDirectory = (UnixRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, rootDirectory),
-                        solutionDirectory = (UnixRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, solutionDirectory),
-                        scriptDirectory = (UnixRelativePath) GetRelativePath(buildDirectory, EnvironmentInfo.WorkingDirectory),
-                        buildDirectory = (UnixRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, buildDirectory),
-                        buildProjectName,
-                        nugetVersion = "latest"
-                    }));
+                    replacements: GetDictionary(
+                        new
+                        {
+                            rootDirectory = (UnixRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, rootDirectory),
+                            solutionDirectory = (UnixRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, solutionDirectory ?? rootDirectory),
+                            scriptDirectory = (UnixRelativePath) GetRelativePath(buildDirectory, EnvironmentInfo.WorkingDirectory),
+                            buildDirectory = (UnixRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, buildDirectory),
+                            buildProjectName,
+                            nugetVersion = "latest"
+                        })));
 
             #endregion
 
@@ -267,32 +269,32 @@ namespace Nuke.GlobalTool
 
                 TextTasks.WriteAllText(
                     Path.Combine(rootDirectory, "README.md"),
-                    TemplateEngine.FillOutTemplate(
-                        "README.md",
-                        definitions: null,
-                        new
-                        {
-                            organization,
-                            addonName,
-                            authors,
-                            packageName
-                        }));
+                    TemplateUtility.FillTemplate(
+                        GetTemplate("README.md"),
+                        replacements: GetDictionary(
+                            new
+                            {
+                                organization,
+                                addonName,
+                                authors,
+                                packageName
+                            })));
+                
                 TextTasks.WriteAllText(
                     Path.Combine(rootDirectory, "LICENSE"),
-                    TemplateEngine.FillOutTemplate(
-                        "LICENSE",
-                        definitions: null,
-                        new
-                        {
-                            year = DateTime.Now.Year,
-                            authors
-                        }));
+                    TemplateUtility.FillTemplate(
+                        GetTemplate("LICENSE"),
+                        replacements: GetDictionary(
+                            new
+                            {
+                                year = DateTime.Now.Year,
+                                authors
+                            })));
+                
                 TextTasks.WriteAllText(
                     Path.Combine(rootDirectory, "CHANGELOG.md"),
-                    TemplateEngine.FillOutTemplate(
-                        "CHANGELOG.md",
-                        definitions: null,
-                        replacements: new { }));
+                    TemplateUtility.FillTemplate(
+                        GetTemplate("CHANGELOG.md")));
 
                 TextTasks.WriteAllText(
                     $"{solutionFile}.DotSettings.ext",
@@ -353,6 +355,21 @@ namespace Nuke.GlobalTool
                 $"Project(\"{{{buildProjectKind}}}\") = \"{buildProjectName}\", \"{buildProjectFileRelative}\", \"{{{buildProjectGuid}}}\"");
             content.Insert(globalIndex + 1,
                 "EndProject");
+        }
+
+        private static string GetTemplate(string templateName)
+        {
+            return new StreamReader(ResourceUtility.GetResource<Program>($"templates.{templateName}")).ReadToEnd();
+        }
+
+        private static IReadOnlyDictionary<string, string> GetDictionary<T>(T obj)
+            where T : class
+        {
+            return obj != null
+                ? obj.ToPropertyDictionary(
+                    x => $"_{x.Name.SplitCamelHumps().Join(separator: '_').ToUpper()}_",
+                    x => x?.ToString() ?? string.Empty)
+                : new Dictionary<string, string>();
         }
     }
 }

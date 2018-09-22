@@ -10,6 +10,7 @@ namespace Nuke.Common.Tools.OpenCover
 {
     partial class OpenCoverTasks
     {
+        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
         public static OpenCoverSettings DefaultOpenCover => new OpenCoverSettings()
             .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
             .SetRegistration(RegistrationType.User)
