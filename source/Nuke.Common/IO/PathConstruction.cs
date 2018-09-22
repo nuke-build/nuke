@@ -45,13 +45,6 @@ namespace Nuke.Common.IO
     {
         // TODO: check usages
         [Pure]
-        public static string GetRootRelativePath(string destinationPath)
-        {
-            return GetRelativePath(NukeBuild.Instance.RootDirectory, destinationPath);
-        }
-
-        // TODO: check usages
-        [Pure]
         public static string GetRelativePath(string basePath, string destinationPath, bool normalize = true)
         {
             basePath = NormalizePath(basePath);
