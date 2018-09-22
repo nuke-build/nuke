@@ -32,7 +32,7 @@ namespace Nuke.Common.Tooling
         public int? ExecutionTimeout { get; internal set; }
         public bool LogOutput { get; internal set; }
 
-        internal virtual Func<string, LogLevel> LogLevelParser => null;
+        protected internal virtual Func<string, LogLevel> LogLevelParser => null;
 
         [NonSerialized]
         private Func<Arguments, Arguments> _argumentConfigurator = x => x;
