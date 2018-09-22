@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Deprecated properties in `NukeBuild` which should belong to user-code
+- Deprecated default settings which should belong to user-code
+- Deprecated `DocFxTasks` which is moved to own package
+- Added `SpecFlowTasks`
+- Added `NukeBuild.OutputSink` property for custom logger implementation
+- Fixed `MSBuildLocator` and `MSBuildToolPathResolver` to also consider `/usr/local/bin/msbuild`
 
 ## [0.8.0] / 2018-09-07
 - Changed `ProcessTasks` to automatically invoke .NET Core DLLs with `dotnet.exe`
