@@ -13,6 +13,26 @@ namespace Nuke.Common.Tests
     public class PathConstructionTest
     {
         [Theory]
+        [InlineData("C:\\A\\B", "C:\\A")]
+        [InlineData("C:\\", null)]
+        [InlineData("\\\\server\\foo", "\\\\server")]
+        [InlineData("\\\\server", null)]
+        [InlineData("/foo", "/")]
+        [InlineData("/", null)]
+        public void TestParent(string path, string expected)
+        {
+            ((AbsolutePath) path).Parent.Should().Be((AbsolutePath) expected);
+        }
+        
+        [Theory]
+        [InlineData("C:\\foo", "C:\\FOO", true)]
+        [InlineData("/foo", "/FOO", false)]
+        public void TestEquality(string path1, string path2, bool expected)
+        {
+            ((AbsolutePath) path1).Equals((AbsolutePath) path2).Should().Be(expected);
+        }
+
+        [Theory]
         [InlineData("C:\\A\\B\\C", "C:\\A\\B", "..")]
         [InlineData("C:\\A\\B\\", "C:\\A\\B\\C", "C")]
         [InlineData("C:\\A\\B\\C", "C:\\A\\B\\D\\E", "..\\D\\E")]

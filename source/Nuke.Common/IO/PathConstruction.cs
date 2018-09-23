@@ -322,19 +322,27 @@ namespace Nuke.Common.IO
 
             private AbsolutePath(string path)
             {
-                _path = path;
+                _path = NormalizePath(path);
             }
 
             public static explicit operator AbsolutePath([CanBeNull] string path)
             {
+                if (path is null)
+                    return null;
+                
                 ControlFlow.Assert(HasPathRoot(path), $"Path '{path}' must be rooted.");
-                return new AbsolutePath(NormalizePath(path));
+                return new AbsolutePath(path);
             }
 
             public static implicit operator string(AbsolutePath path)
             {
                 return path.ToString();
             }
+
+            public AbsolutePath Parent =>
+                !IsWinRoot(_path.TrimEnd(WinSeparator)) && !IsUncRoot(_path) && !IsUnixRoot(_path)
+                    ? this / ".."
+                    : null;
 
             public static AbsolutePath operator /(AbsolutePath path1, string path2)
             {
@@ -346,9 +354,31 @@ namespace Nuke.Common.IO
                 return path1 / path2;
             }
 
+            protected bool Equals(AbsolutePath other)
+            {
+                var stringComparison = HasWinRoot(_path) ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+                return string.Equals(_path, other._path, stringComparison);
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                    return false;
+                if (ReferenceEquals(this, obj))
+                    return true;
+                if (obj.GetType() != GetType())
+                    return false;
+                return Equals((AbsolutePath) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                return _path != null ? _path.GetHashCode() : 0;
+            }
+
             public override string ToString()
             {
-                return NormalizePath(_path);
+                return _path;
             }
         }
     }
