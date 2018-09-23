@@ -77,7 +77,7 @@ namespace Nuke.CodeGeneration.Generators
                 return writer;
 
             var logLevelParser = $"{tool.GetClassName()}.ParseLogLevel";
-            return writer.WriteLine($"internal override Func<string, LogLevel> LogLevelParser => {logLevelParser};");
+            return writer.WriteLine($"protected override Func<string, LogLevel> LogLevelParser => {logLevelParser};");
         }
 
         private static void WritePropertyDeclaration(DataClassWriter writer, Property property)
