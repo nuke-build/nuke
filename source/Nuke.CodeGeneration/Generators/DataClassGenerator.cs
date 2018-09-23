@@ -202,30 +202,22 @@ namespace Nuke.CodeGeneration.Generators
             if ((writer.DataClass as SettingsClass)?.Task.DefiniteArgument == null && formatProperties.Count == 0)
                 return writer;
 
-            var argumentAdditions = formatProperties.Select(GetArgumentAddition).ToArray();
+            var argumentAdditions = formatProperties.Select(GetArgumentAddition).ToList();
+            
+            var settingsClass = writer.DataClass as SettingsClass;
+            if (settingsClass?.Task.DefiniteArgument != null)
+                argumentAdditions.Insert(0, $"  .Add({settingsClass.Task.DefiniteArgument.DoubleQuote()})");
 
-            var hasArguments = argumentAdditions.Length > 0;
+            var hasArguments = argumentAdditions.Count > 0;
             if (hasArguments)
-            {
-                argumentAdditions[argumentAdditions.Length - 1] += ";";
-            }
+                argumentAdditions[argumentAdditions.Count - 1] += ";";
 
             return writer
                 .WriteLine("protected override Arguments ConfigureArguments(Arguments arguments)")
                 .WriteBlock(w => w
                     .WriteLine("arguments")
-                    .WriteLine($"{GetCommandAdditionOrNull(writer.DataClass)}{(hasArguments ? string.Empty : ";")}")
                     .ForEachWriteLine(argumentAdditions)
                     .WriteLine("return base.ConfigureArguments(arguments);"));
-        }
-
-        [CanBeNull]
-        private static string GetCommandAdditionOrNull(DataClass dataClass)
-        {
-            var settingsClass = dataClass as SettingsClass;
-            return settingsClass?.Task.DefiniteArgument != null
-                ? $"  .Add({settingsClass.Task.DefiniteArgument.DoubleQuote()})"
-                : null;
         }
 
         private static string GetArgumentAddition(Property property)
