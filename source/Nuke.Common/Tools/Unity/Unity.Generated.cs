@@ -1,9 +1,5 @@
-// Copyright 2018 Maintainers and Contributors of NUKE.
-// Distributed under the MIT License.
-// https://github.com/nuke-build/nuke/blob/master/LICENSE
-
-// Generated with Nuke.CodeGeneration, Version: Local.
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Unity.json.
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Unity.json
+// Generated with Nuke.CodeGeneration, Version: Local
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -138,7 +134,7 @@ namespace Nuke.Common.Tools.Unity
         protected override void AssertValid()
         {
             base.AssertValid();
-            ControlFlow.Assert(File.Exists(LicenseFile), "File.Exists(LicenseFile)");
+            ControlFlow.Assert(File.Exists(LicenseFile), $"File.Exists(LicenseFile) [LicenseFile = {LicenseFile}]");
         }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -256,7 +252,7 @@ namespace Nuke.Common.Tools.Unity
         protected override void AssertValid()
         {
             base.AssertValid();
-            ControlFlow.Assert(Directory.Exists(ProjectPath) || ProjectPath == null, "Directory.Exists(ProjectPath) || ProjectPath == null");
+            ControlFlow.Assert(Directory.Exists(ProjectPath) || ProjectPath == null, $"Directory.Exists(ProjectPath) || ProjectPath == null [ProjectPath = {ProjectPath}]");
         }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {

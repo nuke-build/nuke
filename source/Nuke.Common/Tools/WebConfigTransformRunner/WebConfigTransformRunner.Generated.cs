@@ -1,9 +1,5 @@
-// Copyright 2018 Maintainers of NUKE.
-// Distributed under the MIT License.
-// https://github.com/nuke-build/nuke/blob/master/LICENSE
-
-// Generated with Nuke.CodeGeneration, Version: Local.
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/WebConfigTransformRunner.json.
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/WebConfigTransformRunner.json
+// Generated with Nuke.CodeGeneration, Version: Local
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -62,9 +58,9 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         protected override void AssertValid()
         {
             base.AssertValid();
-            ControlFlow.Assert(File.Exists(WebConfigFilename), "File.Exists(WebConfigFilename)");
-            ControlFlow.Assert(File.Exists(TransformFilename), "File.Exists(TransformFilename)");
-            ControlFlow.Assert(OutputFilename != null, "OutputFilename != null");
+            ControlFlow.Assert(File.Exists(WebConfigFilename), $"File.Exists(WebConfigFilename) [WebConfigFilename = {WebConfigFilename}]");
+            ControlFlow.Assert(File.Exists(TransformFilename), $"File.Exists(TransformFilename) [TransformFilename = {TransformFilename}]");
+            ControlFlow.Assert(OutputFilename != null, $"OutputFilename != null [OutputFilename = {OutputFilename}]");
         }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {

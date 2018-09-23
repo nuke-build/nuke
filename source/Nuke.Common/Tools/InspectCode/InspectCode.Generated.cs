@@ -1,9 +1,5 @@
-// Copyright 2018 Maintainers of NUKE.
-// Distributed under the MIT License.
-// https://github.com/nuke-build/nuke/blob/master/LICENSE
-
-// Generated with Nuke.CodeGeneration, Version: Local.
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/InspectCode.json.
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/InspectCode.json
+// Generated with Nuke.CodeGeneration, Version: Local
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -97,8 +93,8 @@ namespace Nuke.Common.Tools.InspectCode
         protected override void AssertValid()
         {
             base.AssertValid();
-            ControlFlow.Assert(File.Exists(TargetPath), "File.Exists(TargetPath)");
-            ControlFlow.Assert(Output != null, "Output != null");
+            ControlFlow.Assert(File.Exists(TargetPath), $"File.Exists(TargetPath) [TargetPath = {TargetPath}]");
+            ControlFlow.Assert(Output != null, $"Output != null [Output = {Output}]");
         }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {

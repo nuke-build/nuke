@@ -1,9 +1,5 @@
-// Copyright 2018 Maintainers of NUKE.
-// Distributed under the MIT License.
-// https://github.com/nuke-build/nuke/blob/master/LICENSE
-
-// Generated with Nuke.CodeGeneration, Version: Local.
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/DocFx.json.
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/DocFx.json
+// Generated with Nuke.CodeGeneration, Version: Local
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -86,8 +82,8 @@ namespace Nuke.Common.Tools.DocFx
         protected override void AssertValid()
         {
             base.AssertValid();
-            ControlFlow.Assert(File.Exists(ConfigPath) || ConfigPath == null, "File.Exists(ConfigPath) || ConfigPath == null");
-            ControlFlow.Assert(Directory.Exists(RepositoryRoot) || RepositoryRoot == null, "Directory.Exists(RepositoryRoot) || RepositoryRoot == null");
+            ControlFlow.Assert(File.Exists(ConfigPath) || ConfigPath == null, $"File.Exists(ConfigPath) || ConfigPath == null [ConfigPath = {ConfigPath}]");
+            ControlFlow.Assert(Directory.Exists(RepositoryRoot) || RepositoryRoot == null, $"Directory.Exists(RepositoryRoot) || RepositoryRoot == null [RepositoryRoot = {RepositoryRoot}]");
         }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -131,9 +127,9 @@ namespace Nuke.Common.Tools.DocFx
         protected override void AssertValid()
         {
             base.AssertValid();
-            ControlFlow.Assert(File.Exists(ConfigPath) || ConfigPath == null, "File.Exists(ConfigPath) || ConfigPath == null");
-            ControlFlow.Assert(Directory.Exists(RepositoryRoot) || RepositoryRoot == null, "Directory.Exists(RepositoryRoot) || RepositoryRoot == null");
-            ControlFlow.Assert(Directory.Exists(Theme) || Theme == null, "Directory.Exists(Theme) || Theme == null");
+            ControlFlow.Assert(File.Exists(ConfigPath) || ConfigPath == null, $"File.Exists(ConfigPath) || ConfigPath == null [ConfigPath = {ConfigPath}]");
+            ControlFlow.Assert(Directory.Exists(RepositoryRoot) || RepositoryRoot == null, $"Directory.Exists(RepositoryRoot) || RepositoryRoot == null [RepositoryRoot = {RepositoryRoot}]");
+            ControlFlow.Assert(Directory.Exists(Theme) || Theme == null, $"Directory.Exists(Theme) || Theme == null [Theme = {Theme}]");
         }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {

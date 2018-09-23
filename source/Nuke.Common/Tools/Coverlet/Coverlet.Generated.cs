@@ -1,9 +1,5 @@
-// Copyright 2018 Maintainers of NUKE.
-// Distributed under the MIT License.
-// https://github.com/nuke-build/nuke/blob/master/LICENSE
-
-// Generated with Nuke.CodeGeneration, Version: Local.
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Coverlet.json.
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Coverlet.json
+// Generated with Nuke.CodeGeneration, Version: Local
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -83,7 +79,6 @@ namespace Nuke.Common.Tools.Coverlet
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
-            
               .Add("{value}", Assembly)
               .Add("--target {value}", Target)
               .Add("--targetargs {value}", TargetArgs, separator: ' ', quoteMultiple: true)

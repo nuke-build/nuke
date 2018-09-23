@@ -1,9 +1,5 @@
-// Copyright 2018 Maintainers of NUKE.
-// Distributed under the MIT License.
-// https://github.com/nuke-build/nuke/blob/master/LICENSE
-
-// Generated with Nuke.CodeGeneration, Version: Local.
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/OpenCover.json.
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/OpenCover.json
+// Generated with Nuke.CodeGeneration, Version: Local
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -111,8 +107,8 @@ namespace Nuke.Common.Tools.OpenCover
         protected override void AssertValid()
         {
             base.AssertValid();
-            ControlFlow.Assert(File.Exists(TargetPath), "File.Exists(TargetPath)");
-            ControlFlow.Assert(Directory.Exists(TargetDirectory) || TargetDirectory == null, "Directory.Exists(TargetDirectory) || TargetDirectory == null");
+            ControlFlow.Assert(File.Exists(TargetPath), $"File.Exists(TargetPath) [TargetPath = {TargetPath}]");
+            ControlFlow.Assert(Directory.Exists(TargetDirectory) || TargetDirectory == null, $"Directory.Exists(TargetDirectory) || TargetDirectory == null [TargetDirectory = {TargetDirectory}]");
         }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
