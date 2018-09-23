@@ -1,10 +1,5 @@
 {
   "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
-  "license": [
-    "Copyright 2018 Maintainers of NUKE.",
-    "Distributed under the MIT License.",
-    "https://github.com/nuke-build/tools/blob/master/LICENSE"
-  ],
   "references": [
     "https://octopus.com/docs/api-and-integration/octo.exe-command-line/creating-releases#//article[@id='doc-content']/pre[2]",
     "https://octopus.com/docs/api-and-integration/octo.exe-command-line/pushing-packages#//article[@id='doc-content']/pre[3]",

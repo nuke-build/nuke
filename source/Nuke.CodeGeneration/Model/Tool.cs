@@ -20,8 +20,6 @@ namespace Nuke.CodeGeneration.Model
         [JsonProperty("$schema")]
         public string Schema { get; set; } = "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json";
 
-        [JsonProperty] public string[] License { get; set; }
-
         [JsonIgnore] public string DefinitionFile { get; set; }
 
         [JsonIgnore] public string RepositoryUrl { get; set; }

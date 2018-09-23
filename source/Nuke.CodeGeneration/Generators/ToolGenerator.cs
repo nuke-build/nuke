@@ -27,12 +27,8 @@ namespace Nuke.CodeGeneration.Generators
             {
                 writer
                     // TODO [3]: extract license from dotsettings file
-                    .WriteLine($"// Copyright {DateTime.Now.Year} Maintainers of NUKE.")
-                    .WriteLine("// Distributed under the MIT License.")
-                    .WriteLine("// https://github.com/nuke-build/nuke/blob/master/LICENSE")
-                    .WriteLine(string.Empty)
-                    .WriteLine($"// Generated with {s_assembly.GetName().Name}, Version: {s_assembly.GetInformationalText()}.")
-                    .WriteLineIfTrue(tool.RepositoryUrl != null, $"// Generated from {tool.RepositoryUrl}.")
+                    .WriteLineIfTrue(tool.RepositoryUrl != null, $"// Generated from {tool.RepositoryUrl}")
+                    .WriteLine($"// Generated with {s_assembly.GetName().Name}, Version: {s_assembly.GetInformationalText()}")
                     .WriteLine(string.Empty)
                     .ForEach(GetNamespaceImports(), x => writer.WriteLine($"using {x};"))
                     .WriteLine(string.Empty)

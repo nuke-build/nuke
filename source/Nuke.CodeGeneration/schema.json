@@ -243,12 +243,6 @@
     "$schema": {
       "type": "string"
     },
-    "license": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
     "references": {
       "description": "Contains all references on which this definition is based on. Allows checking for updates.",
       "type": "array",

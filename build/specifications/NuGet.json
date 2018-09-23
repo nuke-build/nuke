@@ -1,10 +1,5 @@
 {
   "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
-  "license": [
-    "Copyright 2018 Maintainers of NUKE.",
-    "Distributed under the MIT License.",
-    "https://github.com/nuke-build/tools/blob/master/LICENSE"
-  ],
   "references": [
     "https://raw.githubusercontent.com/NuGet/docs.microsoft.com-nuget/live/docs/tools/cli-ref-pack.md",
     "https://raw.githubusercontent.com/NuGet/docs.microsoft.com-nuget/live/docs/tools/cli-ref-push.md",
