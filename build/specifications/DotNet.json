@@ -640,6 +640,12 @@
             "help": "Doesn't perform an implicit restore when running the command."
           },
           {
+            "name": "NoBuild",
+            "type": "bool",
+            "format": "--no-build",
+            "help": "Doesn't build the project before publishing. It also implicitly sets the <c>--no-restore</c> flag."
+          },
+          {
             "name": "Output",
             "type": "string",
             "format": "--output {value}",

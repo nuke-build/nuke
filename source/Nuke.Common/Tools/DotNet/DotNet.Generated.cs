@@ -461,6 +461,8 @@ namespace Nuke.Common.Tools.DotNet
         public virtual bool? NoDependencies { get; internal set; }
         /// <summary><p>Doesn't perform an implicit restore when running the command.</p></summary>
         public virtual bool? NoRestore { get; internal set; }
+        /// <summary><p>Doesn't build the project before publishing. It also implicitly sets the <c>--no-restore</c> flag.</p></summary>
+        public virtual bool? NoBuild { get; internal set; }
         /// <summary><p>Specifies the path for the output directory. If not specified, it defaults to <em>./bin/[configuration]/[framework]/</em> for a framework-dependent deployment or <em>./bin/[configuration]/[framework]/[runtime]</em> for a self-contained deployment.<para/>If a relative path is provided, the output directory generated is relative to the project file location, not to the current working directory.</p></summary>
         public virtual string Output { get; internal set; }
         /// <summary><p>Publishes the .NET Core runtime with your application so the runtime doesn't need to be installed on the target machine. If a runtime identifier is specified, its default value is <c>true</c>. For more information about the different deployment types, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index">.NET Core application deployment</a>.</p></summary>
@@ -485,6 +487,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--manifest {value}", Manifest)
               .Add("--no-dependencies", NoDependencies)
               .Add("--no-restore", NoRestore)
+              .Add("--no-build", NoBuild)
               .Add("--output {value}", Output)
               .Add("--self-contained {value}", SelfContained)
               .Add("--runtime {value}", Runtime)
@@ -3348,6 +3351,48 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoRestore = !toolSettings.NoRestore;
+            return toolSettings;
+        }
+        #endregion
+        #region NoBuild
+        /// <summary><p><em>Sets <see cref="DotNetPublishSettings.NoBuild"/>.</em></p><p>Doesn't build the project before publishing. It also implicitly sets the <c>--no-restore</c> flag.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings SetNoBuild(this DotNetPublishSettings toolSettings, bool? noBuild)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = noBuild;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPublishSettings.NoBuild"/>.</em></p><p>Doesn't build the project before publishing. It also implicitly sets the <c>--no-restore</c> flag.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings ResetNoBuild(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetPublishSettings.NoBuild"/>.</em></p><p>Doesn't build the project before publishing. It also implicitly sets the <c>--no-restore</c> flag.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings EnableNoBuild(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetPublishSettings.NoBuild"/>.</em></p><p>Doesn't build the project before publishing. It also implicitly sets the <c>--no-restore</c> flag.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings DisableNoBuild(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetPublishSettings.NoBuild"/>.</em></p><p>Doesn't build the project before publishing. It also implicitly sets the <c>--no-restore</c> flag.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings ToggleNoBuild(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = !toolSettings.NoBuild;
             return toolSettings;
         }
         #endregion
