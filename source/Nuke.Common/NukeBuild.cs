@@ -79,6 +79,8 @@ namespace Nuke.Common
         /// Configuration to build. Default is <em>Debug</em> (local) or <em>Release</em> (server).
         /// </summary>
         [Parameter("Configuration to build. Default is 'Debug' (local) or 'Release' (server).")]
+        [Obsolete("Property will be removed in a following version. Please define it yourself, i.e.: "
+                  + "[Parameter] readonly string Configuration;")]
         public virtual string Configuration { get; } = GetHostType() == HostType.Console ? "Debug" : "Release";
 
         /// <summary>
