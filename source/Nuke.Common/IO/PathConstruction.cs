@@ -4,7 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using Glob;
@@ -316,8 +318,31 @@ namespace Nuke.Common.IO
         }
 
         [DebuggerDisplay("{" + nameof(_path) + "}")]
+        [TypeConverter(typeof(TypeConverter))]
         public class AbsolutePath
         {
+            public class TypeConverter : System.ComponentModel.TypeConverter
+            {
+                public override bool CanConvertFrom(ITypeDescriptorContext context,
+                    Type sourceType)
+                {
+                    return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
+                }
+        
+                public override object ConvertFrom(ITypeDescriptorContext context,
+                    CultureInfo culture, object value)
+                {
+                    if (value is string stringValue)
+                    {
+                        return (AbsolutePath) (HasPathRoot(stringValue)
+                            ? stringValue
+                            : Combine(EnvironmentInfo.WorkingDirectory, stringValue));
+                    }
+
+                    return base.ConvertFrom(context, culture, value);
+                }
+            }
+
             private readonly string _path;
 
             private AbsolutePath(string path)

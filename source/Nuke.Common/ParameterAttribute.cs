@@ -49,11 +49,12 @@ namespace Nuke.Common
         [CanBeNull]
         public override object GetValue(string memberName, Type memberType)
         {
-            memberType = Nullable.GetUnderlyingType(memberType) == null &&
-                         memberType != typeof(string) &&
-                         !memberType.IsArray
-                ? typeof(Nullable<>).MakeGenericType(memberType)
-                : memberType;
+            if (Nullable.GetUnderlyingType(memberType) == null &&
+                memberType != typeof(string) &&
+                !memberType.IsClass &&
+                !memberType.IsArray)
+                memberType = typeof(Nullable<>).MakeGenericType(memberType);
+            
             return ParameterService.Instance.GetParameter(
                 parameterName: Name ?? memberName,
                 destinationType: memberType,
