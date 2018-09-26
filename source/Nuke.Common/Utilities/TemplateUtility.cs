@@ -19,10 +19,11 @@ namespace Nuke.Common.Utilities
             definitions = definitions ?? new List<string>();
             replacements = replacements ?? new Dictionary<string, string>();
             
-            definitions.ForEach(x => ControlFlow.Assert(template.Contains(x),
-                $"Definition '{x}' is not contained in template."));
-            replacements.Keys.ForEach(x => ControlFlow.Assert(template.Contains(x),
-                $"Replacement for '{x}' is not contained in template."));
+            // TODO: checked build?
+            // definitions.ForEach(x => ControlFlow.Assert(template.Contains(x),
+            //     $"Definition '{x}' is not contained in template."));
+            // replacements.Keys.ForEach(x => ControlFlow.Assert(template.Contains(x),
+            //     $"Replacement for '{x}' is not contained in template."));
 
             var crCount = template.Count(x => x == '\r');
             var lfCount = template.Count(x => x == '\n');
