@@ -17,6 +17,9 @@
     {
       "help": "The <c>dotnet test</c> command is used to execute unit tests in a given project. Unit tests are console application projects that have dependencies on the unit test framework (for example, MSTest, NUnit, or xUnit) and the dotnet test runner for the unit testing framework. These are packaged as NuGet packages and are restored as ordinary dependencies for the project.",
       "postfix": "Test",
+      "commonPropertySets": [
+        "build"
+      ],
       "definiteArgument": "test",
       "settingsClass": {
         "properties": [
@@ -116,6 +119,9 @@
     {
       "help": "<p>The <c>dotnet run</c> command provides a convenient option to run your application from the source code with one command. It's useful for fast iterative development from the command line. The command depends on the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-build\"><c>dotnet build</c></a> command to build the code. Any requirements for the build, such as that the project must be restored first, apply to <c>dotnet run</c> as well.</p><p>Output files are written into the default location, which is <c>bin/&lt;configuration&gt;/&lt;target&gt;</c>. For example if you have a <c>netcoreapp1.0</c> application and you run <c>dotnet run</c>, the output is placed in <c>bin/Debug/netcoreapp1.0</c>. Files are overwritten as needed. Temporary files are placed in the <c>obj</c> directory.</p><p>If the project specifies multiple frameworks, executing <c>dotnet run</c> results in an error unless the <c>-f|--framework &lt;FRAMEWORK&gt;</c> option is used to specify the framework.</p><p>The <c>dotnet run</c> command is used in the context of projects, not built assemblies. If you're trying to run a framework-dependent application DLL instead, you must use <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet\">dotnet</a> without a command. For example, to run <c>myapp.dll</c>, use: <c>dotnet myapp.dll</c></p><p>For more information on the <c>dotnet</c> driver, see the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/index\">.NET Core Command Line Tools (CLI)</a> topic.</p><p>In order to run the application, the <c>dotnet run</c> command resolves the dependencies of the application that are outside of the shared runtime from the NuGet cache. Because it uses cached dependencies, it's not recommended to use <c>dotnet run</c> to run applications in production. Instead, <a href=\"https://docs.microsoft.com/en-us/dotnet/core/deploying/index\">create a deployment</a> using the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish\"><c>dotnet publish</c></a> command and deploy the published output.</p>",
       "postfix": "Run",
+      "commonPropertySets": [
+        "build"
+      ],
       "definiteArgument": "run",
       "settingsClass": {
         "properties": [
@@ -268,6 +274,9 @@
     {
       "help": "<p>The <c>dotnet pack</c> command builds the project and creates NuGet packages. The result of this command is a NuGet package. If the <c>--include-symbols</c> option is present, another package containing the debug symbols is created.</p><p>NuGet dependencies of the packed project are added to the <em>.nuspec</em> file, so they're properly resolved when the package is installed. Project-to-project references aren't packaged inside the project. Currently, you must have a package per project if you have project-to-project dependencies.</p><p>By default, <c>dotnet pack</c> builds the project first. If you wish to avoid this behavior, pass the <c>--no-build</c> option. This is often useful in Continuous Integration (CI) build scenarios where you know the code was previously built.</p><p>You can provide MSBuild properties to the <c>dotnet pack</c> command for the packing process. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/csproj#nuget-metadata-properties\">NuGet metadata properties</a> and the <a href=\"https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference\">MSBuild Command-Line Reference</a>.</p>",
       "postfix": "Pack",
+      "commonPropertySets": [
+        "build-pack"
+      ],
       "definiteArgument": "pack",
       "settingsClass": {
         "properties": [
@@ -349,78 +358,6 @@
             "type": "string",
             "format": "--version-suffix {value}",
             "help": "Defines the value for the <c>$(VersionSuffix)</c> MSBuild property in the project."
-          },
-          {
-            "name": "Properties",
-            "type": "Dictionary<string, object>",
-            "format": "/p:{value}",
-            "itemFormat": "{key}={value}",
-            "disallowedCharacter": ";",
-            "help": "<p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\\Debug</c></p>",
-            "delegates": [
-              {
-                "name": "PackageId",
-                "type": "string"
-              },
-              {
-                "name": "Version",
-                "type": "string"
-              },
-              {
-                "name": "VersionPrefix",
-                "type": "string"
-              },
-              {
-                "name": "Authors",
-                "type": "List<string>",
-                "separator": ","
-              },
-              {
-                "name": "Title",
-                "type": "string"
-              },
-              {
-                "name": "Description",
-                "type": "string"
-              },
-              {
-                "name": "Copyright",
-                "type": "string"
-              },
-              {
-                "name": "PackageRequireLicenseAcceptance",
-                "type": "bool"
-              },
-              {
-                "name": "PackageLicenseUrl",
-                "type": "string"
-              },
-              {
-                "name": "PackageProjectUrl",
-                "type": "string"
-              },
-              {
-                "name": "PackageIconUrl",
-                "type": "string"
-              },
-              {
-                "name": "PackageTags",
-                "type": "List<string>",
-                "separator": " "
-              },
-              {
-                "name": "PackageReleaseNotes",
-                "type": "string"
-              },
-              {
-                "name": "RepositoryUrl",
-                "type": "string"
-              },
-              {
-                "name": "RepositoryType",
-                "type": "string"
-              }
-            ]
           }
         ]
       }
@@ -428,6 +365,9 @@
     {
       "help": "<p>The <c>dotnet build</c> command builds the project and its dependencies into a set of binaries. The binaries include the project's code in Intermediate Language (IL) files with a <em>.dll</em> extension and symbol files used for debugging with a <em>.pdb</em> extension. A dependencies JSON file (<em>*.deps.json</em>) is produced that lists the dependencies of the application. A <em>.runtimeconfig.json</em> file is produced, which specifies the shared runtime and its version for the application.</p><p>If the project has third-party dependencies, such as libraries from NuGet, they're resolved from the NuGet cache and aren't available with the project's built output. With that in mind, the product of <c>dotnet build</c>d isn't ready to be transferred to another machine to run. This is in contrast to the behavior of the .NET Framework in which building an executable project (an application) produces output that's runnable on any machine where the .NET Framework is installed. To have a similar experience with .NET Core, you use the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish\"><c>dotnet publish</c></a> command. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/deploying/index\">.NET Core Application Deployment</a>.</p><p>Building requires the <em>project.assets.json</em> file, which lists the dependencies of your application. The file is created <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-restore\"><c>dotnet restore</c></a> is executed. Without the assets file in place, the tooling cannot resolve reference assemblies, which will result in errors. With .NET Core 1.x SDK, you needed to explicitily run the <c>dotnet restore</c> before running <c>dotnet build</c>. Starting with .NET Core 2.0 SDK, <c>dotnet restore</c> runs implicitily when you run <c>dotnet build</c>. If you want to disable implicit restore when running the build command, you can pass the <c>--no-restore</c> option.</p><p><c>dotnet build</c> uses MSBuild to build the project; thus, it supports both parallel and incremental builds. Refer to <a href=\"https://docs.microsoft.com/visualstudio/msbuild/incremental-builds\">Incremental Builds</a> for more information.</p><p>In addition to its options, the <c>dotnet build</c> command accepts MSBuild options, such as <c>/p</c> for setting properties or <c>/l</c> to define a logger. Learn more about these options in the <a href=\"https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference\">MSBuild Command-Line Reference</a>.</p>",
       "postfix": "Build",
+      "commonPropertySets": [
+        "build"
+      ],
       "definiteArgument": "build",
       "settingsClass": {
         "properties": [
@@ -497,50 +437,6 @@
             "type": "string",
             "format": "--version-suffix {value}",
             "help": "Defines the version suffix for an asterisk (<c>*</c>) in the version field of the project file. The format follows NuGet's version guidelines."
-          },
-          {
-            "name": "Properties",
-            "type": "Dictionary<string, object>",
-            "format": "/p:{value}",
-            "itemFormat": "{key}={value}",
-            "disallowedCharacter": ";",
-            "help": "<p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\\Debug</c></p>",
-            "delegates": [
-              {
-                "name": "RunCodeAnalysis",
-                "type": "bool"
-              },
-              {
-                "name": "NoWarn",
-                "type": "List<int>",
-                "separator": ";"
-              },
-              {
-                "name": "WarningsAsErrors",
-                "type": "List<int>",
-                "separator": ";"
-              },
-              {
-                "name": "WarningLevel",
-                "type": "int"
-              },
-              {
-                "name": "TreatWarningsAsErrors",
-                "type": "bool"
-              },
-              {
-                "name": "AssemblyVersion",
-                "type": "string"
-              },
-              {
-                "name": "FileVersion",
-                "type": "string"
-              },
-              {
-                "name": "InformationalVersion",
-                "type": "string"
-              }
-            ]
           }
         ]
       }
@@ -594,6 +490,9 @@
     {
       "help": "<c>dotnet publish</c> compiles the application, reads through its dependencies specified in the project file, and publishes the resulting set of files to a directory. The output will contain the following:<para/><ul><li>Intermediate Language (IL) code in an assembly with a <em>dll</em> extension.</li><li><em>.deps.json</em> file that contains all of the dependencies of the project.</li><li><em>.runtime.config.json</em> file that specifies the shared runtime that the application expects, as well as other configuration options for the runtime (for example, garbage collection type).</li><li>The application's dependencies. These are copied from the NuGet cache into the output folder.</li></ul><para/>The <c>dotnet publish</c> command's output is ready for deployment to a hosting system (for example, a server, PC, Mac, laptop) for execution and is the only officially supported way to prepare the application for deployment. Depending on the type of deployment that the project specifies, the hosting system may or may not have the .NET Core shared runtime installed on it. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/deploying/index\">.NET Core Application Deployment</a>. For the directory structure of a published application, see <a href=\"https://docs.microsoft.com/en-us/aspnet/core/hosting/directory-structure\">Directory structure</a>.",
       "postfix": "Publish",
+      "commonPropertySets": [
+        "build"
+      ],
       "definiteArgument": "publish",
       "settingsClass": {
         "properties": [
@@ -674,50 +573,6 @@
             "type": "string",
             "format": "--version-suffix {value}",
             "help": "Defines the version suffix for an asterisk (<c>*</c>) in the version field of the project file. The format follows NuGet's version guidelines."
-          },
-          {
-            "name": "Properties",
-            "type": "Dictionary<string, object>",
-            "format": "/p:{value}",
-            "itemFormat": "{key}={value}",
-            "disallowedCharacter": ";",
-            "help": "<p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\\Debug</c></p>",
-            "delegates": [
-              {
-                "name": "RunCodeAnalysis",
-                "type": "bool"
-              },
-              {
-                "name": "NoWarn",
-                "type": "List<int>",
-                "separator": ";"
-              },
-              {
-                "name": "WarningsAsErrors",
-                "type": "List<int>",
-                "separator": ";"
-              },
-              {
-                "name": "WarningLevel",
-                "type": "int"
-              },
-              {
-                "name": "TreatWarningsAsErrors",
-                "type": "bool"
-              },
-              {
-                "name": "AssemblyVersion",
-                "type": "string"
-              },
-              {
-                "name": "FileVersion",
-                "type": "string"
-              },
-              {
-                "name": "InformationalVersion",
-                "type": "string"
-              }
-            ]
           }
         ]
       }
@@ -789,6 +644,162 @@
       }
     }
   ],
+  "commonTaskPropertySets": {
+    "build": [
+      {
+        "name": "Properties",
+        "type": "Dictionary<string, object>",
+        "format": "/property:{value}",
+        "itemFormat": "{key}={value}",
+        "disallowedCharacter": ";",
+        "help": "<p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\\Debug</c></p>",
+        "delegates": [
+          {
+            "name": "RunCodeAnalysis",
+            "type": "bool"
+          },
+          {
+            "name": "NoWarn",
+            "type": "List<int>",
+            "separator": ";"
+          },
+          {
+            "name": "WarningsAsErrors",
+            "type": "List<int>",
+            "separator": ";"
+          },
+          {
+            "name": "WarningLevel",
+            "type": "int"
+          },
+          {
+            "name": "TreatWarningsAsErrors",
+            "type": "bool"
+          },
+          {
+            "name": "AssemblyVersion",
+            "type": "string"
+          },
+          {
+            "name": "FileVersion",
+            "type": "string"
+          },
+          {
+            "name": "InformationalVersion",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "build-pack": [
+      {
+        "name": "Properties",
+        "type": "Dictionary<string, object>",
+        "format": "/property:{value}",
+        "itemFormat": "{key}={value}",
+        "disallowedCharacter": ";",
+        "help": "<p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\\Debug</c></p>",
+        "delegates": [
+          {
+            "name": "RunCodeAnalysis",
+            "type": "bool"
+          },
+          {
+            "name": "NoWarn",
+            "type": "List<int>",
+            "separator": ";"
+          },
+          {
+            "name": "WarningsAsErrors",
+            "type": "List<int>",
+            "separator": ";"
+          },
+          {
+            "name": "WarningLevel",
+            "type": "int"
+          },
+          {
+            "name": "TreatWarningsAsErrors",
+            "type": "bool"
+          },
+          {
+            "name": "AssemblyVersion",
+            "type": "string"
+          },
+          {
+            "name": "FileVersion",
+            "type": "string"
+          },
+          {
+            "name": "InformationalVersion",
+            "type": "string"
+          },
+          {
+            "name": "PackageId",
+            "type": "string"
+          },
+          {
+            "name": "Version",
+            "type": "string"
+          },
+          {
+            "name": "VersionPrefix",
+            "type": "string"
+          },
+          {
+            "name": "Authors",
+            "type": "List<string>",
+            "separator": ","
+          },
+          {
+            "name": "Title",
+            "type": "string"
+          },
+          {
+            "name": "Description",
+            "type": "string"
+          },
+          {
+            "name": "Copyright",
+            "type": "string"
+          },
+          {
+            "name": "PackageRequireLicenseAcceptance",
+            "type": "bool"
+          },
+          {
+            "name": "PackageLicenseUrl",
+            "type": "string"
+          },
+          {
+            "name": "PackageProjectUrl",
+            "type": "string"
+          },
+          {
+            "name": "PackageIconUrl",
+            "type": "string"
+          },
+          {
+            "name": "PackageTags",
+            "type": "List<string>",
+            "separator": " "
+          },
+          {
+            "name": "PackageReleaseNotes",
+            "type": "string"
+          },
+          {
+            "name": "RepositoryUrl",
+            "type": "string"
+          },
+          {
+            "name": "RepositoryType",
+            "type": "string"
+          }
+        ]
+      }
+    ]
+  },
   "enumerations": [
     {
       "name": "DotNetVerbosity",
