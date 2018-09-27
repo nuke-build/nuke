@@ -15,7 +15,8 @@ namespace Nuke.CodeGeneration.Generators
     {
         public static bool IsValueType(this Property property)
         {
-            return new[] { "int", "bool" }.Contains(property.Type);
+            return new[] { "int", "bool", "sbyte", "short", "long", "byte", "ushort", "uint", "ulong", "float", "double", "char", "decimal" }
+                .Contains(property.Type);
         }
 
         public static string GetNullableType(this Property property)
