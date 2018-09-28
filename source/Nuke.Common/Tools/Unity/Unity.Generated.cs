@@ -23,7 +23,9 @@ namespace Nuke.Common.Tools.Unity
     public static partial class UnityTasks
     {
         /// <summary><p>Path to the Unity executable.</p></summary>
-        public static string UnityPath => GetToolPath();
+        public static string UnityPath =>
+            ToolPathResolver.TryGetEnvironmentExecutable("UNITY_EXE") ??
+            GetToolPath();
         /// <summary><p>Unity is usually launched by double-clicking its icon from the desktop. However, it is also possible to run it from the command line (from the macOS Terminal or the Windows Command Prompt). When launched in this way, Unity can receive commands and information on startup, which can be very useful for test suites, automated builds and other production tasks.</p></summary>
         public static IReadOnlyCollection<Output> Unity(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {

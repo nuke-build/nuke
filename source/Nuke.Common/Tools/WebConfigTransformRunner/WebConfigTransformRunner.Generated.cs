@@ -23,7 +23,9 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
     public static partial class WebConfigTransformRunnerTasks
     {
         /// <summary><p>Path to the WebConfigTransformRunner executable.</p></summary>
-        public static string WebConfigTransformRunnerPath => ToolPathResolver.GetPackageExecutable("WebConfigTransformRunner", "WebConfigTransformRunner.exe");
+        public static string WebConfigTransformRunnerPath =>
+            ToolPathResolver.TryGetEnvironmentExecutable("WEBCONFIGTRANSFORMRUNNER_EXE") ??
+            ToolPathResolver.GetPackageExecutable("WebConfigTransformRunner", "WebConfigTransformRunner.exe");
         /// <summary><p>This is a commandline tool to run an ASP.Net web.config tranformation.</p></summary>
         public static IReadOnlyCollection<Output> WebConfigTransformRunner(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {

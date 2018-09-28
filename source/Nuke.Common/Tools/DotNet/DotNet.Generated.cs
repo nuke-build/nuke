@@ -23,7 +23,9 @@ namespace Nuke.Common.Tools.DotNet
     public static partial class DotNetTasks
     {
         /// <summary><p>Path to the DotNet executable.</p></summary>
-        public static string DotNetPath => GetToolPath();
+        public static string DotNetPath =>
+            ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE") ??
+            ToolPathResolver.GetPathExecutable("dotnet");
         public static IReadOnlyCollection<Output> DotNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
             var process = ProcessTasks.StartProcess(DotNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, ParseLogLevel, outputFilter);

@@ -23,7 +23,9 @@ namespace Nuke.Common.Tools.NuGet
     public static partial class NuGetTasks
     {
         /// <summary><p>Path to the NuGet executable.</p></summary>
-        public static string NuGetPath => GetToolPath();
+        public static string NuGetPath =>
+            ToolPathResolver.TryGetEnvironmentExecutable("NUGET_EXE") ??
+            ToolPathResolver.GetPackageExecutable("NuGet.CommandLine", "nuget.exe");
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p></summary>
         public static IReadOnlyCollection<Output> NuGet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {

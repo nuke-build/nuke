@@ -272,10 +272,6 @@
       "description": "Exact name of the main executable found in the './tools' folder. Case-sensitive.",
       "type": "string"
     },
-    "environmentExecutable": {
-      "description": "Exact name of the environment variable that contains the path to the executable.",
-      "type": "string"
-    },
     "pathExecutable": {
       "description": "Exact name of the executable that can be found via 'where' or 'which'.",
       "type": "string"

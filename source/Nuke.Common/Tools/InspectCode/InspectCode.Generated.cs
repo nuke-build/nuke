@@ -23,7 +23,9 @@ namespace Nuke.Common.Tools.InspectCode
     public static partial class InspectCodeTasks
     {
         /// <summary><p>Path to the InspectCode executable.</p></summary>
-        public static string InspectCodePath => ToolPathResolver.GetPackageExecutable("JetBrains.ReSharper.CommandLineTools", GetPackageExecutable());
+        public static string InspectCodePath =>
+            ToolPathResolver.TryGetEnvironmentExecutable("INSPECTCODE_EXE") ??
+            ToolPathResolver.GetPackageExecutable("JetBrains.ReSharper.CommandLineTools", GetPackageExecutable());
         /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p></summary>
         public static IReadOnlyCollection<Output> InspectCode(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {

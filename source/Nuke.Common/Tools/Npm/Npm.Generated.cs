@@ -23,7 +23,9 @@ namespace Nuke.Common.Tools.Npm
     public static partial class NpmTasks
     {
         /// <summary><p>Path to the Npm executable.</p></summary>
-        public static string NpmPath => ToolPathResolver.GetPathExecutable("npm");
+        public static string NpmPath =>
+            ToolPathResolver.TryGetEnvironmentExecutable("NPM_EXE") ??
+            ToolPathResolver.GetPathExecutable("npm");
         /// <summary><p>npm is the package manager for the Node JavaScript platform. It puts modules in place so that node can find them, and manages dependency conflicts intelligently.<para/>It is extremely configurable to support a wide variety of use cases. Most commonly, it is used to publish, discover, install, and develop node programs.</p></summary>
         public static IReadOnlyCollection<Output> Npm(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {

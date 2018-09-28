@@ -23,7 +23,9 @@ namespace Nuke.Common.Tools.VSWhere
     public static partial class VSWhereTasks
     {
         /// <summary><p>Path to the VSWhere executable.</p></summary>
-        public static string VSWherePath => ToolPathResolver.GetPackageExecutable("vswhere", "vswhere.exe");
+        public static string VSWherePath =>
+            ToolPathResolver.TryGetEnvironmentExecutable("VSWHERE_EXE") ??
+            ToolPathResolver.GetPackageExecutable("vswhere", "vswhere.exe");
         /// <summary><p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p></summary>
         public static IReadOnlyCollection<Output> VSWhere(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {

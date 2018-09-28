@@ -23,7 +23,9 @@ namespace Nuke.Common.Tools.SignTool
     public static partial class SignToolTasks
     {
         /// <summary><p>Path to the SignTool executable.</p></summary>
-        public static string SignToolPath => GetToolPath();
+        public static string SignToolPath =>
+            ToolPathResolver.TryGetEnvironmentExecutable("SIGNTOOL_EXE") ??
+            GetToolPath();
         /// <summary><p>Sign Tool is a command-line tool that digitally signs files, verifies signatures in files, and time-stamps files.</p></summary>
         public static IReadOnlyCollection<Output> SignTool(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {

@@ -47,9 +47,6 @@ namespace Nuke.CodeGeneration.Model
         [Description("Exact name of the main executable found in the './tools' folder. Case-sensitive.")]
         public string PackageExecutable { get; set; }
 
-        [Description("Exact name of the environment variable that contains the path to the executable.")]
-        public string EnvironmentExecutable { get; set; }
-
         [Description("Exact name of the executable that can be found via 'where' or 'which'.")]
         public string PathExecutable { get; set; }
 

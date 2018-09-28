@@ -12,6 +12,7 @@
   ],
   "name": "DotNet",
   "officialUrl": "https://docs.microsoft.com/en-us/dotnet/core/tools/",
+  "pathExecutable": "dotnet",
   "logLevelParsing": true,
   "tasks": [
     {
