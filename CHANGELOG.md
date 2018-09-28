@@ -5,7 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Removed `PathConstruction.GetRootRelativePath`
+- Removed `License` from specification files
+- Deprecated `NukeBuild.Configuration` which should belong to user-code
+- Changed `SolutionAttribute` to resolve solution file via parameter
+- Changed CLI wrapper tasks to attempt to resolve tool paths from `[TOOL]_EXE` environment variable
+- Added `AbsolutePath.Parent` and equality members
+- Added `TypeConverter` for `AbsolutePath` which allows passing paths as parameter
 - Fixed detection of value types in specification files
+- Fixed path variable check to split by specific separator
 
 ## [0.9.1] / 2018-09-26
 - Fixed wrong assertions in global tool
