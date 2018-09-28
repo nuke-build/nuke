@@ -29,7 +29,7 @@ namespace Nuke.Common.Tools.MSBuild
                     .SetSolutionFile(NukeBuild.Instance.SolutionFile)
                     .SetMaxCpuCount(Environment.ProcessorCount)
                     .SetConfiguration(NukeBuild.Instance.Configuration)
-                    .SetNodeReuse(NukeBuild.Instance.IsLocalBuild);
+                    .SetNodeReuse(NukeBuild.IsLocalBuild);
 
                 var teamCityLogger = TeamCity.Instance?.ConfigurationProperties["TEAMCITY_DOTNET_MSBUILD_EXTENSIONS4_0"];
                 if (teamCityLogger != null)

@@ -107,8 +107,8 @@ namespace Nuke.Common
         [Parameter("Shows the help text for this build assembly.")]
         public bool Help { get; }
 
-        public bool IsLocalBuild => Host == HostType.Console;
-        public bool IsServerBuild => Host != HostType.Console;
+        public static bool IsLocalBuild => GetHostType() == HostType.Console;
+        public static bool IsServerBuild => GetHostType() != HostType.Console;
 
         public LogLevel LogLevel => (LogLevel) Verbosity;
 
