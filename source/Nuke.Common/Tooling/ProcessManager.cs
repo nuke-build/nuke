@@ -109,7 +109,6 @@ namespace Nuke.Common.Tooling
 
             ApplyEnvironmentVariables(environmentVariables, startInfo);
             PrintEnvironmentVariables(startInfo);
-            CheckPathEnvironmentVariable(startInfo);
 
             var process = Process.Start(startInfo);
             if (process == null)
@@ -209,9 +208,9 @@ namespace Nuke.Common.Tooling
             }
         }
 
-        private static void CheckPathEnvironmentVariable(ProcessStartInfo startInfo)
+        public static void CheckPathEnvironmentVariable()
         {
-            startInfo.Environment
+            EnvironmentInfo.Variables
                 .SingleOrDefault(x => x.Key.EqualsOrdinalIgnoreCase("path"))
                 .Value.Split(s_pathSeparators, StringSplitOptions.RemoveEmptyEntries)
                 .Where(x => !Directory.Exists(x))

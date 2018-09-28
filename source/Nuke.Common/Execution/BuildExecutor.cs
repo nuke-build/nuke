@@ -37,6 +37,7 @@ namespace Nuke.Common.Execution
                 Logger.Log($"Host: {build.Host}");
                 Logger.Log();
                 
+                ProcessManager.CheckPathEnvironmentVariable();
                 InjectionService.InjectValues(build);
                 HandleEarlyExits(build);
 
