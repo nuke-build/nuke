@@ -35,12 +35,17 @@ using Nuke.Common;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
+using Nuke.Common.Tools.Coverlet;
 using Nuke.Common.Tools.Slack;
+using Nuke.Common.Tools.SpecFlow;
+using Nuke.Common.Tools.Squirrel;
+using Nuke.Common.Tools.Unity;
 using Nuke.Common.Tools.VSWhere;
 
 [assembly: IconClass(typeof(ChangelogTasks), "books")]
 [assembly: IconClass(typeof(ControlFlow), "footprint")]
 [assembly: IconClass(typeof(CoverallsNetTasks), "pie-chart4")]
+[assembly: IconClass(typeof(CoverletTasks), "shield2")]
 [assembly: IconClass(typeof(DotCoverTasks), "shield2")]
 [assembly: IconClass(typeof(DotNetTasks), "fire")]
 [assembly: IconClass(typeof(DupFinderTasks), "code")]
@@ -75,8 +80,11 @@ using Nuke.Common.Tools.VSWhere;
 [assembly: IconClass(typeof(SignToolTasks), "key")]
 [assembly: IconClass(typeof(SlackTasks), "bubbles")]
 [assembly: IconClass(typeof(SolutionAttribute), "tree7")]
+[assembly: IconClass(typeof(SpecFlowTasks), "bug2")]
+[assembly: IconClass(typeof(SquirrelTasks), "disk")]
 [assembly: IconClass(typeof(TextTasks), "file-text3")]
 [assembly: IconClass(typeof(TestCloudTasks), "bug2")]
+[assembly: IconClass(typeof(UnityTasks), "gamepad3")]
 [assembly: IconClass(typeof(VSTestTasks), "bug2")]
 [assembly: IconClass(typeof(VSWhereTasks), "search")]
 [assembly: IconClass(typeof(WebConfigTransformRunnerTasks), "file-empty2")]
