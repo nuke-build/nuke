@@ -17,7 +17,7 @@ namespace Nuke.Common.Tooling
 {
     internal class ProcessManager : IProcessManager
     {
-        private static readonly char[] s_pathSeparators = { ';', ':' };
+        private static readonly char[] s_pathSeparators = { EnvironmentInfo.IsWin ? ';' : ':' };
         
         public static IProcessManager Instance { get; private set; } = new ProcessManager();
 
@@ -213,6 +213,7 @@ namespace Nuke.Common.Tooling
             EnvironmentInfo.Variables
                 .SingleOrDefault(x => x.Key.EqualsOrdinalIgnoreCase("path"))
                 .Value.Split(s_pathSeparators, StringSplitOptions.RemoveEmptyEntries)
+                .Select(EnvironmentInfo.ExpandVariables)
                 .Where(x => !Directory.Exists(x))
                 .ForEach(x => Logger.Warn($"Path environment variable contains invalid or inaccessible path '{x}'."));
         }

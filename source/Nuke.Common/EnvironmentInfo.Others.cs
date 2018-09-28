@@ -25,6 +25,12 @@ namespace Nuke.Common
             => Environment.CurrentDirectory;
 #endif
 
+        public static string ExpandVariables(string value)
+        {
+            // TODO: Expand unix style variables $var (https://github.com/dotnet/corefx/issues/28890)
+            return Environment.ExpandEnvironmentVariables(value);
+        }
+
         internal static Dictionary<string, string> GetVariables()
         {
             var environmentVariables = Environment.GetEnvironmentVariables()
