@@ -16,9 +16,15 @@ class Build : NukeBuild
 {
     public static int Main () => Execute<Build>(x => x.Compile);
 
-    [Parameter] readonly string Source = "https://api.nuget.org/v3/index.json";                 // NUGET
-    [Parameter] readonly string SymbolSource = "https://nuget.smbsrc.net/";                     // NUGET
-    [Parameter] readonly string ApiKey;                                                         // NUGET
+    [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
+    readonly string Configuration = IsLocalBuild ? "Debug" : "Release";
+    
+    [Parameter("Source to push NuGet packages")]                                                // NUGET
+    readonly string Source = "https://api.nuget.org/v3/index.json";                             // NUGET
+    [Parameter("API endpoint to push NuGet source packages")]                                   // NUGET
+    readonly string SymbolSource = "https://nuget.smbsrc.net/";                                 // NUGET
+    [Parameter("API key for pushing NuGet packages")]                                           // NUGET
+    readonly string ApiKey;                                                                     // NUGET
 
     [Solution("_SOLUTION_FILE_")] readonly Solution Solution;                                   // SOLUTION_FILE
     [GitRepository] readonly GitRepository GitRepository;                                       // GIT
