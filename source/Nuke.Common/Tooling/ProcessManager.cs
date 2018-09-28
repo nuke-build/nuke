@@ -17,6 +17,8 @@ namespace Nuke.Common.Tooling
 {
     internal class ProcessManager : IProcessManager
     {
+        private static readonly char[] s_pathSeparators = { ';', ':' };
+        
         public static IProcessManager Instance { get; private set; } = new ProcessManager();
 
         public virtual IProcess StartProcess(ToolSettings toolSettings)
@@ -194,7 +196,7 @@ namespace Nuke.Common.Tooling
             {
                 if (pair.Key.EqualsOrdinalIgnoreCase("path"))
                 {
-                    var paths = pair.Value.Split(';');
+                    var paths = pair.Value.Split(s_pathSeparators);
                     var padding = paths.Length.ToString().Length;
 
                     for (var i = 0; i < paths.Length; i++)
@@ -211,7 +213,7 @@ namespace Nuke.Common.Tooling
         {
             startInfo.Environment
                 .SingleOrDefault(x => x.Key.EqualsOrdinalIgnoreCase("path"))
-                .Value.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
+                .Value.Split(s_pathSeparators, StringSplitOptions.RemoveEmptyEntries)
                 .Where(x => !Directory.Exists(x))
                 .ForEach(x => Logger.Warn($"Path environment variable contains invalid or inaccessible path '{x}'."));
         }
