@@ -141,6 +141,14 @@ namespace Nuke.Common
             }
         }
 
-        protected internal virtual string PackagesConfigFile => NuGetPackageResolver.GetPackageConfigFile(BuildProjectDirectory);
+        protected internal virtual string PackagesConfigFile
+        {
+            get
+            {
+                ControlFlow.Assert(BuildProjectDirectory != null,
+                    "No build project found. Either pass the tool paths directly or override NukeBuild.PackagesConfigFile. ");
+                return NuGetPackageResolver.GetPackageConfigFile(BuildProjectDirectory);
+            }
+        }
     }
 }

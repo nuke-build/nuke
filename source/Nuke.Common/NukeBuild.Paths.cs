@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using JetBrains.Annotations;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities.Collections;
 
@@ -20,6 +21,7 @@ namespace Nuke.Common
         {
             get
             {
+                ControlFlow.Assert(BuildProjectDirectory != null, "No build project found. NukeBuild.RootDirectory has to be overridden.");
                 var rootDirectory =
                     FileSystemTasks.FindParentDirectory(BuildProjectDirectory, x => x.GetFiles(ConfigurationFile).Any());
                 ControlFlow.Assert(rootDirectory != null,
@@ -53,6 +55,7 @@ namespace Nuke.Common
             }
         }
 
+        [CanBeNull]
         public static PathConstruction.AbsolutePath BuildProjectDirectory
         {
             get
@@ -63,7 +66,7 @@ namespace Nuke.Common
                         .SingleOrDefaultOrError($"Found multiple project files in '{x}'."))
                     .FirstOrDefault(x => x != null)
                     ?.DirectoryName;
-                return (PathConstruction.AbsolutePath) buildProjectDirectory.NotNull("buildProjectDirectory != null");
+                return (PathConstruction.AbsolutePath) buildProjectDirectory;
             }
         }
 
