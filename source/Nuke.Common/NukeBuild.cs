@@ -80,8 +80,8 @@ namespace Nuke.Common
         /// </summary>
         [Parameter("Configuration to build. Default is 'Debug' (local) or 'Release' (server).")]
         [Obsolete("Property will be removed in a following version. Please define it yourself, i.e.: "
-                  + "[Parameter] readonly string Configuration;")]
-        public virtual string Configuration { get; } = GetHostType() == HostType.Console ? "Debug" : "Release";
+                  + "[Parameter] readonly string Configuration = IsLocalBuild ? \"Debug\" : \"Release\";")]
+        public virtual string Configuration { get; } = IsLocalBuild ? "Debug" : "Release";
 
         /// <summary>
         /// Disables execution of target dependencies.
