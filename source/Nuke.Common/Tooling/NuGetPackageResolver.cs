@@ -25,6 +25,8 @@ namespace Nuke.Common.Tooling
     [PublicAPI]
     public static class NuGetPackageResolver
     {
+        public static string DefaultPackagesConfigFile;
+
         public static async Task<string> GetLatestPackageVersion(string packageId, bool includePrereleases, int? timeout = null)
         {
             try
@@ -40,12 +42,26 @@ namespace Nuke.Common.Tooling
             }
         }
 
+        public static InstalledPackage GetLocalInstalledPackage(
+            string packageId,
+            string packagesConfigFile = null,
+            bool includeDependencies = false)
+        {
+            packagesConfigFile = packagesConfigFile ?? DefaultPackagesConfigFile;
+            
+            return GetLocalInstalledPackages(packagesConfigFile, includeDependencies)
+                .FirstOrDefault(x => x.Id.EqualsOrdinalIgnoreCase(packageId))
+                .NotNull($"Could not find package '{packageId}' via '{packagesConfigFile}'.");
+        }
+
         // TODO: add HasLocalInstalledPackage() ?
         // ReSharper disable once CyclomaticComplexity
         public static IEnumerable<InstalledPackage> GetLocalInstalledPackages(
-            string packagesConfigFile,
+            string packagesConfigFile = null,
             bool includeDependencies = false)
         {
+            packagesConfigFile = packagesConfigFile ?? DefaultPackagesConfigFile;
+            
             ControlFlow.Assert(!IncludesDependencies(packagesConfigFile) || includeDependencies,
                 $"!IncludesDependencies({packagesConfigFile}) || includeDependencies");
             var packagesDirectory = GetPackagesDirectory(packagesConfigFile);
