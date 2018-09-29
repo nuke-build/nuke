@@ -105,7 +105,8 @@ namespace Nuke.GlobalTool
 
             var defaultBuildDefinitions = new List<string>();
 
-            if (ConsoleHelper.PromptForChoice("Do you need help getting started with a basic build?",
+            if (solutionFile != null &&
+                ConsoleHelper.PromptForChoice("Do you need help getting started with a basic build?",
                 (true, "Yes, get me started!"),
                 (false, "No, I can do this myself...")))
             {
