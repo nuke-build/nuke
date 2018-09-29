@@ -51,10 +51,10 @@ class Build : NukeBuild
         .Executes(() =>
         {
             MSBuild(s => s                                                                      // MSBUILD
-                .SetTargetPath(SolutionFile)                                                    // MSBUILD
+                .SetTargetPath(Solution)                                                        // MSBUILD
                 .SetTargets("Restore"));                                                        // MSBUILD
             DotNetRestore(s => s                                                                // DOTNET
-                .SetProjectFile(SolutionFile));                                                 // DOTNET
+                .SetProjectFile(Solution));                                                     // DOTNET
         });
 
     Target Compile => _ => _
@@ -62,7 +62,7 @@ class Build : NukeBuild
         .Executes(() =>
         {
             MSBuild(s => s                                                                      // MSBUILD
-                .SetTargetPath(SolutionFile)                                                    // MSBUILD
+                .SetTargetPath(Solution)                                                        // MSBUILD
                 .SetTargets("Rebuild")                                                          // MSBUILD
                 .SetConfiguration(Configuration)                                                // MSBUILD
                 .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())                  // MSBUILD && GITVERSION
@@ -71,7 +71,7 @@ class Build : NukeBuild
                 .SetMaxCpuCount(Environment.ProcessorCount)                                     // MSBUILD
                 .SetNodeReuse(IsLocalBuild));                                                   // MSBUILD
             DotNetBuild(s => s                                                                  // DOTNET
-                .SetProjectFile(SolutionFile)                                                   // DOTNET
+                .SetProjectFile(Solution)                                                       // DOTNET
                 .SetConfiguration(Configuration)                                                // DOTNET
                 .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())                  // DOTNET && GITVERSION
                 .SetFileVersion(GitVersion.GetNormalizedFileVersion())                          // DOTNET && GITVERSION
@@ -84,7 +84,7 @@ class Build : NukeBuild
         .Executes(() =>
         {
             MSBuild(s => s                                                                      // MSBUILD
-                .SetTargetPath(SolutionFile)                                                    // MSBUILD
+                .SetTargetPath(Solution)                                                        // MSBUILD
                 .SetTargets("Restore", "Pack")                                                  // MSBUILD
                 .SetPackageVersion(GitVersion.NuGetVersionV2)                                   // MSBUILD && GITVERSION
                 .SetPackageOutputPath(ArtifactsDirectory)                                       // MSBUILD && ARTIFACTS_DIR
@@ -92,7 +92,7 @@ class Build : NukeBuild
                 .SetConfiguration(Configuration)                                                // MSBUILD
                 .EnableIncludeSymbols());                                                       // MSBUILD
             DotNetPack(s => s                                                                   // DOTNET
-                .SetProject(SolutionFile)                                                       // DOTNET
+                .SetProject(Solution)                                                           // DOTNET
                 .SetVersion(GitVersion.NuGetVersionV2)                                          // DOTNET && GITVERSION
                 .SetOutputDirectory(ArtifactsDirectory)                                         // DOTNET && ARTIFACTS_DIR
                 .SetOutputDirectory(OutputDirectory)                                            // DOTNET && OUTPUT_DIR
