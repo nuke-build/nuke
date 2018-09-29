@@ -90,12 +90,6 @@ namespace Nuke.Common
         public string[] SkippedTargets { get; } = GetSkippedTargets();
 
         /// <summary>
-        /// Enables sanity checks for the <c>PATH</c> environment variable.
-        /// </summary>
-        [Parameter("Enables sanity checks for the 'PATH' environment variable.")]
-        public bool CheckPath { get; }
-
-        /// <summary>
         /// Shows the target dependency graph (HTML).
         /// </summary>
         [Parameter("Shows the target dependency graph (HTML).")]
