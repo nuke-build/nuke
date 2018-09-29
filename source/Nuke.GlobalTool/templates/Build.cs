@@ -18,7 +18,7 @@ class Build : NukeBuild
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly string Configuration = IsLocalBuild ? "Debug" : "Release";
-    
+
     [Parameter("Source to push NuGet packages")]                                                // NUGET
     readonly string Source = "https://api.nuget.org/v3/index.json";                             // NUGET
     [Parameter("API endpoint to push NuGet source packages")]                                   // NUGET
