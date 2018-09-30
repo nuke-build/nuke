@@ -6,19 +6,19 @@
     "https://github.com/nuke-build/nswag/blob/master/LICENSE"
   ],
   "references": [
-    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/Tooling/VersionCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/SwaggerGeneration/ListTypesCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/SwaggerGeneration/ListWebApiControllersCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/SwaggerGeneration/TypesToSwaggerCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/SwaggerGeneration/WebApi/WebApiToSwaggerCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/SwaggerGeneration/AspNetCore/AspNetCoreToSwaggerCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/Document/CreateDocumentCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/Document/ExecuteDocumentCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/CodeGeneration/JsonSchemaToCSharpCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/CodeGeneration/JsonSchemaToTypeScriptCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToCSharpClientCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToCSharpControllerCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag/5ebe18eb9a/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToTypeScriptClientCommand.cs"
+    "https://raw.githubusercontent.com/RSuter/NSwag/3088823af3/src/NSwag.Commands/Commands/Tooling/VersionCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/3088823af3/src/NSwag.Commands/Commands/SwaggerGeneration/ListTypesCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/3088823af3/src/NSwag.Commands/Commands/SwaggerGeneration/ListWebApiControllersCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/3088823af3/src/NSwag.Commands/Commands/SwaggerGeneration/TypesToSwaggerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/3088823af3/src/NSwag.Commands/Commands/SwaggerGeneration/WebApi/WebApiToSwaggerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/3088823af3/src/NSwag.Commands/Commands/SwaggerGeneration/AspNetCore/AspNetCoreToSwaggerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/3088823af3/src/NSwag.Commands/Commands/Document/CreateDocumentCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/3088823af3/src/NSwag.Commands/Commands/Document/ExecuteDocumentCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/3088823af3/src/NSwag.Commands/Commands/CodeGeneration/JsonSchemaToCSharpCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/3088823af3/src/NSwag.Commands/Commands/CodeGeneration/JsonSchemaToTypeScriptCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/3088823af3/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToCSharpClientCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/3088823af3/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToCSharpControllerCommand.cs",
+    "https://raw.githubusercontent.com/RSuter/NSwag/3088823af3/src/NSwag.Commands/Commands/CodeGeneration/SwaggerToTypeScriptClientCommand.cs"
   ],
   "name": "NSwag",
   "officialUrl": "https://github.com/RSuter/NSwag",
@@ -242,6 +242,12 @@
             "type": "string",
             "format": "/Project:{value}",
             "help": "The project to use."
+          },
+          {
+            "name": "RequireParametersWithoutDefault",
+            "type": "bool?",
+            "format": "/RequireParametersWithoutDefault:{value}",
+            "help": "Parameters without default value are always required(i.e. api explorer info and only optional when default is set, legacy, default: false)."
           },
           {
             "name": "Runtime",
@@ -952,6 +958,12 @@
       }
     ],
     "swaggerGeneratorCommand": [
+      {
+        "name": "AllowNullableBodyParameters",
+        "type": "bool?",
+        "format": "/AllowNullableBodyParameters:{value}",
+        "help": "Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available, default: true)."
+      },
       {
         "name": "AllowReferencesWithProperties",
         "type": "bool?",

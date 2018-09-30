@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
-
+- Changed supported version to [NSwag v11.20.0 (Build )](https://github.com/RSuter/NSwag/releases/tag/NSwag-Build-)
 ## [0.6.0] / 2018-09-11
 - Changed supported version to [NSwag v11.19.1 (Build 1024)](https://github.com/RSuter/NSwag/releases/tag/NSwag-Build-1024)
 ## [0.5.2] / 2018-08-15
@@ -34,4 +34,3 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [0.4.1]: https://github.com/nuke-build/nswag/compare/0.3.6...0.4.1
 [0.3.6]: https://github.com/nuke-build/nswag/compare/0.3.1...0.3.6
 [0.3.1]: https://github.com/nuke-build/nswag/tree/0.3.1
-
