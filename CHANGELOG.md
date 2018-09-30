@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Removed `PathConstruction.GetRootRelativePath`
 - Removed `License` from specification files
 - Deprecated `NukeBuild.Configuration` which should belong to user-code
+- Deprecated plus operator in `PathConstruction.AbsolutePath` and `RelativePath`
 - Changed `SolutionAttribute` to resolve solution file via parameter
 - Changed CLI wrapper tasks to attempt to resolve tool paths from `[TOOL]_EXE` environment variable
 - Added `AbsolutePath.Parent` and equality members
