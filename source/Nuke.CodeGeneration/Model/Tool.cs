@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -14,15 +15,18 @@ using Newtonsoft.Json;
 namespace Nuke.CodeGeneration.Model
 {
     [UsedImplicitly(ImplicitUseKindFlags.Assign, ImplicitUseTargetFlags.WithMembers)]
-    [DebuggerDisplay("{" + nameof(DefinitionFile) + "}")]
+    [DebuggerDisplay("{" + nameof(SpecificationFile) + "}")]
     public class Tool
     {
         [JsonProperty("$schema")]
         public string Schema { get; set; } = "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json";
 
-        [JsonIgnore] public string DefinitionFile { get; set; }
+        [JsonIgnore] public string SpecificationFile { get; set; }
+        [JsonIgnore] public string DefaultOutputFileName => $"{Path.GetFileNameWithoutExtension(SpecificationFile)}.Generated.cs";
 
-        [JsonIgnore] public string RepositoryUrl { get; set; }
+        [JsonIgnore] public string SourceFile { get; set; }
+
+        [JsonIgnore] public string Namespace { get; set; }
 
         [Description("Contains all references on which this definition is based on. Allows checking for updates.")]
         public List<string> References { get; set; } = new List<string>();

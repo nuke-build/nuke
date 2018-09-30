@@ -15,7 +15,7 @@
           Condition="'$(NukeCodeGeneration)' == 'True' And '$(DOTNET_EXE)' == ''">
     <!-- TODO: output all metadata files -->
     <CodeGeneratorTask
-      MetadataFiles="@(NukeMetadata)"
+      SpecificationFiles="@(NukeMetadata)"
       BaseDirectory="$(NukeBaseDirectory)"
       UseNestedNamespaces="$(NukeUseNestedNamespaces)"
       BaseNamespace="$(NukeBaseNamespace)"

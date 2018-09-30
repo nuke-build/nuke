@@ -3,13 +3,14 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.Build.Framework;
 using Nuke.Common.Git;
 using Nuke.Common;
-using Nuke.Common.IO;
+using static Nuke.Common.IO.PathConstruction;
 
 namespace Nuke.CodeGeneration
 {
@@ -22,7 +23,7 @@ namespace Nuke.CodeGeneration
         public ITaskHost HostObject { get; set; }
 
         [Required]
-        public ITaskItem[] MetadataFiles { get; set; }
+        public ITaskItem[] SpecificationFiles { get; set; }
 
         [Required]
         public string BaseDirectory { get; set; }
@@ -36,26 +37,26 @@ namespace Nuke.CodeGeneration
 
         public bool Execute()
         {
-            var metadataFiles = MetadataFiles.Select(x => x.GetMetadata("Fullpath")).ToList();
-            if (!MetadataFiles.Any())
-            {
-                ControlFlow.SuppressErrors(() =>
-                {
-                    var exampleFile = Path.Combine(BaseDirectory, "RandomTool.json");
-                    HttpTasks.HttpDownloadFile(c_exampleUrl, exampleFile);
-                    metadataFiles.Add(exampleFile);
-                });
-            }
+            var specificationFiles = SpecificationFiles.Select(x => x.GetMetadata("Fullpath")).ToList();
+            var repository = ControlFlow.SuppressErrors(() => GitRepository.FromLocalDirectory(BaseDirectory));
 
             CodeGenerator.GenerateCode(
-                metadataFiles,
-                BaseDirectory,
-                UseNestedNamespaces,
-                BaseNamespace,
-                GitRepository.FromLocalDirectory(BaseDirectory));
+                specificationFiles,
+                outputFileProvider: x =>
+                    (AbsolutePath) BaseDirectory
+                    / (UseNestedNamespaces ? x.Name : ".")
+                    / x.DefaultOutputFileName,
+                namespaceProvider: x =>
+                    !UseNestedNamespaces
+                        ? BaseNamespace
+                        : string.IsNullOrEmpty(BaseNamespace)
+                            ? x.Name
+                            : $"{BaseNamespace}.{x.Name}",
+                sourceFileProvider: x =>
+                    repository.IsGitHubRepository() ? repository?.GetGitHubDownloadUrl(x.SpecificationFile) : null);
 
             if (UpdateReferences)
-                ReferenceUpdater.UpdateReferences(metadataFiles);
+                ReferenceUpdater.UpdateReferences(specificationFiles);
 
             return true;
         }

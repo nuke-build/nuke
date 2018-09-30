@@ -23,9 +23,7 @@ namespace Nuke.CodeGeneration
             try
             {
                 var content = File.ReadAllText(file);
-                var tool = JsonConvert.DeserializeObject<Tool>(content);
-                tool.DefinitionFile = file;
-                return tool;
+                return JsonConvert.DeserializeObject<Tool>(content);
             }
             catch (Exception exception)
             {
@@ -35,7 +33,7 @@ namespace Nuke.CodeGeneration
             }
         }
 
-        public static void Save(Tool tool)
+        public static void Save(Tool tool, string file)
         {
             var content = JsonConvert.SerializeObject(
                 tool,
@@ -47,7 +45,7 @@ namespace Nuke.CodeGeneration
                     DefaultValueHandling = DefaultValueHandling.Ignore
                 });
 
-            File.WriteAllText(tool.DefinitionFile, content);
+            File.WriteAllText(file, content);
         }
 
         private class CustomContractResolver : CamelCasePropertyNamesContractResolver

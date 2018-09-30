@@ -13,12 +13,16 @@ using Nuke.Common.Git;
 using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
+using static Nuke.Common.IO.PathConstruction;
 
 namespace Nuke.CodeGeneration
 {
     [PublicAPI]
     public static class CodeGenerator
     {
+        public const string SpecificationFilePattern = "*.json";
+
+        [Obsolete]
         public static void GenerateCode(
             string specificationDirectory,
             string generationBaseDirectory,
@@ -27,53 +31,94 @@ namespace Nuke.CodeGeneration
             GitRepository gitRepository = null)
         {
             GenerateCode(
-                Directory.GetFiles(specificationDirectory, "*.json", SearchOption.TopDirectoryOnly),
+                Directory.GetFiles(specificationDirectory, SpecificationFilePattern, SearchOption.TopDirectoryOnly),
                 generationBaseDirectory,
                 useNestedNamespaces,
                 baseNamespace,
                 gitRepository);
         }
 
+        [Obsolete]
         public static void GenerateCode(
             IReadOnlyCollection<string> specificationFiles,
-            string baseDirectory,
+            string generationBaseDirectory,
             bool useNestedNamespaces,
             [CanBeNull] string baseNamespace,
             [CanBeNull] GitRepository repository)
+        {
+            GenerateCode(
+                specificationFiles,
+                outputFileProvider: x =>
+                    (AbsolutePath) generationBaseDirectory
+                    / (useNestedNamespaces ? x.Name : ".")
+                    / x.DefaultOutputFileName,
+                namespaceProvider: x =>
+                    !useNestedNamespaces
+                        ? baseNamespace
+                        : string.IsNullOrEmpty(baseNamespace)
+                            ? x.Name
+                            : $"{baseNamespace}.{x.Name}",
+                sourceFileProvider: x =>
+                    repository?.GetGitHubBrowseUrl(x.SpecificationFile));
+        }
+
+        public static void GenerateCode(
+            string specificationDirectory,
+            Func<Tool, string> outputFileProvider = null,
+            Func<Tool, string> namespaceProvider = null,
+            Func<Tool, string> sourceFileProvider = null)
+        {
+            GenerateCode(
+                Directory.GetFiles(specificationDirectory, SpecificationFilePattern, SearchOption.TopDirectoryOnly),
+                outputFileProvider,
+                namespaceProvider,
+                sourceFileProvider);
+        }
+
+        public static void GenerateCode(
+            IReadOnlyCollection<string> specificationFiles,
+            Func<Tool, string> outputFileProvider = null,
+            Func<Tool, string> namespaceProvider = null,
+            Func<Tool, string> sourceFileProvider = null)
         {
             foreach (var specificationFile in specificationFiles)
             {
                 var tool = ToolSerializer.Load(specificationFile);
                 // for formatting and ordering of properties
-                ToolSerializer.Save(tool);
-                ApplyRuntimeInformation(tool, repository);
+                ToolSerializer.Save(tool, specificationFile);
+                
+                tool.SpecificationFile = specificationFile;
+                tool.SourceFile = sourceFileProvider?.Invoke(tool);
+                tool.Namespace = namespaceProvider?.Invoke(tool);
+                ApplyRuntimeInformation(tool, specificationFile, sourceFileProvider, namespaceProvider);
 
-                var generationDirectory = useNestedNamespaces ? Path.Combine(baseDirectory, tool.Name) : baseDirectory;
-                var generationFile = Path.Combine(generationDirectory, $"{Path.GetFileNameWithoutExtension(tool.DefinitionFile)}.Generated.cs");
-                FileSystemTasks.EnsureExistingDirectory(generationDirectory);
+                var outputFile = outputFileProvider?.Invoke(tool) ??
+                                 Path.ChangeExtension(tool.SpecificationFile, ".Generated.cs").NotNull();
 
-                var @namespace =
-                    !useNestedNamespaces
-                        ? baseNamespace
-                        : string.IsNullOrEmpty(baseNamespace)
-                            ? tool.Name
-                            : $"{baseNamespace}.{tool.Name}";
-
-                using (var fileStream = File.Open(generationFile, FileMode.Create))
-                using (var streamWriter = new StreamWriter(fileStream))
-                {
-                    ToolGenerator.Run(tool, @namespace, streamWriter);
-                }
-
-                Logger.Info($"Generated code from '{Path.GetFileName(tool.DefinitionFile)}'.");
+                GenerateCode(tool, outputFile);
             }
         }
 
-        // ReSharper disable once CyclomaticComplexity
-        private static void ApplyRuntimeInformation(Tool tool, GitRepository repository)
+        public static void GenerateCode(Tool tool, string outputFile)
         {
-            tool.RepositoryUrl = repository?.GetGitHubBrowseUrl(tool.DefinitionFile);
+            FileSystemTasks.EnsureExistingDirectory(Path.GetDirectoryName(outputFile));
 
+            using (var fileStream = File.Open(outputFile, FileMode.Create))
+            using (var streamWriter = new StreamWriter(fileStream))
+            {
+                ToolGenerator.Run(tool, streamWriter);
+            }
+
+            Logger.Info($"Generated code for {tool.Name} from {Path.GetFileName(tool.SpecificationFile) ?? "<in-memory>"}.");
+        }
+
+        // ReSharper disable once CyclomaticComplexity
+        private static void ApplyRuntimeInformation(
+            Tool tool,
+            string specificationFile,
+            [CanBeNull] Func<Tool, string> sourceFileProvider, 
+            [CanBeNull] Func<Tool, string> namespaceProvider)
+        {
             foreach (var task in tool.Tasks)
             {
                 task.Tool = tool;
