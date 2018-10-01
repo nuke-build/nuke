@@ -29,6 +29,10 @@
           "items": {
             "$ref": "#/definitions/Property"
           }
+        },
+        "deprecationMessage": {
+          "description": "Obsolete message. DataClass is marked as obsolete when specified.",
+          "type": "string"
         }
       },
       "required": [
@@ -49,6 +53,10 @@
           "items": {
             "type": "string"
           }
+        },
+        "deprecationMessage": {
+          "description": "Obsolete message. Enumeration is marked as obsolete when specified.",
+          "type": "string"
         }
       },
       "required": [
@@ -137,6 +145,10 @@
           "items": {
             "$ref": "#/definitions/Property"
           }
+        },
+        "deprecationMessage": {
+          "description": "Obsolete message. Property is marked as obsolete when specified.",
+          "type": "string"
         }
       },
       "required": [
@@ -174,6 +186,10 @@
           "items": {
             "$ref": "#/definitions/Property"
           }
+        },
+        "deprecationMessage": {
+          "description": "Obsolete message. DataClass is marked as obsolete when specified.",
+          "type": "string"
         }
       }
     },
@@ -234,6 +250,10 @@
         },
         "settingsClass": {
           "$ref": "#/definitions/SettingsClass"
+        },
+        "deprecationMessage": {
+          "description": "Obsolete message. Task is marked as obsolete when specified.",
+          "type": "string"
         }
       }
     }
@@ -259,6 +279,10 @@
       "description": "Url to the official website.",
       "type": "string",
       "format": "uri"
+    },
+    "deprecationMessage": {
+      "description": "Obsolete message. Tool is marked as obsolete when specified.",
+      "type": "string"
     },
     "help": {
       "description": "Help or introduction text to for the tool. Supports 'a-href', 'c', 'em', 'b', 'ul', 'li' and 'para' tags for better formatting.",

@@ -16,7 +16,7 @@ namespace Nuke.CodeGeneration.Model
 {
     [UsedImplicitly(ImplicitUseKindFlags.Assign, ImplicitUseTargetFlags.WithMembers)]
     [DebuggerDisplay("{" + nameof(SpecificationFile) + "}")]
-    public class Tool
+    public class Tool : IDeprecatable
     {
         [JsonProperty("$schema")]
         public string Schema { get; set; } = "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json";
@@ -27,6 +27,8 @@ namespace Nuke.CodeGeneration.Model
         [JsonIgnore] public string SourceFile { get; set; }
 
         [JsonIgnore] public string Namespace { get; set; }
+
+        [CanBeNull] [JsonIgnore] public IDeprecatable Parent => null;
 
         [Description("Contains all references on which this definition is based on. Allows checking for updates.")]
         public List<string> References { get; set; } = new List<string>();
@@ -40,6 +42,9 @@ namespace Nuke.CodeGeneration.Model
         [JsonProperty(Required = Required.Always)]
         [Description("Url to the official website.")]
         public string OfficialUrl { get; set; }
+
+        [Description("Obsolete message. Tool is marked as obsolete when specified.")]
+        public string DeprecationMessage { get; set; }
 
         [Description(
             "Help or introduction text to for the tool. Supports 'a-href', 'c', 'em', 'b', 'ul', 'li' and 'para' tags for better formatting.")]

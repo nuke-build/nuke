@@ -15,7 +15,7 @@ namespace Nuke.CodeGeneration.Model
 {
     [Serializable]
     [UsedImplicitly(ImplicitUseKindFlags.Assign, ImplicitUseTargetFlags.WithMembers)]
-    public class Property
+    public class Property : IDeprecatable
     {
         [NonSerialized] private DataClass _dataClass;
 
@@ -25,6 +25,10 @@ namespace Nuke.CodeGeneration.Model
             get => _dataClass;
             set => _dataClass = value;
         }
+
+        [JsonIgnore]
+        [NotNull]
+        public IDeprecatable Parent => DataClass;
 
         [JsonProperty(Required = Required.Always)]
         [RegularExpression(RegexPatterns.Name)]
@@ -81,5 +85,8 @@ namespace Nuke.CodeGeneration.Model
 
         [Description("Dictionary delegates for named properties.")]
         public List<Property> Delegates { get; set; } = new List<Property>();
+
+        [Description("Obsolete message. Property is marked as obsolete when specified.")]
+        public string DeprecationMessage { get; set; }
     }
 }

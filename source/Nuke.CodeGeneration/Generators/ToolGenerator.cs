@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using JetBrains.Annotations;
 using Nuke.CodeGeneration.Model;
 using Nuke.CodeGeneration.Writers;
 using Nuke.Common.Utilities;
@@ -86,7 +85,7 @@ namespace Nuke.CodeGeneration.Generators
                        "System.Diagnostics.CodeAnalysis",
                        "System.IO",
                        "System.Linq",
-                       "System.Text",
+                       "System.Text"
                    };
         }
     }

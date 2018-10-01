@@ -12,6 +12,17 @@ namespace Nuke.CodeGeneration.Generators
 {
     public static class WriterExtensions
     {
+        public static T WriteObsoleteAttributeWhenObsolete<T>(this T writerWrapper, IDeprecatable deprecatable)
+            where T : IWriterWrapper
+        {
+            if (!deprecatable.IsDeprecated())
+                return writerWrapper;
+
+            var message = deprecatable.GetDeprecationMessage();
+            var obsoleteText = string.IsNullOrEmpty(message) ? string.Empty : $"(\"{message}\")";
+            return writerWrapper.WriteLine($"[Obsolete{obsoleteText}]");
+        }
+
         public static T WriteSummary<T>(this T writerWrapper, Task task)
             where T : IWriterWrapper
         {

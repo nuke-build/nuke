@@ -29,6 +29,7 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteSummary(enumeration)
                 .WriteLine("[PublicAPI]")
                 .WriteLine("[Serializable]")
+                .WriteObsoleteAttributeWhenObsolete(enumeration)
                 .WriteLine("[ExcludeFromCodeCoverage]")
                 .WriteLine($"public partial class {enumeration.Name} : Enumeration")
                 .WriteBlock(w => w.ForEach(enumeration.Values,
