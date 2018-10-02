@@ -249,6 +249,13 @@ namespace Nuke.GlobalTool
                             buildProjectName,
                             nugetVersion = "latest"
                         })));
+            
+            if (definitions.Contains("SRC_DIR"))
+                FileSystemTasks.EnsureExistingDirectory(Path.Combine(rootDirectory, "src"));
+            if (definitions.Contains("SOURCE_DIR"))
+                FileSystemTasks.EnsureExistingDirectory(Path.Combine(rootDirectory, "source"));
+            if (definitions.Contains("TESTS_DIR"))
+                FileSystemTasks.EnsureExistingDirectory(Path.Combine(rootDirectory, "tests"));
 
             #endregion
 
