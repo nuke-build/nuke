@@ -4,17 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
-using System.Xml.XPath;
 using JetBrains.Annotations;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
@@ -103,58 +97,60 @@ namespace Nuke.GlobalTool
 
             #region Additional
 
-            var defaultBuildDefinitions = new List<string>();
+            var definitions = new List<string>();
 
             if (solutionFile != null &&
-                ConsoleHelper.PromptForChoice("Do you need help getting started with a basic build?",
-                (true, "Yes, get me started!"),
-                (false, "No, I can do this myself...")))
+                projectFormat == FORMAT_SDK &&
+                ConsoleHelper.PromptForChoice(
+                    "Do you need help getting started with a basic build?",
+                    (true, "Yes, get me started!"),
+                    (false, "No, I can do this myself...")))
             {
-                defaultBuildDefinitions.Add(
+                definitions.Add(
                     ConsoleHelper.PromptForChoice("Restore, compile, pack using ...",
                         ("DOTNET", "dotnet CLI"),
                         ("MSBUILD", "MSBuild/Mono"),
                         (null, "Neither")));
 
-                defaultBuildDefinitions.Add(
+                definitions.Add(
                     ConsoleHelper.PromptForChoice("Source files are located in ...",
                         ("SOURCE_DIR", "./source"),
                         ("SRC_DIR", "./src"),
                         (null, "Neither")));
 
-                defaultBuildDefinitions.Add(
+                definitions.Add(
                     ConsoleHelper.PromptForChoice("Move packages to ...",
                         ("OUTPUT_DIR", "./output"),
                         ("ARTIFACTS_DIR", "./artifacts"),
                         (null, "Neither")));
 
-                defaultBuildDefinitions.Add(
+                definitions.Add(
                     ConsoleHelper.PromptForChoice("Where do test projects go?",
                         ("TESTS_DIR", "./tests"),
                         (null, "Same as source")));
 
                 if (Directory.Exists(Path.Combine(rootDirectory, ".git")))
-                    defaultBuildDefinitions.Add("GIT");
+                    definitions.Add("GIT");
                 else
                 {
-                    defaultBuildDefinitions.Add(
+                    definitions.Add(
                         ConsoleHelper.PromptForChoice("Do you use git?",
                             ("GIT", "Yes, just not setup yet"),
                             (null, "No, something else")));
                 }
 
                 if (File.Exists(Path.Combine(rootDirectory, "GitVersion.yml")))
-                    defaultBuildDefinitions.Add("GITVERSION");
-                else if (defaultBuildDefinitions.Contains("GIT"))
+                    definitions.Add("GITVERSION");
+                else if (definitions.Contains("GIT"))
                 {
-                    defaultBuildDefinitions.Add(
+                    definitions.Add(
                         ConsoleHelper.PromptForChoice("Do you use GitVersion?",
                             ("GITVERSION", "Yes, just not setup yet"),
                             (null, "No, custom versioning")));
                 }
             }
 
-            defaultBuildDefinitions.RemoveAll(x => x == null);
+            definitions.RemoveAll(x => x == null);
 
             #endregion
 
@@ -171,7 +167,7 @@ namespace Nuke.GlobalTool
 
             if (solutionFile != null)
             {
-                defaultBuildDefinitions.Add("SOLUTION_FILE");
+                definitions.Add("SOLUTION_FILE");
                 
                 var solutionFileContent = TextTasks.ReadAllLines(solutionFile).ToList();
                 var buildProjectFileRelative = (WinRelativePath) GetRelativePath(solutionDirectory, buildProjectFile);
@@ -185,6 +181,7 @@ namespace Nuke.GlobalTool
                 buildProjectFile,
                 TemplateUtility.FillTemplate(
                     GetTemplate($"_build.{projectFormat}.csproj"),
+                    definitions,
                     replacements: GetDictionary(
                         new
                         {
@@ -216,7 +213,7 @@ namespace Nuke.GlobalTool
                 Path.Combine(buildDirectory, "Build.cs"),
                 TemplateUtility.FillTemplate(
                     GetTemplate("Build.cs"),
-                    defaultBuildDefinitions,
+                    definitions,
                     replacements: GetDictionary(
                         new
                         {
@@ -227,7 +224,6 @@ namespace Nuke.GlobalTool
                 Path.Combine(EnvironmentInfo.WorkingDirectory, "build.ps1"),
                 TemplateUtility.FillTemplate(
                     GetTemplate($"build.{targetPlatform}.ps1"),
-                    definitions: null,
                     replacements: GetDictionary(
                         new
                         {
@@ -243,7 +239,6 @@ namespace Nuke.GlobalTool
                 Path.Combine(EnvironmentInfo.WorkingDirectory, "build.sh"),
                 TemplateUtility.FillTemplate(
                     GetTemplate($"build.{targetPlatform}.sh"),
-                    definitions: null,
                     replacements: GetDictionary(
                         new
                         {
@@ -254,6 +249,13 @@ namespace Nuke.GlobalTool
                             buildProjectName,
                             nugetVersion = "latest"
                         })));
+            
+            if (definitions.Contains("SRC_DIR"))
+                FileSystemTasks.EnsureExistingDirectory(Path.Combine(rootDirectory, "src"));
+            if (definitions.Contains("SOURCE_DIR"))
+                FileSystemTasks.EnsureExistingDirectory(Path.Combine(rootDirectory, "source"));
+            if (definitions.Contains("TESTS_DIR"))
+                FileSystemTasks.EnsureExistingDirectory(Path.Combine(rootDirectory, "tests"));
 
             #endregion
 
@@ -261,7 +263,7 @@ namespace Nuke.GlobalTool
 
             if (new[]{"addon", "addin", "plugin"}.Any(x => x.EqualsOrdinalIgnoreCase(args.FirstOrDefault())))
             {
-                ControlFlow.Assert(defaultBuildDefinitions.Contains("SOURCE_DIR"), "definitions.Contains('SOURCE_DIR')");
+                ControlFlow.Assert(definitions.Contains("SOURCE_DIR"), "definitions.Contains('SOURCE_DIR')");
 
                 var organization = ConsoleHelper.PromptForInput("Organization name:", defaultValue: "nuke-build");
                 var addonName = ConsoleHelper.PromptForInput("Organization name:", defaultValue: null);
