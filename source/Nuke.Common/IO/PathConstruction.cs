@@ -280,7 +280,7 @@ namespace Nuke.Common.IO
                 return new RelativePath(NormalizePath(Combine(path1, (RelativePath) path2, separator), separator), separator);
             }
 
-            [Obsolete("Will be removed in a following release.")]
+            [Obsolete("Will be removed in a following release. Use division operator '/' instead.")]
             public static RelativePath operator +(RelativePath path1, string path2)
             {
                 return path1 / path2;
@@ -375,7 +375,7 @@ namespace Nuke.Common.IO
                 return new AbsolutePath(Combine(path1, path2));
             }
 
-            [Obsolete("Will be removed in a following release.")]
+            [Obsolete("Will be removed in a following release. Use division operator '/' instead.")]
             public static AbsolutePath operator +(AbsolutePath path1, string path2)
             {
                 return path1 / path2;
