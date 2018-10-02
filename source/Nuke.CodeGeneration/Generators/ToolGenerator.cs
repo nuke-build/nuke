@@ -21,24 +21,20 @@ namespace Nuke.CodeGeneration.Generators
     {
         private static readonly Assembly s_assembly = typeof(ToolGenerator).GetTypeInfo().Assembly;
 
-        public static void Run(Tool tool, [CanBeNull] string @namespace, StreamWriter streamWriter)
+        public static void Run(Tool tool, StreamWriter streamWriter)
         {
             using (var writer = new ToolWriter(tool, streamWriter))
             {
                 writer
                     // TODO [3]: extract license from dotsettings file
-                    .WriteLine($"// Copyright {DateTime.Now.Year} Maintainers of NUKE.")
-                    .WriteLine("// Distributed under the MIT License.")
-                    .WriteLine("// https://github.com/nuke-build/nuke/blob/master/LICENSE")
-                    .WriteLine(string.Empty)
-                    .WriteLine($"// Generated with {s_assembly.GetName().Name}, Version: {s_assembly.GetInformationalText()}.")
-                    .WriteLineIfTrue(tool.RepositoryUrl != null, $"// Generated from {tool.RepositoryUrl}.")
+                    .WriteLineIfTrue(tool.SourceFile != null, $"// Generated from {tool.SourceFile}")
+                    .WriteLine($"// Generated with {s_assembly.GetName().Name}, Version: {s_assembly.GetInformationalText()}")
                     .WriteLine(string.Empty)
                     .ForEach(GetNamespaceImports(), x => writer.WriteLine($"using {x};"))
                     .WriteLine(string.Empty)
-                    .WriteLineIfTrue(@namespace != null, $"namespace {@namespace}");
+                    .WriteLineIfTrue(tool.Namespace != null, $"namespace {tool.Namespace}");
 
-                if (!string.IsNullOrEmpty(@namespace))
+                if (!string.IsNullOrEmpty(tool.Namespace))
                     writer.WriteBlock(x => x.WriteAll());
                 else
                     writer.WriteAll();

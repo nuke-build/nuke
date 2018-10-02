@@ -36,19 +36,19 @@ namespace Nuke.CodeGeneration
             var index = tool.References.IndexOf(reference);
             try
             {
-                referencesDirectory = referencesDirectory ?? Path.GetDirectoryName(tool.DefinitionFile).NotNull();
+                referencesDirectory = referencesDirectory ?? Path.GetDirectoryName(tool.SpecificationFile).NotNull();
                 var referenceId = index.ToString().PadLeft(totalWidth: 3, paddingChar: '0');
                 var referenceFile = Path.Combine(
                     referencesDirectory,
-                    $"{Path.GetFileNameWithoutExtension(tool.DefinitionFile)}.ref.{referenceId}.txt");
+                    $"{Path.GetFileNameWithoutExtension(tool.SpecificationFile)}.ref.{referenceId}.txt");
                 var referenceContent = await GetReferenceContent(reference);
                 File.WriteAllText(referenceFile, referenceContent);
 
-                Logger.Info($"Updated reference for '{Path.GetFileName(tool.DefinitionFile)}#{index}'.");
+                Logger.Info($"Updated reference for '{Path.GetFileName(tool.SpecificationFile)}#{index}'.");
             }
             catch (Exception exception)
             {
-                Logger.Error($"Couldn't update {Path.GetFileName(tool.DefinitionFile)}#{index}: {reference}");
+                Logger.Error($"Couldn't update {Path.GetFileName(tool.SpecificationFile)}#{index}: {reference}");
                 Logger.Error(exception.Message);
             }
         }

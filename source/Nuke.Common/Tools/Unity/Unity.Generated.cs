@@ -1,9 +1,5 @@
-// Copyright 2018 Maintainers and Contributors of NUKE.
-// Distributed under the MIT License.
-// https://github.com/nuke-build/nuke/blob/master/LICENSE
-
-// Generated with Nuke.CodeGeneration, Version: Local.
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Unity.json.
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Unity.json
+// Generated with Nuke.CodeGeneration, Version: Local
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -27,7 +23,9 @@ namespace Nuke.Common.Tools.Unity
     public static partial class UnityTasks
     {
         /// <summary><p>Path to the Unity executable.</p></summary>
-        public static string UnityPath => GetToolPath();
+        public static string UnityPath =>
+            ToolPathResolver.TryGetEnvironmentExecutable("UNITY_EXE") ??
+            GetToolPath();
         /// <summary><p>Unity is usually launched by double-clicking its icon from the desktop. However, it is also possible to run it from the command line (from the macOS Terminal or the Windows Command Prompt). When launched in this way, Unity can receive commands and information on startup, which can be very useful for test suites, automated builds and other production tasks.</p></summary>
         public static IReadOnlyCollection<Output> Unity(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
@@ -138,7 +136,7 @@ namespace Nuke.Common.Tools.Unity
         protected override void AssertValid()
         {
             base.AssertValid();
-            ControlFlow.Assert(File.Exists(LicenseFile), "File.Exists(LicenseFile)");
+            ControlFlow.Assert(File.Exists(LicenseFile), $"File.Exists(LicenseFile) [LicenseFile = {LicenseFile}]");
         }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -256,7 +254,7 @@ namespace Nuke.Common.Tools.Unity
         protected override void AssertValid()
         {
             base.AssertValid();
-            ControlFlow.Assert(Directory.Exists(ProjectPath) || ProjectPath == null, "Directory.Exists(ProjectPath) || ProjectPath == null");
+            ControlFlow.Assert(Directory.Exists(ProjectPath) || ProjectPath == null, $"Directory.Exists(ProjectPath) || ProjectPath == null [ProjectPath = {ProjectPath}]");
         }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {

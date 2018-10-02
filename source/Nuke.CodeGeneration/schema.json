@@ -243,12 +243,6 @@
     "$schema": {
       "type": "string"
     },
-    "license": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
     "references": {
       "description": "Contains all references on which this definition is based on. Allows checking for updates.",
       "type": "array",
@@ -276,10 +270,6 @@
     },
     "packageExecutable": {
       "description": "Exact name of the main executable found in the './tools' folder. Case-sensitive.",
-      "type": "string"
-    },
-    "environmentExecutable": {
-      "description": "Exact name of the environment variable that contains the path to the executable.",
       "type": "string"
     },
     "pathExecutable": {

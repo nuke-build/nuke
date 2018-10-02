@@ -16,9 +16,15 @@ class Build : NukeBuild
 {
     public static int Main () => Execute<Build>(x => x.Compile);
 
-    [Parameter] readonly string Source = "https://api.nuget.org/v3/index.json";                 // NUGET
-    [Parameter] readonly string SymbolSource = "https://nuget.smbsrc.net/";                     // NUGET
-    [Parameter] readonly string ApiKey;                                                         // NUGET
+    [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
+    readonly string Configuration = IsLocalBuild ? "Debug" : "Release";
+
+    [Parameter("Source to push NuGet packages")]                                                // NUGET
+    readonly string Source = "https://api.nuget.org/v3/index.json";                             // NUGET
+    [Parameter("API endpoint to push NuGet source packages")]                                   // NUGET
+    readonly string SymbolSource = "https://nuget.smbsrc.net/";                                 // NUGET
+    [Parameter("API key for pushing NuGet packages")]                                           // NUGET
+    readonly string ApiKey;                                                                     // NUGET
 
     [Solution("_SOLUTION_FILE_")] readonly Solution Solution;                                   // SOLUTION_FILE
     [GitRepository] readonly GitRepository GitRepository;                                       // GIT
@@ -45,10 +51,10 @@ class Build : NukeBuild
         .Executes(() =>
         {
             MSBuild(s => s                                                                      // MSBUILD
-                .SetTargetPath(SolutionFile)                                                    // MSBUILD
+                .SetTargetPath(Solution)                                                        // MSBUILD
                 .SetTargets("Restore"));                                                        // MSBUILD
             DotNetRestore(s => s                                                                // DOTNET
-                .SetProjectFile(SolutionFile));                                                 // DOTNET
+                .SetProjectFile(Solution));                                                     // DOTNET
         });
 
     Target Compile => _ => _
@@ -56,7 +62,7 @@ class Build : NukeBuild
         .Executes(() =>
         {
             MSBuild(s => s                                                                      // MSBUILD
-                .SetTargetPath(SolutionFile)                                                    // MSBUILD
+                .SetTargetPath(Solution)                                                        // MSBUILD
                 .SetTargets("Rebuild")                                                          // MSBUILD
                 .SetConfiguration(Configuration)                                                // MSBUILD
                 .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())                  // MSBUILD && GITVERSION
@@ -65,7 +71,7 @@ class Build : NukeBuild
                 .SetMaxCpuCount(Environment.ProcessorCount)                                     // MSBUILD
                 .SetNodeReuse(IsLocalBuild));                                                   // MSBUILD
             DotNetBuild(s => s                                                                  // DOTNET
-                .SetProjectFile(SolutionFile)                                                   // DOTNET
+                .SetProjectFile(Solution)                                                       // DOTNET
                 .SetConfiguration(Configuration)                                                // DOTNET
                 .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())                  // DOTNET && GITVERSION
                 .SetFileVersion(GitVersion.GetNormalizedFileVersion())                          // DOTNET && GITVERSION
@@ -78,7 +84,7 @@ class Build : NukeBuild
         .Executes(() =>
         {
             MSBuild(s => s                                                                      // MSBUILD
-                .SetTargetPath(SolutionFile)                                                    // MSBUILD
+                .SetTargetPath(Solution)                                                        // MSBUILD
                 .SetTargets("Restore", "Pack")                                                  // MSBUILD
                 .SetPackageVersion(GitVersion.NuGetVersionV2)                                   // MSBUILD && GITVERSION
                 .SetPackageOutputPath(ArtifactsDirectory)                                       // MSBUILD && ARTIFACTS_DIR
@@ -86,7 +92,7 @@ class Build : NukeBuild
                 .SetConfiguration(Configuration)                                                // MSBUILD
                 .EnableIncludeSymbols());                                                       // MSBUILD
             DotNetPack(s => s                                                                   // DOTNET
-                .SetProject(SolutionFile)                                                       // DOTNET
+                .SetProject(Solution)                                                           // DOTNET
                 .SetVersion(GitVersion.NuGetVersionV2)                                          // DOTNET && GITVERSION
                 .SetOutputDirectory(ArtifactsDirectory)                                         // DOTNET && ARTIFACTS_DIR
                 .SetOutputDirectory(OutputDirectory)                                            // DOTNET && OUTPUT_DIR

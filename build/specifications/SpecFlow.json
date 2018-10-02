@@ -1,10 +1,5 @@
 {
   "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
-  "license": [
-    "Copyright 2018 Maintainers and Contributors of NUKE.",
-    "Distributed under the MIT License.",
-    "https://github.com/nuke-build/tools/blob/master/LICENSE"
-  ],
   "references": [
     "https://specflow.org/plus/documentation/SpecFlowPlus-Runner-Command-Line/",
     "https://specflow.org/documentation/Reporting/"

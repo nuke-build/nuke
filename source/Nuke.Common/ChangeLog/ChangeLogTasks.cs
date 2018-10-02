@@ -77,7 +77,7 @@ namespace Nuke.Common.ChangeLog
         /// <seealso cref="FinalizeChangelog(ChangeLog,NuGetVersion,GitRepository)"/>
         public static void FinalizeChangelog(ChangeLog changelogFile, NuGetVersion tag, [CanBeNull] GitRepository repository = null)
         {
-            Logger.Info($"Finalizing {PathConstruction.GetRootRelativePath(changelogFile.Path)} for '{tag}'...");
+            Logger.Info($"Finalizing {PathConstruction.GetRelativePath(NukeBuild.Instance.RootDirectory, changelogFile.Path)} for '{tag}'...");
 
             var unreleasedNotes = changelogFile.Unreleased;
             var releaseNotes = changelogFile.ReleaseNotes;
@@ -111,7 +111,7 @@ namespace Nuke.Common.ChangeLog
         /// <seealso cref="FinalizeChangelog(ChangeLog,NuGetVersion,GitRepository)"/>
         public static void FinalizeChangelog(string changelogFile, string tag, [CanBeNull] GitRepository repository = null)
         {
-            Logger.Info($"Finalizing {PathConstruction.GetRootRelativePath(changelogFile)} for '{tag}'...");
+            Logger.Info($"Finalizing {PathConstruction.GetRelativePath(NukeBuild.Instance.RootDirectory, changelogFile)} for '{tag}'...");
 
             var content = TextTasks.ReadAllLines(changelogFile).ToList();
             var sections = GetReleaseSections(content).ToList();

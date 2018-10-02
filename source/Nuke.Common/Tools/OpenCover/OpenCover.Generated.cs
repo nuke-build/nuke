@@ -1,9 +1,5 @@
-// Copyright 2018 Maintainers of NUKE.
-// Distributed under the MIT License.
-// https://github.com/nuke-build/nuke/blob/master/LICENSE
-
-// Generated with Nuke.CodeGeneration, Version: Local.
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/OpenCover.json.
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/OpenCover.json
+// Generated with Nuke.CodeGeneration, Version: Local
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -27,7 +23,9 @@ namespace Nuke.Common.Tools.OpenCover
     public static partial class OpenCoverTasks
     {
         /// <summary><p>Path to the OpenCover executable.</p></summary>
-        public static string OpenCoverPath => ToolPathResolver.GetPackageExecutable("OpenCover", "OpenCover.Console.exe");
+        public static string OpenCoverPath =>
+            ToolPathResolver.TryGetEnvironmentExecutable("OPENCOVER_EXE") ??
+            ToolPathResolver.GetPackageExecutable("OpenCover", "OpenCover.Console.exe");
         /// <summary><p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p></summary>
         public static IReadOnlyCollection<Output> OpenCover(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
@@ -111,8 +109,8 @@ namespace Nuke.Common.Tools.OpenCover
         protected override void AssertValid()
         {
             base.AssertValid();
-            ControlFlow.Assert(File.Exists(TargetPath), "File.Exists(TargetPath)");
-            ControlFlow.Assert(Directory.Exists(TargetDirectory) || TargetDirectory == null, "Directory.Exists(TargetDirectory) || TargetDirectory == null");
+            ControlFlow.Assert(File.Exists(TargetPath), $"File.Exists(TargetPath) [TargetPath = {TargetPath}]");
+            ControlFlow.Assert(Directory.Exists(TargetDirectory) || TargetDirectory == null, $"Directory.Exists(TargetDirectory) || TargetDirectory == null [TargetDirectory = {TargetDirectory}]");
         }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {

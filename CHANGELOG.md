@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.10.0] / 2018-10-02
+- Removed `PathConstruction.GetRootRelativePath`
+- Removed `License` from specification files
+- Deprecated `NukeBuild.Configuration` which should belong to user-code
+- Deprecated plus operator in `PathConstruction.AbsolutePath` and `RelativePath`
+- Changed `SolutionAttribute` to resolve solution file via parameter
+- Changed CLI wrapper tasks to attempt to resolve tool paths from `[TOOL]_EXE` environment variable
+- Added `AbsolutePath.Parent` and equality members
+- Added `TypeConverter` for `AbsolutePath` which allows passing paths as parameter
+- Fixed detection of value types in specification files
+- Fixed path variable check to split by specific separator
+
 ## [0.9.1] / 2018-09-26
 - Fixed wrong assertions in global tool
 
@@ -144,7 +156,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.9.1...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.10.0...HEAD
+[0.10.0]: https://github.com/nuke-build/nuke/compare/0.9.1...0.10.0
 [0.9.1]: https://github.com/nuke-build/nuke/compare/0.9.0...0.9.1
 [0.9.0]: https://github.com/nuke-build/nuke/compare/0.8.0...0.9.0
 [0.8.0]: https://github.com/nuke-build/nuke/compare/0.7.0...0.8.0

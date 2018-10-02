@@ -8,15 +8,15 @@ using Nuke.Common.Git;
 using static Nuke.CodeGeneration.CodeGenerator;
 using static Nuke.CodeGeneration.ReferenceUpdater;
 using static Nuke.CodeGeneration.SchemaGenerator;
-using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.FileSystemTasks;
+using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.Git.GitTasks;
 
 partial class Build
 {
     string SpecificationsDirectory => BuildProjectDirectory / "specifications";
     string ReferencesDirectory => BuildProjectDirectory / "references";
-    string GenerationDirectory => RootDirectory / "source" / "Nuke.Common" / "Tools";
+    AbsolutePath GenerationDirectory => RootDirectory / "source" / "Nuke.Common" / "Tools";
     string ToolSchemaFile => SourceDirectory / "Nuke.CodeGeneration" / "schema.json";
 
     Target References => _ => _
@@ -38,9 +38,8 @@ partial class Build
 
             GenerateCode(
                 SpecificationsDirectory,
-                GenerationDirectory,
-                baseNamespace: "Nuke.Common.Tools",
-                useNestedNamespaces: true,
-                gitRepository: GitRepository.SetBranch(MasterBranch));
+                outputFileProvider: x => GenerationDirectory / x.Name / x.DefaultOutputFileName,
+                namespaceProvider: x => $"Nuke.Common.Tools.{x.Name}",
+                sourceFileProvider: x => GitRepository.SetBranch(MasterBranch).GetGitHubBrowseUrl(x.SpecificationFile));
         });
 }

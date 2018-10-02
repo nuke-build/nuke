@@ -4,7 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using Glob;
@@ -43,13 +45,6 @@ namespace Nuke.Common.IO
     [PublicAPI]
     public static class PathConstruction
     {
-        // TODO: check usages
-        [Pure]
-        public static string GetRootRelativePath(string destinationPath)
-        {
-            return GetRelativePath(NukeBuild.Instance.RootDirectory, destinationPath);
-        }
-
         // TODO: check usages
         [Pure]
         public static string GetRelativePath(string basePath, string destinationPath, bool normalize = true)
@@ -285,6 +280,7 @@ namespace Nuke.Common.IO
                 return new RelativePath(NormalizePath(Combine(path1, (RelativePath) path2, separator), separator), separator);
             }
 
+            [Obsolete("Will be removed in a following release. Use division operator '/' instead.")]
             public static RelativePath operator +(RelativePath path1, string path2)
             {
                 return path1 / path2;
@@ -323,19 +319,45 @@ namespace Nuke.Common.IO
         }
 
         [DebuggerDisplay("{" + nameof(_path) + "}")]
+        [TypeConverter(typeof(TypeConverter))]
         public class AbsolutePath
         {
+            public class TypeConverter : System.ComponentModel.TypeConverter
+            {
+                public override bool CanConvertFrom(ITypeDescriptorContext context,
+                    Type sourceType)
+                {
+                    return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
+                }
+        
+                public override object ConvertFrom(ITypeDescriptorContext context,
+                    CultureInfo culture, object value)
+                {
+                    if (value is string stringValue)
+                    {
+                        return (AbsolutePath) (HasPathRoot(stringValue)
+                            ? stringValue
+                            : Combine(EnvironmentInfo.WorkingDirectory, stringValue));
+                    }
+
+                    return base.ConvertFrom(context, culture, value);
+                }
+            }
+
             private readonly string _path;
 
             private AbsolutePath(string path)
             {
-                _path = path;
+                _path = NormalizePath(path);
             }
 
             public static explicit operator AbsolutePath([CanBeNull] string path)
             {
+                if (path is null)
+                    return null;
+                
                 ControlFlow.Assert(HasPathRoot(path), $"Path '{path}' must be rooted.");
-                return new AbsolutePath(NormalizePath(path));
+                return new AbsolutePath(path);
             }
 
             public static implicit operator string(AbsolutePath path)
@@ -343,19 +365,47 @@ namespace Nuke.Common.IO
                 return path.ToString();
             }
 
+            public AbsolutePath Parent =>
+                !IsWinRoot(_path.TrimEnd(WinSeparator)) && !IsUncRoot(_path) && !IsUnixRoot(_path)
+                    ? this / ".."
+                    : null;
+
             public static AbsolutePath operator /(AbsolutePath path1, string path2)
             {
                 return new AbsolutePath(Combine(path1, path2));
             }
 
+            [Obsolete("Will be removed in a following release. Use division operator '/' instead.")]
             public static AbsolutePath operator +(AbsolutePath path1, string path2)
             {
                 return path1 / path2;
             }
 
+            protected bool Equals(AbsolutePath other)
+            {
+                var stringComparison = HasWinRoot(_path) ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+                return string.Equals(_path, other._path, stringComparison);
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                    return false;
+                if (ReferenceEquals(this, obj))
+                    return true;
+                if (obj.GetType() != GetType())
+                    return false;
+                return Equals((AbsolutePath) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                return _path != null ? _path.GetHashCode() : 0;
+            }
+
             public override string ToString()
             {
-                return NormalizePath(_path);
+                return _path;
             }
         }
     }

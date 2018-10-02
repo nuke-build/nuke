@@ -1,9 +1,5 @@
-// Copyright 2018 Maintainers of NUKE.
-// Distributed under the MIT License.
-// https://github.com/nuke-build/nuke/blob/master/LICENSE
-
-// Generated with Nuke.CodeGeneration, Version: Local.
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/GitLink.json.
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/GitLink.json
+// Generated with Nuke.CodeGeneration, Version: Local
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -27,7 +23,9 @@ namespace Nuke.Common.Tools.GitLink
     public static partial class GitLinkTasks
     {
         /// <summary><p>Path to the GitLink executable.</p></summary>
-        public static string GitLinkPath => ToolPathResolver.GetPackageExecutable("gitlink", "GitLink.exe");
+        public static string GitLinkPath =>
+            ToolPathResolver.TryGetEnvironmentExecutable("GITLINK_EXE") ??
+            ToolPathResolver.GetPackageExecutable("gitlink", "GitLink.exe");
         /// <summary><p>GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.</p></summary>
         public static IReadOnlyCollection<Output> GitLink(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {

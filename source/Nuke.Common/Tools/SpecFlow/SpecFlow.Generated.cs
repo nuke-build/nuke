@@ -1,9 +1,5 @@
-// Copyright 2018 Maintainers of NUKE.
-// Distributed under the MIT License.
-// https://github.com/nuke-build/nuke/blob/master/LICENSE
-
-// Generated with Nuke.CodeGeneration, Version: Local.
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/SpecFlow.json.
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/SpecFlow.json
+// Generated with Nuke.CodeGeneration, Version: Local
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -27,7 +23,9 @@ namespace Nuke.Common.Tools.SpecFlow
     public static partial class SpecFlowTasks
     {
         /// <summary><p>Path to the SpecFlow executable.</p></summary>
-        public static string SpecFlowPath => ToolPathResolver.GetPackageExecutable("SpecFlow", "specflow.exe");
+        public static string SpecFlowPath =>
+            ToolPathResolver.TryGetEnvironmentExecutable("SPECFLOW_EXE") ??
+            ToolPathResolver.GetPackageExecutable("SpecFlow", "specflow.exe");
         /// <summary><p>Use SpecFlow to define, manage and automatically execute human-readable acceptance tests in .NET projects. Writing easily understandable tests is a cornerstone of the BDD paradigm and also helps build up a living documentation of your system.</p></summary>
         public static IReadOnlyCollection<Output> SpecFlow(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {

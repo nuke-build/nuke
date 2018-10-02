@@ -1,9 +1,5 @@
-// Copyright 2018 Maintainers of NUKE.
-// Distributed under the MIT License.
-// https://github.com/nuke-build/nuke/blob/master/LICENSE
-
-// Generated with Nuke.CodeGeneration, Version: Local.
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/NuGet.json.
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/NuGet.json
+// Generated with Nuke.CodeGeneration, Version: Local
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -27,7 +23,9 @@ namespace Nuke.Common.Tools.NuGet
     public static partial class NuGetTasks
     {
         /// <summary><p>Path to the NuGet executable.</p></summary>
-        public static string NuGetPath => GetToolPath();
+        public static string NuGetPath =>
+            ToolPathResolver.TryGetEnvironmentExecutable("NUGET_EXE") ??
+            ToolPathResolver.GetPackageExecutable("NuGet.CommandLine", "nuget.exe");
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p></summary>
         public static IReadOnlyCollection<Output> NuGet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
@@ -114,8 +112,8 @@ namespace Nuke.Common.Tools.NuGet
         protected override void AssertValid()
         {
             base.AssertValid();
-            ControlFlow.Assert(File.Exists(TargetPath), "File.Exists(TargetPath)");
-            ControlFlow.Assert(File.Exists(ConfigFile) || ConfigFile == null, "File.Exists(ConfigFile) || ConfigFile == null");
+            ControlFlow.Assert(File.Exists(TargetPath), $"File.Exists(TargetPath) [TargetPath = {TargetPath}]");
+            ControlFlow.Assert(File.Exists(ConfigFile) || ConfigFile == null, $"File.Exists(ConfigFile) || ConfigFile == null [ConfigFile = {ConfigFile}]");
         }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -188,8 +186,8 @@ namespace Nuke.Common.Tools.NuGet
         protected override void AssertValid()
         {
             base.AssertValid();
-            ControlFlow.Assert(File.Exists(TargetPath), "File.Exists(TargetPath)");
-            ControlFlow.Assert(Directory.Exists(BasePath), "Directory.Exists(BasePath)");
+            ControlFlow.Assert(File.Exists(TargetPath), $"File.Exists(TargetPath) [TargetPath = {TargetPath}]");
+            ControlFlow.Assert(Directory.Exists(BasePath), $"Directory.Exists(BasePath) [BasePath = {BasePath}]");
         }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {

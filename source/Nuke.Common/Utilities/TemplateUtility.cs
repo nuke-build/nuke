@@ -36,8 +36,8 @@ namespace Nuke.Common.Utilities
             for (var i = 0; i < lines.Count; i++)
             {
                 if (i > 0 &&
-                    string.IsNullOrEmpty(lines[i - 1]) &&
-                    string.IsNullOrEmpty(lines[i]))
+                    string.IsNullOrWhiteSpace(lines[i - 1]) &&
+                    string.IsNullOrWhiteSpace(lines[i]))
                 {
                     lines.RemoveAt(i);
                     i--;

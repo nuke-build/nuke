@@ -17,6 +17,8 @@ namespace Nuke.Common.Tooling
 {
     internal class ProcessManager : IProcessManager
     {
+        private static readonly char[] s_pathSeparators = { EnvironmentInfo.IsWin ? ';' : ':' };
+        
         public static IProcessManager Instance { get; private set; } = new ProcessManager();
 
         public virtual IProcess StartProcess(ToolSettings toolSettings)
@@ -52,7 +54,10 @@ namespace Nuke.Common.Tooling
 #if NETCORE
             string toolPathOverride = null;
             if (toolPath.EndsWith(".dll"))
-                toolPathOverride = DotNetTasks.GetToolPath();
+            {
+                toolPathOverride = ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE") ??
+                                   ToolPathResolver.GetPathExecutable("dotnet");
+            }
             else if (EnvironmentInfo.IsUnix && toolPath.EndsWithOrdinalIgnoreCase(".exe"))
                 toolPathOverride = ToolPathResolver.GetPathExecutable("mono");
 
@@ -103,11 +108,7 @@ namespace Nuke.Common.Tooling
                             };
 
             ApplyEnvironmentVariables(environmentVariables, startInfo);
-            if (NukeBuild.Instance?.CheckPath == true)
-            {
-                PrintEnvironmentVariables(startInfo);
-                CheckPathEnvironmentVariable(startInfo);
-            }
+            PrintEnvironmentVariables(startInfo);
 
             var process = Process.Start(startInfo);
             if (process == null)
@@ -194,7 +195,7 @@ namespace Nuke.Common.Tooling
             {
                 if (pair.Key.EqualsOrdinalIgnoreCase("path"))
                 {
-                    var paths = pair.Value.Split(';');
+                    var paths = pair.Value.Split(s_pathSeparators);
                     var padding = paths.Length.ToString().Length;
 
                     for (var i = 0; i < paths.Length; i++)
@@ -207,11 +208,12 @@ namespace Nuke.Common.Tooling
             }
         }
 
-        private static void CheckPathEnvironmentVariable(ProcessStartInfo startInfo)
+        public static void CheckPathEnvironmentVariable()
         {
-            startInfo.Environment
+            EnvironmentInfo.Variables
                 .SingleOrDefault(x => x.Key.EqualsOrdinalIgnoreCase("path"))
-                .Value.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
+                .Value.Split(s_pathSeparators, StringSplitOptions.RemoveEmptyEntries)
+                .Select(EnvironmentInfo.ExpandVariables)
                 .Where(x => !Directory.Exists(x))
                 .ForEach(x => Logger.Warn($"Path environment variable contains invalid or inaccessible path '{x}'."));
         }

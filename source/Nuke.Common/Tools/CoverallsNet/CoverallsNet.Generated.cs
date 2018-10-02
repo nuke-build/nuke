@@ -1,9 +1,5 @@
-// Copyright 2018 Maintainers of NUKE.
-// Distributed under the MIT License.
-// https://github.com/nuke-build/nuke/blob/master/LICENSE
-
-// Generated with Nuke.CodeGeneration, Version: Local.
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/CoverallsNet.json.
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/CoverallsNet.json
+// Generated with Nuke.CodeGeneration, Version: Local
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -27,7 +23,9 @@ namespace Nuke.Common.Tools.CoverallsNet
     public static partial class CoverallsNetTasks
     {
         /// <summary><p>Path to the CoverallsNet executable.</p></summary>
-        public static string CoverallsNetPath => ToolPathResolver.GetPackageExecutable("coveralls.net", "csmacnz.Coveralls.exe");
+        public static string CoverallsNetPath =>
+            ToolPathResolver.TryGetEnvironmentExecutable("COVERALLSNET_EXE") ??
+            ToolPathResolver.GetPackageExecutable("coveralls.net", "csmacnz.Coveralls.exe");
         /// <summary><p>Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.</p></summary>
         public static IReadOnlyCollection<Output> CoverallsNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {

@@ -19,12 +19,6 @@ namespace Nuke.Common.Tools.DotNet
 
     public static partial class DotNetTasks
     {
-        public static string GetToolPath()
-        {
-            return ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE")
-                   ?? ToolPathResolver.GetPathExecutable("dotnet");
-        }
-
         [Obsolete("Property will be removed in a following version. Please define it yourself.")]
         public static DotNetRestoreSettings DefaultDotNetRestore => new DotNetRestoreSettings()
             .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)

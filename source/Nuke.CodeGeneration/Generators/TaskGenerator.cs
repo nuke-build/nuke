@@ -153,9 +153,6 @@ namespace Nuke.CodeGeneration.Generators
                               $"{tool.PackageExecutable?.DoubleQuote() ?? "GetPackageExecutable()"})");
             }
 
-            if (tool.EnvironmentExecutable != null)
-                resolvers.Add($"ToolPathResolver.GetEnvironmentExecutable({tool.EnvironmentExecutable.DoubleQuote()})");
-
             if (tool.PathExecutable != null)
                 resolvers.Add($"ToolPathResolver.GetPathExecutable({tool.PathExecutable.DoubleQuote()})");
 
@@ -166,7 +163,9 @@ namespace Nuke.CodeGeneration.Generators
 
             return writer
                 .WriteSummary($"Path to the {tool.Name} executable.")
-                .WriteLine($"public static string {tool.Name}Path => {resolvers.Single()};");
+                .WriteLine($"public static string {tool.Name}Path =>")
+                .WriteLine($"    ToolPathResolver.TryGetEnvironmentExecutable(\"{tool.Name.ToUpperInvariant()}_EXE\") ??")
+                .WriteLine($"    {resolvers.Single()};");
         }
     }
 }

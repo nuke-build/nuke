@@ -1,10 +1,5 @@
 {
   "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
-  "license": [
-    "Copyright 2018 Maintainers of NUKE.",
-    "Distributed under the MIT License.",
-    "https://github.com/nuke-build/tools/blob/master/LICENSE"
-  ],
   "references": [
     "https://developer.xamarin.com/guides/testcloud/uitest/working-with/submitting-tests-at-command-line#//div[@class='doc-content']/table"
   ],

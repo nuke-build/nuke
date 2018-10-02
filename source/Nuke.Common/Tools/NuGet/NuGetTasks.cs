@@ -11,12 +11,6 @@ namespace Nuke.Common.Tools.NuGet
 {
     public static partial class NuGetTasks
     {
-        private static string GetToolPath()
-        {
-            return ToolPathResolver.TryGetEnvironmentExecutable("NUGET_EXE")
-                   ?? ToolPathResolver.GetPackageExecutable("NuGet.CommandLine", "nuget.exe");
-        }
-
         [Obsolete("Property will be removed in a following version. Please define it yourself.")]
         public static NuGetPackSettings DefaultNuGetPack => new NuGetPackSettings()
             .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)

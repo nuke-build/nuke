@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using Nuke.Common.BuildServers;
 using Nuke.Common.Execution;
 using Nuke.Common.OutputSinks;
+using Nuke.Common.Tooling;
 
 // ReSharper disable VirtualMemberNeverOverridden.Global
 
@@ -78,19 +79,15 @@ namespace Nuke.Common
         /// Configuration to build. Default is <em>Debug</em> (local) or <em>Release</em> (server).
         /// </summary>
         [Parameter("Configuration to build. Default is 'Debug' (local) or 'Release' (server).")]
-        public virtual string Configuration { get; } = GetHostType() == HostType.Console ? "Debug" : "Release";
+        [Obsolete("Property will be removed in a following version. Please define it yourself, i.e.: "
+                  + "[Parameter] readonly string Configuration = IsLocalBuild ? \"Debug\" : \"Release\";")]
+        public virtual string Configuration { get; } = IsLocalBuild ? "Debug" : "Release";
 
         /// <summary>
         /// Disables execution of target dependencies.
         /// </summary>
         [Parameter("Disables execution of dependent targets.", Name = "Skip", Separator = "+")]
         public string[] SkippedTargets { get; } = GetSkippedTargets();
-
-        /// <summary>
-        /// Enables sanity checks for the <c>PATH</c> environment variable.
-        /// </summary>
-        [Parameter("Enables sanity checks for the 'PATH' environment variable.")]
-        public bool CheckPath { get; }
 
         /// <summary>
         /// Shows the target dependency graph (HTML).
@@ -104,8 +101,8 @@ namespace Nuke.Common
         [Parameter("Shows the help text for this build assembly.")]
         public bool Help { get; }
 
-        public bool IsLocalBuild => Host == HostType.Console;
-        public bool IsServerBuild => Host != HostType.Console;
+        public static bool IsLocalBuild => GetHostType() == HostType.Console;
+        public static bool IsServerBuild => GetHostType() != HostType.Console;
 
         public LogLevel LogLevel => (LogLevel) Verbosity;
 
@@ -135,6 +132,16 @@ namespace Nuke.Common
                 }
 
                 return new SevereMessagesOutputSink(innerOutputSink);
+            }
+        }
+
+        protected internal virtual string PackagesConfigFile
+        {
+            get
+            {
+                ControlFlow.Assert(BuildProjectDirectory != null,
+                    "No build project found. Either pass the tool paths directly or override NukeBuild.PackagesConfigFile. ");
+                return NuGetPackageResolver.GetPackageConfigFile(BuildProjectDirectory);
             }
         }
     }

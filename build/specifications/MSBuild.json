@@ -1,10 +1,5 @@
 {
   "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
-  "license": [
-    "Copyright 2018 Maintainers of NUKE.",
-    "Distributed under the MIT License.",
-    "https://github.com/nuke-build/tools/blob/master/LICENSE"
-  ],
   "references": [
     "https://raw.githubusercontent.com/MicrosoftDocs/visualstudio-docs/master/docs/msbuild/msbuild-command-line-reference.md"
   ],

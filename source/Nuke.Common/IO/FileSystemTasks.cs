@@ -67,12 +67,6 @@ namespace Nuke.Common.IO
             if (!Directory.Exists(directory))
                 return;
 
-            if (PathConstruction.IsDescendantPath(NukeBuild.BuildProjectDirectory, directory))
-            {
-                Logger.Warn($"Skipping directory '{directory}' because it is contained in the build project directory...");
-                return;
-            }
-
             Logger.Info($"Deleting directory '{directory}'...");
             DeleteDirectoryInternal(directory);
         }

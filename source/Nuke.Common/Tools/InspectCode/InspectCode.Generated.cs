@@ -1,9 +1,5 @@
-// Copyright 2018 Maintainers of NUKE.
-// Distributed under the MIT License.
-// https://github.com/nuke-build/nuke/blob/master/LICENSE
-
-// Generated with Nuke.CodeGeneration, Version: Local.
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/InspectCode.json.
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/InspectCode.json
+// Generated with Nuke.CodeGeneration, Version: Local
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -27,7 +23,9 @@ namespace Nuke.Common.Tools.InspectCode
     public static partial class InspectCodeTasks
     {
         /// <summary><p>Path to the InspectCode executable.</p></summary>
-        public static string InspectCodePath => ToolPathResolver.GetPackageExecutable("JetBrains.ReSharper.CommandLineTools", GetPackageExecutable());
+        public static string InspectCodePath =>
+            ToolPathResolver.TryGetEnvironmentExecutable("INSPECTCODE_EXE") ??
+            ToolPathResolver.GetPackageExecutable("JetBrains.ReSharper.CommandLineTools", GetPackageExecutable());
         /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p></summary>
         public static IReadOnlyCollection<Output> InspectCode(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
@@ -97,8 +95,8 @@ namespace Nuke.Common.Tools.InspectCode
         protected override void AssertValid()
         {
             base.AssertValid();
-            ControlFlow.Assert(File.Exists(TargetPath), "File.Exists(TargetPath)");
-            ControlFlow.Assert(Output != null, "Output != null");
+            ControlFlow.Assert(File.Exists(TargetPath), $"File.Exists(TargetPath) [TargetPath = {TargetPath}]");
+            ControlFlow.Assert(Output != null, $"Output != null [Output = {Output}]");
         }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {

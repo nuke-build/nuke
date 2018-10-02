@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -14,17 +15,18 @@ using Newtonsoft.Json;
 namespace Nuke.CodeGeneration.Model
 {
     [UsedImplicitly(ImplicitUseKindFlags.Assign, ImplicitUseTargetFlags.WithMembers)]
-    [DebuggerDisplay("{" + nameof(DefinitionFile) + "}")]
+    [DebuggerDisplay("{" + nameof(SpecificationFile) + "}")]
     public class Tool
     {
         [JsonProperty("$schema")]
         public string Schema { get; set; } = "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json";
 
-        [JsonProperty] public string[] License { get; set; }
+        [JsonIgnore] public string SpecificationFile { get; set; }
+        [JsonIgnore] public string DefaultOutputFileName => $"{Path.GetFileNameWithoutExtension(SpecificationFile)}.Generated.cs";
 
-        [JsonIgnore] public string DefinitionFile { get; set; }
+        [JsonIgnore] public string SourceFile { get; set; }
 
-        [JsonIgnore] public string RepositoryUrl { get; set; }
+        [JsonIgnore] public string Namespace { get; set; }
 
         [Description("Contains all references on which this definition is based on. Allows checking for updates.")]
         public List<string> References { get; set; } = new List<string>();
@@ -48,9 +50,6 @@ namespace Nuke.CodeGeneration.Model
 
         [Description("Exact name of the main executable found in the './tools' folder. Case-sensitive.")]
         public string PackageExecutable { get; set; }
-
-        [Description("Exact name of the environment variable that contains the path to the executable.")]
-        public string EnvironmentExecutable { get; set; }
 
         [Description("Exact name of the executable that can be found via 'where' or 'which'.")]
         public string PathExecutable { get; set; }

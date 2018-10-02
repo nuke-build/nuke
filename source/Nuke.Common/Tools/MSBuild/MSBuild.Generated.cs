@@ -1,9 +1,5 @@
-// Copyright 2018 Maintainers of NUKE.
-// Distributed under the MIT License.
-// https://github.com/nuke-build/nuke/blob/master/LICENSE
-
-// Generated with Nuke.CodeGeneration, Version: Local.
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/MSBuild.json.
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/MSBuild.json
+// Generated with Nuke.CodeGeneration, Version: Local
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -27,7 +23,9 @@ namespace Nuke.Common.Tools.MSBuild
     public static partial class MSBuildTasks
     {
         /// <summary><p>Path to the MSBuild executable.</p></summary>
-        public static string MSBuildPath => GetToolPath();
+        public static string MSBuildPath =>
+            ToolPathResolver.TryGetEnvironmentExecutable("MSBUILD_EXE") ??
+            GetToolPath();
         /// <summary><p>The Microsoft Build Engine is a platform for building applications. This engine, which is also known as MSBuild, provides an XML schema for a project file that controls how the build platform processes and builds software. Visual Studio uses MSBuild, but it doesn't depend on Visual Studio. By invoking msbuild.exe on your project or solution file, you can orchestrate and build products in environments where Visual Studio isn't installed. Visual Studio uses MSBuild to load and build managed projects. The project files in Visual Studio (.csproj,.vbproj, vcxproj, and others) contain MSBuild XML code that executes when you build a project by using the IDE. Visual Studio projects import all the necessary settings and build processes to do typical development work, but you can extend or modify them from within Visual Studio or by using an XML editor.</p></summary>
         public static IReadOnlyCollection<Output> MSBuild(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
@@ -93,7 +91,7 @@ namespace Nuke.Common.Tools.MSBuild
         protected override void AssertValid()
         {
             base.AssertValid();
-            ControlFlow.Assert(File.Exists(TargetPath) || TargetPath == null, "File.Exists(TargetPath) || TargetPath == null");
+            ControlFlow.Assert(File.Exists(TargetPath) || TargetPath == null, $"File.Exists(TargetPath) || TargetPath == null [TargetPath = {TargetPath}]");
         }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {

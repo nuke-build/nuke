@@ -1,9 +1,5 @@
-// Copyright 2018 Maintainers of NUKE.
-// Distributed under the MIT License.
-// https://github.com/nuke-build/nuke/blob/master/LICENSE
-
-// Generated with Nuke.CodeGeneration, Version: Local.
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/GitVersion.json.
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/GitVersion.json
+// Generated with Nuke.CodeGeneration, Version: Local
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -27,7 +23,9 @@ namespace Nuke.Common.Tools.GitVersion
     public static partial class GitVersionTasks
     {
         /// <summary><p>Path to the GitVersion executable.</p></summary>
-        public static string GitVersionPath => ToolPathResolver.GetPackageExecutable("GitVersion.CommandLine", "GitVersion.exe");
+        public static string GitVersionPath =>
+            ToolPathResolver.TryGetEnvironmentExecutable("GITVERSION_EXE") ??
+            ToolPathResolver.GetPackageExecutable("GitVersion.CommandLine", "GitVersion.exe");
         /// <summary><p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p></summary>
         public static IReadOnlyCollection<Output> GitVersion(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {

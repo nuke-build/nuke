@@ -38,6 +38,9 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
 partial class Build : NukeBuild
 {
     public static int Main() => Execute<Build>(x => x.Pack);
+    
+    [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
+    new readonly string Configuration = IsLocalBuild ? "Debug" : "Release";
 
     [Parameter("ApiKey for the specified source.")] readonly string ApiKey;
     [Parameter] string Source = "https://api.nuget.org/v3/index.json";
