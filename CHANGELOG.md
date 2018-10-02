@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.10.1] / 2018-10-02
+- Fixed wizard to pass definitions for project file template
+- Fixed wizard to create source and tests directory if selected
+- Fixed wizard to be disabled for legacy format
+
 ## [0.10.0] / 2018-10-02
 - Removed `PathConstruction.GetRootRelativePath`
 - Removed `License` from specification files
@@ -156,7 +161,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.10.0...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.10.1...HEAD
+[0.10.1]: https://github.com/nuke-build/nuke/compare/0.10.0...0.10.1
 [0.10.0]: https://github.com/nuke-build/nuke/compare/0.9.1...0.10.0
 [0.9.1]: https://github.com/nuke-build/nuke/compare/0.9.0...0.9.1
 [0.9.0]: https://github.com/nuke-build/nuke/compare/0.8.0...0.9.0
