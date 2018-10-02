@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed wizard to pass definitions for project file template
+- Fixed wizard to create source and tests directory if selected
+- Fixed wizard to be disabled for legacy format
 
 ## [0.10.0] / 2018-10-02
 - Removed `PathConstruction.GetRootRelativePath`
