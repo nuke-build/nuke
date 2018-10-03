@@ -322,6 +322,8 @@ namespace Nuke.NSwag
         public virtual string DefaultUrlTemplate { get; internal set; }
         /// <summary><p>Specifies whether to resolve MvcJsonOptions to infer serializer settings (recommended, default: false, only available when IsAspNetCore is set).</p></summary>
         public virtual bool? ResolveJsonOptions { get; internal set; }
+        /// <summary><p>Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available, default: true).</p></summary>
+        public virtual bool? AllowNullableBodyParameters { get; internal set; }
         /// <summary><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
         public virtual bool? AllowReferencesWithProperties { get; internal set; }
         /// <summary><p>DEPRECATED: The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
@@ -404,6 +406,7 @@ namespace Nuke.NSwag
               .Add("/DefaultUrlTemplate:{value}", DefaultUrlTemplate)
               .Add("/ResolveJsonOptions:{value}", ResolveJsonOptions)
               .Add("{value}", GetNSwagRuntime(), customValue: true)
+              .Add("/AllowNullableBodyParameters:{value}", AllowNullableBodyParameters)
               .Add("/AllowReferencesWithProperties:{value}", AllowReferencesWithProperties)
               .Add("/ContractResolver:{value}", ContractResolver)
               .Add("/DefaultEnumHandling:{value}", DefaultEnumHandling)
@@ -459,12 +462,16 @@ namespace Nuke.NSwag
         public virtual string NSwagWorkingDirectory { get; internal set; }
         /// <summary><p>The project to use.</p></summary>
         public virtual string Project { get; internal set; }
+        /// <summary><p>Parameters without default value are always required(i.e. api explorer info and only optional when default is set, legacy, default: false).</p></summary>
+        public virtual bool? RequireParametersWithoutDefault { get; internal set; }
         /// <summary><p>The runtime to use.</p></summary>
         public virtual string Runtime { get; internal set; }
         /// <summary><p>The target framework to use.</p></summary>
         public virtual string TargetFramework { get; internal set; }
         /// <summary><p>Print verbose output.</p></summary>
         public virtual bool? Verbose { get; internal set; }
+        /// <summary><p>Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available, default: true).</p></summary>
+        public virtual bool? AllowNullableBodyParameters { get; internal set; }
         /// <summary><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
         public virtual bool? AllowReferencesWithProperties { get; internal set; }
         /// <summary><p>DEPRECATED: The custom IContractResolver implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').</p></summary>
@@ -545,10 +552,12 @@ namespace Nuke.NSwag
               .Add("/NoBuild:{value}", NoBuild)
               .Add("/WorkingDirectory:{value}", NSwagWorkingDirectory)
               .Add("/Project:{value}", Project)
+              .Add("/RequireParametersWithoutDefault:{value}", RequireParametersWithoutDefault)
               .Add("/Runtime:{value}", Runtime)
               .Add("/TargetFramework:{value}", TargetFramework)
               .Add("/Verbose:{value}", Verbose)
               .Add("{value}", GetNSwagRuntime(), customValue: true)
+              .Add("/AllowNullableBodyParameters:{value}", AllowNullableBodyParameters)
               .Add("/AllowReferencesWithProperties:{value}", AllowReferencesWithProperties)
               .Add("/ContractResolver:{value}", ContractResolver)
               .Add("/DefaultEnumHandling:{value}", DefaultEnumHandling)
@@ -2581,6 +2590,48 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
+        #region AllowNullableBodyParameters
+        /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.AllowNullableBodyParameters"/>.</em></p><p>Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available, default: true).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings SetAllowNullableBodyParameters(this NSwagWebApiToSwaggerSettings toolSettings, bool? allowNullableBodyParameters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowNullableBodyParameters = allowNullableBodyParameters;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagWebApiToSwaggerSettings.AllowNullableBodyParameters"/>.</em></p><p>Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available, default: true).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ResetAllowNullableBodyParameters(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowNullableBodyParameters = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagWebApiToSwaggerSettings.AllowNullableBodyParameters"/>.</em></p><p>Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available, default: true).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings EnableAllowNullableBodyParameters(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowNullableBodyParameters = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagWebApiToSwaggerSettings.AllowNullableBodyParameters"/>.</em></p><p>Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available, default: true).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings DisableAllowNullableBodyParameters(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowNullableBodyParameters = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagWebApiToSwaggerSettings.AllowNullableBodyParameters"/>.</em></p><p>Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available, default: true).</p></summary>
+        [Pure]
+        public static NSwagWebApiToSwaggerSettings ToggleAllowNullableBodyParameters(this NSwagWebApiToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowNullableBodyParameters = !toolSettings.AllowNullableBodyParameters;
+            return toolSettings;
+        }
+        #endregion
         #region AllowReferencesWithProperties
         /// <summary><p><em>Sets <see cref="NSwagWebApiToSwaggerSettings.AllowReferencesWithProperties"/>.</em></p><p>Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).</p></summary>
         [Pure]
@@ -3765,6 +3816,48 @@ namespace Nuke.NSwag
             return toolSettings;
         }
         #endregion
+        #region RequireParametersWithoutDefault
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.RequireParametersWithoutDefault"/>.</em></p><p>Parameters without default value are always required(i.e. api explorer info and only optional when default is set, legacy, default: false).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings SetRequireParametersWithoutDefault(this NSwagAspNetCoreToSwaggerSettings toolSettings, bool? requireParametersWithoutDefault)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequireParametersWithoutDefault = requireParametersWithoutDefault;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.RequireParametersWithoutDefault"/>.</em></p><p>Parameters without default value are always required(i.e. api explorer info and only optional when default is set, legacy, default: false).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ResetRequireParametersWithoutDefault(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequireParametersWithoutDefault = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagAspNetCoreToSwaggerSettings.RequireParametersWithoutDefault"/>.</em></p><p>Parameters without default value are always required(i.e. api explorer info and only optional when default is set, legacy, default: false).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings EnableRequireParametersWithoutDefault(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequireParametersWithoutDefault = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagAspNetCoreToSwaggerSettings.RequireParametersWithoutDefault"/>.</em></p><p>Parameters without default value are always required(i.e. api explorer info and only optional when default is set, legacy, default: false).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings DisableRequireParametersWithoutDefault(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequireParametersWithoutDefault = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagAspNetCoreToSwaggerSettings.RequireParametersWithoutDefault"/>.</em></p><p>Parameters without default value are always required(i.e. api explorer info and only optional when default is set, legacy, default: false).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ToggleRequireParametersWithoutDefault(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RequireParametersWithoutDefault = !toolSettings.RequireParametersWithoutDefault;
+            return toolSettings;
+        }
+        #endregion
         #region Runtime
         /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.Runtime"/>.</em></p><p>The runtime to use.</p></summary>
         [Pure]
@@ -3840,6 +3933,48 @@ namespace Nuke.NSwag
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = !toolSettings.Verbose;
+            return toolSettings;
+        }
+        #endregion
+        #region AllowNullableBodyParameters
+        /// <summary><p><em>Sets <see cref="NSwagAspNetCoreToSwaggerSettings.AllowNullableBodyParameters"/>.</em></p><p>Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available, default: true).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings SetAllowNullableBodyParameters(this NSwagAspNetCoreToSwaggerSettings toolSettings, bool? allowNullableBodyParameters)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowNullableBodyParameters = allowNullableBodyParameters;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NSwagAspNetCoreToSwaggerSettings.AllowNullableBodyParameters"/>.</em></p><p>Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available, default: true).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ResetAllowNullableBodyParameters(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowNullableBodyParameters = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NSwagAspNetCoreToSwaggerSettings.AllowNullableBodyParameters"/>.</em></p><p>Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available, default: true).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings EnableAllowNullableBodyParameters(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowNullableBodyParameters = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NSwagAspNetCoreToSwaggerSettings.AllowNullableBodyParameters"/>.</em></p><p>Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available, default: true).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings DisableAllowNullableBodyParameters(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowNullableBodyParameters = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NSwagAspNetCoreToSwaggerSettings.AllowNullableBodyParameters"/>.</em></p><p>Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available, default: true).</p></summary>
+        [Pure]
+        public static NSwagAspNetCoreToSwaggerSettings ToggleAllowNullableBodyParameters(this NSwagAspNetCoreToSwaggerSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowNullableBodyParameters = !toolSettings.AllowNullableBodyParameters;
             return toolSettings;
         }
         #endregion
