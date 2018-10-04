@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -26,10 +27,22 @@ namespace Nuke.Common.Execution
                     var memberExpression = requirement.Body is MemberExpression
                         ? (MemberExpression) requirement.Body
                         : (MemberExpression) ((UnaryExpression) requirement.Body).Operand;
-                    var field = (FieldInfo) memberExpression.Member;
 
-                    ControlFlow.Assert(field.GetValue(build) != null,
-                        $"Target '{target.Name}' requires that field '{field.Name}' must be not null.");
+                    switch (memberExpression.Member)
+                    {
+                       case FieldInfo field:
+                           ControlFlow.Assert(
+                               field.GetValue(build) != null,
+                               $"Target '{target.Name}' requires that field '{field.Name}' must be not null.");
+                           break;
+                       case PropertyInfo property:
+                           ControlFlow.Assert(
+                               property.GetValue(build) != null,
+                               $"Target '{target.Name}' requires that property '{property.Name}' must be not null.");
+                           break;
+                       default:
+                           throw new Exception($"Member type {memberExpression.Member} not supported.");
+                    }
                 }
             }
         }
