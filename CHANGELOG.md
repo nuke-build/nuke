@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.10.2] / 2018-10-04
+- Fixed `RequirementService` to also support shorthand for properties
+
 ## [0.10.1] / 2018-10-02
 - Fixed wizard to pass definitions for project file template
 - Fixed wizard to create source and tests directory if selected
@@ -161,7 +164,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.10.1...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.10.2...HEAD
+[0.10.2]: https://github.com/nuke-build/nuke/compare/0.10.1...0.10.2
 [0.10.1]: https://github.com/nuke-build/nuke/compare/0.10.0...0.10.1
 [0.10.0]: https://github.com/nuke-build/nuke/compare/0.9.1...0.10.0
 [0.9.1]: https://github.com/nuke-build/nuke/compare/0.9.0...0.9.1
