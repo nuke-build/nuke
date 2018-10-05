@@ -301,7 +301,7 @@ namespace Nuke.Common.IO
 
             public static explicit operator UnixRelativePath([CanBeNull] string path)
             {
-                return new UnixRelativePath(NormalizePath(path), UnixSeparator);
+                return new UnixRelativePath(NormalizePath(path, UnixSeparator), UnixSeparator);
             }
         }
 
@@ -314,7 +314,7 @@ namespace Nuke.Common.IO
 
             public static explicit operator WinRelativePath([CanBeNull] string path)
             {
-                return new WinRelativePath(NormalizePath(path), WinSeparator);
+                return new WinRelativePath(NormalizePath(path, WinSeparator), WinSeparator);
             }
         }
 

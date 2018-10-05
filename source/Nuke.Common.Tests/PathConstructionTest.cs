@@ -197,6 +197,9 @@ namespace Nuke.Common.Tests
         {
             ((string) ((UnixRelativePath) "foo" / "bar")).Should().Be("foo/bar");
             ((string) ((WinRelativePath) "foo" / "bar")).Should().Be("foo\\bar");
+
+            ((string) (UnixRelativePath) "foo\\bar").Should().Be("foo/bar");
+            ((string) (WinRelativePath) "foo/bar").Should().Be("foo\\bar");
         }
 
         private static string ParseRelativePath(object[] parts)
