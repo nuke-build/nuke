@@ -41,9 +41,11 @@ namespace Nuke.Common.Git
         [CanBeNull]
         public override object GetStaticValue()
         {
-            return Value = Value
-                           ?? ControlFlow.SuppressErrors(() =>
-                               GitRepository.FromLocalDirectory(NukeBuild.Instance.RootDirectory, Branch, Remote.NotNull()));
+            return Value = ControlFlow.SuppressErrors(() =>
+                GitRepository.FromLocalDirectory(
+                    NukeBuild.Instance.RootDirectory,
+                    Branch,
+                    Remote.NotNull()));
         }
     }
 }

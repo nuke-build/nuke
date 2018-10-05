@@ -44,6 +44,7 @@ partial class Build
             var masterVersion = GitVersion(s => s
                 .SetUrl(RootDirectory)
                 .SetBranch(MasterBranch)
+                .EnableNoCache()
                 .DisableLogOutput()).Result;
 
             if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase(HotfixBranchPrefix))
