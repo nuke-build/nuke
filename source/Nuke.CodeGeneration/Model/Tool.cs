@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -79,5 +79,10 @@ namespace Nuke.CodeGeneration.Model
 
         [Description("Used enumerations.")]
         public List<Enumeration> Enumerations { get; set; } = new List<Enumeration>();
+
+        [CanBeNull]
+        [Description("Can be used to store additional information about the tool.")]
+        [JsonProperty("_metadata")]
+        public Dictionary<string, object> Metadata { get; set; }
     }
 }

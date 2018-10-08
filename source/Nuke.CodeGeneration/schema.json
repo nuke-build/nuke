@@ -345,6 +345,20 @@
       "items": {
         "$ref": "#/definitions/Enumeration"
       }
+    },
+    "_metadata": {
+      "description": "Can be used to store additional information about the tool.",
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number",
+          "integer",
+          "boolean",
+          "object",
+          "array"
+        ]
+      }
     }
   },
   "required": [
