@@ -61,15 +61,10 @@ namespace Nuke.Common.Git
 
         private static (string endpoint, string identifier) ParseUrl(string url)
         {
-            var match = new[]
-                        {
-                            @"git@(?<endpoint>[^:/]+?)(:|/)(?<identifier>.+?)/?(\.git)?$",
-                            @"^https?://([^:]+:[^:@]+@)?(?<endpoint>[^/]+?)/(?<identifier>.+?)/?(\.git)?$"
-                        }
-                .Select(x => Regex.Match(url.Trim(), x))
-                .FirstOrDefault(x => x.Success);
-            ControlFlow.Assert(match != null, $"Url '{url}' could not be parsed.");
-
+            var regex = new Regex(@"^(?'protocol'\w+\:\/\/)?(?>(?'user'.*)@)?(?'endpoint'[^\/:]+)(?>\:(?'port'\d+))?[\/:](?'identifier'.*?)\/?(?>\.git)?$");
+            var match = regex.Match(url.Trim());
+            
+            ControlFlow.Assert(match.Success, $"Url '{url}' could not be parsed.");
             return (match.Groups["endpoint"].Value, match.Groups["identifier"].Value);
         }
 
