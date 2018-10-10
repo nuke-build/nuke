@@ -273,7 +273,8 @@ namespace Nuke.Common.Tools.DotNet
         public virtual IReadOnlyList<string> Runtimes => RuntimesInternal.AsReadOnly();
         internal List<string> RuntimesInternal { get; set; } = new List<string>();
         /// <summary><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
-        public virtual string Source { get; internal set; }
+        public virtual IReadOnlyList<string> Sources => SourcesInternal.AsReadOnly();
+        internal List<string> SourcesInternal { get; set; } = new List<string>();
         /// <summary><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
         public virtual DotNetVerbosity Verbosity { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -289,7 +290,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--no-dependencies", NoDependencies)
               .Add("--packages {value}", PackageDirectory)
               .Add("--runtime {value}", Runtimes)
-              .Add("--source {value}", Source)
+              .Add("--source {value}", Sources)
               .Add("--verbosity {value}", Verbosity);
             return base.ConfigureArguments(arguments);
         }
@@ -2192,21 +2193,63 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
-        #region Source
-        /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.Source"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        #region Sources
+        /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.Sources"/> to a new list.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
         [Pure]
-        public static DotNetRestoreSettings SetSource(this DotNetRestoreSettings toolSettings, string source)
+        public static DotNetRestoreSettings SetSources(this DotNetRestoreSettings toolSettings, params string[] sources)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Source = source;
+            toolSettings.SourcesInternal = sources.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DotNetRestoreSettings.Source"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.Sources"/> to a new list.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
         [Pure]
-        public static DotNetRestoreSettings ResetSource(this DotNetRestoreSettings toolSettings)
+        public static DotNetRestoreSettings SetSources(this DotNetRestoreSettings toolSettings, IEnumerable<string> sources)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Source = null;
+            toolSettings.SourcesInternal = sources.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="DotNetRestoreSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings AddSources(this DotNetRestoreSettings toolSettings, params string[] sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.AddRange(sources);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="DotNetRestoreSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings AddSources(this DotNetRestoreSettings toolSettings, IEnumerable<string> sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.AddRange(sources);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="DotNetRestoreSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings ClearSources(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="DotNetRestoreSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings RemoveSources(this DotNetRestoreSettings toolSettings, params string[] sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(sources);
+            toolSettings.SourcesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="DotNetRestoreSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings RemoveSources(this DotNetRestoreSettings toolSettings, IEnumerable<string> sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(sources);
+            toolSettings.SourcesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion
