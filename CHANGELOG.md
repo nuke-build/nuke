@@ -6,8 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.10.5] / 2018-10-10
+- Fixed `--source` parameter for `DotNetRestore` to be collection
+
 ## [0.10.4] / 2018-10-10
-- Fixed `GitRepository` when origin url is a ssh url without username.
+- Fixed `GitRepository` when origin URL uses SSH without username
 
 ## [0.10.3] / 2018-10-05
 - Fixed `WinRelativePath` and `UnixRelativePath` to use correct separator
@@ -170,7 +173,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.10.4...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.10.5...HEAD
+[0.10.5]: https://github.com/nuke-build/nuke/compare/0.10.4...0.10.5
 [0.10.4]: https://github.com/nuke-build/nuke/compare/0.10.3...0.10.4
 [0.10.3]: https://github.com/nuke-build/nuke/compare/0.10.2...0.10.3
 [0.10.2]: https://github.com/nuke-build/nuke/compare/0.10.1...0.10.2
