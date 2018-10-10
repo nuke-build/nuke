@@ -26,6 +26,12 @@ namespace Nuke.Common.Tests
         [InlineData("git@git.test.org/test/", "git.test.org", "test")]
         [InlineData("git@git.test.org/test.git", "git.test.org", "test")]
         [InlineData("ssh://git@git.test.org/test.git", "git.test.org", "test")]
+        [InlineData("ssh://git@git.test.org:1234/test.git", "git.test.org", "test")]
+        [InlineData("ssh://git.test.org/test/test", "git.test.org", "test/test")]
+        [InlineData("ssh://git.test.org:1234/test/test", "git.test.org", "test/test")]
+        [InlineData("https://git.test.org:1234/test/test", "git.test.org", "test/test")]
+        [InlineData("git://git.test.org:1234/test/test", "git.test.org", "test/test")]
+        [InlineData("git://git.test.org/test/test", "git.test.org", "test/test")]
         public void FromUrlTest(string url, string endpoint, string identifier)
         {
             var repository = GitRepository.FromUrl(url);
