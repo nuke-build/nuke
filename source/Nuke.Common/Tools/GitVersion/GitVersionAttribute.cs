@@ -35,11 +35,9 @@ namespace Nuke.Common.Tools.GitVersion
                 return null;
             }
 
-            return Value = ControlFlow.SuppressErrors(() =>
-                GitVersionTasks.GitVersion(s => s
-                    .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
-                    .EnableNoCache()
-                    .DisableLogOutput()).Result);
+#pragma warning disable 618
+            return Value = GitVersionTasks.GitVersion(s => GitVersionTasks.DefaultGitVersion).Result;
+#pragma warning restore 618
         }
     }
 }
