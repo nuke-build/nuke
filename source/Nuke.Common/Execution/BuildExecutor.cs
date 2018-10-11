@@ -24,10 +24,12 @@ namespace Nuke.Common.Execution
             where T : NukeBuild
         {
             var executionList = default(IReadOnlyCollection<TargetDefinition>);
+            var build = CreateBuildInstance(defaultTargetExpression);
+
             try
             {
-                var build = CreateBuildInstance(defaultTargetExpression);
-
+                build.OnBuildCreated();
+                
                 Logger.OutputSink = build.OutputSink;
                 Logger.LogLevel = build.LogLevel;
                 NuGetPackageResolver.DefaultPackagesConfigFile = build.PackagesConfigFile;
@@ -36,14 +38,17 @@ namespace Nuke.Common.Execution
                 Logger.Log($"Version: {typeof(BuildExecutor).GetTypeInfo().Assembly.GetInformationalText()}");
                 Logger.Log($"Host: {build.Host}");
                 Logger.Log();
-                
+
                 ProcessManager.CheckPathEnvironmentVariable();
                 InjectionService.InjectValues(build);
                 HandleEarlyExits(build);
 
                 executionList = TargetDefinitionLoader.GetExecutingTargets(build, build.InvokedTargets);
                 RequirementService.ValidateRequirements(executionList, build);
-                Execute(executionList);
+
+                build.OnBuildInitialized();
+
+                Execute(build, executionList);
 
                 return 0;
             }
@@ -65,38 +70,44 @@ namespace Nuke.Common.Execution
                     Logger.Log();
                     WriteSummary(executionList);
                 }
+
+                build.OnBuildFinished();
             }
         }
 
-        internal static void Execute(IEnumerable<TargetDefinition> executionList)
+        internal static void Execute(NukeBuild build, IEnumerable<TargetDefinition> executionList)
         {
             foreach (var target in executionList)
             {
                 if (target.Factory == null)
                 {
                     target.Status = ExecutionStatus.Absent;
+                    build.OnTargetAbsent(target.Name);
                     continue;
                 }
 
                 if (target.Skip || target.DependencyBehavior == DependencyBehavior.Execute && target.Conditions.Any(x => !x()))
                 {
                     target.Status = ExecutionStatus.Skipped;
+                    build.OnTargetSkipped(target.Name);
                     continue;
                 }
 
                 using (Logger.Block(target.Name))
                 {
+                    build.OnTargetStart(target.Name);
                     var stopwatch = Stopwatch.StartNew();
+                    
                     try
                     {
                         target.Actions.ForEach(x => x());
-                        target.Duration = stopwatch.Elapsed;
-
                         target.Status = ExecutionStatus.Executed;
+                        build.OnTargetExecuted(target.Name);
                     }
                     catch
                     {
                         target.Status = ExecutionStatus.Failed;
+                        build.OnTargetFailed(target.Name);
                         throw;
                     }
                     finally

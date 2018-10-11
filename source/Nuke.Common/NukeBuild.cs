@@ -108,7 +108,7 @@ namespace Nuke.Common
 
         public string[] InvokedTargets { get; } = GetInvokedTargets();
         public string[] ExecutingTargets { get; }
-                
+
         protected internal virtual IOutputSink OutputSink
         {
             get

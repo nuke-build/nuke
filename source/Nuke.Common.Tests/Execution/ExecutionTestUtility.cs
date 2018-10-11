@@ -46,7 +46,7 @@ namespace Nuke.Common.Tests.Execution
             where T : NukeBuild
         {
             var executingTargets = TargetDefinitionLoader.GetExecutingTargets(build, new[] { BuildExecutor.DefaultTarget });
-            BuildExecutor.Execute(executingTargets);
+            BuildExecutor.Execute(build, executingTargets);
         }
 
         private static Expression<Func<T, Target>> CreateTargetExpressionByTargetName<T>(string target)
