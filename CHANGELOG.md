@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.11.0] / 2018-10-11
+- Removed deprecated APIs
+- Added event methods `OnBuildCreated`, `OnBuildInitialized`, `OnBuildFinished`, `OnTargetStart`, `OnTargetAbsent`, `OnTargetSkipped`, `OnTargetExecuted` and `OnTargetFailed`
+
 ## [0.10.5] / 2018-10-10
 - Fixed `--source` parameter for `DotNetRestore` to be collection
 
@@ -173,7 +177,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.10.5...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.11.0...HEAD
+[0.11.0]: https://github.com/nuke-build/nuke/compare/0.10.5...0.11.0
 [0.10.5]: https://github.com/nuke-build/nuke/compare/0.10.4...0.10.5
 [0.10.4]: https://github.com/nuke-build/nuke/compare/0.10.3...0.10.4
 [0.10.3]: https://github.com/nuke-build/nuke/compare/0.10.2...0.10.3
