@@ -9,11 +9,9 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.CodeGeneration.Generators;
 using Nuke.CodeGeneration.Model;
-using Nuke.Common.Git;
 using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
-using static Nuke.Common.IO.PathConstruction;
 
 namespace Nuke.CodeGeneration
 {
@@ -21,46 +19,6 @@ namespace Nuke.CodeGeneration
     public static class CodeGenerator
     {
         public const string SpecificationFilePattern = "*.json";
-
-        [Obsolete]
-        public static void GenerateCode(
-            string specificationDirectory,
-            string generationBaseDirectory,
-            bool useNestedNamespaces = false,
-            string baseNamespace = null,
-            GitRepository gitRepository = null)
-        {
-            GenerateCode(
-                Directory.GetFiles(specificationDirectory, SpecificationFilePattern, SearchOption.TopDirectoryOnly),
-                generationBaseDirectory,
-                useNestedNamespaces,
-                baseNamespace,
-                gitRepository);
-        }
-
-        [Obsolete]
-        public static void GenerateCode(
-            IReadOnlyCollection<string> specificationFiles,
-            string generationBaseDirectory,
-            bool useNestedNamespaces,
-            [CanBeNull] string baseNamespace,
-            [CanBeNull] GitRepository repository)
-        {
-            GenerateCode(
-                specificationFiles,
-                outputFileProvider: x =>
-                    (AbsolutePath) generationBaseDirectory
-                    / (useNestedNamespaces ? x.Name : ".")
-                    / x.DefaultOutputFileName,
-                namespaceProvider: x =>
-                    !useNestedNamespaces
-                        ? baseNamespace
-                        : string.IsNullOrEmpty(baseNamespace)
-                            ? x.Name
-                            : $"{baseNamespace}.{x.Name}",
-                sourceFileProvider: x =>
-                    repository?.GetGitHubBrowseUrl(x.SpecificationFile));
-        }
 
         public static void GenerateCode(
             string specificationDirectory,
@@ -93,7 +51,7 @@ namespace Nuke.CodeGeneration
                 ApplyRuntimeInformation(tool, specificationFile, sourceFileProvider, namespaceProvider);
 
                 var outputFile = outputFileProvider?.Invoke(tool) ??
-                                 Path.ChangeExtension(tool.SpecificationFile, ".Generated.cs").NotNull();
+                                 Path.Combine(Path.GetDirectoryName(tool.SpecificationFile).NotNull(), tool.DefaultOutputFileName);
 
                 GenerateCode(tool, outputFile);
             }
