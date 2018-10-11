@@ -35,9 +35,10 @@ namespace Nuke.Common.Tools.GitVersion
                 return null;
             }
 
-#pragma warning disable 618
-            return Value = GitVersionTasks.GitVersion(s => GitVersionTasks.DefaultGitVersion).Result;
-#pragma warning restore 618
+            return Value = GitVersionTasks.GitVersion(s => s
+                    .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
+                    .DisableLogOutput())
+                .Result;
         }
     }
 }

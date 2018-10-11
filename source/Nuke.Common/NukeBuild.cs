@@ -76,14 +76,6 @@ namespace Nuke.Common
         public HostType Host { get; } = GetHostType();
 
         /// <summary>
-        /// Configuration to build. Default is <em>Debug</em> (local) or <em>Release</em> (server).
-        /// </summary>
-        [Parameter("Configuration to build. Default is 'Debug' (local) or 'Release' (server).")]
-        [Obsolete("Property will be removed in a following version. Please define it yourself, i.e.: "
-                  + "[Parameter] readonly string Configuration = IsLocalBuild ? \"Debug\" : \"Release\";")]
-        public virtual string Configuration { get; } = IsLocalBuild ? "Debug" : "Release";
-
-        /// <summary>
         /// Disables execution of target dependencies.
         /// </summary>
         [Parameter("Disables execution of dependent targets.", Name = "Skip", Separator = "+")]
@@ -108,7 +100,7 @@ namespace Nuke.Common
 
         public string[] InvokedTargets { get; } = GetInvokedTargets();
         public string[] ExecutingTargets { get; }
-                
+
         protected internal virtual IOutputSink OutputSink
         {
             get

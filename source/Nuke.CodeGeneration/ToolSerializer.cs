@@ -56,7 +56,7 @@ namespace Nuke.CodeGeneration
                 property.ShouldSerialize = x =>
                 {
                     var propertyInfo = (PropertyInfo) member;
-
+                   
                     if (propertyInfo.GetSetMethod(nonPublic: true) == null)
                         return false;
 
@@ -64,7 +64,10 @@ namespace Nuke.CodeGeneration
                         return true;
 
                     if (typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
-                        return ((IEnumerable) propertyInfo.GetValue(x)).GetEnumerator().MoveNext();
+                    {
+                        var propertyValue = (IEnumerable) propertyInfo.GetValue(x);
+                        return propertyValue?.GetEnumerator().MoveNext() ?? false;
+                    }
 
                     if (x is SettingsClass && property.PropertyType == typeof(bool))
                     {

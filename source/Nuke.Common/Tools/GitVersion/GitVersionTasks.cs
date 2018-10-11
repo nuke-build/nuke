@@ -14,11 +14,6 @@ namespace Nuke.Common.Tools.GitVersion
 {
     partial class GitVersionTasks
     {
-        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
-        public static GitVersionSettings DefaultGitVersion => new GitVersionSettings()
-            .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
-            .DisableLogOutput();
-
         [CanBeNull]
         private static GitVersion GetResult(IProcess process, GitVersionSettings toolSettings)
         {

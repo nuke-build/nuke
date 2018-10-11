@@ -19,48 +19,6 @@ namespace Nuke.Common.Tools.DotNet
 
     public static partial class DotNetTasks
     {
-        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
-        public static DotNetRestoreSettings DefaultDotNetRestore => new DotNetRestoreSettings()
-            .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
-            .SetProjectFile(NukeBuild.Instance.SolutionFile);
-
-        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
-        public static DotNetBuildSettings DefaultDotNetBuild => new DotNetBuildSettings()
-            .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
-            .SetProjectFile(NukeBuild.Instance.SolutionFile)
-            .EnableNoRestore()
-            .SetConfiguration(NukeBuild.Instance.Configuration)
-            .SetAssemblyVersion(GitVersionAttribute.Value?.GetNormalizedAssemblyVersion())
-            .SetFileVersion(GitVersionAttribute.Value?.GetNormalizedFileVersion())
-            .SetInformationalVersion(GitVersionAttribute.Value?.InformationalVersion);
-
-        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
-        public static DotNetPublishSettings DefaultDotNetPublish => new DotNetPublishSettings()
-            .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
-            .SetProject(NukeBuild.Instance.SolutionFile)
-            .EnableNoRestore()
-            .SetConfiguration(NukeBuild.Instance.Configuration)
-            .SetAssemblyVersion(GitVersionAttribute.Value?.GetNormalizedAssemblyVersion())
-            .SetFileVersion(GitVersionAttribute.Value?.GetNormalizedFileVersion())
-            .SetInformationalVersion(GitVersionAttribute.Value?.InformationalVersion);
-
-        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
-        public static DotNetPackSettings DefaultDotNetPack => new DotNetPackSettings()
-            .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
-            .SetProject(NukeBuild.Instance.SolutionFile)
-            .EnableNoBuild()
-            .SetConfiguration(NukeBuild.Instance.Configuration)
-            .EnableIncludeSymbols()
-            .SetOutputDirectory(NukeBuild.Instance.OutputDirectory)
-            .SetVersion(GitVersionAttribute.Value?.NuGetVersionV2);
-
-        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
-        public static DotNetTestSettings DefaultDotNetTest => new DotNetTestSettings()
-            .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
-            .EnableNoBuild()
-            .SetConfiguration(NukeBuild.Instance.Configuration)
-            .SetProjectFile(NukeBuild.Instance.SolutionFile);
-
         internal static LogLevel ParseLogLevel(string arg)
         {
             var spaces = 0;

@@ -30,18 +30,6 @@ namespace Nuke.Common.Tools.Git
             return !Git("status --short", workingDirectory, logOutput: false).Any();
         }
 
-        [Obsolete("Use " + nameof(GitHasCleanWorkingCopy))]
-        public static bool GitHasUncommitedChanges()
-        {
-            return GitHasUncommitedChanges(EnvironmentInfo.WorkingDirectory);
-        }
-
-        [Obsolete("Use " + nameof(GitHasCleanWorkingCopy))]
-        public static bool GitHasUncommitedChanges(string workingDirectory)
-        {
-            return Git("status --short", workingDirectory, logOutput: false).Any();
-        }
-
         public static string GitCurrentBranch()
         {
             return GitCurrentBranch(EnvironmentInfo.WorkingDirectory);

@@ -22,6 +22,7 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteLine($"#region {dataClass.Name}Extensions")
                 .WriteSummary(dataClass)
                 .WriteLine("[PublicAPI]")
+                .WriteObsoleteAttributeWhenObsolete(dataClass)
                 .WriteLine("[ExcludeFromCodeCoverage]")
                 .WriteLine($"public static partial class {dataClass.Name}Extensions")
                 .WriteBlock(w => w.ForEach(dataClass.Properties, WriteMethods))
@@ -40,11 +41,13 @@ namespace Nuke.CodeGeneration.Generators
             {
                 writer
                     .WriteSummaryExtension($"Sets {property.GetCrefTag()}", property)
+                    .WriteObsoleteAttributeWhenObsolete(property)
                     .WriteMethod(
                         $"Set{property.Name}",
                         property,
                         $"toolSettings.{property.Name} = {property.Name.ToInstance().EscapeParameter()};")
                     .WriteSummaryExtension($"Resets {property.GetCrefTag()}", property)
+                    .WriteObsoleteAttributeWhenObsolete(property)
                     .WriteMethod(
                         $"Reset{property.Name}",
                         $"toolSettings.{property.Name} = null;");
@@ -68,10 +71,13 @@ namespace Nuke.CodeGeneration.Generators
 
             writer
                 .WriteSummaryExtension($"Enables {property.GetCrefTag()}", property)
+                .WriteObsoleteAttributeWhenObsolete(property)
                 .WriteMethod($"Enable{property.Name}", $"{propertyAccess} = true;")
                 .WriteSummaryExtension($"Disables {property.GetCrefTag()}", property)
+                .WriteObsoleteAttributeWhenObsolete(property)
                 .WriteMethod($"Disable{property.Name}", $"{propertyAccess} = false;")
                 .WriteSummaryExtension($"Toggles {property.GetCrefTag()}", property)
+                .WriteObsoleteAttributeWhenObsolete(property)
                 .WriteMethod($"Toggle{property.Name}", $"{propertyAccess} = !{propertyAccess};");
 
             // TODO [4]: negate for 'skip', 'no', 'disable'
@@ -86,32 +92,39 @@ namespace Nuke.CodeGeneration.Generators
 
             writer
                 .WriteSummaryExtension($"Sets {property.GetCrefTag()} to a new list", property)
+                .WriteObsoleteAttributeWhenObsolete(property)
                 .WriteMethod($"Set{property.Name}",
                     $"params {valueType}[] {propertyInstance}",
                     $"{propertyAccess} = {propertyInstance}.ToList();")
                 .WriteSummaryExtension($"Sets {property.GetCrefTag()} to a new list", property)
+                .WriteObsoleteAttributeWhenObsolete(property)
                 .WriteMethod($"Set{property.Name}",
                     $"IEnumerable<{valueType}> {propertyInstance}",
                     $"{propertyAccess} = {propertyInstance}.ToList();")
                 .WriteSummaryExtension($"Adds values to {property.GetCrefTag()}", property)
+                .WriteObsoleteAttributeWhenObsolete(property)
                 .WriteMethod($"Add{property.Name}",
                     $"params {valueType}[] {propertyInstance}",
                     $"{propertyAccess}.AddRange({propertyInstance});")
                 .WriteSummaryExtension($"Adds values to {property.GetCrefTag()}", property)
+                .WriteObsoleteAttributeWhenObsolete(property)
                 .WriteMethod($"Add{property.Name}",
                     $"IEnumerable<{valueType}> {propertyInstance}",
                     $"{propertyAccess}.AddRange({propertyInstance});")
                 .WriteSummaryExtension($"Clears {property.GetCrefTag()}", property)
+                .WriteObsoleteAttributeWhenObsolete(property)
                 .WriteMethod($"Clear{property.Name}",
                     $"{propertyAccess}.Clear();")
                 //.WriteSummaryExtension($"Adds a single {propertySingularInstance} to {property.GetCrefTag()}", property)
                 //.WriteListAddMethod(propertySingular, propertySingularInstanceEscaped, valueType, propertyInternal)
                 .WriteSummaryExtension($"Removes values from {property.GetCrefTag()}", property)
+                .WriteObsoleteAttributeWhenObsolete(property)
                 .WriteMethod($"Remove{property.Name}",
                     $"params {valueType}[] {propertyInstance}",
                     $"var hashSet = new HashSet<{valueType}>({propertyInstance});",
                     $"{propertyAccess}.RemoveAll(x => hashSet.Contains(x));")
                 .WriteSummaryExtension($"Removes values from {property.GetCrefTag()}", property)
+                .WriteObsoleteAttributeWhenObsolete(property)
                 .WriteMethod($"Remove{property.Name}",
                     $"IEnumerable<{valueType}> {propertyInstance}",
                     $"var hashSet = new HashSet<{valueType}>({propertyInstance});",
@@ -130,21 +143,26 @@ namespace Nuke.CodeGeneration.Generators
 
             writer
                 .WriteSummaryExtension($"Sets {property.GetCrefTag()} to a new dictionary", property)
+                .WriteObsoleteAttributeWhenObsolete(property)
                 .WriteMethod($"Set{property.Name}",
                     $"IDictionary<{keyType}, {valueType}> {propertyInstance}",
                     $"{propertyAccess} = {propertyInstance}.ToDictionary(x => x.Key, x => x.Value, {property.GetKeyComparer()});")
                 .WriteSummaryExtension($"Clears {property.GetCrefTag()}", property)
+                .WriteObsoleteAttributeWhenObsolete(property)
                 .WriteMethod($"Clear{property.Name}",
                     $"{propertyAccess}.Clear();")
                 .WriteSummaryExtension($"Adds a new key-value-pair {property.GetCrefTag()}", property)
+                .WriteObsoleteAttributeWhenObsolete(property)
                 .WriteMethod($"Add{propertySingular}",
                     new[] { $"{keyType} {keyInstance}", $"{valueType} {valueInstance}" },
                     $"{propertyAccess}.Add({keyInstance}, {valueInstance});")
                 .WriteSummaryExtension($"Removes a key-value-pair from {property.GetCrefTag()}", property)
+                .WriteObsoleteAttributeWhenObsolete(property)
                 .WriteMethod($"Remove{propertySingular}",
                     $"{keyType} {keyInstance}",
                     $"{propertyAccess}.Remove({keyInstance});")
                 .WriteSummaryExtension($"Sets a key-value-pair in {property.GetCrefTag()}", property)
+                .WriteObsoleteAttributeWhenObsolete(property)
                 .WriteMethod($"Set{propertySingular}",
                     new[] { $"{keyType} {keyInstance}", $"{valueType} {valueInstance}" },
                     $"{propertyAccess}[{keyInstance}] = {valueInstance};");
@@ -165,11 +183,13 @@ namespace Nuke.CodeGeneration.Generators
             {
                 writer
                     .WriteSummaryExtension($"Sets {reference} in {property.GetCrefTag()}", delegateProperty, property)
+                    .WriteObsoleteAttributeWhenObsolete(property)
                     .WriteMethod(
                         $"Set{delegateProperty.Name}",
                         delegateProperty,
                         GetModification(delegateProperty.Name.ToInstance()))
                     .WriteSummaryExtension($"Resets {reference} in {property.GetCrefTag()}", delegateProperty, property)
+                    .WriteObsoleteAttributeWhenObsolete(property)
                     .WriteMethod(
                         $"Reset{delegateProperty.Name}",
                         $"{propertyAccess}.Remove({delegateProperty.Name.DoubleQuote()});");
@@ -179,10 +199,13 @@ namespace Nuke.CodeGeneration.Generators
             {
                 writer
                     .WriteSummaryExtension($"Enables {reference} in {property.GetCrefTag()}", property)
+                    .WriteObsoleteAttributeWhenObsolete(property)
                     .WriteMethod($"Enable{delegateProperty.Name}", GetModification("true"))
                     .WriteSummaryExtension($"Disables {reference} in {property.GetCrefTag()}", property)
+                    .WriteObsoleteAttributeWhenObsolete(property)
                     .WriteMethod($"Disable{delegateProperty.Name}", GetModification("false"))
                     .WriteSummaryExtension($"Toggles {reference} in {property.GetCrefTag()}", property)
+                    .WriteObsoleteAttributeWhenObsolete(property)
                     .WriteMethod($"Toggle{delegateProperty.Name}",
                         $"ExtensionHelper.ToggleBoolean({propertyAccess}, {delegateProperty.Name.DoubleQuote()});");
             }
@@ -195,29 +218,36 @@ namespace Nuke.CodeGeneration.Generators
 
                 writer
                     .WriteSummaryExtension($"Sets {reference} in {property.GetCrefTag()} to a new collection", delegateProperty, property)
+                    .WriteObsoleteAttributeWhenObsolete(property)
                     .WriteMethod($"Set{propertyPlural}",
                         $"params {valueType}[] {propertyInstance}",
                         $"ExtensionHelper.SetCollection({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.Separator.SingleQuote()});")
                     .WriteSummaryExtension($"Sets {reference} in {property.GetCrefTag()} to a new collection", delegateProperty, property)
+                    .WriteObsoleteAttributeWhenObsolete(property)
                     .WriteMethod($"Set{propertyPlural}",
                         $"IEnumerable<{valueType}> {propertyInstance}",
                         $"ExtensionHelper.SetCollection({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.Separator.SingleQuote()});")
                     .WriteSummaryExtension($"Adds values to {reference} in {property.GetCrefTag()}", delegateProperty, property)
+                    .WriteObsoleteAttributeWhenObsolete(property)
                     .WriteMethod($"Add{propertyPlural}",
                         $"params {valueType}[] {propertyInstance}",
                         $"ExtensionHelper.AddItems({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.Separator.SingleQuote()});")
                     .WriteSummaryExtension($"Adds values to {reference} in existing {property.GetCrefTag()}", delegateProperty, property)
+                    .WriteObsoleteAttributeWhenObsolete(property)
                     .WriteMethod($"Add{propertyPlural}",
                         $"IEnumerable<{valueType}> {propertyInstance}",
                         $"ExtensionHelper.AddItems({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.Separator.SingleQuote()});")
                     .WriteSummaryExtension($"Clears {reference} in {property.GetCrefTag()}", delegateProperty, property)
+                    .WriteObsoleteAttributeWhenObsolete(property)
                     .WriteMethod($"Clear{propertyPlural}",
                         $"{propertyAccess}.Remove({delegateProperty.Name.DoubleQuote()});")
                     .WriteSummaryExtension($"Removes values from {reference} in {property.GetCrefTag()}", delegateProperty, property)
+                    .WriteObsoleteAttributeWhenObsolete(property)
                     .WriteMethod($"Remove{propertyPlural}",
                         $"params {valueType}[] {propertyInstance}",
                         $"ExtensionHelper.RemoveItems({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.Separator.SingleQuote()});")
                     .WriteSummaryExtension($"Removes values from {reference} in {property.GetCrefTag()}", delegateProperty, property)
+                    .WriteObsoleteAttributeWhenObsolete(property)
                     .WriteMethod($"Remove{propertyPlural}",
                         $"IEnumerable<{valueType}> {propertyInstance}",
                         $"ExtensionHelper.RemoveItems({propertyAccess}, {delegateProperty.Name.DoubleQuote()}, {propertyInstance}, {delegateProperty.Separator.SingleQuote()});");
@@ -241,21 +271,26 @@ namespace Nuke.CodeGeneration.Generators
             // TODO: remove by key
             writer
                 .WriteSummaryExtension($"Sets {property.GetCrefTag()} to a new lookup table", property)
+                .WriteObsoleteAttributeWhenObsolete(property)
                 .WriteMethod($"Set{property.Name}",
                     $"ILookup<{keyType}, {valueType}> {propertyInstance}",
                     $"{propertyAccess} = {propertyInstance}.ToLookupTable(StringComparer.OrdinalIgnoreCase);")
                 .WriteSummaryExtension($"Clears {property.GetCrefTag()}", property)
+                .WriteObsoleteAttributeWhenObsolete(property)
                 .WriteMethod($"Clear{property.Name}",
                     $"{propertyAccess}.Clear();")
                 .WriteSummaryExtension($"Adds new values for the given key to {property.GetCrefTag()}", property)
+                .WriteObsoleteAttributeWhenObsolete(property)
                 .WriteMethod($"Add{property.Name}",
                     new[] { $"{keyType} {keyInstance}", $"params {valueType}[] {valueInstances}" },
                     $"{propertyAccess}.AddRange({keyInstance}, {valueInstances});")
                 .WriteSummaryExtension($"Adds new values for the given key to {property.GetCrefTag()}", property)
+                .WriteObsoleteAttributeWhenObsolete(property)
                 .WriteMethod($"Add{property.Name}",
                     new[] { $"{keyType} {keyInstance}", $"IEnumerable<{valueType}> {valueInstances}" },
                     $"{propertyAccess}.AddRange({keyInstance}, {valueInstances});")
                 .WriteSummaryExtension($"Removes a single {propertySingularInstance} from {property.GetCrefTag()}", property)
+                .WriteObsoleteAttributeWhenObsolete(property)
                 .WriteMethod($"Remove{propertySingular}",
                     new[] { $"{keyType} {keyInstance}", $"{valueType} {valueInstance}" },
                     $"{propertyAccess}.Remove({keyInstance}, {valueInstance});");

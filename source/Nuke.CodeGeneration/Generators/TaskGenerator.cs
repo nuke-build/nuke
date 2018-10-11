@@ -52,7 +52,7 @@ namespace Nuke.CodeGeneration.Generators
 
             writer
                 .WriteSummary(task)
-                .WriteLine(GetTaskSignature(writer.Task, additionalParameterDeclarations))
+                .WriteTaskSignature(additionalParameterDeclarations)
                 .WriteBlock(w => w
                     .WriteLine("configurator = configurator ?? (x => x);")
                     .WriteLine($"return {taskCallPrefix}{task.GetTaskMethodName()}({allArguments.JoinComma()});"));
@@ -85,6 +85,7 @@ namespace Nuke.CodeGeneration.Generators
                             };
             writer
                 .WriteSummary(tool.Help)
+                .WriteObsoleteAttributeWhenObsolete(tool)
                 .WriteLine($"public static IReadOnlyCollection<Output> {tool.Name}({parameters.JoinComma()})")
                 .WriteBlock(w => w
                     .WriteLine($"var process = ProcessTasks.StartProcess({arguments.JoinComma()});")
@@ -96,21 +97,8 @@ namespace Nuke.CodeGeneration.Generators
         {
             return writer
                 .WriteSummary(writer.Task)
-                .WriteLine(GetTaskSignature(writer.Task))
+                .WriteTaskSignature()
                 .WriteBlock(WriteMainTaskBlock);
-        }
-
-        private static string GetTaskSignature(Task task, IEnumerable<string> additionalParameterDeclarations = null)
-        {
-            var parameterDeclarations = new List<string>();
-            parameterDeclarations.AddRange(additionalParameterDeclarations ?? new List<string>());
-            parameterDeclarations.Add($"Configure<{task.SettingsClass.Name}> configurator = null");
-
-            var returnType = task.HasReturnValue()
-                ? $"({task.ReturnType} Result, IReadOnlyCollection<Output> Output)"
-                : "IReadOnlyCollection<Output>";
-
-            return $"public static {returnType} {task.GetTaskMethodName()}({parameterDeclarations.JoinComma()})";
         }
 
         private static void WriteMainTaskBlock(TaskWriter writer)
@@ -118,10 +106,10 @@ namespace Nuke.CodeGeneration.Generators
             var task = writer.Task;
             writer
                 .WriteLine($"var toolSettings = configurator.InvokeSafe(new {task.SettingsClass.Name}());")
-                .WriteLineIfTrue(task.PreProcess, $"PreProcess(ref toolSettings);")
+                .WriteLineIfTrue(task.PreProcess, "PreProcess(ref toolSettings);")
                 .WriteLine($"var process = {GetProcessStart(task)};")
                 .WriteLine(GetProcessAssertion(task))
-                .WriteLineIfTrue(task.PostProcess, $"PostProcess(toolSettings);")
+                .WriteLineIfTrue(task.PostProcess, "PostProcess(toolSettings);")
                 .WriteLine(task.HasReturnValue()
                     ? "return (GetResult(process, toolSettings), process.Output);"
                     : "return process.Output;");
@@ -166,6 +154,23 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteLine($"public static string {tool.Name}Path =>")
                 .WriteLine($"    ToolPathResolver.TryGetEnvironmentExecutable(\"{tool.Name.ToUpperInvariant()}_EXE\") ??")
                 .WriteLine($"    {resolvers.Single()};");
+        }
+
+        private static T WriteTaskSignature<T>(this T writer, IEnumerable<string> additionalParameterDeclarations = null)
+            where T : TaskWriter
+        {
+            var task = writer.Task;
+            var parameterDeclarations = new List<string>();
+            parameterDeclarations.AddRange(additionalParameterDeclarations ?? new List<string>());
+            parameterDeclarations.Add($"Configure<{task.SettingsClass.Name}> configurator = null");
+
+            var returnType = task.HasReturnValue()
+                ? $"({task.ReturnType} Result, IReadOnlyCollection<Output> Output)"
+                : "IReadOnlyCollection<Output>";
+
+            return writer
+                .WriteObsoleteAttributeWhenObsolete(task)
+                .WriteLine($"public static {returnType} {task.GetTaskMethodName()}({parameterDeclarations.JoinComma()})");
         }
     }
 }

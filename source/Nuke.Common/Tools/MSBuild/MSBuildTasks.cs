@@ -19,48 +19,6 @@ namespace Nuke.Common.Tools.MSBuild
             return MSBuildToolPathResolver.Resolve();
         }
 
-        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
-        public static MSBuildSettings DefaultMSBuild
-        {
-            get
-            {
-                var toolSettings = new MSBuildSettings()
-                    .SetWorkingDirectory(NukeBuild.Instance.SolutionDirectory)
-                    .SetSolutionFile(NukeBuild.Instance.SolutionFile)
-                    .SetMaxCpuCount(Environment.ProcessorCount)
-                    .SetConfiguration(NukeBuild.Instance.Configuration)
-                    .SetNodeReuse(NukeBuild.IsLocalBuild);
-
-                var teamCityLogger = TeamCity.Instance?.ConfigurationProperties["TEAMCITY_DOTNET_MSBUILD_EXTENSIONS4_0"];
-                if (teamCityLogger != null)
-                {
-                    toolSettings = toolSettings
-                        .AddLoggers($"JetBrains.BuildServer.MSBuildLoggers.MSBuildLogger,{teamCityLogger}")
-                        .EnableNoConsoleLogger();
-                }
-
-                return toolSettings;
-            }
-        }
-
-        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
-        public static MSBuildSettings DefaultMSBuildRestore => DefaultMSBuild
-            .SetTargets("Restore");
-
-        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
-        public static MSBuildSettings DefaultMSBuildCompile => DefaultMSBuild
-            .SetTargets("Rebuild")
-            .SetAssemblyVersion(GitVersionAttribute.Value?.GetNormalizedAssemblyVersion())
-            .SetFileVersion(GitVersionAttribute.Value?.GetNormalizedFileVersion())
-            .SetInformationalVersion(GitVersionAttribute.Value?.InformationalVersion);
-
-        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
-        public static MSBuildSettings DefaultMSBuildPack => DefaultMSBuild
-            .SetTargets("Restore", "Pack")
-            .EnableIncludeSymbols()
-            .SetPackageOutputPath(NukeBuild.Instance.OutputDirectory)
-            .SetPackageVersion(GitVersionAttribute.Value?.NuGetVersionV2);
-
         /// <summary>
         /// Parses MSBuild project file.
         /// </summary>

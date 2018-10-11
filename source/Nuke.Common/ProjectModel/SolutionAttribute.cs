@@ -38,13 +38,11 @@ namespace Nuke.Common.ProjectModel
         [CanBeNull]
         public static string TargetFramework { get; set; }
         
-#pragma warning disable 618
-
         public override object GetValue(string memberName, Type memberType)
         {
             return ProjectModelTasks.ParseSolution(
                 GetSolutionFile(memberName),
-                Configuration ?? NukeBuild.Instance.Configuration,
+                Configuration,
                 TargetFramework);
         }
         
@@ -63,8 +61,21 @@ namespace Nuke.Common.ProjectModel
             if (_solutionFileRootRelativePath != null)
                 return PathConstruction.Combine(NukeBuild.Instance.RootDirectory, _solutionFileRootRelativePath);
 
-            return NukeBuild.Instance.SolutionFile;
+            return GetSolutionFileFromConfigurationFile();
         }
-#pragma warning restore 618
+
+        private string GetSolutionFileFromConfigurationFile()
+        {
+            var nukeFile = Path.Combine(NukeBuild.Instance.RootDirectory, NukeBuild.ConfigurationFile);
+            ControlFlow.Assert(File.Exists(nukeFile), $"File.Exists({NukeBuild.ConfigurationFile})");
+
+            var solutionFileRelative = File.ReadAllLines(nukeFile)[0];
+            ControlFlow.Assert(!solutionFileRelative.Contains(value: '\\'), $"{NukeBuild.ConfigurationFile} must use unix-styled separators");
+
+            var solutionFile = Path.GetFullPath(Path.Combine(NukeBuild.Instance.RootDirectory, solutionFileRelative));
+            ControlFlow.Assert(File.Exists(solutionFile), "File.Exists(solutionFile)");
+
+            return (PathConstruction.AbsolutePath) solutionFile;
+        }
     }
 }

@@ -13,10 +13,14 @@ using Newtonsoft.Json;
 namespace Nuke.CodeGeneration.Model
 {
     [UsedImplicitly(ImplicitUseKindFlags.Assign, ImplicitUseTargetFlags.WithMembers)]
-    public class Task
+    public class Task : IDeprecatable
     {
         [JsonIgnore]
         public Tool Tool { get; set; }
+
+        [NotNull]
+        [JsonIgnore]
+        public IDeprecatable Parent => Tool;
 
         [CanBeNull]
         [Description(
@@ -62,5 +66,8 @@ namespace Nuke.CodeGeneration.Model
 
         [Description("The settings of the task.")]
         public SettingsClass SettingsClass { get; set; } = new SettingsClass();
+
+        [Description("Obsolete message. Task is marked as obsolete when specified.")]
+        public string DeprecationMessage { get; set; }
     }
 }

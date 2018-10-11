@@ -7,17 +7,20 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
 namespace Nuke.CodeGeneration.Model
 {
     [UsedImplicitly(ImplicitUseKindFlags.Assign, ImplicitUseTargetFlags.WithMembers)]
-    public class DataClass
+    public class DataClass : IDeprecatable
     {
         [JsonIgnore]
         public Tool Tool { get; set; }
+
+        [NotNull]
+        [JsonIgnore]
+        public virtual IDeprecatable Parent => Tool;
 
         [JsonProperty(Required = Required.Always)]
         [RegularExpression(RegexPatterns.Name)]
@@ -35,6 +38,9 @@ namespace Nuke.CodeGeneration.Model
 
         [Description("Properties of the data class.")]
         public List<Property> Properties { get; set; } = new List<Property>();
+
+        [Description("Obsolete message. DataClass is marked as obsolete when specified.")]
+        public string DeprecationMessage { get; set; }
     }
 
     [UsedImplicitly]
@@ -48,6 +54,10 @@ namespace Nuke.CodeGeneration.Model
 
         [JsonIgnore]
         public Task Task { get; set; }
+
+        [NotNull]
+        [JsonIgnore]
+        public override IDeprecatable Parent => Task;
 
         [JsonProperty(Required = Required.Default)]
         public override string Name => $"{Tool.Name}{Task.Postfix}Settings";
