@@ -143,12 +143,6 @@ namespace Nuke.Common.IO
             CopyRecursivelyInternal(source, target, policy);
         }
 
-        [Obsolete("Use " + nameof(CopyDirectoryRecursively))]
-        public static void CopyRecursively(string source, string target, FileExistsPolicy policy = FileExistsPolicy.Fail)
-        {
-            CopyDirectoryRecursively(source, target, policy);
-        }
-
         private static bool ShouldCopyFile(string sourceFile, string targetFile, FileExistsPolicy policy)
         {
             if (!File.Exists(targetFile))

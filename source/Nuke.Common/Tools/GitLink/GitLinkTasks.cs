@@ -12,20 +12,6 @@ namespace Nuke.Common.Tools.GitLink
 {
     public static partial class GitLinkTasks
     {
-        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
-        public static GitLink2Settings DefaultGitLink2 => new GitLink2Settings()
-            .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
-            .SetSolutionDirectory(NukeBuild.Instance.SolutionDirectory)
-            .SetConfiguration(NukeBuild.Instance.Configuration)
-            .SetBranchName(GitVersionAttribute.Value?.BranchName)
-            .SetRepositoryUrl(GitRepositoryAttribute.Value?.ToString());
-
-        [Obsolete("Property will be removed in a following version. Please define it yourself.")]
-        public static GitLink3Settings DefaultGitLink3 => new GitLink3Settings()
-            .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
-            .SetBaseDirectory(NukeBuild.Instance.RootDirectory)
-            .SetRepositoryUrl(GitRepositoryAttribute.Value?.ToString());
-
         private static void PreProcess(ref GitLink2Settings toolSettings)
         {
             ControlFlow.AssertWarn(toolSettings.ToolPath.Contains("gitlink\\2"), "toolSettings.ToolPath.Contains('gitlink\\2')");

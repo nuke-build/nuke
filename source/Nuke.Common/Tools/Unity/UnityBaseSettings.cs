@@ -17,9 +17,7 @@ namespace Nuke.Common.Tools.Unity
         public string GetLogFile()
         {
             // TODO SK
-#pragma warning disable 618
-            return LogFile ?? NukeBuild.Instance.OutputDirectory / "unity.log";
-#pragma warning restore 618
+            return LogFile ?? NukeBuild.Instance.RootDirectory / "unity.log";
         }
     }
 }

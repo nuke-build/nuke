@@ -9,7 +9,6 @@ using Nuke.Common.Git;
 using Nuke.Common.Gitter;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.CoverallsNet;
-using Nuke.Common.Tools.DocFx;
 using Nuke.Common.Tools.DotCover;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.DupFinder;
