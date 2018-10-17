@@ -31,6 +31,8 @@ NUGET_URL="https://dist.nuget.org/win-x86-commandline/$NUGET_VERSION/nuget.exe"
 # EXECUTION
 ###########################################################################
 
+echo $(mono --version 2>&1 | head -n 1)
+
 export NUGET_EXE="$TEMP_DIRECTORY/nuget.exe"
 if [ ! -f "$NUGET_EXE" ]; then
     mkdir -p "$TEMP_DIRECTORY"
@@ -38,7 +40,7 @@ if [ ! -f "$NUGET_EXE" ]; then
 elif [ "$NUGET_VERSION" == "latest" ]; then
     mono "$NUGET_EXE" update -Self
 fi
-echo $("$NUGET_EXE" help 2>&1 | head -n 1)
+echo $(mono "$NUGET_EXE" help 2>&1 | head -n 1)
 
 mono "$NUGET_EXE" restore "$BUILD_PROJECT_FILE" -SolutionDirectory "$SOLUTION_DIRECTORY"
 msbuild "$BUILD_PROJECT_FILE"
