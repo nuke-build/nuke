@@ -13,7 +13,7 @@ namespace Nuke.Common.Tools.GitVersion
 {
     /// <inheritdoc/>
     /// <summary>
-    /// Implements auto-injection for <see cref="GitVersionTasks"/>.
+    /// Injects an instance of <see cref="GitVersion"/> based on the local repository.
     /// <para/>
     /// <inheritdoc/>
     /// </summary>

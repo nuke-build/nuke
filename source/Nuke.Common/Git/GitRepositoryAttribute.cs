@@ -13,7 +13,7 @@ namespace Nuke.Common.Git
 {
     /// <inheritdoc/>
     /// <summary>
-    /// Implements auto-injection for <see cref="GitRepository"/>.
+    /// Injects an instance of <see cref="GitRepository"/> based on the local repository.
     /// <para/>
     /// <inheritdoc/>
     /// </summary>

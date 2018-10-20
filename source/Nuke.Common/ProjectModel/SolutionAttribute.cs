@@ -12,7 +12,29 @@ using Nuke.Common.IO;
 
 namespace Nuke.Common.ProjectModel
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="InjectionAttributeBase"/>
+    /// <summary>
+    ///     Injects an instance of <see cref="Solution"/>. The solution path is resolved in the following order:
+    ///     <ul>
+    ///         <li>From command-line arguments (e.g., <c>-solution path/to/solution.sln</c>)</li>
+    ///         <li>From environment variables (e.g., <c>SOLUTION=path/to/solution.sln</c>)</li>
+    ///         <li>From the constructor argument</li>
+    ///         <li>From the <c>.nuke</c> configuration file</li>
+    ///     </ul>
+    ///     <inheritdoc cref="InjectionAttributeBase"/>
+    /// </summary>
+    /// <example>
+    ///     <code>
+    /// [Solution("common.sln")] readonly Solution Solution;
+    /// Target FooBar => _ => _
+    ///     .Executes(() =>
+    ///     {
+    ///         Logger.Log($"File: {Solution}");
+    ///         Logger.Log($"Directory: {Solution.Directory}");
+    ///         Logger.Log($"Projects: {Solution.AllProjects.Select(x => x.Name).JoinComma()}");
+    ///     });
+    ///     </code>
+    /// </example>
     [PublicAPI]
     [UsedImplicitly(ImplicitUseKindFlags.Assign)]
     public class SolutionAttribute : ParameterAttribute
