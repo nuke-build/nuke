@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.7.1] / 2018-10-21
+- Changed minmal required Nuke version to v0.11.1.
 ## [0.7.0] / 2018-10-03
 - Changed supported version to [NSwag v11.20.0 (Build 1031)](https://github.com/RSuter/NSwag/releases/tag/NSwag-Build-1031)
 ## [0.6.0] / 2018-09-11
@@ -27,7 +29,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [0.3.1] / 2018-05-22
 - First release.
 
-[vNext]: https://github.com/nuke-build/nswag/compare/0.7.0...HEAD
+[vNext]: https://github.com/nuke-build/nswag/compare/0.7.1...HEAD
+[0.7.1]: https://github.com/nuke-build/nswag/compare/0.7.0...0.7.1
 [0.7.0]: https://github.com/nuke-build/nswag/compare/0.6.0...0.7.0
 [0.6.0]: https://github.com/nuke-build/nswag/compare/0.5.2...0.6.0
 [0.5.2]: https://github.com/nuke-build/nswag/compare/0.5.1...0.5.2
