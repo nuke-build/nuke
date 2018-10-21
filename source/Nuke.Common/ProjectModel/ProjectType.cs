@@ -15,7 +15,7 @@ namespace Nuke.Common.ProjectModel
     [PublicAPI]
     public class ProjectType
     {
-        public static ProjectType SolutionFolder = new ProjectType("2150E333-8FDC-42A3-9474-1A3956D46DE8");
+        public static ProjectType SolutionFolder = new ProjectType(Nuke.Common.ProjectModel.SolutionFolder.Guid);
 
         public static ProjectType CSharpProject = new ProjectType("FAE04EC0-301F-11D3-BF4B-00C04F79EFBC", "9A19103F-16F7-4668-BE54-9A1E7A4F7556");
         public static ProjectType VBNetProject = new ProjectType("F184B08F-C81C-45F6-A57F-5ABD9991F28F");
@@ -49,8 +49,13 @@ namespace Nuke.Common.ProjectModel
             "D399B71A-8929-442a-A9AC-8BEC78BB2433");
 
         public ProjectType(params string[] guids)
+            : this(guids.Select(Guid.Parse).ToArray())
         {
-            Guids = guids.Select(Guid.Parse).ToList();
+        }
+
+        public ProjectType(params Guid[] guids)
+        {
+            Guids = guids;
         }
 
         public IReadOnlyCollection<Guid> Guids { get; }
