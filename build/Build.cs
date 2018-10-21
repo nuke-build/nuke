@@ -50,7 +50,15 @@ class Build : NukeBuild
 
     [GitRepository] readonly GitRepository GitRepository;
     [GitVersion] readonly GitVersion GitVersion;
-    [Solution] readonly Solution Solution;
+    [Solution("nuke-nswag.sln")] readonly Solution Solution;
+    [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
+    new readonly string Configuration = IsLocalBuild ? "Debug" : "Release";
+
+
+    AbsolutePath SourceDirectory => RootDirectory / "src";
+    AbsolutePath TestsDirectory => RootDirectory / "tests";
+    AbsolutePath OutputDirectory => RootDirectory / "output";
+
 
     [Parameter("Api key to push packages to NuGet.org.")] readonly string NuGetApiKey;
     [Parameter("Api key to access the GitHub.")] readonly string GitHubApiKey;
@@ -108,10 +116,15 @@ class Build : NukeBuild
         .DependsOn(Generate, Clean)
         .Executes(() =>
         {
-            DotNetRestore(x => DefaultDotNetRestore
+            DotNetRestore(s => s
                 .SetProjectFile(NSwagProject));
-            DotNetBuild(x => DefaultDotNetBuild
-                .SetProjectFile(NSwagProject));
+            DotNetBuild(s => s
+                .SetProjectFile(NSwagProject)
+                .SetConfiguration(Configuration)
+                .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())
+                .SetFileVersion(GitVersion.GetNormalizedFileVersion())
+                .SetInformationalVersion(GitVersion.InformationalVersion)
+                .EnableNoRestore());
         });
 
     Target Pack => _ => _
@@ -124,12 +137,13 @@ class Build : NukeBuild
                 .Concat($"Full changelog at {GitRepository.GetGitHubBrowseUrl(ChangelogFile)}")
                 .JoinNewLine();
 
-            DotNetPack(s => DefaultDotNetPack
+            DotNetPack(s => s
                 .SetProject(NSwagProject)
-                .EnableNoBuild()
-                .EnableNoRestore()
                 .SetVersion(GitVersion.NuGetVersionV2)
-                .SetPackageReleaseNotes(releaseNotes));
+                .SetOutputDirectory(OutputDirectory)
+                .SetPackageReleaseNotes(releaseNotes)
+                .SetConfiguration(Configuration)
+                .EnableNoBuild());
         });
 
     Target Push => _ => _

@@ -31,7 +31,7 @@ namespace Nuke.NSwag.Generator
         {
             Console.WriteLine($"Generating {ToolName} specifications...");
 
-            var tool = GenerateTool(PathConstruction.Combine(_outputFolder, $"{ToolName}.json"));
+            var tool = GenerateTool();
             using (var parser = CreateSpecificationParser())
             {
                 parser.Populate(tool);
@@ -40,7 +40,7 @@ namespace Nuke.NSwag.Generator
             PopulateReferences(tool);
 
             Directory.CreateDirectory(_outputFolder);
-            ToolSerializer.Save(tool);
+            ToolSerializer.Save(tool, PathConstruction.Combine(_outputFolder, $"{ToolName}.json"));
 
             Console.WriteLine();
             Console.WriteLine("Generation finished.");
@@ -57,19 +57,16 @@ namespace Nuke.NSwag.Generator
         protected virtual string PackageExecutable => null;
         protected virtual bool CustomExecutable => false;
 
-        private Tool GenerateTool(string specificationFilePath)
+        private Tool GenerateTool()
         {
             var tool = new Tool
                        {
                            Name = ToolName,
                            CustomExecutable = CustomExecutable,
-                           License = License,
                            OfficialUrl = OfficialUrl,
-                           EnvironmentExecutable = EnvironmentExecutable,
                            PackageExecutable = PackageExecutable,
                            PathExecutable = PathExecutable,
                            PackageId = PackageId,
-                           DefinitionFile = specificationFilePath,
                            Help = Help
                        };
             return tool;

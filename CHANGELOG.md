@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
-
+- Changed minmal required Nuke version to v0.11.1.
 ## [0.7.0] / 2018-10-03
 - Changed supported version to [NSwag v11.20.0 (Build 1031)](https://github.com/RSuter/NSwag/releases/tag/NSwag-Build-1031)
 ## [0.6.0] / 2018-09-11
