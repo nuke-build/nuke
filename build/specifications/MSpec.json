@@ -1,0 +1,107 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://raw.githubusercontent.com/machine/machine.specifications.runner.console/master/README.md"
+  ],
+  "name": "MSpec",
+  "officialUrl": "https://github.com/machine/machine.specifications",
+  "help": "MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.",
+  "customExecutable": true,
+  "tasks": [
+    {
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Assemblies",
+            "type": "List<string>",
+            "format": "{value}",
+            "separator": " ",
+            "createOverload": true,
+            "help": "Assemblies with tests to be executed."
+          },
+          {
+            "name": "Filters",
+            "type": "List<string>",
+            "format": "-f={value}",
+            "separator": ",",
+            "help": "Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags."
+          },
+          {
+            "name": "Includes",
+            "type": "List<string>",
+            "format": "-i={value}",
+            "separator": ",",
+            "help": "Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>."
+          },
+          {
+            "name": "Excludes",
+            "type": "List<string>",
+            "format": "-x={value}",
+            "separator": ",",
+            "help": "Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>."
+          },
+          {
+            "name": "HtmlOutput",
+            "type": "string",
+            "format": "--html={value}",
+            "help": "Outputs the HTML report to path, one-per-assembly w/ index.html (if directory, otherwise all are in one file). Ex. <c>--html=output/reports/</c>"
+          },
+          {
+            "name": "XmlOutput",
+            "type": "string",
+            "format": "--xml={value}",
+            "help": "Outputs the XML report to the file referenced by the path. Ex. <c>--xml=output/reports/MSpecResults.xml</c>"
+          },
+          {
+            "name": "TeamCity",
+            "type": "bool",
+            "format": "--teamcity",
+            "help": "Reporting for TeamCity CI integration (also auto-detected)."
+          },
+          {
+            "name": "NoTeamCity",
+            "type": "bool",
+            "format": "--no-teamcity-autodetect",
+            "help": "Disables TeamCity autodetection."
+          },
+          {
+            "name": "AppVeyor",
+            "type": "bool",
+            "format": "--appveyor",
+            "help": "Reporting for AppVeyor CI integration (also auto-detected)."
+          },
+          {
+            "name": "NoAppVeyor",
+            "type": "bool",
+            "format": "--no-appveyor-autodetect",
+            "help": "Disables AppVeyor autodetection."
+          },
+          {
+            "name": "TimeInfo",
+            "type": "bool",
+            "format": "--timeinfo",
+            "help": "Shows time-related information in HTML output."
+          },
+          {
+            "name": "Silent",
+            "type": "bool",
+            "format": "--silent",
+            "help": "Suppress progress output (print fatal errors, failures and summary)."
+          },
+          {
+            "name": "DottedProgress",
+            "type": "bool",
+            "format": "--progress",
+            "help": "Print dotted progress output."
+          },
+          {
+            "name": "NoColor",
+            "type": "bool",
+            "format": "--no-color",
+            "help": "Suppress colored console output."
+          }
+        ]
+      }
+    }
+  ]
+}
