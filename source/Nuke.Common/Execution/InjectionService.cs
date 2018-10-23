@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -26,7 +26,7 @@ namespace Nuke.Common.Execution
 
                 var attribute = attributes.Single();
                 var memberType = (member as FieldInfo)?.FieldType ?? ((PropertyInfo) member).PropertyType;
-                var value = attribute.GetValue(member.Name, memberType);
+                var value = attribute.GetValue(member.Name, memberType, build.GetType());
                 if (value == null)
                     continue;
 

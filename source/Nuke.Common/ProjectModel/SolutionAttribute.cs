@@ -5,6 +5,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
@@ -38,7 +39,7 @@ namespace Nuke.Common.ProjectModel
         [CanBeNull]
         public static string TargetFramework { get; set; }
         
-        public override object GetValue(string memberName, Type memberType)
+        public override object GetValue(string memberName, Type memberType, Type buildType)
         {
             return ProjectModelTasks.ParseSolution(
                 GetSolutionFile(memberName),

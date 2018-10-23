@@ -1,9 +1,10 @@
-// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
 
@@ -47,7 +48,7 @@ namespace Nuke.Common
         public string Separator { get; set; }
 
         [CanBeNull]
-        public override object GetValue(string memberName, Type memberType)
+        public override object GetValue(string memberName, Type memberType, Type buildType)
         {
             if (Nullable.GetUnderlyingType(memberType) == null &&
                 memberType != typeof(string) &&
