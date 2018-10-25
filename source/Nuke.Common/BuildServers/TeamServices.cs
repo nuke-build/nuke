@@ -20,7 +20,7 @@ namespace Nuke.Common.BuildServers
     {
         private static Lazy<TeamServices> s_instance = new Lazy<TeamServices>(() => new TeamServices());
 
-        public static TeamServices Instance => NukeBuild.Instance?.Host == HostType.TeamServices ? s_instance.Value : null;
+        public static TeamServices Instance => NukeBuild.Host == HostType.TeamServices ? s_instance.Value : null;
 
         internal static bool IsRunningTeamServices => Environment.GetEnvironmentVariable("TF_BUILD") != null;
 

@@ -20,7 +20,7 @@ namespace Nuke.Common.BuildServers
     {
         private static Lazy<Bitrise> s_instance = new Lazy<Bitrise>(() => new Bitrise());
 
-        public static Bitrise Instance => NukeBuild.Instance?.Host == HostType.Bitrise ? s_instance.Value : null;
+        public static Bitrise Instance => NukeBuild.Host == HostType.Bitrise ? s_instance.Value : null;
 
         internal static bool IsRunningBitrise => Environment.GetEnvironmentVariable("BITRISE_BUILD_URL") != null;
 

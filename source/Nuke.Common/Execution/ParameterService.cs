@@ -6,12 +6,15 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Execution
 {
+    [PublicAPI]
     public class ParameterService
     {
         private static ParameterService s_instance;
@@ -24,10 +27,38 @@ namespace Nuke.Common.Execution
             [CanBeNull] IReadOnlyDictionary<string, string> environmentVariables = null)
         {
             _environmentVariablesProvider = () => environmentVariables ?? EnvironmentInfo.Variables;
-            _commandLineArguments = commandLineArguments ?? EnvironmentInfo.CommandLineArguments;
+            _commandLineArguments = commandLineArguments ?? EnvironmentInfo.CommandLineArguments.Skip(count: 1).ToArray();
         }
 
         public static ParameterService Instance => s_instance ?? (s_instance = new ParameterService());
+
+        public string GetParameterName<T>(Expression<Func<T>> expression)
+        {
+            var member = expression.GetMemberInfo();
+            var attribute = member.GetCustomAttribute<ParameterAttribute>();
+            return attribute.Name ?? member.Name;
+        }
+
+        [CanBeNull]
+        public object GetParameter(Expression<Func<object>> expression)
+        {
+            return GetParameter<object>(expression.GetMemberInfo());
+        }
+
+        [CanBeNull]
+        public T GetParameter<T>(Expression<Func<T>> expression)
+        {
+            return GetParameter<T>(expression.GetMemberInfo());
+        }
+
+        [CanBeNull]
+        public T GetParameter<T>(MemberInfo member)
+        {
+            var attribute = member.GetCustomAttribute<ParameterAttribute>();
+            var memberType = typeof(T) != typeof(object) ? typeof(T) : member.GetFieldOrPropertyType();
+            var separator = (attribute.Separator ?? string.Empty).SingleOrDefault();
+            return (T) GetParameter(attribute.Name ?? member.Name, memberType, separator);
+        }
 
         [CanBeNull]
         public T GetParameter<T>(string parameterName, char? separator = null)
@@ -45,6 +76,12 @@ namespace Nuke.Common.Execution
         public T GetCommandLineArgument<T>(int position, char? separator = null)
         {
             return (T) GetCommandLineArgument(position, typeof(T), separator);
+        }
+
+        [CanBeNull]
+        public T[] GetPositionalCommandLineArguments<T>(char? separator = null)
+        {
+            return (T[]) GetPositionalCommandLineArguments(typeof(T[]), separator);
         }
 
         [CanBeNull]
@@ -83,8 +120,23 @@ namespace Nuke.Common.Execution
                 return null;
 
             return ConvertCommandLineArguments(
-                $"positional[{position}]",
+                $"$positional[{position}]",
                 new[] { _commandLineArguments[position] },
+                destinationType,
+                _commandLineArguments,
+                separator);
+        }
+
+        [CanBeNull]
+        public object GetPositionalCommandLineArguments(Type destinationType, char? separator = null)
+        {
+            var positionalArguments = _commandLineArguments.TakeWhile(x => !x.StartsWith("-")).ToArray();
+            if (positionalArguments.Length == 0)
+                return GetDefaultValue(destinationType);
+            
+            return ConvertCommandLineArguments(
+                $"$all-positional",
+                positionalArguments,
                 destinationType,
                 _commandLineArguments,
                 separator);
@@ -163,7 +215,10 @@ namespace Nuke.Common.Execution
         [CanBeNull]
         private object GetDefaultValue(Type type)
         {
-            if (Nullable.GetUnderlyingType(type) == null && type != typeof(string) && !type.IsArray)
+            if (Nullable.GetUnderlyingType(type) == null && 
+                type != typeof(string) && 
+                !type.IsClass &&
+                !type.IsArray)
                 return Activator.CreateInstance(type);
             return null;
         }
@@ -253,7 +308,7 @@ namespace Nuke.Common.Execution
             foreach (var candidate in candidates.Select(x => x.ToLower()))
             {
                 var levenshteinDistance = (float) GetLevenshteinDistance(name, candidate);
-                if (levenshteinDistance / name.Length <= similarityThreshold)
+                if (levenshteinDistance / name.Length < similarityThreshold)
                 {
                     Logger.Warn($"Requested parameter '{name}' was not found. Is there a typo with '{candidate}' which was passed?");
                     return;

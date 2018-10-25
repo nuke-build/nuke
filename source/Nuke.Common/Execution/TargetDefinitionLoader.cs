@@ -14,7 +14,10 @@ namespace Nuke.Common.Execution
 {
     internal static class TargetDefinitionLoader
     {
-        public static IReadOnlyCollection<TargetDefinition> GetExecutingTargets(NukeBuild build, [CanBeNull] string[] invokedTargetNames = null)
+        public static IReadOnlyCollection<TargetDefinition> GetExecutingTargets(
+            NukeBuild build,
+            [CanBeNull] string[] invokedTargetNames,
+            [CanBeNull] string[] skippedTargetNames)
         {
             ControlFlow.Assert(build.TargetDefinitions.All(x => !x.Name.EqualsOrdinalIgnoreCase(BuildExecutor.DefaultTarget)),
                 $"The name '{BuildExecutor.DefaultTarget}' cannot be used as target name.");
@@ -24,9 +27,9 @@ namespace Nuke.Common.Execution
 
             var skippedTargets = executingTargets
                 .Where(x => !invokedTargets.Contains(x) &&
-                            build.SkippedTargets != null &&
-                            (build.SkippedTargets.Length == 0 ||
-                             build.SkippedTargets.Contains(x.Name, StringComparer.OrdinalIgnoreCase))).ToList();
+                            skippedTargetNames != null &&
+                            (skippedTargetNames.Length == 0 ||
+                             skippedTargetNames.Contains(x.Name, StringComparer.OrdinalIgnoreCase))).ToList();
             skippedTargets.ForEach(x => x.Skip = true);
             executingTargets
                 .Where(x => x.DependencyBehavior == DependencyBehavior.Skip)
@@ -36,9 +39,9 @@ namespace Nuke.Common.Execution
             string[] GetNames(IEnumerable<TargetDefinition> targets)
                 => targets.Select(x => x.Name).ToArray();
 
-            ReflectionService.SetValue(build, nameof(NukeBuild.InvokedTargets), GetNames(invokedTargets));
-            ReflectionService.SetValue(build, nameof(NukeBuild.SkippedTargets), GetNames(skippedTargets));
-            ReflectionService.SetValue(build, nameof(NukeBuild.ExecutingTargets), GetNames(executingTargets.Except(skippedTargets)));
+            ReflectionService.SetValue(typeof(NukeBuild), nameof(NukeBuild.InvokedTargets), GetNames(invokedTargets));
+            ReflectionService.SetValue(typeof(NukeBuild), nameof(NukeBuild.SkippedTargets), GetNames(skippedTargets));
+            ReflectionService.SetValue(typeof(NukeBuild), nameof(NukeBuild.ExecutingTargets), GetNames(executingTargets.Except(skippedTargets)));
 
             return executingTargets;
         }

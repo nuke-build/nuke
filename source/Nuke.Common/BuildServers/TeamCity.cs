@@ -28,7 +28,7 @@ namespace Nuke.Common.BuildServers
     {
         private static Lazy<TeamCity> s_instance = new Lazy<TeamCity>(() => new TeamCity());
 
-        public static TeamCity Instance => NukeBuild.Instance?.Host == HostType.TeamCity ? s_instance.Value : null;
+        public static TeamCity Instance => NukeBuild.Host == HostType.TeamCity ? s_instance.Value : null;
 
         internal static bool IsRunningTeamCity => Environment.GetEnvironmentVariable("TEAMCITY_VERSION") != null;
 

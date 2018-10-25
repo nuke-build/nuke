@@ -48,13 +48,9 @@ namespace Nuke.Common
         internal const string TemporaryDirectoryName = ".tmp";
         internal const string CompletionParameterName = "shell-completion";
         internal const string CompletionFileName = CompletionParameterName + ".yml";
+        internal const string RootDirectoryParameterName = "Root";
         internal const string InvokedTargetsParameterName = "Target";
         internal const string SkippedTargetsParameterName = "Skip";
-
-        /// <summary>
-        /// Currently running build instance.
-        /// </summary>
-        public static NukeBuild Instance { get; internal set; }
 
         /// <summary>
         /// Executes the build. The provided expression defines the <em>default</em> target that is invoked,
@@ -67,44 +63,6 @@ namespace Nuke.Common
         }
 
         internal IReadOnlyCollection<TargetDefinition> TargetDefinitions { get; set; }
-
-        /// <summary>
-        /// Logging verbosity while building. Default is <see cref="Nuke.Common.Verbosity.Normal"/>.
-        /// </summary>
-        [Parameter("Logging verbosity while building. Default is 'Normal'.")]
-        public Verbosity Verbosity { get; set; } = Verbosity.Normal;
-
-        /// <summary>
-        /// Host for execution. Default is <em>automatic</em>.
-        /// </summary>
-        [Parameter("Host for execution. Default is 'automatic'.")]
-        public HostType Host { get; } = GetHostType();
-
-        /// <summary>
-        /// Disables execution of target dependencies.
-        /// </summary>
-        [Parameter("Disables execution of dependent targets.", Name = SkippedTargetsParameterName, Separator = "+")]
-        public string[] SkippedTargets { get; } = GetSkippedTargets();
-
-        /// <summary>
-        /// Shows the target dependency graph (HTML).
-        /// </summary>
-        [Parameter("Shows the target dependency graph (HTML).")]
-        public bool Graph { get; }
-
-        /// <summary>
-        /// Shows the help text for this build assembly.
-        /// </summary>
-        [Parameter("Shows the help text for this build assembly.")]
-        public bool Help { get; }
-
-        public static bool IsLocalBuild => GetHostType() == HostType.Console;
-        public static bool IsServerBuild => GetHostType() != HostType.Console;
-
-        public LogLevel LogLevel => (LogLevel) Verbosity;
-
-        public string[] InvokedTargets { get; } = GetInvokedTargets();
-        public string[] ExecutingTargets { get; }
 
         protected internal virtual IOutputSink OutputSink
         {

@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.BuildServers;
 using Nuke.Common.Execution;
@@ -19,10 +20,8 @@ namespace Nuke.Common.Git
     /// </summary>
     [PublicAPI]
     [UsedImplicitly(ImplicitUseKindFlags.Default)]
-    public class GitRepositoryAttribute : StaticInjectionAttributeBase
+    public class GitRepositoryAttribute : InjectionAttributeBase
     {
-        public static GitRepository Value { get; private set; }
-
         private static Lazy<string> s_branch = new Lazy<string>(()
             => AppVeyor.Instance?.RepositoryBranch ??
                Bitrise.Instance?.GitBranch ??
@@ -38,12 +37,10 @@ namespace Nuke.Common.Git
 
         public string Remote { get; set; } = "origin";
 
-        [CanBeNull]
-        public override object GetStaticValue()
+        public override object GetValue(MemberInfo member, Type buildType)
         {
-            return Value = Value
-                           ?? ControlFlow.SuppressErrors(() =>
-                               GitRepository.FromLocalDirectory(NukeBuild.Instance.RootDirectory, Branch, Remote.NotNull()));
+            return ControlFlow.SuppressErrors(() =>
+                GitRepository.FromLocalDirectory(NukeBuild.RootDirectory, Branch, Remote.NotNull()));
         }
     }
 }

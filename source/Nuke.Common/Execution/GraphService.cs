@@ -38,7 +38,7 @@ namespace Nuke.Common.Execution
                     dependendBy.ForEach(x => graph.AppendLine($"{target.Name} --> {x.Name}"));
             }
 
-            var path = Path.Combine(build.TemporaryDirectory, "graph.html");
+            var path = Path.Combine(NukeBuild.TemporaryDirectory, "graph.html");
             var contents = GetStringFromStream(resourceStream).Replace("__GRAPH__", graph.ToString());
             File.WriteAllText(path, contents);
 

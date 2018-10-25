@@ -20,7 +20,7 @@ namespace Nuke.Common.BuildServers
     {
         private static Lazy<AppVeyor> s_instance = new Lazy<AppVeyor>(() => new AppVeyor());
 
-        public static AppVeyor Instance => NukeBuild.Instance?.Host == HostType.AppVeyor ? s_instance.Value : null;
+        public static AppVeyor Instance => NukeBuild.Host == HostType.AppVeyor ? s_instance.Value : null;
 
         internal static bool IsRunningAppVeyor => Environment.GetEnvironmentVariable("APPVEYOR") != null;
 

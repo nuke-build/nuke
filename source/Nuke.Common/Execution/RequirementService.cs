@@ -24,11 +24,8 @@ namespace Nuke.Common.Execution
                 }
                 else
                 {
-                    var memberExpression = requirement.Body is MemberExpression
-                        ? (MemberExpression) requirement.Body
-                        : (MemberExpression) ((UnaryExpression) requirement.Body).Operand;
-
-                    switch (memberExpression.Member)
+                    var member = requirement.GetMemberInfo();
+                    switch (member)
                     {
                        case FieldInfo field:
                            ControlFlow.Assert(
@@ -41,7 +38,7 @@ namespace Nuke.Common.Execution
                                $"Target '{target.Name}' requires that property '{property.Name}' must be not null.");
                            break;
                        default:
-                           throw new Exception($"Member type {memberExpression.Member} not supported.");
+                           throw new Exception($"Member type {member} not supported.");
                     }
                 }
             }

@@ -34,9 +34,12 @@ namespace Nuke.Common.Tests.Execution
         [InlineData(
             new[] { nameof(TestBuild.ExecuteSkipDependencies), nameof(TestBuild.Dependency) },
             new[] { nameof(TestBuild.Dependency) })]
-        public void Test(string[] invokedTargets, string[] expectedTargets)
+        public void Test(string[] invokedTargetNames, string[] expectedTargets)
         {
-            TargetDefinitionLoader.GetExecutingTargets(ExecutionTestUtility.CreateBuild<TestBuild>(), invokedTargets)
+            TargetDefinitionLoader.GetExecutingTargets(
+                    ExecutionTestUtility.CreateBuild<TestBuild>(),
+                    invokedTargetNames,
+                    skippedTargetNames: null)
                 .Where(x => !x.Skip && x.Conditions.All(y => y()))
                 .Select(x => x.Name)
                 .Should().BeEquivalentTo(expectedTargets);

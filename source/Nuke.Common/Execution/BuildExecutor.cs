@@ -35,19 +35,19 @@ namespace Nuke.Common.Execution
                 build.OnBuildCreated();
                 
                 Logger.OutputSink = build.OutputSink;
-                Logger.LogLevel = build.LogLevel;
+                Logger.LogLevel = NukeBuild.LogLevel;
                 NuGetPackageResolver.DefaultPackagesConfigFile = build.PackagesConfigFile;
                 
                 Logger.Log(FigletTransform.GetText("NUKE"));
                 Logger.Log($"Version: {typeof(BuildExecutor).GetTypeInfo().Assembly.GetInformationalText()}");
-                Logger.Log($"Host: {build.Host}");
+                Logger.Log($"Host: {NukeBuild.Host}");
                 Logger.Log();
 
                 ProcessManager.CheckPathEnvironmentVariable();
                 InjectionService.InjectValues(build);
                 HandleEarlyExits(build);
 
-                executionList = TargetDefinitionLoader.GetExecutingTargets(build, build.InvokedTargets);
+                executionList = TargetDefinitionLoader.GetExecutingTargets(build, NukeBuild.InvokedTargets, NukeBuild.SkippedTargets);
                 RequirementService.ValidateRequirements(executionList, build);
 
                 build.OnBuildInitialized();
@@ -99,7 +99,7 @@ namespace Nuke.Common.Execution
             foreach (var parameter in build.GetParameterMembers())
                 completionItems[parameter.Name] = GetSubItems(parameter.GetFieldOrPropertyType());
 
-            SerializationTasks.YamlSerializeToFile(completionItems, build.TemporaryDirectory / NukeBuild.CompletionFileName);
+            SerializationTasks.YamlSerializeToFile(completionItems, NukeBuild.TemporaryDirectory / NukeBuild.CompletionFileName);
 
             if (EnvironmentInfo.ParameterSwitch(NukeBuild.CompletionParameterName))
                 Environment.Exit(exitCode: 0);
@@ -151,16 +151,16 @@ namespace Nuke.Common.Execution
         private static void HandleEarlyExits<T>(T build)
             where T : NukeBuild
         {
-            if (build.Help)
+            if (NukeBuild.Help)
             {
                 Logger.Log(HelpTextService.GetTargetsText(build));
                 Logger.Log(HelpTextService.GetParametersText(build));
             }
 
-            if (build.Graph)
+            if (NukeBuild.Graph)
                 GraphService.ShowGraph(build);
 
-            if (build.Help || build.Graph)
+            if (NukeBuild.Help || NukeBuild.Graph)
                 Environment.Exit(exitCode: 0);
         }
 
@@ -173,7 +173,6 @@ namespace Nuke.Common.Execution
 
             var build = Activator.CreateInstance<T>();
             build.TargetDefinitions = build.GetTargetDefinitions(defaultTargetExpression);
-            NukeBuild.Instance = build;
 
             return build;
         }

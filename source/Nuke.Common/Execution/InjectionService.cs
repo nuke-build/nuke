@@ -19,20 +19,22 @@ namespace Nuke.Common.Execution
 
             foreach (var member in injectionMembers)
             {
+                if (member.DeclaringType == typeof(NukeBuild))
+                    continue;
+                
                 var attributes = member.GetCustomAttributes().OfType<InjectionAttributeBase>().ToList();
                 if (attributes.Count == 0)
                     continue;
                 ControlFlow.Assert(attributes.Count == 1, $"Member '{member.Name}' has multiple injection attributes applied.");
 
                 var attribute = attributes.Single();
-                var memberType = member.GetFieldOrPropertyType();
-                var value = attribute.GetValue(member.Name, memberType, build.GetType());
+                var value = attribute.GetValue(member, build.GetType());
                 if (value == null)
                     continue;
 
                 var valueType = value.GetType();
-                ControlFlow.Assert(memberType.IsAssignableFrom(valueType),
-                    $"Field '{member.Name}' must be of type '{valueType.Name}' to get its valued injected from '{attribute.GetType().Name}'.");
+                ControlFlow.Assert(member.GetFieldOrPropertyType().IsAssignableFrom(valueType),
+                    $"Member '{member.Name}' must be of type '{valueType.Name}' to get its valued injected from '{attribute.GetType().Name}'.");
                 ReflectionService.SetValue(build, member, value);
 
                 anyInjected = true;
