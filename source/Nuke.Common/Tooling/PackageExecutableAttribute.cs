@@ -1,9 +1,11 @@
-// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Linq;
+using System.Reflection;
+using JetBrains.Annotations;
 using Nuke.Common.Execution;
 
 namespace Nuke.Common.Tooling
@@ -35,20 +37,25 @@ namespace Nuke.Common.Tooling
     {
         private readonly string _packageId;
         private readonly string _packageExecutable;
-        private readonly string _framework;
 
-        public PackageExecutableAttribute(string packageId, string packageExecutable, string framework = null)
+        [CanBeNull]
+        public string Framework { get; set; }
+
+        public PackageExecutableAttribute(string packageId, string packageExecutable)
+            : this(packageId, packageExecutable32: packageExecutable, packageExecutable64: packageExecutable)
         {
-            _packageId = packageId;
-            _packageExecutable = packageExecutable;
-            _framework = framework;
         }
 
-        public override object GetValue(string memberName, Type memberType)
+        public PackageExecutableAttribute(string packageId, string packageExecutable32, string packageExecutable64)
         {
-            var toolPath =
-                ToolPathResolver.TryGetEnvironmentExecutable($"{memberName.ToUpperInvariant()}_EXE") ??
-                ToolPathResolver.GetPackageExecutable(_packageId, _packageExecutable, _framework);
+            _packageId = packageId;
+            _packageExecutable = EnvironmentInfo.Is32Bit ? packageExecutable32 : packageExecutable64;
+        }
+
+        public override object GetValue(MemberInfo member, Type buildType)
+        {
+            var toolPath = ToolPathResolver.TryGetEnvironmentExecutable($"{member.Name.ToUpperInvariant()}_EXE") ??
+                           ToolPathResolver.GetPackageExecutable(_packageId, _packageExecutable, Framework);
             return new Tool(new ToolExecutor(toolPath).Execute);
         }
     }

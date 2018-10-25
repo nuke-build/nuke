@@ -17,7 +17,7 @@ namespace Nuke.Common.Tools.Unity
         public string GetLogFile()
         {
             // TODO SK
-            return LogFile ?? NukeBuild.Instance.RootDirectory / "unity.log";
+            return LogFile ?? NukeBuild.RootDirectory / "unity.log";
         }
     }
 }

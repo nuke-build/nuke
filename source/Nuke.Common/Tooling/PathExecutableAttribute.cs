@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using System.Reflection;
 using Nuke.Common.Execution;
 
 namespace Nuke.Common.Tooling
@@ -38,12 +39,11 @@ namespace Nuke.Common.Tooling
             _name = name;
         }
 
-        public override object GetValue(string memberName, Type memberType)
+        public override object GetValue(MemberInfo member, Type buildType)
         {
-            var name = _name ?? memberName;
-            var toolPath =
-                ToolPathResolver.TryGetEnvironmentExecutable($"{name.ToUpperInvariant()}_EXE") ??
-                ToolPathResolver.GetPathExecutable(name);
+            var name = _name ?? member.Name;
+            var toolPath = ToolPathResolver.TryGetEnvironmentExecutable($"{name.ToUpperInvariant()}_EXE") ??
+                           ToolPathResolver.GetPathExecutable(name);
             return new Tool(new ToolExecutor(toolPath).Execute);
         }
     }

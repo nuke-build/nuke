@@ -27,7 +27,7 @@ namespace Nuke.Common.Tests
         [InlineData("configuration", typeof(string), "release")]
         [InlineData("AMOUNT", typeof(int), 5)]
         [InlineData("noLogo", typeof(bool), true)]
-        [InlineData("nodeps", typeof(bool), false)]
+        [InlineData("NoDeps", typeof(bool), false)]
         public void TestConversion(string argument, Type destinationType, object expectedValue)
         {
             GetService(
@@ -41,7 +41,7 @@ namespace Nuke.Common.Tests
                     "C:\\file.txt",
                     "-amount",
                     "5",
-                    "-nodeps",
+                    "--no-deps",
                     "false"
                 }).GetCommandLineArgument(argument, destinationType).Should().Be(expectedValue);
         }

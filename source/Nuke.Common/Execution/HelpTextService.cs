@@ -50,9 +50,9 @@ namespace Nuke.Common.Execution
                 var attribute = parameter.GetCustomAttribute<ParameterAttribute>().NotNull();
                 var description = SplitLines(
                     // TODO: remove
-                    attribute.Description?.Replace("{default_target}", defaultTarget.Name)
-                    ?? "<no description>");
-                builder.AppendLine($"  -{(attribute.Name ?? parameter.Name).PadRight(padRightParameter)}  {description.First()}");
+                    attribute.Description.Replace("{default_target}", defaultTarget.Name));
+                var parameterName = (attribute.Name ?? parameter.Name).GetDelimiterSeparated("-");
+                builder.AppendLine($"  --{parameterName.PadRight(padRightParameter)}  {description.First()}");
                 foreach (var line in description.Skip(count: 1))
                     builder.AppendLine($"{new string(c: ' ', count: padRightParameter + 5)}{line}");
             }

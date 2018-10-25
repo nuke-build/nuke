@@ -78,7 +78,7 @@ namespace Nuke.Common.Tools.InspectCode
             var hashCode = Math.Abs(installedPlugins.Select(x => x.Id).Concat(toolSettings.Extensions)
                 .Aggregate(seed: 0, func: (hc, x) => hc + x.GetHashCode()));
             var hashCodeString = hashCode.ToString().Substring(startIndex: 0, length: 4);
-            return Path.Combine(NukeBuild.Instance.TemporaryDirectory, $"InspectCode-{hashCodeString}");
+            return Path.Combine(NukeBuild.TemporaryDirectory, $"InspectCode-{hashCodeString}");
         }
     }
 }

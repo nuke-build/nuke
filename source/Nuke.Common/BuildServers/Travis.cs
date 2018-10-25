@@ -20,7 +20,7 @@ namespace Nuke.Common.BuildServers
     {
         private static Lazy<Travis> s_instance = new Lazy<Travis>(() => new Travis());
 
-        public static Travis Instance => NukeBuild.Instance?.Host == HostType.Travis ? s_instance.Value : null;
+        public static Travis Instance => NukeBuild.Host == HostType.Travis ? s_instance.Value : null;
 
         internal static bool IsRunningTravis => Environment.GetEnvironmentVariable("TRAVIS") != null;
 

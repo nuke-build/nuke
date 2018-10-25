@@ -61,10 +61,10 @@ namespace Nuke.Common.ProjectModel
         [CanBeNull]
         public static string TargetFramework { get; set; }
         
-        public override object GetValue(string memberName, Type memberType, Type buildType)
+        public override object GetValue(MemberInfo member, Type buildType)
         {
             return ProjectModelTasks.ParseSolution(
-                GetSolutionFile(memberName),
+                GetSolutionFile(member.Name),
                 Configuration,
                 TargetFramework);
         }
@@ -76,26 +76,26 @@ namespace Nuke.Common.ProjectModel
             var parameter = ParameterService.Instance.GetParameter<string>(memberName);
             if (parameter != null)
             {
-                return PathConstruction.HasPathRoot(parameter) 
-                    ? parameter :
-                    PathConstruction.Combine(EnvironmentInfo.WorkingDirectory, parameter);
+                return PathConstruction.HasPathRoot(parameter)
+                    ? parameter
+                    : PathConstruction.Combine(EnvironmentInfo.WorkingDirectory, parameter);
             }
 
             if (_solutionFileRootRelativePath != null)
-                return PathConstruction.Combine(NukeBuild.Instance.RootDirectory, _solutionFileRootRelativePath);
+                return PathConstruction.Combine(NukeBuild.RootDirectory, _solutionFileRootRelativePath);
 
             return GetSolutionFileFromConfigurationFile();
         }
 
         private string GetSolutionFileFromConfigurationFile()
         {
-            var nukeFile = Path.Combine(NukeBuild.Instance.RootDirectory, NukeBuild.ConfigurationFileName);
+            var nukeFile = Path.Combine(NukeBuild.RootDirectory, NukeBuild.ConfigurationFileName);
             ControlFlow.Assert(File.Exists(nukeFile), $"File.Exists({NukeBuild.ConfigurationFileName})");
 
             var solutionFileRelative = File.ReadAllLines(nukeFile)[0];
             ControlFlow.Assert(!solutionFileRelative.Contains(value: '\\'), $"{NukeBuild.ConfigurationFileName} must use unix-styled separators");
 
-            var solutionFile = Path.GetFullPath(Path.Combine(NukeBuild.Instance.RootDirectory, solutionFileRelative));
+            var solutionFile = Path.GetFullPath(Path.Combine(NukeBuild.RootDirectory, solutionFileRelative));
             ControlFlow.Assert(File.Exists(solutionFile), "File.Exists(solutionFile)");
 
             return (PathConstruction.AbsolutePath) solutionFile;

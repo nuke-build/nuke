@@ -20,7 +20,7 @@ namespace Nuke.Common.BuildServers
     {
         private static Lazy<GitLab> s_instance = new Lazy<GitLab>(() => new GitLab());
 
-        public static GitLab Instance => NukeBuild.Instance?.Host == HostType.GitLab ? s_instance.Value : null;
+        public static GitLab Instance => NukeBuild.Host == HostType.GitLab ? s_instance.Value : null;
 
         internal static bool IsRunningGitLab => Environment.GetEnvironmentVariable("GITLAB_CI") != null;
 
