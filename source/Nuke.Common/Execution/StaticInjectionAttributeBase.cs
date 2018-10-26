@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
 
 namespace Nuke.Common.Execution
@@ -16,7 +17,7 @@ namespace Nuke.Common.Execution
         public abstract object GetStaticValue();
 
         [CanBeNull]
-        public override object GetValue(string memberName, Type memberType)
+        public override object GetValue(string memberName, Type memberType, Type buildType)
         {
             return GetStaticValue();
         }
