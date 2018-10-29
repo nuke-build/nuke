@@ -11,6 +11,7 @@ using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -827,6 +828,7 @@ namespace Nuke.Common.Tools.GitVersion
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<GitVersionOutput>))]
     public partial class GitVersionOutput : Enumeration
     {
         public static GitVersionOutput json = new GitVersionOutput { Value = "json" };
@@ -838,6 +840,7 @@ namespace Nuke.Common.Tools.GitVersion
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<GitVersionVerbosity>))]
     public partial class GitVersionVerbosity : Enumeration
     {
         public static GitVersionVerbosity debug = new GitVersionVerbosity { Value = "debug" };

@@ -11,6 +11,7 @@ using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -1448,6 +1449,7 @@ namespace Nuke.Common.Tools.SignTool
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<SignToolContentMethod>))]
     public partial class SignToolContentMethod : Enumeration
     {
         public static SignToolContentMethod Embedded = new SignToolContentMethod { Value = "Embedded" };

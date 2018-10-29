@@ -11,6 +11,7 @@ using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -752,6 +753,7 @@ namespace Nuke.Common.Tools.VSTest
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<VsTestPlatform>))]
     public partial class VsTestPlatform : Enumeration
     {
         public static VsTestPlatform x86 = new VsTestPlatform { Value = "x86" };
@@ -764,6 +766,7 @@ namespace Nuke.Common.Tools.VSTest
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<VsTestFramework>))]
     public partial class VsTestFramework : Enumeration
     {
         public static VsTestFramework Framework35 = new VsTestFramework { Value = "Framework35" };

@@ -11,6 +11,7 @@ using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -1045,6 +1046,7 @@ namespace Nuke.Common.Tools.Xunit
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<Xunit2ReporterType>))]
     public partial class Xunit2ReporterType : Enumeration
     {
         public static Xunit2ReporterType AppVeyor = new Xunit2ReporterType { Value = "AppVeyor" };
@@ -1059,6 +1061,7 @@ namespace Nuke.Common.Tools.Xunit
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<Xunit2ResultFormat>))]
     public partial class Xunit2ResultFormat : Enumeration
     {
         public static Xunit2ResultFormat Xml = new Xunit2ResultFormat { Value = "Xml" };
@@ -1072,6 +1075,7 @@ namespace Nuke.Common.Tools.Xunit
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<Xunit2ParallelOption>))]
     public partial class Xunit2ParallelOption : Enumeration
     {
         public static Xunit2ParallelOption None = new Xunit2ParallelOption { Value = "None" };
@@ -1085,6 +1089,7 @@ namespace Nuke.Common.Tools.Xunit
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<Xunit2AppDomainMode>))]
     public partial class Xunit2AppDomainMode : Enumeration
     {
         public static Xunit2AppDomainMode IfAvailable = new Xunit2AppDomainMode { Value = "IfAvailable" };

@@ -11,6 +11,7 @@ using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -1098,6 +1099,7 @@ namespace Nuke.Common.Tools.OpenCover
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<OpenCoverVerbosity>))]
     public partial class OpenCoverVerbosity : Enumeration
     {
         public static OpenCoverVerbosity Off = new OpenCoverVerbosity { Value = "Off" };
@@ -1115,6 +1117,7 @@ namespace Nuke.Common.Tools.OpenCover
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<OpenCoverSkipping>))]
     public partial class OpenCoverSkipping : Enumeration
     {
         public static OpenCoverSkipping File = new OpenCoverSkipping { Value = "File" };
@@ -1128,6 +1131,7 @@ namespace Nuke.Common.Tools.OpenCover
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<RegistrationType>))]
     public partial class RegistrationType : Enumeration
     {
         public static RegistrationType User = new RegistrationType { Value = "User" };

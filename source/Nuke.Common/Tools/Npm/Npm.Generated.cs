@@ -11,6 +11,7 @@ using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -746,6 +747,7 @@ namespace Nuke.Common.Tools.Npm
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<NpmOnlyMode>))]
     public partial class NpmOnlyMode : Enumeration
     {
         public static NpmOnlyMode production = new NpmOnlyMode { Value = "production" };

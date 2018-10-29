@@ -82,6 +82,7 @@ namespace Nuke.CodeGeneration.Generators
                        "System",
                        "System.Collections.Generic",
                        "System.Collections.ObjectModel",
+                       "System.ComponentModel",
                        "System.Diagnostics.CodeAnalysis",
                        "System.IO",
                        "System.Linq",

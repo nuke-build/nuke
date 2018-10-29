@@ -11,6 +11,7 @@ using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -1004,6 +1005,7 @@ namespace Nuke.Common.Tools.SpecFlow
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<SpecFlowToolIntegration>))]
     public partial class SpecFlowToolIntegration : Enumeration
     {
         public static SpecFlowToolIntegration None = new SpecFlowToolIntegration { Value = "None" };

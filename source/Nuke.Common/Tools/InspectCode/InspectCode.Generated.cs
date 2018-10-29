@@ -11,6 +11,7 @@ using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -525,6 +526,7 @@ namespace Nuke.Common.Tools.InspectCode
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<InspectCodeSettingsLayers>))]
     public partial class InspectCodeSettingsLayers : Enumeration
     {
         public static InspectCodeSettingsLayers GlobalAll = new InspectCodeSettingsLayers { Value = "GlobalAll" };
@@ -538,6 +540,7 @@ namespace Nuke.Common.Tools.InspectCode
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<InspectCodeMSBuildToolset>))]
     public partial class InspectCodeMSBuildToolset : Enumeration
     {
         public static InspectCodeMSBuildToolset _12_0 = new InspectCodeMSBuildToolset { Value = "12.0" };

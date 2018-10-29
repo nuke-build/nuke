@@ -11,6 +11,7 @@ using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -2242,6 +2243,7 @@ namespace Nuke.Common.Tools.DotCover
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<DotCoverReportType>))]
     public partial class DotCoverReportType : Enumeration
     {
         public static DotCoverReportType Html = new DotCoverReportType { Value = "Html" };
