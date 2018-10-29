@@ -19,7 +19,7 @@ namespace Nuke.Common.ProjectModel
     {
         private readonly string _solutionFileRootRelativePath;
 
-        [Obsolete("With the next release the " + NukeBuild.ConfigurationFile + " configuration file will not longer be used to " +
+        [Obsolete("With the next release the " + NukeBuild.ConfigurationFileName + " configuration file will not longer be used to " +
                   "determine the solution file. Instead, pass the root-relative path to the " + nameof(SolutionAttribute) + ".")]
         public SolutionAttribute()
             : this(solutionFileRootRelativePath: null)
@@ -67,11 +67,11 @@ namespace Nuke.Common.ProjectModel
 
         private string GetSolutionFileFromConfigurationFile()
         {
-            var nukeFile = Path.Combine(NukeBuild.Instance.RootDirectory, NukeBuild.ConfigurationFile);
-            ControlFlow.Assert(File.Exists(nukeFile), $"File.Exists({NukeBuild.ConfigurationFile})");
+            var nukeFile = Path.Combine(NukeBuild.Instance.RootDirectory, NukeBuild.ConfigurationFileName);
+            ControlFlow.Assert(File.Exists(nukeFile), $"File.Exists({NukeBuild.ConfigurationFileName})");
 
             var solutionFileRelative = File.ReadAllLines(nukeFile)[0];
-            ControlFlow.Assert(!solutionFileRelative.Contains(value: '\\'), $"{NukeBuild.ConfigurationFile} must use unix-styled separators");
+            ControlFlow.Assert(!solutionFileRelative.Contains(value: '\\'), $"{NukeBuild.ConfigurationFileName} must use unix-styled separators");
 
             var solutionFile = Path.GetFullPath(Path.Combine(NukeBuild.Instance.RootDirectory, solutionFileRelative));
             ControlFlow.Assert(File.Exists(solutionFile), "File.Exists(solutionFile)");

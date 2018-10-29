@@ -3,8 +3,10 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using Nuke.Common;
 using Xunit;
 
 namespace Nuke.GlobalTool.Tests
@@ -124,12 +126,40 @@ Global
 	EndGlobalSection
 EndGlobal
 ")]
-        public void Test(string input, string expected)
+        public void TestUpdateSolutionFileContent(string input, string expected)
         {
             var content = input.Split(Environment.NewLine).ToList();
             Program.UpdateSolutionFileContent(content, "RELATIVE", "GUID", "KIND", "NAME");
 
             content.Should().BeEquivalentTo(expected.Split(Environment.NewLine));
+        }
+
+        [Theory]
+        [InlineData("", null, new[] { "Compile", "Pack", "--target", "--api-key" })]
+        [InlineData("-", null, new[] { "--target", "--api-key" })]
+        [InlineData("-t", null, new[] { "-target" })]
+        [InlineData("-Api", null, new[] { "-ApiKey" })]
+        [InlineData("--api", null, new[] { "--api-key" })]
+        [InlineData("-ApiKey ", null, new[] { "--target" } )]
+        [InlineData("--api-key ", null, new[] { "--target" } )]
+        [InlineData("--target ", null, new[] { "Compile", "Pack", "--api-key" })]
+        [InlineData("--target P", null, new[] { "Pack" })]
+        [InlineData("--target -", null, new[] { "--api-key" })]
+        [InlineData("--target Compile ", null, new[] { "Pack", "--api-key" })]
+        [InlineData("P", null, new[] { "Pack" })]
+        [InlineData("Pack ", null, new[] { "Compile", "--target", "--api-key" })]
+        [InlineData("Pack comp", null, new[] { "compile" })]
+        public void TestGetRelevantCompletionItems(string words, int? position, string[] expectedItems)
+        {
+            var completionItems =
+                new Dictionary<string, string[]>
+                {
+                    { NukeBuild.InvokedTargetsParameterName, new[] { "Compile", "Pack" } },
+                    { "ApiKey", null }
+                };
+            Program.GetRelevantCompletionItems(words, position, completionItems)
+                .Should()
+                .BeEquivalentTo(expectedItems);
         }
     }
 }

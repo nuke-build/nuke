@@ -23,9 +23,9 @@ namespace Nuke.Common
             {
                 ControlFlow.Assert(BuildProjectDirectory != null, "No build project found. NukeBuild.RootDirectory has to be overridden.");
                 var rootDirectory =
-                    FileSystemTasks.FindParentDirectory(BuildProjectDirectory, x => x.GetFiles(ConfigurationFile).Any());
+                    FileSystemTasks.FindParentDirectory(BuildProjectDirectory, x => x.GetFiles(ConfigurationFileName).Any());
                 ControlFlow.Assert(rootDirectory != null,
-                    $"Could not locate '{ConfigurationFile}' file while traversing up from '{BuildProjectDirectory}'.");
+                    $"Could not locate '{ConfigurationFileName}' file while traversing up from '{BuildProjectDirectory}'.");
 
                 return (PathConstruction.AbsolutePath) rootDirectory;
             }

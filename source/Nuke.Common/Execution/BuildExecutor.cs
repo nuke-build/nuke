@@ -6,10 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Nuke.Common.BuildServers;
+using Nuke.Common.IO;
 using Nuke.Common.OutputSinks;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
@@ -25,6 +27,8 @@ namespace Nuke.Common.Execution
         {
             var executionList = default(IReadOnlyCollection<TargetDefinition>);
             var build = CreateBuildInstance(defaultTargetExpression);
+
+            HandleCompletion(build);
 
             try
             {
@@ -73,6 +77,32 @@ namespace Nuke.Common.Execution
 
                 build.OnBuildFinished();
             }
+        }
+
+        private static void HandleCompletion(NukeBuild build)
+        {
+            var completionItems = new Dictionary<string, string[]>();
+            
+            var targetNames = build.TargetDefinitions.Select(x => x.Name).ToArray();
+            completionItems[NukeBuild.InvokedTargetsParameterName] = targetNames;
+            completionItems[NukeBuild.SkippedTargetsParameterName] = targetNames;
+
+            string[] GetSubItems(Type type)
+            {
+                if (type.IsEnum)
+                    return type.GetEnumNames();
+                if (type.IsSubclassOf(typeof(Enumeration)))
+                    return type.GetFields(ReflectionService.Static).Select(x => x.Name).ToArray();
+                return null;
+            }
+
+            foreach (var parameter in build.GetParameterMembers())
+                completionItems[parameter.Name] = GetSubItems(parameter.GetFieldOrPropertyType());
+
+            SerializationTasks.YamlSerializeToFile(completionItems, build.TemporaryDirectory / NukeBuild.CompletionFileName);
+
+            if (EnvironmentInfo.ParameterSwitch(NukeBuild.CompletionParameterName))
+                Environment.Exit(exitCode: 0);
         }
 
         internal static void Execute(NukeBuild build, IEnumerable<TargetDefinition> executionList)
@@ -201,7 +231,7 @@ namespace Nuke.Common.Execution
         {
             if (outputSink.SevereMessages.Count <= 0)
                 return;
-            
+
             Logger.Log("Repeating warnings and errors:");
 
             foreach (var severeMessage in outputSink.SevereMessages.ToList())

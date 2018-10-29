@@ -25,7 +25,7 @@ namespace Nuke.Common.Execution
                 ControlFlow.Assert(attributes.Count == 1, $"Member '{member.Name}' has multiple injection attributes applied.");
 
                 var attribute = attributes.Single();
-                var memberType = (member as FieldInfo)?.FieldType ?? ((PropertyInfo) member).PropertyType;
+                var memberType = member.GetFieldOrPropertyType();
                 var value = attribute.GetValue(member.Name, memberType, build.GetType());
                 if (value == null)
                     continue;

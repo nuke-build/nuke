@@ -47,5 +47,10 @@ namespace Nuke.Common.Execution
                 }
             }
         }
+
+        public static Type GetFieldOrPropertyType(this MemberInfo member)
+        {
+            return (member as FieldInfo)?.FieldType ?? ((PropertyInfo) member).PropertyType;
+        }
     }
 }

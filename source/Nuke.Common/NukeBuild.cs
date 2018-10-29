@@ -44,7 +44,12 @@ namespace Nuke.Common
     [PublicAPI]
     public abstract partial class NukeBuild
     {
-        public const string ConfigurationFile = ".nuke";
+        internal const string ConfigurationFileName = ".nuke";
+        internal const string TemporaryDirectoryName = ".tmp";
+        internal const string CompletionParameterName = "shell-completion";
+        internal const string CompletionFileName = CompletionParameterName + ".yml";
+        internal const string InvokedTargetsParameterName = "Target";
+        internal const string SkippedTargetsParameterName = "Skip";
 
         /// <summary>
         /// Currently running build instance.
@@ -78,7 +83,7 @@ namespace Nuke.Common
         /// <summary>
         /// Disables execution of target dependencies.
         /// </summary>
-        [Parameter("Disables execution of dependent targets.", Name = "Skip", Separator = "+")]
+        [Parameter("Disables execution of dependent targets.", Name = SkippedTargetsParameterName, Separator = "+")]
         public string[] SkippedTargets { get; } = GetSkippedTargets();
 
         /// <summary>

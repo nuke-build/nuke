@@ -16,7 +16,7 @@ namespace Nuke.Common.Utilities
             return GetResource(typeof(T), postfix);
         }
 
-        private static Stream GetResource(Type typeForNamespace, string postfix)
+        public static Stream GetResource(Type typeForNamespace, string postfix)
         {
             var fullResourceName = $"{typeForNamespace.Namespace}.{postfix}";
             var assembly = typeForNamespace.GetTypeInfo().Assembly;

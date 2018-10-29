@@ -126,19 +126,10 @@ namespace Nuke.Common.Execution
 
         private int GetCommandLineArgumentIndex(string argumentName, bool checkNames)
         {
-            var hadLower = false;
-            var splittedName = argumentName.Split(c =>
-            {
-                var shouldSplit = hadLower && char.IsUpper(c);
-                hadLower = char.IsLower(c) && !shouldSplit;
-
-                return shouldSplit;
-            }).Join("-");
-
             var index = Array.FindLastIndex(_commandLineArguments,
                 x => x.StartsWith("-") &&
                      (x.TrimStart('-').EqualsOrdinalIgnoreCase(argumentName) ||
-                      x.TrimStart('-').EqualsOrdinalIgnoreCase(splittedName)));
+                      x.TrimStart('-').EqualsOrdinalIgnoreCase(argumentName.GetDelimiterSeparated("-"))));
 
             if (index == -1 && checkNames)
             {
