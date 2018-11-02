@@ -42,15 +42,24 @@ namespace Nuke.Common.Tooling
             }
         }
 
-        public static InstalledPackage GetLocalInstalledPackage(
+        [CanBeNull]
+        public static InstalledPackage TryGetLocalInstalledPackage(
             string packageId,
             string packagesConfigFile = null,
             bool includeDependencies = false)
         {
             packagesConfigFile = packagesConfigFile ?? DefaultPackagesConfigFile;
-            
+
             return GetLocalInstalledPackages(packagesConfigFile, includeDependencies)
-                .FirstOrDefault(x => x.Id.EqualsOrdinalIgnoreCase(packageId))
+                .FirstOrDefault(x => x.Id.EqualsOrdinalIgnoreCase(packageId));
+        }
+        
+        public static InstalledPackage GetLocalInstalledPackage(
+            string packageId,
+            string packagesConfigFile = null,
+            bool includeDependencies = false)
+        {
+            return TryGetLocalInstalledPackage(packageId, packagesConfigFile, includeDependencies)
                 .NotNull($"Could not find package '{packageId}' via '{packagesConfigFile}'.");
         }
 
