@@ -20,8 +20,7 @@ namespace Nuke.Common
     {
         static NukeBuild()
         {
-            RootDirectory = ParameterService.Instance.GetParameter(() => RootDirectory) ??
-                            GetRootDirectoryFromWorkingDirectory();
+            RootDirectory = GetRootDirectory();
             TemporaryDirectory = RootDirectory / TemporaryDirectoryName;
             FileSystemTasks.EnsureExistingDirectory(TemporaryDirectory);
             BuildAssemblyDirectory = GetBuildAssemblyDirectory();
@@ -50,7 +49,7 @@ namespace Nuke.Common
         public static PathConstruction.AbsolutePath TemporaryDirectory { get; }
 
         /// <summary>
-        /// Gets the full path to the build assembly directory.
+        /// Gets the full path to the build assembly directory, or <c>null</c>.
         /// </summary>
         [CanBeNull]
         public static PathConstruction.AbsolutePath BuildAssemblyDirectory { get; }
@@ -107,8 +106,15 @@ namespace Nuke.Common
         /// </summary>
         public static string[] ExecutingTargets { get; }
         
-        private static PathConstruction.AbsolutePath GetRootDirectoryFromWorkingDirectory()
+        private static PathConstruction.AbsolutePath GetRootDirectory()
         {
+            var parameterValue = ParameterService.Instance.GetParameter(() => RootDirectory);
+            if (parameterValue != null)
+                return parameterValue;
+
+            if (ParameterService.Instance.GetParameter<bool>(() => RootDirectory))
+                return (PathConstruction.AbsolutePath) EnvironmentInfo.WorkingDirectory;
+            
             return (PathConstruction.AbsolutePath) FileSystemTasks.FindParentDirectory(
                     EnvironmentInfo.WorkingDirectory,
                     x => x.GetFiles(ConfigurationFileName).Any())
