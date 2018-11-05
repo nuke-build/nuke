@@ -181,7 +181,7 @@ namespace Nuke.Common.Execution
             var index = Array.FindLastIndex(_commandLineArguments,
                 x => x.StartsWith("-") &&
                      (x.TrimStart('-').EqualsOrdinalIgnoreCase(argumentName) ||
-                      x.TrimStart('-').EqualsOrdinalIgnoreCase(argumentName.GetDelimiterSeparated("-"))));
+                      x.TrimStart('-').EqualsOrdinalIgnoreCase(argumentName.SplitCamelHumpsWithSeparator("-"))));
 
             if (index == -1 && checkNames)
             {

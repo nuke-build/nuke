@@ -40,5 +40,11 @@ namespace Nuke.Common.Utilities
                 return shouldSplit;
             });
         }
+        
+        [Pure]
+        public static string SplitCamelHumpsWithSeparator(this string str, string separator)
+        {
+            return str.SplitCamelHumps().Join(separator).ToLowerInvariant();
+        }
     }
 }

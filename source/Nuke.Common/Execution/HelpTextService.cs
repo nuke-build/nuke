@@ -51,7 +51,7 @@ namespace Nuke.Common.Execution
                 var description = SplitLines(
                     // TODO: remove
                     attribute.Description.Replace("{default_target}", defaultTarget.Name));
-                var parameterName = (attribute.Name ?? parameter.Name).GetDelimiterSeparated("-");
+                var parameterName = (attribute.Name ?? parameter.Name).SplitCamelHumpsWithSeparator("-");
                 builder.AppendLine($"  --{parameterName.PadRight(padRightParameter)}  {description.First()}");
                 foreach (var line in description.Skip(count: 1))
                     builder.AppendLine($"{new string(c: ' ', count: padRightParameter + 5)}{line}");
