@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -95,7 +95,13 @@ namespace Nuke.Common.Execution
             }
 
             foreach (var parameter in build.GetParameterMembers())
-                completionItems[parameter.Name] = GetSubItems(parameter.GetFieldOrPropertyType());
+            {
+                var parameterName = ParameterService.Instance.GetParameterName(parameter);
+                if (completionItems.ContainsKey(parameterName))
+                    continue;
+                
+                completionItems[parameterName] = GetSubItems(parameter.GetFieldOrPropertyType());
+            }
 
             SerializationTasks.YamlSerializeToFile(completionItems, NukeBuild.TemporaryDirectory / NukeBuild.CompletionFileName);
 
