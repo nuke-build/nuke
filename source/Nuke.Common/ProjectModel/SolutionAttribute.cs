@@ -73,13 +73,9 @@ namespace Nuke.Common.ProjectModel
         // TODO: for just [Solution] without parameter being passed, do wildcard search?
         private string GetSolutionFile(string memberName)
         {
-            var parameter = ParameterService.Instance.GetParameter<string>(memberName);
-            if (parameter != null)
-            {
-                return PathConstruction.HasPathRoot(parameter)
-                    ? parameter
-                    : PathConstruction.Combine(EnvironmentInfo.WorkingDirectory, parameter);
-            }
+            var parameterValue = ParameterService.Instance.GetParameter<PathConstruction.AbsolutePath>(memberName);
+            if (parameterValue != null)
+                return parameterValue;
 
             if (_solutionFileRootRelativePath != null)
                 return PathConstruction.Combine(NukeBuild.RootDirectory, _solutionFileRootRelativePath);
