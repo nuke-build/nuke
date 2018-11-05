@@ -21,6 +21,8 @@ namespace Nuke.GlobalTool
 
         private static int Main(string[] args)
         {
+            Logger.Log($"NUKE Global Tool {typeof(Program).Assembly.GetInformationalText()}");
+            
             try
             {
                 var rootDirectory = FileSystemTasks.FindParentDirectory(

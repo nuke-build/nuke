@@ -27,7 +27,7 @@ namespace Nuke.CodeGeneration.Generators
                 writer
                     // TODO [3]: extract license from dotsettings file
                     .WriteLineIfTrue(tool.SourceFile != null, $"// Generated from {tool.SourceFile}")
-                    .WriteLine($"// Generated with {s_assembly.GetName().Name}, Version: {s_assembly.GetInformationalText()}")
+                    .WriteLine($"// Generated with {s_assembly.GetName().Name} {s_assembly.GetInformationalText()}")
                     .WriteLine(string.Empty)
                     .ForEach(GetNamespaceImports(), x => writer.WriteLine($"using {x};"))
                     .WriteLine(string.Empty)

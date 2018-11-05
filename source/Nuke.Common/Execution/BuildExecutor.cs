@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -37,11 +37,9 @@ namespace Nuke.Common.Execution
                 Logger.OutputSink = build.OutputSink;
                 Logger.LogLevel = NukeBuild.LogLevel;
                 NuGetPackageResolver.DefaultPackagesConfigFile = build.PackagesConfigFile;
-                
+
+                Logger.Log($"NUKE Execution Engine {typeof(BuildExecutor).Assembly.GetInformationalText()}");
                 Logger.Log(FigletTransform.GetText("NUKE"));
-                Logger.Log($"Version: {typeof(BuildExecutor).GetTypeInfo().Assembly.GetInformationalText()}");
-                Logger.Log($"Host: {NukeBuild.Host}");
-                Logger.Log();
 
                 ProcessManager.CheckPathEnvironmentVariable();
                 InjectionService.InjectValues(build);
