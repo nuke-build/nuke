@@ -25,6 +25,8 @@ namespace Nuke.Common.Tooling
     [PublicAPI]
     public static class NuGetPackageResolver
     {
+        private const int c_defaultTimeout = 2000;
+        
         public static string DefaultPackagesConfigFile;
 
         public static async Task<string> GetLatestPackageVersion(string packageId, bool includePrereleases, int? timeout = null)
@@ -32,7 +34,7 @@ namespace Nuke.Common.Tooling
             try
             {
                 var url = $"https://api-v2v3search-0.nuget.org/query?q=packageid:{packageId}&prerelease={includePrereleases}";
-                var response = await HttpTasks.HttpDownloadStringAsync(url, requestConfigurator: x => x.Timeout = timeout ?? int.MaxValue);
+                var response = await HttpTasks.HttpDownloadStringAsync(url, requestConfigurator: x => x.Timeout = timeout ?? c_defaultTimeout);
                 var packageObject = JsonConvert.DeserializeObject<JObject>(response);
                 return packageObject["data"].Single()["version"].ToString();
             }
