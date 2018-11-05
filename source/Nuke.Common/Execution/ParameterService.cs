@@ -253,8 +253,7 @@ namespace Nuke.Common.Execution
                 if (destinationType == typeof(bool) || destinationType == typeof(bool?))
                     return true;
 
-                if (elementType == typeof(string) || Nullable.GetUnderlyingType(elementType) != null)
-                    return null;
+                return null;
             }
 
             var convertedValues = values.Select(x => Convert(x, elementType)).ToList();
