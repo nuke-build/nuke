@@ -22,25 +22,32 @@ namespace Nuke.Common.Git
     [UsedImplicitly(ImplicitUseKindFlags.Default)]
     public class GitRepositoryAttribute : InjectionAttributeBase
     {
-        private static Lazy<string> s_branch = new Lazy<string>(()
-            => AppVeyor.Instance?.RepositoryBranch ??
-               Bitrise.Instance?.GitBranch ??
-               GitLab.Instance?.CommitRefName ??
-               Jenkins.Instance?.GitBranch ??
-               TeamCity.Instance?.BranchName ??
-               TeamServices.Instance?.SourceBranchName ??
-               Travis.Instance?.Branch ??
-               GitTasks.GitCurrentBranch());
+        [CanBeNull]
+        public string Branch { get; set; }
 
         [CanBeNull]
-        public string Branch { get; set; } = s_branch.Value;
-
-        public string Remote { get; set; } = "origin";
+        public string Remote { get; set; }
 
         public override object GetValue(MemberInfo member, Type buildType)
         {
             return ControlFlow.SuppressErrors(() =>
-                GitRepository.FromLocalDirectory(NukeBuild.RootDirectory, Branch, Remote.NotNull()));
+                GitRepository.FromLocalDirectory(
+                    NukeBuild.RootDirectory,
+                    Branch ?? GetBranch(),
+                    Remote ?? "origin"));
+        }
+
+        private string GetBranch()
+        {
+            return
+                AppVeyor.Instance?.RepositoryBranch ??
+                Bitrise.Instance?.GitBranch ??
+                GitLab.Instance?.CommitRefName ??
+                Jenkins.Instance?.GitBranch ??
+                TeamCity.Instance?.BranchName ??
+                TeamServices.Instance?.SourceBranchName ??
+                Travis.Instance?.Branch ??
+                GitTasks.GitCurrentBranch();
         }
     }
 }
