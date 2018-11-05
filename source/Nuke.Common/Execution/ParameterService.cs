@@ -35,6 +35,11 @@ namespace Nuke.Common.Execution
         public string GetParameterName<T>(Expression<Func<T>> expression)
         {
             var member = expression.GetMemberInfo();
+            return GetParameterName(member);
+        }
+
+        public string GetParameterName(MemberInfo member)
+        {
             var attribute = member.GetCustomAttribute<ParameterAttribute>();
             return attribute.Name ?? member.Name;
         }
@@ -47,6 +52,12 @@ namespace Nuke.Common.Execution
 
         [CanBeNull]
         public T GetParameter<T>(Expression<Func<T>> expression)
+        {
+            return GetParameter<T>(expression.GetMemberInfo());
+        }
+
+        [CanBeNull]
+        public T GetParameter<T>(Expression<Func<object>> expression)
         {
             return GetParameter<T>(expression.GetMemberInfo());
         }
