@@ -22,6 +22,7 @@ namespace Nuke.Common.Tests
         public void TestParent(string path, string expected)
         {
             ((AbsolutePath) path).Parent.Should().Be((AbsolutePath) expected);
+            ((string) ((AbsolutePath) path).Parent).Should().Be(expected);
         }
         
         [Theory]
