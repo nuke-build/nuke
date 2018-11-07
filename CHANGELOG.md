@@ -5,10 +5,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
-- Added Machine Specifications
+- Changed `NukeBuild` properties to be static
+- Changed `NukeBuild.RootDirectory` to allow resolution from parameter 
+- Added package resolution for Paket
+- Added shell-completion for global tool
+- Added parameter resolution for `Enumeration` subclasses
+- Added `PathExecutableAttribute` and `PackageExecutableAttribute` for `Tool` delegate resolution
+- Added `PackPackageToolsTask` for global tool packaging
+- Added `MSpeckTasks`
+- Fixed Glob package version to 0.3.2
 
 ## [0.11.1] / 2018-10-17
-- Security -- Updated YamlDotNet version
+- Security: Updated YamlDotNet version
 
 ## [0.11.0] / 2018-10-11
 - Removed deprecated APIs
