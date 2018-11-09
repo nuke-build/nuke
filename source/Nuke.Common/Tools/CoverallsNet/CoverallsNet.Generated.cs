@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/CoverallsNet.json
-// Generated with Nuke.CodeGeneration, Version: Local
+// Generated with Nuke.CodeGeneration version LOCAL (OSX, .NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -102,7 +102,7 @@ namespace Nuke.Common.Tools.CoverallsNet
               .Add("--dynamiccodecoverage", DynamicCodeCoverage)
               .Add("--exportcodecoverage", ExportCodeCoverage)
               .Add("--monocov", Monocov)
-              .Add("--repoToken {value}", RepoToken)
+              .Add("--repoToken {value}", RepoToken, secret: true)
               .Add("--repoTokenVariable {value}", RepoTokenVariable)
               .Add("--commitId {value}", CommitId)
               .Add("--commitBranch {value}", CommitBranch)

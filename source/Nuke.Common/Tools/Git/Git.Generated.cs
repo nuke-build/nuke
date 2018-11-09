@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Git.json
-// Generated with Nuke.CodeGeneration, Version: Local
+// Generated with Nuke.CodeGeneration version LOCAL (OSX, .NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;

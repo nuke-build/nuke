@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/GitVersion.json
-// Generated with Nuke.CodeGeneration, Version: Local
+// Generated with Nuke.CodeGeneration version LOCAL (OSX, .NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -119,7 +119,7 @@ namespace Nuke.Common.Tools.GitVersion
               .Add("/url {value}", Url)
               .Add("/b {value}", Branch)
               .Add("/u {value}", Username)
-              .Add("/p {value}", Password)
+              .Add("/p {value}", Password, secret: true)
               .Add("/c {value}", Commit)
               .Add("/dynamicRepoLocation {value}", DynamicRepositoryLocation)
               .Add("/nofetch", NoFetch)
