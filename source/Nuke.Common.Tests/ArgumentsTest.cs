@@ -132,7 +132,7 @@ namespace Nuke.Common.Tests
         [Fact]
         public void TestFilter()
         {
-            Assert(x => x.Add("-arg {value}", "secret", secret: true).Filter("foosecretbar"), "foo[hidden]bar");
+            Assert(x => x.Add("-arg {value}", "secret", secret: true).FilterSecrets("foosecretbar"), "foo[hidden]bar");
         }
 
         [Fact]

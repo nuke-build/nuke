@@ -13,7 +13,7 @@ namespace Nuke.Common.Tooling
 {
     public interface IArguments
     {
-        string Filter(string text);
+        string FilterSecrets(string text);
         string RenderForExecution();
         string RenderForOutput();
     }
@@ -193,7 +193,7 @@ namespace Nuke.Common.Tooling
                 : values.DoubleQuoteIfNeeded();
         }
 
-        public string Filter(string text)
+        public string FilterSecrets(string text)
         {
             return _secrets.Aggregate(text, (str, s) => str.Replace(s, c_hiddenString));
         }

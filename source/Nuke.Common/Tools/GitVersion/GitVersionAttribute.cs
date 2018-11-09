@@ -37,7 +37,8 @@ namespace Nuke.Common.Tools.GitVersion
                 GitVersionTasks.GitVersion(s => s
                         .SetWorkingDirectory(NukeBuild.RootDirectory)
                         .DisableLogOutput())
-                    .Result);
+                    .Result,
+                includeStackTrace: true);
         }
     }
 }

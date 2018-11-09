@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Nuke.Common.Utilities;
 
 // ReSharper disable CompareNonConstrainedGenericWithNull
 
@@ -122,9 +123,9 @@ namespace Nuke.Common
         /// <summary>
         /// Executes a given action and suppresses all errors while delegating them to <see cref="Logger.Warn(string)"/>.
         /// </summary>
-        public static void SuppressErrors(Action action)
+        public static void SuppressErrors(Action action, bool includeStackTrace = false)
         {
-            SuppressErrorsIf(condition: true, action: action);
+            SuppressErrorsIf(condition: true, action, includeStackTrace: includeStackTrace);
         }
 
         /// <summary>
@@ -137,9 +138,9 @@ namespace Nuke.Common
         /// </example>
         [ContractAnnotation("defaultValue: notnull => notnull")]
         [CanBeNull]
-        public static T SuppressErrors<T>(Func<T> action, T defaultValue = default(T))
+        public static T SuppressErrors<T>(Func<T> action, T defaultValue = default, bool includeStackTrace = false)
         {
-            return SuppressErrorsIf(condition: true, action: action, defaultValue: defaultValue);
+            return (T) SuppressErrorsIf(condition: true, action, defaultValue, includeStackTrace);
         }
 
         /// <summary>
@@ -154,24 +155,9 @@ namespace Nuke.Common
         /// var authorsCount = SuppressErrors(GetAuthors).Length;
         /// </code>
         /// </example>
-        public static IEnumerable<T> SuppressErrors<T>(Func<IEnumerable<T>> action)
+        public static IEnumerable<T> SuppressErrors<T>(Func<IEnumerable<T>> action, bool includeStackTrace = false)
         {
-            return SuppressErrors<IEnumerable<T>>(action) ?? Enumerable.Empty<T>();
-        }
-
-        private static void SuppressErrorsIf(bool condition, Action action)
-        {
-            if (!condition)
-                action();
-
-            try
-            {
-                action();
-            }
-            catch (Exception exception)
-            {
-                Logger.Warn(exception.Message);
-            }
+            return SuppressErrors<IEnumerable<T>>(action, includeStackTrace: includeStackTrace) ?? Enumerable.Empty<T>();
         }
 
         /// <summary>
@@ -179,18 +165,21 @@ namespace Nuke.Common
         /// </summary>
         [ContractAnnotation("defaultValue: notnull => notnull")]
         [CanBeNull]
-        private static T SuppressErrorsIf<T>(bool condition, Func<T> action, T defaultValue = default(T))
+        private static object SuppressErrorsIf(bool condition, Delegate action, object defaultValue = null, bool includeStackTrace = false)
         {
             if (!condition)
-                return action();
+                return defaultValue;
 
             try
             {
-                return action();
+                return action.DynamicInvoke();
             }
             catch (Exception exception)
             {
-                Logger.Warn(exception.Message);
+                var innerException = exception.InnerException.NotNull("innerException != null");
+                Logger.Warn(includeStackTrace
+                    ? new[] { innerException.Message, "StackTrace:", innerException.StackTrace }.JoinNewLine()
+                    : exception.Message);
                 return defaultValue;
             }
         }

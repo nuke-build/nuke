@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Tooling
 {
@@ -32,18 +33,28 @@ namespace Nuke.Common.Tooling
             [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
             this IProcess process)
         {
+            const string indentation = "   ";
+            
             process.AssertWaitForExit();
             if (process.ExitCode != 0)
             {
                 var messageBuilder = new StringBuilder()
-                    .AppendLine($"Process '{Path.GetFileName(process.FileName)}' exited with code {process.ExitCode}. Verify the invocation.")
-                    .AppendLine($"> {process.FileName.DoubleQuoteIfNeeded()} {process.Arguments}");
+                    .AppendLine($"Process '{Path.GetFileName(process.FileName)}' exited with code {process.ExitCode}.")
+                    .AppendLine("Invocation:")
+                    .AppendLine($"{indentation}{process.FileName.DoubleQuoteIfNeeded()} {process.Arguments}")
+                    .AppendLine("Working directory:")
+                    .AppendLine($"{indentation}{process.WorkingDirectory}");
 
-                var errorOutput = process.Output.Where(x => x.Type == OutputType.Err).Select(x => x.Text).ToList();
+                var errorOutput = process.Output.Where(x => x.Type == OutputType.Err).ToList();
                 if (errorOutput.Count > 0)
                 {
                     messageBuilder.AppendLine("Error output:");
-                    errorOutput.ForEach(x => messageBuilder.AppendLine(x));
+                    errorOutput.ForEach(x => messageBuilder.Append(indentation).AppendLine(x.Text));
+                }
+                else if (Logger.LogLevel <= LogLevel.Trace)
+                {
+                    messageBuilder.AppendLine("Standard output:");
+                    process.Output.ForEach(x => messageBuilder.Append(indentation).AppendLine(x.Text));
                 }
 
                 ControlFlow.Fail(messageBuilder.ToString());
