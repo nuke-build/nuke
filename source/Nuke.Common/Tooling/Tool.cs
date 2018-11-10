@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Nuke.Common.Tooling
 {
-    public delegate IProcess Tool(
+    public delegate IReadOnlyCollection<Output> Tool(
         string arguments = null,
         string workingDirectory = null,
         IReadOnlyDictionary<string, string> environmentVariables = null,

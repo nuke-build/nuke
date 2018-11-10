@@ -17,7 +17,7 @@ namespace Nuke.Common.Tooling
             _toolPath = toolPath;
         }
 
-        public IProcess Execute(
+        public IReadOnlyCollection<Output> Execute(
             string arguments = null,
             string workingDirectory = null,
             IReadOnlyDictionary<string, string> environmentVariables = null,
@@ -26,7 +26,7 @@ namespace Nuke.Common.Tooling
             Func<string, LogLevel> logLevelParser = null,
             Func<string, string> outputFilter = null)
         {
-            return ProcessTasks.StartProcess(
+            var process = ProcessTasks.StartProcess(
                 _toolPath,
                 arguments,
                 workingDirectory,
@@ -35,6 +35,8 @@ namespace Nuke.Common.Tooling
                 logOutput,
                 logLevelParser,
                 outputFilter);
+            process.AssertZeroExitCode();
+            return process.Output;
         }
     }
 }
