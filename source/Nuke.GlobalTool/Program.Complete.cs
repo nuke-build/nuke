@@ -31,8 +31,7 @@ namespace Nuke.GlobalTool
                 return 0;
             }
 
-            var completionFile = (PathConstruction.AbsolutePath) rootDirectory / NukeBuild.TemporaryDirectoryName / NukeBuild.CompletionFileName;
-            if (!File.Exists(completionFile))
+            if (!File.Exists(NukeBuild.CompletionFile))
             {
                 Build(buildScript.NotNull(), $"--{NukeBuild.CompletionParameterName}");
                 return 1;
@@ -40,7 +39,7 @@ namespace Nuke.GlobalTool
 
             words = words.Substring("nuke ".Length);
             var position = ParameterService.Instance.GetParameter<int?>("position");
-            var completionItems = SerializationTasks.YamlDeserializeFromFile<Dictionary<string, string[]>>(completionFile);
+            var completionItems = SerializationTasks.YamlDeserializeFromFile<Dictionary<string, string[]>>(NukeBuild.CompletionFile);
             foreach (var item in GetRelevantCompletionItems(words, position, completionItems))
                 Console.WriteLine(item);
 

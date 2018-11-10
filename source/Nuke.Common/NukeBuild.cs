@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
@@ -51,6 +52,10 @@ namespace Nuke.Common
         internal const string RootDirectoryParameterName = "Root";
         internal const string InvokedTargetsParameterName = "Target";
         internal const string SkippedTargetsParameterName = "Skip";
+        
+        internal static string CompletionFile => File.Exists(RootDirectory / CompletionFileName)
+            ? RootDirectory / CompletionFileName
+            : TemporaryDirectory / CompletionFileName;
 
         /// <summary>
         /// Executes the build. The provided expression defines the <em>default</em> target that is invoked,
