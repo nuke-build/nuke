@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -79,11 +79,11 @@ namespace Nuke.Common.Execution
 
         private static void HandleCompletion(NukeBuild build)
         {
-            var completionItems = new Dictionary<string, string[]>();
-            
-            var targetNames = build.TargetDefinitions.Select(x => x.Name).ToArray();
-            completionItems[NukeBuild.InvokedTargetsParameterName] = targetNames;
-            completionItems[NukeBuild.SkippedTargetsParameterName] = targetNames;
+            var completionItems = new SortedDictionary<string, string[]>();
+
+            var targetNames = build.TargetDefinitions.Select(x => x.Name).OrderBy(x => x).ToList();
+            completionItems[NukeBuild.InvokedTargetsParameterName] = targetNames.ToArray();
+            completionItems[NukeBuild.SkippedTargetsParameterName] = targetNames.ToArray();
 
             string[] GetSubItems(Type type)
             {
@@ -99,8 +99,8 @@ namespace Nuke.Common.Execution
                 var parameterName = ParameterService.Instance.GetParameterName(parameter);
                 if (completionItems.ContainsKey(parameterName))
                     continue;
-                
-                completionItems[parameterName] = GetSubItems(parameter.GetFieldOrPropertyType());
+
+                completionItems[parameterName] = GetSubItems(parameter.GetFieldOrPropertyType())?.OrderBy(x => x).ToArray();
             }
 
             SerializationTasks.YamlSerializeToFile(completionItems, NukeBuild.CompletionFile);
