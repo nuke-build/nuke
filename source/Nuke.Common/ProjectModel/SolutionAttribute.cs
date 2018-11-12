@@ -92,7 +92,7 @@ namespace Nuke.Common.ProjectModel
             ControlFlow.Assert(!solutionFileRelative.Contains(value: '\\'), $"{NukeBuild.ConfigurationFileName} must use unix-styled separators");
 
             var solutionFile = Path.GetFullPath(Path.Combine(NukeBuild.RootDirectory, solutionFileRelative));
-            ControlFlow.Assert(File.Exists(solutionFile), "File.Exists(solutionFile)");
+            ControlFlow.Assert(File.Exists(solutionFile), $"Solution file '{solutionFile}' does not exist.");
 
             return (PathConstruction.AbsolutePath) solutionFile;
         }
