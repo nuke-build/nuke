@@ -42,7 +42,7 @@ namespace Nuke.Common.Tooling
 
         public Arguments Add(string argumentFormat, [CanBeNull] object value, char? disallowed = null, bool secret = false)
         {
-            return Add(argumentFormat, value?.ToString(), disallowed, secret);
+            return Add(argumentFormat, value?.ToString(), disallowed, customValue: false, secret);
         }
 
         public Arguments Add(
