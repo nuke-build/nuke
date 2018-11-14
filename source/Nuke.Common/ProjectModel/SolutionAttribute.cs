@@ -41,8 +41,6 @@ namespace Nuke.Common.ProjectModel
     {
         private readonly string _solutionFileRootRelativePath;
 
-        [Obsolete("With the next release the " + NukeBuild.ConfigurationFileName + " configuration file will not longer be used to " +
-                  "determine the solution file. Instead, pass the root-relative path to the " + nameof(SolutionAttribute) + ".")]
         public SolutionAttribute()
             : this(solutionFileRootRelativePath: null)
         {
