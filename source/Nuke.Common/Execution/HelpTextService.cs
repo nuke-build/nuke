@@ -43,7 +43,7 @@ namespace Nuke.Common.Execution
             var builder = new StringBuilder();
 
             var parameters = build.GetParameterMembers().OrderBy(x => x.Name).ToList();
-            var padRightParameter = Math.Max(parameters.Max(x => x.Name.Length), val2: 17);
+            var padRightParameter = Math.Max(parameters.Max(x => x.Name.Length), val2: 16);
 
             void PrintParameter(MemberInfo parameter)
             {
@@ -54,7 +54,7 @@ namespace Nuke.Common.Execution
                 var parameterName = (attribute.Name ?? parameter.Name).SplitCamelHumpsWithSeparator("-");
                 builder.AppendLine($"  --{parameterName.PadRight(padRightParameter)}  {description.First()}");
                 foreach (var line in description.Skip(count: 1))
-                    builder.AppendLine($"{new string(c: ' ', count: padRightParameter + 5)}{line}");
+                    builder.AppendLine($"{new string(c: ' ', count: padRightParameter + 6)}{line}");
             }
 
             builder.AppendLine("Parameters:");
@@ -80,7 +80,7 @@ namespace Nuke.Common.Execution
             var lines = new List<string> { string.Empty };
             foreach (var word in words)
             {
-                if (lines.Last().Length + word.Length > 100)
+                if (lines.Last().Length + word.Length > 60)
                     lines.Add(string.Empty);
 
                 lines[lines.Count - 1] = $"{lines.Last()} {word}";
