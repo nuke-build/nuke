@@ -21,8 +21,6 @@ namespace Nuke.GlobalTool
 
         private static int Main(string[] args)
         {
-            Logger.Log($"NUKE Global Tool {typeof(Program).Assembly.GetInformationalText()}");
-            
             try
             {
                 var rootDirectory = FileSystemTasks.FindParentDirectory(
@@ -70,6 +68,8 @@ namespace Nuke.GlobalTool
             }
 
             // TODO: docker
+            
+            Logger.Log($"NUKE Global Tool {typeof(Program).Assembly.GetInformationalText()}");
 
             var arguments = args.Select(x => x.DoubleQuoteIfNeeded()).JoinSpace();
             var process = Build(buildScript, arguments);
