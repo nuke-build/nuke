@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Unity.json
-// Generated with Nuke.CodeGeneration, Version: Local
+// Generated with Nuke.CodeGeneration version LOCAL (OSX, .NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -11,6 +11,7 @@ using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -2516,6 +2517,7 @@ namespace Nuke.Common.Tools.Unity
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<UnityBuildTarget>))]
     public partial class UnityBuildTarget : Enumeration
     {
         public static UnityBuildTarget standalone = new UnityBuildTarget { Value = "standalone" };
@@ -2545,6 +2547,7 @@ namespace Nuke.Common.Tools.Unity
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<UnityGLCore>))]
     public partial class UnityGLCore : Enumeration
     {
         public static UnityGLCore _32 = new UnityGLCore { Value = "32" };
@@ -2562,6 +2565,7 @@ namespace Nuke.Common.Tools.Unity
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<UnityGLES>))]
     public partial class UnityGLES : Enumeration
     {
         public static UnityGLES _30 = new UnityGLES { Value = "30" };
@@ -2574,6 +2578,7 @@ namespace Nuke.Common.Tools.Unity
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<UnityStackTraceLogType>))]
     public partial class UnityStackTraceLogType : Enumeration
     {
         public static UnityStackTraceLogType None = new UnityStackTraceLogType { Value = "None" };
@@ -2586,6 +2591,7 @@ namespace Nuke.Common.Tools.Unity
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<UnityPlatformTextureFormat>))]
     public partial class UnityPlatformTextureFormat : Enumeration
     {
         public static UnityPlatformTextureFormat dxt = new UnityPlatformTextureFormat { Value = "dxt" };

@@ -1,0 +1,52 @@
+ApiKey: 
+Configuration: 
+GitterAuthToken: 
+Graph: 
+Help: 
+Host:
+- AppVeyor
+- Bitrise
+- Console
+- GitLab
+- Jenkins
+- TeamCity
+- TeamServices
+- Travis
+Root: 
+Skip:
+- Analysis
+- Changelog
+- Clean
+- Compile
+- Generate
+- Hotfix
+- Install
+- Pack
+- Publish
+- References
+- Release
+- Restore
+- Test
+SlackWebhook: 
+Solution: 
+Source: 
+SymbolSource: 
+Target:
+- Analysis
+- Changelog
+- Clean
+- Compile
+- Generate
+- Hotfix
+- Install
+- Pack
+- Publish
+- References
+- Release
+- Restore
+- Test
+Verbosity:
+- Minimal
+- Normal
+- Quiet
+- Verbose

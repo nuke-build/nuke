@@ -33,7 +33,7 @@ namespace Nuke.Common.Tooling
                 toolSettings.ExecutionTimeout,
                 toolSettings.LogOutput,
                 toolSettings.LogLevelParser,
-                arguments.Filter);
+                arguments.FilterSecrets);
         }
 
         public virtual IProcess StartProcess(
@@ -108,14 +108,14 @@ namespace Nuke.Common.Tooling
                             };
 
             ApplyEnvironmentVariables(environmentVariables, startInfo);
-            PrintEnvironmentVariables(startInfo);
+            // PrintEnvironmentVariables(startInfo);
 
             var process = Process.Start(startInfo);
             if (process == null)
                 return null;
 
             var output = GetOutputCollection(process, logOutput, logLevelParser, outputFilter);
-            return new Process2(process, timeout, output);
+            return new Process2(process, outputFilter, timeout, output);
         }
 
         private static void ApplyEnvironmentVariables(

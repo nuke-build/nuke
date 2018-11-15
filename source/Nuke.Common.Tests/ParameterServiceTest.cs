@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Linq;
 using FluentAssertions;
 using Nuke.Common.Execution;
+using Nuke.Common.IO;
 using Nuke.Common.Utilities.Collections;
 using Xunit;
 
@@ -27,7 +28,8 @@ namespace Nuke.Common.Tests
         [InlineData("configuration", typeof(string), "release")]
         [InlineData("AMOUNT", typeof(int), 5)]
         [InlineData("noLogo", typeof(bool), true)]
-        [InlineData("nodeps", typeof(bool), false)]
+        [InlineData("NoDeps", typeof(bool), false)]
+        [InlineData("root", typeof(PathConstruction.AbsolutePath), null)]
         public void TestConversion(string argument, Type destinationType, object expectedValue)
         {
             GetService(
@@ -41,8 +43,9 @@ namespace Nuke.Common.Tests
                     "C:\\file.txt",
                     "-amount",
                     "5",
-                    "-nodeps",
-                    "false"
+                    "--no-deps",
+                    "false",
+                    "--root"
                 }).GetCommandLineArgument(argument, destinationType).Should().Be(expectedValue);
         }
 
@@ -68,6 +71,7 @@ namespace Nuke.Common.Tests
         [InlineData(typeof(int?), null)]
         [InlineData(typeof(string), null)]
         [InlineData(typeof(string[]), null)]
+        [InlineData(typeof(PathConstruction.AbsolutePath), null)]
         public void TestNotSupplied(Type destinationType, object expectedValue)
         {
             GetService().GetCommandLineArgument("notsupplied", destinationType).Should().Be(expectedValue);
@@ -109,11 +113,14 @@ namespace Nuke.Common.Tests
                     "-guid",
                     $"{guid}",
                     "-datetime",
-                    $"{dateTime.ToString(CultureInfo.InvariantCulture)}"
+                    $"{dateTime.ToString(CultureInfo.InvariantCulture)}",
+                    "--root",
+                    "/bin/etc"
                 });
 
             service.GetParameter<DateTime>("datetime").Should().BeCloseTo(dateTime, precision: 1000);
             service.GetParameter<Guid>("guid").Should().Be(guid);
+            service.GetParameter<PathConstruction.AbsolutePath>("root").ToString().Should().Be("/bin/etc");
         }
 
         [Fact]

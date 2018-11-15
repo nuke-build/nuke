@@ -30,7 +30,7 @@ namespace Nuke.GlobalTool
         // ReSharper restore InconsistentNaming
 
         [UsedImplicitly]
-        private static void Setup([CanBeNull] string rootDirectory, string[] args)
+        private static int Setup(string[] args, [CanBeNull] string rootDirectory, [CanBeNull] string buildScript)
         {
             #region Basic
             
@@ -175,7 +175,7 @@ namespace Nuke.GlobalTool
                 TextTasks.WriteAllLines(solutionFile, solutionFileContent, Encoding.UTF8);
             }
 
-            FileSystemTasks.Touch(Path.Combine(rootDirectory, NukeBuild.ConfigurationFile));
+            FileSystemTasks.Touch(Path.Combine(rootDirectory, NukeBuild.ConfigurationFileName));
 
             TextTasks.WriteAllText(
                 buildProjectFile,
@@ -314,6 +314,8 @@ namespace Nuke.GlobalTool
             }
 
             #endregion
+
+            return 0;
         }
 
         public static void UpdateSolutionFileContent(
@@ -362,9 +364,10 @@ namespace Nuke.GlobalTool
 
         private static string GetTemplate(string templateName)
         {
-            return new StreamReader(ResourceUtility.GetResource<Program>($"templates.{templateName}")).ReadToEnd();
+            return new StreamReader(ResourceUtility.GetResource(typeof(Program), $"templates.{templateName}")).ReadToEnd();
         }
 
+        // TODO: move to TemplateUtility
         private static IReadOnlyDictionary<string, string> GetDictionary<T>(T obj)
             where T : class
         {

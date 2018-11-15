@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Nunit3.json
-// Generated with Nuke.CodeGeneration, Version: Local
+// Generated with Nuke.CodeGeneration version LOCAL (OSX, .NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -11,6 +11,7 @@ using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -1456,6 +1457,7 @@ namespace Nuke.Common.Tools.Nunit
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<NunitProcessType>))]
     public partial class NunitProcessType : Enumeration
     {
         public static NunitProcessType Single = new NunitProcessType { Value = "Single" };
@@ -1468,6 +1470,7 @@ namespace Nuke.Common.Tools.Nunit
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<NunitPrincipalPolicy>))]
     public partial class NunitPrincipalPolicy : Enumeration
     {
         public static NunitPrincipalPolicy UnauthenticatedPrincipal = new NunitPrincipalPolicy { Value = "UnauthenticatedPrincipal" };
@@ -1480,6 +1483,7 @@ namespace Nuke.Common.Tools.Nunit
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<NunitLabelType>))]
     public partial class NunitLabelType : Enumeration
     {
         public static NunitLabelType Off = new NunitLabelType { Value = "Off" };
@@ -1492,6 +1496,7 @@ namespace Nuke.Common.Tools.Nunit
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<NunitTraceLevel>))]
     public partial class NunitTraceLevel : Enumeration
     {
         public static NunitTraceLevel Off = new NunitTraceLevel { Value = "Off" };

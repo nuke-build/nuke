@@ -31,6 +31,7 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteLine("[Serializable]")
                 .WriteObsoleteAttributeWhenObsolete(enumeration)
                 .WriteLine("[ExcludeFromCodeCoverage]")
+                .WriteLine($"[TypeConverter(typeof(TypeConverter<{enumeration.Name}>))]")
                 .WriteLine($"public partial class {enumeration.Name} : Enumeration")
                 .WriteBlock(w => w.ForEach(enumeration.Values,
                     x => w.WriteLine(

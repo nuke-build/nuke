@@ -12,21 +12,14 @@ namespace Nuke.Common.Utilities
     {
         public static string GetInformationalText(this Assembly assembly)
         {
-            var informationalVersion = assembly.GetAssemblyInformationalVersion();
-            var plusIndex = informationalVersion.IndexOf(value: '+');
-            if (plusIndex == -1)
-                return "Local";
-
-            var dotLastIndex = informationalVersion.LastIndexOf(value: '.');
-            var commitSha = informationalVersion.Substring(dotLastIndex + 1, length: 8);
-            return $"{assembly.GetVersionText()} [CommitSha: {commitSha}]";
+            return $"version {assembly.GetVersionText()} ({EnvironmentInfo.Platform}, {EnvironmentInfo.Framework})";
         }
 
         public static string GetVersionText(this Assembly assembly)
         {
             var informationalVersion = assembly.GetAssemblyInformationalVersion();
             var plusIndex = informationalVersion.IndexOf(value: '+');
-            return plusIndex == -1 ? "Local" : informationalVersion.Substring(startIndex: 0, length: plusIndex);
+            return plusIndex == -1 ? "LOCAL" : informationalVersion.Substring(startIndex: 0, length: plusIndex);
         }
 
         private static string GetAssemblyInformationalVersion(this Assembly assembly)

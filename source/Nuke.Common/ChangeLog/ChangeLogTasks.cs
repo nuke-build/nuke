@@ -18,6 +18,20 @@ namespace Nuke.Common.ChangeLog
     [PublicAPI]
     public static class ChangelogTasks
     {
+        public static string GetNuGetReleaseNotes(string changelogFile, GitRepository repository = null)
+        {
+            var changelogSectionNotes = ExtractChangelogSectionNotes(changelogFile)
+                .Select(x => x.Replace("- ", "\u2022 ").Replace("`", string.Empty).Replace(",", "%2C")).ToList();
+            
+            if (repository.IsGitHubRepository())
+            {
+                changelogSectionNotes.Add(string.Empty);
+                changelogSectionNotes.Add($"Full changelog at {repository.GetGitHubBrowseUrl(changelogFile)}");
+            }
+
+            return changelogSectionNotes.JoinNewLine();
+        }
+
         /// <summary>
         /// Reads the release notes from the given changelog file and returns the result.
         /// </summary>
@@ -77,7 +91,7 @@ namespace Nuke.Common.ChangeLog
         /// <seealso cref="FinalizeChangelog(ChangeLog,NuGetVersion,GitRepository)"/>
         public static void FinalizeChangelog(ChangeLog changelogFile, NuGetVersion tag, [CanBeNull] GitRepository repository = null)
         {
-            Logger.Info($"Finalizing {PathConstruction.GetRelativePath(NukeBuild.Instance.RootDirectory, changelogFile.Path)} for '{tag}'...");
+            Logger.Info($"Finalizing {PathConstruction.GetRelativePath(NukeBuild.RootDirectory, changelogFile.Path)} for '{tag}'...");
 
             var unreleasedNotes = changelogFile.Unreleased;
             var releaseNotes = changelogFile.ReleaseNotes;
@@ -111,7 +125,7 @@ namespace Nuke.Common.ChangeLog
         /// <seealso cref="FinalizeChangelog(ChangeLog,NuGetVersion,GitRepository)"/>
         public static void FinalizeChangelog(string changelogFile, string tag, [CanBeNull] GitRepository repository = null)
         {
-            Logger.Info($"Finalizing {PathConstruction.GetRelativePath(NukeBuild.Instance.RootDirectory, changelogFile)} for '{tag}'...");
+            Logger.Info($"Finalizing {PathConstruction.GetRelativePath(NukeBuild.RootDirectory, changelogFile)} for '{tag}'...");
 
             var content = TextTasks.ReadAllLines(changelogFile).ToList();
             var sections = GetReleaseSections(content).ToList();

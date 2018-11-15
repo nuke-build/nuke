@@ -49,10 +49,7 @@ partial class Build : NukeBuild
     [Parameter("Gitter authtoken.")] readonly string GitterAuthToken;
     [Parameter("Slack webhook.")] readonly string SlackWebhook;
 
-    [Parameter("Install global tool.")] readonly bool InstallGlobalTool;
-
     [Solution("nuke-common.sln")] readonly Solution Solution;
-
     [GitRepository] readonly GitRepository GitRepository;
     [GitVersion] readonly GitVersion GitVersion;
 
@@ -129,12 +126,6 @@ partial class Build : NukeBuild
         .DependsOn(Compile)
         .Executes(() =>
         {
-            var releaseNotes = ChangelogSectionNotes
-                .Select(x => x.Replace("- ", "\u2022 ").Replace("`", string.Empty).Replace(",", "%2C"))
-                .Concat(string.Empty)
-                .Concat($"Full changelog at {GitRepository.GetGitHubBrowseUrl(ChangelogFile)}")
-                .JoinNewLine();
-
             DotNetPack(s => s
                 .SetProject(Solution)
                 .EnableNoBuild()
@@ -142,7 +133,7 @@ partial class Build : NukeBuild
                 .EnableIncludeSymbols()
                 .SetOutputDirectory(OutputDirectory)
                 .SetVersion(GitVersion.NuGetVersionV2)
-                .SetPackageReleaseNotes(releaseNotes));
+                .SetPackageReleaseNotes(GetNuGetReleaseNotes(ChangelogFile, GitRepository)));
         });
 
     Target Install => _ => _

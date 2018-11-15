@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.Tools.Git;
 using Nuke.Common.Execution;
@@ -13,20 +14,17 @@ namespace Nuke.Common.Tools.GitVersion
 {
     /// <inheritdoc/>
     /// <summary>
-    /// Implements auto-injection for <see cref="GitVersionTasks"/>.
+    /// Injects an instance of <see cref="GitVersion"/> based on the local repository.
     /// <para/>
     /// <inheritdoc/>
     /// </summary>
     [PublicAPI]
     [UsedImplicitly(ImplicitUseKindFlags.Default)]
-    public class GitVersionAttribute : StaticInjectionAttributeBase
+    public class GitVersionAttribute : InjectionAttributeBase
     {
-        public static GitVersion Value { get; private set; }
-
         public bool DisableOnUnix { get; set; }
 
-        [CanBeNull]
-        public override object GetStaticValue()
+        public override object GetValue(MemberInfo member, Type buildType)
         {
             // TODO: https://github.com/GitTools/GitVersion/issues/1097
             if (EnvironmentInfo.IsUnix && DisableOnUnix)
@@ -35,10 +33,12 @@ namespace Nuke.Common.Tools.GitVersion
                 return null;
             }
 
-            return Value = GitVersionTasks.GitVersion(s => s
-                    .SetWorkingDirectory(NukeBuild.Instance.RootDirectory)
-                    .DisableLogOutput())
-                .Result;
+            return ControlFlow.SuppressErrors(() =>
+                GitVersionTasks.GitVersion(s => s
+                        .SetWorkingDirectory(NukeBuild.RootDirectory)
+                        .DisableLogOutput())
+                    .Result,
+                includeStackTrace: true);
         }
     }
 }

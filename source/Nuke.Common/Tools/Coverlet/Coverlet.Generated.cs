@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Coverlet.json
-// Generated with Nuke.CodeGeneration, Version: Local
+// Generated with Nuke.CodeGeneration version LOCAL (OSX, .NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -11,6 +11,7 @@ using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -541,6 +542,7 @@ namespace Nuke.Common.Tools.Coverlet
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<CoverletOutputFormat>))]
     public partial class CoverletOutputFormat : Enumeration
     {
         public static CoverletOutputFormat json = new CoverletOutputFormat { Value = "json" };
@@ -554,6 +556,7 @@ namespace Nuke.Common.Tools.Coverlet
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<CoverletThresholdType>))]
     public partial class CoverletThresholdType : Enumeration
     {
         public static CoverletThresholdType line = new CoverletThresholdType { Value = "line" };

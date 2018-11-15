@@ -70,12 +70,14 @@
             "name": "RepoToken",
             "type": "string",
             "format": "--repoToken {value}",
+            "secret": true,
             "help": "The coveralls.io repository token."
           },
           {
             "name": "RepoTokenVariable",
             "type": "string",
             "format": "--repoTokenVariable {value}",
+            "secret": false,
             "help": "The Environment Variable name where the coveralls.io repository token is available. Default is <c>COVERALLS_REPO_TOKEN</c>."
           },
           {

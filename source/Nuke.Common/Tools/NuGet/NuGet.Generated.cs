@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/NuGet.json
-// Generated with Nuke.CodeGeneration, Version: Local
+// Generated with Nuke.CodeGeneration version LOCAL (OSX, .NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -11,6 +11,7 @@ using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -1870,6 +1871,7 @@ namespace Nuke.Common.Tools.NuGet
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<NuGetVerbosity>))]
     public partial class NuGetVerbosity : Enumeration
     {
         public static NuGetVerbosity Normal = new NuGetVerbosity { Value = "Normal" };
@@ -1882,6 +1884,7 @@ namespace Nuke.Common.Tools.NuGet
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<PackageSaveMode>))]
     public partial class PackageSaveMode : Enumeration
     {
         public static PackageSaveMode Nuspec = new PackageSaveMode { Value = "Nuspec" };
@@ -1893,6 +1896,7 @@ namespace Nuke.Common.Tools.NuGet
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<NuGetMSBuildVersion>))]
     public partial class NuGetMSBuildVersion : Enumeration
     {
         public static NuGetMSBuildVersion _4 = new NuGetMSBuildVersion { Value = "4" };

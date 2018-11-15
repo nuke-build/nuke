@@ -13,7 +13,7 @@ namespace Nuke.Common.Tooling
 {
     public interface IArguments
     {
-        string Filter(string text);
+        string FilterSecrets(string text);
         string RenderForExecution();
         string RenderForOutput();
     }
@@ -42,7 +42,7 @@ namespace Nuke.Common.Tooling
 
         public Arguments Add(string argumentFormat, [CanBeNull] object value, char? disallowed = null, bool secret = false)
         {
-            return Add(argumentFormat, value?.ToString(), disallowed, secret);
+            return Add(argumentFormat, value?.ToString(), disallowed, customValue: false, secret);
         }
 
         public Arguments Add(
@@ -59,7 +59,7 @@ namespace Nuke.Common.Tooling
                 _secrets.Add(value);
 
             argumentFormat = argumentFormat.Replace("{value}", "{0}");
-            Add(argumentFormat, customValue ? value : value.DoubleQuoteIfNeeded(disallowed, c_space));
+            AddInternal(argumentFormat, customValue ? value : value.DoubleQuoteIfNeeded(disallowed, c_space));
 
             return this;
         }
@@ -79,10 +79,9 @@ namespace Nuke.Common.Tooling
 
             string Format(T value) => value.ToString().DoubleQuoteIfNeeded(separator, disallowed, c_space);
 
-            if (separator.HasValue)
-                Add(argumentFormat, FormatMultiple(list, Format, separator.Value, quoteMultiple));
-            else
-                AddRange(argumentFormat, list.Select(Format));
+            AddInternal(argumentFormat, separator.HasValue
+                ? new[] { FormatMultiple(list, Format, separator.Value, quoteMultiple) }
+                : list.Select(Format).ToArray());
 
             return this;
         }
@@ -110,10 +109,10 @@ namespace Nuke.Common.Tooling
                     .Replace("{value}", Format(pair.Value));
 
             var pairs = dictionary.Where(x => x.Value.NotNullWarn($"Value for '{x.Key}' is 'null', omitting...") != null).ToList();
-            if (separator.HasValue)
-                Add(argumentFormat, FormatMultiple(pairs, FormatPair, separator.Value, quoteMultiple));
-            else
-                AddRange(argumentFormat, pairs.Select(FormatPair));
+            
+            AddInternal(argumentFormat, separator.HasValue
+                ? new[] { FormatMultiple(pairs, FormatPair, separator.Value, quoteMultiple) }
+                : pairs.Select(FormatPair).ToArray());
 
             return this;
         }
@@ -140,15 +139,11 @@ namespace Nuke.Common.Tooling
                     .Replace("{key}", Format(key))
                     .Replace("{value}", values);
 
-            if (separator.HasValue)
+            foreach (var list in lookup)
             {
-                foreach (var list in lookup)
-                    Add(argumentFormat, FormatLookup(list.Key, FormatMultiple(list, x => Format(x), separator.NotNull().Value, quoteMultiple)));
-            }
-            else
-            {
-                foreach (var list in lookup)
-                    AddRange(argumentFormat, list.Select(x => FormatLookup(list.Key, Format(x))));
+                AddInternal(argumentFormat, separator.HasValue
+                    ? new[] { FormatLookup(list.Key, FormatMultiple(list, x => Format(x), separator.NotNull().Value, quoteMultiple)) }
+                    : list.Select(x => FormatLookup(list.Key, Format(x))).ToArray());
             }
 
             return this;
@@ -161,19 +156,7 @@ namespace Nuke.Common.Tooling
             return this;
         }
 
-        private void Add(string format, string value)
-        {
-            var list = _arguments.LastOrDefault(x => x.Key.Equals(format, StringComparison.OrdinalIgnoreCase)).Value;
-            if (list == null)
-            {
-                list = new List<string>();
-                _arguments.Add(new KeyValuePair<string, List<string>>(format, list));
-            }
-
-            list.Add(value);
-        }
-
-        private void AddRange(string format, IEnumerable<string> values)
+        private void AddInternal(string format, params string[] values)
         {
             var list = _arguments.LastOrDefault(x => x.Key.Equals(format, StringComparison.OrdinalIgnoreCase)).Value;
             if (list == null)
@@ -193,7 +176,7 @@ namespace Nuke.Common.Tooling
                 : values.DoubleQuoteIfNeeded();
         }
 
-        public string Filter(string text)
+        public string FilterSecrets(string text)
         {
             return _secrets.Aggregate(text, (str, s) => str.Replace(s, c_hiddenString));
         }

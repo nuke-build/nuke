@@ -1,11 +1,13 @@
-// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common
 {
@@ -25,10 +27,13 @@ namespace Nuke.Common
     /// </summary>
     /// <example>
     ///     <code>
-    /// [Parameter("MyGet API key for private feed."] string MyGetApiKey;
+    /// [Parameter("API key for NuGet"] string ApiKey;
     /// Target Push => _ => _
-    ///         .Requires(() => MyGetApiKey)
-    ///         .Executes() => { /* ... */ });
+    ///     .Requires(() => ApiKey)
+    ///     .Executes() =>
+    ///     {
+    ///         // NuGetPush with ApiKey
+    ///     });
     ///     </code>
     /// </example>
     [PublicAPI]
@@ -37,29 +42,21 @@ namespace Nuke.Common
     {
         public ParameterAttribute(string description = null)
         {
-            Description = description;
+            Description = description ?? "<no description>";
         }
 
-        [CanBeNull]
         public string Description { get; }
 
+        [CanBeNull]
         public string Name { get; set; }
+        
+        [CanBeNull]
         public string Separator { get; set; }
 
         [CanBeNull]
-        public override object GetValue(string memberName, Type memberType)
+        public override object GetValue(MemberInfo member, Type buildType)
         {
-            if (Nullable.GetUnderlyingType(memberType) == null &&
-                memberType != typeof(string) &&
-                !memberType.IsClass &&
-                !memberType.IsArray)
-                memberType = typeof(Nullable<>).MakeGenericType(memberType);
-            
-            return ParameterService.Instance.GetParameter(
-                parameterName: Name ?? memberName,
-                destinationType: memberType,
-                separator: (Separator ?? string.Empty).SingleOrDefault(),
-                checkNames: true);
+            return ParameterService.Instance.GetParameter<object>(member);
         }
     }
 }

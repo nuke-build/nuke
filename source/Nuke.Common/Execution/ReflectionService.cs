@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using Nuke.Common.Utilities.Collections;
 
@@ -11,17 +12,25 @@ namespace Nuke.Common.Execution
 {
     internal static class ReflectionService
     {
-        public const BindingFlags All = Static | Instance;
+        public const BindingFlags All = Static | Instance | BindingFlags.FlattenHierarchy;
 
         public const BindingFlags Instance = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
         public const BindingFlags Static = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
 
         public static void SetValue(object instance, string memberName, object value)
         {
-            var member = instance.GetType().GetMember(memberName, Instance)
+            var member = instance.GetType().GetMember(memberName, All)
                 .SingleOrDefault()
                 .NotNull($"Could not find member '{memberName}' on type '{instance.GetType()}'.");
             SetValue(instance, member, value);
+        }
+        
+        public static void SetValue(Type type, string memberName, object value)
+        {
+            var member = type.GetMember(memberName, All)
+                .SingleOrDefault()
+                .NotNull($"Could not find member '{memberName}' on type '{type}'.");
+            SetValue(instance: null, member, value);
         }
 
         public static void SetValue(object instance, MemberInfo member, object value)
@@ -46,6 +55,19 @@ namespace Nuke.Common.Execution
                     property.SetValue(property.GetMethod.IsStatic ? null : instance, value);
                 }
             }
+        }
+
+        public static MemberInfo GetMemberInfo(this LambdaExpression expression)
+        {
+            var memberExpression = !(expression.Body is UnaryExpression unaryExpression)
+                ? (MemberExpression) expression.Body
+                : (MemberExpression) unaryExpression.Operand;
+            return memberExpression.Member;
+        }
+
+        public static Type GetFieldOrPropertyType(this MemberInfo member)
+        {
+            return (member as FieldInfo)?.FieldType ?? ((PropertyInfo) member).PropertyType;
         }
     }
 }

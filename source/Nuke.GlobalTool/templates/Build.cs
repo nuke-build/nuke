@@ -6,11 +6,14 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.DotNet;                                                                 // DOTNET
 using Nuke.Common.Tools.GitVersion;                                                             // GITVERSION
 using Nuke.Common.Tools.MSBuild;                                                                // MSBUILD
+using Nuke.Common.Tools.NuGet;                                                                  // NUGET && MSBUILD
+using static Nuke.Common.ChangeLog.ChangelogTasks;                                              // CHANGELOG
 using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;                                              // DOTNET
 using static Nuke.Common.Tools.MSBuild.MSBuildTasks;                                            // MSBUILD
+using static Nuke.Common.Tools.NuGet.NuGetTasks;                                                // NUGET && MSBUILD
 
 class Build : NukeBuild
 {
@@ -78,26 +81,48 @@ class Build : NukeBuild
                 .SetInformationalVersion(GitVersion.InformationalVersion)                       // DOTNET && GITVERSION
                 .EnableNoRestore());                                                            // DOTNET
         });
-
-    Target Pack => _ => _
-        .DependsOn(Compile)
-        .Executes(() =>
-        {
-            MSBuild(s => s                                                                      // MSBUILD
-                .SetTargetPath(Solution)                                                        // MSBUILD
-                .SetTargets("Restore", "Pack")                                                  // MSBUILD
-                .SetPackageVersion(GitVersion.NuGetVersionV2)                                   // MSBUILD && GITVERSION
-                .SetPackageOutputPath(ArtifactsDirectory)                                       // MSBUILD && ARTIFACTS_DIR
-                .SetPackageOutputPath(OutputDirectory)                                          // MSBUILD && OUTPUT_DIR
-                .SetConfiguration(Configuration)                                                // MSBUILD
-                .EnableIncludeSymbols());                                                       // MSBUILD
-            DotNetPack(s => s                                                                   // DOTNET
-                .SetProject(Solution)                                                           // DOTNET
-                .SetVersion(GitVersion.NuGetVersionV2)                                          // DOTNET && GITVERSION
-                .SetOutputDirectory(ArtifactsDirectory)                                         // DOTNET && ARTIFACTS_DIR
-                .SetOutputDirectory(OutputDirectory)                                            // DOTNET && OUTPUT_DIR
-                .SetConfiguration(Configuration)                                                // DOTNET
-                .EnableNoBuild()                                                                // DOTNET
-                .EnableIncludeSymbols());                                                       // DOTNET
-        });
+    
+    string ChangelogFile => RootDirectory / "CHANGELOG.md";                                     // CHANGELOG
+    
+    Target Pack => _ => _                                                                       // NUGET
+        .DependsOn(Compile)                                                                     // NUGET
+        .Executes(() =>                                                                         // NUGET
+        {                                                                                       // NUGET
+            MSBuild(s => s                                                                      // NUGET && MSBUILD
+                .SetTargetPath(Solution)                                                        // NUGET && MSBUILD
+                .SetTargets("Restore", "Pack")                                                  // NUGET && MSBUILD
+                .SetPackageVersion(GitVersion.NuGetVersionV2)                                   // NUGET && MSBUILD && GITVERSION
+                .SetPackageReleaseNotes(GetNuGetReleaseNotes(ChangelogFile, GitRepository))     // NUGET && MSBUILD && CHANGELOG && GIT
+                .SetPackageOutputPath(ArtifactsDirectory)                                       // NUGET && MSBUILD && ARTIFACTS_DIR
+                .SetPackageOutputPath(OutputDirectory)                                          // NUGET && MSBUILD && OUTPUT_DIR
+                .SetConfiguration(Configuration)                                                // NUGET && MSBUILD
+                .EnableIncludeSymbols());                                                       // NUGET && MSBUILD
+            DotNetPack(s => s                                                                   // NUGET && DOTNET
+                .SetProject(Solution)                                                           // NUGET && DOTNET
+                .SetVersion(GitVersion.NuGetVersionV2)                                          // NUGET && DOTNET && GITVERSION
+                .SetPackageReleaseNotes(GetNuGetReleaseNotes(ChangelogFile, GitRepository))     // NUGET && DOTNET && CHANGELOG && GIT
+                .SetOutputDirectory(ArtifactsDirectory)                                         // NUGET && DOTNET && ARTIFACTS_DIR
+                .SetOutputDirectory(OutputDirectory)                                            // NUGET && DOTNET && OUTPUT_DIR
+                .SetConfiguration(Configuration)                                                // NUGET && DOTNET
+                .EnableNoBuild()                                                                // NUGET && DOTNET
+                .EnableIncludeSymbols());                                                       // NUGET && DOTNET
+        });                                                                                     // NUGET
+                                                                                                // NUGET
+    Target Push => _ => _                                                                       // NUGET
+        .DependsOn(Pack)                                                                        // NUGET
+        .Requires(() => ApiKey)                                                                 // NUGET
+        .Requires(() => Configuration.EqualsOrdinalIgnoreCase("release"))                       // NUGET
+        .Executes(() =>                                                                         // NUGET
+        {                                                                                       // NUGET
+            GlobFiles(OutputDirectory, "*.nupkg")                                               // NUGET && OUTPUT_DOR
+            GlobFiles(ArtifactsDirectory, "*.nupkg")                                            // NUGET && ARTIFACTS_DIR
+                .Where(x => !x.EndsWith(".symbols.nupkg"))                                      // NUGET
+                .NotEmpty()                                                                     // NUGET
+                .ForEach(x => DotNetNuGetPush(s => s                                            // NUGET && MSBUILD
+                .ForEach(x => NuGetPush(s => s                                                  // NUGET && DOTNET
+                    .SetTargetPath(x)                                                           // NUGET
+                    .SetSource(Source)                                                          // NUGET
+                    .SetSymbolSource(SymbolSource)                                              // NUGET
+                    .SetApiKey(ApiKey)));                                                       // NUGET
+        });                                                                                     // NUGET
 }

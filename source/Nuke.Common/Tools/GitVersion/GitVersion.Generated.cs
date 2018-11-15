@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/GitVersion.json
-// Generated with Nuke.CodeGeneration, Version: Local
+// Generated with Nuke.CodeGeneration version LOCAL (OSX, .NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -11,6 +11,7 @@ using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -118,7 +119,7 @@ namespace Nuke.Common.Tools.GitVersion
               .Add("/url {value}", Url)
               .Add("/b {value}", Branch)
               .Add("/u {value}", Username)
-              .Add("/p {value}", Password)
+              .Add("/p {value}", Password, secret: true)
               .Add("/c {value}", Commit)
               .Add("/dynamicRepoLocation {value}", DynamicRepositoryLocation)
               .Add("/nofetch", NoFetch)
@@ -827,6 +828,7 @@ namespace Nuke.Common.Tools.GitVersion
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<GitVersionOutput>))]
     public partial class GitVersionOutput : Enumeration
     {
         public static GitVersionOutput json = new GitVersionOutput { Value = "json" };
@@ -838,6 +840,7 @@ namespace Nuke.Common.Tools.GitVersion
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<GitVersionVerbosity>))]
     public partial class GitVersionVerbosity : Enumeration
     {
         public static GitVersionVerbosity debug = new GitVersionVerbosity { Value = "debug" };

@@ -22,16 +22,8 @@ namespace Nuke.CodeGeneration.Generators
             {
                 foreach (var property in dataClass.Properties)
                 {
-                    if (property.NoArgument)
-                        continue;
-
-                    if (new[] { "int", "bool" }.Contains(property.Type))
-                        continue;
-
-                    if (property.Format != null && property.Format.Contains("{value}"))
-                        continue;
-
-                    Console.WriteLine($"Format for '{dataClass.Name}.{property.Name}' doesn't contain '{{value}}'.");
+                    CheckMissingValue(property);
+                    CheckMissingSecret(property);
                 }
             }
 
@@ -53,6 +45,33 @@ namespace Nuke.CodeGeneration.Generators
                     .WriteAssertValid()
                     .WriteConfigureArguments())
                 .WriteLine("#endregion");
+        }
+        
+        private static void CheckMissingValue(Property property)
+        {
+            if (property.NoArgument)
+                return;
+            
+            if (property.Format != null && property.Format.Contains("{value}"))
+                return;
+            
+            if (new[] { "int", "bool" }.Contains(property.Type))
+                return;
+
+            Logger.Warn($"Property {property.DataClass.Name}.{property.Name} doesn't contain '{{value}}'.");
+        }
+
+        private static void CheckMissingSecret(Property property)
+        {
+            if (property.Secret.HasValue)
+                return;
+            
+            if (!property.Name.ContainsOrdinalIgnoreCase("key") &&
+                !property.Name.ContainsOrdinalIgnoreCase("password") &&
+                !property.Name.ContainsOrdinalIgnoreCase("token"))
+                return;
+            
+            Logger.Warn($"Property {property.DataClass.Name}.{property.Name} should have explicit secret definition.");
         }
 
         private static DataClassWriter WriteToolPath(this DataClassWriter writer)
@@ -243,7 +262,7 @@ namespace Nuke.CodeGeneration.Generators
                 arguments.Add("quoteMultiple: true");
             if (property.CustomValue)
                 arguments.Add("customValue: true");
-            if (property.Secret)
+            if (property.Secret ?? false)
                 arguments.Add("secret: true");
 
             return $"  .Add({arguments.JoinComma()})";

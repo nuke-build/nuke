@@ -6,10 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Nuke.Common.BuildServers;
+using Nuke.Common.IO;
 using Nuke.Common.OutputSinks;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
@@ -26,24 +28,24 @@ namespace Nuke.Common.Execution
             var executionList = default(IReadOnlyCollection<TargetDefinition>);
             var build = CreateBuildInstance(defaultTargetExpression);
 
+            HandleCompletion(build);
+
             try
             {
                 build.OnBuildCreated();
                 
                 Logger.OutputSink = build.OutputSink;
-                Logger.LogLevel = build.LogLevel;
+                Logger.LogLevel = NukeBuild.LogLevel;
                 NuGetPackageResolver.DefaultPackagesConfigFile = build.PackagesConfigFile;
-                
+
+                Logger.Log($"NUKE Execution Engine {typeof(BuildExecutor).Assembly.GetInformationalText()}");
                 Logger.Log(FigletTransform.GetText("NUKE"));
-                Logger.Log($"Version: {typeof(BuildExecutor).GetTypeInfo().Assembly.GetInformationalText()}");
-                Logger.Log($"Host: {build.Host}");
-                Logger.Log();
 
                 ProcessManager.CheckPathEnvironmentVariable();
                 InjectionService.InjectValues(build);
                 HandleEarlyExits(build);
 
-                executionList = TargetDefinitionLoader.GetExecutingTargets(build, build.InvokedTargets);
+                executionList = TargetDefinitionLoader.GetExecutingTargets(build, NukeBuild.InvokedTargets, NukeBuild.SkippedTargets);
                 RequirementService.ValidateRequirements(executionList, build);
 
                 build.OnBuildInitialized();
@@ -73,6 +75,38 @@ namespace Nuke.Common.Execution
 
                 build.OnBuildFinished();
             }
+        }
+
+        private static void HandleCompletion(NukeBuild build)
+        {
+            var completionItems = new SortedDictionary<string, string[]>();
+
+            var targetNames = build.TargetDefinitions.Select(x => x.Name).OrderBy(x => x).ToList();
+            completionItems[NukeBuild.InvokedTargetsParameterName] = targetNames.ToArray();
+            completionItems[NukeBuild.SkippedTargetsParameterName] = targetNames.ToArray();
+
+            string[] GetSubItems(Type type)
+            {
+                if (type.IsEnum)
+                    return type.GetEnumNames();
+                if (type.IsSubclassOf(typeof(Enumeration)))
+                    return type.GetFields(ReflectionService.Static).Select(x => x.Name).ToArray();
+                return null;
+            }
+
+            foreach (var parameter in build.GetParameterMembers())
+            {
+                var parameterName = ParameterService.Instance.GetParameterName(parameter);
+                if (completionItems.ContainsKey(parameterName))
+                    continue;
+
+                completionItems[parameterName] = GetSubItems(parameter.GetFieldOrPropertyType())?.OrderBy(x => x).ToArray();
+            }
+
+            SerializationTasks.YamlSerializeToFile(completionItems, NukeBuild.CompletionFile);
+
+            if (EnvironmentInfo.ParameterSwitch(NukeBuild.CompletionParameterName))
+                Environment.Exit(exitCode: 0);
         }
 
         internal static void Execute(NukeBuild build, IEnumerable<TargetDefinition> executionList)
@@ -121,16 +155,16 @@ namespace Nuke.Common.Execution
         private static void HandleEarlyExits<T>(T build)
             where T : NukeBuild
         {
-            if (build.Help)
+            if (NukeBuild.Help)
             {
                 Logger.Log(HelpTextService.GetTargetsText(build));
                 Logger.Log(HelpTextService.GetParametersText(build));
             }
 
-            if (build.Graph)
+            if (NukeBuild.Graph)
                 GraphService.ShowGraph(build);
 
-            if (build.Help || build.Graph)
+            if (NukeBuild.Help || NukeBuild.Graph)
                 Environment.Exit(exitCode: 0);
         }
 
@@ -143,7 +177,6 @@ namespace Nuke.Common.Execution
 
             var build = Activator.CreateInstance<T>();
             build.TargetDefinitions = build.GetTargetDefinitions(defaultTargetExpression);
-            NukeBuild.Instance = build;
 
             return build;
         }
@@ -201,7 +234,7 @@ namespace Nuke.Common.Execution
         {
             if (outputSink.SevereMessages.Count <= 0)
                 return;
-            
+
             Logger.Log("Repeating warnings and errors:");
 
             foreach (var severeMessage in outputSink.SevereMessages.ToList())

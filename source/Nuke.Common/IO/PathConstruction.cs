@@ -266,17 +266,20 @@ namespace Nuke.Common.IO
 
             public static explicit operator RelativePath([CanBeNull] string path)
             {
+                if (path is null)
+                    return null;
+                
                 return new RelativePath(NormalizePath(path));
             }
 
-            public static implicit operator string(RelativePath path)
+            public static implicit operator string([CanBeNull] RelativePath path)
             {
-                return path._path;
+                return path?._path;
             }
 
-            public static RelativePath operator /(RelativePath path1, string path2)
+            public static RelativePath operator /(RelativePath path1, [CanBeNull] string path2)
             {
-                var separator = path1._separator;
+                var separator = path1.NotNull("path1 != null")._separator;
                 return new RelativePath(NormalizePath(Combine(path1, (RelativePath) path2, separator), separator), separator);
             }
 
@@ -318,14 +321,12 @@ namespace Nuke.Common.IO
         {
             public class TypeConverter : System.ComponentModel.TypeConverter
             {
-                public override bool CanConvertFrom(ITypeDescriptorContext context,
-                    Type sourceType)
+                public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
                 {
                     return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
                 }
         
-                public override object ConvertFrom(ITypeDescriptorContext context,
-                    CultureInfo culture, object value)
+                public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
                 {
                     if (value is string stringValue)
                     {
@@ -354,9 +355,9 @@ namespace Nuke.Common.IO
                 return new AbsolutePath(path);
             }
 
-            public static implicit operator string(AbsolutePath path)
+            public static implicit operator string([CanBeNull] AbsolutePath path)
             {
-                return path.ToString();
+                return path?.ToString();
             }
 
             public AbsolutePath Parent =>
@@ -364,9 +365,9 @@ namespace Nuke.Common.IO
                     ? this / ".."
                     : null;
 
-            public static AbsolutePath operator /(AbsolutePath path1, string path2)
+            public static AbsolutePath operator /(AbsolutePath path1, [CanBeNull] string path2)
             {
-                return new AbsolutePath(Combine(path1, path2));
+                return new AbsolutePath(Combine(path1.NotNull("path1 != null"), path2));
             }
 
             protected bool Equals(AbsolutePath other)
@@ -388,7 +389,7 @@ namespace Nuke.Common.IO
 
             public override int GetHashCode()
             {
-                return _path != null ? _path.GetHashCode() : 0;
+                return _path?.GetHashCode() ?? 0;
             }
 
             public override string ToString()

@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
 
 namespace Nuke.Common.Execution
@@ -22,6 +23,6 @@ namespace Nuke.Common.Execution
     public abstract class InjectionAttributeBase : Attribute
     {
         [CanBeNull]
-        public abstract object GetValue(string memberName, Type memberType);
+        public abstract object GetValue(MemberInfo member, Type buildType);
     }
 }

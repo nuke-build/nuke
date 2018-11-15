@@ -72,7 +72,7 @@ namespace Nuke.CodeGeneration.Model
         public string Default { get; set; }
 
         [Description("Specifies that the value is secret and should be hidden in output.")]
-        public bool Secret { get; set; }
+        public bool? Secret { get; set; }
 
         [Description("Custom implementation of value presentation.")]
         public bool CustomValue { get; set; }

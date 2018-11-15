@@ -45,7 +45,8 @@ namespace Nuke.Common.Tests.Execution
         public static void ExecuteDefaultTarget<T>(T build)
             where T : NukeBuild
         {
-            var executingTargets = TargetDefinitionLoader.GetExecutingTargets(build, new[] { BuildExecutor.DefaultTarget });
+            var invokedTargetNames = new[] { BuildExecutor.DefaultTarget };
+            var executingTargets = TargetDefinitionLoader.GetExecutingTargets(build, invokedTargetNames, skippedTargetNames: null);
             BuildExecutor.Execute(build, executingTargets);
         }
 

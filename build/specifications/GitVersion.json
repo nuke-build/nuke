@@ -109,6 +109,7 @@
             "name": "Password",
             "type": "string",
             "format": "/p {value}",
+            "secret": true,
             "help": "Password in case authentication is required."
           },
           {

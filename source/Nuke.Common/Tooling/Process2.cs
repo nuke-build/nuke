@@ -14,18 +14,20 @@ namespace Nuke.Common.Tooling
     public class Process2 : IProcess
     {
         private readonly Process _process;
+        private readonly Func<string, string> _outputFilter;
         private readonly int? _timeout;
 
-        public Process2(Process process, int? timeout, IReadOnlyCollection<Output> output)
+        public Process2(Process process, Func<string, string> outputFilter, int? timeout, IReadOnlyCollection<Output> output)
         {
             _process = process;
+            _outputFilter = outputFilter;
             _timeout = timeout;
             Output = output;
         }
 
         public string FileName => _process.StartInfo.FileName;
 
-        public string Arguments => _process.StartInfo.Arguments;
+        public string Arguments => _outputFilter.Invoke(_process.StartInfo.Arguments);
 
         public string WorkingDirectory => _process.StartInfo.WorkingDirectory;
 

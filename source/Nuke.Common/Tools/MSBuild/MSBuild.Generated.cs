@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/MSBuild.json
-// Generated with Nuke.CodeGeneration, Version: Local
+// Generated with Nuke.CodeGeneration version LOCAL (OSX, .NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -11,6 +11,7 @@ using Nuke.Common.Utilities.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -1655,6 +1656,7 @@ namespace Nuke.Common.Tools.MSBuild
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<MSBuildToolsVersion>))]
     public partial class MSBuildToolsVersion : Enumeration
     {
         public static MSBuildToolsVersion _2_0 = new MSBuildToolsVersion { Value = "2.0" };
@@ -1670,6 +1672,7 @@ namespace Nuke.Common.Tools.MSBuild
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<MSBuildVerbosity>))]
     public partial class MSBuildVerbosity : Enumeration
     {
         public static MSBuildVerbosity Quiet = new MSBuildVerbosity { Value = "Quiet" };
@@ -1684,6 +1687,7 @@ namespace Nuke.Common.Tools.MSBuild
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<MSBuildTargetPlatform>))]
     public partial class MSBuildTargetPlatform : Enumeration
     {
         public static MSBuildTargetPlatform MSIL = new MSBuildTargetPlatform { Value = "MSIL" };

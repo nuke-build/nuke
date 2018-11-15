@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.BuildServers;
 using Nuke.Common.Execution;
@@ -13,37 +14,40 @@ namespace Nuke.Common.Git
 {
     /// <inheritdoc/>
     /// <summary>
-    /// Implements auto-injection for <see cref="GitRepository"/>.
+    /// Injects an instance of <see cref="GitRepository"/> based on the local repository.
     /// <para/>
     /// <inheritdoc/>
     /// </summary>
     [PublicAPI]
     [UsedImplicitly(ImplicitUseKindFlags.Default)]
-    public class GitRepositoryAttribute : StaticInjectionAttributeBase
+    public class GitRepositoryAttribute : InjectionAttributeBase
     {
-        public static GitRepository Value { get; private set; }
-
-        private static Lazy<string> s_branch = new Lazy<string>(()
-            => AppVeyor.Instance?.RepositoryBranch ??
-               Bitrise.Instance?.GitBranch ??
-               GitLab.Instance?.CommitRefName ??
-               Jenkins.Instance?.GitBranch ??
-               TeamCity.Instance?.BranchName ??
-               TeamServices.Instance?.SourceBranchName ??
-               Travis.Instance?.Branch ??
-               GitTasks.GitCurrentBranch());
+        [CanBeNull]
+        public string Branch { get; set; }
 
         [CanBeNull]
-        public string Branch { get; set; } = s_branch.Value;
+        public string Remote { get; set; }
 
-        public string Remote { get; set; } = "origin";
-
-        [CanBeNull]
-        public override object GetStaticValue()
+        public override object GetValue(MemberInfo member, Type buildType)
         {
-            return Value = Value
-                           ?? ControlFlow.SuppressErrors(() =>
-                               GitRepository.FromLocalDirectory(NukeBuild.Instance.RootDirectory, Branch, Remote.NotNull()));
+            return ControlFlow.SuppressErrors(() =>
+                GitRepository.FromLocalDirectory(
+                    NukeBuild.RootDirectory,
+                    Branch ?? GetBranch(),
+                    Remote ?? "origin"));
+        }
+
+        private string GetBranch()
+        {
+            return
+                AppVeyor.Instance?.RepositoryBranch ??
+                Bitrise.Instance?.GitBranch ??
+                GitLab.Instance?.CommitRefName ??
+                Jenkins.Instance?.GitBranch ??
+                TeamCity.Instance?.BranchName ??
+                TeamServices.Instance?.SourceBranchName ??
+                Travis.Instance?.Branch ??
+                GitTasks.GitCurrentBranch();
         }
     }
 }
