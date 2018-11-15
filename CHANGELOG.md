@@ -13,7 +13,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `PathExecutableAttribute` and `PackageExecutableAttribute` for `Tool` delegate resolution
 - Added `PackPackageToolsTask` for global tool packaging
 - Added `MSpeckTasks`
+- Fixed bootstrapping scripts to install by channel instead of latest version
 - Fixed Glob package version to 0.3.2
+- Fixed `Arguments` passing of `secret` parameter
 
 ## [0.11.1] / 2018-10-17
 - Security: Updated YamlDotNet version
