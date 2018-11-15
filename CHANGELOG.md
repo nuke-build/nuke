@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [0.12.0] / 2018-11-15
 - Changed `NukeBuild` properties to be static
 - Changed `NukeBuild.RootDirectory` to allow resolution from parameter 
 - Added package resolution for Paket
@@ -13,7 +15,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `PathExecutableAttribute` and `PackageExecutableAttribute` for `Tool` delegate resolution
 - Added `PackPackageToolsTask` for global tool packaging
 - Added `MSpeckTasks`
+- Fixed bootstrapping scripts to install by channel instead of latest version
 - Fixed Glob package version to 0.3.2
+- Fixed `Arguments` passing of `secret` parameter
 
 ## [0.11.1] / 2018-10-17
 - Security: Updated YamlDotNet version
@@ -189,7 +193,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.11.1...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.12.0...HEAD
+[0.12.0]: https://github.com/nuke-build/nuke/compare/0.11.1...0.12.0
 [0.11.1]: https://github.com/nuke-build/nuke/compare/0.11.0...0.11.1
 [0.11.0]: https://github.com/nuke-build/nuke/compare/0.10.5...0.11.0
 [0.10.5]: https://github.com/nuke-build/nuke/compare/0.10.4...0.10.5
