@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -27,8 +28,15 @@ namespace Nuke.Common
 
         public static string ExpandVariables(string value)
         {
-            // TODO: Expand unix style variables $var (https://github.com/dotnet/corefx/issues/28890)
-            return Environment.ExpandEnvironmentVariables(value);
+            string ExpandUnixEnvironmentVariables()
+            {
+                var regex = new Regex(@"\$([a-z_][a-z0-9_]*)", RegexOptions.IgnoreCase);
+                return regex.Replace(value, x => Environment.GetEnvironmentVariable(x.Groups[1].Value));
+            }
+
+            return IsWin
+                ? Environment.ExpandEnvironmentVariables(value)
+                : ExpandUnixEnvironmentVariables();
         }
 
         internal static Dictionary<string, string> GetVariables()
