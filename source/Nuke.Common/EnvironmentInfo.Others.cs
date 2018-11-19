@@ -31,7 +31,9 @@ namespace Nuke.Common
             string ExpandUnixEnvironmentVariables()
             {
                 var regex = new Regex(@"\$([a-z_][a-z0-9_]*)", RegexOptions.IgnoreCase);
-                return regex.Replace(value, x => Environment.GetEnvironmentVariable(x.Groups[1].Value));
+                return regex.Replace(
+                    value.ReplaceRegex("^~", x => Environment.GetEnvironmentVariable("HOME")),
+                    x => Environment.GetEnvironmentVariable(x.Groups[1].Value));
             }
 
             return IsWin
