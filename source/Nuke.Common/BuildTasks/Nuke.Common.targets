@@ -8,28 +8,11 @@
   <UsingTask
     TaskName="Nuke.Common.BuildTasks.ExternalFilesTask"
     AssemblyFile="$(MSBuildThisFileDirectory)\Nuke.Common.dll" />
-
-  <UsingTask
-    TaskName="Nuke.Common.BuildTasks.PackPackageToolsTask"
-    AssemblyFile="$(MSBuildThisFileDirectory)\Nuke.Common.dll" />
-
+  
   <Target Name="NukeExternalFiles" BeforeTargets="CoreCompile">
     <ExternalFilesTask 
       ExternalFiles="@(NukeExternalFiles)"
       Timeout="$(NukeTimeout)"
       ContinueOnError="$(NukeContinueOnError)" />
   </Target>
-
-  <Target Name="NukePackPackageTools" BeforeTargets="GenerateNuspec" Condition="'$(PackAsTool)' == 'True'">
-    <PackPackageToolsTask
-      TargetFramework="@(_TargetFrameworks)"
-      ProjectAssetsFile="$(ProjectAssetsFile)"
-      NuGetPackageRoot="$(NuGetPackageRoot)">
-      <Output TaskParameter="TargetOutputs" ItemName="_PackageToolFiles" />
-    </PackPackageToolsTask>
-    <ItemGroup>
-      <_PackageFiles Include="@(_PackageToolFiles)" />
-    </ItemGroup>
-  </Target>
-  
 </Project>

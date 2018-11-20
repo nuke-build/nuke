@@ -28,13 +28,8 @@ namespace Nuke.Common.Tooling
         public static string GetPackageExecutable(string packageId, string packageExecutable, string framework = null)
         {
             ControlFlow.Assert(packageId != null && packageExecutable != null, "packageId != null && packageExecutable != null");
-
-            var packageDirectory = (string) (NukeBuild.BuildAssemblyDirectory / packageId);
-            if (!Directory.Exists(packageDirectory))
-            {
-                var installedPackage = NuGetPackageResolver.GetLocalInstalledPackage(packageId);
-                packageDirectory = Path.GetDirectoryName(installedPackage.FileName).NotNull("packageDirectory != null");
-            }
+            var installedPackage = NuGetPackageResolver.GetLocalInstalledPackage(packageId);
+            var packageDirectory = Path.GetDirectoryName(installedPackage.FileName).NotNull("packageDirectory != null");
 
             var executables = Directory.GetFiles(packageDirectory, packageExecutable, SearchOption.AllDirectories);
             ControlFlow.Assert(executables.Length > 0, $"Could not find '{packageExecutable}' inside '{packageDirectory}'.");
