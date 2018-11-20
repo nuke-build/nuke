@@ -36,7 +36,14 @@ function ExecSafe([scriptblock] $cmd) {
 
 # If global.json exists, load expected version
 if (Test-Path $DotNetGlobalFile) {
-    $DotNetVersion = $(Get-Content $DotNetGlobalFile | Out-String | ConvertFrom-Json).sdk.version
+    try
+    {
+        $DotNetVersion = $(Get-Content $DotNetGlobalFile | Out-String | ConvertFrom-Json).sdk.version
+    }
+    catch
+    {
+    
+    }
 }
 
 # If dotnet is installed locally, and expected version is not set or installation matches the expected version
