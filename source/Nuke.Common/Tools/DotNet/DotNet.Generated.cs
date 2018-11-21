@@ -162,6 +162,31 @@ namespace Nuke.Common.Tools.DotNet
         public virtual bool? ListTests { get; internal set; }
         /// <summary><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
         public virtual DotNetVerbosity Verbosity { get; internal set; }
+        /// <summary><p>Disables restoring multiple projects in parallel.</p></summary>
+        public virtual bool? DisableParallel { get; internal set; }
+        /// <summary><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        public virtual bool? Force { get; internal set; }
+        /// <summary><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        public virtual bool? IgnoreFailedSources { get; internal set; }
+        /// <summary><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        public virtual bool? NoCache { get; internal set; }
+        /// <summary><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        public virtual bool? NoDependencies { get; internal set; }
+        /// <summary><p>Specifies the directory for restored packages.</p></summary>
+        public virtual string PackageDirectory { get; internal set; }
+        /// <summary><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        public virtual IReadOnlyList<string> Sources => SourcesInternal.AsReadOnly();
+        internal List<string> SourcesInternal { get; set; } = new List<string>();
+        /// <summary><p>Enables project lock file to be generated and used with restore.</p></summary>
+        public virtual bool? UseLockFile { get; internal set; }
+        /// <summary><p>Don't allow updating project lock file.</p></summary>
+        public virtual bool? LockedMode { get; internal set; }
+        /// <summary><p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p></summary>
+        public virtual string LockFilePath { get; internal set; }
+        /// <summary><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        public virtual bool? ForceEvaluate { get; internal set; }
+        /// <summary><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
+        public virtual string Runtime { get; internal set; }
         /// <summary><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
@@ -184,6 +209,18 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--settings {value}", SettingsFile)
               .Add("--list-tests", ListTests)
               .Add("--verbosity {value}", Verbosity)
+              .Add("--disable-parallel", DisableParallel)
+              .Add("--force", Force)
+              .Add("--ignore-failed-sources", IgnoreFailedSources)
+              .Add("--no-cache", NoCache)
+              .Add("--no-dependencies", NoDependencies)
+              .Add("--packages {value}", PackageDirectory)
+              .Add("--source {value}", Sources)
+              .Add("--use-lock-file", UseLockFile)
+              .Add("--locked-mode", LockedMode)
+              .Add("--lock-file-path {value}", LockFilePath)
+              .Add("--force-evaluate", ForceEvaluate)
+              .Add("--runtime {value}", Runtime)
               .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
             return base.ConfigureArguments(arguments);
         }
@@ -203,24 +240,43 @@ namespace Nuke.Common.Tools.DotNet
         public virtual string Configuration { get; internal set; }
         /// <summary><p>Builds and runs the app using the specified framework. The framework must be specified in the project file.</p></summary>
         public virtual string Framework { get; internal set; }
-        /// <summary><p>Set this flag to force all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting <em>project.assets.json</em>.</p></summary>
-        public virtual bool? Force { get; internal set; }
         /// <summary><p>The name of the launch profile (if any) to use when launching the application. Launch profiles are defined in the <em>launchSettings.json</em> file and are typically called <c>Development</c>, <c>Staging</c> and <c>Production</c>. For more information, see <a href="https://docs.microsoft.com/en-us/aspnetcore/fundamentals/environments">Working with multiple environments</a>.</p></summary>
         public virtual string LaunchProfile { get; internal set; }
         /// <summary><p>Doesn't build the project before running.</p></summary>
         public virtual bool? NoBuild { get; internal set; }
-        /// <summary><p>Set this flag to ignore project to project references and only restore the root project.</p></summary>
-        public virtual bool? NoDependencies { get; internal set; }
         /// <summary><p>Doesn't attempt to use <em>launchSettings.json</em> to configure the application.</p></summary>
         public virtual bool? NoLaunchProfile { get; internal set; }
         /// <summary><p>Doesn't perform an implicit restore when running the command.</p></summary>
         public virtual bool? NoRestore { get; internal set; }
         /// <summary><p>Specifies the path and name of the project file. (See the NOTE.) It defaults to the current directory if not specified.</p></summary>
         public virtual string ProjectFile { get; internal set; }
-        /// <summary><p>Specifies the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p></summary>
-        public virtual string Runtime { get; internal set; }
         /// <summary><p>Arguments passed to the application being run.</p></summary>
         public virtual string ApplicationArguments { get; internal set; }
+        /// <summary><p>Disables restoring multiple projects in parallel.</p></summary>
+        public virtual bool? DisableParallel { get; internal set; }
+        /// <summary><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        public virtual bool? Force { get; internal set; }
+        /// <summary><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        public virtual bool? IgnoreFailedSources { get; internal set; }
+        /// <summary><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        public virtual bool? NoCache { get; internal set; }
+        /// <summary><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        public virtual bool? NoDependencies { get; internal set; }
+        /// <summary><p>Specifies the directory for restored packages.</p></summary>
+        public virtual string PackageDirectory { get; internal set; }
+        /// <summary><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        public virtual IReadOnlyList<string> Sources => SourcesInternal.AsReadOnly();
+        internal List<string> SourcesInternal { get; set; } = new List<string>();
+        /// <summary><p>Enables project lock file to be generated and used with restore.</p></summary>
+        public virtual bool? UseLockFile { get; internal set; }
+        /// <summary><p>Don't allow updating project lock file.</p></summary>
+        public virtual bool? LockedMode { get; internal set; }
+        /// <summary><p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p></summary>
+        public virtual string LockFilePath { get; internal set; }
+        /// <summary><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        public virtual bool? ForceEvaluate { get; internal set; }
+        /// <summary><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
+        public virtual string Runtime { get; internal set; }
         /// <summary><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
@@ -230,15 +286,24 @@ namespace Nuke.Common.Tools.DotNet
               .Add("run")
               .Add("--configuration {value}", Configuration)
               .Add("--framework {value}", Framework)
-              .Add("--project {value}", Force)
               .Add("--launch-profile {value}", LaunchProfile)
               .Add("--no-build", NoBuild)
-              .Add("--no-dependencies", NoDependencies)
               .Add("--no-launch-profile", NoLaunchProfile)
               .Add("--no-restore", NoRestore)
               .Add("--project {value}", ProjectFile)
-              .Add("--runtime {value}", Runtime)
               .Add("-- {value}", GetApplicationArguments(), customValue: true)
+              .Add("--disable-parallel", DisableParallel)
+              .Add("--force", Force)
+              .Add("--ignore-failed-sources", IgnoreFailedSources)
+              .Add("--no-cache", NoCache)
+              .Add("--no-dependencies", NoDependencies)
+              .Add("--packages {value}", PackageDirectory)
+              .Add("--source {value}", Sources)
+              .Add("--use-lock-file", UseLockFile)
+              .Add("--locked-mode", LockedMode)
+              .Add("--lock-file-path {value}", LockFilePath)
+              .Add("--force-evaluate", ForceEvaluate)
+              .Add("--runtime {value}", Runtime)
               .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
             return base.ConfigureArguments(arguments);
         }
@@ -258,6 +323,8 @@ namespace Nuke.Common.Tools.DotNet
         public virtual string ProjectFile { get; internal set; }
         /// <summary><p>The NuGet configuration file (<em>NuGet.config</em>) to use for the restore operation.</p></summary>
         public virtual string ConfigFile { get; internal set; }
+        /// <summary><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
+        public virtual DotNetVerbosity Verbosity { get; internal set; }
         /// <summary><p>Disables restoring multiple projects in parallel.</p></summary>
         public virtual bool? DisableParallel { get; internal set; }
         /// <summary><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
@@ -270,29 +337,38 @@ namespace Nuke.Common.Tools.DotNet
         public virtual bool? NoDependencies { get; internal set; }
         /// <summary><p>Specifies the directory for restored packages.</p></summary>
         public virtual string PackageDirectory { get; internal set; }
-        /// <summary><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
-        public virtual IReadOnlyList<string> Runtimes => RuntimesInternal.AsReadOnly();
-        internal List<string> RuntimesInternal { get; set; } = new List<string>();
         /// <summary><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
         public virtual IReadOnlyList<string> Sources => SourcesInternal.AsReadOnly();
         internal List<string> SourcesInternal { get; set; } = new List<string>();
-        /// <summary><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
-        public virtual DotNetVerbosity Verbosity { get; internal set; }
+        /// <summary><p>Enables project lock file to be generated and used with restore.</p></summary>
+        public virtual bool? UseLockFile { get; internal set; }
+        /// <summary><p>Don't allow updating project lock file.</p></summary>
+        public virtual bool? LockedMode { get; internal set; }
+        /// <summary><p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p></summary>
+        public virtual string LockFilePath { get; internal set; }
+        /// <summary><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        public virtual bool? ForceEvaluate { get; internal set; }
+        /// <summary><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
+        public virtual string Runtime { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
               .Add("restore")
               .Add("{value}", ProjectFile)
               .Add("--configfile {value}", ConfigFile)
+              .Add("--verbosity {value}", Verbosity)
               .Add("--disable-parallel", DisableParallel)
               .Add("--force", Force)
               .Add("--ignore-failed-sources", IgnoreFailedSources)
               .Add("--no-cache", NoCache)
               .Add("--no-dependencies", NoDependencies)
               .Add("--packages {value}", PackageDirectory)
-              .Add("--runtime {value}", Runtimes)
               .Add("--source {value}", Sources)
-              .Add("--verbosity {value}", Verbosity);
+              .Add("--use-lock-file", UseLockFile)
+              .Add("--locked-mode", LockedMode)
+              .Add("--lock-file-path {value}", LockFilePath)
+              .Add("--force-evaluate", ForceEvaluate)
+              .Add("--runtime {value}", Runtime);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -311,28 +387,47 @@ namespace Nuke.Common.Tools.DotNet
         public virtual string Project { get; internal set; }
         /// <summary><p>Configuration to use when building the project. If not specified, configuration defaults to <c>Debug</c>.</p></summary>
         public virtual string Configuration { get; internal set; }
-        /// <summary><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
-        public virtual bool? Force { get; internal set; }
         /// <summary><p>Includes the source files in the NuGet package. The sources files are included in the <c>src</c> folder within the <c>nupkg</c>.</p></summary>
         public virtual bool? IncludeSource { get; internal set; }
         /// <summary><p>Generates the symbols <c>nupkg</c>.</p></summary>
         public virtual bool? IncludeSymbols { get; internal set; }
         /// <summary><p>Don't build the project before packing.</p></summary>
         public virtual bool? NoBuild { get; internal set; }
-        /// <summary><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
-        public virtual bool? NoDependencies { get; internal set; }
         /// <summary><p>Doesn't perform an implicit restore when running the command.</p></summary>
         public virtual bool? NoRestore { get; internal set; }
         /// <summary><p>Places the built packages in the directory specified.</p></summary>
         public virtual string OutputDirectory { get; internal set; }
-        /// <summary><p>Specifies the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p></summary>
-        public virtual string Runtime { get; internal set; }
         /// <summary><p>Sets the serviceable flag in the package. For more information, see <a href="https://aka.ms/nupkgservicing">.NET Blog: .NET 4.5.1 Supports Microsoft Security Updates for .NET NuGet Libraries</a>.</p></summary>
         public virtual bool? Serviceable { get; internal set; }
         /// <summary><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
         public virtual DotNetVerbosity Verbostiy { get; internal set; }
         /// <summary><p>Defines the value for the <c>$(VersionSuffix)</c> MSBuild property in the project.</p></summary>
         public virtual string VersionSuffix { get; internal set; }
+        /// <summary><p>Disables restoring multiple projects in parallel.</p></summary>
+        public virtual bool? DisableParallel { get; internal set; }
+        /// <summary><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        public virtual bool? Force { get; internal set; }
+        /// <summary><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        public virtual bool? IgnoreFailedSources { get; internal set; }
+        /// <summary><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        public virtual bool? NoCache { get; internal set; }
+        /// <summary><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        public virtual bool? NoDependencies { get; internal set; }
+        /// <summary><p>Specifies the directory for restored packages.</p></summary>
+        public virtual string PackageDirectory { get; internal set; }
+        /// <summary><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        public virtual IReadOnlyList<string> Sources => SourcesInternal.AsReadOnly();
+        internal List<string> SourcesInternal { get; set; } = new List<string>();
+        /// <summary><p>Enables project lock file to be generated and used with restore.</p></summary>
+        public virtual bool? UseLockFile { get; internal set; }
+        /// <summary><p>Don't allow updating project lock file.</p></summary>
+        public virtual bool? LockedMode { get; internal set; }
+        /// <summary><p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p></summary>
+        public virtual string LockFilePath { get; internal set; }
+        /// <summary><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        public virtual bool? ForceEvaluate { get; internal set; }
+        /// <summary><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
+        public virtual string Runtime { get; internal set; }
         /// <summary><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
@@ -342,17 +437,26 @@ namespace Nuke.Common.Tools.DotNet
               .Add("pack")
               .Add("{value}", Project)
               .Add("--configuration {value}", Configuration)
-              .Add("--force", Force)
               .Add("--include-source", IncludeSource)
               .Add("--include-symbols", IncludeSymbols)
               .Add("--no-build", NoBuild)
-              .Add("--no-dependencies", NoDependencies)
               .Add("--no-restore", NoRestore)
               .Add("--output {value}", OutputDirectory)
-              .Add("--runtime {value}", Runtime)
               .Add("--serviceable", Serviceable)
               .Add("--verbosity {value}", Verbostiy)
               .Add("--version-suffix {value}", VersionSuffix)
+              .Add("--disable-parallel", DisableParallel)
+              .Add("--force", Force)
+              .Add("--ignore-failed-sources", IgnoreFailedSources)
+              .Add("--no-cache", NoCache)
+              .Add("--no-dependencies", NoDependencies)
+              .Add("--packages {value}", PackageDirectory)
+              .Add("--source {value}", Sources)
+              .Add("--use-lock-file", UseLockFile)
+              .Add("--locked-mode", LockedMode)
+              .Add("--lock-file-path {value}", LockFilePath)
+              .Add("--force-evaluate", ForceEvaluate)
+              .Add("--runtime {value}", Runtime)
               .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
             return base.ConfigureArguments(arguments);
         }
@@ -374,10 +478,6 @@ namespace Nuke.Common.Tools.DotNet
         public virtual string Configuration { get; internal set; }
         /// <summary><p>Compiles for a specific <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">framework</a>. The framework must be defined in the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/csproj">project file</a>.</p></summary>
         public virtual string Framework { get; internal set; }
-        /// <summary><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
-        public virtual bool? Force { get; internal set; }
-        /// <summary><p>Ignores project-to-project (P2P) references and only builds the root project specified to build.</p></summary>
-        public virtual bool? NoDependencies { get; internal set; }
         /// <summary><p>Marks the build as unsafe for incremental build. This turns off incremental compilation and forces a clean rebuild of the project's dependency graph.</p></summary>
         public virtual bool? NoIncremental { get; internal set; }
         /// <summary><p>Doesn't perform an implicit restore during build.</p></summary>
@@ -390,6 +490,29 @@ namespace Nuke.Common.Tools.DotNet
         public virtual DotNetVerbosity Verbosity { get; internal set; }
         /// <summary><p>Defines the version suffix for an asterisk (<c>*</c>) in the version field of the project file. The format follows NuGet's version guidelines.</p></summary>
         public virtual string VersionSuffix { get; internal set; }
+        /// <summary><p>Disables restoring multiple projects in parallel.</p></summary>
+        public virtual bool? DisableParallel { get; internal set; }
+        /// <summary><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        public virtual bool? Force { get; internal set; }
+        /// <summary><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        public virtual bool? IgnoreFailedSources { get; internal set; }
+        /// <summary><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        public virtual bool? NoCache { get; internal set; }
+        /// <summary><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        public virtual bool? NoDependencies { get; internal set; }
+        /// <summary><p>Specifies the directory for restored packages.</p></summary>
+        public virtual string PackageDirectory { get; internal set; }
+        /// <summary><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        public virtual IReadOnlyList<string> Sources => SourcesInternal.AsReadOnly();
+        internal List<string> SourcesInternal { get; set; } = new List<string>();
+        /// <summary><p>Enables project lock file to be generated and used with restore.</p></summary>
+        public virtual bool? UseLockFile { get; internal set; }
+        /// <summary><p>Don't allow updating project lock file.</p></summary>
+        public virtual bool? LockedMode { get; internal set; }
+        /// <summary><p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p></summary>
+        public virtual string LockFilePath { get; internal set; }
+        /// <summary><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        public virtual bool? ForceEvaluate { get; internal set; }
         /// <summary><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
@@ -400,14 +523,23 @@ namespace Nuke.Common.Tools.DotNet
               .Add("{value}", ProjectFile)
               .Add("--configuration {value}", Configuration)
               .Add("--framework {value}", Framework)
-              .Add("--force", Force)
-              .Add("--no-dependencies", NoDependencies)
               .Add("--no-incremental", NoIncremental)
               .Add("--no-restore", NoRestore)
               .Add("--output {value}", OutputDirectory)
               .Add("--runtime {value}", Runtime)
               .Add("--verbosity {value}", Verbosity)
               .Add("--version-suffix {value}", VersionSuffix)
+              .Add("--disable-parallel", DisableParallel)
+              .Add("--force", Force)
+              .Add("--ignore-failed-sources", IgnoreFailedSources)
+              .Add("--no-cache", NoCache)
+              .Add("--no-dependencies", NoDependencies)
+              .Add("--packages {value}", PackageDirectory)
+              .Add("--source {value}", Sources)
+              .Add("--use-lock-file", UseLockFile)
+              .Add("--locked-mode", LockedMode)
+              .Add("--lock-file-path {value}", LockFilePath)
+              .Add("--force-evaluate", ForceEvaluate)
               .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
             return base.ConfigureArguments(arguments);
         }
@@ -465,12 +597,8 @@ namespace Nuke.Common.Tools.DotNet
         public virtual string Configuration { get; internal set; }
         /// <summary><p>Publishes the application for the specified <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. You must specify the target framework in the project file.</p></summary>
         public virtual string Framework { get; internal set; }
-        /// <summary><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
-        public virtual bool? Force { get; internal set; }
         /// <summary><p>Specifies one or several <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/runtime-store">target manifests</a> to use to trim the set of packages published with the app. The manifest file is part of the output of the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-store"><c>dotnet store</c></a> command. To specify multiple manifests, add a <c>--manifest</c> option for each manifest. This option is available starting with .NET Core 2.0 SDK.</p></summary>
         public virtual string Manifest { get; internal set; }
-        /// <summary><p>Ignores project-to-project references and only restores the root project.</p></summary>
-        public virtual bool? NoDependencies { get; internal set; }
         /// <summary><p>Doesn't perform an implicit restore when running the command.</p></summary>
         public virtual bool? NoRestore { get; internal set; }
         /// <summary><p>Doesn't build the project before publishing. It also implicitly sets the <c>--no-restore</c> flag.</p></summary>
@@ -485,6 +613,29 @@ namespace Nuke.Common.Tools.DotNet
         public virtual DotNetVerbosity Verbosity { get; internal set; }
         /// <summary><p>Defines the version suffix for an asterisk (<c>*</c>) in the version field of the project file. The format follows NuGet's version guidelines.</p></summary>
         public virtual string VersionSuffix { get; internal set; }
+        /// <summary><p>Disables restoring multiple projects in parallel.</p></summary>
+        public virtual bool? DisableParallel { get; internal set; }
+        /// <summary><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        public virtual bool? Force { get; internal set; }
+        /// <summary><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        public virtual bool? IgnoreFailedSources { get; internal set; }
+        /// <summary><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        public virtual bool? NoCache { get; internal set; }
+        /// <summary><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        public virtual bool? NoDependencies { get; internal set; }
+        /// <summary><p>Specifies the directory for restored packages.</p></summary>
+        public virtual string PackageDirectory { get; internal set; }
+        /// <summary><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        public virtual IReadOnlyList<string> Sources => SourcesInternal.AsReadOnly();
+        internal List<string> SourcesInternal { get; set; } = new List<string>();
+        /// <summary><p>Enables project lock file to be generated and used with restore.</p></summary>
+        public virtual bool? UseLockFile { get; internal set; }
+        /// <summary><p>Don't allow updating project lock file.</p></summary>
+        public virtual bool? LockedMode { get; internal set; }
+        /// <summary><p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p></summary>
+        public virtual string LockFilePath { get; internal set; }
+        /// <summary><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        public virtual bool? ForceEvaluate { get; internal set; }
         /// <summary><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
@@ -495,9 +646,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("{value}", Project)
               .Add("--configuration {value}", Configuration)
               .Add("--framework {value}", Framework)
-              .Add("--force", Force)
               .Add("--manifest {value}", Manifest)
-              .Add("--no-dependencies", NoDependencies)
               .Add("--no-restore", NoRestore)
               .Add("--no-build", NoBuild)
               .Add("--output {value}", Output)
@@ -505,6 +654,17 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--runtime {value}", Runtime)
               .Add("--verbosity {value}", Verbosity)
               .Add("--version-suffix {value}", VersionSuffix)
+              .Add("--disable-parallel", DisableParallel)
+              .Add("--force", Force)
+              .Add("--ignore-failed-sources", IgnoreFailedSources)
+              .Add("--no-cache", NoCache)
+              .Add("--no-dependencies", NoDependencies)
+              .Add("--packages {value}", PackageDirectory)
+              .Add("--source {value}", Sources)
+              .Add("--use-lock-file", UseLockFile)
+              .Add("--locked-mode", LockedMode)
+              .Add("--lock-file-path {value}", LockFilePath)
+              .Add("--force-evaluate", ForceEvaluate)
               .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
             return base.ConfigureArguments(arguments);
         }
@@ -908,6 +1068,456 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region DisableParallel
+        /// <summary><p><em>Sets <see cref="DotNetTestSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetTestSettings SetDisableParallel(this DotNetTestSettings toolSettings, bool? disableParallel)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = disableParallel;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetTestSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetDisableParallel(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetTestSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetTestSettings EnableDisableParallel(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetTestSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetTestSettings DisableDisableParallel(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetTestSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ToggleDisableParallel(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = !toolSettings.DisableParallel;
+            return toolSettings;
+        }
+        #endregion
+        #region Force
+        /// <summary><p><em>Sets <see cref="DotNetTestSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetTestSettings SetForce(this DotNetTestSettings toolSettings, bool? force)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = force;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetTestSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetForce(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetTestSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetTestSettings EnableForce(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetTestSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetTestSettings DisableForce(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetTestSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ToggleForce(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = !toolSettings.Force;
+            return toolSettings;
+        }
+        #endregion
+        #region IgnoreFailedSources
+        /// <summary><p><em>Sets <see cref="DotNetTestSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetTestSettings SetIgnoreFailedSources(this DotNetTestSettings toolSettings, bool? ignoreFailedSources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = ignoreFailedSources;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetTestSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetIgnoreFailedSources(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetTestSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetTestSettings EnableIgnoreFailedSources(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetTestSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetTestSettings DisableIgnoreFailedSources(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetTestSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ToggleIgnoreFailedSources(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = !toolSettings.IgnoreFailedSources;
+            return toolSettings;
+        }
+        #endregion
+        #region NoCache
+        /// <summary><p><em>Sets <see cref="DotNetTestSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetTestSettings SetNoCache(this DotNetTestSettings toolSettings, bool? noCache)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = noCache;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetTestSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetNoCache(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetTestSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetTestSettings EnableNoCache(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetTestSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetTestSettings DisableNoCache(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetTestSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ToggleNoCache(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = !toolSettings.NoCache;
+            return toolSettings;
+        }
+        #endregion
+        #region NoDependencies
+        /// <summary><p><em>Sets <see cref="DotNetTestSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetTestSettings SetNoDependencies(this DotNetTestSettings toolSettings, bool? noDependencies)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = noDependencies;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetTestSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetNoDependencies(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetTestSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetTestSettings EnableNoDependencies(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetTestSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetTestSettings DisableNoDependencies(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetTestSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ToggleNoDependencies(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = !toolSettings.NoDependencies;
+            return toolSettings;
+        }
+        #endregion
+        #region PackageDirectory
+        /// <summary><p><em>Sets <see cref="DotNetTestSettings.PackageDirectory"/>.</em></p><p>Specifies the directory for restored packages.</p></summary>
+        [Pure]
+        public static DotNetTestSettings SetPackageDirectory(this DotNetTestSettings toolSettings, string packageDirectory)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageDirectory = packageDirectory;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetTestSettings.PackageDirectory"/>.</em></p><p>Specifies the directory for restored packages.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetPackageDirectory(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageDirectory = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Sources
+        /// <summary><p><em>Sets <see cref="DotNetTestSettings.Sources"/> to a new list.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetTestSettings SetSources(this DotNetTestSettings toolSettings, params string[] sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal = sources.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <see cref="DotNetTestSettings.Sources"/> to a new list.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetTestSettings SetSources(this DotNetTestSettings toolSettings, IEnumerable<string> sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal = sources.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="DotNetTestSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetTestSettings AddSources(this DotNetTestSettings toolSettings, params string[] sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.AddRange(sources);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="DotNetTestSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetTestSettings AddSources(this DotNetTestSettings toolSettings, IEnumerable<string> sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.AddRange(sources);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="DotNetTestSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ClearSources(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="DotNetTestSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetTestSettings RemoveSources(this DotNetTestSettings toolSettings, params string[] sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(sources);
+            toolSettings.SourcesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="DotNetTestSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetTestSettings RemoveSources(this DotNetTestSettings toolSettings, IEnumerable<string> sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(sources);
+            toolSettings.SourcesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region UseLockFile
+        /// <summary><p><em>Sets <see cref="DotNetTestSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetTestSettings SetUseLockFile(this DotNetTestSettings toolSettings, bool? useLockFile)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = useLockFile;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetTestSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetUseLockFile(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetTestSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetTestSettings EnableUseLockFile(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetTestSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetTestSettings DisableUseLockFile(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetTestSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ToggleUseLockFile(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = !toolSettings.UseLockFile;
+            return toolSettings;
+        }
+        #endregion
+        #region LockedMode
+        /// <summary><p><em>Sets <see cref="DotNetTestSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetTestSettings SetLockedMode(this DotNetTestSettings toolSettings, bool? lockedMode)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = lockedMode;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetTestSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetLockedMode(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetTestSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetTestSettings EnableLockedMode(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetTestSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetTestSettings DisableLockedMode(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetTestSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ToggleLockedMode(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = !toolSettings.LockedMode;
+            return toolSettings;
+        }
+        #endregion
+        #region LockFilePath
+        /// <summary><p><em>Sets <see cref="DotNetTestSettings.LockFilePath"/>.</em></p><p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p></summary>
+        [Pure]
+        public static DotNetTestSettings SetLockFilePath(this DotNetTestSettings toolSettings, string lockFilePath)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockFilePath = lockFilePath;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetTestSettings.LockFilePath"/>.</em></p><p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetLockFilePath(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockFilePath = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ForceEvaluate
+        /// <summary><p><em>Sets <see cref="DotNetTestSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetTestSettings SetForceEvaluate(this DotNetTestSettings toolSettings, bool? forceEvaluate)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = forceEvaluate;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetTestSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetForceEvaluate(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetTestSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetTestSettings EnableForceEvaluate(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetTestSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetTestSettings DisableForceEvaluate(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetTestSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ToggleForceEvaluate(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = !toolSettings.ForceEvaluate;
+            return toolSettings;
+        }
+        #endregion
+        #region Runtime
+        /// <summary><p><em>Sets <see cref="DotNetTestSettings.Runtime"/>.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetTestSettings SetRuntime(this DotNetTestSettings toolSettings, string runtime)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Runtime = runtime;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetTestSettings.Runtime"/>.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetRuntime(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Runtime = null;
+            return toolSettings;
+        }
+        #endregion
         #region Properties
         /// <summary><p><em>Sets <see cref="DotNetTestSettings.Properties"/> to a new dictionary.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
         [Pure]
@@ -1266,48 +1876,6 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
-        #region Force
-        /// <summary><p><em>Sets <see cref="DotNetRunSettings.Force"/>.</em></p><p>Set this flag to force all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting <em>project.assets.json</em>.</p></summary>
-        [Pure]
-        public static DotNetRunSettings SetForce(this DotNetRunSettings toolSettings, bool? force)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = force;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DotNetRunSettings.Force"/>.</em></p><p>Set this flag to force all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting <em>project.assets.json</em>.</p></summary>
-        [Pure]
-        public static DotNetRunSettings ResetForce(this DotNetRunSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="DotNetRunSettings.Force"/>.</em></p><p>Set this flag to force all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting <em>project.assets.json</em>.</p></summary>
-        [Pure]
-        public static DotNetRunSettings EnableForce(this DotNetRunSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="DotNetRunSettings.Force"/>.</em></p><p>Set this flag to force all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting <em>project.assets.json</em>.</p></summary>
-        [Pure]
-        public static DotNetRunSettings DisableForce(this DotNetRunSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="DotNetRunSettings.Force"/>.</em></p><p>Set this flag to force all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting <em>project.assets.json</em>.</p></summary>
-        [Pure]
-        public static DotNetRunSettings ToggleForce(this DotNetRunSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = !toolSettings.Force;
-            return toolSettings;
-        }
-        #endregion
         #region LaunchProfile
         /// <summary><p><em>Sets <see cref="DotNetRunSettings.LaunchProfile"/>.</em></p><p>The name of the launch profile (if any) to use when launching the application. Launch profiles are defined in the <em>launchSettings.json</em> file and are typically called <c>Development</c>, <c>Staging</c> and <c>Production</c>. For more information, see <a href="https://docs.microsoft.com/en-us/aspnetcore/fundamentals/environments">Working with multiple environments</a>.</p></summary>
         [Pure]
@@ -1365,48 +1933,6 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoBuild = !toolSettings.NoBuild;
-            return toolSettings;
-        }
-        #endregion
-        #region NoDependencies
-        /// <summary><p><em>Sets <see cref="DotNetRunSettings.NoDependencies"/>.</em></p><p>Set this flag to ignore project to project references and only restore the root project.</p></summary>
-        [Pure]
-        public static DotNetRunSettings SetNoDependencies(this DotNetRunSettings toolSettings, bool? noDependencies)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoDependencies = noDependencies;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DotNetRunSettings.NoDependencies"/>.</em></p><p>Set this flag to ignore project to project references and only restore the root project.</p></summary>
-        [Pure]
-        public static DotNetRunSettings ResetNoDependencies(this DotNetRunSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoDependencies = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="DotNetRunSettings.NoDependencies"/>.</em></p><p>Set this flag to ignore project to project references and only restore the root project.</p></summary>
-        [Pure]
-        public static DotNetRunSettings EnableNoDependencies(this DotNetRunSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoDependencies = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="DotNetRunSettings.NoDependencies"/>.</em></p><p>Set this flag to ignore project to project references and only restore the root project.</p></summary>
-        [Pure]
-        public static DotNetRunSettings DisableNoDependencies(this DotNetRunSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoDependencies = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="DotNetRunSettings.NoDependencies"/>.</em></p><p>Set this flag to ignore project to project references and only restore the root project.</p></summary>
-        [Pure]
-        public static DotNetRunSettings ToggleNoDependencies(this DotNetRunSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoDependencies = !toolSettings.NoDependencies;
             return toolSettings;
         }
         #endregion
@@ -1512,24 +2038,6 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
-        #region Runtime
-        /// <summary><p><em>Sets <see cref="DotNetRunSettings.Runtime"/>.</em></p><p>Specifies the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p></summary>
-        [Pure]
-        public static DotNetRunSettings SetRuntime(this DotNetRunSettings toolSettings, string runtime)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Runtime = runtime;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DotNetRunSettings.Runtime"/>.</em></p><p>Specifies the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p></summary>
-        [Pure]
-        public static DotNetRunSettings ResetRuntime(this DotNetRunSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Runtime = null;
-            return toolSettings;
-        }
-        #endregion
         #region ApplicationArguments
         /// <summary><p><em>Sets <see cref="DotNetRunSettings.ApplicationArguments"/>.</em></p><p>Arguments passed to the application being run.</p></summary>
         [Pure]
@@ -1545,6 +2053,456 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApplicationArguments = null;
+            return toolSettings;
+        }
+        #endregion
+        #region DisableParallel
+        /// <summary><p><em>Sets <see cref="DotNetRunSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetRunSettings SetDisableParallel(this DotNetRunSettings toolSettings, bool? disableParallel)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = disableParallel;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetRunSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ResetDisableParallel(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetRunSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetRunSettings EnableDisableParallel(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetRunSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetRunSettings DisableDisableParallel(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetRunSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ToggleDisableParallel(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = !toolSettings.DisableParallel;
+            return toolSettings;
+        }
+        #endregion
+        #region Force
+        /// <summary><p><em>Sets <see cref="DotNetRunSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetRunSettings SetForce(this DotNetRunSettings toolSettings, bool? force)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = force;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetRunSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ResetForce(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetRunSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetRunSettings EnableForce(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetRunSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetRunSettings DisableForce(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetRunSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ToggleForce(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = !toolSettings.Force;
+            return toolSettings;
+        }
+        #endregion
+        #region IgnoreFailedSources
+        /// <summary><p><em>Sets <see cref="DotNetRunSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetRunSettings SetIgnoreFailedSources(this DotNetRunSettings toolSettings, bool? ignoreFailedSources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = ignoreFailedSources;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetRunSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ResetIgnoreFailedSources(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetRunSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetRunSettings EnableIgnoreFailedSources(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetRunSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetRunSettings DisableIgnoreFailedSources(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetRunSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ToggleIgnoreFailedSources(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = !toolSettings.IgnoreFailedSources;
+            return toolSettings;
+        }
+        #endregion
+        #region NoCache
+        /// <summary><p><em>Sets <see cref="DotNetRunSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetRunSettings SetNoCache(this DotNetRunSettings toolSettings, bool? noCache)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = noCache;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetRunSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ResetNoCache(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetRunSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetRunSettings EnableNoCache(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetRunSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetRunSettings DisableNoCache(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetRunSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ToggleNoCache(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = !toolSettings.NoCache;
+            return toolSettings;
+        }
+        #endregion
+        #region NoDependencies
+        /// <summary><p><em>Sets <see cref="DotNetRunSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetRunSettings SetNoDependencies(this DotNetRunSettings toolSettings, bool? noDependencies)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = noDependencies;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetRunSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ResetNoDependencies(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetRunSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetRunSettings EnableNoDependencies(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetRunSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetRunSettings DisableNoDependencies(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetRunSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ToggleNoDependencies(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = !toolSettings.NoDependencies;
+            return toolSettings;
+        }
+        #endregion
+        #region PackageDirectory
+        /// <summary><p><em>Sets <see cref="DotNetRunSettings.PackageDirectory"/>.</em></p><p>Specifies the directory for restored packages.</p></summary>
+        [Pure]
+        public static DotNetRunSettings SetPackageDirectory(this DotNetRunSettings toolSettings, string packageDirectory)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageDirectory = packageDirectory;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetRunSettings.PackageDirectory"/>.</em></p><p>Specifies the directory for restored packages.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ResetPackageDirectory(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageDirectory = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Sources
+        /// <summary><p><em>Sets <see cref="DotNetRunSettings.Sources"/> to a new list.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetRunSettings SetSources(this DotNetRunSettings toolSettings, params string[] sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal = sources.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <see cref="DotNetRunSettings.Sources"/> to a new list.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetRunSettings SetSources(this DotNetRunSettings toolSettings, IEnumerable<string> sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal = sources.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="DotNetRunSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetRunSettings AddSources(this DotNetRunSettings toolSettings, params string[] sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.AddRange(sources);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="DotNetRunSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetRunSettings AddSources(this DotNetRunSettings toolSettings, IEnumerable<string> sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.AddRange(sources);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="DotNetRunSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ClearSources(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="DotNetRunSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetRunSettings RemoveSources(this DotNetRunSettings toolSettings, params string[] sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(sources);
+            toolSettings.SourcesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="DotNetRunSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetRunSettings RemoveSources(this DotNetRunSettings toolSettings, IEnumerable<string> sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(sources);
+            toolSettings.SourcesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region UseLockFile
+        /// <summary><p><em>Sets <see cref="DotNetRunSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetRunSettings SetUseLockFile(this DotNetRunSettings toolSettings, bool? useLockFile)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = useLockFile;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetRunSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ResetUseLockFile(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetRunSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetRunSettings EnableUseLockFile(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetRunSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetRunSettings DisableUseLockFile(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetRunSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ToggleUseLockFile(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = !toolSettings.UseLockFile;
+            return toolSettings;
+        }
+        #endregion
+        #region LockedMode
+        /// <summary><p><em>Sets <see cref="DotNetRunSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetRunSettings SetLockedMode(this DotNetRunSettings toolSettings, bool? lockedMode)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = lockedMode;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetRunSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ResetLockedMode(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetRunSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetRunSettings EnableLockedMode(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetRunSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetRunSettings DisableLockedMode(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetRunSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ToggleLockedMode(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = !toolSettings.LockedMode;
+            return toolSettings;
+        }
+        #endregion
+        #region LockFilePath
+        /// <summary><p><em>Sets <see cref="DotNetRunSettings.LockFilePath"/>.</em></p><p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p></summary>
+        [Pure]
+        public static DotNetRunSettings SetLockFilePath(this DotNetRunSettings toolSettings, string lockFilePath)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockFilePath = lockFilePath;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetRunSettings.LockFilePath"/>.</em></p><p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ResetLockFilePath(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockFilePath = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ForceEvaluate
+        /// <summary><p><em>Sets <see cref="DotNetRunSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetRunSettings SetForceEvaluate(this DotNetRunSettings toolSettings, bool? forceEvaluate)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = forceEvaluate;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetRunSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ResetForceEvaluate(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetRunSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetRunSettings EnableForceEvaluate(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetRunSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetRunSettings DisableForceEvaluate(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetRunSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ToggleForceEvaluate(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = !toolSettings.ForceEvaluate;
+            return toolSettings;
+        }
+        #endregion
+        #region Runtime
+        /// <summary><p><em>Sets <see cref="DotNetRunSettings.Runtime"/>.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetRunSettings SetRuntime(this DotNetRunSettings toolSettings, string runtime)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Runtime = runtime;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetRunSettings.Runtime"/>.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ResetRuntime(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Runtime = null;
             return toolSettings;
         }
         #endregion
@@ -1906,6 +2864,24 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region Verbosity
+        /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.Verbosity"/>.</em></p><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings SetVerbosity(this DotNetRestoreSettings toolSettings, DotNetVerbosity verbosity)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = verbosity;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetRestoreSettings.Verbosity"/>.</em></p><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings ResetVerbosity(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = null;
+            return toolSettings;
+        }
+        #endregion
         #region DisableParallel
         /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
         [Pure]
@@ -2134,66 +3110,6 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
-        #region Runtimes
-        /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.Runtimes"/> to a new list.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
-        [Pure]
-        public static DotNetRestoreSettings SetRuntimes(this DotNetRestoreSettings toolSettings, params string[] runtimes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RuntimesInternal = runtimes.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.Runtimes"/> to a new list.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
-        [Pure]
-        public static DotNetRestoreSettings SetRuntimes(this DotNetRestoreSettings toolSettings, IEnumerable<string> runtimes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RuntimesInternal = runtimes.ToList();
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DotNetRestoreSettings.Runtimes"/>.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
-        [Pure]
-        public static DotNetRestoreSettings AddRuntimes(this DotNetRestoreSettings toolSettings, params string[] runtimes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RuntimesInternal.AddRange(runtimes);
-            return toolSettings;
-        }
-        /// <summary><p><em>Adds values to <see cref="DotNetRestoreSettings.Runtimes"/>.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
-        [Pure]
-        public static DotNetRestoreSettings AddRuntimes(this DotNetRestoreSettings toolSettings, IEnumerable<string> runtimes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RuntimesInternal.AddRange(runtimes);
-            return toolSettings;
-        }
-        /// <summary><p><em>Clears <see cref="DotNetRestoreSettings.Runtimes"/>.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
-        [Pure]
-        public static DotNetRestoreSettings ClearRuntimes(this DotNetRestoreSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.RuntimesInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DotNetRestoreSettings.Runtimes"/>.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
-        [Pure]
-        public static DotNetRestoreSettings RemoveRuntimes(this DotNetRestoreSettings toolSettings, params string[] runtimes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(runtimes);
-            toolSettings.RuntimesInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary><p><em>Removes values from <see cref="DotNetRestoreSettings.Runtimes"/>.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
-        [Pure]
-        public static DotNetRestoreSettings RemoveRuntimes(this DotNetRestoreSettings toolSettings, IEnumerable<string> runtimes)
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(runtimes);
-            toolSettings.RuntimesInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        #endregion
         #region Sources
         /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.Sources"/> to a new list.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
         [Pure]
@@ -2254,21 +3170,165 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
-        #region Verbosity
-        /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.Verbosity"/>.</em></p><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
+        #region UseLockFile
+        /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
         [Pure]
-        public static DotNetRestoreSettings SetVerbosity(this DotNetRestoreSettings toolSettings, DotNetVerbosity verbosity)
+        public static DotNetRestoreSettings SetUseLockFile(this DotNetRestoreSettings toolSettings, bool? useLockFile)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Verbosity = verbosity;
+            toolSettings.UseLockFile = useLockFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="DotNetRestoreSettings.Verbosity"/>.</em></p><p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p></summary>
+        /// <summary><p><em>Resets <see cref="DotNetRestoreSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
         [Pure]
-        public static DotNetRestoreSettings ResetVerbosity(this DotNetRestoreSettings toolSettings)
+        public static DotNetRestoreSettings ResetUseLockFile(this DotNetRestoreSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Verbosity = null;
+            toolSettings.UseLockFile = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetRestoreSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings EnableUseLockFile(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetRestoreSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings DisableUseLockFile(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetRestoreSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings ToggleUseLockFile(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = !toolSettings.UseLockFile;
+            return toolSettings;
+        }
+        #endregion
+        #region LockedMode
+        /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings SetLockedMode(this DotNetRestoreSettings toolSettings, bool? lockedMode)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = lockedMode;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetRestoreSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings ResetLockedMode(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetRestoreSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings EnableLockedMode(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetRestoreSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings DisableLockedMode(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetRestoreSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings ToggleLockedMode(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = !toolSettings.LockedMode;
+            return toolSettings;
+        }
+        #endregion
+        #region LockFilePath
+        /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.LockFilePath"/>.</em></p><p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings SetLockFilePath(this DotNetRestoreSettings toolSettings, string lockFilePath)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockFilePath = lockFilePath;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetRestoreSettings.LockFilePath"/>.</em></p><p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings ResetLockFilePath(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockFilePath = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ForceEvaluate
+        /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings SetForceEvaluate(this DotNetRestoreSettings toolSettings, bool? forceEvaluate)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = forceEvaluate;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetRestoreSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings ResetForceEvaluate(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetRestoreSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings EnableForceEvaluate(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetRestoreSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings DisableForceEvaluate(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetRestoreSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings ToggleForceEvaluate(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = !toolSettings.ForceEvaluate;
+            return toolSettings;
+        }
+        #endregion
+        #region Runtime
+        /// <summary><p><em>Sets <see cref="DotNetRestoreSettings.Runtime"/>.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings SetRuntime(this DotNetRestoreSettings toolSettings, string runtime)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Runtime = runtime;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetRestoreSettings.Runtime"/>.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings ResetRuntime(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Runtime = null;
             return toolSettings;
         }
         #endregion
@@ -2313,48 +3373,6 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Configuration = null;
-            return toolSettings;
-        }
-        #endregion
-        #region Force
-        /// <summary><p><em>Sets <see cref="DotNetPackSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
-        [Pure]
-        public static DotNetPackSettings SetForce(this DotNetPackSettings toolSettings, bool? force)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = force;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DotNetPackSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
-        [Pure]
-        public static DotNetPackSettings ResetForce(this DotNetPackSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="DotNetPackSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
-        [Pure]
-        public static DotNetPackSettings EnableForce(this DotNetPackSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="DotNetPackSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
-        [Pure]
-        public static DotNetPackSettings DisableForce(this DotNetPackSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="DotNetPackSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
-        [Pure]
-        public static DotNetPackSettings ToggleForce(this DotNetPackSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = !toolSettings.Force;
             return toolSettings;
         }
         #endregion
@@ -2484,48 +3502,6 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
-        #region NoDependencies
-        /// <summary><p><em>Sets <see cref="DotNetPackSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
-        [Pure]
-        public static DotNetPackSettings SetNoDependencies(this DotNetPackSettings toolSettings, bool? noDependencies)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoDependencies = noDependencies;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DotNetPackSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
-        [Pure]
-        public static DotNetPackSettings ResetNoDependencies(this DotNetPackSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoDependencies = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="DotNetPackSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
-        [Pure]
-        public static DotNetPackSettings EnableNoDependencies(this DotNetPackSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoDependencies = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="DotNetPackSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
-        [Pure]
-        public static DotNetPackSettings DisableNoDependencies(this DotNetPackSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoDependencies = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="DotNetPackSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
-        [Pure]
-        public static DotNetPackSettings ToggleNoDependencies(this DotNetPackSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoDependencies = !toolSettings.NoDependencies;
-            return toolSettings;
-        }
-        #endregion
         #region NoRestore
         /// <summary><p><em>Sets <see cref="DotNetPackSettings.NoRestore"/>.</em></p><p>Doesn't perform an implicit restore when running the command.</p></summary>
         [Pure]
@@ -2583,24 +3559,6 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputDirectory = null;
-            return toolSettings;
-        }
-        #endregion
-        #region Runtime
-        /// <summary><p><em>Sets <see cref="DotNetPackSettings.Runtime"/>.</em></p><p>Specifies the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p></summary>
-        [Pure]
-        public static DotNetPackSettings SetRuntime(this DotNetPackSettings toolSettings, string runtime)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Runtime = runtime;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DotNetPackSettings.Runtime"/>.</em></p><p>Specifies the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p></summary>
-        [Pure]
-        public static DotNetPackSettings ResetRuntime(this DotNetPackSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Runtime = null;
             return toolSettings;
         }
         #endregion
@@ -2679,6 +3637,456 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VersionSuffix = null;
+            return toolSettings;
+        }
+        #endregion
+        #region DisableParallel
+        /// <summary><p><em>Sets <see cref="DotNetPackSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetPackSettings SetDisableParallel(this DotNetPackSettings toolSettings, bool? disableParallel)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = disableParallel;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPackSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetDisableParallel(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetPackSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetPackSettings EnableDisableParallel(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetPackSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetPackSettings DisableDisableParallel(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetPackSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ToggleDisableParallel(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = !toolSettings.DisableParallel;
+            return toolSettings;
+        }
+        #endregion
+        #region Force
+        /// <summary><p><em>Sets <see cref="DotNetPackSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetPackSettings SetForce(this DotNetPackSettings toolSettings, bool? force)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = force;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPackSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetForce(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetPackSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetPackSettings EnableForce(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetPackSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetPackSettings DisableForce(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetPackSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ToggleForce(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = !toolSettings.Force;
+            return toolSettings;
+        }
+        #endregion
+        #region IgnoreFailedSources
+        /// <summary><p><em>Sets <see cref="DotNetPackSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetPackSettings SetIgnoreFailedSources(this DotNetPackSettings toolSettings, bool? ignoreFailedSources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = ignoreFailedSources;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPackSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetIgnoreFailedSources(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetPackSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetPackSettings EnableIgnoreFailedSources(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetPackSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetPackSettings DisableIgnoreFailedSources(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetPackSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ToggleIgnoreFailedSources(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = !toolSettings.IgnoreFailedSources;
+            return toolSettings;
+        }
+        #endregion
+        #region NoCache
+        /// <summary><p><em>Sets <see cref="DotNetPackSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetPackSettings SetNoCache(this DotNetPackSettings toolSettings, bool? noCache)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = noCache;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPackSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetNoCache(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetPackSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetPackSettings EnableNoCache(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetPackSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetPackSettings DisableNoCache(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetPackSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ToggleNoCache(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = !toolSettings.NoCache;
+            return toolSettings;
+        }
+        #endregion
+        #region NoDependencies
+        /// <summary><p><em>Sets <see cref="DotNetPackSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetPackSettings SetNoDependencies(this DotNetPackSettings toolSettings, bool? noDependencies)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = noDependencies;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPackSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetNoDependencies(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetPackSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetPackSettings EnableNoDependencies(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetPackSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetPackSettings DisableNoDependencies(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetPackSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ToggleNoDependencies(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = !toolSettings.NoDependencies;
+            return toolSettings;
+        }
+        #endregion
+        #region PackageDirectory
+        /// <summary><p><em>Sets <see cref="DotNetPackSettings.PackageDirectory"/>.</em></p><p>Specifies the directory for restored packages.</p></summary>
+        [Pure]
+        public static DotNetPackSettings SetPackageDirectory(this DotNetPackSettings toolSettings, string packageDirectory)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageDirectory = packageDirectory;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPackSettings.PackageDirectory"/>.</em></p><p>Specifies the directory for restored packages.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetPackageDirectory(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageDirectory = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Sources
+        /// <summary><p><em>Sets <see cref="DotNetPackSettings.Sources"/> to a new list.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetPackSettings SetSources(this DotNetPackSettings toolSettings, params string[] sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal = sources.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <see cref="DotNetPackSettings.Sources"/> to a new list.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetPackSettings SetSources(this DotNetPackSettings toolSettings, IEnumerable<string> sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal = sources.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="DotNetPackSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetPackSettings AddSources(this DotNetPackSettings toolSettings, params string[] sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.AddRange(sources);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="DotNetPackSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetPackSettings AddSources(this DotNetPackSettings toolSettings, IEnumerable<string> sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.AddRange(sources);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="DotNetPackSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ClearSources(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="DotNetPackSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetPackSettings RemoveSources(this DotNetPackSettings toolSettings, params string[] sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(sources);
+            toolSettings.SourcesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="DotNetPackSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetPackSettings RemoveSources(this DotNetPackSettings toolSettings, IEnumerable<string> sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(sources);
+            toolSettings.SourcesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region UseLockFile
+        /// <summary><p><em>Sets <see cref="DotNetPackSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetPackSettings SetUseLockFile(this DotNetPackSettings toolSettings, bool? useLockFile)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = useLockFile;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPackSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetUseLockFile(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetPackSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetPackSettings EnableUseLockFile(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetPackSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetPackSettings DisableUseLockFile(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetPackSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ToggleUseLockFile(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = !toolSettings.UseLockFile;
+            return toolSettings;
+        }
+        #endregion
+        #region LockedMode
+        /// <summary><p><em>Sets <see cref="DotNetPackSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetPackSettings SetLockedMode(this DotNetPackSettings toolSettings, bool? lockedMode)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = lockedMode;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPackSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetLockedMode(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetPackSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetPackSettings EnableLockedMode(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetPackSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetPackSettings DisableLockedMode(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetPackSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ToggleLockedMode(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = !toolSettings.LockedMode;
+            return toolSettings;
+        }
+        #endregion
+        #region LockFilePath
+        /// <summary><p><em>Sets <see cref="DotNetPackSettings.LockFilePath"/>.</em></p><p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p></summary>
+        [Pure]
+        public static DotNetPackSettings SetLockFilePath(this DotNetPackSettings toolSettings, string lockFilePath)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockFilePath = lockFilePath;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPackSettings.LockFilePath"/>.</em></p><p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetLockFilePath(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockFilePath = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ForceEvaluate
+        /// <summary><p><em>Sets <see cref="DotNetPackSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetPackSettings SetForceEvaluate(this DotNetPackSettings toolSettings, bool? forceEvaluate)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = forceEvaluate;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPackSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetForceEvaluate(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetPackSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetPackSettings EnableForceEvaluate(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetPackSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetPackSettings DisableForceEvaluate(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetPackSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ToggleForceEvaluate(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = !toolSettings.ForceEvaluate;
+            return toolSettings;
+        }
+        #endregion
+        #region Runtime
+        /// <summary><p><em>Sets <see cref="DotNetPackSettings.Runtime"/>.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetPackSettings SetRuntime(this DotNetPackSettings toolSettings, string runtime)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Runtime = runtime;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPackSettings.Runtime"/>.</em></p><p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetRuntime(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Runtime = null;
             return toolSettings;
         }
         #endregion
@@ -3432,90 +4840,6 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
-        #region Force
-        /// <summary><p><em>Sets <see cref="DotNetBuildSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
-        [Pure]
-        public static DotNetBuildSettings SetForce(this DotNetBuildSettings toolSettings, bool? force)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = force;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DotNetBuildSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
-        [Pure]
-        public static DotNetBuildSettings ResetForce(this DotNetBuildSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="DotNetBuildSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
-        [Pure]
-        public static DotNetBuildSettings EnableForce(this DotNetBuildSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="DotNetBuildSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
-        [Pure]
-        public static DotNetBuildSettings DisableForce(this DotNetBuildSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="DotNetBuildSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
-        [Pure]
-        public static DotNetBuildSettings ToggleForce(this DotNetBuildSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = !toolSettings.Force;
-            return toolSettings;
-        }
-        #endregion
-        #region NoDependencies
-        /// <summary><p><em>Sets <see cref="DotNetBuildSettings.NoDependencies"/>.</em></p><p>Ignores project-to-project (P2P) references and only builds the root project specified to build.</p></summary>
-        [Pure]
-        public static DotNetBuildSettings SetNoDependencies(this DotNetBuildSettings toolSettings, bool? noDependencies)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoDependencies = noDependencies;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DotNetBuildSettings.NoDependencies"/>.</em></p><p>Ignores project-to-project (P2P) references and only builds the root project specified to build.</p></summary>
-        [Pure]
-        public static DotNetBuildSettings ResetNoDependencies(this DotNetBuildSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoDependencies = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="DotNetBuildSettings.NoDependencies"/>.</em></p><p>Ignores project-to-project (P2P) references and only builds the root project specified to build.</p></summary>
-        [Pure]
-        public static DotNetBuildSettings EnableNoDependencies(this DotNetBuildSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoDependencies = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="DotNetBuildSettings.NoDependencies"/>.</em></p><p>Ignores project-to-project (P2P) references and only builds the root project specified to build.</p></summary>
-        [Pure]
-        public static DotNetBuildSettings DisableNoDependencies(this DotNetBuildSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoDependencies = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="DotNetBuildSettings.NoDependencies"/>.</em></p><p>Ignores project-to-project (P2P) references and only builds the root project specified to build.</p></summary>
-        [Pure]
-        public static DotNetBuildSettings ToggleNoDependencies(this DotNetBuildSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoDependencies = !toolSettings.NoDependencies;
-            return toolSettings;
-        }
-        #endregion
         #region NoIncremental
         /// <summary><p><em>Sets <see cref="DotNetBuildSettings.NoIncremental"/>.</em></p><p>Marks the build as unsafe for incremental build. This turns off incremental compilation and forces a clean rebuild of the project's dependency graph.</p></summary>
         [Pure]
@@ -3669,6 +4993,438 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VersionSuffix = null;
+            return toolSettings;
+        }
+        #endregion
+        #region DisableParallel
+        /// <summary><p><em>Sets <see cref="DotNetBuildSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetDisableParallel(this DotNetBuildSettings toolSettings, bool? disableParallel)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = disableParallel;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetBuildSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetDisableParallel(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetBuildSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings EnableDisableParallel(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetBuildSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings DisableDisableParallel(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetBuildSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ToggleDisableParallel(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = !toolSettings.DisableParallel;
+            return toolSettings;
+        }
+        #endregion
+        #region Force
+        /// <summary><p><em>Sets <see cref="DotNetBuildSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetForce(this DotNetBuildSettings toolSettings, bool? force)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = force;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetBuildSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetForce(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetBuildSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings EnableForce(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetBuildSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings DisableForce(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetBuildSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ToggleForce(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = !toolSettings.Force;
+            return toolSettings;
+        }
+        #endregion
+        #region IgnoreFailedSources
+        /// <summary><p><em>Sets <see cref="DotNetBuildSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetIgnoreFailedSources(this DotNetBuildSettings toolSettings, bool? ignoreFailedSources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = ignoreFailedSources;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetBuildSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetIgnoreFailedSources(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetBuildSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings EnableIgnoreFailedSources(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetBuildSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings DisableIgnoreFailedSources(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetBuildSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ToggleIgnoreFailedSources(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = !toolSettings.IgnoreFailedSources;
+            return toolSettings;
+        }
+        #endregion
+        #region NoCache
+        /// <summary><p><em>Sets <see cref="DotNetBuildSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetNoCache(this DotNetBuildSettings toolSettings, bool? noCache)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = noCache;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetBuildSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetNoCache(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetBuildSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings EnableNoCache(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetBuildSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings DisableNoCache(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetBuildSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ToggleNoCache(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = !toolSettings.NoCache;
+            return toolSettings;
+        }
+        #endregion
+        #region NoDependencies
+        /// <summary><p><em>Sets <see cref="DotNetBuildSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetNoDependencies(this DotNetBuildSettings toolSettings, bool? noDependencies)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = noDependencies;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetBuildSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetNoDependencies(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetBuildSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings EnableNoDependencies(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetBuildSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings DisableNoDependencies(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetBuildSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ToggleNoDependencies(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = !toolSettings.NoDependencies;
+            return toolSettings;
+        }
+        #endregion
+        #region PackageDirectory
+        /// <summary><p><em>Sets <see cref="DotNetBuildSettings.PackageDirectory"/>.</em></p><p>Specifies the directory for restored packages.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetPackageDirectory(this DotNetBuildSettings toolSettings, string packageDirectory)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageDirectory = packageDirectory;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetBuildSettings.PackageDirectory"/>.</em></p><p>Specifies the directory for restored packages.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetPackageDirectory(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageDirectory = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Sources
+        /// <summary><p><em>Sets <see cref="DotNetBuildSettings.Sources"/> to a new list.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetSources(this DotNetBuildSettings toolSettings, params string[] sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal = sources.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <see cref="DotNetBuildSettings.Sources"/> to a new list.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetSources(this DotNetBuildSettings toolSettings, IEnumerable<string> sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal = sources.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="DotNetBuildSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings AddSources(this DotNetBuildSettings toolSettings, params string[] sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.AddRange(sources);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="DotNetBuildSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings AddSources(this DotNetBuildSettings toolSettings, IEnumerable<string> sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.AddRange(sources);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="DotNetBuildSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ClearSources(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="DotNetBuildSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings RemoveSources(this DotNetBuildSettings toolSettings, params string[] sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(sources);
+            toolSettings.SourcesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="DotNetBuildSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings RemoveSources(this DotNetBuildSettings toolSettings, IEnumerable<string> sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(sources);
+            toolSettings.SourcesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region UseLockFile
+        /// <summary><p><em>Sets <see cref="DotNetBuildSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetUseLockFile(this DotNetBuildSettings toolSettings, bool? useLockFile)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = useLockFile;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetBuildSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetUseLockFile(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetBuildSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings EnableUseLockFile(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetBuildSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings DisableUseLockFile(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetBuildSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ToggleUseLockFile(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = !toolSettings.UseLockFile;
+            return toolSettings;
+        }
+        #endregion
+        #region LockedMode
+        /// <summary><p><em>Sets <see cref="DotNetBuildSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetLockedMode(this DotNetBuildSettings toolSettings, bool? lockedMode)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = lockedMode;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetBuildSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetLockedMode(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetBuildSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings EnableLockedMode(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetBuildSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings DisableLockedMode(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetBuildSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ToggleLockedMode(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = !toolSettings.LockedMode;
+            return toolSettings;
+        }
+        #endregion
+        #region LockFilePath
+        /// <summary><p><em>Sets <see cref="DotNetBuildSettings.LockFilePath"/>.</em></p><p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetLockFilePath(this DotNetBuildSettings toolSettings, string lockFilePath)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockFilePath = lockFilePath;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetBuildSettings.LockFilePath"/>.</em></p><p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetLockFilePath(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockFilePath = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ForceEvaluate
+        /// <summary><p><em>Sets <see cref="DotNetBuildSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetForceEvaluate(this DotNetBuildSettings toolSettings, bool? forceEvaluate)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = forceEvaluate;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetBuildSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetForceEvaluate(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetBuildSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings EnableForceEvaluate(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetBuildSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings DisableForceEvaluate(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetBuildSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ToggleForceEvaluate(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = !toolSettings.ForceEvaluate;
             return toolSettings;
         }
         #endregion
@@ -4164,48 +5920,6 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
-        #region Force
-        /// <summary><p><em>Sets <see cref="DotNetPublishSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
-        [Pure]
-        public static DotNetPublishSettings SetForce(this DotNetPublishSettings toolSettings, bool? force)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = force;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DotNetPublishSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
-        [Pure]
-        public static DotNetPublishSettings ResetForce(this DotNetPublishSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="DotNetPublishSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
-        [Pure]
-        public static DotNetPublishSettings EnableForce(this DotNetPublishSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="DotNetPublishSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
-        [Pure]
-        public static DotNetPublishSettings DisableForce(this DotNetPublishSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="DotNetPublishSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
-        [Pure]
-        public static DotNetPublishSettings ToggleForce(this DotNetPublishSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Force = !toolSettings.Force;
-            return toolSettings;
-        }
-        #endregion
         #region Manifest
         /// <summary><p><em>Sets <see cref="DotNetPublishSettings.Manifest"/>.</em></p><p>Specifies one or several <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/runtime-store">target manifests</a> to use to trim the set of packages published with the app. The manifest file is part of the output of the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-store"><c>dotnet store</c></a> command. To specify multiple manifests, add a <c>--manifest</c> option for each manifest. This option is available starting with .NET Core 2.0 SDK.</p></summary>
         [Pure]
@@ -4221,48 +5935,6 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Manifest = null;
-            return toolSettings;
-        }
-        #endregion
-        #region NoDependencies
-        /// <summary><p><em>Sets <see cref="DotNetPublishSettings.NoDependencies"/>.</em></p><p>Ignores project-to-project references and only restores the root project.</p></summary>
-        [Pure]
-        public static DotNetPublishSettings SetNoDependencies(this DotNetPublishSettings toolSettings, bool? noDependencies)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoDependencies = noDependencies;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DotNetPublishSettings.NoDependencies"/>.</em></p><p>Ignores project-to-project references and only restores the root project.</p></summary>
-        [Pure]
-        public static DotNetPublishSettings ResetNoDependencies(this DotNetPublishSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoDependencies = null;
-            return toolSettings;
-        }
-        /// <summary><p><em>Enables <see cref="DotNetPublishSettings.NoDependencies"/>.</em></p><p>Ignores project-to-project references and only restores the root project.</p></summary>
-        [Pure]
-        public static DotNetPublishSettings EnableNoDependencies(this DotNetPublishSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoDependencies = true;
-            return toolSettings;
-        }
-        /// <summary><p><em>Disables <see cref="DotNetPublishSettings.NoDependencies"/>.</em></p><p>Ignores project-to-project references and only restores the root project.</p></summary>
-        [Pure]
-        public static DotNetPublishSettings DisableNoDependencies(this DotNetPublishSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoDependencies = false;
-            return toolSettings;
-        }
-        /// <summary><p><em>Toggles <see cref="DotNetPublishSettings.NoDependencies"/>.</em></p><p>Ignores project-to-project references and only restores the root project.</p></summary>
-        [Pure]
-        public static DotNetPublishSettings ToggleNoDependencies(this DotNetPublishSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.NoDependencies = !toolSettings.NoDependencies;
             return toolSettings;
         }
         #endregion
@@ -4461,6 +6133,438 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.VersionSuffix = null;
+            return toolSettings;
+        }
+        #endregion
+        #region DisableParallel
+        /// <summary><p><em>Sets <see cref="DotNetPublishSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings SetDisableParallel(this DotNetPublishSettings toolSettings, bool? disableParallel)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = disableParallel;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPublishSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings ResetDisableParallel(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetPublishSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings EnableDisableParallel(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetPublishSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings DisableDisableParallel(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetPublishSettings.DisableParallel"/>.</em></p><p>Disables restoring multiple projects in parallel.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings ToggleDisableParallel(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DisableParallel = !toolSettings.DisableParallel;
+            return toolSettings;
+        }
+        #endregion
+        #region Force
+        /// <summary><p><em>Sets <see cref="DotNetPublishSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings SetForce(this DotNetPublishSettings toolSettings, bool? force)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = force;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPublishSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings ResetForce(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetPublishSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings EnableForce(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetPublishSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings DisableForce(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetPublishSettings.Force"/>.</em></p><p>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings ToggleForce(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = !toolSettings.Force;
+            return toolSettings;
+        }
+        #endregion
+        #region IgnoreFailedSources
+        /// <summary><p><em>Sets <see cref="DotNetPublishSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings SetIgnoreFailedSources(this DotNetPublishSettings toolSettings, bool? ignoreFailedSources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = ignoreFailedSources;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPublishSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings ResetIgnoreFailedSources(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetPublishSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings EnableIgnoreFailedSources(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetPublishSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings DisableIgnoreFailedSources(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetPublishSettings.IgnoreFailedSources"/>.</em></p><p>Only warn about failed sources if there are packages meeting the version requirement.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings ToggleIgnoreFailedSources(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IgnoreFailedSources = !toolSettings.IgnoreFailedSources;
+            return toolSettings;
+        }
+        #endregion
+        #region NoCache
+        /// <summary><p><em>Sets <see cref="DotNetPublishSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings SetNoCache(this DotNetPublishSettings toolSettings, bool? noCache)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = noCache;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPublishSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings ResetNoCache(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetPublishSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings EnableNoCache(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetPublishSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings DisableNoCache(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetPublishSettings.NoCache"/>.</em></p><p>Specifies to not cache packages and HTTP requests.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings ToggleNoCache(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = !toolSettings.NoCache;
+            return toolSettings;
+        }
+        #endregion
+        #region NoDependencies
+        /// <summary><p><em>Sets <see cref="DotNetPublishSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings SetNoDependencies(this DotNetPublishSettings toolSettings, bool? noDependencies)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = noDependencies;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPublishSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings ResetNoDependencies(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetPublishSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings EnableNoDependencies(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetPublishSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings DisableNoDependencies(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetPublishSettings.NoDependencies"/>.</em></p><p>When restoring a project with project-to-project (P2P) references, restore the root project and not the references.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings ToggleNoDependencies(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDependencies = !toolSettings.NoDependencies;
+            return toolSettings;
+        }
+        #endregion
+        #region PackageDirectory
+        /// <summary><p><em>Sets <see cref="DotNetPublishSettings.PackageDirectory"/>.</em></p><p>Specifies the directory for restored packages.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings SetPackageDirectory(this DotNetPublishSettings toolSettings, string packageDirectory)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageDirectory = packageDirectory;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPublishSettings.PackageDirectory"/>.</em></p><p>Specifies the directory for restored packages.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings ResetPackageDirectory(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageDirectory = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Sources
+        /// <summary><p><em>Sets <see cref="DotNetPublishSettings.Sources"/> to a new list.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings SetSources(this DotNetPublishSettings toolSettings, params string[] sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal = sources.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <see cref="DotNetPublishSettings.Sources"/> to a new list.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings SetSources(this DotNetPublishSettings toolSettings, IEnumerable<string> sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal = sources.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="DotNetPublishSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings AddSources(this DotNetPublishSettings toolSettings, params string[] sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.AddRange(sources);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="DotNetPublishSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings AddSources(this DotNetPublishSettings toolSettings, IEnumerable<string> sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.AddRange(sources);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="DotNetPublishSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings ClearSources(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="DotNetPublishSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings RemoveSources(this DotNetPublishSettings toolSettings, params string[] sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(sources);
+            toolSettings.SourcesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="DotNetPublishSettings.Sources"/>.</em></p><p>Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings RemoveSources(this DotNetPublishSettings toolSettings, IEnumerable<string> sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(sources);
+            toolSettings.SourcesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region UseLockFile
+        /// <summary><p><em>Sets <see cref="DotNetPublishSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings SetUseLockFile(this DotNetPublishSettings toolSettings, bool? useLockFile)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = useLockFile;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPublishSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings ResetUseLockFile(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetPublishSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings EnableUseLockFile(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetPublishSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings DisableUseLockFile(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetPublishSettings.UseLockFile"/>.</em></p><p>Enables project lock file to be generated and used with restore.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings ToggleUseLockFile(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UseLockFile = !toolSettings.UseLockFile;
+            return toolSettings;
+        }
+        #endregion
+        #region LockedMode
+        /// <summary><p><em>Sets <see cref="DotNetPublishSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings SetLockedMode(this DotNetPublishSettings toolSettings, bool? lockedMode)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = lockedMode;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPublishSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings ResetLockedMode(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetPublishSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings EnableLockedMode(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetPublishSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings DisableLockedMode(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetPublishSettings.LockedMode"/>.</em></p><p>Don't allow updating project lock file.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings ToggleLockedMode(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockedMode = !toolSettings.LockedMode;
+            return toolSettings;
+        }
+        #endregion
+        #region LockFilePath
+        /// <summary><p><em>Sets <see cref="DotNetPublishSettings.LockFilePath"/>.</em></p><p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings SetLockFilePath(this DotNetPublishSettings toolSettings, string lockFilePath)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockFilePath = lockFilePath;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPublishSettings.LockFilePath"/>.</em></p><p>Output location where project lock file is written. By default, this is 'PROJECT_ROOT\packages.lock.json'.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings ResetLockFilePath(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LockFilePath = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ForceEvaluate
+        /// <summary><p><em>Sets <see cref="DotNetPublishSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings SetForceEvaluate(this DotNetPublishSettings toolSettings, bool? forceEvaluate)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = forceEvaluate;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotNetPublishSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings ResetForceEvaluate(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="DotNetPublishSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings EnableForceEvaluate(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="DotNetPublishSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings DisableForceEvaluate(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="DotNetPublishSettings.ForceEvaluate"/>.</em></p><p>Forces restore to reevaluate all dependencies even if a lock file already exists.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings ToggleForceEvaluate(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEvaluate = !toolSettings.ForceEvaluate;
             return toolSettings;
         }
         #endregion
