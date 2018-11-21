@@ -25,7 +25,7 @@
 4. Invoke `nuke` to execute the build (invokes build.sh or build.ps1)
 
 
-On our website there is a complete [getting started](https://www.nuke.build/getting-started.html) guide that explains all the basics of this project.
+On our website there is a complete [getting started](https://www.nuke.build/docs/getting-started/philosophy.html) guide that explains all the basics of this project.
 
 ## Contributing
 
