@@ -54,7 +54,7 @@ namespace Nuke.Common
         public string Separator { get; set; }
 
         [CanBeNull]
-        public override object GetValue(MemberInfo member, Type buildType)
+        public override object GetValue(MemberInfo member, NukeBuild build)
         {
             return ParameterService.Instance.GetParameter<object>(member);
         }

@@ -24,7 +24,7 @@ namespace Nuke.Common.Tools.GitVersion
     {
         public bool DisableOnUnix { get; set; }
 
-        public override object GetValue(MemberInfo member, Type buildType)
+        public override object GetValue(MemberInfo member, NukeBuild build)
         {
             // TODO: https://github.com/GitTools/GitVersion/issues/1097
             if (EnvironmentInfo.IsUnix && DisableOnUnix)
