@@ -19,6 +19,8 @@
       "help": "The <c>dotnet test</c> command is used to execute unit tests in a given project. Unit tests are console application projects that have dependencies on the unit test framework (for example, MSTest, NUnit, or xUnit) and the dotnet test runner for the unit testing framework. These are packaged as NuGet packages and are restored as ordinary dependencies for the project.",
       "postfix": "Test",
       "commonPropertySets": [
+        "restore",
+        "restore-runtime",
         "build"
       ],
       "definiteArgument": "test",
@@ -121,6 +123,8 @@
       "help": "<p>The <c>dotnet run</c> command provides a convenient option to run your application from the source code with one command. It's useful for fast iterative development from the command line. The command depends on the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-build\"><c>dotnet build</c></a> command to build the code. Any requirements for the build, such as that the project must be restored first, apply to <c>dotnet run</c> as well.</p><p>Output files are written into the default location, which is <c>bin/&lt;configuration&gt;/&lt;target&gt;</c>. For example if you have a <c>netcoreapp1.0</c> application and you run <c>dotnet run</c>, the output is placed in <c>bin/Debug/netcoreapp1.0</c>. Files are overwritten as needed. Temporary files are placed in the <c>obj</c> directory.</p><p>If the project specifies multiple frameworks, executing <c>dotnet run</c> results in an error unless the <c>-f|--framework &lt;FRAMEWORK&gt;</c> option is used to specify the framework.</p><p>The <c>dotnet run</c> command is used in the context of projects, not built assemblies. If you're trying to run a framework-dependent application DLL instead, you must use <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet\">dotnet</a> without a command. For example, to run <c>myapp.dll</c>, use: <c>dotnet myapp.dll</c></p><p>For more information on the <c>dotnet</c> driver, see the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/index\">.NET Core Command Line Tools (CLI)</a> topic.</p><p>In order to run the application, the <c>dotnet run</c> command resolves the dependencies of the application that are outside of the shared runtime from the NuGet cache. Because it uses cached dependencies, it's not recommended to use <c>dotnet run</c> to run applications in production. Instead, <a href=\"https://docs.microsoft.com/en-us/dotnet/core/deploying/index\">create a deployment</a> using the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish\"><c>dotnet publish</c></a> command and deploy the published output.</p>",
       "postfix": "Run",
       "commonPropertySets": [
+        "restore",
+        "restore-runtime",
         "build"
       ],
       "definiteArgument": "run",
@@ -139,12 +143,6 @@
             "help": "Builds and runs the app using the specified framework. The framework must be specified in the project file."
           },
           {
-            "name": "Force",
-            "type": "bool",
-            "format": "--project {value}",
-            "help": "Set this flag to force all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting <em>project.assets.json</em>."
-          },
-          {
             "name": "LaunchProfile",
             "type": "string",
             "format": "--launch-profile {value}",
@@ -155,12 +153,6 @@
             "type": "bool",
             "format": "--no-build",
             "help": "Doesn't build the project before running."
-          },
-          {
-            "name": "NoDependencies",
-            "type": "bool",
-            "format": "--no-dependencies",
-            "help": "Set this flag to ignore project to project references and only restore the root project."
           },
           {
             "name": "NoLaunchProfile",
@@ -181,12 +173,6 @@
             "help": "Specifies the path and name of the project file. (See the NOTE.) It defaults to the current directory if not specified."
           },
           {
-            "name": "Runtime",
-            "type": "string",
-            "format": "--runtime {value}",
-            "help": "Specifies the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/rid-catalog\">RID catalog</a>."
-          },
-          {
             "name": "ApplicationArguments",
             "type": "string",
             "format": "-- {value}",
@@ -199,6 +185,10 @@
     {
       "help": "<p>The <c>dotnet restore</c> command uses NuGet to restore dependencies as well as project-specific tools that are specified in the project file. By default, the restoration of dependencies and tools are performed in parallel.</p><p>Starting with .NET Core 2.0, you don't have to run <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-restore\"><c>dotnet restore</c></a> because it's run implicitly by all commands, such as <c>dotnet build</c> and <c>dotnet run</c>, that require a restore to occur. It's still a valid command in certain scenarios where doing an explicit restore makes sense, such as <a href=\"https://docs.microsoft.com/en-us/vsts/build-release/apps/aspnet/build-aspnet-core\">continuous integration builds in Visual Studio Team Services</a> or in build systems that need to explicitly control the time at which the restore occurs.</p><p>In order to restore the dependencies, NuGet needs the feeds where the packages are located. Feeds are usually provided via the <em>NuGet.config</em> configuration file. A default configuration file is provided when the CLI tools are installed. You specify additional feeds by creating your own <em>NuGet.config</em> file in the project directory. You also specify additional feeds per invocation at a command prompt.</p><p>For dependencies, you specify where the restored packages are placed during the restore operation using the <c>--packages</c> argument. If not specified, the default NuGet package cache is used, which is found in the <c>.nuget/packages</c> directory in the user's home directory on all operating systems (for example, <em>/home/user1</em> on Linux or <em>C:\\Users\\user1</em> on Windows).</p><p>For project-specific tooling, <c>dotnet restore</c> first restores the package in which the tool is packed, and then proceeds to restore the tool's dependencies as specified in its project file.</p><p>The behavior of the <c>dotnet restore</c> command is affected by some of the settings in the <em>Nuget.Config</em> file, if present. For example, setting the <c>globalPackagesFolder</c> in <em>NuGet.Config</em> places the restored NuGet packages in the specified folder. This is an alternative to specifying the <c>--packages</c> option on the <c>dotnet restore</c> command. For more information, see the <a href=\"https://docs.microsoft.com/nuget/schema/nuget-config-file\">NuGet.Config reference</a>.</p>",
       "postfix": "Restore",
+      "commonPropertySets": [
+        "restore",
+        "restore-runtime"
+      ],
       "definiteArgument": "restore",
       "settingsClass": {
         "properties": [
@@ -216,54 +206,6 @@
             "help": "The NuGet configuration file (<em>NuGet.config</em>) to use for the restore operation."
           },
           {
-            "name": "DisableParallel",
-            "type": "bool",
-            "format": "--disable-parallel",
-            "help": "Disables restoring multiple projects in parallel."
-          },
-          {
-            "name": "Force",
-            "type": "bool",
-            "format": "--force",
-            "help": "Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file."
-          },
-          {
-            "name": "IgnoreFailedSources",
-            "type": "bool",
-            "format": "--ignore-failed-sources",
-            "help": "Only warn about failed sources if there are packages meeting the version requirement."
-          },
-          {
-            "name": "NoCache",
-            "type": "bool",
-            "format": "--no-cache",
-            "help": "Specifies to not cache packages and HTTP requests."
-          },
-          {
-            "name": "NoDependencies",
-            "type": "bool",
-            "format": "--no-dependencies",
-            "help": "When restoring a project with project-to-project (P2P) references, restore the root project and not the references."
-          },
-          {
-            "name": "PackageDirectory",
-            "type": "string",
-            "format": "--packages {value}",
-            "help": "Specifies the directory for restored packages."
-          },
-          {
-            "name": "Runtimes",
-            "type": "List<string>",
-            "format": "--runtime {value}",
-            "help": "Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/rid-catalog\">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times."
-          },
-          {
-            "name": "Sources",
-            "type": "List<string>",
-            "format": "--source {value}",
-            "help": "Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times."
-          },
-          {
             "name": "Verbosity",
             "type": "DotNetVerbosity",
             "format": "--verbosity {value}",
@@ -276,6 +218,8 @@
       "help": "<p>The <c>dotnet pack</c> command builds the project and creates NuGet packages. The result of this command is a NuGet package. If the <c>--include-symbols</c> option is present, another package containing the debug symbols is created.</p><p>NuGet dependencies of the packed project are added to the <em>.nuspec</em> file, so they're properly resolved when the package is installed. Project-to-project references aren't packaged inside the project. Currently, you must have a package per project if you have project-to-project dependencies.</p><p>By default, <c>dotnet pack</c> builds the project first. If you wish to avoid this behavior, pass the <c>--no-build</c> option. This is often useful in Continuous Integration (CI) build scenarios where you know the code was previously built.</p><p>You can provide MSBuild properties to the <c>dotnet pack</c> command for the packing process. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/csproj#nuget-metadata-properties\">NuGet metadata properties</a> and the <a href=\"https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference\">MSBuild Command-Line Reference</a>.</p>",
       "postfix": "Pack",
       "commonPropertySets": [
+        "restore",
+        "restore-runtime",
         "build-pack"
       ],
       "definiteArgument": "pack",
@@ -293,12 +237,6 @@
             "type": "string",
             "format": "--configuration {value}",
             "help": "Configuration to use when building the project. If not specified, configuration defaults to <c>Debug</c>."
-          },
-          {
-            "name": "Force",
-            "type": "bool",
-            "format": "--force",
-            "help": "Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file."
           },
           {
             "name": "IncludeSource",
@@ -319,12 +257,6 @@
             "help": "Don't build the project before packing."
           },
           {
-            "name": "NoDependencies",
-            "type": "bool",
-            "format": "--no-dependencies",
-            "help": "When restoring a project with project-to-project (P2P) references, restore the root project and not the references."
-          },
-          {
             "name": "NoRestore",
             "type": "bool",
             "format": "--no-restore",
@@ -335,12 +267,6 @@
             "type": "string",
             "format": "--output {value}",
             "help": "Places the built packages in the directory specified."
-          },
-          {
-            "name": "Runtime",
-            "type": "string",
-            "format": "--runtime {value}",
-            "help": "Specifies the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/rid-catalog\">RID catalog</a>."
           },
           {
             "name": "Serviceable",
@@ -367,6 +293,7 @@
       "help": "<p>The <c>dotnet build</c> command builds the project and its dependencies into a set of binaries. The binaries include the project's code in Intermediate Language (IL) files with a <em>.dll</em> extension and symbol files used for debugging with a <em>.pdb</em> extension. A dependencies JSON file (<em>*.deps.json</em>) is produced that lists the dependencies of the application. A <em>.runtimeconfig.json</em> file is produced, which specifies the shared runtime and its version for the application.</p><p>If the project has third-party dependencies, such as libraries from NuGet, they're resolved from the NuGet cache and aren't available with the project's built output. With that in mind, the product of <c>dotnet build</c>d isn't ready to be transferred to another machine to run. This is in contrast to the behavior of the .NET Framework in which building an executable project (an application) produces output that's runnable on any machine where the .NET Framework is installed. To have a similar experience with .NET Core, you use the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish\"><c>dotnet publish</c></a> command. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/deploying/index\">.NET Core Application Deployment</a>.</p><p>Building requires the <em>project.assets.json</em> file, which lists the dependencies of your application. The file is created <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-restore\"><c>dotnet restore</c></a> is executed. Without the assets file in place, the tooling cannot resolve reference assemblies, which will result in errors. With .NET Core 1.x SDK, you needed to explicitily run the <c>dotnet restore</c> before running <c>dotnet build</c>. Starting with .NET Core 2.0 SDK, <c>dotnet restore</c> runs implicitily when you run <c>dotnet build</c>. If you want to disable implicit restore when running the build command, you can pass the <c>--no-restore</c> option.</p><p><c>dotnet build</c> uses MSBuild to build the project; thus, it supports both parallel and incremental builds. Refer to <a href=\"https://docs.microsoft.com/visualstudio/msbuild/incremental-builds\">Incremental Builds</a> for more information.</p><p>In addition to its options, the <c>dotnet build</c> command accepts MSBuild options, such as <c>/p</c> for setting properties or <c>/l</c> to define a logger. Learn more about these options in the <a href=\"https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference\">MSBuild Command-Line Reference</a>.</p>",
       "postfix": "Build",
       "commonPropertySets": [
+        "restore",
         "build"
       ],
       "definiteArgument": "build",
@@ -390,18 +317,6 @@
             "type": "string",
             "format": "--framework {value}",
             "help": "Compiles for a specific <a href=\"https://docs.microsoft.com/en-us/dotnet/standard/frameworks\">framework</a>. The framework must be defined in the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/csproj\">project file</a>."
-          },
-          {
-            "name": "Force",
-            "type": "bool",
-            "format": "--force",
-            "help": "Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file."
-          },
-          {
-            "name": "NoDependencies",
-            "type": "bool",
-            "format": "--no-dependencies",
-            "help": "Ignores project-to-project (P2P) references and only builds the root project specified to build."
           },
           {
             "name": "NoIncremental",
@@ -492,6 +407,7 @@
       "help": "<c>dotnet publish</c> compiles the application, reads through its dependencies specified in the project file, and publishes the resulting set of files to a directory. The output will contain the following:<para/><ul><li>Intermediate Language (IL) code in an assembly with a <em>dll</em> extension.</li><li><em>.deps.json</em> file that contains all of the dependencies of the project.</li><li><em>.runtime.config.json</em> file that specifies the shared runtime that the application expects, as well as other configuration options for the runtime (for example, garbage collection type).</li><li>The application's dependencies. These are copied from the NuGet cache into the output folder.</li></ul><para/>The <c>dotnet publish</c> command's output is ready for deployment to a hosting system (for example, a server, PC, Mac, laptop) for execution and is the only officially supported way to prepare the application for deployment. Depending on the type of deployment that the project specifies, the hosting system may or may not have the .NET Core shared runtime installed on it. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/deploying/index\">.NET Core Application Deployment</a>. For the directory structure of a published application, see <a href=\"https://docs.microsoft.com/en-us/aspnet/core/hosting/directory-structure\">Directory structure</a>.",
       "postfix": "Publish",
       "commonPropertySets": [
+        "restore",
         "build"
       ],
       "definiteArgument": "publish",
@@ -516,22 +432,10 @@
             "help": "Publishes the application for the specified <a href=\"https://docs.microsoft.com/en-us/dotnet/standard/frameworks\">target framework</a>. You must specify the target framework in the project file."
           },
           {
-            "name": "Force",
-            "type": "bool",
-            "format": "--force",
-            "help": "Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file."
-          },
-          {
             "name": "Manifest",
             "type": "string",
             "format": "--manifest {value}",
             "help": "Specifies one or several <a href=\"https://docs.microsoft.com/en-us/dotnet/core/deploying/runtime-store\">target manifests</a> to use to trim the set of packages published with the app. The manifest file is part of the output of the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-store\"><c>dotnet store</c></a> command. To specify multiple manifests, add a <c>--manifest</c> option for each manifest. This option is available starting with .NET Core 2.0 SDK."
-          },
-          {
-            "name": "NoDependencies",
-            "type": "bool",
-            "format": "--no-dependencies",
-            "help": "Ignores project-to-project references and only restores the root project."
           },
           {
             "name": "NoRestore",
@@ -646,6 +550,82 @@
     }
   ],
   "commonTaskPropertySets": {
+    "restore": [
+      {
+        "name": "DisableParallel",
+        "type": "bool",
+        "format": "--disable-parallel",
+        "help": "Disables restoring multiple projects in parallel."
+      },
+      {
+        "name": "Force",
+        "type": "bool",
+        "format": "--force",
+        "help": "Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file."
+      },
+      {
+        "name": "IgnoreFailedSources",
+        "type": "bool",
+        "format": "--ignore-failed-sources",
+        "help": "Only warn about failed sources if there are packages meeting the version requirement."
+      },
+      {
+        "name": "NoCache",
+        "type": "bool",
+        "format": "--no-cache",
+        "help": "Specifies to not cache packages and HTTP requests."
+      },
+      {
+        "name": "NoDependencies",
+        "type": "bool",
+        "format": "--no-dependencies",
+        "help": "When restoring a project with project-to-project (P2P) references, restore the root project and not the references."
+      },
+      {
+        "name": "PackageDirectory",
+        "type": "string",
+        "format": "--packages {value}",
+        "help": "Specifies the directory for restored packages."
+      },
+      {
+        "name": "Sources",
+        "type": "List<string>",
+        "format": "--source {value}",
+        "help": "Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times."
+      },
+      {
+        "name": "UseLockFile",
+        "type": "bool",
+        "format": "--use-lock-file",
+        "help": "Enables project lock file to be generated and used with restore."
+      },
+      {
+        "name": "LockedMode",
+        "type": "bool",
+        "format": "--locked-mode",
+        "help": "Don't allow updating project lock file."
+      },
+      {
+        "name": "LockFilePath",
+        "type": "string",
+        "format": "--lock-file-path {value}",
+        "help": "Output location where project lock file is written. By default, this is 'PROJECT_ROOT\\packages.lock.json'."
+      },
+      {
+        "name": "ForceEvaluate",
+        "type": "bool",
+        "format": "--force-evaluate",
+        "help": "Forces restore to reevaluate all dependencies even if a lock file already exists."
+      }
+    ],
+    "restore-runtime": [
+      {
+        "name": "Runtime",
+        "type": "string",
+        "format": "--runtime {value}",
+        "help": "Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/rid-catalog\">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times."
+      }
+    ],
     "build": [
       {
         "name": "Properties",
