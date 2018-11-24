@@ -36,7 +36,7 @@ namespace Nuke.Common.Execution
                 
                 Logger.OutputSink = build.OutputSink;
                 Logger.LogLevel = NukeBuild.LogLevel;
-                NuGetPackageResolver.DefaultPackagesConfigFile = build.PackagesConfigFile;
+                ToolPathResolver.NuGetPackagesConfigFile = build.NuGetPackagesConfigFile;
 
                 Logger.Log($"NUKE Execution Engine {typeof(BuildExecutor).Assembly.GetInformationalText()}");
                 Logger.Log(FigletTransform.GetText("NUKE"));

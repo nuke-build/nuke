@@ -97,9 +97,9 @@ namespace Nuke.Common
         }
 
         [CanBeNull]
-        protected internal virtual string PackagesConfigFile =>
+        protected internal virtual string NuGetPackagesConfigFile =>
             BuildProjectDirectory != null
-                ? NuGetPackageResolver.GetPackageConfigFile(BuildProjectDirectory)
+                ? NuGetPackageResolver.GetPackagesConfigFile(BuildProjectDirectory)
                 : null;
     }
 }
