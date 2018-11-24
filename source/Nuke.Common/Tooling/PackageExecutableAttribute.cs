@@ -52,7 +52,7 @@ namespace Nuke.Common.Tooling
             _packageExecutable = EnvironmentInfo.Is32Bit ? packageExecutable32 : packageExecutable64;
         }
 
-        public override object GetValue(MemberInfo member, Type buildType)
+        public override object GetValue(MemberInfo member, NukeBuild build)
         {
             var toolPath = ToolPathResolver.TryGetEnvironmentExecutable($"{member.Name.ToUpperInvariant()}_EXE") ??
                            ToolPathResolver.GetPackageExecutable(_packageId, _packageExecutable, Framework);

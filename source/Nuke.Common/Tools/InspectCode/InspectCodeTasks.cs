@@ -66,7 +66,7 @@ namespace Nuke.Common.Tools.InspectCode
 
         private static IReadOnlyCollection<NuGetPackageResolver.InstalledPackage> GetInstalledPlugins()
         {
-            return NuGetPackageResolver.GetLocalInstalledPackages()
+            return NuGetPackageResolver.GetLocalInstalledPackages(ToolPathResolver.NuGetPackagesConfigFile)
                 .Where(x => x.Metadata.GetDependencyGroups().SelectMany(y => y.Packages).Any(y => y.Id == "Wave"))
                 .ToList();
         }

@@ -59,7 +59,7 @@ namespace Nuke.Common.ProjectModel
         [CanBeNull]
         public static string TargetFramework { get; set; }
         
-        public override object GetValue(MemberInfo member, Type buildType)
+        public override object GetValue(MemberInfo member, NukeBuild build)
         {
             return ProjectModelTasks.ParseSolution(
                 GetSolutionFile(member.Name),

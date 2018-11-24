@@ -23,6 +23,6 @@ namespace Nuke.Common.Execution
     public abstract class InjectionAttributeBase : Attribute
     {
         [CanBeNull]
-        public abstract object GetValue(MemberInfo member, Type buildType);
+        public abstract object GetValue(MemberInfo member, NukeBuild build);
     }
 }

@@ -3,12 +3,15 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Nuke.Common.Tooling;
+using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Tools.GitVersion
 {
@@ -30,6 +33,21 @@ namespace Nuke.Common.Tools.GitVersion
                 property.Writable = true;
                 return property;
             }
+        }
+
+        private static string GetToolPath()
+        {
+            var package = new[]
+                          {
+                              "GitVersion.CommandLine.DotNetCore",
+                              "GitVersion.CommandLine"
+                          }
+                .Select(x => NuGetPackageResolver.TryGetLocalInstalledPackage(x, ToolPathResolver.NuGetPackagesConfigFile))
+                .WhereNotNull()
+                .FirstOrDefault().NotNull("package != null");
+            return Directory.GetFiles(package.Directory, "GitVersion.*", SearchOption.AllDirectories)
+                .FirstOrDefault(x => x.EndsWithOrdinalIgnoreCase(".dll") || x.EndsWithOrdinalIgnoreCase(".exe"))
+                .NotNull("executable != null");
         }
     }
 

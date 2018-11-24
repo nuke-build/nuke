@@ -13,6 +13,8 @@ namespace Nuke.Common.Tooling
     [PublicAPI]
     public static class ToolPathResolver
     {
+        public static string NuGetPackagesConfigFile;
+        
         [CanBeNull]
         public static string TryGetEnvironmentExecutable(string environmentExecutable)
         {
@@ -29,13 +31,19 @@ namespace Nuke.Common.Tooling
         {
             ControlFlow.Assert(packageId != null && packageExecutable != null, "packageId != null && packageExecutable != null");
 
-            var packageDirectory =
-                new[]
-                {
-                    NukeBuild.BuildAssemblyDirectory / packageId,
-                    PaketPackageResolver.TryGetLocalInstalledPackageDirectory(packageId),
-                    NuGetPackageResolver.TryGetLocalInstalledPackage(packageId)?.Directory
-                }.FirstOrDefault(Directory.Exists).NotNull("packageDirectory != null");
+            string GetPackagesDirectory()
+            {
+                var embeddedDirectory = NukeBuild.BuildAssemblyDirectory / packageId;
+                if (Directory.Exists(embeddedDirectory))
+                    return embeddedDirectory;
+
+                if (NuGetPackagesConfigFile != null)
+                    return NuGetPackageResolver.GetLocalInstalledPackage(packageId, NuGetPackagesConfigFile)?.Directory;
+
+                return PaketPackageResolver.TryGetLocalInstalledPackageDirectory(packageId);
+            }
+
+            var packageDirectory = GetPackagesDirectory().NotNull("packageDirectory != null");
 
             var executables = Directory.GetFiles(packageDirectory, packageExecutable, SearchOption.AllDirectories);
             ControlFlow.Assert(executables.Length > 0, $"Could not find '{packageExecutable}' inside '{packageDirectory}'.");

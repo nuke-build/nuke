@@ -10,7 +10,7 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Execution
 {
-    internal static class ReflectionService
+    public static class ReflectionService
     {
         public const BindingFlags All = Static | Instance | BindingFlags.FlattenHierarchy;
 
