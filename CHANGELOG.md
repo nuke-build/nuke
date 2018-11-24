@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed bootstrapping scripts to exit without closing PowerShell
+- Fixed expansion for Unix environment variables
+- Fixed separator for target parameters
+- Fixed `ToolPathResolver` to resolve decidedly 
+- Fixed `GitVersionTasks` to resolve based on `GitVersion.CommandLine.DotNetCore` package
+- Fixed `InjectionAttributeBase` to pass build instance
+- Fixed `ReflectionService` to be public to allow usage in addons
+- Fixed `DotNetTasks` to expose `restore` related parameters for `test`, `build`, `publish`, `pack`, `run`
 
 ## [0.12.0] / 2018-11-15
 - Changed `NukeBuild` properties to be static
@@ -14,7 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added parameter resolution for `Enumeration` subclasses
 - Added `PathExecutableAttribute` and `PackageExecutableAttribute` for `Tool` delegate resolution
 - Added `PackPackageToolsTask` for global tool packaging
-- Added `MSpeckTasks`
+- Added `MSpecTasks`
 - Fixed bootstrapping scripts to install by channel instead of latest version
 - Fixed Glob package version to 0.3.2
 - Fixed `Arguments` passing of `secret` parameter
