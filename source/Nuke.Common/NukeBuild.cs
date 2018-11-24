@@ -52,6 +52,7 @@ namespace Nuke.Common
         internal const string RootDirectoryParameterName = "Root";
         internal const string InvokedTargetsParameterName = "Target";
         internal const string SkippedTargetsParameterName = "Skip";
+        internal const string TargetsSeparator = "+";
         
         internal static string CompletionFile => File.Exists(RootDirectory / CompletionFileName)
             ? RootDirectory / CompletionFileName
@@ -96,9 +97,9 @@ namespace Nuke.Common
         }
 
         [CanBeNull]
-        protected internal virtual string PackagesConfigFile =>
+        protected internal virtual string NuGetPackagesConfigFile =>
             BuildProjectDirectory != null
-                ? NuGetPackageResolver.GetPackageConfigFile(BuildProjectDirectory)
+                ? NuGetPackageResolver.GetPackagesConfigFile(BuildProjectDirectory)
                 : null;
     }
 }

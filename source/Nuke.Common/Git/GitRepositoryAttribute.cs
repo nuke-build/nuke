@@ -28,7 +28,7 @@ namespace Nuke.Common.Git
         [CanBeNull]
         public string Remote { get; set; }
 
-        public override object GetValue(MemberInfo member, Type buildType)
+        public override object GetValue(MemberInfo member, NukeBuild build)
         {
             return ControlFlow.SuppressErrors(() =>
                 GitRepository.FromLocalDirectory(

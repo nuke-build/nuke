@@ -39,7 +39,7 @@ namespace Nuke.Common.Tooling
             _name = name;
         }
 
-        public override object GetValue(MemberInfo member, Type buildType)
+        public override object GetValue(MemberInfo member, NukeBuild build)
         {
             var name = _name ?? member.Name;
             var toolPath = ToolPathResolver.TryGetEnvironmentExecutable($"{name.ToUpperInvariant()}_EXE") ??

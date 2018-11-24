@@ -33,10 +33,11 @@ namespace Nuke.GlobalTool
         private static int Setup(string[] args, [CanBeNull] string rootDirectory, [CanBeNull] string buildScript)
         {
             #region Basic
-            
-            var nukeLatestLocalVersion = NuGetPackageResolver.GetGlobalInstalledPackage("Nuke.Common", version: null)?.Version.ToString();
+
             var nukeLatestReleaseVersion = NuGetPackageResolver.GetLatestPackageVersion("Nuke.Common", includePrereleases: false);
             var nukeLatestPrereleaseVersion = NuGetPackageResolver.GetLatestPackageVersion("Nuke.Common", includePrereleases: true);
+            var nukeLatestLocalVersion = NuGetPackageResolver.GetGlobalInstalledPackage("Nuke.Common", version: null, packagesConfigFile: null)
+                ?.Version.ToString();
 
             if (rootDirectory == null)
             {

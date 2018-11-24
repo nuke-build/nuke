@@ -27,8 +27,6 @@ namespace Nuke.Common.Tooling
     {
         private const int c_defaultTimeout = 2000;
         
-        public static string DefaultPackagesConfigFile;
-
         public static async Task<string> GetLatestPackageVersion(string packageId, bool includePrereleases, int? timeout = null)
         {
             try
@@ -47,18 +45,16 @@ namespace Nuke.Common.Tooling
         [CanBeNull]
         public static InstalledPackage TryGetLocalInstalledPackage(
             string packageId,
-            string packagesConfigFile = null,
+            string packagesConfigFile,
             bool includeDependencies = false)
         {
-            packagesConfigFile = packagesConfigFile ?? DefaultPackagesConfigFile;
-
             return GetLocalInstalledPackages(packagesConfigFile, includeDependencies)
                 .FirstOrDefault(x => x.Id.EqualsOrdinalIgnoreCase(packageId));
         }
         
         public static InstalledPackage GetLocalInstalledPackage(
             string packageId,
-            string packagesConfigFile = null,
+            string packagesConfigFile,
             bool includeDependencies = false)
         {
             return TryGetLocalInstalledPackage(packageId, packagesConfigFile, includeDependencies)
@@ -68,11 +64,9 @@ namespace Nuke.Common.Tooling
         // TODO: add HasLocalInstalledPackage() ?
         // ReSharper disable once CyclomaticComplexity
         public static IEnumerable<InstalledPackage> GetLocalInstalledPackages(
-            string packagesConfigFile = null,
+            string packagesConfigFile,
             bool includeDependencies = false)
         {
-            packagesConfigFile = packagesConfigFile ?? DefaultPackagesConfigFile;
-            
             ControlFlow.Assert(!IncludesDependencies(packagesConfigFile) || includeDependencies,
                 $"!IncludesDependencies({packagesConfigFile}) || includeDependencies");
             var packagesDirectory = GetPackagesDirectory(packagesConfigFile);
@@ -133,10 +127,10 @@ namespace Nuke.Common.Tooling
         }
 
         [CanBeNull]
-        public static InstalledPackage GetGlobalInstalledPackage(string packageId, string version = null, string packagesDirectory = null)
+        public static InstalledPackage GetGlobalInstalledPackage(string packageId, [CanBeNull] string version, [CanBeNull] string packagesConfigFile)
         {
             VersionRange.TryParse(version != null && version.Contains("*") ? $"{version}" : $"[{version}]", out var versionRange);
-            return GetGlobalInstalledPackage(packageId, versionRange, packagesDirectory);
+            return GetGlobalInstalledPackage(packageId, versionRange, packagesConfigFile);
         }
 
         // TODO: add parameter for auto download?
@@ -144,15 +138,15 @@ namespace Nuke.Common.Tooling
         [CanBeNull]
         public static InstalledPackage GetGlobalInstalledPackage(
             string packageId,
-            VersionRange versionRange = null,
-            string packagesDirectory = null,
+            [CanBeNull] VersionRange versionRange,
+            [CanBeNull] string packagesConfigFile,
             bool? includePrereleases = null)
         {
             packageId = packageId.ToLowerInvariant();
-            packagesDirectory = packagesDirectory ?? GetPackagesDirectory();
+            var packagesDirectory = GetPackagesDirectory(packagesConfigFile);
 
             var packagesDirectoryInfo = new DirectoryInfo(packagesDirectory);
-            var packageFiles = packagesDirectoryInfo
+            var packages = packagesDirectoryInfo
                 .GetDirectories(packageId)
                 .SelectMany(x => x.GetDirectories())
                 .SelectMany(x => x.GetFiles($"{packageId}*.nupkg"))
@@ -161,8 +155,9 @@ namespace Nuke.Common.Tooling
                     .SelectMany(x => x.GetFiles($"{packageId}*.nupkg")))
                 .Select(x => x.FullName);
 
-            var candidatePackages = packageFiles.Select(x => new InstalledPackage(x))
-                .Where(x => x.Id.EqualsOrdinalIgnoreCase(packageId)) // packageFiles can contain wrong packages
+            var candidatePackages = packages.Select(x => new InstalledPackage(x))
+                // packages can contain false positives due to present/missing version specification
+                .Where(x => x.Id.EqualsOrdinalIgnoreCase(packageId))
                 .Where(x => !x.Version.IsPrerelease || !includePrereleases.HasValue || includePrereleases.Value)
                 .OrderByDescending(x => x.Version)
                 .ToList();
@@ -173,16 +168,16 @@ namespace Nuke.Common.Tooling
         }
 
         [CanBeNull]
-        public static string GetPackageConfigFile(string projectDirectory)
+        public static string GetPackagesConfigFile(string projectDirectory)
         {
             var projectDirectoryInfo = new DirectoryInfo(projectDirectory);
-            var packageConfigFile = projectDirectoryInfo.GetFiles("packages.config").SingleOrDefault()
+            var packagesConfigFile = projectDirectoryInfo.GetFiles("packages.config").SingleOrDefault()
                                     ?? projectDirectoryInfo.GetFiles("*.csproj").SingleOrDefaultOrError("Directory contains multiple project files.");
-            return packageConfigFile?.FullName;
+            return packagesConfigFile?.FullName;
         }
 
         // TODO: check for config ( repositoryPath / globalPackagesFolder )
-        public static string GetPackagesDirectory(string packagesConfigFile = null)
+        public static string GetPackagesDirectory([CanBeNull] string packagesConfigFile)
         {
             string TryGetFromEnvironmentVariable()
                 => EnvironmentInfo.Variable("NUGET_PACKAGES");

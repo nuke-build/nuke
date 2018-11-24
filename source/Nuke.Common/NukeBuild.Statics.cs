@@ -27,7 +27,7 @@ namespace Nuke.Common
             BuildProjectDirectory = GetBuildProjectDirectory(BuildAssemblyDirectory);
 
             InvokedTargets = ParameterService.Instance.GetParameter(() => InvokedTargets) ??
-                             ParameterService.Instance.GetPositionalCommandLineArguments<string>(separator: '+') ??
+                             ParameterService.Instance.GetPositionalCommandLineArguments<string>(separator: TargetsSeparator.Single()) ??
                              new[] { BuildExecutor.DefaultTarget };
             SkippedTargets = ParameterService.Instance.GetParameter(() => SkippedTargets);
 
@@ -92,13 +92,13 @@ namespace Nuke.Common
         /// <summary>
         /// Gets the list of targets that were invoked.
         /// </summary>
-        [Parameter("List of targets to be executed. Default is '{default_target}'.", Name = InvokedTargetsParameterName)]
+        [Parameter("List of targets to be executed. Default is '{default_target}'.", Name = InvokedTargetsParameterName, Separator = TargetsSeparator)]
         public static string[] InvokedTargets { get; }
         
         /// <summary>
         /// Gets the list of targets that are skipped.
         /// </summary>
-        [Parameter("List of targets to be skipped. Empty list skips all dependencies.", Name = SkippedTargetsParameterName, Separator = "+")]
+        [Parameter("List of targets to be skipped. Empty list skips all dependencies.", Name = SkippedTargetsParameterName, Separator = TargetsSeparator)]
         public static string[] SkippedTargets { get; }
         
         /// <summary>
