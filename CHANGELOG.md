@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed globbing related issues
+- Fixed shell-completion to not split common names
+- Fixed bootstrapping scripts to guard extraction of SDK version
+- Fixed help text to be printed before value injection
 
 ## [0.12.1] / 2018-11-24
 - Fixed bootstrapping scripts to exit without closing PowerShell
