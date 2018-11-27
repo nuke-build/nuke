@@ -135,19 +135,19 @@ EndGlobal
         }
 
         [Theory]
-        [InlineData("", null, new[] { "Compile", "Pack", "--target", "--api-key" })]
-        [InlineData("-", null, new[] { "--target", "--api-key" })]
+        [InlineData("", null, new[] { "Compile", "Pack", "--target", "--api-key", "--nuget-source" })]
+        [InlineData("-", null, new[] { "--target", "--api-key", "--nuget-source"})]
         [InlineData("-t", null, new[] { "-target" })]
         [InlineData("-Api", null, new[] { "-ApiKey" })]
         [InlineData("--api", null, new[] { "--api-key" })]
-        [InlineData("-ApiKey ", null, new[] { "--target" } )]
-        [InlineData("--api-key ", null, new[] { "--target" } )]
-        [InlineData("--target ", null, new[] { "Compile", "Pack", "--api-key" })]
+        [InlineData("-ApiKey ", null, new[] { "--target", "--nuget-source" } )]
+        [InlineData("--api-key ", null, new[] { "--target", "--nuget-source" } )]
+        [InlineData("--target ", null, new[] { "Compile", "Pack", "--api-key", "--nuget-source" })]
         [InlineData("--target P", null, new[] { "Pack" })]
-        [InlineData("--target -", null, new[] { "--api-key" })]
-        [InlineData("--target Compile ", null, new[] { "Pack", "--api-key" })]
+        [InlineData("--target -", null, new[] { "--api-key", "--nuget-source" })]
+        [InlineData("--target Compile ", null, new[] { "Pack", "--api-key", "--nuget-source" })]
         [InlineData("P", null, new[] { "Pack" })]
-        [InlineData("Pack ", null, new[] { "Compile", "--target", "--api-key" })]
+        [InlineData("Pack ", null, new[] { "Compile", "--target", "--api-key", "--nuget-source" })]
         [InlineData("Pack comp", null, new[] { "compile" })]
         public void TestGetRelevantCompletionItems(string words, int? position, string[] expectedItems)
         {
@@ -155,7 +155,8 @@ EndGlobal
                 new Dictionary<string, string[]>
                 {
                     { NukeBuild.InvokedTargetsParameterName, new[] { "Compile", "Pack" } },
-                    { "ApiKey", null }
+                    { "ApiKey", null },
+                    { "NuGetSource", null }
                 };
             Program.GetRelevantCompletionItems(words, position, completionItems)
                 .Should()
