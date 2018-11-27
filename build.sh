@@ -43,6 +43,9 @@ function FirstJsonValue {
 # If global.json exists, load expected version
 if [ -f "$DOTNET_GLOBAL_FILE" ]; then
     DOTNET_VERSION=$(FirstJsonValue "version" $(cat "$DOTNET_GLOBAL_FILE"))
+    if [ "$DOTNET_VERSION" == ""  ]; then
+        unset DOTNET_VERSION
+    fi
 fi
 
 # If dotnet is installed locally, and expected version is not set or installation matches the expected version

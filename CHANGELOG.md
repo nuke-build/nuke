@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.12.2] / 2018-11-27
+- Fixed globbing related issues
+- Fixed shell-completion to not split common names
+- Fixed bootstrapping scripts to guard extraction of SDK version
+- Fixed help text to be printed before value injection
+
 ## [0.12.1] / 2018-11-24
 - Fixed bootstrapping scripts to exit without closing PowerShell
 - Fixed expansion for Unix environment variables
@@ -203,7 +209,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.12.1...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.12.2...HEAD
+[0.12.2]: https://github.com/nuke-build/nuke/compare/0.12.1...0.12.2
 [0.12.1]: https://github.com/nuke-build/nuke/compare/0.12.0...0.12.1
 [0.12.0]: https://github.com/nuke-build/nuke/compare/0.11.1...0.12.0
 [0.11.1]: https://github.com/nuke-build/nuke/compare/0.11.0...0.11.1

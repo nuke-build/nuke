@@ -90,8 +90,14 @@ namespace Nuke.GlobalTool
                         continue;
 
                     if (currentWord == null || currentWord.TrimStart("-").Length == 0)
-                        suggestedItems.Add($"--{item.SplitCamelHumpsWithSeparator("-")}");
-                    else if (currentWord.IsParameter() && item.StartsWith(currentWord.GetParameterName(), StringComparison.OrdinalIgnoreCase))
+                    {
+                        suggestedItems.Add(
+                            new[] { "NuGet", "MSBuild" }
+                                .Aggregate(
+                                    $"--{item.SplitCamelHumpsWithSeparator("-")}",
+                                    (i, t) => i.Replace(t.SplitCamelHumpsWithSeparator("-"), t.ToLowerInvariant())));
+                    }
+                    else if (currentWord.IsParameter() && item.StartsWithOrdinalIgnoreCase(currentWord.GetParameterName()))
                     {
                         suggestedItems.Add(
                             (currentWord.StartsWith("--")
