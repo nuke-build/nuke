@@ -41,9 +41,9 @@ namespace Nuke.Common.Execution
                 Logger.Log($"NUKE Execution Engine {typeof(BuildExecutor).Assembly.GetInformationalText()}");
                 Logger.Log(FigletTransform.GetText("NUKE"));
 
+                HandleEarlyExits(build);
                 ProcessManager.CheckPathEnvironmentVariable();
                 InjectionService.InjectValues(build);
-                HandleEarlyExits(build);
 
                 executionList = TargetDefinitionLoader.GetExecutingTargets(build, NukeBuild.InvokedTargets, NukeBuild.SkippedTargets);
                 RequirementService.ValidateRequirements(executionList, build);
