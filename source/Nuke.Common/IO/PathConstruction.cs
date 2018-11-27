@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using Glob;
+using GlobExpressions;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 
