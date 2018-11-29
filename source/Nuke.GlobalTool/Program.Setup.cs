@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Text;
 using JetBrains.Annotations;
 using Nuke.Common;
+using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
@@ -52,20 +53,15 @@ namespace Nuke.GlobalTool
                 Logger.Warn("Could not find root directory. Falling back to working directory.");
                 rootDirectory = EnvironmentInfo.WorkingDirectory;
             }
+            
+            var buildProjectName = ConsoleHelper.PromptForInput("How should the build project be named?", "_build");
+            var buildDirectoryName = ConsoleHelper.PromptForInput("Where should the build project be located?", "./build");
 
-            var solutionFile = ConsoleHelper.PromptForChoice(
-                "Which solution should be the default?",
-                options: new DirectoryInfo(rootDirectory)
-                    .EnumerateFiles("*", SearchOption.AllDirectories)
-                    .Where(x => x.FullName.EndsWithOrdinalIgnoreCase(".sln"))
-                    .OrderByDescending(x => x.FullName)
-                    .Select(x => (x, GetRelativePath(rootDirectory, x.FullName)))
-                    .Concat((null, "None")).ToArray())?.FullName;
-            var solutionDirectory = solutionFile != null ? Path.GetDirectoryName(solutionFile) : null;
-
-            var targetPlatform = ConsoleHelper.PromptForChoice("How should the build project be bootstrapped?",
-                (PLATFORM_NETCORE, ".NET Core SDK"),
-                (PLATFORM_NETFX, ".NET Framework/Mono"));
+            var targetPlatform = !ParameterService.Instance.GetParameter<bool>("boot")
+                ? PLATFORM_NETCORE
+                : ConsoleHelper.PromptForChoice("What bootstrapping method should be used?",
+                    (PLATFORM_NETCORE, ".NET Core SDK"),
+                    (PLATFORM_NETFX, ".NET Framework/Mono"));
 
             var targetFramework = targetPlatform == PLATFORM_NETFX
                 ? FRAMEWORK_NET461
@@ -75,7 +71,7 @@ namespace Nuke.GlobalTool
 
             var projectFormat = targetPlatform == PLATFORM_NETCORE
                 ? FORMAT_SDK
-                : ConsoleHelper.PromptForChoice("What format should the build project use?",
+                : ConsoleHelper.PromptForChoice("What project format should be used?",
                     (FORMAT_SDK, "SDK-based Format: requires .NET Core SDK"),
                     (FORMAT_LEGACY, "Legacy Format: supported by all MSBuild/Mono versions"));
 
@@ -90,9 +86,16 @@ namespace Nuke.GlobalTool
                     .Where(x => x.Item2 != null)
                     .Distinct(x => x.Item2)
                     .Select(x => (x.Item2, $"{x.Item2} ({x.Item1})")).ToArray());
-
-            var buildDirectoryName = ConsoleHelper.PromptForInput("Where should the build project be located?", "./build");
-            var buildProjectName = ConsoleHelper.PromptForInput("What should be the name for the build project?", "_build");
+            
+            var solutionFile = ConsoleHelper.PromptForChoice(
+                "Which solution should be the default?",
+                options: new DirectoryInfo(rootDirectory)
+                    .EnumerateFiles("*", SearchOption.AllDirectories)
+                    .Where(x => x.FullName.EndsWithOrdinalIgnoreCase(".sln"))
+                    .OrderByDescending(x => x.FullName)
+                    .Select(x => (x, GetRelativePath(rootDirectory, x.FullName)))
+                    .Concat((null, "None")).ToArray())?.FullName;
+            var solutionDirectory = solutionFile != null ? Path.GetDirectoryName(solutionFile) : null;
 
             #endregion
 
