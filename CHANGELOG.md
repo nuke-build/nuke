@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed `EnvironmentInfo.Variables` not to be cached
+- Fixed `Glob` package reference in legacy template
+- Fixed error message for unresolvable root directory
+- Fixed global tool setup to hide choice of bootstrapping by default
+- Fixed `NuGetPackageResolver` assertion for dependency resolution
 
 ## [0.12.2] / 2018-11-27
 - Fixed globbing related issues
