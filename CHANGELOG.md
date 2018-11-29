@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.12.3] / 2018-11-29
+- Fixed `EnvironmentInfo.Variables` not to be cached
+- Fixed `Glob` package reference in legacy template
+- Fixed error message for unresolvable root directory
+- Fixed global tool setup to hide choice of bootstrapping by default
+- Fixed `NuGetPackageResolver` assertion for dependency resolution
+
 ## [0.12.2] / 2018-11-27
 - Fixed globbing related issues
 - Fixed shell-completion to not split common names
@@ -209,7 +216,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.12.2...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.12.3...HEAD
+[0.12.3]: https://github.com/nuke-build/nuke/compare/0.12.2...0.12.3
 [0.12.2]: https://github.com/nuke-build/nuke/compare/0.12.1...0.12.2
 [0.12.1]: https://github.com/nuke-build/nuke/compare/0.12.0...0.12.1
 [0.12.0]: https://github.com/nuke-build/nuke/compare/0.11.1...0.12.0

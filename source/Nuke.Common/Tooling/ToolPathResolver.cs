@@ -38,7 +38,13 @@ namespace Nuke.Common.Tooling
                     return embeddedDirectory;
 
                 if (NuGetPackagesConfigFile != null)
-                    return NuGetPackageResolver.GetLocalInstalledPackage(packageId, NuGetPackagesConfigFile)?.Directory;
+                {
+                    return NuGetPackageResolver.GetLocalInstalledPackage(
+                            packageId,
+                            NuGetPackagesConfigFile,
+                            resolveDependencies: false)
+                        ?.Directory;
+                }
 
                 return PaketPackageResolver.TryGetLocalInstalledPackageDirectory(packageId);
             }

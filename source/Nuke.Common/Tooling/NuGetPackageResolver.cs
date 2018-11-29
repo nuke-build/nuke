@@ -55,9 +55,9 @@ namespace Nuke.Common.Tooling
         public static InstalledPackage GetLocalInstalledPackage(
             string packageId,
             string packagesConfigFile,
-            bool includeDependencies = false)
+            bool resolveDependencies = true)
         {
-            return TryGetLocalInstalledPackage(packageId, packagesConfigFile, includeDependencies)
+            return TryGetLocalInstalledPackage(packageId, packagesConfigFile, resolveDependencies)
                 .NotNull($"Could not find package '{packageId}' via '{packagesConfigFile}'.");
         }
 
@@ -65,10 +65,8 @@ namespace Nuke.Common.Tooling
         // ReSharper disable once CyclomaticComplexity
         public static IEnumerable<InstalledPackage> GetLocalInstalledPackages(
             string packagesConfigFile,
-            bool includeDependencies = false)
+            bool resolveDependencies = true)
         {
-            ControlFlow.Assert(!IncludesDependencies(packagesConfigFile) || includeDependencies,
-                $"!IncludesDependencies({packagesConfigFile}) || includeDependencies");
             var packagesDirectory = GetPackagesDirectory(packagesConfigFile);
 
             var packageIds = XmlTasks.XmlPeek(
@@ -96,7 +94,7 @@ namespace Nuke.Common.Tooling
                 yield return packageData;
             }
 
-            if (includeDependencies)
+            if (resolveDependencies && !IsLegacyFile(packagesConfigFile))
             {
                 var packagesToCheck = new Queue<InstalledPackage>(installedPackages);
                 while (packagesToCheck.Any())
@@ -220,7 +218,7 @@ namespace Nuke.Common.Tooling
             return packagesDirectory;
         }
 
-        private static bool IsLegacyFile(string packagesConfigFile)
+        public static bool IsLegacyFile(string packagesConfigFile)
         {
             return packagesConfigFile.EndsWithOrdinalIgnoreCase(".config");
         }
