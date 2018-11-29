@@ -41,7 +41,7 @@
       <HintPath>_SOLUTION_DIRECTORY_\packages\Colorful.Console.1.0.7\lib\net461\Colorful.Console.dll</HintPath>
     </Reference>
     <Reference Include="Glob, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>_SOLUTION_DIRECTORY_\packages\Glob.0.3.2\lib\net46\Glob.dll</HintPath>
+      <HintPath>_SOLUTION_DIRECTORY_\packages\Glob.1.0.4\lib\net46\Glob.dll</HintPath>
     </Reference>
     <Reference Include="JetBrains.Annotations, Version=10.4.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <HintPath>_SOLUTION_DIRECTORY_\packages\JetBrains.Annotations.10.4.0\lib\net\JetBrains.Annotations.dll</HintPath>
