@@ -114,12 +114,18 @@ namespace Nuke.Common
 
             if (ParameterService.Instance.GetParameter<bool>(() => RootDirectory))
                 return (PathConstruction.AbsolutePath) EnvironmentInfo.WorkingDirectory;
+
+            var rootDirectory = (PathConstruction.AbsolutePath) FileSystemTasks.FindParentDirectory(
+                EnvironmentInfo.WorkingDirectory,
+                x => x.GetFiles(ConfigurationFileName).Any());
+            ControlFlow.Assert(rootDirectory != null,
+                new[]
+                {
+                    $"Could not locate '{ConfigurationFileName}' file while walking up from '{EnvironmentInfo.WorkingDirectory}'.",
+                    "Either create the file to mark the root directory, or use the --root parameter."
+                }.JoinNewLine());
             
-            return (PathConstruction.AbsolutePath) FileSystemTasks.FindParentDirectory(
-                    EnvironmentInfo.WorkingDirectory,
-                    x => x.GetFiles(ConfigurationFileName).Any())
-                .NotNull(
-                    $"Could not locate '{ConfigurationFileName}' file while walking up from working directory '{EnvironmentInfo.WorkingDirectory}'.");
+            return rootDirectory;
         }
 
         [CanBeNull]
