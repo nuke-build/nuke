@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -208,7 +208,7 @@ partial class Build : NukeBuild
                 .ForEach(x => DotNetNuGetPush(s => s
                     .SetTargetPath(x)
                     .SetSource(Source)
-                    .SetSymbolSource(SymbolSource)
+                    // .SetSymbolSource(SymbolSource)
                     .SetApiKey(ApiKey)));
 
             if (GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch))
