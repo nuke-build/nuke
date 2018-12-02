@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [0.12.4] / 2018-12-02
 - Fixed `SolutionAttribute` to handle empty configuration file
 
 ## [0.12.3] / 2018-11-29
@@ -217,7 +219,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.12.3...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.12.4...HEAD
+[0.12.4]: https://github.com/nuke-build/nuke/compare/0.12.3...0.12.4
 [0.12.3]: https://github.com/nuke-build/nuke/compare/0.12.2...0.12.3
 [0.12.2]: https://github.com/nuke-build/nuke/compare/0.12.1...0.12.2
 [0.12.1]: https://github.com/nuke-build/nuke/compare/0.12.0...0.12.1
