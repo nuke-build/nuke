@@ -210,6 +210,9 @@ namespace Nuke.Common.Tooling
 
         public static void CheckPathEnvironmentVariable()
         {
+            if (Logger.LogLevel >= LogLevel.Information)
+                return;
+            
             EnvironmentInfo.Variables
                 .SingleOrDefault(x => x.Key.EqualsOrdinalIgnoreCase("path"))
                 .Value.Split(s_pathSeparators, StringSplitOptions.RemoveEmptyEntries)
