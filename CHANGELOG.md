@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Change `CheckPathEnvironmentVariable` to be executed only with `Trace` log level
+- Added `ToolSettings.When` for conditional fluent modifications
+- Added `DotMemoryUnitTasks`
+- Added `MSBuildSettings.Restore`
 
 ## [0.12.4] / 2018-12-02
 - Fixed `SolutionAttribute` to handle empty configuration file
