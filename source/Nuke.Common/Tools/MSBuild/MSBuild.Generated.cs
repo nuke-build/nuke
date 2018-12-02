@@ -73,6 +73,8 @@ namespace Nuke.Common.Tools.MSBuild
         /// <summary><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+        /// <summary><p>Runs the <c>Restore</c> target prior to building the actual targets.</p></summary>
+        public virtual bool? Restore { get; internal set; }
         /// <summary><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
         public virtual IReadOnlyList<string> Targets => TargetsInternal.AsReadOnly();
         internal List<string> TargetsInternal { get; set; } = new List<string>();
@@ -104,6 +106,7 @@ namespace Nuke.Common.Tools.MSBuild
               .Add("/nologo", NoLogo)
               .Add("/p:Platform={value}", GetTargetPlatform(), customValue: true)
               .Add("/p:{value}", Properties, "{key}={value}", disallowed: ';')
+              .Add("/restore", Restore)
               .Add("/target:{value}", Targets, separator: ';')
               .Add("/toolsversion:{value}", ToolsVersion)
               .Add("/verbosity:{value}", Verbosity)
@@ -1414,6 +1417,48 @@ namespace Nuke.Common.Tools.MSBuild
             return toolSettings;
         }
         #endregion
+        #endregion
+        #region Restore
+        /// <summary><p><em>Sets <see cref="MSBuildSettings.Restore"/>.</em></p><p>Runs the <c>Restore</c> target prior to building the actual targets.</p></summary>
+        [Pure]
+        public static MSBuildSettings SetRestore(this MSBuildSettings toolSettings, bool? restore)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Restore = restore;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="MSBuildSettings.Restore"/>.</em></p><p>Runs the <c>Restore</c> target prior to building the actual targets.</p></summary>
+        [Pure]
+        public static MSBuildSettings ResetRestore(this MSBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Restore = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="MSBuildSettings.Restore"/>.</em></p><p>Runs the <c>Restore</c> target prior to building the actual targets.</p></summary>
+        [Pure]
+        public static MSBuildSettings EnableRestore(this MSBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Restore = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="MSBuildSettings.Restore"/>.</em></p><p>Runs the <c>Restore</c> target prior to building the actual targets.</p></summary>
+        [Pure]
+        public static MSBuildSettings DisableRestore(this MSBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Restore = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="MSBuildSettings.Restore"/>.</em></p><p>Runs the <c>Restore</c> target prior to building the actual targets.</p></summary>
+        [Pure]
+        public static MSBuildSettings ToggleRestore(this MSBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Restore = !toolSettings.Restore;
+            return toolSettings;
+        }
         #endregion
         #region Targets
         /// <summary><p><em>Sets <see cref="MSBuildSettings.Targets"/> to a new list.</em></p><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
