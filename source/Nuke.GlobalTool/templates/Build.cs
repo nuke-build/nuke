@@ -17,6 +17,11 @@ using static Nuke.Common.Tools.NuGet.NuGetTasks;                                
 
 class Build : NukeBuild
 {
+    // Support plugins are available for:
+    //   - Rider        https://plugins.jetbrains.com/plugin/10803-nuke-support
+    //   - ReSharper    https://resharper-plugins.jetbrains.com/packages/ReSharper.Nuke/
+    //   - VSCode       https://marketplace.visualstudio.com/items?itemName=nuke.support
+    
     public static int Main () => Execute<Build>(x => x.Compile);
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
