@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using FluentAssertions;
+using Microsoft.SqlServer.Server;
 using Nuke.Common.Utilities;
 using Xunit;
 
@@ -29,6 +30,16 @@ namespace Nuke.Common.Tests
         public void TestTrimMatchingQuotes(string input, char quote, string expected)
         {
             input.TrimMatchingQuotes(quote).Should().Be(expected);
+        }
+
+        [Fact]
+        public void TestSplit()
+        {
+            "msbuild-configuration".Split(x => !char.IsLetter(x))
+                .Should().Equal("msbuild", "configuration");
+
+            "MSBuildConfiguration".SplitCamelHumps()
+                .Should().Equal("MSBuild", "Configuration");
         }
     }
 }

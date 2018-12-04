@@ -13,7 +13,7 @@ namespace Nuke.Common.Utilities
     public static partial class StringExtensions
     {
         [Pure]
-        public static IEnumerable<string> Split(this string str, Func<char, bool> predicate)
+        public static IEnumerable<string> Split(this string str, Func<char, bool> predicate, bool includeSplitCharacter = false)
         {
             var next = 0;
             for (var i = 0; i < str.Length; i++)
@@ -23,6 +23,8 @@ namespace Nuke.Common.Utilities
 
                 yield return str.Substring(next, i - next);
                 next = i;
+                if (!includeSplitCharacter)
+                    next++;
             }
 
             yield return str.Substring(next);
@@ -33,12 +35,13 @@ namespace Nuke.Common.Utilities
         {
             var hadLower = false;
             return str.Split(c =>
-            {
-                var shouldSplit = hadLower && char.IsUpper(c);
-                hadLower = char.IsLower(c) && !shouldSplit;
+                {
+                    var shouldSplit = hadLower && char.IsUpper(c);
+                    hadLower = char.IsLower(c) && !shouldSplit;
 
-                return shouldSplit;
-            });
+                    return shouldSplit;
+                },
+                includeSplitCharacter: true);
         }
         
         [Pure]
