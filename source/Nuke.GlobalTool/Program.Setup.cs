@@ -130,7 +130,7 @@ namespace Nuke.GlobalTool
 
                 definitions.Add(
                     ConsoleHelper.PromptForChoice("Where do test projects go?",
-                        ("TESTS_DIR", "./tests"),
+                        ("TESTS_DIR", "./test","./tests"),
                         (null, "Same as source")));
 
                 if (Directory.Exists(Path.Combine(rootDirectory, ".git")))
