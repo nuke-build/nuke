@@ -83,15 +83,15 @@ namespace Nuke.CodeGeneration
                 task.SettingsClass.Tool = tool;
                 task.SettingsClass.Task = task;
 
-                if (!task.OmitCommonProperties)
-                    tool.CommonTaskProperties.ForEach(x => task.SettingsClass.Properties.Add(x.Clone()));
-
                 foreach (var commonPropertySet in task.CommonPropertySets)
                 {
                     ControlFlow.Assert(tool.CommonTaskPropertySets.TryGetValue(commonPropertySet, out var properties),
                         $"commonPropertySets[{commonPropertySet}] != null");
                     properties.ForEach(x => task.SettingsClass.Properties.Add(x.Clone()));
                 }
+                
+                if (!task.OmitCommonProperties)
+                    tool.CommonTaskProperties.ForEach(x => task.SettingsClass.Properties.Add(x.Clone()));
 
                 foreach (var property in task.SettingsClass.Properties)
                 {
