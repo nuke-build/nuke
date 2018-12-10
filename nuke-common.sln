@@ -34,7 +34,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.GlobalTool", "source\N
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.GlobalTool.Tests", "source\Nuke.GlobalTool.Tests\Nuke.GlobalTool.Tests.csproj", "{BD416DD4-06F4-4246-B92C-B261B026B6E9}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Nuke.Common.Paket", "source\Nuke.Common.Paket\Nuke.Common.Paket.fsproj", "{3EF8A730-4981-481A-89AE-39ED0A57CC35}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Nuke.Common.Paket", "source\Nuke.Common.Paket\Nuke.Common.Paket.fsproj", "{3EF8A730-4981-481A-89AE-39ED0A57CC35}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

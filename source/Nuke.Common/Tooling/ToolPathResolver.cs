@@ -50,7 +50,7 @@ namespace Nuke.Common.Tooling
                 }
 
                 if (PaketDependenciesFile != null)
-                    return PaketPackageResolver.TryGetLocalInstalledPackageDirectoryInAnyGroup(packageId, PaketDependenciesFile);
+                    return PaketPackageResolver.TryGetLocalInstalledPackageDirectoryInBuildGroup(packageId, PaketDependenciesFile);
 
                 return null;
             }

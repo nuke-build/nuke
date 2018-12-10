@@ -62,7 +62,7 @@ namespace Nuke.Common.Tools.GitVersion
             string GetDirectoryFromPaket()
             {
                 return packages
-                    .Select(x => PaketPackageResolver.TryGetLocalInstalledPackageDirectoryInMainGroup(x, ToolPathResolver.PaketDependenciesFile))
+                    .Select(x => PaketPackageResolver.TryGetLocalInstalledPackageDirectoryInBuildGroup(x, ToolPathResolver.PaketDependenciesFile))
                     .WhereNotNull()
                     .FirstOrDefault()
                     .NotNull("packageDirectory != null");
