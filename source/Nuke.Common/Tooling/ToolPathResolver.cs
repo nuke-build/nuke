@@ -49,7 +49,10 @@ namespace Nuke.Common.Tooling
                         ?.Directory;
                 }
 
-                return PaketPackageResolver.TryGetLocalInstalledPackageDirectoryInMainGroup(packageId, PaketDependenciesFile);
+                if (PaketDependenciesFile != null)
+                    return PaketPackageResolver.TryGetLocalInstalledPackageDirectoryInAnyGroup(packageId, PaketDependenciesFile);
+
+                return null;
             }
 
             var packageDirectory = GetPackagesDirectory().NotNull("packageDirectory != null");
