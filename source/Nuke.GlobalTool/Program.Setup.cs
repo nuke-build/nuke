@@ -212,6 +212,11 @@ namespace Nuke.GlobalTool
                 $"{buildProjectFile}.DotSettings",
                 TemplateUtility.FillTemplate(
                     GetTemplate("_build.csproj.DotSettings")));
+            
+            TextTasks.WriteAllText(
+                Path.Combine(buildDirectory, ".editorconfig"),
+                TemplateUtility.FillTemplate(
+                    GetTemplate(".editorconfig")));
 
             TextTasks.WriteAllText(
                 Path.Combine(buildDirectory, "Build.cs"),
