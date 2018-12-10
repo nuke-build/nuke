@@ -112,12 +112,6 @@ namespace Nuke.CodeGeneration.Generators
             return s_reservedWords.Contains(propertyName) ? propertyName + "_" : propertyName;
         }
 
-        public static string ToMember(this string text)
-        {
-            return text.Substring(startIndex: 0, length: 1).ToUpper(CultureInfo.InvariantCulture) +
-                   text.Substring(startIndex: 1);
-        }
-
         public static string Paragraph([CanBeNull] this string text)
         {
             if (text == null)

@@ -93,17 +93,18 @@ namespace Nuke.Common
             var inDoubleQuotes = false;
             var escaped = false;
             return commandLine.Split(x =>
-                {
-                    if (x == '\"' && !inSingleQuotes && !escaped)
-                        inDoubleQuotes = !inDoubleQuotes;
+                    {
+                        if (x == '\"' && !inSingleQuotes && !escaped)
+                            inDoubleQuotes = !inDoubleQuotes;
 
-                    if (x == '\'' && !inDoubleQuotes && !escaped)
-                        inSingleQuotes = !inSingleQuotes;
+                        if (x == '\'' && !inDoubleQuotes && !escaped)
+                            inSingleQuotes = !inSingleQuotes;
 
-                    escaped = x == '\\' && !escaped;
+                        escaped = x == '\\' && !escaped;
 
-                    return x == ' ' && !(inDoubleQuotes || inSingleQuotes);
-                })
+                        return x == ' ' && !(inDoubleQuotes || inSingleQuotes);
+                    },
+                    includeSplitCharacter: true)
                 .Select(x => x.Trim().TrimMatchingDoubleQuotes().TrimMatchingQuotes().Replace("\\\"", "\"").Replace("\\\'", "'"))
                 .Where(x => !string.IsNullOrEmpty(x))
                 .ToArray();

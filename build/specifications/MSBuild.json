@@ -224,6 +224,12 @@
             ]
           },
           {
+            "name": "Restore",
+            "type": "bool",
+            "format": "/restore",
+            "help": "Runs the <c>Restore</c> target prior to building the actual targets."
+          },
+          {
             "name": "Targets",
             "type": "List<string>",
             "format": "/target:{value}",

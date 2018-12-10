@@ -9,8 +9,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using Nuke.Common.BuildServers;
+using System.Threading;
 using Nuke.Common.IO;
 using Nuke.Common.OutputSinks;
 using Nuke.Common.Tooling;
@@ -21,6 +20,7 @@ namespace Nuke.Common.Execution
     internal static class BuildExecutor
     {
         public const string DefaultTarget = "default";
+        private const int c_debuggerAttachTimeout = 10_000;
 
         public static int Execute<T>(Expression<Func<T, Target>> defaultTargetExpression)
             where T : NukeBuild
@@ -29,6 +29,7 @@ namespace Nuke.Common.Execution
             var build = CreateBuildInstance(defaultTargetExpression);
 
             HandleCompletion(build);
+            AttachVisualStudioDebugger();
 
             try
             {
@@ -75,6 +76,17 @@ namespace Nuke.Common.Execution
 
                 build.OnBuildFinished();
             }
+        }
+
+        private static void AttachVisualStudioDebugger()
+        {
+            if (!ParameterService.Instance.GetParameter<bool>(nameof(AttachVisualStudioDebugger)))
+                return;
+            
+            File.WriteAllText(NukeBuild.TemporaryDirectory / "visual-studio.dbg",
+                Process.GetCurrentProcess().Id.ToString());
+            ControlFlow.Assert(SpinWait.SpinUntil(() => Debugger.IsAttached, millisecondsTimeout: c_debuggerAttachTimeout),
+                $"VisualStudio debugger was not attached within timeout of {c_debuggerAttachTimeout} milliseconds.");
         }
 
         private static void HandleCompletion(NukeBuild build)

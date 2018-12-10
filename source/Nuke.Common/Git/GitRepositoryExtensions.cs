@@ -57,6 +57,20 @@ namespace Nuke.Common.Git
         {
             return repository != null && repository.Endpoint.EqualsOrdinalIgnoreCase("github.com");
         }
+        
+        public static string GetGitHubOwner(this GitRepository repository)
+        {
+            ControlFlow.Assert(repository.IsGitHubRepository(), "repository.IsGitHubRepository()");
+            
+            return repository.Identifier.Split('/')[0];
+        }
+
+        public static string GetGitHubName(this GitRepository repository)
+        {
+            ControlFlow.Assert(repository.IsGitHubRepository(), "repository.IsGitHubRepository()");
+            
+            return repository.Identifier.Split('/')[1];
+        }
 
         /// <summary>Url in the form of <c>https://raw.githubusercontent.com/{identifier}/blob/{branch}/{file}</c>.</summary>
         public static string GetGitHubDownloadUrl(this GitRepository repository, string file, string branch = null)

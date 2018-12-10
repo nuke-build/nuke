@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/DotCover.json
-// Generated with Nuke.CodeGeneration version LOCAL (OSX, .NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -99,8 +99,6 @@ namespace Nuke.Common.Tools.DotCover
         public virtual string OutputFile { get; internal set; }
         /// <summary><p>Remove auto-implemented properties from report.</p></summary>
         public virtual bool? HideAutoProperties { get; internal set; }
-        /// <summary><p>Enables logging and specifies log file name.</p></summary>
-        public virtual string LogFile { get; internal set; }
         /// <summary><p>File name of the program to analyse.</p></summary>
         public virtual string TargetExecutable { get; internal set; }
         /// <summary><p>Program arguments.</p></summary>
@@ -134,6 +132,8 @@ namespace Nuke.Common.Tools.DotCover
         /// <summary><p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p></summary>
         public virtual IReadOnlyList<string> ProcessFilters => ProcessFiltersInternal.AsReadOnly();
         internal List<string> ProcessFiltersInternal { get; set; } = new List<string>();
+        /// <summary><p>Enables logging and specifies log file name.</p></summary>
+        public virtual string LogFile { get; internal set; }
         protected override void AssertValid()
         {
             base.AssertValid();
@@ -147,7 +147,6 @@ namespace Nuke.Common.Tools.DotCover
               .Add("/ReportType={value}", ReportType)
               .Add("/Output={value}", OutputFile)
               .Add("/HideAutoProperties", HideAutoProperties)
-              .Add("/LogFile={value}", LogFile)
               .Add("/TargetExecutable={value}", TargetExecutable)
               .Add("/TargetArguments={value}", TargetArguments)
               .Add("/TargetWorkingDir={value}", TargetWorkingDirectory)
@@ -161,7 +160,8 @@ namespace Nuke.Common.Tools.DotCover
               .Add("/SymbolSearchPaths={value}", SymbolSearchPaths, separator: ';')
               .Add("/AllowSymbolServerAccess", AllowSymbolServerAccess)
               .Add("/ReturnTargetExitCode", ReturnTargetExitCode)
-              .Add("/ProcessFilters={value}", ProcessFilters, separator: ';');
+              .Add("/ProcessFilters={value}", ProcessFilters, separator: ';')
+              .Add("/LogFile={value}", LogFile);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -178,8 +178,6 @@ namespace Nuke.Common.Tools.DotCover
         public virtual string Configuration { get; internal set; }
         /// <summary><p>Path to the resulting coverage snapshot.</p></summary>
         public virtual string OutputFile { get; internal set; }
-        /// <summary><p>Enables logging and specifies log file name.</p></summary>
-        public virtual string LogFile { get; internal set; }
         /// <summary><p>File name of the program to analyse.</p></summary>
         public virtual string TargetExecutable { get; internal set; }
         /// <summary><p>Program arguments.</p></summary>
@@ -213,6 +211,8 @@ namespace Nuke.Common.Tools.DotCover
         /// <summary><p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p></summary>
         public virtual IReadOnlyList<string> ProcessFilters => ProcessFiltersInternal.AsReadOnly();
         internal List<string> ProcessFiltersInternal { get; set; } = new List<string>();
+        /// <summary><p>Enables logging and specifies log file name.</p></summary>
+        public virtual string LogFile { get; internal set; }
         protected override void AssertValid()
         {
             base.AssertValid();
@@ -224,7 +224,6 @@ namespace Nuke.Common.Tools.DotCover
               .Add("cover")
               .Add("{value}", Configuration)
               .Add("/Output={value}", OutputFile)
-              .Add("/LogFile={value}", LogFile)
               .Add("/TargetExecutable={value}", TargetExecutable)
               .Add("/TargetArguments={value}", TargetArguments)
               .Add("/TargetWorkingDir={value}", TargetWorkingDirectory)
@@ -238,7 +237,8 @@ namespace Nuke.Common.Tools.DotCover
               .Add("/SymbolSearchPaths={value}", SymbolSearchPaths, separator: ';')
               .Add("/AllowSymbolServerAccess", AllowSymbolServerAccess)
               .Add("/ReturnTargetExitCode", ReturnTargetExitCode)
-              .Add("/ProcessFilters={value}", ProcessFilters, separator: ';');
+              .Add("/ProcessFilters={value}", ProcessFilters, separator: ';')
+              .Add("/LogFile={value}", LogFile);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -483,24 +483,6 @@ namespace Nuke.Common.Tools.DotCover
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.HideAutoProperties = !toolSettings.HideAutoProperties;
-            return toolSettings;
-        }
-        #endregion
-        #region LogFile
-        /// <summary><p><em>Sets <see cref="DotCoverAnalyseSettings.LogFile"/>.</em></p><p>Enables logging and specifies log file name.</p></summary>
-        [Pure]
-        public static DotCoverAnalyseSettings SetLogFile(this DotCoverAnalyseSettings toolSettings, string logFile)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.LogFile = logFile;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DotCoverAnalyseSettings.LogFile"/>.</em></p><p>Enables logging and specifies log file name.</p></summary>
-        [Pure]
-        public static DotCoverAnalyseSettings ResetLogFile(this DotCoverAnalyseSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.LogFile = null;
             return toolSettings;
         }
         #endregion
@@ -1086,6 +1068,24 @@ namespace Nuke.Common.Tools.DotCover
             return toolSettings;
         }
         #endregion
+        #region LogFile
+        /// <summary><p><em>Sets <see cref="DotCoverAnalyseSettings.LogFile"/>.</em></p><p>Enables logging and specifies log file name.</p></summary>
+        [Pure]
+        public static DotCoverAnalyseSettings SetLogFile(this DotCoverAnalyseSettings toolSettings, string logFile)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogFile = logFile;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotCoverAnalyseSettings.LogFile"/>.</em></p><p>Enables logging and specifies log file name.</p></summary>
+        [Pure]
+        public static DotCoverAnalyseSettings ResetLogFile(this DotCoverAnalyseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogFile = null;
+            return toolSettings;
+        }
+        #endregion
     }
     #endregion
     #region DotCoverCoverSettingsExtensions
@@ -1127,24 +1127,6 @@ namespace Nuke.Common.Tools.DotCover
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputFile = null;
-            return toolSettings;
-        }
-        #endregion
-        #region LogFile
-        /// <summary><p><em>Sets <see cref="DotCoverCoverSettings.LogFile"/>.</em></p><p>Enables logging and specifies log file name.</p></summary>
-        [Pure]
-        public static DotCoverCoverSettings SetLogFile(this DotCoverCoverSettings toolSettings, string logFile)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.LogFile = logFile;
-            return toolSettings;
-        }
-        /// <summary><p><em>Resets <see cref="DotCoverCoverSettings.LogFile"/>.</em></p><p>Enables logging and specifies log file name.</p></summary>
-        [Pure]
-        public static DotCoverCoverSettings ResetLogFile(this DotCoverCoverSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.LogFile = null;
             return toolSettings;
         }
         #endregion
@@ -1727,6 +1709,24 @@ namespace Nuke.Common.Tools.DotCover
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(processFilters);
             toolSettings.ProcessFiltersInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region LogFile
+        /// <summary><p><em>Sets <see cref="DotCoverCoverSettings.LogFile"/>.</em></p><p>Enables logging and specifies log file name.</p></summary>
+        [Pure]
+        public static DotCoverCoverSettings SetLogFile(this DotCoverCoverSettings toolSettings, string logFile)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogFile = logFile;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="DotCoverCoverSettings.LogFile"/>.</em></p><p>Enables logging and specifies log file name.</p></summary>
+        [Pure]
+        public static DotCoverCoverSettings ResetLogFile(this DotCoverCoverSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogFile = null;
             return toolSettings;
         }
         #endregion

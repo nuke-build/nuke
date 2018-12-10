@@ -13,6 +13,11 @@ namespace Nuke.Common.Tooling
     [ExcludeFromCodeCoverage]
     public static class ToolSettingsExtensions
     {
+        public static T When<T>(this T settings, bool condition, Configure<T> configurator)
+        {
+            return condition ? configurator(settings) : settings;
+        }
+        
         [Pure]
         public static T AddEnvironmentVariable<T>(
             this T toolSettings,

@@ -26,6 +26,7 @@
     <None Include="_ROOT_DIRECTORY_\.nuke" />     
     <None Include="_ROOT_DIRECTORY_\global.json" Condition="Exists('_ROOT_DIRECTORY_\global.json')" />
     <None Include="_ROOT_DIRECTORY_\nuget.config" Condition="Exists('_ROOT_DIRECTORY_\nuget.config')" />
+    <None Include="_ROOT_DIRECTORY_\azure-pipelines.yml" Condition="Exists('_ROOT_DIRECTORY_\azure-pipelines.yml')" />
     <None Include="_ROOT_DIRECTORY_\Jenkinsfile" Condition="Exists('_ROOT_DIRECTORY_\Jenkinsfile')" />
     <None Include="_ROOT_DIRECTORY_\appveyor.yml" Condition="Exists('_ROOT_DIRECTORY_\appveyor.yml')" />
     <None Include="_ROOT_DIRECTORY_\.travis.yml" Condition="Exists('_ROOT_DIRECTORY_\.travis.yml')" />
