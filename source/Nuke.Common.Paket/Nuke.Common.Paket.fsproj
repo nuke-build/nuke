@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Paket.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Paket.Core" Version="[5.194.0]" />
+    <PackageReference Include="FSharp.Compiler.Tools" Version="[3.1.2.2]" />
+    <PackageReference Include="FSharp.Core" Version="[4.5.4]" />
+  </ItemGroup>
+</Project>

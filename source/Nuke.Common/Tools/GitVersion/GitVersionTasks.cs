@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Nuke.Common.Tooling;
+using Nuke.Common.Tooling.Paket;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -37,17 +38,35 @@ namespace Nuke.Common.Tools.GitVersion
 
         private static string GetToolPath()
         {
-            var package = new[]
-                          {
-                              "GitVersion.CommandLine.DotNetCore",
-                              "GitVersion.CommandLine"
-                          }
-                .Select(x => NuGetPackageResolver.TryGetLocalInstalledPackage(x, ToolPathResolver.NuGetPackagesConfigFile))
-                .WhereNotNull()
-                .FirstOrDefault().NotNull("package != null");
-            return Directory.GetFiles(package.Directory, "GitVersion.*", SearchOption.AllDirectories)
+            var packages = new[]{ "GitVersion.CommandLine.DotNetCore", "GitVersion.CommandLine"};
+            string packageDirectory = null;
+            if (ToolPathResolver.PaketDependenciesFile != null)
+                packageDirectory = GetDirectoryFromPaket();
+            if (packageDirectory == null)
+                packageDirectory = GetDirectoryFromNuget();
+
+            return Directory.GetFiles(packageDirectory, "GitVersion.*", SearchOption.AllDirectories)
                 .FirstOrDefault(x => x.EndsWithOrdinalIgnoreCase(".dll") || x.EndsWithOrdinalIgnoreCase(".exe"))
                 .NotNull("executable != null");
+
+            string GetDirectoryFromNuget()
+            {
+                return packages
+                    .Select(x => NuGetPackageResolver.TryGetLocalInstalledPackage(x, ToolPathResolver.NuGetPackagesConfigFile))
+                    .WhereNotNull()
+                    .FirstOrDefault()
+                    .NotNull("package != null")
+                    .Directory;
+            }
+
+            string GetDirectoryFromPaket()
+            {
+                return packages
+                    .Select(x => PaketPackageResolver.TryGetLocalInstalledPackageDirectoryInMainGroup(x, ToolPathResolver.PaketDependenciesFile))
+                    .WhereNotNull()
+                    .FirstOrDefault()
+                    .NotNull("packageDirectory != null");
+            }
         }
     }
 

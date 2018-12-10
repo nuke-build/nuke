@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.Tooling.Paket;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Tooling
@@ -14,7 +15,9 @@ namespace Nuke.Common.Tooling
     public static class ToolPathResolver
     {
         public static string NuGetPackagesConfigFile;
-        
+
+        public static string PaketDependenciesFile;
+
         [CanBeNull]
         public static string TryGetEnvironmentExecutable(string environmentExecutable)
         {
@@ -46,7 +49,7 @@ namespace Nuke.Common.Tooling
                         ?.Directory;
                 }
 
-                return PaketPackageResolver.TryGetLocalInstalledPackageDirectory(packageId);
+                return PaketPackageResolver.TryGetLocalInstalledPackageDirectoryInMainGroup(packageId, PaketDependenciesFile);
             }
 
             var packageDirectory = GetPackagesDirectory().NotNull("packageDirectory != null");

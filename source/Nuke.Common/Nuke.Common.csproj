@@ -9,6 +9,7 @@
   
   <ItemGroup>
     <EmbeddedResource Include="**\*.flf" />
+    <Compile Remove="Tooling\PaketPackageResolver.cs" />
     <None Remove="graph.html" />
     <EmbeddedResource Include="Execution\graph.html" />
   </ItemGroup>
@@ -34,6 +35,10 @@
     <None Include="BuildTasks\$(MSBuildProjectName).targets" PackagePath="build\net461" Pack="true" />
     <None Include="bin\$(Configuration)\netstandard2.0\publish\**\*.*" PackagePath="build\netstandard2.0" Pack="true" />
     <None Include="bin\$(Configuration)\net461\publish\**\*.*" PackagePath="build\net461" Pack="true" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Nuke.Common.Paket\Nuke.Common.Paket.fsproj" />
   </ItemGroup>
   
 </Project>

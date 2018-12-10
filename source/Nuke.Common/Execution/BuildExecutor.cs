@@ -13,6 +13,7 @@ using System.Threading;
 using Nuke.Common.IO;
 using Nuke.Common.OutputSinks;
 using Nuke.Common.Tooling;
+using Nuke.Common.Tooling.Paket;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Execution
@@ -38,6 +39,7 @@ namespace Nuke.Common.Execution
                 Logger.OutputSink = build.OutputSink;
                 Logger.LogLevel = NukeBuild.LogLevel;
                 ToolPathResolver.NuGetPackagesConfigFile = build.NuGetPackagesConfigFile;
+                ToolPathResolver.PaketDependenciesFile = build.PaketDependenciesFile;
 
                 Logger.Log($"NUKE Execution Engine {typeof(BuildExecutor).Assembly.GetInformationalText()}");
                 Logger.Log(FigletTransform.GetText("NUKE"));

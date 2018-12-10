@@ -17,22 +17,24 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{B43B0E45-8
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		CHANGELOG.md = CHANGELOG.md
-		LICENSE = LICENSE
-		README.md = README.md
-		nuke-common.sln.DotSettings = nuke-common.sln.DotSettings
+		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
 		source\CodeStyle.DotSettings = source\CodeStyle.DotSettings
 		source\Configuration.props = source\Configuration.props
-		source\Inspections.DotSettings = source\Inspections.DotSettings
-		source\Package.props = source\Package.props
-		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
 		CONTRIBUTING.md = CONTRIBUTING.md
+		source\Inspections.DotSettings = source\Inspections.DotSettings
+		LICENSE = LICENSE
+		nuke-common.sln.DotSettings = nuke-common.sln.DotSettings
+		source\Package.props = source\Package.props
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.CodeGeneration", "source\Nuke.CodeGeneration\Nuke.CodeGeneration.csproj", "{34FBD413-AD5D-493E-BD61-ED8497D314A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.GlobalTool", "source\Nuke.GlobalTool\Nuke.GlobalTool.csproj", "{140A4F0D-C21D-4212-BB75-EFDBDBBD5E1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.GlobalTool", "source\Nuke.GlobalTool\Nuke.GlobalTool.csproj", "{140A4F0D-C21D-4212-BB75-EFDBDBBD5E1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.GlobalTool.Tests", "source\Nuke.GlobalTool.Tests\Nuke.GlobalTool.Tests.csproj", "{BD416DD4-06F4-4246-B92C-B261B026B6E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.GlobalTool.Tests", "source\Nuke.GlobalTool.Tests\Nuke.GlobalTool.Tests.csproj", "{BD416DD4-06F4-4246-B92C-B261B026B6E9}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Nuke.Common.Paket", "source\Nuke.Common.Paket\Nuke.Common.Paket.fsproj", "{3EF8A730-4981-481A-89AE-39ED0A57CC35}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,11 +68,13 @@ Global
 		{BD416DD4-06F4-4246-B92C-B261B026B6E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD416DD4-06F4-4246-B92C-B261B026B6E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD416DD4-06F4-4246-B92C-B261B026B6E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EF8A730-4981-481A-89AE-39ED0A57CC35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EF8A730-4981-481A-89AE-39ED0A57CC35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EF8A730-4981-481A-89AE-39ED0A57CC35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EF8A730-4981-481A-89AE-39ED0A57CC35}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A2C37D4D-74E1-443B-999B-505B8C6694C9}

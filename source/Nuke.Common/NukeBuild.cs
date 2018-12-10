@@ -101,5 +101,17 @@ namespace Nuke.Common
             BuildProjectDirectory != null
                 ? NuGetPackageResolver.GetPackagesConfigFile(BuildProjectDirectory)
                 : null;
+
+        [CanBeNull]
+        protected internal virtual string PaketDependenciesFile
+        {
+            get
+            {
+                var paketFile = RootDirectory / "paket.dependencies";
+                if (File.Exists(paketFile))
+                    return paketFile;
+                return null;
+            }
+        }
     }
 }
