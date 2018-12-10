@@ -12,7 +12,7 @@ namespace Nuke.Common.Utilities
     {
         public static string GetInformationalText(this Assembly assembly)
         {
-            return $"version {assembly.GetVersionText()} ({EnvironmentInfo.Platform}, {EnvironmentInfo.Framework})";
+            return $"version {assembly.GetVersionText()} ({EnvironmentInfo.Platform},{EnvironmentInfo.Framework})";
         }
 
         public static string GetVersionText(this Assembly assembly)
