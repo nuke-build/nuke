@@ -93,18 +93,18 @@ namespace Nuke.Common
         /// Gets the list of targets that were invoked.
         /// </summary>
         [Parameter("List of targets to be executed. Default is '{default_target}'.", Name = InvokedTargetsParameterName, Separator = TargetsSeparator)]
-        public static string[] InvokedTargets { get; }
+        public static string[] InvokedTargets { get; internal set; }
         
         /// <summary>
         /// Gets the list of targets that are skipped.
         /// </summary>
         [Parameter("List of targets to be skipped. Empty list skips all dependencies.", Name = SkippedTargetsParameterName, Separator = TargetsSeparator)]
-        public static string[] SkippedTargets { get; }
+        public static string[] SkippedTargets { get; internal set; }
         
         /// <summary>
         /// Gets the list of targets that are executing.
         /// </summary>
-        public static string[] ExecutingTargets { get; }
+        public static string[] ExecutingTargets { get; internal set; }
         
         private static PathConstruction.AbsolutePath GetRootDirectory()
         {
