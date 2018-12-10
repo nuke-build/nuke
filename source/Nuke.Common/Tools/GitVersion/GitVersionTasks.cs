@@ -40,7 +40,7 @@ namespace Nuke.Common.Tools.GitVersion
         {
             var packages = new[]{ "GitVersion.CommandLine.DotNetCore", "GitVersion.CommandLine"};
             string packageDirectory = null;
-            if (ToolPathResolver.PaketDependenciesFile != null)
+            if (!string.IsNullOrEmpty(ToolPathResolver.PaketDependenciesFile))
                 packageDirectory = GetDirectoryFromPaket();
             if (packageDirectory == null)
                 packageDirectory = GetDirectoryFromNuget();
