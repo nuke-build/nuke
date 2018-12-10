@@ -9,7 +9,6 @@
   
   <ItemGroup>
     <EmbeddedResource Include="**\*.flf" />
-    <Compile Remove="Tooling\PaketPackageResolver.cs" />
     <None Remove="graph.html" />
     <EmbeddedResource Include="Execution\graph.html" />
   </ItemGroup>
