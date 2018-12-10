@@ -2,6 +2,7 @@
   
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeP2PAssets</TargetsForTfmSpecificBuildOutput>
   </PropertyGroup>
   
   <Import Project="..\Package.props" />
@@ -37,7 +38,14 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Nuke.Common.Paket\Nuke.Common.Paket.fsproj" />
+    <ProjectReference Include="..\Nuke.Common.Paket\Nuke.Common.Paket.fsproj" PrivateAssets="All" />
   </ItemGroup>
-  
+
+  <!--reference and pack issue https://github.com/dotnet/cli/issues/3959#issuecomment-333318028-->
+  <Target Name="IncludeP2PAssets">
+    <ItemGroup>
+      <BuildOutputInPackage Include="$(OutputPath)Nuke.Common.Paket.dll" />
+    </ItemGroup>
+  </Target>
+
 </Project>
