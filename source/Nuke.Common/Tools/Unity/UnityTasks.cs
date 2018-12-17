@@ -96,7 +96,7 @@ namespace Nuke.Common.Tools.Unity
                     Logger.Error(message);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(logLevel), logLevel, null);
+                    throw new ArgumentOutOfRangeException(nameof(logLevel), logLevel, message: null);
             }
         }
 

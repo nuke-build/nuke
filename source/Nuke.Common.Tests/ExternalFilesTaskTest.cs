@@ -15,7 +15,7 @@ namespace Nuke.Common.Tests
         {
             await ExternalFilesTask.DownloadExternalFile(
                 "/Users/matt/code/nuke/repositories/nuke-build/compression/build/Build2.cs.ext",
-                1000,
+                timeout: 1000,
                 (file, message) => throw new Exception(message),
                 (file, message) => throw new Exception(message));
         }

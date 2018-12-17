@@ -45,7 +45,7 @@ namespace Nuke.Common.BuildTasks
                 var uriConversion = Uri.TryCreate(lines.FirstOrDefault(), UriKind.Absolute, out var uri);
                 ControlFlow.Assert(uriConversion, $"Could not parse URI for external file from first line of '{externalFile}'.");
 
-                var outputFile = externalFile.Substring(0, externalFile.Length - 4);
+                var outputFile = externalFile.Substring(startIndex: 0, length: externalFile.Length - 4);
                 var previousHash = File.Exists(outputFile) ? FileSystemTasks.GetFileHash(outputFile) : null;
                 
                 var template = await HttpTasks.HttpDownloadStringAsync(uri.OriginalString);
