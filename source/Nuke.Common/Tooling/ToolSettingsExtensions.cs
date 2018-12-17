@@ -14,6 +14,7 @@ namespace Nuke.Common.Tooling
     public static class ToolSettingsExtensions
     {
         public static T When<T>(this T settings, bool condition, Configure<T> configurator)
+            where T : ToolSettings
         {
             return condition ? configurator(settings) : settings;
         }
