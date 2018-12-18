@@ -107,5 +107,38 @@ namespace Nuke.Common.Utilities
 
             return options[selection].Value;
         }
+        
+        public static string ReadSecret()
+        {
+            var secret = string.Empty;
+
+            do
+            {
+                var key = Console.ReadKey(intercept: true);
+                if (key.Key == ConsoleKey.Backspace ||
+                    key.KeyChar == 23 ||
+                    key.KeyChar == 21)
+                {
+                    if (secret.Length > 0)
+                    {
+                        var charsToRemove = (key.Modifiers & ConsoleModifiers.Control) != 0 ? secret.Length : 1;
+                        secret = secret.Substring(startIndex: 0, length: secret.Length - charsToRemove);
+                        Console.Write(string.Concat(Enumerable.Repeat("\b \b", charsToRemove)));
+                    }
+                }
+                else if (key.Key == ConsoleKey.Enter)
+                {
+                    Console.Write(Environment.NewLine);
+                    break;
+                }
+                else if (!char.IsControl(key.KeyChar))
+                {
+                    secret += key.KeyChar;
+                    Console.Write("*");
+                }
+            } while (true);
+
+            return secret;
+        }
     }
 }
