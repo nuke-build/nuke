@@ -25,7 +25,7 @@ namespace Nuke.GlobalTool
             {
                 var rootDirectory = FileSystemTasks.FindParentDirectory(
                     Directory.GetCurrentDirectory(),
-                    x => x.GetFiles(NukeBuild.ConfigurationFileName).Any());
+                    x => x.GetFiles(Constants.ConfigurationFileName).Any());
 
                 var buildScript = rootDirectory != null
                     ? new DirectoryInfo(rootDirectory)
@@ -62,7 +62,7 @@ namespace Nuke.GlobalTool
 
             if (buildScript == null)
             {
-                if (UserConfirms($"Could not find {NukeBuild.ConfigurationFileName} file. Do you want to setup a build?"))
+                if (UserConfirms($"Could not find {Constants.ConfigurationFileName} file. Do you want to setup a build?"))
                     return Setup(new string[0], rootDirectory, buildScript: null);
                 return 0;
             }

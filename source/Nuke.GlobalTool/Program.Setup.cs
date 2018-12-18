@@ -179,7 +179,7 @@ namespace Nuke.GlobalTool
                 TextTasks.WriteAllLines(solutionFile, solutionFileContent, Encoding.UTF8);
             }
 
-            FileSystemTasks.Touch(Path.Combine(rootDirectory, NukeBuild.ConfigurationFileName));
+            FileSystemTasks.Touch(Path.Combine(rootDirectory, Constants.ConfigurationFileName));
 
             TextTasks.WriteAllText(
                 buildProjectFile,

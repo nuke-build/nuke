@@ -154,7 +154,7 @@ EndGlobal
             var completionItems =
                 new Dictionary<string, string[]>
                 {
-                    { NukeBuild.InvokedTargetsParameterName, new[] { "Compile", "Pack" } },
+                    { Constants.InvokedTargetsParameterName, new[] { "Compile", "Pack" } },
                     { "ApiKey", null },
                     { "NuGetSource", null }
                 };

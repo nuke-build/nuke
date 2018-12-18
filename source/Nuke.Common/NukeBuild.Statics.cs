@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,6 +13,7 @@ using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using static Nuke.Common.Constants;
 
 namespace Nuke.Common
 {
@@ -21,7 +22,7 @@ namespace Nuke.Common
         static NukeBuild()
         {
             RootDirectory = GetRootDirectory();
-            TemporaryDirectory = RootDirectory / TemporaryDirectoryName;
+            TemporaryDirectory = GetTemporaryDirectory(RootDirectory);
             FileSystemTasks.EnsureExistingDirectory(TemporaryDirectory);
             BuildAssemblyDirectory = GetBuildAssemblyDirectory();
             BuildProjectDirectory = GetBuildProjectDirectory(BuildAssemblyDirectory);
@@ -40,7 +41,7 @@ namespace Nuke.Common
         /// <summary>
         /// Gets the full path to the root directory.
         /// </summary>
-        [Parameter("Root directory during build execution.", Name = RootDirectoryParameterName)]
+        [Parameter("Root directory during build execution.", Name = "Root")]
         public static PathConstruction.AbsolutePath RootDirectory { get; }
 
         /// <summary>

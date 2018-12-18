@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
@@ -45,19 +44,6 @@ namespace Nuke.Common
     [PublicAPI]
     public abstract partial class NukeBuild
     {
-        internal const string ConfigurationFileName = ".nuke";
-        internal const string TemporaryDirectoryName = ".tmp";
-        internal const string CompletionParameterName = "shell-completion";
-        internal const string CompletionFileName = CompletionParameterName + ".yml";
-        internal const string RootDirectoryParameterName = "Root";
-        internal const string InvokedTargetsParameterName = "Target";
-        internal const string SkippedTargetsParameterName = "Skip";
-        internal const string TargetsSeparator = "+";
-        
-        internal static string CompletionFile => File.Exists(RootDirectory / CompletionFileName)
-            ? RootDirectory / CompletionFileName
-            : TemporaryDirectory / CompletionFileName;
-
         /// <summary>
         /// Executes the build. The provided expression defines the <em>default</em> target that is invoked,
         /// if no targets have been specified via command-line arguments.
@@ -95,7 +81,7 @@ namespace Nuke.Common
                 return new SevereMessagesOutputSink(innerOutputSink);
             }
         }
-
+        
         [CanBeNull]
         protected internal virtual string NuGetPackagesConfigFile =>
             BuildProjectDirectory != null

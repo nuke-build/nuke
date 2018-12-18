@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -9,6 +9,8 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
 using Nuke.Common.IO;
 using Nuke.Common.OutputSinks;
@@ -94,8 +96,8 @@ namespace Nuke.Common.Execution
             var completionItems = new SortedDictionary<string, string[]>();
 
             var targetNames = build.TargetDefinitions.Select(x => x.Name).OrderBy(x => x).ToList();
-            completionItems[NukeBuild.InvokedTargetsParameterName] = targetNames.ToArray();
-            completionItems[NukeBuild.SkippedTargetsParameterName] = targetNames.ToArray();
+            completionItems[Constants.InvokedTargetsParameterName] = targetNames.ToArray();
+            completionItems[Constants.SkippedTargetsParameterName] = targetNames.ToArray();
 
             string[] GetSubItems(Type type)
             {
@@ -115,9 +117,9 @@ namespace Nuke.Common.Execution
                 completionItems[parameterName] = GetSubItems(parameter.GetFieldOrPropertyType())?.OrderBy(x => x).ToArray();
             }
 
-            SerializationTasks.YamlSerializeToFile(completionItems, NukeBuild.CompletionFile);
+            SerializationTasks.YamlSerializeToFile(completionItems, Constants.GetCompletionFile(NukeBuild.RootDirectory));
 
-            if (EnvironmentInfo.ParameterSwitch(NukeBuild.CompletionParameterName))
+            if (EnvironmentInfo.ParameterSwitch(Constants.CompletionParameterName))
                 Environment.Exit(exitCode: 0);
         }
 
