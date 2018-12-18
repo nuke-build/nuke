@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -34,6 +34,7 @@ namespace Nuke.Common
 
             Verbosity = ParameterService.Instance.GetParameter<Verbosity?>(()  => Verbosity) ?? Verbosity.Normal;
             Host = ParameterService.Instance.GetParameter<HostType?>(()  => Host) ?? GetHostType();
+            Continue = ParameterService.Instance.GetParameter(() => Continue);
             Graph = ParameterService.Instance.GetParameter(() => Graph);
             Help = ParameterService.Instance.GetParameter(() => Help);
         }
@@ -106,7 +107,10 @@ namespace Nuke.Common
         /// Gets the list of targets that are executing.
         /// </summary>
         public static string[] ExecutingTargets { get; internal set; }
-        
+
+        [Parameter("Indicates to continue a previously failed build attempt.")]
+        public static bool Continue { get; internal set; }
+
         private static PathConstruction.AbsolutePath GetRootDirectory()
         {
             var parameterValue = ParameterService.Instance.GetParameter(() => RootDirectory);

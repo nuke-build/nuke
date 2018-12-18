@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -125,6 +125,28 @@ namespace Nuke.Common.Execution
 
         internal static void Execute(NukeBuild build, IEnumerable<TargetDefinition> executionList)
         {
+            var buildAttemptFile = Constants.GetBuildAttemptFile(NukeBuild.RootDirectory);
+            var invocationHash = GetInvocationHash();
+
+            string[] GetExecutedTargets()
+            {
+                if (!NukeBuild.Continue ||
+                    !File.Exists(buildAttemptFile))
+                    return new string[0];
+                
+                var previousBuild = File.ReadAllLines(buildAttemptFile);
+                if (previousBuild.FirstOrDefault() != invocationHash)
+                {
+                    Logger.Warn("Build invocation changed. Starting over...");
+                    return new string[0];
+                }
+
+                return previousBuild.Skip(1).ToArray();
+            }
+
+            var executedTargets = GetExecutedTargets();
+            File.WriteAllLines(buildAttemptFile, new[] { invocationHash });
+
             foreach (var target in executionList)
             {
                 if (target.Factory == null)
@@ -134,10 +156,13 @@ namespace Nuke.Common.Execution
                     continue;
                 }
 
-                if (target.Skip || target.DependencyBehavior == DependencyBehavior.Execute && target.Conditions.Any(x => !x()))
+                if (target.Skip ||
+                    executedTargets.Contains(target.Name) ||
+                    target.DependencyBehavior == DependencyBehavior.Execute && target.Conditions.Any(x => !x()))
                 {
                     target.Status = ExecutionStatus.Skipped;
                     build.OnTargetSkipped(target.Name);
+                    File.AppendAllLines(buildAttemptFile, new[] { target.Name });
                     continue;
                 }
 
@@ -151,6 +176,7 @@ namespace Nuke.Common.Execution
                         target.Actions.ForEach(x => x());
                         target.Status = ExecutionStatus.Executed;
                         build.OnTargetExecuted(target.Name);
+                        File.AppendAllLines(buildAttemptFile, new[] { target.Name });
                     }
                     catch
                     {
@@ -164,6 +190,15 @@ namespace Nuke.Common.Execution
                     }
                 }
             }
+        }
+
+        private static string GetInvocationHash()
+        {
+            var continueParameterName = ParameterService.Instance.GetParameterName(() => NukeBuild.Continue);
+            var invocation = EnvironmentInfo.CommandLineArguments
+                .Where(x => !x.StartsWith("-") || x.TrimStart("-").EqualsOrdinalIgnoreCase(continueParameterName))
+                .JoinSpace();
+            return invocation.GetMD5Hash();
         }
 
         private static void HandleEarlyExits<T>(T build)
