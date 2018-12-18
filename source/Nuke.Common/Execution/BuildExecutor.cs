@@ -9,13 +9,14 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using Nuke.Common.IO;
 using Nuke.Common.OutputSinks;
+using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Execution
 {
@@ -23,6 +24,7 @@ namespace Nuke.Common.Execution
     {
         public const string DefaultTarget = "default";
         private const int c_debuggerAttachTimeout = 10_000;
+        private const int c_configurationCheckTimeout = 500;
 
         public static int Execute<T>(Expression<Func<T, Target>> defaultTargetExpression)
             where T : NukeBuild
@@ -31,6 +33,7 @@ namespace Nuke.Common.Execution
             var build = CreateBuildInstance(defaultTargetExpression);
 
             HandleCompletion(build);
+            CheckActiveBuildProjectConfigurations();
             AttachVisualStudioDebugger();
 
             try
@@ -88,9 +91,27 @@ namespace Nuke.Common.Execution
             File.WriteAllText(NukeBuild.TemporaryDirectory / "visual-studio.dbg",
                 Process.GetCurrentProcess().Id.ToString());
             ControlFlow.Assert(SpinWait.SpinUntil(() => Debugger.IsAttached, millisecondsTimeout: c_debuggerAttachTimeout),
-                $"VisualStudio debugger was not attached within timeout of {c_debuggerAttachTimeout} milliseconds.");
+                $"VisualStudio debugger was not attached within {c_debuggerAttachTimeout} milliseconds.");
         }
 
+        private static void CheckActiveBuildProjectConfigurations()
+        {
+            ControlFlow.AssertWarn(Task.Run(CheckConfiguration).Wait(c_configurationCheckTimeout),
+                $"Could not complete checking build configurations within {c_configurationCheckTimeout} milliseconds.");
+
+            Task CheckConfiguration()
+            {
+                Directory.GetFiles(NukeBuild.RootDirectory, "*.sln", SearchOption.AllDirectories)
+                    .Select(ProjectModelTasks.ParseSolution)
+                    .SelectMany(x => x.Projects)
+                    .Where(x => x.Directory.Equals(NukeBuild.BuildProjectDirectory))
+                    .Where(x => x.Configurations.Any(y => y.Key.Contains("Build")))
+                    .ForEach(x => Logger.Warn($"Solution {x.Solution.Path} has an active build configurations for {x.Path}."));
+
+                return Task.CompletedTask;
+            }
+        }
+        
         private static void HandleCompletion(NukeBuild build)
         {
             var completionItems = new SortedDictionary<string, string[]>();
