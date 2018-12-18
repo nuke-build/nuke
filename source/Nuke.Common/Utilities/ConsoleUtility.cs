@@ -7,12 +7,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
-using Nuke.Common;
 using Console = Colorful.Console;
 
-namespace Nuke.GlobalTool
+namespace Nuke.Common.Utilities
 {
-    public class ConsoleHelper
+    public class ConsoleUtility
     {
         private static int BufferWidth => EnvironmentInfo.IsWin ? Console.BufferWidth - 1 : Console.BufferWidth;
 
