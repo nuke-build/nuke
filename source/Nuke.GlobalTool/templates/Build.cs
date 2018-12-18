@@ -25,7 +25,7 @@ class Build : NukeBuild
     public static int Main () => Execute<Build>(x => x.Compile);
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
-    readonly string Configuration = IsLocalBuild ? "Debug" : "Release";
+    readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
     [Parameter("Source to push NuGet packages")]                                                // NUGET
     readonly string Source = "https://api.nuget.org/v3/index.json";                             // NUGET
@@ -116,7 +116,7 @@ class Build : NukeBuild
     Target Push => _ => _                                                                       // NUGET
         .DependsOn(Pack)                                                                        // NUGET
         .Requires(() => ApiKey)                                                                 // NUGET
-        .Requires(() => Configuration.EqualsOrdinalIgnoreCase("release"))                       // NUGET
+        .Requires(() => Configuration.Equals(Configuration.Release))                            // NUGET
         .Executes(() =>                                                                         // NUGET
         {                                                                                       // NUGET
             GlobFiles(OutputDirectory, "*.nupkg")                                               // NUGET && OUTPUT_DOR

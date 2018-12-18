@@ -40,11 +40,11 @@ partial class Build : NukeBuild
     public static int Main() => Execute<Build>(x => x.Pack);
     
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
-    readonly string Configuration = IsLocalBuild ? "Debug" : "Release";
+    readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
     [Parameter("ApiKey for the specified source.")] readonly string ApiKey;
-    [Parameter] string Source = "https://api.nuget.org/v3/index.json";
-    [Parameter] string SymbolSource = "https://nuget.smbsrc.net/";
+    [Parameter] readonly string Source = "https://api.nuget.org/v3/index.json";
+    [Parameter] readonly string SymbolSource = "https://nuget.smbsrc.net/";
 
     [Parameter("Gitter authtoken.")] readonly string GitterAuthToken;
     [Parameter("Slack webhook.")] readonly string SlackWebhook;
@@ -196,7 +196,7 @@ partial class Build : NukeBuild
         .DependsOn(Test, Pack)
         .Requires(() => ApiKey, () => SlackWebhook, () => GitterAuthToken)
         .Requires(() => GitHasCleanWorkingCopy())
-        .Requires(() => Configuration.EqualsOrdinalIgnoreCase("release"))
+        .Requires(() => Configuration.Equals(Configuration.Release))
         .Requires(() => GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch) ||
                         GitRepository.Branch.EqualsOrdinalIgnoreCase(DevelopBranch) ||
                         GitRepository.Branch.StartsWithOrdinalIgnoreCase(ReleaseBranchPrefix) ||
