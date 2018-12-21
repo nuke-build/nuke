@@ -1,4 +1,7 @@
 image: Visual Studio 2017
 
+init:
+  - git config --global core.autocrlf true
+
 build_script:
   - ps: .\build.ps1 test+pack
