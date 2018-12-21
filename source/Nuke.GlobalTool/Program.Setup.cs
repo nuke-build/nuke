@@ -169,17 +169,23 @@ namespace Nuke.GlobalTool
                                        [FORMAT_SDK] = "9A19103F-16F7-4668-BE54-9A1E7A4F7556"
                                    }[projectFormat];
 
-            if (solutionFile != null)
+            if (solutionFile == null)
             {
-                definitions.Add("SOLUTION_FILE");
+                FileSystemTasks.Touch(Path.Combine(rootDirectory, Constants.ConfigurationFileName));
+            }
+            else
+            {
+                TextTasks.WriteAllText(
+                    Path.Combine(rootDirectory, Constants.ConfigurationFileName),
+                    GetRelativePath(rootDirectory, solutionFile).Replace(oldChar: '\\', newChar: '/'));
                 
+                definitions.Add("SOLUTION_FILE");
+
                 var solutionFileContent = TextTasks.ReadAllLines(solutionFile).ToList();
                 var buildProjectFileRelative = (WinRelativePath) GetRelativePath(solutionDirectory, buildProjectFile);
                 UpdateSolutionFileContent(solutionFileContent, buildProjectFileRelative, buildProjectGuid, buildProjectKind, buildProjectName);
                 TextTasks.WriteAllLines(solutionFile, solutionFileContent, Encoding.UTF8);
             }
-
-            FileSystemTasks.Touch(Path.Combine(rootDirectory, Constants.ConfigurationFileName));
 
             TextTasks.WriteAllText(
                 buildProjectFile,
@@ -225,12 +231,7 @@ namespace Nuke.GlobalTool
                 Path.Combine(buildDirectory, "Build.cs"),
                 TemplateUtility.FillTemplate(
                     GetTemplate("Build.cs"),
-                    definitions,
-                    replacements: GetDictionary(
-                        new
-                        {
-                            solutionFile = (UnixRelativePath) GetRelativePath(rootDirectory, solutionFile)
-                        })));
+                    definitions));
 
             TextTasks.WriteAllText(
                 Path.Combine(EnvironmentInfo.WorkingDirectory, "build.ps1"),

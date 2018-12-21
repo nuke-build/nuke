@@ -35,7 +35,7 @@ class Build : NukeBuild
     [Parameter("API key for pushing NuGet packages")]                                           // NUGET
     readonly string ApiKey;                                                                     // NUGET
 
-    [Solution("_SOLUTION_FILE_")] readonly Solution Solution;                                   // SOLUTION_FILE
+    [Solution] readonly Solution Solution;                                                      // SOLUTION_FILE
     [GitRepository] readonly GitRepository GitRepository;                                       // GIT
     [GitVersion] readonly GitVersion GitVersion;                                                // GITVERSION
 
