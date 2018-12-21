@@ -18,8 +18,10 @@
     <PackageReference Include="Colorful.Console" Version="1.2.9" />
     <PackageReference Include="Glob" Version="1.0.4" />
     <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" />
-    <PackageReference Include="Microsoft.Build.Framework" Version="15.5.180" />
-    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="15.5.180" />
+    <PackageReference Include="Microsoft.Build" Version="*" />
+    <PackageReference Include="Microsoft.Build.Framework" Version="*" />
+    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="*" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="*" />
     <PackageReference Include="Newtonsoft.Json" Version="10.*" />
     <PackageReference Include="NuGet.Packaging" Version="4.5.0" />
     <PackageReference Include="Refit" Version="4.0.0" />

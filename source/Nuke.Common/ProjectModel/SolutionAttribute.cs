@@ -53,18 +53,9 @@ namespace Nuke.Common.ProjectModel
             _solutionFileRootRelativePath = solutionFileRootRelativePath;
         }
         
-        [CanBeNull]
-        public static string Configuration { get; set; }
-
-        [CanBeNull]
-        public static string TargetFramework { get; set; }
-        
         public override object GetValue(MemberInfo member, NukeBuild build)
         {
-            return ProjectModelTasks.ParseSolution(
-                GetSolutionFile(member.Name),
-                Configuration,
-                TargetFramework);
+            return ProjectModelTasks.ParseSolution(GetSolutionFile(member.Name));
         }
         
         // TODO: allow wildcard matching? [Solution("nuke-*.sln")] -- no globbing?
