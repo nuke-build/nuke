@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Linq;
 using FluentAssertions;
+using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Xunit;
 using static Nuke.Common.IO.PathConstruction;
@@ -16,8 +17,12 @@ namespace Nuke.Common.Tests
 {
     public class ProjectModelTest
     {
-        private static AbsolutePath SolutionFile
-            => (AbsolutePath) Directory.GetCurrentDirectory() / ".." / ".." / ".." / ".." / ".." / "nuke-common.sln";
+        private static AbsolutePath RootDirectory =>
+            (AbsolutePath) FileSystemTasks.FindParentDirectory(
+                start: Directory.GetCurrentDirectory(),
+                predicate: x => x.GetFiles(Constants.ConfigurationFileName).Any());
+
+        private static AbsolutePath SolutionFile  => RootDirectory / "nuke-common.sln";
 
         [Fact]
         public void SolutionTest()

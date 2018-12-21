@@ -148,33 +148,13 @@ partial class Build : NukeBuild
         .DependsOn(Compile)
         .Executes(() =>
         {
-            var framework = "net461";
-            var xunitSettings = new Xunit2Settings()
-                .SetFramework(framework)
-                .AddTargetAssemblies(GlobFiles(SourceDirectory, $"*/bin/{Configuration}/{framework}/Nuke.*.Tests.dll").NotEmpty())
-                .AddResultReport(Xunit2ResultFormat.Xml, OutputDirectory / "tests.xml");
-
-            if (IsWin)
-            {
-                OpenCover(s => s
-                    .SetTargetSettings(xunitSettings)
-                    .SetOutput(OutputDirectory / "coverage.xml")
-                    .SetSearchDirectories(xunitSettings.TargetAssemblyWithConfigs.Select(x => Path.GetDirectoryName(x.Key)))
-                    .SetRegistration(RegistrationType.User)
-                    .SetTargetExitCodeOffset(targetExitCodeOffset: 0)
-                    .SetFilters(
-                        "+[*]*",
-                        "-[xunit.*]*",
-                        "-[FluentAssertions.*]*")
-                    .SetExcludeByAttributes("System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute"));
-
-                ReportGenerator(s => s
-                    .AddReports(OutputDirectory / "coverage.xml")
-                    .AddReportTypes(ReportTypes.Html)
-                    .SetTargetDirectory(OutputDirectory / "coverage"));
-            }
-            else
-                Xunit2(s => xunitSettings);
+            Solution.GetProjects("*.Tests")
+                .ForEach(x => DotNetTest(s => s
+                    .SetProjectFile(x)
+                    .SetConfiguration(Configuration)
+                    .EnableNoBuild()
+                    .SetLogger("trx")
+                    .SetResultsDirectory(OutputDirectory)));
         });
 
     Target Analysis => _ => _
