@@ -12,7 +12,8 @@
   <ItemGroup>
     <PackageReference Include="Nuke.Common" Version="_NUKE_VERSION_" />
     <PackageReference Include="Nuke.CodeGeneration" Version="_NUKE_VERSION_" />                  // GENERATION
-    <PackageReference Include="GitVersion.CommandLine.DotNetCore" Version="4.0.1-beta1-49" />    // GITVERSION
+    <PackageReference Include="GitVersion.CommandLine.DotNetCore" Version="4.0.1-beta1-49" />    // GITVERSION && DOTNET
+    <PackageReference Include="GitVersion.CommandLine" Version="4.0.0" />                        // GITVERSION && MSBUILD
   </ItemGroup>
 
   <ItemGroup>
