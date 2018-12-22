@@ -193,10 +193,7 @@ namespace Nuke.GlobalTool
                             buildProjectName,
                             buildProjectGuid,
                             nukeVersion,
-                            nukeVersionMajorMinor =
-                                nukeVersion.Substring(
-                                    startIndex: 0,
-                                    length: nukeVersion.IndexOf(".", startIndex: 0, count: 2, StringComparison.OrdinalIgnoreCase))
+                            nukeVersionMajorMinor = nukeVersion.Split(".").Take(2).Join(".")
                         })));
 
             if (projectFormat == FORMAT_LEGACY)
