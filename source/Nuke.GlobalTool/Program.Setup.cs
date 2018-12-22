@@ -24,8 +24,6 @@ namespace Nuke.GlobalTool
         // ReSharper disable InconsistentNaming
         public const string PLATFORM_NETCORE = "netcore";
         public const string PLATFORM_NETFX = "netfx";
-        public const string FRAMEWORK_NET461 = "net461";
-        public const string FRAMEWORK_NETCOREAPP2 = "netcoreapp2.0";
         public const string FORMAT_SDK = "sdk";
         public const string FORMAT_LEGACY = "legacy";
         // ReSharper restore InconsistentNaming
@@ -62,12 +60,6 @@ namespace Nuke.GlobalTool
                 : ConsoleUtility.PromptForChoice("What bootstrapping method should be used?",
                     (PLATFORM_NETCORE, ".NET Core SDK"),
                     (PLATFORM_NETFX, ".NET Framework/Mono"));
-
-            var targetFramework = targetPlatform == PLATFORM_NETFX
-                ? FRAMEWORK_NET461
-                : ConsoleUtility.PromptForChoice("What target framework should be used?",
-                    (FRAMEWORK_NETCOREAPP2, FRAMEWORK_NETCOREAPP2),
-                    (FRAMEWORK_NET461, FRAMEWORK_NET461));
 
             var projectFormat = targetPlatform == PLATFORM_NETCORE
                 ? FORMAT_SDK
@@ -200,7 +192,6 @@ namespace Nuke.GlobalTool
                             scriptDirectory = (WinRelativePath) GetRelativePath(buildDirectory, EnvironmentInfo.WorkingDirectory),
                             buildProjectName,
                             buildProjectGuid,
-                            targetFramework,
                             nukeVersion,
                             nukeVersionMajorMinor =
                                 nukeVersion.Substring(
