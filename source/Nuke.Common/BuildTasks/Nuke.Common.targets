@@ -13,7 +13,7 @@
     TaskName="Nuke.Common.BuildTasks.PackPackageToolsTask"
     AssemblyFile="$(MSBuildThisFileDirectory)\Nuke.Common.dll" />
 
-  <Target Name="NukeExternalFiles" BeforeTargets="CoreCompile">
+  <Target Name="NukeExternalFiles" BeforeTargets="Restore">
     <ExternalFilesTask 
       ExternalFiles="@(NukeExternalFiles)"
       Timeout="$(NukeTimeout)"
