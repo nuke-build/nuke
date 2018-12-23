@@ -15,7 +15,7 @@ namespace Nuke.Common.Utilities
     {
         private static int BufferWidth => EnvironmentInfo.IsWin ? Console.BufferWidth - 1 : Console.BufferWidth;
 
-        private static string EnterForDefault => "[enter for default]";
+        private static string Default => "[default: {0}]";
         private static string Confirmed => "¬";
         private static string Selected => "»";
         private static string Unselected => " ";
@@ -48,7 +48,7 @@ namespace Nuke.Common.Utilities
                 }
                 else if (defaultValue != null)
                 {
-                    Console.Write($"{defaultValue.PadRight(totalWidth: 15)}   {EnterForDefault}", Color.DarkGray);
+                    Console.Write($"               {string.Format(Default, defaultValue)}", Color.DarkGray);
                     Console.CursorLeft = 3;
                 }
 
