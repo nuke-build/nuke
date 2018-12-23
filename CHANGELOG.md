@@ -5,9 +5,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Changed setup to write solution file reference to configuration file again
+- Added integration for `Microsoft.Build`
+- Added `Configuration` type
+- Added `continue` parameter
+- Fixed overload of tool path for .NET Core executables
+- Fixed default value not to be hidden by cursor
+- Fixed generic constraint for `ToolSettingsExtensions.When`
 
 ## [0.13.0] / 2018-12-10
-- Change verification of PATH environment variable to be executed only with `Trace` log level
+- Changed verification of PATH environment variable to be executed only with `Trace` log level
 - Added `ToolSettings.When` for conditional fluent modifications
 - Added `.editorconfig` file in setup to avoid formatting issues
 - Added `DotMemoryUnitTasks`
