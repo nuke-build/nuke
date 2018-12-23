@@ -31,11 +31,11 @@ namespace Nuke.Common.Execution
             var graph = new StringBuilder();
             foreach (var target in build.TargetDefinitions)
             {
-                var dependendBy = build.TargetDefinitions.Where(x => x.TargetDefinitionDependencies.Contains(target)).ToList();
-                if (dependendBy.Count == 0)
+                var dependentBy = build.TargetDefinitions.Where(x => x.TargetDefinitionDependencies.Contains(target)).ToList();
+                if (dependentBy.Count == 0)
                     graph.AppendLine(target.Name);
                 else
-                    dependendBy.ForEach(x => graph.AppendLine($"{target.Name} --> {x.Name}"));
+                    dependentBy.ForEach(x => graph.AppendLine($"{target.Name} --> {x.Name}"));
             }
 
             var path = Path.Combine(NukeBuild.TemporaryDirectory, "graph.html");
