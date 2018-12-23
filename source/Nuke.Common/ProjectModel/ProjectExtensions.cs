@@ -19,7 +19,7 @@ namespace Nuke.Common.ProjectModel
         {
             var dotnet = ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE") ??
                          ToolPathResolver.GetPathExecutable("dotnet");
-            var output = ProcessTasks.StartProcess(dotnet, "--info", workingDirectory).AssertZeroExitCode().Output;
+            var output = ProcessTasks.StartProcess(dotnet, "--info", workingDirectory, logOutput: false).AssertZeroExitCode().Output;
             var basePath = (PathConstruction.AbsolutePath) output
                 .Select(x => x.Text.Trim())
                 .Single(x => x.StartsWith("Base Path:"))
