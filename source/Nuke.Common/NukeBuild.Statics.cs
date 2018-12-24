@@ -6,7 +6,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using Nuke.Common.BuildServers;
 using Nuke.Common.Execution;
@@ -120,17 +119,12 @@ namespace Nuke.Common
             if (ParameterService.Instance.GetParameter<bool>(() => RootDirectory))
                 return (PathConstruction.AbsolutePath) EnvironmentInfo.WorkingDirectory;
 
-            var rootDirectory = (PathConstruction.AbsolutePath) FileSystemTasks.FindParentDirectory(
-                EnvironmentInfo.WorkingDirectory,
-                x => x.GetFiles(ConfigurationFileName).Any());
-            ControlFlow.Assert(rootDirectory != null,
-                new[]
-                {
-                    $"Could not locate '{ConfigurationFileName}' file while walking up from '{EnvironmentInfo.WorkingDirectory}'.",
-                    "Either create the file to mark the root directory, or use the --root parameter."
-                }.JoinNewLine());
-            
-            return rootDirectory;
+            return TryGetRootDirectoryFrom(EnvironmentInfo.WorkingDirectory)
+                .NotNull(new[]
+                         {
+                             $"Could not locate '{ConfigurationFileName}' file while walking up from '{EnvironmentInfo.WorkingDirectory}'.",
+                             "Either create the file to mark the root directory, or use the --root parameter."
+                         }.JoinNewLine());
         }
 
         [CanBeNull]

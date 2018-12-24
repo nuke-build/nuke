@@ -5,11 +5,12 @@
 using System;
 using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common.IO;
 
 namespace Nuke.Common
 {
-    internal class Constants
+    internal static class Constants
     {
         internal const string ConfigurationFileName = ".nuke";
         
@@ -18,6 +19,14 @@ namespace Nuke.Common
         internal const string SkippedTargetsParameterName = "Skip";
         
         internal const string CompletionParameterName = "shell-completion";
+
+        [CanBeNull]
+        internal static PathConstruction.AbsolutePath TryGetRootDirectoryFrom(string startDirectory)
+        {
+            return (PathConstruction.AbsolutePath) FileSystemTasks.FindParentDirectory(
+                startDirectory,
+                predicate: x => x.GetFiles(ConfigurationFileName).Any());
+        }
 
         internal static PathConstruction.AbsolutePath GetTemporaryDirectory(PathConstruction.AbsolutePath rootDirectory)
         {

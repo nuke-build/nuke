@@ -9,7 +9,6 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common;
-using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 
@@ -23,9 +22,7 @@ namespace Nuke.GlobalTool
         {
             try
             {
-                var rootDirectory = FileSystemTasks.FindParentDirectory(
-                    Directory.GetCurrentDirectory(),
-                    x => x.GetFiles(Constants.ConfigurationFileName).Any());
+                var rootDirectory = Constants.TryGetRootDirectoryFrom(Directory.GetCurrentDirectory());
 
                 var buildScript = rootDirectory != null
                     ? new DirectoryInfo(rootDirectory)

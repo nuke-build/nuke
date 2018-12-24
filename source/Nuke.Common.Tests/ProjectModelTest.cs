@@ -15,10 +15,7 @@ namespace Nuke.Common.Tests
 {
     public class ProjectModelTest
     {
-        private static AbsolutePath RootDirectory =>
-            (AbsolutePath) FileSystemTasks.FindParentDirectory(
-                start: Directory.GetCurrentDirectory(),
-                predicate: x => x.GetFiles(Constants.ConfigurationFileName).Any());
+        private static AbsolutePath RootDirectory => Constants.TryGetRootDirectoryFrom(Directory.GetCurrentDirectory()).NotNull();
 
         private static AbsolutePath SolutionFile  => RootDirectory / "nuke-common.sln";
 
