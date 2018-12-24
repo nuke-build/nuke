@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.IO;
 
 namespace Nuke.Common.Tooling
 {
@@ -13,11 +14,17 @@ namespace Nuke.Common.Tooling
     [PublicAPI]
     public static class PaketPackageResolver
     {
-        [CanBeNull]
-        public static string TryGetLocalInstalledPackageDirectory(string packageId)
+        public static string GetLocalInstalledPackageDirectory(string packageId, string packagesConfigFile)
         {
-            var packageDirectory = NukeBuild.RootDirectory / "packages" / packageId;
-            return Directory.Exists(packageDirectory) ? packageDirectory : null;
+            var packagesDirectory = GetPackagesDirectory(packagesConfigFile);
+            var packageDirectory = Path.Combine(packagesDirectory, packageId);
+            ControlFlow.Assert(Directory.Exists(packagesDirectory), $"Directory.Exists({packagesDirectory})");
+            return packageDirectory;
+        }
+
+        private static string GetPackagesDirectory(string packagesConfigFile)
+        {
+            return Path.Combine(Path.GetDirectoryName(packagesConfigFile).NotNull(), "packages");
         }
     }
 }

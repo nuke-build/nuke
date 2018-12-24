@@ -5,7 +5,9 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
+using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Tooling
@@ -14,6 +16,7 @@ namespace Nuke.Common.Tooling
     public static class ToolPathResolver
     {
         public static string NuGetPackagesConfigFile;
+        public static string PaketPackagesConfigFile;
         
         [CanBeNull]
         public static string TryGetEnvironmentExecutable(string environmentExecutable)
@@ -31,25 +34,32 @@ namespace Nuke.Common.Tooling
         {
             ControlFlow.Assert(packageId != null && packageExecutable != null, "packageId != null && packageExecutable != null");
 
-            string GetPackagesDirectory()
+            string GetEmbeddedPackagesDirectory()
             {
-                var embeddedDirectory = NukeBuild.BuildAssemblyDirectory / packageId;
-                if (Directory.Exists(embeddedDirectory))
-                    return embeddedDirectory;
+                var assemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var embeddedDirectory = (PathConstruction.AbsolutePath) assemblyDirectory / packageId;
+                return Directory.Exists(embeddedDirectory) ? embeddedDirectory : null;
+            }
 
-                if (NuGetPackagesConfigFile != null)
-                {
-                    return NuGetPackageResolver.GetLocalInstalledPackage(
+            string GetNuGetPackagesDirectory() =>
+                NuGetPackagesConfigFile != null
+                    ? NuGetPackageResolver.GetLocalInstalledPackage(
                             packageId,
                             NuGetPackagesConfigFile,
                             resolveDependencies: false)
-                        ?.Directory;
-                }
+                        ?.Directory
+                    : null;
 
-                return PaketPackageResolver.TryGetLocalInstalledPackageDirectory(packageId);
-            }
+            string GetPaketPackagesDirectory() =>
+                PaketPackagesConfigFile != null
+                    ? PaketPackageResolver.GetLocalInstalledPackageDirectory(
+                        packageId,
+                        PaketPackagesConfigFile)
+                    : null;
 
-            var packageDirectory = GetPackagesDirectory().NotNull("packageDirectory != null");
+            var packageDirectory = (GetEmbeddedPackagesDirectory() ??
+                                    GetNuGetPackagesDirectory() ??
+                                    GetPaketPackagesDirectory()).NotNull("packageDirectory != null");
 
             var executables = Directory.GetFiles(packageDirectory, packageExecutable, SearchOption.AllDirectories);
             ControlFlow.Assert(executables.Length > 0, $"Could not find '{packageExecutable}' inside '{packageDirectory}'.");
