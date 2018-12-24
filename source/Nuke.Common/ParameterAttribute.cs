@@ -37,7 +37,6 @@ namespace Nuke.Common
     ///     </code>
     /// </example>
     [PublicAPI]
-    [UsedImplicitly(ImplicitUseKindFlags.Assign)]
     public class ParameterAttribute : InjectionAttributeBase
     {
         public ParameterAttribute(string description = null)

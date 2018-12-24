@@ -19,7 +19,7 @@ namespace Nuke.Common.Execution
     /// </summary>
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-    [MeansImplicitUse(ImplicitUseKindFlags.Default)]
+    [MeansImplicitUse(ImplicitUseKindFlags.Assign)]
     public abstract class InjectionAttributeBase : Attribute
     {
         [CanBeNull]
