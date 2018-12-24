@@ -12,11 +12,8 @@ using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.GitVersion
 {
-    /// <inheritdoc/>
     /// <summary>
     /// Injects an instance of <see cref="GitVersion"/> based on the local repository.
-    /// <para/>
-    /// <inheritdoc/>
     /// </summary>
     [PublicAPI]
     [UsedImplicitly(ImplicitUseKindFlags.Default)]
@@ -24,7 +21,7 @@ namespace Nuke.Common.Tools.GitVersion
     {
         public bool DisableOnUnix { get; set; }
 
-        public override object GetValue(MemberInfo member, NukeBuild build)
+        public override object GetValue(MemberInfo member, object instance)
         {
             // TODO: https://github.com/GitTools/GitVersion/issues/1097
             if (EnvironmentInfo.IsUnix && DisableOnUnix)

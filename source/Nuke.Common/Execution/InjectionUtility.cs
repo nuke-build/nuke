@@ -3,18 +3,19 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
 namespace Nuke.Common.Execution
 {
-    internal static class InjectionService
+    internal static class InjectionUtility
     {
-        public static void InjectValues(NukeBuild build)
+        public static void InjectValues<T>(T instance = default)
         {
             var anyInjected = false;
 
-            var injectionMembers = build.GetInjectionMembers()
+            var injectionMembers = GetInjectionMembers(typeof(T))
                 .OrderByDescending(x => x.GetCustomAttribute<ParameterAttribute>() != null);
 
             foreach (var member in injectionMembers)
@@ -28,20 +29,40 @@ namespace Nuke.Common.Execution
                 ControlFlow.Assert(attributes.Count == 1, $"Member '{member.Name}' has multiple injection attributes applied.");
 
                 var attribute = attributes.Single();
-                var value = attribute.GetValue(member, build);
+                var value = attribute.GetValue(member, instance);
                 if (value == null)
                     continue;
 
                 var valueType = value.GetType();
                 ControlFlow.Assert(member.GetFieldOrPropertyType().IsAssignableFrom(valueType),
                     $"Member '{member.Name}' must be of type '{valueType.Name}' to get its valued injected from '{attribute.GetType().Name}'.");
-                ReflectionService.SetValue(build, member, value);
+                ReflectionService.SetValue(instance, member, value);
 
                 anyInjected = true;
             }
 
             if (anyInjected)
                 Logger.Log();
+        }
+        
+        public static IReadOnlyCollection<MemberInfo> GetParameterMembers(Type type)
+        {
+            return GetInjectionMembers(type)
+                .Where(x => x.GetCustomAttribute<ParameterAttribute>() != null).ToList();
+        }
+
+        public static IReadOnlyCollection<MemberInfo> GetInjectionMembers(Type type)
+        {
+            var members = type
+                .GetMembers(ReflectionService.All)
+                .Where(x => x.GetCustomAttributes<InjectionAttributeBase>().Any()).ToList();
+
+            var transitiveMembers = members
+                .SelectMany(x => x.GetCustomAttributes<InjectionAttributeBase>())
+                .SelectMany(x => x.GetType().GetMembers(ReflectionService.All))
+                .Where(x => x.GetCustomAttributes<InjectionAttributeBase>().Any()).ToList();
+
+            return members.Concat(transitiveMembers).ToList();
         }
     }
 }

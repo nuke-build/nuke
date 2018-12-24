@@ -9,7 +9,6 @@ using Nuke.Common.Execution;
 
 namespace Nuke.Common.Tooling
 {
-    /// <inheritdoc/>
     /// <summary>
     ///     Injects a delegate for process execution. The executable name is derived from the member name or can be
     ///     passed as constructor argument. The path to the executable is resolved in the following order:
@@ -17,7 +16,6 @@ namespace Nuke.Common.Tooling
     ///         <li>From environment variables (e.g., <c>[NAME]_EXE=path</c>)</li>
     ///         <li>From the PATH variable using <c>which</c> or <c>where</c></li>
     ///     </ul>
-    ///     <inheritdoc/>
     /// </summary>
     /// <example>
     ///     <code>
@@ -39,7 +37,7 @@ namespace Nuke.Common.Tooling
             _name = name;
         }
 
-        public override object GetValue(MemberInfo member, NukeBuild build)
+        public override object GetValue(MemberInfo member, object instance)
         {
             var name = _name ?? member.Name;
             var toolPath = ToolPathResolver.TryGetEnvironmentExecutable($"{name.ToUpperInvariant()}_EXE") ??

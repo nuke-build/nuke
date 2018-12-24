@@ -46,7 +46,7 @@ namespace Nuke.Common.Execution
 
                 HandleEarlyExits(build);
                 ProcessManager.CheckPathEnvironmentVariable();
-                InjectionService.InjectValues(build);
+                InjectionUtility.InjectValues(build);
 
                 executionList = TargetDefinitionLoader.GetExecutingTargets(build, NukeBuild.InvokedTargets, NukeBuild.SkippedTargets);
                 RequirementService.ValidateRequirements(executionList, build);
@@ -108,7 +108,7 @@ namespace Nuke.Common.Execution
                 return null;
             }
 
-            foreach (var parameter in build.GetParameterMembers())
+            foreach (var parameter in InjectionUtility.GetParameterMembers(build.GetType()))
             {
                 var parameterName = ParameterService.Instance.GetParameterName(parameter);
                 if (completionItems.ContainsKey(parameterName))
