@@ -49,7 +49,7 @@ partial class Build : NukeBuild
     [Parameter("Gitter authtoken.")] readonly string GitterAuthToken;
     [Parameter("Slack webhook.")] readonly string SlackWebhook;
 
-    [Solution("nuke-common.sln")] readonly Solution Solution;
+    [Solution] readonly Solution Solution;
     [GitRepository] readonly GitRepository GitRepository;
     [GitVersion] readonly GitVersion GitVersion;
 
