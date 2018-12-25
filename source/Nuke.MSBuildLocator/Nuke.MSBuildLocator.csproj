@@ -7,9 +7,6 @@
     <IsTool>True</IsTool>
   </PropertyGroup>
 
-  <Import Project="..\Package.props" />
-  <Import Project="..\Configuration.props" />
-
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2018.2.1">
       <PrivateAssets>all</PrivateAssets>

@@ -4,15 +4,6 @@
     <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
 
-  <Import Project="..\Configuration.props" />
-
-  <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="5.4.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
-    <PackageReference Include="xunit" Version="2.4.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Nuke.Common\Nuke.Common.csproj" />
   </ItemGroup>

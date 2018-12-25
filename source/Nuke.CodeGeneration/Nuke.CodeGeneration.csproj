@@ -4,9 +4,6 @@
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
   
-  <Import Project="..\Package.props" />
-  <Import Project="..\Configuration.props" />
-  
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.6.3" />
     <PackageReference Include="Humanizer" Version="2.2.0" />
