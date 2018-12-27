@@ -131,7 +131,7 @@ namespace Nuke.Common.Tools.DotNet
     {
         /// <summary><p>Path to the DotNet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        protected internal override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
+        protected override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
         /// <summary><p>Specifies a path to the test project. If omitted, it defaults to current directory.</p></summary>
         public virtual string ProjectFile { get; internal set; }
         /// <summary><p>Use the custom test adapters from the specified path in the test run.</p></summary>
@@ -235,7 +235,7 @@ namespace Nuke.Common.Tools.DotNet
     {
         /// <summary><p>Path to the DotNet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        protected internal override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
+        protected override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
         /// <summary><p>Configuration to use for building the project. The default value is Debug.</p></summary>
         public virtual string Configuration { get; internal set; }
         /// <summary><p>Builds and runs the app using the specified framework. The framework must be specified in the project file.</p></summary>
@@ -318,7 +318,7 @@ namespace Nuke.Common.Tools.DotNet
     {
         /// <summary><p>Path to the DotNet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        protected internal override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
+        protected override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
         /// <summary><p>Optional path to the project file to restore.</p></summary>
         public virtual string ProjectFile { get; internal set; }
         /// <summary><p>The NuGet configuration file (<em>NuGet.config</em>) to use for the restore operation.</p></summary>
@@ -386,7 +386,7 @@ namespace Nuke.Common.Tools.DotNet
     {
         /// <summary><p>Path to the DotNet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        protected internal override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
+        protected override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
         /// <summary><p>The project to pack. It's either a path to a csproj file or to a directory. If omitted, it defaults to the current directory.</p></summary>
         public virtual string Project { get; internal set; }
         /// <summary><p>Configuration to use when building the project. If not specified, configuration defaults to <c>Debug</c>.</p></summary>
@@ -475,7 +475,7 @@ namespace Nuke.Common.Tools.DotNet
     {
         /// <summary><p>Path to the DotNet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        protected internal override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
+        protected override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
         /// <summary><p>The project file to build. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in proj and uses that file.</p></summary>
         public virtual string ProjectFile { get; internal set; }
         /// <summary><p>Defines the build configuration. If omitted, the build configuration defaults to <c>Debug</c>. Use <c>Release</c> build a Release configuration.</p></summary>
@@ -558,7 +558,7 @@ namespace Nuke.Common.Tools.DotNet
     {
         /// <summary><p>Path to the DotNet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        protected internal override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
+        protected override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
         /// <summary><p>The MSBuild project to clean. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in <em>proj</em> and uses that file.</p></summary>
         public virtual string Project { get; internal set; }
         /// <summary><p>Defines the build configuration. The default value is <c>Debug</c>. This option is only required when cleaning if you specified it during build time.</p></summary>
@@ -598,7 +598,7 @@ namespace Nuke.Common.Tools.DotNet
     {
         /// <summary><p>Path to the DotNet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        protected internal override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
+        protected override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
         /// <summary><p>The project to publish, which defaults to the current directory if not specified.</p></summary>
         public virtual string Project { get; internal set; }
         /// <summary><p>Defines the build configuration. The default value is <c>Debug</c>.</p></summary>
@@ -687,7 +687,7 @@ namespace Nuke.Common.Tools.DotNet
     {
         /// <summary><p>Path to the DotNet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
-        protected internal override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
+        protected override Func<string, LogLevel> LogLevelParser => DotNetTasks.ParseLogLevel;
         /// <summary><p>Path of the package to push.</p></summary>
         public virtual string TargetPath { get; internal set; }
         /// <summary><p>Specifies the server URL. This option is required unless <c>DefaultPushSource</c> config value is set in the NuGet config file.</p></summary>
@@ -2213,6 +2213,24 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region SymbolPackageFormat
+        /// <summary><p><em>Sets <c>SymbolPackageFormat</c> in <see cref="DotNetTestSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetTestSettings SetSymbolPackageFormat(this DotNetTestSettings toolSettings, DotNetSymbolPackageFormat symbolPackageFormat)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>SymbolPackageFormat</c> in <see cref="DotNetTestSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetSymbolPackageFormat(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
+            return toolSettings;
+        }
+        #endregion
         #endregion
     }
     #endregion
@@ -3575,6 +3593,24 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region SymbolPackageFormat
+        /// <summary><p><em>Sets <c>SymbolPackageFormat</c> in <see cref="DotNetRunSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetRunSettings SetSymbolPackageFormat(this DotNetRunSettings toolSettings, DotNetSymbolPackageFormat symbolPackageFormat)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>SymbolPackageFormat</c> in <see cref="DotNetRunSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ResetSymbolPackageFormat(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
+            return toolSettings;
+        }
+        #endregion
         #endregion
     }
     #endregion
@@ -4772,6 +4808,24 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("RepositoryType");
+            return toolSettings;
+        }
+        #endregion
+        #region SymbolPackageFormat
+        /// <summary><p><em>Sets <c>SymbolPackageFormat</c> in <see cref="DotNetRestoreSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings SetSymbolPackageFormat(this DotNetRestoreSettings toolSettings, DotNetSymbolPackageFormat symbolPackageFormat)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>SymbolPackageFormat</c> in <see cref="DotNetRestoreSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings ResetSymbolPackageFormat(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
             return toolSettings;
         }
         #endregion
@@ -6221,6 +6275,24 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region SymbolPackageFormat
+        /// <summary><p><em>Sets <c>SymbolPackageFormat</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetPackSettings SetSymbolPackageFormat(this DotNetPackSettings toolSettings, DotNetSymbolPackageFormat symbolPackageFormat)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>SymbolPackageFormat</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetSymbolPackageFormat(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
+            return toolSettings;
+        }
+        #endregion
         #endregion
     }
     #endregion
@@ -7559,6 +7631,24 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region SymbolPackageFormat
+        /// <summary><p><em>Sets <c>SymbolPackageFormat</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetSymbolPackageFormat(this DotNetBuildSettings toolSettings, DotNetSymbolPackageFormat symbolPackageFormat)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>SymbolPackageFormat</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetSymbolPackageFormat(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
+            return toolSettings;
+        }
+        #endregion
         #endregion
     }
     #endregion
@@ -8360,6 +8450,24 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("RepositoryType");
+            return toolSettings;
+        }
+        #endregion
+        #region SymbolPackageFormat
+        /// <summary><p><em>Sets <c>SymbolPackageFormat</c> in <see cref="DotNetCleanSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetCleanSettings SetSymbolPackageFormat(this DotNetCleanSettings toolSettings, DotNetSymbolPackageFormat symbolPackageFormat)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>SymbolPackageFormat</c> in <see cref="DotNetCleanSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetCleanSettings ResetSymbolPackageFormat(this DotNetCleanSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
             return toolSettings;
         }
         #endregion
@@ -9761,6 +9869,24 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region SymbolPackageFormat
+        /// <summary><p><em>Sets <c>SymbolPackageFormat</c> in <see cref="DotNetPublishSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings SetSymbolPackageFormat(this DotNetPublishSettings toolSettings, DotNetSymbolPackageFormat symbolPackageFormat)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>SymbolPackageFormat</c> in <see cref="DotNetPublishSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings ResetSymbolPackageFormat(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
+            return toolSettings;
+        }
+        #endregion
         #endregion
     }
     #endregion
@@ -10019,6 +10145,18 @@ namespace Nuke.Common.Tools.DotNet
         public static DotNetVerbosity Normal = new DotNetVerbosity { Value = "Normal" };
         public static DotNetVerbosity Detailed = new DotNetVerbosity { Value = "Detailed" };
         public static DotNetVerbosity Diagnostic = new DotNetVerbosity { Value = "Diagnostic" };
+    }
+    #endregion
+    #region DotNetSymbolPackageFormat
+    /// <summary><p>Used within <see cref="DotNetTasks"/>.</p></summary>
+    [PublicAPI]
+    [Serializable]
+    [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<DotNetSymbolPackageFormat>))]
+    public partial class DotNetSymbolPackageFormat : Enumeration
+    {
+        public static DotNetSymbolPackageFormat symbols_nupkg = new DotNetSymbolPackageFormat { Value = "symbols.nupkg" };
+        public static DotNetSymbolPackageFormat snupkg = new DotNetSymbolPackageFormat { Value = "snupkg" };
     }
     #endregion
 }
