@@ -220,6 +220,11 @@
                 "name": "RestoreOutputPath",
                 "type": "string",
                 "help": "Output folder, defaulting to the obj folder."
+              },
+              {
+                "name": "SymbolPackageFormat",
+                "type": "MSBuildSymbolPackageFormat",
+                "help": "Format for packaging symbols."
               }
             ]
           },
@@ -306,6 +311,13 @@
         "x64",
         "arm",
         "Win32"
+      ]
+    },
+    {
+      "name": "MSBuildSymbolPackageFormat",
+      "values": [
+        "symbols.nupkg",
+        "snupkg"
       ]
     }
   ]

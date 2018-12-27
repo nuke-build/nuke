@@ -649,6 +649,11 @@
         {
           "name": "RepositoryType",
           "type": "string"
+        },
+        {
+          "name": "SymbolPackageFormat",
+          "type": "DotNetSymbolPackageFormat",
+          "help": "Format for packaging symbols."
         }
       ]
     }
@@ -740,6 +745,13 @@
         "Normal",
         "Detailed",
         "Diagnostic"
+      ]
+    },
+    {
+      "name": "DotNetSymbolPackageFormat",
+      "values": [
+        "symbols.nupkg",
+        "snupkg"
       ]
     }
   ]
