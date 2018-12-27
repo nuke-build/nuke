@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
+using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -28,6 +29,17 @@ namespace Nuke.Common
             get => Environment.CurrentDirectory;
             set => Environment.CurrentDirectory = value;
 #endif
+        }
+
+        public static IDisposable SwitchWorkingDirectory(string workingDirectory, bool allowCreate = true)
+        {
+            if (!Directory.Exists(workingDirectory))
+                FileSystemTasks.EnsureExistingDirectory(workingDirectory);
+
+            var previousWorkingDirectory = WorkingDirectory;
+            return DelegateDisposable.CreateBracket(
+                () => WorkingDirectory = workingDirectory,
+                () => WorkingDirectory = previousWorkingDirectory);
         }
 
         public static string ExpandVariables(string value)
@@ -91,7 +103,7 @@ namespace Nuke.Common
             return new[] { entryAssemblyLocation }.Concat(splittedArguments).ToArray();
         }
 
-        public static string[] ParseCommandLineArguments(string commandLine)
+        internal static string[] ParseCommandLineArguments(string commandLine)
         {
             var inSingleQuotes = false;
             var inDoubleQuotes = false;
