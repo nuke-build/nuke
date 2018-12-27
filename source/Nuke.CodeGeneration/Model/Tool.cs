@@ -22,7 +22,8 @@ namespace Nuke.CodeGeneration.Model
         public string Schema { get; set; } = "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json";
 
         [JsonIgnore] public string SpecificationFile { get; set; }
-        [JsonIgnore] public string DefaultOutputFileName => $"{Path.GetFileNameWithoutExtension(SpecificationFile)}.Generated.cs";
+        [JsonIgnore] public string DefaultOutputFile => Path.ChangeExtension(SpecificationFile, "Generated.cs");
+        [JsonIgnore] public string DefaultOutputFileName => Path.GetFileName(DefaultOutputFile);
 
         [JsonIgnore] public string SourceFile { get; set; }
 
