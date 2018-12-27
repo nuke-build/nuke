@@ -131,6 +131,7 @@ partial class Build : NukeBuild
                 .EnableNoBuild()
                 .SetConfiguration(Configuration)
                 .EnableIncludeSymbols()
+                .SetSymbolPackageFormat(DotNetSymbolPackageFormat.snupkg)
                 .SetOutputDirectory(OutputDirectory)
                 .SetVersion(GitVersion.NuGetVersionV2)
                 .SetPackageReleaseNotes(GetNuGetReleaseNotes(ChangelogFile, GitRepository)));
@@ -188,7 +189,7 @@ partial class Build : NukeBuild
                 .ForEach(x => DotNetNuGetPush(s => s
                     .SetTargetPath(x)
                     .SetSource(Source)
-                    // .SetSymbolSource(SymbolSource)
+                    .SetSymbolSource(SymbolSource)
                     .SetApiKey(ApiKey)));
 
             if (GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch))
