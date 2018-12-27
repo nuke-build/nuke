@@ -20,11 +20,15 @@ namespace Nuke.Common
         public static string MachineName => Environment.MachineName;
 
         public static string WorkingDirectory
+        {
 #if NETCORE
-            => Directory.GetCurrentDirectory();
+            get => Directory.GetCurrentDirectory();
+            set => Directory.SetCurrentDirectory(value);
 #else
-            => Environment.CurrentDirectory;
+            get => Environment.CurrentDirectory;
+            set => Environment.CurrentDirectory = value;
 #endif
+        }
 
         public static string ExpandVariables(string value)
         {
