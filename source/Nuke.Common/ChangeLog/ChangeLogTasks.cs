@@ -184,17 +184,6 @@ namespace Nuke.Common.ChangeLog
                     .First()
                     .TrimEnd(']');
 
-            int GetTrimmedEndIndex(int endIndex)
-            {
-                for (var i = endIndex; !IsReleaseHead(content[i]); i--)
-                {
-                    if (!string.IsNullOrWhiteSpace(content[i]))
-                        return i;
-                }
-
-                return endIndex - 1;
-            }
-
             var index = content.FindIndex(IsReleaseHead);
             while (index < content.Count)
             {
@@ -206,16 +195,16 @@ namespace Nuke.Common.ChangeLog
                 }
 
                 var caption = GetCaption(line);
-                var endIndex = content.FindIndex(index + 1, x => IsReleaseHead(x) || !IsReleaseContent(x));
-                if (endIndex == -1)
-                    endIndex = content.Count - 1;
+                var nextNonReleaseContentIndex = content.FindIndex(index + 1, x => IsReleaseHead(x) || !IsReleaseContent(x));
 
                 var releaseData =
                     new ReleaseSection
                     {
                         Caption = caption,
                         StartIndex = index,
-                        EndIndex = GetTrimmedEndIndex(endIndex)
+                        EndIndex = nextNonReleaseContentIndex != 1
+                            ? nextNonReleaseContentIndex - 1
+                            : content.Count - 1
                     };
 
                 yield return releaseData;
