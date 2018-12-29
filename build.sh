@@ -2,16 +2,6 @@
 
 echo $(bash --version 2>&1 | head -n 1)
 
-REFEXT="False"
-BUILD_ARGUMENTS=()
-for i in "$@"; do
-    case $(echo $1 | awk '{print tolower($0)}') in
-        -refext) REFEXT="True";;
-        *) BUILD_ARGUMENTS+=("$1") ;;
-    esac
-    shift
-done
-
 set -eo pipefail
 SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 
@@ -71,5 +61,5 @@ fi
 
 echo "Microsoft (R) .NET Core SDK version $("$DOTNET_EXE" --version)"
 
-"$DOTNET_EXE" build "$BUILD_PROJECT_FILE" /p:"ReferenceExternal=$REFEXT"
-"$DOTNET_EXE" run --project "$BUILD_PROJECT_FILE" -- ${BUILD_ARGUMENTS[@]}
+"$DOTNET_EXE" build "$BUILD_PROJECT_FILE" /nodeReuse:false
+"$DOTNET_EXE" run --project "$BUILD_PROJECT_FILE" --no-build -- "$@"

@@ -1,6 +1,5 @@
 [CmdletBinding()]
 Param(
-    #[switch]$CustomParam,
     [Parameter(Position=0,Mandatory=$false,ValueFromRemainingArguments=$true)]
     [string[]]$BuildArguments
 )
@@ -45,5 +44,5 @@ ExecSafe { & $env:NUGET_EXE install Nuke.MSBuildLocator -ExcludeVersion -OutputD
 $MSBuildFile = & "$TempDirectory\Nuke.MSBuildLocator\tools\Nuke.MSBuildLocator.exe" "$TempDirectory\vswhere\tools\vswhere.exe"
 
 ExecSafe { & $env:NUGET_EXE restore $BuildProjectFile -SolutionDirectory $SolutionDirectory }
-ExecSafe { & $MSBuildFile $BuildProjectFile }
+ExecSafe { & $MSBuildFile $BuildProjectFile /nodeReuse:false }
 ExecSafe { & $BuildExeFile $BuildArguments }
