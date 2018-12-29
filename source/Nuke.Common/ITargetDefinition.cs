@@ -42,6 +42,11 @@ namespace Nuke.Common
         ITargetDefinition DependsOn(params Target[] targets);
 
         /// <summary>
+        ///   Adds a set of targets that are dependent on this target.
+        /// </summary>
+        ITargetDefinition DependentFor(params Target[] targets);
+
+        /// <summary>
         ///   Adds a set of dependent shadow targets that will be executed before this target.
         ///   Non-existent shadow targets will automatically being skipped.
         /// </summary>

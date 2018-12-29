@@ -62,6 +62,8 @@ partial class Build : NukeBuild
     readonly string HotfixBranchPrefix = "hotfix";
 
     Target Clean => _ => _
+        .Before(Restore)
+        .DependentFor(Compile)
         .Executes(() =>
         {
             DeleteDirectories(GlobDirectories(SourceDirectory, "*/bin", "*/obj"));
@@ -69,7 +71,6 @@ partial class Build : NukeBuild
         });
 
     Target Restore => _ => _
-        .DependsOn(Clean)
         .Executes(() =>
         {
             DotNetRestore(s => s

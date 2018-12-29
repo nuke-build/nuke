@@ -55,7 +55,8 @@ namespace Nuke.Common.Execution
                 .Select(x => nameDictionary.TryGetValue(x, out var namedTarget)
                     ? namedTarget
                     : TargetDefinition.Create(x))
-                .Concat(targetDefinition.FactoryDependencies.Select(x => factoryDictionary[x]));
+                .Concat(targetDefinition.FactoryDependencies.Select(x => factoryDictionary[x]))
+                .Concat(factoryDictionary.Values.Where(x => x.FactoryReverseDependencies.Contains(targetDefinition.Factory)));
         }
 
         public static IReadOnlyCollection<MemberInfo> GetParameterMembers(this NukeBuild build)
