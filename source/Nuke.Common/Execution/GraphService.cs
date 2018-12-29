@@ -33,9 +33,9 @@ namespace Nuke.Common.Execution
             {
                 var dependentBy = build.TargetDefinitions.Where(x => x.TargetDefinitionDependencies.Contains(target)).ToList();
                 if (dependentBy.Count == 0)
-                    graph.AppendLine(target.Name);
+                    graph.AppendLine(target.GetDeclaration());
                 else
-                    dependentBy.ForEach(x => graph.AppendLine($"{target.Name} --> {x.Name}"));
+                    dependentBy.ForEach(x => graph.AppendLine($"{target.GetDeclaration()} --> {x.GetDeclaration()}"));
             }
 
             var path = Path.Combine(NukeBuild.TemporaryDirectory, "graph.html");
@@ -48,6 +48,13 @@ namespace Nuke.Common.Execution
                               FileName = path,
                               UseShellExecute = true
                           });
+        }
+
+        private static string GetDeclaration(this TargetDefinition targetDefinition)
+        {
+            return targetDefinition.IsDefault
+                ? $"defaultTarget[{targetDefinition.Name}]"
+                : targetDefinition.Name;
         }
     }
 }
