@@ -44,7 +44,6 @@
             "name": "Server",
             "type": "string",
             "format": "/d:sonar.host.url={value}",
-            "default": "\"http://localhost:9000\"",
             "help": "The server URL. Default is http://localhost:9000"
           },
           {

@@ -61,7 +61,7 @@ namespace Nuke.Common.Tools.SonarScanner
         /// <summary><p>Path to the SonarScanner executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? SonarScannerTasks.SonarScannerPath;
         /// <summary><p>Specifies the key of the analyzed project in SonarQube.</p></summary>
-        public virtual string ProjektKey { get; internal set; }
+        public virtual string ProjectKey { get; internal set; }
         /// <summary><p>Specifies the name of the analyzed project in SonarQube. Adding this argument will overwrite the project name in SonarQube if it already exists.</p></summary>
         public virtual string Name { get; internal set; }
         /// <summary><p>Specifies the version of your project.</p></summary>
@@ -69,7 +69,7 @@ namespace Nuke.Common.Tools.SonarScanner
         /// <summary><p>The project description.</p></summary>
         public virtual string Description { get; internal set; }
         /// <summary><p>The server URL. Default is http://localhost:9000</p></summary>
-        public virtual string Server { get; internal set; } = "http://localhost:9000";
+        public virtual string Server { get; internal set; }
         /// <summary><p>Specifies the username or access token to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added on the end step.</p></summary>
         public virtual string Login { get; internal set; }
         /// <summary><p>Specifies the password for the SonarQube username in the `sonar.login` argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.</p></summary>
@@ -106,13 +106,13 @@ namespace Nuke.Common.Tools.SonarScanner
         protected override void AssertValid()
         {
             base.AssertValid();
-            ControlFlow.Assert(ProjektKey != null, $"ProjektKey != null [ProjektKey = {ProjektKey}]");
+            ControlFlow.Assert(ProjectKey != null, $"ProjectKey != null [ProjectKey = {ProjectKey}]");
         }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
               .Add("begin")
-              .Add("/k:{value}", ProjektKey)
+              .Add("/k:{value}", ProjectKey)
               .Add("/n:{value}", Name)
               .Add("/v:{value}", Version)
               .Add("/d:sonar.projectDescription={value}", Description)
@@ -164,21 +164,21 @@ namespace Nuke.Common.Tools.SonarScanner
     [ExcludeFromCodeCoverage]
     public static partial class SonarScannerBeginSettingsExtensions
     {
-        #region ProjektKey
-        /// <summary><p><em>Sets <see cref="SonarScannerBeginSettings.ProjektKey"/>.</em></p><p>Specifies the key of the analyzed project in SonarQube.</p></summary>
+        #region ProjectKey
+        /// <summary><p><em>Sets <see cref="SonarScannerBeginSettings.ProjectKey"/>.</em></p><p>Specifies the key of the analyzed project in SonarQube.</p></summary>
         [Pure]
-        public static SonarScannerBeginSettings SetProjektKey(this SonarScannerBeginSettings toolSettings, string projektKey)
+        public static SonarScannerBeginSettings SetProjectKey(this SonarScannerBeginSettings toolSettings, string projectKey)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ProjektKey = projektKey;
+            toolSettings.ProjectKey = projectKey;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SonarScannerBeginSettings.ProjektKey"/>.</em></p><p>Specifies the key of the analyzed project in SonarQube.</p></summary>
+        /// <summary><p><em>Resets <see cref="SonarScannerBeginSettings.ProjectKey"/>.</em></p><p>Specifies the key of the analyzed project in SonarQube.</p></summary>
         [Pure]
-        public static SonarScannerBeginSettings ResetProjektKey(this SonarScannerBeginSettings toolSettings)
+        public static SonarScannerBeginSettings ResetProjectKey(this SonarScannerBeginSettings toolSettings)
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ProjektKey = null;
+            toolSettings.ProjectKey = null;
             return toolSettings;
         }
         #endregion
