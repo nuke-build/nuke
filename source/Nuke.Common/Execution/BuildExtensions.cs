@@ -48,9 +48,6 @@ namespace Nuke.Common.Execution
             foreach (var target in targetDefinition.FactoryDependencies.Select(x => factoryDictionary[x]))
                 yield return target;
 
-            foreach (var target in factoryDictionary.Values.Where(x => x.FactoryReverseDependencies.Contains(targetDefinition.Factory)))
-                yield return target;
-
             foreach (var target in targetDefinition.RunAfterTargets.Select(x => factoryDictionary[x]))
                 yield return target;
 

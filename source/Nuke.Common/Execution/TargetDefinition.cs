@@ -23,7 +23,6 @@ namespace Nuke.Common.Execution
             Name = name;
             Factory = factory;
             FactoryDependencies = new List<Target>();
-            FactoryReverseDependencies = new List<Target>();
             Actions = new List<Action>();
             Conditions = new List<Func<bool>>();
             Requirements = new List<LambdaExpression>();
@@ -47,7 +46,6 @@ namespace Nuke.Common.Execution
         internal List<Func<bool>> Conditions { get; }
         internal List<LambdaExpression> Requirements { get; }
         internal List<Target> FactoryDependencies { get; }
-        internal List<Target> FactoryReverseDependencies { get; }
         internal List<TargetDefinition> TargetDefinitionDependencies { get; }
         internal List<Action> Actions { get; }
         internal DependencyBehavior DependencyBehavior { get; private set; }
@@ -80,12 +78,6 @@ namespace Nuke.Common.Execution
         public ITargetDefinition DependsOn(params Target[] targets)
         {
             FactoryDependencies.AddRange(targets);
-            return this;
-        }
-        
-        public ITargetDefinition DependentFor(params Target[] targets)
-        {
-            FactoryReverseDependencies.AddRange(targets);
             return this;
         }
 

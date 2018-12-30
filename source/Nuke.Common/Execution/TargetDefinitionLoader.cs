@@ -133,8 +133,9 @@ namespace Nuke.Common.Execution
                 graphAsList.Remove(independent);
 
                 var targetDefinition = independent.Value;
-                var targetDefinitionDependencies = executingTargets.SelectMany(x => x.TargetDefinitionDependencies);
-                if (!invokedTargets.Contains(targetDefinition) && !targetDefinitionDependencies.Contains(targetDefinition))
+                var factoryDependencies = executingTargets.SelectMany(x => x.FactoryDependencies);
+                if (!invokedTargets.Contains(targetDefinition) && 
+                    !factoryDependencies.Contains(targetDefinition.Factory))
                     continue;
 
                 executingTargets.Add(targetDefinition);
