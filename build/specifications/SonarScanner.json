@@ -15,7 +15,7 @@
       "settingsClass": {
         "properties": [
           {
-            "name": "ProjektKey",
+            "name": "ProjectKey",
             "type": "string",
             "assertion": "NotNull",
             "format": "/k:{value}",
