@@ -22,13 +22,11 @@ namespace Nuke.Common.Execution
                 .GetProperties(ReflectionService.Instance)
                 .Where(x => x.PropertyType == typeof(Target))
                 .Select(x => LoadTargetDefinition(build, x)).ToList();
-
-            var nameDictionary = targetDefinitions.ToDictionary(x => x.Name, x => x, StringComparer.OrdinalIgnoreCase);
             var factoryDictionary = targetDefinitions.ToDictionary(x => x.Factory, x => x);
 
             foreach (var targetDefinition in targetDefinitions)
             {
-                var dependencies = GetDependencies(targetDefinition, nameDictionary, factoryDictionary);
+                var dependencies = GetDependencies(targetDefinition, factoryDictionary);
                 targetDefinition.TargetDefinitionDependencies.AddRange(dependencies);
                 targetDefinition.IsDefault = targetDefinition.Factory == defaultTarget;
 
@@ -48,15 +46,13 @@ namespace Nuke.Common.Execution
 
         private static IEnumerable<TargetDefinition> GetDependencies(
             TargetDefinition targetDefinition,
-            IReadOnlyDictionary<string, TargetDefinition> nameDictionary,
             IReadOnlyDictionary<Target, TargetDefinition> factoryDictionary)
         {
-            return targetDefinition.NamedDependencies
-                .Select(x => nameDictionary.TryGetValue(x, out var namedTarget)
-                    ? namedTarget
-                    : TargetDefinition.Create(x))
-                .Concat(targetDefinition.FactoryDependencies.Select(x => factoryDictionary[x]))
-                .Concat(factoryDictionary.Values.Where(x => x.FactoryReverseDependencies.Contains(targetDefinition.Factory)));
+            foreach (var target in targetDefinition.FactoryDependencies.Select(x => factoryDictionary[x]))
+                yield return target;
+
+            foreach (var target in factoryDictionary.Values.Where(x => x.FactoryReverseDependencies.Contains(targetDefinition.Factory)))
+                yield return target;
         }
 
         public static IReadOnlyCollection<MemberInfo> GetParameterMembers(this NukeBuild build)
