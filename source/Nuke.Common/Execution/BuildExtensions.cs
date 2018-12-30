@@ -26,13 +26,10 @@ namespace Nuke.Common.Execution
 
             foreach (var targetDefinition in targetDefinitions)
             {
+                targetDefinition.IsDefault = targetDefinition.Factory == defaultTarget;
+                
                 var dependencies = GetDependencies(targetDefinition, factoryDictionary);
                 targetDefinition.TargetDefinitionDependencies.AddRange(dependencies);
-                targetDefinition.IsDefault = targetDefinition.Factory == defaultTarget;
-
-                targetDefinition.TargetDefinitionDependencies.AddRange(targetDefinition.RunAfterTargets.Select(x => factoryDictionary[x]));
-                targetDefinition.TargetDefinitionDependencies.AddRange(
-                    targetDefinitions.Where(x => x.RunBeforeTargets.Any(y => y == targetDefinition.Factory)));
             }
 
             return targetDefinitions;
@@ -52,6 +49,12 @@ namespace Nuke.Common.Execution
                 yield return target;
 
             foreach (var target in factoryDictionary.Values.Where(x => x.FactoryReverseDependencies.Contains(targetDefinition.Factory)))
+                yield return target;
+
+            foreach (var target in targetDefinition.RunAfterTargets.Select(x => factoryDictionary[x]))
+                yield return target;
+
+            foreach (var target in factoryDictionary.Values.Where(x => x.RunBeforeTargets.Contains(targetDefinition.Factory)))
                 yield return target;
         }
 
