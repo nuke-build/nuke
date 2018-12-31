@@ -106,7 +106,7 @@ namespace Nuke.Common.Execution
                     .SelectMany(x => x.Projects)
                     .Where(x => x.Directory.Equals(NukeBuild.BuildProjectDirectory))
                     .Where(x => x.Configurations.Any(y => y.Key.Contains("Build")))
-                    .ForEach(x => Logger.Warn($"Solution {x.Solution.Path} has an active build configurations for {x.Path}."));
+                    .ForEach(x => Logger.Warn($"Solution {x.Solution} has an active build configuration for {x}."));
 
                 return Task.CompletedTask;
             }

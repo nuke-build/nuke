@@ -28,13 +28,18 @@ namespace Nuke.Common.ProjectModel
         }
 
         public PathConstruction.AbsolutePath Path { get; }
-        public PathConstruction.AbsolutePath Directory => (PathConstruction.AbsolutePath) System.IO.Path.GetDirectoryName(Path).NotNull();
+        public PathConstruction.AbsolutePath Directory => Path.Parent;
         
         public IDictionary<string, string> Configurations { get; }
 
         public static implicit operator string(Project project)
         {
             return project.Path;
+        }
+
+        public override string ToString()
+        {
+            return Path;
         }
 
         internal override string RelativePath => PathConstruction.GetRelativePath(Solution.Directory, Path);

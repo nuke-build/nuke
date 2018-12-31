@@ -40,7 +40,12 @@ namespace Nuke.Common.ProjectModel
         {
             return solution.Path;
         }
-        
+
+        public override string ToString()
+        {
+            return Path ?? "<in-memory solution>";
+        }
+
         [CanBeNull]
         public SolutionFolder GetSolutionFolder(string name)
         {
@@ -129,7 +134,6 @@ namespace Nuke.Common.ProjectModel
 
             PrimitiveProjectParents[primitiveProject] = solutionFolder;
         }
-
 
         public void SaveAs(string fileName)
         {
