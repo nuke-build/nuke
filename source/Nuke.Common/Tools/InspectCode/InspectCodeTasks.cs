@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using Nuke.Common.BuildServers;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
+using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Tools.InspectCode
@@ -75,10 +76,8 @@ namespace Nuke.Common.Tools.InspectCode
             InspectCodeSettings toolSettings,
             IReadOnlyCollection<NuGetPackageResolver.InstalledPackage> installedPlugins)
         {
-            var hashCode = Math.Abs(installedPlugins.Select(x => x.Id).Concat(toolSettings.Extensions)
-                .Aggregate(seed: 0, func: (hc, x) => hc + x.GetHashCode()));
-            var hashCodeString = hashCode.ToString().Substring(startIndex: 0, length: 4);
-            return Path.Combine(NukeBuild.TemporaryDirectory, $"InspectCode-{hashCodeString}");
+            var hashCode = installedPlugins.Select(x => x.Id).OrderBy(x => x).JoinComma().GetMD5Hash();
+            return Path.Combine(NukeBuild.TemporaryDirectory, $"InspectCode-{hashCode.Substring(startIndex: 0, length: 4)}");
         }
     }
 }

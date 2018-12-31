@@ -7,11 +7,9 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
-using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common
 {
-    /// <inheritdoc/>
     /// <summary>
     ///     Injected parameters are resolved case-insensitively in the following order:
     ///     <ul>
@@ -23,21 +21,15 @@ namespace Nuke.Common
     ///     counterparts. For instance, <c>int</c> will have its default value <c>0</c> even when it's not
     ///     supplied via command-line or environment variable.
     ///     <para/>
-    ///     <inheritdoc/>
     /// </summary>
     /// <example>
     ///     <code>
-    /// [Parameter("API key for NuGet"] string ApiKey;
-    /// Target Push => _ => _
-    ///     .Requires(() => ApiKey)
-    ///     .Executes() =>
-    ///     {
-    ///         // NuGetPush with ApiKey
-    ///     });
+    /// [Parameter("Configuration to build")] readonly Configuration Configuration;
+    /// [Parameter("API key for NuGet")] readonly string ApiKey;
+    /// [Parameter("Custom items")] readonly string[] Items;
     ///     </code>
     /// </example>
     [PublicAPI]
-    [UsedImplicitly(ImplicitUseKindFlags.Assign)]
     public class ParameterAttribute : InjectionAttributeBase
     {
         public ParameterAttribute(string description = null)
@@ -54,7 +46,7 @@ namespace Nuke.Common
         public string Separator { get; set; }
 
         [CanBeNull]
-        public override object GetValue(MemberInfo member, NukeBuild build)
+        public override object GetValue(MemberInfo member, object instance)
         {
             return ParameterService.Instance.GetParameter<object>(member);
         }

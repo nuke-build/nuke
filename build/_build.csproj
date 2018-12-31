@@ -5,7 +5,6 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <RootNamespace></RootNamespace>
-    <ReferenceExternal>False</ReferenceExternal>
     <IsPackable>false</IsPackable>
     <NoWarn>CS0649;CS0169</NoWarn>
   </PropertyGroup>
@@ -17,18 +16,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GitVersion.CommandLine" Version="4.0.0-beta0012" />
+    <PackageReference Include="GitVersion.CommandLine.DotNetCore" Version="4.0.1-beta1-53" />
     <PackageReference Include="JetBrains.ReSharper.CommandLineTools" Version="2017.1.20170613.162720" />
     <PackageReference Include="OpenCover" Version="4.6.519" />
     <PackageReference Include="ReportGenerator" Version="2.5.6" />
     <PackageReference Include="xunit.runner.console" Version="2.4.0" />
   </ItemGroup>
-
-  <ItemGroup Condition="'$(ReferenceExternal)'=='True'">
-    <PackageReference Include="Nuke.CodeGeneration" Version="*" />
-  </ItemGroup>
   
-  <ItemGroup Condition="'$(ReferenceExternal)'!='True'">
+  <ItemGroup>
     <ProjectReference Include="..\source\Nuke.Common\Nuke.Common.csproj" />
     <ProjectReference Include="..\source\Nuke.CodeGeneration\Nuke.CodeGeneration.csproj" />
   </ItemGroup>

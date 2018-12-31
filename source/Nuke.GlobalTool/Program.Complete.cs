@@ -31,15 +31,16 @@ namespace Nuke.GlobalTool
                 return 0;
             }
 
-            if (!File.Exists(NukeBuild.CompletionFile))
+            var completionFile = Constants.GetCompletionFile((PathConstruction.AbsolutePath) rootDirectory);
+            if (!File.Exists(completionFile))
             {
-                Build(buildScript.NotNull(), $"--{NukeBuild.CompletionParameterName}");
+                Build(buildScript.NotNull(), $"--{Constants.CompletionParameterName}");
                 return 1;
             }
 
             words = words.Substring("nuke ".Length);
             var position = ParameterService.Instance.GetParameter<int?>("position");
-            var completionItems = SerializationTasks.YamlDeserializeFromFile<Dictionary<string, string[]>>(NukeBuild.CompletionFile);
+            var completionItems = SerializationTasks.YamlDeserializeFromFile<Dictionary<string, string[]>>(completionFile);
             foreach (var item in GetRelevantCompletionItems(words, position, completionItems))
                 Console.WriteLine(item);
 
@@ -74,7 +75,7 @@ namespace Nuke.GlobalTool
             }
 
             if (lastParameter == null)
-                AddSubItems(NukeBuild.InvokedTargetsParameterName);
+                AddSubItems(Constants.InvokedTargetsParameterName);
 
             if (lastParameter != null && currentWord != lastParameter)
                 AddSubItems(lastParameter);

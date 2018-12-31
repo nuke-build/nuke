@@ -74,9 +74,6 @@ EndGlobal
         [InlineData(
             @"
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2047
-MinimumVisualStudioVersion = 10.0.40219.1
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,6 +95,12 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{GUID}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{GUID}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {77D83C53-98F5-4275-8217-14700BCA05BB}
 	EndGlobalSection
 EndGlobal
 ")]
@@ -154,7 +157,7 @@ EndGlobal
             var completionItems =
                 new Dictionary<string, string[]>
                 {
-                    { NukeBuild.InvokedTargetsParameterName, new[] { "Compile", "Pack" } },
+                    { Constants.InvokedTargetsParameterName, new[] { "Compile", "Pack" } },
                     { "ApiKey", null },
                     { "NuGetSource", null }
                 };

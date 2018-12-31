@@ -9,7 +9,6 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common;
-using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 
@@ -23,9 +22,7 @@ namespace Nuke.GlobalTool
         {
             try
             {
-                var rootDirectory = FileSystemTasks.FindParentDirectory(
-                    Directory.GetCurrentDirectory(),
-                    x => x.GetFiles(NukeBuild.ConfigurationFileName).Any());
+                var rootDirectory = Constants.TryGetRootDirectoryFrom(Directory.GetCurrentDirectory());
 
                 var buildScript = rootDirectory != null
                     ? new DirectoryInfo(rootDirectory)
@@ -62,7 +59,7 @@ namespace Nuke.GlobalTool
 
             if (buildScript == null)
             {
-                if (UserConfirms($"Could not find {NukeBuild.ConfigurationFileName} file. Do you want to setup a build?"))
+                if (UserConfirms($"Could not find {Constants.ConfigurationFileName} file. Do you want to setup a build?"))
                     return Setup(new string[0], rootDirectory, buildScript: null);
                 return 0;
             }

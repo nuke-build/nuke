@@ -6,13 +6,13 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using Nuke.Common.BuildServers;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using static Nuke.Common.Constants;
 
 namespace Nuke.Common
 {
@@ -21,7 +21,7 @@ namespace Nuke.Common
         static NukeBuild()
         {
             RootDirectory = GetRootDirectory();
-            TemporaryDirectory = RootDirectory / TemporaryDirectoryName;
+            TemporaryDirectory = GetTemporaryDirectory(RootDirectory);
             FileSystemTasks.EnsureExistingDirectory(TemporaryDirectory);
             BuildAssemblyDirectory = GetBuildAssemblyDirectory();
             BuildProjectDirectory = GetBuildProjectDirectory(BuildAssemblyDirectory);
@@ -33,6 +33,7 @@ namespace Nuke.Common
 
             Verbosity = ParameterService.Instance.GetParameter<Verbosity?>(()  => Verbosity) ?? Verbosity.Normal;
             Host = ParameterService.Instance.GetParameter<HostType?>(()  => Host) ?? GetHostType();
+            Continue = ParameterService.Instance.GetParameter(() => Continue);
             Graph = ParameterService.Instance.GetParameter(() => Graph);
             Help = ParameterService.Instance.GetParameter(() => Help);
         }
@@ -40,7 +41,7 @@ namespace Nuke.Common
         /// <summary>
         /// Gets the full path to the root directory.
         /// </summary>
-        [Parameter("Root directory during build execution.", Name = RootDirectoryParameterName)]
+        [Parameter("Root directory during build execution.", Name = "Root")]
         public static PathConstruction.AbsolutePath RootDirectory { get; }
 
         /// <summary>
@@ -105,7 +106,10 @@ namespace Nuke.Common
         /// Gets the list of targets that are executing.
         /// </summary>
         public static string[] ExecutingTargets { get; internal set; }
-        
+
+        [Parameter("Indicates to continue a previously failed build attempt.")]
+        public static bool Continue { get; internal set; }
+
         private static PathConstruction.AbsolutePath GetRootDirectory()
         {
             var parameterValue = ParameterService.Instance.GetParameter(() => RootDirectory);
@@ -115,17 +119,12 @@ namespace Nuke.Common
             if (ParameterService.Instance.GetParameter<bool>(() => RootDirectory))
                 return (PathConstruction.AbsolutePath) EnvironmentInfo.WorkingDirectory;
 
-            var rootDirectory = (PathConstruction.AbsolutePath) FileSystemTasks.FindParentDirectory(
-                EnvironmentInfo.WorkingDirectory,
-                x => x.GetFiles(ConfigurationFileName).Any());
-            ControlFlow.Assert(rootDirectory != null,
-                new[]
-                {
-                    $"Could not locate '{ConfigurationFileName}' file while walking up from '{EnvironmentInfo.WorkingDirectory}'.",
-                    "Either create the file to mark the root directory, or use the --root parameter."
-                }.JoinNewLine());
-            
-            return rootDirectory;
+            return TryGetRootDirectoryFrom(EnvironmentInfo.WorkingDirectory)
+                .NotNull(new[]
+                         {
+                             $"Could not locate '{ConfigurationFileName}' file while walking up from '{EnvironmentInfo.WorkingDirectory}'.",
+                             "Either create the file to mark the root directory, or use the --root parameter."
+                         }.JoinNewLine());
         }
 
         [CanBeNull]

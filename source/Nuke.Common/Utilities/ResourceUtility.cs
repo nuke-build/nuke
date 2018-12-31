@@ -11,6 +11,11 @@ namespace Nuke.Common.Utilities
 {
     public static class ResourceUtility
     {
+        public static string GetResourceText<T>(string postfix)
+        {
+            return new StreamReader(GetResource<T>(postfix)).ReadToEnd();
+        }
+
         public static Stream GetResource<T>(string postfix)
         {
             return GetResource(typeof(T), postfix);

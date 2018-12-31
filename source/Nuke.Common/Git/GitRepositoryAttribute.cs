@@ -12,11 +12,8 @@ using Nuke.Common.Tools.Git;
 
 namespace Nuke.Common.Git
 {
-    /// <inheritdoc/>
     /// <summary>
     /// Injects an instance of <see cref="GitRepository"/> based on the local repository.
-    /// <para/>
-    /// <inheritdoc/>
     /// </summary>
     [PublicAPI]
     [UsedImplicitly(ImplicitUseKindFlags.Default)]
@@ -28,7 +25,7 @@ namespace Nuke.Common.Git
         [CanBeNull]
         public string Remote { get; set; }
 
-        public override object GetValue(MemberInfo member, NukeBuild build)
+        public override object GetValue(MemberInfo member, object instance)
         {
             return ControlFlow.SuppressErrors(() =>
                 GitRepository.FromLocalDirectory(

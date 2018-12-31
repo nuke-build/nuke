@@ -2,16 +2,6 @@
 
 echo $(bash --version 2>&1 | head -n 1)
 
-#CUSTOMPARAM=0
-BUILD_ARGUMENTS=()
-for i in "$@"; do
-    case $(echo $1 | awk '{print tolower($0)}') in
-        # -custom-param) CUSTOMPARAM=1;;
-        *) BUILD_ARGUMENTS+=("$1") ;;
-    esac
-    shift
-done
-
 set -eo pipefail
 SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 
@@ -43,6 +33,5 @@ fi
 echo $(mono "$NUGET_EXE" help 2>&1 | head -n 1)
 
 mono "$NUGET_EXE" restore "$BUILD_PROJECT_FILE" -SolutionDirectory "$SOLUTION_DIRECTORY"
-msbuild "$BUILD_PROJECT_FILE"
-
-mono "$BUILD_EXE_FILE" ${BUILD_ARGUMENTS[@]}
+msbuild "$BUILD_PROJECT_FILE" /nodeReuse:false
+mono "$BUILD_EXE_FILE" "$@"

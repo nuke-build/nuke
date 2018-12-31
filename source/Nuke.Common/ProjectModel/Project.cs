@@ -3,7 +3,8 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Diagnostics;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.IO;
@@ -11,37 +12,36 @@ using Nuke.Common.IO;
 namespace Nuke.Common.ProjectModel
 {
     [PublicAPI]
-    [DebuggerDisplay("{" + nameof(Path) + "}")]
-    public class Project
+    public class Project : PrimitiveProject
     {
         internal Project(
-            Guid id,
+            Solution solution,
+            Guid projectId,
             string name,
             string path,
             Guid typeId,
-            [CanBeNull] Project parent,
-            [CanBeNull] string configuration,
-            [CanBeNull] string targetFramework)
+            IDictionary<string, string> configurations)
+            : base(solution, projectId, name, typeId)
         {
-            Id = id;
-            Name = name;
             Path = (PathConstruction.AbsolutePath) path;
-            TypeId = typeId;
-            Parent = parent;
+            Configurations = configurations;
         }
 
-        public Guid Id { get; }
-        public string Name { get; }
         public PathConstruction.AbsolutePath Path { get; }
-        public PathConstruction.AbsolutePath Directory => (PathConstruction.AbsolutePath) System.IO.Path.GetDirectoryName(Path).NotNull();
-        public Guid TypeId { get; }
-
-        [CanBeNull]
-        public Project Parent { get; }
+        public PathConstruction.AbsolutePath Directory => Path.Parent;
+        
+        public IDictionary<string, string> Configurations { get; }
 
         public static implicit operator string(Project project)
         {
             return project.Path;
         }
+
+        public override string ToString()
+        {
+            return Path;
+        }
+
+        internal override string RelativePath => PathConstruction.GetRelativePath(Solution.Directory, Path);
     }
 }

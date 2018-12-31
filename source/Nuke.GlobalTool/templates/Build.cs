@@ -18,14 +18,15 @@ using static Nuke.Common.Tools.NuGet.NuGetTasks;                                
 class Build : NukeBuild
 {
     // Support plugins are available for:
-    //   - Rider        https://plugins.jetbrains.com/plugin/10803-nuke-support
-    //   - ReSharper    https://resharper-plugins.jetbrains.com/packages/ReSharper.Nuke/
-    //   - VSCode       https://marketplace.visualstudio.com/items?itemName=nuke.support
+    //   - JetBrains ReSharper        https://resharper-plugins.jetbrains.com/packages/ReSharper.Nuke/
+    //   - JetBrains Rider            https://plugins.jetbrains.com/plugin/10803-nuke-support
+    //   - Microsoft VisualStudio     https://marketplace.visualstudio.com/items?itemName=nuke.visualstudio
+    //   - Microsoft VSCode           https://marketplace.visualstudio.com/items?itemName=nuke.support
     
     public static int Main () => Execute<Build>(x => x.Compile);
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
-    readonly string Configuration = IsLocalBuild ? "Debug" : "Release";
+    readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
     [Parameter("Source to push NuGet packages")]                                                // NUGET
     readonly string Source = "https://api.nuget.org/v3/index.json";                             // NUGET
@@ -34,7 +35,7 @@ class Build : NukeBuild
     [Parameter("API key for pushing NuGet packages")]                                           // NUGET
     readonly string ApiKey;                                                                     // NUGET
 
-    [Solution("_SOLUTION_FILE_")] readonly Solution Solution;                                   // SOLUTION_FILE
+    [Solution] readonly Solution Solution;                                                      // SOLUTION_FILE
     [GitRepository] readonly GitRepository GitRepository;                                       // GIT
     [GitVersion] readonly GitVersion GitVersion;                                                // GITVERSION
 
@@ -116,7 +117,7 @@ class Build : NukeBuild
     Target Push => _ => _                                                                       // NUGET
         .DependsOn(Pack)                                                                        // NUGET
         .Requires(() => ApiKey)                                                                 // NUGET
-        .Requires(() => Configuration.EqualsOrdinalIgnoreCase("release"))                       // NUGET
+        .Requires(() => Configuration.Equals(Configuration.Release))                            // NUGET
         .Executes(() =>                                                                         // NUGET
         {                                                                                       // NUGET
             GlobFiles(OutputDirectory, "*.nupkg")                                               // NUGET && OUTPUT_DOR

@@ -1,0 +1,165 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+MSBuild",
+    "https://docs.sonarqube.org/latest/analysis/analysis-parameters/"
+  ],
+  "name": "SonarScanner",
+  "officialUrl": "https://www.sonarqube.org/",
+  "help": "The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.",
+  "packageId": "MSBuild.SonarQube.Runner.Tool",
+  "packageExecutable": "SonarScanner.MSBuild.exe",
+  "tasks": [
+    {
+      "postfix": "Begin",
+      "definiteArgument": "begin",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ProjectKey",
+            "type": "string",
+            "assertion": "NotNull",
+            "format": "/k:{value}",
+            "secret": false,
+            "help": "Specifies the key of the analyzed project in SonarQube."
+          },
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "/n:{value}",
+            "help": "Specifies the name of the analyzed project in SonarQube. Adding this argument will overwrite the project name in SonarQube if it already exists."
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "/v:{value}",
+            "help": "Specifies the version of your project."
+          },
+          {
+            "name": "Description",
+            "type": "string",
+            "format": "/d:sonar.projectDescription={value}",
+            "help": "The project description."
+          },
+          {
+            "name": "Server",
+            "type": "string",
+            "format": "/d:sonar.host.url={value}",
+            "help": "The server URL. Default is http://localhost:9000"
+          },
+          {
+            "name": "Login",
+            "type": "string",
+            "format": "/d:sonar.login={value}",
+            "help": "Specifies the username or access token to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added on the end step."
+          },
+          {
+            "name": "Password",
+            "type": "string",
+            "format": "/d:sonar.password={value}",
+            "secret": true,
+            "help": "Specifies the password for the SonarQube username in the `sonar.login` argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step."
+          },
+          {
+            "name": "Verbose",
+            "type": "bool",
+            "format": "/d:sonar.verbose={value}",
+            "help": "Sets the logging verbosity to detailed. Add this argument before sending logs for troubleshooting."
+          },
+          {
+            "name": "CoverageExclusions",
+            "type": "List<string>",
+            "format": "/d:sonar.coverage.exclusions={value}",
+            "separator": ",",
+            "help": "Comma separated list of files to exclude from coverage calculations. Supports wildcards (*, **, ?)."
+          },
+          {
+            "name": "VisualStudioCoveragePaths",
+            "type": "List<string>",
+            "format": "/d:sonar.cs.vscoveragexml.reportsPaths={value}",
+            "separator": ",",
+            "help": "Comma separated list of Visual Studio Code Coverage reports to include. Supports wildcards (*, **, ?)."
+          },
+          {
+            "name": "DotCoverPaths",
+            "type": "List<string>",
+            "format": "/d:sonar.cs.dotcover.reportsPaths={value}",
+            "separator": ",",
+            "help": "Comma separated list of dotCover HTML-reports to include. Supports wildcards (*, **, ?)."
+          },
+          {
+            "name": "OpenCoverPaths",
+            "type": "List<string>",
+            "format": "/d:sonar.cs.opencover.reportsPaths={value}",
+            "separator": ",",
+            "help": "Comma separated list of OpenCover reports to include. Supports wildcards (*, **, ?)."
+          },
+          {
+            "name": "WebServiceTimeout",
+            "type": "int",
+            "format": "/d:sonar.ws.timeout={value}",
+            "help": "Maximum time to wait for the response of a Web Service call (in seconds). Modifying this value from the default is useful only when you're experiencing timeouts during analysis while waiting for the server to respond to Web Service calls."
+          },
+          {
+            "name": "Homepage",
+            "type": "string",
+            "format": "/d:sonar.links.homepage={value}",
+            "help": "Project home page."
+          },
+          {
+            "name": "ContinuousIntegrationUrl",
+            "type": "string",
+            "format": "/d:sonar.links.ci={value}",
+            "help": "Link to Continuous integration"
+          },
+          {
+            "name": "IssueTrackerUrl",
+            "type": "string",
+            "format": "/d:sonar.links.issue={value}",
+            "help": "Link to Issue tracker."
+          },
+          {
+            "name": "SCMUrl",
+            "type": "string",
+            "format": "/d:sonar.links.scm={value}",
+            "help": "Link to project source repository"
+          },
+          {
+            "name": "SourceEncoding",
+            "type": "string",
+            "format": "/d:sonar.sourceEncoding={value}",
+            "help": "Encoding of the source files. Ex: UTF-8 , MacRoman , Shift_JIS . This property can be replaced by the standard property project.build.sourceEncoding in Maven projects. The list of available encodings depends on your JVM."
+          },
+          {
+            "name": "DuplicationExclusions",
+            "type": "List<string>",
+            "format": "/d:sonar.cpd.exclusions={value}",
+            "separator": ",",
+            "help": "Comma-delimited list of file path patterns to be excluded from duplication detection."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "End",
+      "definiteArgument": "end",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Login",
+            "type": "string",
+            "format": "/d:sonar.login={value}",
+            "help": "Specifies the username or access token to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added on the end step."
+          },
+          {
+            "name": "Password",
+            "type": "string",
+            "format": "/d:sonar.password={value}",
+            "secret": true,
+            "help": "Specifies the password for the SonarQube username in the `sonar.login` argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step."
+          }
+        ]
+      }
+    }
+  ]
+}

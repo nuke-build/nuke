@@ -2213,6 +2213,24 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region SymbolPackageFormat
+        /// <summary><p><em>Sets <c>SymbolPackageFormat</c> in <see cref="DotNetTestSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetTestSettings SetSymbolPackageFormat(this DotNetTestSettings toolSettings, DotNetSymbolPackageFormat symbolPackageFormat)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>SymbolPackageFormat</c> in <see cref="DotNetTestSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetTestSettings ResetSymbolPackageFormat(this DotNetTestSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
+            return toolSettings;
+        }
+        #endregion
         #endregion
     }
     #endregion
@@ -3575,6 +3593,24 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region SymbolPackageFormat
+        /// <summary><p><em>Sets <c>SymbolPackageFormat</c> in <see cref="DotNetRunSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetRunSettings SetSymbolPackageFormat(this DotNetRunSettings toolSettings, DotNetSymbolPackageFormat symbolPackageFormat)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>SymbolPackageFormat</c> in <see cref="DotNetRunSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetRunSettings ResetSymbolPackageFormat(this DotNetRunSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
+            return toolSettings;
+        }
+        #endregion
         #endregion
     }
     #endregion
@@ -4772,6 +4808,24 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("RepositoryType");
+            return toolSettings;
+        }
+        #endregion
+        #region SymbolPackageFormat
+        /// <summary><p><em>Sets <c>SymbolPackageFormat</c> in <see cref="DotNetRestoreSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings SetSymbolPackageFormat(this DotNetRestoreSettings toolSettings, DotNetSymbolPackageFormat symbolPackageFormat)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>SymbolPackageFormat</c> in <see cref="DotNetRestoreSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetRestoreSettings ResetSymbolPackageFormat(this DotNetRestoreSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
             return toolSettings;
         }
         #endregion
@@ -6221,6 +6275,24 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region SymbolPackageFormat
+        /// <summary><p><em>Sets <c>SymbolPackageFormat</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetPackSettings SetSymbolPackageFormat(this DotNetPackSettings toolSettings, DotNetSymbolPackageFormat symbolPackageFormat)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>SymbolPackageFormat</c> in <see cref="DotNetPackSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetPackSettings ResetSymbolPackageFormat(this DotNetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
+            return toolSettings;
+        }
+        #endregion
         #endregion
     }
     #endregion
@@ -7559,6 +7631,24 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region SymbolPackageFormat
+        /// <summary><p><em>Sets <c>SymbolPackageFormat</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings SetSymbolPackageFormat(this DotNetBuildSettings toolSettings, DotNetSymbolPackageFormat symbolPackageFormat)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>SymbolPackageFormat</c> in <see cref="DotNetBuildSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetBuildSettings ResetSymbolPackageFormat(this DotNetBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
+            return toolSettings;
+        }
+        #endregion
         #endregion
     }
     #endregion
@@ -8360,6 +8450,24 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("RepositoryType");
+            return toolSettings;
+        }
+        #endregion
+        #region SymbolPackageFormat
+        /// <summary><p><em>Sets <c>SymbolPackageFormat</c> in <see cref="DotNetCleanSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetCleanSettings SetSymbolPackageFormat(this DotNetCleanSettings toolSettings, DotNetSymbolPackageFormat symbolPackageFormat)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>SymbolPackageFormat</c> in <see cref="DotNetCleanSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetCleanSettings ResetSymbolPackageFormat(this DotNetCleanSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
             return toolSettings;
         }
         #endregion
@@ -9761,6 +9869,24 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region SymbolPackageFormat
+        /// <summary><p><em>Sets <c>SymbolPackageFormat</c> in <see cref="DotNetPublishSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings SetSymbolPackageFormat(this DotNetPublishSettings toolSettings, DotNetSymbolPackageFormat symbolPackageFormat)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>SymbolPackageFormat</c> in <see cref="DotNetPublishSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static DotNetPublishSettings ResetSymbolPackageFormat(this DotNetPublishSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
+            return toolSettings;
+        }
+        #endregion
         #endregion
     }
     #endregion
@@ -10019,6 +10145,18 @@ namespace Nuke.Common.Tools.DotNet
         public static DotNetVerbosity Normal = new DotNetVerbosity { Value = "Normal" };
         public static DotNetVerbosity Detailed = new DotNetVerbosity { Value = "Detailed" };
         public static DotNetVerbosity Diagnostic = new DotNetVerbosity { Value = "Diagnostic" };
+    }
+    #endregion
+    #region DotNetSymbolPackageFormat
+    /// <summary><p>Used within <see cref="DotNetTasks"/>.</p></summary>
+    [PublicAPI]
+    [Serializable]
+    [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<DotNetSymbolPackageFormat>))]
+    public partial class DotNetSymbolPackageFormat : Enumeration
+    {
+        public static DotNetSymbolPackageFormat symbols_nupkg = new DotNetSymbolPackageFormat { Value = "symbols.nupkg" };
+        public static DotNetSymbolPackageFormat snupkg = new DotNetSymbolPackageFormat { Value = "snupkg" };
     }
     #endregion
 }

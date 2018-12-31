@@ -1,5 +1,8 @@
 ApiKey: 
-Configuration: 
+Configuration:
+- Debug
+- Release
+Continue: 
 GitterAuthToken: 
 Graph: 
 Help: 

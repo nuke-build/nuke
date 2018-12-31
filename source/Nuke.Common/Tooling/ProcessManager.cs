@@ -18,7 +18,7 @@ namespace Nuke.Common.Tooling
     internal class ProcessManager : IProcessManager
     {
         private static readonly char[] s_pathSeparators = { EnvironmentInfo.IsWin ? ';' : ':' };
-        
+
         public static IProcessManager Instance { get; private set; } = new ProcessManager();
 
         public virtual IProcess StartProcess(ToolSettings toolSettings)
@@ -51,23 +51,13 @@ namespace Nuke.Common.Tooling
             if (!Path.IsPathRooted(toolPath) && !toolPath.Contains(Path.DirectorySeparatorChar))
                 toolPath = ToolPathResolver.GetPathExecutable(toolPath);
 
-#if NETCORE
-            string toolPathOverride = null;
-            if (toolPath.EndsWith(".dll"))
-            {
-                toolPathOverride = ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE") ??
-                                   ToolPathResolver.GetPathExecutable("dotnet");
-            }
-            else if (EnvironmentInfo.IsUnix && toolPath.EndsWithOrdinalIgnoreCase(".exe"))
-                toolPathOverride = ToolPathResolver.GetPathExecutable("mono");
-
+            var toolPathOverride = GetToolPathOverride(toolPath);
             if (!string.IsNullOrEmpty(toolPathOverride))
             {
                 executionArguments = $"{toolPath.DoubleQuoteIfNeeded()} {executionArguments}".TrimEnd();
                 outputArguments = $"{toolPath.DoubleQuoteIfNeeded()} {outputArguments}".TrimEnd();
                 toolPath = toolPathOverride;
             }
-#endif
 
             outputArguments = outputArguments ?? (outputFilter == null ? executionArguments : outputFilter(executionArguments));
             ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
@@ -83,7 +73,25 @@ namespace Nuke.Common.Tooling
                 outputFilter ?? (x => x));
         }
 
+        [CanBeNull]
+        private static string GetToolPathOverride(string toolPath)
+        {       
+            if (toolPath.EndsWithOrdinalIgnoreCase(".dll"))
+            {
+                return ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE") ??
+                       ToolPathResolver.GetPathExecutable("dotnet");
+            }
+            
+#if NETCORE
+            if (EnvironmentInfo.IsUnix && toolPath.EndsWithOrdinalIgnoreCase(".exe"))
+                return ToolPathResolver.GetPathExecutable("mono");
+#endif
+            
+            return null;
+        }
+
         // TODO: add default values
+        [CanBeNull]
         internal static IProcess StartProcessInternal(
             string toolPath,
             [CanBeNull] string arguments,

@@ -6,32 +6,32 @@ using System;
 using System.IO;
 using System.Linq;
 using FluentAssertions;
+using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Xunit;
 using static Nuke.Common.IO.PathConstruction;
-
-// ReSharper disable ArgumentsStyleLiteral
 
 namespace Nuke.Common.Tests
 {
     public class ProjectModelTest
     {
-        private static AbsolutePath SolutionFile
-            => (AbsolutePath) Directory.GetCurrentDirectory() / ".." / ".." / ".." / ".." / ".." / "nuke-common.sln";
+        private static AbsolutePath RootDirectory => Constants.TryGetRootDirectoryFrom(Directory.GetCurrentDirectory()).NotNull();
+
+        private static AbsolutePath SolutionFile  => RootDirectory / "nuke-common.sln";
 
         [Fact]
         public void SolutionTest()
         {
             var solution = ProjectModelTasks.ParseSolution(SolutionFile);
 
-            solution.Projects.Where(x => x.Is(ProjectType.SolutionFolder)).Select(x => x.Name)
-                .Should().BeEquivalentTo("misc");
+            solution.SolutionFolders.Select(x => x.Name).Should().BeEquivalentTo("misc");
+            solution.AllProjects.Where(x => x.Is(ProjectType.CSharpProject)).Should().HaveCount(7);
 
-            solution.Projects.Where(x => x.Is(ProjectType.CSharpProject)).Should().HaveCount(7);
-
-            var buildProject = solution.Projects.SingleOrDefault(x => x.Name == "_build");
+            var buildProject = solution.AllProjects.SingleOrDefault(x => x.Name == "_build");
             buildProject.Should().NotBeNull();
             buildProject.Is(ProjectType.CSharpProject).Should().BeTrue();
+
+            // solution.SaveAs(solution.Path + ".bak");
         }
 
         [Fact]
@@ -42,21 +42,11 @@ namespace Nuke.Common.Tests
             solution.GetProjects("*.Tests").Should().HaveCount(2);
         }
 
-        //        [Fact]
-        //        public void ProjectTest ()
-        //        {
-        //            //EnvironmentInfo.SetVariable("VisualStudioVersion", @"15.0");
-        //            EnvironmentInfo.SetVariable("VSINSTALLDIR", @"C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional");
-        //            //EnvironmentInfo.SetVariable("MSBuildSDKsPath", @"C:\Program Files\dotnet\sdk\2.0.0\Sdks");
-        //            EnvironmentInfo.SetVariable("MSBuildExtensionsPath", @"..\..\..");
-        //
-        //            var netstandardProject = ProjectModelTasks.ParseSolution(SolutionFile, targetFramework: "netstandard2.0")
-        //                    .Projects.Single(x => x.Name == "Nuke.Common");
-        //            var netframeworkProject = ProjectModelTasks.ParseSolution(SolutionFile, targetFramework: "net461")
-        //                    .Projects.Single(x => x.Name == "Nuke.Common");
-        //
-        //            netstandardProject.Items["PackageReference"].Should().Contain("NETStandard.Library");
-        //            netframeworkProject.Items["PackageReference"].Should().Contain("Octokit");
-        //        }
+        [Fact]
+        public void ProjectTest ()
+        {
+            var solution = ProjectModelTasks.ParseSolution(SolutionFile);
+            solution.Projects.First().GetMSBuildProject();
+        }
     }
 }

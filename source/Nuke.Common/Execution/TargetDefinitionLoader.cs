@@ -134,9 +134,8 @@ namespace Nuke.Common.Execution
 
                 var targetDefinition = independent.Value;
                 var factoryDependencies = executingTargets.SelectMany(x => x.FactoryDependencies);
-                var nameDependencies = executingTargets.SelectMany(x => x.NamedDependencies);
-                if (!invokedTargets.Contains(targetDefinition) &&
-                    !(factoryDependencies.Contains(targetDefinition.Factory) || nameDependencies.Contains(targetDefinition.Name)))
+                if (!invokedTargets.Contains(targetDefinition) && 
+                    !factoryDependencies.Contains(targetDefinition.Factory))
                     continue;
 
                 executingTargets.Add(targetDefinition);

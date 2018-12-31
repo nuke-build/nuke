@@ -22,19 +22,14 @@ namespace Nuke.Common.Execution
                 .GetProperties(ReflectionService.Instance)
                 .Where(x => x.PropertyType == typeof(Target))
                 .Select(x => LoadTargetDefinition(build, x)).ToList();
-
-            var nameDictionary = targetDefinitions.ToDictionary(x => x.Name, x => x, StringComparer.OrdinalIgnoreCase);
             var factoryDictionary = targetDefinitions.ToDictionary(x => x.Factory, x => x);
 
             foreach (var targetDefinition in targetDefinitions)
             {
-                var dependencies = GetDependencies(targetDefinition, nameDictionary, factoryDictionary);
-                targetDefinition.TargetDefinitionDependencies.AddRange(dependencies);
                 targetDefinition.IsDefault = targetDefinition.Factory == defaultTarget;
-
-                targetDefinition.TargetDefinitionDependencies.AddRange(targetDefinition.RunAfterTargets.Select(x => factoryDictionary[x]));
-                targetDefinition.TargetDefinitionDependencies.AddRange(
-                    targetDefinitions.Where(x => x.RunBeforeTargets.Any(y => y == targetDefinition.Factory)));
+                
+                var dependencies = GetDependencies(targetDefinition, factoryDictionary);
+                targetDefinition.TargetDefinitionDependencies.AddRange(dependencies);
             }
 
             return targetDefinitions;
@@ -48,34 +43,16 @@ namespace Nuke.Common.Execution
 
         private static IEnumerable<TargetDefinition> GetDependencies(
             TargetDefinition targetDefinition,
-            IReadOnlyDictionary<string, TargetDefinition> nameDictionary,
             IReadOnlyDictionary<Target, TargetDefinition> factoryDictionary)
         {
-            return targetDefinition.NamedDependencies
-                .Select(x => nameDictionary.TryGetValue(x, out var namedTarget)
-                    ? namedTarget
-                    : TargetDefinition.Create(x))
-                .Concat(targetDefinition.FactoryDependencies.Select(x => factoryDictionary[x]));
-        }
+            foreach (var target in targetDefinition.FactoryDependencies.Select(x => factoryDictionary[x]))
+                yield return target;
 
-        public static IReadOnlyCollection<MemberInfo> GetParameterMembers(this NukeBuild build)
-        {
-            return build.GetInjectionMembers()
-                .Where(x => x.GetCustomAttribute<ParameterAttribute>() != null).ToList();
-        }
+            foreach (var target in targetDefinition.RunAfterTargets.Select(x => factoryDictionary[x]))
+                yield return target;
 
-        public static IReadOnlyCollection<MemberInfo> GetInjectionMembers(this NukeBuild build)
-        {
-            var members = build.GetType()
-                .GetMembers(ReflectionService.All)
-                .Where(x => x.GetCustomAttributes<InjectionAttributeBase>().Any()).ToList();
-
-            var transitiveMembers = members
-                .SelectMany(x => x.GetCustomAttributes<InjectionAttributeBase>())
-                .SelectMany(x => x.GetType().GetMembers(ReflectionService.All))
-                .Where(x => x.GetCustomAttributes<InjectionAttributeBase>().Any()).ToList();
-
-            return members.Concat(transitiveMembers).ToList();
+            foreach (var target in factoryDictionary.Values.Where(x => x.RunBeforeTargets.Contains(targetDefinition.Factory)))
+                yield return target;
         }
     }
 }

@@ -10,7 +10,6 @@ using Nuke.Common.Execution;
 
 namespace Nuke.Common.Tooling
 {
-    /// <inheritdoc/>
     /// <summary>
     ///     Injects a delegate for process execution. The path to the executable is resolved in the following order:
     ///     <ul>
@@ -20,7 +19,6 @@ namespace Nuke.Common.Tooling
     ///             <c>packageExecutable</c> to look up the NuGet package cache
     ///         </li>
     ///     </ul>
-    ///     <inheritdoc/>
     /// </summary>
     /// <example>
     ///     <code>
@@ -52,7 +50,7 @@ namespace Nuke.Common.Tooling
             _packageExecutable = EnvironmentInfo.Is32Bit ? packageExecutable32 : packageExecutable64;
         }
 
-        public override object GetValue(MemberInfo member, NukeBuild build)
+        public override object GetValue(MemberInfo member, object instance)
         {
             var toolPath = ToolPathResolver.TryGetEnvironmentExecutable($"{member.Name.ToUpperInvariant()}_EXE") ??
                            ToolPathResolver.GetPackageExecutable(_packageId, _packageExecutable, Framework);

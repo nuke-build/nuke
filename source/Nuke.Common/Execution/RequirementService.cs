@@ -20,7 +20,7 @@ namespace Nuke.Common.Execution
             {
                 if (requirement is Expression<Func<bool>> boolExpression)
                 {
-                    ControlFlow.Assert(boolExpression.Compile().Invoke(), $"Target '{target.Name}' requires '{requirement.Body.ToString()}'.");
+                    ControlFlow.Assert(boolExpression.Compile().Invoke(), $"Target '{target.Name}' requires '{requirement.Body}'.");
                 }
                 else
                 {

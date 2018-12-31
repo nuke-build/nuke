@@ -40,16 +40,16 @@ partial class Build : NukeBuild
     public static int Main() => Execute<Build>(x => x.Pack);
     
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
-    readonly string Configuration = IsLocalBuild ? "Debug" : "Release";
+    readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
     [Parameter("ApiKey for the specified source.")] readonly string ApiKey;
-    [Parameter] string Source = "https://api.nuget.org/v3/index.json";
-    [Parameter] string SymbolSource = "https://nuget.smbsrc.net/";
+    [Parameter] readonly string Source = "https://api.nuget.org/v3/index.json";
+    [Parameter] readonly string SymbolSource = "https://nuget.smbsrc.net/";
 
     [Parameter("Gitter authtoken.")] readonly string GitterAuthToken;
     [Parameter("Slack webhook.")] readonly string SlackWebhook;
 
-    [Solution("nuke-common.sln")] readonly Solution Solution;
+    [Solution] readonly Solution Solution;
     [GitRepository] readonly GitRepository GitRepository;
     [GitVersion] readonly GitVersion GitVersion;
 
@@ -131,6 +131,7 @@ partial class Build : NukeBuild
                 .EnableNoBuild()
                 .SetConfiguration(Configuration)
                 .EnableIncludeSymbols()
+                .SetSymbolPackageFormat(DotNetSymbolPackageFormat.snupkg)
                 .SetOutputDirectory(OutputDirectory)
                 .SetVersion(GitVersion.NuGetVersionV2)
                 .SetPackageReleaseNotes(GetNuGetReleaseNotes(ChangelogFile, GitRepository)));
@@ -148,33 +149,13 @@ partial class Build : NukeBuild
         .DependsOn(Compile)
         .Executes(() =>
         {
-            var framework = "net461";
-            var xunitSettings = new Xunit2Settings()
-                .SetFramework(framework)
-                .AddTargetAssemblies(GlobFiles(SourceDirectory, $"*/bin/{Configuration}/{framework}/Nuke.*.Tests.dll").NotEmpty())
-                .AddResultReport(Xunit2ResultFormat.Xml, OutputDirectory / "tests.xml");
-
-            if (IsWin)
-            {
-                OpenCover(s => s
-                    .SetTargetSettings(xunitSettings)
-                    .SetOutput(OutputDirectory / "coverage.xml")
-                    .SetSearchDirectories(xunitSettings.TargetAssemblyWithConfigs.Select(x => Path.GetDirectoryName(x.Key)))
-                    .SetRegistration(RegistrationType.User)
-                    .SetTargetExitCodeOffset(targetExitCodeOffset: 0)
-                    .SetFilters(
-                        "+[*]*",
-                        "-[xunit.*]*",
-                        "-[FluentAssertions.*]*")
-                    .SetExcludeByAttributes("System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute"));
-
-                ReportGenerator(s => s
-                    .AddReports(OutputDirectory / "coverage.xml")
-                    .AddReportTypes(ReportTypes.Html)
-                    .SetTargetDirectory(OutputDirectory / "coverage"));
-            }
-            else
-                Xunit2(s => xunitSettings);
+            Solution.GetProjects("*.Tests")
+                .ForEach(x => DotNetTest(s => s
+                    .SetProjectFile(x)
+                    .SetConfiguration(Configuration)
+                    .EnableNoBuild()
+                    .SetLogger("trx")
+                    .SetResultsDirectory(OutputDirectory)));
         });
 
     Target Analysis => _ => _
@@ -196,7 +177,7 @@ partial class Build : NukeBuild
         .DependsOn(Test, Pack)
         .Requires(() => ApiKey, () => SlackWebhook, () => GitterAuthToken)
         .Requires(() => GitHasCleanWorkingCopy())
-        .Requires(() => Configuration.EqualsOrdinalIgnoreCase("release"))
+        .Requires(() => Configuration.Equals(Configuration.Release))
         .Requires(() => GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch) ||
                         GitRepository.Branch.EqualsOrdinalIgnoreCase(DevelopBranch) ||
                         GitRepository.Branch.StartsWithOrdinalIgnoreCase(ReleaseBranchPrefix) ||
@@ -208,7 +189,7 @@ partial class Build : NukeBuild
                 .ForEach(x => DotNetNuGetPush(s => s
                     .SetTargetPath(x)
                     .SetSource(Source)
-                    // .SetSymbolSource(SymbolSource)
+                    .SetSymbolSource(SymbolSource)
                     .SetApiKey(ApiKey)));
 
             if (GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch))

@@ -12,27 +12,18 @@ using Nuke.Common.IO;
 
 namespace Nuke.Common.ProjectModel
 {
-    /// <inheritdoc cref="InjectionAttributeBase"/>
     /// <summary>
     ///     Injects an instance of <see cref="Solution"/>. The solution path is resolved in the following order:
     ///     <ul>
-    ///         <li>From command-line arguments (e.g., <c>-solution path/to/solution.sln</c>)</li>
-    ///         <li>From environment variables (e.g., <c>SOLUTION=path/to/solution.sln</c>)</li>
+    ///         <li>From command-line arguments (e.g., <c>-[MemberName] path/to/solution.sln</c>)</li>
+    ///         <li>From environment variables (e.g., <c>[MemberName]=path/to/solution.sln</c>)</li>
     ///         <li>From the constructor argument</li>
     ///         <li>From the <c>.nuke</c> configuration file</li>
     ///     </ul>
-    ///     <inheritdoc cref="InjectionAttributeBase"/>
     /// </summary>
     /// <example>
     ///     <code>
     /// [Solution("common.sln")] readonly Solution Solution;
-    /// Target FooBar => _ => _
-    ///     .Executes(() =>
-    ///     {
-    ///         Logger.Log($"File: {Solution}");
-    ///         Logger.Log($"Directory: {Solution.Directory}");
-    ///         Logger.Log($"Projects: {Solution.AllProjects.Select(x => x.Name).JoinComma()}");
-    ///     });
     ///     </code>
     /// </example>
     [PublicAPI]
@@ -53,18 +44,9 @@ namespace Nuke.Common.ProjectModel
             _solutionFileRootRelativePath = solutionFileRootRelativePath;
         }
         
-        [CanBeNull]
-        public static string Configuration { get; set; }
-
-        [CanBeNull]
-        public static string TargetFramework { get; set; }
-        
-        public override object GetValue(MemberInfo member, NukeBuild build)
+        public override object GetValue(MemberInfo member, object instance)
         {
-            return ProjectModelTasks.ParseSolution(
-                GetSolutionFile(member.Name),
-                Configuration,
-                TargetFramework);
+            return ProjectModelTasks.ParseSolution(GetSolutionFile(member.Name));
         }
         
         // TODO: allow wildcard matching? [Solution("nuke-*.sln")] -- no globbing?
@@ -83,16 +65,16 @@ namespace Nuke.Common.ProjectModel
 
         private string GetSolutionFileFromConfigurationFile()
         {
-            var nukeFile = Path.Combine(NukeBuild.RootDirectory, NukeBuild.ConfigurationFileName);
+            var nukeFile = Path.Combine(NukeBuild.RootDirectory, Constants.ConfigurationFileName);
             ControlFlow.Assert(File.Exists(nukeFile), $"File.Exists({nukeFile})");
 
             var solutionFileRelative = File.ReadAllLines(nukeFile).ElementAtOrDefault(0);
             ControlFlow.Assert(solutionFileRelative != null && !solutionFileRelative.Contains(value: '\\'),
-                $"First line of {NukeBuild.ConfigurationFileName} must provide solution path using UNIX separators");
+                $"First line of {Constants.ConfigurationFileName} must provide solution path using UNIX separators");
 
             var solutionFile = Path.GetFullPath(Path.Combine(NukeBuild.RootDirectory, solutionFileRelative));
             ControlFlow.Assert(File.Exists(solutionFile),
-                $"Solution file '{solutionFile}' provided via {NukeBuild.CompletionFileName} does not exist.");
+                $"Solution file '{solutionFile}' provided via {Constants.ConfigurationFileName} does not exist.");
 
             return (PathConstruction.AbsolutePath) solutionFile;
         }

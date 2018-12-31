@@ -7,16 +7,15 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
-using Nuke.Common;
 using Console = Colorful.Console;
 
-namespace Nuke.GlobalTool
+namespace Nuke.Common.Utilities
 {
-    public class ConsoleHelper
+    public class ConsoleUtility
     {
         private static int BufferWidth => EnvironmentInfo.IsWin ? Console.BufferWidth - 1 : Console.BufferWidth;
 
-        private static string EnterForDefault => "[enter for default]";
+        private static string Default => "[default: {0}]";
         private static string Confirmed => "¬";
         private static string Selected => "»";
         private static string Unselected => " ";
@@ -49,7 +48,7 @@ namespace Nuke.GlobalTool
                 }
                 else if (defaultValue != null)
                 {
-                    Console.Write($"{defaultValue.PadRight(totalWidth: 15)}   {EnterForDefault}", Color.DarkGray);
+                    Console.Write($"               {string.Format(Default, defaultValue)}", Color.DarkGray);
                     Console.CursorLeft = 3;
                 }
 
@@ -107,6 +106,39 @@ namespace Nuke.GlobalTool
             Console.WriteLine($"{Confirmed}  {options[selection].Description}", Color.Lime);
 
             return options[selection].Value;
+        }
+        
+        public static string ReadSecret()
+        {
+            var secret = string.Empty;
+
+            do
+            {
+                var key = Console.ReadKey(intercept: true);
+                if (key.Key == ConsoleKey.Backspace ||
+                    key.KeyChar == 23 ||
+                    key.KeyChar == 21)
+                {
+                    if (secret.Length > 0)
+                    {
+                        var charsToRemove = (key.Modifiers & ConsoleModifiers.Control) != 0 ? secret.Length : 1;
+                        secret = secret.Substring(startIndex: 0, length: secret.Length - charsToRemove);
+                        Console.Write(string.Concat(Enumerable.Repeat("\b \b", charsToRemove)));
+                    }
+                }
+                else if (key.Key == ConsoleKey.Enter)
+                {
+                    Console.Write(Environment.NewLine);
+                    break;
+                }
+                else if (!char.IsControl(key.KeyChar))
+                {
+                    secret += key.KeyChar;
+                    Console.Write("*");
+                }
+            } while (true);
+
+            return secret;
         }
     }
 }

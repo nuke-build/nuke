@@ -6,8 +6,30 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.14.0] / 2018-12-31
+- Removed named target dependencies
+- Removed choice of target framework in setup
+- Changed setup to write solution file reference to configuration file again
+- Added extended solution parsing with integration for `Microsoft.Build`
+- Added `Configuration` type
+- Added `continue` parameter
+- Added checking for active build project configurations in solution files
+- Added highlighting for default target in HTML graph
+- Added `SonarScannerTasks`
+- Added `EnvironmentInfo.SwitchWorkingDirectory`
+- Added `SymbolPackageFormat` property for `DotNetTasks`, `MSBuildTasks`, and `NuGetTasks`
+- Fixed bootstrapping scripts not to leave DotNet processes behind
+- Fixed bootstrapping scripts to correctly quote arguments
+- Fixed overload of tool path for .NET Core executables
+- Fixed default value not to be hidden by cursor
+- Fixed `ToolSettingsExtensions.When` to have generic constraint on `ToolSettings`
+- Fixed `InspectCodeTasks` to use deterministic hashing
+- Fixed `ChangelogTasks` to correctly parse empty sections at end of file
+- Fixed `InjectionAttributeBase` to express implicit assignment only
+- Fixed `ExternalFilesTask` to be executed before `Restore` target
+
 ## [0.13.0] / 2018-12-10
-- Change verification of PATH environment variable to be executed only with `Trace` log level
+- Changed verification of PATH environment variable to be executed only with `Trace` log level
 - Added `ToolSettings.When` for conditional fluent modifications
 - Added `.editorconfig` file in setup to avoid formatting issues
 - Added `DotMemoryUnitTasks`
@@ -226,7 +248,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.13.0...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.14.0...HEAD
+[0.14.0]: https://github.com/nuke-build/nuke/compare/0.13.0...0.14.0
 [0.13.0]: https://github.com/nuke-build/nuke/compare/0.12.4...0.13.0
 [0.12.4]: https://github.com/nuke-build/nuke/compare/0.12.3...0.12.4
 [0.12.3]: https://github.com/nuke-build/nuke/compare/0.12.2...0.12.3

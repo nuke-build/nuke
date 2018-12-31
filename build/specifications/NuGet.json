@@ -225,6 +225,12 @@
             "format": "-Version {value}",
             "createOverload": true,
             "help": "Overrides the version number from the <c>.nuspec</c> file."
+          },
+          {
+            "name": "SymbolPackageFormat",
+            "type": "NuGetSymbolPackageFormat",
+            "format": "-SymbolPackageFormat {value}",
+            "help": "Format for packaging symbols."
           }
         ]
       }
@@ -378,6 +384,13 @@
         "4",
         "12",
         "14"
+      ]
+    },
+    {
+      "name": "NuGetSymbolPackageFormat",
+      "values": [
+        "symbols.nupkg",
+        "snupkg"
       ]
     }
   ]

@@ -10,10 +10,13 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
+using System.Threading.Tasks;
 using Nuke.Common.IO;
 using Nuke.Common.OutputSinks;
+using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Execution
 {
@@ -21,6 +24,7 @@ namespace Nuke.Common.Execution
     {
         public const string DefaultTarget = "default";
         private const int c_debuggerAttachTimeout = 10_000;
+        private const int c_configurationCheckTimeout = 500;
 
         public static int Execute<T>(Expression<Func<T, Target>> defaultTargetExpression)
             where T : NukeBuild
@@ -29,6 +33,7 @@ namespace Nuke.Common.Execution
             var build = CreateBuildInstance(defaultTargetExpression);
 
             HandleCompletion(build);
+            CheckActiveBuildProjectConfigurations();
             AttachVisualStudioDebugger();
 
             try
@@ -44,7 +49,7 @@ namespace Nuke.Common.Execution
 
                 HandleEarlyExits(build);
                 ProcessManager.CheckPathEnvironmentVariable();
-                InjectionService.InjectValues(build);
+                InjectionUtility.InjectValues(build);
 
                 executionList = TargetDefinitionLoader.GetExecutingTargets(build, NukeBuild.InvokedTargets, NukeBuild.SkippedTargets);
                 RequirementService.ValidateRequirements(executionList, build);
@@ -86,16 +91,34 @@ namespace Nuke.Common.Execution
             File.WriteAllText(NukeBuild.TemporaryDirectory / "visual-studio.dbg",
                 Process.GetCurrentProcess().Id.ToString());
             ControlFlow.Assert(SpinWait.SpinUntil(() => Debugger.IsAttached, millisecondsTimeout: c_debuggerAttachTimeout),
-                $"VisualStudio debugger was not attached within timeout of {c_debuggerAttachTimeout} milliseconds.");
+                $"VisualStudio debugger was not attached within {c_debuggerAttachTimeout} milliseconds.");
         }
 
+        private static void CheckActiveBuildProjectConfigurations()
+        {
+            ControlFlow.AssertWarn(Task.Run(CheckConfiguration).Wait(c_configurationCheckTimeout),
+                $"Could not complete checking build configurations within {c_configurationCheckTimeout} milliseconds.");
+
+            Task CheckConfiguration()
+            {
+                Directory.GetFiles(NukeBuild.RootDirectory, "*.sln", SearchOption.AllDirectories)
+                    .Select(ProjectModelTasks.ParseSolution)
+                    .SelectMany(x => x.Projects)
+                    .Where(x => x.Directory.Equals(NukeBuild.BuildProjectDirectory))
+                    .Where(x => x.Configurations.Any(y => y.Key.Contains("Build")))
+                    .ForEach(x => Logger.Warn($"Solution {x.Solution} has an active build configuration for {x}."));
+
+                return Task.CompletedTask;
+            }
+        }
+        
         private static void HandleCompletion(NukeBuild build)
         {
             var completionItems = new SortedDictionary<string, string[]>();
 
             var targetNames = build.TargetDefinitions.Select(x => x.Name).OrderBy(x => x).ToList();
-            completionItems[NukeBuild.InvokedTargetsParameterName] = targetNames.ToArray();
-            completionItems[NukeBuild.SkippedTargetsParameterName] = targetNames.ToArray();
+            completionItems[Constants.InvokedTargetsParameterName] = targetNames.ToArray();
+            completionItems[Constants.SkippedTargetsParameterName] = targetNames.ToArray();
 
             string[] GetSubItems(Type type)
             {
@@ -106,7 +129,7 @@ namespace Nuke.Common.Execution
                 return null;
             }
 
-            foreach (var parameter in build.GetParameterMembers())
+            foreach (var parameter in InjectionUtility.GetParameterMembers(build.GetType()))
             {
                 var parameterName = ParameterService.Instance.GetParameterName(parameter);
                 if (completionItems.ContainsKey(parameterName))
@@ -115,14 +138,36 @@ namespace Nuke.Common.Execution
                 completionItems[parameterName] = GetSubItems(parameter.GetFieldOrPropertyType())?.OrderBy(x => x).ToArray();
             }
 
-            SerializationTasks.YamlSerializeToFile(completionItems, NukeBuild.CompletionFile);
+            SerializationTasks.YamlSerializeToFile(completionItems, Constants.GetCompletionFile(NukeBuild.RootDirectory));
 
-            if (EnvironmentInfo.ParameterSwitch(NukeBuild.CompletionParameterName))
+            if (EnvironmentInfo.ParameterSwitch(Constants.CompletionParameterName))
                 Environment.Exit(exitCode: 0);
         }
 
         internal static void Execute(NukeBuild build, IEnumerable<TargetDefinition> executionList)
         {
+            var buildAttemptFile = Constants.GetBuildAttemptFile(NukeBuild.RootDirectory);
+            var invocationHash = GetInvocationHash();
+
+            string[] GetExecutedTargets()
+            {
+                if (!NukeBuild.Continue ||
+                    !File.Exists(buildAttemptFile))
+                    return new string[0];
+                
+                var previousBuild = File.ReadAllLines(buildAttemptFile);
+                if (previousBuild.FirstOrDefault() != invocationHash)
+                {
+                    Logger.Warn("Build invocation changed. Starting over...");
+                    return new string[0];
+                }
+
+                return previousBuild.Skip(1).ToArray();
+            }
+
+            var executedTargets = GetExecutedTargets();
+            File.WriteAllLines(buildAttemptFile, new[] { invocationHash });
+
             foreach (var target in executionList)
             {
                 if (target.Factory == null)
@@ -132,10 +177,13 @@ namespace Nuke.Common.Execution
                     continue;
                 }
 
-                if (target.Skip || target.DependencyBehavior == DependencyBehavior.Execute && target.Conditions.Any(x => !x()))
+                if (target.Skip ||
+                    executedTargets.Contains(target.Name) ||
+                    target.DependencyBehavior == DependencyBehavior.Execute && target.Conditions.Any(x => !x()))
                 {
                     target.Status = ExecutionStatus.Skipped;
                     build.OnTargetSkipped(target.Name);
+                    File.AppendAllLines(buildAttemptFile, new[] { target.Name });
                     continue;
                 }
 
@@ -149,6 +197,7 @@ namespace Nuke.Common.Execution
                         target.Actions.ForEach(x => x());
                         target.Status = ExecutionStatus.Executed;
                         build.OnTargetExecuted(target.Name);
+                        File.AppendAllLines(buildAttemptFile, new[] { target.Name });
                     }
                     catch
                     {
@@ -162,6 +211,15 @@ namespace Nuke.Common.Execution
                     }
                 }
             }
+        }
+
+        private static string GetInvocationHash()
+        {
+            var continueParameterName = ParameterService.Instance.GetParameterName(() => NukeBuild.Continue);
+            var invocation = EnvironmentInfo.CommandLineArguments
+                .Where(x => !x.StartsWith("-") || x.TrimStart("-").EqualsOrdinalIgnoreCase(continueParameterName))
+                .JoinSpace();
+            return invocation.GetMD5Hash();
         }
 
         private static void HandleEarlyExits<T>(T build)

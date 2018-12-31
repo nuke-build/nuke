@@ -1417,6 +1417,24 @@ namespace Nuke.Common.Tools.MSBuild
             return toolSettings;
         }
         #endregion
+        #region SymbolPackageFormat
+        /// <summary><p><em>Sets <c>SymbolPackageFormat</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static MSBuildSettings SetSymbolPackageFormat(this MSBuildSettings toolSettings, MSBuildSymbolPackageFormat symbolPackageFormat)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <c>SymbolPackageFormat</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static MSBuildSettings ResetSymbolPackageFormat(this MSBuildSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
+            return toolSettings;
+        }
+        #endregion
         #endregion
         #region Restore
         /// <summary><p><em>Sets <see cref="MSBuildSettings.Restore"/>.</em></p><p>Runs the <c>Restore</c> target prior to building the actual targets.</p></summary>
@@ -1740,6 +1758,18 @@ namespace Nuke.Common.Tools.MSBuild
         public static MSBuildTargetPlatform x64 = new MSBuildTargetPlatform { Value = "x64" };
         public static MSBuildTargetPlatform arm = new MSBuildTargetPlatform { Value = "arm" };
         public static MSBuildTargetPlatform Win32 = new MSBuildTargetPlatform { Value = "Win32" };
+    }
+    #endregion
+    #region MSBuildSymbolPackageFormat
+    /// <summary><p>Used within <see cref="MSBuildTasks"/>.</p></summary>
+    [PublicAPI]
+    [Serializable]
+    [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<MSBuildSymbolPackageFormat>))]
+    public partial class MSBuildSymbolPackageFormat : Enumeration
+    {
+        public static MSBuildSymbolPackageFormat symbols_nupkg = new MSBuildSymbolPackageFormat { Value = "symbols.nupkg" };
+        public static MSBuildSymbolPackageFormat snupkg = new MSBuildSymbolPackageFormat { Value = "snupkg" };
     }
     #endregion
 }

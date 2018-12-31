@@ -184,6 +184,8 @@ namespace Nuke.Common.Tools.NuGet
         public virtual NuGetVerbosity Verbosity { get; internal set; }
         /// <summary><p>Overrides the version number from the <c>.nuspec</c> file.</p></summary>
         public virtual string Version { get; internal set; }
+        /// <summary><p>Format for packaging symbols.</p></summary>
+        public virtual NuGetSymbolPackageFormat SymbolPackageFormat { get; internal set; }
         protected override void AssertValid()
         {
             base.AssertValid();
@@ -212,7 +214,8 @@ namespace Nuke.Common.Tools.NuGet
               .Add("-Symbols", Symbols)
               .Add("-Tool", Tool)
               .Add("-Verbosity {value}", Verbosity)
-              .Add("-Version {value}", Version);
+              .Add("-Version {value}", Version)
+              .Add("-SymbolPackageFormat {value}", SymbolPackageFormat);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -1220,6 +1223,24 @@ namespace Nuke.Common.Tools.NuGet
             return toolSettings;
         }
         #endregion
+        #region SymbolPackageFormat
+        /// <summary><p><em>Sets <see cref="NuGetPackSettings.SymbolPackageFormat"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static NuGetPackSettings SetSymbolPackageFormat(this NuGetPackSettings toolSettings, NuGetSymbolPackageFormat symbolPackageFormat)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SymbolPackageFormat = symbolPackageFormat;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetPackSettings.SymbolPackageFormat"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        [Pure]
+        public static NuGetPackSettings ResetSymbolPackageFormat(this NuGetPackSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SymbolPackageFormat = null;
+            return toolSettings;
+        }
+        #endregion
     }
     #endregion
     #region NuGetRestoreSettingsExtensions
@@ -1902,6 +1923,18 @@ namespace Nuke.Common.Tools.NuGet
         public static NuGetMSBuildVersion _4 = new NuGetMSBuildVersion { Value = "4" };
         public static NuGetMSBuildVersion _12 = new NuGetMSBuildVersion { Value = "12" };
         public static NuGetMSBuildVersion _14 = new NuGetMSBuildVersion { Value = "14" };
+    }
+    #endregion
+    #region NuGetSymbolPackageFormat
+    /// <summary><p>Used within <see cref="NuGetTasks"/>.</p></summary>
+    [PublicAPI]
+    [Serializable]
+    [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<NuGetSymbolPackageFormat>))]
+    public partial class NuGetSymbolPackageFormat : Enumeration
+    {
+        public static NuGetSymbolPackageFormat symbols_nupkg = new NuGetSymbolPackageFormat { Value = "symbols.nupkg" };
+        public static NuGetSymbolPackageFormat snupkg = new NuGetSymbolPackageFormat { Value = "snupkg" };
     }
     #endregion
 }
