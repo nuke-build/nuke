@@ -4,7 +4,6 @@
 
 using System;
 using System.Linq;
-using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.Git
 {

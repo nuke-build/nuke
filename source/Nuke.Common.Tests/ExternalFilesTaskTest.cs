@@ -5,7 +5,6 @@
 using System;
 using System.Threading.Tasks;
 using Nuke.Common.BuildTasks;
-using Xunit;
 
 namespace Nuke.Common.Tests
 {

@@ -5,7 +5,6 @@
 using System;
 using System.Linq;
 using FluentAssertions;
-using Microsoft.SqlServer.Server;
 using Nuke.Common.Utilities;
 using Xunit;
 

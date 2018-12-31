@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.14.1] / 2018-12-31
+- Fixed package reference versions
+- Fixed `SolutionSerializer` to handle empty lines
+
 ## [0.14.0] / 2018-12-31
 - Removed named target dependencies
 - Removed choice of target framework in setup
@@ -248,7 +252,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/0.14.0...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/0.14.1...HEAD
+[0.14.1]: https://github.com/nuke-build/nuke/compare/0.14.0...0.14.1
 [0.14.0]: https://github.com/nuke-build/nuke/compare/0.13.0...0.14.0
 [0.13.0]: https://github.com/nuke-build/nuke/compare/0.12.4...0.13.0
 [0.12.4]: https://github.com/nuke-build/nuke/compare/0.12.3...0.12.4

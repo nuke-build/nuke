@@ -10,7 +10,6 @@
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.6.3" />
     <PackageReference Include="Humanizer" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Build.Framework" Version="15.5.180" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.5" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.4.1" />
