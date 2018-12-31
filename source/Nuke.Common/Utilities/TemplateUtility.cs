@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Utilities
 {
