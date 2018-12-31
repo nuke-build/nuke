@@ -23,20 +23,22 @@ namespace Nuke.Common.ProjectModel
 
         public static Solution Deserialize(string solutionFile, string[] content)
         {
+            var trimmedContent = content.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+            
             var solution = new Solution
                            {
                                Path = (PathConstruction.AbsolutePath) solutionFile,
                                Header = content.TakeWhile(x => !x.StartsWith("Project")).ToArray(),
-                               Properties = content.GetGlobalSection("SolutionProperties"),
-                               ExtensibilityGlobals = content.GetGlobalSection("ExtensibilityGlobals"),
-                               Configurations = content.GetGlobalSection("SolutionConfigurationPlatforms")
+                               Properties = trimmedContent.GetGlobalSection("SolutionProperties"),
+                               ExtensibilityGlobals = trimmedContent.GetGlobalSection("ExtensibilityGlobals"),
+                               Configurations = trimmedContent.GetGlobalSection("SolutionConfigurationPlatforms")
                            };
             
-            var primitiveProjects = GetPrimitiveProjects(solution, content).ToList();
+            var primitiveProjects = GetPrimitiveProjects(solution, trimmedContent).ToList();
             foreach (var primitiveProject in primitiveProjects)
                 solution.AddPrimitiveProject(primitiveProject);
 
-            var projectToSolutionFolder = GetProjectToSolutionFolder(content);
+            var projectToSolutionFolder = GetProjectToSolutionFolder(trimmedContent);
             if (projectToSolutionFolder != null)
             {
                 var solutionFolders = primitiveProjects.OfType<SolutionFolder>().ToList();
