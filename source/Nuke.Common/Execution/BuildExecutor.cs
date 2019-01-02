@@ -9,6 +9,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Nuke.Common.IO;
@@ -32,9 +33,8 @@ namespace Nuke.Common.Execution
             var executionList = default(IReadOnlyCollection<TargetDefinition>);
             var build = CreateBuildInstance(defaultTargetExpression);
 
-            HandleCompletion(build);
-            CheckActiveBuildProjectConfigurations();
-            AttachVisualStudioDebugger();
+            var extensions = build.GetType().GetCustomAttributes<BuildExtensionAttributeBase>().ToList();
+            extensions.ForEach(x => x.PreUserCode(build));
 
             Console.CancelKeyPress += (s, e) => Finish();
 
@@ -49,10 +49,9 @@ namespace Nuke.Common.Execution
                 Logger.Log($"NUKE Execution Engine {typeof(BuildExecutor).Assembly.GetInformationalText()}");
                 Logger.Log(FigletTransform.GetText("NUKE"));
 
-                HandleEarlyExits(build);
-                ProcessManager.CheckPathEnvironmentVariable();
+                extensions.ForEach(x => x.PreInitialization(build));
+                
                 InjectionUtility.InjectValues(build);
-
                 executionList = TargetDefinitionLoader.GetExecutingTargets(build, NukeBuild.InvokedTargets, NukeBuild.SkippedTargets);
                 RequirementService.ValidateRequirements(executionList, build);
 

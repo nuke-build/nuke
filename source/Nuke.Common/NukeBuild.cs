@@ -42,6 +42,9 @@ namespace Nuke.Common
     /// </code>
     /// </example>
     [PublicAPI]
+    [HandleHelpRequests]
+    [HandleShellCompletion]
+    [HandleVisualStudioDebugging]
     public abstract partial class NukeBuild
     {
         /// <summary>
