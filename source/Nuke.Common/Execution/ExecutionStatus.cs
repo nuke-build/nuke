@@ -13,6 +13,7 @@ namespace Nuke.Common.Execution
         Skipped,
         Executed,
         Failed,
-        Absent
+        Absent,
+        Aborted
     }
 }

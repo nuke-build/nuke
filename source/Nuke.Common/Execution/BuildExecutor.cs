@@ -36,6 +36,8 @@ namespace Nuke.Common.Execution
             CheckActiveBuildProjectConfigurations();
             AttachVisualStudioDebugger();
 
+            Console.CancelKeyPress += (s, e) => Finish();
+
             try
             {
                 build.OnBuildCreated();
@@ -67,17 +69,24 @@ namespace Nuke.Common.Execution
             }
             finally
             {
+                Finish();
+            }
+            
+            void Finish()
+            {
                 if (Logger.OutputSink is SevereMessagesOutputSink outputSink)
                 {
                     Logger.Log();
                     WriteWarningsAndErrors(outputSink);
                 }
 
+                // ReSharper disable AccessToModifiedClosure
                 if (executionList != null)
                 {
                     Logger.Log();
                     WriteSummary(executionList);
                 }
+                // ReSharper restore AccessToModifiedClosure
 
                 build.OnBuildFinished();
             }
@@ -189,6 +198,7 @@ namespace Nuke.Common.Execution
 
                 using (Logger.Block(target.Name))
                 {
+                    target.Status = ExecutionStatus.Aborted;
                     build.OnTargetStart(target.Name);
                     var stopwatch = Stopwatch.StartNew();
                     
@@ -282,6 +292,7 @@ namespace Nuke.Common.Execution
                     case ExecutionStatus.Executed:
                         Logger.Success(line);
                         break;
+                    case ExecutionStatus.Aborted:
                     case ExecutionStatus.NotRun:
                     case ExecutionStatus.Failed:
                         Logger.Error(line);
@@ -293,7 +304,12 @@ namespace Nuke.Common.Execution
             Logger.Log(CreateLine("Total", "", ToMinutesAndSeconds(totalDuration)));
             Logger.Log(new string(c: '=', count: allColumns));
             Logger.Log();
-            if (executionList.All(x => x.Status != ExecutionStatus.Failed && x.Status != ExecutionStatus.NotRun))
+
+            var buildSucceeded = executionList
+                .All(x => x.Status != ExecutionStatus.Failed &&
+                          x.Status != ExecutionStatus.NotRun &&
+                          x.Status != ExecutionStatus.Aborted);
+            if (buildSucceeded)
                 Logger.Success($"Build succeeded on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}.");
             else
                 Logger.Error($"Build failed on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}.");
