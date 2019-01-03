@@ -10,13 +10,14 @@ using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Execution
 {
-    internal class HandleShellCompletionAttribute : BuildExtensionAttributeBase
+    [AttributeUsage(AttributeTargets.Class)]
+    internal class HandleShellCompletionAttribute : Attribute, IPreLogoBuildExtension
     {
-        public override void PreUserCode(NukeBuild instance)
+        public void Execute(NukeBuild instance)
         {
             var completionItems = new SortedDictionary<string, string[]>();
 
-            var targetNames = instance.TargetDefinitions.Select(x => x.Name).OrderBy(x => x).ToList();
+            var targetNames = NukeBuild.ExecutableTargets.Select(x => x.Name).OrderBy(x => x).ToList();
             completionItems[Constants.InvokedTargetsParameterName] = targetNames.ToArray();
             completionItems[Constants.SkippedTargetsParameterName] = targetNames.ToArray();
 

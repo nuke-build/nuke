@@ -7,51 +7,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 
 namespace Nuke.Common.Execution
 {
     internal class TargetDefinition : ITargetDefinition
     {
-        public static TargetDefinition Create(string name, Target factory = null)
-        {
-            return new TargetDefinition(name, factory);
-        }
-
-        private TargetDefinition(string name, Target factory = null)
-        {
-            Name = name;
-            Factory = factory;
-            FactoryDependencies = new List<Target>();
-            Actions = new List<Action>();
-            Conditions = new List<Func<bool>>();
-            Requirements = new List<LambdaExpression>();
-            TargetDefinitionDependencies = new List<TargetDefinition>();
-            RunBeforeTargets = new List<Target>();
-            RunAfterTargets = new List<Target>();
-            DependencyBehavior = DependencyBehavior.Execute;
-
-            factory?.Invoke(this);
-        }
-
-        internal string Name { get; }
-
-        [CanBeNull]
-        internal Target Factory { get; }
-
         internal string Description { get; set; }
         internal bool IsDefault { get; set; }
         internal TimeSpan Duration { get; set; }
         internal ExecutionStatus Status { get; set; }
-        internal List<Func<bool>> Conditions { get; }
-        internal List<LambdaExpression> Requirements { get; }
-        internal List<Target> FactoryDependencies { get; }
-        internal List<TargetDefinition> TargetDefinitionDependencies { get; }
-        internal List<Action> Actions { get; }
+        internal List<Func<bool>> Conditions { get; } = new List<Func<bool>>();
+        internal List<LambdaExpression> Requirements { get; } = new List<LambdaExpression>();
+        internal List<Target> DependsOnTargets { get; } = new List<Target>();
+        internal List<Target> DependentForTargets { get; } = new List<Target>();
+        internal List<Action> Actions { get; } = new List<Action>();
         internal DependencyBehavior DependencyBehavior { get; private set; }
-        internal bool Skip { get; set; }
-        internal List<Target> RunBeforeTargets { get; private set; }
-        internal List<Target> RunAfterTargets { get; private set; }
+        internal List<Target> BeforeTargets { get; private set; } = new List<Target>();
+        internal List<Target> AfterTargets { get; private set; } = new List<Target>();
+        internal List<Target> TriggersTargets { get; private set; } = new List<Target>();
+        internal List<Target> TriggeredByTargets { get; private set; } = new List<Target>();
 
         ITargetDefinition ITargetDefinition.Description(string description)
         {
@@ -77,7 +51,13 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition DependsOn(params Target[] targets)
         {
-            FactoryDependencies.AddRange(targets);
+            DependsOnTargets.AddRange(targets);
+            return this;
+        }
+
+        public ITargetDefinition DependentFor(params Target[] targets)
+        {
+            DependentForTargets.AddRange(targets);
             return this;
         }
 
@@ -115,19 +95,26 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition Before(params Target[] targets)
         {
-            RunBeforeTargets.AddRange(targets);
+            BeforeTargets.AddRange(targets);
             return this;
         }
 
         public ITargetDefinition After(params Target[] targets)
         {
-            RunAfterTargets.AddRange(targets);
+            AfterTargets.AddRange(targets);
             return this;
         }
 
-        public override string ToString()
+        public ITargetDefinition Triggers(params Target[] targets)
         {
-            return $"Target '{Name}'";
+            TriggersTargets.AddRange(targets);
+            return this;
+        }
+
+        public ITargetDefinition TriggeredBy(params Target[] targets)
+        {
+            TriggeredByTargets.AddRange(targets);
+            return this;
         }
     }
 }

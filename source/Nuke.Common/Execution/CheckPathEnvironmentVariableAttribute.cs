@@ -10,9 +10,10 @@ using Nuke.Common.Tooling;
 namespace Nuke.Common.Execution
 {
     [PublicAPI]
-    public class CheckPathEnvironmentVariableAttribute : BuildExtensionAttributeBase
+    [AttributeUsage(AttributeTargets.Class)]
+    public class CheckPathEnvironmentVariableAttribute : Attribute, IPostLogoBuildExtension
     {
-        public override void PreInitialization(NukeBuild instance)
+        public void Execute(NukeBuild instance)
         {
             ProcessManager.CheckPathEnvironmentVariable();
         }

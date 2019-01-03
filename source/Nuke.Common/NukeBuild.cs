@@ -6,11 +6,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.BuildServers;
 using Nuke.Common.Execution;
 using Nuke.Common.OutputSinks;
 using Nuke.Common.Tooling;
+using Nuke.Common.Utilities.Collections;
 
 // ReSharper disable VirtualMemberNeverOverridden.Global
 
@@ -18,7 +20,7 @@ namespace Nuke.Common
 {
     /// <summary>
     /// Base class for build definitions. Derived types must declare <c>static int Main</c> which calls
-    /// <see cref="Execute{T}"/> for the exit code.
+    /// <see cref="Execute{T}(System.Linq.Expressions.Expression{System.Func{T,Nuke.Common.Target}})"/> for the exit code.
     /// </summary>
     /// <example>
     /// <code>
@@ -54,10 +56,17 @@ namespace Nuke.Common
         protected static int Execute<T>(Expression<Func<T, Target>> defaultTargetExpression)
             where T : NukeBuild
         {
-            return BuildExecutor.Execute(defaultTargetExpression);
+            return BuildManager.Execute(defaultTargetExpression);
         }
+        
+        internal static IReadOnlyCollection<ExecutableTarget> ExecutableTargets { get; set; }
+        internal static IReadOnlyCollection<ExecutableTarget> ExecutionPlan { get; set; }
 
-        internal IReadOnlyCollection<TargetDefinition> TargetDefinitions { get; set; }
+        internal void Execute<T>()
+            where T : IBuildExtension
+        {
+            GetType().GetCustomAttributes().OfType<T>().ForEach(x => x.Execute(this));
+        }
 
         protected internal virtual IOutputSink OutputSink
         {

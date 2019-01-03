@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -13,8 +14,7 @@ namespace Nuke.Common.Execution
 {
     internal static class GraphService
     {
-        public static void ShowGraph<T>(T build)
-            where T : NukeBuild
+        public static void ShowGraph(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             string GetStringFromStream(Stream stream)
             {
@@ -24,18 +24,18 @@ namespace Nuke.Common.Execution
                 }
             }
 
-            var assembly = typeof(BuildExecutor).GetTypeInfo().Assembly;
-            var resourceName = typeof(BuildExecutor).Namespace + ".graph.html";
+            var assembly = typeof(BuildManager).GetTypeInfo().Assembly;
+            var resourceName = typeof(BuildManager).Namespace + ".graph.html";
             var resourceStream = assembly.GetManifestResourceStream(resourceName).NotNull("resourceStream != null");
 
             var graph = new StringBuilder();
-            foreach (var target in build.TargetDefinitions)
+            foreach (var executableTarget in executableTargets)
             {
-                var dependentBy = build.TargetDefinitions.Where(x => x.TargetDefinitionDependencies.Contains(target)).ToList();
+                var dependentBy = executableTargets.Where(x => x.AllDependencies.Contains(executableTarget)).ToList();
                 if (dependentBy.Count == 0)
-                    graph.AppendLine(target.GetDeclaration());
+                    graph.AppendLine(executableTarget.GetDeclaration());
                 else
-                    dependentBy.ForEach(x => graph.AppendLine($"{target.GetDeclaration()} --> {x.GetDeclaration()}"));
+                    dependentBy.ForEach(x => graph.AppendLine($"{executableTarget.GetDeclaration()} --> {x.GetDeclaration()}"));
             }
 
             var path = Path.Combine(NukeBuild.TemporaryDirectory, "graph.html");
@@ -50,11 +50,11 @@ namespace Nuke.Common.Execution
                           });
         }
 
-        private static string GetDeclaration(this TargetDefinition targetDefinition)
+        private static string GetDeclaration(this ExecutableTarget executableTarget)
         {
-            return targetDefinition.IsDefault
-                ? $"defaultTarget[{targetDefinition.Name}]"
-                : targetDefinition.Name;
+            return executableTarget.IsDefault
+                ? $"defaultTarget[{executableTarget.Name}]"
+                : executableTarget.Name;
         }
     }
 }

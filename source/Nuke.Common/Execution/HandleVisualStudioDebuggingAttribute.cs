@@ -12,11 +12,12 @@ using JetBrains.Annotations;
 namespace Nuke.Common.Execution
 {
     [PublicAPI]
-    public class HandleVisualStudioDebuggingAttribute : BuildExtensionAttributeBase
+    [AttributeUsage(AttributeTargets.Class)]
+    public class HandleVisualStudioDebuggingAttribute : Attribute, IPreLogoBuildExtension
     {
         public int TimeoutInMilliseconds { get; } = 10_000;
 
-        public override void PreUserCode(NukeBuild instance)
+        public void Execute(NukeBuild instance)
         {
             if (!ParameterService.Instance.GetParameter<bool>(Constants.VisualStudioDebugParameterName))
                 return;

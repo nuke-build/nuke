@@ -7,18 +7,19 @@ using System.Linq;
 
 namespace Nuke.Common.Execution
 {
-    internal class HandleHelpRequestsAttribute : BuildExtensionAttributeBase
+    [AttributeUsage(AttributeTargets.Class)]
+    internal class HandleHelpRequestsAttribute : Attribute, IPostLogoBuildExtension
     {
-        public override void PreInitialization(NukeBuild instance)
+        public void Execute(NukeBuild instance)
         {
             if (NukeBuild.Help)
             {
-                Logger.Log(HelpTextService.GetTargetsText(instance));
-                Logger.Log(HelpTextService.GetParametersText(instance));
+                Logger.Log(HelpTextService.GetTargetsText(NukeBuild.ExecutableTargets));
+                Logger.Log(HelpTextService.GetParametersText(instance, NukeBuild.ExecutableTargets));
             }
 
             if (NukeBuild.Graph)
-                GraphService.ShowGraph(instance);
+                GraphService.ShowGraph(NukeBuild.ExecutableTargets);
 
             if (NukeBuild.Help || NukeBuild.Graph)
                 Environment.Exit(exitCode: 0);

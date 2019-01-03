@@ -12,9 +12,9 @@ namespace Nuke.Common.Execution
 {
     internal static class RequirementService
     {
-        public static void ValidateRequirements(IReadOnlyCollection<TargetDefinition> executionList, NukeBuild build)
+        public static void ValidateRequirements(IReadOnlyCollection<ExecutableTarget> executionPlan, NukeBuild build)
         {
-            foreach (var target in executionList.Where(x => !x.Skip))
+            foreach (var target in executionPlan)
             foreach (var requirement in target.Requirements)
             {
                 if (requirement is Expression<Func<bool>> boolExpression)

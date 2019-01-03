@@ -7,15 +7,16 @@ using System.Linq;
 
 namespace Nuke.Common.Execution
 {
-    [AttributeUsage(AttributeTargets.Class)]
-    public abstract class BuildExtensionAttributeBase : Attribute
+    public interface IBuildExtension
     {
-        public virtual void PreUserCode(NukeBuild instance)
-        {
-        }
+        void Execute(NukeBuild build);
+    }
 
-        public virtual void PreInitialization(NukeBuild instance)
-        {
-        }
+    public interface IPreLogoBuildExtension : IBuildExtension
+    {
+    }
+    
+    public interface IPostLogoBuildExtension : IBuildExtension
+    {
     }
 }
