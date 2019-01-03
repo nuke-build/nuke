@@ -9,6 +9,7 @@ using System.Text;
 using Nuke.Common;
 using Nuke.Common.Git;
 using Nuke.Common.ProjectModel;
+using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.InspectCode;
@@ -86,29 +87,27 @@ partial class Build : NukeBuild
                 .SetFileVersion(GitVersion.GetNormalizedFileVersion())
                 .SetInformationalVersion(GitVersion.InformationalVersion));
 
-            var publishSettings = new DotNetPublishSettings()
+            DotNetPublish(s => s
                 .EnableNoRestore()
                 .SetConfiguration(Configuration)
                 .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())
                 .SetFileVersion(GitVersion.GetNormalizedFileVersion())
-                .SetInformationalVersion(GitVersion.InformationalVersion);
-
-            DotNetPublish(s => publishSettings
-                .SetProject(GlobalToolProject));
-
-            DotNetPublish(s => publishSettings
-                .SetProject(CommonProject)
-                .SetFramework("netstandard2.0"));
-            DotNetPublish(s => publishSettings
-                .SetProject(CommonProject)
-                .SetFramework("net461"));
-
-            DotNetPublish(s => publishSettings
-                .SetProject(CodeGenerationProject)
-                .SetFramework("netstandard2.0"));
-            DotNetPublish(s => publishSettings
-                .SetProject(CodeGenerationProject)
-                .SetFramework("net461"));
+                .SetInformationalVersion(GitVersion.InformationalVersion)
+                .Multiplex(
+                    ss => ss
+                        .SetProject(GlobalToolProject),
+                    ss => ss
+                        .SetProject(CommonProject)
+                        .SetFramework("netstandard2.0"),
+                    ss => ss
+                        .SetProject(CommonProject)
+                        .SetFramework("net461"),
+                    ss => ss
+                        .SetProject(CodeGenerationProject)
+                        .SetFramework("netstandard2.0"),
+                    ss => ss
+                        .SetProject(CodeGenerationProject)
+                        .SetFramework("net461")));
         });
 
     string ChangelogFile => RootDirectory / "CHANGELOG.md";

@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
@@ -17,6 +18,59 @@ namespace Nuke.Common.Tooling
             where T : ToolSettings
         {
             return condition ? configurator(settings) : settings;
+        }
+        
+        public static T[] Multiplex<T>(this T toolSettings, params Configure<T>[] configurators)
+            where T : ToolSettings
+        {
+            return configurators.Select(x => x(toolSettings)).ToArray();
+        }
+        
+        public static T[] Multiplex<T>(this T toolSettings, params MultiplexConfigure<T>[] configurators)
+            where T : ToolSettings
+        {
+            return configurators.SelectMany(x => x(toolSettings)).ToArray();
+        }
+        
+        public static T[] Multiplex<T, TValue>(this T toolSettings, Func<T, TValue, T> configurator, params TValue[] values)
+            where T : ToolSettings
+        {
+            return values.Select(x => configurator(toolSettings, x)).ToArray();
+        }
+        
+        public static T[] Multiplex<T, TValue>(this T toolSettings, Func<T, TValue, T> configurator, IEnumerable<TValue> values)
+            where T : ToolSettings
+        {
+            return values.Select(x => configurator(toolSettings, x)).ToArray();
+        }
+        
+        public static T[] Multiplex<T, TValue>(this IEnumerable<T> toolSettings, Func<T, TValue, T> configurator, params TValue[] values)
+            where T : ToolSettings
+        {
+            return toolSettings.SelectMany(x => values.Select(y => configurator(x, y))).ToArray();
+        }
+        
+        public static T[] Multiplex<T, TValue>(this IEnumerable<T> toolSettings, Func<T, TValue, T> configurator, IEnumerable<TValue> values)
+            where T : ToolSettings
+        {
+            return toolSettings.SelectMany(x => values.Select(y => configurator(x, y))).ToArray();
+        }
+        
+        public static T[] Multiplex<T, TValue>(this T toolSettings, Func<T, TValue, IEnumerable<T>> configurator, params TValue[] values)
+            where T : ToolSettings
+        {
+            return values.SelectMany(x => configurator(toolSettings, x)).ToArray();
+        }
+        public static T[] Multiplex<T, TValue>(this T toolSettings, Func<T, TValue, IEnumerable<T>> configurator, IEnumerable<TValue> values)
+            where T : ToolSettings
+        {
+            return values.SelectMany(x => configurator(toolSettings, x)).ToArray();
+        }
+        
+        public static T[] Multiplex<T, TValue>(this IEnumerable<T> toolSettings, Func<T, TValue, IEnumerable<T>> configurator, params TValue[] values)
+            where T : ToolSettings
+        {
+            return toolSettings.SelectMany(x => values.SelectMany(y => configurator(x, y))).ToArray();
         }
         
         [Pure]
