@@ -35,12 +35,24 @@ namespace Nuke.Common.Tools.Squirrel
             return process.Output;
         }
         /// <summary><p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p><p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> Squirrel(Configure<SquirrelSettings> configurator = null)
+        public static IReadOnlyCollection<Output> Squirrel(SquirrelSettings toolSettings = null)
         {
-            var toolSettings = configurator.InvokeSafe(new SquirrelSettings());
+            toolSettings = toolSettings ?? new SquirrelSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
+        }
+        /// <summary><p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p><p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> Squirrel(Configure<SquirrelSettings> configurator)
+        {
+            return Squirrel(configurator(new SquirrelSettings()));
+        }
+        /// <summary><p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p><p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p></summary>
+        public static IEnumerable<(SquirrelSettings Settings, IReadOnlyCollection<Output> Output)> Squirrel(MultiplexConfigure<SquirrelSettings> configurator)
+        {
+            return configurator(new SquirrelSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: Squirrel(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
         }
     }
     #region SquirrelSettings

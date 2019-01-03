@@ -35,12 +35,24 @@ namespace Nuke.Common.Tools.CoverallsNet
             return process.Output;
         }
         /// <summary><p>Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.</p><p>For more details, visit the <a href="https://coverallsnet.readthedocs.io">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> CoverallsNet(Configure<CoverallsNetSettings> configurator = null)
+        public static IReadOnlyCollection<Output> CoverallsNet(CoverallsNetSettings toolSettings = null)
         {
-            var toolSettings = configurator.InvokeSafe(new CoverallsNetSettings());
+            toolSettings = toolSettings ?? new CoverallsNetSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
+        }
+        /// <summary><p>Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.</p><p>For more details, visit the <a href="https://coverallsnet.readthedocs.io">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> CoverallsNet(Configure<CoverallsNetSettings> configurator)
+        {
+            return CoverallsNet(configurator(new CoverallsNetSettings()));
+        }
+        /// <summary><p>Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.</p><p>For more details, visit the <a href="https://coverallsnet.readthedocs.io">official website</a>.</p></summary>
+        public static IEnumerable<(CoverallsNetSettings Settings, IReadOnlyCollection<Output> Output)> CoverallsNet(MultiplexConfigure<CoverallsNetSettings> configurator)
+        {
+            return configurator(new CoverallsNetSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: CoverallsNet(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
         }
     }
     #region CoverallsNetSettings

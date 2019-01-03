@@ -35,12 +35,24 @@ namespace Nuke.Common.Tools.SignTool
             return process.Output;
         }
         /// <summary><p>Use the <c>sign</c> command to sign files using embedded signatures. Signing protects a file from tampering, and allows users to verify the signer (you) based on a signing certificate. The options below allow you to specify signing parameters and to select the signing certificate you wish to use.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> SignTool(Configure<SignToolSettings> configurator = null)
+        public static IReadOnlyCollection<Output> SignTool(SignToolSettings toolSettings = null)
         {
-            var toolSettings = configurator.InvokeSafe(new SignToolSettings());
+            toolSettings = toolSettings ?? new SignToolSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
+        }
+        /// <summary><p>Use the <c>sign</c> command to sign files using embedded signatures. Signing protects a file from tampering, and allows users to verify the signer (you) based on a signing certificate. The options below allow you to specify signing parameters and to select the signing certificate you wish to use.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> SignTool(Configure<SignToolSettings> configurator)
+        {
+            return SignTool(configurator(new SignToolSettings()));
+        }
+        /// <summary><p>Use the <c>sign</c> command to sign files using embedded signatures. Signing protects a file from tampering, and allows users to verify the signer (you) based on a signing certificate. The options below allow you to specify signing parameters and to select the signing certificate you wish to use.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe">official website</a>.</p></summary>
+        public static IEnumerable<(SignToolSettings Settings, IReadOnlyCollection<Output> Output)> SignTool(MultiplexConfigure<SignToolSettings> configurator)
+        {
+            return configurator(new SignToolSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: SignTool(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
         }
     }
     #region SignToolSettings

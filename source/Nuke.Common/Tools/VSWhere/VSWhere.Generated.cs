@@ -35,12 +35,24 @@ namespace Nuke.Common.Tools.VSWhere
             return process.Output;
         }
         /// <summary><p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p><p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p></summary>
-        public static (List<VSWhereResult> Result, IReadOnlyCollection<Output> Output) VSWhere(Configure<VSWhereSettings> configurator = null)
+        public static (List<VSWhereResult> Result, IReadOnlyCollection<Output> Output) VSWhere(VSWhereSettings toolSettings = null)
         {
-            var toolSettings = configurator.InvokeSafe(new VSWhereSettings());
+            toolSettings = toolSettings ?? new VSWhereSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return (GetResult(process, toolSettings), process.Output);
+        }
+        /// <summary><p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p><p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p></summary>
+        public static (List<VSWhereResult> Result, IReadOnlyCollection<Output> Output) VSWhere(Configure<VSWhereSettings> configurator)
+        {
+            return VSWhere(configurator(new VSWhereSettings()));
+        }
+        /// <summary><p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p><p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p></summary>
+        public static IEnumerable<(VSWhereSettings Settings, List<VSWhereResult> Result, IReadOnlyCollection<Output> Output)> VSWhere(MultiplexConfigure<VSWhereSettings> configurator)
+        {
+            return configurator(new VSWhereSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: VSWhere(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue.Result, x.ReturnValue.Output)).ToList();
         }
     }
     #region VSWhereSettings

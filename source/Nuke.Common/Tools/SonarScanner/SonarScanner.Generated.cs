@@ -35,20 +35,44 @@ namespace Nuke.Common.Tools.SonarScanner
             return process.Output;
         }
         /// <summary><p>The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.</p><p>For more details, visit the <a href="https://www.sonarqube.org/">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> SonarScannerBegin(Configure<SonarScannerBeginSettings> configurator = null)
+        public static IReadOnlyCollection<Output> SonarScannerBegin(SonarScannerBeginSettings toolSettings = null)
         {
-            var toolSettings = configurator.InvokeSafe(new SonarScannerBeginSettings());
+            toolSettings = toolSettings ?? new SonarScannerBeginSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
         /// <summary><p>The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.</p><p>For more details, visit the <a href="https://www.sonarqube.org/">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> SonarScannerEnd(Configure<SonarScannerEndSettings> configurator = null)
+        public static IReadOnlyCollection<Output> SonarScannerBegin(Configure<SonarScannerBeginSettings> configurator)
         {
-            var toolSettings = configurator.InvokeSafe(new SonarScannerEndSettings());
+            return SonarScannerBegin(configurator(new SonarScannerBeginSettings()));
+        }
+        /// <summary><p>The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.</p><p>For more details, visit the <a href="https://www.sonarqube.org/">official website</a>.</p></summary>
+        public static IEnumerable<(SonarScannerBeginSettings Settings, IReadOnlyCollection<Output> Output)> SonarScannerBegin(MultiplexConfigure<SonarScannerBeginSettings> configurator)
+        {
+            return configurator(new SonarScannerBeginSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: SonarScannerBegin(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.</p><p>For more details, visit the <a href="https://www.sonarqube.org/">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> SonarScannerEnd(SonarScannerEndSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new SonarScannerEndSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
+        }
+        /// <summary><p>The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.</p><p>For more details, visit the <a href="https://www.sonarqube.org/">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> SonarScannerEnd(Configure<SonarScannerEndSettings> configurator)
+        {
+            return SonarScannerEnd(configurator(new SonarScannerEndSettings()));
+        }
+        /// <summary><p>The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.</p><p>For more details, visit the <a href="https://www.sonarqube.org/">official website</a>.</p></summary>
+        public static IEnumerable<(SonarScannerEndSettings Settings, IReadOnlyCollection<Output> Output)> SonarScannerEnd(MultiplexConfigure<SonarScannerEndSettings> configurator)
+        {
+            return configurator(new SonarScannerEndSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: SonarScannerEnd(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
         }
     }
     #region SonarScannerBeginSettings

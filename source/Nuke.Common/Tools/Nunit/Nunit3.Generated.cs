@@ -35,18 +35,24 @@ namespace Nuke.Common.Tools.Nunit
             return process.Output;
         }
         /// <summary><p>NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href="http://www.junit.org/">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.</p><p>For more details, visit the <a href="https://www.nunit.org/">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> Nunit3(Configure<Nunit3Settings> configurator = null)
+        public static IReadOnlyCollection<Output> Nunit3(Nunit3Settings toolSettings = null)
         {
-            var toolSettings = configurator.InvokeSafe(new Nunit3Settings());
+            toolSettings = toolSettings ?? new Nunit3Settings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
         /// <summary><p>NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href="http://www.junit.org/">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.</p><p>For more details, visit the <a href="https://www.nunit.org/">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> Nunit3(List<string> inputFiles, Configure<Nunit3Settings> configurator = null)
+        public static IReadOnlyCollection<Output> Nunit3(Configure<Nunit3Settings> configurator)
         {
-            configurator = configurator ?? (x => x);
-            return Nunit3(x => configurator(x).SetInputFiles(inputFiles));
+            return Nunit3(configurator(new Nunit3Settings()));
+        }
+        /// <summary><p>NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href="http://www.junit.org/">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.</p><p>For more details, visit the <a href="https://www.nunit.org/">official website</a>.</p></summary>
+        public static IEnumerable<(Nunit3Settings Settings, IReadOnlyCollection<Output> Output)> Nunit3(MultiplexConfigure<Nunit3Settings> configurator)
+        {
+            return configurator(new Nunit3Settings())
+                .Select(x => (ToolSettings: x, ReturnValue: Nunit3(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
         }
     }
     #region Nunit3Settings
