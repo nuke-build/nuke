@@ -13,6 +13,7 @@ using Nuke.Common.Utilities;
 
 namespace Nuke.Common.ProjectModel
 {
+    [PublicAPI]
     public static class ProjectExtensions
     {
         private static void Initialize(string workingDirectory)
@@ -62,6 +63,33 @@ namespace Nuke.Common.ProjectModel
             }
 
             return msbuildProject;
+        }
+
+        [CanBeNull]
+        public static string GetProperty(this Project project, string propertyName)
+        {
+            var property = project.GetMSBuildProject().GetProperty(propertyName);
+            return property?.EvaluatedValue;
+        }
+
+        [CanBeNull]
+        public static IEnumerable<string> GetItemIncludes(this Project project, string itemGroupName)
+        {
+            var items = project.GetMSBuildProject().GetItems(itemGroupName);
+            return items.Select(x => x.EvaluatedInclude);
+        }
+
+        public static IReadOnlyCollection<string> GetTargetFrameworks(this Microsoft.Build.Evaluation.Project project)
+        {
+            var targetFrameworkProperty = project.GetProperty("TargetFramework");
+            if (targetFrameworkProperty != null)
+                return new[]{ targetFrameworkProperty.EvaluatedValue };
+            
+            var targetFrameworksProperty = project.GetProperty("TargetFrameworks");
+            if (targetFrameworksProperty != null)
+                return targetFrameworksProperty.EvaluatedValue.Split(';');
+
+            return new string[0];
         }
 
         private static Dictionary<string, string> GetProperties([CanBeNull] string configuration, [CanBeNull] string targetFramework)
