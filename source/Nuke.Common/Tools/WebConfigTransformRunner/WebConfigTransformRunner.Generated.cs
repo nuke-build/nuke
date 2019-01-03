@@ -35,12 +35,24 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
             return process.Output;
         }
         /// <summary><p>This is a commandline tool to run an ASP.Net web.config tranformation.</p><p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> WebConfigTransformRunner(Configure<WebConfigTransformRunnerSettings> configurator = null)
+        public static IReadOnlyCollection<Output> WebConfigTransformRunner(WebConfigTransformRunnerSettings toolSettings = null)
         {
-            var toolSettings = configurator.InvokeSafe(new WebConfigTransformRunnerSettings());
+            toolSettings = toolSettings ?? new WebConfigTransformRunnerSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
+        }
+        /// <summary><p>This is a commandline tool to run an ASP.Net web.config tranformation.</p><p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> WebConfigTransformRunner(Configure<WebConfigTransformRunnerSettings> configurator)
+        {
+            return WebConfigTransformRunner(configurator(new WebConfigTransformRunnerSettings()));
+        }
+        /// <summary><p>This is a commandline tool to run an ASP.Net web.config tranformation.</p><p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p></summary>
+        public static IEnumerable<(WebConfigTransformRunnerSettings Settings, IReadOnlyCollection<Output> Output)> WebConfigTransformRunner(MultiplexConfigure<WebConfigTransformRunnerSettings> configurator)
+        {
+            return configurator(new WebConfigTransformRunnerSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: WebConfigTransformRunner(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
         }
     }
     #region WebConfigTransformRunnerSettings

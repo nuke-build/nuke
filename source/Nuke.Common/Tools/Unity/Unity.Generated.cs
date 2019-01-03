@@ -35,40 +35,88 @@ namespace Nuke.Common.Tools.Unity
             return process.Output;
         }
         /// <summary><p>(2018.2+) Exports the currently activated license to the path of the Unity executable or either the default Unity license location, see the logs or <a href="https://docs.unity3d.com/Manual/ActivationFAQ.html">Activation FAQ</a> for more information.</p><p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> UnityCreateManualActivationFile(Configure<UnityCreateManualActivationFileSettings> configurator = null)
+        public static IReadOnlyCollection<Output> UnityCreateManualActivationFile(UnityCreateManualActivationFileSettings toolSettings = null)
         {
-            var toolSettings = configurator.InvokeSafe(new UnityCreateManualActivationFileSettings());
+            toolSettings = toolSettings ?? new UnityCreateManualActivationFileSettings();
+            PreProcess(ref toolSettings);
+            var process = StartProcess(toolSettings);
+            AssertProcess(process, toolSettings);
+            return process.Output;
+        }
+        /// <summary><p>(2018.2+) Exports the currently activated license to the path of the Unity executable or either the default Unity license location, see the logs or <a href="https://docs.unity3d.com/Manual/ActivationFAQ.html">Activation FAQ</a> for more information.</p><p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> UnityCreateManualActivationFile(Configure<UnityCreateManualActivationFileSettings> configurator)
+        {
+            return UnityCreateManualActivationFile(configurator(new UnityCreateManualActivationFileSettings()));
+        }
+        /// <summary><p>(2018.2+) Exports the currently activated license to the path of the Unity executable or either the default Unity license location, see the logs or <a href="https://docs.unity3d.com/Manual/ActivationFAQ.html">Activation FAQ</a> for more information.</p><p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p></summary>
+        public static IEnumerable<(UnityCreateManualActivationFileSettings Settings, IReadOnlyCollection<Output> Output)> UnityCreateManualActivationFile(MultiplexConfigure<UnityCreateManualActivationFileSettings> configurator)
+        {
+            return configurator(new UnityCreateManualActivationFileSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: UnityCreateManualActivationFile(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>(2018.2+) Activates Unity with a license file.</p><p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> UnityManualLicenseFile(UnityManualLicenseFileSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new UnityManualLicenseFileSettings();
             PreProcess(ref toolSettings);
             var process = StartProcess(toolSettings);
             AssertProcess(process, toolSettings);
             return process.Output;
         }
         /// <summary><p>(2018.2+) Activates Unity with a license file.</p><p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> UnityManualLicenseFile(Configure<UnityManualLicenseFileSettings> configurator = null)
+        public static IReadOnlyCollection<Output> UnityManualLicenseFile(Configure<UnityManualLicenseFileSettings> configurator)
         {
-            var toolSettings = configurator.InvokeSafe(new UnityManualLicenseFileSettings());
+            return UnityManualLicenseFile(configurator(new UnityManualLicenseFileSettings()));
+        }
+        /// <summary><p>(2018.2+) Activates Unity with a license file.</p><p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p></summary>
+        public static IEnumerable<(UnityManualLicenseFileSettings Settings, IReadOnlyCollection<Output> Output)> UnityManualLicenseFile(MultiplexConfigure<UnityManualLicenseFileSettings> configurator)
+        {
+            return configurator(new UnityManualLicenseFileSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: UnityManualLicenseFile(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>Execute Unity.</p><p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> Unity(UnitySettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new UnitySettings();
             PreProcess(ref toolSettings);
             var process = StartProcess(toolSettings);
             AssertProcess(process, toolSettings);
             return process.Output;
         }
         /// <summary><p>Execute Unity.</p><p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> Unity(Configure<UnitySettings> configurator = null)
+        public static IReadOnlyCollection<Output> Unity(Configure<UnitySettings> configurator)
         {
-            var toolSettings = configurator.InvokeSafe(new UnitySettings());
+            return Unity(configurator(new UnitySettings()));
+        }
+        /// <summary><p>Execute Unity.</p><p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p></summary>
+        public static IEnumerable<(UnitySettings Settings, IReadOnlyCollection<Output> Output)> Unity(MultiplexConfigure<UnitySettings> configurator)
+        {
+            return configurator(new UnitySettings())
+                .Select(x => (ToolSettings: x, ReturnValue: Unity(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>Return the currenlty activated Unity license.</p><p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> UnityReturnLicense(UnityReturnLicenseSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new UnityReturnLicenseSettings();
             PreProcess(ref toolSettings);
             var process = StartProcess(toolSettings);
             AssertProcess(process, toolSettings);
             return process.Output;
         }
         /// <summary><p>Return the currenlty activated Unity license.</p><p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> UnityReturnLicense(Configure<UnityReturnLicenseSettings> configurator = null)
+        public static IReadOnlyCollection<Output> UnityReturnLicense(Configure<UnityReturnLicenseSettings> configurator)
         {
-            var toolSettings = configurator.InvokeSafe(new UnityReturnLicenseSettings());
-            PreProcess(ref toolSettings);
-            var process = StartProcess(toolSettings);
-            AssertProcess(process, toolSettings);
-            return process.Output;
+            return UnityReturnLicense(configurator(new UnityReturnLicenseSettings()));
+        }
+        /// <summary><p>Return the currenlty activated Unity license.</p><p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p></summary>
+        public static IEnumerable<(UnityReturnLicenseSettings Settings, IReadOnlyCollection<Output> Output)> UnityReturnLicense(MultiplexConfigure<UnityReturnLicenseSettings> configurator)
+        {
+            return configurator(new UnityReturnLicenseSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: UnityReturnLicense(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
         }
     }
     #region UnityCreateManualActivationFileSettings

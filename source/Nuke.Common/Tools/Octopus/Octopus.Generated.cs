@@ -35,36 +35,84 @@ namespace Nuke.Common.Tools.Octopus
             return process.Output;
         }
         /// <summary><p>The <c>Octo.exe pack</c> command provides a number of other useful parameters that can be used to customize the way your package gets created, such as output folder, files to include and release notes.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> OctopusPack(Configure<OctopusPackSettings> configurator = null)
+        public static IReadOnlyCollection<Output> OctopusPack(OctopusPackSettings toolSettings = null)
         {
-            var toolSettings = configurator.InvokeSafe(new OctopusPackSettings());
+            toolSettings = toolSettings ?? new OctopusPackSettings();
+            var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary><p>The <c>Octo.exe pack</c> command provides a number of other useful parameters that can be used to customize the way your package gets created, such as output folder, files to include and release notes.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> OctopusPack(Configure<OctopusPackSettings> configurator)
+        {
+            return OctopusPack(configurator(new OctopusPackSettings()));
+        }
+        /// <summary><p>The <c>Octo.exe pack</c> command provides a number of other useful parameters that can be used to customize the way your package gets created, such as output folder, files to include and release notes.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
+        public static IEnumerable<(OctopusPackSettings Settings, IReadOnlyCollection<Output> Output)> OctopusPack(MultiplexConfigure<OctopusPackSettings> configurator)
+        {
+            return configurator(new OctopusPackSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: OctopusPack(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>The <c>Octo.exe push</c> command can push any of the supported packages types listed on this <a href="https://octopus.com/docs/packaging-applications/supported-packages">page</a>.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> OctopusPush(OctopusPushSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new OctopusPushSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
         /// <summary><p>The <c>Octo.exe push</c> command can push any of the supported packages types listed on this <a href="https://octopus.com/docs/packaging-applications/supported-packages">page</a>.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> OctopusPush(Configure<OctopusPushSettings> configurator = null)
+        public static IReadOnlyCollection<Output> OctopusPush(Configure<OctopusPushSettings> configurator)
         {
-            var toolSettings = configurator.InvokeSafe(new OctopusPushSettings());
+            return OctopusPush(configurator(new OctopusPushSettings()));
+        }
+        /// <summary><p>The <c>Octo.exe push</c> command can push any of the supported packages types listed on this <a href="https://octopus.com/docs/packaging-applications/supported-packages">page</a>.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
+        public static IEnumerable<(OctopusPushSettings Settings, IReadOnlyCollection<Output> Output)> OctopusPush(MultiplexConfigure<OctopusPushSettings> configurator)
+        {
+            return configurator(new OctopusPushSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: OctopusPush(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>The <c>Octo.exe create-release</c> can be used to automate the creation of releases. This allows you to easily integrate Octopus with other continuous integration servers.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> OctopusCreateRelease(OctopusCreateReleaseSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new OctopusCreateReleaseSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
         /// <summary><p>The <c>Octo.exe create-release</c> can be used to automate the creation of releases. This allows you to easily integrate Octopus with other continuous integration servers.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> OctopusCreateRelease(Configure<OctopusCreateReleaseSettings> configurator = null)
+        public static IReadOnlyCollection<Output> OctopusCreateRelease(Configure<OctopusCreateReleaseSettings> configurator)
         {
-            var toolSettings = configurator.InvokeSafe(new OctopusCreateReleaseSettings());
+            return OctopusCreateRelease(configurator(new OctopusCreateReleaseSettings()));
+        }
+        /// <summary><p>The <c>Octo.exe create-release</c> can be used to automate the creation of releases. This allows you to easily integrate Octopus with other continuous integration servers.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
+        public static IEnumerable<(OctopusCreateReleaseSettings Settings, IReadOnlyCollection<Output> Output)> OctopusCreateRelease(MultiplexConfigure<OctopusCreateReleaseSettings> configurator)
+        {
+            return configurator(new OctopusCreateReleaseSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: OctopusCreateRelease(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>The <c>Octo.exe deploy-release</c> can be used to automate the deployment of releases to environments. This allows you to easily integrate Octopus with other continuous integration servers.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> OctopusDeployRelease(OctopusDeployReleaseSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new OctopusDeployReleaseSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
         /// <summary><p>The <c>Octo.exe deploy-release</c> can be used to automate the deployment of releases to environments. This allows you to easily integrate Octopus with other continuous integration servers.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> OctopusDeployRelease(Configure<OctopusDeployReleaseSettings> configurator = null)
+        public static IReadOnlyCollection<Output> OctopusDeployRelease(Configure<OctopusDeployReleaseSettings> configurator)
         {
-            var toolSettings = configurator.InvokeSafe(new OctopusDeployReleaseSettings());
-            var process = ProcessTasks.StartProcess(toolSettings);
-            process.AssertZeroExitCode();
-            return process.Output;
+            return OctopusDeployRelease(configurator(new OctopusDeployReleaseSettings()));
+        }
+        /// <summary><p>The <c>Octo.exe deploy-release</c> can be used to automate the deployment of releases to environments. This allows you to easily integrate Octopus with other continuous integration servers.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
+        public static IEnumerable<(OctopusDeployReleaseSettings Settings, IReadOnlyCollection<Output> Output)> OctopusDeployRelease(MultiplexConfigure<OctopusDeployReleaseSettings> configurator)
+        {
+            return configurator(new OctopusDeployReleaseSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: OctopusDeployRelease(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
         }
     }
     #region OctopusPackSettings

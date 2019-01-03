@@ -35,18 +35,24 @@ namespace Nuke.Common.Tools.MSpec
             return process.Output;
         }
         /// <summary><p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p><p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> MSpec(Configure<MSpecSettings> configurator = null)
+        public static IReadOnlyCollection<Output> MSpec(MSpecSettings toolSettings = null)
         {
-            var toolSettings = configurator.InvokeSafe(new MSpecSettings());
+            toolSettings = toolSettings ?? new MSpecSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
         /// <summary><p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p><p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> MSpec(List<string> assemblies, Configure<MSpecSettings> configurator = null)
+        public static IReadOnlyCollection<Output> MSpec(Configure<MSpecSettings> configurator)
         {
-            configurator = configurator ?? (x => x);
-            return MSpec(x => configurator(x).SetAssemblies(assemblies));
+            return MSpec(configurator(new MSpecSettings()));
+        }
+        /// <summary><p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p><p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p></summary>
+        public static IEnumerable<(MSpecSettings Settings, IReadOnlyCollection<Output> Output)> MSpec(MultiplexConfigure<MSpecSettings> configurator)
+        {
+            return configurator(new MSpecSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: MSpec(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
         }
     }
     #region MSpecSettings

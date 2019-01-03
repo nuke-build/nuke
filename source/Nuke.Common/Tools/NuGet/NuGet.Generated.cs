@@ -35,46 +35,64 @@ namespace Nuke.Common.Tools.NuGet
             return process.Output;
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> NuGetPush(Configure<NuGetPushSettings> configurator = null)
+        public static IReadOnlyCollection<Output> NuGetPush(NuGetPushSettings toolSettings = null)
         {
-            var toolSettings = configurator.InvokeSafe(new NuGetPushSettings());
+            toolSettings = toolSettings ?? new NuGetPushSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> NuGetPack(Configure<NuGetPackSettings> configurator = null)
+        public static IReadOnlyCollection<Output> NuGetPush(Configure<NuGetPushSettings> configurator)
         {
-            var toolSettings = configurator.InvokeSafe(new NuGetPackSettings());
+            return NuGetPush(configurator(new NuGetPushSettings()));
+        }
+        /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+        public static IEnumerable<(NuGetPushSettings Settings, IReadOnlyCollection<Output> Output)> NuGetPush(MultiplexConfigure<NuGetPushSettings> configurator)
+        {
+            return configurator(new NuGetPushSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: NuGetPush(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> NuGetPack(NuGetPackSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new NuGetPackSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> NuGetPack(string targetPath, Configure<NuGetPackSettings> configurator = null)
+        public static IReadOnlyCollection<Output> NuGetPack(Configure<NuGetPackSettings> configurator)
         {
-            configurator = configurator ?? (x => x);
-            return NuGetPack(x => configurator(x).SetTargetPath(targetPath));
+            return NuGetPack(configurator(new NuGetPackSettings()));
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> NuGetPack(string targetPath, string version, Configure<NuGetPackSettings> configurator = null)
+        public static IEnumerable<(NuGetPackSettings Settings, IReadOnlyCollection<Output> Output)> NuGetPack(MultiplexConfigure<NuGetPackSettings> configurator)
         {
-            configurator = configurator ?? (x => x);
-            return NuGetPack(targetPath, x => configurator(x).SetVersion(version));
+            return configurator(new NuGetPackSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: NuGetPack(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> NuGetRestore(Configure<NuGetRestoreSettings> configurator = null)
+        public static IReadOnlyCollection<Output> NuGetRestore(NuGetRestoreSettings toolSettings = null)
         {
-            var toolSettings = configurator.InvokeSafe(new NuGetRestoreSettings());
+            toolSettings = toolSettings ?? new NuGetRestoreSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> NuGetRestore(string targetPath, Configure<NuGetRestoreSettings> configurator = null)
+        public static IReadOnlyCollection<Output> NuGetRestore(Configure<NuGetRestoreSettings> configurator)
         {
-            configurator = configurator ?? (x => x);
-            return NuGetRestore(x => configurator(x).SetTargetPath(targetPath));
+            return NuGetRestore(configurator(new NuGetRestoreSettings()));
+        }
+        /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+        public static IEnumerable<(NuGetRestoreSettings Settings, IReadOnlyCollection<Output> Output)> NuGetRestore(MultiplexConfigure<NuGetRestoreSettings> configurator)
+        {
+            return configurator(new NuGetRestoreSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: NuGetRestore(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
         }
     }
     #region NuGetPushSettings

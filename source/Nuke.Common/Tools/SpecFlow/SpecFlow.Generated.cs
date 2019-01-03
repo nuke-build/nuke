@@ -35,68 +35,164 @@ namespace Nuke.Common.Tools.SpecFlow
             return process.Output;
         }
         /// <summary><p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> SpecFlowNUnitExecutionReport(Configure<SpecFlowNUnitExecutionReportSettings> configurator = null)
+        public static IReadOnlyCollection<Output> SpecFlowNUnitExecutionReport(SpecFlowNUnitExecutionReportSettings toolSettings = null)
         {
-            var toolSettings = configurator.InvokeSafe(new SpecFlowNUnitExecutionReportSettings());
+            toolSettings = toolSettings ?? new SpecFlowNUnitExecutionReportSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
         /// <summary><p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> SpecFlowMSTestExecutionReport(Configure<SpecFlowMSTestExecutionReportSettings> configurator = null)
+        public static IReadOnlyCollection<Output> SpecFlowNUnitExecutionReport(Configure<SpecFlowNUnitExecutionReportSettings> configurator)
         {
-            var toolSettings = configurator.InvokeSafe(new SpecFlowMSTestExecutionReportSettings());
+            return SpecFlowNUnitExecutionReport(configurator(new SpecFlowNUnitExecutionReportSettings()));
+        }
+        /// <summary><p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        public static IEnumerable<(SpecFlowNUnitExecutionReportSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowNUnitExecutionReport(MultiplexConfigure<SpecFlowNUnitExecutionReportSettings> configurator)
+        {
+            return configurator(new SpecFlowNUnitExecutionReportSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: SpecFlowNUnitExecutionReport(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> SpecFlowMSTestExecutionReport(SpecFlowMSTestExecutionReportSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new SpecFlowMSTestExecutionReportSettings();
+            var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary><p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> SpecFlowMSTestExecutionReport(Configure<SpecFlowMSTestExecutionReportSettings> configurator)
+        {
+            return SpecFlowMSTestExecutionReport(configurator(new SpecFlowMSTestExecutionReportSettings()));
+        }
+        /// <summary><p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        public static IEnumerable<(SpecFlowMSTestExecutionReportSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowMSTestExecutionReport(MultiplexConfigure<SpecFlowMSTestExecutionReportSettings> configurator)
+        {
+            return configurator(new SpecFlowMSTestExecutionReportSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: SpecFlowMSTestExecutionReport(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>This report shows the usage and binding status of the steps for the entire project. You can use this report to find both unused code in the automation layer and scenario steps that have no definition yet.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> SpecFlowStepDefinitionReport(SpecFlowStepDefinitionReportSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new SpecFlowStepDefinitionReportSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
         /// <summary><p>This report shows the usage and binding status of the steps for the entire project. You can use this report to find both unused code in the automation layer and scenario steps that have no definition yet.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> SpecFlowStepDefinitionReport(Configure<SpecFlowStepDefinitionReportSettings> configurator = null)
+        public static IReadOnlyCollection<Output> SpecFlowStepDefinitionReport(Configure<SpecFlowStepDefinitionReportSettings> configurator)
         {
-            var toolSettings = configurator.InvokeSafe(new SpecFlowStepDefinitionReportSettings());
+            return SpecFlowStepDefinitionReport(configurator(new SpecFlowStepDefinitionReportSettings()));
+        }
+        /// <summary><p>This report shows the usage and binding status of the steps for the entire project. You can use this report to find both unused code in the automation layer and scenario steps that have no definition yet.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        public static IEnumerable<(SpecFlowStepDefinitionReportSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowStepDefinitionReport(MultiplexConfigure<SpecFlowStepDefinitionReportSettings> configurator)
+        {
+            return configurator(new SpecFlowStepDefinitionReportSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: SpecFlowStepDefinitionReport(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>Use <c>SpecRun.exe run</c> to execute your tests.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> SpecFlowRun(SpecFlowRunSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new SpecFlowRunSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
         /// <summary><p>Use <c>SpecRun.exe run</c> to execute your tests.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> SpecFlowRun(Configure<SpecFlowRunSettings> configurator = null)
+        public static IReadOnlyCollection<Output> SpecFlowRun(Configure<SpecFlowRunSettings> configurator)
         {
-            var toolSettings = configurator.InvokeSafe(new SpecFlowRunSettings());
+            return SpecFlowRun(configurator(new SpecFlowRunSettings()));
+        }
+        /// <summary><p>Use <c>SpecRun.exe run</c> to execute your tests.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        public static IEnumerable<(SpecFlowRunSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowRun(MultiplexConfigure<SpecFlowRunSettings> configurator)
+        {
+            return configurator(new SpecFlowRunSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: SpecFlowRun(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>Use <c>SpecRun.exe buildserverrun</c> to execute your tests in build server mode.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> SpecFlowBuildServerRun(SpecFlowBuildServerRunSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new SpecFlowBuildServerRunSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
         /// <summary><p>Use <c>SpecRun.exe buildserverrun</c> to execute your tests in build server mode.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> SpecFlowBuildServerRun(Configure<SpecFlowBuildServerRunSettings> configurator = null)
+        public static IReadOnlyCollection<Output> SpecFlowBuildServerRun(Configure<SpecFlowBuildServerRunSettings> configurator)
         {
-            var toolSettings = configurator.InvokeSafe(new SpecFlowBuildServerRunSettings());
+            return SpecFlowBuildServerRun(configurator(new SpecFlowBuildServerRunSettings()));
+        }
+        /// <summary><p>Use <c>SpecRun.exe buildserverrun</c> to execute your tests in build server mode.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        public static IEnumerable<(SpecFlowBuildServerRunSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowBuildServerRun(MultiplexConfigure<SpecFlowBuildServerRunSettings> configurator)
+        {
+            return configurator(new SpecFlowBuildServerRunSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: SpecFlowBuildServerRun(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>Use <c>SpecRun.exe register</c> to register your SpecFlow+ license. You only need to register your license once per user per machine. The license is valid for all SpecFlow+ components.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> SpecFlowRegister(SpecFlowRegisterSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new SpecFlowRegisterSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
         /// <summary><p>Use <c>SpecRun.exe register</c> to register your SpecFlow+ license. You only need to register your license once per user per machine. The license is valid for all SpecFlow+ components.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> SpecFlowRegister(Configure<SpecFlowRegisterSettings> configurator = null)
+        public static IReadOnlyCollection<Output> SpecFlowRegister(Configure<SpecFlowRegisterSettings> configurator)
         {
-            var toolSettings = configurator.InvokeSafe(new SpecFlowRegisterSettings());
+            return SpecFlowRegister(configurator(new SpecFlowRegisterSettings()));
+        }
+        /// <summary><p>Use <c>SpecRun.exe register</c> to register your SpecFlow+ license. You only need to register your license once per user per machine. The license is valid for all SpecFlow+ components.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        public static IEnumerable<(SpecFlowRegisterSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowRegister(MultiplexConfigure<SpecFlowRegisterSettings> configurator)
+        {
+            return configurator(new SpecFlowRegisterSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: SpecFlowRegister(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>Use <c>SpecRun.exe unregister</c> to unregister your SpecFlow+ license.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> SpecFlowUnregister(SpecFlowUnregisterSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new SpecFlowUnregisterSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
         /// <summary><p>Use <c>SpecRun.exe unregister</c> to unregister your SpecFlow+ license.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> SpecFlowUnregister(Configure<SpecFlowUnregisterSettings> configurator = null)
+        public static IReadOnlyCollection<Output> SpecFlowUnregister(Configure<SpecFlowUnregisterSettings> configurator)
         {
-            var toolSettings = configurator.InvokeSafe(new SpecFlowUnregisterSettings());
+            return SpecFlowUnregister(configurator(new SpecFlowUnregisterSettings()));
+        }
+        /// <summary><p>Use <c>SpecRun.exe unregister</c> to unregister your SpecFlow+ license.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        public static IEnumerable<(SpecFlowUnregisterSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowUnregister(MultiplexConfigure<SpecFlowUnregisterSettings> configurator)
+        {
+            return configurator(new SpecFlowUnregisterSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: SpecFlowUnregister(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>Use <c>SpecRun.exe about</c> to display information such as your version number, build date and license information (licensee, upgrade until date/expiry date).</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> SpecFlowAbout(SpecFlowAboutSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new SpecFlowAboutSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
         /// <summary><p>Use <c>SpecRun.exe about</c> to display information such as your version number, build date and license information (licensee, upgrade until date/expiry date).</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> SpecFlowAbout(Configure<SpecFlowAboutSettings> configurator = null)
+        public static IReadOnlyCollection<Output> SpecFlowAbout(Configure<SpecFlowAboutSettings> configurator)
         {
-            var toolSettings = configurator.InvokeSafe(new SpecFlowAboutSettings());
-            var process = ProcessTasks.StartProcess(toolSettings);
-            process.AssertZeroExitCode();
-            return process.Output;
+            return SpecFlowAbout(configurator(new SpecFlowAboutSettings()));
+        }
+        /// <summary><p>Use <c>SpecRun.exe about</c> to display information such as your version number, build date and license information (licensee, upgrade until date/expiry date).</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        public static IEnumerable<(SpecFlowAboutSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowAbout(MultiplexConfigure<SpecFlowAboutSettings> configurator)
+        {
+            return configurator(new SpecFlowAboutSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: SpecFlowAbout(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
         }
     }
     #region SpecFlowNUnitExecutionReportSettings
