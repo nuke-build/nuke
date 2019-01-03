@@ -67,6 +67,27 @@
             "help": "Sets the logging verbosity to detailed. Add this argument before sending logs for troubleshooting."
           },
           {
+            "name": "VSTestReports",
+            "type": "List<string>",
+            "format": "/d:sonar.cs.vstest.reportsPaths={value}",
+            "separator": ",",
+            "help": "Comma separated list of VSTest report files to include."
+          },
+          {
+            "name": "NUnitTestReports",
+            "type": "List<string>",
+            "format": "/d:sonar.cs.nunit.reportsPaths={value}",
+            "separator": ",",
+            "help": "Comma separated list of NUnit report files to include."
+          },
+          {
+            "name": "XUnitTestReports",
+            "type": "List<string>",
+            "format": "/d:sonar.cs.xunit.reportsPaths={value}",
+            "separator": ",",
+            "help": "Comma separated list of xUnit report files to include."
+          },
+          {
             "name": "CoverageExclusions",
             "type": "List<string>",
             "format": "/d:sonar.coverage.exclusions={value}",
