@@ -17,10 +17,7 @@ Host:
 - Travis
 Root: 
 Skip:
-- A
 - Analysis
-- B
-- C
 - Changelog
 - Clean
 - Compile
@@ -38,10 +35,7 @@ Solution:
 Source: 
 SymbolSource: 
 Target:
-- A
 - Analysis
-- B
-- C
 - Changelog
 - Clean
 - Compile
