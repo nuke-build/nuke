@@ -56,6 +56,7 @@ partial class Build : NukeBuild
     readonly string HotfixBranchPrefix = "hotfix";
 
     Target Clean => _ => _
+        .Before(Restore)
         .Executes(() =>
         {
             DeleteDirectories(GlobDirectories(SourceDirectory, "*/bin", "*/obj"));
