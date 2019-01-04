@@ -110,7 +110,7 @@ namespace Nuke.Common
                         innerOutputSink = new TeamServicesOutputSink(new TeamServices());
                         break;
                     default:
-                        innerOutputSink = new ConsoleOutputSink();
+                        innerOutputSink = ConsoleOutputSink.Default;
                         break;
                 }
 

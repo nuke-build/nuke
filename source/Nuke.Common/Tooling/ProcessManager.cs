@@ -206,7 +206,7 @@ namespace Nuke.Common.Tooling
 
         public static void CheckPathEnvironmentVariable()
         {
-            if (Logger.LogLevel >= LogLevel.Information)
+            if (Logger.LogLevel >= LogLevel.Normal)
                 return;
             
             EnvironmentInfo.Variables

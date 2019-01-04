@@ -42,7 +42,7 @@ namespace Nuke.Common.Execution
             }
 
             if (anyInjected)
-                Logger.Log();
+                Logger.Normal();
         }
         
         public static IReadOnlyCollection<MemberInfo> GetParameterMembers(Type type)
