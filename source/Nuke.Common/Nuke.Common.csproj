@@ -9,8 +9,8 @@
   
   <ItemGroup>
     <EmbeddedResource Include="**\*.flf" />
-    <None Remove="graph.html" />
-    <EmbeddedResource Include="Execution\graph.html" />
+    <None Remove="execution-plan.html" />
+    <EmbeddedResource Include="Execution\execution-plan.html" />
   </ItemGroup>
   
   <ItemGroup>

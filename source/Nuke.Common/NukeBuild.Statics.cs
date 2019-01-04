@@ -29,7 +29,7 @@ namespace Nuke.Common
             Verbosity = ParameterService.Instance.GetParameter<Verbosity?>(()  => Verbosity) ?? Verbosity.Normal;
             Host = ParameterService.Instance.GetParameter<HostType?>(()  => Host) ?? GetHostType();
             Continue = ParameterService.Instance.GetParameter(() => Continue);
-            Graph = ParameterService.Instance.GetParameter(() => Graph);
+            Plan = ParameterService.Instance.GetParameter(() => Plan);
             Help = ParameterService.Instance.GetParameter(() => Help);
         }
 
@@ -69,10 +69,10 @@ namespace Nuke.Common
         public static HostType Host { get; }
 
         /// <summary>
-        /// Gets a value whether to show the target dependency graph (HTML).
+        /// Gets a value whether to show the execution plan (HTML).
         /// </summary>
-        [Parameter("Shows the target dependency graph (HTML).")]
-        public static bool Graph { get; }
+        [Parameter("Shows the execution plan (HTML).")]
+        public static bool Plan { get; }
 
         /// <summary>
         /// Gets a value whether to show the help text for this build assembly.

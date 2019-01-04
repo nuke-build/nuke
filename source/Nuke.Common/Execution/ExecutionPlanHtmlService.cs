@@ -9,30 +9,23 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Execution
 {
-    internal static class GraphService
+    internal class ExecutionPlanHtmlService
     {
-        public static void ShowGraph(IReadOnlyCollection<ExecutableTarget> executableTargets)
+        private const string c_htmlFileName = "execution-plan.html";
+
+        public static void ShowPlan(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
-            string GetStringFromStream(Stream stream)
-            {
-                using (var reader = new StreamReader(stream, Encoding.UTF8))
-                {
-                    return reader.ReadToEnd();
-                }
-            }
-
-            var assembly = typeof(BuildManager).GetTypeInfo().Assembly;
-            var resourceName = typeof(BuildManager).Namespace + ".graph.html";
-            var resourceStream = assembly.GetManifestResourceStream(resourceName).NotNull("resourceStream != null");
-
-            var path = Path.Combine(NukeBuild.TemporaryDirectory, "graph.html");
-            var contents = GetStringFromStream(resourceStream)
+            var resourceText = ResourceUtility.GetResourceText<ExecutionPlanHtmlService>(c_htmlFileName);
+            var contents = resourceText
                 .Replace("__GRAPH__", GetGraphDefinition(executableTargets))
                 .Replace("__EVENTS__", GetEventsDefinition(executableTargets));
+            
+            var path = Path.Combine(NukeBuild.TemporaryDirectory, c_htmlFileName);
             File.WriteAllText(path, contents);
 
             // Workaround for https://github.com/dotnet/corefx/issues/10361

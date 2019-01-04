@@ -18,10 +18,10 @@ namespace Nuke.Common.Execution
                 Logger.Log(HelpTextService.GetParametersText(instance, NukeBuild.ExecutableTargets));
             }
 
-            if (NukeBuild.Graph)
-                GraphService.ShowGraph(NukeBuild.ExecutableTargets);
+            if (NukeBuild.Plan)
+                ExecutionPlanHtmlService.ShowPlan(NukeBuild.ExecutableTargets);
 
-            if (NukeBuild.Help || NukeBuild.Graph)
+            if (NukeBuild.Help || NukeBuild.Plan)
                 Environment.Exit(exitCode: 0);
         }
     }
