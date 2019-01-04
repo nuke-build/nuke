@@ -79,6 +79,9 @@ namespace Nuke.Common
                     case HostType.Bitrise:
                         innerOutputSink = new BitriseOutputSink();
                         break;
+                    case HostType.Travis:
+                        innerOutputSink = new TravisOutputSink();
+                        break;
                     case HostType.TeamCity:
                         innerOutputSink = new TeamCityOutputSink(new TeamCity());
                         break;
