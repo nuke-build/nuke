@@ -1,0 +1,7 @@
+- https://github.com/nuke-build/common.git#develop
+- https://github.com/nuke-build/presentation.git#master
+- https://github.com/nuke-build/resharper.git#master
+- https://github.com/nuke-build/template.git#master
+- https://github.com/nuke-build/visualstudio.git#master
+- https://github.com/nuke-build/vscode.git#master
+- https://github.com/nuke-build/web.git#master
