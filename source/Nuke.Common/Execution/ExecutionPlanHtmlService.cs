@@ -23,7 +23,7 @@ namespace Nuke.Common.Execution
             var resourceText = ResourceUtility.GetResourceText<ExecutionPlanHtmlService>(c_htmlFileName);
             var contents = resourceText
                 .Replace("__GRAPH__", GetGraphDefinition(executableTargets))
-                .Replace("__EVENTS__", GetEventsDefinition(executableTargets));
+                .Replace("__EVENTS__", GetEvents(executableTargets));
             
             var path = Path.Combine(NukeBuild.TemporaryDirectory, c_htmlFileName);
             File.WriteAllText(path, contents);
@@ -61,22 +61,26 @@ namespace Nuke.Common.Execution
             return builder.ToString();
         }
 
-        private static string GetEventsDefinition(IReadOnlyCollection<ExecutableTarget> executableTargets)
+        private static string GetEvents(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             var builder = new StringBuilder();
-            builder.AppendLine($@"  $(""#{executableTargets.Single(x => x.IsDefault).Name}"").find('rect').addClass('defaultTarget');");
-            
+
+            var defaultPlan = ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { executableTargets.Single(x => x.IsDefault).Name });
+            defaultPlan.ForEach(x => builder.AppendLine($@"  $(""#{x.Name}"").addClass('highlight');"));
+
             foreach (var executableTarget in executableTargets)
             {
                 var executionPlan = ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { executableTarget.Name });
                 builder
                     .AppendLine($@"  $(""#{executableTarget.Name}"").hover(")
                     .AppendLine("    function() {");
+                executableTargets.ForEach(x => builder.AppendLine($@"        $(""#{x.Name}"").removeClass('highlight');"));
                 executionPlan.ForEach(x => builder.AppendLine($@"        $(""#{x.Name}"").addClass('highlight');"));
                 builder
                     .AppendLine("    },")
                     .AppendLine("    function() {");
                 executionPlan.ForEach(x => builder.AppendLine($@"        $(""#{x.Name}"").removeClass('highlight');"));
+                defaultPlan.ForEach(x => builder.AppendLine($@"        $(""#{x.Name}"").addClass('highlight');"));
                 builder
                     .AppendLine("    });");
             }
