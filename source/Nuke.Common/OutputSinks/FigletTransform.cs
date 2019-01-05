@@ -3,27 +3,24 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using AutoMapper.XpressionMapper;
 using Colorful;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.OutputSinks
 {
     [ExcludeFromCodeCoverage]
-    public static class FigletTransform
+    public class FigletTransform
     {
         public static string GetText(string text, string integratedFontName = null)
         {
-            integratedFontName = integratedFontName ?? "cybermedium";
-
-            var fullResourceName = $"{typeof(IOutputSink).Namespace}.Fonts.{integratedFontName}.flf";
-            var assembly = typeof(FigletTransform).GetTypeInfo().Assembly;
-            var resourceStream = assembly.GetManifestResourceStream(fullResourceName);
-
-            return GetText(text, resourceStream.NotNull("resourceStream != null"));
+            var resource = ResourceUtility.GetResource<FigletTransform>($"Fonts.{integratedFontName ?? "cybermedium"}.flf");
+            return GetText(text, resource);
         }
 
         public static string GetText(string text, Stream stream)
