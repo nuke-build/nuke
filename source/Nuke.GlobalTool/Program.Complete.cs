@@ -16,14 +16,17 @@ namespace Nuke.GlobalTool
 {
     partial class Program
     {
+        private const string c_commandName = "nuke";
+
         [UsedImplicitly]
         public static int Complete(string[] args, [CanBeNull] string rootDirectory, [CanBeNull] string buildScript)
         {
             var words = args.Single();
-            if (!words.StartsWithOrdinalIgnoreCase("nuke"))
+            if (!words.StartsWithOrdinalIgnoreCase(c_commandName))
             {
                 return 0;
             }
+            words = words.Substring(c_commandName.Length).TrimStart();
 
             if (rootDirectory == null)
             {
@@ -38,7 +41,6 @@ namespace Nuke.GlobalTool
                 return 1;
             }
 
-            words = words.Substring("nuke ".Length);
             var position = ParameterService.Instance.GetParameter<int?>("position");
             var completionItems = SerializationTasks.YamlDeserializeFromFile<Dictionary<string, string[]>>(completionFile);
             foreach (var item in GetRelevantCompletionItems(words, position, completionItems))
@@ -93,7 +95,7 @@ namespace Nuke.GlobalTool
                     if (currentWord == null || currentWord.TrimStart("-").Length == 0)
                     {
                         suggestedItems.Add(
-                            new[] { "NuGet", "MSBuild" }
+                            new[] { "NuGet", "MSBuild", "GitHub" }
                                 .Aggregate(
                                     $"--{item.SplitCamelHumpsWithSeparator("-")}",
                                     (i, t) => i.Replace(t.SplitCamelHumpsWithSeparator("-"), t.ToLowerInvariant())));
