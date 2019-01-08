@@ -18,10 +18,10 @@ using static Nuke.Common.Tools.NuGet.NuGetTasks;                                
 class Build : NukeBuild
 {
     // Support plugins are available for:
-    //   - JetBrains ReSharper        https://resharper-plugins.jetbrains.com/packages/ReSharper.Nuke/
-    //   - JetBrains Rider            https://plugins.jetbrains.com/plugin/10803-nuke-support
-    //   - Microsoft VisualStudio     https://marketplace.visualstudio.com/items?itemName=nuke.visualstudio
-    //   - Microsoft VSCode           https://marketplace.visualstudio.com/items?itemName=nuke.support
+    //   - JetBrains ReSharper        https://nuke.build/resharper
+    //   - JetBrains Rider            https://nuke.build/rider
+    //   - Microsoft VisualStudio     https://nuke.build/visualstudio
+    //   - Microsoft VSCode           https://nuke.build/vscode
     
     public static int Main () => Execute<Build>(x => x.Compile);
 
