@@ -102,7 +102,8 @@ class Build : NukeBuild
                 .SetPackageOutputPath(ArtifactsDirectory)                                       // NUGET && MSBUILD && ARTIFACTS_DIR
                 .SetPackageOutputPath(OutputDirectory)                                          // NUGET && MSBUILD && OUTPUT_DIR
                 .SetConfiguration(Configuration)                                                // NUGET && MSBUILD
-                .EnableIncludeSymbols());                                                       // NUGET && MSBUILD
+                .EnableIncludeSymbols()                                                         // NUGET && MSBUILD
+                .SetSymbolPackageFormat(NuGetSymbolPackageFormat.snupkg));                      // NUGET && MSBUILD
             DotNetPack(s => s                                                                   // NUGET && DOTNET
                 .SetProject(Solution)                                                           // NUGET && DOTNET
                 .SetVersion(GitVersion.NuGetVersionV2)                                          // NUGET && DOTNET && GITVERSION
@@ -111,7 +112,8 @@ class Build : NukeBuild
                 .SetOutputDirectory(OutputDirectory)                                            // NUGET && DOTNET && OUTPUT_DIR
                 .SetConfiguration(Configuration)                                                // NUGET && DOTNET
                 .EnableNoBuild()                                                                // NUGET && DOTNET
-                .EnableIncludeSymbols());                                                       // NUGET && DOTNET
+                .EnableIncludeSymbols()                                                         // NUGET && DOTNET
+                .SetSymbolPackageFormat(DotNetSymbolPackageFormat.snupkg));                     // NUGET && DOTNET
         });                                                                                     // NUGET
                                                                                                 // NUGET
     Target Push => _ => _                                                                       // NUGET
@@ -122,7 +124,6 @@ class Build : NukeBuild
         {                                                                                       // NUGET
             GlobFiles(OutputDirectory, "*.nupkg")                                               // NUGET && OUTPUT_DOR
             GlobFiles(ArtifactsDirectory, "*.nupkg")                                            // NUGET && ARTIFACTS_DIR
-                .Where(x => !x.EndsWith(".symbols.nupkg"))                                      // NUGET
                 .NotEmpty()                                                                     // NUGET
                 .ForEach(x => DotNetNuGetPush(s => s                                            // NUGET && MSBUILD
                 .ForEach(x => NuGetPush(s => s                                                  // NUGET && DOTNET
