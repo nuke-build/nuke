@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/DotCover.json
+// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/DotCover.json
 // Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
@@ -48,7 +48,7 @@ namespace Nuke.Common.Tools.DotCover
             return DotCoverAnalyse(configurator(new DotCoverAnalyseSettings()));
         }
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
-        public static IEnumerable<(DotCoverAnalyseSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverAnalyse(MultiplexConfigure<DotCoverAnalyseSettings> configurator)
+        public static IEnumerable<(DotCoverAnalyseSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverAnalyse(CombinatorialConfigure<DotCoverAnalyseSettings> configurator)
         {
             return configurator(new DotCoverAnalyseSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: DotCoverAnalyse(x)))
@@ -68,7 +68,7 @@ namespace Nuke.Common.Tools.DotCover
             return DotCoverCover(configurator(new DotCoverCoverSettings()));
         }
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
-        public static IEnumerable<(DotCoverCoverSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverCover(MultiplexConfigure<DotCoverCoverSettings> configurator)
+        public static IEnumerable<(DotCoverCoverSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverCover(CombinatorialConfigure<DotCoverCoverSettings> configurator)
         {
             return configurator(new DotCoverCoverSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: DotCoverCover(x)))
@@ -88,7 +88,7 @@ namespace Nuke.Common.Tools.DotCover
             return DotCoverDelete(configurator(new DotCoverDeleteSettings()));
         }
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
-        public static IEnumerable<(DotCoverDeleteSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverDelete(MultiplexConfigure<DotCoverDeleteSettings> configurator)
+        public static IEnumerable<(DotCoverDeleteSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverDelete(CombinatorialConfigure<DotCoverDeleteSettings> configurator)
         {
             return configurator(new DotCoverDeleteSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: DotCoverDelete(x)))
@@ -108,7 +108,7 @@ namespace Nuke.Common.Tools.DotCover
             return DotCoverMerge(configurator(new DotCoverMergeSettings()));
         }
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
-        public static IEnumerable<(DotCoverMergeSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverMerge(MultiplexConfigure<DotCoverMergeSettings> configurator)
+        public static IEnumerable<(DotCoverMergeSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverMerge(CombinatorialConfigure<DotCoverMergeSettings> configurator)
         {
             return configurator(new DotCoverMergeSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: DotCoverMerge(x)))
@@ -128,7 +128,7 @@ namespace Nuke.Common.Tools.DotCover
             return DotCoverReport(configurator(new DotCoverReportSettings()));
         }
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
-        public static IEnumerable<(DotCoverReportSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverReport(MultiplexConfigure<DotCoverReportSettings> configurator)
+        public static IEnumerable<(DotCoverReportSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverReport(CombinatorialConfigure<DotCoverReportSettings> configurator)
         {
             return configurator(new DotCoverReportSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: DotCoverReport(x)))
@@ -148,7 +148,7 @@ namespace Nuke.Common.Tools.DotCover
             return DotCoverZip(configurator(new DotCoverZipSettings()));
         }
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
-        public static IEnumerable<(DotCoverZipSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverZip(MultiplexConfigure<DotCoverZipSettings> configurator)
+        public static IEnumerable<(DotCoverZipSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverZip(CombinatorialConfigure<DotCoverZipSettings> configurator)
         {
             return configurator(new DotCoverZipSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: DotCoverZip(x)))

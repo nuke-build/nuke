@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/OpenCover.json
+// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/OpenCover.json
 // Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
@@ -48,7 +48,7 @@ namespace Nuke.Common.Tools.OpenCover
             return OpenCover(configurator(new OpenCoverSettings()));
         }
         /// <summary><p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p><p>For more details, visit the <a href="https://github.com/OpenCover/opencover">official website</a>.</p></summary>
-        public static IEnumerable<(OpenCoverSettings Settings, IReadOnlyCollection<Output> Output)> OpenCover(MultiplexConfigure<OpenCoverSettings> configurator)
+        public static IEnumerable<(OpenCoverSettings Settings, IReadOnlyCollection<Output> Output)> OpenCover(CombinatorialConfigure<OpenCoverSettings> configurator)
         {
             return configurator(new OpenCoverSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: OpenCover(x)))

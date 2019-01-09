@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/SonarScanner.json
+// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/SonarScanner.json
 // Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
@@ -48,7 +48,7 @@ namespace Nuke.Common.Tools.SonarScanner
             return SonarScannerBegin(configurator(new SonarScannerBeginSettings()));
         }
         /// <summary><p>The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.</p><p>For more details, visit the <a href="https://www.sonarqube.org/">official website</a>.</p></summary>
-        public static IEnumerable<(SonarScannerBeginSettings Settings, IReadOnlyCollection<Output> Output)> SonarScannerBegin(MultiplexConfigure<SonarScannerBeginSettings> configurator)
+        public static IEnumerable<(SonarScannerBeginSettings Settings, IReadOnlyCollection<Output> Output)> SonarScannerBegin(CombinatorialConfigure<SonarScannerBeginSettings> configurator)
         {
             return configurator(new SonarScannerBeginSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: SonarScannerBegin(x)))
@@ -68,7 +68,7 @@ namespace Nuke.Common.Tools.SonarScanner
             return SonarScannerEnd(configurator(new SonarScannerEndSettings()));
         }
         /// <summary><p>The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.</p><p>For more details, visit the <a href="https://www.sonarqube.org/">official website</a>.</p></summary>
-        public static IEnumerable<(SonarScannerEndSettings Settings, IReadOnlyCollection<Output> Output)> SonarScannerEnd(MultiplexConfigure<SonarScannerEndSettings> configurator)
+        public static IEnumerable<(SonarScannerEndSettings Settings, IReadOnlyCollection<Output> Output)> SonarScannerEnd(CombinatorialConfigure<SonarScannerEndSettings> configurator)
         {
             return configurator(new SonarScannerEndSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: SonarScannerEnd(x)))

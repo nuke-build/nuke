@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/SignTool.json
+// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/SignTool.json
 // Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
@@ -48,7 +48,7 @@ namespace Nuke.Common.Tools.SignTool
             return SignTool(configurator(new SignToolSettings()));
         }
         /// <summary><p>Use the <c>sign</c> command to sign files using embedded signatures. Signing protects a file from tampering, and allows users to verify the signer (you) based on a signing certificate. The options below allow you to specify signing parameters and to select the signing certificate you wish to use.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe">official website</a>.</p></summary>
-        public static IEnumerable<(SignToolSettings Settings, IReadOnlyCollection<Output> Output)> SignTool(MultiplexConfigure<SignToolSettings> configurator)
+        public static IEnumerable<(SignToolSettings Settings, IReadOnlyCollection<Output> Output)> SignTool(CombinatorialConfigure<SignToolSettings> configurator)
         {
             return configurator(new SignToolSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: SignTool(x)))

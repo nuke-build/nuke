@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Nunit3.json
+// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/Nunit3.json
 // Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
@@ -48,7 +48,7 @@ namespace Nuke.Common.Tools.Nunit
             return Nunit3(configurator(new Nunit3Settings()));
         }
         /// <summary><p>NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href="http://www.junit.org/">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.</p><p>For more details, visit the <a href="https://www.nunit.org/">official website</a>.</p></summary>
-        public static IEnumerable<(Nunit3Settings Settings, IReadOnlyCollection<Output> Output)> Nunit3(MultiplexConfigure<Nunit3Settings> configurator)
+        public static IEnumerable<(Nunit3Settings Settings, IReadOnlyCollection<Output> Output)> Nunit3(CombinatorialConfigure<Nunit3Settings> configurator)
         {
             return configurator(new Nunit3Settings())
                 .Select(x => (ToolSettings: x, ReturnValue: Nunit3(x)))

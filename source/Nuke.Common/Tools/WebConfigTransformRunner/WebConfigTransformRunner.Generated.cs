@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/WebConfigTransformRunner.json
+// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/WebConfigTransformRunner.json
 // Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
@@ -48,7 +48,7 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
             return WebConfigTransformRunner(configurator(new WebConfigTransformRunnerSettings()));
         }
         /// <summary><p>This is a commandline tool to run an ASP.Net web.config tranformation.</p><p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p></summary>
-        public static IEnumerable<(WebConfigTransformRunnerSettings Settings, IReadOnlyCollection<Output> Output)> WebConfigTransformRunner(MultiplexConfigure<WebConfigTransformRunnerSettings> configurator)
+        public static IEnumerable<(WebConfigTransformRunnerSettings Settings, IReadOnlyCollection<Output> Output)> WebConfigTransformRunner(CombinatorialConfigure<WebConfigTransformRunnerSettings> configurator)
         {
             return configurator(new WebConfigTransformRunnerSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: WebConfigTransformRunner(x)))

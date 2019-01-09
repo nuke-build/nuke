@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/GitReleaseManager.json
+// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/GitReleaseManager.json
 // Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
@@ -48,7 +48,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
             return GitReleaseManagerAddAssets(configurator(new GitReleaseManagerAddAssetsSettings()));
         }
         /// <summary><p>Adds an asset to an existing release.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
-        public static IEnumerable<(GitReleaseManagerAddAssetsSettings Settings, IReadOnlyCollection<Output> Output)> GitReleaseManagerAddAssets(MultiplexConfigure<GitReleaseManagerAddAssetsSettings> configurator)
+        public static IEnumerable<(GitReleaseManagerAddAssetsSettings Settings, IReadOnlyCollection<Output> Output)> GitReleaseManagerAddAssets(CombinatorialConfigure<GitReleaseManagerAddAssetsSettings> configurator)
         {
             return configurator(new GitReleaseManagerAddAssetsSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: GitReleaseManagerAddAssets(x)))
@@ -68,7 +68,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
             return GitReleaseManagerClose(configurator(new GitReleaseManagerCloseSettings()));
         }
         /// <summary><p>Closes the milestone.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
-        public static IEnumerable<(GitReleaseManagerCloseSettings Settings, IReadOnlyCollection<Output> Output)> GitReleaseManagerClose(MultiplexConfigure<GitReleaseManagerCloseSettings> configurator)
+        public static IEnumerable<(GitReleaseManagerCloseSettings Settings, IReadOnlyCollection<Output> Output)> GitReleaseManagerClose(CombinatorialConfigure<GitReleaseManagerCloseSettings> configurator)
         {
             return configurator(new GitReleaseManagerCloseSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: GitReleaseManagerClose(x)))
@@ -88,7 +88,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
             return GitReleaseManagerCreate(configurator(new GitReleaseManagerCreateSettings()));
         }
         /// <summary><p>Creates a draft release notes from a milestone.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
-        public static IEnumerable<(GitReleaseManagerCreateSettings Settings, IReadOnlyCollection<Output> Output)> GitReleaseManagerCreate(MultiplexConfigure<GitReleaseManagerCreateSettings> configurator)
+        public static IEnumerable<(GitReleaseManagerCreateSettings Settings, IReadOnlyCollection<Output> Output)> GitReleaseManagerCreate(CombinatorialConfigure<GitReleaseManagerCreateSettings> configurator)
         {
             return configurator(new GitReleaseManagerCreateSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: GitReleaseManagerCreate(x)))
@@ -108,7 +108,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
             return GitReleaseManagerExport(configurator(new GitReleaseManagerExportSettings()));
         }
         /// <summary><p>Exports all the Release Notes in markdown format.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
-        public static IEnumerable<(GitReleaseManagerExportSettings Settings, IReadOnlyCollection<Output> Output)> GitReleaseManagerExport(MultiplexConfigure<GitReleaseManagerExportSettings> configurator)
+        public static IEnumerable<(GitReleaseManagerExportSettings Settings, IReadOnlyCollection<Output> Output)> GitReleaseManagerExport(CombinatorialConfigure<GitReleaseManagerExportSettings> configurator)
         {
             return configurator(new GitReleaseManagerExportSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: GitReleaseManagerExport(x)))
@@ -128,7 +128,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
             return GitReleaseManagerPublish(configurator(new GitReleaseManagerPublishSettings()));
         }
         /// <summary><p>Publishes the GitHub Release.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
-        public static IEnumerable<(GitReleaseManagerPublishSettings Settings, IReadOnlyCollection<Output> Output)> GitReleaseManagerPublish(MultiplexConfigure<GitReleaseManagerPublishSettings> configurator)
+        public static IEnumerable<(GitReleaseManagerPublishSettings Settings, IReadOnlyCollection<Output> Output)> GitReleaseManagerPublish(CombinatorialConfigure<GitReleaseManagerPublishSettings> configurator)
         {
             return configurator(new GitReleaseManagerPublishSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: GitReleaseManagerPublish(x)))

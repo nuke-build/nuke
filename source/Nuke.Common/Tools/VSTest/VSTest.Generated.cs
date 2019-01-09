@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/VSTest.json
+// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/VSTest.json
 // Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
@@ -48,7 +48,7 @@ namespace Nuke.Common.Tools.VSTest
             return VSTest(configurator(new VSTestSettings()));
         }
         /// <summary><p>VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.</p><p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/jj155796.aspx">official website</a>.</p></summary>
-        public static IEnumerable<(VSTestSettings Settings, IReadOnlyCollection<Output> Output)> VSTest(MultiplexConfigure<VSTestSettings> configurator)
+        public static IEnumerable<(VSTestSettings Settings, IReadOnlyCollection<Output> Output)> VSTest(CombinatorialConfigure<VSTestSettings> configurator)
         {
             return configurator(new VSTestSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: VSTest(x)))

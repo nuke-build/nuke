@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/CoverallsNet.json
+// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/CoverallsNet.json
 // Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
@@ -48,7 +48,7 @@ namespace Nuke.Common.Tools.CoverallsNet
             return CoverallsNet(configurator(new CoverallsNetSettings()));
         }
         /// <summary><p>Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.</p><p>For more details, visit the <a href="https://coverallsnet.readthedocs.io">official website</a>.</p></summary>
-        public static IEnumerable<(CoverallsNetSettings Settings, IReadOnlyCollection<Output> Output)> CoverallsNet(MultiplexConfigure<CoverallsNetSettings> configurator)
+        public static IEnumerable<(CoverallsNetSettings Settings, IReadOnlyCollection<Output> Output)> CoverallsNet(CombinatorialConfigure<CoverallsNetSettings> configurator)
         {
             return configurator(new CoverallsNetSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: CoverallsNet(x)))

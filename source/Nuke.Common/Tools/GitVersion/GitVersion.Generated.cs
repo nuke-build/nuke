@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/GitVersion.json
+// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/GitVersion.json
 // Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
@@ -48,7 +48,7 @@ namespace Nuke.Common.Tools.GitVersion
             return GitVersion(configurator(new GitVersionSettings()));
         }
         /// <summary><p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p><p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p></summary>
-        public static IEnumerable<(GitVersionSettings Settings, GitVersion Result, IReadOnlyCollection<Output> Output)> GitVersion(MultiplexConfigure<GitVersionSettings> configurator)
+        public static IEnumerable<(GitVersionSettings Settings, GitVersion Result, IReadOnlyCollection<Output> Output)> GitVersion(CombinatorialConfigure<GitVersionSettings> configurator)
         {
             return configurator(new GitVersionSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: GitVersion(x)))

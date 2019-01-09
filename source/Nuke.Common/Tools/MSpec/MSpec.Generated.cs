@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/MSpec.json
+// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/MSpec.json
 // Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
@@ -48,7 +48,7 @@ namespace Nuke.Common.Tools.MSpec
             return MSpec(configurator(new MSpecSettings()));
         }
         /// <summary><p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p><p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p></summary>
-        public static IEnumerable<(MSpecSettings Settings, IReadOnlyCollection<Output> Output)> MSpec(MultiplexConfigure<MSpecSettings> configurator)
+        public static IEnumerable<(MSpecSettings Settings, IReadOnlyCollection<Output> Output)> MSpec(CombinatorialConfigure<MSpecSettings> configurator)
         {
             return configurator(new MSpecSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: MSpec(x)))

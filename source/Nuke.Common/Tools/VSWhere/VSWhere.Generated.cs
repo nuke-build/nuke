@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/VSWhere.json
+// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/VSWhere.json
 // Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
@@ -48,7 +48,7 @@ namespace Nuke.Common.Tools.VSWhere
             return VSWhere(configurator(new VSWhereSettings()));
         }
         /// <summary><p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p><p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p></summary>
-        public static IEnumerable<(VSWhereSettings Settings, List<VSWhereResult> Result, IReadOnlyCollection<Output> Output)> VSWhere(MultiplexConfigure<VSWhereSettings> configurator)
+        public static IEnumerable<(VSWhereSettings Settings, List<VSWhereResult> Result, IReadOnlyCollection<Output> Output)> VSWhere(CombinatorialConfigure<VSWhereSettings> configurator)
         {
             return configurator(new VSWhereSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: VSWhere(x)))

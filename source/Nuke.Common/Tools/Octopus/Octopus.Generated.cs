@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Octopus.json
+// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/Octopus.json
 // Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
@@ -48,7 +48,7 @@ namespace Nuke.Common.Tools.Octopus
             return OctopusPack(configurator(new OctopusPackSettings()));
         }
         /// <summary><p>The <c>Octo.exe pack</c> command provides a number of other useful parameters that can be used to customize the way your package gets created, such as output folder, files to include and release notes.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
-        public static IEnumerable<(OctopusPackSettings Settings, IReadOnlyCollection<Output> Output)> OctopusPack(MultiplexConfigure<OctopusPackSettings> configurator)
+        public static IEnumerable<(OctopusPackSettings Settings, IReadOnlyCollection<Output> Output)> OctopusPack(CombinatorialConfigure<OctopusPackSettings> configurator)
         {
             return configurator(new OctopusPackSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: OctopusPack(x)))
@@ -68,7 +68,7 @@ namespace Nuke.Common.Tools.Octopus
             return OctopusPush(configurator(new OctopusPushSettings()));
         }
         /// <summary><p>The <c>Octo.exe push</c> command can push any of the supported packages types listed on this <a href="https://octopus.com/docs/packaging-applications/supported-packages">page</a>.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
-        public static IEnumerable<(OctopusPushSettings Settings, IReadOnlyCollection<Output> Output)> OctopusPush(MultiplexConfigure<OctopusPushSettings> configurator)
+        public static IEnumerable<(OctopusPushSettings Settings, IReadOnlyCollection<Output> Output)> OctopusPush(CombinatorialConfigure<OctopusPushSettings> configurator)
         {
             return configurator(new OctopusPushSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: OctopusPush(x)))
@@ -88,7 +88,7 @@ namespace Nuke.Common.Tools.Octopus
             return OctopusCreateRelease(configurator(new OctopusCreateReleaseSettings()));
         }
         /// <summary><p>The <c>Octo.exe create-release</c> can be used to automate the creation of releases. This allows you to easily integrate Octopus with other continuous integration servers.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
-        public static IEnumerable<(OctopusCreateReleaseSettings Settings, IReadOnlyCollection<Output> Output)> OctopusCreateRelease(MultiplexConfigure<OctopusCreateReleaseSettings> configurator)
+        public static IEnumerable<(OctopusCreateReleaseSettings Settings, IReadOnlyCollection<Output> Output)> OctopusCreateRelease(CombinatorialConfigure<OctopusCreateReleaseSettings> configurator)
         {
             return configurator(new OctopusCreateReleaseSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: OctopusCreateRelease(x)))
@@ -108,7 +108,7 @@ namespace Nuke.Common.Tools.Octopus
             return OctopusDeployRelease(configurator(new OctopusDeployReleaseSettings()));
         }
         /// <summary><p>The <c>Octo.exe deploy-release</c> can be used to automate the deployment of releases to environments. This allows you to easily integrate Octopus with other continuous integration servers.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
-        public static IEnumerable<(OctopusDeployReleaseSettings Settings, IReadOnlyCollection<Output> Output)> OctopusDeployRelease(MultiplexConfigure<OctopusDeployReleaseSettings> configurator)
+        public static IEnumerable<(OctopusDeployReleaseSettings Settings, IReadOnlyCollection<Output> Output)> OctopusDeployRelease(CombinatorialConfigure<OctopusDeployReleaseSettings> configurator)
         {
             return configurator(new OctopusDeployReleaseSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: OctopusDeployRelease(x)))

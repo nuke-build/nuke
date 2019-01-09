@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/SpecFlow.json
+// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/SpecFlow.json
 // Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
@@ -48,7 +48,7 @@ namespace Nuke.Common.Tools.SpecFlow
             return SpecFlowNUnitExecutionReport(configurator(new SpecFlowNUnitExecutionReportSettings()));
         }
         /// <summary><p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IEnumerable<(SpecFlowNUnitExecutionReportSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowNUnitExecutionReport(MultiplexConfigure<SpecFlowNUnitExecutionReportSettings> configurator)
+        public static IEnumerable<(SpecFlowNUnitExecutionReportSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowNUnitExecutionReport(CombinatorialConfigure<SpecFlowNUnitExecutionReportSettings> configurator)
         {
             return configurator(new SpecFlowNUnitExecutionReportSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: SpecFlowNUnitExecutionReport(x)))
@@ -68,7 +68,7 @@ namespace Nuke.Common.Tools.SpecFlow
             return SpecFlowMSTestExecutionReport(configurator(new SpecFlowMSTestExecutionReportSettings()));
         }
         /// <summary><p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IEnumerable<(SpecFlowMSTestExecutionReportSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowMSTestExecutionReport(MultiplexConfigure<SpecFlowMSTestExecutionReportSettings> configurator)
+        public static IEnumerable<(SpecFlowMSTestExecutionReportSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowMSTestExecutionReport(CombinatorialConfigure<SpecFlowMSTestExecutionReportSettings> configurator)
         {
             return configurator(new SpecFlowMSTestExecutionReportSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: SpecFlowMSTestExecutionReport(x)))
@@ -88,7 +88,7 @@ namespace Nuke.Common.Tools.SpecFlow
             return SpecFlowStepDefinitionReport(configurator(new SpecFlowStepDefinitionReportSettings()));
         }
         /// <summary><p>This report shows the usage and binding status of the steps for the entire project. You can use this report to find both unused code in the automation layer and scenario steps that have no definition yet.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IEnumerable<(SpecFlowStepDefinitionReportSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowStepDefinitionReport(MultiplexConfigure<SpecFlowStepDefinitionReportSettings> configurator)
+        public static IEnumerable<(SpecFlowStepDefinitionReportSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowStepDefinitionReport(CombinatorialConfigure<SpecFlowStepDefinitionReportSettings> configurator)
         {
             return configurator(new SpecFlowStepDefinitionReportSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: SpecFlowStepDefinitionReport(x)))
@@ -108,7 +108,7 @@ namespace Nuke.Common.Tools.SpecFlow
             return SpecFlowRun(configurator(new SpecFlowRunSettings()));
         }
         /// <summary><p>Use <c>SpecRun.exe run</c> to execute your tests.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IEnumerable<(SpecFlowRunSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowRun(MultiplexConfigure<SpecFlowRunSettings> configurator)
+        public static IEnumerable<(SpecFlowRunSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowRun(CombinatorialConfigure<SpecFlowRunSettings> configurator)
         {
             return configurator(new SpecFlowRunSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: SpecFlowRun(x)))
@@ -128,7 +128,7 @@ namespace Nuke.Common.Tools.SpecFlow
             return SpecFlowBuildServerRun(configurator(new SpecFlowBuildServerRunSettings()));
         }
         /// <summary><p>Use <c>SpecRun.exe buildserverrun</c> to execute your tests in build server mode.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IEnumerable<(SpecFlowBuildServerRunSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowBuildServerRun(MultiplexConfigure<SpecFlowBuildServerRunSettings> configurator)
+        public static IEnumerable<(SpecFlowBuildServerRunSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowBuildServerRun(CombinatorialConfigure<SpecFlowBuildServerRunSettings> configurator)
         {
             return configurator(new SpecFlowBuildServerRunSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: SpecFlowBuildServerRun(x)))
@@ -148,7 +148,7 @@ namespace Nuke.Common.Tools.SpecFlow
             return SpecFlowRegister(configurator(new SpecFlowRegisterSettings()));
         }
         /// <summary><p>Use <c>SpecRun.exe register</c> to register your SpecFlow+ license. You only need to register your license once per user per machine. The license is valid for all SpecFlow+ components.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IEnumerable<(SpecFlowRegisterSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowRegister(MultiplexConfigure<SpecFlowRegisterSettings> configurator)
+        public static IEnumerable<(SpecFlowRegisterSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowRegister(CombinatorialConfigure<SpecFlowRegisterSettings> configurator)
         {
             return configurator(new SpecFlowRegisterSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: SpecFlowRegister(x)))
@@ -168,7 +168,7 @@ namespace Nuke.Common.Tools.SpecFlow
             return SpecFlowUnregister(configurator(new SpecFlowUnregisterSettings()));
         }
         /// <summary><p>Use <c>SpecRun.exe unregister</c> to unregister your SpecFlow+ license.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IEnumerable<(SpecFlowUnregisterSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowUnregister(MultiplexConfigure<SpecFlowUnregisterSettings> configurator)
+        public static IEnumerable<(SpecFlowUnregisterSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowUnregister(CombinatorialConfigure<SpecFlowUnregisterSettings> configurator)
         {
             return configurator(new SpecFlowUnregisterSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: SpecFlowUnregister(x)))
@@ -188,7 +188,7 @@ namespace Nuke.Common.Tools.SpecFlow
             return SpecFlowAbout(configurator(new SpecFlowAboutSettings()));
         }
         /// <summary><p>Use <c>SpecRun.exe about</c> to display information such as your version number, build date and license information (licensee, upgrade until date/expiry date).</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IEnumerable<(SpecFlowAboutSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowAbout(MultiplexConfigure<SpecFlowAboutSettings> configurator)
+        public static IEnumerable<(SpecFlowAboutSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowAbout(CombinatorialConfigure<SpecFlowAboutSettings> configurator)
         {
             return configurator(new SpecFlowAboutSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: SpecFlowAbout(x)))

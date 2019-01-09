@@ -48,7 +48,7 @@ namespace Nuke.Common.Tools.NuGet
             return NuGetPush(configurator(new NuGetPushSettings()));
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IEnumerable<(NuGetPushSettings Settings, IReadOnlyCollection<Output> Output)> NuGetPush(MultiplexConfigure<NuGetPushSettings> configurator)
+        public static IEnumerable<(NuGetPushSettings Settings, IReadOnlyCollection<Output> Output)> NuGetPush(CombinatorialConfigure<NuGetPushSettings> configurator)
         {
             return configurator(new NuGetPushSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: NuGetPush(x)))
@@ -68,7 +68,7 @@ namespace Nuke.Common.Tools.NuGet
             return NuGetPack(configurator(new NuGetPackSettings()));
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IEnumerable<(NuGetPackSettings Settings, IReadOnlyCollection<Output> Output)> NuGetPack(MultiplexConfigure<NuGetPackSettings> configurator)
+        public static IEnumerable<(NuGetPackSettings Settings, IReadOnlyCollection<Output> Output)> NuGetPack(CombinatorialConfigure<NuGetPackSettings> configurator)
         {
             return configurator(new NuGetPackSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: NuGetPack(x)))
@@ -88,7 +88,7 @@ namespace Nuke.Common.Tools.NuGet
             return NuGetRestore(configurator(new NuGetRestoreSettings()));
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IEnumerable<(NuGetRestoreSettings Settings, IReadOnlyCollection<Output> Output)> NuGetRestore(MultiplexConfigure<NuGetRestoreSettings> configurator)
+        public static IEnumerable<(NuGetRestoreSettings Settings, IReadOnlyCollection<Output> Output)> NuGetRestore(CombinatorialConfigure<NuGetRestoreSettings> configurator)
         {
             return configurator(new NuGetRestoreSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: NuGetRestore(x)))
@@ -108,7 +108,7 @@ namespace Nuke.Common.Tools.NuGet
             return NuGetSourcesAdd(configurator(new NuGetSourcesAddSettings()));
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IEnumerable<(NuGetSourcesAddSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesAdd(MultiplexConfigure<NuGetSourcesAddSettings> configurator)
+        public static IEnumerable<(NuGetSourcesAddSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesAdd(CombinatorialConfigure<NuGetSourcesAddSettings> configurator)
         {
             return configurator(new NuGetSourcesAddSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: NuGetSourcesAdd(x)))
@@ -128,7 +128,7 @@ namespace Nuke.Common.Tools.NuGet
             return NuGetSourcesUpdate(configurator(new NuGetSourcesUpdateSettings()));
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IEnumerable<(NuGetSourcesUpdateSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesUpdate(MultiplexConfigure<NuGetSourcesUpdateSettings> configurator)
+        public static IEnumerable<(NuGetSourcesUpdateSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesUpdate(CombinatorialConfigure<NuGetSourcesUpdateSettings> configurator)
         {
             return configurator(new NuGetSourcesUpdateSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: NuGetSourcesUpdate(x)))
@@ -148,7 +148,7 @@ namespace Nuke.Common.Tools.NuGet
             return NuGetSourcesRemove(configurator(new NuGetSourcesRemoveSettings()));
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IEnumerable<(NuGetSourcesRemoveSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesRemove(MultiplexConfigure<NuGetSourcesRemoveSettings> configurator)
+        public static IEnumerable<(NuGetSourcesRemoveSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesRemove(CombinatorialConfigure<NuGetSourcesRemoveSettings> configurator)
         {
             return configurator(new NuGetSourcesRemoveSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: NuGetSourcesRemove(x)))
@@ -168,7 +168,7 @@ namespace Nuke.Common.Tools.NuGet
             return NuGetSourcesEnable(configurator(new NuGetSourcesEnableSettings()));
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IEnumerable<(NuGetSourcesEnableSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesEnable(MultiplexConfigure<NuGetSourcesEnableSettings> configurator)
+        public static IEnumerable<(NuGetSourcesEnableSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesEnable(CombinatorialConfigure<NuGetSourcesEnableSettings> configurator)
         {
             return configurator(new NuGetSourcesEnableSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: NuGetSourcesEnable(x)))
@@ -188,7 +188,7 @@ namespace Nuke.Common.Tools.NuGet
             return NuGetSourcesDisable(configurator(new NuGetSourcesDisableSettings()));
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IEnumerable<(NuGetSourcesDisableSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesDisable(MultiplexConfigure<NuGetSourcesDisableSettings> configurator)
+        public static IEnumerable<(NuGetSourcesDisableSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesDisable(CombinatorialConfigure<NuGetSourcesDisableSettings> configurator)
         {
             return configurator(new NuGetSourcesDisableSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: NuGetSourcesDisable(x)))
@@ -208,7 +208,7 @@ namespace Nuke.Common.Tools.NuGet
             return NuGetSourcesList(configurator(new NuGetSourcesListSettings()));
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IEnumerable<(NuGetSourcesListSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesList(MultiplexConfigure<NuGetSourcesListSettings> configurator)
+        public static IEnumerable<(NuGetSourcesListSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesList(CombinatorialConfigure<NuGetSourcesListSettings> configurator)
         {
             return configurator(new NuGetSourcesListSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: NuGetSourcesList(x)))
