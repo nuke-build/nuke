@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/NuGet.json
+// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/NuGet.json
 // Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
@@ -92,6 +92,126 @@ namespace Nuke.Common.Tools.NuGet
         {
             return configurator(new NuGetRestoreSettings())
                 .Select(x => (ToolSettings: x, ReturnValue: NuGetRestore(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> NuGetSourcesAdd(NuGetSourcesAddSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new NuGetSourcesAddSettings();
+            var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> NuGetSourcesAdd(Configure<NuGetSourcesAddSettings> configurator)
+        {
+            return NuGetSourcesAdd(configurator(new NuGetSourcesAddSettings()));
+        }
+        /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+        public static IEnumerable<(NuGetSourcesAddSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesAdd(MultiplexConfigure<NuGetSourcesAddSettings> configurator)
+        {
+            return configurator(new NuGetSourcesAddSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: NuGetSourcesAdd(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> NuGetSourcesUpdate(NuGetSourcesUpdateSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new NuGetSourcesUpdateSettings();
+            var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> NuGetSourcesUpdate(Configure<NuGetSourcesUpdateSettings> configurator)
+        {
+            return NuGetSourcesUpdate(configurator(new NuGetSourcesUpdateSettings()));
+        }
+        /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+        public static IEnumerable<(NuGetSourcesUpdateSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesUpdate(MultiplexConfigure<NuGetSourcesUpdateSettings> configurator)
+        {
+            return configurator(new NuGetSourcesUpdateSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: NuGetSourcesUpdate(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> NuGetSourcesRemove(NuGetSourcesRemoveSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new NuGetSourcesRemoveSettings();
+            var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> NuGetSourcesRemove(Configure<NuGetSourcesRemoveSettings> configurator)
+        {
+            return NuGetSourcesRemove(configurator(new NuGetSourcesRemoveSettings()));
+        }
+        /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+        public static IEnumerable<(NuGetSourcesRemoveSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesRemove(MultiplexConfigure<NuGetSourcesRemoveSettings> configurator)
+        {
+            return configurator(new NuGetSourcesRemoveSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: NuGetSourcesRemove(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> NuGetSourcesEnable(NuGetSourcesEnableSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new NuGetSourcesEnableSettings();
+            var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> NuGetSourcesEnable(Configure<NuGetSourcesEnableSettings> configurator)
+        {
+            return NuGetSourcesEnable(configurator(new NuGetSourcesEnableSettings()));
+        }
+        /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+        public static IEnumerable<(NuGetSourcesEnableSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesEnable(MultiplexConfigure<NuGetSourcesEnableSettings> configurator)
+        {
+            return configurator(new NuGetSourcesEnableSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: NuGetSourcesEnable(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> NuGetSourcesDisable(NuGetSourcesDisableSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new NuGetSourcesDisableSettings();
+            var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> NuGetSourcesDisable(Configure<NuGetSourcesDisableSettings> configurator)
+        {
+            return NuGetSourcesDisable(configurator(new NuGetSourcesDisableSettings()));
+        }
+        /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+        public static IEnumerable<(NuGetSourcesDisableSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesDisable(MultiplexConfigure<NuGetSourcesDisableSettings> configurator)
+        {
+            return configurator(new NuGetSourcesDisableSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: NuGetSourcesDisable(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> NuGetSourcesList(NuGetSourcesListSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new NuGetSourcesListSettings();
+            var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> NuGetSourcesList(Configure<NuGetSourcesListSettings> configurator)
+        {
+            return NuGetSourcesList(configurator(new NuGetSourcesListSettings()));
+        }
+        /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+        public static IEnumerable<(NuGetSourcesListSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesList(MultiplexConfigure<NuGetSourcesListSettings> configurator)
+        {
+            return configurator(new NuGetSourcesListSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: NuGetSourcesList(x)))
                 .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
         }
     }
@@ -310,6 +430,222 @@ namespace Nuke.Common.Tools.NuGet
               .Add("-RequireConsent", RequireConsent)
               .Add("-SolutionDirectory {value}", SolutionDirectory)
               .Add("-Source {value}", Source, separator: ';')
+              .Add("-Verbosity {value}", Verbosity);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
+    #region NuGetSourcesAddSettings
+    /// <summary><p>Used within <see cref="NuGetTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class NuGetSourcesAddSettings : ToolSettings
+    {
+        /// <summary><p>Path to the NuGet executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
+        /// <summary><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>
+        public virtual string ConfigFile { get; internal set; }
+        /// <summary><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        public virtual bool? ForceEnglishOutput { get; internal set; }
+        /// <summary><p>Suppresses prompts for user input or confirmations.</p></summary>
+        public virtual bool? NonInteractive { get; internal set; }
+        /// <summary><p>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        public virtual NuGetVerbosity Verbosity { get; internal set; }
+        /// <summary><p>Name of the source.</p></summary>
+        public virtual string Name { get; internal set; }
+        /// <summary><p>URL of the source.</p></summary>
+        public virtual string Source { get; internal set; }
+        /// <summary><p>Specifies the password for authenticating with the source.</p></summary>
+        public virtual string Password { get; internal set; }
+        /// <summary><p>Indicates to store the password in unencrypted text instead of the default behavior of storing an encrypted form.</p></summary>
+        public virtual bool? StorePasswordInClearText { get; internal set; }
+        /// <summary><p>Specifies the user name for authenticating with the source.</p></summary>
+        public virtual string UserName { get; internal set; }
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("sources add")
+              .Add("-ConfigFile {value}", ConfigFile)
+              .Add("-ForceEnglishOutput", ForceEnglishOutput)
+              .Add("-NonInteractive", NonInteractive)
+              .Add("-Verbosity {value}", Verbosity)
+              .Add("-Name {value}", Name)
+              .Add("-Source {value}", Source)
+              .Add("-Password {value}", Password, secret: true)
+              .Add("-StorePasswordInClearText", StorePasswordInClearText)
+              .Add("-UserName {value}", UserName);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
+    #region NuGetSourcesUpdateSettings
+    /// <summary><p>Used within <see cref="NuGetTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class NuGetSourcesUpdateSettings : ToolSettings
+    {
+        /// <summary><p>Path to the NuGet executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
+        /// <summary><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>
+        public virtual string ConfigFile { get; internal set; }
+        /// <summary><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        public virtual bool? ForceEnglishOutput { get; internal set; }
+        /// <summary><p>Suppresses prompts for user input or confirmations.</p></summary>
+        public virtual bool? NonInteractive { get; internal set; }
+        /// <summary><p>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        public virtual NuGetVerbosity Verbosity { get; internal set; }
+        /// <summary><p>Name of the source.</p></summary>
+        public virtual string Name { get; internal set; }
+        /// <summary><p>URL of the source.</p></summary>
+        public virtual string Source { get; internal set; }
+        /// <summary><p>Specifies the password for authenticating with the source.</p></summary>
+        public virtual string Password { get; internal set; }
+        /// <summary><p>Indicates to store the password in unencrypted text instead of the default behavior of storing an encrypted form.</p></summary>
+        public virtual bool? StorePasswordInClearText { get; internal set; }
+        /// <summary><p>Specifies the user name for authenticating with the source.</p></summary>
+        public virtual string UserName { get; internal set; }
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("sources update")
+              .Add("-ConfigFile {value}", ConfigFile)
+              .Add("-ForceEnglishOutput", ForceEnglishOutput)
+              .Add("-NonInteractive", NonInteractive)
+              .Add("-Verbosity {value}", Verbosity)
+              .Add("-Name {value}", Name)
+              .Add("-Source {value}", Source)
+              .Add("-Password {value}", Password, secret: true)
+              .Add("-StorePasswordInClearText", StorePasswordInClearText)
+              .Add("-UserName {value}", UserName);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
+    #region NuGetSourcesRemoveSettings
+    /// <summary><p>Used within <see cref="NuGetTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class NuGetSourcesRemoveSettings : ToolSettings
+    {
+        /// <summary><p>Path to the NuGet executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
+        /// <summary><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>
+        public virtual string ConfigFile { get; internal set; }
+        /// <summary><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        public virtual bool? ForceEnglishOutput { get; internal set; }
+        /// <summary><p>Suppresses prompts for user input or confirmations.</p></summary>
+        public virtual bool? NonInteractive { get; internal set; }
+        /// <summary><p>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        public virtual NuGetVerbosity Verbosity { get; internal set; }
+        /// <summary><p>Name of the source.</p></summary>
+        public virtual string Name { get; internal set; }
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("sources remove")
+              .Add("-ConfigFile {value}", ConfigFile)
+              .Add("-ForceEnglishOutput", ForceEnglishOutput)
+              .Add("-NonInteractive", NonInteractive)
+              .Add("-Verbosity {value}", Verbosity)
+              .Add("-Name {value}", Name);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
+    #region NuGetSourcesEnableSettings
+    /// <summary><p>Used within <see cref="NuGetTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class NuGetSourcesEnableSettings : ToolSettings
+    {
+        /// <summary><p>Path to the NuGet executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
+        /// <summary><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>
+        public virtual string ConfigFile { get; internal set; }
+        /// <summary><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        public virtual bool? ForceEnglishOutput { get; internal set; }
+        /// <summary><p>Suppresses prompts for user input or confirmations.</p></summary>
+        public virtual bool? NonInteractive { get; internal set; }
+        /// <summary><p>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        public virtual NuGetVerbosity Verbosity { get; internal set; }
+        /// <summary><p>Name of the source.</p></summary>
+        public virtual string Name { get; internal set; }
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("sources enable")
+              .Add("-ConfigFile {value}", ConfigFile)
+              .Add("-ForceEnglishOutput", ForceEnglishOutput)
+              .Add("-NonInteractive", NonInteractive)
+              .Add("-Verbosity {value}", Verbosity)
+              .Add("-Name {value}", Name);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
+    #region NuGetSourcesDisableSettings
+    /// <summary><p>Used within <see cref="NuGetTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class NuGetSourcesDisableSettings : ToolSettings
+    {
+        /// <summary><p>Path to the NuGet executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
+        /// <summary><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>
+        public virtual string ConfigFile { get; internal set; }
+        /// <summary><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        public virtual bool? ForceEnglishOutput { get; internal set; }
+        /// <summary><p>Suppresses prompts for user input or confirmations.</p></summary>
+        public virtual bool? NonInteractive { get; internal set; }
+        /// <summary><p>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        public virtual NuGetVerbosity Verbosity { get; internal set; }
+        /// <summary><p>Name of the source.</p></summary>
+        public virtual string Name { get; internal set; }
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("sources disable")
+              .Add("-ConfigFile {value}", ConfigFile)
+              .Add("-ForceEnglishOutput", ForceEnglishOutput)
+              .Add("-NonInteractive", NonInteractive)
+              .Add("-Verbosity {value}", Verbosity)
+              .Add("-Name {value}", Name);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
+    #region NuGetSourcesListSettings
+    /// <summary><p>Used within <see cref="NuGetTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class NuGetSourcesListSettings : ToolSettings
+    {
+        /// <summary><p>Path to the NuGet executable.</p></summary>
+        public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
+        /// <summary><p>Can be <c>Detailed</c> (the default) or <c>Short</c>.</p></summary>
+        public virtual NuGetSourcesListFormat Format { get; internal set; }
+        /// <summary><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>
+        public virtual string ConfigFile { get; internal set; }
+        /// <summary><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        public virtual bool? ForceEnglishOutput { get; internal set; }
+        /// <summary><p>Suppresses prompts for user input or confirmations.</p></summary>
+        public virtual bool? NonInteractive { get; internal set; }
+        /// <summary><p>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        public virtual NuGetVerbosity Verbosity { get; internal set; }
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("sources list")
+              .Add("-Format {value}", Format)
+              .Add("-ConfigFile {value}", ConfigFile)
+              .Add("-ForceEnglishOutput", ForceEnglishOutput)
+              .Add("-NonInteractive", NonInteractive)
               .Add("-Verbosity {value}", Verbosity);
             return base.ConfigureArguments(arguments);
         }
@@ -1905,6 +2241,1074 @@ namespace Nuke.Common.Tools.NuGet
         #endregion
     }
     #endregion
+    #region NuGetSourcesAddSettingsExtensions
+    /// <summary><p>Used within <see cref="NuGetTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class NuGetSourcesAddSettingsExtensions
+    {
+        #region ConfigFile
+        /// <summary><p><em>Sets <see cref="NuGetSourcesAddSettings.ConfigFile"/>.</em></p><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings SetConfigFile(this NuGetSourcesAddSettings toolSettings, string configFile)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = configFile;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesAddSettings.ConfigFile"/>.</em></p><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings ResetConfigFile(this NuGetSourcesAddSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ForceEnglishOutput
+        /// <summary><p><em>Sets <see cref="NuGetSourcesAddSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings SetForceEnglishOutput(this NuGetSourcesAddSettings toolSettings, bool? forceEnglishOutput)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = forceEnglishOutput;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesAddSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings ResetForceEnglishOutput(this NuGetSourcesAddSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NuGetSourcesAddSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings EnableForceEnglishOutput(this NuGetSourcesAddSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NuGetSourcesAddSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings DisableForceEnglishOutput(this NuGetSourcesAddSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NuGetSourcesAddSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings ToggleForceEnglishOutput(this NuGetSourcesAddSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = !toolSettings.ForceEnglishOutput;
+            return toolSettings;
+        }
+        #endregion
+        #region NonInteractive
+        /// <summary><p><em>Sets <see cref="NuGetSourcesAddSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings SetNonInteractive(this NuGetSourcesAddSettings toolSettings, bool? nonInteractive)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = nonInteractive;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesAddSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings ResetNonInteractive(this NuGetSourcesAddSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NuGetSourcesAddSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings EnableNonInteractive(this NuGetSourcesAddSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NuGetSourcesAddSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings DisableNonInteractive(this NuGetSourcesAddSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NuGetSourcesAddSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings ToggleNonInteractive(this NuGetSourcesAddSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = !toolSettings.NonInteractive;
+            return toolSettings;
+        }
+        #endregion
+        #region Verbosity
+        /// <summary><p><em>Sets <see cref="NuGetSourcesAddSettings.Verbosity"/>.</em></p><p>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings SetVerbosity(this NuGetSourcesAddSettings toolSettings, NuGetVerbosity verbosity)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = verbosity;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesAddSettings.Verbosity"/>.</em></p><p>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings ResetVerbosity(this NuGetSourcesAddSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Name
+        /// <summary><p><em>Sets <see cref="NuGetSourcesAddSettings.Name"/>.</em></p><p>Name of the source.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings SetName(this NuGetSourcesAddSettings toolSettings, string name)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Name = name;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesAddSettings.Name"/>.</em></p><p>Name of the source.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings ResetName(this NuGetSourcesAddSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Name = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Source
+        /// <summary><p><em>Sets <see cref="NuGetSourcesAddSettings.Source"/>.</em></p><p>URL of the source.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings SetSource(this NuGetSourcesAddSettings toolSettings, string source)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Source = source;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesAddSettings.Source"/>.</em></p><p>URL of the source.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings ResetSource(this NuGetSourcesAddSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Source = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Password
+        /// <summary><p><em>Sets <see cref="NuGetSourcesAddSettings.Password"/>.</em></p><p>Specifies the password for authenticating with the source.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings SetPassword(this NuGetSourcesAddSettings toolSettings, string password)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Password = password;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesAddSettings.Password"/>.</em></p><p>Specifies the password for authenticating with the source.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings ResetPassword(this NuGetSourcesAddSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Password = null;
+            return toolSettings;
+        }
+        #endregion
+        #region StorePasswordInClearText
+        /// <summary><p><em>Sets <see cref="NuGetSourcesAddSettings.StorePasswordInClearText"/>.</em></p><p>Indicates to store the password in unencrypted text instead of the default behavior of storing an encrypted form.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings SetStorePasswordInClearText(this NuGetSourcesAddSettings toolSettings, bool? storePasswordInClearText)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.StorePasswordInClearText = storePasswordInClearText;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesAddSettings.StorePasswordInClearText"/>.</em></p><p>Indicates to store the password in unencrypted text instead of the default behavior of storing an encrypted form.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings ResetStorePasswordInClearText(this NuGetSourcesAddSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.StorePasswordInClearText = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NuGetSourcesAddSettings.StorePasswordInClearText"/>.</em></p><p>Indicates to store the password in unencrypted text instead of the default behavior of storing an encrypted form.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings EnableStorePasswordInClearText(this NuGetSourcesAddSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.StorePasswordInClearText = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NuGetSourcesAddSettings.StorePasswordInClearText"/>.</em></p><p>Indicates to store the password in unencrypted text instead of the default behavior of storing an encrypted form.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings DisableStorePasswordInClearText(this NuGetSourcesAddSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.StorePasswordInClearText = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NuGetSourcesAddSettings.StorePasswordInClearText"/>.</em></p><p>Indicates to store the password in unencrypted text instead of the default behavior of storing an encrypted form.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings ToggleStorePasswordInClearText(this NuGetSourcesAddSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.StorePasswordInClearText = !toolSettings.StorePasswordInClearText;
+            return toolSettings;
+        }
+        #endregion
+        #region UserName
+        /// <summary><p><em>Sets <see cref="NuGetSourcesAddSettings.UserName"/>.</em></p><p>Specifies the user name for authenticating with the source.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings SetUserName(this NuGetSourcesAddSettings toolSettings, string userName)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UserName = userName;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesAddSettings.UserName"/>.</em></p><p>Specifies the user name for authenticating with the source.</p></summary>
+        [Pure]
+        public static NuGetSourcesAddSettings ResetUserName(this NuGetSourcesAddSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UserName = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region NuGetSourcesUpdateSettingsExtensions
+    /// <summary><p>Used within <see cref="NuGetTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class NuGetSourcesUpdateSettingsExtensions
+    {
+        #region ConfigFile
+        /// <summary><p><em>Sets <see cref="NuGetSourcesUpdateSettings.ConfigFile"/>.</em></p><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings SetConfigFile(this NuGetSourcesUpdateSettings toolSettings, string configFile)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = configFile;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesUpdateSettings.ConfigFile"/>.</em></p><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings ResetConfigFile(this NuGetSourcesUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ForceEnglishOutput
+        /// <summary><p><em>Sets <see cref="NuGetSourcesUpdateSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings SetForceEnglishOutput(this NuGetSourcesUpdateSettings toolSettings, bool? forceEnglishOutput)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = forceEnglishOutput;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesUpdateSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings ResetForceEnglishOutput(this NuGetSourcesUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NuGetSourcesUpdateSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings EnableForceEnglishOutput(this NuGetSourcesUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NuGetSourcesUpdateSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings DisableForceEnglishOutput(this NuGetSourcesUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NuGetSourcesUpdateSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings ToggleForceEnglishOutput(this NuGetSourcesUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = !toolSettings.ForceEnglishOutput;
+            return toolSettings;
+        }
+        #endregion
+        #region NonInteractive
+        /// <summary><p><em>Sets <see cref="NuGetSourcesUpdateSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings SetNonInteractive(this NuGetSourcesUpdateSettings toolSettings, bool? nonInteractive)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = nonInteractive;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesUpdateSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings ResetNonInteractive(this NuGetSourcesUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NuGetSourcesUpdateSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings EnableNonInteractive(this NuGetSourcesUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NuGetSourcesUpdateSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings DisableNonInteractive(this NuGetSourcesUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NuGetSourcesUpdateSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings ToggleNonInteractive(this NuGetSourcesUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = !toolSettings.NonInteractive;
+            return toolSettings;
+        }
+        #endregion
+        #region Verbosity
+        /// <summary><p><em>Sets <see cref="NuGetSourcesUpdateSettings.Verbosity"/>.</em></p><p>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings SetVerbosity(this NuGetSourcesUpdateSettings toolSettings, NuGetVerbosity verbosity)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = verbosity;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesUpdateSettings.Verbosity"/>.</em></p><p>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings ResetVerbosity(this NuGetSourcesUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Name
+        /// <summary><p><em>Sets <see cref="NuGetSourcesUpdateSettings.Name"/>.</em></p><p>Name of the source.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings SetName(this NuGetSourcesUpdateSettings toolSettings, string name)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Name = name;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesUpdateSettings.Name"/>.</em></p><p>Name of the source.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings ResetName(this NuGetSourcesUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Name = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Source
+        /// <summary><p><em>Sets <see cref="NuGetSourcesUpdateSettings.Source"/>.</em></p><p>URL of the source.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings SetSource(this NuGetSourcesUpdateSettings toolSettings, string source)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Source = source;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesUpdateSettings.Source"/>.</em></p><p>URL of the source.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings ResetSource(this NuGetSourcesUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Source = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Password
+        /// <summary><p><em>Sets <see cref="NuGetSourcesUpdateSettings.Password"/>.</em></p><p>Specifies the password for authenticating with the source.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings SetPassword(this NuGetSourcesUpdateSettings toolSettings, string password)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Password = password;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesUpdateSettings.Password"/>.</em></p><p>Specifies the password for authenticating with the source.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings ResetPassword(this NuGetSourcesUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Password = null;
+            return toolSettings;
+        }
+        #endregion
+        #region StorePasswordInClearText
+        /// <summary><p><em>Sets <see cref="NuGetSourcesUpdateSettings.StorePasswordInClearText"/>.</em></p><p>Indicates to store the password in unencrypted text instead of the default behavior of storing an encrypted form.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings SetStorePasswordInClearText(this NuGetSourcesUpdateSettings toolSettings, bool? storePasswordInClearText)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.StorePasswordInClearText = storePasswordInClearText;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesUpdateSettings.StorePasswordInClearText"/>.</em></p><p>Indicates to store the password in unencrypted text instead of the default behavior of storing an encrypted form.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings ResetStorePasswordInClearText(this NuGetSourcesUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.StorePasswordInClearText = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NuGetSourcesUpdateSettings.StorePasswordInClearText"/>.</em></p><p>Indicates to store the password in unencrypted text instead of the default behavior of storing an encrypted form.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings EnableStorePasswordInClearText(this NuGetSourcesUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.StorePasswordInClearText = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NuGetSourcesUpdateSettings.StorePasswordInClearText"/>.</em></p><p>Indicates to store the password in unencrypted text instead of the default behavior of storing an encrypted form.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings DisableStorePasswordInClearText(this NuGetSourcesUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.StorePasswordInClearText = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NuGetSourcesUpdateSettings.StorePasswordInClearText"/>.</em></p><p>Indicates to store the password in unencrypted text instead of the default behavior of storing an encrypted form.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings ToggleStorePasswordInClearText(this NuGetSourcesUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.StorePasswordInClearText = !toolSettings.StorePasswordInClearText;
+            return toolSettings;
+        }
+        #endregion
+        #region UserName
+        /// <summary><p><em>Sets <see cref="NuGetSourcesUpdateSettings.UserName"/>.</em></p><p>Specifies the user name for authenticating with the source.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings SetUserName(this NuGetSourcesUpdateSettings toolSettings, string userName)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UserName = userName;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesUpdateSettings.UserName"/>.</em></p><p>Specifies the user name for authenticating with the source.</p></summary>
+        [Pure]
+        public static NuGetSourcesUpdateSettings ResetUserName(this NuGetSourcesUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.UserName = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region NuGetSourcesRemoveSettingsExtensions
+    /// <summary><p>Used within <see cref="NuGetTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class NuGetSourcesRemoveSettingsExtensions
+    {
+        #region ConfigFile
+        /// <summary><p><em>Sets <see cref="NuGetSourcesRemoveSettings.ConfigFile"/>.</em></p><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>
+        [Pure]
+        public static NuGetSourcesRemoveSettings SetConfigFile(this NuGetSourcesRemoveSettings toolSettings, string configFile)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = configFile;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesRemoveSettings.ConfigFile"/>.</em></p><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>
+        [Pure]
+        public static NuGetSourcesRemoveSettings ResetConfigFile(this NuGetSourcesRemoveSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ForceEnglishOutput
+        /// <summary><p><em>Sets <see cref="NuGetSourcesRemoveSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesRemoveSettings SetForceEnglishOutput(this NuGetSourcesRemoveSettings toolSettings, bool? forceEnglishOutput)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = forceEnglishOutput;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesRemoveSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesRemoveSettings ResetForceEnglishOutput(this NuGetSourcesRemoveSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NuGetSourcesRemoveSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesRemoveSettings EnableForceEnglishOutput(this NuGetSourcesRemoveSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NuGetSourcesRemoveSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesRemoveSettings DisableForceEnglishOutput(this NuGetSourcesRemoveSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NuGetSourcesRemoveSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesRemoveSettings ToggleForceEnglishOutput(this NuGetSourcesRemoveSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = !toolSettings.ForceEnglishOutput;
+            return toolSettings;
+        }
+        #endregion
+        #region NonInteractive
+        /// <summary><p><em>Sets <see cref="NuGetSourcesRemoveSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesRemoveSettings SetNonInteractive(this NuGetSourcesRemoveSettings toolSettings, bool? nonInteractive)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = nonInteractive;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesRemoveSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesRemoveSettings ResetNonInteractive(this NuGetSourcesRemoveSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NuGetSourcesRemoveSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesRemoveSettings EnableNonInteractive(this NuGetSourcesRemoveSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NuGetSourcesRemoveSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesRemoveSettings DisableNonInteractive(this NuGetSourcesRemoveSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NuGetSourcesRemoveSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesRemoveSettings ToggleNonInteractive(this NuGetSourcesRemoveSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = !toolSettings.NonInteractive;
+            return toolSettings;
+        }
+        #endregion
+        #region Verbosity
+        /// <summary><p><em>Sets <see cref="NuGetSourcesRemoveSettings.Verbosity"/>.</em></p><p>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        [Pure]
+        public static NuGetSourcesRemoveSettings SetVerbosity(this NuGetSourcesRemoveSettings toolSettings, NuGetVerbosity verbosity)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = verbosity;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesRemoveSettings.Verbosity"/>.</em></p><p>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        [Pure]
+        public static NuGetSourcesRemoveSettings ResetVerbosity(this NuGetSourcesRemoveSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Name
+        /// <summary><p><em>Sets <see cref="NuGetSourcesRemoveSettings.Name"/>.</em></p><p>Name of the source.</p></summary>
+        [Pure]
+        public static NuGetSourcesRemoveSettings SetName(this NuGetSourcesRemoveSettings toolSettings, string name)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Name = name;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesRemoveSettings.Name"/>.</em></p><p>Name of the source.</p></summary>
+        [Pure]
+        public static NuGetSourcesRemoveSettings ResetName(this NuGetSourcesRemoveSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Name = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region NuGetSourcesEnableSettingsExtensions
+    /// <summary><p>Used within <see cref="NuGetTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class NuGetSourcesEnableSettingsExtensions
+    {
+        #region ConfigFile
+        /// <summary><p><em>Sets <see cref="NuGetSourcesEnableSettings.ConfigFile"/>.</em></p><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>
+        [Pure]
+        public static NuGetSourcesEnableSettings SetConfigFile(this NuGetSourcesEnableSettings toolSettings, string configFile)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = configFile;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesEnableSettings.ConfigFile"/>.</em></p><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>
+        [Pure]
+        public static NuGetSourcesEnableSettings ResetConfigFile(this NuGetSourcesEnableSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ForceEnglishOutput
+        /// <summary><p><em>Sets <see cref="NuGetSourcesEnableSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesEnableSettings SetForceEnglishOutput(this NuGetSourcesEnableSettings toolSettings, bool? forceEnglishOutput)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = forceEnglishOutput;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesEnableSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesEnableSettings ResetForceEnglishOutput(this NuGetSourcesEnableSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NuGetSourcesEnableSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesEnableSettings EnableForceEnglishOutput(this NuGetSourcesEnableSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NuGetSourcesEnableSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesEnableSettings DisableForceEnglishOutput(this NuGetSourcesEnableSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NuGetSourcesEnableSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesEnableSettings ToggleForceEnglishOutput(this NuGetSourcesEnableSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = !toolSettings.ForceEnglishOutput;
+            return toolSettings;
+        }
+        #endregion
+        #region NonInteractive
+        /// <summary><p><em>Sets <see cref="NuGetSourcesEnableSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesEnableSettings SetNonInteractive(this NuGetSourcesEnableSettings toolSettings, bool? nonInteractive)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = nonInteractive;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesEnableSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesEnableSettings ResetNonInteractive(this NuGetSourcesEnableSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NuGetSourcesEnableSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesEnableSettings EnableNonInteractive(this NuGetSourcesEnableSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NuGetSourcesEnableSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesEnableSettings DisableNonInteractive(this NuGetSourcesEnableSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NuGetSourcesEnableSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesEnableSettings ToggleNonInteractive(this NuGetSourcesEnableSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = !toolSettings.NonInteractive;
+            return toolSettings;
+        }
+        #endregion
+        #region Verbosity
+        /// <summary><p><em>Sets <see cref="NuGetSourcesEnableSettings.Verbosity"/>.</em></p><p>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        [Pure]
+        public static NuGetSourcesEnableSettings SetVerbosity(this NuGetSourcesEnableSettings toolSettings, NuGetVerbosity verbosity)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = verbosity;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesEnableSettings.Verbosity"/>.</em></p><p>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        [Pure]
+        public static NuGetSourcesEnableSettings ResetVerbosity(this NuGetSourcesEnableSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Name
+        /// <summary><p><em>Sets <see cref="NuGetSourcesEnableSettings.Name"/>.</em></p><p>Name of the source.</p></summary>
+        [Pure]
+        public static NuGetSourcesEnableSettings SetName(this NuGetSourcesEnableSettings toolSettings, string name)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Name = name;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesEnableSettings.Name"/>.</em></p><p>Name of the source.</p></summary>
+        [Pure]
+        public static NuGetSourcesEnableSettings ResetName(this NuGetSourcesEnableSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Name = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region NuGetSourcesDisableSettingsExtensions
+    /// <summary><p>Used within <see cref="NuGetTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class NuGetSourcesDisableSettingsExtensions
+    {
+        #region ConfigFile
+        /// <summary><p><em>Sets <see cref="NuGetSourcesDisableSettings.ConfigFile"/>.</em></p><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>
+        [Pure]
+        public static NuGetSourcesDisableSettings SetConfigFile(this NuGetSourcesDisableSettings toolSettings, string configFile)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = configFile;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesDisableSettings.ConfigFile"/>.</em></p><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>
+        [Pure]
+        public static NuGetSourcesDisableSettings ResetConfigFile(this NuGetSourcesDisableSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ForceEnglishOutput
+        /// <summary><p><em>Sets <see cref="NuGetSourcesDisableSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesDisableSettings SetForceEnglishOutput(this NuGetSourcesDisableSettings toolSettings, bool? forceEnglishOutput)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = forceEnglishOutput;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesDisableSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesDisableSettings ResetForceEnglishOutput(this NuGetSourcesDisableSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NuGetSourcesDisableSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesDisableSettings EnableForceEnglishOutput(this NuGetSourcesDisableSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NuGetSourcesDisableSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesDisableSettings DisableForceEnglishOutput(this NuGetSourcesDisableSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NuGetSourcesDisableSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesDisableSettings ToggleForceEnglishOutput(this NuGetSourcesDisableSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = !toolSettings.ForceEnglishOutput;
+            return toolSettings;
+        }
+        #endregion
+        #region NonInteractive
+        /// <summary><p><em>Sets <see cref="NuGetSourcesDisableSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesDisableSettings SetNonInteractive(this NuGetSourcesDisableSettings toolSettings, bool? nonInteractive)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = nonInteractive;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesDisableSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesDisableSettings ResetNonInteractive(this NuGetSourcesDisableSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NuGetSourcesDisableSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesDisableSettings EnableNonInteractive(this NuGetSourcesDisableSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NuGetSourcesDisableSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesDisableSettings DisableNonInteractive(this NuGetSourcesDisableSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NuGetSourcesDisableSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesDisableSettings ToggleNonInteractive(this NuGetSourcesDisableSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = !toolSettings.NonInteractive;
+            return toolSettings;
+        }
+        #endregion
+        #region Verbosity
+        /// <summary><p><em>Sets <see cref="NuGetSourcesDisableSettings.Verbosity"/>.</em></p><p>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        [Pure]
+        public static NuGetSourcesDisableSettings SetVerbosity(this NuGetSourcesDisableSettings toolSettings, NuGetVerbosity verbosity)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = verbosity;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesDisableSettings.Verbosity"/>.</em></p><p>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        [Pure]
+        public static NuGetSourcesDisableSettings ResetVerbosity(this NuGetSourcesDisableSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Name
+        /// <summary><p><em>Sets <see cref="NuGetSourcesDisableSettings.Name"/>.</em></p><p>Name of the source.</p></summary>
+        [Pure]
+        public static NuGetSourcesDisableSettings SetName(this NuGetSourcesDisableSettings toolSettings, string name)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Name = name;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesDisableSettings.Name"/>.</em></p><p>Name of the source.</p></summary>
+        [Pure]
+        public static NuGetSourcesDisableSettings ResetName(this NuGetSourcesDisableSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Name = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region NuGetSourcesListSettingsExtensions
+    /// <summary><p>Used within <see cref="NuGetTasks"/>.</p></summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class NuGetSourcesListSettingsExtensions
+    {
+        #region Format
+        /// <summary><p><em>Sets <see cref="NuGetSourcesListSettings.Format"/>.</em></p><p>Can be <c>Detailed</c> (the default) or <c>Short</c>.</p></summary>
+        [Pure]
+        public static NuGetSourcesListSettings SetFormat(this NuGetSourcesListSettings toolSettings, NuGetSourcesListFormat format)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Format = format;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesListSettings.Format"/>.</em></p><p>Can be <c>Detailed</c> (the default) or <c>Short</c>.</p></summary>
+        [Pure]
+        public static NuGetSourcesListSettings ResetFormat(this NuGetSourcesListSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Format = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ConfigFile
+        /// <summary><p><em>Sets <see cref="NuGetSourcesListSettings.ConfigFile"/>.</em></p><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>
+        [Pure]
+        public static NuGetSourcesListSettings SetConfigFile(this NuGetSourcesListSettings toolSettings, string configFile)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = configFile;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesListSettings.ConfigFile"/>.</em></p><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>
+        [Pure]
+        public static NuGetSourcesListSettings ResetConfigFile(this NuGetSourcesListSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ForceEnglishOutput
+        /// <summary><p><em>Sets <see cref="NuGetSourcesListSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesListSettings SetForceEnglishOutput(this NuGetSourcesListSettings toolSettings, bool? forceEnglishOutput)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = forceEnglishOutput;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesListSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesListSettings ResetForceEnglishOutput(this NuGetSourcesListSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NuGetSourcesListSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesListSettings EnableForceEnglishOutput(this NuGetSourcesListSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NuGetSourcesListSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesListSettings DisableForceEnglishOutput(this NuGetSourcesListSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NuGetSourcesListSettings.ForceEnglishOutput"/>.</em></p><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
+        [Pure]
+        public static NuGetSourcesListSettings ToggleForceEnglishOutput(this NuGetSourcesListSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ForceEnglishOutput = !toolSettings.ForceEnglishOutput;
+            return toolSettings;
+        }
+        #endregion
+        #region NonInteractive
+        /// <summary><p><em>Sets <see cref="NuGetSourcesListSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesListSettings SetNonInteractive(this NuGetSourcesListSettings toolSettings, bool? nonInteractive)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = nonInteractive;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesListSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesListSettings ResetNonInteractive(this NuGetSourcesListSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = null;
+            return toolSettings;
+        }
+        /// <summary><p><em>Enables <see cref="NuGetSourcesListSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesListSettings EnableNonInteractive(this NuGetSourcesListSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = true;
+            return toolSettings;
+        }
+        /// <summary><p><em>Disables <see cref="NuGetSourcesListSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesListSettings DisableNonInteractive(this NuGetSourcesListSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = false;
+            return toolSettings;
+        }
+        /// <summary><p><em>Toggles <see cref="NuGetSourcesListSettings.NonInteractive"/>.</em></p><p>Suppresses prompts for user input or confirmations.</p></summary>
+        [Pure]
+        public static NuGetSourcesListSettings ToggleNonInteractive(this NuGetSourcesListSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NonInteractive = !toolSettings.NonInteractive;
+            return toolSettings;
+        }
+        #endregion
+        #region Verbosity
+        /// <summary><p><em>Sets <see cref="NuGetSourcesListSettings.Verbosity"/>.</em></p><p>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        [Pure]
+        public static NuGetSourcesListSettings SetVerbosity(this NuGetSourcesListSettings toolSettings, NuGetVerbosity verbosity)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = verbosity;
+            return toolSettings;
+        }
+        /// <summary><p><em>Resets <see cref="NuGetSourcesListSettings.Verbosity"/>.</em></p><p>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</p></summary>
+        [Pure]
+        public static NuGetSourcesListSettings ResetVerbosity(this NuGetSourcesListSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
     #region NuGetVerbosity
     /// <summary><p>Used within <see cref="NuGetTasks"/>.</p></summary>
     [PublicAPI]
@@ -1953,6 +3357,18 @@ namespace Nuke.Common.Tools.NuGet
     {
         public static NuGetSymbolPackageFormat symbols_nupkg = new NuGetSymbolPackageFormat { Value = "symbols.nupkg" };
         public static NuGetSymbolPackageFormat snupkg = new NuGetSymbolPackageFormat { Value = "snupkg" };
+    }
+    #endregion
+    #region NuGetSourcesListFormat
+    /// <summary><p>Used within <see cref="NuGetTasks"/>.</p></summary>
+    [PublicAPI]
+    [Serializable]
+    [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<NuGetSourcesListFormat>))]
+    public partial class NuGetSourcesListFormat : Enumeration
+    {
+        public static NuGetSourcesListFormat Detailed = new NuGetSourcesListFormat { Value = "Detailed" };
+        public static NuGetSourcesListFormat Short = new NuGetSourcesListFormat { Value = "Short" };
     }
     #endregion
 }

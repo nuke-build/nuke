@@ -1,9 +1,10 @@
 {
-  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "$schema": "https://raw.githubusercontent.com/nuke-build/common/master/source/Nuke.CodeGeneration/schema.json",
   "references": [
     "https://raw.githubusercontent.com/NuGet/docs.microsoft.com-nuget/live/docs/tools/cli-ref-pack.md",
     "https://raw.githubusercontent.com/NuGet/docs.microsoft.com-nuget/live/docs/tools/cli-ref-push.md",
-    "https://raw.githubusercontent.com/NuGet/docs.microsoft.com-nuget/live/docs/tools/cli-ref-restore.md"
+    "https://raw.githubusercontent.com/NuGet/docs.microsoft.com-nuget/live/docs/tools/cli-ref-restore.md",
+    "https://raw.githubusercontent.com/NuGet/docs.microsoft.com-nuget/live/docs/tools/cli-ref-sources.md"
   ],
   "name": "NuGet",
   "officialUrl": "https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference",
@@ -360,8 +361,136 @@
           }
         ]
       }
+    },
+    {
+      "postfix": "SourcesAdd",
+      "commonPropertySets": [
+        "sources",
+        "sources_single",
+        "sources_add_update"
+      ],
+      "definiteArgument": "sources add",
+      "settingsClass": {}
+    },
+    {
+      "postfix": "SourcesUpdate",
+      "commonPropertySets": [
+        "sources",
+        "sources_single",
+        "sources_add_update"
+      ],
+      "definiteArgument": "sources update",
+      "settingsClass": {}
+    },
+    {
+      "postfix": "SourcesRemove",
+      "commonPropertySets": [
+        "sources",
+        "sources_single"
+      ],
+      "definiteArgument": "sources remove",
+      "settingsClass": {}
+    },
+    {
+      "postfix": "SourcesEnable",
+      "commonPropertySets": [
+        "sources",
+        "sources_single"
+      ],
+      "definiteArgument": "sources enable",
+      "settingsClass": {}
+    },
+    {
+      "postfix": "SourcesDisable",
+      "commonPropertySets": [
+        "sources",
+        "sources_single"
+      ],
+      "definiteArgument": "sources disable",
+      "settingsClass": {}
+    },
+    {
+      "postfix": "SourcesList",
+      "commonPropertySets": [
+        "sources"
+      ],
+      "definiteArgument": "sources list",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Format",
+            "type": "NuGetSourcesListFormat",
+            "format": "-Format {value}",
+            "help": "Can be <c>Detailed</c> (the default) or <c>Short</c>."
+          }
+        ]
+      }
     }
   ],
+  "commonTaskPropertySets": {
+    "sources": [
+      {
+        "name": "ConfigFile",
+        "type": "string",
+        "format": "-ConfigFile {value}",
+        "help": "The NuGet configuration file to apply. If not specified, <c>%AppData%\\NuGet\\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used."
+      },
+      {
+        "name": "ForceEnglishOutput",
+        "type": "bool",
+        "format": "-ForceEnglishOutput",
+        "help": "<em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture."
+      },
+      {
+        "name": "NonInteractive",
+        "type": "bool",
+        "format": "-NonInteractive",
+        "help": "Suppresses prompts for user input or confirmations."
+      },
+      {
+        "name": "Verbosity",
+        "type": "NuGetVerbosity",
+        "format": "-Verbosity {value}",
+        "help": "Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>."
+      }
+    ],
+    "sources_single": [
+      {
+        "name": "Name",
+        "type": "string",
+        "format": "-Name {value}",
+        "help": "Name of the source."
+      }
+    ],
+    "sources_add_update": [
+      {
+        "name": "Source",
+        "type": "string",
+        "format": "-Source {value}",
+        "help": "URL of the source."
+      },
+      {
+        "name": "Password",
+        "type": "string",
+        "format": "-Password {value}",
+        "secret": true,
+        "help": "Specifies the password for authenticating with the source."
+      },
+      {
+        "name": "StorePasswordInClearText",
+        "type": "bool",
+        "format": "-StorePasswordInClearText",
+        "secret": false,
+        "help": "Indicates to store the password in unencrypted text instead of the default behavior of storing an encrypted form."
+      },
+      {
+        "name": "UserName",
+        "type": "string",
+        "format": "-UserName {value}",
+        "help": "Specifies the user name for authenticating with the source."
+      }
+    ]
+  },
   "enumerations": [
     {
       "name": "NuGetVerbosity",
@@ -391,6 +520,13 @@
       "values": [
         "symbols.nupkg",
         "snupkg"
+      ]
+    },
+    {
+      "name": "NuGetSourcesListFormat",
+      "values": [
+        "Detailed",
+        "Short"
       ]
     }
   ]
