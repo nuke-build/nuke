@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Changed `graph` parameter to `plan`
+- Added `DependentFor`, `Triggers` and `TriggeredBy` for target declarations
+- Added `ToolSettings.CombineWith` for combinatorial invocations
+- Added highlighting of execution plans in HTML representation
+- Added process cancellation handler to always show summary
+- Added `NuGetTasks` to add, remove, update, enable, disable and list sources
+- Added `TravisOutputSink`
+- Fixed `GitRepository.IsOnDevelopBranch` to recognize `develop` and `development`
+- Fixed shell-completion for PowerShell
 
 ## [0.14.1] / 2018-12-31
 - Fixed package reference versions
