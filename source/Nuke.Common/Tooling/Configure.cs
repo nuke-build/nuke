@@ -10,7 +10,7 @@ using JetBrains.Annotations;
 namespace Nuke.Common.Tooling
 {
     public delegate T Configure<T>(T settings);
-    public delegate IEnumerable<T> MultiplexConfigure<T>(T settings);
+    public delegate IEnumerable<T> CombinatorialConfigure<T>(T settings);
 
     public static class ConfigureExtensions
     {

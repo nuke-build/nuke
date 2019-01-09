@@ -32,7 +32,7 @@ namespace Nuke.CodeGeneration.Generators
                     tool.Tasks.ForEach(x => new TaskWriter(x, toolWriter)
                         .WriteToolSettingsTask()
                         .WriteConfiguratorTask()
-                        .WriteMultiplexConfiguratorTask());
+                        .WriteCombinatorialConfiguratorTask());
                 });
         }
 
@@ -106,7 +106,7 @@ namespace Nuke.CodeGeneration.Generators
                     .WriteLine($"return {task.GetTaskMethodName()}(configurator(new {task.SettingsClass.Name}()));"));
         }
         
-        private static TaskWriter WriteMultiplexConfiguratorTask(this TaskWriter writer)
+        private static TaskWriter WriteCombinatorialConfiguratorTask(this TaskWriter writer)
         {
             var task = writer.Task;
             var returnType = !task.HasReturnValue()
@@ -119,7 +119,7 @@ namespace Nuke.CodeGeneration.Generators
             return writer
                 .WriteSummary(task)
                 .WriteObsoleteAttributeWhenObsolete(task)
-                .WriteLine($"public static {returnType} {task.GetTaskMethodName()}(MultiplexConfigure<{task.SettingsClass.Name}> configurator)")
+                .WriteLine($"public static {returnType} {task.GetTaskMethodName()}(CombinatorialConfigure<{task.SettingsClass.Name}> configurator)")
                 .WriteBlock(w => w
                     .WriteLine($"return configurator(new {task.SettingsClass.Name}())")
                     .WriteLine($"    .Select(x => (ToolSettings: x, ReturnValue: {task.GetTaskMethodName()}(x)))")

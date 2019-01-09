@@ -93,7 +93,7 @@ partial class Build : NukeBuild
                 .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())
                 .SetFileVersion(GitVersion.GetNormalizedFileVersion())
                 .SetInformationalVersion(GitVersion.InformationalVersion)
-                .Multiplex(
+                .CombineWith(
                     ss => ss
                         .SetProject(GlobalToolProject),
                     ss => ss
