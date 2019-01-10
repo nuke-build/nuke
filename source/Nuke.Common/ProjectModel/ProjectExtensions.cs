@@ -16,25 +16,25 @@ namespace Nuke.Common.ProjectModel
     [PublicAPI]
     public static class ProjectExtensions
     {
-        private static void Initialize(string workingDirectory)
+        private static Lazy<string> s_msbuildPathResolver = new Lazy<string>(() =>
         {
             var dotnet = ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE") ??
                          ToolPathResolver.GetPathExecutable("dotnet");
-            var output = ProcessTasks.StartProcess(dotnet, "--info", workingDirectory, logOutput: false).AssertZeroExitCode().Output;
+            var output = ProcessTasks.StartProcess(dotnet, "--info", EnvironmentInfo.WorkingDirectory, logOutput: false).AssertZeroExitCode().Output;
             var basePath = (PathConstruction.AbsolutePath) output
                 .Select(x => x.Text.Trim())
                 .Single(x => x.StartsWith("Base Path:"))
                 .TrimStart("Base Path:").Trim();
 
-            EnvironmentInfo.SetVariable("MSBUILD_EXE_PATH", basePath / "MSBuild.dll");
-        }
+            return basePath / "MSBuild.dll";
+        });
 
         public static Microsoft.Build.Evaluation.Project GetMSBuildProject(
             this Project project,
             string configuration = null,
             string targetFramework = null)
         {
-            Initialize(project.Directory);
+            Environment.SetEnvironmentVariable("MSBUILD_EXE_PATH", s_msbuildPathResolver.Value);
 
             var projectCollection = new ProjectCollection();
             var msbuildProject = new Microsoft.Build.Evaluation.Project(
