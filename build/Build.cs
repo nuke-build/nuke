@@ -94,20 +94,11 @@ partial class Build : NukeBuild
                 .SetFileVersion(GitVersion.GetNormalizedFileVersion())
                 .SetInformationalVersion(GitVersion.InformationalVersion)
                 .CombineWith(
-                    ss => ss
-                        .SetProject(GlobalToolProject),
-                    ss => ss
-                        .SetProject(CommonProject)
-                        .SetFramework("netstandard2.0"),
-                    ss => ss
-                        .SetProject(CommonProject)
-                        .SetFramework("net461"),
-                    ss => ss
-                        .SetProject(CodeGenerationProject)
-                        .SetFramework("netstandard2.0"),
-                    ss => ss
-                        .SetProject(CodeGenerationProject)
-                        .SetFramework("net461")));
+                    from project in new[] { GlobalToolProject, CommonProject, CodeGenerationProject }
+                    from framework in project.GetMSBuildProject().GetTargetFrameworks()
+                    select new { project, framework }, (cs, v) => cs
+                        .SetProject(v.project)
+                        .SetFramework(v.framework)));
         });
 
     string ChangelogFile => RootDirectory / "CHANGELOG.md";
