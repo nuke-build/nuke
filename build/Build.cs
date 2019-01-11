@@ -76,7 +76,6 @@ partial class Build : NukeBuild
 
     Target Compile => _ => _
         .DependsOn(Restore)
-        .Requires(() => IsUnix || GitVersion != null)
         .Executes(() =>
         {
             DotNetBuild(s => s
