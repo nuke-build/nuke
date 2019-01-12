@@ -77,7 +77,7 @@ namespace Nuke.Common.IO
             directoryList.ForEach(DeleteDirectory);
         }
 
-        public static void DeleteDirectoryInternal(string directory)
+        private static void DeleteDirectoryInternal(string directory)
         {
             if (!Directory.Exists(directory))
                 return;
