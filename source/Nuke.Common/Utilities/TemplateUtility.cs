@@ -45,9 +45,9 @@ namespace Nuke.Common.Utilities
                 return null;
 
             return replacements.Aggregate(
-                line
-                    .Substring(startIndex: 0, commentIndex)
-                    .TrimEnd(),
+                commentIndex == -1
+                    ? line
+                    : line.Substring(startIndex: 0, commentIndex).TrimEnd(),
                 (t, r) => t.Replace(r.Key, r.Value));
         }
 
