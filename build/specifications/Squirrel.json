@@ -15,7 +15,6 @@
           {
             "name": "Install",
             "type": "string",
-            "assertion": "DirectoryOrNull",
             "format": "--install={value}",
             "help": "Install the app whose package is in the specified directory."
           },
@@ -46,7 +45,6 @@
           {
             "name": "Releasify",
             "type": "string",
-            "assertion": "File",
             "format": "--releasify={value}",
             "help": "Update or generate a releases directory with a given NuGet package."
           },
@@ -95,28 +93,24 @@
           {
             "name": "BootstrapperExecutable",
             "type": "string",
-            "assertion": "FileOrNull",
             "format": "--bootstrapperExe={value}",
             "help": "Path to the Setup.exe to use as a template."
           },
           {
             "name": "LoadingGif",
             "type": "string",
-            "assertion": "FileOrNull",
             "format": "--loadingGif={value}",
             "help": "Path to an animated GIF to be displayed during installation."
           },
           {
             "name": "Icon",
             "type": "string",
-            "assertion": "FileOrNull",
             "format": "--icon={value}",
             "help": "Path to an ICO file that will be used for icon shortcuts."
           },
           {
             "name": "SetupIcon",
             "type": "string",
-            "assertion": "FileOrNull",
             "format": "--setupIcon={value}",
             "help": "Path to an ICO file that will be used for the Setup executable's icon."
           },

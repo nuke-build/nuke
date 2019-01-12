@@ -80,17 +80,6 @@
           "description": "Name used when serializing to JSON.",
           "type": "string"
         },
-        "assertion": {
-          "description": "Automatic assertion.",
-          "type": "string",
-          "enum": [
-            "NotNull",
-            "File",
-            "Directory",
-            "FileOrNull",
-            "DirectoryOrNull"
-          ]
-        },
         "format": {
           "description": "Argument formatting for the property. '{value}' is replaced by the value of the property.",
           "type": "string"

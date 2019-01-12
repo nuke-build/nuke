@@ -18,7 +18,6 @@
           {
             "name": "ProjectKey",
             "type": "string",
-            "assertion": "NotNull",
             "format": "/k:{value}",
             "secret": false,
             "help": "Specifies the key of the analyzed project in SonarQube."

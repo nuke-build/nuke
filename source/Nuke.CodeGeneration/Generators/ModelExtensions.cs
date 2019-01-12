@@ -85,12 +85,6 @@ namespace Nuke.CodeGeneration.Generators
             return property.Type.StartsWith("bool");
         }
 
-        public static string GetNullabilityAttribute(this Property property)
-        {
-            var isOptional = property.Assertion.ToString().StartsWith("NullOr");
-            return isOptional ? "[CanBeNull] " : string.Empty;
-        }
-
         public static string GetClassName(this Tool tool)
         {
             return $"{tool.Name}Tasks";

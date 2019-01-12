@@ -42,11 +42,6 @@ namespace Nuke.CodeGeneration.Model
         [Description("Name used when serializing to JSON.")]
         public string Json { get; set; }
 
-        [EnumDataType(typeof(AssertionType))]
-        [Description("Automatic assertion.")]
-        [JsonConverter(typeof(StringEnumConverter))]
-        public AssertionType? Assertion { get; set; }
-
         [Description("Argument formatting for the property. '{value}' is replaced by the value of the property.")]
         public string Format { get; set; }
 

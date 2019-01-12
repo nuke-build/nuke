@@ -298,9 +298,7 @@ namespace Nuke.CodeGeneration.Generators
 
         private static DataClassWriter WriteMethod(this DataClassWriter writer, string name, Property property, string modification)
         {
-            return writer.WriteMethod(name,
-                $"{property.GetNullabilityAttribute()}{property.GetNullableType()} {property.Name.ToInstance().EscapeParameter()}",
-                modification);
+            return writer.WriteMethod(name, $"{property.GetNullableType()} {property.Name.ToInstance().EscapeParameter()}", modification);
         }
 
         private static DataClassWriter WriteMethod(

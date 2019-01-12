@@ -42,7 +42,6 @@ namespace Nuke.CodeGeneration.Generators
                     .WriteToolPath()
                     .WriteLogLevelParser()
                     .ForEach(dataClass.Properties, WritePropertyDeclaration)
-                    .WriteAssertValid()
                     .WriteConfigureArguments())
                 .WriteLine("#endregion");
         }
@@ -179,46 +178,9 @@ namespace Nuke.CodeGeneration.Generators
             return property.GetNullableType();
         }
 
-        private static DataClassWriter WriteAssertValid(this DataClassWriter writer)
-        {
-            var validatedProperties = writer.DataClass.Properties.Where(x => x.Assertion != null).ToList();
-            if (validatedProperties.Count == 0)
-                return writer;
-
-            return writer
-                .WriteLine("protected override void AssertValid()")
-                .WriteBlock(w => w
-                    .WriteLine("base.AssertValid();")
-                    .ForEach(
-                        validatedProperties.Select(GetAssertedProperty),
-                        assertedProperty =>
-                            w.WriteLine(
-                                $"ControlFlow.Assert({assertedProperty.assertion}, {AssertionWithValue(assertedProperty.assertion, assertedProperty.propertyName)});"))
-                );
-        }
-
         private static string AssertionWithValue(string assertion, string propertyName)
         {
             return $"{assertion} [{propertyName} = {{{propertyName}}}]".DoubleQuoteInterpolated();
-        }
-
-        private static (string assertion, string propertyName) GetAssertedProperty(Property property)
-        {
-            switch (property.Assertion)
-            {
-                case AssertionType.NotNull:
-                    return ($"{property.Name} != null", property.Name);
-                case AssertionType.File:
-                    return ($"File.Exists({property.Name})", property.Name);
-                case AssertionType.Directory:
-                    return ($"Directory.Exists({property.Name})", property.Name);
-                case AssertionType.FileOrNull:
-                    return ($"File.Exists({property.Name}) || {property.Name} == null", property.Name);
-                case AssertionType.DirectoryOrNull:
-                    return ($"Directory.Exists({property.Name}) || {property.Name} == null", property.Name);
-                default:
-                    throw new NotSupportedException(property.Assertion.ToString());
-            }
         }
 
         private static DataClassWriter WriteConfigureArguments(this DataClassWriter writer)

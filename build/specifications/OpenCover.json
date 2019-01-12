@@ -15,7 +15,6 @@
           {
             "name": "TargetPath",
             "type": "string",
-            "assertion": "File",
             "format": "-target:{value}",
             "help": "The name of the target application or service that will be started; this can also be a path to the target application."
           },
@@ -28,7 +27,6 @@
           {
             "name": "TargetDirectory",
             "type": "string",
-            "assertion": "DirectoryOrNull",
             "format": "-targetdir:{value}",
             "help": "The path to the target directory; if the target argument already contains a path then this argument can be used to provide an alternate path where PDB files may be found."
           },
