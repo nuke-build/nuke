@@ -778,11 +778,6 @@ namespace Nuke.Common.Tools.DotNet
         public virtual bool? NoSymbols { get; internal set; }
         /// <summary><p>Forces all logged output in English.</p></summary>
         public virtual bool? ForceEnglishOutput { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(TargetPath), $"File.Exists(TargetPath) [TargetPath = {TargetPath}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments

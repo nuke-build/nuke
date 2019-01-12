@@ -97,11 +97,6 @@ namespace Nuke.Common.Tools.MSBuild
         internal List<string> LoggersInternal { get; set; } = new List<string>();
         /// <summary><p>Disable the default console logger, and don't log events to the console.</p></summary>
         public virtual bool? NoConsoleLogger { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(TargetPath) || TargetPath == null, $"File.Exists(TargetPath) || TargetPath == null [TargetPath = {TargetPath}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments

@@ -70,13 +70,6 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         public virtual string TransformFilename { get; internal set; }
         /// <summary><p>The path to the output web.config file</p></summary>
         public virtual string OutputFilename { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(WebConfigFilename), $"File.Exists(WebConfigFilename) [WebConfigFilename = {WebConfigFilename}]");
-            ControlFlow.Assert(File.Exists(TransformFilename), $"File.Exists(TransformFilename) [TransformFilename = {TransformFilename}]");
-            ControlFlow.Assert(OutputFilename != null, $"OutputFilename != null [OutputFilename = {OutputFilename}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments

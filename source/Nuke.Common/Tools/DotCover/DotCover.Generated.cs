@@ -206,11 +206,6 @@ namespace Nuke.Common.Tools.DotCover
         internal List<string> ProcessFiltersInternal { get; set; } = new List<string>();
         /// <summary><p>Enables logging and specifies log file name.</p></summary>
         public virtual string LogFile { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(Configuration) || Configuration == null, $"File.Exists(Configuration) || Configuration == null [Configuration = {Configuration}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -285,11 +280,6 @@ namespace Nuke.Common.Tools.DotCover
         internal List<string> ProcessFiltersInternal { get; set; } = new List<string>();
         /// <summary><p>Enables logging and specifies log file name.</p></summary>
         public virtual string LogFile { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(Configuration) || Configuration == null, $"File.Exists(Configuration) || Configuration == null [Configuration = {Configuration}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -330,11 +320,6 @@ namespace Nuke.Common.Tools.DotCover
         internal List<string> SourceInternal { get; set; } = new List<string>();
         /// <summary><p>Enables logging and specifies log file name.</p></summary>
         public virtual string LogFile { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(Configuration) || Configuration == null, $"File.Exists(Configuration) || Configuration == null [Configuration = {Configuration}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -365,11 +350,6 @@ namespace Nuke.Common.Tools.DotCover
         public virtual string TempDirectory { get; internal set; }
         /// <summary><p>Enables logging and specifies log file name.</p></summary>
         public virtual string LogFile { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(Configuration) || Configuration == null, $"File.Exists(Configuration) || Configuration == null [Configuration = {Configuration}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -404,11 +384,6 @@ namespace Nuke.Common.Tools.DotCover
         public virtual bool? HideAutoProperties { get; internal set; }
         /// <summary><p>Enables logging and specifies log file name.</p></summary>
         public virtual string LogFile { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(Configuration) || Configuration == null, $"File.Exists(Configuration) || Configuration == null [Configuration = {Configuration}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -439,11 +414,6 @@ namespace Nuke.Common.Tools.DotCover
         public virtual string OutputFile { get; internal set; }
         /// <summary><p>Enables logging and specifies log file name.</p></summary>
         public virtual string LogFile { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(Configuration) || Configuration == null, $"File.Exists(Configuration) || Configuration == null [Configuration = {Configuration}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments

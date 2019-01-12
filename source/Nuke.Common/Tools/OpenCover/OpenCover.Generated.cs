@@ -119,12 +119,6 @@ namespace Nuke.Common.Tools.OpenCover
         public virtual RegistrationType Registration { get; internal set; }
         /// <summary><p>Return the target process exit code instead of the OpenCover console exit code. Use the offset to return the OpenCover console at a value outside the range returned by the target process.</p></summary>
         public virtual int? TargetExitCodeOffset { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(TargetPath), $"File.Exists(TargetPath) [TargetPath = {TargetPath}]");
-            ControlFlow.Assert(Directory.Exists(TargetDirectory) || TargetDirectory == null, $"Directory.Exists(TargetDirectory) || TargetDirectory == null [TargetDirectory = {TargetDirectory}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments

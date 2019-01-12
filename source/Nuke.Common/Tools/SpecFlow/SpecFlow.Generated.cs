@@ -218,11 +218,6 @@ namespace Nuke.Common.Tools.SpecFlow
         public virtual string ProjectName { get; internal set; }
         /// <summary><p>The feature language to use. Optional. Default: en-US.</p></summary>
         public virtual string FeatureLanguage { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(ProjectFile), $"File.Exists(ProjectFile) [ProjectFile = {ProjectFile}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -255,11 +250,6 @@ namespace Nuke.Common.Tools.SpecFlow
         public virtual string OutputFile { get; internal set; }
         /// <summary><p>Custom XSLT file to use, defaults to built-in stylesheet if not provided. Optional. Default: not specified.</p></summary>
         public virtual string XsltFile { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(ProjectFile), $"File.Exists(ProjectFile) [ProjectFile = {ProjectFile}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -289,11 +279,6 @@ namespace Nuke.Common.Tools.SpecFlow
         public virtual string OutputFile { get; internal set; }
         /// <summary><p>Custom XSLT file to use, defaults to built-in stylesheet if not provided. Optional. Default: not specified.</p></summary>
         public virtual string XsltFile { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(ProjectFile), $"File.Exists(ProjectFile) [ProjectFile = {ProjectFile}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -367,11 +352,6 @@ namespace Nuke.Common.Tools.SpecFlow
         public virtual string ReportFile { get; internal set; }
         /// <summary><p>Applies a filter to your tests and only executes those that match your expression. This overrides the <c>filter</c> entry in your <c>.srprofile</c> file. An overview of the syntax can be found <a href="https://specflow.org/plus/documentation/Filter/">here</a>.</p></summary>
         public virtual string Filter { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(Target != null, $"Target != null [Target = {Target}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -400,12 +380,6 @@ namespace Nuke.Common.Tools.SpecFlow
         public virtual string LicenseKey { get; internal set; }
         /// <summary><p>The name of the licensee. If you purchased your SpecFlow+ license online via SWREG, this is the email address you used to purchase the license. If you purchased SpecFlow+ directly from TechTalk, this is the value in the email you received containing your license information.</p></summary>
         public virtual string IssuedTo { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(LicenseKey != null, $"LicenseKey != null [LicenseKey = {LicenseKey}]");
-            ControlFlow.Assert(IssuedTo != null, $"IssuedTo != null [IssuedTo = {IssuedTo}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments

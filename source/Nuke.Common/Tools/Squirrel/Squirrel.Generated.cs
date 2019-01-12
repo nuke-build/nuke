@@ -113,16 +113,6 @@ namespace Nuke.Common.Tools.Squirrel
         public virtual bool? GenerateNoDelta { get; internal set; }
         /// <summary><p>Set the required .NET framework version, e.g. net461</p></summary>
         public virtual string FrameworkVersion { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(Directory.Exists(Install) || Install == null, $"Directory.Exists(Install) || Install == null [Install = {Install}]");
-            ControlFlow.Assert(File.Exists(Releasify), $"File.Exists(Releasify) [Releasify = {Releasify}]");
-            ControlFlow.Assert(File.Exists(BootstrapperExecutable) || BootstrapperExecutable == null, $"File.Exists(BootstrapperExecutable) || BootstrapperExecutable == null [BootstrapperExecutable = {BootstrapperExecutable}]");
-            ControlFlow.Assert(File.Exists(LoadingGif) || LoadingGif == null, $"File.Exists(LoadingGif) || LoadingGif == null [LoadingGif = {LoadingGif}]");
-            ControlFlow.Assert(File.Exists(Icon) || Icon == null, $"File.Exists(Icon) || Icon == null [Icon = {Icon}]");
-            ControlFlow.Assert(File.Exists(SetupIcon) || SetupIcon == null, $"File.Exists(SetupIcon) || SetupIcon == null [SetupIcon = {SetupIcon}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments

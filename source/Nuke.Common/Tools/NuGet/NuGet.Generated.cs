@@ -248,12 +248,6 @@ namespace Nuke.Common.Tools.NuGet
         public virtual bool? NonInteractive { get; internal set; }
         /// <summary><p>Specifies the timeout, in seconds, for pushing to a server. The default is 300 seconds (5 minutes).</p></summary>
         public virtual int? Timeout { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(TargetPath), $"File.Exists(TargetPath) [TargetPath = {TargetPath}]");
-            ControlFlow.Assert(File.Exists(ConfigFile) || ConfigFile == null, $"File.Exists(ConfigFile) || ConfigFile == null [ConfigFile = {ConfigFile}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -324,12 +318,6 @@ namespace Nuke.Common.Tools.NuGet
         public virtual string Version { get; internal set; }
         /// <summary><p>Format for packaging symbols.</p></summary>
         public virtual NuGetSymbolPackageFormat SymbolPackageFormat { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(TargetPath), $"File.Exists(TargetPath) [TargetPath = {TargetPath}]");
-            ControlFlow.Assert(Directory.Exists(BasePath), $"Directory.Exists(BasePath) [BasePath = {BasePath}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments

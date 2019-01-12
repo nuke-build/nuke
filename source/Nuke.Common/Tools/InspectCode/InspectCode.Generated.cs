@@ -93,12 +93,6 @@ namespace Nuke.Common.Tools.InspectCode
         public virtual bool? DumpIssuesTypes { get; internal set; }
         /// <summary><p>Explicitly specified MsBuild Toolset version (12.0, 14.0, 15.0). For example, <c>--toolset=12.0</c>.</p></summary>
         public virtual InspectCodeMSBuildToolset Toolset { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(TargetPath), $"File.Exists(TargetPath) [TargetPath = {TargetPath}]");
-            ControlFlow.Assert(Output != null, $"Output != null [Output = {Output}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments

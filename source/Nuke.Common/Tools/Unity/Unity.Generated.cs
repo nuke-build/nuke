@@ -182,11 +182,6 @@ namespace Nuke.Common.Tools.Unity
         public virtual bool? NoGraphics { get; internal set; }
         /// <summary><p>Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).</p></summary>
         public virtual bool? Quit { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(LicenseFile), $"File.Exists(LicenseFile) [LicenseFile = {LicenseFile}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -300,11 +295,6 @@ namespace Nuke.Common.Tools.Unity
         public virtual bool? NoGraphics { get; internal set; }
         /// <summary><p>Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file).</p></summary>
         public virtual bool? Quit { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(Directory.Exists(ProjectPath) || ProjectPath == null, $"Directory.Exists(ProjectPath) || ProjectPath == null [ProjectPath = {ProjectPath}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments

@@ -127,11 +127,6 @@ namespace Nuke.Common.Tools.SonarScanner
         /// <summary><p>Comma-delimited list of file path patterns to be excluded from duplication detection.</p></summary>
         public virtual IReadOnlyList<string> DuplicationExclusions => DuplicationExclusionsInternal.AsReadOnly();
         internal List<string> DuplicationExclusionsInternal { get; set; } = new List<string>();
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(ProjectKey != null, $"ProjectKey != null [ProjectKey = {ProjectKey}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
