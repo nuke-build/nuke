@@ -20,7 +20,7 @@ namespace Nuke.Common.Execution
 
         public static void ShowPlan(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
-            var resourceText = ResourceUtility.GetResourceText<ExecutionPlanHtmlService>(c_htmlFileName);
+            var resourceText = ResourceUtility.GetResourceAllText<ExecutionPlanHtmlService>(c_htmlFileName);
             var contents = resourceText
                 .Replace("__GRAPH__", GetGraphDefinition(executableTargets))
                 .Replace("__EVENTS__", GetEvents(executableTargets));
