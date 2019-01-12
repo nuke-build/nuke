@@ -19,11 +19,11 @@
     <NukeMetadata Include="**\*.json" Exclude="bin\**;obj\**" />
     <NukeExternalFiles Include="**\*.*.ext" Exclude="bin\**;obj\**" />
     <None Remove="*.csproj.DotSettings;*.ref.*.txt" />
-    
+
     <!-- Common build related files -->
     <None Include="_SCRIPT_DIRECTORY_\build.ps1" />
     <None Include="_SCRIPT_DIRECTORY_\build.sh" />
-    <None Include="_ROOT_DIRECTORY_\.nuke" />     
+    <None Include="_ROOT_DIRECTORY_\.nuke" />
     <None Include="_ROOT_DIRECTORY_\global.json" Condition="Exists('_ROOT_DIRECTORY_\global.json')" />
     <None Include="_ROOT_DIRECTORY_\nuget.config" Condition="Exists('_ROOT_DIRECTORY_\nuget.config')" />
     <None Include="_ROOT_DIRECTORY_\azure-pipelines.yml" Condition="Exists('_ROOT_DIRECTORY_\azure-pipelines.yml')" />
