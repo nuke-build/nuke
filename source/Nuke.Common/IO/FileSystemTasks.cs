@@ -133,14 +133,49 @@ namespace Nuke.Common.IO
             Directory.Move(source, target);
         }
 
-        public static void CopyDirectoryRecursively(string source, string target, FileExistsPolicy policy = FileExistsPolicy.Fail)
+        public static void CopyDirectoryRecursively(
+            string source,
+            string target,
+            FileExistsPolicy policy = FileExistsPolicy.Fail,
+            Func<DirectoryInfo, bool> directoryIncludeFilter = null,
+            Func<FileInfo, bool> fileIncludeFilter = null)
         {
             ControlFlow.Assert(Directory.Exists(source), $"Directory.Exists({source})");
             ControlFlow.Assert(!Contains(target, source), $"Source '{source}' is not contained in target '{target}'.");
             //ControlFlow.Assert(!Contains(source, target), $"Target '{target}' is not contained in source '{source}'.");
 
             Logger.Info($"Copying recursively from '{source}' to '{target}'...");
-            CopyRecursivelyInternal(source, target, policy);
+            CopyRecursivelyInternal(source, target, policy, directoryIncludeFilter, fileIncludeFilter);
+        }
+
+        private static void CopyRecursivelyInternal(
+            string source,
+            string target,
+            FileExistsPolicy policy,
+            [CanBeNull] Func<DirectoryInfo, bool> directoryIncludeFilter,
+            [CanBeNull] Func<FileInfo, bool> fileIncludeFilter)
+        {
+            if (directoryIncludeFilter != null && !directoryIncludeFilter(new DirectoryInfo(source)))
+                return;
+            
+            string GetDestinationPath(string path)
+                => Path.Combine(target, PathConstruction.GetRelativePath(source, path));
+
+            Directory.CreateDirectory(target);
+            Directory.GetDirectories(source).ForEach(x => CopyRecursivelyInternal(x, GetDestinationPath(x), policy, directoryIncludeFilter, fileIncludeFilter));
+
+            foreach (var sourceFile in Directory.GetFiles(source))
+            {
+                if (fileIncludeFilter != null && !fileIncludeFilter(new FileInfo(sourceFile)))
+                    continue;
+                
+                var targetFile = GetDestinationPath(sourceFile);
+                if (!ShouldCopyFile(sourceFile, targetFile, policy))
+                    continue;
+
+                //EnsureFileAttributes(sourceFile);
+                File.Copy(sourceFile, targetFile, overwrite: true);
+            }
         }
 
         private static bool ShouldCopyFile(string sourceFile, string targetFile, FileExistsPolicy policy)
@@ -162,25 +197,6 @@ namespace Nuke.Common.IO
                     return File.GetLastWriteTimeUtc(targetFile) < File.GetLastWriteTimeUtc(sourceFile);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(policy), policy, message: null);
-            }
-        }
-
-        private static void CopyRecursivelyInternal(string source, string target, FileExistsPolicy policy)
-        {
-            string GetDestinationPath(string path)
-                => Path.Combine(target, PathConstruction.GetRelativePath(source, path));
-
-            Directory.CreateDirectory(target);
-            Directory.GetDirectories(source).ForEach(x => CopyRecursivelyInternal(x, GetDestinationPath(x), policy));
-
-            foreach (var sourceFile in Directory.GetFiles(source))
-            {
-                var targetFile = GetDestinationPath(sourceFile);
-                if (!ShouldCopyFile(sourceFile, targetFile, policy))
-                    continue;
-
-                //EnsureFileAttributes(sourceFile);
-                File.Copy(sourceFile, targetFile, overwrite: true);
             }
         }
 
