@@ -3,7 +3,7 @@
   "references": [
     "https://github.com/nunit/docs/wiki/Console-Command-Line#//div[@id='wiki-body']"
   ],
-  "name": "Nunit",
+  "name": "NUnit",
   "officialUrl": "https://www.nunit.org/",
   "help": "NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href=\"http://www.junit.org/\">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.",
   "packageId": "NUnit.ConsoleRunner",
@@ -54,7 +54,7 @@
           },
           {
             "name": "Process",
-            "type": "NunitProcessType",
+            "type": "NUnitProcessType",
             "format": "--process={value}",
             "help": "Process isolation for test assemblies. Values: Single, Separate, Multiple. If not specified, defaults to Separate for a single assembly or Multiple for more than one. By default, processes are run in parallel."
           },
@@ -186,13 +186,13 @@
           },
           {
             "name": "Labels",
-            "type": "NunitLabelType",
+            "type": "NUnitLabelType",
             "format": "--labels={value}",
             "help": "Specify whether to write test case names to the output. Values: Off, On, All"
           },
           {
             "name": "Trace",
-            "type": "NunitTraceLevel",
+            "type": "NUnitTraceLevel",
             "format": "--trace={value}",
             "help": "Set internal trace LEVEL. Values: Off, Error, Warning, Info, Verbose (Debug)"
           },
@@ -228,7 +228,7 @@
           },
           {
             "name": "SetPrincipalPolicy",
-            "type": "NunitPrincipalPolicy",
+            "type": "NUnitPrincipalPolicy",
             "format": "--set-principal-policy={value}",
             "help": "Set the principal policy for the test domain to POLICY. Values: UnauthenticatedPrincipal, NoPrincipal, WindowsPrincipal"
           },
@@ -250,7 +250,7 @@
   ],
   "enumerations": [
     {
-      "name": "NunitProcessType",
+      "name": "NUnitProcessType",
       "values": [
         "Single",
         "Separate",
@@ -258,7 +258,7 @@
       ]
     },
     {
-      "name": "NunitPrincipalPolicy",
+      "name": "NUnitPrincipalPolicy",
       "values": [
         "UnauthenticatedPrincipal",
         "NoPrincipal",
@@ -266,7 +266,7 @@
       ]
     },
     {
-      "name": "NunitLabelType",
+      "name": "NUnitLabelType",
       "values": [
         "Off",
         "On",
@@ -274,7 +274,7 @@
       ]
     },
     {
-      "name": "NunitTraceLevel",
+      "name": "NUnitTraceLevel",
       "values": [
         "Off",
         "Error",
