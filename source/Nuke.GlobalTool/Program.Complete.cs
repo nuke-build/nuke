@@ -43,7 +43,7 @@ namespace Nuke.GlobalTool
 
             var position = ParameterService.Instance.GetParameter<int?>("position");
             var completionItems = SerializationTasks.YamlDeserializeFromFile<Dictionary<string, string[]>>(completionFile);
-            foreach (var item in CompletionUtility.GetRelevantCompletionItems(words, position, completionItems))
+            foreach (var item in CompletionUtility.GetRelevantCompletionItems(words, completionItems))
                 Console.WriteLine(item);
 
             return 0;

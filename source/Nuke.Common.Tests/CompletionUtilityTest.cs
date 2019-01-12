@@ -14,21 +14,21 @@ namespace Nuke.Common.Tests
     public class CompletionUtilityTest
     {
         [Theory]
-        [InlineData("", null, new[] { "Compile", "Pack", "--target", "--api-key", "--nuget-source" })]
-        [InlineData("-", null, new[] { "--target", "--api-key", "--nuget-source"})]
-        [InlineData("-t", null, new[] { "-target" })]
-        [InlineData("-Api", null, new[] { "-ApiKey" })]
-        [InlineData("--api", null, new[] { "--api-key" })]
-        [InlineData("-ApiKey ", null, new[] { "--target", "--nuget-source" } )]
-        [InlineData("--api-key ", null, new[] { "--target", "--nuget-source" } )]
-        [InlineData("--target ", null, new[] { "Compile", "Pack", "--api-key", "--nuget-source" })]
-        [InlineData("--target P", null, new[] { "Pack" })]
-        [InlineData("--target -", null, new[] { "--api-key", "--nuget-source" })]
-        [InlineData("--target Compile ", null, new[] { "Pack", "--api-key", "--nuget-source" })]
-        [InlineData("P", null, new[] { "Pack" })]
-        [InlineData("Pack ", null, new[] { "Compile", "--target", "--api-key", "--nuget-source" })]
-        [InlineData("Pack comp", null, new[] { "compile" })]
-        public void TestGetRelevantCompletionItems(string words, int? position, string[] expectedItems)
+        [InlineData("", new[] { "Compile", "Pack", "--target", "--api-key", "--nuget-source" })]
+        [InlineData("-", new[] { "--target", "--api-key", "--nuget-source"})]
+        [InlineData("-t", new[] { "-target" })]
+        [InlineData("-Api", new[] { "-ApiKey" })]
+        [InlineData("--api", new[] { "--api-key" })]
+        [InlineData("-ApiKey ", new[] { "--target", "--nuget-source" } )]
+        [InlineData("--api-key ", new[] { "--target", "--nuget-source" } )]
+        [InlineData("--target ", new[] { "Compile", "Pack", "--api-key", "--nuget-source" })]
+        [InlineData("--target P", new[] { "Pack" })]
+        [InlineData("--target -", new[] { "--api-key", "--nuget-source" })]
+        [InlineData("--target Compile ", new[] { "Pack", "--api-key", "--nuget-source" })]
+        [InlineData("P", new[] { "Pack" })]
+        [InlineData("Pack ", new[] { "Compile", "--target", "--api-key", "--nuget-source" })]
+        [InlineData("Pack comp", new[] { "compile" })]
+        public void TestGetRelevantCompletionItems(string words, string[] expectedItems)
         {
             var completionItems =
                 new Dictionary<string, string[]>
@@ -37,7 +37,7 @@ namespace Nuke.Common.Tests
                     { "ApiKey", null },
                     { "NuGetSource", null }
                 };
-            CompletionUtility.GetRelevantCompletionItems(words, position, completionItems)
+            CompletionUtility.GetRelevantCompletionItems(words, completionItems)
                 .Should()
                 .BeEquivalentTo(expectedItems);
         }

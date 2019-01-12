@@ -14,12 +14,11 @@ namespace Nuke.Common.Utilities
     {
         public static IEnumerable<string> GetRelevantCompletionItems(
             string words, 
-            int? position, 
-            Dictionary<string, string[]> completionItems)
+            IDictionary<string, string[]> completionItems)
         {
             completionItems = new Dictionary<string, string[]>(completionItems, StringComparer.OrdinalIgnoreCase);
             var suggestedItems = new List<string>();
-                
+
             var parts = words.Split(separator: ' ');
             var currentWord = parts.Last() != string.Empty ? parts.Last() : null;
             var parameters = parts.Where(x => x.IsParameter()).Select(x => x.GetParameterName()).ToList();
