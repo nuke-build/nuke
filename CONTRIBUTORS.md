@@ -6,4 +6,5 @@
 - Matthias Koch
 - Michael Bisbjerg
 - Sebastian Karasek
+- Stefan Bertels
 - Vladislav Khapin
