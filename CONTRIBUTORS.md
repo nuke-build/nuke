@@ -6,6 +6,7 @@
 - Jonathan Robson
 - Jonathan Ziller
 - Jörg Preiß
+- kysel
 - Markus Amshove
 - Matthias Koch
 - Michael Bisbjerg
