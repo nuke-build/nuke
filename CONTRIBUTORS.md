@@ -9,3 +9,4 @@
 - Sebastian Karasek
 - Stefan Bertels
 - Vladislav Khapin
+- Yuuki Wesp
