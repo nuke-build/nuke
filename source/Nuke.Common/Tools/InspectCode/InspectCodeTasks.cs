@@ -33,7 +33,7 @@ namespace Nuke.Common.Tools.InspectCode
             FileSystemTasks.CopyDirectoryRecursively(
                 Path.GetDirectoryName(toolSettings.ToolPath).NotNull(),
                 shadowDirectory,
-                FileSystemTasks.FileExistsPolicy.OverwriteIfNewer);
+                filePolicy: FileSystemTasks.FileExistsPolicy.OverwriteIfNewer);
 
             installedPlugins.Select(x => x.FileName)
                 .ForEach(x => File.Copy(x, Path.Combine(shadowDirectory, Path.GetFileName(x).NotNull()), overwrite: true));
