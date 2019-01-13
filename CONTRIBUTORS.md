@@ -3,6 +3,7 @@
 - dos36
 - Elijah
 - Jonathan Robson
+- Jonathan Ziller
 - Jörg Preiß
 - Markus Amshove
 - Matthias Koch
