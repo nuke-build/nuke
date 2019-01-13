@@ -8,6 +8,7 @@
 - Jonathan Ziller
 - Jörg Preiß
 - kysel
+- MadMathMike
 - Markus Amshove
 - Matthias Koch
 - Michael Bisbjerg
