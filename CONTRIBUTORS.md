@@ -2,6 +2,7 @@
 - Dariel Marlow
 - dos36
 - Elijah
+- Georg Dangl
 - Jiří Kyzlink
 - Jonathan Robson
 - Jonathan Ziller
