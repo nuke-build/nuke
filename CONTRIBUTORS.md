@@ -12,6 +12,7 @@
 - Markus Amshove
 - Matthias Koch
 - Michael Bisbjerg
+- Mikhail Filippov
 - Robert Schili
 - Sebastian Karasek
 - Stefan Bertels
