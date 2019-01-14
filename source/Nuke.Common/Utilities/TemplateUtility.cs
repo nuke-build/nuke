@@ -12,35 +12,52 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Utilities
 {
+    [PublicAPI]
+    
     public static class TemplateUtility
     {
-        public static void FillTemplateDirectory(
+        public static void FillTemplateDirectoryRecursively(
             string directory,
             IReadOnlyCollection<string> definitions = null,
             IReadOnlyDictionary<string, string> replacements = null,
             Func<DirectoryInfo, bool> excludeDirectory = null,
             Func<FileInfo, bool> excludeFile = null)
         {
-            Directory.GetFiles(directory, "*", SearchOption.AllDirectories)
-                .Where(x => excludeFile == null || !excludeFile(new FileInfo(x)))
-                .ForEach(x => FillTemplateFile(x, definitions, replacements));
+            Logger.Info($"Recursively filling out template directory '{directory}'...");
+            FillTemplateDirectoryRecursivelyInternal(new DirectoryInfo(directory), definitions, replacements, excludeDirectory, excludeFile);
+        }
 
-            if (replacements == null)
+        private static void FillTemplateDirectoryRecursivelyInternal(
+            DirectoryInfo directory,
+            [CanBeNull] IReadOnlyCollection<string> definitions,
+            [CanBeNull] IReadOnlyDictionary<string, string> replacements,
+            [CanBeNull] Func<DirectoryInfo, bool> excludeDirectory,
+            [CanBeNull] Func<FileInfo, bool> excludeFile = null)
+        {
+            if (excludeDirectory != null && excludeDirectory(directory))
                 return;
             
-            bool ShouldMove(FileSystemInfo info) => replacements.Keys.Any(x => info.Name.Contains(x));
-            
-            PathConstruction.GlobFiles(directory, "**/*")
-                .Select(x => new FileInfo(x))
-                .Where(ShouldMove)
-                .Where(x => excludeFile == null || !excludeFile(x)).ToList()
-                .ForEach(x => File.Move(x.FullName, Path.Combine(x.DirectoryName.NotNull(), x.Name.Replace(replacements))));
-            PathConstruction.GlobDirectories(directory, "**/*")
-                .Select(x => new DirectoryInfo(x))
-                .Where(ShouldMove)
-                .Where(x => excludeDirectory == null || !excludeDirectory(x))
-                .OrderByDescending(x => x.FullName).ToList()
-                .ForEach(x => Directory.Move(x.FullName, Path.Combine(x.Parent.NotNull().FullName, x.Name.Replace(replacements))));
+            bool ShouldMove(FileSystemInfo info) => replacements?.Keys.Any(x => info.Name.Contains(x)) ?? false;
+
+            foreach (var file in directory.GetFiles())
+            {
+                if (excludeFile != null && excludeFile(file))
+                    continue;
+
+                FillTemplateFile(file.FullName, definitions, replacements);
+
+                if (ShouldMove(file))
+                    FileSystemTasks.RenameFile(file.FullName, file.Name.Replace(replacements), FileExistsPolicy.OverwriteIfNewer);
+            }
+
+            directory.GetDirectories().ForEach(x => FillTemplateDirectoryRecursivelyInternal(x, definitions, replacements, excludeDirectory, excludeFile));
+
+            if (ShouldMove(directory))
+                FileSystemTasks.RenameDirectory(
+                    directory.FullName,
+                    directory.Name.Replace(replacements),
+                    DirectoryExistsPolicy.Merge,
+                    FileExistsPolicy.OverwriteIfNewer);
         }
 
         public static void FillTemplateFile(
