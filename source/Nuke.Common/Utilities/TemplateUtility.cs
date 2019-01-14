@@ -18,11 +18,11 @@ namespace Nuke.Common.Utilities
             string directory,
             IReadOnlyCollection<string> definitions = null,
             IReadOnlyDictionary<string, string> replacements = null,
-            Func<DirectoryInfo, bool> directoryIncludeFilter = null,
-            Func<FileInfo, bool> fileIncludeFilter = null)
+            Func<DirectoryInfo, bool> excludeDirectory = null,
+            Func<FileInfo, bool> excludeFile = null)
         {
             Directory.GetFiles(directory, "*", SearchOption.AllDirectories)
-                .Where(x => fileIncludeFilter == null || fileIncludeFilter(new FileInfo(x)))
+                .Where(x => excludeFile == null || !excludeFile(new FileInfo(x)))
                 .ForEach(x => FillTemplateFile(x, definitions, replacements));
 
             if (replacements == null)
@@ -33,12 +33,12 @@ namespace Nuke.Common.Utilities
             PathConstruction.GlobFiles(directory, "**/*")
                 .Select(x => new FileInfo(x))
                 .Where(ShouldMove)
-                .Where(x => fileIncludeFilter == null || fileIncludeFilter(x)).ToList()
+                .Where(x => excludeFile == null || !excludeFile(x)).ToList()
                 .ForEach(x => File.Move(x.FullName, Path.Combine(x.DirectoryName.NotNull(), x.Name.Replace(replacements))));
             PathConstruction.GlobDirectories(directory, "**/*")
                 .Select(x => new DirectoryInfo(x))
                 .Where(ShouldMove)
-                .Where(x => directoryIncludeFilter == null || directoryIncludeFilter(x))
+                .Where(x => excludeDirectory == null || !excludeDirectory(x))
                 .OrderByDescending(x => x.FullName).ToList()
                 .ForEach(x => Directory.Move(x.FullName, Path.Combine(x.Parent.NotNull().FullName, x.Name.Replace(replacements))));
         }

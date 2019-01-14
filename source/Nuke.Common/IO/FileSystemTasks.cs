@@ -173,15 +173,15 @@ namespace Nuke.Common.IO
             string target,
             DirectoryExistsPolicy directoryPolicy = DirectoryExistsPolicy.Fail,
             FileExistsPolicy filePolicy = FileExistsPolicy.Fail,
-            Func<DirectoryInfo, bool> directoryIncludeFilter = null,
-            Func<FileInfo, bool> fileIncludeFilter = null)
+            Func<DirectoryInfo, bool> excludeDirectory = null,
+            Func<FileInfo, bool> excludeFile = null)
         {
             ControlFlow.Assert(Directory.Exists(source), $"Directory.Exists({source})");
             ControlFlow.Assert(!Contains(target, source), $"Source '{source}' is not contained in target '{target}'.");
             //ControlFlow.Assert(!Contains(source, target), $"Target '{target}' is not contained in source '{source}'.");
 
             Logger.Info($"Copying recursively from '{source}' to '{target}'...");
-            CopyRecursivelyInternal(source, target, directoryPolicy, filePolicy, directoryIncludeFilter, fileIncludeFilter);
+            CopyRecursivelyInternal(source, target, directoryPolicy, filePolicy, excludeDirectory, excludeFile);
         }
 
         private static void CopyRecursivelyInternal(
@@ -189,10 +189,10 @@ namespace Nuke.Common.IO
             string target,
             DirectoryExistsPolicy directoryPolicy,
             FileExistsPolicy filePolicy,
-            [CanBeNull] Func<DirectoryInfo, bool> directoryIncludeFilter,
-            [CanBeNull] Func<FileInfo, bool> fileIncludeFilter)
+            [CanBeNull] Func<DirectoryInfo, bool> excludeDirectory,
+            [CanBeNull] Func<FileInfo, bool> excludeFile)
         {
-            if (directoryIncludeFilter != null && !directoryIncludeFilter(new DirectoryInfo(source)))
+            if (excludeDirectory != null && excludeDirectory(new DirectoryInfo(source)))
                 return;
             
             string GetDestinationPath(string path)
@@ -208,12 +208,12 @@ namespace Nuke.Common.IO
                     GetDestinationPath(x),
                     directoryPolicy,
                     filePolicy,
-                    directoryIncludeFilter,
-                    fileIncludeFilter));
+                    excludeDirectory,
+                    excludeFile));
 
             foreach (var sourceFile in Directory.GetFiles(source))
             {
-                if (fileIncludeFilter != null && !fileIncludeFilter(new FileInfo(sourceFile)))
+                if (excludeFile != null && excludeFile(new FileInfo(sourceFile)))
                     continue;
                 
                 var targetFile = GetDestinationPath(sourceFile);
