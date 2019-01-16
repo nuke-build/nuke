@@ -42,9 +42,19 @@ namespace Nuke.Common
         ITargetDefinition DependsOn(params Target[] targets);
 
         /// <summary>
+        ///   Adds a set of targets that are dependent for this target.
+        /// </summary>
+        ITargetDefinition DependentFor(params Target[] targets);
+
+        /// <summary>
         ///   Adds a set of conditions that will be checked before executing this target.
         /// </summary>
-        ITargetDefinition OnlyWhen(params Func<bool>[] conditions);
+        ITargetDefinition OnlyWhenDynamic(params Func<bool>[] conditions);
+
+        /// <summary>
+        ///   Adds a set of conditions that will be checked prior to build execution.
+        /// </summary>
+        ITargetDefinition OnlyWhenStatic(params Func<bool>[] conditions);
 
         /// <summary>
         ///   Adds a required parameter that will be checked prior to build execution.
@@ -77,6 +87,16 @@ namespace Nuke.Common
         ///  Defines if this target should run after other targets.
         /// </summary>
         ITargetDefinition After(params Target[] targets);
+
+        /// <summary>
+        ///  Defines targets that will be triggered after this target.
+        /// </summary>
+        ITargetDefinition Triggers(params Target[] targets);
+
+        /// <summary>
+        ///  Defines targets that will trigger this target.
+        /// </summary>
+        ITargetDefinition TriggeredBy(params Target[] targets);
     }
 
     /// <summary>

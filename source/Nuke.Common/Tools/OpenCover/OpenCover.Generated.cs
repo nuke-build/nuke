@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/OpenCover.json
+// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/OpenCover.json
 // Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
@@ -35,12 +35,24 @@ namespace Nuke.Common.Tools.OpenCover
             return process.Output;
         }
         /// <summary><p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p><p>For more details, visit the <a href="https://github.com/OpenCover/opencover">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> OpenCover(Configure<OpenCoverSettings> configurator = null)
+        public static IReadOnlyCollection<Output> OpenCover(OpenCoverSettings toolSettings = null)
         {
-            var toolSettings = configurator.InvokeSafe(new OpenCoverSettings());
+            toolSettings = toolSettings ?? new OpenCoverSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
+        }
+        /// <summary><p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p><p>For more details, visit the <a href="https://github.com/OpenCover/opencover">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> OpenCover(Configure<OpenCoverSettings> configurator)
+        {
+            return OpenCover(configurator(new OpenCoverSettings()));
+        }
+        /// <summary><p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p><p>For more details, visit the <a href="https://github.com/OpenCover/opencover">official website</a>.</p></summary>
+        public static IEnumerable<(OpenCoverSettings Settings, IReadOnlyCollection<Output> Output)> OpenCover(CombinatorialConfigure<OpenCoverSettings> configurator)
+        {
+            return configurator(new OpenCoverSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: OpenCover(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
         }
     }
     #region OpenCoverSettings
@@ -107,12 +119,6 @@ namespace Nuke.Common.Tools.OpenCover
         public virtual RegistrationType Registration { get; internal set; }
         /// <summary><p>Return the target process exit code instead of the OpenCover console exit code. Use the offset to return the OpenCover console at a value outside the range returned by the target process.</p></summary>
         public virtual int? TargetExitCodeOffset { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(TargetPath), $"File.Exists(TargetPath) [TargetPath = {TargetPath}]");
-            ControlFlow.Assert(Directory.Exists(TargetDirectory) || TargetDirectory == null, $"Directory.Exists(TargetDirectory) || TargetDirectory == null [TargetDirectory = {TargetDirectory}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments

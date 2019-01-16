@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/GitVersion.json
+// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/GitVersion.json
 // Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
@@ -35,12 +35,24 @@ namespace Nuke.Common.Tools.GitVersion
             return process.Output;
         }
         /// <summary><p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p><p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p></summary>
-        public static (GitVersion Result, IReadOnlyCollection<Output> Output) GitVersion(Configure<GitVersionSettings> configurator = null)
+        public static (GitVersion Result, IReadOnlyCollection<Output> Output) GitVersion(GitVersionSettings toolSettings = null)
         {
-            var toolSettings = configurator.InvokeSafe(new GitVersionSettings());
+            toolSettings = toolSettings ?? new GitVersionSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return (GetResult(process, toolSettings), process.Output);
+        }
+        /// <summary><p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p><p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p></summary>
+        public static (GitVersion Result, IReadOnlyCollection<Output> Output) GitVersion(Configure<GitVersionSettings> configurator)
+        {
+            return GitVersion(configurator(new GitVersionSettings()));
+        }
+        /// <summary><p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p><p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p></summary>
+        public static IEnumerable<(GitVersionSettings Settings, GitVersion Result, IReadOnlyCollection<Output> Output)> GitVersion(CombinatorialConfigure<GitVersionSettings> configurator)
+        {
+            return configurator(new GitVersionSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: GitVersion(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue.Result, x.ReturnValue.Output)).ToList();
         }
     }
     #region GitVersionSettings

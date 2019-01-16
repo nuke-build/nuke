@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Squirrel.json
+// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/Squirrel.json
 // Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
@@ -35,12 +35,24 @@ namespace Nuke.Common.Tools.Squirrel
             return process.Output;
         }
         /// <summary><p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p><p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> Squirrel(Configure<SquirrelSettings> configurator = null)
+        public static IReadOnlyCollection<Output> Squirrel(SquirrelSettings toolSettings = null)
         {
-            var toolSettings = configurator.InvokeSafe(new SquirrelSettings());
+            toolSettings = toolSettings ?? new SquirrelSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
+        }
+        /// <summary><p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p><p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> Squirrel(Configure<SquirrelSettings> configurator)
+        {
+            return Squirrel(configurator(new SquirrelSettings()));
+        }
+        /// <summary><p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p><p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p></summary>
+        public static IEnumerable<(SquirrelSettings Settings, IReadOnlyCollection<Output> Output)> Squirrel(CombinatorialConfigure<SquirrelSettings> configurator)
+        {
+            return configurator(new SquirrelSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: Squirrel(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
         }
     }
     #region SquirrelSettings
@@ -101,16 +113,6 @@ namespace Nuke.Common.Tools.Squirrel
         public virtual bool? GenerateNoDelta { get; internal set; }
         /// <summary><p>Set the required .NET framework version, e.g. net461</p></summary>
         public virtual string FrameworkVersion { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(Directory.Exists(Install) || Install == null, $"Directory.Exists(Install) || Install == null [Install = {Install}]");
-            ControlFlow.Assert(File.Exists(Releasify), $"File.Exists(Releasify) [Releasify = {Releasify}]");
-            ControlFlow.Assert(File.Exists(BootstrapperExecutable) || BootstrapperExecutable == null, $"File.Exists(BootstrapperExecutable) || BootstrapperExecutable == null [BootstrapperExecutable = {BootstrapperExecutable}]");
-            ControlFlow.Assert(File.Exists(LoadingGif) || LoadingGif == null, $"File.Exists(LoadingGif) || LoadingGif == null [LoadingGif = {LoadingGif}]");
-            ControlFlow.Assert(File.Exists(Icon) || Icon == null, $"File.Exists(Icon) || Icon == null [Icon = {Icon}]");
-            ControlFlow.Assert(File.Exists(SetupIcon) || SetupIcon == null, $"File.Exists(SetupIcon) || SetupIcon == null [SetupIcon = {SetupIcon}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments

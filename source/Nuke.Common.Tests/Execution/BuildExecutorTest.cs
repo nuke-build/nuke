@@ -5,154 +5,122 @@
 using System;
 using System.Linq;
 using FluentAssertions;
-using FluentAssertions.Execution;
 using Nuke.Common.Execution;
+using Nuke.Common.Utilities.Collections;
 using Xunit;
 
 namespace Nuke.Common.Tests.Execution
 {
     public class BuildExecutorTest
     {
-        [Fact]
-        public void SkipAllTargetsWhenConditionFalseAndBehaviorSkip()
-        {
-            var build = ExecutionTestUtility.CreateBuildAndExecuteDefaultTarget<TestBuild>(x => x.Execute,
-                x =>
-                {
-                    x.OnlyWhenCondition = false;
-                    x.SwitchConditionInDependency = false;
-                    x.DependencyBehavior = DependencyBehavior.Skip;
-                });
+        private ExecutableTarget A = new ExecutableTarget { Name = nameof(A) };
+        private ExecutableTarget B = new ExecutableTarget { Name = nameof(B) };
+        private ExecutableTarget C = new ExecutableTarget { Name = nameof(C) };
 
-            AssertExecutionStatus(build, ExecutionStatus.Skipped, ExecutionStatus.Skipped);
+        private Func<bool> True = () => true;
+        private Func<bool> False = () => false;
+
+        public BuildExecutorTest()
+        {
+            C.ExecutionDependencies.Add(B);
+            B.ExecutionDependencies.Add(A);
         }
 
         [Fact]
-        public void SkipAllTargetsWhenConditionFalseAndBehaviorSkip_SwitchCondition()
+        public void TestDefault()
         {
-            var build = ExecutionTestUtility.CreateBuildAndExecuteDefaultTarget<TestBuild>(x => x.Execute,
-                x =>
-                {
-                    x.OnlyWhenCondition = false;
-                    x.SwitchConditionInDependency = true;
-                    x.DependencyBehavior = DependencyBehavior.Skip;
-                });
-
-            AssertExecutionStatus(build, ExecutionStatus.Skipped, ExecutionStatus.Skipped);
+            ExecuteBuild();
+            AssertExecuted(A, B, C);
         }
-
+        
         [Fact]
-        public void ExecuteAllTargetsWhenConditionTrueAndBehaviorSkip()
+        public void TestUserSkipped()
         {
-            var build = ExecutionTestUtility.CreateBuildAndExecuteDefaultTarget<TestBuild>(x => x.Execute,
-                x =>
-                {
-                    x.OnlyWhenCondition = true;
-                    x.SwitchConditionInDependency = false;
-                    x.DependencyBehavior = DependencyBehavior.Skip;
-                });
+            ExecuteBuild(skippedTargets: new ExecutableTarget[0]);
+            AssertSkipped(A, B, C);
+            
+            ExecuteBuild(skippedTargets: new[]{ A });
+            AssertExecuted(B, C);
+            AssertSkipped(A);
+            
+            ExecuteBuild(skippedTargets: new[]{ A, B });
+            AssertExecuted(C);
+            AssertSkipped(A, B);
 
-            AssertExecutionStatus(build, ExecutionStatus.Executed, ExecutionStatus.Executed);
+            B.DependencyBehavior = DependencyBehavior.Skip;
+            ExecuteBuild(skippedTargets: new[]{ B });
+            AssertExecuted(C);
+            AssertSkipped(A, B);
         }
-
+        
         [Fact]
-        public void ExecuteAllTargetsWhenConditionTrueAndBehaviorSkip_SwitchCondition()
+        public void TestStaticCondition()
         {
-            var build = ExecutionTestUtility.CreateBuildAndExecuteDefaultTarget<TestBuild>(x => x.Execute,
-                x =>
-                {
-                    x.OnlyWhenCondition = true;
-                    x.SwitchConditionInDependency = true;
-                    x.DependencyBehavior = DependencyBehavior.Skip;
-                });
-
-            AssertExecutionStatus(build, ExecutionStatus.Executed, ExecutionStatus.Executed);
+            B.StaticConditions.Add(True);
+            ExecuteBuild();
+            AssertExecuted(A, B, C);
+            
+            B.StaticConditions.Add(False);
+            
+            B.DependencyBehavior = DependencyBehavior.Execute;
+            ExecuteBuild();
+            AssertExecuted(A, C);
+            AssertSkipped(B);
+            
+            B.DependencyBehavior = DependencyBehavior.Skip;
+            ExecuteBuild();
+            AssertExecuted(C);
+            AssertSkipped(A, B);
         }
-
+        
         [Fact]
-        public void SkipExecuteTargetWhenConditionTrueAndBehaviorExecute_SwitchCondition()
+        public void TestDynamicCondition()
         {
-            var build = ExecutionTestUtility.CreateBuildAndExecuteDefaultTarget<TestBuild>(x => x.Execute,
-                x =>
-                {
-                    x.OnlyWhenCondition = true;
-                    x.SwitchConditionInDependency = true;
-                    x.DependencyBehavior = DependencyBehavior.Execute;
-                });
+            var condition = false;
+            B.DynamicConditions.Add(() => condition);
 
-            AssertExecutionStatus(build, ExecutionStatus.Executed, ExecutionStatus.Skipped);
+            ExecuteBuild();
+            AssertExecuted(A, C);
+            AssertSkipped(B);
+            
+            A.Actions.Add(() => condition = true);
+            ExecuteBuild();
+            AssertExecuted(A, B, C);
         }
 
-        [Fact]
-        public void ExecuteAllTargetsWhenConditionTrueAndBehaviorExecute()
+        private void ExecuteBuild(ExecutableTarget[] skippedTargets = null)
         {
-            var build = ExecutionTestUtility.CreateBuildAndExecuteDefaultTarget<TestBuild>(x => x.Execute,
-                x =>
-                {
-                    x.OnlyWhenCondition = true;
-                    x.SwitchConditionInDependency = false;
-                    x.DependencyBehavior = DependencyBehavior.Execute;
-                });
-
-            AssertExecutionStatus(build, ExecutionStatus.Executed, ExecutionStatus.Executed);
+            string[] SelectNames(ExecutableTarget[] targets) => targets?.Select(x => x.Name).ToArray();
+            
+            var build = new TestBuild();
+            build.ExecutableTargets = new[] { A, B, C };
+            build.ExecutionPlan = new[] { A, B, C };
+            build.ExecutionPlan.ForEach(x => x.Status = ExecutionStatus.NotRun);
+            BuildExecutor.Execute(build, SelectNames(skippedTargets));
         }
 
-        [Fact]
-        public void ExecuteDependencyTargetWhenConditionFalseAndBehaviorExecute()
+        private static void AssertExecuted(params ExecutableTarget[] targets)
         {
-            var build = ExecutionTestUtility.CreateBuildAndExecuteDefaultTarget<TestBuild>(x => x.Execute,
-                x =>
-                {
-                    x.OnlyWhenCondition = false;
-                    x.SwitchConditionInDependency = false;
-                    x.DependencyBehavior = DependencyBehavior.Execute;
-                });
-
-            AssertExecutionStatus(build, ExecutionStatus.Executed, ExecutionStatus.Skipped);
+            targets.ForEach(x => x.Status.Should().Be(ExecutionStatus.Executed));
         }
-
-        [Fact]
-        public void ExecuteAllTargetsWhenConditionFalseAndBehaviorExecute_SwitchCondition()
+        
+        private static void AssertSkipped(params ExecutableTarget[] targets)
         {
-            var build = ExecutionTestUtility.CreateBuildAndExecuteDefaultTarget<TestBuild>(x => x.Execute,
-                x =>
-                {
-                    x.OnlyWhenCondition = false;
-                    x.SwitchConditionInDependency = true;
-                    x.DependencyBehavior = DependencyBehavior.Execute;
-                });
-
-            AssertExecutionStatus(build, ExecutionStatus.Executed, ExecutionStatus.Executed);
+            targets.ForEach(x => x.Status.Should().Be(ExecutionStatus.Skipped));
         }
-
-        [CustomAssertion]
-        private void AssertExecutionStatus(TestBuild build, ExecutionStatus dependencyTargetStatus, ExecutionStatus executeTargetStatus)
+        
+        private static void AssertUnscheduled(params ExecutableTarget[] targets)
         {
-            using (new AssertionScope())
-            {
-                build.Should().HaveTargetWithExecutionStatus<TestBuild>(x => x.Dependency, dependencyTargetStatus);
-                build.Should().HaveTargetWithExecutionStatus<TestBuild>(x => x.Execute, executeTargetStatus);
-            }
+            targets.ForEach(x => x.Status.Should().BeNull());
+        }
+        
+        private static void AssertNotRun(params ExecutableTarget[] targets)
+        {
+            targets.ForEach(x => x.Status.Should().Be(ExecutionStatus.NotRun));
         }
 
         private class TestBuild : NukeBuild
         {
-            public bool OnlyWhenCondition;
-            public bool SwitchConditionInDependency;
-            public DependencyBehavior DependencyBehavior = DependencyBehavior.Execute;
-
-            public Target Dependency => _ => _
-                .Executes(() =>
-                {
-                    if (SwitchConditionInDependency)
-                        OnlyWhenCondition = !OnlyWhenCondition;
-                });
-
-            public Target Execute => _ => _
-                .DependsOn(Dependency)
-                .OnlyWhen(() => OnlyWhenCondition)
-                .WhenSkipped(DependencyBehavior)
-                .Executes(() => { });
         }
     }
 }

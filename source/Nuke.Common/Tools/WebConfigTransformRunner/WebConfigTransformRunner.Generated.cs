@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/WebConfigTransformRunner.json
+// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/WebConfigTransformRunner.json
 // Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
@@ -35,12 +35,24 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
             return process.Output;
         }
         /// <summary><p>This is a commandline tool to run an ASP.Net web.config tranformation.</p><p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> WebConfigTransformRunner(Configure<WebConfigTransformRunnerSettings> configurator = null)
+        public static IReadOnlyCollection<Output> WebConfigTransformRunner(WebConfigTransformRunnerSettings toolSettings = null)
         {
-            var toolSettings = configurator.InvokeSafe(new WebConfigTransformRunnerSettings());
+            toolSettings = toolSettings ?? new WebConfigTransformRunnerSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
+        }
+        /// <summary><p>This is a commandline tool to run an ASP.Net web.config tranformation.</p><p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> WebConfigTransformRunner(Configure<WebConfigTransformRunnerSettings> configurator)
+        {
+            return WebConfigTransformRunner(configurator(new WebConfigTransformRunnerSettings()));
+        }
+        /// <summary><p>This is a commandline tool to run an ASP.Net web.config tranformation.</p><p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p></summary>
+        public static IEnumerable<(WebConfigTransformRunnerSettings Settings, IReadOnlyCollection<Output> Output)> WebConfigTransformRunner(CombinatorialConfigure<WebConfigTransformRunnerSettings> configurator)
+        {
+            return configurator(new WebConfigTransformRunnerSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: WebConfigTransformRunner(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
         }
     }
     #region WebConfigTransformRunnerSettings
@@ -58,13 +70,6 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         public virtual string TransformFilename { get; internal set; }
         /// <summary><p>The path to the output web.config file</p></summary>
         public virtual string OutputFilename { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(WebConfigFilename), $"File.Exists(WebConfigFilename) [WebConfigFilename = {WebConfigFilename}]");
-            ControlFlow.Assert(File.Exists(TransformFilename), $"File.Exists(TransformFilename) [TransformFilename = {TransformFilename}]");
-            ControlFlow.Assert(OutputFilename != null, $"OutputFilename != null [OutputFilename = {OutputFilename}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments

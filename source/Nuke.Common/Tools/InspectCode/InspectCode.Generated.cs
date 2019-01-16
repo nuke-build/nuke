@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/InspectCode.json
+// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/InspectCode.json
 // Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
@@ -35,9 +35,9 @@ namespace Nuke.Common.Tools.InspectCode
             return process.Output;
         }
         /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p><p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> InspectCode(Configure<InspectCodeSettings> configurator = null)
+        public static IReadOnlyCollection<Output> InspectCode(InspectCodeSettings toolSettings = null)
         {
-            var toolSettings = configurator.InvokeSafe(new InspectCodeSettings());
+            toolSettings = toolSettings ?? new InspectCodeSettings();
             PreProcess(ref toolSettings);
             var process = StartProcess(toolSettings);
             process.AssertZeroExitCode();
@@ -45,16 +45,16 @@ namespace Nuke.Common.Tools.InspectCode
             return process.Output;
         }
         /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p><p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> InspectCode(string targetPath, Configure<InspectCodeSettings> configurator = null)
+        public static IReadOnlyCollection<Output> InspectCode(Configure<InspectCodeSettings> configurator)
         {
-            configurator = configurator ?? (x => x);
-            return InspectCode(x => configurator(x).SetTargetPath(targetPath));
+            return InspectCode(configurator(new InspectCodeSettings()));
         }
         /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p><p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> InspectCode(string targetPath, string output, Configure<InspectCodeSettings> configurator = null)
+        public static IEnumerable<(InspectCodeSettings Settings, IReadOnlyCollection<Output> Output)> InspectCode(CombinatorialConfigure<InspectCodeSettings> configurator)
         {
-            configurator = configurator ?? (x => x);
-            return InspectCode(targetPath, x => configurator(x).SetOutput(output));
+            return configurator(new InspectCodeSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: InspectCode(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
         }
     }
     #region InspectCodeSettings
@@ -93,12 +93,6 @@ namespace Nuke.Common.Tools.InspectCode
         public virtual bool? DumpIssuesTypes { get; internal set; }
         /// <summary><p>Explicitly specified MsBuild Toolset version (12.0, 14.0, 15.0). For example, <c>--toolset=12.0</c>.</p></summary>
         public virtual InspectCodeMSBuildToolset Toolset { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(TargetPath), $"File.Exists(TargetPath) [TargetPath = {TargetPath}]");
-            ControlFlow.Assert(Output != null, $"Output != null [Output = {Output}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments

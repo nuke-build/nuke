@@ -142,30 +142,30 @@ namespace Nuke.Common.IO
             return null;
         }
 
-        public static string Combine([CanBeNull] string path1, string path2, char? separator = null)
+        public static string Combine([CanBeNull] string left, string right, char? separator = null)
         {
             // TODO: better something like "SafeHandleRoots"?
-            path1 = Trim(path1);
-            path2 = Trim(path2);
+            left = Trim(left);
+            right = Trim(right);
 
-            ControlFlow.Assert(!HasPathRoot(path2), "Second path must not be rooted.");
+            ControlFlow.Assert(!HasPathRoot(right), "Second path must not be rooted.");
 
-            if (string.IsNullOrWhiteSpace(path1))
-                return path2;
-            if (string.IsNullOrWhiteSpace(path2))
-                return !IsWinRoot(path1) ? path1 : $@"{path1}\";
+            if (string.IsNullOrWhiteSpace(left))
+                return right;
+            if (string.IsNullOrWhiteSpace(right))
+                return !IsWinRoot(left) ? left : $@"{left}\";
 
-            AssertSeparatorChoice(path1, separator);
-            separator = separator ?? GetSeparator(path1);
+            AssertSeparatorChoice(left, separator);
+            separator = separator ?? GetSeparator(left);
 
-            if (IsWinRoot(path1))
-                return $@"{path1}\{path2}";
-            if (IsUnixRoot(path1))
-                return $"{path1}{path2}";
-            if (IsUncRoot(path1))
-                return $@"{path1}\{path2}";
+            if (IsWinRoot(left))
+                return $@"{left}\{right}";
+            if (IsUnixRoot(left))
+                return $"{left}{right}";
+            if (IsUncRoot(left))
+                return $@"{left}\{right}";
 
-            return $"{path1}{separator}{path2}";
+            return $"{left}{separator}{right}";
         }
 
         // ReSharper disable once CyclomaticComplexity
@@ -277,10 +277,10 @@ namespace Nuke.Common.IO
                 return path?._path;
             }
 
-            public static RelativePath operator /(RelativePath path1, [CanBeNull] string path2)
+            public static RelativePath operator /(RelativePath left, [CanBeNull] string right)
             {
-                var separator = path1.NotNull("path1 != null")._separator;
-                return new RelativePath(NormalizePath(Combine(path1, (RelativePath) path2, separator), separator), separator);
+                var separator = left.NotNull("left != null")._separator;
+                return new RelativePath(NormalizePath(Combine(left, (RelativePath) right, separator), separator), separator);
             }
 
             public override string ToString()
@@ -365,9 +365,9 @@ namespace Nuke.Common.IO
                     ? this / ".."
                     : null;
 
-            public static AbsolutePath operator /(AbsolutePath path1, [CanBeNull] string path2)
+            public static AbsolutePath operator /(AbsolutePath left, [CanBeNull] string right)
             {
-                return new AbsolutePath(Combine(path1.NotNull("path1 != null"), path2));
+                return new AbsolutePath(Combine(left.NotNull("left != null"), right));
             }
 
             protected bool Equals(AbsolutePath other)

@@ -13,47 +13,47 @@ namespace Nuke.Common.Utilities.Collections
     {
         public static void Deconstruct<T>(this T[] items, out T t0)
         {
-            t0 = items.Length > 0 ? items[0] : default(T);
+            t0 = items.ElementAtOrDefault(0);
         }
 
         public static void Deconstruct<T>(this T[] items, out T t0, out T t1)
         {
-            t0 = items.Length > 0 ? items[0] : default(T);
-            t1 = items.Length > 1 ? items[1] : default(T);
+            t0 = items.ElementAtOrDefault(0);
+            t1 = items.ElementAtOrDefault(1);
         }
 
         public static void Deconstruct<T>(this T[] items, out T t0, out T t1, out T t2)
         {
-            t0 = items.Length > 0 ? items[0] : default(T);
-            t1 = items.Length > 1 ? items[1] : default(T);
-            t2 = items.Length > 2 ? items[2] : default(T);
+            t0 = items.ElementAtOrDefault(0);
+            t1 = items.ElementAtOrDefault(1);
+            t2 = items.ElementAtOrDefault(2);
         }
 
         public static void Deconstruct<T>(this T[] items, out T t0, out T t1, out T t2, out T t3)
         {
-            t0 = items.Length > 0 ? items[0] : default(T);
-            t1 = items.Length > 1 ? items[1] : default(T);
-            t2 = items.Length > 2 ? items[2] : default(T);
-            t3 = items.Length > 3 ? items[3] : default(T);
+            t0 = items.ElementAtOrDefault(0);
+            t1 = items.ElementAtOrDefault(1);
+            t2 = items.ElementAtOrDefault(2);
+            t3 = items.ElementAtOrDefault(3);
         }
 
         public static void Deconstruct<T>(this T[] items, out T t0, out T t1, out T t2, out T t3, out T t4)
         {
-            t0 = items.Length > 0 ? items[0] : default(T);
-            t1 = items.Length > 1 ? items[1] : default(T);
-            t2 = items.Length > 2 ? items[2] : default(T);
-            t3 = items.Length > 3 ? items[3] : default(T);
-            t4 = items.Length > 4 ? items[4] : default(T);
+            t0 = items.ElementAtOrDefault(0);
+            t1 = items.ElementAtOrDefault(1);
+            t2 = items.ElementAtOrDefault(2);
+            t3 = items.ElementAtOrDefault(3);
+            t4 = items.ElementAtOrDefault(4);
         }
 
         public static void Deconstruct<T>(this T[] items, out T t0, out T t1, out T t2, out T t3, out T t4, out T t5)
         {
-            t0 = items.Length > 0 ? items[0] : default(T);
-            t1 = items.Length > 1 ? items[1] : default(T);
-            t2 = items.Length > 2 ? items[2] : default(T);
-            t3 = items.Length > 3 ? items[3] : default(T);
-            t4 = items.Length > 4 ? items[4] : default(T);
-            t5 = items.Length > 5 ? items[5] : default(T);
+            t0 = items.ElementAtOrDefault(0);
+            t1 = items.ElementAtOrDefault(1);
+            t2 = items.ElementAtOrDefault(2);
+            t3 = items.ElementAtOrDefault(3);
+            t4 = items.ElementAtOrDefault(4);
+            t5 = items.ElementAtOrDefault(5);
         }
     }
 }

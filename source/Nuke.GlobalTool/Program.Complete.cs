@@ -16,14 +16,17 @@ namespace Nuke.GlobalTool
 {
     partial class Program
     {
+        private const string c_commandName = "nuke";
+
         [UsedImplicitly]
         public static int Complete(string[] args, [CanBeNull] string rootDirectory, [CanBeNull] string buildScript)
         {
             var words = args.Single();
-            if (!words.StartsWithOrdinalIgnoreCase("nuke"))
+            if (!words.StartsWithOrdinalIgnoreCase(c_commandName))
             {
                 return 0;
             }
+            words = words.Substring(c_commandName.Length).TrimStart();
 
             if (rootDirectory == null)
             {
@@ -38,94 +41,12 @@ namespace Nuke.GlobalTool
                 return 1;
             }
 
-            words = words.Substring("nuke ".Length);
             var position = ParameterService.Instance.GetParameter<int?>("position");
             var completionItems = SerializationTasks.YamlDeserializeFromFile<Dictionary<string, string[]>>(completionFile);
-            foreach (var item in GetRelevantCompletionItems(words, position, completionItems))
+            foreach (var item in CompletionUtility.GetRelevantCompletionItems(words, completionItems))
                 Console.WriteLine(item);
 
             return 0;
-        }
-
-        public static IEnumerable<string> GetRelevantCompletionItems(
-            string words, 
-            int? position, 
-            Dictionary<string, string[]> completionItems)
-        {
-            completionItems = new Dictionary<string, string[]>(completionItems, StringComparer.OrdinalIgnoreCase);
-            var suggestedItems = new List<string>();
-                
-            var parts = words.Split(separator: ' ');
-            var currentWord = parts.Last() != string.Empty ? parts.Last() : null;
-            var parameters = parts.Where(x => x.IsParameter()).Select(x => x.GetParameterName()).ToList();
-            var lastParameter = parameters.LastOrDefault();
-
-            void AddSubItems(string parameter)
-            {
-                var passedItems = parts.Reverse().TakeWhile(x => !x.IsParameter());
-                var items = completionItems.GetValueOrDefault(parameter)?.Except(passedItems, StringComparer.OrdinalIgnoreCase) ?? 
-                            new string[0];
-                foreach (var item in items)
-                {
-                    if (currentWord == null)
-                        suggestedItems.Add(item);
-                    if (currentWord != null && item.StartsWith(currentWord, StringComparison.OrdinalIgnoreCase))
-                        suggestedItems.Add(item.ReplaceCurrentWord(currentWord));
-                }
-            }
-
-            if (lastParameter == null)
-                AddSubItems(Constants.InvokedTargetsParameterName);
-
-            if (lastParameter != null && currentWord != lastParameter)
-                AddSubItems(lastParameter);
-
-            if (currentWord == null || currentWord.IsParameter())
-            {
-                foreach (var item in completionItems.Keys)
-                {
-                    // if (currentWord == null && completionItems.GetValueOrDefault(lastParameter.GetParameterName())?.Length > 0)
-                    //     continue;
-                
-                    if (parameters.Contains(item, StringComparer.OrdinalIgnoreCase))
-                        continue;
-
-                    if (currentWord == null || currentWord.TrimStart("-").Length == 0)
-                    {
-                        suggestedItems.Add(
-                            new[] { "NuGet", "MSBuild" }
-                                .Aggregate(
-                                    $"--{item.SplitCamelHumpsWithSeparator("-")}",
-                                    (i, t) => i.Replace(t.SplitCamelHumpsWithSeparator("-"), t.ToLowerInvariant())));
-                    }
-                    else if (currentWord.IsParameter() && item.StartsWithOrdinalIgnoreCase(currentWord.GetParameterName()))
-                    {
-                        suggestedItems.Add(
-                            (currentWord.StartsWith("--")
-                                ? $"--{item.SplitCamelHumpsWithSeparator("-")}"
-                                : $"-{item}")
-                            .ReplaceCurrentWord(currentWord));
-                    }
-                }
-            }
-
-            return suggestedItems;
-        }
-
-        private static string ReplaceCurrentWord(this string str, string currentWord)
-        {
-            return str.Replace(currentWord, currentWord, StringComparison.OrdinalIgnoreCase);
-        }
-
-        private static bool IsParameter(this string value)
-        {
-            return value != null && value.StartsWith("-");
-        }
-
-        private static string GetParameterName(this string value)
-        {
-            ControlFlow.Assert(value.IsParameter(), "value.IsParameter()");
-            return value.Replace("-", string.Empty);
         }
     }
 }

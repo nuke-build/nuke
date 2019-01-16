@@ -6,11 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.BuildServers;
 using Nuke.Common.Execution;
 using Nuke.Common.OutputSinks;
 using Nuke.Common.Tooling;
+using Nuke.Common.Utilities.Collections;
+using static Nuke.Common.Constants;
 
 // ReSharper disable VirtualMemberNeverOverridden.Global
 
@@ -18,7 +21,7 @@ namespace Nuke.Common
 {
     /// <summary>
     /// Base class for build definitions. Derived types must declare <c>static int Main</c> which calls
-    /// <see cref="Execute{T}"/> for the exit code.
+    /// <see cref="Execute{T}(System.Linq.Expressions.Expression{System.Func{T,Nuke.Common.Target}})"/> for the exit code.
     /// </summary>
     /// <example>
     /// <code>
@@ -42,6 +45,9 @@ namespace Nuke.Common
     /// </code>
     /// </example>
     [PublicAPI]
+    [HandleHelpRequests]
+    [HandleShellCompletion]
+    [HandleVisualStudioDebugging]
     public abstract partial class NukeBuild
     {
         /// <summary>
@@ -51,10 +57,37 @@ namespace Nuke.Common
         protected static int Execute<T>(Expression<Func<T, Target>> defaultTargetExpression)
             where T : NukeBuild
         {
-            return BuildExecutor.Execute(defaultTargetExpression);
+            return BuildManager.Execute(defaultTargetExpression);
         }
+        
+        internal IReadOnlyCollection<ExecutableTarget> ExecutableTargets { get; set; }
+        internal IReadOnlyCollection<ExecutableTarget> ExecutionPlan { get; set; }
+        
+        /// <summary>
+        /// Gets the list of targets that were invoked.
+        /// </summary>
+        [Parameter("List of targets to be executed. Default is '{default_target}'.",
+            Name = InvokedTargetsParameterName,
+            Separator = TargetsSeparator)]
+        public IReadOnlyCollection<ExecutableTarget> InvokedTargets => ExecutionPlan.Where(x => x.Invoked).ToList();
+        
+        /// <summary>
+        /// Gets the list of targets that are skipped.
+        /// </summary>
+        [Parameter("List of targets to be skipped. Empty list skips all dependencies.", Name = SkippedTargetsParameterName, Separator = TargetsSeparator)]
+        public IReadOnlyCollection<ExecutableTarget> SkippedTargets => ExecutionPlan.Where(x => x.Status == ExecutionStatus.Skipped).ToList();
 
-        internal IReadOnlyCollection<TargetDefinition> TargetDefinitions { get; set; }
+        /// <summary>
+        /// Gets the list of targets that are executing.
+        /// </summary>
+        public IReadOnlyCollection<ExecutableTarget> ExecutingTargets => ExecutionPlan.Where(x => x.Status != ExecutionStatus.Skipped).ToList();
+
+
+        internal void Execute<T>()
+            where T : IBuildExtension
+        {
+            GetType().GetCustomAttributes().OfType<T>().ForEach(x => x.Execute(this));
+        }
 
         protected internal virtual IOutputSink OutputSink
         {
@@ -66,6 +99,9 @@ namespace Nuke.Common
                 {
                     case HostType.Bitrise:
                         innerOutputSink = new BitriseOutputSink();
+                        break;
+                    case HostType.Travis:
+                        innerOutputSink = new TravisOutputSink();
                         break;
                     case HostType.TeamCity:
                         innerOutputSink = new TeamCityOutputSink(new TeamCity());

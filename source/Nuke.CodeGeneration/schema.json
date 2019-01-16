@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "id": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "id": "https://raw.githubusercontent.com/nuke-build/common/master/source/Nuke.CodeGeneration/schema.json",
   "title": "Tool specification schema file by NUKE",
   "definitions": {
     "DataClass": {
@@ -79,17 +79,6 @@
         "json": {
           "description": "Name used when serializing to JSON.",
           "type": "string"
-        },
-        "assertion": {
-          "description": "Automatic assertion.",
-          "type": "string",
-          "enum": [
-            "NotNull",
-            "File",
-            "Directory",
-            "FileOrNull",
-            "DirectoryOrNull"
-          ]
         },
         "format": {
           "description": "Argument formatting for the property. '{value}' is replaced by the value of the property.",

@@ -13,27 +13,28 @@ using Nuke.Common.Utilities;
 
 namespace Nuke.Common.ProjectModel
 {
+    [PublicAPI]
     public static class ProjectExtensions
     {
-        private static void Initialize(string workingDirectory)
+        private static Lazy<string> s_msbuildPathResolver = new Lazy<string>(() =>
         {
             var dotnet = ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE") ??
                          ToolPathResolver.GetPathExecutable("dotnet");
-            var output = ProcessTasks.StartProcess(dotnet, "--info", workingDirectory, logOutput: false).AssertZeroExitCode().Output;
+            var output = ProcessTasks.StartProcess(dotnet, "--info", EnvironmentInfo.WorkingDirectory, logOutput: false).AssertZeroExitCode().Output;
             var basePath = (PathConstruction.AbsolutePath) output
                 .Select(x => x.Text.Trim())
                 .Single(x => x.StartsWith("Base Path:"))
                 .TrimStart("Base Path:").Trim();
 
-            EnvironmentInfo.SetVariable("MSBUILD_EXE_PATH", basePath / "MSBuild.dll");
-        }
+            return basePath / "MSBuild.dll";
+        });
 
         public static Microsoft.Build.Evaluation.Project GetMSBuildProject(
             this Project project,
             string configuration = null,
             string targetFramework = null)
         {
-            Initialize(project.Directory);
+            Environment.SetEnvironmentVariable("MSBUILD_EXE_PATH", s_msbuildPathResolver.Value);
 
             var projectCollection = new ProjectCollection();
             var msbuildProject = new Microsoft.Build.Evaluation.Project(
@@ -62,6 +63,33 @@ namespace Nuke.Common.ProjectModel
             }
 
             return msbuildProject;
+        }
+
+        [CanBeNull]
+        public static string GetProperty(this Project project, string propertyName)
+        {
+            var property = project.GetMSBuildProject().GetProperty(propertyName);
+            return property?.EvaluatedValue;
+        }
+
+        [CanBeNull]
+        public static IEnumerable<string> GetItemIncludes(this Project project, string itemGroupName)
+        {
+            var items = project.GetMSBuildProject().GetItems(itemGroupName);
+            return items.Select(x => x.EvaluatedInclude);
+        }
+
+        public static IReadOnlyCollection<string> GetTargetFrameworks(this Microsoft.Build.Evaluation.Project project)
+        {
+            var targetFrameworkProperty = project.GetProperty("TargetFramework");
+            if (targetFrameworkProperty != null)
+                return new[]{ targetFrameworkProperty.EvaluatedValue };
+            
+            var targetFrameworksProperty = project.GetProperty("TargetFrameworks");
+            if (targetFrameworksProperty != null)
+                return targetFrameworksProperty.EvaluatedValue.Split(';');
+
+            return new string[0];
         }
 
         private static Dictionary<string, string> GetProperties([CanBeNull] string configuration, [CanBeNull] string targetFramework)

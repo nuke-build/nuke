@@ -47,7 +47,7 @@ namespace Nuke.Common.BuildTasks
                 var outputFile = externalFile.Substring(startIndex: 0, length: externalFile.Length - 4);
                 var previousHash = File.Exists(outputFile) ? FileSystemTasks.GetFileHash(outputFile) : null;
                 
-                var template = await HttpTasks.HttpDownloadStringAsync(uri.OriginalString);
+                var template = (await HttpTasks.HttpDownloadStringAsync(uri.OriginalString)).SplitLineBreaks();
                 var replacements = lines.Skip(1)
                     .Where(x => x.Contains('='))
                     .Select(x => x.Split('='))
@@ -60,7 +60,7 @@ namespace Nuke.Common.BuildTasks
                     .Select(x => x.ToUpperInvariant())
                     .ToList();
                 
-                File.WriteAllText(outputFile, TemplateUtility.FillTemplate(template, definitions, replacements));
+                File.WriteAllLines(outputFile, TemplateUtility.FillTemplate(template, definitions, replacements));
                 var newHash = FileSystemTasks.GetFileHash(outputFile);
 
                 if (newHash != previousHash)

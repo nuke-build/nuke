@@ -3,7 +3,10 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
+using Nuke.Common.Execution;
 
 namespace Nuke.Common
 {
@@ -19,4 +22,13 @@ namespace Nuke.Common
     /// </code>
     /// </example>
     public delegate ITargetDefinition Target(ITargetDefinition definition);
+
+    [PublicAPI]
+    public static class ExecutableTargetExtensions
+    {
+        public static bool Contains(this IEnumerable<ExecutableTarget> targets, Target target)
+        {
+            return targets.Any(x => x.Factory == target);
+        }
+    }
 }

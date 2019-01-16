@@ -26,15 +26,10 @@ namespace Nuke.Common
             BuildAssemblyDirectory = GetBuildAssemblyDirectory();
             BuildProjectDirectory = GetBuildProjectDirectory(BuildAssemblyDirectory);
 
-            InvokedTargets = ParameterService.Instance.GetParameter(() => InvokedTargets) ??
-                             ParameterService.Instance.GetPositionalCommandLineArguments<string>(separator: TargetsSeparator.Single()) ??
-                             new[] { BuildExecutor.DefaultTarget };
-            SkippedTargets = ParameterService.Instance.GetParameter(() => SkippedTargets);
-
             Verbosity = ParameterService.Instance.GetParameter<Verbosity?>(()  => Verbosity) ?? Verbosity.Normal;
             Host = ParameterService.Instance.GetParameter<HostType?>(()  => Host) ?? GetHostType();
             Continue = ParameterService.Instance.GetParameter(() => Continue);
-            Graph = ParameterService.Instance.GetParameter(() => Graph);
+            Plan = ParameterService.Instance.GetParameter(() => Plan);
             Help = ParameterService.Instance.GetParameter(() => Help);
         }
 
@@ -74,10 +69,10 @@ namespace Nuke.Common
         public static HostType Host { get; }
 
         /// <summary>
-        /// Gets a value whether to show the target dependency graph (HTML).
+        /// Gets a value whether to show the execution plan (HTML).
         /// </summary>
-        [Parameter("Shows the target dependency graph (HTML).")]
-        public static bool Graph { get; }
+        [Parameter("Shows the execution plan (HTML).")]
+        public static bool Plan { get; }
 
         /// <summary>
         /// Gets a value whether to show the help text for this build assembly.
@@ -89,23 +84,6 @@ namespace Nuke.Common
         public static bool IsServerBuild => Host != HostType.Console;
 
         public static LogLevel LogLevel => (LogLevel) Verbosity;
-
-        /// <summary>
-        /// Gets the list of targets that were invoked.
-        /// </summary>
-        [Parameter("List of targets to be executed. Default is '{default_target}'.", Name = InvokedTargetsParameterName, Separator = TargetsSeparator)]
-        public static string[] InvokedTargets { get; internal set; }
-        
-        /// <summary>
-        /// Gets the list of targets that are skipped.
-        /// </summary>
-        [Parameter("List of targets to be skipped. Empty list skips all dependencies.", Name = SkippedTargetsParameterName, Separator = TargetsSeparator)]
-        public static string[] SkippedTargets { get; internal set; }
-        
-        /// <summary>
-        /// Gets the list of targets that are executing.
-        /// </summary>
-        public static string[] ExecutingTargets { get; internal set; }
 
         [Parameter("Indicates to continue a previously failed build attempt.")]
         public static bool Continue { get; internal set; }

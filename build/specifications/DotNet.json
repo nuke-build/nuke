@@ -487,7 +487,6 @@
           {
             "name": "TargetPath",
             "type": "string",
-            "assertion": "File",
             "format": "{value}",
             "help": "Path of the package to push."
           },

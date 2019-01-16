@@ -13,19 +13,18 @@ namespace Nuke.Common.Execution
 {
     internal static class HelpTextService
     {
-        public static string GetTargetsText<T>(T build)
-            where T : NukeBuild
+        public static string GetTargetsText(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             var builder = new StringBuilder();
 
-            var longestTargetName = build.TargetDefinitions.Select(x => x.Name.Length).OrderByDescending(x => x).First();
+            var longestTargetName = executableTargets.Select(x => x.Name.Length).OrderByDescending(x => x).First();
             var padRightTargets = Math.Max(longestTargetName, val2: 20);
             builder.AppendLine("Targets (with their direct dependencies):");
             builder.AppendLine();
-            foreach (var target in build.TargetDefinitions)
+            foreach (var target in executableTargets)
             {
-                var dependencies = target.TargetDefinitionDependencies.Count > 0
-                    ? $" -> {target.TargetDefinitionDependencies.Select(x => x.Name).JoinComma()}"
+                var dependencies = target.ExecutionDependencies.Count > 0
+                    ? $" -> {target.ExecutionDependencies.Select(x => x.Name).JoinComma()}"
                     : string.Empty;
                 var targetEntry = target.Name + (target.IsDefault ? " (default)" : string.Empty);
                 builder.AppendLine($"  {targetEntry.PadRight(padRightTargets)}{dependencies}");
@@ -36,10 +35,9 @@ namespace Nuke.Common.Execution
             return builder.ToString();
         }
 
-        public static string GetParametersText<T>(T build)
-            where T : NukeBuild
+        public static string GetParametersText(NukeBuild build)
         {
-            var defaultTarget = build.TargetDefinitions.Single(x => x.IsDefault);
+            var defaultTarget = build.ExecutableTargets.Single(x => x.IsDefault);
             var builder = new StringBuilder();
 
             var parameters = InjectionUtility.GetParameterMembers(build.GetType()).OrderBy(x => x.Name).ToList();

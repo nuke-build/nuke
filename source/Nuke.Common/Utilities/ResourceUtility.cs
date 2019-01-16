@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -11,9 +12,24 @@ namespace Nuke.Common.Utilities
 {
     public static class ResourceUtility
     {
-        public static string GetResourceText<T>(string postfix)
+        public static string GetResourceAllText<T>(string postfix)
         {
             return new StreamReader(GetResource<T>(postfix)).ReadToEnd();
+        }
+        
+        public static string[] GetResourceAllLines<T>(string postfix)
+        {
+            var lines = new List<string>();
+            
+            using (var streamReader = new StreamReader(GetResource<T>(postfix)))
+            {
+                while (!streamReader.EndOfStream)
+                {
+                    lines.Add(streamReader.ReadLine());
+                }
+            }
+
+            return lines.ToArray();
         }
 
         public static Stream GetResource<T>(string postfix)

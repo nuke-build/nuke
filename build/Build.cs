@@ -9,6 +9,7 @@ using System.Text;
 using Nuke.Common;
 using Nuke.Common.Git;
 using Nuke.Common.ProjectModel;
+using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.InspectCode;
@@ -55,6 +56,7 @@ partial class Build : NukeBuild
     readonly string HotfixBranchPrefix = "hotfix";
 
     Target Clean => _ => _
+        .Before(Restore)
         .Executes(() =>
         {
             DeleteDirectories(GlobDirectories(SourceDirectory, "*/bin", "*/obj"));
@@ -62,7 +64,6 @@ partial class Build : NukeBuild
         });
 
     Target Restore => _ => _
-        .DependsOn(Clean)
         .Executes(() =>
         {
             DotNetRestore(s => s
@@ -75,7 +76,6 @@ partial class Build : NukeBuild
 
     Target Compile => _ => _
         .DependsOn(Restore)
-        .Requires(() => IsUnix || GitVersion != null)
         .Executes(() =>
         {
             DotNetBuild(s => s
@@ -86,29 +86,18 @@ partial class Build : NukeBuild
                 .SetFileVersion(GitVersion.GetNormalizedFileVersion())
                 .SetInformationalVersion(GitVersion.InformationalVersion));
 
-            var publishSettings = new DotNetPublishSettings()
+            DotNetPublish(s => s
                 .EnableNoRestore()
                 .SetConfiguration(Configuration)
                 .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())
                 .SetFileVersion(GitVersion.GetNormalizedFileVersion())
-                .SetInformationalVersion(GitVersion.InformationalVersion);
-
-            DotNetPublish(s => publishSettings
-                .SetProject(GlobalToolProject));
-
-            DotNetPublish(s => publishSettings
-                .SetProject(CommonProject)
-                .SetFramework("netstandard2.0"));
-            DotNetPublish(s => publishSettings
-                .SetProject(CommonProject)
-                .SetFramework("net461"));
-
-            DotNetPublish(s => publishSettings
-                .SetProject(CodeGenerationProject)
-                .SetFramework("netstandard2.0"));
-            DotNetPublish(s => publishSettings
-                .SetProject(CodeGenerationProject)
-                .SetFramework("net461"));
+                .SetInformationalVersion(GitVersion.InformationalVersion)
+                .CombineWith(
+                    from project in new[] { GlobalToolProject, CommonProject, CodeGenerationProject }
+                    from framework in project.GetMSBuildProject().GetTargetFrameworks()
+                    select new { project, framework }, (cs, v) => cs
+                        .SetProject(v.project)
+                        .SetFramework(v.framework)));
         });
 
     string ChangelogFile => RootDirectory / "CHANGELOG.md";

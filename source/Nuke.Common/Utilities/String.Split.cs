@@ -42,7 +42,12 @@ namespace Nuke.Common.Utilities
                 },
                 includeSplitCharacter: true);
         }
-        
+
+        public static string[] SplitLineBreaks(this string str)
+        {
+            return str.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
+        }
+
         [Pure]
         public static string SplitCamelHumpsWithSeparator(this string str, string separator)
         {

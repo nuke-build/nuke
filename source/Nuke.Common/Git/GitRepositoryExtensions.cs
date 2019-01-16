@@ -28,9 +28,9 @@ namespace Nuke.Common.Git
         
         public static bool IsOnDevelopBranch(this GitRepository repository)
         {
-            return repository.Branch?.EqualsOrdinalIgnoreCase("dev") ??
-                   repository.Branch?.EqualsOrdinalIgnoreCase("develop") ??
-                   repository.Branch?.EqualsOrdinalIgnoreCase("development") ?? false;
+            return (repository.Branch?.EqualsOrdinalIgnoreCase("dev") ?? false) ||
+                   (repository.Branch?.EqualsOrdinalIgnoreCase("develop") ?? false) ||
+                   (repository.Branch?.EqualsOrdinalIgnoreCase("development") ?? false);
         }
         
         public static bool IsOnFeatureBranch(this GitRepository repository)

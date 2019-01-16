@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/DotCover.json
+// Generated from https://github.com/nuke-build/common/blob/master/build/specifications/DotCover.json
 // Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
@@ -35,52 +35,124 @@ namespace Nuke.Common.Tools.DotCover
             return process.Output;
         }
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> DotCoverAnalyse(Configure<DotCoverAnalyseSettings> configurator = null)
+        public static IReadOnlyCollection<Output> DotCoverAnalyse(DotCoverAnalyseSettings toolSettings = null)
         {
-            var toolSettings = configurator.InvokeSafe(new DotCoverAnalyseSettings());
+            toolSettings = toolSettings ?? new DotCoverAnalyseSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> DotCoverCover(Configure<DotCoverCoverSettings> configurator = null)
+        public static IReadOnlyCollection<Output> DotCoverAnalyse(Configure<DotCoverAnalyseSettings> configurator)
         {
-            var toolSettings = configurator.InvokeSafe(new DotCoverCoverSettings());
+            return DotCoverAnalyse(configurator(new DotCoverAnalyseSettings()));
+        }
+        /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+        public static IEnumerable<(DotCoverAnalyseSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverAnalyse(CombinatorialConfigure<DotCoverAnalyseSettings> configurator)
+        {
+            return configurator(new DotCoverAnalyseSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: DotCoverAnalyse(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> DotCoverCover(DotCoverCoverSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new DotCoverCoverSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> DotCoverDelete(Configure<DotCoverDeleteSettings> configurator = null)
+        public static IReadOnlyCollection<Output> DotCoverCover(Configure<DotCoverCoverSettings> configurator)
         {
-            var toolSettings = configurator.InvokeSafe(new DotCoverDeleteSettings());
+            return DotCoverCover(configurator(new DotCoverCoverSettings()));
+        }
+        /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+        public static IEnumerable<(DotCoverCoverSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverCover(CombinatorialConfigure<DotCoverCoverSettings> configurator)
+        {
+            return configurator(new DotCoverCoverSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: DotCoverCover(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> DotCoverDelete(DotCoverDeleteSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new DotCoverDeleteSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> DotCoverMerge(Configure<DotCoverMergeSettings> configurator = null)
+        public static IReadOnlyCollection<Output> DotCoverDelete(Configure<DotCoverDeleteSettings> configurator)
         {
-            var toolSettings = configurator.InvokeSafe(new DotCoverMergeSettings());
+            return DotCoverDelete(configurator(new DotCoverDeleteSettings()));
+        }
+        /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+        public static IEnumerable<(DotCoverDeleteSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverDelete(CombinatorialConfigure<DotCoverDeleteSettings> configurator)
+        {
+            return configurator(new DotCoverDeleteSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: DotCoverDelete(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> DotCoverMerge(DotCoverMergeSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new DotCoverMergeSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> DotCoverReport(Configure<DotCoverReportSettings> configurator = null)
+        public static IReadOnlyCollection<Output> DotCoverMerge(Configure<DotCoverMergeSettings> configurator)
         {
-            var toolSettings = configurator.InvokeSafe(new DotCoverReportSettings());
+            return DotCoverMerge(configurator(new DotCoverMergeSettings()));
+        }
+        /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+        public static IEnumerable<(DotCoverMergeSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverMerge(CombinatorialConfigure<DotCoverMergeSettings> configurator)
+        {
+            return configurator(new DotCoverMergeSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: DotCoverMerge(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> DotCoverReport(DotCoverReportSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new DotCoverReportSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
         }
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
-        public static IReadOnlyCollection<Output> DotCoverZip(Configure<DotCoverZipSettings> configurator = null)
+        public static IReadOnlyCollection<Output> DotCoverReport(Configure<DotCoverReportSettings> configurator)
         {
-            var toolSettings = configurator.InvokeSafe(new DotCoverZipSettings());
+            return DotCoverReport(configurator(new DotCoverReportSettings()));
+        }
+        /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+        public static IEnumerable<(DotCoverReportSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverReport(CombinatorialConfigure<DotCoverReportSettings> configurator)
+        {
+            return configurator(new DotCoverReportSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: DotCoverReport(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+        }
+        /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> DotCoverZip(DotCoverZipSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new DotCoverZipSettings();
             var process = ProcessTasks.StartProcess(toolSettings);
             process.AssertZeroExitCode();
             return process.Output;
+        }
+        /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+        public static IReadOnlyCollection<Output> DotCoverZip(Configure<DotCoverZipSettings> configurator)
+        {
+            return DotCoverZip(configurator(new DotCoverZipSettings()));
+        }
+        /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+        public static IEnumerable<(DotCoverZipSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverZip(CombinatorialConfigure<DotCoverZipSettings> configurator)
+        {
+            return configurator(new DotCoverZipSettings())
+                .Select(x => (ToolSettings: x, ReturnValue: DotCoverZip(x)))
+                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
         }
     }
     #region DotCoverAnalyseSettings
@@ -134,11 +206,6 @@ namespace Nuke.Common.Tools.DotCover
         internal List<string> ProcessFiltersInternal { get; set; } = new List<string>();
         /// <summary><p>Enables logging and specifies log file name.</p></summary>
         public virtual string LogFile { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(Configuration) || Configuration == null, $"File.Exists(Configuration) || Configuration == null [Configuration = {Configuration}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -213,11 +280,6 @@ namespace Nuke.Common.Tools.DotCover
         internal List<string> ProcessFiltersInternal { get; set; } = new List<string>();
         /// <summary><p>Enables logging and specifies log file name.</p></summary>
         public virtual string LogFile { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(Configuration) || Configuration == null, $"File.Exists(Configuration) || Configuration == null [Configuration = {Configuration}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -258,11 +320,6 @@ namespace Nuke.Common.Tools.DotCover
         internal List<string> SourceInternal { get; set; } = new List<string>();
         /// <summary><p>Enables logging and specifies log file name.</p></summary>
         public virtual string LogFile { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(Configuration) || Configuration == null, $"File.Exists(Configuration) || Configuration == null [Configuration = {Configuration}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -293,11 +350,6 @@ namespace Nuke.Common.Tools.DotCover
         public virtual string TempDirectory { get; internal set; }
         /// <summary><p>Enables logging and specifies log file name.</p></summary>
         public virtual string LogFile { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(Configuration) || Configuration == null, $"File.Exists(Configuration) || Configuration == null [Configuration = {Configuration}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -332,11 +384,6 @@ namespace Nuke.Common.Tools.DotCover
         public virtual bool? HideAutoProperties { get; internal set; }
         /// <summary><p>Enables logging and specifies log file name.</p></summary>
         public virtual string LogFile { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(Configuration) || Configuration == null, $"File.Exists(Configuration) || Configuration == null [Configuration = {Configuration}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -367,11 +414,6 @@ namespace Nuke.Common.Tools.DotCover
         public virtual string OutputFile { get; internal set; }
         /// <summary><p>Enables logging and specifies log file name.</p></summary>
         public virtual string LogFile { get; internal set; }
-        protected override void AssertValid()
-        {
-            base.AssertValid();
-            ControlFlow.Assert(File.Exists(Configuration) || Configuration == null, $"File.Exists(Configuration) || Configuration == null [Configuration = {Configuration}]");
-        }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments

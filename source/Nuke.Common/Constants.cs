@@ -18,6 +18,7 @@ namespace Nuke.Common
         internal const string InvokedTargetsParameterName = "Target";
         internal const string SkippedTargetsParameterName = "Skip";
         
+        public const string VisualStudioDebugParameterName = "visual-studio-debug";
         internal const string CompletionParameterName = "shell-completion";
 
         [CanBeNull]
@@ -44,6 +45,11 @@ namespace Nuke.Common
         internal static PathConstruction.AbsolutePath GetBuildAttemptFile(PathConstruction.AbsolutePath rootDirectory)
         {
             return GetTemporaryDirectory(rootDirectory) / "build-attempt.log";
+        }
+        
+        public static PathConstruction.AbsolutePath GetVisualStudioDebugFile(PathConstruction.AbsolutePath rootDirectory)
+        {
+            return GetTemporaryDirectory(rootDirectory) / $"{VisualStudioDebugParameterName}.log";
         }
     }
 }

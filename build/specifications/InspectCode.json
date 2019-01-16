@@ -17,7 +17,6 @@
           {
             "name": "TargetPath",
             "type": "string",
-            "assertion": "File",
             "format": "{value}",
             "createOverload": true,
             "help": "Target path."
@@ -25,7 +24,6 @@
           {
             "name": "Output",
             "type": "string",
-            "assertion": "NotNull",
             "format": "--output={value}",
             "createOverload": true,
             "help": "Lets you set the output file. By default, the output file is saved in the <em>%TEMP%</em> directory."

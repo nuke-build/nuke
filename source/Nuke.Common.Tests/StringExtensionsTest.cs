@@ -15,9 +15,17 @@ namespace Nuke.Common.Tests
         [Theory]
         [InlineData("a b c", "\"a b c\"")]
         [InlineData("\"a b c\"", "\"a b c\"")]
-        public void Test(string input, string output)
+        public void TestDoubleQuoteIfNeeded(string input, string output)
         {
             input.DoubleQuoteIfNeeded().Should().Be(output);
+        }
+        
+        [Theory]
+        [InlineData("a\nb\nc")]
+        [InlineData("a\r\nb\r\nc")]
+        public void TestSplitLineBreaks(string input)
+        {
+            input.SplitLineBreaks().Should().BeEquivalentTo("a", "b", "c");
         }
 
         [Theory]

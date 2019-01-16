@@ -14,7 +14,6 @@
           {
             "name": "TargetPath",
             "type": "string",
-            "assertion": "FileOrNull",
             "format": "{value}",
             "createOverload": true,
             "help": "The solution or project file on which MSBuild is executed."

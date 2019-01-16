@@ -20,7 +20,6 @@
           {
             "name": "Configuration",
             "type": "string",
-            "assertion": "FileOrNull",
             "format": "{value}"
           },
           {
@@ -55,7 +54,6 @@
           {
             "name": "Configuration",
             "type": "string",
-            "assertion": "FileOrNull",
             "format": "{value}"
           },
           {
@@ -75,7 +73,6 @@
           {
             "name": "Configuration",
             "type": "string",
-            "assertion": "FileOrNull",
             "format": "{value}"
           },
           {
@@ -96,7 +93,6 @@
           {
             "name": "Configuration",
             "type": "string",
-            "assertion": "FileOrNull",
             "format": "{value}"
           },
           {
@@ -129,7 +125,6 @@
           {
             "name": "Configuration",
             "type": "string",
-            "assertion": "FileOrNull",
             "format": "{value}"
           },
           {
@@ -168,7 +163,6 @@
           {
             "name": "Configuration",
             "type": "string",
-            "assertion": "FileOrNull",
             "format": "{value}"
           },
           {

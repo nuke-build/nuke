@@ -179,7 +179,7 @@ namespace Nuke.GlobalTool
                 TextTasks.WriteAllLines(solutionFile, solutionFileContent, Encoding.UTF8);
             }
 
-            TextTasks.WriteAllText(
+            TextTasks.WriteAllLines(
                 buildProjectFile,
                 TemplateUtility.FillTemplate(
                     GetTemplate($"_build.{projectFormat}.csproj"),
@@ -198,30 +198,30 @@ namespace Nuke.GlobalTool
 
             if (projectFormat == FORMAT_LEGACY)
             {
-                TextTasks.WriteAllText(
+                TextTasks.WriteAllLines(
                     Path.Combine(buildDirectory, "packages.config"),
                     TemplateUtility.FillTemplate(
                         GetTemplate("_build.legacy.packages.config"),
                         replacements: GetDictionary(new { nukeVersion })));
             }
 
-            TextTasks.WriteAllText(
+            TextTasks.WriteAllLines(
                 $"{buildProjectFile}.DotSettings",
                 TemplateUtility.FillTemplate(
                     GetTemplate("_build.csproj.DotSettings")));
             
-            TextTasks.WriteAllText(
+            TextTasks.WriteAllLines(
                 Path.Combine(buildDirectory, ".editorconfig"),
                 TemplateUtility.FillTemplate(
                     GetTemplate(".editorconfig")));
 
-            TextTasks.WriteAllText(
+            TextTasks.WriteAllLines(
                 Path.Combine(buildDirectory, "Build.cs"),
                 TemplateUtility.FillTemplate(
                     GetTemplate("Build.cs"),
                     definitions));
 
-            TextTasks.WriteAllText(
+            TextTasks.WriteAllLines(
                 Path.Combine(EnvironmentInfo.WorkingDirectory, "build.ps1"),
                 TemplateUtility.FillTemplate(
                     GetTemplate($"build.{targetPlatform}.ps1"),
@@ -236,7 +236,7 @@ namespace Nuke.GlobalTool
                             nugetVersion = "latest"
                         })));
 
-            TextTasks.WriteAllText(
+            TextTasks.WriteAllLines(
                 Path.Combine(EnvironmentInfo.WorkingDirectory, "build.sh"),
                 TemplateUtility.FillTemplate(
                     GetTemplate($"build.{targetPlatform}.sh"),
@@ -271,7 +271,7 @@ namespace Nuke.GlobalTool
                 var authors = ConsoleUtility.PromptForInput("Author names separated by comma:", defaultValue: "Matthias Koch, Sebastian Karasek");
                 var packageName = ConsoleUtility.PromptForInput("Package name on nuget.org:", defaultValue: null);
 
-                TextTasks.WriteAllText(
+                TextTasks.WriteAllLines(
                     Path.Combine(rootDirectory, "README.md"),
                     TemplateUtility.FillTemplate(
                         GetTemplate("README.md"),
@@ -284,7 +284,7 @@ namespace Nuke.GlobalTool
                                 packageName
                             })));
                 
-                TextTasks.WriteAllText(
+                TextTasks.WriteAllLines(
                     Path.Combine(rootDirectory, "LICENSE"),
                     TemplateUtility.FillTemplate(
                         GetTemplate("LICENSE"),
@@ -295,23 +295,23 @@ namespace Nuke.GlobalTool
                                 authors
                             })));
                 
-                TextTasks.WriteAllText(
+                TextTasks.WriteAllLines(
                     Path.Combine(rootDirectory, "CHANGELOG.md"),
                     TemplateUtility.FillTemplate(
                         GetTemplate("CHANGELOG.md")));
 
                 TextTasks.WriteAllText(
                     $"{solutionFile}.DotSettings.ext",
-                    "https://raw.githubusercontent.com/nuke-build/nuke/develop/nuke-common.sln.DotSettings");
+                    "https://raw.githubusercontent.com/nuke-build/common/develop/nuke-common.sln.DotSettings");
                 TextTasks.WriteAllText(
                     Path.Combine(solutionDirectory, "source", "Inspections.DotSettings.ext"),
-                    "https://raw.githubusercontent.com/nuke-build/nuke/develop/source/Inspections.DotSettings");
+                    "https://raw.githubusercontent.com/nuke-build/common/develop/source/Inspections.DotSettings");
                 TextTasks.WriteAllText(
                     Path.Combine(solutionDirectory, "source", "CodeStyle.DotSettings.ext"),
-                    "https://raw.githubusercontent.com/nuke-build/nuke/develop/source/CodeStyle.DotSettings");
+                    "https://raw.githubusercontent.com/nuke-build/common/develop/source/CodeStyle.DotSettings");
                 TextTasks.WriteAllText(
                     Path.Combine(solutionDirectory, "source", "Configuration.props.ext"),
-                    "https://raw.githubusercontent.com/nuke-build/nuke/develop/source/Configuration.props");
+                    "https://raw.githubusercontent.com/nuke-build/common/develop/source/Configuration.props");
             }
 
             #endregion
@@ -363,9 +363,9 @@ namespace Nuke.GlobalTool
                 "EndProject");
         }
 
-        private static string GetTemplate(string templateName)
+        private static string[] GetTemplate(string templateName)
         {
-            return new StreamReader(ResourceUtility.GetResource(typeof(Program), $"templates.{templateName}")).ReadToEnd();
+            return ResourceUtility.GetResourceAllLines<Program>($"templates.{templateName}");
         }
 
         // TODO: move to TemplateUtility

@@ -3,12 +3,14 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 
 namespace Nuke.Common.Tooling
 {
     public delegate T Configure<T>(T settings);
+    public delegate IEnumerable<T> CombinatorialConfigure<T>(T settings);
 
     public static class ConfigureExtensions
     {

@@ -31,7 +31,6 @@
           {
             "name": "LicenseFile",
             "type": "string",
-            "assertion": "File",
             "format": "-manualLicenseFile {value}",
             "help": "The path to the license file."
           }
@@ -258,7 +257,6 @@
           {
             "name": "ProjectPath",
             "type": "string",
-            "assertion": "DirectoryOrNull",
             "format": "-projectPath {value}",
             "help": "Specify the path of the unity project."
           }

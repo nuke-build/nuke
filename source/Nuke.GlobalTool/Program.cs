@@ -14,7 +14,7 @@ using Nuke.Common.Utilities;
 
 namespace Nuke.GlobalTool
 {
-    public static partial class Program
+    public partial class Program
     {
         private const char c_commandPrefix = ':';
 

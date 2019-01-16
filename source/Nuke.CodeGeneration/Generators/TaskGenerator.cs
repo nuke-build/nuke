@@ -30,34 +30,10 @@ namespace Nuke.CodeGeneration.Generators
                     w.WriteToolPath();
                     w.WriteGenericTask();
                     tool.Tasks.ForEach(x => new TaskWriter(x, toolWriter)
-                        .WriteMainTask()
-                        .WriteTaskOverloads());
+                        .WriteToolSettingsTask()
+                        .WriteConfiguratorTask()
+                        .WriteCombinatorialConfiguratorTask());
                 });
-        }
-
-        private static TaskWriter WriteTaskOverloads(this TaskWriter writer, int index = 0)
-        {
-            var task = writer.Task;
-            var properties = task.SettingsClass.Properties.Where(x => x.CreateOverload).Take(index + 1).ToList();
-
-            if (properties.Count == 0 || index >= properties.Count)
-                return writer;
-
-            var additionalParameterDeclarations = properties.Select(x => $"{x.GetNullabilityAttribute()}{x.Type} {x.Name.ToInstance()}");
-            var nextArguments = properties.AsEnumerable().Reverse().Skip(count: 1).Reverse().Select(x => x.Name.ToInstance());
-            var currentArgument = properties.Last();
-            var setter = $"x => configurator(x).Set{currentArgument.Name}({currentArgument.Name.ToInstance()})";
-            var allArguments = nextArguments.Concat(new[] { setter });
-            var taskCallPrefix = task.HasReturnValue() ? "return " : string.Empty;
-
-            writer
-                .WriteSummary(task)
-                .WriteTaskSignature(additionalParameterDeclarations)
-                .WriteBlock(w => w
-                    .WriteLine("configurator = configurator ?? (x => x);")
-                    .WriteLine($"return {taskCallPrefix}{task.GetTaskMethodName()}({allArguments.JoinComma()});"));
-
-            return writer.WriteTaskOverloads(index + 1);
         }
 
         private static void WriteGenericTask(this ToolWriter writer)
@@ -93,26 +69,61 @@ namespace Nuke.CodeGeneration.Generators
                     .WriteLine("return process.Output;"));
         }
 
-        private static TaskWriter WriteMainTask(this TaskWriter writer)
-        {
-            return writer
-                .WriteSummary(writer.Task)
-                .WriteTaskSignature()
-                .WriteBlock(WriteMainTaskBlock);
-        }
-
-        private static void WriteMainTaskBlock(TaskWriter writer)
+        private static TaskWriter WriteToolSettingsTask(this TaskWriter writer)
         {
             var task = writer.Task;
-            writer
-                .WriteLine($"var toolSettings = configurator.InvokeSafe(new {task.SettingsClass.Name}());")
-                .WriteLineIfTrue(task.PreProcess, "PreProcess(ref toolSettings);")
-                .WriteLine($"var process = {GetProcessStart(task)};")
-                .WriteLine(GetProcessAssertion(task))
-                .WriteLineIfTrue(task.PostProcess, "PostProcess(toolSettings);")
-                .WriteLine(task.HasReturnValue()
-                    ? "return (GetResult(process, toolSettings), process.Output);"
-                    : "return process.Output;");
+            var returnType = task.HasReturnValue()
+                ? $"({task.ReturnType} Result, IReadOnlyCollection<Output> Output)"
+                : "IReadOnlyCollection<Output>";
+
+            return writer
+                .WriteSummary(task)
+                .WriteObsoleteAttributeWhenObsolete(task)
+                .WriteLine($"public static {returnType} {task.GetTaskMethodName()}({task.SettingsClass.Name} toolSettings = null)")
+                .WriteBlock(w => w
+                    .WriteLine($"toolSettings = toolSettings ?? new {task.SettingsClass.Name}();")
+                    .WriteLineIfTrue(task.PreProcess, "PreProcess(ref toolSettings);")
+                    .WriteLine($"var process = {GetProcessStart(task)};")
+                    .WriteLine(GetProcessAssertion(task))
+                    .WriteLineIfTrue(task.PostProcess, "PostProcess(toolSettings);")
+                    .WriteLine(task.HasReturnValue()
+                        ? "return (GetResult(process, toolSettings), process.Output);"
+                        : "return process.Output;"));
+        }
+
+        private static TaskWriter WriteConfiguratorTask(this TaskWriter writer)
+        {
+            var task = writer.Task;
+            var returnType = task.HasReturnValue()
+                ? $"({task.ReturnType} Result, IReadOnlyCollection<Output> Output)"
+                : "IReadOnlyCollection<Output>";
+
+            return writer
+                .WriteSummary(task)
+                .WriteObsoleteAttributeWhenObsolete(task)
+                .WriteLine($"public static {returnType} {task.GetTaskMethodName()}(Configure<{task.SettingsClass.Name}> configurator)")
+                .WriteBlock(w => w
+                    .WriteLine($"return {task.GetTaskMethodName()}(configurator(new {task.SettingsClass.Name}()));"));
+        }
+        
+        private static TaskWriter WriteCombinatorialConfiguratorTask(this TaskWriter writer)
+        {
+            var task = writer.Task;
+            var returnType = !task.HasReturnValue()
+                ? $"IEnumerable<({task.SettingsClass.Name} Settings, IReadOnlyCollection<Output> Output)>"
+                : $"IEnumerable<({task.SettingsClass.Name} Settings, {task.ReturnType} Result, IReadOnlyCollection<Output> Output)>";
+            var selector = !task.HasReturnValue()
+                ? "(x.ToolSettings, x.ReturnValue)"
+                : "(x.ToolSettings, x.ReturnValue.Result, x.ReturnValue.Output)";
+
+            return writer
+                .WriteSummary(task)
+                .WriteObsoleteAttributeWhenObsolete(task)
+                .WriteLine($"public static {returnType} {task.GetTaskMethodName()}(CombinatorialConfigure<{task.SettingsClass.Name}> configurator)")
+                .WriteBlock(w => w
+                    .WriteLine($"return configurator(new {task.SettingsClass.Name}())")
+                    .WriteLine($"    .Select(x => (ToolSettings: x, ReturnValue: {task.GetTaskMethodName()}(x)))")
+                    .WriteLine($"    .Select(x => {selector}).ToList();"));
         }
 
         private static string GetProcessStart(Task task)
@@ -154,23 +165,6 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteLine($"public static string {tool.Name}Path =>")
                 .WriteLine($"    ToolPathResolver.TryGetEnvironmentExecutable(\"{tool.Name.ToUpperInvariant()}_EXE\") ??")
                 .WriteLine($"    {resolvers.Single()};");
-        }
-
-        private static T WriteTaskSignature<T>(this T writer, IEnumerable<string> additionalParameterDeclarations = null)
-            where T : TaskWriter
-        {
-            var task = writer.Task;
-            var parameterDeclarations = new List<string>();
-            parameterDeclarations.AddRange(additionalParameterDeclarations ?? new List<string>());
-            parameterDeclarations.Add($"Configure<{task.SettingsClass.Name}> configurator = null");
-
-            var returnType = task.HasReturnValue()
-                ? $"({task.ReturnType} Result, IReadOnlyCollection<Output> Output)"
-                : "IReadOnlyCollection<Output>";
-
-            return writer
-                .WriteObsoleteAttributeWhenObsolete(task)
-                .WriteLine($"public static {returnType} {task.GetTaskMethodName()}({parameterDeclarations.JoinComma()})");
         }
     }
 }
