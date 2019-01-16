@@ -35,9 +35,9 @@ namespace Nuke.Common.Execution
             return builder.ToString();
         }
 
-        public static string GetParametersText(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public static string GetParametersText(NukeBuild build)
         {
-            var defaultTarget = executableTargets.Single(x => x.IsDefault);
+            var defaultTarget = build.ExecutableTargets.Single(x => x.IsDefault);
             var builder = new StringBuilder();
 
             var parameters = InjectionUtility.GetParameterMembers(build.GetType()).OrderBy(x => x.Name).ToList();

@@ -13,11 +13,11 @@ namespace Nuke.Common.Execution
     [AttributeUsage(AttributeTargets.Class)]
     internal class HandleShellCompletionAttribute : Attribute, IPreLogoBuildExtension
     {
-        public void Execute(NukeBuild instance)
+        public void Execute(NukeBuild build)
         {
             var completionItems = new SortedDictionary<string, string[]>();
 
-            var targetNames = NukeBuild.ExecutableTargets.Select(x => x.Name).OrderBy(x => x).ToList();
+            var targetNames = build.ExecutableTargets.Select(x => x.Name).OrderBy(x => x).ToList();
             completionItems[Constants.InvokedTargetsParameterName] = targetNames.ToArray();
             completionItems[Constants.SkippedTargetsParameterName] = targetNames.ToArray();
 
@@ -30,7 +30,7 @@ namespace Nuke.Common.Execution
                 return null;
             }
 
-            foreach (var parameter in InjectionUtility.GetParameterMembers(instance.GetType()))
+            foreach (var parameter in InjectionUtility.GetParameterMembers(build.GetType()))
             {
                 var parameterName = ParameterService.Instance.GetParameterName(parameter);
                 if (completionItems.ContainsKey(parameterName))

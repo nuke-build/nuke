@@ -10,16 +10,16 @@ namespace Nuke.Common.Execution
     [AttributeUsage(AttributeTargets.Class)]
     internal class HandleHelpRequestsAttribute : Attribute, IPostLogoBuildExtension
     {
-        public void Execute(NukeBuild instance)
+        public void Execute(NukeBuild build)
         {
             if (NukeBuild.Help)
             {
-                Logger.Log(HelpTextService.GetTargetsText(NukeBuild.ExecutableTargets));
-                Logger.Log(HelpTextService.GetParametersText(instance, NukeBuild.ExecutableTargets));
+                Logger.Log(HelpTextService.GetTargetsText(build.ExecutableTargets));
+                Logger.Log(HelpTextService.GetParametersText(build));
             }
 
             if (NukeBuild.Plan)
-                ExecutionPlanHtmlService.ShowPlan(NukeBuild.ExecutableTargets);
+                ExecutionPlanHtmlService.ShowPlan(build.ExecutableTargets);
 
             if (NukeBuild.Help || NukeBuild.Plan)
                 Environment.Exit(exitCode: 0);

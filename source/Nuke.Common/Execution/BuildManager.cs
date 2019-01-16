@@ -20,7 +20,7 @@ namespace Nuke.Common.Execution
             where T : NukeBuild
         {
             var build = Create<T>();
-            NukeBuild.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpression);
+            build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpression);
             
             try
             {
@@ -35,21 +35,20 @@ namespace Nuke.Common.Execution
                 Logger.Log(FigletTransform.GetText("NUKE"));
                 
                 build.Execute<IPostLogoBuildExtension>();
-                NukeBuild.ExecutionPlan = ExecutionPlanner.GetExecutionPlan(
-                    NukeBuild.ExecutableTargets,
-                    ParameterService.Instance.GetParameter(() => NukeBuild.InvokedTargets) ??
+                build.ExecutionPlan = ExecutionPlanner.GetExecutionPlan(
+                    build.ExecutableTargets,
+                    ParameterService.Instance.GetParameter<string[]>(() => build.InvokedTargets) ??
                     ParameterService.Instance.GetPositionalCommandLineArguments<string>(separator: Constants.TargetsSeparator.Single()));
                 Console.CancelKeyPress += (s, e) => Finish();
 
                 InjectionUtility.InjectValues(build);
-                RequirementService.ValidateRequirements(NukeBuild.ExecutionPlan, build);
+                RequirementService.ValidateRequirements(build);
                 
                 build.OnBuildInitialized();
                 
                 BuildExecutor.Execute(
                     build,
-                    NukeBuild.ExecutionPlan,
-                    ParameterService.Instance.GetParameter(() => NukeBuild.SkippedTargets));
+                    ParameterService.Instance.GetParameter<string[]>(() => build.SkippedTargets));
                 
                 return 0;
             }
@@ -65,7 +64,7 @@ namespace Nuke.Common.Execution
             
             void Finish()
             {
-                NukeBuild.ExecutionPlan
+                build.ExecutionPlan
                     .Where(x => x.Status == ExecutionStatus.Executing)
                     .ForEach(x => x.Status = ExecutionStatus.Aborted);
                 
@@ -75,10 +74,10 @@ namespace Nuke.Common.Execution
                     WriteWarningsAndErrors(outputSink);
                 }
 
-                if (NukeBuild.ExecutionPlan != null)
+                if (build.ExecutionPlan != null)
                 {
                     Logger.Log();
-                    WriteSummary(NukeBuild.ExecutionPlan);
+                    WriteSummary(build.ExecutionPlan);
                 }
 
                 build.OnBuildFinished();

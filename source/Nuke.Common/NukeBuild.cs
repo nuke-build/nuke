@@ -13,6 +13,7 @@ using Nuke.Common.Execution;
 using Nuke.Common.OutputSinks;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities.Collections;
+using static Nuke.Common.Constants;
 
 // ReSharper disable VirtualMemberNeverOverridden.Global
 
@@ -59,8 +60,28 @@ namespace Nuke.Common
             return BuildManager.Execute(defaultTargetExpression);
         }
         
-        internal static IReadOnlyCollection<ExecutableTarget> ExecutableTargets { get; set; }
-        internal static IReadOnlyCollection<ExecutableTarget> ExecutionPlan { get; set; }
+        internal IReadOnlyCollection<ExecutableTarget> ExecutableTargets { get; set; }
+        internal IReadOnlyCollection<ExecutableTarget> ExecutionPlan { get; set; }
+        
+        /// <summary>
+        /// Gets the list of targets that were invoked.
+        /// </summary>
+        [Parameter("List of targets to be executed. Default is '{default_target}'.",
+            Name = InvokedTargetsParameterName,
+            Separator = TargetsSeparator)]
+        public IReadOnlyCollection<ExecutableTarget> InvokedTargets => ExecutionPlan.Where(x => x.Invoked).ToList();
+        
+        /// <summary>
+        /// Gets the list of targets that are skipped.
+        /// </summary>
+        [Parameter("List of targets to be skipped. Empty list skips all dependencies.", Name = SkippedTargetsParameterName, Separator = TargetsSeparator)]
+        public IReadOnlyCollection<ExecutableTarget> SkippedTargets => ExecutionPlan.Where(x => x.Status == ExecutionStatus.Skipped).ToList();
+
+        /// <summary>
+        /// Gets the list of targets that are executing.
+        /// </summary>
+        public IReadOnlyCollection<ExecutableTarget> ExecutingTargets => ExecutionPlan.Where(x => x.Status != ExecutionStatus.Skipped).ToList();
+
 
         internal void Execute<T>()
             where T : IBuildExtension

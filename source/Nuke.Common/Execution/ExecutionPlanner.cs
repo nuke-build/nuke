@@ -13,6 +13,9 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Execution
 {
+    /// <summary>
+    /// Given the invoked target names, creates an execution plan under consideration of execution, ordering and trigger dependencies.
+    /// </summary>
     internal static class ExecutionPlanner
     {
         public static IReadOnlyCollection<ExecutableTarget> GetExecutionPlan(
@@ -23,6 +26,7 @@ namespace Nuke.Common.Execution
                                  new[] { executableTargets.Single(x => x.IsDefault) };
             invokedTargets.ForEach(x => x.Invoked = true);
 
+            // Repeat to create the plan with triggers taken into account until plan doesn't change
             IReadOnlyCollection<ExecutableTarget> executionPlan;
             IReadOnlyCollection<ExecutableTarget> additionallyTriggered;
             do
@@ -75,7 +79,6 @@ namespace Nuke.Common.Execution
                     !executingTargets.SelectMany(x => x.ExecutionDependencies).Contains(executableTarget))
                     continue;
 
-                executableTarget.Status = ExecutionStatus.NotRun;
                 executingTargets.Add(executableTarget);
             }
 

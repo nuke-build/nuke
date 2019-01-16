@@ -10,6 +10,9 @@ using NuGet.Packaging;
 
 namespace Nuke.Common.Execution
 {
+    /// <summary>
+    /// Creates all target objects according to the build instance.
+    /// </summary>
     internal static class ExecutableTargetFactory
     {
         public static IReadOnlyCollection<ExecutableTarget> CreateAll<T>(
@@ -29,10 +32,24 @@ namespace Nuke.Common.Execution
                 var factory = (Target) property.GetValue(build);
                 var definition = new TargetDefinition();
                 factory.Invoke(definition);
-                executables.Add(new ExecutableTarget(property, factory, definition, isDefault: factory == defaultTarget));
+                
+                var target = new ExecutableTarget
+                             {
+                                 Name = property.Name,
+                                 Member = property,
+                                 Definition = definition,
+                                 Description = definition.Description,
+                                 Factory = factory,
+                                 IsDefault = factory == defaultTarget,
+                                 DynamicConditions = definition.DynamicConditions,
+                                 StaticConditions = definition.StaticConditions,
+                                 DependencyBehavior = definition.DependencyBehavior,
+                                 Requirements = definition.Requirements,
+                                 Actions = definition.Actions,
+                             };
+                
+                executables.Add(target);
             }
-            
- 
 
             foreach (var executable in executables)
             {

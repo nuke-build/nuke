@@ -15,8 +15,9 @@ using static Nuke.Common.Tools.GitVersion.GitVersionTasks;
 partial class Build
 {
     Target Changelog => _ => _
-        .OnlyWhen(() => GitRepository.Branch.NotNull().StartsWith("release") ||
-                        GitRepository.Branch.StartsWith("hotfix"))
+        .OnlyWhenStatic(
+            () => GitRepository.Branch.NotNull().StartsWith("release") ||
+                  GitRepository.Branch.StartsWith("hotfix"))
         .Executes(() =>
         {
             FinalizeChangelog(ChangelogFile, GitVersion.MajorMinorPatch, GitRepository);

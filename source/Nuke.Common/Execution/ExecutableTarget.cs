@@ -12,39 +12,33 @@ using System.Reflection;
 namespace Nuke.Common.Execution
 {
     [DebuggerDisplay("{" + nameof(ToDebugString) + "}")]
-    internal class ExecutableTarget
+    public class ExecutableTarget
     {
-        public ExecutableTarget(
-            PropertyInfo property,
-            Target factory,
-            TargetDefinition definition,
-            bool isDefault)
+        internal ExecutableTarget()
         {
-            Property = property;
-            Factory = factory;
-            Definition = definition;
-            IsDefault = isDefault;
         }
 
-        public PropertyInfo Property { get; }
-        public string Name => Property.Name;
-        public Target Factory { get; }
-        public TargetDefinition Definition { get; }
-        public string Description => Definition.Description;
-        public List<Func<bool>> Conditions => Definition.Conditions;
-        public IReadOnlyList<LambdaExpression> Requirements => Definition.Requirements;
-        public IReadOnlyList<Action> Actions => Definition.Actions;
-        public ICollection<ExecutableTarget> ExecutionDependencies { get; } = new List<ExecutableTarget>();
-        public ICollection<ExecutableTarget> OrderDependencies { get; } = new List<ExecutableTarget>();
-        public ICollection<ExecutableTarget> TriggerDependencies { get; } = new List<ExecutableTarget>();
-        public ICollection<ExecutableTarget> Triggers { get; } = new List<ExecutableTarget>();
-        public IReadOnlyCollection<ExecutableTarget> AllDependencies
+        internal MemberInfo Member { get; set; }
+        internal TargetDefinition Definition { get; set; }
+        public string Name { get; internal set; }
+        public string Description { get; internal set; }
+        internal Target Factory { get; set; }
+        internal ICollection<Func<bool>> DynamicConditions { get; set; } = new List<Func<bool>>();
+        internal ICollection<Func<bool>> StaticConditions { get; set; } = new List<Func<bool>>();
+        internal DependencyBehavior DependencyBehavior { get; set; }
+        internal ICollection<LambdaExpression> Requirements { get; set; } = new List<LambdaExpression>();
+        internal ICollection<Action> Actions { get; set; } = new List<Action>();
+        internal ICollection<ExecutableTarget> ExecutionDependencies { get; } = new List<ExecutableTarget>();
+        internal ICollection<ExecutableTarget> OrderDependencies { get; } = new List<ExecutableTarget>();
+        internal ICollection<ExecutableTarget> TriggerDependencies { get; } = new List<ExecutableTarget>();
+        internal ICollection<ExecutableTarget> Triggers { get; } = new List<ExecutableTarget>();
+        internal IReadOnlyCollection<ExecutableTarget> AllDependencies
             => ExecutionDependencies.Concat(OrderDependencies).Concat(TriggerDependencies).ToList();
-        public bool IsDefault { get; }
+        public bool IsDefault { get; internal set; }
 
-        public ExecutionStatus Status { get; set; }
-        public TimeSpan Duration { get; set; }
-        public bool Invoked { get; set; }
+        public ExecutionStatus Status { get; internal set; }
+        public TimeSpan Duration { get; internal set; }
+        public bool Invoked { get; internal set; }
 
         internal string ToDebugString()
         {

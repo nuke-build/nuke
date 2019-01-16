@@ -14,32 +14,27 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Execution
 {
+    /// <summary>
+    /// Gradually executes targets of the execution plan.
+    /// Targets are skipped according to static conditions, dependency behavior, dynamic conditions and previous build attempts.
+    /// </summary>
     internal static class BuildExecutor
     {
         private static PathConstruction.AbsolutePath BuildAttemptFile => Constants.GetBuildAttemptFile(NukeBuild.RootDirectory);
 
-        public static void Execute(
-            NukeBuild build,
-            IReadOnlyCollection<ExecutableTarget> executionPlan,
-            [CanBeNull] IReadOnlyCollection<string> skippedTargets)
+        public static void Execute(NukeBuild build, [CanBeNull] IReadOnlyCollection<string> skippedTargets)
         {
             var invocationHash = GetInvocationHash();
             var previouslyExecutedTargets = GetPreviouslyExecutedTargets(invocationHash);
             File.WriteAllLines(BuildAttemptFile, new[] { invocationHash });
             
-            if (skippedTargets != null)
-            {
-                NukeBuild.ExecutionPlan
-                    .Where(x => !NukeBuild.InvokedTargets.Contains(x.Name))
-                    .Where(x => skippedTargets.Count == 0 || skippedTargets.Contains(x.Name, StringComparer.OrdinalIgnoreCase))
-                    .ForEach(x => x.Status = ExecutionStatus.Skipped);
-            }
+            MarkSkippedTargets(build, skippedTargets);
             
-            foreach (var target in executionPlan)
+            foreach (var target in build.ExecutionPlan)
             {
                 if (target.Status == ExecutionStatus.Skipped ||
                     previouslyExecutedTargets.Contains(target.Name) ||
-                    target.Conditions.Any(x => !x()))
+                    target.DynamicConditions.Any(x => !x()))
                 {
                     target.Status = ExecutionStatus.Skipped;
                     build.OnTargetSkipped(target.Name);
@@ -71,6 +66,43 @@ namespace Nuke.Common.Execution
                     }
                 }
             }
+        }
+
+        private static void MarkSkippedTargets(NukeBuild build, IReadOnlyCollection<string> skippedTargets)
+        {
+            void MarkTargetSkipped(ExecutableTarget target)
+            {
+                if (build.InvokedTargets.Contains(target))
+                    return;
+                
+                target.Status = ExecutionStatus.Skipped;
+
+                if (target.DependencyBehavior == DependencyBehavior.Execute)
+                    return;
+            
+                target.ExecutionDependencies.ForEach(TryMarkTargetSkipped);
+                target.Triggers.ForEach(TryMarkTargetSkipped);
+            }
+
+            void TryMarkTargetSkipped(ExecutableTarget target)
+            {
+                var executingTargets = build.ExecutionPlan.Where(x => x.Status == ExecutionStatus.NotRun);
+                if (executingTargets.Any(x => x.ExecutionDependencies.Contains(target) || x.Triggers.Contains(target)))
+                    return;
+
+                MarkTargetSkipped(target);
+            }
+
+            if (skippedTargets != null)
+            {
+                build.ExecutionPlan
+                    .Where(x => skippedTargets.Count == 0 || skippedTargets.Contains(x.Name, StringComparer.OrdinalIgnoreCase))
+                    .ForEach(MarkTargetSkipped);
+            }
+
+            build.ExecutionPlan
+                .Where(x => x.StaticConditions.Any(y => !y()))
+                .ForEach(MarkTargetSkipped);
         }
 
         private static string GetInvocationHash()

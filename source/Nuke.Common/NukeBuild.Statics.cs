@@ -85,25 +85,6 @@ namespace Nuke.Common
 
         public static LogLevel LogLevel => (LogLevel) Verbosity;
 
-        /// <summary>
-        /// Gets the list of targets that were invoked.
-        /// </summary>
-        [Parameter("List of targets to be executed. Default is '{default_target}'.",
-            Name = InvokedTargetsParameterName,
-            Separator = TargetsSeparator)]
-        public static string[] InvokedTargets => ExecutionPlan.Where(x => x.Invoked).Select(x => x.Name).ToArray();
-        
-        /// <summary>
-        /// Gets the list of targets that are skipped.
-        /// </summary>
-        [Parameter("List of targets to be skipped. Empty list skips all dependencies.", Name = SkippedTargetsParameterName, Separator = TargetsSeparator)]
-        public static string[] SkippedTargets => ExecutionPlan.Where(x => x.Status == ExecutionStatus.Skipped).Select(x => x.Name).ToArray();
-
-        /// <summary>
-        /// Gets the list of targets that are executing.
-        /// </summary>
-        public static string[] ExecutingTargets => ExecutionPlan.Where(x => x.Status != ExecutionStatus.Skipped).Select(x => x.Name).ToArray();
-
         [Parameter("Indicates to continue a previously failed build attempt.")]
         public static bool Continue { get; internal set; }
 

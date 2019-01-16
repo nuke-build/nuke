@@ -17,6 +17,11 @@ namespace Nuke.Common.Tooling
     {
         private readonly Dictionary<TKey, List<TValue>> _dictionary;
 
+        public LookupTable()
+            : this(new Dictionary<TKey, List<TValue>>())
+        {
+        }
+        
         public LookupTable(IEqualityComparer<TKey> comparer)
             : this(new Dictionary<TKey, List<TValue>>(comparer))
         {
