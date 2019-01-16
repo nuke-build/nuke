@@ -5,13 +5,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Changed `OnlyWhen` to `OnlyWhenStatic` and `OnlyWhenDynamic`
 - Changed `graph` parameter to `plan`
 - Added `DependentFor`, `Triggers` and `TriggeredBy` for target declarations
 - Added `ToolSettings.CombineWith` for combinatorial invocations
+- Added several `FileSystemTasks` methods
+- Added `TemplateUtility.FillTemplateDirectory` and `FillTemplateFile`
 - Added highlighting of execution plans in HTML representation
 - Added process cancellation handler to always show summary
 - Added `NuGetTasks` to add, remove, update, enable, disable and list sources
 - Added `TravisOutputSink`
+- Added path resolution for `VSTestTasks`
+- Added caching of `MSBuild` path in `GetMSBuidProject`
 - Fixed `GitRepository.IsOnDevelopBranch` to recognize `develop` and `development`
 - Fixed shell-completion for PowerShell
 
