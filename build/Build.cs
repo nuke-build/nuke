@@ -131,13 +131,14 @@ partial class Build : NukeBuild
         .DependsOn(Compile)
         .Executes(() =>
         {
-            Solution.GetProjects("*.Tests")
-                .ForEach(x => DotNetTest(s => s
-                    .SetProjectFile(x)
-                    .SetConfiguration(Configuration)
-                    .EnableNoBuild()
-                    .SetLogger("trx")
-                    .SetResultsDirectory(OutputDirectory)));
+            DotNetTest(s => s
+                .SetConfiguration(Configuration)
+                .EnableNoBuild()
+                .SetLogger("trx")
+                .SetResultsDirectory(OutputDirectory)
+                .CombineWith(
+                    Solution.GetProjects("*.Tests"), (cs, v) => cs
+                        .SetProjectFile(v)));
         });
 
     Target Analysis => _ => _
@@ -166,13 +167,13 @@ partial class Build : NukeBuild
                         GitRepository.Branch.StartsWithOrdinalIgnoreCase(HotfixBranchPrefix))
         .Executes(() =>
         {
-            GlobFiles(OutputDirectory, "*.nupkg").NotEmpty()
-                .Where(x => !x.EndsWith(".symbols.nupkg"))
-                .ForEach(x => DotNetNuGetPush(s => s
-                    .SetTargetPath(x)
-                    .SetSource(Source)
-                    .SetSymbolSource(SymbolSource)
-                    .SetApiKey(ApiKey)));
+            DotNetNuGetPush(s => s
+                .SetSource(Source)
+                .SetSymbolSource(SymbolSource)
+                .SetApiKey(ApiKey)
+                .CombineWith(
+                    GlobFiles(OutputDirectory, "*.nupkg").NotEmpty(), (cs, v) => cs
+                        .SetTargetPath(v)));
 
             if (GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch))
             {
