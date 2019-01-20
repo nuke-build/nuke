@@ -23,8 +23,7 @@ namespace Nuke.Common.Tooling
     /// Target FooBar => _ => _
     ///     .Executes(() =>
     ///     {
-    ///         var process = Echo("test");
-    ///         process.AssertZeroExitCode();
+    ///         var output = Echo("test");
     ///     });
     ///     </code>
     /// </example>

@@ -26,8 +26,7 @@ namespace Nuke.Common.Tooling
     /// Target FooBar => _ => _
     ///     .Executes(() =>
     ///     {
-    ///         var process = NuGet($"pack {ProjectFile}");
-    ///         process.AssertZeroExitCode();
+    ///         var output = NuGet($"pack {ProjectFile}");
     ///     });
     ///     </code>
     /// </example>
