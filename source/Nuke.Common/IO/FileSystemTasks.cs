@@ -70,8 +70,8 @@ namespace Nuke.Common.IO
             if (Directory.Exists(directory))
             {
                 Logger.Info($"Cleaning directory '{directory}'...");
-                DeleteDirectoryInternal(directory);
-                Directory.CreateDirectory(directory);
+                Directory.GetFiles(directory).ForEach(DeleteFileInternal);
+                Directory.GetDirectories(directory).ForEach(DeleteDirectoryInternal);
             }
             else
             {
