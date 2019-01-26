@@ -221,12 +221,13 @@ namespace Nuke.Common
 
         #endregion
 
-        private static void HandleException(Exception exception, Action<string, string> exceptionOutput)
+        private static void HandleException(Exception exception, Action<string, string> exceptionOutput, string prefix = null)
         {
             switch (exception)
             {
                 case AggregateException ex:
-                    ex.Flatten().InnerExceptions.ForEach(x => HandleException(x, exceptionOutput));
+                    var exceptions = ex.Flatten().InnerExceptions;
+                    exceptions.ForEach((x, i) => HandleException(x, exceptionOutput, $"#{i + 1}/{exceptions.Count}: "));
                     break;
                 case TargetInvocationException ex:
                     HandleException(ex.InnerException, exceptionOutput);
@@ -235,7 +236,7 @@ namespace Nuke.Common
                     HandleException(ex.InnerException, exceptionOutput);
                     break;
                 default:
-                    exceptionOutput(exception.Message, exception.StackTrace);
+                    exceptionOutput(prefix + exception.Message, exception.StackTrace);
                     break;
             }
         }
