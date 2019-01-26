@@ -27,10 +27,11 @@ namespace Nuke.Common.Tools.NuGet
         public static string NuGetPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("NUGET_EXE") ??
             ToolPathResolver.GetPackageExecutable("NuGet.CommandLine", "nuget.exe");
+        public static Action<OutputType, string> NuGetLogger { get; set; } = ProcessManager.DefaultLogger;
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p></summary>
         public static IReadOnlyCollection<Output> NuGet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(NuGetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
+            var process = ProcessTasks.StartProcess(NuGetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, NuGetLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -224,6 +225,7 @@ namespace Nuke.Common.Tools.NuGet
     {
         /// <summary><p>Path to the NuGet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
+        public override Action<OutputType, string> CustomLogger => NuGetTasks.NuGetLogger;
         /// <summary><p>Path of the package to push.</p></summary>
         public virtual string TargetPath { get; internal set; }
         /// <summary><p>The API key for the target repository. If not present, the one specified in <em>%AppData%\NuGet\NuGet.Config</em> is used.</p></summary>
@@ -277,6 +279,7 @@ namespace Nuke.Common.Tools.NuGet
     {
         /// <summary><p>Path to the NuGet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
+        public override Action<OutputType, string> CustomLogger => NuGetTasks.NuGetLogger;
         /// <summary><p>The <c>.nuspec</c> or <c>.csproj</c> file.</p></summary>
         public virtual string TargetPath { get; internal set; }
         /// <summary><p>Sets the base path of the files defined in the <c>.nuspec</c> file.</p></summary>
@@ -355,6 +358,7 @@ namespace Nuke.Common.Tools.NuGet
     {
         /// <summary><p>Path to the NuGet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
+        public override Action<OutputType, string> CustomLogger => NuGetTasks.NuGetLogger;
         /// <summary><p>Defines the project to restore. I.e., the location of a solution file, a <c>packages.config</c>, or a <c>project.json</c> file.</p></summary>
         public virtual string TargetPath { get; internal set; }
         /// <summary><p>The NuGet configuration file to apply. If not specified, <em>%AppData%\NuGet\NuGet.Config</em> is used.</p></summary>
@@ -432,6 +436,7 @@ namespace Nuke.Common.Tools.NuGet
     {
         /// <summary><p>Path to the NuGet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
+        public override Action<OutputType, string> CustomLogger => NuGetTasks.NuGetLogger;
         /// <summary><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>
         public virtual string ConfigFile { get; internal set; }
         /// <summary><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
@@ -476,6 +481,7 @@ namespace Nuke.Common.Tools.NuGet
     {
         /// <summary><p>Path to the NuGet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
+        public override Action<OutputType, string> CustomLogger => NuGetTasks.NuGetLogger;
         /// <summary><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>
         public virtual string ConfigFile { get; internal set; }
         /// <summary><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
@@ -520,6 +526,7 @@ namespace Nuke.Common.Tools.NuGet
     {
         /// <summary><p>Path to the NuGet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
+        public override Action<OutputType, string> CustomLogger => NuGetTasks.NuGetLogger;
         /// <summary><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>
         public virtual string ConfigFile { get; internal set; }
         /// <summary><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
@@ -552,6 +559,7 @@ namespace Nuke.Common.Tools.NuGet
     {
         /// <summary><p>Path to the NuGet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
+        public override Action<OutputType, string> CustomLogger => NuGetTasks.NuGetLogger;
         /// <summary><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>
         public virtual string ConfigFile { get; internal set; }
         /// <summary><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
@@ -584,6 +592,7 @@ namespace Nuke.Common.Tools.NuGet
     {
         /// <summary><p>Path to the NuGet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
+        public override Action<OutputType, string> CustomLogger => NuGetTasks.NuGetLogger;
         /// <summary><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>
         public virtual string ConfigFile { get; internal set; }
         /// <summary><p><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</p></summary>
@@ -616,6 +625,7 @@ namespace Nuke.Common.Tools.NuGet
     {
         /// <summary><p>Path to the NuGet executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? NuGetTasks.NuGetPath;
+        public override Action<OutputType, string> CustomLogger => NuGetTasks.NuGetLogger;
         /// <summary><p>Can be <c>Detailed</c> (the default) or <c>Short</c>.</p></summary>
         public virtual NuGetSourcesListFormat Format { get; internal set; }
         /// <summary><p>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</p></summary>

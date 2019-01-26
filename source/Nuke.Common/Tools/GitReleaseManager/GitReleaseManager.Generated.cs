@@ -27,10 +27,11 @@ namespace Nuke.Common.Tools.GitReleaseManager
         public static string GitReleaseManagerPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("GITRELEASEMANAGER_EXE") ??
             ToolPathResolver.GetPackageExecutable("gitreleasemanager", "GitReleaseManager.exe");
+        public static Action<OutputType, string> GitReleaseManagerLogger { get; set; } = ProcessManager.DefaultLogger;
         /// <summary><p>GitReleaseManager is a tool that will help create a set of release notes for your application/product. It does this using the collection of issues which are stored on the GitHub Issue Tracker for your application/product.<para/>By inspecting the issues that have been assigned to a particular milestone, GitReleaseManager creates a set of release notes, in markdown format, which are then used to create a Release on GitHub.<para/>In addition to creating a Release, GitReleaseManager can be used to publish a release, close a milestone, and also to export the complete set of release notes for your application/product.</p></summary>
         public static IReadOnlyCollection<Output> GitReleaseManager(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(GitReleaseManagerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
+            var process = ProcessTasks.StartProcess(GitReleaseManagerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, GitReleaseManagerLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -144,6 +145,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
     {
         /// <summary><p>Path to the GitReleaseManager executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
+        public override Action<OutputType, string> CustomLogger => GitReleaseManagerTasks.GitReleaseManagerLogger;
         /// <summary><p>Paths to the files to include in the release.</p></summary>
         public virtual IReadOnlyList<string> AssetPaths => AssetPathsInternal.AsReadOnly();
         internal List<string> AssetPathsInternal { get; set; } = new List<string>();
@@ -186,6 +188,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
     {
         /// <summary><p>Path to the GitReleaseManager executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
+        public override Action<OutputType, string> CustomLogger => GitReleaseManagerTasks.GitReleaseManagerLogger;
         /// <summary><p>The milestone to use.</p></summary>
         public virtual string Milestone { get; internal set; }
         /// <summary><p>The username to access GitHub with.</p></summary>
@@ -224,6 +227,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
     {
         /// <summary><p>Path to the GitReleaseManager executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
+        public override Action<OutputType, string> CustomLogger => GitReleaseManagerTasks.GitReleaseManagerLogger;
         /// <summary><p>Paths to the files to include in the release.</p></summary>
         public virtual IReadOnlyList<string> AssetPaths => AssetPathsInternal.AsReadOnly();
         internal List<string> AssetPathsInternal { get; set; } = new List<string>();
@@ -278,6 +282,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
     {
         /// <summary><p>Path to the GitReleaseManager executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
+        public override Action<OutputType, string> CustomLogger => GitReleaseManagerTasks.GitReleaseManagerLogger;
         /// <summary><p>The name of the release. Typically this is the generated SemVer Version Number.</p></summary>
         public virtual string TagName { get; internal set; }
         /// <summary><p>Path to the file export releases.</p></summary>
@@ -319,6 +324,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
     {
         /// <summary><p>Path to the GitReleaseManager executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
+        public override Action<OutputType, string> CustomLogger => GitReleaseManagerTasks.GitReleaseManagerLogger;
         /// <summary><p>The name of the release. Typically this is the generated SemVer Version Number.</p></summary>
         public virtual string TagName { get; internal set; }
         /// <summary><p>The username to access GitHub with.</p></summary>

@@ -27,10 +27,11 @@ namespace Nuke.Common.Tools.Paket
         public static string PaketPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("PAKET_EXE") ??
             ToolPathResolver.GetPackageExecutable("Paket", "paket.exe");
+        public static Action<OutputType, string> PaketLogger { get; set; } = ProcessManager.DefaultLogger;
         /// <summary><p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href="https://www.nuget.org/">NuGet</a> packages and also enables referencing files directly from <a href="https://fsprojects.github.io/Paket/git-dependencies.html">Git repositories</a> or any <a href="https://fsprojects.github.io/Paket/http-dependencies.html">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href="https://fsprojects.github.io/Paket/getting-started.html"><em>Getting started</em> tutorial</a> and take a look at the <a href="https://fsprojects.github.io/Paket/faq.html">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href="https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion">convert from NuGet</a> section.</p></summary>
         public static IReadOnlyCollection<Output> Paket(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(PaketPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
+            var process = ProcessTasks.StartProcess(PaketPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, PaketLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -124,6 +125,7 @@ namespace Nuke.Common.Tools.Paket
     {
         /// <summary><p>Path to the Paket executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? PaketTasks.PaketPath;
+        public override Action<OutputType, string> CustomLogger => PaketTasks.PaketLogger;
         /// <summary><p>NuGet package ID.</p></summary>
         public virtual string PackageId { get; internal set; }
         /// <summary><p>Dependency version constraint.</p></summary>
@@ -192,6 +194,7 @@ namespace Nuke.Common.Tools.Paket
     {
         /// <summary><p>Path to the Paket executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? PaketTasks.PaketPath;
+        public override Action<OutputType, string> CustomLogger => PaketTasks.PaketLogger;
         /// <summary><p>Force download and reinstallation of all dependencies.</p></summary>
         public virtual bool? Force { get; internal set; }
         /// <summary><p>Only restore packages that are referenced by paket.references files.</p></summary>
@@ -249,6 +252,7 @@ namespace Nuke.Common.Tools.Paket
     {
         /// <summary><p>Path to the Paket executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? PaketTasks.PaketPath;
+        public override Action<OutputType, string> CustomLogger => PaketTasks.PaketLogger;
         /// <summary><p>Path to the package.</p></summary>
         public virtual string File { get; internal set; }
         /// <summary><p>URL of the NuGet feed.</p></summary>
@@ -290,6 +294,7 @@ namespace Nuke.Common.Tools.Paket
     {
         /// <summary><p>Path to the Paket executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? PaketTasks.PaketPath;
+        public override Action<OutputType, string> CustomLogger => PaketTasks.PaketLogger;
         /// <summary><p>Output directory for .nupkg files.</p></summary>
         public virtual string OutputDirectory { get; internal set; }
         /// <summary><p>Build configuration that should be packaged. Default is <em>Release</em>.</p></summary>

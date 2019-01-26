@@ -15,9 +15,9 @@ namespace Nuke.Common.Tooling
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
-    public class ToolSettings : ISettingsEntity
+    public abstract class ToolSettings : ISettingsEntity
     {
-        public ToolSettings()
+        protected ToolSettings()
         {
             var variables = EnvironmentInfo.GetVariables();
             EnvironmentVariablesInternal = new Dictionary<string, string>(variables, variables.Comparer);
@@ -32,7 +32,7 @@ namespace Nuke.Common.Tooling
         public int? ExecutionTimeout { get; internal set; }
         public bool LogOutput { get; internal set; }
 
-        protected internal virtual Func<string, LogLevel> LogLevelParser => null;
+        public abstract Action<OutputType, string> CustomLogger { get; }
 
         [NonSerialized]
         private Func<Arguments, Arguments> _argumentConfigurator = x => x;

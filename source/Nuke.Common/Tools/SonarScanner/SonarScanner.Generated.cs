@@ -27,10 +27,11 @@ namespace Nuke.Common.Tools.SonarScanner
         public static string SonarScannerPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("SONARSCANNER_EXE") ??
             ToolPathResolver.GetPackageExecutable("MSBuild.SonarQube.Runner.Tool", "SonarScanner.MSBuild.exe");
+        public static Action<OutputType, string> SonarScannerLogger { get; set; } = ProcessManager.DefaultLogger;
         /// <summary><p>The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.</p></summary>
         public static IReadOnlyCollection<Output> SonarScanner(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(SonarScannerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
+            var process = ProcessTasks.StartProcess(SonarScannerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, SonarScannerLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -84,6 +85,7 @@ namespace Nuke.Common.Tools.SonarScanner
     {
         /// <summary><p>Path to the SonarScanner executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? SonarScannerTasks.SonarScannerPath;
+        public override Action<OutputType, string> CustomLogger => SonarScannerTasks.SonarScannerLogger;
         /// <summary><p>Specifies the key of the analyzed project in SonarQube.</p></summary>
         public virtual string ProjectKey { get; internal set; }
         /// <summary><p>Specifies the name of the analyzed project in SonarQube. Adding this argument will overwrite the project name in SonarQube if it already exists.</p></summary>
@@ -163,6 +165,7 @@ namespace Nuke.Common.Tools.SonarScanner
     {
         /// <summary><p>Path to the SonarScanner executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? SonarScannerTasks.SonarScannerPath;
+        public override Action<OutputType, string> CustomLogger => SonarScannerTasks.SonarScannerLogger;
         /// <summary><p>Specifies the username or access token to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added on the end step.</p></summary>
         public virtual string Login { get; internal set; }
         /// <summary><p>Specifies the password for the SonarQube username in the `sonar.login` argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.</p></summary>

@@ -27,10 +27,11 @@ namespace Nuke.Common.Tools.Squirrel
         public static string SquirrelPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("SQUIRREL_EXE") ??
             ToolPathResolver.GetPackageExecutable("Squirrel.Windows", "Squirrel.exe");
+        public static Action<OutputType, string> SquirrelLogger { get; set; } = ProcessManager.DefaultLogger;
         /// <summary><p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p></summary>
         public static IReadOnlyCollection<Output> Squirrel(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(SquirrelPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
+            var process = ProcessTasks.StartProcess(SquirrelPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, SquirrelLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -64,6 +65,7 @@ namespace Nuke.Common.Tools.Squirrel
     {
         /// <summary><p>Path to the Squirrel executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? SquirrelTasks.SquirrelPath;
+        public override Action<OutputType, string> CustomLogger => SquirrelTasks.SquirrelLogger;
         /// <summary><p>Install the app whose package is in the specified directory.</p></summary>
         public virtual string Install { get; internal set; }
         /// <summary><p>Uninstall the app the same dir as Update.exe.</p></summary>

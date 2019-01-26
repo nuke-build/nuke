@@ -27,10 +27,11 @@ namespace Nuke.Common.Tools.SignTool
         public static string SignToolPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("SIGNTOOL_EXE") ??
             GetToolPath();
+        public static Action<OutputType, string> SignToolLogger { get; set; } = ProcessManager.DefaultLogger;
         /// <summary><p>Sign Tool is a command-line tool that digitally signs files, verifies signatures in files, and time-stamps files.</p></summary>
         public static IReadOnlyCollection<Output> SignTool(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(SignToolPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
+            var process = ProcessTasks.StartProcess(SignToolPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, SignToolLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -64,6 +65,7 @@ namespace Nuke.Common.Tools.SignTool
     {
         /// <summary><p>Path to the SignTool executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? SignToolTasks.SignToolPath;
+        public override Action<OutputType, string> CustomLogger => SignToolTasks.SignToolLogger;
         /// <summary><p>Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.</p></summary>
         public virtual bool? AutomaticSelection { get; internal set; }
         /// <summary><p>Add an additional certificate to the signature block.</p></summary>

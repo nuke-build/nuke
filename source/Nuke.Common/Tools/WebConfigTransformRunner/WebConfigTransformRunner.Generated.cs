@@ -27,10 +27,11 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         public static string WebConfigTransformRunnerPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("WEBCONFIGTRANSFORMRUNNER_EXE") ??
             ToolPathResolver.GetPackageExecutable("WebConfigTransformRunner", "WebConfigTransformRunner.exe");
+        public static Action<OutputType, string> WebConfigTransformRunnerLogger { get; set; } = ProcessManager.DefaultLogger;
         /// <summary><p>This is a commandline tool to run an ASP.Net web.config tranformation.</p></summary>
         public static IReadOnlyCollection<Output> WebConfigTransformRunner(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(WebConfigTransformRunnerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
+            var process = ProcessTasks.StartProcess(WebConfigTransformRunnerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, WebConfigTransformRunnerLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -64,6 +65,7 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
     {
         /// <summary><p>Path to the WebConfigTransformRunner executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? WebConfigTransformRunnerTasks.WebConfigTransformRunnerPath;
+        public override Action<OutputType, string> CustomLogger => WebConfigTransformRunnerTasks.WebConfigTransformRunnerLogger;
         /// <summary><p>The base web.config file</p></summary>
         public virtual string WebConfigFilename { get; internal set; }
         /// <summary><p>The transformation web.config file</p></summary>

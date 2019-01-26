@@ -18,7 +18,7 @@ namespace Nuke.CodeGeneration.Generators
     {
         public static void Run(DataClass dataClass, ToolWriter toolWriter)
         {
-            if (dataClass.ArgumentConstruction)
+            if (dataClass.IsToolSettingsClass)
             {
                 foreach (var property in dataClass.Properties)
                 {
@@ -40,7 +40,7 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteLine($"public partial class {dataClass.Name} : {baseType}")
                 .WriteBlock(w => w
                     .WriteToolPath()
-                    .WriteLogLevelParser()
+                    .WriteLogger()
                     .ForEach(dataClass.Properties, WritePropertyDeclaration)
                     .WriteConfigureArguments())
                 .WriteLine("#endregion");
@@ -88,14 +88,14 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteLine($"public override string ToolPath => base.ToolPath ?? {resolver};");
         }
 
-        private static DataClassWriter WriteLogLevelParser(this DataClassWriter writer)
+        private static DataClassWriter WriteLogger(this DataClassWriter writer)
         {
-            var tool = writer.DataClass.Tool;
-            if (!tool.LogLevelParsing)
+            if (!writer.DataClass.IsToolSettingsClass)
                 return writer;
-
-            var logLevelParser = $"{tool.GetClassName()}.ParseLogLevel";
-            return writer.WriteLine($"protected override Func<string, LogLevel> LogLevelParser => {logLevelParser};");
+            
+            var tool = writer.DataClass.Tool;
+            var logger = $"{tool.GetClassName()}.{tool.Name}Logger";
+            return writer.WriteLine($"public override Action<OutputType, string> CustomLogger => {logger};");
         }
 
         private static void WritePropertyDeclaration(DataClassWriter writer, Property property)

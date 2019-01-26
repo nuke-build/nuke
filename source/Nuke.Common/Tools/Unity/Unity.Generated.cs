@@ -27,10 +27,11 @@ namespace Nuke.Common.Tools.Unity
         public static string UnityPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("UNITY_EXE") ??
             GetToolPath();
+        public static Action<OutputType, string> UnityLogger { get; set; } = ProcessManager.DefaultLogger;
         /// <summary><p>Unity is usually launched by double-clicking its icon from the desktop. However, it is also possible to run it from the command line (from the macOS Terminal or the Windows Command Prompt). When launched in this way, Unity can receive commands and information on startup, which can be very useful for test suites, automated builds and other production tasks.</p></summary>
         public static IReadOnlyCollection<Output> Unity(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(UnityPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
+            var process = ProcessTasks.StartProcess(UnityPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, UnityLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -128,6 +129,7 @@ namespace Nuke.Common.Tools.Unity
     {
         /// <summary><p>Path to the Unity executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? GetToolPath();
+        public override Action<OutputType, string> CustomLogger => UnityTasks.UnityLogger;
         /// <summary><p>Enter a username into the log-in form during activation of the Unity Editor.</p></summary>
         public virtual string Username { get; internal set; }
         /// <summary><p>Enter a password into the log-in form during activation of the Unity Editor.</p></summary>
@@ -166,6 +168,7 @@ namespace Nuke.Common.Tools.Unity
     {
         /// <summary><p>Path to the Unity executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? GetToolPath();
+        public override Action<OutputType, string> CustomLogger => UnityTasks.UnityLogger;
         /// <summary><p>The path to the license file.</p></summary>
         public virtual string LicenseFile { get; internal set; }
         /// <summary><p>Enter a username into the log-in form during activation of the Unity Editor.</p></summary>
@@ -206,6 +209,7 @@ namespace Nuke.Common.Tools.Unity
     {
         /// <summary><p>Path to the Unity executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? GetToolPath();
+        public override Action<OutputType, string> CustomLogger => UnityTasks.UnityLogger;
         /// <summary><p>Force an update of the project in the <a href="https://docs.unity3d.com/Manual/AssetServer.html">Asset Server</a> given by <c>IP:port</c>. The port is optional, and if not given it is assumed to be the standard one (10733). It is advisable to use this command in conjunction with the <c>-projectPath</c> argument to ensure you are working with the correct project. If no project name is given, then the last project opened by Unity is used. If no project exists at the path given by <c>-projectPath</c>, then one is created automatically.</p></summary>
         public virtual string AssetServerUpdate { get; internal set; }
         /// <summary><p>Build a 32-bit standalone Linux player (for example, <c>-buildLinux32Player path/to/your/build</c>).</p></summary>
@@ -353,6 +357,7 @@ namespace Nuke.Common.Tools.Unity
     {
         /// <summary><p>Path to the Unity executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? GetToolPath();
+        public override Action<OutputType, string> CustomLogger => UnityTasks.UnityLogger;
         /// <summary><p>Enter a username into the log-in form during activation of the Unity Editor.</p></summary>
         public virtual string Username { get; internal set; }
         /// <summary><p>Enter a password into the log-in form during activation of the Unity Editor.</p></summary>

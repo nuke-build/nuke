@@ -18,6 +18,9 @@ namespace Nuke.CodeGeneration.Model
         [JsonIgnore]
         public Tool Tool { get; set; }
 
+        [JsonIgnore]
+        public virtual bool IsToolSettingsClass => false;
+
         [NotNull]
         [JsonIgnore]
         public virtual IDeprecatable Parent => Tool;
@@ -33,9 +36,6 @@ namespace Nuke.CodeGeneration.Model
         [Description("Enables generation of extension methods for modification.")]
         public bool ExtensionMethods { get; set; }
 
-        [Description("Enables argument construction.")]
-        public bool ArgumentConstruction { get; set; }
-
         [Description("Properties of the data class.")]
         public List<Property> Properties { get; set; } = new List<Property>();
 
@@ -49,8 +49,9 @@ namespace Nuke.CodeGeneration.Model
         public SettingsClass()
         {
             ExtensionMethods = true;
-            ArgumentConstruction = true;
         }
+
+        public override bool IsToolSettingsClass => true;
 
         [JsonIgnore]
         public Task Task { get; set; }

@@ -86,7 +86,7 @@ namespace Nuke.Common.Tooling
                 environmentVariables: null,
                 timeout: null,
                 logOutput: false,
-                logLevelParser: null,
+                customLogger: null,
                 outputFilter: null);
             locateProcess.AssertWaitForExit();
 

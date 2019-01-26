@@ -27,10 +27,11 @@ namespace Nuke.Common.Tools.Npm
         public static string NpmPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("NPM_EXE") ??
             ToolPathResolver.GetPathExecutable("npm");
+        public static Action<OutputType, string> NpmLogger { get; set; } = ProcessManager.DefaultLogger;
         /// <summary><p>npm is the package manager for the Node JavaScript platform. It puts modules in place so that node can find them, and manages dependency conflicts intelligently.<para/>It is extremely configurable to support a wide variety of use cases. Most commonly, it is used to publish, discover, install, and develop node programs.</p></summary>
         public static IReadOnlyCollection<Output> Npm(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(NpmPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
+            var process = ProcessTasks.StartProcess(NpmPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, NpmLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -84,6 +85,7 @@ namespace Nuke.Common.Tools.Npm
     {
         /// <summary><p>Path to the Npm executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? NpmTasks.NpmPath;
+        public override Action<OutputType, string> CustomLogger => NpmTasks.NpmLogger;
         /// <summary><p>List of packages to be installed.</p></summary>
         public virtual IReadOnlyList<string> Packages => PackagesInternal.AsReadOnly();
         internal List<string> PackagesInternal { get; set; } = new List<string>();
@@ -141,6 +143,7 @@ namespace Nuke.Common.Tools.Npm
     {
         /// <summary><p>Path to the Npm executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? NpmTasks.NpmPath;
+        public override Action<OutputType, string> CustomLogger => NpmTasks.NpmLogger;
         /// <summary><p>The command to be executed.</p></summary>
         public virtual string Command { get; internal set; }
         /// <summary><p>Arguments passed to the script.</p></summary>

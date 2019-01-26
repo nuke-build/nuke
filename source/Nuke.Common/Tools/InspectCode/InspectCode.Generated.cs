@@ -27,10 +27,11 @@ namespace Nuke.Common.Tools.InspectCode
         public static string InspectCodePath =>
             ToolPathResolver.TryGetEnvironmentExecutable("INSPECTCODE_EXE") ??
             ToolPathResolver.GetPackageExecutable("JetBrains.ReSharper.CommandLineTools", GetPackageExecutable());
+        public static Action<OutputType, string> InspectCodeLogger { get; set; } = ProcessManager.DefaultLogger;
         /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p></summary>
         public static IReadOnlyCollection<Output> InspectCode(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(InspectCodePath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
+            var process = ProcessTasks.StartProcess(InspectCodePath, arguments, workingDirectory, environmentVariables, timeout, logOutput, InspectCodeLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -66,6 +67,7 @@ namespace Nuke.Common.Tools.InspectCode
     {
         /// <summary><p>Path to the InspectCode executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? InspectCodeTasks.InspectCodePath;
+        public override Action<OutputType, string> CustomLogger => InspectCodeTasks.InspectCodeLogger;
         /// <summary><p>Target path.</p></summary>
         public virtual string TargetPath { get; internal set; }
         /// <summary><p>Lets you set the output file. By default, the output file is saved in the <em>%TEMP%</em> directory.</p></summary>

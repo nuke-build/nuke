@@ -27,10 +27,11 @@ namespace Nuke.Common.Tools.VSWhere
         public static string VSWherePath =>
             ToolPathResolver.TryGetEnvironmentExecutable("VSWHERE_EXE") ??
             ToolPathResolver.GetPackageExecutable("vswhere", "vswhere.exe");
+        public static Action<OutputType, string> VSWhereLogger { get; set; } = ProcessManager.DefaultLogger;
         /// <summary><p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p></summary>
         public static IReadOnlyCollection<Output> VSWhere(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(VSWherePath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
+            var process = ProcessTasks.StartProcess(VSWherePath, arguments, workingDirectory, environmentVariables, timeout, logOutput, VSWhereLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -64,6 +65,7 @@ namespace Nuke.Common.Tools.VSWhere
     {
         /// <summary><p>Path to the VSWhere executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? VSWhereTasks.VSWherePath;
+        public override Action<OutputType, string> CustomLogger => VSWhereTasks.VSWhereLogger;
         /// <summary><p> Return only the newest version and last installed.</p></summary>
         public virtual bool? Latest { get; internal set; }
         /// <summary><p>A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.</p></summary>

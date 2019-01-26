@@ -27,10 +27,11 @@ namespace Nuke.Common.Tools.DotCover
         public static string DotCoverPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("DOTCOVER_EXE") ??
             ToolPathResolver.GetPackageExecutable("JetBrains.dotCover.CommandLineTools", "dotCover.exe");
+        public static Action<OutputType, string> DotCoverLogger { get; set; } = ProcessManager.DefaultLogger;
         /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p></summary>
         public static IReadOnlyCollection<Output> DotCover(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(DotCoverPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
+            var process = ProcessTasks.StartProcess(DotCoverPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, DotCoverLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -164,6 +165,7 @@ namespace Nuke.Common.Tools.DotCover
     {
         /// <summary><p>Path to the DotCover executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotCoverTasks.DotCoverPath;
+        public override Action<OutputType, string> CustomLogger => DotCoverTasks.DotCoverLogger;
         public virtual string Configuration { get; internal set; }
         /// <summary><p>A type of the report. The default value is <c>XML</c>.</p></summary>
         public virtual DotCoverReportType ReportType { get; internal set; }
@@ -242,6 +244,7 @@ namespace Nuke.Common.Tools.DotCover
     {
         /// <summary><p>Path to the DotCover executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotCoverTasks.DotCoverPath;
+        public override Action<OutputType, string> CustomLogger => DotCoverTasks.DotCoverLogger;
         public virtual string Configuration { get; internal set; }
         /// <summary><p>Path to the resulting coverage snapshot.</p></summary>
         public virtual string OutputFile { get; internal set; }
@@ -314,6 +317,7 @@ namespace Nuke.Common.Tools.DotCover
     {
         /// <summary><p>Path to the DotCover executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotCoverTasks.DotCoverPath;
+        public override Action<OutputType, string> CustomLogger => DotCoverTasks.DotCoverLogger;
         public virtual string Configuration { get; internal set; }
         /// <summary><p>List of snapshot files.</p></summary>
         public virtual IReadOnlyList<string> Source => SourceInternal.AsReadOnly();
@@ -340,6 +344,7 @@ namespace Nuke.Common.Tools.DotCover
     {
         /// <summary><p>Path to the DotCover executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotCoverTasks.DotCoverPath;
+        public override Action<OutputType, string> CustomLogger => DotCoverTasks.DotCoverLogger;
         public virtual string Configuration { get; internal set; }
         /// <summary><p>List of snapshot files.</p></summary>
         public virtual IReadOnlyList<string> Source => SourceInternal.AsReadOnly();
@@ -372,6 +377,7 @@ namespace Nuke.Common.Tools.DotCover
     {
         /// <summary><p>Path to the DotCover executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotCoverTasks.DotCoverPath;
+        public override Action<OutputType, string> CustomLogger => DotCoverTasks.DotCoverLogger;
         public virtual string Configuration { get; internal set; }
         /// <summary><p>List of snapshot files.</p></summary>
         public virtual IReadOnlyList<string> Source => SourceInternal.AsReadOnly();
@@ -407,6 +413,7 @@ namespace Nuke.Common.Tools.DotCover
     {
         /// <summary><p>Path to the DotCover executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? DotCoverTasks.DotCoverPath;
+        public override Action<OutputType, string> CustomLogger => DotCoverTasks.DotCoverLogger;
         public virtual string Configuration { get; internal set; }
         /// <summary><p>Coverage snapshot file name.</p></summary>
         public virtual string Source { get; internal set; }

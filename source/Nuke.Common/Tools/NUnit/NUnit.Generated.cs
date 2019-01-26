@@ -27,10 +27,11 @@ namespace Nuke.Common.Tools.NUnit
         public static string NUnitPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("NUNIT_EXE") ??
             ToolPathResolver.GetPackageExecutable("NUnit.ConsoleRunner", "nunit3-console.exe");
+        public static Action<OutputType, string> NUnitLogger { get; set; } = ProcessManager.DefaultLogger;
         /// <summary><p>NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href="http://www.junit.org/">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.</p></summary>
         public static IReadOnlyCollection<Output> NUnit(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(NUnitPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
+            var process = ProcessTasks.StartProcess(NUnitPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, NUnitLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -64,6 +65,7 @@ namespace Nuke.Common.Tools.NUnit
     {
         /// <summary><p>Path to the NUnit executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? NUnitTasks.NUnitPath;
+        public override Action<OutputType, string> CustomLogger => NUnitTasks.NUnitLogger;
         /// <summary><p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (.nunit) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p></summary>
         public virtual IReadOnlyList<string> InputFiles => InputFilesInternal.AsReadOnly();
         internal List<string> InputFilesInternal { get; set; } = new List<string>();

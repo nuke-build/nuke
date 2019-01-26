@@ -27,10 +27,11 @@ namespace Nuke.Common.Tools.OpenCover
         public static string OpenCoverPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("OPENCOVER_EXE") ??
             ToolPathResolver.GetPackageExecutable("OpenCover", "OpenCover.Console.exe");
+        public static Action<OutputType, string> OpenCoverLogger { get; set; } = ProcessManager.DefaultLogger;
         /// <summary><p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p></summary>
         public static IReadOnlyCollection<Output> OpenCover(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(OpenCoverPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
+            var process = ProcessTasks.StartProcess(OpenCoverPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, OpenCoverLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -64,6 +65,7 @@ namespace Nuke.Common.Tools.OpenCover
     {
         /// <summary><p>Path to the OpenCover executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? OpenCoverTasks.OpenCoverPath;
+        public override Action<OutputType, string> CustomLogger => OpenCoverTasks.OpenCoverLogger;
         /// <summary><p>The name of the target application or service that will be started; this can also be a path to the target application.</p></summary>
         public virtual string TargetPath { get; internal set; }
         /// <summary><p>Arguments to be passed to the target process.</p></summary>

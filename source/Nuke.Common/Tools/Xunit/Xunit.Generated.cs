@@ -27,10 +27,11 @@ namespace Nuke.Common.Tools.Xunit
         public static string XunitPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("XUNIT_EXE") ??
             GetToolPath();
+        public static Action<OutputType, string> XunitLogger { get; set; } = ProcessManager.DefaultLogger;
         /// <summary><p>xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Written by the original inventor of NUnit v2, xUnit.net is the latest technology for unit testing C#, F#, VB.NET and other .NET languages. xUnit.net works with ReSharper, CodeRush, TestDriven.NET and Xamarin. It is part of the <a href="https://www.dotnetfoundation.org/">.NET Foundation</a>, and operates under their <a href="https://www.dotnetfoundation.org/code-of-conduct">code of conduct</a>. It is licensed under <a href="https://opensource.org/licenses/Apache-2.0">Apache 2</a> (an OSI approved license).</p></summary>
         public static IReadOnlyCollection<Output> Xunit(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(XunitPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
+            var process = ProcessTasks.StartProcess(XunitPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, XunitLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -64,6 +65,7 @@ namespace Nuke.Common.Tools.Xunit
     {
         /// <summary><p>Path to the Xunit executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? GetToolPath();
+        public override Action<OutputType, string> CustomLogger => XunitTasks.XunitLogger;
         /// <summary><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
         public virtual ILookup<string, string> TargetAssemblyWithConfigs => TargetAssemblyWithConfigsInternal.AsReadOnly();
         internal LookupTable<string, string> TargetAssemblyWithConfigsInternal { get; set; } = new LookupTable<string, string>(StringComparer.OrdinalIgnoreCase);

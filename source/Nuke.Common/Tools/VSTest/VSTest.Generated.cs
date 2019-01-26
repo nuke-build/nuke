@@ -27,10 +27,11 @@ namespace Nuke.Common.Tools.VSTest
         public static string VSTestPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("VSTEST_EXE") ??
             ToolPathResolver.GetPackageExecutable("Microsoft.TestPlatform", "vstest.console.exe");
+        public static Action<OutputType, string> VSTestLogger { get; set; } = ProcessManager.DefaultLogger;
         /// <summary><p>VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.</p></summary>
         public static IReadOnlyCollection<Output> VSTest(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(VSTestPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
+            var process = ProcessTasks.StartProcess(VSTestPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, VSTestLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -64,6 +65,7 @@ namespace Nuke.Common.Tools.VSTest
     {
         /// <summary><p>Path to the VSTest executable.</p></summary>
         public override string ToolPath => base.ToolPath ?? VSTestTasks.VSTestPath;
+        public override Action<OutputType, string> CustomLogger => VSTestTasks.VSTestLogger;
         /// <summary><p>Run tests from the specified files. Separate multiple test file names with spaces.</p></summary>
         public virtual IReadOnlyList<string> TestAssemblies => TestAssembliesInternal.AsReadOnly();
         internal List<string> TestAssembliesInternal { get; set; } = new List<string>();
