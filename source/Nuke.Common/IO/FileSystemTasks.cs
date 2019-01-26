@@ -84,6 +84,11 @@ namespace Nuke.Common.IO
             directories.ForEach(EnsureCleanDirectory);
         }
 
+        public static void DeleteDirectory(PathConstruction.AbsolutePath directory)
+        {
+            DeleteDirectory((string) directory);
+        }
+
         public static void DeleteDirectory(string directory)
         {
             if (!Directory.Exists(directory))
@@ -116,6 +121,11 @@ namespace Nuke.Common.IO
             Logger.Trace($"Deleting file '{file}'...");
             EnsureFileAttributes(file);
             File.Delete(file);
+        }
+
+        public static void DeleteFile(PathConstruction.AbsolutePath file)
+        {
+            DeleteFile((string) file);
         }
 
         public static void DeleteFile(string file)
