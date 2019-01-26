@@ -108,7 +108,7 @@ namespace Nuke.Common.Tooling
                             {
                                 FileName = toolPath,
                                 Arguments = arguments ?? string.Empty,
-                                WorkingDirectory = workingDirectory ?? string.Empty,
+                                WorkingDirectory = workingDirectory ?? EnvironmentInfo.WorkingDirectory,
                                 RedirectStandardOutput = true,
                                 RedirectStandardError = true,
                                 UseShellExecute = false
