@@ -44,6 +44,7 @@ namespace Nuke.Common.Tooling
         public ProcessException(IProcess process)
             : base(FormatMessage(process))
         {
+            Process = process;
         }
 
         protected ProcessException(
@@ -52,5 +53,7 @@ namespace Nuke.Common.Tooling
             : base(info, context)
         {
         }
+
+        internal IProcess Process { get; }
     }
 }
