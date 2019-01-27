@@ -21,10 +21,8 @@ namespace Nuke.Common.Tooling
             
             var messageBuilder = new StringBuilder()
                 .AppendLine($"Process '{Path.GetFileName(process.FileName)}' exited with code {process.ExitCode}.")
-                .AppendLine("Invocation:")
-                .AppendLine($"{indentation}{process.FileName.DoubleQuoteIfNeeded()} {process.Arguments}")
-                .AppendLine("Working directory:")
-                .AppendLine($"{indentation}{process.WorkingDirectory}");
+                .AppendLine($"{indentation}> {process.FileName.DoubleQuoteIfNeeded()} {process.Arguments}")
+                .AppendLine($"{indentation}@ {process.WorkingDirectory}");
 
             var errorOutput = process.Output.Where(x => x.Type == OutputType.Err).ToList();
             if (errorOutput.Count > 0)
