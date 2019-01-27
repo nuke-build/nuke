@@ -39,7 +39,6 @@ namespace Nuke.Common.OutputSinks
         public override void Error(string text, string details = null)
         {
             _teamCity.WriteError(text, details);
-            _teamCity.AddBuildProblem(text);
         }
     }
 }
