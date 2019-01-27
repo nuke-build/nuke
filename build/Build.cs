@@ -15,7 +15,6 @@ using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.InspectCode;
 using Nuke.Common.Tools.Slack;
 using Nuke.Common.Utilities;
-using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.ControlFlow;
 using static Nuke.Common.Gitter.GitterTasks;
@@ -24,7 +23,6 @@ using static Nuke.Common.Tools.Git.GitTasks;
 using static Nuke.Common.Tools.InspectCode.InspectCodeTasks;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
-using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.Tools.Slack.SlackTasks;
 
 // ReSharper disable HeapView.DelegateAllocation
@@ -168,12 +166,13 @@ partial class Build : NukeBuild
         .Executes(() =>
         {
             DotNetNuGetPush(s => s
-                .SetSource(Source)
-                .SetSymbolSource(SymbolSource)
-                .SetApiKey(ApiKey)
-                .CombineWith(
-                    GlobFiles(OutputDirectory, "*.nupkg").NotEmpty(), (cs, v) => cs
-                        .SetTargetPath(v)));
+                    .SetSource(Source)
+                    .SetSymbolSource(SymbolSource)
+                    .SetApiKey(ApiKey)
+                    .CombineWith(
+                        OutputDirectory.GlobFiles("*.nupkg").NotEmpty(), (cs, v) => cs
+                            .SetTargetPath(v)),
+                degreeOfParallelism: 5);
 
             if (GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch))
             {
