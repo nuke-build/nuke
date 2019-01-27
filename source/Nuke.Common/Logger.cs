@@ -236,7 +236,7 @@ namespace Nuke.Common
                     HandleException(ex.InnerException, exceptionOutput);
                     break;
                 default:
-                    exceptionOutput(prefix + exception.Message, exception.StackTrace);
+                    exceptionOutput(prefix + exception.Message, exception.StackTrace + EnvironmentInfo.NewLine);
                     break;
             }
         }

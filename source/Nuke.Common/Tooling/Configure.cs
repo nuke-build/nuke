@@ -67,25 +67,23 @@ namespace Nuke.Common.Tooling
             where TSettings : ToolSettings, new()
         {
             var singleExecution = degreeOfParallelism == 1;
-            var cancellationTokenSource = new CancellationTokenSource();
 
-            var invocations = new ConcurrentBag<(TResult Result, Exception Exception)>();
+            var invocations = new ConcurrentBag<(TSettings Settings, TResult Result, Exception Exception)>();
 
             try
             {
                 configurator(new TSettings())
                     .AsParallel()
                     .WithDegreeOfParallelism(degreeOfParallelism)
-                    .WithCancellation(cancellationTokenSource.Token)
                     .ForAll(x =>
                     {
                         try
                         {
-                            invocations.Add((executor(x.SetLogOutput(singleExecution)), default));
+                            invocations.Add((x, executor(x.SetLogOutput(singleExecution)), default));
                         }
                         catch (Exception exception)
                         {
-                            invocations.Add((default, exception));
+                            invocations.Add((x, default, exception));
                             
                             if (stopOnFirstError)
                                 throw;
@@ -100,6 +98,7 @@ namespace Nuke.Common.Tooling
             finally
             {
                 invocations
+                    .Where(x => x.Settings.LogOutput)
                     .SelectMany(x =>
                         !(x.Exception is ProcessException processException)
                             ? outputSelector(x.Result)
