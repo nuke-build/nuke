@@ -49,11 +49,9 @@ namespace Nuke.Common.Tools.Squirrel
             return Squirrel(configurator(new SquirrelSettings()));
         }
         /// <summary><p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p><p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p></summary>
-        public static IEnumerable<(SquirrelSettings Settings, IReadOnlyCollection<Output> Output)> Squirrel(CombinatorialConfigure<SquirrelSettings> configurator)
+        public static IEnumerable<(SquirrelSettings Settings, IReadOnlyCollection<Output> Output)> Squirrel(CombinatorialConfigure<SquirrelSettings> configurator, int degreeOfParallelism = 1, bool stopOnFirstError = false)
         {
-            return configurator(new SquirrelSettings())
-                .Select(x => (ToolSettings: x, ReturnValue: Squirrel(x)))
-                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+            return configurator.Execute(Squirrel, SquirrelLogger, degreeOfParallelism, stopOnFirstError);
         }
     }
     #region SquirrelSettings

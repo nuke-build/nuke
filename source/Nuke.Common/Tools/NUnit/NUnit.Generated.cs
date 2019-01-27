@@ -49,11 +49,9 @@ namespace Nuke.Common.Tools.NUnit
             return NUnit3(configurator(new NUnit3Settings()));
         }
         /// <summary><p>NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href="http://www.junit.org/">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.</p><p>For more details, visit the <a href="https://www.nunit.org/">official website</a>.</p></summary>
-        public static IEnumerable<(NUnit3Settings Settings, IReadOnlyCollection<Output> Output)> NUnit3(CombinatorialConfigure<NUnit3Settings> configurator)
+        public static IEnumerable<(NUnit3Settings Settings, IReadOnlyCollection<Output> Output)> NUnit3(CombinatorialConfigure<NUnit3Settings> configurator, int degreeOfParallelism = 1, bool stopOnFirstError = false)
         {
-            return configurator(new NUnit3Settings())
-                .Select(x => (ToolSettings: x, ReturnValue: NUnit3(x)))
-                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+            return configurator.Execute(NUnit3, NUnitLogger, degreeOfParallelism, stopOnFirstError);
         }
     }
     #region NUnit3Settings

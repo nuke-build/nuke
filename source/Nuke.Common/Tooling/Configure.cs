@@ -22,7 +22,7 @@ namespace Nuke.Common.Tooling
             return (configurator ?? (x => x)).Invoke(obj);
         }
 
-        public static IReadOnlyCollection<(TSettings Settings, IReadOnlyCollection<Output> Output)> ExecuteMultiple<TSettings>(
+        public static IReadOnlyCollection<(TSettings Settings, IReadOnlyCollection<Output> Output)> Execute<TSettings>(
             this CombinatorialConfigure<TSettings> configurator,
             Func<TSettings, IReadOnlyCollection<Output>> executor,
             Action<OutputType, string> logger,
@@ -30,7 +30,7 @@ namespace Nuke.Common.Tooling
             bool stopOnFirstError)
             where TSettings : ToolSettings, new()
         {
-            return ExecuteMultiple(
+            return Execute(
                 configurator,
                 x => (Settings: x, Output: executor(x)),
                 x => x.Output,
@@ -39,7 +39,7 @@ namespace Nuke.Common.Tooling
                 stopOnFirstError);
         }
         
-        public static IReadOnlyCollection<(TSettings Settings, TResult Result, IReadOnlyCollection<Output> Output)> ExecuteMultiple<TSettings, TResult>(
+        public static IReadOnlyCollection<(TSettings Settings, TResult Result, IReadOnlyCollection<Output> Output)> Execute<TSettings, TResult>(
             this CombinatorialConfigure<TSettings> configurator,
             Func<TSettings, (TResult Result, IReadOnlyCollection<Output> Output)> executor,
             Action<OutputType, string> logger,
@@ -47,7 +47,7 @@ namespace Nuke.Common.Tooling
             bool stopOnFirstError)
             where TSettings : ToolSettings, new()
         {
-            return ExecuteMultiple(
+            return Execute(
                     configurator,
                     x => (Settings: x, ReturnValue: executor(x)),
                     x => x.ReturnValue.Output,
@@ -57,7 +57,7 @@ namespace Nuke.Common.Tooling
                 .Select(x => (x.Settings, x.ReturnValue.Result, x.ReturnValue.Output)).ToList();
         }
 
-        private static IReadOnlyCollection<TResult> ExecuteMultiple<TSettings, TResult>(
+        private static IReadOnlyCollection<TResult> Execute<TSettings, TResult>(
             CombinatorialConfigure<TSettings> configurator,
             Func<TSettings, TResult> executor,
             Func<TResult, IReadOnlyCollection<Output>> outputSelector,

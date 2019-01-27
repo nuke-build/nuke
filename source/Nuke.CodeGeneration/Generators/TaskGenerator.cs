@@ -112,21 +112,24 @@ namespace Nuke.CodeGeneration.Generators
         private static TaskWriter WriteCombinatorialConfiguratorTask(this TaskWriter writer)
         {
             var task = writer.Task;
+            
             var returnType = !task.HasReturnValue()
                 ? $"IEnumerable<({task.SettingsClass.Name} Settings, IReadOnlyCollection<Output> Output)>"
                 : $"IEnumerable<({task.SettingsClass.Name} Settings, {task.ReturnType} Result, IReadOnlyCollection<Output> Output)>";
-            var selector = !task.HasReturnValue()
-                ? "(x.ToolSettings, x.ReturnValue)"
-                : "(x.ToolSettings, x.ReturnValue.Result, x.ReturnValue.Output)";
-
+            
+            var parameters = new[]
+                             {
+                                 $"CombinatorialConfigure<{task.SettingsClass.Name}> configurator",
+                                 "int degreeOfParallelism = 1",
+                                 "bool stopOnFirstError = false"
+                             }.JoinComma();
+            
             return writer
                 .WriteSummary(task)
                 .WriteObsoleteAttributeWhenObsolete(task)
-                .WriteLine($"public static {returnType} {task.GetTaskMethodName()}(CombinatorialConfigure<{task.SettingsClass.Name}> configurator)")
+                .WriteLine($"public static {returnType} {task.GetTaskMethodName()}({parameters})")
                 .WriteBlock(w => w
-                    .WriteLine($"return configurator(new {task.SettingsClass.Name}())")
-                    .WriteLine($"    .Select(x => (ToolSettings: x, ReturnValue: {task.GetTaskMethodName()}(x)))")
-                    .WriteLine($"    .Select(x => {selector}).ToList();"));
+                    .WriteLine($"return configurator.Execute({task.GetTaskMethodName()}, {task.Tool.Name}Logger, degreeOfParallelism, stopOnFirstError);"));
         }
 
         private static string GetProcessStart(Task task)

@@ -49,11 +49,9 @@ namespace Nuke.Common.Tools.SignTool
             return SignTool(configurator(new SignToolSettings()));
         }
         /// <summary><p>Use the <c>sign</c> command to sign files using embedded signatures. Signing protects a file from tampering, and allows users to verify the signer (you) based on a signing certificate. The options below allow you to specify signing parameters and to select the signing certificate you wish to use.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe">official website</a>.</p></summary>
-        public static IEnumerable<(SignToolSettings Settings, IReadOnlyCollection<Output> Output)> SignTool(CombinatorialConfigure<SignToolSettings> configurator)
+        public static IEnumerable<(SignToolSettings Settings, IReadOnlyCollection<Output> Output)> SignTool(CombinatorialConfigure<SignToolSettings> configurator, int degreeOfParallelism = 1, bool stopOnFirstError = false)
         {
-            return configurator(new SignToolSettings())
-                .Select(x => (ToolSettings: x, ReturnValue: SignTool(x)))
-                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+            return configurator.Execute(SignTool, SignToolLogger, degreeOfParallelism, stopOnFirstError);
         }
     }
     #region SignToolSettings
