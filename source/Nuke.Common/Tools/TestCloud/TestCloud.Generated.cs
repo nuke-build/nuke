@@ -49,9 +49,9 @@ namespace Nuke.Common.Tools.TestCloud
             return TestCloud(configurator(new TestCloudSettings()));
         }
         /// <summary><p>Test Cloud is a cloud based service consisting of thousands of physical mobile devices. Users upload their apps and tests to Test Cloud, which will install the apps on the devices and run the tests. When the tests are complete, Test Cloud, the results made available to users through an easy to use and informative web-based front end.</p><p>For more details, visit the <a href="https://developer.xamarin.com/guides/testcloud/">official website</a>.</p></summary>
-        public static IEnumerable<(TestCloudSettings Settings, IReadOnlyCollection<Output> Output)> TestCloud(CombinatorialConfigure<TestCloudSettings> configurator, int degreeOfParallelism = 1, bool stopOnFirstError = false)
+        public static IEnumerable<(TestCloudSettings Settings, IReadOnlyCollection<Output> Output)> TestCloud(CombinatorialConfigure<TestCloudSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
         {
-            return configurator.Execute(TestCloud, TestCloudLogger, degreeOfParallelism, stopOnFirstError);
+            return configurator.Invoke(TestCloud, TestCloudLogger, degreeOfParallelism, continueOnError);
         }
     }
     #region TestCloudSettings

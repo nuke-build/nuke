@@ -51,9 +51,9 @@ namespace Nuke.Common.Tools.InspectCode
             return InspectCode(configurator(new InspectCodeSettings()));
         }
         /// <summary><p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p><p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p></summary>
-        public static IEnumerable<(InspectCodeSettings Settings, IReadOnlyCollection<Output> Output)> InspectCode(CombinatorialConfigure<InspectCodeSettings> configurator, int degreeOfParallelism = 1, bool stopOnFirstError = false)
+        public static IEnumerable<(InspectCodeSettings Settings, IReadOnlyCollection<Output> Output)> InspectCode(CombinatorialConfigure<InspectCodeSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
         {
-            return configurator.Execute(InspectCode, InspectCodeLogger, degreeOfParallelism, stopOnFirstError);
+            return configurator.Invoke(InspectCode, InspectCodeLogger, degreeOfParallelism, continueOnError);
         }
     }
     #region InspectCodeSettings

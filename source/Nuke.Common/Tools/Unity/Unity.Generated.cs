@@ -50,9 +50,9 @@ namespace Nuke.Common.Tools.Unity
             return UnityCreateManualActivationFile(configurator(new UnityCreateManualActivationFileSettings()));
         }
         /// <summary><p>(2018.2+) Exports the currently activated license to the path of the Unity executable or either the default Unity license location, see the logs or <a href="https://docs.unity3d.com/Manual/ActivationFAQ.html">Activation FAQ</a> for more information.</p><p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p></summary>
-        public static IEnumerable<(UnityCreateManualActivationFileSettings Settings, IReadOnlyCollection<Output> Output)> UnityCreateManualActivationFile(CombinatorialConfigure<UnityCreateManualActivationFileSettings> configurator, int degreeOfParallelism = 1, bool stopOnFirstError = false)
+        public static IEnumerable<(UnityCreateManualActivationFileSettings Settings, IReadOnlyCollection<Output> Output)> UnityCreateManualActivationFile(CombinatorialConfigure<UnityCreateManualActivationFileSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
         {
-            return configurator.Execute(UnityCreateManualActivationFile, UnityLogger, degreeOfParallelism, stopOnFirstError);
+            return configurator.Invoke(UnityCreateManualActivationFile, UnityLogger, degreeOfParallelism, continueOnError);
         }
         /// <summary><p>(2018.2+) Activates Unity with a license file.</p><p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> UnityManualLicenseFile(UnityManualLicenseFileSettings toolSettings = null)
@@ -69,9 +69,9 @@ namespace Nuke.Common.Tools.Unity
             return UnityManualLicenseFile(configurator(new UnityManualLicenseFileSettings()));
         }
         /// <summary><p>(2018.2+) Activates Unity with a license file.</p><p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p></summary>
-        public static IEnumerable<(UnityManualLicenseFileSettings Settings, IReadOnlyCollection<Output> Output)> UnityManualLicenseFile(CombinatorialConfigure<UnityManualLicenseFileSettings> configurator, int degreeOfParallelism = 1, bool stopOnFirstError = false)
+        public static IEnumerable<(UnityManualLicenseFileSettings Settings, IReadOnlyCollection<Output> Output)> UnityManualLicenseFile(CombinatorialConfigure<UnityManualLicenseFileSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
         {
-            return configurator.Execute(UnityManualLicenseFile, UnityLogger, degreeOfParallelism, stopOnFirstError);
+            return configurator.Invoke(UnityManualLicenseFile, UnityLogger, degreeOfParallelism, continueOnError);
         }
         /// <summary><p>Execute Unity.</p><p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> Unity(UnitySettings toolSettings = null)
@@ -88,9 +88,9 @@ namespace Nuke.Common.Tools.Unity
             return Unity(configurator(new UnitySettings()));
         }
         /// <summary><p>Execute Unity.</p><p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p></summary>
-        public static IEnumerable<(UnitySettings Settings, IReadOnlyCollection<Output> Output)> Unity(CombinatorialConfigure<UnitySettings> configurator, int degreeOfParallelism = 1, bool stopOnFirstError = false)
+        public static IEnumerable<(UnitySettings Settings, IReadOnlyCollection<Output> Output)> Unity(CombinatorialConfigure<UnitySettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
         {
-            return configurator.Execute(Unity, UnityLogger, degreeOfParallelism, stopOnFirstError);
+            return configurator.Invoke(Unity, UnityLogger, degreeOfParallelism, continueOnError);
         }
         /// <summary><p>Return the currenlty activated Unity license.</p><p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> UnityReturnLicense(UnityReturnLicenseSettings toolSettings = null)
@@ -107,9 +107,9 @@ namespace Nuke.Common.Tools.Unity
             return UnityReturnLicense(configurator(new UnityReturnLicenseSettings()));
         }
         /// <summary><p>Return the currenlty activated Unity license.</p><p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p></summary>
-        public static IEnumerable<(UnityReturnLicenseSettings Settings, IReadOnlyCollection<Output> Output)> UnityReturnLicense(CombinatorialConfigure<UnityReturnLicenseSettings> configurator, int degreeOfParallelism = 1, bool stopOnFirstError = false)
+        public static IEnumerable<(UnityReturnLicenseSettings Settings, IReadOnlyCollection<Output> Output)> UnityReturnLicense(CombinatorialConfigure<UnityReturnLicenseSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
         {
-            return configurator.Execute(UnityReturnLicense, UnityLogger, degreeOfParallelism, stopOnFirstError);
+            return configurator.Invoke(UnityReturnLicense, UnityLogger, degreeOfParallelism, continueOnError);
         }
     }
     #region UnityCreateManualActivationFileSettings

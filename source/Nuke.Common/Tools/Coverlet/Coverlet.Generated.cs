@@ -49,9 +49,9 @@ namespace Nuke.Common.Tools.Coverlet
             return Coverlet(configurator(new CoverletSettings()));
         }
         /// <summary><p><c>Coverlet</c> is a cross platform code coverage library for .NET Core, with support for line, branch and method coverage.The <c>dotnet test</c> command is used to execute unit tests in a given project. Unit tests are console application projects that have dependencies on the unit test framework (for example, MSTest, NUnit, or xUnit) and the dotnet test runner for the unit testing framework. These are packaged as NuGet packages and are restored as ordinary dependencies for the project.</p><p>For more details, visit the <a href="https://github.com/tonerdo/coverlet/">official website</a>.</p></summary>
-        public static IEnumerable<(CoverletSettings Settings, IReadOnlyCollection<Output> Output)> Coverlet(CombinatorialConfigure<CoverletSettings> configurator, int degreeOfParallelism = 1, bool stopOnFirstError = false)
+        public static IEnumerable<(CoverletSettings Settings, IReadOnlyCollection<Output> Output)> Coverlet(CombinatorialConfigure<CoverletSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
         {
-            return configurator.Execute(Coverlet, CoverletLogger, degreeOfParallelism, stopOnFirstError);
+            return configurator.Invoke(Coverlet, CoverletLogger, degreeOfParallelism, continueOnError);
         }
     }
     #region CoverletSettings

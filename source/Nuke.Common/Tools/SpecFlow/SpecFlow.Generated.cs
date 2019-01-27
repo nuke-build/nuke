@@ -49,9 +49,9 @@ namespace Nuke.Common.Tools.SpecFlow
             return SpecFlowNUnitExecutionReport(configurator(new SpecFlowNUnitExecutionReportSettings()));
         }
         /// <summary><p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IEnumerable<(SpecFlowNUnitExecutionReportSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowNUnitExecutionReport(CombinatorialConfigure<SpecFlowNUnitExecutionReportSettings> configurator, int degreeOfParallelism = 1, bool stopOnFirstError = false)
+        public static IEnumerable<(SpecFlowNUnitExecutionReportSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowNUnitExecutionReport(CombinatorialConfigure<SpecFlowNUnitExecutionReportSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
         {
-            return configurator.Execute(SpecFlowNUnitExecutionReport, SpecFlowLogger, degreeOfParallelism, stopOnFirstError);
+            return configurator.Invoke(SpecFlowNUnitExecutionReport, SpecFlowLogger, degreeOfParallelism, continueOnError);
         }
         /// <summary><p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> SpecFlowMSTestExecutionReport(SpecFlowMSTestExecutionReportSettings toolSettings = null)
@@ -67,9 +67,9 @@ namespace Nuke.Common.Tools.SpecFlow
             return SpecFlowMSTestExecutionReport(configurator(new SpecFlowMSTestExecutionReportSettings()));
         }
         /// <summary><p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IEnumerable<(SpecFlowMSTestExecutionReportSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowMSTestExecutionReport(CombinatorialConfigure<SpecFlowMSTestExecutionReportSettings> configurator, int degreeOfParallelism = 1, bool stopOnFirstError = false)
+        public static IEnumerable<(SpecFlowMSTestExecutionReportSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowMSTestExecutionReport(CombinatorialConfigure<SpecFlowMSTestExecutionReportSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
         {
-            return configurator.Execute(SpecFlowMSTestExecutionReport, SpecFlowLogger, degreeOfParallelism, stopOnFirstError);
+            return configurator.Invoke(SpecFlowMSTestExecutionReport, SpecFlowLogger, degreeOfParallelism, continueOnError);
         }
         /// <summary><p>This report shows the usage and binding status of the steps for the entire project. You can use this report to find both unused code in the automation layer and scenario steps that have no definition yet.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> SpecFlowStepDefinitionReport(SpecFlowStepDefinitionReportSettings toolSettings = null)
@@ -85,9 +85,9 @@ namespace Nuke.Common.Tools.SpecFlow
             return SpecFlowStepDefinitionReport(configurator(new SpecFlowStepDefinitionReportSettings()));
         }
         /// <summary><p>This report shows the usage and binding status of the steps for the entire project. You can use this report to find both unused code in the automation layer and scenario steps that have no definition yet.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IEnumerable<(SpecFlowStepDefinitionReportSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowStepDefinitionReport(CombinatorialConfigure<SpecFlowStepDefinitionReportSettings> configurator, int degreeOfParallelism = 1, bool stopOnFirstError = false)
+        public static IEnumerable<(SpecFlowStepDefinitionReportSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowStepDefinitionReport(CombinatorialConfigure<SpecFlowStepDefinitionReportSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
         {
-            return configurator.Execute(SpecFlowStepDefinitionReport, SpecFlowLogger, degreeOfParallelism, stopOnFirstError);
+            return configurator.Invoke(SpecFlowStepDefinitionReport, SpecFlowLogger, degreeOfParallelism, continueOnError);
         }
         /// <summary><p>Use <c>SpecRun.exe run</c> to execute your tests.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> SpecFlowRun(SpecFlowRunSettings toolSettings = null)
@@ -103,9 +103,9 @@ namespace Nuke.Common.Tools.SpecFlow
             return SpecFlowRun(configurator(new SpecFlowRunSettings()));
         }
         /// <summary><p>Use <c>SpecRun.exe run</c> to execute your tests.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IEnumerable<(SpecFlowRunSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowRun(CombinatorialConfigure<SpecFlowRunSettings> configurator, int degreeOfParallelism = 1, bool stopOnFirstError = false)
+        public static IEnumerable<(SpecFlowRunSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowRun(CombinatorialConfigure<SpecFlowRunSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
         {
-            return configurator.Execute(SpecFlowRun, SpecFlowLogger, degreeOfParallelism, stopOnFirstError);
+            return configurator.Invoke(SpecFlowRun, SpecFlowLogger, degreeOfParallelism, continueOnError);
         }
         /// <summary><p>Use <c>SpecRun.exe buildserverrun</c> to execute your tests in build server mode.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> SpecFlowBuildServerRun(SpecFlowBuildServerRunSettings toolSettings = null)
@@ -121,9 +121,9 @@ namespace Nuke.Common.Tools.SpecFlow
             return SpecFlowBuildServerRun(configurator(new SpecFlowBuildServerRunSettings()));
         }
         /// <summary><p>Use <c>SpecRun.exe buildserverrun</c> to execute your tests in build server mode.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IEnumerable<(SpecFlowBuildServerRunSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowBuildServerRun(CombinatorialConfigure<SpecFlowBuildServerRunSettings> configurator, int degreeOfParallelism = 1, bool stopOnFirstError = false)
+        public static IEnumerable<(SpecFlowBuildServerRunSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowBuildServerRun(CombinatorialConfigure<SpecFlowBuildServerRunSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
         {
-            return configurator.Execute(SpecFlowBuildServerRun, SpecFlowLogger, degreeOfParallelism, stopOnFirstError);
+            return configurator.Invoke(SpecFlowBuildServerRun, SpecFlowLogger, degreeOfParallelism, continueOnError);
         }
         /// <summary><p>Use <c>SpecRun.exe register</c> to register your SpecFlow+ license. You only need to register your license once per user per machine. The license is valid for all SpecFlow+ components.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> SpecFlowRegister(SpecFlowRegisterSettings toolSettings = null)
@@ -139,9 +139,9 @@ namespace Nuke.Common.Tools.SpecFlow
             return SpecFlowRegister(configurator(new SpecFlowRegisterSettings()));
         }
         /// <summary><p>Use <c>SpecRun.exe register</c> to register your SpecFlow+ license. You only need to register your license once per user per machine. The license is valid for all SpecFlow+ components.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IEnumerable<(SpecFlowRegisterSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowRegister(CombinatorialConfigure<SpecFlowRegisterSettings> configurator, int degreeOfParallelism = 1, bool stopOnFirstError = false)
+        public static IEnumerable<(SpecFlowRegisterSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowRegister(CombinatorialConfigure<SpecFlowRegisterSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
         {
-            return configurator.Execute(SpecFlowRegister, SpecFlowLogger, degreeOfParallelism, stopOnFirstError);
+            return configurator.Invoke(SpecFlowRegister, SpecFlowLogger, degreeOfParallelism, continueOnError);
         }
         /// <summary><p>Use <c>SpecRun.exe unregister</c> to unregister your SpecFlow+ license.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> SpecFlowUnregister(SpecFlowUnregisterSettings toolSettings = null)
@@ -157,9 +157,9 @@ namespace Nuke.Common.Tools.SpecFlow
             return SpecFlowUnregister(configurator(new SpecFlowUnregisterSettings()));
         }
         /// <summary><p>Use <c>SpecRun.exe unregister</c> to unregister your SpecFlow+ license.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IEnumerable<(SpecFlowUnregisterSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowUnregister(CombinatorialConfigure<SpecFlowUnregisterSettings> configurator, int degreeOfParallelism = 1, bool stopOnFirstError = false)
+        public static IEnumerable<(SpecFlowUnregisterSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowUnregister(CombinatorialConfigure<SpecFlowUnregisterSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
         {
-            return configurator.Execute(SpecFlowUnregister, SpecFlowLogger, degreeOfParallelism, stopOnFirstError);
+            return configurator.Invoke(SpecFlowUnregister, SpecFlowLogger, degreeOfParallelism, continueOnError);
         }
         /// <summary><p>Use <c>SpecRun.exe about</c> to display information such as your version number, build date and license information (licensee, upgrade until date/expiry date).</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> SpecFlowAbout(SpecFlowAboutSettings toolSettings = null)
@@ -175,9 +175,9 @@ namespace Nuke.Common.Tools.SpecFlow
             return SpecFlowAbout(configurator(new SpecFlowAboutSettings()));
         }
         /// <summary><p>Use <c>SpecRun.exe about</c> to display information such as your version number, build date and license information (licensee, upgrade until date/expiry date).</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
-        public static IEnumerable<(SpecFlowAboutSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowAbout(CombinatorialConfigure<SpecFlowAboutSettings> configurator, int degreeOfParallelism = 1, bool stopOnFirstError = false)
+        public static IEnumerable<(SpecFlowAboutSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowAbout(CombinatorialConfigure<SpecFlowAboutSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
         {
-            return configurator.Execute(SpecFlowAbout, SpecFlowLogger, degreeOfParallelism, stopOnFirstError);
+            return configurator.Invoke(SpecFlowAbout, SpecFlowLogger, degreeOfParallelism, continueOnError);
         }
     }
     #region SpecFlowNUnitExecutionReportSettings

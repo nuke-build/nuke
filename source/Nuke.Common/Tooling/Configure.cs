@@ -22,48 +22,48 @@ namespace Nuke.Common.Tooling
             return (configurator ?? (x => x)).Invoke(obj);
         }
 
-        public static IReadOnlyCollection<(TSettings Settings, IReadOnlyCollection<Output> Output)> Execute<TSettings>(
+        public static IReadOnlyCollection<(TSettings Settings, IReadOnlyCollection<Output> Output)> Invoke<TSettings>(
             this CombinatorialConfigure<TSettings> configurator,
             Func<TSettings, IReadOnlyCollection<Output>> executor,
             Action<OutputType, string> logger,
             int degreeOfParallelism,
-            bool stopOnFirstError)
+            bool continueOnError)
             where TSettings : ToolSettings, new()
         {
-            return Execute(
+            return Invoke(
                 configurator,
                 x => (Settings: x, Output: executor(x)),
                 x => x.Output,
                 logger,
                 degreeOfParallelism,
-                stopOnFirstError);
+                continueOnError);
         }
         
-        public static IReadOnlyCollection<(TSettings Settings, TResult Result, IReadOnlyCollection<Output> Output)> Execute<TSettings, TResult>(
+        public static IReadOnlyCollection<(TSettings Settings, TResult Result, IReadOnlyCollection<Output> Output)> Invoke<TSettings, TResult>(
             this CombinatorialConfigure<TSettings> configurator,
             Func<TSettings, (TResult Result, IReadOnlyCollection<Output> Output)> executor,
             Action<OutputType, string> logger,
             int degreeOfParallelism,
-            bool stopOnFirstError)
+            bool continueOnError)
             where TSettings : ToolSettings, new()
         {
-            return Execute(
+            return Invoke(
                     configurator,
                     x => (Settings: x, ReturnValue: executor(x)),
                     x => x.ReturnValue.Output,
                     logger,
                     degreeOfParallelism,
-                    stopOnFirstError)
+                    continueOnError)
                 .Select(x => (x.Settings, x.ReturnValue.Result, x.ReturnValue.Output)).ToList();
         }
 
-        private static IReadOnlyCollection<TResult> Execute<TSettings, TResult>(
+        private static IReadOnlyCollection<TResult> Invoke<TSettings, TResult>(
             CombinatorialConfigure<TSettings> configurator,
             Func<TSettings, TResult> executor,
             Func<TResult, IReadOnlyCollection<Output>> outputSelector,
             Action<OutputType, string> logger,
             int degreeOfParallelism,
-            bool stopOnFirstError)
+            bool continueOnError)
             where TSettings : ToolSettings, new()
         {
             var singleExecution = degreeOfParallelism == 1;
@@ -85,7 +85,7 @@ namespace Nuke.Common.Tooling
                         {
                             invocations.Add((x, default, exception));
                             
-                            if (stopOnFirstError)
+                            if (!continueOnError)
                                 throw;
                         }
                     });

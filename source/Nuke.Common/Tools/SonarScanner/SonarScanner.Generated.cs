@@ -49,9 +49,9 @@ namespace Nuke.Common.Tools.SonarScanner
             return SonarScannerBegin(configurator(new SonarScannerBeginSettings()));
         }
         /// <summary><p>The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.</p><p>For more details, visit the <a href="https://www.sonarqube.org/">official website</a>.</p></summary>
-        public static IEnumerable<(SonarScannerBeginSettings Settings, IReadOnlyCollection<Output> Output)> SonarScannerBegin(CombinatorialConfigure<SonarScannerBeginSettings> configurator, int degreeOfParallelism = 1, bool stopOnFirstError = false)
+        public static IEnumerable<(SonarScannerBeginSettings Settings, IReadOnlyCollection<Output> Output)> SonarScannerBegin(CombinatorialConfigure<SonarScannerBeginSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
         {
-            return configurator.Execute(SonarScannerBegin, SonarScannerLogger, degreeOfParallelism, stopOnFirstError);
+            return configurator.Invoke(SonarScannerBegin, SonarScannerLogger, degreeOfParallelism, continueOnError);
         }
         /// <summary><p>The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.</p><p>For more details, visit the <a href="https://www.sonarqube.org/">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> SonarScannerEnd(SonarScannerEndSettings toolSettings = null)
@@ -67,9 +67,9 @@ namespace Nuke.Common.Tools.SonarScanner
             return SonarScannerEnd(configurator(new SonarScannerEndSettings()));
         }
         /// <summary><p>The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.</p><p>For more details, visit the <a href="https://www.sonarqube.org/">official website</a>.</p></summary>
-        public static IEnumerable<(SonarScannerEndSettings Settings, IReadOnlyCollection<Output> Output)> SonarScannerEnd(CombinatorialConfigure<SonarScannerEndSettings> configurator, int degreeOfParallelism = 1, bool stopOnFirstError = false)
+        public static IEnumerable<(SonarScannerEndSettings Settings, IReadOnlyCollection<Output> Output)> SonarScannerEnd(CombinatorialConfigure<SonarScannerEndSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
         {
-            return configurator.Execute(SonarScannerEnd, SonarScannerLogger, degreeOfParallelism, stopOnFirstError);
+            return configurator.Invoke(SonarScannerEnd, SonarScannerLogger, degreeOfParallelism, continueOnError);
         }
     }
     #region SonarScannerBeginSettings
