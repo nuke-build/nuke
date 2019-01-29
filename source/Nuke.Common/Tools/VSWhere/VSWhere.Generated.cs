@@ -23,19 +23,26 @@ namespace Nuke.Common.Tools.VSWhere
     [ExcludeFromCodeCoverage]
     public static partial class VSWhereTasks
     {
-        /// <summary><p>Path to the VSWhere executable.</p></summary>
+        /// <summary>
+        ///   Path to the VSWhere executable.
+        /// </summary>
         public static string VSWherePath =>
             ToolPathResolver.TryGetEnvironmentExecutable("VSWHERE_EXE") ??
             ToolPathResolver.GetPackageExecutable("vswhere", "vswhere.exe");
         public static Action<OutputType, string> VSWhereLogger { get; set; } = ProcessManager.DefaultLogger;
-        /// <summary><p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p></summary>
+        /// <summary>
+        ///   VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.
+        /// </summary>
         public static IReadOnlyCollection<Output> VSWhere(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
             var process = ProcessTasks.StartProcess(VSWherePath, arguments, workingDirectory, environmentVariables, timeout, logOutput, VSWhereLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p><p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p>
+        ///   <p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p>
+        /// </summary>
         public static (List<VSWhereResult> Result, IReadOnlyCollection<Output> Output) VSWhere(VSWhereSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new VSWhereSettings();
@@ -43,52 +50,120 @@ namespace Nuke.Common.Tools.VSWhere
             process.AssertZeroExitCode();
             return (GetResult(process, toolSettings), process.Output);
         }
-        /// <summary><p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p><p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p>
+        ///   <p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>-all</c> via <see cref="VSWhereSettings.All"/></li>
+        ///     <li><c>-format</c> via <see cref="VSWhereSettings.Format"/></li>
+        ///     <li><c>-latest</c> via <see cref="VSWhereSettings.Latest"/></li>
+        ///     <li><c>-legacy</c> via <see cref="VSWhereSettings.Legacy"/></li>
+        ///     <li><c>-nologo</c> via <see cref="VSWhereSettings.NoLogo"/></li>
+        ///     <li><c>-prerelease</c> via <see cref="VSWhereSettings.Prerelease"/></li>
+        ///     <li><c>-products</c> via <see cref="VSWhereSettings.Products"/></li>
+        ///     <li><c>-property</c> via <see cref="VSWhereSettings.Property"/></li>
+        ///     <li><c>-requires</c> via <see cref="VSWhereSettings.Requires"/></li>
+        ///     <li><c>-requiresAny</c> via <see cref="VSWhereSettings.RequiresAny"/></li>
+        ///     <li><c>-utf8</c> via <see cref="VSWhereSettings.UTF8"/></li>
+        ///     <li><c>-version</c> via <see cref="VSWhereSettings.Version"/></li>
+        ///   </ul>
+        /// </remarks>
         public static (List<VSWhereResult> Result, IReadOnlyCollection<Output> Output) VSWhere(Configure<VSWhereSettings> configurator)
         {
             return VSWhere(configurator(new VSWhereSettings()));
         }
-        /// <summary><p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p><p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p>
+        ///   <p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>-all</c> via <see cref="VSWhereSettings.All"/></li>
+        ///     <li><c>-format</c> via <see cref="VSWhereSettings.Format"/></li>
+        ///     <li><c>-latest</c> via <see cref="VSWhereSettings.Latest"/></li>
+        ///     <li><c>-legacy</c> via <see cref="VSWhereSettings.Legacy"/></li>
+        ///     <li><c>-nologo</c> via <see cref="VSWhereSettings.NoLogo"/></li>
+        ///     <li><c>-prerelease</c> via <see cref="VSWhereSettings.Prerelease"/></li>
+        ///     <li><c>-products</c> via <see cref="VSWhereSettings.Products"/></li>
+        ///     <li><c>-property</c> via <see cref="VSWhereSettings.Property"/></li>
+        ///     <li><c>-requires</c> via <see cref="VSWhereSettings.Requires"/></li>
+        ///     <li><c>-requiresAny</c> via <see cref="VSWhereSettings.RequiresAny"/></li>
+        ///     <li><c>-utf8</c> via <see cref="VSWhereSettings.UTF8"/></li>
+        ///     <li><c>-version</c> via <see cref="VSWhereSettings.Version"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IEnumerable<(VSWhereSettings Settings, List<VSWhereResult> Result, IReadOnlyCollection<Output> Output)> VSWhere(CombinatorialConfigure<VSWhereSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
             return configurator.Invoke(VSWhere, VSWhereLogger, degreeOfParallelism, completeOnFailure);
         }
     }
     #region VSWhereSettings
-    /// <summary><p>Used within <see cref="VSWhereTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="VSWhereTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
     public partial class VSWhereSettings : ToolSettings
     {
-        /// <summary><p>Path to the VSWhere executable.</p></summary>
+        /// <summary>
+        ///   Path to the VSWhere executable.
+        /// </summary>
         public override string ToolPath => base.ToolPath ?? VSWhereTasks.VSWherePath;
         public override Action<OutputType, string> CustomLogger => VSWhereTasks.VSWhereLogger;
-        /// <summary><p> Return only the newest version and last installed.</p></summary>
+        /// <summary>
+        ///    Return only the newest version and last installed.
+        /// </summary>
         public virtual bool? Latest { get; internal set; }
-        /// <summary><p>A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.</p></summary>
+        /// <summary>
+        ///   A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.
+        /// </summary>
         public virtual VSWhereFormat Format { get; internal set; }
-        /// <summary><p>Do not show logo information.</p></summary>
+        /// <summary>
+        ///   Do not show logo information.
+        /// </summary>
         public virtual bool? NoLogo { get; internal set; }
-        /// <summary><p>Use UTF-8 encoding (recommended for JSON).</p></summary>
+        /// <summary>
+        ///   Use UTF-8 encoding (recommended for JSON).
+        /// </summary>
         public virtual bool? UTF8 { get; internal set; }
-        /// <summary><p>Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.</p></summary>
+        /// <summary>
+        ///   Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.
+        /// </summary>
         public virtual bool? Legacy { get; internal set; }
-        /// <summary><p>Finds all instances even if they are incomplete and may not launch.</p></summary>
+        /// <summary>
+        ///   Finds all instances even if they are incomplete and may not launch.
+        /// </summary>
         public virtual bool? All { get; internal set; }
-        /// <summary><p>Also searches prereleases. By default, only releases are searched.</p></summary>
+        /// <summary>
+        ///   Also searches prereleases. By default, only releases are searched.
+        /// </summary>
         public virtual bool? Prerelease { get; internal set; }
-        /// <summary><p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p></summary>
+        /// <summary>
+        ///   One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.
+        /// </summary>
         public virtual IReadOnlyList<string> Products => ProductsInternal.AsReadOnly();
         internal List<string> ProductsInternal { get; set; } = new List<string>();
-        /// <summary><p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p></summary>
+        /// <summary>
+        ///   One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.
+        /// </summary>
         public virtual IReadOnlyList<string> Requires => RequiresInternal.AsReadOnly();
         internal List<string> RequiresInternal { get; set; } = new List<string>();
-        /// <summary><p>Find instances with any one or more workload or components IDs passed to <c>-requires</c>.</p></summary>
+        /// <summary>
+        ///   Find instances with any one or more workload or components IDs passed to <c>-requires</c>.
+        /// </summary>
         public virtual bool? RequiresAny { get; internal set; }
-        /// <summary><p>A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.</p></summary>
+        /// <summary>
+        ///   A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.
+        /// </summary>
         public virtual string Version { get; internal set; }
-        /// <summary><p>The name of a property to return. Use delimiters <c>'.'</c>, <c>'/'</c>, or <c>'_'</c> to separate object and property names. Example: <c>properties.nickname</c> will return the <em>nickname</em> property under <em>properties</em>.</p></summary>
+        /// <summary>
+        ///   The name of a property to return. Use delimiters <c>'.'</c>, <c>'/'</c>, or <c>'_'</c> to separate object and property names. Example: <c>properties.nickname</c> will return the <em>nickname</em> property under <em>properties</em>.
+        /// </summary>
         public virtual string Property { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -110,7 +185,9 @@ namespace Nuke.Common.Tools.VSWhere
     }
     #endregion
     #region VSWhereCatalog
-    /// <summary><p>Used within <see cref="VSWhereTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="VSWhereTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
@@ -136,7 +213,9 @@ namespace Nuke.Common.Tools.VSWhere
     }
     #endregion
     #region VSWhereResult
-    /// <summary><p>Used within <see cref="VSWhereTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="VSWhereTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
@@ -164,13 +243,18 @@ namespace Nuke.Common.Tools.VSWhere
     }
     #endregion
     #region VSWhereSettingsExtensions
-    /// <summary><p>Used within <see cref="VSWhereTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="VSWhereTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class VSWhereSettingsExtensions
     {
         #region Latest
-        /// <summary><p><em>Sets <see cref="VSWhereSettings.Latest"/>.</em></p><p> Return only the newest version and last installed.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="VSWhereSettings.Latest"/></em></p>
+        ///   <p> Return only the newest version and last installed.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings SetLatest(this VSWhereSettings toolSettings, bool? latest)
         {
@@ -178,7 +262,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.Latest = latest;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="VSWhereSettings.Latest"/>.</em></p><p> Return only the newest version and last installed.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="VSWhereSettings.Latest"/></em></p>
+        ///   <p> Return only the newest version and last installed.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings ResetLatest(this VSWhereSettings toolSettings)
         {
@@ -186,7 +273,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.Latest = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="VSWhereSettings.Latest"/>.</em></p><p> Return only the newest version and last installed.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="VSWhereSettings.Latest"/></em></p>
+        ///   <p> Return only the newest version and last installed.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings EnableLatest(this VSWhereSettings toolSettings)
         {
@@ -194,7 +284,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.Latest = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="VSWhereSettings.Latest"/>.</em></p><p> Return only the newest version and last installed.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="VSWhereSettings.Latest"/></em></p>
+        ///   <p> Return only the newest version and last installed.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings DisableLatest(this VSWhereSettings toolSettings)
         {
@@ -202,7 +295,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.Latest = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="VSWhereSettings.Latest"/>.</em></p><p> Return only the newest version and last installed.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="VSWhereSettings.Latest"/></em></p>
+        ///   <p> Return only the newest version and last installed.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings ToggleLatest(this VSWhereSettings toolSettings)
         {
@@ -212,7 +308,10 @@ namespace Nuke.Common.Tools.VSWhere
         }
         #endregion
         #region Format
-        /// <summary><p><em>Sets <see cref="VSWhereSettings.Format"/>.</em></p><p>A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="VSWhereSettings.Format"/></em></p>
+        ///   <p>A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings SetFormat(this VSWhereSettings toolSettings, VSWhereFormat format)
         {
@@ -220,7 +319,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.Format = format;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="VSWhereSettings.Format"/>.</em></p><p>A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="VSWhereSettings.Format"/></em></p>
+        ///   <p>A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings ResetFormat(this VSWhereSettings toolSettings)
         {
@@ -230,7 +332,10 @@ namespace Nuke.Common.Tools.VSWhere
         }
         #endregion
         #region NoLogo
-        /// <summary><p><em>Sets <see cref="VSWhereSettings.NoLogo"/>.</em></p><p>Do not show logo information.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="VSWhereSettings.NoLogo"/></em></p>
+        ///   <p>Do not show logo information.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings SetNoLogo(this VSWhereSettings toolSettings, bool? noLogo)
         {
@@ -238,7 +343,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.NoLogo = noLogo;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="VSWhereSettings.NoLogo"/>.</em></p><p>Do not show logo information.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="VSWhereSettings.NoLogo"/></em></p>
+        ///   <p>Do not show logo information.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings ResetNoLogo(this VSWhereSettings toolSettings)
         {
@@ -246,7 +354,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.NoLogo = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="VSWhereSettings.NoLogo"/>.</em></p><p>Do not show logo information.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="VSWhereSettings.NoLogo"/></em></p>
+        ///   <p>Do not show logo information.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings EnableNoLogo(this VSWhereSettings toolSettings)
         {
@@ -254,7 +365,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.NoLogo = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="VSWhereSettings.NoLogo"/>.</em></p><p>Do not show logo information.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="VSWhereSettings.NoLogo"/></em></p>
+        ///   <p>Do not show logo information.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings DisableNoLogo(this VSWhereSettings toolSettings)
         {
@@ -262,7 +376,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.NoLogo = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="VSWhereSettings.NoLogo"/>.</em></p><p>Do not show logo information.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="VSWhereSettings.NoLogo"/></em></p>
+        ///   <p>Do not show logo information.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings ToggleNoLogo(this VSWhereSettings toolSettings)
         {
@@ -272,7 +389,10 @@ namespace Nuke.Common.Tools.VSWhere
         }
         #endregion
         #region UTF8
-        /// <summary><p><em>Sets <see cref="VSWhereSettings.UTF8"/>.</em></p><p>Use UTF-8 encoding (recommended for JSON).</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="VSWhereSettings.UTF8"/></em></p>
+        ///   <p>Use UTF-8 encoding (recommended for JSON).</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings SetUTF8(this VSWhereSettings toolSettings, bool? utf8)
         {
@@ -280,7 +400,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.UTF8 = utf8;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="VSWhereSettings.UTF8"/>.</em></p><p>Use UTF-8 encoding (recommended for JSON).</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="VSWhereSettings.UTF8"/></em></p>
+        ///   <p>Use UTF-8 encoding (recommended for JSON).</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings ResetUTF8(this VSWhereSettings toolSettings)
         {
@@ -288,7 +411,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.UTF8 = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="VSWhereSettings.UTF8"/>.</em></p><p>Use UTF-8 encoding (recommended for JSON).</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="VSWhereSettings.UTF8"/></em></p>
+        ///   <p>Use UTF-8 encoding (recommended for JSON).</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings EnableUTF8(this VSWhereSettings toolSettings)
         {
@@ -296,7 +422,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.UTF8 = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="VSWhereSettings.UTF8"/>.</em></p><p>Use UTF-8 encoding (recommended for JSON).</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="VSWhereSettings.UTF8"/></em></p>
+        ///   <p>Use UTF-8 encoding (recommended for JSON).</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings DisableUTF8(this VSWhereSettings toolSettings)
         {
@@ -304,7 +433,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.UTF8 = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="VSWhereSettings.UTF8"/>.</em></p><p>Use UTF-8 encoding (recommended for JSON).</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="VSWhereSettings.UTF8"/></em></p>
+        ///   <p>Use UTF-8 encoding (recommended for JSON).</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings ToggleUTF8(this VSWhereSettings toolSettings)
         {
@@ -314,7 +446,10 @@ namespace Nuke.Common.Tools.VSWhere
         }
         #endregion
         #region Legacy
-        /// <summary><p><em>Sets <see cref="VSWhereSettings.Legacy"/>.</em></p><p>Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="VSWhereSettings.Legacy"/></em></p>
+        ///   <p>Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings SetLegacy(this VSWhereSettings toolSettings, bool? legacy)
         {
@@ -322,7 +457,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.Legacy = legacy;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="VSWhereSettings.Legacy"/>.</em></p><p>Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="VSWhereSettings.Legacy"/></em></p>
+        ///   <p>Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings ResetLegacy(this VSWhereSettings toolSettings)
         {
@@ -330,7 +468,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.Legacy = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="VSWhereSettings.Legacy"/>.</em></p><p>Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="VSWhereSettings.Legacy"/></em></p>
+        ///   <p>Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings EnableLegacy(this VSWhereSettings toolSettings)
         {
@@ -338,7 +479,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.Legacy = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="VSWhereSettings.Legacy"/>.</em></p><p>Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="VSWhereSettings.Legacy"/></em></p>
+        ///   <p>Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings DisableLegacy(this VSWhereSettings toolSettings)
         {
@@ -346,7 +490,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.Legacy = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="VSWhereSettings.Legacy"/>.</em></p><p>Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="VSWhereSettings.Legacy"/></em></p>
+        ///   <p>Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings ToggleLegacy(this VSWhereSettings toolSettings)
         {
@@ -356,7 +503,10 @@ namespace Nuke.Common.Tools.VSWhere
         }
         #endregion
         #region All
-        /// <summary><p><em>Sets <see cref="VSWhereSettings.All"/>.</em></p><p>Finds all instances even if they are incomplete and may not launch.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="VSWhereSettings.All"/></em></p>
+        ///   <p>Finds all instances even if they are incomplete and may not launch.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings SetAll(this VSWhereSettings toolSettings, bool? all)
         {
@@ -364,7 +514,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.All = all;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="VSWhereSettings.All"/>.</em></p><p>Finds all instances even if they are incomplete and may not launch.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="VSWhereSettings.All"/></em></p>
+        ///   <p>Finds all instances even if they are incomplete and may not launch.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings ResetAll(this VSWhereSettings toolSettings)
         {
@@ -372,7 +525,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.All = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="VSWhereSettings.All"/>.</em></p><p>Finds all instances even if they are incomplete and may not launch.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="VSWhereSettings.All"/></em></p>
+        ///   <p>Finds all instances even if they are incomplete and may not launch.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings EnableAll(this VSWhereSettings toolSettings)
         {
@@ -380,7 +536,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.All = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="VSWhereSettings.All"/>.</em></p><p>Finds all instances even if they are incomplete and may not launch.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="VSWhereSettings.All"/></em></p>
+        ///   <p>Finds all instances even if they are incomplete and may not launch.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings DisableAll(this VSWhereSettings toolSettings)
         {
@@ -388,7 +547,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.All = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="VSWhereSettings.All"/>.</em></p><p>Finds all instances even if they are incomplete and may not launch.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="VSWhereSettings.All"/></em></p>
+        ///   <p>Finds all instances even if they are incomplete and may not launch.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings ToggleAll(this VSWhereSettings toolSettings)
         {
@@ -398,7 +560,10 @@ namespace Nuke.Common.Tools.VSWhere
         }
         #endregion
         #region Prerelease
-        /// <summary><p><em>Sets <see cref="VSWhereSettings.Prerelease"/>.</em></p><p>Also searches prereleases. By default, only releases are searched.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="VSWhereSettings.Prerelease"/></em></p>
+        ///   <p>Also searches prereleases. By default, only releases are searched.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings SetPrerelease(this VSWhereSettings toolSettings, bool? prerelease)
         {
@@ -406,7 +571,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.Prerelease = prerelease;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="VSWhereSettings.Prerelease"/>.</em></p><p>Also searches prereleases. By default, only releases are searched.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="VSWhereSettings.Prerelease"/></em></p>
+        ///   <p>Also searches prereleases. By default, only releases are searched.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings ResetPrerelease(this VSWhereSettings toolSettings)
         {
@@ -414,7 +582,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.Prerelease = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="VSWhereSettings.Prerelease"/>.</em></p><p>Also searches prereleases. By default, only releases are searched.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="VSWhereSettings.Prerelease"/></em></p>
+        ///   <p>Also searches prereleases. By default, only releases are searched.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings EnablePrerelease(this VSWhereSettings toolSettings)
         {
@@ -422,7 +593,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.Prerelease = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="VSWhereSettings.Prerelease"/>.</em></p><p>Also searches prereleases. By default, only releases are searched.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="VSWhereSettings.Prerelease"/></em></p>
+        ///   <p>Also searches prereleases. By default, only releases are searched.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings DisablePrerelease(this VSWhereSettings toolSettings)
         {
@@ -430,7 +604,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.Prerelease = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="VSWhereSettings.Prerelease"/>.</em></p><p>Also searches prereleases. By default, only releases are searched.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="VSWhereSettings.Prerelease"/></em></p>
+        ///   <p>Also searches prereleases. By default, only releases are searched.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings TogglePrerelease(this VSWhereSettings toolSettings)
         {
@@ -440,7 +617,10 @@ namespace Nuke.Common.Tools.VSWhere
         }
         #endregion
         #region Products
-        /// <summary><p><em>Sets <see cref="VSWhereSettings.Products"/> to a new list.</em></p><p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="VSWhereSettings.Products"/> to a new list</em></p>
+        ///   <p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings SetProducts(this VSWhereSettings toolSettings, params string[] products)
         {
@@ -448,7 +628,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.ProductsInternal = products.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="VSWhereSettings.Products"/> to a new list.</em></p><p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="VSWhereSettings.Products"/> to a new list</em></p>
+        ///   <p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings SetProducts(this VSWhereSettings toolSettings, IEnumerable<string> products)
         {
@@ -456,7 +639,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.ProductsInternal = products.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="VSWhereSettings.Products"/>.</em></p><p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="VSWhereSettings.Products"/></em></p>
+        ///   <p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings AddProducts(this VSWhereSettings toolSettings, params string[] products)
         {
@@ -464,7 +650,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.ProductsInternal.AddRange(products);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="VSWhereSettings.Products"/>.</em></p><p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="VSWhereSettings.Products"/></em></p>
+        ///   <p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings AddProducts(this VSWhereSettings toolSettings, IEnumerable<string> products)
         {
@@ -472,7 +661,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.ProductsInternal.AddRange(products);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="VSWhereSettings.Products"/>.</em></p><p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="VSWhereSettings.Products"/></em></p>
+        ///   <p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings ClearProducts(this VSWhereSettings toolSettings)
         {
@@ -480,7 +672,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.ProductsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="VSWhereSettings.Products"/>.</em></p><p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="VSWhereSettings.Products"/></em></p>
+        ///   <p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings RemoveProducts(this VSWhereSettings toolSettings, params string[] products)
         {
@@ -489,7 +684,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.ProductsInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="VSWhereSettings.Products"/>.</em></p><p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="VSWhereSettings.Products"/></em></p>
+        ///   <p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings RemoveProducts(this VSWhereSettings toolSettings, IEnumerable<string> products)
         {
@@ -500,7 +698,10 @@ namespace Nuke.Common.Tools.VSWhere
         }
         #endregion
         #region Requires
-        /// <summary><p><em>Sets <see cref="VSWhereSettings.Requires"/> to a new list.</em></p><p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="VSWhereSettings.Requires"/> to a new list</em></p>
+        ///   <p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings SetRequires(this VSWhereSettings toolSettings, params string[] requires)
         {
@@ -508,7 +709,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.RequiresInternal = requires.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="VSWhereSettings.Requires"/> to a new list.</em></p><p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="VSWhereSettings.Requires"/> to a new list</em></p>
+        ///   <p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings SetRequires(this VSWhereSettings toolSettings, IEnumerable<string> requires)
         {
@@ -516,7 +720,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.RequiresInternal = requires.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="VSWhereSettings.Requires"/>.</em></p><p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="VSWhereSettings.Requires"/></em></p>
+        ///   <p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings AddRequires(this VSWhereSettings toolSettings, params string[] requires)
         {
@@ -524,7 +731,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.RequiresInternal.AddRange(requires);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="VSWhereSettings.Requires"/>.</em></p><p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="VSWhereSettings.Requires"/></em></p>
+        ///   <p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings AddRequires(this VSWhereSettings toolSettings, IEnumerable<string> requires)
         {
@@ -532,7 +742,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.RequiresInternal.AddRange(requires);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="VSWhereSettings.Requires"/>.</em></p><p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="VSWhereSettings.Requires"/></em></p>
+        ///   <p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings ClearRequires(this VSWhereSettings toolSettings)
         {
@@ -540,7 +753,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.RequiresInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="VSWhereSettings.Requires"/>.</em></p><p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="VSWhereSettings.Requires"/></em></p>
+        ///   <p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings RemoveRequires(this VSWhereSettings toolSettings, params string[] requires)
         {
@@ -549,7 +765,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.RequiresInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="VSWhereSettings.Requires"/>.</em></p><p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="VSWhereSettings.Requires"/></em></p>
+        ///   <p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings RemoveRequires(this VSWhereSettings toolSettings, IEnumerable<string> requires)
         {
@@ -560,7 +779,10 @@ namespace Nuke.Common.Tools.VSWhere
         }
         #endregion
         #region RequiresAny
-        /// <summary><p><em>Sets <see cref="VSWhereSettings.RequiresAny"/>.</em></p><p>Find instances with any one or more workload or components IDs passed to <c>-requires</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="VSWhereSettings.RequiresAny"/></em></p>
+        ///   <p>Find instances with any one or more workload or components IDs passed to <c>-requires</c>.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings SetRequiresAny(this VSWhereSettings toolSettings, bool? requiresAny)
         {
@@ -568,7 +790,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.RequiresAny = requiresAny;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="VSWhereSettings.RequiresAny"/>.</em></p><p>Find instances with any one or more workload or components IDs passed to <c>-requires</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="VSWhereSettings.RequiresAny"/></em></p>
+        ///   <p>Find instances with any one or more workload or components IDs passed to <c>-requires</c>.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings ResetRequiresAny(this VSWhereSettings toolSettings)
         {
@@ -576,7 +801,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.RequiresAny = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="VSWhereSettings.RequiresAny"/>.</em></p><p>Find instances with any one or more workload or components IDs passed to <c>-requires</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="VSWhereSettings.RequiresAny"/></em></p>
+        ///   <p>Find instances with any one or more workload or components IDs passed to <c>-requires</c>.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings EnableRequiresAny(this VSWhereSettings toolSettings)
         {
@@ -584,7 +812,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.RequiresAny = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="VSWhereSettings.RequiresAny"/>.</em></p><p>Find instances with any one or more workload or components IDs passed to <c>-requires</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="VSWhereSettings.RequiresAny"/></em></p>
+        ///   <p>Find instances with any one or more workload or components IDs passed to <c>-requires</c>.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings DisableRequiresAny(this VSWhereSettings toolSettings)
         {
@@ -592,7 +823,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.RequiresAny = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="VSWhereSettings.RequiresAny"/>.</em></p><p>Find instances with any one or more workload or components IDs passed to <c>-requires</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="VSWhereSettings.RequiresAny"/></em></p>
+        ///   <p>Find instances with any one or more workload or components IDs passed to <c>-requires</c>.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings ToggleRequiresAny(this VSWhereSettings toolSettings)
         {
@@ -602,7 +836,10 @@ namespace Nuke.Common.Tools.VSWhere
         }
         #endregion
         #region Version
-        /// <summary><p><em>Sets <see cref="VSWhereSettings.Version"/>.</em></p><p>A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="VSWhereSettings.Version"/></em></p>
+        ///   <p>A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings SetVersion(this VSWhereSettings toolSettings, string version)
         {
@@ -610,7 +847,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.Version = version;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="VSWhereSettings.Version"/>.</em></p><p>A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="VSWhereSettings.Version"/></em></p>
+        ///   <p>A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings ResetVersion(this VSWhereSettings toolSettings)
         {
@@ -620,7 +860,10 @@ namespace Nuke.Common.Tools.VSWhere
         }
         #endregion
         #region Property
-        /// <summary><p><em>Sets <see cref="VSWhereSettings.Property"/>.</em></p><p>The name of a property to return. Use delimiters <c>'.'</c>, <c>'/'</c>, or <c>'_'</c> to separate object and property names. Example: <c>properties.nickname</c> will return the <em>nickname</em> property under <em>properties</em>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="VSWhereSettings.Property"/></em></p>
+        ///   <p>The name of a property to return. Use delimiters <c>'.'</c>, <c>'/'</c>, or <c>'_'</c> to separate object and property names. Example: <c>properties.nickname</c> will return the <em>nickname</em> property under <em>properties</em>.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings SetProperty(this VSWhereSettings toolSettings, string property)
         {
@@ -628,7 +871,10 @@ namespace Nuke.Common.Tools.VSWhere
             toolSettings.Property = property;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="VSWhereSettings.Property"/>.</em></p><p>The name of a property to return. Use delimiters <c>'.'</c>, <c>'/'</c>, or <c>'_'</c> to separate object and property names. Example: <c>properties.nickname</c> will return the <em>nickname</em> property under <em>properties</em>.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="VSWhereSettings.Property"/></em></p>
+        ///   <p>The name of a property to return. Use delimiters <c>'.'</c>, <c>'/'</c>, or <c>'_'</c> to separate object and property names. Example: <c>properties.nickname</c> will return the <em>nickname</em> property under <em>properties</em>.</p>
+        /// </summary>
         [Pure]
         public static VSWhereSettings ResetProperty(this VSWhereSettings toolSettings)
         {
@@ -640,7 +886,9 @@ namespace Nuke.Common.Tools.VSWhere
     }
     #endregion
     #region VSWhereFormat
-    /// <summary><p>Used within <see cref="VSWhereTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="VSWhereTasks"/>.
+    /// </summary>
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]

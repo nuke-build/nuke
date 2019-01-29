@@ -23,19 +23,26 @@ namespace Nuke.Common.Tools.SpecFlow
     [ExcludeFromCodeCoverage]
     public static partial class SpecFlowTasks
     {
-        /// <summary><p>Path to the SpecFlow executable.</p></summary>
+        /// <summary>
+        ///   Path to the SpecFlow executable.
+        /// </summary>
         public static string SpecFlowPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("SPECFLOW_EXE") ??
             ToolPathResolver.GetPackageExecutable("SpecFlow", "specflow.exe");
         public static Action<OutputType, string> SpecFlowLogger { get; set; } = ProcessManager.DefaultLogger;
-        /// <summary><p>Use SpecFlow to define, manage and automatically execute human-readable acceptance tests in .NET projects. Writing easily understandable tests is a cornerstone of the BDD paradigm and also helps build up a living documentation of your system.</p></summary>
+        /// <summary>
+        ///   Use SpecFlow to define, manage and automatically execute human-readable acceptance tests in .NET projects. Writing easily understandable tests is a cornerstone of the BDD paradigm and also helps build up a living documentation of your system.
+        /// </summary>
         public static IReadOnlyCollection<Output> SpecFlow(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
             var process = ProcessTasks.StartProcess(SpecFlowPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, SpecFlowLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
         public static IReadOnlyCollection<Output> SpecFlowNUnitExecutionReport(SpecFlowNUnitExecutionReportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowNUnitExecutionReportSettings();
@@ -43,17 +50,50 @@ namespace Nuke.Common.Tools.SpecFlow
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--FeatureLanguage</c> via <see cref="SpecFlowNUnitExecutionReportSettings.FeatureLanguage"/></li>
+        ///     <li><c>--OutputFile</c> via <see cref="SpecFlowNUnitExecutionReportSettings.OutputFile"/></li>
+        ///     <li><c>--ProjectFile</c> via <see cref="SpecFlowNUnitExecutionReportSettings.ProjectFile"/></li>
+        ///     <li><c>--ProjectName</c> via <see cref="SpecFlowNUnitExecutionReportSettings.ProjectName"/></li>
+        ///     <li><c>--testOutput</c> via <see cref="SpecFlowNUnitExecutionReportSettings.TestOutput"/></li>
+        ///     <li><c>--xmlTestResult</c> via <see cref="SpecFlowNUnitExecutionReportSettings.XmlTestResult"/></li>
+        ///     <li><c>--XsltFile</c> via <see cref="SpecFlowNUnitExecutionReportSettings.XsltFile"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> SpecFlowNUnitExecutionReport(Configure<SpecFlowNUnitExecutionReportSettings> configurator)
         {
             return SpecFlowNUnitExecutionReport(configurator(new SpecFlowNUnitExecutionReportSettings()));
         }
-        /// <summary><p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--FeatureLanguage</c> via <see cref="SpecFlowNUnitExecutionReportSettings.FeatureLanguage"/></li>
+        ///     <li><c>--OutputFile</c> via <see cref="SpecFlowNUnitExecutionReportSettings.OutputFile"/></li>
+        ///     <li><c>--ProjectFile</c> via <see cref="SpecFlowNUnitExecutionReportSettings.ProjectFile"/></li>
+        ///     <li><c>--ProjectName</c> via <see cref="SpecFlowNUnitExecutionReportSettings.ProjectName"/></li>
+        ///     <li><c>--testOutput</c> via <see cref="SpecFlowNUnitExecutionReportSettings.TestOutput"/></li>
+        ///     <li><c>--xmlTestResult</c> via <see cref="SpecFlowNUnitExecutionReportSettings.XmlTestResult"/></li>
+        ///     <li><c>--XsltFile</c> via <see cref="SpecFlowNUnitExecutionReportSettings.XsltFile"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IEnumerable<(SpecFlowNUnitExecutionReportSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowNUnitExecutionReport(CombinatorialConfigure<SpecFlowNUnitExecutionReportSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
             return configurator.Invoke(SpecFlowNUnitExecutionReport, SpecFlowLogger, degreeOfParallelism, completeOnFailure);
         }
-        /// <summary><p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
         public static IReadOnlyCollection<Output> SpecFlowMSTestExecutionReport(SpecFlowMSTestExecutionReportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowMSTestExecutionReportSettings();
@@ -61,17 +101,44 @@ namespace Nuke.Common.Tools.SpecFlow
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;projectFile&gt;</c> via <see cref="SpecFlowMSTestExecutionReportSettings.ProjectFile"/></li>
+        ///     <li><c>/out</c> via <see cref="SpecFlowMSTestExecutionReportSettings.OutputFile"/></li>
+        ///     <li><c>/testResult</c> via <see cref="SpecFlowMSTestExecutionReportSettings.TestResult"/></li>
+        ///     <li><c>/xsltFile</c> via <see cref="SpecFlowMSTestExecutionReportSettings.XsltFile"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> SpecFlowMSTestExecutionReport(Configure<SpecFlowMSTestExecutionReportSettings> configurator)
         {
             return SpecFlowMSTestExecutionReport(configurator(new SpecFlowMSTestExecutionReportSettings()));
         }
-        /// <summary><p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;projectFile&gt;</c> via <see cref="SpecFlowMSTestExecutionReportSettings.ProjectFile"/></li>
+        ///     <li><c>/out</c> via <see cref="SpecFlowMSTestExecutionReportSettings.OutputFile"/></li>
+        ///     <li><c>/testResult</c> via <see cref="SpecFlowMSTestExecutionReportSettings.TestResult"/></li>
+        ///     <li><c>/xsltFile</c> via <see cref="SpecFlowMSTestExecutionReportSettings.XsltFile"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IEnumerable<(SpecFlowMSTestExecutionReportSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowMSTestExecutionReport(CombinatorialConfigure<SpecFlowMSTestExecutionReportSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
             return configurator.Invoke(SpecFlowMSTestExecutionReport, SpecFlowLogger, degreeOfParallelism, completeOnFailure);
         }
-        /// <summary><p>This report shows the usage and binding status of the steps for the entire project. You can use this report to find both unused code in the automation layer and scenario steps that have no definition yet.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>This report shows the usage and binding status of the steps for the entire project. You can use this report to find both unused code in the automation layer and scenario steps that have no definition yet.</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
         public static IReadOnlyCollection<Output> SpecFlowStepDefinitionReport(SpecFlowStepDefinitionReportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowStepDefinitionReportSettings();
@@ -79,17 +146,44 @@ namespace Nuke.Common.Tools.SpecFlow
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>This report shows the usage and binding status of the steps for the entire project. You can use this report to find both unused code in the automation layer and scenario steps that have no definition yet.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>This report shows the usage and binding status of the steps for the entire project. You can use this report to find both unused code in the automation layer and scenario steps that have no definition yet.</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;projectFile&gt;</c> via <see cref="SpecFlowStepDefinitionReportSettings.ProjectFile"/></li>
+        ///     <li><c>/out</c> via <see cref="SpecFlowStepDefinitionReportSettings.OutputFile"/></li>
+        ///     <li><c>/testResult</c> via <see cref="SpecFlowStepDefinitionReportSettings.BinFolder"/></li>
+        ///     <li><c>/xsltFile</c> via <see cref="SpecFlowStepDefinitionReportSettings.XsltFile"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> SpecFlowStepDefinitionReport(Configure<SpecFlowStepDefinitionReportSettings> configurator)
         {
             return SpecFlowStepDefinitionReport(configurator(new SpecFlowStepDefinitionReportSettings()));
         }
-        /// <summary><p>This report shows the usage and binding status of the steps for the entire project. You can use this report to find both unused code in the automation layer and scenario steps that have no definition yet.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>This report shows the usage and binding status of the steps for the entire project. You can use this report to find both unused code in the automation layer and scenario steps that have no definition yet.</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;projectFile&gt;</c> via <see cref="SpecFlowStepDefinitionReportSettings.ProjectFile"/></li>
+        ///     <li><c>/out</c> via <see cref="SpecFlowStepDefinitionReportSettings.OutputFile"/></li>
+        ///     <li><c>/testResult</c> via <see cref="SpecFlowStepDefinitionReportSettings.BinFolder"/></li>
+        ///     <li><c>/xsltFile</c> via <see cref="SpecFlowStepDefinitionReportSettings.XsltFile"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IEnumerable<(SpecFlowStepDefinitionReportSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowStepDefinitionReport(CombinatorialConfigure<SpecFlowStepDefinitionReportSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
             return configurator.Invoke(SpecFlowStepDefinitionReport, SpecFlowLogger, degreeOfParallelism, completeOnFailure);
         }
-        /// <summary><p>Use <c>SpecRun.exe run</c> to execute your tests.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>Use <c>SpecRun.exe run</c> to execute your tests.</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
         public static IReadOnlyCollection<Output> SpecFlowRun(SpecFlowRunSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowRunSettings();
@@ -97,17 +191,50 @@ namespace Nuke.Common.Tools.SpecFlow
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>Use <c>SpecRun.exe run</c> to execute your tests.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>Use <c>SpecRun.exe run</c> to execute your tests.</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>/basefolder</c> via <see cref="SpecFlowRunSettings.BaseFolder"/></li>
+        ///     <li><c>/debug</c> via <see cref="SpecFlowRunSettings.Debug"/></li>
+        ///     <li><c>/filter</c> via <see cref="SpecFlowRunSettings.Filter"/></li>
+        ///     <li><c>/log</c> via <see cref="SpecFlowRunSettings.LogFile"/></li>
+        ///     <li><c>/outputfolder</c> via <see cref="SpecFlowRunSettings.OutputFolder"/></li>
+        ///     <li><c>/report</c> via <see cref="SpecFlowRunSettings.ReportFile"/></li>
+        ///     <li><c>/toolIntegration</c> via <see cref="SpecFlowRunSettings.ToolIntegration"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> SpecFlowRun(Configure<SpecFlowRunSettings> configurator)
         {
             return SpecFlowRun(configurator(new SpecFlowRunSettings()));
         }
-        /// <summary><p>Use <c>SpecRun.exe run</c> to execute your tests.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>Use <c>SpecRun.exe run</c> to execute your tests.</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>/basefolder</c> via <see cref="SpecFlowRunSettings.BaseFolder"/></li>
+        ///     <li><c>/debug</c> via <see cref="SpecFlowRunSettings.Debug"/></li>
+        ///     <li><c>/filter</c> via <see cref="SpecFlowRunSettings.Filter"/></li>
+        ///     <li><c>/log</c> via <see cref="SpecFlowRunSettings.LogFile"/></li>
+        ///     <li><c>/outputfolder</c> via <see cref="SpecFlowRunSettings.OutputFolder"/></li>
+        ///     <li><c>/report</c> via <see cref="SpecFlowRunSettings.ReportFile"/></li>
+        ///     <li><c>/toolIntegration</c> via <see cref="SpecFlowRunSettings.ToolIntegration"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IEnumerable<(SpecFlowRunSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowRun(CombinatorialConfigure<SpecFlowRunSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
             return configurator.Invoke(SpecFlowRun, SpecFlowLogger, degreeOfParallelism, completeOnFailure);
         }
-        /// <summary><p>Use <c>SpecRun.exe buildserverrun</c> to execute your tests in build server mode.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>Use <c>SpecRun.exe buildserverrun</c> to execute your tests in build server mode.</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
         public static IReadOnlyCollection<Output> SpecFlowBuildServerRun(SpecFlowBuildServerRunSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowBuildServerRunSettings();
@@ -115,17 +242,50 @@ namespace Nuke.Common.Tools.SpecFlow
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>Use <c>SpecRun.exe buildserverrun</c> to execute your tests in build server mode.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>Use <c>SpecRun.exe buildserverrun</c> to execute your tests in build server mode.</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;target&gt;</c> via <see cref="SpecFlowBuildServerRunSettings.Target"/></li>
+        ///     <li><c>/basefolder</c> via <see cref="SpecFlowBuildServerRunSettings.BaseFolder"/></li>
+        ///     <li><c>/buildserver</c> via <see cref="SpecFlowBuildServerRunSettings.BuildServerName"/></li>
+        ///     <li><c>/filter</c> via <see cref="SpecFlowBuildServerRunSettings.Filter"/></li>
+        ///     <li><c>/log</c> via <see cref="SpecFlowBuildServerRunSettings.LogFile"/></li>
+        ///     <li><c>/outputfolder</c> via <see cref="SpecFlowBuildServerRunSettings.OutputFolder"/></li>
+        ///     <li><c>/report</c> via <see cref="SpecFlowBuildServerRunSettings.ReportFile"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> SpecFlowBuildServerRun(Configure<SpecFlowBuildServerRunSettings> configurator)
         {
             return SpecFlowBuildServerRun(configurator(new SpecFlowBuildServerRunSettings()));
         }
-        /// <summary><p>Use <c>SpecRun.exe buildserverrun</c> to execute your tests in build server mode.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>Use <c>SpecRun.exe buildserverrun</c> to execute your tests in build server mode.</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;target&gt;</c> via <see cref="SpecFlowBuildServerRunSettings.Target"/></li>
+        ///     <li><c>/basefolder</c> via <see cref="SpecFlowBuildServerRunSettings.BaseFolder"/></li>
+        ///     <li><c>/buildserver</c> via <see cref="SpecFlowBuildServerRunSettings.BuildServerName"/></li>
+        ///     <li><c>/filter</c> via <see cref="SpecFlowBuildServerRunSettings.Filter"/></li>
+        ///     <li><c>/log</c> via <see cref="SpecFlowBuildServerRunSettings.LogFile"/></li>
+        ///     <li><c>/outputfolder</c> via <see cref="SpecFlowBuildServerRunSettings.OutputFolder"/></li>
+        ///     <li><c>/report</c> via <see cref="SpecFlowBuildServerRunSettings.ReportFile"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IEnumerable<(SpecFlowBuildServerRunSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowBuildServerRun(CombinatorialConfigure<SpecFlowBuildServerRunSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
             return configurator.Invoke(SpecFlowBuildServerRun, SpecFlowLogger, degreeOfParallelism, completeOnFailure);
         }
-        /// <summary><p>Use <c>SpecRun.exe register</c> to register your SpecFlow+ license. You only need to register your license once per user per machine. The license is valid for all SpecFlow+ components.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>Use <c>SpecRun.exe register</c> to register your SpecFlow+ license. You only need to register your license once per user per machine. The license is valid for all SpecFlow+ components.</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
         public static IReadOnlyCollection<Output> SpecFlowRegister(SpecFlowRegisterSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowRegisterSettings();
@@ -133,17 +293,40 @@ namespace Nuke.Common.Tools.SpecFlow
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>Use <c>SpecRun.exe register</c> to register your SpecFlow+ license. You only need to register your license once per user per machine. The license is valid for all SpecFlow+ components.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>Use <c>SpecRun.exe register</c> to register your SpecFlow+ license. You only need to register your license once per user per machine. The license is valid for all SpecFlow+ components.</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;issuedTo&gt;</c> via <see cref="SpecFlowRegisterSettings.IssuedTo"/></li>
+        ///     <li><c>&lt;licenseKey&gt;</c> via <see cref="SpecFlowRegisterSettings.LicenseKey"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> SpecFlowRegister(Configure<SpecFlowRegisterSettings> configurator)
         {
             return SpecFlowRegister(configurator(new SpecFlowRegisterSettings()));
         }
-        /// <summary><p>Use <c>SpecRun.exe register</c> to register your SpecFlow+ license. You only need to register your license once per user per machine. The license is valid for all SpecFlow+ components.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>Use <c>SpecRun.exe register</c> to register your SpecFlow+ license. You only need to register your license once per user per machine. The license is valid for all SpecFlow+ components.</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;issuedTo&gt;</c> via <see cref="SpecFlowRegisterSettings.IssuedTo"/></li>
+        ///     <li><c>&lt;licenseKey&gt;</c> via <see cref="SpecFlowRegisterSettings.LicenseKey"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IEnumerable<(SpecFlowRegisterSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowRegister(CombinatorialConfigure<SpecFlowRegisterSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
             return configurator.Invoke(SpecFlowRegister, SpecFlowLogger, degreeOfParallelism, completeOnFailure);
         }
-        /// <summary><p>Use <c>SpecRun.exe unregister</c> to unregister your SpecFlow+ license.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>Use <c>SpecRun.exe unregister</c> to unregister your SpecFlow+ license.</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
         public static IReadOnlyCollection<Output> SpecFlowUnregister(SpecFlowUnregisterSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowUnregisterSettings();
@@ -151,17 +334,32 @@ namespace Nuke.Common.Tools.SpecFlow
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>Use <c>SpecRun.exe unregister</c> to unregister your SpecFlow+ license.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>Use <c>SpecRun.exe unregister</c> to unregister your SpecFlow+ license.</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        /// </remarks>
         public static IReadOnlyCollection<Output> SpecFlowUnregister(Configure<SpecFlowUnregisterSettings> configurator)
         {
             return SpecFlowUnregister(configurator(new SpecFlowUnregisterSettings()));
         }
-        /// <summary><p>Use <c>SpecRun.exe unregister</c> to unregister your SpecFlow+ license.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>Use <c>SpecRun.exe unregister</c> to unregister your SpecFlow+ license.</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        /// </remarks>
         public static IEnumerable<(SpecFlowUnregisterSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowUnregister(CombinatorialConfigure<SpecFlowUnregisterSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
             return configurator.Invoke(SpecFlowUnregister, SpecFlowLogger, degreeOfParallelism, completeOnFailure);
         }
-        /// <summary><p>Use <c>SpecRun.exe about</c> to display information such as your version number, build date and license information (licensee, upgrade until date/expiry date).</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>Use <c>SpecRun.exe about</c> to display information such as your version number, build date and license information (licensee, upgrade until date/expiry date).</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
         public static IReadOnlyCollection<Output> SpecFlowAbout(SpecFlowAboutSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowAboutSettings();
@@ -169,40 +367,70 @@ namespace Nuke.Common.Tools.SpecFlow
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>Use <c>SpecRun.exe about</c> to display information such as your version number, build date and license information (licensee, upgrade until date/expiry date).</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>Use <c>SpecRun.exe about</c> to display information such as your version number, build date and license information (licensee, upgrade until date/expiry date).</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        /// </remarks>
         public static IReadOnlyCollection<Output> SpecFlowAbout(Configure<SpecFlowAboutSettings> configurator)
         {
             return SpecFlowAbout(configurator(new SpecFlowAboutSettings()));
         }
-        /// <summary><p>Use <c>SpecRun.exe about</c> to display information such as your version number, build date and license information (licensee, upgrade until date/expiry date).</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>Use <c>SpecRun.exe about</c> to display information such as your version number, build date and license information (licensee, upgrade until date/expiry date).</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        /// </remarks>
         public static IEnumerable<(SpecFlowAboutSettings Settings, IReadOnlyCollection<Output> Output)> SpecFlowAbout(CombinatorialConfigure<SpecFlowAboutSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
             return configurator.Invoke(SpecFlowAbout, SpecFlowLogger, degreeOfParallelism, completeOnFailure);
         }
     }
     #region SpecFlowNUnitExecutionReportSettings
-    /// <summary><p>Used within <see cref="SpecFlowTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="SpecFlowTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
     public partial class SpecFlowNUnitExecutionReportSettings : ToolSettings
     {
-        /// <summary><p>Path to the SpecFlow executable.</p></summary>
+        /// <summary>
+        ///   Path to the SpecFlow executable.
+        /// </summary>
         public override string ToolPath => base.ToolPath ?? SpecFlowTasks.SpecFlowPath;
         public override Action<OutputType, string> CustomLogger => SpecFlowTasks.SpecFlowLogger;
-        /// <summary><p>A path of the project file containing the *.feature files. Required.</p></summary>
+        /// <summary>
+        ///   A path of the project file containing the *.feature files. Required.
+        /// </summary>
         public virtual string ProjectFile { get; internal set; }
-        /// <summary><p>The XML test result file generated by nunit-console. Optional. Default: TestResult.xml.</p></summary>
+        /// <summary>
+        ///   The XML test result file generated by nunit-console. Optional. Default: TestResult.xml.
+        /// </summary>
         public virtual string XmlTestResult { get; internal set; }
-        /// <summary><p>The labeled test output file generated by nunit-console. Optional. Default: TestResult.txt.</p></summary>
+        /// <summary>
+        ///   The labeled test output file generated by nunit-console. Optional. Default: TestResult.txt.
+        /// </summary>
         public virtual string TestOutput { get; internal set; }
-        /// <summary><p>Generated Output File. Optional. Default: TestResult.html.</p></summary>
+        /// <summary>
+        ///   Generated Output File. Optional. Default: TestResult.html.
+        /// </summary>
         public virtual string OutputFile { get; internal set; }
-        /// <summary><p>Custom XSLT file to use, defaults to built-in stylesheet if not provided. Optional. Default: not specified.</p></summary>
+        /// <summary>
+        ///   Custom XSLT file to use, defaults to built-in stylesheet if not provided. Optional. Default: not specified.
+        /// </summary>
         public virtual string XsltFile { get; internal set; }
-        /// <summary><p>Project name which can be passed explicitly instead of implicitly getting it from --ProjectFile. Optional. Default: not specified.</p></summary>
+        /// <summary>
+        ///   Project name which can be passed explicitly instead of implicitly getting it from --ProjectFile. Optional. Default: not specified.
+        /// </summary>
         public virtual string ProjectName { get; internal set; }
-        /// <summary><p>The feature language to use. Optional. Default: en-US.</p></summary>
+        /// <summary>
+        ///   The feature language to use. Optional. Default: en-US.
+        /// </summary>
         public virtual string FeatureLanguage { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -220,22 +448,34 @@ namespace Nuke.Common.Tools.SpecFlow
     }
     #endregion
     #region SpecFlowMSTestExecutionReportSettings
-    /// <summary><p>Used within <see cref="SpecFlowTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="SpecFlowTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
     public partial class SpecFlowMSTestExecutionReportSettings : ToolSettings
     {
-        /// <summary><p>Path to the SpecFlow executable.</p></summary>
+        /// <summary>
+        ///   Path to the SpecFlow executable.
+        /// </summary>
         public override string ToolPath => base.ToolPath ?? SpecFlowTasks.SpecFlowPath;
         public override Action<OutputType, string> CustomLogger => SpecFlowTasks.SpecFlowLogger;
-        /// <summary><p>A path of the project file containing the *.feature files. Required.</p></summary>
+        /// <summary>
+        ///   A path of the project file containing the *.feature files. Required.
+        /// </summary>
         public virtual string ProjectFile { get; internal set; }
-        /// <summary><p>The TRX test result file generated by MsTest. Optional. Default: TestResult.trx</p></summary>
+        /// <summary>
+        ///   The TRX test result file generated by MsTest. Optional. Default: TestResult.trx
+        /// </summary>
         public virtual string TestResult { get; internal set; }
-        /// <summary><p>Generated Output File. Optional. Default: TestResult.html</p></summary>
+        /// <summary>
+        ///   Generated Output File. Optional. Default: TestResult.html
+        /// </summary>
         public virtual string OutputFile { get; internal set; }
-        /// <summary><p>Custom XSLT file to use, defaults to built-in stylesheet if not provided. Optional. Default: not specified.</p></summary>
+        /// <summary>
+        ///   Custom XSLT file to use, defaults to built-in stylesheet if not provided. Optional. Default: not specified.
+        /// </summary>
         public virtual string XsltFile { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -250,22 +490,34 @@ namespace Nuke.Common.Tools.SpecFlow
     }
     #endregion
     #region SpecFlowStepDefinitionReportSettings
-    /// <summary><p>Used within <see cref="SpecFlowTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="SpecFlowTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
     public partial class SpecFlowStepDefinitionReportSettings : ToolSettings
     {
-        /// <summary><p>Path to the SpecFlow executable.</p></summary>
+        /// <summary>
+        ///   Path to the SpecFlow executable.
+        /// </summary>
         public override string ToolPath => base.ToolPath ?? SpecFlowTasks.SpecFlowPath;
         public override Action<OutputType, string> CustomLogger => SpecFlowTasks.SpecFlowLogger;
-        /// <summary><p>A path of the project file containing the *.feature files. Required.</p></summary>
+        /// <summary>
+        ///   A path of the project file containing the *.feature files. Required.
+        /// </summary>
         public virtual string ProjectFile { get; internal set; }
-        /// <summary><p>A path for the compiled SpecFlow project. Optional. Default: bin/debug</p></summary>
+        /// <summary>
+        ///   A path for the compiled SpecFlow project. Optional. Default: bin/debug
+        /// </summary>
         public virtual string BinFolder { get; internal set; }
-        /// <summary><p>Generated Output File. Optional. Default: TestResult.html</p></summary>
+        /// <summary>
+        ///   Generated Output File. Optional. Default: TestResult.html
+        /// </summary>
         public virtual string OutputFile { get; internal set; }
-        /// <summary><p>Custom XSLT file to use, defaults to built-in stylesheet if not provided. Optional. Default: not specified.</p></summary>
+        /// <summary>
+        ///   Custom XSLT file to use, defaults to built-in stylesheet if not provided. Optional. Default: not specified.
+        /// </summary>
         public virtual string XsltFile { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -280,28 +532,46 @@ namespace Nuke.Common.Tools.SpecFlow
     }
     #endregion
     #region SpecFlowRunSettings
-    /// <summary><p>Used within <see cref="SpecFlowTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="SpecFlowTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
     public partial class SpecFlowRunSettings : ToolSettings
     {
-        /// <summary><p>Path to the SpecFlow executable.</p></summary>
+        /// <summary>
+        ///   Path to the SpecFlow executable.
+        /// </summary>
         public override string ToolPath => base.ToolPath ?? SpecFlowTasks.SpecFlowPath;
         public override Action<OutputType, string> CustomLogger => SpecFlowTasks.SpecFlowLogger;
-        /// <summary><p>Supported values: <c>None, VS2010, VS2012, VS2013, TeamCity, TFS</c>.</p></summary>
+        /// <summary>
+        ///   Supported values: <c>None, VS2010, VS2012, VS2013, TeamCity, TFS</c>.
+        /// </summary>
         public virtual SpecFlowToolIntegration ToolIntegration { get; internal set; }
-        /// <summary><p>Default: false.</p></summary>
+        /// <summary>
+        ///   Default: false.
+        /// </summary>
         public virtual bool? Debug { get; internal set; }
-        /// <summary><p>Specifies the base folder for executing tests. All paths are relative to this path.<para>If you have specified an <b>assembly</b> as your <c>target</c> you need to define the base folder as the path to the directory containing your assembly.</para><para>If you have specified a <b>test profile</b> (.srprofile) as your target, this overrides the <c>baseFolder</c> entry in your <c>.srprofile</c> file.</para></p></summary>
+        /// <summary>
+        ///   Specifies the base folder for executing tests. All paths are relative to this path.<para>If you have specified an <b>assembly</b> as your <c>target</c> you need to define the base folder as the path to the directory containing your assembly.</para><para>If you have specified a <b>test profile</b> (.srprofile) as your target, this overrides the <c>baseFolder</c> entry in your <c>.srprofile</c> file.</para>
+        /// </summary>
         public virtual string BaseFolder { get; internal set; }
-        /// <summary><p>Specifies the output folder for your logs and report file. All paths are relative to this path. If you have specified a test profile (.srprofile) as your target, this value overrides the <c>outputFolder</c> entry in your <c>.srprofile</c> file.<para>If no output folder is defined in your test profile, or your <c>target</c> is an assembly,  the output folder defaults to the base folder if not specified from the command line.</para></p></summary>
+        /// <summary>
+        ///   Specifies the output folder for your logs and report file. All paths are relative to this path. If you have specified a test profile (.srprofile) as your target, this value overrides the <c>outputFolder</c> entry in your <c>.srprofile</c> file.<para>If no output folder is defined in your test profile, or your <c>target</c> is an assembly,  the output folder defaults to the base folder if not specified from the command line.</para>
+        /// </summary>
         public virtual string OutputFolder { get; internal set; }
-        /// <summary><p>Specifies the target log file. This path is relative to your output folder.</p></summary>
+        /// <summary>
+        ///   Specifies the target log file. This path is relative to your output folder.
+        /// </summary>
         public virtual string LogFile { get; internal set; }
-        /// <summary><p>Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt;</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para></p></summary>
+        /// <summary>
+        ///   Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt;</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para>
+        /// </summary>
         public virtual string ReportFile { get; internal set; }
-        /// <summary><p>Applies a filter to your tests and only executes those that match your expression. This overrides the <c>filter</c> entry in your <c>.srprofile</c> file. An overview of the syntax can be found <a href="https://specflow.org/plus/documentation/Filter/">here</a>.</p></summary>
+        /// <summary>
+        ///   Applies a filter to your tests and only executes those that match your expression. This overrides the <c>filter</c> entry in your <c>.srprofile</c> file. An overview of the syntax can be found <a href="https://specflow.org/plus/documentation/Filter/">here</a>.
+        /// </summary>
         public virtual string Filter { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -319,28 +589,46 @@ namespace Nuke.Common.Tools.SpecFlow
     }
     #endregion
     #region SpecFlowBuildServerRunSettings
-    /// <summary><p>Used within <see cref="SpecFlowTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="SpecFlowTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
     public partial class SpecFlowBuildServerRunSettings : ToolSettings
     {
-        /// <summary><p>Path to the SpecFlow executable.</p></summary>
+        /// <summary>
+        ///   Path to the SpecFlow executable.
+        /// </summary>
         public override string ToolPath => base.ToolPath ?? SpecFlowTasks.SpecFlowPath;
         public override Action<OutputType, string> CustomLogger => SpecFlowTasks.SpecFlowLogger;
-        /// <summary><p>The assembly or test profile (<c>.srprofile</c> file) to be tested.</p></summary>
+        /// <summary>
+        ///   The assembly or test profile (<c>.srprofile</c> file) to be tested.
+        /// </summary>
         public virtual string Target { get; internal set; }
-        /// <summary><p>The build servers' product name (TFS, TeamCity) for specialised trace output.</p></summary>
+        /// <summary>
+        ///   The build servers' product name (TFS, TeamCity) for specialised trace output.
+        /// </summary>
         public virtual string BuildServerName { get; internal set; }
-        /// <summary><p>Specifies the base folder for executing tests. All paths are relative to this path.<para>If you have specified an <b>assembly</b> as your <c>target</c> you need to define the base folder as the path to the directory containing your assembly.</para><para>If you have specified a <b>test profile</b> (.srprofile) as your target, this overrides the <c>baseFolder</c> entry in your <c>.srprofile</c> file.</para></p></summary>
+        /// <summary>
+        ///   Specifies the base folder for executing tests. All paths are relative to this path.<para>If you have specified an <b>assembly</b> as your <c>target</c> you need to define the base folder as the path to the directory containing your assembly.</para><para>If you have specified a <b>test profile</b> (.srprofile) as your target, this overrides the <c>baseFolder</c> entry in your <c>.srprofile</c> file.</para>
+        /// </summary>
         public virtual string BaseFolder { get; internal set; }
-        /// <summary><p>Specifies the output folder for your logs and report file. All paths are relative to this path. If you have specified a test profile (.srprofile) as your target, this value overrides the <c>outputFolder</c> entry in your <c>.srprofile</c> file.<para>If no output folder is defined in your test profile, or your <c>target</c> is an assembly,  the output folder defaults to the base folder if not specified from the command line.</para></p></summary>
+        /// <summary>
+        ///   Specifies the output folder for your logs and report file. All paths are relative to this path. If you have specified a test profile (.srprofile) as your target, this value overrides the <c>outputFolder</c> entry in your <c>.srprofile</c> file.<para>If no output folder is defined in your test profile, or your <c>target</c> is an assembly,  the output folder defaults to the base folder if not specified from the command line.</para>
+        /// </summary>
         public virtual string OutputFolder { get; internal set; }
-        /// <summary><p>Specifies the target log file. This path is relative to your output folder.</p></summary>
+        /// <summary>
+        ///   Specifies the target log file. This path is relative to your output folder.
+        /// </summary>
         public virtual string LogFile { get; internal set; }
-        /// <summary><p>Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt;</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para></p></summary>
+        /// <summary>
+        ///   Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt;</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para>
+        /// </summary>
         public virtual string ReportFile { get; internal set; }
-        /// <summary><p>Applies a filter to your tests and only executes those that match your expression. This overrides the <c>filter</c> entry in your <c>.srprofile</c> file. An overview of the syntax can be found <a href="https://specflow.org/plus/documentation/Filter/">here</a>.</p></summary>
+        /// <summary>
+        ///   Applies a filter to your tests and only executes those that match your expression. This overrides the <c>filter</c> entry in your <c>.srprofile</c> file. An overview of the syntax can be found <a href="https://specflow.org/plus/documentation/Filter/">here</a>.
+        /// </summary>
         public virtual string Filter { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -358,18 +646,26 @@ namespace Nuke.Common.Tools.SpecFlow
     }
     #endregion
     #region SpecFlowRegisterSettings
-    /// <summary><p>Used within <see cref="SpecFlowTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="SpecFlowTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
     public partial class SpecFlowRegisterSettings : ToolSettings
     {
-        /// <summary><p>Path to the SpecFlow executable.</p></summary>
+        /// <summary>
+        ///   Path to the SpecFlow executable.
+        /// </summary>
         public override string ToolPath => base.ToolPath ?? SpecFlowTasks.SpecFlowPath;
         public override Action<OutputType, string> CustomLogger => SpecFlowTasks.SpecFlowLogger;
-        /// <summary><p>The license key you received when you purchased SpecFlow+.</p></summary>
+        /// <summary>
+        ///   The license key you received when you purchased SpecFlow+.
+        /// </summary>
         public virtual string LicenseKey { get; internal set; }
-        /// <summary><p>The name of the licensee. If you purchased your SpecFlow+ license online via SWREG, this is the email address you used to purchase the license. If you purchased SpecFlow+ directly from TechTalk, this is the value in the email you received containing your license information.</p></summary>
+        /// <summary>
+        ///   The name of the licensee. If you purchased your SpecFlow+ license online via SWREG, this is the email address you used to purchase the license. If you purchased SpecFlow+ directly from TechTalk, this is the value in the email you received containing your license information.
+        /// </summary>
         public virtual string IssuedTo { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -382,13 +678,17 @@ namespace Nuke.Common.Tools.SpecFlow
     }
     #endregion
     #region SpecFlowUnregisterSettings
-    /// <summary><p>Used within <see cref="SpecFlowTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="SpecFlowTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
     public partial class SpecFlowUnregisterSettings : ToolSettings
     {
-        /// <summary><p>Path to the SpecFlow executable.</p></summary>
+        /// <summary>
+        ///   Path to the SpecFlow executable.
+        /// </summary>
         public override string ToolPath => base.ToolPath ?? SpecFlowTasks.SpecFlowPath;
         public override Action<OutputType, string> CustomLogger => SpecFlowTasks.SpecFlowLogger;
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -400,13 +700,17 @@ namespace Nuke.Common.Tools.SpecFlow
     }
     #endregion
     #region SpecFlowAboutSettings
-    /// <summary><p>Used within <see cref="SpecFlowTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="SpecFlowTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
     public partial class SpecFlowAboutSettings : ToolSettings
     {
-        /// <summary><p>Path to the SpecFlow executable.</p></summary>
+        /// <summary>
+        ///   Path to the SpecFlow executable.
+        /// </summary>
         public override string ToolPath => base.ToolPath ?? SpecFlowTasks.SpecFlowPath;
         public override Action<OutputType, string> CustomLogger => SpecFlowTasks.SpecFlowLogger;
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -418,13 +722,18 @@ namespace Nuke.Common.Tools.SpecFlow
     }
     #endregion
     #region SpecFlowNUnitExecutionReportSettingsExtensions
-    /// <summary><p>Used within <see cref="SpecFlowTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="SpecFlowTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class SpecFlowNUnitExecutionReportSettingsExtensions
     {
         #region ProjectFile
-        /// <summary><p><em>Sets <see cref="SpecFlowNUnitExecutionReportSettings.ProjectFile"/>.</em></p><p>A path of the project file containing the *.feature files. Required.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowNUnitExecutionReportSettings.ProjectFile"/></em></p>
+        ///   <p>A path of the project file containing the *.feature files. Required.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowNUnitExecutionReportSettings SetProjectFile(this SpecFlowNUnitExecutionReportSettings toolSettings, string projectFile)
         {
@@ -432,7 +741,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.ProjectFile = projectFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowNUnitExecutionReportSettings.ProjectFile"/>.</em></p><p>A path of the project file containing the *.feature files. Required.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowNUnitExecutionReportSettings.ProjectFile"/></em></p>
+        ///   <p>A path of the project file containing the *.feature files. Required.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowNUnitExecutionReportSettings ResetProjectFile(this SpecFlowNUnitExecutionReportSettings toolSettings)
         {
@@ -442,7 +754,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region XmlTestResult
-        /// <summary><p><em>Sets <see cref="SpecFlowNUnitExecutionReportSettings.XmlTestResult"/>.</em></p><p>The XML test result file generated by nunit-console. Optional. Default: TestResult.xml.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowNUnitExecutionReportSettings.XmlTestResult"/></em></p>
+        ///   <p>The XML test result file generated by nunit-console. Optional. Default: TestResult.xml.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowNUnitExecutionReportSettings SetXmlTestResult(this SpecFlowNUnitExecutionReportSettings toolSettings, string xmlTestResult)
         {
@@ -450,7 +765,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.XmlTestResult = xmlTestResult;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowNUnitExecutionReportSettings.XmlTestResult"/>.</em></p><p>The XML test result file generated by nunit-console. Optional. Default: TestResult.xml.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowNUnitExecutionReportSettings.XmlTestResult"/></em></p>
+        ///   <p>The XML test result file generated by nunit-console. Optional. Default: TestResult.xml.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowNUnitExecutionReportSettings ResetXmlTestResult(this SpecFlowNUnitExecutionReportSettings toolSettings)
         {
@@ -460,7 +778,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region TestOutput
-        /// <summary><p><em>Sets <see cref="SpecFlowNUnitExecutionReportSettings.TestOutput"/>.</em></p><p>The labeled test output file generated by nunit-console. Optional. Default: TestResult.txt.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowNUnitExecutionReportSettings.TestOutput"/></em></p>
+        ///   <p>The labeled test output file generated by nunit-console. Optional. Default: TestResult.txt.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowNUnitExecutionReportSettings SetTestOutput(this SpecFlowNUnitExecutionReportSettings toolSettings, string testOutput)
         {
@@ -468,7 +789,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.TestOutput = testOutput;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowNUnitExecutionReportSettings.TestOutput"/>.</em></p><p>The labeled test output file generated by nunit-console. Optional. Default: TestResult.txt.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowNUnitExecutionReportSettings.TestOutput"/></em></p>
+        ///   <p>The labeled test output file generated by nunit-console. Optional. Default: TestResult.txt.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowNUnitExecutionReportSettings ResetTestOutput(this SpecFlowNUnitExecutionReportSettings toolSettings)
         {
@@ -478,7 +802,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region OutputFile
-        /// <summary><p><em>Sets <see cref="SpecFlowNUnitExecutionReportSettings.OutputFile"/>.</em></p><p>Generated Output File. Optional. Default: TestResult.html.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowNUnitExecutionReportSettings.OutputFile"/></em></p>
+        ///   <p>Generated Output File. Optional. Default: TestResult.html.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowNUnitExecutionReportSettings SetOutputFile(this SpecFlowNUnitExecutionReportSettings toolSettings, string outputFile)
         {
@@ -486,7 +813,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.OutputFile = outputFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowNUnitExecutionReportSettings.OutputFile"/>.</em></p><p>Generated Output File. Optional. Default: TestResult.html.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowNUnitExecutionReportSettings.OutputFile"/></em></p>
+        ///   <p>Generated Output File. Optional. Default: TestResult.html.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowNUnitExecutionReportSettings ResetOutputFile(this SpecFlowNUnitExecutionReportSettings toolSettings)
         {
@@ -496,7 +826,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region XsltFile
-        /// <summary><p><em>Sets <see cref="SpecFlowNUnitExecutionReportSettings.XsltFile"/>.</em></p><p>Custom XSLT file to use, defaults to built-in stylesheet if not provided. Optional. Default: not specified.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowNUnitExecutionReportSettings.XsltFile"/></em></p>
+        ///   <p>Custom XSLT file to use, defaults to built-in stylesheet if not provided. Optional. Default: not specified.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowNUnitExecutionReportSettings SetXsltFile(this SpecFlowNUnitExecutionReportSettings toolSettings, string xsltFile)
         {
@@ -504,7 +837,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.XsltFile = xsltFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowNUnitExecutionReportSettings.XsltFile"/>.</em></p><p>Custom XSLT file to use, defaults to built-in stylesheet if not provided. Optional. Default: not specified.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowNUnitExecutionReportSettings.XsltFile"/></em></p>
+        ///   <p>Custom XSLT file to use, defaults to built-in stylesheet if not provided. Optional. Default: not specified.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowNUnitExecutionReportSettings ResetXsltFile(this SpecFlowNUnitExecutionReportSettings toolSettings)
         {
@@ -514,7 +850,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region ProjectName
-        /// <summary><p><em>Sets <see cref="SpecFlowNUnitExecutionReportSettings.ProjectName"/>.</em></p><p>Project name which can be passed explicitly instead of implicitly getting it from --ProjectFile. Optional. Default: not specified.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowNUnitExecutionReportSettings.ProjectName"/></em></p>
+        ///   <p>Project name which can be passed explicitly instead of implicitly getting it from --ProjectFile. Optional. Default: not specified.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowNUnitExecutionReportSettings SetProjectName(this SpecFlowNUnitExecutionReportSettings toolSettings, string projectName)
         {
@@ -522,7 +861,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.ProjectName = projectName;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowNUnitExecutionReportSettings.ProjectName"/>.</em></p><p>Project name which can be passed explicitly instead of implicitly getting it from --ProjectFile. Optional. Default: not specified.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowNUnitExecutionReportSettings.ProjectName"/></em></p>
+        ///   <p>Project name which can be passed explicitly instead of implicitly getting it from --ProjectFile. Optional. Default: not specified.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowNUnitExecutionReportSettings ResetProjectName(this SpecFlowNUnitExecutionReportSettings toolSettings)
         {
@@ -532,7 +874,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region FeatureLanguage
-        /// <summary><p><em>Sets <see cref="SpecFlowNUnitExecutionReportSettings.FeatureLanguage"/>.</em></p><p>The feature language to use. Optional. Default: en-US.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowNUnitExecutionReportSettings.FeatureLanguage"/></em></p>
+        ///   <p>The feature language to use. Optional. Default: en-US.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowNUnitExecutionReportSettings SetFeatureLanguage(this SpecFlowNUnitExecutionReportSettings toolSettings, string featureLanguage)
         {
@@ -540,7 +885,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.FeatureLanguage = featureLanguage;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowNUnitExecutionReportSettings.FeatureLanguage"/>.</em></p><p>The feature language to use. Optional. Default: en-US.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowNUnitExecutionReportSettings.FeatureLanguage"/></em></p>
+        ///   <p>The feature language to use. Optional. Default: en-US.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowNUnitExecutionReportSettings ResetFeatureLanguage(this SpecFlowNUnitExecutionReportSettings toolSettings)
         {
@@ -552,13 +900,18 @@ namespace Nuke.Common.Tools.SpecFlow
     }
     #endregion
     #region SpecFlowMSTestExecutionReportSettingsExtensions
-    /// <summary><p>Used within <see cref="SpecFlowTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="SpecFlowTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class SpecFlowMSTestExecutionReportSettingsExtensions
     {
         #region ProjectFile
-        /// <summary><p><em>Sets <see cref="SpecFlowMSTestExecutionReportSettings.ProjectFile"/>.</em></p><p>A path of the project file containing the *.feature files. Required.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowMSTestExecutionReportSettings.ProjectFile"/></em></p>
+        ///   <p>A path of the project file containing the *.feature files. Required.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowMSTestExecutionReportSettings SetProjectFile(this SpecFlowMSTestExecutionReportSettings toolSettings, string projectFile)
         {
@@ -566,7 +919,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.ProjectFile = projectFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowMSTestExecutionReportSettings.ProjectFile"/>.</em></p><p>A path of the project file containing the *.feature files. Required.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowMSTestExecutionReportSettings.ProjectFile"/></em></p>
+        ///   <p>A path of the project file containing the *.feature files. Required.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowMSTestExecutionReportSettings ResetProjectFile(this SpecFlowMSTestExecutionReportSettings toolSettings)
         {
@@ -576,7 +932,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region TestResult
-        /// <summary><p><em>Sets <see cref="SpecFlowMSTestExecutionReportSettings.TestResult"/>.</em></p><p>The TRX test result file generated by MsTest. Optional. Default: TestResult.trx</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowMSTestExecutionReportSettings.TestResult"/></em></p>
+        ///   <p>The TRX test result file generated by MsTest. Optional. Default: TestResult.trx</p>
+        /// </summary>
         [Pure]
         public static SpecFlowMSTestExecutionReportSettings SetTestResult(this SpecFlowMSTestExecutionReportSettings toolSettings, string testResult)
         {
@@ -584,7 +943,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.TestResult = testResult;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowMSTestExecutionReportSettings.TestResult"/>.</em></p><p>The TRX test result file generated by MsTest. Optional. Default: TestResult.trx</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowMSTestExecutionReportSettings.TestResult"/></em></p>
+        ///   <p>The TRX test result file generated by MsTest. Optional. Default: TestResult.trx</p>
+        /// </summary>
         [Pure]
         public static SpecFlowMSTestExecutionReportSettings ResetTestResult(this SpecFlowMSTestExecutionReportSettings toolSettings)
         {
@@ -594,7 +956,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region OutputFile
-        /// <summary><p><em>Sets <see cref="SpecFlowMSTestExecutionReportSettings.OutputFile"/>.</em></p><p>Generated Output File. Optional. Default: TestResult.html</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowMSTestExecutionReportSettings.OutputFile"/></em></p>
+        ///   <p>Generated Output File. Optional. Default: TestResult.html</p>
+        /// </summary>
         [Pure]
         public static SpecFlowMSTestExecutionReportSettings SetOutputFile(this SpecFlowMSTestExecutionReportSettings toolSettings, string outputFile)
         {
@@ -602,7 +967,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.OutputFile = outputFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowMSTestExecutionReportSettings.OutputFile"/>.</em></p><p>Generated Output File. Optional. Default: TestResult.html</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowMSTestExecutionReportSettings.OutputFile"/></em></p>
+        ///   <p>Generated Output File. Optional. Default: TestResult.html</p>
+        /// </summary>
         [Pure]
         public static SpecFlowMSTestExecutionReportSettings ResetOutputFile(this SpecFlowMSTestExecutionReportSettings toolSettings)
         {
@@ -612,7 +980,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region XsltFile
-        /// <summary><p><em>Sets <see cref="SpecFlowMSTestExecutionReportSettings.XsltFile"/>.</em></p><p>Custom XSLT file to use, defaults to built-in stylesheet if not provided. Optional. Default: not specified.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowMSTestExecutionReportSettings.XsltFile"/></em></p>
+        ///   <p>Custom XSLT file to use, defaults to built-in stylesheet if not provided. Optional. Default: not specified.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowMSTestExecutionReportSettings SetXsltFile(this SpecFlowMSTestExecutionReportSettings toolSettings, string xsltFile)
         {
@@ -620,7 +991,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.XsltFile = xsltFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowMSTestExecutionReportSettings.XsltFile"/>.</em></p><p>Custom XSLT file to use, defaults to built-in stylesheet if not provided. Optional. Default: not specified.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowMSTestExecutionReportSettings.XsltFile"/></em></p>
+        ///   <p>Custom XSLT file to use, defaults to built-in stylesheet if not provided. Optional. Default: not specified.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowMSTestExecutionReportSettings ResetXsltFile(this SpecFlowMSTestExecutionReportSettings toolSettings)
         {
@@ -632,13 +1006,18 @@ namespace Nuke.Common.Tools.SpecFlow
     }
     #endregion
     #region SpecFlowStepDefinitionReportSettingsExtensions
-    /// <summary><p>Used within <see cref="SpecFlowTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="SpecFlowTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class SpecFlowStepDefinitionReportSettingsExtensions
     {
         #region ProjectFile
-        /// <summary><p><em>Sets <see cref="SpecFlowStepDefinitionReportSettings.ProjectFile"/>.</em></p><p>A path of the project file containing the *.feature files. Required.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowStepDefinitionReportSettings.ProjectFile"/></em></p>
+        ///   <p>A path of the project file containing the *.feature files. Required.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowStepDefinitionReportSettings SetProjectFile(this SpecFlowStepDefinitionReportSettings toolSettings, string projectFile)
         {
@@ -646,7 +1025,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.ProjectFile = projectFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowStepDefinitionReportSettings.ProjectFile"/>.</em></p><p>A path of the project file containing the *.feature files. Required.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowStepDefinitionReportSettings.ProjectFile"/></em></p>
+        ///   <p>A path of the project file containing the *.feature files. Required.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowStepDefinitionReportSettings ResetProjectFile(this SpecFlowStepDefinitionReportSettings toolSettings)
         {
@@ -656,7 +1038,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region BinFolder
-        /// <summary><p><em>Sets <see cref="SpecFlowStepDefinitionReportSettings.BinFolder"/>.</em></p><p>A path for the compiled SpecFlow project. Optional. Default: bin/debug</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowStepDefinitionReportSettings.BinFolder"/></em></p>
+        ///   <p>A path for the compiled SpecFlow project. Optional. Default: bin/debug</p>
+        /// </summary>
         [Pure]
         public static SpecFlowStepDefinitionReportSettings SetBinFolder(this SpecFlowStepDefinitionReportSettings toolSettings, string binFolder)
         {
@@ -664,7 +1049,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.BinFolder = binFolder;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowStepDefinitionReportSettings.BinFolder"/>.</em></p><p>A path for the compiled SpecFlow project. Optional. Default: bin/debug</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowStepDefinitionReportSettings.BinFolder"/></em></p>
+        ///   <p>A path for the compiled SpecFlow project. Optional. Default: bin/debug</p>
+        /// </summary>
         [Pure]
         public static SpecFlowStepDefinitionReportSettings ResetBinFolder(this SpecFlowStepDefinitionReportSettings toolSettings)
         {
@@ -674,7 +1062,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region OutputFile
-        /// <summary><p><em>Sets <see cref="SpecFlowStepDefinitionReportSettings.OutputFile"/>.</em></p><p>Generated Output File. Optional. Default: TestResult.html</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowStepDefinitionReportSettings.OutputFile"/></em></p>
+        ///   <p>Generated Output File. Optional. Default: TestResult.html</p>
+        /// </summary>
         [Pure]
         public static SpecFlowStepDefinitionReportSettings SetOutputFile(this SpecFlowStepDefinitionReportSettings toolSettings, string outputFile)
         {
@@ -682,7 +1073,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.OutputFile = outputFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowStepDefinitionReportSettings.OutputFile"/>.</em></p><p>Generated Output File. Optional. Default: TestResult.html</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowStepDefinitionReportSettings.OutputFile"/></em></p>
+        ///   <p>Generated Output File. Optional. Default: TestResult.html</p>
+        /// </summary>
         [Pure]
         public static SpecFlowStepDefinitionReportSettings ResetOutputFile(this SpecFlowStepDefinitionReportSettings toolSettings)
         {
@@ -692,7 +1086,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region XsltFile
-        /// <summary><p><em>Sets <see cref="SpecFlowStepDefinitionReportSettings.XsltFile"/>.</em></p><p>Custom XSLT file to use, defaults to built-in stylesheet if not provided. Optional. Default: not specified.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowStepDefinitionReportSettings.XsltFile"/></em></p>
+        ///   <p>Custom XSLT file to use, defaults to built-in stylesheet if not provided. Optional. Default: not specified.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowStepDefinitionReportSettings SetXsltFile(this SpecFlowStepDefinitionReportSettings toolSettings, string xsltFile)
         {
@@ -700,7 +1097,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.XsltFile = xsltFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowStepDefinitionReportSettings.XsltFile"/>.</em></p><p>Custom XSLT file to use, defaults to built-in stylesheet if not provided. Optional. Default: not specified.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowStepDefinitionReportSettings.XsltFile"/></em></p>
+        ///   <p>Custom XSLT file to use, defaults to built-in stylesheet if not provided. Optional. Default: not specified.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowStepDefinitionReportSettings ResetXsltFile(this SpecFlowStepDefinitionReportSettings toolSettings)
         {
@@ -712,13 +1112,18 @@ namespace Nuke.Common.Tools.SpecFlow
     }
     #endregion
     #region SpecFlowRunSettingsExtensions
-    /// <summary><p>Used within <see cref="SpecFlowTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="SpecFlowTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class SpecFlowRunSettingsExtensions
     {
         #region ToolIntegration
-        /// <summary><p><em>Sets <see cref="SpecFlowRunSettings.ToolIntegration"/>.</em></p><p>Supported values: <c>None, VS2010, VS2012, VS2013, TeamCity, TFS</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowRunSettings.ToolIntegration"/></em></p>
+        ///   <p>Supported values: <c>None, VS2010, VS2012, VS2013, TeamCity, TFS</c>.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowRunSettings SetToolIntegration(this SpecFlowRunSettings toolSettings, SpecFlowToolIntegration toolIntegration)
         {
@@ -726,7 +1131,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.ToolIntegration = toolIntegration;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowRunSettings.ToolIntegration"/>.</em></p><p>Supported values: <c>None, VS2010, VS2012, VS2013, TeamCity, TFS</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowRunSettings.ToolIntegration"/></em></p>
+        ///   <p>Supported values: <c>None, VS2010, VS2012, VS2013, TeamCity, TFS</c>.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowRunSettings ResetToolIntegration(this SpecFlowRunSettings toolSettings)
         {
@@ -736,7 +1144,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region Debug
-        /// <summary><p><em>Sets <see cref="SpecFlowRunSettings.Debug"/>.</em></p><p>Default: false.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowRunSettings.Debug"/></em></p>
+        ///   <p>Default: false.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowRunSettings SetDebug(this SpecFlowRunSettings toolSettings, bool? debug)
         {
@@ -744,7 +1155,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.Debug = debug;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowRunSettings.Debug"/>.</em></p><p>Default: false.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowRunSettings.Debug"/></em></p>
+        ///   <p>Default: false.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowRunSettings ResetDebug(this SpecFlowRunSettings toolSettings)
         {
@@ -752,7 +1166,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.Debug = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="SpecFlowRunSettings.Debug"/>.</em></p><p>Default: false.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="SpecFlowRunSettings.Debug"/></em></p>
+        ///   <p>Default: false.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowRunSettings EnableDebug(this SpecFlowRunSettings toolSettings)
         {
@@ -760,7 +1177,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.Debug = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="SpecFlowRunSettings.Debug"/>.</em></p><p>Default: false.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="SpecFlowRunSettings.Debug"/></em></p>
+        ///   <p>Default: false.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowRunSettings DisableDebug(this SpecFlowRunSettings toolSettings)
         {
@@ -768,7 +1188,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.Debug = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="SpecFlowRunSettings.Debug"/>.</em></p><p>Default: false.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SpecFlowRunSettings.Debug"/></em></p>
+        ///   <p>Default: false.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowRunSettings ToggleDebug(this SpecFlowRunSettings toolSettings)
         {
@@ -778,7 +1201,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region BaseFolder
-        /// <summary><p><em>Sets <see cref="SpecFlowRunSettings.BaseFolder"/>.</em></p><p>Specifies the base folder for executing tests. All paths are relative to this path.<para>If you have specified an <b>assembly</b> as your <c>target</c> you need to define the base folder as the path to the directory containing your assembly.</para><para>If you have specified a <b>test profile</b> (.srprofile) as your target, this overrides the <c>baseFolder</c> entry in your <c>.srprofile</c> file.</para></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowRunSettings.BaseFolder"/></em></p>
+        ///   <p>Specifies the base folder for executing tests. All paths are relative to this path.<para>If you have specified an <b>assembly</b> as your <c>target</c> you need to define the base folder as the path to the directory containing your assembly.</para><para>If you have specified a <b>test profile</b> (.srprofile) as your target, this overrides the <c>baseFolder</c> entry in your <c>.srprofile</c> file.</para></p>
+        /// </summary>
         [Pure]
         public static SpecFlowRunSettings SetBaseFolder(this SpecFlowRunSettings toolSettings, string baseFolder)
         {
@@ -786,7 +1212,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.BaseFolder = baseFolder;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowRunSettings.BaseFolder"/>.</em></p><p>Specifies the base folder for executing tests. All paths are relative to this path.<para>If you have specified an <b>assembly</b> as your <c>target</c> you need to define the base folder as the path to the directory containing your assembly.</para><para>If you have specified a <b>test profile</b> (.srprofile) as your target, this overrides the <c>baseFolder</c> entry in your <c>.srprofile</c> file.</para></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowRunSettings.BaseFolder"/></em></p>
+        ///   <p>Specifies the base folder for executing tests. All paths are relative to this path.<para>If you have specified an <b>assembly</b> as your <c>target</c> you need to define the base folder as the path to the directory containing your assembly.</para><para>If you have specified a <b>test profile</b> (.srprofile) as your target, this overrides the <c>baseFolder</c> entry in your <c>.srprofile</c> file.</para></p>
+        /// </summary>
         [Pure]
         public static SpecFlowRunSettings ResetBaseFolder(this SpecFlowRunSettings toolSettings)
         {
@@ -796,7 +1225,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region OutputFolder
-        /// <summary><p><em>Sets <see cref="SpecFlowRunSettings.OutputFolder"/>.</em></p><p>Specifies the output folder for your logs and report file. All paths are relative to this path. If you have specified a test profile (.srprofile) as your target, this value overrides the <c>outputFolder</c> entry in your <c>.srprofile</c> file.<para>If no output folder is defined in your test profile, or your <c>target</c> is an assembly,  the output folder defaults to the base folder if not specified from the command line.</para></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowRunSettings.OutputFolder"/></em></p>
+        ///   <p>Specifies the output folder for your logs and report file. All paths are relative to this path. If you have specified a test profile (.srprofile) as your target, this value overrides the <c>outputFolder</c> entry in your <c>.srprofile</c> file.<para>If no output folder is defined in your test profile, or your <c>target</c> is an assembly,  the output folder defaults to the base folder if not specified from the command line.</para></p>
+        /// </summary>
         [Pure]
         public static SpecFlowRunSettings SetOutputFolder(this SpecFlowRunSettings toolSettings, string outputFolder)
         {
@@ -804,7 +1236,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.OutputFolder = outputFolder;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowRunSettings.OutputFolder"/>.</em></p><p>Specifies the output folder for your logs and report file. All paths are relative to this path. If you have specified a test profile (.srprofile) as your target, this value overrides the <c>outputFolder</c> entry in your <c>.srprofile</c> file.<para>If no output folder is defined in your test profile, or your <c>target</c> is an assembly,  the output folder defaults to the base folder if not specified from the command line.</para></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowRunSettings.OutputFolder"/></em></p>
+        ///   <p>Specifies the output folder for your logs and report file. All paths are relative to this path. If you have specified a test profile (.srprofile) as your target, this value overrides the <c>outputFolder</c> entry in your <c>.srprofile</c> file.<para>If no output folder is defined in your test profile, or your <c>target</c> is an assembly,  the output folder defaults to the base folder if not specified from the command line.</para></p>
+        /// </summary>
         [Pure]
         public static SpecFlowRunSettings ResetOutputFolder(this SpecFlowRunSettings toolSettings)
         {
@@ -814,7 +1249,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region LogFile
-        /// <summary><p><em>Sets <see cref="SpecFlowRunSettings.LogFile"/>.</em></p><p>Specifies the target log file. This path is relative to your output folder.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowRunSettings.LogFile"/></em></p>
+        ///   <p>Specifies the target log file. This path is relative to your output folder.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowRunSettings SetLogFile(this SpecFlowRunSettings toolSettings, string logFile)
         {
@@ -822,7 +1260,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.LogFile = logFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowRunSettings.LogFile"/>.</em></p><p>Specifies the target log file. This path is relative to your output folder.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowRunSettings.LogFile"/></em></p>
+        ///   <p>Specifies the target log file. This path is relative to your output folder.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowRunSettings ResetLogFile(this SpecFlowRunSettings toolSettings)
         {
@@ -832,7 +1273,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region ReportFile
-        /// <summary><p><em>Sets <see cref="SpecFlowRunSettings.ReportFile"/>.</em></p><p>Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt;</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowRunSettings.ReportFile"/></em></p>
+        ///   <p>Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt;</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para></p>
+        /// </summary>
         [Pure]
         public static SpecFlowRunSettings SetReportFile(this SpecFlowRunSettings toolSettings, string reportFile)
         {
@@ -840,7 +1284,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.ReportFile = reportFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowRunSettings.ReportFile"/>.</em></p><p>Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt;</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowRunSettings.ReportFile"/></em></p>
+        ///   <p>Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt;</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para></p>
+        /// </summary>
         [Pure]
         public static SpecFlowRunSettings ResetReportFile(this SpecFlowRunSettings toolSettings)
         {
@@ -850,7 +1297,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region Filter
-        /// <summary><p><em>Sets <see cref="SpecFlowRunSettings.Filter"/>.</em></p><p>Applies a filter to your tests and only executes those that match your expression. This overrides the <c>filter</c> entry in your <c>.srprofile</c> file. An overview of the syntax can be found <a href="https://specflow.org/plus/documentation/Filter/">here</a>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowRunSettings.Filter"/></em></p>
+        ///   <p>Applies a filter to your tests and only executes those that match your expression. This overrides the <c>filter</c> entry in your <c>.srprofile</c> file. An overview of the syntax can be found <a href="https://specflow.org/plus/documentation/Filter/">here</a>.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowRunSettings SetFilter(this SpecFlowRunSettings toolSettings, string filter)
         {
@@ -858,7 +1308,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.Filter = filter;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowRunSettings.Filter"/>.</em></p><p>Applies a filter to your tests and only executes those that match your expression. This overrides the <c>filter</c> entry in your <c>.srprofile</c> file. An overview of the syntax can be found <a href="https://specflow.org/plus/documentation/Filter/">here</a>.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowRunSettings.Filter"/></em></p>
+        ///   <p>Applies a filter to your tests and only executes those that match your expression. This overrides the <c>filter</c> entry in your <c>.srprofile</c> file. An overview of the syntax can be found <a href="https://specflow.org/plus/documentation/Filter/">here</a>.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowRunSettings ResetFilter(this SpecFlowRunSettings toolSettings)
         {
@@ -870,13 +1323,18 @@ namespace Nuke.Common.Tools.SpecFlow
     }
     #endregion
     #region SpecFlowBuildServerRunSettingsExtensions
-    /// <summary><p>Used within <see cref="SpecFlowTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="SpecFlowTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class SpecFlowBuildServerRunSettingsExtensions
     {
         #region Target
-        /// <summary><p><em>Sets <see cref="SpecFlowBuildServerRunSettings.Target"/>.</em></p><p>The assembly or test profile (<c>.srprofile</c> file) to be tested.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowBuildServerRunSettings.Target"/></em></p>
+        ///   <p>The assembly or test profile (<c>.srprofile</c> file) to be tested.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowBuildServerRunSettings SetTarget(this SpecFlowBuildServerRunSettings toolSettings, string target)
         {
@@ -884,7 +1342,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.Target = target;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowBuildServerRunSettings.Target"/>.</em></p><p>The assembly or test profile (<c>.srprofile</c> file) to be tested.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowBuildServerRunSettings.Target"/></em></p>
+        ///   <p>The assembly or test profile (<c>.srprofile</c> file) to be tested.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowBuildServerRunSettings ResetTarget(this SpecFlowBuildServerRunSettings toolSettings)
         {
@@ -894,7 +1355,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region BuildServerName
-        /// <summary><p><em>Sets <see cref="SpecFlowBuildServerRunSettings.BuildServerName"/>.</em></p><p>The build servers' product name (TFS, TeamCity) for specialised trace output.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowBuildServerRunSettings.BuildServerName"/></em></p>
+        ///   <p>The build servers' product name (TFS, TeamCity) for specialised trace output.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowBuildServerRunSettings SetBuildServerName(this SpecFlowBuildServerRunSettings toolSettings, string buildServerName)
         {
@@ -902,7 +1366,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.BuildServerName = buildServerName;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowBuildServerRunSettings.BuildServerName"/>.</em></p><p>The build servers' product name (TFS, TeamCity) for specialised trace output.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowBuildServerRunSettings.BuildServerName"/></em></p>
+        ///   <p>The build servers' product name (TFS, TeamCity) for specialised trace output.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowBuildServerRunSettings ResetBuildServerName(this SpecFlowBuildServerRunSettings toolSettings)
         {
@@ -912,7 +1379,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region BaseFolder
-        /// <summary><p><em>Sets <see cref="SpecFlowBuildServerRunSettings.BaseFolder"/>.</em></p><p>Specifies the base folder for executing tests. All paths are relative to this path.<para>If you have specified an <b>assembly</b> as your <c>target</c> you need to define the base folder as the path to the directory containing your assembly.</para><para>If you have specified a <b>test profile</b> (.srprofile) as your target, this overrides the <c>baseFolder</c> entry in your <c>.srprofile</c> file.</para></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowBuildServerRunSettings.BaseFolder"/></em></p>
+        ///   <p>Specifies the base folder for executing tests. All paths are relative to this path.<para>If you have specified an <b>assembly</b> as your <c>target</c> you need to define the base folder as the path to the directory containing your assembly.</para><para>If you have specified a <b>test profile</b> (.srprofile) as your target, this overrides the <c>baseFolder</c> entry in your <c>.srprofile</c> file.</para></p>
+        /// </summary>
         [Pure]
         public static SpecFlowBuildServerRunSettings SetBaseFolder(this SpecFlowBuildServerRunSettings toolSettings, string baseFolder)
         {
@@ -920,7 +1390,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.BaseFolder = baseFolder;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowBuildServerRunSettings.BaseFolder"/>.</em></p><p>Specifies the base folder for executing tests. All paths are relative to this path.<para>If you have specified an <b>assembly</b> as your <c>target</c> you need to define the base folder as the path to the directory containing your assembly.</para><para>If you have specified a <b>test profile</b> (.srprofile) as your target, this overrides the <c>baseFolder</c> entry in your <c>.srprofile</c> file.</para></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowBuildServerRunSettings.BaseFolder"/></em></p>
+        ///   <p>Specifies the base folder for executing tests. All paths are relative to this path.<para>If you have specified an <b>assembly</b> as your <c>target</c> you need to define the base folder as the path to the directory containing your assembly.</para><para>If you have specified a <b>test profile</b> (.srprofile) as your target, this overrides the <c>baseFolder</c> entry in your <c>.srprofile</c> file.</para></p>
+        /// </summary>
         [Pure]
         public static SpecFlowBuildServerRunSettings ResetBaseFolder(this SpecFlowBuildServerRunSettings toolSettings)
         {
@@ -930,7 +1403,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region OutputFolder
-        /// <summary><p><em>Sets <see cref="SpecFlowBuildServerRunSettings.OutputFolder"/>.</em></p><p>Specifies the output folder for your logs and report file. All paths are relative to this path. If you have specified a test profile (.srprofile) as your target, this value overrides the <c>outputFolder</c> entry in your <c>.srprofile</c> file.<para>If no output folder is defined in your test profile, or your <c>target</c> is an assembly,  the output folder defaults to the base folder if not specified from the command line.</para></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowBuildServerRunSettings.OutputFolder"/></em></p>
+        ///   <p>Specifies the output folder for your logs and report file. All paths are relative to this path. If you have specified a test profile (.srprofile) as your target, this value overrides the <c>outputFolder</c> entry in your <c>.srprofile</c> file.<para>If no output folder is defined in your test profile, or your <c>target</c> is an assembly,  the output folder defaults to the base folder if not specified from the command line.</para></p>
+        /// </summary>
         [Pure]
         public static SpecFlowBuildServerRunSettings SetOutputFolder(this SpecFlowBuildServerRunSettings toolSettings, string outputFolder)
         {
@@ -938,7 +1414,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.OutputFolder = outputFolder;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowBuildServerRunSettings.OutputFolder"/>.</em></p><p>Specifies the output folder for your logs and report file. All paths are relative to this path. If you have specified a test profile (.srprofile) as your target, this value overrides the <c>outputFolder</c> entry in your <c>.srprofile</c> file.<para>If no output folder is defined in your test profile, or your <c>target</c> is an assembly,  the output folder defaults to the base folder if not specified from the command line.</para></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowBuildServerRunSettings.OutputFolder"/></em></p>
+        ///   <p>Specifies the output folder for your logs and report file. All paths are relative to this path. If you have specified a test profile (.srprofile) as your target, this value overrides the <c>outputFolder</c> entry in your <c>.srprofile</c> file.<para>If no output folder is defined in your test profile, or your <c>target</c> is an assembly,  the output folder defaults to the base folder if not specified from the command line.</para></p>
+        /// </summary>
         [Pure]
         public static SpecFlowBuildServerRunSettings ResetOutputFolder(this SpecFlowBuildServerRunSettings toolSettings)
         {
@@ -948,7 +1427,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region LogFile
-        /// <summary><p><em>Sets <see cref="SpecFlowBuildServerRunSettings.LogFile"/>.</em></p><p>Specifies the target log file. This path is relative to your output folder.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowBuildServerRunSettings.LogFile"/></em></p>
+        ///   <p>Specifies the target log file. This path is relative to your output folder.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowBuildServerRunSettings SetLogFile(this SpecFlowBuildServerRunSettings toolSettings, string logFile)
         {
@@ -956,7 +1438,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.LogFile = logFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowBuildServerRunSettings.LogFile"/>.</em></p><p>Specifies the target log file. This path is relative to your output folder.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowBuildServerRunSettings.LogFile"/></em></p>
+        ///   <p>Specifies the target log file. This path is relative to your output folder.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowBuildServerRunSettings ResetLogFile(this SpecFlowBuildServerRunSettings toolSettings)
         {
@@ -966,7 +1451,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region ReportFile
-        /// <summary><p><em>Sets <see cref="SpecFlowBuildServerRunSettings.ReportFile"/>.</em></p><p>Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt;</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowBuildServerRunSettings.ReportFile"/></em></p>
+        ///   <p>Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt;</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para></p>
+        /// </summary>
         [Pure]
         public static SpecFlowBuildServerRunSettings SetReportFile(this SpecFlowBuildServerRunSettings toolSettings, string reportFile)
         {
@@ -974,7 +1462,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.ReportFile = reportFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowBuildServerRunSettings.ReportFile"/>.</em></p><p>Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt;</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowBuildServerRunSettings.ReportFile"/></em></p>
+        ///   <p>Specifies the target report file. This path is relative to your output folder.<para><b>Note:</b>This option only affects the name of the report file defined in the <li>&lt;Settings&gt;</li> section of your profile. It does not affect the reports defined in the <li>&lt;Report&gt;</li>; section; to change the name of the report file for these reports, use the <c>outputName</c> attribute instead.</para></p>
+        /// </summary>
         [Pure]
         public static SpecFlowBuildServerRunSettings ResetReportFile(this SpecFlowBuildServerRunSettings toolSettings)
         {
@@ -984,7 +1475,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region Filter
-        /// <summary><p><em>Sets <see cref="SpecFlowBuildServerRunSettings.Filter"/>.</em></p><p>Applies a filter to your tests and only executes those that match your expression. This overrides the <c>filter</c> entry in your <c>.srprofile</c> file. An overview of the syntax can be found <a href="https://specflow.org/plus/documentation/Filter/">here</a>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowBuildServerRunSettings.Filter"/></em></p>
+        ///   <p>Applies a filter to your tests and only executes those that match your expression. This overrides the <c>filter</c> entry in your <c>.srprofile</c> file. An overview of the syntax can be found <a href="https://specflow.org/plus/documentation/Filter/">here</a>.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowBuildServerRunSettings SetFilter(this SpecFlowBuildServerRunSettings toolSettings, string filter)
         {
@@ -992,7 +1486,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.Filter = filter;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowBuildServerRunSettings.Filter"/>.</em></p><p>Applies a filter to your tests and only executes those that match your expression. This overrides the <c>filter</c> entry in your <c>.srprofile</c> file. An overview of the syntax can be found <a href="https://specflow.org/plus/documentation/Filter/">here</a>.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowBuildServerRunSettings.Filter"/></em></p>
+        ///   <p>Applies a filter to your tests and only executes those that match your expression. This overrides the <c>filter</c> entry in your <c>.srprofile</c> file. An overview of the syntax can be found <a href="https://specflow.org/plus/documentation/Filter/">here</a>.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowBuildServerRunSettings ResetFilter(this SpecFlowBuildServerRunSettings toolSettings)
         {
@@ -1004,13 +1501,18 @@ namespace Nuke.Common.Tools.SpecFlow
     }
     #endregion
     #region SpecFlowRegisterSettingsExtensions
-    /// <summary><p>Used within <see cref="SpecFlowTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="SpecFlowTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class SpecFlowRegisterSettingsExtensions
     {
         #region LicenseKey
-        /// <summary><p><em>Sets <see cref="SpecFlowRegisterSettings.LicenseKey"/>.</em></p><p>The license key you received when you purchased SpecFlow+.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowRegisterSettings.LicenseKey"/></em></p>
+        ///   <p>The license key you received when you purchased SpecFlow+.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowRegisterSettings SetLicenseKey(this SpecFlowRegisterSettings toolSettings, string licenseKey)
         {
@@ -1018,7 +1520,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.LicenseKey = licenseKey;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowRegisterSettings.LicenseKey"/>.</em></p><p>The license key you received when you purchased SpecFlow+.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowRegisterSettings.LicenseKey"/></em></p>
+        ///   <p>The license key you received when you purchased SpecFlow+.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowRegisterSettings ResetLicenseKey(this SpecFlowRegisterSettings toolSettings)
         {
@@ -1028,7 +1533,10 @@ namespace Nuke.Common.Tools.SpecFlow
         }
         #endregion
         #region IssuedTo
-        /// <summary><p><em>Sets <see cref="SpecFlowRegisterSettings.IssuedTo"/>.</em></p><p>The name of the licensee. If you purchased your SpecFlow+ license online via SWREG, this is the email address you used to purchase the license. If you purchased SpecFlow+ directly from TechTalk, this is the value in the email you received containing your license information.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SpecFlowRegisterSettings.IssuedTo"/></em></p>
+        ///   <p>The name of the licensee. If you purchased your SpecFlow+ license online via SWREG, this is the email address you used to purchase the license. If you purchased SpecFlow+ directly from TechTalk, this is the value in the email you received containing your license information.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowRegisterSettings SetIssuedTo(this SpecFlowRegisterSettings toolSettings, string issuedTo)
         {
@@ -1036,7 +1544,10 @@ namespace Nuke.Common.Tools.SpecFlow
             toolSettings.IssuedTo = issuedTo;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SpecFlowRegisterSettings.IssuedTo"/>.</em></p><p>The name of the licensee. If you purchased your SpecFlow+ license online via SWREG, this is the email address you used to purchase the license. If you purchased SpecFlow+ directly from TechTalk, this is the value in the email you received containing your license information.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SpecFlowRegisterSettings.IssuedTo"/></em></p>
+        ///   <p>The name of the licensee. If you purchased your SpecFlow+ license online via SWREG, this is the email address you used to purchase the license. If you purchased SpecFlow+ directly from TechTalk, this is the value in the email you received containing your license information.</p>
+        /// </summary>
         [Pure]
         public static SpecFlowRegisterSettings ResetIssuedTo(this SpecFlowRegisterSettings toolSettings)
         {
@@ -1048,7 +1559,9 @@ namespace Nuke.Common.Tools.SpecFlow
     }
     #endregion
     #region SpecFlowUnregisterSettingsExtensions
-    /// <summary><p>Used within <see cref="SpecFlowTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="SpecFlowTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class SpecFlowUnregisterSettingsExtensions
@@ -1056,7 +1569,9 @@ namespace Nuke.Common.Tools.SpecFlow
     }
     #endregion
     #region SpecFlowAboutSettingsExtensions
-    /// <summary><p>Used within <see cref="SpecFlowTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="SpecFlowTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class SpecFlowAboutSettingsExtensions
@@ -1064,7 +1579,9 @@ namespace Nuke.Common.Tools.SpecFlow
     }
     #endregion
     #region SpecFlowToolIntegration
-    /// <summary><p>Used within <see cref="SpecFlowTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="SpecFlowTasks"/>.
+    /// </summary>
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]

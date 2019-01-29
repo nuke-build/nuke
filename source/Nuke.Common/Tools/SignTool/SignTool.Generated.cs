@@ -23,19 +23,26 @@ namespace Nuke.Common.Tools.SignTool
     [ExcludeFromCodeCoverage]
     public static partial class SignToolTasks
     {
-        /// <summary><p>Path to the SignTool executable.</p></summary>
+        /// <summary>
+        ///   Path to the SignTool executable.
+        /// </summary>
         public static string SignToolPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("SIGNTOOL_EXE") ??
             GetToolPath();
         public static Action<OutputType, string> SignToolLogger { get; set; } = ProcessManager.DefaultLogger;
-        /// <summary><p>Sign Tool is a command-line tool that digitally signs files, verifies signatures in files, and time-stamps files.</p></summary>
+        /// <summary>
+        ///   Sign Tool is a command-line tool that digitally signs files, verifies signatures in files, and time-stamps files.
+        /// </summary>
         public static IReadOnlyCollection<Output> SignTool(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
             var process = ProcessTasks.StartProcess(SignToolPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, SignToolLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>Use the <c>sign</c> command to sign files using embedded signatures. Signing protects a file from tampering, and allows users to verify the signer (you) based on a signing certificate. The options below allow you to specify signing parameters and to select the signing certificate you wish to use.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>Use the <c>sign</c> command to sign files using embedded signatures. Signing protects a file from tampering, and allows users to verify the signer (you) based on a signing certificate. The options below allow you to specify signing parameters and to select the signing certificate you wish to use.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe">official website</a>.</p>
+        /// </summary>
         public static IReadOnlyCollection<Output> SignTool(SignToolSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SignToolSettings();
@@ -43,115 +50,311 @@ namespace Nuke.Common.Tools.SignTool
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>Use the <c>sign</c> command to sign files using embedded signatures. Signing protects a file from tampering, and allows users to verify the signer (you) based on a signing certificate. The options below allow you to specify signing parameters and to select the signing certificate you wish to use.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>Use the <c>sign</c> command to sign files using embedded signatures. Signing protects a file from tampering, and allows users to verify the signer (you) based on a signing certificate. The options below allow you to specify signing parameters and to select the signing certificate you wish to use.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;files&gt;</c> via <see cref="SignToolSettings.Files"/></li>
+        ///     <li><c>/a</c> via <see cref="SignToolSettings.AutomaticSelection"/></li>
+        ///     <li><c>/ac</c> via <see cref="SignToolSettings.AdditionalCertificate"/></li>
+        ///     <li><c>/as</c> via <see cref="SignToolSettings.AppendSignature"/></li>
+        ///     <li><c>/c</c> via <see cref="SignToolSettings.CertificateTemplateName"/></li>
+        ///     <li><c>/csp</c> via <see cref="SignToolSettings.Csp"/></li>
+        ///     <li><c>/d</c> via <see cref="SignToolSettings.Description"/></li>
+        ///     <li><c>/debug</c> via <see cref="SignToolSettings.Debug"/></li>
+        ///     <li><c>/dg</c> via <see cref="SignToolSettings.SignedDigestAndUnsignedPkcs7Path"/></li>
+        ///     <li><c>/di</c> via <see cref="SignToolSettings.GenerateSignature"/></li>
+        ///     <li><c>/dlib</c> via <see cref="SignToolSettings.AuthenticodeDigestSignLibDll"/></li>
+        ///     <li><c>/ds</c> via <see cref="SignToolSettings.SignDigestOnly"/></li>
+        ///     <li><c>/du</c> via <see cref="SignToolSettings.Url"/></li>
+        ///     <li><c>/dxml</c> via <see cref="SignToolSettings.XmlFile"/></li>
+        ///     <li><c>/f</c> via <see cref="SignToolSettings.File"/></li>
+        ///     <li><c>/fd</c> via <see cref="SignToolSettings.FileDigestAlgorithm"/></li>
+        ///     <li><c>/force</c> via <see cref="SignToolSettings.Force"/></li>
+        ///     <li><c>/i</c> via <see cref="SignToolSettings.Issuer"/></li>
+        ///     <li><c>/itos</c> via <see cref="SignToolSettings.IntentToSealAttribute"/></li>
+        ///     <li><c>/kc</c> via <see cref="SignToolSettings.KeyContainer"/></li>
+        ///     <li><c>/n</c> via <see cref="SignToolSettings.SigningSubjectName"/></li>
+        ///     <li><c>/nosealwarn</c> via <see cref="SignToolSettings.NoSealWarn"/></li>
+        ///     <li><c>/nph</c> via <see cref="SignToolSettings.SuppressPageHashes"/></li>
+        ///     <li><c>/p</c> via <see cref="SignToolSettings.Password"/></li>
+        ///     <li><c>/p7</c> via <see cref="SignToolSettings.ContentFileToPkcs7"/></li>
+        ///     <li><c>/p7ce</c> via <see cref="SignToolSettings.SignedContentMethod"/></li>
+        ///     <li><c>/p7co</c> via <see cref="SignToolSettings.SignedContentIdentifier"/></li>
+        ///     <li><c>/ph</c> via <see cref="SignToolSettings.PageHashes"/></li>
+        ///     <li><c>/q</c> via <see cref="SignToolSettings.Quiet"/></li>
+        ///     <li><c>/r</c> via <see cref="SignToolSettings.RootSubjectName"/></li>
+        ///     <li><c>/rmc</c> via <see cref="SignToolSettings.RelaxedMarkerCheck"/></li>
+        ///     <li><c>/s</c> via <see cref="SignToolSettings.Store"/></li>
+        ///     <li><c>/sa</c> via <see cref="SignToolSettings.AuthenticatedAttributes"/></li>
+        ///     <li><c>/seal</c> via <see cref="SignToolSettings.SealingSignature"/></li>
+        ///     <li><c>/sha1</c> via <see cref="SignToolSettings.Sha1Thumbprint"/></li>
+        ///     <li><c>/sm</c> via <see cref="SignToolSettings.MachineStore"/></li>
+        ///     <li><c>/t</c> via <see cref="SignToolSettings.TimestampServerUrl"/></li>
+        ///     <li><c>/td</c> via <see cref="SignToolSettings.TimestampServerDigestAlgorithm"/></li>
+        ///     <li><c>/tr</c> via <see cref="SignToolSettings.Rfc3161TimestampServerUrl"/></li>
+        ///     <li><c>/tseal</c> via <see cref="SignToolSettings.Rfc3161TimestampServerUrlSealed"/></li>
+        ///     <li><c>/u</c> via <see cref="SignToolSettings.EnhancedKeyUsage"/></li>
+        ///     <li><c>/uw</c> via <see cref="SignToolSettings.WindowsSystemComponentVerification"/></li>
+        ///     <li><c>/v</c> via <see cref="SignToolSettings.Verbose"/></li>
+        ///     <li><c>dmdf</c> via <see cref="SignToolSettings.AuthenticodeDigestSignPassUnmodified"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> SignTool(Configure<SignToolSettings> configurator)
         {
             return SignTool(configurator(new SignToolSettings()));
         }
-        /// <summary><p>Use the <c>sign</c> command to sign files using embedded signatures. Signing protects a file from tampering, and allows users to verify the signer (you) based on a signing certificate. The options below allow you to specify signing parameters and to select the signing certificate you wish to use.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>Use the <c>sign</c> command to sign files using embedded signatures. Signing protects a file from tampering, and allows users to verify the signer (you) based on a signing certificate. The options below allow you to specify signing parameters and to select the signing certificate you wish to use.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;files&gt;</c> via <see cref="SignToolSettings.Files"/></li>
+        ///     <li><c>/a</c> via <see cref="SignToolSettings.AutomaticSelection"/></li>
+        ///     <li><c>/ac</c> via <see cref="SignToolSettings.AdditionalCertificate"/></li>
+        ///     <li><c>/as</c> via <see cref="SignToolSettings.AppendSignature"/></li>
+        ///     <li><c>/c</c> via <see cref="SignToolSettings.CertificateTemplateName"/></li>
+        ///     <li><c>/csp</c> via <see cref="SignToolSettings.Csp"/></li>
+        ///     <li><c>/d</c> via <see cref="SignToolSettings.Description"/></li>
+        ///     <li><c>/debug</c> via <see cref="SignToolSettings.Debug"/></li>
+        ///     <li><c>/dg</c> via <see cref="SignToolSettings.SignedDigestAndUnsignedPkcs7Path"/></li>
+        ///     <li><c>/di</c> via <see cref="SignToolSettings.GenerateSignature"/></li>
+        ///     <li><c>/dlib</c> via <see cref="SignToolSettings.AuthenticodeDigestSignLibDll"/></li>
+        ///     <li><c>/ds</c> via <see cref="SignToolSettings.SignDigestOnly"/></li>
+        ///     <li><c>/du</c> via <see cref="SignToolSettings.Url"/></li>
+        ///     <li><c>/dxml</c> via <see cref="SignToolSettings.XmlFile"/></li>
+        ///     <li><c>/f</c> via <see cref="SignToolSettings.File"/></li>
+        ///     <li><c>/fd</c> via <see cref="SignToolSettings.FileDigestAlgorithm"/></li>
+        ///     <li><c>/force</c> via <see cref="SignToolSettings.Force"/></li>
+        ///     <li><c>/i</c> via <see cref="SignToolSettings.Issuer"/></li>
+        ///     <li><c>/itos</c> via <see cref="SignToolSettings.IntentToSealAttribute"/></li>
+        ///     <li><c>/kc</c> via <see cref="SignToolSettings.KeyContainer"/></li>
+        ///     <li><c>/n</c> via <see cref="SignToolSettings.SigningSubjectName"/></li>
+        ///     <li><c>/nosealwarn</c> via <see cref="SignToolSettings.NoSealWarn"/></li>
+        ///     <li><c>/nph</c> via <see cref="SignToolSettings.SuppressPageHashes"/></li>
+        ///     <li><c>/p</c> via <see cref="SignToolSettings.Password"/></li>
+        ///     <li><c>/p7</c> via <see cref="SignToolSettings.ContentFileToPkcs7"/></li>
+        ///     <li><c>/p7ce</c> via <see cref="SignToolSettings.SignedContentMethod"/></li>
+        ///     <li><c>/p7co</c> via <see cref="SignToolSettings.SignedContentIdentifier"/></li>
+        ///     <li><c>/ph</c> via <see cref="SignToolSettings.PageHashes"/></li>
+        ///     <li><c>/q</c> via <see cref="SignToolSettings.Quiet"/></li>
+        ///     <li><c>/r</c> via <see cref="SignToolSettings.RootSubjectName"/></li>
+        ///     <li><c>/rmc</c> via <see cref="SignToolSettings.RelaxedMarkerCheck"/></li>
+        ///     <li><c>/s</c> via <see cref="SignToolSettings.Store"/></li>
+        ///     <li><c>/sa</c> via <see cref="SignToolSettings.AuthenticatedAttributes"/></li>
+        ///     <li><c>/seal</c> via <see cref="SignToolSettings.SealingSignature"/></li>
+        ///     <li><c>/sha1</c> via <see cref="SignToolSettings.Sha1Thumbprint"/></li>
+        ///     <li><c>/sm</c> via <see cref="SignToolSettings.MachineStore"/></li>
+        ///     <li><c>/t</c> via <see cref="SignToolSettings.TimestampServerUrl"/></li>
+        ///     <li><c>/td</c> via <see cref="SignToolSettings.TimestampServerDigestAlgorithm"/></li>
+        ///     <li><c>/tr</c> via <see cref="SignToolSettings.Rfc3161TimestampServerUrl"/></li>
+        ///     <li><c>/tseal</c> via <see cref="SignToolSettings.Rfc3161TimestampServerUrlSealed"/></li>
+        ///     <li><c>/u</c> via <see cref="SignToolSettings.EnhancedKeyUsage"/></li>
+        ///     <li><c>/uw</c> via <see cref="SignToolSettings.WindowsSystemComponentVerification"/></li>
+        ///     <li><c>/v</c> via <see cref="SignToolSettings.Verbose"/></li>
+        ///     <li><c>dmdf</c> via <see cref="SignToolSettings.AuthenticodeDigestSignPassUnmodified"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IEnumerable<(SignToolSettings Settings, IReadOnlyCollection<Output> Output)> SignTool(CombinatorialConfigure<SignToolSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
             return configurator.Invoke(SignTool, SignToolLogger, degreeOfParallelism, completeOnFailure);
         }
     }
     #region SignToolSettings
-    /// <summary><p>Used within <see cref="SignToolTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="SignToolTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
     public partial class SignToolSettings : ToolSettings
     {
-        /// <summary><p>Path to the SignTool executable.</p></summary>
+        /// <summary>
+        ///   Path to the SignTool executable.
+        /// </summary>
         public override string ToolPath => base.ToolPath ?? SignToolTasks.SignToolPath;
         public override Action<OutputType, string> CustomLogger => SignToolTasks.SignToolLogger;
-        /// <summary><p>Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.</p></summary>
+        /// <summary>
+        ///   Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.
+        /// </summary>
         public virtual bool? AutomaticSelection { get; internal set; }
-        /// <summary><p>Add an additional certificate to the signature block.</p></summary>
+        /// <summary>
+        ///   Add an additional certificate to the signature block.
+        /// </summary>
         public virtual string AdditionalCertificate { get; internal set; }
-        /// <summary><p>Specify the Certificate Template Name (Microsoft extension) of the signing cert.</p></summary>
+        /// <summary>
+        ///   Specify the Certificate Template Name (Microsoft extension) of the signing cert.
+        /// </summary>
         public virtual string CertificateTemplateName { get; internal set; }
-        /// <summary><p>Specify the signing cert in a file. If this file is a PFX with a password, the password may be supplied with the <c>/p</c> option. If the file does not contain private keys, use the <c>/csp</c> and <c>/kc</c> options to specify the CSP and container name of the private key.</p></summary>
+        /// <summary>
+        ///   Specify the signing cert in a file. If this file is a PFX with a password, the password may be supplied with the <c>/p</c> option. If the file does not contain private keys, use the <c>/csp</c> and <c>/kc</c> options to specify the CSP and container name of the private key.
+        /// </summary>
         public virtual string File { get; internal set; }
-        /// <summary><p>Specify the Issuer of the signing cert, or a substring.</p></summary>
+        /// <summary>
+        ///   Specify the Issuer of the signing cert, or a substring.
+        /// </summary>
         public virtual string Issuer { get; internal set; }
-        /// <summary><p>Specify the Subject Name of the signing cert, or a substring.</p></summary>
+        /// <summary>
+        ///   Specify the Subject Name of the signing cert, or a substring.
+        /// </summary>
         public virtual string SigningSubjectName { get; internal set; }
-        /// <summary><p>Specify a password to use when opening the PFX file.</p></summary>
+        /// <summary>
+        ///   Specify a password to use when opening the PFX file.
+        /// </summary>
         public virtual string Password { get; internal set; }
-        /// <summary><p>Specify the Subject Name of a Root cert that the signing cert must chain to.</p></summary>
+        /// <summary>
+        ///   Specify the Subject Name of a Root cert that the signing cert must chain to.
+        /// </summary>
         public virtual string RootSubjectName { get; internal set; }
-        /// <summary><p>Specify the Store to open when searching for the cert. The default is the <c>MY</c> Store.</p></summary>
+        /// <summary>
+        ///   Specify the Store to open when searching for the cert. The default is the <c>MY</c> Store.
+        /// </summary>
         public virtual string Store { get; internal set; }
-        /// <summary><p>Open a Machine store instead of a User store.</p></summary>
+        /// <summary>
+        ///   Open a Machine store instead of a User store.
+        /// </summary>
         public virtual bool? MachineStore { get; internal set; }
-        /// <summary><p>Specify the SHA1 thumbprint of the signing cert.</p></summary>
+        /// <summary>
+        ///   Specify the SHA1 thumbprint of the signing cert.
+        /// </summary>
         public virtual string Sha1Thumbprint { get; internal set; }
-        /// <summary><p>Specifies the file digest algorithm to use for creating file signatures. (Default is <c>SHA1</c>)</p></summary>
+        /// <summary>
+        ///   Specifies the file digest algorithm to use for creating file signatures. (Default is <c>SHA1</c>)
+        /// </summary>
         public virtual string FileDigestAlgorithm { get; internal set; }
-        /// <summary><p>Specify the Enhanced Key Usage that must be present in the cert.<para/>The parameter may be specified by OID or by string. The default usage is <em>Code Signing</em> (1.3.6.1.5.5.7.3.3).</p></summary>
+        /// <summary>
+        ///   Specify the Enhanced Key Usage that must be present in the cert.<para/>The parameter may be specified by OID or by string. The default usage is <em>Code Signing</em> (1.3.6.1.5.5.7.3.3).
+        /// </summary>
         public virtual string EnhancedKeyUsage { get; internal set; }
-        /// <summary><p>Specify usage of <em>Windows System Component Verification</em> (1.3.6.1.4.1.311.10.3.6).</p></summary>
+        /// <summary>
+        ///   Specify usage of <em>Windows System Component Verification</em> (1.3.6.1.4.1.311.10.3.6).
+        /// </summary>
         public virtual bool? WindowsSystemComponentVerification { get; internal set; }
-        /// <summary><p>Specify the CSP containing the Private Key Container.</p></summary>
+        /// <summary>
+        ///   Specify the CSP containing the Private Key Container.
+        /// </summary>
         public virtual string Csp { get; internal set; }
-        /// <summary><p>Specify the Key Container Name of the Private Key.</p></summary>
+        /// <summary>
+        ///   Specify the Key Container Name of the Private Key.
+        /// </summary>
         public virtual string KeyContainer { get; internal set; }
-        /// <summary><p>Append this signature. If no primary signature is present, this signature will be made the primary signature instead.</p></summary>
+        /// <summary>
+        ///   Append this signature. If no primary signature is present, this signature will be made the primary signature instead.
+        /// </summary>
         public virtual bool? AppendSignature { get; internal set; }
-        /// <summary><p>Provide a description of the signed content.</p></summary>
+        /// <summary>
+        ///   Provide a description of the signed content.
+        /// </summary>
         public virtual string Description { get; internal set; }
-        /// <summary><p>Provide a URL with more information about the signed content.</p></summary>
+        /// <summary>
+        ///   Provide a URL with more information about the signed content.
+        /// </summary>
         public virtual string Url { get; internal set; }
-        /// <summary><p>Specify the timestamp server's URL. If this option is not present, the signed file will not be timestamped. A warning is generated if timestamping fails.</p></summary>
+        /// <summary>
+        ///   Specify the timestamp server's URL. If this option is not present, the signed file will not be timestamped. A warning is generated if timestamping fails.
+        /// </summary>
         public virtual string TimestampServerUrl { get; internal set; }
-        /// <summary><p>Specifies the RFC 3161 timestamp server's URL. If this option (or <c>/t</c>) is not specified, the signed file will not be timestamped. A warning is generated if timestamping fails. This switch cannot be used with the <c>/t</c> switch.</p></summary>
+        /// <summary>
+        ///   Specifies the RFC 3161 timestamp server's URL. If this option (or <c>/t</c>) is not specified, the signed file will not be timestamped. A warning is generated if timestamping fails. This switch cannot be used with the <c>/t</c> switch.
+        /// </summary>
         public virtual string Rfc3161TimestampServerUrl { get; internal set; }
-        /// <summary><p>Specifies the RFC 3161 timestamp server's URL for timestamping a sealed file.</p></summary>
+        /// <summary>
+        ///   Specifies the RFC 3161 timestamp server's URL for timestamping a sealed file.
+        /// </summary>
         public virtual string Rfc3161TimestampServerUrlSealed { get; internal set; }
-        /// <summary><p>Used with the <c>/tr</c> or <c>/tseal</c> switch to request a digest algorithm used by the RFC 3161 timestamp server.</p></summary>
+        /// <summary>
+        ///   Used with the <c>/tr</c> or <c>/tseal</c> switch to request a digest algorithm used by the RFC 3161 timestamp server.
+        /// </summary>
         public virtual string TimestampServerDigestAlgorithm { get; internal set; }
-        /// <summary><p>Specify an OID and value to be included as an authenticated attribute in the signature. The value will be encoded as an ASN1 UTF8 string. This option may be given multiple times.</p></summary>
+        /// <summary>
+        ///   Specify an OID and value to be included as an authenticated attribute in the signature. The value will be encoded as an ASN1 UTF8 string. This option may be given multiple times.
+        /// </summary>
         public virtual IReadOnlyDictionary<string, string> AuthenticatedAttributes => AuthenticatedAttributesInternal.AsReadOnly();
         internal Dictionary<string, string> AuthenticatedAttributesInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-        /// <summary><p>Add a sealing signature if the file format supports it.</p></summary>
+        /// <summary>
+        ///   Add a sealing signature if the file format supports it.
+        /// </summary>
         public virtual bool? SealingSignature { get; internal set; }
-        /// <summary><p>Create a primary signature with the intent-to-seal attribute.</p></summary>
+        /// <summary>
+        ///   Create a primary signature with the intent-to-seal attribute.
+        /// </summary>
         public virtual bool? IntentToSealAttribute { get; internal set; }
-        /// <summary><p>Continue to seal or sign in situations where the existing signature or sealing signature needs to be removed to support sealing.</p></summary>
+        /// <summary>
+        ///   Continue to seal or sign in situations where the existing signature or sealing signature needs to be removed to support sealing.
+        /// </summary>
         public virtual bool? Force { get; internal set; }
-        /// <summary><p>Sealing-related warnings do not affect SignTool's return code.</p></summary>
+        /// <summary>
+        ///   Sealing-related warnings do not affect SignTool's return code.
+        /// </summary>
         public virtual bool? NoSealWarn { get; internal set; }
-        /// <summary><p>Generates the to be signed digest and the unsigned PKCS7 files. The output digest and PKCS7 files will be: <c>&lt;path&gt;\&lt;file&gt;.dig</c> and <c>&lt;path&gt;\&lt;file&gt;.p7u</c>. To output an additional XML file, see <c>/dxml</c>.</p></summary>
+        /// <summary>
+        ///   Generates the to be signed digest and the unsigned PKCS7 files. The output digest and PKCS7 files will be: <c>&lt;path&gt;\&lt;file&gt;.dig</c> and <c>&lt;path&gt;\&lt;file&gt;.p7u</c>. To output an additional XML file, see <c>/dxml</c>.
+        /// </summary>
         public virtual string SignedDigestAndUnsignedPkcs7Path { get; internal set; }
-        /// <summary><p>Signs the digest only. The input file should be the digest generated by the <c>/dg</c> option. The output file will be: <c>&lt;file&gt;.signed</c>.</p></summary>
+        /// <summary>
+        ///   Signs the digest only. The input file should be the digest generated by the <c>/dg</c> option. The output file will be: <c>&lt;file&gt;.signed</c>.
+        /// </summary>
         public virtual bool? SignDigestOnly { get; internal set; }
-        /// <summary><p>Creates the signature by ingesting the signed digest to the unsigned PKCS7 file. The input signed digest and unsigned PKCS7 files should be: <c>&lt;path&gt;\&lt;file&gt;.dig.signed</c> and <c>&lt;path&gt;\&lt;file&gt;.p7u</c>.</p></summary>
+        /// <summary>
+        ///   Creates the signature by ingesting the signed digest to the unsigned PKCS7 file. The input signed digest and unsigned PKCS7 files should be: <c>&lt;path&gt;\&lt;file&gt;.dig.signed</c> and <c>&lt;path&gt;\&lt;file&gt;.p7u</c>.
+        /// </summary>
         public virtual string GenerateSignature { get; internal set; }
-        /// <summary><p>When used with the <c>/dg</c> option, produces an XML file. The output file will be: <c>&lt;path&gt;\&lt;file&gt;.dig.xml</c>.</p></summary>
+        /// <summary>
+        ///   When used with the <c>/dg</c> option, produces an XML file. The output file will be: <c>&lt;path&gt;\&lt;file&gt;.dig.xml</c>.
+        /// </summary>
         public virtual bool? XmlFile { get; internal set; }
-        /// <summary><p>Specifies the DLL implementing the AuthenticodeDigestSign function to sign the digest with. This option is equivalent to using SignTool separately with the <c>/dg</c>, <c>/ds</c>, and <c>/di</c> switches, except this option invokes all three as one atomic operation.</p></summary>
+        /// <summary>
+        ///   Specifies the DLL implementing the AuthenticodeDigestSign function to sign the digest with. This option is equivalent to using SignTool separately with the <c>/dg</c>, <c>/ds</c>, and <c>/di</c> switches, except this option invokes all three as one atomic operation.
+        /// </summary>
         public virtual string AuthenticodeDigestSignLibDll { get; internal set; }
-        /// <summary><p>When used with the <c>/dlib</c> option, passes the file's contents to the AuthenticodeDigestSign function without modification.</p></summary>
+        /// <summary>
+        ///   When used with the <c>/dlib</c> option, passes the file's contents to the AuthenticodeDigestSign function without modification.
+        /// </summary>
         public virtual string AuthenticodeDigestSignPassUnmodified { get; internal set; }
-        /// <summary><p>Specifies that for each specified content file a PKCS7 file is produced. The PKCS7 file will be named: <c>&lt;path&gt;\&lt;file&gt;.p7</c></p></summary>
+        /// <summary>
+        ///   Specifies that for each specified content file a PKCS7 file is produced. The PKCS7 file will be named: <c>&lt;path&gt;\&lt;file&gt;.p7</c>
+        /// </summary>
         public virtual string ContentFileToPkcs7 { get; internal set; }
-        /// <summary><p>Specifies the <c>&lt;OID&gt;</c> that identifies the signed content.</p></summary>
+        /// <summary>
+        ///   Specifies the <c>&lt;OID&gt;</c> that identifies the signed content.
+        /// </summary>
         public virtual string SignedContentIdentifier { get; internal set; }
-        /// <summary><p>efined values:<ul><li><b>Embedded:</b> Embeds the signed content in the PKCS7.</li><li><b>DetachedSignedData:</b> Produces the signed data part of a detached PKCS7.</li></ul>The default is <c>Embedded</c>.</p></summary>
+        /// <summary>
+        ///   efined values:<ul><li><b>Embedded:</b> Embeds the signed content in the PKCS7.</li><li><b>DetachedSignedData:</b> Produces the signed data part of a detached PKCS7.</li></ul>The default is <c>Embedded</c>.
+        /// </summary>
         public virtual SignToolContentMethod SignedContentMethod { get; internal set; }
-        /// <summary><p>Generate page hashes for executable files if supported.</p></summary>
+        /// <summary>
+        ///   Generate page hashes for executable files if supported.
+        /// </summary>
         public virtual bool? PageHashes { get; internal set; }
-        /// <summary><p>Suppress page hashes for executable files if supported. The default is determined by the <c>SIGNTOOL_PAGE_HASHES</c> environment variable and by the <em>wintrust.dll</em> version.</p></summary>
+        /// <summary>
+        ///   Suppress page hashes for executable files if supported. The default is determined by the <c>SIGNTOOL_PAGE_HASHES</c> environment variable and by the <em>wintrust.dll</em> version.
+        /// </summary>
         public virtual bool? SuppressPageHashes { get; internal set; }
-        /// <summary><p>Specifies signing a PE file with the relaxed marker check semantic. The flag is ignored for non-PE files. During verification, certain authenticated sections of the signature will bypass invalid PE markers check. This option should only be used after careful consideration and reviewing the details of MSRC case MS12-024 to ensure that no vulnerabilities are introduced.</p></summary>
+        /// <summary>
+        ///   Specifies signing a PE file with the relaxed marker check semantic. The flag is ignored for non-PE files. During verification, certain authenticated sections of the signature will bypass invalid PE markers check. This option should only be used after careful consideration and reviewing the details of MSRC case MS12-024 to ensure that no vulnerabilities are introduced.
+        /// </summary>
         public virtual bool? RelaxedMarkerCheck { get; internal set; }
-        /// <summary><p>No output on success and minimal output on failure.</p></summary>
+        /// <summary>
+        ///   No output on success and minimal output on failure.
+        /// </summary>
         public virtual bool? Quiet { get; internal set; }
-        /// <summary><p>Print verbose success and status messages. This may also provide slightly more information on error.</p></summary>
+        /// <summary>
+        ///   Print verbose success and status messages. This may also provide slightly more information on error.
+        /// </summary>
         public virtual bool? Verbose { get; internal set; }
-        /// <summary><p>Display additional debug information.</p></summary>
+        /// <summary>
+        ///   Display additional debug information.
+        /// </summary>
         public virtual bool? Debug { get; internal set; }
-        /// <summary><p>Files to sign.</p></summary>
+        /// <summary>
+        ///   Files to sign.
+        /// </summary>
         public virtual IReadOnlyList<string> Files => FilesInternal.AsReadOnly();
         internal List<string> FilesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -207,13 +410,18 @@ namespace Nuke.Common.Tools.SignTool
     }
     #endregion
     #region SignToolSettingsExtensions
-    /// <summary><p>Used within <see cref="SignToolTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="SignToolTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class SignToolSettingsExtensions
     {
         #region AutomaticSelection
-        /// <summary><p><em>Sets <see cref="SignToolSettings.AutomaticSelection"/>.</em></p><p>Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.AutomaticSelection"/></em></p>
+        ///   <p>Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetAutomaticSelection(this SignToolSettings toolSettings, bool? automaticSelection)
         {
@@ -221,7 +429,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.AutomaticSelection = automaticSelection;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.AutomaticSelection"/>.</em></p><p>Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.AutomaticSelection"/></em></p>
+        ///   <p>Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetAutomaticSelection(this SignToolSettings toolSettings)
         {
@@ -229,7 +440,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.AutomaticSelection = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="SignToolSettings.AutomaticSelection"/>.</em></p><p>Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="SignToolSettings.AutomaticSelection"/></em></p>
+        ///   <p>Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings EnableAutomaticSelection(this SignToolSettings toolSettings)
         {
@@ -237,7 +451,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.AutomaticSelection = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="SignToolSettings.AutomaticSelection"/>.</em></p><p>Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="SignToolSettings.AutomaticSelection"/></em></p>
+        ///   <p>Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings DisableAutomaticSelection(this SignToolSettings toolSettings)
         {
@@ -245,7 +462,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.AutomaticSelection = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="SignToolSettings.AutomaticSelection"/>.</em></p><p>Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SignToolSettings.AutomaticSelection"/></em></p>
+        ///   <p>Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ToggleAutomaticSelection(this SignToolSettings toolSettings)
         {
@@ -255,7 +475,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region AdditionalCertificate
-        /// <summary><p><em>Sets <see cref="SignToolSettings.AdditionalCertificate"/>.</em></p><p>Add an additional certificate to the signature block.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.AdditionalCertificate"/></em></p>
+        ///   <p>Add an additional certificate to the signature block.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetAdditionalCertificate(this SignToolSettings toolSettings, string additionalCertificate)
         {
@@ -263,7 +486,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.AdditionalCertificate = additionalCertificate;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.AdditionalCertificate"/>.</em></p><p>Add an additional certificate to the signature block.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.AdditionalCertificate"/></em></p>
+        ///   <p>Add an additional certificate to the signature block.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetAdditionalCertificate(this SignToolSettings toolSettings)
         {
@@ -273,7 +499,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region CertificateTemplateName
-        /// <summary><p><em>Sets <see cref="SignToolSettings.CertificateTemplateName"/>.</em></p><p>Specify the Certificate Template Name (Microsoft extension) of the signing cert.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.CertificateTemplateName"/></em></p>
+        ///   <p>Specify the Certificate Template Name (Microsoft extension) of the signing cert.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetCertificateTemplateName(this SignToolSettings toolSettings, string certificateTemplateName)
         {
@@ -281,7 +510,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.CertificateTemplateName = certificateTemplateName;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.CertificateTemplateName"/>.</em></p><p>Specify the Certificate Template Name (Microsoft extension) of the signing cert.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.CertificateTemplateName"/></em></p>
+        ///   <p>Specify the Certificate Template Name (Microsoft extension) of the signing cert.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetCertificateTemplateName(this SignToolSettings toolSettings)
         {
@@ -291,7 +523,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region File
-        /// <summary><p><em>Sets <see cref="SignToolSettings.File"/>.</em></p><p>Specify the signing cert in a file. If this file is a PFX with a password, the password may be supplied with the <c>/p</c> option. If the file does not contain private keys, use the <c>/csp</c> and <c>/kc</c> options to specify the CSP and container name of the private key.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.File"/></em></p>
+        ///   <p>Specify the signing cert in a file. If this file is a PFX with a password, the password may be supplied with the <c>/p</c> option. If the file does not contain private keys, use the <c>/csp</c> and <c>/kc</c> options to specify the CSP and container name of the private key.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetFile(this SignToolSettings toolSettings, string file)
         {
@@ -299,7 +534,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.File = file;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.File"/>.</em></p><p>Specify the signing cert in a file. If this file is a PFX with a password, the password may be supplied with the <c>/p</c> option. If the file does not contain private keys, use the <c>/csp</c> and <c>/kc</c> options to specify the CSP and container name of the private key.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.File"/></em></p>
+        ///   <p>Specify the signing cert in a file. If this file is a PFX with a password, the password may be supplied with the <c>/p</c> option. If the file does not contain private keys, use the <c>/csp</c> and <c>/kc</c> options to specify the CSP and container name of the private key.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetFile(this SignToolSettings toolSettings)
         {
@@ -309,7 +547,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region Issuer
-        /// <summary><p><em>Sets <see cref="SignToolSettings.Issuer"/>.</em></p><p>Specify the Issuer of the signing cert, or a substring.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.Issuer"/></em></p>
+        ///   <p>Specify the Issuer of the signing cert, or a substring.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetIssuer(this SignToolSettings toolSettings, string issuer)
         {
@@ -317,7 +558,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Issuer = issuer;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.Issuer"/>.</em></p><p>Specify the Issuer of the signing cert, or a substring.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.Issuer"/></em></p>
+        ///   <p>Specify the Issuer of the signing cert, or a substring.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetIssuer(this SignToolSettings toolSettings)
         {
@@ -327,7 +571,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region SigningSubjectName
-        /// <summary><p><em>Sets <see cref="SignToolSettings.SigningSubjectName"/>.</em></p><p>Specify the Subject Name of the signing cert, or a substring.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.SigningSubjectName"/></em></p>
+        ///   <p>Specify the Subject Name of the signing cert, or a substring.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetSigningSubjectName(this SignToolSettings toolSettings, string signingSubjectName)
         {
@@ -335,7 +582,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.SigningSubjectName = signingSubjectName;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.SigningSubjectName"/>.</em></p><p>Specify the Subject Name of the signing cert, or a substring.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.SigningSubjectName"/></em></p>
+        ///   <p>Specify the Subject Name of the signing cert, or a substring.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetSigningSubjectName(this SignToolSettings toolSettings)
         {
@@ -345,7 +595,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region Password
-        /// <summary><p><em>Sets <see cref="SignToolSettings.Password"/>.</em></p><p>Specify a password to use when opening the PFX file.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.Password"/></em></p>
+        ///   <p>Specify a password to use when opening the PFX file.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetPassword(this SignToolSettings toolSettings, string password)
         {
@@ -353,7 +606,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Password = password;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.Password"/>.</em></p><p>Specify a password to use when opening the PFX file.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.Password"/></em></p>
+        ///   <p>Specify a password to use when opening the PFX file.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetPassword(this SignToolSettings toolSettings)
         {
@@ -363,7 +619,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region RootSubjectName
-        /// <summary><p><em>Sets <see cref="SignToolSettings.RootSubjectName"/>.</em></p><p>Specify the Subject Name of a Root cert that the signing cert must chain to.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.RootSubjectName"/></em></p>
+        ///   <p>Specify the Subject Name of a Root cert that the signing cert must chain to.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetRootSubjectName(this SignToolSettings toolSettings, string rootSubjectName)
         {
@@ -371,7 +630,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.RootSubjectName = rootSubjectName;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.RootSubjectName"/>.</em></p><p>Specify the Subject Name of a Root cert that the signing cert must chain to.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.RootSubjectName"/></em></p>
+        ///   <p>Specify the Subject Name of a Root cert that the signing cert must chain to.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetRootSubjectName(this SignToolSettings toolSettings)
         {
@@ -381,7 +643,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region Store
-        /// <summary><p><em>Sets <see cref="SignToolSettings.Store"/>.</em></p><p>Specify the Store to open when searching for the cert. The default is the <c>MY</c> Store.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.Store"/></em></p>
+        ///   <p>Specify the Store to open when searching for the cert. The default is the <c>MY</c> Store.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetStore(this SignToolSettings toolSettings, string store)
         {
@@ -389,7 +654,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Store = store;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.Store"/>.</em></p><p>Specify the Store to open when searching for the cert. The default is the <c>MY</c> Store.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.Store"/></em></p>
+        ///   <p>Specify the Store to open when searching for the cert. The default is the <c>MY</c> Store.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetStore(this SignToolSettings toolSettings)
         {
@@ -399,7 +667,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region MachineStore
-        /// <summary><p><em>Sets <see cref="SignToolSettings.MachineStore"/>.</em></p><p>Open a Machine store instead of a User store.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.MachineStore"/></em></p>
+        ///   <p>Open a Machine store instead of a User store.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetMachineStore(this SignToolSettings toolSettings, bool? machineStore)
         {
@@ -407,7 +678,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.MachineStore = machineStore;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.MachineStore"/>.</em></p><p>Open a Machine store instead of a User store.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.MachineStore"/></em></p>
+        ///   <p>Open a Machine store instead of a User store.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetMachineStore(this SignToolSettings toolSettings)
         {
@@ -415,7 +689,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.MachineStore = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="SignToolSettings.MachineStore"/>.</em></p><p>Open a Machine store instead of a User store.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="SignToolSettings.MachineStore"/></em></p>
+        ///   <p>Open a Machine store instead of a User store.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings EnableMachineStore(this SignToolSettings toolSettings)
         {
@@ -423,7 +700,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.MachineStore = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="SignToolSettings.MachineStore"/>.</em></p><p>Open a Machine store instead of a User store.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="SignToolSettings.MachineStore"/></em></p>
+        ///   <p>Open a Machine store instead of a User store.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings DisableMachineStore(this SignToolSettings toolSettings)
         {
@@ -431,7 +711,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.MachineStore = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="SignToolSettings.MachineStore"/>.</em></p><p>Open a Machine store instead of a User store.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SignToolSettings.MachineStore"/></em></p>
+        ///   <p>Open a Machine store instead of a User store.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ToggleMachineStore(this SignToolSettings toolSettings)
         {
@@ -441,7 +724,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region Sha1Thumbprint
-        /// <summary><p><em>Sets <see cref="SignToolSettings.Sha1Thumbprint"/>.</em></p><p>Specify the SHA1 thumbprint of the signing cert.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.Sha1Thumbprint"/></em></p>
+        ///   <p>Specify the SHA1 thumbprint of the signing cert.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetSha1Thumbprint(this SignToolSettings toolSettings, string sha1Thumbprint)
         {
@@ -449,7 +735,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Sha1Thumbprint = sha1Thumbprint;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.Sha1Thumbprint"/>.</em></p><p>Specify the SHA1 thumbprint of the signing cert.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.Sha1Thumbprint"/></em></p>
+        ///   <p>Specify the SHA1 thumbprint of the signing cert.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetSha1Thumbprint(this SignToolSettings toolSettings)
         {
@@ -459,7 +748,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region FileDigestAlgorithm
-        /// <summary><p><em>Sets <see cref="SignToolSettings.FileDigestAlgorithm"/>.</em></p><p>Specifies the file digest algorithm to use for creating file signatures. (Default is <c>SHA1</c>)</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.FileDigestAlgorithm"/></em></p>
+        ///   <p>Specifies the file digest algorithm to use for creating file signatures. (Default is <c>SHA1</c>)</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetFileDigestAlgorithm(this SignToolSettings toolSettings, string fileDigestAlgorithm)
         {
@@ -467,7 +759,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.FileDigestAlgorithm = fileDigestAlgorithm;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.FileDigestAlgorithm"/>.</em></p><p>Specifies the file digest algorithm to use for creating file signatures. (Default is <c>SHA1</c>)</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.FileDigestAlgorithm"/></em></p>
+        ///   <p>Specifies the file digest algorithm to use for creating file signatures. (Default is <c>SHA1</c>)</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetFileDigestAlgorithm(this SignToolSettings toolSettings)
         {
@@ -477,7 +772,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region EnhancedKeyUsage
-        /// <summary><p><em>Sets <see cref="SignToolSettings.EnhancedKeyUsage"/>.</em></p><p>Specify the Enhanced Key Usage that must be present in the cert.<para/>The parameter may be specified by OID or by string. The default usage is <em>Code Signing</em> (1.3.6.1.5.5.7.3.3).</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.EnhancedKeyUsage"/></em></p>
+        ///   <p>Specify the Enhanced Key Usage that must be present in the cert.<para/>The parameter may be specified by OID or by string. The default usage is <em>Code Signing</em> (1.3.6.1.5.5.7.3.3).</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetEnhancedKeyUsage(this SignToolSettings toolSettings, string enhancedKeyUsage)
         {
@@ -485,7 +783,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.EnhancedKeyUsage = enhancedKeyUsage;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.EnhancedKeyUsage"/>.</em></p><p>Specify the Enhanced Key Usage that must be present in the cert.<para/>The parameter may be specified by OID or by string. The default usage is <em>Code Signing</em> (1.3.6.1.5.5.7.3.3).</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.EnhancedKeyUsage"/></em></p>
+        ///   <p>Specify the Enhanced Key Usage that must be present in the cert.<para/>The parameter may be specified by OID or by string. The default usage is <em>Code Signing</em> (1.3.6.1.5.5.7.3.3).</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetEnhancedKeyUsage(this SignToolSettings toolSettings)
         {
@@ -495,7 +796,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region WindowsSystemComponentVerification
-        /// <summary><p><em>Sets <see cref="SignToolSettings.WindowsSystemComponentVerification"/>.</em></p><p>Specify usage of <em>Windows System Component Verification</em> (1.3.6.1.4.1.311.10.3.6).</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.WindowsSystemComponentVerification"/></em></p>
+        ///   <p>Specify usage of <em>Windows System Component Verification</em> (1.3.6.1.4.1.311.10.3.6).</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetWindowsSystemComponentVerification(this SignToolSettings toolSettings, bool? windowsSystemComponentVerification)
         {
@@ -503,7 +807,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.WindowsSystemComponentVerification = windowsSystemComponentVerification;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.WindowsSystemComponentVerification"/>.</em></p><p>Specify usage of <em>Windows System Component Verification</em> (1.3.6.1.4.1.311.10.3.6).</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.WindowsSystemComponentVerification"/></em></p>
+        ///   <p>Specify usage of <em>Windows System Component Verification</em> (1.3.6.1.4.1.311.10.3.6).</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetWindowsSystemComponentVerification(this SignToolSettings toolSettings)
         {
@@ -511,7 +818,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.WindowsSystemComponentVerification = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="SignToolSettings.WindowsSystemComponentVerification"/>.</em></p><p>Specify usage of <em>Windows System Component Verification</em> (1.3.6.1.4.1.311.10.3.6).</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="SignToolSettings.WindowsSystemComponentVerification"/></em></p>
+        ///   <p>Specify usage of <em>Windows System Component Verification</em> (1.3.6.1.4.1.311.10.3.6).</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings EnableWindowsSystemComponentVerification(this SignToolSettings toolSettings)
         {
@@ -519,7 +829,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.WindowsSystemComponentVerification = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="SignToolSettings.WindowsSystemComponentVerification"/>.</em></p><p>Specify usage of <em>Windows System Component Verification</em> (1.3.6.1.4.1.311.10.3.6).</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="SignToolSettings.WindowsSystemComponentVerification"/></em></p>
+        ///   <p>Specify usage of <em>Windows System Component Verification</em> (1.3.6.1.4.1.311.10.3.6).</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings DisableWindowsSystemComponentVerification(this SignToolSettings toolSettings)
         {
@@ -527,7 +840,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.WindowsSystemComponentVerification = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="SignToolSettings.WindowsSystemComponentVerification"/>.</em></p><p>Specify usage of <em>Windows System Component Verification</em> (1.3.6.1.4.1.311.10.3.6).</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SignToolSettings.WindowsSystemComponentVerification"/></em></p>
+        ///   <p>Specify usage of <em>Windows System Component Verification</em> (1.3.6.1.4.1.311.10.3.6).</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ToggleWindowsSystemComponentVerification(this SignToolSettings toolSettings)
         {
@@ -537,7 +853,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region Csp
-        /// <summary><p><em>Sets <see cref="SignToolSettings.Csp"/>.</em></p><p>Specify the CSP containing the Private Key Container.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.Csp"/></em></p>
+        ///   <p>Specify the CSP containing the Private Key Container.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetCsp(this SignToolSettings toolSettings, string csp)
         {
@@ -545,7 +864,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Csp = csp;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.Csp"/>.</em></p><p>Specify the CSP containing the Private Key Container.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.Csp"/></em></p>
+        ///   <p>Specify the CSP containing the Private Key Container.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetCsp(this SignToolSettings toolSettings)
         {
@@ -555,7 +877,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region KeyContainer
-        /// <summary><p><em>Sets <see cref="SignToolSettings.KeyContainer"/>.</em></p><p>Specify the Key Container Name of the Private Key.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.KeyContainer"/></em></p>
+        ///   <p>Specify the Key Container Name of the Private Key.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetKeyContainer(this SignToolSettings toolSettings, string keyContainer)
         {
@@ -563,7 +888,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.KeyContainer = keyContainer;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.KeyContainer"/>.</em></p><p>Specify the Key Container Name of the Private Key.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.KeyContainer"/></em></p>
+        ///   <p>Specify the Key Container Name of the Private Key.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetKeyContainer(this SignToolSettings toolSettings)
         {
@@ -573,7 +901,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region AppendSignature
-        /// <summary><p><em>Sets <see cref="SignToolSettings.AppendSignature"/>.</em></p><p>Append this signature. If no primary signature is present, this signature will be made the primary signature instead.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.AppendSignature"/></em></p>
+        ///   <p>Append this signature. If no primary signature is present, this signature will be made the primary signature instead.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetAppendSignature(this SignToolSettings toolSettings, bool? appendSignature)
         {
@@ -581,7 +912,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.AppendSignature = appendSignature;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.AppendSignature"/>.</em></p><p>Append this signature. If no primary signature is present, this signature will be made the primary signature instead.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.AppendSignature"/></em></p>
+        ///   <p>Append this signature. If no primary signature is present, this signature will be made the primary signature instead.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetAppendSignature(this SignToolSettings toolSettings)
         {
@@ -589,7 +923,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.AppendSignature = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="SignToolSettings.AppendSignature"/>.</em></p><p>Append this signature. If no primary signature is present, this signature will be made the primary signature instead.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="SignToolSettings.AppendSignature"/></em></p>
+        ///   <p>Append this signature. If no primary signature is present, this signature will be made the primary signature instead.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings EnableAppendSignature(this SignToolSettings toolSettings)
         {
@@ -597,7 +934,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.AppendSignature = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="SignToolSettings.AppendSignature"/>.</em></p><p>Append this signature. If no primary signature is present, this signature will be made the primary signature instead.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="SignToolSettings.AppendSignature"/></em></p>
+        ///   <p>Append this signature. If no primary signature is present, this signature will be made the primary signature instead.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings DisableAppendSignature(this SignToolSettings toolSettings)
         {
@@ -605,7 +945,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.AppendSignature = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="SignToolSettings.AppendSignature"/>.</em></p><p>Append this signature. If no primary signature is present, this signature will be made the primary signature instead.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SignToolSettings.AppendSignature"/></em></p>
+        ///   <p>Append this signature. If no primary signature is present, this signature will be made the primary signature instead.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ToggleAppendSignature(this SignToolSettings toolSettings)
         {
@@ -615,7 +958,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region Description
-        /// <summary><p><em>Sets <see cref="SignToolSettings.Description"/>.</em></p><p>Provide a description of the signed content.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.Description"/></em></p>
+        ///   <p>Provide a description of the signed content.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetDescription(this SignToolSettings toolSettings, string description)
         {
@@ -623,7 +969,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Description = description;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.Description"/>.</em></p><p>Provide a description of the signed content.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.Description"/></em></p>
+        ///   <p>Provide a description of the signed content.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetDescription(this SignToolSettings toolSettings)
         {
@@ -633,7 +982,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region Url
-        /// <summary><p><em>Sets <see cref="SignToolSettings.Url"/>.</em></p><p>Provide a URL with more information about the signed content.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.Url"/></em></p>
+        ///   <p>Provide a URL with more information about the signed content.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetUrl(this SignToolSettings toolSettings, string url)
         {
@@ -641,7 +993,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Url = url;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.Url"/>.</em></p><p>Provide a URL with more information about the signed content.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.Url"/></em></p>
+        ///   <p>Provide a URL with more information about the signed content.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetUrl(this SignToolSettings toolSettings)
         {
@@ -651,7 +1006,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region TimestampServerUrl
-        /// <summary><p><em>Sets <see cref="SignToolSettings.TimestampServerUrl"/>.</em></p><p>Specify the timestamp server's URL. If this option is not present, the signed file will not be timestamped. A warning is generated if timestamping fails.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.TimestampServerUrl"/></em></p>
+        ///   <p>Specify the timestamp server's URL. If this option is not present, the signed file will not be timestamped. A warning is generated if timestamping fails.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetTimestampServerUrl(this SignToolSettings toolSettings, string timestampServerUrl)
         {
@@ -659,7 +1017,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.TimestampServerUrl = timestampServerUrl;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.TimestampServerUrl"/>.</em></p><p>Specify the timestamp server's URL. If this option is not present, the signed file will not be timestamped. A warning is generated if timestamping fails.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.TimestampServerUrl"/></em></p>
+        ///   <p>Specify the timestamp server's URL. If this option is not present, the signed file will not be timestamped. A warning is generated if timestamping fails.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetTimestampServerUrl(this SignToolSettings toolSettings)
         {
@@ -669,7 +1030,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region Rfc3161TimestampServerUrl
-        /// <summary><p><em>Sets <see cref="SignToolSettings.Rfc3161TimestampServerUrl"/>.</em></p><p>Specifies the RFC 3161 timestamp server's URL. If this option (or <c>/t</c>) is not specified, the signed file will not be timestamped. A warning is generated if timestamping fails. This switch cannot be used with the <c>/t</c> switch.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.Rfc3161TimestampServerUrl"/></em></p>
+        ///   <p>Specifies the RFC 3161 timestamp server's URL. If this option (or <c>/t</c>) is not specified, the signed file will not be timestamped. A warning is generated if timestamping fails. This switch cannot be used with the <c>/t</c> switch.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetRfc3161TimestampServerUrl(this SignToolSettings toolSettings, string rfc3161TimestampServerUrl)
         {
@@ -677,7 +1041,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Rfc3161TimestampServerUrl = rfc3161TimestampServerUrl;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.Rfc3161TimestampServerUrl"/>.</em></p><p>Specifies the RFC 3161 timestamp server's URL. If this option (or <c>/t</c>) is not specified, the signed file will not be timestamped. A warning is generated if timestamping fails. This switch cannot be used with the <c>/t</c> switch.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.Rfc3161TimestampServerUrl"/></em></p>
+        ///   <p>Specifies the RFC 3161 timestamp server's URL. If this option (or <c>/t</c>) is not specified, the signed file will not be timestamped. A warning is generated if timestamping fails. This switch cannot be used with the <c>/t</c> switch.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetRfc3161TimestampServerUrl(this SignToolSettings toolSettings)
         {
@@ -687,7 +1054,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region Rfc3161TimestampServerUrlSealed
-        /// <summary><p><em>Sets <see cref="SignToolSettings.Rfc3161TimestampServerUrlSealed"/>.</em></p><p>Specifies the RFC 3161 timestamp server's URL for timestamping a sealed file.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.Rfc3161TimestampServerUrlSealed"/></em></p>
+        ///   <p>Specifies the RFC 3161 timestamp server's URL for timestamping a sealed file.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetRfc3161TimestampServerUrlSealed(this SignToolSettings toolSettings, string rfc3161TimestampServerUrlSealed)
         {
@@ -695,7 +1065,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Rfc3161TimestampServerUrlSealed = rfc3161TimestampServerUrlSealed;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.Rfc3161TimestampServerUrlSealed"/>.</em></p><p>Specifies the RFC 3161 timestamp server's URL for timestamping a sealed file.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.Rfc3161TimestampServerUrlSealed"/></em></p>
+        ///   <p>Specifies the RFC 3161 timestamp server's URL for timestamping a sealed file.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetRfc3161TimestampServerUrlSealed(this SignToolSettings toolSettings)
         {
@@ -705,7 +1078,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region TimestampServerDigestAlgorithm
-        /// <summary><p><em>Sets <see cref="SignToolSettings.TimestampServerDigestAlgorithm"/>.</em></p><p>Used with the <c>/tr</c> or <c>/tseal</c> switch to request a digest algorithm used by the RFC 3161 timestamp server.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.TimestampServerDigestAlgorithm"/></em></p>
+        ///   <p>Used with the <c>/tr</c> or <c>/tseal</c> switch to request a digest algorithm used by the RFC 3161 timestamp server.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetTimestampServerDigestAlgorithm(this SignToolSettings toolSettings, string timestampServerDigestAlgorithm)
         {
@@ -713,7 +1089,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.TimestampServerDigestAlgorithm = timestampServerDigestAlgorithm;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.TimestampServerDigestAlgorithm"/>.</em></p><p>Used with the <c>/tr</c> or <c>/tseal</c> switch to request a digest algorithm used by the RFC 3161 timestamp server.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.TimestampServerDigestAlgorithm"/></em></p>
+        ///   <p>Used with the <c>/tr</c> or <c>/tseal</c> switch to request a digest algorithm used by the RFC 3161 timestamp server.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetTimestampServerDigestAlgorithm(this SignToolSettings toolSettings)
         {
@@ -723,7 +1102,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region AuthenticatedAttributes
-        /// <summary><p><em>Sets <see cref="SignToolSettings.AuthenticatedAttributes"/> to a new dictionary.</em></p><p>Specify an OID and value to be included as an authenticated attribute in the signature. The value will be encoded as an ASN1 UTF8 string. This option may be given multiple times.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.AuthenticatedAttributes"/> to a new dictionary</em></p>
+        ///   <p>Specify an OID and value to be included as an authenticated attribute in the signature. The value will be encoded as an ASN1 UTF8 string. This option may be given multiple times.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetAuthenticatedAttributes(this SignToolSettings toolSettings, IDictionary<string, string> authenticatedAttributes)
         {
@@ -731,7 +1113,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.AuthenticatedAttributesInternal = authenticatedAttributes.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="SignToolSettings.AuthenticatedAttributes"/>.</em></p><p>Specify an OID and value to be included as an authenticated attribute in the signature. The value will be encoded as an ASN1 UTF8 string. This option may be given multiple times.</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="SignToolSettings.AuthenticatedAttributes"/></em></p>
+        ///   <p>Specify an OID and value to be included as an authenticated attribute in the signature. The value will be encoded as an ASN1 UTF8 string. This option may be given multiple times.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ClearAuthenticatedAttributes(this SignToolSettings toolSettings)
         {
@@ -739,7 +1124,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.AuthenticatedAttributesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Adds a new key-value-pair <see cref="SignToolSettings.AuthenticatedAttributes"/>.</em></p><p>Specify an OID and value to be included as an authenticated attribute in the signature. The value will be encoded as an ASN1 UTF8 string. This option may be given multiple times.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds a new key-value-pair <see cref="SignToolSettings.AuthenticatedAttributes"/></em></p>
+        ///   <p>Specify an OID and value to be included as an authenticated attribute in the signature. The value will be encoded as an ASN1 UTF8 string. This option may be given multiple times.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings AddAuthenticatedAttribute(this SignToolSettings toolSettings, string authenticatedAttributeKey, string authenticatedAttributeValue)
         {
@@ -747,7 +1135,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.AuthenticatedAttributesInternal.Add(authenticatedAttributeKey, authenticatedAttributeValue);
             return toolSettings;
         }
-        /// <summary><p><em>Removes a key-value-pair from <see cref="SignToolSettings.AuthenticatedAttributes"/>.</em></p><p>Specify an OID and value to be included as an authenticated attribute in the signature. The value will be encoded as an ASN1 UTF8 string. This option may be given multiple times.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes a key-value-pair from <see cref="SignToolSettings.AuthenticatedAttributes"/></em></p>
+        ///   <p>Specify an OID and value to be included as an authenticated attribute in the signature. The value will be encoded as an ASN1 UTF8 string. This option may be given multiple times.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings RemoveAuthenticatedAttribute(this SignToolSettings toolSettings, string authenticatedAttributeKey)
         {
@@ -755,7 +1146,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.AuthenticatedAttributesInternal.Remove(authenticatedAttributeKey);
             return toolSettings;
         }
-        /// <summary><p><em>Sets a key-value-pair in <see cref="SignToolSettings.AuthenticatedAttributes"/>.</em></p><p>Specify an OID and value to be included as an authenticated attribute in the signature. The value will be encoded as an ASN1 UTF8 string. This option may be given multiple times.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets a key-value-pair in <see cref="SignToolSettings.AuthenticatedAttributes"/></em></p>
+        ///   <p>Specify an OID and value to be included as an authenticated attribute in the signature. The value will be encoded as an ASN1 UTF8 string. This option may be given multiple times.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetAuthenticatedAttribute(this SignToolSettings toolSettings, string authenticatedAttributeKey, string authenticatedAttributeValue)
         {
@@ -765,7 +1159,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region SealingSignature
-        /// <summary><p><em>Sets <see cref="SignToolSettings.SealingSignature"/>.</em></p><p>Add a sealing signature if the file format supports it.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.SealingSignature"/></em></p>
+        ///   <p>Add a sealing signature if the file format supports it.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetSealingSignature(this SignToolSettings toolSettings, bool? sealingSignature)
         {
@@ -773,7 +1170,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.SealingSignature = sealingSignature;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.SealingSignature"/>.</em></p><p>Add a sealing signature if the file format supports it.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.SealingSignature"/></em></p>
+        ///   <p>Add a sealing signature if the file format supports it.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetSealingSignature(this SignToolSettings toolSettings)
         {
@@ -781,7 +1181,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.SealingSignature = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="SignToolSettings.SealingSignature"/>.</em></p><p>Add a sealing signature if the file format supports it.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="SignToolSettings.SealingSignature"/></em></p>
+        ///   <p>Add a sealing signature if the file format supports it.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings EnableSealingSignature(this SignToolSettings toolSettings)
         {
@@ -789,7 +1192,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.SealingSignature = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="SignToolSettings.SealingSignature"/>.</em></p><p>Add a sealing signature if the file format supports it.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="SignToolSettings.SealingSignature"/></em></p>
+        ///   <p>Add a sealing signature if the file format supports it.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings DisableSealingSignature(this SignToolSettings toolSettings)
         {
@@ -797,7 +1203,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.SealingSignature = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="SignToolSettings.SealingSignature"/>.</em></p><p>Add a sealing signature if the file format supports it.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SignToolSettings.SealingSignature"/></em></p>
+        ///   <p>Add a sealing signature if the file format supports it.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ToggleSealingSignature(this SignToolSettings toolSettings)
         {
@@ -807,7 +1216,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region IntentToSealAttribute
-        /// <summary><p><em>Sets <see cref="SignToolSettings.IntentToSealAttribute"/>.</em></p><p>Create a primary signature with the intent-to-seal attribute.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.IntentToSealAttribute"/></em></p>
+        ///   <p>Create a primary signature with the intent-to-seal attribute.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetIntentToSealAttribute(this SignToolSettings toolSettings, bool? intentToSealAttribute)
         {
@@ -815,7 +1227,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.IntentToSealAttribute = intentToSealAttribute;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.IntentToSealAttribute"/>.</em></p><p>Create a primary signature with the intent-to-seal attribute.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.IntentToSealAttribute"/></em></p>
+        ///   <p>Create a primary signature with the intent-to-seal attribute.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetIntentToSealAttribute(this SignToolSettings toolSettings)
         {
@@ -823,7 +1238,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.IntentToSealAttribute = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="SignToolSettings.IntentToSealAttribute"/>.</em></p><p>Create a primary signature with the intent-to-seal attribute.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="SignToolSettings.IntentToSealAttribute"/></em></p>
+        ///   <p>Create a primary signature with the intent-to-seal attribute.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings EnableIntentToSealAttribute(this SignToolSettings toolSettings)
         {
@@ -831,7 +1249,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.IntentToSealAttribute = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="SignToolSettings.IntentToSealAttribute"/>.</em></p><p>Create a primary signature with the intent-to-seal attribute.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="SignToolSettings.IntentToSealAttribute"/></em></p>
+        ///   <p>Create a primary signature with the intent-to-seal attribute.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings DisableIntentToSealAttribute(this SignToolSettings toolSettings)
         {
@@ -839,7 +1260,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.IntentToSealAttribute = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="SignToolSettings.IntentToSealAttribute"/>.</em></p><p>Create a primary signature with the intent-to-seal attribute.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SignToolSettings.IntentToSealAttribute"/></em></p>
+        ///   <p>Create a primary signature with the intent-to-seal attribute.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ToggleIntentToSealAttribute(this SignToolSettings toolSettings)
         {
@@ -849,7 +1273,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region Force
-        /// <summary><p><em>Sets <see cref="SignToolSettings.Force"/>.</em></p><p>Continue to seal or sign in situations where the existing signature or sealing signature needs to be removed to support sealing.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.Force"/></em></p>
+        ///   <p>Continue to seal or sign in situations where the existing signature or sealing signature needs to be removed to support sealing.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetForce(this SignToolSettings toolSettings, bool? force)
         {
@@ -857,7 +1284,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Force = force;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.Force"/>.</em></p><p>Continue to seal or sign in situations where the existing signature or sealing signature needs to be removed to support sealing.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.Force"/></em></p>
+        ///   <p>Continue to seal or sign in situations where the existing signature or sealing signature needs to be removed to support sealing.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetForce(this SignToolSettings toolSettings)
         {
@@ -865,7 +1295,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Force = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="SignToolSettings.Force"/>.</em></p><p>Continue to seal or sign in situations where the existing signature or sealing signature needs to be removed to support sealing.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="SignToolSettings.Force"/></em></p>
+        ///   <p>Continue to seal or sign in situations where the existing signature or sealing signature needs to be removed to support sealing.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings EnableForce(this SignToolSettings toolSettings)
         {
@@ -873,7 +1306,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Force = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="SignToolSettings.Force"/>.</em></p><p>Continue to seal or sign in situations where the existing signature or sealing signature needs to be removed to support sealing.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="SignToolSettings.Force"/></em></p>
+        ///   <p>Continue to seal or sign in situations where the existing signature or sealing signature needs to be removed to support sealing.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings DisableForce(this SignToolSettings toolSettings)
         {
@@ -881,7 +1317,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Force = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="SignToolSettings.Force"/>.</em></p><p>Continue to seal or sign in situations where the existing signature or sealing signature needs to be removed to support sealing.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SignToolSettings.Force"/></em></p>
+        ///   <p>Continue to seal or sign in situations where the existing signature or sealing signature needs to be removed to support sealing.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ToggleForce(this SignToolSettings toolSettings)
         {
@@ -891,7 +1330,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region NoSealWarn
-        /// <summary><p><em>Sets <see cref="SignToolSettings.NoSealWarn"/>.</em></p><p>Sealing-related warnings do not affect SignTool's return code.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.NoSealWarn"/></em></p>
+        ///   <p>Sealing-related warnings do not affect SignTool's return code.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetNoSealWarn(this SignToolSettings toolSettings, bool? noSealWarn)
         {
@@ -899,7 +1341,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.NoSealWarn = noSealWarn;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.NoSealWarn"/>.</em></p><p>Sealing-related warnings do not affect SignTool's return code.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.NoSealWarn"/></em></p>
+        ///   <p>Sealing-related warnings do not affect SignTool's return code.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetNoSealWarn(this SignToolSettings toolSettings)
         {
@@ -907,7 +1352,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.NoSealWarn = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="SignToolSettings.NoSealWarn"/>.</em></p><p>Sealing-related warnings do not affect SignTool's return code.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="SignToolSettings.NoSealWarn"/></em></p>
+        ///   <p>Sealing-related warnings do not affect SignTool's return code.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings EnableNoSealWarn(this SignToolSettings toolSettings)
         {
@@ -915,7 +1363,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.NoSealWarn = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="SignToolSettings.NoSealWarn"/>.</em></p><p>Sealing-related warnings do not affect SignTool's return code.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="SignToolSettings.NoSealWarn"/></em></p>
+        ///   <p>Sealing-related warnings do not affect SignTool's return code.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings DisableNoSealWarn(this SignToolSettings toolSettings)
         {
@@ -923,7 +1374,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.NoSealWarn = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="SignToolSettings.NoSealWarn"/>.</em></p><p>Sealing-related warnings do not affect SignTool's return code.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SignToolSettings.NoSealWarn"/></em></p>
+        ///   <p>Sealing-related warnings do not affect SignTool's return code.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ToggleNoSealWarn(this SignToolSettings toolSettings)
         {
@@ -933,7 +1387,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region SignedDigestAndUnsignedPkcs7Path
-        /// <summary><p><em>Sets <see cref="SignToolSettings.SignedDigestAndUnsignedPkcs7Path"/>.</em></p><p>Generates the to be signed digest and the unsigned PKCS7 files. The output digest and PKCS7 files will be: <c>&lt;path&gt;\&lt;file&gt;.dig</c> and <c>&lt;path&gt;\&lt;file&gt;.p7u</c>. To output an additional XML file, see <c>/dxml</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.SignedDigestAndUnsignedPkcs7Path"/></em></p>
+        ///   <p>Generates the to be signed digest and the unsigned PKCS7 files. The output digest and PKCS7 files will be: <c>&lt;path&gt;\&lt;file&gt;.dig</c> and <c>&lt;path&gt;\&lt;file&gt;.p7u</c>. To output an additional XML file, see <c>/dxml</c>.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetSignedDigestAndUnsignedPkcs7Path(this SignToolSettings toolSettings, string signedDigestAndUnsignedPkcs7Path)
         {
@@ -941,7 +1398,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.SignedDigestAndUnsignedPkcs7Path = signedDigestAndUnsignedPkcs7Path;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.SignedDigestAndUnsignedPkcs7Path"/>.</em></p><p>Generates the to be signed digest and the unsigned PKCS7 files. The output digest and PKCS7 files will be: <c>&lt;path&gt;\&lt;file&gt;.dig</c> and <c>&lt;path&gt;\&lt;file&gt;.p7u</c>. To output an additional XML file, see <c>/dxml</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.SignedDigestAndUnsignedPkcs7Path"/></em></p>
+        ///   <p>Generates the to be signed digest and the unsigned PKCS7 files. The output digest and PKCS7 files will be: <c>&lt;path&gt;\&lt;file&gt;.dig</c> and <c>&lt;path&gt;\&lt;file&gt;.p7u</c>. To output an additional XML file, see <c>/dxml</c>.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetSignedDigestAndUnsignedPkcs7Path(this SignToolSettings toolSettings)
         {
@@ -951,7 +1411,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region SignDigestOnly
-        /// <summary><p><em>Sets <see cref="SignToolSettings.SignDigestOnly"/>.</em></p><p>Signs the digest only. The input file should be the digest generated by the <c>/dg</c> option. The output file will be: <c>&lt;file&gt;.signed</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.SignDigestOnly"/></em></p>
+        ///   <p>Signs the digest only. The input file should be the digest generated by the <c>/dg</c> option. The output file will be: <c>&lt;file&gt;.signed</c>.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetSignDigestOnly(this SignToolSettings toolSettings, bool? signDigestOnly)
         {
@@ -959,7 +1422,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.SignDigestOnly = signDigestOnly;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.SignDigestOnly"/>.</em></p><p>Signs the digest only. The input file should be the digest generated by the <c>/dg</c> option. The output file will be: <c>&lt;file&gt;.signed</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.SignDigestOnly"/></em></p>
+        ///   <p>Signs the digest only. The input file should be the digest generated by the <c>/dg</c> option. The output file will be: <c>&lt;file&gt;.signed</c>.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetSignDigestOnly(this SignToolSettings toolSettings)
         {
@@ -967,7 +1433,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.SignDigestOnly = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="SignToolSettings.SignDigestOnly"/>.</em></p><p>Signs the digest only. The input file should be the digest generated by the <c>/dg</c> option. The output file will be: <c>&lt;file&gt;.signed</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="SignToolSettings.SignDigestOnly"/></em></p>
+        ///   <p>Signs the digest only. The input file should be the digest generated by the <c>/dg</c> option. The output file will be: <c>&lt;file&gt;.signed</c>.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings EnableSignDigestOnly(this SignToolSettings toolSettings)
         {
@@ -975,7 +1444,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.SignDigestOnly = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="SignToolSettings.SignDigestOnly"/>.</em></p><p>Signs the digest only. The input file should be the digest generated by the <c>/dg</c> option. The output file will be: <c>&lt;file&gt;.signed</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="SignToolSettings.SignDigestOnly"/></em></p>
+        ///   <p>Signs the digest only. The input file should be the digest generated by the <c>/dg</c> option. The output file will be: <c>&lt;file&gt;.signed</c>.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings DisableSignDigestOnly(this SignToolSettings toolSettings)
         {
@@ -983,7 +1455,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.SignDigestOnly = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="SignToolSettings.SignDigestOnly"/>.</em></p><p>Signs the digest only. The input file should be the digest generated by the <c>/dg</c> option. The output file will be: <c>&lt;file&gt;.signed</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SignToolSettings.SignDigestOnly"/></em></p>
+        ///   <p>Signs the digest only. The input file should be the digest generated by the <c>/dg</c> option. The output file will be: <c>&lt;file&gt;.signed</c>.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ToggleSignDigestOnly(this SignToolSettings toolSettings)
         {
@@ -993,7 +1468,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region GenerateSignature
-        /// <summary><p><em>Sets <see cref="SignToolSettings.GenerateSignature"/>.</em></p><p>Creates the signature by ingesting the signed digest to the unsigned PKCS7 file. The input signed digest and unsigned PKCS7 files should be: <c>&lt;path&gt;\&lt;file&gt;.dig.signed</c> and <c>&lt;path&gt;\&lt;file&gt;.p7u</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.GenerateSignature"/></em></p>
+        ///   <p>Creates the signature by ingesting the signed digest to the unsigned PKCS7 file. The input signed digest and unsigned PKCS7 files should be: <c>&lt;path&gt;\&lt;file&gt;.dig.signed</c> and <c>&lt;path&gt;\&lt;file&gt;.p7u</c>.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetGenerateSignature(this SignToolSettings toolSettings, string generateSignature)
         {
@@ -1001,7 +1479,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.GenerateSignature = generateSignature;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.GenerateSignature"/>.</em></p><p>Creates the signature by ingesting the signed digest to the unsigned PKCS7 file. The input signed digest and unsigned PKCS7 files should be: <c>&lt;path&gt;\&lt;file&gt;.dig.signed</c> and <c>&lt;path&gt;\&lt;file&gt;.p7u</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.GenerateSignature"/></em></p>
+        ///   <p>Creates the signature by ingesting the signed digest to the unsigned PKCS7 file. The input signed digest and unsigned PKCS7 files should be: <c>&lt;path&gt;\&lt;file&gt;.dig.signed</c> and <c>&lt;path&gt;\&lt;file&gt;.p7u</c>.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetGenerateSignature(this SignToolSettings toolSettings)
         {
@@ -1011,7 +1492,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region XmlFile
-        /// <summary><p><em>Sets <see cref="SignToolSettings.XmlFile"/>.</em></p><p>When used with the <c>/dg</c> option, produces an XML file. The output file will be: <c>&lt;path&gt;\&lt;file&gt;.dig.xml</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.XmlFile"/></em></p>
+        ///   <p>When used with the <c>/dg</c> option, produces an XML file. The output file will be: <c>&lt;path&gt;\&lt;file&gt;.dig.xml</c>.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetXmlFile(this SignToolSettings toolSettings, bool? xmlFile)
         {
@@ -1019,7 +1503,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.XmlFile = xmlFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.XmlFile"/>.</em></p><p>When used with the <c>/dg</c> option, produces an XML file. The output file will be: <c>&lt;path&gt;\&lt;file&gt;.dig.xml</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.XmlFile"/></em></p>
+        ///   <p>When used with the <c>/dg</c> option, produces an XML file. The output file will be: <c>&lt;path&gt;\&lt;file&gt;.dig.xml</c>.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetXmlFile(this SignToolSettings toolSettings)
         {
@@ -1027,7 +1514,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.XmlFile = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="SignToolSettings.XmlFile"/>.</em></p><p>When used with the <c>/dg</c> option, produces an XML file. The output file will be: <c>&lt;path&gt;\&lt;file&gt;.dig.xml</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="SignToolSettings.XmlFile"/></em></p>
+        ///   <p>When used with the <c>/dg</c> option, produces an XML file. The output file will be: <c>&lt;path&gt;\&lt;file&gt;.dig.xml</c>.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings EnableXmlFile(this SignToolSettings toolSettings)
         {
@@ -1035,7 +1525,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.XmlFile = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="SignToolSettings.XmlFile"/>.</em></p><p>When used with the <c>/dg</c> option, produces an XML file. The output file will be: <c>&lt;path&gt;\&lt;file&gt;.dig.xml</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="SignToolSettings.XmlFile"/></em></p>
+        ///   <p>When used with the <c>/dg</c> option, produces an XML file. The output file will be: <c>&lt;path&gt;\&lt;file&gt;.dig.xml</c>.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings DisableXmlFile(this SignToolSettings toolSettings)
         {
@@ -1043,7 +1536,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.XmlFile = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="SignToolSettings.XmlFile"/>.</em></p><p>When used with the <c>/dg</c> option, produces an XML file. The output file will be: <c>&lt;path&gt;\&lt;file&gt;.dig.xml</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SignToolSettings.XmlFile"/></em></p>
+        ///   <p>When used with the <c>/dg</c> option, produces an XML file. The output file will be: <c>&lt;path&gt;\&lt;file&gt;.dig.xml</c>.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ToggleXmlFile(this SignToolSettings toolSettings)
         {
@@ -1053,7 +1549,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region AuthenticodeDigestSignLibDll
-        /// <summary><p><em>Sets <see cref="SignToolSettings.AuthenticodeDigestSignLibDll"/>.</em></p><p>Specifies the DLL implementing the AuthenticodeDigestSign function to sign the digest with. This option is equivalent to using SignTool separately with the <c>/dg</c>, <c>/ds</c>, and <c>/di</c> switches, except this option invokes all three as one atomic operation.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.AuthenticodeDigestSignLibDll"/></em></p>
+        ///   <p>Specifies the DLL implementing the AuthenticodeDigestSign function to sign the digest with. This option is equivalent to using SignTool separately with the <c>/dg</c>, <c>/ds</c>, and <c>/di</c> switches, except this option invokes all three as one atomic operation.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetAuthenticodeDigestSignLibDll(this SignToolSettings toolSettings, string authenticodeDigestSignLibDll)
         {
@@ -1061,7 +1560,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.AuthenticodeDigestSignLibDll = authenticodeDigestSignLibDll;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.AuthenticodeDigestSignLibDll"/>.</em></p><p>Specifies the DLL implementing the AuthenticodeDigestSign function to sign the digest with. This option is equivalent to using SignTool separately with the <c>/dg</c>, <c>/ds</c>, and <c>/di</c> switches, except this option invokes all three as one atomic operation.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.AuthenticodeDigestSignLibDll"/></em></p>
+        ///   <p>Specifies the DLL implementing the AuthenticodeDigestSign function to sign the digest with. This option is equivalent to using SignTool separately with the <c>/dg</c>, <c>/ds</c>, and <c>/di</c> switches, except this option invokes all three as one atomic operation.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetAuthenticodeDigestSignLibDll(this SignToolSettings toolSettings)
         {
@@ -1071,7 +1573,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region AuthenticodeDigestSignPassUnmodified
-        /// <summary><p><em>Sets <see cref="SignToolSettings.AuthenticodeDigestSignPassUnmodified"/>.</em></p><p>When used with the <c>/dlib</c> option, passes the file's contents to the AuthenticodeDigestSign function without modification.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.AuthenticodeDigestSignPassUnmodified"/></em></p>
+        ///   <p>When used with the <c>/dlib</c> option, passes the file's contents to the AuthenticodeDigestSign function without modification.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetAuthenticodeDigestSignPassUnmodified(this SignToolSettings toolSettings, string authenticodeDigestSignPassUnmodified)
         {
@@ -1079,7 +1584,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.AuthenticodeDigestSignPassUnmodified = authenticodeDigestSignPassUnmodified;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.AuthenticodeDigestSignPassUnmodified"/>.</em></p><p>When used with the <c>/dlib</c> option, passes the file's contents to the AuthenticodeDigestSign function without modification.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.AuthenticodeDigestSignPassUnmodified"/></em></p>
+        ///   <p>When used with the <c>/dlib</c> option, passes the file's contents to the AuthenticodeDigestSign function without modification.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetAuthenticodeDigestSignPassUnmodified(this SignToolSettings toolSettings)
         {
@@ -1089,7 +1597,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region ContentFileToPkcs7
-        /// <summary><p><em>Sets <see cref="SignToolSettings.ContentFileToPkcs7"/>.</em></p><p>Specifies that for each specified content file a PKCS7 file is produced. The PKCS7 file will be named: <c>&lt;path&gt;\&lt;file&gt;.p7</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.ContentFileToPkcs7"/></em></p>
+        ///   <p>Specifies that for each specified content file a PKCS7 file is produced. The PKCS7 file will be named: <c>&lt;path&gt;\&lt;file&gt;.p7</c></p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetContentFileToPkcs7(this SignToolSettings toolSettings, string contentFileToPkcs7)
         {
@@ -1097,7 +1608,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.ContentFileToPkcs7 = contentFileToPkcs7;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.ContentFileToPkcs7"/>.</em></p><p>Specifies that for each specified content file a PKCS7 file is produced. The PKCS7 file will be named: <c>&lt;path&gt;\&lt;file&gt;.p7</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.ContentFileToPkcs7"/></em></p>
+        ///   <p>Specifies that for each specified content file a PKCS7 file is produced. The PKCS7 file will be named: <c>&lt;path&gt;\&lt;file&gt;.p7</c></p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetContentFileToPkcs7(this SignToolSettings toolSettings)
         {
@@ -1107,7 +1621,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region SignedContentIdentifier
-        /// <summary><p><em>Sets <see cref="SignToolSettings.SignedContentIdentifier"/>.</em></p><p>Specifies the <c>&lt;OID&gt;</c> that identifies the signed content.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.SignedContentIdentifier"/></em></p>
+        ///   <p>Specifies the <c>&lt;OID&gt;</c> that identifies the signed content.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetSignedContentIdentifier(this SignToolSettings toolSettings, string signedContentIdentifier)
         {
@@ -1115,7 +1632,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.SignedContentIdentifier = signedContentIdentifier;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.SignedContentIdentifier"/>.</em></p><p>Specifies the <c>&lt;OID&gt;</c> that identifies the signed content.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.SignedContentIdentifier"/></em></p>
+        ///   <p>Specifies the <c>&lt;OID&gt;</c> that identifies the signed content.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetSignedContentIdentifier(this SignToolSettings toolSettings)
         {
@@ -1125,7 +1645,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region SignedContentMethod
-        /// <summary><p><em>Sets <see cref="SignToolSettings.SignedContentMethod"/>.</em></p><p>efined values:<ul><li><b>Embedded:</b> Embeds the signed content in the PKCS7.</li><li><b>DetachedSignedData:</b> Produces the signed data part of a detached PKCS7.</li></ul>The default is <c>Embedded</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.SignedContentMethod"/></em></p>
+        ///   <p>efined values:<ul><li><b>Embedded:</b> Embeds the signed content in the PKCS7.</li><li><b>DetachedSignedData:</b> Produces the signed data part of a detached PKCS7.</li></ul>The default is <c>Embedded</c>.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetSignedContentMethod(this SignToolSettings toolSettings, SignToolContentMethod signedContentMethod)
         {
@@ -1133,7 +1656,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.SignedContentMethod = signedContentMethod;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.SignedContentMethod"/>.</em></p><p>efined values:<ul><li><b>Embedded:</b> Embeds the signed content in the PKCS7.</li><li><b>DetachedSignedData:</b> Produces the signed data part of a detached PKCS7.</li></ul>The default is <c>Embedded</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.SignedContentMethod"/></em></p>
+        ///   <p>efined values:<ul><li><b>Embedded:</b> Embeds the signed content in the PKCS7.</li><li><b>DetachedSignedData:</b> Produces the signed data part of a detached PKCS7.</li></ul>The default is <c>Embedded</c>.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetSignedContentMethod(this SignToolSettings toolSettings)
         {
@@ -1143,7 +1669,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region PageHashes
-        /// <summary><p><em>Sets <see cref="SignToolSettings.PageHashes"/>.</em></p><p>Generate page hashes for executable files if supported.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.PageHashes"/></em></p>
+        ///   <p>Generate page hashes for executable files if supported.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetPageHashes(this SignToolSettings toolSettings, bool? pageHashes)
         {
@@ -1151,7 +1680,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.PageHashes = pageHashes;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.PageHashes"/>.</em></p><p>Generate page hashes for executable files if supported.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.PageHashes"/></em></p>
+        ///   <p>Generate page hashes for executable files if supported.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetPageHashes(this SignToolSettings toolSettings)
         {
@@ -1159,7 +1691,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.PageHashes = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="SignToolSettings.PageHashes"/>.</em></p><p>Generate page hashes for executable files if supported.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="SignToolSettings.PageHashes"/></em></p>
+        ///   <p>Generate page hashes for executable files if supported.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings EnablePageHashes(this SignToolSettings toolSettings)
         {
@@ -1167,7 +1702,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.PageHashes = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="SignToolSettings.PageHashes"/>.</em></p><p>Generate page hashes for executable files if supported.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="SignToolSettings.PageHashes"/></em></p>
+        ///   <p>Generate page hashes for executable files if supported.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings DisablePageHashes(this SignToolSettings toolSettings)
         {
@@ -1175,7 +1713,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.PageHashes = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="SignToolSettings.PageHashes"/>.</em></p><p>Generate page hashes for executable files if supported.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SignToolSettings.PageHashes"/></em></p>
+        ///   <p>Generate page hashes for executable files if supported.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings TogglePageHashes(this SignToolSettings toolSettings)
         {
@@ -1185,7 +1726,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region SuppressPageHashes
-        /// <summary><p><em>Sets <see cref="SignToolSettings.SuppressPageHashes"/>.</em></p><p>Suppress page hashes for executable files if supported. The default is determined by the <c>SIGNTOOL_PAGE_HASHES</c> environment variable and by the <em>wintrust.dll</em> version.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.SuppressPageHashes"/></em></p>
+        ///   <p>Suppress page hashes for executable files if supported. The default is determined by the <c>SIGNTOOL_PAGE_HASHES</c> environment variable and by the <em>wintrust.dll</em> version.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetSuppressPageHashes(this SignToolSettings toolSettings, bool? suppressPageHashes)
         {
@@ -1193,7 +1737,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.SuppressPageHashes = suppressPageHashes;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.SuppressPageHashes"/>.</em></p><p>Suppress page hashes for executable files if supported. The default is determined by the <c>SIGNTOOL_PAGE_HASHES</c> environment variable and by the <em>wintrust.dll</em> version.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.SuppressPageHashes"/></em></p>
+        ///   <p>Suppress page hashes for executable files if supported. The default is determined by the <c>SIGNTOOL_PAGE_HASHES</c> environment variable and by the <em>wintrust.dll</em> version.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetSuppressPageHashes(this SignToolSettings toolSettings)
         {
@@ -1201,7 +1748,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.SuppressPageHashes = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="SignToolSettings.SuppressPageHashes"/>.</em></p><p>Suppress page hashes for executable files if supported. The default is determined by the <c>SIGNTOOL_PAGE_HASHES</c> environment variable and by the <em>wintrust.dll</em> version.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="SignToolSettings.SuppressPageHashes"/></em></p>
+        ///   <p>Suppress page hashes for executable files if supported. The default is determined by the <c>SIGNTOOL_PAGE_HASHES</c> environment variable and by the <em>wintrust.dll</em> version.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings EnableSuppressPageHashes(this SignToolSettings toolSettings)
         {
@@ -1209,7 +1759,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.SuppressPageHashes = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="SignToolSettings.SuppressPageHashes"/>.</em></p><p>Suppress page hashes for executable files if supported. The default is determined by the <c>SIGNTOOL_PAGE_HASHES</c> environment variable and by the <em>wintrust.dll</em> version.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="SignToolSettings.SuppressPageHashes"/></em></p>
+        ///   <p>Suppress page hashes for executable files if supported. The default is determined by the <c>SIGNTOOL_PAGE_HASHES</c> environment variable and by the <em>wintrust.dll</em> version.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings DisableSuppressPageHashes(this SignToolSettings toolSettings)
         {
@@ -1217,7 +1770,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.SuppressPageHashes = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="SignToolSettings.SuppressPageHashes"/>.</em></p><p>Suppress page hashes for executable files if supported. The default is determined by the <c>SIGNTOOL_PAGE_HASHES</c> environment variable and by the <em>wintrust.dll</em> version.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SignToolSettings.SuppressPageHashes"/></em></p>
+        ///   <p>Suppress page hashes for executable files if supported. The default is determined by the <c>SIGNTOOL_PAGE_HASHES</c> environment variable and by the <em>wintrust.dll</em> version.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ToggleSuppressPageHashes(this SignToolSettings toolSettings)
         {
@@ -1227,7 +1783,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region RelaxedMarkerCheck
-        /// <summary><p><em>Sets <see cref="SignToolSettings.RelaxedMarkerCheck"/>.</em></p><p>Specifies signing a PE file with the relaxed marker check semantic. The flag is ignored for non-PE files. During verification, certain authenticated sections of the signature will bypass invalid PE markers check. This option should only be used after careful consideration and reviewing the details of MSRC case MS12-024 to ensure that no vulnerabilities are introduced.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.RelaxedMarkerCheck"/></em></p>
+        ///   <p>Specifies signing a PE file with the relaxed marker check semantic. The flag is ignored for non-PE files. During verification, certain authenticated sections of the signature will bypass invalid PE markers check. This option should only be used after careful consideration and reviewing the details of MSRC case MS12-024 to ensure that no vulnerabilities are introduced.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetRelaxedMarkerCheck(this SignToolSettings toolSettings, bool? relaxedMarkerCheck)
         {
@@ -1235,7 +1794,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.RelaxedMarkerCheck = relaxedMarkerCheck;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.RelaxedMarkerCheck"/>.</em></p><p>Specifies signing a PE file with the relaxed marker check semantic. The flag is ignored for non-PE files. During verification, certain authenticated sections of the signature will bypass invalid PE markers check. This option should only be used after careful consideration and reviewing the details of MSRC case MS12-024 to ensure that no vulnerabilities are introduced.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.RelaxedMarkerCheck"/></em></p>
+        ///   <p>Specifies signing a PE file with the relaxed marker check semantic. The flag is ignored for non-PE files. During verification, certain authenticated sections of the signature will bypass invalid PE markers check. This option should only be used after careful consideration and reviewing the details of MSRC case MS12-024 to ensure that no vulnerabilities are introduced.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetRelaxedMarkerCheck(this SignToolSettings toolSettings)
         {
@@ -1243,7 +1805,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.RelaxedMarkerCheck = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="SignToolSettings.RelaxedMarkerCheck"/>.</em></p><p>Specifies signing a PE file with the relaxed marker check semantic. The flag is ignored for non-PE files. During verification, certain authenticated sections of the signature will bypass invalid PE markers check. This option should only be used after careful consideration and reviewing the details of MSRC case MS12-024 to ensure that no vulnerabilities are introduced.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="SignToolSettings.RelaxedMarkerCheck"/></em></p>
+        ///   <p>Specifies signing a PE file with the relaxed marker check semantic. The flag is ignored for non-PE files. During verification, certain authenticated sections of the signature will bypass invalid PE markers check. This option should only be used after careful consideration and reviewing the details of MSRC case MS12-024 to ensure that no vulnerabilities are introduced.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings EnableRelaxedMarkerCheck(this SignToolSettings toolSettings)
         {
@@ -1251,7 +1816,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.RelaxedMarkerCheck = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="SignToolSettings.RelaxedMarkerCheck"/>.</em></p><p>Specifies signing a PE file with the relaxed marker check semantic. The flag is ignored for non-PE files. During verification, certain authenticated sections of the signature will bypass invalid PE markers check. This option should only be used after careful consideration and reviewing the details of MSRC case MS12-024 to ensure that no vulnerabilities are introduced.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="SignToolSettings.RelaxedMarkerCheck"/></em></p>
+        ///   <p>Specifies signing a PE file with the relaxed marker check semantic. The flag is ignored for non-PE files. During verification, certain authenticated sections of the signature will bypass invalid PE markers check. This option should only be used after careful consideration and reviewing the details of MSRC case MS12-024 to ensure that no vulnerabilities are introduced.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings DisableRelaxedMarkerCheck(this SignToolSettings toolSettings)
         {
@@ -1259,7 +1827,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.RelaxedMarkerCheck = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="SignToolSettings.RelaxedMarkerCheck"/>.</em></p><p>Specifies signing a PE file with the relaxed marker check semantic. The flag is ignored for non-PE files. During verification, certain authenticated sections of the signature will bypass invalid PE markers check. This option should only be used after careful consideration and reviewing the details of MSRC case MS12-024 to ensure that no vulnerabilities are introduced.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SignToolSettings.RelaxedMarkerCheck"/></em></p>
+        ///   <p>Specifies signing a PE file with the relaxed marker check semantic. The flag is ignored for non-PE files. During verification, certain authenticated sections of the signature will bypass invalid PE markers check. This option should only be used after careful consideration and reviewing the details of MSRC case MS12-024 to ensure that no vulnerabilities are introduced.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ToggleRelaxedMarkerCheck(this SignToolSettings toolSettings)
         {
@@ -1269,7 +1840,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region Quiet
-        /// <summary><p><em>Sets <see cref="SignToolSettings.Quiet"/>.</em></p><p>No output on success and minimal output on failure.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.Quiet"/></em></p>
+        ///   <p>No output on success and minimal output on failure.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetQuiet(this SignToolSettings toolSettings, bool? quiet)
         {
@@ -1277,7 +1851,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Quiet = quiet;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.Quiet"/>.</em></p><p>No output on success and minimal output on failure.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.Quiet"/></em></p>
+        ///   <p>No output on success and minimal output on failure.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetQuiet(this SignToolSettings toolSettings)
         {
@@ -1285,7 +1862,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Quiet = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="SignToolSettings.Quiet"/>.</em></p><p>No output on success and minimal output on failure.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="SignToolSettings.Quiet"/></em></p>
+        ///   <p>No output on success and minimal output on failure.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings EnableQuiet(this SignToolSettings toolSettings)
         {
@@ -1293,7 +1873,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Quiet = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="SignToolSettings.Quiet"/>.</em></p><p>No output on success and minimal output on failure.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="SignToolSettings.Quiet"/></em></p>
+        ///   <p>No output on success and minimal output on failure.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings DisableQuiet(this SignToolSettings toolSettings)
         {
@@ -1301,7 +1884,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Quiet = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="SignToolSettings.Quiet"/>.</em></p><p>No output on success and minimal output on failure.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SignToolSettings.Quiet"/></em></p>
+        ///   <p>No output on success and minimal output on failure.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ToggleQuiet(this SignToolSettings toolSettings)
         {
@@ -1311,7 +1897,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region Verbose
-        /// <summary><p><em>Sets <see cref="SignToolSettings.Verbose"/>.</em></p><p>Print verbose success and status messages. This may also provide slightly more information on error.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.Verbose"/></em></p>
+        ///   <p>Print verbose success and status messages. This may also provide slightly more information on error.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetVerbose(this SignToolSettings toolSettings, bool? verbose)
         {
@@ -1319,7 +1908,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Verbose = verbose;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.Verbose"/>.</em></p><p>Print verbose success and status messages. This may also provide slightly more information on error.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.Verbose"/></em></p>
+        ///   <p>Print verbose success and status messages. This may also provide slightly more information on error.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetVerbose(this SignToolSettings toolSettings)
         {
@@ -1327,7 +1919,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Verbose = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="SignToolSettings.Verbose"/>.</em></p><p>Print verbose success and status messages. This may also provide slightly more information on error.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="SignToolSettings.Verbose"/></em></p>
+        ///   <p>Print verbose success and status messages. This may also provide slightly more information on error.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings EnableVerbose(this SignToolSettings toolSettings)
         {
@@ -1335,7 +1930,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Verbose = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="SignToolSettings.Verbose"/>.</em></p><p>Print verbose success and status messages. This may also provide slightly more information on error.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="SignToolSettings.Verbose"/></em></p>
+        ///   <p>Print verbose success and status messages. This may also provide slightly more information on error.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings DisableVerbose(this SignToolSettings toolSettings)
         {
@@ -1343,7 +1941,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Verbose = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="SignToolSettings.Verbose"/>.</em></p><p>Print verbose success and status messages. This may also provide slightly more information on error.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SignToolSettings.Verbose"/></em></p>
+        ///   <p>Print verbose success and status messages. This may also provide slightly more information on error.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ToggleVerbose(this SignToolSettings toolSettings)
         {
@@ -1353,7 +1954,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region Debug
-        /// <summary><p><em>Sets <see cref="SignToolSettings.Debug"/>.</em></p><p>Display additional debug information.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.Debug"/></em></p>
+        ///   <p>Display additional debug information.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetDebug(this SignToolSettings toolSettings, bool? debug)
         {
@@ -1361,7 +1965,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Debug = debug;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SignToolSettings.Debug"/>.</em></p><p>Display additional debug information.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SignToolSettings.Debug"/></em></p>
+        ///   <p>Display additional debug information.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ResetDebug(this SignToolSettings toolSettings)
         {
@@ -1369,7 +1976,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Debug = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="SignToolSettings.Debug"/>.</em></p><p>Display additional debug information.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="SignToolSettings.Debug"/></em></p>
+        ///   <p>Display additional debug information.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings EnableDebug(this SignToolSettings toolSettings)
         {
@@ -1377,7 +1987,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Debug = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="SignToolSettings.Debug"/>.</em></p><p>Display additional debug information.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="SignToolSettings.Debug"/></em></p>
+        ///   <p>Display additional debug information.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings DisableDebug(this SignToolSettings toolSettings)
         {
@@ -1385,7 +1998,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.Debug = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="SignToolSettings.Debug"/>.</em></p><p>Display additional debug information.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SignToolSettings.Debug"/></em></p>
+        ///   <p>Display additional debug information.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ToggleDebug(this SignToolSettings toolSettings)
         {
@@ -1395,7 +2011,10 @@ namespace Nuke.Common.Tools.SignTool
         }
         #endregion
         #region Files
-        /// <summary><p><em>Sets <see cref="SignToolSettings.Files"/> to a new list.</em></p><p>Files to sign.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.Files"/> to a new list</em></p>
+        ///   <p>Files to sign.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetFiles(this SignToolSettings toolSettings, params string[] files)
         {
@@ -1403,7 +2022,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.FilesInternal = files.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="SignToolSettings.Files"/> to a new list.</em></p><p>Files to sign.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SignToolSettings.Files"/> to a new list</em></p>
+        ///   <p>Files to sign.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings SetFiles(this SignToolSettings toolSettings, IEnumerable<string> files)
         {
@@ -1411,7 +2033,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.FilesInternal = files.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="SignToolSettings.Files"/>.</em></p><p>Files to sign.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="SignToolSettings.Files"/></em></p>
+        ///   <p>Files to sign.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings AddFiles(this SignToolSettings toolSettings, params string[] files)
         {
@@ -1419,7 +2044,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.FilesInternal.AddRange(files);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="SignToolSettings.Files"/>.</em></p><p>Files to sign.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="SignToolSettings.Files"/></em></p>
+        ///   <p>Files to sign.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings AddFiles(this SignToolSettings toolSettings, IEnumerable<string> files)
         {
@@ -1427,7 +2055,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.FilesInternal.AddRange(files);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="SignToolSettings.Files"/>.</em></p><p>Files to sign.</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="SignToolSettings.Files"/></em></p>
+        ///   <p>Files to sign.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings ClearFiles(this SignToolSettings toolSettings)
         {
@@ -1435,7 +2066,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.FilesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="SignToolSettings.Files"/>.</em></p><p>Files to sign.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="SignToolSettings.Files"/></em></p>
+        ///   <p>Files to sign.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings RemoveFiles(this SignToolSettings toolSettings, params string[] files)
         {
@@ -1444,7 +2078,10 @@ namespace Nuke.Common.Tools.SignTool
             toolSettings.FilesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="SignToolSettings.Files"/>.</em></p><p>Files to sign.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="SignToolSettings.Files"/></em></p>
+        ///   <p>Files to sign.</p>
+        /// </summary>
         [Pure]
         public static SignToolSettings RemoveFiles(this SignToolSettings toolSettings, IEnumerable<string> files)
         {
@@ -1457,7 +2094,9 @@ namespace Nuke.Common.Tools.SignTool
     }
     #endregion
     #region SignToolContentMethod
-    /// <summary><p>Used within <see cref="SignToolTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="SignToolTasks"/>.
+    /// </summary>
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]

@@ -23,19 +23,26 @@ namespace Nuke.Common.Tools.Squirrel
     [ExcludeFromCodeCoverage]
     public static partial class SquirrelTasks
     {
-        /// <summary><p>Path to the Squirrel executable.</p></summary>
+        /// <summary>
+        ///   Path to the Squirrel executable.
+        /// </summary>
         public static string SquirrelPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("SQUIRREL_EXE") ??
             ToolPathResolver.GetPackageExecutable("Squirrel.Windows", "Squirrel.exe");
         public static Action<OutputType, string> SquirrelLogger { get; set; } = ProcessManager.DefaultLogger;
-        /// <summary><p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p></summary>
+        /// <summary>
+        ///   Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).
+        /// </summary>
         public static IReadOnlyCollection<Output> Squirrel(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
             var process = ProcessTasks.StartProcess(SquirrelPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, SquirrelLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p><p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p>
+        ///   <p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p>
+        /// </summary>
         public static IReadOnlyCollection<Output> Squirrel(SquirrelSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SquirrelSettings();
@@ -43,75 +50,191 @@ namespace Nuke.Common.Tools.Squirrel
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p><p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p>
+        ///   <p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--baseUrl</c> via <see cref="SquirrelSettings.BaseUrl"/></li>
+        ///     <li><c>--bootstrapperExe</c> via <see cref="SquirrelSettings.BootstrapperExecutable"/></li>
+        ///     <li><c>--checkForUpdate</c> via <see cref="SquirrelSettings.CheckForUpdate"/></li>
+        ///     <li><c>--createShortcut</c> via <see cref="SquirrelSettings.CreateShortcut"/></li>
+        ///     <li><c>--download</c> via <see cref="SquirrelSettings.Download"/></li>
+        ///     <li><c>--framework-version</c> via <see cref="SquirrelSettings.FrameworkVersion"/></li>
+        ///     <li><c>--icon</c> via <see cref="SquirrelSettings.Icon"/></li>
+        ///     <li><c>--install</c> via <see cref="SquirrelSettings.Install"/></li>
+        ///     <li><c>--loadingGif</c> via <see cref="SquirrelSettings.LoadingGif"/></li>
+        ///     <li><c>--no-delta</c> via <see cref="SquirrelSettings.GenerateNoDelta"/></li>
+        ///     <li><c>--no-msi</c> via <see cref="SquirrelSettings.GenerateNoMsi"/></li>
+        ///     <li><c>--packagesDir</c> via <see cref="SquirrelSettings.PackagesDirectory"/></li>
+        ///     <li><c>--process-start-args</c> via <see cref="SquirrelSettings.ProcessStartArguments"/></li>
+        ///     <li><c>--processStart</c> via <see cref="SquirrelSettings.ProcessStart"/></li>
+        ///     <li><c>--processStartAndWait</c> via <see cref="SquirrelSettings.ProcessStartAndWait"/></li>
+        ///     <li><c>--releaseDir</c> via <see cref="SquirrelSettings.ReleaseDirectory"/></li>
+        ///     <li><c>--releasify</c> via <see cref="SquirrelSettings.Releasify"/></li>
+        ///     <li><c>--removeShortcut</c> via <see cref="SquirrelSettings.RemoveShortcut"/></li>
+        ///     <li><c>--setupIcon</c> via <see cref="SquirrelSettings.SetupIcon"/></li>
+        ///     <li><c>--shortcut-locations</c> via <see cref="SquirrelSettings.ShortcutLocations"/></li>
+        ///     <li><c>--signWithParams</c> via <see cref="SquirrelSettings.SignWithParameters"/></li>
+        ///     <li><c>--uninstall</c> via <see cref="SquirrelSettings.Uninstall"/></li>
+        ///     <li><c>--update</c> via <see cref="SquirrelSettings.Update"/></li>
+        ///     <li><c>--updateSelf</c> via <see cref="SquirrelSettings.UpdateSelf"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> Squirrel(Configure<SquirrelSettings> configurator)
         {
             return Squirrel(configurator(new SquirrelSettings()));
         }
-        /// <summary><p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p><p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p>
+        ///   <p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--baseUrl</c> via <see cref="SquirrelSettings.BaseUrl"/></li>
+        ///     <li><c>--bootstrapperExe</c> via <see cref="SquirrelSettings.BootstrapperExecutable"/></li>
+        ///     <li><c>--checkForUpdate</c> via <see cref="SquirrelSettings.CheckForUpdate"/></li>
+        ///     <li><c>--createShortcut</c> via <see cref="SquirrelSettings.CreateShortcut"/></li>
+        ///     <li><c>--download</c> via <see cref="SquirrelSettings.Download"/></li>
+        ///     <li><c>--framework-version</c> via <see cref="SquirrelSettings.FrameworkVersion"/></li>
+        ///     <li><c>--icon</c> via <see cref="SquirrelSettings.Icon"/></li>
+        ///     <li><c>--install</c> via <see cref="SquirrelSettings.Install"/></li>
+        ///     <li><c>--loadingGif</c> via <see cref="SquirrelSettings.LoadingGif"/></li>
+        ///     <li><c>--no-delta</c> via <see cref="SquirrelSettings.GenerateNoDelta"/></li>
+        ///     <li><c>--no-msi</c> via <see cref="SquirrelSettings.GenerateNoMsi"/></li>
+        ///     <li><c>--packagesDir</c> via <see cref="SquirrelSettings.PackagesDirectory"/></li>
+        ///     <li><c>--process-start-args</c> via <see cref="SquirrelSettings.ProcessStartArguments"/></li>
+        ///     <li><c>--processStart</c> via <see cref="SquirrelSettings.ProcessStart"/></li>
+        ///     <li><c>--processStartAndWait</c> via <see cref="SquirrelSettings.ProcessStartAndWait"/></li>
+        ///     <li><c>--releaseDir</c> via <see cref="SquirrelSettings.ReleaseDirectory"/></li>
+        ///     <li><c>--releasify</c> via <see cref="SquirrelSettings.Releasify"/></li>
+        ///     <li><c>--removeShortcut</c> via <see cref="SquirrelSettings.RemoveShortcut"/></li>
+        ///     <li><c>--setupIcon</c> via <see cref="SquirrelSettings.SetupIcon"/></li>
+        ///     <li><c>--shortcut-locations</c> via <see cref="SquirrelSettings.ShortcutLocations"/></li>
+        ///     <li><c>--signWithParams</c> via <see cref="SquirrelSettings.SignWithParameters"/></li>
+        ///     <li><c>--uninstall</c> via <see cref="SquirrelSettings.Uninstall"/></li>
+        ///     <li><c>--update</c> via <see cref="SquirrelSettings.Update"/></li>
+        ///     <li><c>--updateSelf</c> via <see cref="SquirrelSettings.UpdateSelf"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IEnumerable<(SquirrelSettings Settings, IReadOnlyCollection<Output> Output)> Squirrel(CombinatorialConfigure<SquirrelSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
             return configurator.Invoke(Squirrel, SquirrelLogger, degreeOfParallelism, completeOnFailure);
         }
     }
     #region SquirrelSettings
-    /// <summary><p>Used within <see cref="SquirrelTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="SquirrelTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
     public partial class SquirrelSettings : ToolSettings
     {
-        /// <summary><p>Path to the Squirrel executable.</p></summary>
+        /// <summary>
+        ///   Path to the Squirrel executable.
+        /// </summary>
         public override string ToolPath => base.ToolPath ?? SquirrelTasks.SquirrelPath;
         public override Action<OutputType, string> CustomLogger => SquirrelTasks.SquirrelLogger;
-        /// <summary><p>Install the app whose package is in the specified directory.</p></summary>
+        /// <summary>
+        ///   Install the app whose package is in the specified directory.
+        /// </summary>
         public virtual string Install { get; internal set; }
-        /// <summary><p>Uninstall the app the same dir as Update.exe.</p></summary>
+        /// <summary>
+        ///   Uninstall the app the same dir as Update.exe.
+        /// </summary>
         public virtual bool? Uninstall { get; internal set; }
-        /// <summary><p>Download the releases specified by the URL and write new results to stdout as JSON.</p></summary>
+        /// <summary>
+        ///   Download the releases specified by the URL and write new results to stdout as JSON.
+        /// </summary>
         public virtual bool? Download { get; internal set; }
-        /// <summary><p>Check for one available update and writes new results to stdout as JSON.</p></summary>
+        /// <summary>
+        ///   Check for one available update and writes new results to stdout as JSON.
+        /// </summary>
         public virtual bool? CheckForUpdate { get; internal set; }
-        /// <summary><p>Update the application to the latest remote version specified by URL.</p></summary>
+        /// <summary>
+        ///   Update the application to the latest remote version specified by URL.
+        /// </summary>
         public virtual string Update { get; internal set; }
-        /// <summary><p>Update or generate a releases directory with a given NuGet package.</p></summary>
+        /// <summary>
+        ///   Update or generate a releases directory with a given NuGet package.
+        /// </summary>
         public virtual string Releasify { get; internal set; }
-        /// <summary><p>Create a shortcut for the given executable name.</p></summary>
+        /// <summary>
+        ///   Create a shortcut for the given executable name.
+        /// </summary>
         public virtual string CreateShortcut { get; internal set; }
-        /// <summary><p>Remove a shortcut for the given executable name.</p></summary>
+        /// <summary>
+        ///   Remove a shortcut for the given executable name.
+        /// </summary>
         public virtual string RemoveShortcut { get; internal set; }
-        /// <summary><p>Copy the currently executing Update.exe into the default location.</p></summary>
+        /// <summary>
+        ///   Copy the currently executing Update.exe into the default location.
+        /// </summary>
         public virtual string UpdateSelf { get; internal set; }
-        /// <summary><p>Start an executable in the latest version of the app package.</p></summary>
+        /// <summary>
+        ///   Start an executable in the latest version of the app package.
+        /// </summary>
         public virtual string ProcessStart { get; internal set; }
-        /// <summary><p>Start an executable in the latest version of the app package.</p></summary>
+        /// <summary>
+        ///   Start an executable in the latest version of the app package.
+        /// </summary>
         public virtual string ProcessStartAndWait { get; internal set; }
-        /// <summary><p>Path to a release directory to use with releasify.</p></summary>
+        /// <summary>
+        ///   Path to a release directory to use with releasify.
+        /// </summary>
         public virtual string ReleaseDirectory { get; internal set; }
-        /// <summary><p>Path to the NuGet Packages directory for C# apps.</p></summary>
+        /// <summary>
+        ///   Path to the NuGet Packages directory for C# apps.
+        /// </summary>
         public virtual string PackagesDirectory { get; internal set; }
-        /// <summary><p>Path to the Setup.exe to use as a template.</p></summary>
+        /// <summary>
+        ///   Path to the Setup.exe to use as a template.
+        /// </summary>
         public virtual string BootstrapperExecutable { get; internal set; }
-        /// <summary><p>Path to an animated GIF to be displayed during installation.</p></summary>
+        /// <summary>
+        ///   Path to an animated GIF to be displayed during installation.
+        /// </summary>
         public virtual string LoadingGif { get; internal set; }
-        /// <summary><p>Path to an ICO file that will be used for icon shortcuts.</p></summary>
+        /// <summary>
+        ///   Path to an ICO file that will be used for icon shortcuts.
+        /// </summary>
         public virtual string Icon { get; internal set; }
-        /// <summary><p>Path to an ICO file that will be used for the Setup executable's icon.</p></summary>
+        /// <summary>
+        ///   Path to an ICO file that will be used for the Setup executable's icon.
+        /// </summary>
         public virtual string SetupIcon { get; internal set; }
-        /// <summary><p>Sign the installer via SignTool.exe with the parameters given.</p></summary>
+        /// <summary>
+        ///   Sign the installer via SignTool.exe with the parameters given.
+        /// </summary>
         public virtual string SignWithParameters { get; internal set; }
-        /// <summary><p>Provides a base URL to prefix the RELEASES file packages with.</p></summary>
+        /// <summary>
+        ///   Provides a base URL to prefix the RELEASES file packages with.
+        /// </summary>
         public virtual string BaseUrl { get; internal set; }
-        /// <summary><p>Arguments that will be used when starting executable.</p></summary>
+        /// <summary>
+        ///   Arguments that will be used when starting executable.
+        /// </summary>
         public virtual string ProcessStartArguments { get; internal set; }
-        /// <summary><p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p></summary>
+        /// <summary>
+        ///   Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.
+        /// </summary>
         public virtual IReadOnlyList<string> ShortcutLocations => ShortcutLocationsInternal.AsReadOnly();
         internal List<string> ShortcutLocationsInternal { get; set; } = new List<string>();
-        /// <summary><p>Don't generate an MSI package.</p></summary>
+        /// <summary>
+        ///   Don't generate an MSI package.
+        /// </summary>
         public virtual bool? GenerateNoMsi { get; internal set; }
-        /// <summary><p>Don't generate delta packages to save time</p></summary>
+        /// <summary>
+        ///   Don't generate delta packages to save time
+        /// </summary>
         public virtual bool? GenerateNoDelta { get; internal set; }
-        /// <summary><p>Set the required .NET framework version, e.g. net461</p></summary>
+        /// <summary>
+        ///   Set the required .NET framework version, e.g. net461
+        /// </summary>
         public virtual string FrameworkVersion { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -145,13 +268,18 @@ namespace Nuke.Common.Tools.Squirrel
     }
     #endregion
     #region SquirrelSettingsExtensions
-    /// <summary><p>Used within <see cref="SquirrelTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="SquirrelTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class SquirrelSettingsExtensions
     {
         #region Install
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.Install"/>.</em></p><p>Install the app whose package is in the specified directory.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.Install"/></em></p>
+        ///   <p>Install the app whose package is in the specified directory.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetInstall(this SquirrelSettings toolSettings, string install)
         {
@@ -159,7 +287,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.Install = install;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SquirrelSettings.Install"/>.</em></p><p>Install the app whose package is in the specified directory.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SquirrelSettings.Install"/></em></p>
+        ///   <p>Install the app whose package is in the specified directory.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ResetInstall(this SquirrelSettings toolSettings)
         {
@@ -169,7 +300,10 @@ namespace Nuke.Common.Tools.Squirrel
         }
         #endregion
         #region Uninstall
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.Uninstall"/>.</em></p><p>Uninstall the app the same dir as Update.exe.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.Uninstall"/></em></p>
+        ///   <p>Uninstall the app the same dir as Update.exe.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetUninstall(this SquirrelSettings toolSettings, bool? uninstall)
         {
@@ -177,7 +311,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.Uninstall = uninstall;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SquirrelSettings.Uninstall"/>.</em></p><p>Uninstall the app the same dir as Update.exe.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SquirrelSettings.Uninstall"/></em></p>
+        ///   <p>Uninstall the app the same dir as Update.exe.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ResetUninstall(this SquirrelSettings toolSettings)
         {
@@ -185,7 +322,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.Uninstall = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="SquirrelSettings.Uninstall"/>.</em></p><p>Uninstall the app the same dir as Update.exe.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="SquirrelSettings.Uninstall"/></em></p>
+        ///   <p>Uninstall the app the same dir as Update.exe.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings EnableUninstall(this SquirrelSettings toolSettings)
         {
@@ -193,7 +333,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.Uninstall = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="SquirrelSettings.Uninstall"/>.</em></p><p>Uninstall the app the same dir as Update.exe.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="SquirrelSettings.Uninstall"/></em></p>
+        ///   <p>Uninstall the app the same dir as Update.exe.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings DisableUninstall(this SquirrelSettings toolSettings)
         {
@@ -201,7 +344,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.Uninstall = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="SquirrelSettings.Uninstall"/>.</em></p><p>Uninstall the app the same dir as Update.exe.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SquirrelSettings.Uninstall"/></em></p>
+        ///   <p>Uninstall the app the same dir as Update.exe.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ToggleUninstall(this SquirrelSettings toolSettings)
         {
@@ -211,7 +357,10 @@ namespace Nuke.Common.Tools.Squirrel
         }
         #endregion
         #region Download
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.Download"/>.</em></p><p>Download the releases specified by the URL and write new results to stdout as JSON.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.Download"/></em></p>
+        ///   <p>Download the releases specified by the URL and write new results to stdout as JSON.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetDownload(this SquirrelSettings toolSettings, bool? download)
         {
@@ -219,7 +368,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.Download = download;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SquirrelSettings.Download"/>.</em></p><p>Download the releases specified by the URL and write new results to stdout as JSON.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SquirrelSettings.Download"/></em></p>
+        ///   <p>Download the releases specified by the URL and write new results to stdout as JSON.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ResetDownload(this SquirrelSettings toolSettings)
         {
@@ -227,7 +379,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.Download = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="SquirrelSettings.Download"/>.</em></p><p>Download the releases specified by the URL and write new results to stdout as JSON.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="SquirrelSettings.Download"/></em></p>
+        ///   <p>Download the releases specified by the URL and write new results to stdout as JSON.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings EnableDownload(this SquirrelSettings toolSettings)
         {
@@ -235,7 +390,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.Download = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="SquirrelSettings.Download"/>.</em></p><p>Download the releases specified by the URL and write new results to stdout as JSON.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="SquirrelSettings.Download"/></em></p>
+        ///   <p>Download the releases specified by the URL and write new results to stdout as JSON.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings DisableDownload(this SquirrelSettings toolSettings)
         {
@@ -243,7 +401,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.Download = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="SquirrelSettings.Download"/>.</em></p><p>Download the releases specified by the URL and write new results to stdout as JSON.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SquirrelSettings.Download"/></em></p>
+        ///   <p>Download the releases specified by the URL and write new results to stdout as JSON.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ToggleDownload(this SquirrelSettings toolSettings)
         {
@@ -253,7 +414,10 @@ namespace Nuke.Common.Tools.Squirrel
         }
         #endregion
         #region CheckForUpdate
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.CheckForUpdate"/>.</em></p><p>Check for one available update and writes new results to stdout as JSON.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.CheckForUpdate"/></em></p>
+        ///   <p>Check for one available update and writes new results to stdout as JSON.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetCheckForUpdate(this SquirrelSettings toolSettings, bool? checkForUpdate)
         {
@@ -261,7 +425,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.CheckForUpdate = checkForUpdate;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SquirrelSettings.CheckForUpdate"/>.</em></p><p>Check for one available update and writes new results to stdout as JSON.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SquirrelSettings.CheckForUpdate"/></em></p>
+        ///   <p>Check for one available update and writes new results to stdout as JSON.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ResetCheckForUpdate(this SquirrelSettings toolSettings)
         {
@@ -269,7 +436,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.CheckForUpdate = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="SquirrelSettings.CheckForUpdate"/>.</em></p><p>Check for one available update and writes new results to stdout as JSON.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="SquirrelSettings.CheckForUpdate"/></em></p>
+        ///   <p>Check for one available update and writes new results to stdout as JSON.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings EnableCheckForUpdate(this SquirrelSettings toolSettings)
         {
@@ -277,7 +447,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.CheckForUpdate = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="SquirrelSettings.CheckForUpdate"/>.</em></p><p>Check for one available update and writes new results to stdout as JSON.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="SquirrelSettings.CheckForUpdate"/></em></p>
+        ///   <p>Check for one available update and writes new results to stdout as JSON.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings DisableCheckForUpdate(this SquirrelSettings toolSettings)
         {
@@ -285,7 +458,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.CheckForUpdate = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="SquirrelSettings.CheckForUpdate"/>.</em></p><p>Check for one available update and writes new results to stdout as JSON.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SquirrelSettings.CheckForUpdate"/></em></p>
+        ///   <p>Check for one available update and writes new results to stdout as JSON.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ToggleCheckForUpdate(this SquirrelSettings toolSettings)
         {
@@ -295,7 +471,10 @@ namespace Nuke.Common.Tools.Squirrel
         }
         #endregion
         #region Update
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.Update"/>.</em></p><p>Update the application to the latest remote version specified by URL.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.Update"/></em></p>
+        ///   <p>Update the application to the latest remote version specified by URL.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetUpdate(this SquirrelSettings toolSettings, string update)
         {
@@ -303,7 +482,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.Update = update;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SquirrelSettings.Update"/>.</em></p><p>Update the application to the latest remote version specified by URL.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SquirrelSettings.Update"/></em></p>
+        ///   <p>Update the application to the latest remote version specified by URL.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ResetUpdate(this SquirrelSettings toolSettings)
         {
@@ -313,7 +495,10 @@ namespace Nuke.Common.Tools.Squirrel
         }
         #endregion
         #region Releasify
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.Releasify"/>.</em></p><p>Update or generate a releases directory with a given NuGet package.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.Releasify"/></em></p>
+        ///   <p>Update or generate a releases directory with a given NuGet package.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetReleasify(this SquirrelSettings toolSettings, string releasify)
         {
@@ -321,7 +506,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.Releasify = releasify;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SquirrelSettings.Releasify"/>.</em></p><p>Update or generate a releases directory with a given NuGet package.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SquirrelSettings.Releasify"/></em></p>
+        ///   <p>Update or generate a releases directory with a given NuGet package.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ResetReleasify(this SquirrelSettings toolSettings)
         {
@@ -331,7 +519,10 @@ namespace Nuke.Common.Tools.Squirrel
         }
         #endregion
         #region CreateShortcut
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.CreateShortcut"/>.</em></p><p>Create a shortcut for the given executable name.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.CreateShortcut"/></em></p>
+        ///   <p>Create a shortcut for the given executable name.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetCreateShortcut(this SquirrelSettings toolSettings, string createShortcut)
         {
@@ -339,7 +530,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.CreateShortcut = createShortcut;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SquirrelSettings.CreateShortcut"/>.</em></p><p>Create a shortcut for the given executable name.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SquirrelSettings.CreateShortcut"/></em></p>
+        ///   <p>Create a shortcut for the given executable name.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ResetCreateShortcut(this SquirrelSettings toolSettings)
         {
@@ -349,7 +543,10 @@ namespace Nuke.Common.Tools.Squirrel
         }
         #endregion
         #region RemoveShortcut
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.RemoveShortcut"/>.</em></p><p>Remove a shortcut for the given executable name.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.RemoveShortcut"/></em></p>
+        ///   <p>Remove a shortcut for the given executable name.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetRemoveShortcut(this SquirrelSettings toolSettings, string removeShortcut)
         {
@@ -357,7 +554,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.RemoveShortcut = removeShortcut;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SquirrelSettings.RemoveShortcut"/>.</em></p><p>Remove a shortcut for the given executable name.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SquirrelSettings.RemoveShortcut"/></em></p>
+        ///   <p>Remove a shortcut for the given executable name.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ResetRemoveShortcut(this SquirrelSettings toolSettings)
         {
@@ -367,7 +567,10 @@ namespace Nuke.Common.Tools.Squirrel
         }
         #endregion
         #region UpdateSelf
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.UpdateSelf"/>.</em></p><p>Copy the currently executing Update.exe into the default location.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.UpdateSelf"/></em></p>
+        ///   <p>Copy the currently executing Update.exe into the default location.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetUpdateSelf(this SquirrelSettings toolSettings, string updateSelf)
         {
@@ -375,7 +578,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.UpdateSelf = updateSelf;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SquirrelSettings.UpdateSelf"/>.</em></p><p>Copy the currently executing Update.exe into the default location.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SquirrelSettings.UpdateSelf"/></em></p>
+        ///   <p>Copy the currently executing Update.exe into the default location.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ResetUpdateSelf(this SquirrelSettings toolSettings)
         {
@@ -385,7 +591,10 @@ namespace Nuke.Common.Tools.Squirrel
         }
         #endregion
         #region ProcessStart
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.ProcessStart"/>.</em></p><p>Start an executable in the latest version of the app package.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.ProcessStart"/></em></p>
+        ///   <p>Start an executable in the latest version of the app package.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetProcessStart(this SquirrelSettings toolSettings, string processStart)
         {
@@ -393,7 +602,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.ProcessStart = processStart;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SquirrelSettings.ProcessStart"/>.</em></p><p>Start an executable in the latest version of the app package.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SquirrelSettings.ProcessStart"/></em></p>
+        ///   <p>Start an executable in the latest version of the app package.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ResetProcessStart(this SquirrelSettings toolSettings)
         {
@@ -403,7 +615,10 @@ namespace Nuke.Common.Tools.Squirrel
         }
         #endregion
         #region ProcessStartAndWait
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.ProcessStartAndWait"/>.</em></p><p>Start an executable in the latest version of the app package.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.ProcessStartAndWait"/></em></p>
+        ///   <p>Start an executable in the latest version of the app package.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetProcessStartAndWait(this SquirrelSettings toolSettings, string processStartAndWait)
         {
@@ -411,7 +626,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.ProcessStartAndWait = processStartAndWait;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SquirrelSettings.ProcessStartAndWait"/>.</em></p><p>Start an executable in the latest version of the app package.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SquirrelSettings.ProcessStartAndWait"/></em></p>
+        ///   <p>Start an executable in the latest version of the app package.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ResetProcessStartAndWait(this SquirrelSettings toolSettings)
         {
@@ -421,7 +639,10 @@ namespace Nuke.Common.Tools.Squirrel
         }
         #endregion
         #region ReleaseDirectory
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.ReleaseDirectory"/>.</em></p><p>Path to a release directory to use with releasify.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.ReleaseDirectory"/></em></p>
+        ///   <p>Path to a release directory to use with releasify.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetReleaseDirectory(this SquirrelSettings toolSettings, string releaseDirectory)
         {
@@ -429,7 +650,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.ReleaseDirectory = releaseDirectory;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SquirrelSettings.ReleaseDirectory"/>.</em></p><p>Path to a release directory to use with releasify.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SquirrelSettings.ReleaseDirectory"/></em></p>
+        ///   <p>Path to a release directory to use with releasify.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ResetReleaseDirectory(this SquirrelSettings toolSettings)
         {
@@ -439,7 +663,10 @@ namespace Nuke.Common.Tools.Squirrel
         }
         #endregion
         #region PackagesDirectory
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.PackagesDirectory"/>.</em></p><p>Path to the NuGet Packages directory for C# apps.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.PackagesDirectory"/></em></p>
+        ///   <p>Path to the NuGet Packages directory for C# apps.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetPackagesDirectory(this SquirrelSettings toolSettings, string packagesDirectory)
         {
@@ -447,7 +674,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.PackagesDirectory = packagesDirectory;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SquirrelSettings.PackagesDirectory"/>.</em></p><p>Path to the NuGet Packages directory for C# apps.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SquirrelSettings.PackagesDirectory"/></em></p>
+        ///   <p>Path to the NuGet Packages directory for C# apps.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ResetPackagesDirectory(this SquirrelSettings toolSettings)
         {
@@ -457,7 +687,10 @@ namespace Nuke.Common.Tools.Squirrel
         }
         #endregion
         #region BootstrapperExecutable
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.BootstrapperExecutable"/>.</em></p><p>Path to the Setup.exe to use as a template.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.BootstrapperExecutable"/></em></p>
+        ///   <p>Path to the Setup.exe to use as a template.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetBootstrapperExecutable(this SquirrelSettings toolSettings, string bootstrapperExecutable)
         {
@@ -465,7 +698,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.BootstrapperExecutable = bootstrapperExecutable;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SquirrelSettings.BootstrapperExecutable"/>.</em></p><p>Path to the Setup.exe to use as a template.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SquirrelSettings.BootstrapperExecutable"/></em></p>
+        ///   <p>Path to the Setup.exe to use as a template.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ResetBootstrapperExecutable(this SquirrelSettings toolSettings)
         {
@@ -475,7 +711,10 @@ namespace Nuke.Common.Tools.Squirrel
         }
         #endregion
         #region LoadingGif
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.LoadingGif"/>.</em></p><p>Path to an animated GIF to be displayed during installation.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.LoadingGif"/></em></p>
+        ///   <p>Path to an animated GIF to be displayed during installation.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetLoadingGif(this SquirrelSettings toolSettings, string loadingGif)
         {
@@ -483,7 +722,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.LoadingGif = loadingGif;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SquirrelSettings.LoadingGif"/>.</em></p><p>Path to an animated GIF to be displayed during installation.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SquirrelSettings.LoadingGif"/></em></p>
+        ///   <p>Path to an animated GIF to be displayed during installation.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ResetLoadingGif(this SquirrelSettings toolSettings)
         {
@@ -493,7 +735,10 @@ namespace Nuke.Common.Tools.Squirrel
         }
         #endregion
         #region Icon
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.Icon"/>.</em></p><p>Path to an ICO file that will be used for icon shortcuts.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.Icon"/></em></p>
+        ///   <p>Path to an ICO file that will be used for icon shortcuts.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetIcon(this SquirrelSettings toolSettings, string icon)
         {
@@ -501,7 +746,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.Icon = icon;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SquirrelSettings.Icon"/>.</em></p><p>Path to an ICO file that will be used for icon shortcuts.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SquirrelSettings.Icon"/></em></p>
+        ///   <p>Path to an ICO file that will be used for icon shortcuts.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ResetIcon(this SquirrelSettings toolSettings)
         {
@@ -511,7 +759,10 @@ namespace Nuke.Common.Tools.Squirrel
         }
         #endregion
         #region SetupIcon
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.SetupIcon"/>.</em></p><p>Path to an ICO file that will be used for the Setup executable's icon.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.SetupIcon"/></em></p>
+        ///   <p>Path to an ICO file that will be used for the Setup executable's icon.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetSetupIcon(this SquirrelSettings toolSettings, string setupIcon)
         {
@@ -519,7 +770,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.SetupIcon = setupIcon;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SquirrelSettings.SetupIcon"/>.</em></p><p>Path to an ICO file that will be used for the Setup executable's icon.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SquirrelSettings.SetupIcon"/></em></p>
+        ///   <p>Path to an ICO file that will be used for the Setup executable's icon.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ResetSetupIcon(this SquirrelSettings toolSettings)
         {
@@ -529,7 +783,10 @@ namespace Nuke.Common.Tools.Squirrel
         }
         #endregion
         #region SignWithParameters
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.SignWithParameters"/>.</em></p><p>Sign the installer via SignTool.exe with the parameters given.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.SignWithParameters"/></em></p>
+        ///   <p>Sign the installer via SignTool.exe with the parameters given.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetSignWithParameters(this SquirrelSettings toolSettings, string signWithParameters)
         {
@@ -537,7 +794,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.SignWithParameters = signWithParameters;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SquirrelSettings.SignWithParameters"/>.</em></p><p>Sign the installer via SignTool.exe with the parameters given.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SquirrelSettings.SignWithParameters"/></em></p>
+        ///   <p>Sign the installer via SignTool.exe with the parameters given.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ResetSignWithParameters(this SquirrelSettings toolSettings)
         {
@@ -547,7 +807,10 @@ namespace Nuke.Common.Tools.Squirrel
         }
         #endregion
         #region BaseUrl
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.BaseUrl"/>.</em></p><p>Provides a base URL to prefix the RELEASES file packages with.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.BaseUrl"/></em></p>
+        ///   <p>Provides a base URL to prefix the RELEASES file packages with.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetBaseUrl(this SquirrelSettings toolSettings, string baseUrl)
         {
@@ -555,7 +818,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.BaseUrl = baseUrl;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SquirrelSettings.BaseUrl"/>.</em></p><p>Provides a base URL to prefix the RELEASES file packages with.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SquirrelSettings.BaseUrl"/></em></p>
+        ///   <p>Provides a base URL to prefix the RELEASES file packages with.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ResetBaseUrl(this SquirrelSettings toolSettings)
         {
@@ -565,7 +831,10 @@ namespace Nuke.Common.Tools.Squirrel
         }
         #endregion
         #region ProcessStartArguments
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.ProcessStartArguments"/>.</em></p><p>Arguments that will be used when starting executable.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.ProcessStartArguments"/></em></p>
+        ///   <p>Arguments that will be used when starting executable.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetProcessStartArguments(this SquirrelSettings toolSettings, string processStartArguments)
         {
@@ -573,7 +842,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.ProcessStartArguments = processStartArguments;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SquirrelSettings.ProcessStartArguments"/>.</em></p><p>Arguments that will be used when starting executable.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SquirrelSettings.ProcessStartArguments"/></em></p>
+        ///   <p>Arguments that will be used when starting executable.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ResetProcessStartArguments(this SquirrelSettings toolSettings)
         {
@@ -583,7 +855,10 @@ namespace Nuke.Common.Tools.Squirrel
         }
         #endregion
         #region ShortcutLocations
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.ShortcutLocations"/> to a new list.</em></p><p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.ShortcutLocations"/> to a new list</em></p>
+        ///   <p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetShortcutLocations(this SquirrelSettings toolSettings, params string[] shortcutLocations)
         {
@@ -591,7 +866,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.ShortcutLocationsInternal = shortcutLocations.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.ShortcutLocations"/> to a new list.</em></p><p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.ShortcutLocations"/> to a new list</em></p>
+        ///   <p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetShortcutLocations(this SquirrelSettings toolSettings, IEnumerable<string> shortcutLocations)
         {
@@ -599,7 +877,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.ShortcutLocationsInternal = shortcutLocations.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="SquirrelSettings.ShortcutLocations"/>.</em></p><p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="SquirrelSettings.ShortcutLocations"/></em></p>
+        ///   <p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings AddShortcutLocations(this SquirrelSettings toolSettings, params string[] shortcutLocations)
         {
@@ -607,7 +888,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.ShortcutLocationsInternal.AddRange(shortcutLocations);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="SquirrelSettings.ShortcutLocations"/>.</em></p><p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="SquirrelSettings.ShortcutLocations"/></em></p>
+        ///   <p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings AddShortcutLocations(this SquirrelSettings toolSettings, IEnumerable<string> shortcutLocations)
         {
@@ -615,7 +899,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.ShortcutLocationsInternal.AddRange(shortcutLocations);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="SquirrelSettings.ShortcutLocations"/>.</em></p><p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="SquirrelSettings.ShortcutLocations"/></em></p>
+        ///   <p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ClearShortcutLocations(this SquirrelSettings toolSettings)
         {
@@ -623,7 +910,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.ShortcutLocationsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="SquirrelSettings.ShortcutLocations"/>.</em></p><p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="SquirrelSettings.ShortcutLocations"/></em></p>
+        ///   <p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings RemoveShortcutLocations(this SquirrelSettings toolSettings, params string[] shortcutLocations)
         {
@@ -632,7 +922,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.ShortcutLocationsInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="SquirrelSettings.ShortcutLocations"/>.</em></p><p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="SquirrelSettings.ShortcutLocations"/></em></p>
+        ///   <p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings RemoveShortcutLocations(this SquirrelSettings toolSettings, IEnumerable<string> shortcutLocations)
         {
@@ -643,7 +936,10 @@ namespace Nuke.Common.Tools.Squirrel
         }
         #endregion
         #region GenerateNoMsi
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.GenerateNoMsi"/>.</em></p><p>Don't generate an MSI package.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.GenerateNoMsi"/></em></p>
+        ///   <p>Don't generate an MSI package.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetGenerateNoMsi(this SquirrelSettings toolSettings, bool? generateNoMsi)
         {
@@ -651,7 +947,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.GenerateNoMsi = generateNoMsi;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SquirrelSettings.GenerateNoMsi"/>.</em></p><p>Don't generate an MSI package.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SquirrelSettings.GenerateNoMsi"/></em></p>
+        ///   <p>Don't generate an MSI package.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ResetGenerateNoMsi(this SquirrelSettings toolSettings)
         {
@@ -659,7 +958,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.GenerateNoMsi = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="SquirrelSettings.GenerateNoMsi"/>.</em></p><p>Don't generate an MSI package.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="SquirrelSettings.GenerateNoMsi"/></em></p>
+        ///   <p>Don't generate an MSI package.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings EnableGenerateNoMsi(this SquirrelSettings toolSettings)
         {
@@ -667,7 +969,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.GenerateNoMsi = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="SquirrelSettings.GenerateNoMsi"/>.</em></p><p>Don't generate an MSI package.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="SquirrelSettings.GenerateNoMsi"/></em></p>
+        ///   <p>Don't generate an MSI package.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings DisableGenerateNoMsi(this SquirrelSettings toolSettings)
         {
@@ -675,7 +980,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.GenerateNoMsi = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="SquirrelSettings.GenerateNoMsi"/>.</em></p><p>Don't generate an MSI package.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SquirrelSettings.GenerateNoMsi"/></em></p>
+        ///   <p>Don't generate an MSI package.</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ToggleGenerateNoMsi(this SquirrelSettings toolSettings)
         {
@@ -685,7 +993,10 @@ namespace Nuke.Common.Tools.Squirrel
         }
         #endregion
         #region GenerateNoDelta
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.GenerateNoDelta"/>.</em></p><p>Don't generate delta packages to save time</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.GenerateNoDelta"/></em></p>
+        ///   <p>Don't generate delta packages to save time</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetGenerateNoDelta(this SquirrelSettings toolSettings, bool? generateNoDelta)
         {
@@ -693,7 +1004,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.GenerateNoDelta = generateNoDelta;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SquirrelSettings.GenerateNoDelta"/>.</em></p><p>Don't generate delta packages to save time</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SquirrelSettings.GenerateNoDelta"/></em></p>
+        ///   <p>Don't generate delta packages to save time</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ResetGenerateNoDelta(this SquirrelSettings toolSettings)
         {
@@ -701,7 +1015,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.GenerateNoDelta = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="SquirrelSettings.GenerateNoDelta"/>.</em></p><p>Don't generate delta packages to save time</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="SquirrelSettings.GenerateNoDelta"/></em></p>
+        ///   <p>Don't generate delta packages to save time</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings EnableGenerateNoDelta(this SquirrelSettings toolSettings)
         {
@@ -709,7 +1026,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.GenerateNoDelta = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="SquirrelSettings.GenerateNoDelta"/>.</em></p><p>Don't generate delta packages to save time</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="SquirrelSettings.GenerateNoDelta"/></em></p>
+        ///   <p>Don't generate delta packages to save time</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings DisableGenerateNoDelta(this SquirrelSettings toolSettings)
         {
@@ -717,7 +1037,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.GenerateNoDelta = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="SquirrelSettings.GenerateNoDelta"/>.</em></p><p>Don't generate delta packages to save time</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SquirrelSettings.GenerateNoDelta"/></em></p>
+        ///   <p>Don't generate delta packages to save time</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ToggleGenerateNoDelta(this SquirrelSettings toolSettings)
         {
@@ -727,7 +1050,10 @@ namespace Nuke.Common.Tools.Squirrel
         }
         #endregion
         #region FrameworkVersion
-        /// <summary><p><em>Sets <see cref="SquirrelSettings.FrameworkVersion"/>.</em></p><p>Set the required .NET framework version, e.g. net461</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="SquirrelSettings.FrameworkVersion"/></em></p>
+        ///   <p>Set the required .NET framework version, e.g. net461</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings SetFrameworkVersion(this SquirrelSettings toolSettings, string frameworkVersion)
         {
@@ -735,7 +1061,10 @@ namespace Nuke.Common.Tools.Squirrel
             toolSettings.FrameworkVersion = frameworkVersion;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="SquirrelSettings.FrameworkVersion"/>.</em></p><p>Set the required .NET framework version, e.g. net461</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="SquirrelSettings.FrameworkVersion"/></em></p>
+        ///   <p>Set the required .NET framework version, e.g. net461</p>
+        /// </summary>
         [Pure]
         public static SquirrelSettings ResetFrameworkVersion(this SquirrelSettings toolSettings)
         {
