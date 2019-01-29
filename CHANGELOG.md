@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 - Changed setting of default working directory for process invocations
+- Added `NukeBuild.Execute` overload without default target
 - Added `ContinueOnFailure` and `AssuredAfterFailure` as target definition methods
 - Added `degreeOfParallelism` and `completeOnError` for combinatorial invocations
 - Added `LocalExecutableAttribute`
@@ -13,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `ProjectModelTasks.ParseProject` based on `Microsoft.Build` packages
 - Added `AggregateException` handling to show number as prefix when flattening
 - Added `[Tool].[Tool]Logger` as settable field for custom logging
+- Added `VerbosityMappingAttribute`
 - Fixed `EnsureCleanDirectory` to only clean instead of delete and recreate
 - Fixed `TeamCityOutputSink` to not report errors as build problems
 - Fixed `SolutionAttribute` to resolve first by constructor argument
