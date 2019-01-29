@@ -173,7 +173,7 @@ partial class Build : NukeBuild
                         OutputDirectory.GlobFiles("*.nupkg").NotEmpty(), (cs, v) => cs
                             .SetTargetPath(v)),
                 degreeOfParallelism: 5,
-                continueOnError: true);
+                completeOnFailure: true);
 
             if (GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch))
             {

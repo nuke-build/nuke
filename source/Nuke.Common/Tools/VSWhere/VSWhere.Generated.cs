@@ -49,9 +49,9 @@ namespace Nuke.Common.Tools.VSWhere
             return VSWhere(configurator(new VSWhereSettings()));
         }
         /// <summary><p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p><p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p></summary>
-        public static IEnumerable<(VSWhereSettings Settings, List<VSWhereResult> Result, IReadOnlyCollection<Output> Output)> VSWhere(CombinatorialConfigure<VSWhereSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(VSWhereSettings Settings, List<VSWhereResult> Result, IReadOnlyCollection<Output> Output)> VSWhere(CombinatorialConfigure<VSWhereSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(VSWhere, VSWhereLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(VSWhere, VSWhereLogger, degreeOfParallelism, completeOnFailure);
         }
     }
     #region VSWhereSettings

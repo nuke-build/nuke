@@ -49,9 +49,9 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
             return WebConfigTransformRunner(configurator(new WebConfigTransformRunnerSettings()));
         }
         /// <summary><p>This is a commandline tool to run an ASP.Net web.config tranformation.</p><p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p></summary>
-        public static IEnumerable<(WebConfigTransformRunnerSettings Settings, IReadOnlyCollection<Output> Output)> WebConfigTransformRunner(CombinatorialConfigure<WebConfigTransformRunnerSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(WebConfigTransformRunnerSettings Settings, IReadOnlyCollection<Output> Output)> WebConfigTransformRunner(CombinatorialConfigure<WebConfigTransformRunnerSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(WebConfigTransformRunner, WebConfigTransformRunnerLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(WebConfigTransformRunner, WebConfigTransformRunnerLogger, degreeOfParallelism, completeOnFailure);
         }
     }
     #region WebConfigTransformRunnerSettings

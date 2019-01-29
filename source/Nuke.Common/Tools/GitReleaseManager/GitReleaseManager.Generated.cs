@@ -49,9 +49,9 @@ namespace Nuke.Common.Tools.GitReleaseManager
             return GitReleaseManagerAddAssets(configurator(new GitReleaseManagerAddAssetsSettings()));
         }
         /// <summary><p>Adds an asset to an existing release.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
-        public static IEnumerable<(GitReleaseManagerAddAssetsSettings Settings, IReadOnlyCollection<Output> Output)> GitReleaseManagerAddAssets(CombinatorialConfigure<GitReleaseManagerAddAssetsSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(GitReleaseManagerAddAssetsSettings Settings, IReadOnlyCollection<Output> Output)> GitReleaseManagerAddAssets(CombinatorialConfigure<GitReleaseManagerAddAssetsSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(GitReleaseManagerAddAssets, GitReleaseManagerLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(GitReleaseManagerAddAssets, GitReleaseManagerLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary><p>Closes the milestone.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> GitReleaseManagerClose(GitReleaseManagerCloseSettings toolSettings = null)
@@ -67,9 +67,9 @@ namespace Nuke.Common.Tools.GitReleaseManager
             return GitReleaseManagerClose(configurator(new GitReleaseManagerCloseSettings()));
         }
         /// <summary><p>Closes the milestone.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
-        public static IEnumerable<(GitReleaseManagerCloseSettings Settings, IReadOnlyCollection<Output> Output)> GitReleaseManagerClose(CombinatorialConfigure<GitReleaseManagerCloseSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(GitReleaseManagerCloseSettings Settings, IReadOnlyCollection<Output> Output)> GitReleaseManagerClose(CombinatorialConfigure<GitReleaseManagerCloseSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(GitReleaseManagerClose, GitReleaseManagerLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(GitReleaseManagerClose, GitReleaseManagerLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary><p>Creates a draft release notes from a milestone.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> GitReleaseManagerCreate(GitReleaseManagerCreateSettings toolSettings = null)
@@ -85,9 +85,9 @@ namespace Nuke.Common.Tools.GitReleaseManager
             return GitReleaseManagerCreate(configurator(new GitReleaseManagerCreateSettings()));
         }
         /// <summary><p>Creates a draft release notes from a milestone.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
-        public static IEnumerable<(GitReleaseManagerCreateSettings Settings, IReadOnlyCollection<Output> Output)> GitReleaseManagerCreate(CombinatorialConfigure<GitReleaseManagerCreateSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(GitReleaseManagerCreateSettings Settings, IReadOnlyCollection<Output> Output)> GitReleaseManagerCreate(CombinatorialConfigure<GitReleaseManagerCreateSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(GitReleaseManagerCreate, GitReleaseManagerLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(GitReleaseManagerCreate, GitReleaseManagerLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary><p>Exports all the Release Notes in markdown format.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> GitReleaseManagerExport(GitReleaseManagerExportSettings toolSettings = null)
@@ -103,9 +103,9 @@ namespace Nuke.Common.Tools.GitReleaseManager
             return GitReleaseManagerExport(configurator(new GitReleaseManagerExportSettings()));
         }
         /// <summary><p>Exports all the Release Notes in markdown format.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
-        public static IEnumerable<(GitReleaseManagerExportSettings Settings, IReadOnlyCollection<Output> Output)> GitReleaseManagerExport(CombinatorialConfigure<GitReleaseManagerExportSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(GitReleaseManagerExportSettings Settings, IReadOnlyCollection<Output> Output)> GitReleaseManagerExport(CombinatorialConfigure<GitReleaseManagerExportSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(GitReleaseManagerExport, GitReleaseManagerLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(GitReleaseManagerExport, GitReleaseManagerLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary><p>Publishes the GitHub Release.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> GitReleaseManagerPublish(GitReleaseManagerPublishSettings toolSettings = null)
@@ -121,9 +121,9 @@ namespace Nuke.Common.Tools.GitReleaseManager
             return GitReleaseManagerPublish(configurator(new GitReleaseManagerPublishSettings()));
         }
         /// <summary><p>Publishes the GitHub Release.</p><p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p></summary>
-        public static IEnumerable<(GitReleaseManagerPublishSettings Settings, IReadOnlyCollection<Output> Output)> GitReleaseManagerPublish(CombinatorialConfigure<GitReleaseManagerPublishSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(GitReleaseManagerPublishSettings Settings, IReadOnlyCollection<Output> Output)> GitReleaseManagerPublish(CombinatorialConfigure<GitReleaseManagerPublishSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(GitReleaseManagerPublish, GitReleaseManagerLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(GitReleaseManagerPublish, GitReleaseManagerLogger, degreeOfParallelism, completeOnFailure);
         }
     }
     #region GitReleaseManagerAddAssetsSettings

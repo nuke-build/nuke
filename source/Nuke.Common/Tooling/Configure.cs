@@ -27,7 +27,7 @@ namespace Nuke.Common.Tooling
             Func<TSettings, IReadOnlyCollection<Output>> executor,
             Action<OutputType, string> logger,
             int degreeOfParallelism,
-            bool continueOnError)
+            bool completeOnFailure)
             where TSettings : ToolSettings, new()
         {
             return Invoke(
@@ -36,7 +36,7 @@ namespace Nuke.Common.Tooling
                 x => x.Output,
                 logger,
                 degreeOfParallelism,
-                continueOnError);
+                completeOnFailure);
         }
         
         public static IReadOnlyCollection<(TSettings Settings, TResult Result, IReadOnlyCollection<Output> Output)> Invoke<TSettings, TResult>(
@@ -44,7 +44,7 @@ namespace Nuke.Common.Tooling
             Func<TSettings, (TResult Result, IReadOnlyCollection<Output> Output)> executor,
             Action<OutputType, string> logger,
             int degreeOfParallelism,
-            bool continueOnError)
+            bool completeOnFailure)
             where TSettings : ToolSettings, new()
         {
             return Invoke(
@@ -53,7 +53,7 @@ namespace Nuke.Common.Tooling
                     x => x.ReturnValue.Output,
                     logger,
                     degreeOfParallelism,
-                    continueOnError)
+                    completeOnFailure)
                 .Select(x => (x.Settings, x.ReturnValue.Result, x.ReturnValue.Output)).ToList();
         }
 
@@ -63,7 +63,7 @@ namespace Nuke.Common.Tooling
             Func<TResult, IReadOnlyCollection<Output>> outputSelector,
             Action<OutputType, string> logger,
             int degreeOfParallelism,
-            bool continueOnError)
+            bool completeOnFailure)
             where TSettings : ToolSettings, new()
         {
             var singleExecution = degreeOfParallelism == 1;
@@ -85,7 +85,7 @@ namespace Nuke.Common.Tooling
                         {
                             invocations.Add((x, default, exception));
                             
-                            if (!continueOnError)
+                            if (!completeOnFailure)
                                 throw;
                         }
                     });

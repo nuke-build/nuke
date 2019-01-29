@@ -49,9 +49,9 @@ namespace Nuke.Common.Tools.Octopus
             return OctopusPack(configurator(new OctopusPackSettings()));
         }
         /// <summary><p>The <c>Octo.exe pack</c> command provides a number of other useful parameters that can be used to customize the way your package gets created, such as output folder, files to include and release notes.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
-        public static IEnumerable<(OctopusPackSettings Settings, IReadOnlyCollection<Output> Output)> OctopusPack(CombinatorialConfigure<OctopusPackSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(OctopusPackSettings Settings, IReadOnlyCollection<Output> Output)> OctopusPack(CombinatorialConfigure<OctopusPackSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(OctopusPack, OctopusLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(OctopusPack, OctopusLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary><p>The <c>Octo.exe push</c> command can push any of the supported packages types listed on this <a href="https://octopus.com/docs/packaging-applications/supported-packages">page</a>.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> OctopusPush(OctopusPushSettings toolSettings = null)
@@ -67,9 +67,9 @@ namespace Nuke.Common.Tools.Octopus
             return OctopusPush(configurator(new OctopusPushSettings()));
         }
         /// <summary><p>The <c>Octo.exe push</c> command can push any of the supported packages types listed on this <a href="https://octopus.com/docs/packaging-applications/supported-packages">page</a>.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
-        public static IEnumerable<(OctopusPushSettings Settings, IReadOnlyCollection<Output> Output)> OctopusPush(CombinatorialConfigure<OctopusPushSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(OctopusPushSettings Settings, IReadOnlyCollection<Output> Output)> OctopusPush(CombinatorialConfigure<OctopusPushSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(OctopusPush, OctopusLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(OctopusPush, OctopusLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary><p>The <c>Octo.exe create-release</c> can be used to automate the creation of releases. This allows you to easily integrate Octopus with other continuous integration servers.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> OctopusCreateRelease(OctopusCreateReleaseSettings toolSettings = null)
@@ -85,9 +85,9 @@ namespace Nuke.Common.Tools.Octopus
             return OctopusCreateRelease(configurator(new OctopusCreateReleaseSettings()));
         }
         /// <summary><p>The <c>Octo.exe create-release</c> can be used to automate the creation of releases. This allows you to easily integrate Octopus with other continuous integration servers.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
-        public static IEnumerable<(OctopusCreateReleaseSettings Settings, IReadOnlyCollection<Output> Output)> OctopusCreateRelease(CombinatorialConfigure<OctopusCreateReleaseSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(OctopusCreateReleaseSettings Settings, IReadOnlyCollection<Output> Output)> OctopusCreateRelease(CombinatorialConfigure<OctopusCreateReleaseSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(OctopusCreateRelease, OctopusLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(OctopusCreateRelease, OctopusLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary><p>The <c>Octo.exe deploy-release</c> can be used to automate the deployment of releases to environments. This allows you to easily integrate Octopus with other continuous integration servers.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> OctopusDeployRelease(OctopusDeployReleaseSettings toolSettings = null)
@@ -103,9 +103,9 @@ namespace Nuke.Common.Tools.Octopus
             return OctopusDeployRelease(configurator(new OctopusDeployReleaseSettings()));
         }
         /// <summary><p>The <c>Octo.exe deploy-release</c> can be used to automate the deployment of releases to environments. This allows you to easily integrate Octopus with other continuous integration servers.</p><p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p></summary>
-        public static IEnumerable<(OctopusDeployReleaseSettings Settings, IReadOnlyCollection<Output> Output)> OctopusDeployRelease(CombinatorialConfigure<OctopusDeployReleaseSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(OctopusDeployReleaseSettings Settings, IReadOnlyCollection<Output> Output)> OctopusDeployRelease(CombinatorialConfigure<OctopusDeployReleaseSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(OctopusDeployRelease, OctopusLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(OctopusDeployRelease, OctopusLogger, degreeOfParallelism, completeOnFailure);
         }
     }
     #region OctopusPackSettings

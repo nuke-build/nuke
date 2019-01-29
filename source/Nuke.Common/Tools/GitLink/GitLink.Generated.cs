@@ -50,9 +50,9 @@ namespace Nuke.Common.Tools.GitLink
             return GitLink2(configurator(new GitLink2Settings()));
         }
         /// <summary><p>GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.</p><p>For more details, visit the <a href="https://github.com/GitTools/GitLink/">official website</a>.</p></summary>
-        public static IEnumerable<(GitLink2Settings Settings, IReadOnlyCollection<Output> Output)> GitLink2(CombinatorialConfigure<GitLink2Settings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(GitLink2Settings Settings, IReadOnlyCollection<Output> Output)> GitLink2(CombinatorialConfigure<GitLink2Settings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(GitLink2, GitLinkLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(GitLink2, GitLinkLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary><p>GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.</p><p>For more details, visit the <a href="https://github.com/GitTools/GitLink/">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> GitLink3(GitLink3Settings toolSettings = null)
@@ -69,9 +69,9 @@ namespace Nuke.Common.Tools.GitLink
             return GitLink3(configurator(new GitLink3Settings()));
         }
         /// <summary><p>GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.</p><p>For more details, visit the <a href="https://github.com/GitTools/GitLink/">official website</a>.</p></summary>
-        public static IEnumerable<(GitLink3Settings Settings, IReadOnlyCollection<Output> Output)> GitLink3(CombinatorialConfigure<GitLink3Settings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(GitLink3Settings Settings, IReadOnlyCollection<Output> Output)> GitLink3(CombinatorialConfigure<GitLink3Settings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(GitLink3, GitLinkLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(GitLink3, GitLinkLogger, degreeOfParallelism, completeOnFailure);
         }
     }
     #region GitLink2Settings

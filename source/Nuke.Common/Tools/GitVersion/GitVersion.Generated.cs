@@ -49,9 +49,9 @@ namespace Nuke.Common.Tools.GitVersion
             return GitVersion(configurator(new GitVersionSettings()));
         }
         /// <summary><p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p><p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p></summary>
-        public static IEnumerable<(GitVersionSettings Settings, GitVersion Result, IReadOnlyCollection<Output> Output)> GitVersion(CombinatorialConfigure<GitVersionSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(GitVersionSettings Settings, GitVersion Result, IReadOnlyCollection<Output> Output)> GitVersion(CombinatorialConfigure<GitVersionSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(GitVersion, GitVersionLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(GitVersion, GitVersionLogger, degreeOfParallelism, completeOnFailure);
         }
     }
     #region GitVersionSettings

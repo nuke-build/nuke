@@ -49,9 +49,9 @@ namespace Nuke.Common.Tools.VSTest
             return VSTest(configurator(new VSTestSettings()));
         }
         /// <summary><p>VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.</p><p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/jj155796.aspx">official website</a>.</p></summary>
-        public static IEnumerable<(VSTestSettings Settings, IReadOnlyCollection<Output> Output)> VSTest(CombinatorialConfigure<VSTestSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(VSTestSettings Settings, IReadOnlyCollection<Output> Output)> VSTest(CombinatorialConfigure<VSTestSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(VSTest, VSTestLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(VSTest, VSTestLogger, degreeOfParallelism, completeOnFailure);
         }
     }
     #region VSTestSettings

@@ -121,7 +121,7 @@ namespace Nuke.CodeGeneration.Generators
                              {
                                  $"CombinatorialConfigure<{task.SettingsClass.Name}> configurator",
                                  "int degreeOfParallelism = 1",
-                                 "bool continueOnError = false"
+                                 "bool completeOnFailure = false"
                              }.JoinComma();
             
             return writer
@@ -129,7 +129,7 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteObsoleteAttributeWhenObsolete(task)
                 .WriteLine($"public static {returnType} {task.GetTaskMethodName()}({parameters})")
                 .WriteBlock(w => w
-                    .WriteLine($"return configurator.Invoke({task.GetTaskMethodName()}, {task.Tool.Name}Logger, degreeOfParallelism, continueOnError);"));
+                    .WriteLine($"return configurator.Invoke({task.GetTaskMethodName()}, {task.Tool.Name}Logger, degreeOfParallelism, completeOnFailure);"));
         }
 
         private static string GetProcessStart(Task task)

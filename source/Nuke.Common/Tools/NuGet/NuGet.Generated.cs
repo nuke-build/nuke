@@ -49,9 +49,9 @@ namespace Nuke.Common.Tools.NuGet
             return NuGetPush(configurator(new NuGetPushSettings()));
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IEnumerable<(NuGetPushSettings Settings, IReadOnlyCollection<Output> Output)> NuGetPush(CombinatorialConfigure<NuGetPushSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(NuGetPushSettings Settings, IReadOnlyCollection<Output> Output)> NuGetPush(CombinatorialConfigure<NuGetPushSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(NuGetPush, NuGetLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(NuGetPush, NuGetLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> NuGetPack(NuGetPackSettings toolSettings = null)
@@ -67,9 +67,9 @@ namespace Nuke.Common.Tools.NuGet
             return NuGetPack(configurator(new NuGetPackSettings()));
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IEnumerable<(NuGetPackSettings Settings, IReadOnlyCollection<Output> Output)> NuGetPack(CombinatorialConfigure<NuGetPackSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(NuGetPackSettings Settings, IReadOnlyCollection<Output> Output)> NuGetPack(CombinatorialConfigure<NuGetPackSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(NuGetPack, NuGetLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(NuGetPack, NuGetLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> NuGetRestore(NuGetRestoreSettings toolSettings = null)
@@ -85,9 +85,9 @@ namespace Nuke.Common.Tools.NuGet
             return NuGetRestore(configurator(new NuGetRestoreSettings()));
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IEnumerable<(NuGetRestoreSettings Settings, IReadOnlyCollection<Output> Output)> NuGetRestore(CombinatorialConfigure<NuGetRestoreSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(NuGetRestoreSettings Settings, IReadOnlyCollection<Output> Output)> NuGetRestore(CombinatorialConfigure<NuGetRestoreSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(NuGetRestore, NuGetLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(NuGetRestore, NuGetLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> NuGetSourcesAdd(NuGetSourcesAddSettings toolSettings = null)
@@ -103,9 +103,9 @@ namespace Nuke.Common.Tools.NuGet
             return NuGetSourcesAdd(configurator(new NuGetSourcesAddSettings()));
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IEnumerable<(NuGetSourcesAddSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesAdd(CombinatorialConfigure<NuGetSourcesAddSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(NuGetSourcesAddSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesAdd(CombinatorialConfigure<NuGetSourcesAddSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(NuGetSourcesAdd, NuGetLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(NuGetSourcesAdd, NuGetLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> NuGetSourcesUpdate(NuGetSourcesUpdateSettings toolSettings = null)
@@ -121,9 +121,9 @@ namespace Nuke.Common.Tools.NuGet
             return NuGetSourcesUpdate(configurator(new NuGetSourcesUpdateSettings()));
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IEnumerable<(NuGetSourcesUpdateSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesUpdate(CombinatorialConfigure<NuGetSourcesUpdateSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(NuGetSourcesUpdateSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesUpdate(CombinatorialConfigure<NuGetSourcesUpdateSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(NuGetSourcesUpdate, NuGetLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(NuGetSourcesUpdate, NuGetLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> NuGetSourcesRemove(NuGetSourcesRemoveSettings toolSettings = null)
@@ -139,9 +139,9 @@ namespace Nuke.Common.Tools.NuGet
             return NuGetSourcesRemove(configurator(new NuGetSourcesRemoveSettings()));
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IEnumerable<(NuGetSourcesRemoveSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesRemove(CombinatorialConfigure<NuGetSourcesRemoveSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(NuGetSourcesRemoveSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesRemove(CombinatorialConfigure<NuGetSourcesRemoveSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(NuGetSourcesRemove, NuGetLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(NuGetSourcesRemove, NuGetLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> NuGetSourcesEnable(NuGetSourcesEnableSettings toolSettings = null)
@@ -157,9 +157,9 @@ namespace Nuke.Common.Tools.NuGet
             return NuGetSourcesEnable(configurator(new NuGetSourcesEnableSettings()));
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IEnumerable<(NuGetSourcesEnableSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesEnable(CombinatorialConfigure<NuGetSourcesEnableSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(NuGetSourcesEnableSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesEnable(CombinatorialConfigure<NuGetSourcesEnableSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(NuGetSourcesEnable, NuGetLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(NuGetSourcesEnable, NuGetLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> NuGetSourcesDisable(NuGetSourcesDisableSettings toolSettings = null)
@@ -175,9 +175,9 @@ namespace Nuke.Common.Tools.NuGet
             return NuGetSourcesDisable(configurator(new NuGetSourcesDisableSettings()));
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IEnumerable<(NuGetSourcesDisableSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesDisable(CombinatorialConfigure<NuGetSourcesDisableSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(NuGetSourcesDisableSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesDisable(CombinatorialConfigure<NuGetSourcesDisableSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(NuGetSourcesDisable, NuGetLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(NuGetSourcesDisable, NuGetLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
         public static IReadOnlyCollection<Output> NuGetSourcesList(NuGetSourcesListSettings toolSettings = null)
@@ -193,9 +193,9 @@ namespace Nuke.Common.Tools.NuGet
             return NuGetSourcesList(configurator(new NuGetSourcesListSettings()));
         }
         /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
-        public static IEnumerable<(NuGetSourcesListSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesList(CombinatorialConfigure<NuGetSourcesListSettings> configurator, int degreeOfParallelism = 1, bool continueOnError = false)
+        public static IEnumerable<(NuGetSourcesListSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSourcesList(CombinatorialConfigure<NuGetSourcesListSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator.Invoke(NuGetSourcesList, NuGetLogger, degreeOfParallelism, continueOnError);
+            return configurator.Invoke(NuGetSourcesList, NuGetLogger, degreeOfParallelism, completeOnFailure);
         }
     }
     #region NuGetPushSettings
