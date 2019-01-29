@@ -22,6 +22,7 @@ namespace Nuke.Common.Execution
         internal TargetDefinition Definition { get; set; }
         public string Name { get; internal set; }
         public string Description { get; internal set; }
+        public bool Show { get; internal set; }
         internal Target Factory { get; set; }
         internal ICollection<Func<bool>> DynamicConditions { get; set; } = new List<Func<bool>>();
         internal ICollection<Func<bool>> StaticConditions { get; set; } = new List<Func<bool>>();
