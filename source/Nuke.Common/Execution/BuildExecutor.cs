@@ -30,15 +30,22 @@ namespace Nuke.Common.Execution
             
             MarkSkippedTargets(build, skippedTargets);
 
+            BuildManager.CancellationHandler += ExecuteAssuredTargets;
+
             try
             {
                 build.ExecutionPlan.ForEach(x => Execute(build, x, previouslyExecutedTargets));
             }
             catch
             {
+                ExecuteAssuredTargets();
+                throw;
+            }
+
+            void ExecuteAssuredTargets()
+            {
                 var assuredTargets = build.ExecutionPlan.Where(x => x.AssuredAfterFailure && x.Status == ExecutionStatus.NotRun);
                 assuredTargets.ForEach(x => Execute(build, x, previouslyExecutedTargets, failureMode: true));
-                throw;
             }
         }
 

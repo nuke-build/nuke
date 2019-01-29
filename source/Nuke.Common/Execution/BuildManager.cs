@@ -16,9 +16,19 @@ namespace Nuke.Common.Execution
 {
     internal static class BuildManager
     {
+        private static LinkedList<Action> s_cancellationHandlers = new LinkedList<Action>();
+        
+        public static event Action CancellationHandler
+        {
+            add => s_cancellationHandlers.AddFirst(value);
+            remove => s_cancellationHandlers.Remove(value);
+        } 
+        
         public static int Execute<T>(Expression<Func<T, Target>> defaultTargetExpression)
             where T : NukeBuild
         {
+            Console.CancelKeyPress += (s, e) => s_cancellationHandlers.ForEach(x => x());
+            
             var build = Create<T>();
             build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpression);
             
@@ -39,8 +49,8 @@ namespace Nuke.Common.Execution
                     build.ExecutableTargets,
                     ParameterService.Instance.GetParameter<string[]>(() => build.InvokedTargets) ??
                     ParameterService.Instance.GetPositionalCommandLineArguments<string>(separator: Constants.TargetsSeparator.Single()));
-                Console.CancelKeyPress += (s, e) => Finish();
-
+                CancellationHandler += Finish;
+                
                 InjectionUtility.InjectValues(build);
                 RequirementService.ValidateRequirements(build);
                 
