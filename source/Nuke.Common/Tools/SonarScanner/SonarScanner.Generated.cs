@@ -98,6 +98,15 @@ namespace Nuke.Common.Tools.SonarScanner
         public virtual string Password { get; internal set; }
         /// <summary><p>Sets the logging verbosity to detailed. Add this argument before sending logs for troubleshooting.</p></summary>
         public virtual bool? Verbose { get; internal set; }
+        /// <summary><p>Comma separated list of VSTest report files to include.</p></summary>
+        public virtual IReadOnlyList<string> VSTestReports => VSTestReportsInternal.AsReadOnly();
+        internal List<string> VSTestReportsInternal { get; set; } = new List<string>();
+        /// <summary><p>Comma separated list of NUnit report files to include.</p></summary>
+        public virtual IReadOnlyList<string> NUnitTestReports => NUnitTestReportsInternal.AsReadOnly();
+        internal List<string> NUnitTestReportsInternal { get; set; } = new List<string>();
+        /// <summary><p>Comma separated list of xUnit report files to include.</p></summary>
+        public virtual IReadOnlyList<string> XUnitTestReports => XUnitTestReportsInternal.AsReadOnly();
+        internal List<string> XUnitTestReportsInternal { get; set; } = new List<string>();
         /// <summary><p>Comma separated list of files to exclude from coverage calculations. Supports wildcards (*, **, ?).</p></summary>
         public virtual IReadOnlyList<string> CoverageExclusions => CoverageExclusionsInternal.AsReadOnly();
         internal List<string> CoverageExclusionsInternal { get; set; } = new List<string>();
@@ -137,6 +146,9 @@ namespace Nuke.Common.Tools.SonarScanner
               .Add("/d:sonar.login={value}", Login)
               .Add("/d:sonar.password={value}", Password, secret: true)
               .Add("/d:sonar.verbose={value}", Verbose)
+              .Add("/d:sonar.cs.vstest.reportsPaths={value}", VSTestReports, separator: ',')
+              .Add("/d:sonar.cs.nunit.reportsPaths={value}", NUnitTestReports, separator: ',')
+              .Add("/d:sonar.cs.xunit.reportsPaths={value}", XUnitTestReports, separator: ',')
               .Add("/d:sonar.coverage.exclusions={value}", CoverageExclusions, separator: ',')
               .Add("/d:sonar.cs.vscoveragexml.reportsPaths={value}", VisualStudioCoveragePaths, separator: ',')
               .Add("/d:sonar.cs.dotcover.reportsPaths={value}", DotCoverPaths, separator: ',')
@@ -347,6 +359,186 @@ namespace Nuke.Common.Tools.SonarScanner
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Verbose = !toolSettings.Verbose;
+            return toolSettings;
+        }
+        #endregion
+        #region VSTestReports
+        /// <summary><p><em>Sets <see cref="SonarScannerBeginSettings.VSTestReports"/> to a new list.</em></p><p>Comma separated list of VSTest report files to include.</p></summary>
+        [Pure]
+        public static SonarScannerBeginSettings SetVSTestReports(this SonarScannerBeginSettings toolSettings, params string[] vstestReports)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.VSTestReportsInternal = vstestReports.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <see cref="SonarScannerBeginSettings.VSTestReports"/> to a new list.</em></p><p>Comma separated list of VSTest report files to include.</p></summary>
+        [Pure]
+        public static SonarScannerBeginSettings SetVSTestReports(this SonarScannerBeginSettings toolSettings, IEnumerable<string> vstestReports)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.VSTestReportsInternal = vstestReports.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="SonarScannerBeginSettings.VSTestReports"/>.</em></p><p>Comma separated list of VSTest report files to include.</p></summary>
+        [Pure]
+        public static SonarScannerBeginSettings AddVSTestReports(this SonarScannerBeginSettings toolSettings, params string[] vstestReports)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.VSTestReportsInternal.AddRange(vstestReports);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="SonarScannerBeginSettings.VSTestReports"/>.</em></p><p>Comma separated list of VSTest report files to include.</p></summary>
+        [Pure]
+        public static SonarScannerBeginSettings AddVSTestReports(this SonarScannerBeginSettings toolSettings, IEnumerable<string> vstestReports)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.VSTestReportsInternal.AddRange(vstestReports);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="SonarScannerBeginSettings.VSTestReports"/>.</em></p><p>Comma separated list of VSTest report files to include.</p></summary>
+        [Pure]
+        public static SonarScannerBeginSettings ClearVSTestReports(this SonarScannerBeginSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.VSTestReportsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="SonarScannerBeginSettings.VSTestReports"/>.</em></p><p>Comma separated list of VSTest report files to include.</p></summary>
+        [Pure]
+        public static SonarScannerBeginSettings RemoveVSTestReports(this SonarScannerBeginSettings toolSettings, params string[] vstestReports)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(vstestReports);
+            toolSettings.VSTestReportsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="SonarScannerBeginSettings.VSTestReports"/>.</em></p><p>Comma separated list of VSTest report files to include.</p></summary>
+        [Pure]
+        public static SonarScannerBeginSettings RemoveVSTestReports(this SonarScannerBeginSettings toolSettings, IEnumerable<string> vstestReports)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(vstestReports);
+            toolSettings.VSTestReportsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region NUnitTestReports
+        /// <summary><p><em>Sets <see cref="SonarScannerBeginSettings.NUnitTestReports"/> to a new list.</em></p><p>Comma separated list of NUnit report files to include.</p></summary>
+        [Pure]
+        public static SonarScannerBeginSettings SetNUnitTestReports(this SonarScannerBeginSettings toolSettings, params string[] nunitTestReports)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NUnitTestReportsInternal = nunitTestReports.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <see cref="SonarScannerBeginSettings.NUnitTestReports"/> to a new list.</em></p><p>Comma separated list of NUnit report files to include.</p></summary>
+        [Pure]
+        public static SonarScannerBeginSettings SetNUnitTestReports(this SonarScannerBeginSettings toolSettings, IEnumerable<string> nunitTestReports)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NUnitTestReportsInternal = nunitTestReports.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="SonarScannerBeginSettings.NUnitTestReports"/>.</em></p><p>Comma separated list of NUnit report files to include.</p></summary>
+        [Pure]
+        public static SonarScannerBeginSettings AddNUnitTestReports(this SonarScannerBeginSettings toolSettings, params string[] nunitTestReports)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NUnitTestReportsInternal.AddRange(nunitTestReports);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="SonarScannerBeginSettings.NUnitTestReports"/>.</em></p><p>Comma separated list of NUnit report files to include.</p></summary>
+        [Pure]
+        public static SonarScannerBeginSettings AddNUnitTestReports(this SonarScannerBeginSettings toolSettings, IEnumerable<string> nunitTestReports)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NUnitTestReportsInternal.AddRange(nunitTestReports);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="SonarScannerBeginSettings.NUnitTestReports"/>.</em></p><p>Comma separated list of NUnit report files to include.</p></summary>
+        [Pure]
+        public static SonarScannerBeginSettings ClearNUnitTestReports(this SonarScannerBeginSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NUnitTestReportsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="SonarScannerBeginSettings.NUnitTestReports"/>.</em></p><p>Comma separated list of NUnit report files to include.</p></summary>
+        [Pure]
+        public static SonarScannerBeginSettings RemoveNUnitTestReports(this SonarScannerBeginSettings toolSettings, params string[] nunitTestReports)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(nunitTestReports);
+            toolSettings.NUnitTestReportsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="SonarScannerBeginSettings.NUnitTestReports"/>.</em></p><p>Comma separated list of NUnit report files to include.</p></summary>
+        [Pure]
+        public static SonarScannerBeginSettings RemoveNUnitTestReports(this SonarScannerBeginSettings toolSettings, IEnumerable<string> nunitTestReports)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(nunitTestReports);
+            toolSettings.NUnitTestReportsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region XUnitTestReports
+        /// <summary><p><em>Sets <see cref="SonarScannerBeginSettings.XUnitTestReports"/> to a new list.</em></p><p>Comma separated list of xUnit report files to include.</p></summary>
+        [Pure]
+        public static SonarScannerBeginSettings SetXUnitTestReports(this SonarScannerBeginSettings toolSettings, params string[] xunitTestReports)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.XUnitTestReportsInternal = xunitTestReports.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Sets <see cref="SonarScannerBeginSettings.XUnitTestReports"/> to a new list.</em></p><p>Comma separated list of xUnit report files to include.</p></summary>
+        [Pure]
+        public static SonarScannerBeginSettings SetXUnitTestReports(this SonarScannerBeginSettings toolSettings, IEnumerable<string> xunitTestReports)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.XUnitTestReportsInternal = xunitTestReports.ToList();
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="SonarScannerBeginSettings.XUnitTestReports"/>.</em></p><p>Comma separated list of xUnit report files to include.</p></summary>
+        [Pure]
+        public static SonarScannerBeginSettings AddXUnitTestReports(this SonarScannerBeginSettings toolSettings, params string[] xunitTestReports)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.XUnitTestReportsInternal.AddRange(xunitTestReports);
+            return toolSettings;
+        }
+        /// <summary><p><em>Adds values to <see cref="SonarScannerBeginSettings.XUnitTestReports"/>.</em></p><p>Comma separated list of xUnit report files to include.</p></summary>
+        [Pure]
+        public static SonarScannerBeginSettings AddXUnitTestReports(this SonarScannerBeginSettings toolSettings, IEnumerable<string> xunitTestReports)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.XUnitTestReportsInternal.AddRange(xunitTestReports);
+            return toolSettings;
+        }
+        /// <summary><p><em>Clears <see cref="SonarScannerBeginSettings.XUnitTestReports"/>.</em></p><p>Comma separated list of xUnit report files to include.</p></summary>
+        [Pure]
+        public static SonarScannerBeginSettings ClearXUnitTestReports(this SonarScannerBeginSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.XUnitTestReportsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="SonarScannerBeginSettings.XUnitTestReports"/>.</em></p><p>Comma separated list of xUnit report files to include.</p></summary>
+        [Pure]
+        public static SonarScannerBeginSettings RemoveXUnitTestReports(this SonarScannerBeginSettings toolSettings, params string[] xunitTestReports)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(xunitTestReports);
+            toolSettings.XUnitTestReportsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary><p><em>Removes values from <see cref="SonarScannerBeginSettings.XUnitTestReports"/>.</em></p><p>Comma separated list of xUnit report files to include.</p></summary>
+        [Pure]
+        public static SonarScannerBeginSettings RemoveXUnitTestReports(this SonarScannerBeginSettings toolSettings, IEnumerable<string> xunitTestReports)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(xunitTestReports);
+            toolSettings.XUnitTestReportsInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion
