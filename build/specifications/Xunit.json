@@ -181,10 +181,10 @@
     {
       "name": "Xunit2ParallelOption",
       "values": [
-        "None",
-        "Collections",
-        "Assemblies",
-        "All"
+        "none",
+        "collections",
+        "assemblies",
+        "all"
       ]
     },
     {

@@ -1090,10 +1090,10 @@ namespace Nuke.Common.Tools.Xunit
     [TypeConverter(typeof(TypeConverter<Xunit2ParallelOption>))]
     public partial class Xunit2ParallelOption : Enumeration
     {
-        public static Xunit2ParallelOption None = new Xunit2ParallelOption { Value = "None" };
-        public static Xunit2ParallelOption Collections = new Xunit2ParallelOption { Value = "Collections" };
-        public static Xunit2ParallelOption Assemblies = new Xunit2ParallelOption { Value = "Assemblies" };
-        public static Xunit2ParallelOption All = new Xunit2ParallelOption { Value = "All" };
+        public static Xunit2ParallelOption none = new Xunit2ParallelOption { Value = "none" };
+        public static Xunit2ParallelOption collections = new Xunit2ParallelOption { Value = "collections" };
+        public static Xunit2ParallelOption assemblies = new Xunit2ParallelOption { Value = "assemblies" };
+        public static Xunit2ParallelOption all = new Xunit2ParallelOption { Value = "all" };
     }
     #endregion
     #region Xunit2AppDomainMode
