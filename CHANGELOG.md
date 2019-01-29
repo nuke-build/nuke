@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 - Changed setting of default working directory for process invocations
+- Changed `Logger.Log` to `Logger.Normal`
 - Added `NukeBuild.Execute` overload without default target
 - Added `ContinueOnFailure` and `AssuredAfterFailure` as target definition methods
 - Added `degreeOfParallelism` and `completeOnError` for combinatorial invocations
@@ -15,6 +16,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `AggregateException` handling to show number as prefix when flattening
 - Added `[Tool].[Tool]Logger` as settable field for custom logging
 - Added `VerbosityMappingAttribute`
+- Added format-property map for CLI tasks
+- Added `AnsiColorOutputSink` for Bitrise, TeamCity, Travis, TeamServices
 - Fixed `EnsureCleanDirectory` to only clean instead of delete and recreate
 - Fixed `TeamCityOutputSink` to not report errors as build problems
 - Fixed `SolutionAttribute` to resolve first by constructor argument
