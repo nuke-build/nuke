@@ -5,6 +5,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Changed setting of default working directory for process invocations
+- Added `ContinueOnFailure` and `AssuredAfterFailure` as target definition methods
+- Added `degreeOfParallelism` and `completeOnError` for combinatorial invocations
+- Added `LocalExecutableAttribute`
+- Added `AbsolutePath` extensions for `GlobDirectories/Files`
+- Added `ProjectModelTasks.ParseProject` based on `Microsoft.Build` packages
+- Added `AggregateException` handling to show number as prefix when flattening
+- Added `[Tool].[Tool]Logger` as settable field for custom logging
+- Fixed `EnsureCleanDirectory` to only clean instead of delete and recreate
+- Fixed `TeamCityOutputSink` to not report errors as build problems
+- Fixed `SolutionAttribute` to resolve first by constructor argument
+- Fixed `Xunit2ParallelOption` to use lower-case text
 
 ## [0.15.0] / 2019-01-16
 - Changed `OnlyWhen` to `OnlyWhenStatic` and `OnlyWhenDynamic`
