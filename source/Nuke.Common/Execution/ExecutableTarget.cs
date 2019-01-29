@@ -26,6 +26,8 @@ namespace Nuke.Common.Execution
         internal ICollection<Func<bool>> DynamicConditions { get; set; } = new List<Func<bool>>();
         internal ICollection<Func<bool>> StaticConditions { get; set; } = new List<Func<bool>>();
         internal DependencyBehavior DependencyBehavior { get; set; }
+        internal bool AssuredAfterFailure { get; set; }
+        internal bool ContinueOnFailure { get; set; }
         internal ICollection<LambdaExpression> Requirements { get; set; } = new List<LambdaExpression>();
         internal ICollection<Action> Actions { get; set; } = new List<Action>();
         internal ICollection<ExecutableTarget> ExecutionDependencies { get; } = new List<ExecutableTarget>();

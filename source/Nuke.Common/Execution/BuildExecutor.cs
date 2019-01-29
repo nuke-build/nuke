@@ -29,41 +29,57 @@ namespace Nuke.Common.Execution
             File.WriteAllLines(BuildAttemptFile, new[] { invocationHash });
             
             MarkSkippedTargets(build, skippedTargets);
-            
-            foreach (var target in build.ExecutionPlan)
-            {
-                if (target.Status == ExecutionStatus.Skipped ||
-                    previouslyExecutedTargets.Contains(target.Name) ||
-                    target.DynamicConditions.Any(x => !x()))
-                {
-                    target.Status = ExecutionStatus.Skipped;
-                    build.OnTargetSkipped(target.Name);
-                    AppendToBuildAttemptFile(target.Name);
-                    continue;
-                }
 
-                using (Logger.Block(target.Name))
+            try
+            {
+                build.ExecutionPlan.ForEach(x => Execute(build, x, previouslyExecutedTargets));
+            }
+            catch
+            {
+                var assuredTargets = build.ExecutionPlan.Where(x => x.AssuredAfterFailure && x.Status == ExecutionStatus.NotRun);
+                assuredTargets.ForEach(x => Execute(build, x, previouslyExecutedTargets, failureMode: true));
+                throw;
+            }
+        }
+
+        private static void Execute(
+            NukeBuild build,
+            ExecutableTarget target,
+            IReadOnlyCollection<string> previouslyExecutedTargets,
+            bool failureMode = false)
+        {
+            if (target.Status == ExecutionStatus.Skipped ||
+                previouslyExecutedTargets.Contains(target.Name) ||
+                target.DynamicConditions.Any(x => !x()))
+            {
+                target.Status = ExecutionStatus.Skipped;
+                build.OnTargetSkipped(target.Name);
+                AppendToBuildAttemptFile(target.Name);
+                return;
+            }
+
+            using (Logger.Block(target.Name))
+            {
+                target.Status = ExecutionStatus.Executing;
+                build.OnTargetStart(target.Name);
+                var stopwatch = Stopwatch.StartNew();
+                try
                 {
-                    target.Status = ExecutionStatus.Executing;
-                    build.OnTargetStart(target.Name);
-                    var stopwatch = Stopwatch.StartNew();
-                    try
-                    {
-                        target.Actions.ForEach(x => x());
-                        target.Status = ExecutionStatus.Executed;
-                        build.OnTargetExecuted(target.Name);
-                        AppendToBuildAttemptFile(target.Name);
-                    }
-                    catch
-                    {
-                        target.Status = ExecutionStatus.Failed;
-                        build.OnTargetFailed(target.Name);
+                    target.Actions.ForEach(x => x());
+                    target.Status = ExecutionStatus.Executed;
+                    build.OnTargetExecuted(target.Name);
+                    AppendToBuildAttemptFile(target.Name);
+                }
+                catch
+                {
+                    target.Status = ExecutionStatus.Failed;
+                    build.OnTargetFailed(target.Name);
+                    if (!target.ContinueOnFailure && !failureMode)
                         throw;
-                    }
-                    finally
-                    {
-                        target.Duration = stopwatch.Elapsed;
-                    }
+                }
+                finally
+                {
+                    target.Duration = stopwatch.Elapsed;
                 }
             }
         }

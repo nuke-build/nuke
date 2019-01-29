@@ -44,6 +44,8 @@ namespace Nuke.Common.Execution
                                  DynamicConditions = definition.DynamicConditions,
                                  StaticConditions = definition.StaticConditions,
                                  DependencyBehavior = definition.DependencyBehavior,
+                                 ContinueOnFailure = definition.ContinueOnFailure,
+                                 AssuredAfterFailure = definition.AssureAfterFailure,
                                  Requirements = definition.Requirements,
                                  Actions = definition.Actions,
                              };
