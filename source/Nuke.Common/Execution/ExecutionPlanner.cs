@@ -23,7 +23,7 @@ namespace Nuke.Common.Execution
             [CanBeNull] IReadOnlyCollection<string> invokedTargetNames)
         {
             var invokedTargets = invokedTargetNames?.Select(x => GetExecutableTarget(x, executableTargets)).ToArray() ??
-                                 new[] { executableTargets.Single(x => x.IsDefault) };
+                                 GetDefaultTarget(executableTargets);
             invokedTargets.ForEach(x => x.Invoked = true);
 
             // Repeat to create the plan with triggers taken into account until plan doesn't change
@@ -103,16 +103,26 @@ namespace Nuke.Common.Execution
         {
             var executableTarget = executableTargets.SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(targetName));
             if (executableTarget == null)
-            {
-                var stringBuilder = new StringBuilder()
-                    .AppendLine($"Target with name '{targetName}' is not available.")
-                    .AppendLine()
-                    .AppendLine(HelpTextService.GetTargetsText(executableTargets));
-
-                ControlFlow.Fail(stringBuilder.ToString());
-            }
+                ControlFlow.Fail($"Target with name '{targetName}' is not available.");
 
             return executableTarget;
+        }
+
+        private static ExecutableTarget[] GetDefaultTarget(IReadOnlyCollection<ExecutableTarget> executableTargets)
+        {
+            var target = executableTargets.SingleOrDefault(x => x.IsDefault);
+            if (target == null)
+                Fail("No target has been marked to be the default.", executableTargets);
+            
+            return new[] { target };
+        }
+
+        private static void Fail(string message, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        {
+            ControlFlow.Fail(new StringBuilder()
+                .AppendLine(message)
+                .AppendLine()
+                .AppendLine(HelpTextService.GetTargetsText(executableTargets)).ToString());
         }
     }
 }

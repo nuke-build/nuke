@@ -20,7 +20,7 @@ namespace Nuke.Common.Execution
             Expression<Func<T, Target>> defaultTargetExpression)
             where T : NukeBuild
         {
-            var defaultTarget = defaultTargetExpression.Compile().Invoke(build);
+            var defaultTarget = defaultTargetExpression?.Compile().Invoke(build);
             var properties = build.GetType()
                 .GetProperties(ReflectionService.Instance)
                 .Where(x => x.PropertyType == typeof(Target)).ToList();

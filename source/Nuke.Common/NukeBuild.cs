@@ -54,7 +54,7 @@ namespace Nuke.Common
         /// Executes the build. The provided expression defines the <em>default</em> target that is invoked,
         /// if no targets have been specified via command-line arguments.
         /// </summary>
-        protected static int Execute<T>(Expression<Func<T, Target>> defaultTargetExpression)
+        protected static int Execute<T>(Expression<Func<T, Target>> defaultTargetExpression = null)
             where T : NukeBuild
         {
             return BuildManager.Execute(defaultTargetExpression);
@@ -83,7 +83,7 @@ namespace Nuke.Common
         public IReadOnlyCollection<ExecutableTarget> ExecutingTargets => ExecutionPlan.Where(x => x.Status != ExecutionStatus.Skipped).ToList();
 
 
-        internal void Execute<T>()
+        internal void ExecuteExtensions<T>()
             where T : IBuildExtension
         {
             GetType().GetCustomAttributes().OfType<T>().ForEach(x => x.Execute(this));

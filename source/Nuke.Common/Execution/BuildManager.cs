@@ -34,7 +34,7 @@ namespace Nuke.Common.Execution
             
             try
             {
-                build.Execute<IPreLogoBuildExtension>();
+                build.ExecuteExtensions<IPreLogoBuildExtension>();
                 build.OnBuildCreated();
                 
                 Logger.OutputSink = build.OutputSink;
@@ -44,7 +44,7 @@ namespace Nuke.Common.Execution
                 Logger.Log($"NUKE Execution Engine {typeof(BuildManager).Assembly.GetInformationalText()}");
                 Logger.Log(FigletTransform.GetText("NUKE"));
                 
-                build.Execute<IPostLogoBuildExtension>();
+                build.ExecuteExtensions<IPostLogoBuildExtension>();
                 build.ExecutionPlan = ExecutionPlanner.GetExecutionPlan(
                     build.ExecutableTargets,
                     ParameterService.Instance.GetParameter<string[]>(() => build.InvokedTargets) ??
@@ -69,7 +69,8 @@ namespace Nuke.Common.Execution
             }
             finally
             {
-                Finish();
+                if (build.ExecutionPlan != null)
+                    Finish();
             }
             
             void Finish()
