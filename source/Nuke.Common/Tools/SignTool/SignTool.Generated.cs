@@ -68,6 +68,7 @@ namespace Nuke.Common.Tools.SignTool
         ///     <li><c>/dg</c> via <see cref="SignToolSettings.SignedDigestAndUnsignedPkcs7Path"/></li>
         ///     <li><c>/di</c> via <see cref="SignToolSettings.GenerateSignature"/></li>
         ///     <li><c>/dlib</c> via <see cref="SignToolSettings.AuthenticodeDigestSignLibDll"/></li>
+        ///     <li><c>/dmdf</c> via <see cref="SignToolSettings.AuthenticodeDigestSignPassUnmodified"/></li>
         ///     <li><c>/ds</c> via <see cref="SignToolSettings.SignDigestOnly"/></li>
         ///     <li><c>/du</c> via <see cref="SignToolSettings.Url"/></li>
         ///     <li><c>/dxml</c> via <see cref="SignToolSettings.XmlFile"/></li>
@@ -100,7 +101,6 @@ namespace Nuke.Common.Tools.SignTool
         ///     <li><c>/u</c> via <see cref="SignToolSettings.EnhancedKeyUsage"/></li>
         ///     <li><c>/uw</c> via <see cref="SignToolSettings.WindowsSystemComponentVerification"/></li>
         ///     <li><c>/v</c> via <see cref="SignToolSettings.Verbose"/></li>
-        ///     <li><c>dmdf</c> via <see cref="SignToolSettings.AuthenticodeDigestSignPassUnmodified"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> SignTool(Configure<SignToolSettings> configurator)
@@ -125,6 +125,7 @@ namespace Nuke.Common.Tools.SignTool
         ///     <li><c>/dg</c> via <see cref="SignToolSettings.SignedDigestAndUnsignedPkcs7Path"/></li>
         ///     <li><c>/di</c> via <see cref="SignToolSettings.GenerateSignature"/></li>
         ///     <li><c>/dlib</c> via <see cref="SignToolSettings.AuthenticodeDigestSignLibDll"/></li>
+        ///     <li><c>/dmdf</c> via <see cref="SignToolSettings.AuthenticodeDigestSignPassUnmodified"/></li>
         ///     <li><c>/ds</c> via <see cref="SignToolSettings.SignDigestOnly"/></li>
         ///     <li><c>/du</c> via <see cref="SignToolSettings.Url"/></li>
         ///     <li><c>/dxml</c> via <see cref="SignToolSettings.XmlFile"/></li>
@@ -157,7 +158,6 @@ namespace Nuke.Common.Tools.SignTool
         ///     <li><c>/u</c> via <see cref="SignToolSettings.EnhancedKeyUsage"/></li>
         ///     <li><c>/uw</c> via <see cref="SignToolSettings.WindowsSystemComponentVerification"/></li>
         ///     <li><c>/v</c> via <see cref="SignToolSettings.Verbose"/></li>
-        ///     <li><c>dmdf</c> via <see cref="SignToolSettings.AuthenticodeDigestSignPassUnmodified"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(SignToolSettings Settings, IReadOnlyCollection<Output> Output)> SignTool(CombinatorialConfigure<SignToolSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -394,7 +394,7 @@ namespace Nuke.Common.Tools.SignTool
               .Add("/di {value}", GenerateSignature)
               .Add("/dxml", XmlFile)
               .Add("/dlib {value}", AuthenticodeDigestSignLibDll)
-              .Add("dmdf {value}", AuthenticodeDigestSignPassUnmodified)
+              .Add("/dmdf {value}", AuthenticodeDigestSignPassUnmodified)
               .Add("/p7 {value}", ContentFileToPkcs7)
               .Add("/p7co {value}", SignedContentIdentifier)
               .Add("/p7ce {value}", SignedContentMethod)
