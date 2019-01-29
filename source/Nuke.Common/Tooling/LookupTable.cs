@@ -85,7 +85,7 @@ namespace Nuke.Common.Tooling
 
         public bool Contains([NotNull] TKey key)
         {
-            return Lookup.Contains(key);
+            return _dictionary.ContainsKey(key);
         }
     }
 

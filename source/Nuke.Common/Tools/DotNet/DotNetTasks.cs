@@ -8,6 +8,18 @@ using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.DotNet
 {
+    public class DotNetVerbosityMappingAttribute : VerbosityMappingAttribute
+    {
+        public DotNetVerbosityMappingAttribute()
+            : base(typeof(DotNetVerbosity))
+        {
+            Quiet = nameof(DotNetVerbosity.Quiet);
+            Minimal = nameof(DotNetVerbosity.Minimal);
+            Normal = nameof(DotNetVerbosity.Normal);
+            Verbose = nameof(DotNetVerbosity.Detailed);
+        }
+    }
+
     partial class DotNetRunSettings
     {
         private string GetApplicationArguments()

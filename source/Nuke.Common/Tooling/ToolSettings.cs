@@ -22,6 +22,7 @@ namespace Nuke.Common.Tooling
             var variables = EnvironmentInfo.GetVariables();
             EnvironmentVariablesInternal = new Dictionary<string, string>(variables, variables.Comparer);
             LogOutput = true; // TODO: could be controlled by NukeBuild parameter
+            VerbosityMapping.Apply(this);
         }
 
         public virtual string ToolPath { get; internal set; }

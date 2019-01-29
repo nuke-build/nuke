@@ -27,6 +27,7 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
 
 // ReSharper disable HeapView.DelegateAllocation
 
+[DotNetVerbosityMapping]
 partial class Build : NukeBuild
 {
     public static int Main() => Execute<Build>(x => x.Pack);
