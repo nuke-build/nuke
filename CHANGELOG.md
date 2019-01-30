@@ -16,8 +16,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `AnsiColorOutputSink` for Bitrise, TeamCity, Travis, TeamServices
 - Added `ProjectModelTasks.ParseProject` based on `Microsoft.Build` packages
 - Added `LocalExecutableAttribute`
-- Added `degreeOfParallelism` and `completeOnError` for combinatorial invocations
-- Added `[Tool].[Tool]Logger` as settable field for custom logging
+- Added `degreeOfParallelism` and `completeOnFailure` for combinatorial invocations
+- Added `[Tool]Tasks.[Tool]Logger` as settable field for custom logging
 - Added `VerbosityMappingAttribute`
 - Added format-property map for CLI tasks
 - Fixed `EnsureCleanDirectory` to only clean instead of delete and recreate
