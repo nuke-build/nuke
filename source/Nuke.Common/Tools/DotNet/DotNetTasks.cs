@@ -72,7 +72,7 @@ namespace Nuke.Common.Tools.DotNet
                 }
             }
 
-            Logger.Info(output);
+            Logger.Normal(output);
         }
     }
 }

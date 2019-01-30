@@ -176,7 +176,7 @@ namespace Nuke.Common.Tooling
         public static void DefaultLogger(OutputType type, string output)
         {
             if (type == OutputType.Std)
-                Logger.Info(output);
+                Logger.Normal(output);
             else
                 Logger.Error(output);
         }
