@@ -94,7 +94,7 @@ partial class Build : NukeBuild
                 .SetInformationalVersion(GitVersion.InformationalVersion)
                 .CombineWith(
                     from project in new[] { GlobalToolProject, CommonProject, CodeGenerationProject }
-                    from framework in project.GetMSBuildProject().GetTargetFrameworks()
+                    from framework in project.GetTargetFrameworks()
                     select new { project, framework }, (cs, v) => cs
                         .SetProject(v.project)
                         .SetFramework(v.framework)));
