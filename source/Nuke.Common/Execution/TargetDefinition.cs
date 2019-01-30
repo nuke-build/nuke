@@ -23,8 +23,9 @@ namespace Nuke.Common.Execution
         internal List<Target> DependentForTargets { get; } = new List<Target>();
         internal List<Action> Actions { get; } = new List<Action>();
         internal DependencyBehavior DependencyBehavior { get; private set; }
-        internal bool ContinueOnFailure { get; private set; }
-        internal bool AssureAfterFailure { get; private set; }
+        internal bool IsProceedAfterFailure { get; private set; }
+        internal bool IsAssuredAfterFailure { get; private set; }
+        internal bool IsInternal { get; private set; }
         internal List<Target> BeforeTargets { get; private set; } = new List<Target>();
         internal List<Target> AfterTargets { get; private set; } = new List<Target>();
         internal List<Target> TriggersTargets { get; private set; } = new List<Target>();
@@ -128,13 +129,19 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition AssuredAfterFailure()
         {
-            AssureAfterFailure = true;
+            IsAssuredAfterFailure = true;
             return this;
         }
 
-        public ITargetDefinition ContinuesOnFailure()
+        public ITargetDefinition ProceedAfterFailure()
         {
-            ContinueOnFailure = true;
+            IsProceedAfterFailure = true;
+            return this;
+        }
+
+        public ITargetDefinition Unlisted()
+        {
+            IsInternal = true;
             return this;
         }
     }

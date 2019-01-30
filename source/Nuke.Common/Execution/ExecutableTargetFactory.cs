@@ -24,7 +24,6 @@ namespace Nuke.Common.Execution
             var properties = build.GetType()
                 .GetProperties(ReflectionService.Instance)
                 .Where(x => x.PropertyType == typeof(Target)).ToList();
-            var showAll = properties.All(x => x.GetMethod.IsPublic) || properties.All(x => !x.GetMethod.IsPublic);
 
             var executables = new List<ExecutableTarget>();
 
@@ -40,16 +39,16 @@ namespace Nuke.Common.Execution
                                  Member = property,
                                  Definition = definition,
                                  Description = definition.Description,
-                                 Show = showAll || property.GetMethod.IsPublic,
                                  Factory = factory,
                                  IsDefault = factory == defaultTarget,
                                  DynamicConditions = definition.DynamicConditions,
                                  StaticConditions = definition.StaticConditions,
                                  DependencyBehavior = definition.DependencyBehavior,
-                                 ContinueOnFailure = definition.ContinueOnFailure,
-                                 AssuredAfterFailure = definition.AssureAfterFailure,
+                                 ProceedAfterFailure = definition.IsProceedAfterFailure,
+                                 AssuredAfterFailure = definition.IsAssuredAfterFailure,
                                  Requirements = definition.Requirements,
                                  Actions = definition.Actions,
+                                 Listed = !definition.IsInternal,
                              };
                 
                 executables.Add(target);

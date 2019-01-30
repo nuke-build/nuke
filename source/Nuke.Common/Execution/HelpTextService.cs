@@ -21,7 +21,7 @@ namespace Nuke.Common.Execution
             var padRightTargets = Math.Max(longestTargetName, val2: 20);
             builder.AppendLine("Targets (with their direct dependencies):");
             builder.AppendLine();
-            foreach (var target in executableTargets.Where(x => x.Show))
+            foreach (var target in executableTargets.Where(x => x.Listed))
             {
                 var dependencies = target.ExecutionDependencies.Count > 0
                     ? $" -> {target.ExecutionDependencies.Select(x => x.Name).JoinComma()}"

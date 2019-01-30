@@ -81,7 +81,7 @@ namespace Nuke.Common.Execution
                 {
                     target.Status = ExecutionStatus.Failed;
                     build.OnTargetFailed(target.Name);
-                    if (!target.ContinueOnFailure && !failureMode)
+                    if (!target.ProceedAfterFailure && !failureMode)
                         throw;
                 }
                 finally

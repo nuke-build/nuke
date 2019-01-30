@@ -98,9 +98,20 @@ namespace Nuke.Common
         /// </summary>
         ITargetDefinition TriggeredBy(params Target[] targets);
 
+        /// <summary>
+        ///  Defines that this target is guaranteed to be executed, even if other targets fail.
+        /// </summary>
         ITargetDefinition AssuredAfterFailure();
 
-        ITargetDefinition ContinuesOnFailure();
+        /// <summary>
+        ///  Defines that even if this target fails, the execution will continue.
+        /// </summary>
+        ITargetDefinition ProceedAfterFailure();
+
+        /// <summary>
+        ///  Defines that this target should not be listed.
+        /// </summary>
+        ITargetDefinition Unlisted();
     }
 
     /// <summary>
