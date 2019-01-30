@@ -53,11 +53,13 @@ namespace Nuke.Common.Utilities
             directory.GetDirectories().ForEach(x => FillTemplateDirectoryRecursivelyInternal(x, definitions, replacements, excludeDirectory, excludeFile));
 
             if (ShouldMove(directory))
+            {
                 FileSystemTasks.RenameDirectory(
                     directory.FullName,
                     directory.Name.Replace(replacements),
                     DirectoryExistsPolicy.Merge,
                     FileExistsPolicy.OverwriteIfNewer);
+            }
         }
 
         public static void FillTemplateFile(
@@ -97,7 +99,7 @@ namespace Nuke.Common.Utilities
             IReadOnlyCollection<string> definitions,
             IReadOnlyDictionary<string, string> replacements)
         {
-            var commentIndex = line.LastIndexOf("  //", StringComparison.OrdinalIgnoreCase);
+            var commentIndex = line.LastIndexOf("  // ", StringComparison.OrdinalIgnoreCase);
             if (!ShouldIncludeLine(line, commentIndex, definitions))
                 return null;
 
