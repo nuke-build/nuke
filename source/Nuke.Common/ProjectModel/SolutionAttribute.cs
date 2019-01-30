@@ -15,9 +15,9 @@ namespace Nuke.Common.ProjectModel
     /// <summary>
     ///     Injects an instance of <see cref="Solution"/>. The solution path is resolved in the following order:
     ///     <ul>
+    ///         <li>From the constructor argument</li>
     ///         <li>From command-line arguments (e.g., <c>-[MemberName] path/to/solution.sln</c>)</li>
     ///         <li>From environment variables (e.g., <c>[MemberName]=path/to/solution.sln</c>)</li>
-    ///         <li>From the constructor argument</li>
     ///         <li>From the <c>.nuke</c> configuration file</li>
     ///     </ul>
     /// </summary>
@@ -53,12 +53,12 @@ namespace Nuke.Common.ProjectModel
         // TODO: for just [Solution] without parameter being passed, do wildcard search?
         private string GetSolutionFile(string memberName)
         {
+            if (_solutionFileRootRelativePath != null)
+                return PathConstruction.Combine(NukeBuild.RootDirectory, _solutionFileRootRelativePath);
+            
             var parameterValue = ParameterService.Instance.GetParameter<PathConstruction.AbsolutePath>(memberName);
             if (parameterValue != null)
                 return parameterValue;
-
-            if (_solutionFileRootRelativePath != null)
-                return PathConstruction.Combine(NukeBuild.RootDirectory, _solutionFileRootRelativePath);
 
             return GetSolutionFileFromConfigurationFile();
         }

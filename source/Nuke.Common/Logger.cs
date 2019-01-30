@@ -17,8 +17,8 @@ namespace Nuke.Common
     [DebuggerStepThrough]
     public static class Logger
     {
-        public static IOutputSink OutputSink = new ConsoleOutputSink();
-        public static LogLevel LogLevel = LogLevel.Information;
+        public static IOutputSink OutputSink = ConsoleOutputSink.Default;
+        public static LogLevel LogLevel = LogLevel.Normal;
         
         public static IDisposable Block(string text)
         {
@@ -28,28 +28,29 @@ namespace Nuke.Common
         #region Log
 
         /// <summary>
-        /// Logs a message unconditionally.
+        /// Logs a message as information if <see cref="LogLevel"/> is lower or equal to <see cref="Common.LogLevel.Normal"/>.
         /// </summary>
         [StringFormatMethod("format")]
-        public static void Log(string format, params object[] args)
+        public static void Normal(string format, params object[] args)
         {
-            Log(string.Format(format, args));
+            Normal(string.Format(format, args));
         }
 
         /// <summary>
-        /// Logs a message unconditionally.
+        /// Logs a message as information if <see cref="LogLevel"/> is lower or equal to <see cref="Common.LogLevel.Normal"/>.
         /// </summary>
-        public static void Log(object value)
+        public static void Normal(object value)
         {
-            Log(value?.ToString());
+            Normal(value?.ToString());
         }
 
         /// <summary>
-        /// Logs a message unconditionally.
+        /// Logs a message as information if <see cref="LogLevel"/> is lower or equal to <see cref="Common.LogLevel.Normal"/>.
         /// </summary>
-        public static void Log(string text = null)
+        public static void Normal(string text = null)
         {
-            OutputSink.Write(text ?? string.Empty);
+            if (LogLevel <= LogLevel.Normal)
+                OutputSink.WriteNormal(text ?? string.Empty);
         }
 
         #endregion
@@ -78,7 +79,7 @@ namespace Nuke.Common
         /// </summary>
         public static void Success(string text = null)
         {
-            OutputSink.Success(text ?? string.Empty);
+            OutputSink.WriteSuccess(text ?? string.Empty);
         }
 
         #endregion
@@ -108,7 +109,7 @@ namespace Nuke.Common
         public static void Trace(string text = null)
         {
             if (LogLevel <= LogLevel.Trace)
-                OutputSink.Trace(text ?? string.Empty);
+                OutputSink.WriteTrace(text ?? string.Empty);
         }
 
         #endregion
@@ -116,7 +117,7 @@ namespace Nuke.Common
         #region Info
 
         /// <summary>
-        /// Logs a message as information if <see cref="LogLevel"/> is lower or equal to <see cref="Nuke.Common.LogLevel.Information"/>.
+        /// Logs a message as information if <see cref="LogLevel"/> is lower or equal to <see cref="Common.LogLevel.Normal"/>.
         /// </summary>
         [StringFormatMethod("format")]
         public static void Info(string format, params object[] args)
@@ -125,7 +126,7 @@ namespace Nuke.Common
         }
 
         /// <summary>
-        /// Logs a message as information if <see cref="LogLevel"/> is lower or equal to <see cref="Nuke.Common.LogLevel.Information"/>.
+        /// Logs a message as information if <see cref="LogLevel"/> is lower or equal to <see cref="Common.LogLevel.Normal"/>.
         /// </summary>
         public static void Info(object value)
         {
@@ -133,12 +134,12 @@ namespace Nuke.Common
         }
 
         /// <summary>
-        /// Logs a message as information if <see cref="LogLevel"/> is lower or equal to <see cref="Nuke.Common.LogLevel.Information"/>.
+        /// Logs a message as information if <see cref="LogLevel"/> is lower or equal to <see cref="Common.LogLevel.Normal"/>.
         /// </summary>
         public static void Info(string text = null)
         {
-            if (LogLevel <= LogLevel.Information)
-                OutputSink.Info(text ?? string.Empty);
+            if (LogLevel <= LogLevel.Normal)
+                OutputSink.WriteInformation(text ?? string.Empty);
         }
 
         #endregion
@@ -168,7 +169,7 @@ namespace Nuke.Common
         public static void Warn(string text = null)
         {
             if (LogLevel <= LogLevel.Warning)
-                OutputSink.Warn(text ?? string.Empty);
+                OutputSink.WriteWarning(text ?? string.Empty);
         }
 
         /// <summary>
@@ -177,7 +178,7 @@ namespace Nuke.Common
         public static void Warn(Exception exception)
         {
             if (LogLevel <= LogLevel.Warning)
-                HandleException(exception, OutputSink.Warn);
+                HandleException(exception, OutputSink.WriteWarning);
         }
         
         #endregion
@@ -207,7 +208,7 @@ namespace Nuke.Common
         public static void Error(string text = null)
         {
             if (LogLevel <= LogLevel.Error)
-                OutputSink.Error(text ?? string.Empty);
+                OutputSink.WriteError(text ?? string.Empty);
         }
 
         /// <summary>
@@ -216,17 +217,18 @@ namespace Nuke.Common
         public static void Error(Exception exception)
         {
             if (LogLevel <= LogLevel.Error)
-                HandleException(exception, OutputSink.Error);
+                HandleException(exception, OutputSink.WriteError);
         }
 
         #endregion
 
-        private static void HandleException(Exception exception, Action<string, string> exceptionOutput)
+        private static void HandleException(Exception exception, Action<string, string> exceptionOutput, string prefix = null)
         {
             switch (exception)
             {
                 case AggregateException ex:
-                    ex.Flatten().InnerExceptions.ForEach(x => HandleException(x, exceptionOutput));
+                    var exceptions = ex.Flatten().InnerExceptions;
+                    exceptions.ForEach((x, i) => HandleException(x, exceptionOutput, $"#{i + 1}/{exceptions.Count}: "));
                     break;
                 case TargetInvocationException ex:
                     HandleException(ex.InnerException, exceptionOutput);
@@ -235,7 +237,7 @@ namespace Nuke.Common
                     HandleException(ex.InnerException, exceptionOutput);
                     break;
                 default:
-                    exceptionOutput(exception.Message, exception.StackTrace);
+                    exceptionOutput(prefix + exception.Message, exception.StackTrace + EnvironmentInfo.NewLine);
                     break;
             }
         }

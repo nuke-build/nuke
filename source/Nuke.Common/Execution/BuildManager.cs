@@ -16,31 +16,41 @@ namespace Nuke.Common.Execution
 {
     internal static class BuildManager
     {
+        private static LinkedList<Action> s_cancellationHandlers = new LinkedList<Action>();
+        
+        public static event Action CancellationHandler
+        {
+            add => s_cancellationHandlers.AddFirst(value);
+            remove => s_cancellationHandlers.Remove(value);
+        } 
+        
         public static int Execute<T>(Expression<Func<T, Target>> defaultTargetExpression)
             where T : NukeBuild
         {
+            Console.CancelKeyPress += (s, e) => s_cancellationHandlers.ForEach(x => x());
+            
             var build = Create<T>();
             build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpression);
             
             try
             {
-                build.Execute<IPreLogoBuildExtension>();
+                build.ExecuteExtensions<IPreLogoBuildExtension>();
                 build.OnBuildCreated();
                 
                 Logger.OutputSink = build.OutputSink;
                 Logger.LogLevel = NukeBuild.LogLevel;
                 ToolPathResolver.NuGetPackagesConfigFile = build.NuGetPackagesConfigFile;
 
-                Logger.Log($"NUKE Execution Engine {typeof(BuildManager).Assembly.GetInformationalText()}");
-                Logger.Log(FigletTransform.GetText("NUKE"));
+                Logger.Normal($"NUKE Execution Engine {typeof(BuildManager).Assembly.GetInformationalText()}");
+                Logger.Normal(FigletTransform.GetText("NUKE"));
                 
-                build.Execute<IPostLogoBuildExtension>();
+                build.ExecuteExtensions<IPostLogoBuildExtension>();
                 build.ExecutionPlan = ExecutionPlanner.GetExecutionPlan(
                     build.ExecutableTargets,
                     ParameterService.Instance.GetParameter<string[]>(() => build.InvokedTargets) ??
                     ParameterService.Instance.GetPositionalCommandLineArguments<string>(separator: Constants.TargetsSeparator.Single()));
-                Console.CancelKeyPress += (s, e) => Finish();
-
+                CancellationHandler += Finish;
+                
                 InjectionUtility.InjectValues(build);
                 RequirementService.ValidateRequirements(build);
                 
@@ -59,7 +69,8 @@ namespace Nuke.Common.Execution
             }
             finally
             {
-                Finish();
+                if (build.ExecutionPlan != null)
+                    Finish();
             }
             
             void Finish()
@@ -70,13 +81,13 @@ namespace Nuke.Common.Execution
                 
                 if (Logger.OutputSink is SevereMessagesOutputSink outputSink)
                 {
-                    Logger.Log();
+                    Logger.Normal();
                     WriteWarningsAndErrors(outputSink);
                 }
 
                 if (build.ExecutionPlan != null)
                 {
-                    Logger.Log();
+                    Logger.Normal();
                     WriteSummary(build.ExecutionPlan);
                 }
 
@@ -96,7 +107,7 @@ namespace Nuke.Common.Execution
 
         private static void WriteSummary(IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
-            var firstColumn = Math.Max(executionPlan.Max(x => x.Name.Length) + 4, val2: 20);
+            var firstColumn = Math.Max(executionPlan.Max(x => x.Name.Length) + 4, val2: 19);
             var secondColumn = 10;
             var thirdColumn = 10;
             var allColumns = firstColumn + secondColumn + thirdColumn;
@@ -110,16 +121,16 @@ namespace Nuke.Common.Execution
             string ToMinutesAndSeconds(TimeSpan duration)
                 => $"{(int) duration.TotalMinutes}:{duration:ss}";
 
-            Logger.Log(new string(c: '=', count: allColumns));
-            Logger.Log(CreateLine("Target", "Status", "Duration"));
-            Logger.Log(new string(c: '-', count: allColumns));
+            Logger.Normal(new string(c: '=', count: allColumns));
+            Logger.Info(CreateLine("Target", "Status", "Duration"));
+            Logger.Normal(new string(c: '-', count: allColumns));
             foreach (var target in executionPlan)
             {
                 var line = CreateLine(target.Name, target.Status.ToString(), ToMinutesAndSeconds(target.Duration));
                 switch (target.Status)
                 {
                     case ExecutionStatus.Skipped:
-                        Logger.Log(line);
+                        Logger.Normal(line);
                         break;
                     case ExecutionStatus.Executed:
                         Logger.Success(line);
@@ -132,10 +143,10 @@ namespace Nuke.Common.Execution
                 }
             }
 
-            Logger.Log(new string(c: '-', count: allColumns));
-            Logger.Log(CreateLine("Total", "", ToMinutesAndSeconds(totalDuration)));
-            Logger.Log(new string(c: '=', count: allColumns));
-            Logger.Log();
+            Logger.Normal(new string(c: '-', count: allColumns));
+            Logger.Info(CreateLine("Total", "", ToMinutesAndSeconds(totalDuration)));
+            Logger.Normal(new string(c: '=', count: allColumns));
+            Logger.Normal();
 
             var buildSucceeded = executionPlan
                 .All(x => x.Status != ExecutionStatus.Failed &&
@@ -145,7 +156,7 @@ namespace Nuke.Common.Execution
                 Logger.Success($"Build succeeded on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}.");
             else
                 Logger.Error($"Build failed on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}.");
-            Logger.Log();
+            Logger.Normal();
         }
         
         public static void WriteWarningsAndErrors(SevereMessagesOutputSink outputSink)
@@ -153,7 +164,7 @@ namespace Nuke.Common.Execution
             if (outputSink.SevereMessages.Count <= 0)
                 return;
 
-            Logger.Log("Repeating warnings and errors:");
+            Logger.Normal("Repeating warnings and errors:");
 
             foreach (var severeMessage in outputSink.SevereMessages.ToList())
             {

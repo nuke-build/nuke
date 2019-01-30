@@ -97,6 +97,10 @@ namespace Nuke.Common
         ///  Defines targets that will trigger this target.
         /// </summary>
         ITargetDefinition TriggeredBy(params Target[] targets);
+
+        ITargetDefinition AssuredAfterFailure();
+
+        ITargetDefinition ContinuesOnFailure();
     }
 
     /// <summary>

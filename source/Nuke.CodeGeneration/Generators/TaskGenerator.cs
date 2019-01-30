@@ -27,8 +27,11 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteLine($"public static partial class {tool.GetClassName()}")
                 .WriteBlock(w =>
                 {
-                    w.WriteToolPath();
-                    w.WriteGenericTask();
+                    w
+                        .WriteToolPath()
+                        .WriteLogger()
+                        .WriteGenericTask();
+                    
                     tool.Tasks.ForEach(x => new TaskWriter(x, toolWriter)
                         .WriteToolSettingsTask()
                         .WriteConfiguratorTask()
@@ -56,7 +59,7 @@ namespace Nuke.CodeGeneration.Generators
                                 "environmentVariables",
                                 "timeout",
                                 "logOutput",
-                                writer.Tool.LogLevelParsing ? "ParseLogLevel" : "null",
+                                $"{tool.Name}Logger",
                                 "outputFilter"
                             };
             writer
@@ -100,6 +103,7 @@ namespace Nuke.CodeGeneration.Generators
 
             return writer
                 .WriteSummary(task)
+                .WriteRemarks(task)
                 .WriteObsoleteAttributeWhenObsolete(task)
                 .WriteLine($"public static {returnType} {task.GetTaskMethodName()}(Configure<{task.SettingsClass.Name}> configurator)")
                 .WriteBlock(w => w
@@ -109,21 +113,25 @@ namespace Nuke.CodeGeneration.Generators
         private static TaskWriter WriteCombinatorialConfiguratorTask(this TaskWriter writer)
         {
             var task = writer.Task;
+            
             var returnType = !task.HasReturnValue()
                 ? $"IEnumerable<({task.SettingsClass.Name} Settings, IReadOnlyCollection<Output> Output)>"
                 : $"IEnumerable<({task.SettingsClass.Name} Settings, {task.ReturnType} Result, IReadOnlyCollection<Output> Output)>";
-            var selector = !task.HasReturnValue()
-                ? "(x.ToolSettings, x.ReturnValue)"
-                : "(x.ToolSettings, x.ReturnValue.Result, x.ReturnValue.Output)";
-
+            
+            var parameters = new[]
+                             {
+                                 $"CombinatorialConfigure<{task.SettingsClass.Name}> configurator",
+                                 "int degreeOfParallelism = 1",
+                                 "bool completeOnFailure = false"
+                             }.JoinComma();
+            
             return writer
                 .WriteSummary(task)
+                .WriteRemarks(task)
                 .WriteObsoleteAttributeWhenObsolete(task)
-                .WriteLine($"public static {returnType} {task.GetTaskMethodName()}(CombinatorialConfigure<{task.SettingsClass.Name}> configurator)")
+                .WriteLine($"public static {returnType} {task.GetTaskMethodName()}({parameters})")
                 .WriteBlock(w => w
-                    .WriteLine($"return configurator(new {task.SettingsClass.Name}())")
-                    .WriteLine($"    .Select(x => (ToolSettings: x, ReturnValue: {task.GetTaskMethodName()}(x)))")
-                    .WriteLine($"    .Select(x => {selector}).ToList();"));
+                    .WriteLine($"return configurator.Invoke({task.GetTaskMethodName()}, {task.Tool.Name}Logger, degreeOfParallelism, completeOnFailure);"));
         }
 
         private static string GetProcessStart(Task task)
@@ -165,6 +173,14 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteLine($"public static string {tool.Name}Path =>")
                 .WriteLine($"    ToolPathResolver.TryGetEnvironmentExecutable(\"{tool.Name.ToUpperInvariant()}_EXE\") ??")
                 .WriteLine($"    {resolvers.Single()};");
+        }
+
+        private static ToolWriter WriteLogger(this ToolWriter writer)
+        {
+            var tool = writer.Tool;
+            var logger = tool.CustomLogger ? "CustomLogger" : "ProcessManager.DefaultLogger";
+            return writer
+                .WriteLine($"public static Action<OutputType, string> {tool.Name}Logger {{ get; set; }} = {logger};");
         }
     }
 }

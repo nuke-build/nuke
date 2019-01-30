@@ -23,18 +23,26 @@ namespace Nuke.Common.Tools.TestCloud
     [ExcludeFromCodeCoverage]
     public static partial class TestCloudTasks
     {
-        /// <summary><p>Path to the TestCloud executable.</p></summary>
+        /// <summary>
+        ///   Path to the TestCloud executable.
+        /// </summary>
         public static string TestCloudPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("TESTCLOUD_EXE") ??
             ToolPathResolver.GetPackageExecutable("Xamarin.UITest", "test-cloud.exe");
-        /// <summary><p>Test Cloud is a cloud based service consisting of thousands of physical mobile devices. Users upload their apps and tests to Test Cloud, which will install the apps on the devices and run the tests. When the tests are complete, Test Cloud, the results made available to users through an easy to use and informative web-based front end.</p></summary>
+        public static Action<OutputType, string> TestCloudLogger { get; set; } = ProcessManager.DefaultLogger;
+        /// <summary>
+        ///   Test Cloud is a cloud based service consisting of thousands of physical mobile devices. Users upload their apps and tests to Test Cloud, which will install the apps on the devices and run the tests. When the tests are complete, Test Cloud, the results made available to users through an easy to use and informative web-based front end.
+        /// </summary>
         public static IReadOnlyCollection<Output> TestCloud(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(TestCloudPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
+            var process = ProcessTasks.StartProcess(TestCloudPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, TestCloudLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>Test Cloud is a cloud based service consisting of thousands of physical mobile devices. Users upload their apps and tests to Test Cloud, which will install the apps on the devices and run the tests. When the tests are complete, Test Cloud, the results made available to users through an easy to use and informative web-based front end.</p><p>For more details, visit the <a href="https://developer.xamarin.com/guides/testcloud/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>Test Cloud is a cloud based service consisting of thousands of physical mobile devices. Users upload their apps and tests to Test Cloud, which will install the apps on the devices and run the tests. When the tests are complete, Test Cloud, the results made available to users through an easy to use and informative web-based front end.</p>
+        ///   <p>For more details, visit the <a href="https://developer.xamarin.com/guides/testcloud/">official website</a>.</p>
+        /// </summary>
         public static IReadOnlyCollection<Output> TestCloud(TestCloudSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new TestCloudSettings();
@@ -42,54 +50,121 @@ namespace Nuke.Common.Tools.TestCloud
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>Test Cloud is a cloud based service consisting of thousands of physical mobile devices. Users upload their apps and tests to Test Cloud, which will install the apps on the devices and run the tests. When the tests are complete, Test Cloud, the results made available to users through an easy to use and informative web-based front end.</p><p>For more details, visit the <a href="https://developer.xamarin.com/guides/testcloud/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>Test Cloud is a cloud based service consisting of thousands of physical mobile devices. Users upload their apps and tests to Test Cloud, which will install the apps on the devices and run the tests. When the tests are complete, Test Cloud, the results made available to users through an easy to use and informative web-based front end.</p>
+        ///   <p>For more details, visit the <a href="https://developer.xamarin.com/guides/testcloud/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--assembly-dir</c> via <see cref="TestCloudSettings.AssemblyDirectory"/></li>
+        ///     <li><c>--data</c> via <see cref="TestCloudSettings.DataPaths"/></li>
+        ///     <li><c>--devices</c> via <see cref="TestCloudSettings.Devices"/></li>
+        ///     <li><c>--dsym</c> via <see cref="TestCloudSettings.DsymFile"/></li>
+        ///     <li><c>--exclude</c> via <see cref="TestCloudSettings.ExcludeCategories"/></li>
+        ///     <li><c>--fixture</c> via <see cref="TestCloudSettings.Fixtures"/></li>
+        ///     <li><c>--fixture-chunk</c> via <see cref="TestCloudSettings.FixtureChunk"/></li>
+        ///     <li><c>--include</c> via <see cref="TestCloudSettings.IncludeCategories"/></li>
+        ///     <li><c>--nunit-xml</c> via <see cref="TestCloudSettings.NunitResultsFile"/></li>
+        ///     <li><c>--sign-info</c> via <see cref="TestCloudSettings.SignInfoFile"/></li>
+        ///     <li><c>--test-chunk</c> via <see cref="TestCloudSettings.TestChunk"/></li>
+        ///     <li><c>--user</c> via <see cref="TestCloudSettings.UserEmail"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> TestCloud(Configure<TestCloudSettings> configurator)
         {
             return TestCloud(configurator(new TestCloudSettings()));
         }
-        /// <summary><p>Test Cloud is a cloud based service consisting of thousands of physical mobile devices. Users upload their apps and tests to Test Cloud, which will install the apps on the devices and run the tests. When the tests are complete, Test Cloud, the results made available to users through an easy to use and informative web-based front end.</p><p>For more details, visit the <a href="https://developer.xamarin.com/guides/testcloud/">official website</a>.</p></summary>
-        public static IEnumerable<(TestCloudSettings Settings, IReadOnlyCollection<Output> Output)> TestCloud(CombinatorialConfigure<TestCloudSettings> configurator)
+        /// <summary>
+        ///   <p>Test Cloud is a cloud based service consisting of thousands of physical mobile devices. Users upload their apps and tests to Test Cloud, which will install the apps on the devices and run the tests. When the tests are complete, Test Cloud, the results made available to users through an easy to use and informative web-based front end.</p>
+        ///   <p>For more details, visit the <a href="https://developer.xamarin.com/guides/testcloud/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--assembly-dir</c> via <see cref="TestCloudSettings.AssemblyDirectory"/></li>
+        ///     <li><c>--data</c> via <see cref="TestCloudSettings.DataPaths"/></li>
+        ///     <li><c>--devices</c> via <see cref="TestCloudSettings.Devices"/></li>
+        ///     <li><c>--dsym</c> via <see cref="TestCloudSettings.DsymFile"/></li>
+        ///     <li><c>--exclude</c> via <see cref="TestCloudSettings.ExcludeCategories"/></li>
+        ///     <li><c>--fixture</c> via <see cref="TestCloudSettings.Fixtures"/></li>
+        ///     <li><c>--fixture-chunk</c> via <see cref="TestCloudSettings.FixtureChunk"/></li>
+        ///     <li><c>--include</c> via <see cref="TestCloudSettings.IncludeCategories"/></li>
+        ///     <li><c>--nunit-xml</c> via <see cref="TestCloudSettings.NunitResultsFile"/></li>
+        ///     <li><c>--sign-info</c> via <see cref="TestCloudSettings.SignInfoFile"/></li>
+        ///     <li><c>--test-chunk</c> via <see cref="TestCloudSettings.TestChunk"/></li>
+        ///     <li><c>--user</c> via <see cref="TestCloudSettings.UserEmail"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(TestCloudSettings Settings, IReadOnlyCollection<Output> Output)> TestCloud(CombinatorialConfigure<TestCloudSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator(new TestCloudSettings())
-                .Select(x => (ToolSettings: x, ReturnValue: TestCloud(x)))
-                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+            return configurator.Invoke(TestCloud, TestCloudLogger, degreeOfParallelism, completeOnFailure);
         }
     }
     #region TestCloudSettings
-    /// <summary><p>Used within <see cref="TestCloudTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="TestCloudTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
     public partial class TestCloudSettings : ToolSettings
     {
-        /// <summary><p>Path to the TestCloud executable.</p></summary>
+        /// <summary>
+        ///   Path to the TestCloud executable.
+        /// </summary>
         public override string ToolPath => base.ToolPath ?? TestCloudTasks.TestCloudPath;
-        /// <summary><p>The path to the folder holding the test assemblies.</p></summary>
+        public override Action<OutputType, string> CustomLogger => TestCloudTasks.TestCloudLogger;
+        /// <summary>
+        ///   The path to the folder holding the test assemblies.
+        /// </summary>
         public virtual string AssemblyDirectory { get; internal set; }
-        /// <summary><p>The device ID that was provided in the Test Cloud Upload dialog.</p></summary>
+        /// <summary>
+        ///   The device ID that was provided in the Test Cloud Upload dialog.
+        /// </summary>
         public virtual string Devices { get; internal set; }
-        /// <summary><p>The e-mail address of the team member submitting the tests.</p></summary>
+        /// <summary>
+        ///   The e-mail address of the team member submitting the tests.
+        /// </summary>
         public virtual string UserEmail { get; internal set; }
-        /// <summary><p>The filename to which test results are exported, formatted as NUnit results XML. Optional.</p></summary>
+        /// <summary>
+        ///   The filename to which test results are exported, formatted as NUnit results XML. Optional.
+        /// </summary>
         public virtual string NunitResultsFile { get; internal set; }
-        /// <summary><p>Android only. Supply a signing information file that will be used to sign the Test Server APK. See the section below for more details. Optional.</p></summary>
+        /// <summary>
+        ///   Android only. Supply a signing information file that will be used to sign the Test Server APK. See the section below for more details. Optional.
+        /// </summary>
         public virtual string SignInfoFile { get; internal set; }
-        /// <summary><p>iOS only. Will upload the dSYM files along with the application and tests. This allows for more detail in the log files. Optional.</p></summary>
+        /// <summary>
+        ///   iOS only. Will upload the dSYM files along with the application and tests. This allows for more detail in the log files. Optional.
+        /// </summary>
         public virtual string DsymFile { get; internal set; }
-        /// <summary><p>NUnit fixture / namespace to run. (Can be used multiple times).</p></summary>
+        /// <summary>
+        ///   NUnit fixture / namespace to run. (Can be used multiple times).
+        /// </summary>
         public virtual IReadOnlyList<string> Fixtures => FixturesInternal.AsReadOnly();
         internal List<string> FixturesInternal { get; set; } = new List<string>();
-        /// <summary><p>Identifies the NUnit test categories that should only be included in the test run.</p></summary>
+        /// <summary>
+        ///   Identifies the NUnit test categories that should only be included in the test run.
+        /// </summary>
         public virtual IReadOnlyList<string> IncludeCategories => IncludeCategoriesInternal.AsReadOnly();
         internal List<string> IncludeCategoriesInternal { get; set; } = new List<string>();
-        /// <summary><p>Identifies the NUnit test categories that should be excluded from the test run.</p></summary>
+        /// <summary>
+        ///   Identifies the NUnit test categories that should be excluded from the test run.
+        /// </summary>
         public virtual IReadOnlyList<string> ExcludeCategories => ExcludeCategoriesInternal.AsReadOnly();
         internal List<string> ExcludeCategoriesInternal { get; set; } = new List<string>();
-        /// <summary><p>Run tests in parallel by method.</p></summary>
+        /// <summary>
+        ///   Run tests in parallel by method.
+        /// </summary>
         public virtual bool? TestChunk { get; internal set; }
-        /// <summary><p>Run tests in parallel by fixture.</p></summary>
+        /// <summary>
+        ///   Run tests in parallel by fixture.
+        /// </summary>
         public virtual bool? FixtureChunk { get; internal set; }
-        /// <summary><p>Uploads file or directory along with assemblies. (Can be used multiple times).</p></summary>
+        /// <summary>
+        ///   Uploads file or directory along with assemblies. (Can be used multiple times).
+        /// </summary>
         public virtual IReadOnlyList<string> DataPaths => DataPathsInternal.AsReadOnly();
         internal List<string> DataPathsInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureArguments(Arguments arguments)
@@ -113,13 +188,18 @@ namespace Nuke.Common.Tools.TestCloud
     }
     #endregion
     #region TestCloudSettingsExtensions
-    /// <summary><p>Used within <see cref="TestCloudTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="TestCloudTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class TestCloudSettingsExtensions
     {
         #region AssemblyDirectory
-        /// <summary><p><em>Sets <see cref="TestCloudSettings.AssemblyDirectory"/>.</em></p><p>The path to the folder holding the test assemblies.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="TestCloudSettings.AssemblyDirectory"/></em></p>
+        ///   <p>The path to the folder holding the test assemblies.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings SetAssemblyDirectory(this TestCloudSettings toolSettings, string assemblyDirectory)
         {
@@ -127,7 +207,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.AssemblyDirectory = assemblyDirectory;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="TestCloudSettings.AssemblyDirectory"/>.</em></p><p>The path to the folder holding the test assemblies.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="TestCloudSettings.AssemblyDirectory"/></em></p>
+        ///   <p>The path to the folder holding the test assemblies.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings ResetAssemblyDirectory(this TestCloudSettings toolSettings)
         {
@@ -137,7 +220,10 @@ namespace Nuke.Common.Tools.TestCloud
         }
         #endregion
         #region Devices
-        /// <summary><p><em>Sets <see cref="TestCloudSettings.Devices"/>.</em></p><p>The device ID that was provided in the Test Cloud Upload dialog.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="TestCloudSettings.Devices"/></em></p>
+        ///   <p>The device ID that was provided in the Test Cloud Upload dialog.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings SetDevices(this TestCloudSettings toolSettings, string devices)
         {
@@ -145,7 +231,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.Devices = devices;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="TestCloudSettings.Devices"/>.</em></p><p>The device ID that was provided in the Test Cloud Upload dialog.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="TestCloudSettings.Devices"/></em></p>
+        ///   <p>The device ID that was provided in the Test Cloud Upload dialog.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings ResetDevices(this TestCloudSettings toolSettings)
         {
@@ -155,7 +244,10 @@ namespace Nuke.Common.Tools.TestCloud
         }
         #endregion
         #region UserEmail
-        /// <summary><p><em>Sets <see cref="TestCloudSettings.UserEmail"/>.</em></p><p>The e-mail address of the team member submitting the tests.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="TestCloudSettings.UserEmail"/></em></p>
+        ///   <p>The e-mail address of the team member submitting the tests.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings SetUserEmail(this TestCloudSettings toolSettings, string userEmail)
         {
@@ -163,7 +255,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.UserEmail = userEmail;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="TestCloudSettings.UserEmail"/>.</em></p><p>The e-mail address of the team member submitting the tests.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="TestCloudSettings.UserEmail"/></em></p>
+        ///   <p>The e-mail address of the team member submitting the tests.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings ResetUserEmail(this TestCloudSettings toolSettings)
         {
@@ -173,7 +268,10 @@ namespace Nuke.Common.Tools.TestCloud
         }
         #endregion
         #region NunitResultsFile
-        /// <summary><p><em>Sets <see cref="TestCloudSettings.NunitResultsFile"/>.</em></p><p>The filename to which test results are exported, formatted as NUnit results XML. Optional.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="TestCloudSettings.NunitResultsFile"/></em></p>
+        ///   <p>The filename to which test results are exported, formatted as NUnit results XML. Optional.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings SetNunitResultsFile(this TestCloudSettings toolSettings, string nunitResultsFile)
         {
@@ -181,7 +279,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.NunitResultsFile = nunitResultsFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="TestCloudSettings.NunitResultsFile"/>.</em></p><p>The filename to which test results are exported, formatted as NUnit results XML. Optional.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="TestCloudSettings.NunitResultsFile"/></em></p>
+        ///   <p>The filename to which test results are exported, formatted as NUnit results XML. Optional.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings ResetNunitResultsFile(this TestCloudSettings toolSettings)
         {
@@ -191,7 +292,10 @@ namespace Nuke.Common.Tools.TestCloud
         }
         #endregion
         #region SignInfoFile
-        /// <summary><p><em>Sets <see cref="TestCloudSettings.SignInfoFile"/>.</em></p><p>Android only. Supply a signing information file that will be used to sign the Test Server APK. See the section below for more details. Optional.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="TestCloudSettings.SignInfoFile"/></em></p>
+        ///   <p>Android only. Supply a signing information file that will be used to sign the Test Server APK. See the section below for more details. Optional.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings SetSignInfoFile(this TestCloudSettings toolSettings, string signInfoFile)
         {
@@ -199,7 +303,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.SignInfoFile = signInfoFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="TestCloudSettings.SignInfoFile"/>.</em></p><p>Android only. Supply a signing information file that will be used to sign the Test Server APK. See the section below for more details. Optional.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="TestCloudSettings.SignInfoFile"/></em></p>
+        ///   <p>Android only. Supply a signing information file that will be used to sign the Test Server APK. See the section below for more details. Optional.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings ResetSignInfoFile(this TestCloudSettings toolSettings)
         {
@@ -209,7 +316,10 @@ namespace Nuke.Common.Tools.TestCloud
         }
         #endregion
         #region DsymFile
-        /// <summary><p><em>Sets <see cref="TestCloudSettings.DsymFile"/>.</em></p><p>iOS only. Will upload the dSYM files along with the application and tests. This allows for more detail in the log files. Optional.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="TestCloudSettings.DsymFile"/></em></p>
+        ///   <p>iOS only. Will upload the dSYM files along with the application and tests. This allows for more detail in the log files. Optional.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings SetDsymFile(this TestCloudSettings toolSettings, string dsymFile)
         {
@@ -217,7 +327,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.DsymFile = dsymFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="TestCloudSettings.DsymFile"/>.</em></p><p>iOS only. Will upload the dSYM files along with the application and tests. This allows for more detail in the log files. Optional.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="TestCloudSettings.DsymFile"/></em></p>
+        ///   <p>iOS only. Will upload the dSYM files along with the application and tests. This allows for more detail in the log files. Optional.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings ResetDsymFile(this TestCloudSettings toolSettings)
         {
@@ -227,7 +340,10 @@ namespace Nuke.Common.Tools.TestCloud
         }
         #endregion
         #region Fixtures
-        /// <summary><p><em>Sets <see cref="TestCloudSettings.Fixtures"/> to a new list.</em></p><p>NUnit fixture / namespace to run. (Can be used multiple times).</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="TestCloudSettings.Fixtures"/> to a new list</em></p>
+        ///   <p>NUnit fixture / namespace to run. (Can be used multiple times).</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings SetFixtures(this TestCloudSettings toolSettings, params string[] fixtures)
         {
@@ -235,7 +351,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.FixturesInternal = fixtures.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="TestCloudSettings.Fixtures"/> to a new list.</em></p><p>NUnit fixture / namespace to run. (Can be used multiple times).</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="TestCloudSettings.Fixtures"/> to a new list</em></p>
+        ///   <p>NUnit fixture / namespace to run. (Can be used multiple times).</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings SetFixtures(this TestCloudSettings toolSettings, IEnumerable<string> fixtures)
         {
@@ -243,7 +362,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.FixturesInternal = fixtures.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="TestCloudSettings.Fixtures"/>.</em></p><p>NUnit fixture / namespace to run. (Can be used multiple times).</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="TestCloudSettings.Fixtures"/></em></p>
+        ///   <p>NUnit fixture / namespace to run. (Can be used multiple times).</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings AddFixtures(this TestCloudSettings toolSettings, params string[] fixtures)
         {
@@ -251,7 +373,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.FixturesInternal.AddRange(fixtures);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="TestCloudSettings.Fixtures"/>.</em></p><p>NUnit fixture / namespace to run. (Can be used multiple times).</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="TestCloudSettings.Fixtures"/></em></p>
+        ///   <p>NUnit fixture / namespace to run. (Can be used multiple times).</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings AddFixtures(this TestCloudSettings toolSettings, IEnumerable<string> fixtures)
         {
@@ -259,7 +384,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.FixturesInternal.AddRange(fixtures);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="TestCloudSettings.Fixtures"/>.</em></p><p>NUnit fixture / namespace to run. (Can be used multiple times).</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="TestCloudSettings.Fixtures"/></em></p>
+        ///   <p>NUnit fixture / namespace to run. (Can be used multiple times).</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings ClearFixtures(this TestCloudSettings toolSettings)
         {
@@ -267,7 +395,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.FixturesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="TestCloudSettings.Fixtures"/>.</em></p><p>NUnit fixture / namespace to run. (Can be used multiple times).</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="TestCloudSettings.Fixtures"/></em></p>
+        ///   <p>NUnit fixture / namespace to run. (Can be used multiple times).</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings RemoveFixtures(this TestCloudSettings toolSettings, params string[] fixtures)
         {
@@ -276,7 +407,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.FixturesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="TestCloudSettings.Fixtures"/>.</em></p><p>NUnit fixture / namespace to run. (Can be used multiple times).</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="TestCloudSettings.Fixtures"/></em></p>
+        ///   <p>NUnit fixture / namespace to run. (Can be used multiple times).</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings RemoveFixtures(this TestCloudSettings toolSettings, IEnumerable<string> fixtures)
         {
@@ -287,7 +421,10 @@ namespace Nuke.Common.Tools.TestCloud
         }
         #endregion
         #region IncludeCategories
-        /// <summary><p><em>Sets <see cref="TestCloudSettings.IncludeCategories"/> to a new list.</em></p><p>Identifies the NUnit test categories that should only be included in the test run.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="TestCloudSettings.IncludeCategories"/> to a new list</em></p>
+        ///   <p>Identifies the NUnit test categories that should only be included in the test run.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings SetIncludeCategories(this TestCloudSettings toolSettings, params string[] includeCategories)
         {
@@ -295,7 +432,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.IncludeCategoriesInternal = includeCategories.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="TestCloudSettings.IncludeCategories"/> to a new list.</em></p><p>Identifies the NUnit test categories that should only be included in the test run.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="TestCloudSettings.IncludeCategories"/> to a new list</em></p>
+        ///   <p>Identifies the NUnit test categories that should only be included in the test run.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings SetIncludeCategories(this TestCloudSettings toolSettings, IEnumerable<string> includeCategories)
         {
@@ -303,7 +443,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.IncludeCategoriesInternal = includeCategories.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="TestCloudSettings.IncludeCategories"/>.</em></p><p>Identifies the NUnit test categories that should only be included in the test run.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="TestCloudSettings.IncludeCategories"/></em></p>
+        ///   <p>Identifies the NUnit test categories that should only be included in the test run.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings AddIncludeCategories(this TestCloudSettings toolSettings, params string[] includeCategories)
         {
@@ -311,7 +454,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.IncludeCategoriesInternal.AddRange(includeCategories);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="TestCloudSettings.IncludeCategories"/>.</em></p><p>Identifies the NUnit test categories that should only be included in the test run.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="TestCloudSettings.IncludeCategories"/></em></p>
+        ///   <p>Identifies the NUnit test categories that should only be included in the test run.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings AddIncludeCategories(this TestCloudSettings toolSettings, IEnumerable<string> includeCategories)
         {
@@ -319,7 +465,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.IncludeCategoriesInternal.AddRange(includeCategories);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="TestCloudSettings.IncludeCategories"/>.</em></p><p>Identifies the NUnit test categories that should only be included in the test run.</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="TestCloudSettings.IncludeCategories"/></em></p>
+        ///   <p>Identifies the NUnit test categories that should only be included in the test run.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings ClearIncludeCategories(this TestCloudSettings toolSettings)
         {
@@ -327,7 +476,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.IncludeCategoriesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="TestCloudSettings.IncludeCategories"/>.</em></p><p>Identifies the NUnit test categories that should only be included in the test run.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="TestCloudSettings.IncludeCategories"/></em></p>
+        ///   <p>Identifies the NUnit test categories that should only be included in the test run.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings RemoveIncludeCategories(this TestCloudSettings toolSettings, params string[] includeCategories)
         {
@@ -336,7 +488,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.IncludeCategoriesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="TestCloudSettings.IncludeCategories"/>.</em></p><p>Identifies the NUnit test categories that should only be included in the test run.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="TestCloudSettings.IncludeCategories"/></em></p>
+        ///   <p>Identifies the NUnit test categories that should only be included in the test run.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings RemoveIncludeCategories(this TestCloudSettings toolSettings, IEnumerable<string> includeCategories)
         {
@@ -347,7 +502,10 @@ namespace Nuke.Common.Tools.TestCloud
         }
         #endregion
         #region ExcludeCategories
-        /// <summary><p><em>Sets <see cref="TestCloudSettings.ExcludeCategories"/> to a new list.</em></p><p>Identifies the NUnit test categories that should be excluded from the test run.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="TestCloudSettings.ExcludeCategories"/> to a new list</em></p>
+        ///   <p>Identifies the NUnit test categories that should be excluded from the test run.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings SetExcludeCategories(this TestCloudSettings toolSettings, params string[] excludeCategories)
         {
@@ -355,7 +513,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.ExcludeCategoriesInternal = excludeCategories.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="TestCloudSettings.ExcludeCategories"/> to a new list.</em></p><p>Identifies the NUnit test categories that should be excluded from the test run.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="TestCloudSettings.ExcludeCategories"/> to a new list</em></p>
+        ///   <p>Identifies the NUnit test categories that should be excluded from the test run.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings SetExcludeCategories(this TestCloudSettings toolSettings, IEnumerable<string> excludeCategories)
         {
@@ -363,7 +524,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.ExcludeCategoriesInternal = excludeCategories.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="TestCloudSettings.ExcludeCategories"/>.</em></p><p>Identifies the NUnit test categories that should be excluded from the test run.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="TestCloudSettings.ExcludeCategories"/></em></p>
+        ///   <p>Identifies the NUnit test categories that should be excluded from the test run.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings AddExcludeCategories(this TestCloudSettings toolSettings, params string[] excludeCategories)
         {
@@ -371,7 +535,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.ExcludeCategoriesInternal.AddRange(excludeCategories);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="TestCloudSettings.ExcludeCategories"/>.</em></p><p>Identifies the NUnit test categories that should be excluded from the test run.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="TestCloudSettings.ExcludeCategories"/></em></p>
+        ///   <p>Identifies the NUnit test categories that should be excluded from the test run.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings AddExcludeCategories(this TestCloudSettings toolSettings, IEnumerable<string> excludeCategories)
         {
@@ -379,7 +546,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.ExcludeCategoriesInternal.AddRange(excludeCategories);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="TestCloudSettings.ExcludeCategories"/>.</em></p><p>Identifies the NUnit test categories that should be excluded from the test run.</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="TestCloudSettings.ExcludeCategories"/></em></p>
+        ///   <p>Identifies the NUnit test categories that should be excluded from the test run.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings ClearExcludeCategories(this TestCloudSettings toolSettings)
         {
@@ -387,7 +557,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.ExcludeCategoriesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="TestCloudSettings.ExcludeCategories"/>.</em></p><p>Identifies the NUnit test categories that should be excluded from the test run.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="TestCloudSettings.ExcludeCategories"/></em></p>
+        ///   <p>Identifies the NUnit test categories that should be excluded from the test run.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings RemoveExcludeCategories(this TestCloudSettings toolSettings, params string[] excludeCategories)
         {
@@ -396,7 +569,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.ExcludeCategoriesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="TestCloudSettings.ExcludeCategories"/>.</em></p><p>Identifies the NUnit test categories that should be excluded from the test run.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="TestCloudSettings.ExcludeCategories"/></em></p>
+        ///   <p>Identifies the NUnit test categories that should be excluded from the test run.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings RemoveExcludeCategories(this TestCloudSettings toolSettings, IEnumerable<string> excludeCategories)
         {
@@ -407,7 +583,10 @@ namespace Nuke.Common.Tools.TestCloud
         }
         #endregion
         #region TestChunk
-        /// <summary><p><em>Sets <see cref="TestCloudSettings.TestChunk"/>.</em></p><p>Run tests in parallel by method.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="TestCloudSettings.TestChunk"/></em></p>
+        ///   <p>Run tests in parallel by method.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings SetTestChunk(this TestCloudSettings toolSettings, bool? testChunk)
         {
@@ -415,7 +594,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.TestChunk = testChunk;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="TestCloudSettings.TestChunk"/>.</em></p><p>Run tests in parallel by method.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="TestCloudSettings.TestChunk"/></em></p>
+        ///   <p>Run tests in parallel by method.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings ResetTestChunk(this TestCloudSettings toolSettings)
         {
@@ -423,7 +605,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.TestChunk = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="TestCloudSettings.TestChunk"/>.</em></p><p>Run tests in parallel by method.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="TestCloudSettings.TestChunk"/></em></p>
+        ///   <p>Run tests in parallel by method.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings EnableTestChunk(this TestCloudSettings toolSettings)
         {
@@ -431,7 +616,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.TestChunk = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="TestCloudSettings.TestChunk"/>.</em></p><p>Run tests in parallel by method.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="TestCloudSettings.TestChunk"/></em></p>
+        ///   <p>Run tests in parallel by method.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings DisableTestChunk(this TestCloudSettings toolSettings)
         {
@@ -439,7 +627,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.TestChunk = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="TestCloudSettings.TestChunk"/>.</em></p><p>Run tests in parallel by method.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="TestCloudSettings.TestChunk"/></em></p>
+        ///   <p>Run tests in parallel by method.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings ToggleTestChunk(this TestCloudSettings toolSettings)
         {
@@ -449,7 +640,10 @@ namespace Nuke.Common.Tools.TestCloud
         }
         #endregion
         #region FixtureChunk
-        /// <summary><p><em>Sets <see cref="TestCloudSettings.FixtureChunk"/>.</em></p><p>Run tests in parallel by fixture.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="TestCloudSettings.FixtureChunk"/></em></p>
+        ///   <p>Run tests in parallel by fixture.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings SetFixtureChunk(this TestCloudSettings toolSettings, bool? fixtureChunk)
         {
@@ -457,7 +651,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.FixtureChunk = fixtureChunk;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="TestCloudSettings.FixtureChunk"/>.</em></p><p>Run tests in parallel by fixture.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="TestCloudSettings.FixtureChunk"/></em></p>
+        ///   <p>Run tests in parallel by fixture.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings ResetFixtureChunk(this TestCloudSettings toolSettings)
         {
@@ -465,7 +662,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.FixtureChunk = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="TestCloudSettings.FixtureChunk"/>.</em></p><p>Run tests in parallel by fixture.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="TestCloudSettings.FixtureChunk"/></em></p>
+        ///   <p>Run tests in parallel by fixture.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings EnableFixtureChunk(this TestCloudSettings toolSettings)
         {
@@ -473,7 +673,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.FixtureChunk = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="TestCloudSettings.FixtureChunk"/>.</em></p><p>Run tests in parallel by fixture.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="TestCloudSettings.FixtureChunk"/></em></p>
+        ///   <p>Run tests in parallel by fixture.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings DisableFixtureChunk(this TestCloudSettings toolSettings)
         {
@@ -481,7 +684,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.FixtureChunk = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="TestCloudSettings.FixtureChunk"/>.</em></p><p>Run tests in parallel by fixture.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="TestCloudSettings.FixtureChunk"/></em></p>
+        ///   <p>Run tests in parallel by fixture.</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings ToggleFixtureChunk(this TestCloudSettings toolSettings)
         {
@@ -491,7 +697,10 @@ namespace Nuke.Common.Tools.TestCloud
         }
         #endregion
         #region DataPaths
-        /// <summary><p><em>Sets <see cref="TestCloudSettings.DataPaths"/> to a new list.</em></p><p>Uploads file or directory along with assemblies. (Can be used multiple times).</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="TestCloudSettings.DataPaths"/> to a new list</em></p>
+        ///   <p>Uploads file or directory along with assemblies. (Can be used multiple times).</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings SetDataPaths(this TestCloudSettings toolSettings, params string[] dataPaths)
         {
@@ -499,7 +708,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.DataPathsInternal = dataPaths.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="TestCloudSettings.DataPaths"/> to a new list.</em></p><p>Uploads file or directory along with assemblies. (Can be used multiple times).</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="TestCloudSettings.DataPaths"/> to a new list</em></p>
+        ///   <p>Uploads file or directory along with assemblies. (Can be used multiple times).</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings SetDataPaths(this TestCloudSettings toolSettings, IEnumerable<string> dataPaths)
         {
@@ -507,7 +719,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.DataPathsInternal = dataPaths.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="TestCloudSettings.DataPaths"/>.</em></p><p>Uploads file or directory along with assemblies. (Can be used multiple times).</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="TestCloudSettings.DataPaths"/></em></p>
+        ///   <p>Uploads file or directory along with assemblies. (Can be used multiple times).</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings AddDataPaths(this TestCloudSettings toolSettings, params string[] dataPaths)
         {
@@ -515,7 +730,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.DataPathsInternal.AddRange(dataPaths);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="TestCloudSettings.DataPaths"/>.</em></p><p>Uploads file or directory along with assemblies. (Can be used multiple times).</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="TestCloudSettings.DataPaths"/></em></p>
+        ///   <p>Uploads file or directory along with assemblies. (Can be used multiple times).</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings AddDataPaths(this TestCloudSettings toolSettings, IEnumerable<string> dataPaths)
         {
@@ -523,7 +741,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.DataPathsInternal.AddRange(dataPaths);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="TestCloudSettings.DataPaths"/>.</em></p><p>Uploads file or directory along with assemblies. (Can be used multiple times).</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="TestCloudSettings.DataPaths"/></em></p>
+        ///   <p>Uploads file or directory along with assemblies. (Can be used multiple times).</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings ClearDataPaths(this TestCloudSettings toolSettings)
         {
@@ -531,7 +752,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.DataPathsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="TestCloudSettings.DataPaths"/>.</em></p><p>Uploads file or directory along with assemblies. (Can be used multiple times).</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="TestCloudSettings.DataPaths"/></em></p>
+        ///   <p>Uploads file or directory along with assemblies. (Can be used multiple times).</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings RemoveDataPaths(this TestCloudSettings toolSettings, params string[] dataPaths)
         {
@@ -540,7 +764,10 @@ namespace Nuke.Common.Tools.TestCloud
             toolSettings.DataPathsInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="TestCloudSettings.DataPaths"/>.</em></p><p>Uploads file or directory along with assemblies. (Can be used multiple times).</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="TestCloudSettings.DataPaths"/></em></p>
+        ///   <p>Uploads file or directory along with assemblies. (Can be used multiple times).</p>
+        /// </summary>
         [Pure]
         public static TestCloudSettings RemoveDataPaths(this TestCloudSettings toolSettings, IEnumerable<string> dataPaths)
         {

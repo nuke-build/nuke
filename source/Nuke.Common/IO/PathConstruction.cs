@@ -84,6 +84,16 @@ namespace Nuke.Common.IO
             var directoryInfo = new DirectoryInfo(directory);
             return globPatterns.SelectMany(x => directoryInfo.GlobDirectories(x)).Select(x => x.FullName);
         }
+        
+        public static IEnumerable<AbsolutePath> GlobDirectories(this AbsolutePath directory, params string[] globPatterns)
+        {
+            return GlobDirectories((string) directory, globPatterns).Select(x => (AbsolutePath) x);
+        }
+        
+        public static IEnumerable<AbsolutePath> GlobFiles(this AbsolutePath directory, params string[] globPatterns)
+        {
+            return GlobFiles((string) directory, globPatterns).Select(x => (AbsolutePath) x);
+        }
 
         private const char WinSeparator = '\\';
         private const char UncSeparator = '\\';

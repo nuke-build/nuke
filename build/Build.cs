@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2018 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -24,11 +24,11 @@ using static Nuke.Common.Tools.Git.GitTasks;
 using static Nuke.Common.Tools.InspectCode.InspectCodeTasks;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
-using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.Tools.Slack.SlackTasks;
 
 // ReSharper disable HeapView.DelegateAllocation
 
+// [DotNetVerbosityMapping]
 partial class Build : NukeBuild
 {
     public static int Main() => Execute<Build>(x => x.Pack);
@@ -59,7 +59,7 @@ partial class Build : NukeBuild
         .Before(Restore)
         .Executes(() =>
         {
-            DeleteDirectories(GlobDirectories(SourceDirectory, "*/bin", "*/obj"));
+            SourceDirectory.GlobDirectories("*/bin", "*/obj").ForEach(DeleteDirectory);
             EnsureCleanDirectory(OutputDirectory);
         });
 
@@ -131,13 +131,14 @@ partial class Build : NukeBuild
         .DependsOn(Compile)
         .Executes(() =>
         {
-            Solution.GetProjects("*.Tests")
-                .ForEach(x => DotNetTest(s => s
-                    .SetProjectFile(x)
-                    .SetConfiguration(Configuration)
-                    .EnableNoBuild()
-                    .SetLogger("trx")
-                    .SetResultsDirectory(OutputDirectory)));
+            DotNetTest(s => s
+                .SetConfiguration(Configuration)
+                .EnableNoBuild()
+                .SetLogger("trx")
+                .SetResultsDirectory(OutputDirectory)
+                .CombineWith(
+                    Solution.GetProjects("*.Tests"), (cs, v) => cs
+                        .SetProjectFile(v)));
         });
 
     Target Analysis => _ => _
@@ -166,13 +167,15 @@ partial class Build : NukeBuild
                         GitRepository.Branch.StartsWithOrdinalIgnoreCase(HotfixBranchPrefix))
         .Executes(() =>
         {
-            GlobFiles(OutputDirectory, "*.nupkg").NotEmpty()
-                .Where(x => !x.EndsWith(".symbols.nupkg"))
-                .ForEach(x => DotNetNuGetPush(s => s
-                    .SetTargetPath(x)
+            DotNetNuGetPush(s => s
                     .SetSource(Source)
                     .SetSymbolSource(SymbolSource)
-                    .SetApiKey(ApiKey)));
+                    .SetApiKey(ApiKey)
+                    .CombineWith(
+                        OutputDirectory.GlobFiles("*.nupkg").NotEmpty(), (cs, v) => cs
+                            .SetTargetPath(v)),
+                degreeOfParallelism: 5,
+                completeOnFailure: true);
 
             if (GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch))
             {

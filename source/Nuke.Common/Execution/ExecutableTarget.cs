@@ -22,10 +22,13 @@ namespace Nuke.Common.Execution
         internal TargetDefinition Definition { get; set; }
         public string Name { get; internal set; }
         public string Description { get; internal set; }
+        public bool Show { get; internal set; }
         internal Target Factory { get; set; }
         internal ICollection<Func<bool>> DynamicConditions { get; set; } = new List<Func<bool>>();
         internal ICollection<Func<bool>> StaticConditions { get; set; } = new List<Func<bool>>();
         internal DependencyBehavior DependencyBehavior { get; set; }
+        internal bool AssuredAfterFailure { get; set; }
+        internal bool ContinueOnFailure { get; set; }
         internal ICollection<LambdaExpression> Requirements { get; set; } = new List<LambdaExpression>();
         internal ICollection<Action> Actions { get; set; } = new List<Action>();
         internal ICollection<ExecutableTarget> ExecutionDependencies { get; } = new List<ExecutableTarget>();

@@ -23,18 +23,26 @@ namespace Nuke.Common.Tools.Xunit
     [ExcludeFromCodeCoverage]
     public static partial class XunitTasks
     {
-        /// <summary><p>Path to the Xunit executable.</p></summary>
+        /// <summary>
+        ///   Path to the Xunit executable.
+        /// </summary>
         public static string XunitPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("XUNIT_EXE") ??
             GetToolPath();
-        /// <summary><p>xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Written by the original inventor of NUnit v2, xUnit.net is the latest technology for unit testing C#, F#, VB.NET and other .NET languages. xUnit.net works with ReSharper, CodeRush, TestDriven.NET and Xamarin. It is part of the <a href="https://www.dotnetfoundation.org/">.NET Foundation</a>, and operates under their <a href="https://www.dotnetfoundation.org/code-of-conduct">code of conduct</a>. It is licensed under <a href="https://opensource.org/licenses/Apache-2.0">Apache 2</a> (an OSI approved license).</p></summary>
+        public static Action<OutputType, string> XunitLogger { get; set; } = ProcessManager.DefaultLogger;
+        /// <summary>
+        ///   xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Written by the original inventor of NUnit v2, xUnit.net is the latest technology for unit testing C#, F#, VB.NET and other .NET languages. xUnit.net works with ReSharper, CodeRush, TestDriven.NET and Xamarin. It is part of the <a href="https://www.dotnetfoundation.org/">.NET Foundation</a>, and operates under their <a href="https://www.dotnetfoundation.org/code-of-conduct">code of conduct</a>. It is licensed under <a href="https://opensource.org/licenses/Apache-2.0">Apache 2</a> (an OSI approved license).
+        /// </summary>
         public static IReadOnlyCollection<Output> Xunit(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(XunitPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
+            var process = ProcessTasks.StartProcess(XunitPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, XunitLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Written by the original inventor of NUnit v2, xUnit.net is the latest technology for unit testing C#, F#, VB.NET and other .NET languages. xUnit.net works with ReSharper, CodeRush, TestDriven.NET and Xamarin. It is part of the <a href="https://www.dotnetfoundation.org/">.NET Foundation</a>, and operates under their <a href="https://www.dotnetfoundation.org/code-of-conduct">code of conduct</a>. It is licensed under <a href="https://opensource.org/licenses/Apache-2.0">Apache 2</a> (an OSI approved license).</p><p>For more details, visit the <a href="https://xunit.github.io">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Written by the original inventor of NUnit v2, xUnit.net is the latest technology for unit testing C#, F#, VB.NET and other .NET languages. xUnit.net works with ReSharper, CodeRush, TestDriven.NET and Xamarin. It is part of the <a href="https://www.dotnetfoundation.org/">.NET Foundation</a>, and operates under their <a href="https://www.dotnetfoundation.org/code-of-conduct">code of conduct</a>. It is licensed under <a href="https://opensource.org/licenses/Apache-2.0">Apache 2</a> (an OSI approved license).</p>
+        ///   <p>For more details, visit the <a href="https://xunit.github.io">official website</a>.</p>
+        /// </summary>
         public static IReadOnlyCollection<Output> Xunit2(Xunit2Settings toolSettings = null)
         {
             toolSettings = toolSettings ?? new Xunit2Settings();
@@ -42,77 +50,184 @@ namespace Nuke.Common.Tools.Xunit
             AssertProcess(process, toolSettings);
             return process.Output;
         }
-        /// <summary><p>xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Written by the original inventor of NUnit v2, xUnit.net is the latest technology for unit testing C#, F#, VB.NET and other .NET languages. xUnit.net works with ReSharper, CodeRush, TestDriven.NET and Xamarin. It is part of the <a href="https://www.dotnetfoundation.org/">.NET Foundation</a>, and operates under their <a href="https://www.dotnetfoundation.org/code-of-conduct">code of conduct</a>. It is licensed under <a href="https://opensource.org/licenses/Apache-2.0">Apache 2</a> (an OSI approved license).</p><p>For more details, visit the <a href="https://xunit.github.io">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Written by the original inventor of NUnit v2, xUnit.net is the latest technology for unit testing C#, F#, VB.NET and other .NET languages. xUnit.net works with ReSharper, CodeRush, TestDriven.NET and Xamarin. It is part of the <a href="https://www.dotnetfoundation.org/">.NET Foundation</a>, and operates under their <a href="https://www.dotnetfoundation.org/code-of-conduct">code of conduct</a>. It is licensed under <a href="https://opensource.org/licenses/Apache-2.0">Apache 2</a> (an OSI approved license).</p>
+        ///   <p>For more details, visit the <a href="https://xunit.github.io">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;targetAssemblyWithConfigs&gt;</c> via <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/></li>
+        ///     <li><c>-</c> via <see cref="Xunit2Settings.Reporter"/></li>
+        ///     <li><c>-</c> via <see cref="Xunit2Settings.ResultReports"/></li>
+        ///     <li><c>-appdomains</c> via <see cref="Xunit2Settings.AppDomainMode"/></li>
+        ///     <li><c>-class</c> via <see cref="Xunit2Settings.Classes"/></li>
+        ///     <li><c>-debug</c> via <see cref="Xunit2Settings.Debug"/></li>
+        ///     <li><c>-diagnostics</c> via <see cref="Xunit2Settings.Diagnostics"/></li>
+        ///     <li><c>-failskips</c> via <see cref="Xunit2Settings.FailSkips"/></li>
+        ///     <li><c>-maxthreads</c> via <see cref="Xunit2Settings.MaxThreads"/></li>
+        ///     <li><c>-method</c> via <see cref="Xunit2Settings.Methods"/></li>
+        ///     <li><c>-namespace</c> via <see cref="Xunit2Settings.Namespaces"/></li>
+        ///     <li><c>-noautoreporters</c> via <see cref="Xunit2Settings.NoAutoReporters"/></li>
+        ///     <li><c>-nocolor</c> via <see cref="Xunit2Settings.NoColor"/></li>
+        ///     <li><c>-nologo</c> via <see cref="Xunit2Settings.NoLogo"/></li>
+        ///     <li><c>-noshadow</c> via <see cref="Xunit2Settings.NoShadowCopying"/></li>
+        ///     <li><c>-notrait</c> via <see cref="Xunit2Settings.ExcludedTraits"/></li>
+        ///     <li><c>-parallel</c> via <see cref="Xunit2Settings.Parallel"/></li>
+        ///     <li><c>-pause</c> via <see cref="Xunit2Settings.Pause"/></li>
+        ///     <li><c>-serialize</c> via <see cref="Xunit2Settings.Serialization"/></li>
+        ///     <li><c>-stoponfail</c> via <see cref="Xunit2Settings.StopOnFail"/></li>
+        ///     <li><c>-trait</c> via <see cref="Xunit2Settings.Traits"/></li>
+        ///     <li><c>-wait</c> via <see cref="Xunit2Settings.Wait"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> Xunit2(Configure<Xunit2Settings> configurator)
         {
             return Xunit2(configurator(new Xunit2Settings()));
         }
-        /// <summary><p>xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Written by the original inventor of NUnit v2, xUnit.net is the latest technology for unit testing C#, F#, VB.NET and other .NET languages. xUnit.net works with ReSharper, CodeRush, TestDriven.NET and Xamarin. It is part of the <a href="https://www.dotnetfoundation.org/">.NET Foundation</a>, and operates under their <a href="https://www.dotnetfoundation.org/code-of-conduct">code of conduct</a>. It is licensed under <a href="https://opensource.org/licenses/Apache-2.0">Apache 2</a> (an OSI approved license).</p><p>For more details, visit the <a href="https://xunit.github.io">official website</a>.</p></summary>
-        public static IEnumerable<(Xunit2Settings Settings, IReadOnlyCollection<Output> Output)> Xunit2(CombinatorialConfigure<Xunit2Settings> configurator)
+        /// <summary>
+        ///   <p>xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Written by the original inventor of NUnit v2, xUnit.net is the latest technology for unit testing C#, F#, VB.NET and other .NET languages. xUnit.net works with ReSharper, CodeRush, TestDriven.NET and Xamarin. It is part of the <a href="https://www.dotnetfoundation.org/">.NET Foundation</a>, and operates under their <a href="https://www.dotnetfoundation.org/code-of-conduct">code of conduct</a>. It is licensed under <a href="https://opensource.org/licenses/Apache-2.0">Apache 2</a> (an OSI approved license).</p>
+        ///   <p>For more details, visit the <a href="https://xunit.github.io">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;targetAssemblyWithConfigs&gt;</c> via <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/></li>
+        ///     <li><c>-</c> via <see cref="Xunit2Settings.Reporter"/></li>
+        ///     <li><c>-</c> via <see cref="Xunit2Settings.ResultReports"/></li>
+        ///     <li><c>-appdomains</c> via <see cref="Xunit2Settings.AppDomainMode"/></li>
+        ///     <li><c>-class</c> via <see cref="Xunit2Settings.Classes"/></li>
+        ///     <li><c>-debug</c> via <see cref="Xunit2Settings.Debug"/></li>
+        ///     <li><c>-diagnostics</c> via <see cref="Xunit2Settings.Diagnostics"/></li>
+        ///     <li><c>-failskips</c> via <see cref="Xunit2Settings.FailSkips"/></li>
+        ///     <li><c>-maxthreads</c> via <see cref="Xunit2Settings.MaxThreads"/></li>
+        ///     <li><c>-method</c> via <see cref="Xunit2Settings.Methods"/></li>
+        ///     <li><c>-namespace</c> via <see cref="Xunit2Settings.Namespaces"/></li>
+        ///     <li><c>-noautoreporters</c> via <see cref="Xunit2Settings.NoAutoReporters"/></li>
+        ///     <li><c>-nocolor</c> via <see cref="Xunit2Settings.NoColor"/></li>
+        ///     <li><c>-nologo</c> via <see cref="Xunit2Settings.NoLogo"/></li>
+        ///     <li><c>-noshadow</c> via <see cref="Xunit2Settings.NoShadowCopying"/></li>
+        ///     <li><c>-notrait</c> via <see cref="Xunit2Settings.ExcludedTraits"/></li>
+        ///     <li><c>-parallel</c> via <see cref="Xunit2Settings.Parallel"/></li>
+        ///     <li><c>-pause</c> via <see cref="Xunit2Settings.Pause"/></li>
+        ///     <li><c>-serialize</c> via <see cref="Xunit2Settings.Serialization"/></li>
+        ///     <li><c>-stoponfail</c> via <see cref="Xunit2Settings.StopOnFail"/></li>
+        ///     <li><c>-trait</c> via <see cref="Xunit2Settings.Traits"/></li>
+        ///     <li><c>-wait</c> via <see cref="Xunit2Settings.Wait"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(Xunit2Settings Settings, IReadOnlyCollection<Output> Output)> Xunit2(CombinatorialConfigure<Xunit2Settings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator(new Xunit2Settings())
-                .Select(x => (ToolSettings: x, ReturnValue: Xunit2(x)))
-                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+            return configurator.Invoke(Xunit2, XunitLogger, degreeOfParallelism, completeOnFailure);
         }
     }
     #region Xunit2Settings
-    /// <summary><p>Used within <see cref="XunitTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="XunitTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
     public partial class Xunit2Settings : ToolSettings
     {
-        /// <summary><p>Path to the Xunit executable.</p></summary>
+        /// <summary>
+        ///   Path to the Xunit executable.
+        /// </summary>
         public override string ToolPath => base.ToolPath ?? GetToolPath();
-        /// <summary><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
+        public override Action<OutputType, string> CustomLogger => XunitTasks.XunitLogger;
+        /// <summary>
+        ///   Assemblies to test, and their related related configuration files (ending with .json or .config).
+        /// </summary>
         public virtual ILookup<string, string> TargetAssemblyWithConfigs => TargetAssemblyWithConfigsInternal.AsReadOnly();
         internal LookupTable<string, string> TargetAssemblyWithConfigsInternal { get; set; } = new LookupTable<string, string>(StringComparer.OrdinalIgnoreCase);
-        /// <summary><p>Do not show the copyright message.</p></summary>
+        /// <summary>
+        ///   Do not show the copyright message.
+        /// </summary>
         public virtual bool? NoLogo { get; internal set; }
-        /// <summary><p>Do not output results with colors.</p></summary>
+        /// <summary>
+        ///   Do not output results with colors.
+        /// </summary>
         public virtual bool? NoColor { get; internal set; }
-        /// <summary><p>Convert skipped tests into failures.</p></summary>
+        /// <summary>
+        ///   Convert skipped tests into failures.
+        /// </summary>
         public virtual bool? FailSkips { get; internal set; }
-        /// <summary><p>Stop on first test failure.</p></summary>
+        /// <summary>
+        ///   Stop on first test failure.
+        /// </summary>
         public virtual bool? StopOnFail { get; internal set; }
-        /// <summary><p>Set parallelization based on option:<ul><li><b>none:</b> turn off all parallelization</li><li><b>collections:</b> only parallelize collections</li><li><b>assemblies:</b> only parallelize assemblies</li><li><b>all:</b> parallelize assemblies &amp; collections</li></ul></p></summary>
+        /// <summary>
+        ///   Set parallelization based on option:<ul><li><b>none:</b> turn off all parallelization</li><li><b>collections:</b> only parallelize collections</li><li><b>assemblies:</b> only parallelize assemblies</li><li><b>all:</b> parallelize assemblies &amp; collections</li></ul>
+        /// </summary>
         public virtual Xunit2ParallelOption Parallel { get; internal set; }
-        /// <summary><p>Maximum thread count for collection parallelization:<br/><ul><li><b>default:</b> run with default (1 thread per CPU thread)</li><li><b>unlimited:</b> run with unbounded thread count</li><li><b>(number):</b> limit task thread pool size to 'count'</li></ul></p></summary>
+        /// <summary>
+        ///   Maximum thread count for collection parallelization:<br/><ul><li><b>default:</b> run with default (1 thread per CPU thread)</li><li><b>unlimited:</b> run with unbounded thread count</li><li><b>(number):</b> limit task thread pool size to 'count'</li></ul>
+        /// </summary>
         public virtual int? MaxThreads { get; internal set; }
-        /// <summary><p>AppDomain modes:<ul><li><c>-ifavailable</c>: choose based on library type</li><li><c>-required</c>: force app domains on</li><li><c>-denied</c>: force app domains off</li></ul></p></summary>
+        /// <summary>
+        ///   AppDomain modes:<ul><li><c>-ifavailable</c>: choose based on library type</li><li><c>-required</c>: force app domains on</li><li><c>-denied</c>: force app domains off</li></ul>
+        /// </summary>
         public virtual Xunit2AppDomainMode AppDomainMode { get; internal set; }
-        /// <summary><p>Do not shadow copy assemblies.</p></summary>
+        /// <summary>
+        ///   Do not shadow copy assemblies.
+        /// </summary>
         public virtual bool? NoShadowCopying { get; internal set; }
-        /// <summary><p>Wait for input after completion.</p></summary>
+        /// <summary>
+        ///   Wait for input after completion.
+        /// </summary>
         public virtual bool? Wait { get; internal set; }
-        /// <summary><p>Enable diagnostics messages for all test assemblies.</p></summary>
+        /// <summary>
+        ///   Enable diagnostics messages for all test assemblies.
+        /// </summary>
         public virtual bool? Diagnostics { get; internal set; }
-        /// <summary><p>Pause before doing any work, to help attach a debugger.</p></summary>
+        /// <summary>
+        ///   Pause before doing any work, to help attach a debugger.
+        /// </summary>
         public virtual bool? Pause { get; internal set; }
-        /// <summary><p>Launch the debugger to debug the tests.</p></summary>
+        /// <summary>
+        ///   Launch the debugger to debug the tests.
+        /// </summary>
         public virtual bool? Debug { get; internal set; }
-        /// <summary><p>Serialize all test cases (for diagnostic purposes only).</p></summary>
+        /// <summary>
+        ///   Serialize all test cases (for diagnostic purposes only).
+        /// </summary>
         public virtual bool? Serialization { get; internal set; }
-        /// <summary><p>Only run tests with matching name/value traits.</p></summary>
+        /// <summary>
+        ///   Only run tests with matching name/value traits.
+        /// </summary>
         public virtual ILookup<string, string> Traits => TraitsInternal.AsReadOnly();
         internal LookupTable<string, string> TraitsInternal { get; set; } = new LookupTable<string, string>(StringComparer.OrdinalIgnoreCase);
-        /// <summary><p>Do not run tests with matching name/value traits.</p></summary>
+        /// <summary>
+        ///   Do not run tests with matching name/value traits.
+        /// </summary>
         public virtual ILookup<string, string> ExcludedTraits => ExcludedTraitsInternal.AsReadOnly();
         internal LookupTable<string, string> ExcludedTraitsInternal { get; set; } = new LookupTable<string, string>(StringComparer.OrdinalIgnoreCase);
-        /// <summary><p>Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').</p></summary>
+        /// <summary>
+        ///   Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').
+        /// </summary>
         public virtual IReadOnlyList<string> Methods => MethodsInternal.AsReadOnly();
         internal List<string> MethodsInternal { get; set; } = new List<string>();
-        /// <summary><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
+        /// <summary>
+        ///   Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').
+        /// </summary>
         public virtual IReadOnlyList<string> Classes => ClassesInternal.AsReadOnly();
         internal List<string> ClassesInternal { get; set; } = new List<string>();
-        /// <summary><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
+        /// <summary>
+        ///   Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').
+        /// </summary>
         public virtual IReadOnlyList<string> Namespaces => NamespacesInternal.AsReadOnly();
         internal List<string> NamespacesInternal { get; set; } = new List<string>();
-        /// <summary><p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p></summary>
+        /// <summary>
+        ///   Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).
+        /// </summary>
         public virtual bool? NoAutoReporters { get; internal set; }
-        /// <summary><p>Reporters:<ul><li><c>-appveyor</c>: forces AppVeyor CI mode (normally auto-detected)</li><li><c>-json</c>: show progress messages in JSON format</li><li><c>-quiet</c>: do not show progress messages</li><li><c>-teamcity</c>: forces TeamCity mode (normally auto-detected)</li><li><c>-verbose</c>: show verbose progress messages</li></ul></p></summary>
+        /// <summary>
+        ///   Reporters:<ul><li><c>-appveyor</c>: forces AppVeyor CI mode (normally auto-detected)</li><li><c>-json</c>: show progress messages in JSON format</li><li><c>-quiet</c>: do not show progress messages</li><li><c>-teamcity</c>: forces TeamCity mode (normally auto-detected)</li><li><c>-verbose</c>: show verbose progress messages</li></ul>
+        /// </summary>
         public virtual Xunit2ReporterType Reporter { get; internal set; }
-        /// <summary><p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p></summary>
+        /// <summary>
+        ///   Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul>
+        /// </summary>
         public virtual IReadOnlyDictionary<Xunit2ResultFormat, string> ResultReports => ResultReportsInternal.AsReadOnly();
         internal Dictionary<Xunit2ResultFormat, string> ResultReportsInternal { get; set; } = new Dictionary<Xunit2ResultFormat, string>(EqualityComparer<Xunit2ResultFormat>.Default);
         public virtual string Framework { get; internal set; }
@@ -146,13 +261,18 @@ namespace Nuke.Common.Tools.Xunit
     }
     #endregion
     #region Xunit2SettingsExtensions
-    /// <summary><p>Used within <see cref="XunitTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="XunitTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class Xunit2SettingsExtensions
     {
         #region TargetAssemblyWithConfigs
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/> to a new lookup table.</em></p><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/> to a new lookup table</em></p>
+        ///   <p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetTargetAssemblyWithConfigs(this Xunit2Settings toolSettings, ILookup<string, string> targetAssemblyWithConfigs)
         {
@@ -160,7 +280,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.TargetAssemblyWithConfigsInternal = targetAssemblyWithConfigs.ToLookupTable(StringComparer.OrdinalIgnoreCase);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/>.</em></p><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/></em></p>
+        ///   <p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ClearTargetAssemblyWithConfigs(this Xunit2Settings toolSettings)
         {
@@ -168,7 +291,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.TargetAssemblyWithConfigsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Adds new values for the given key to <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/>.</em></p><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
+        /// <summary>
+        ///   <p><em>Adds new values for the given key to <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/></em></p>
+        ///   <p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings AddTargetAssemblyWithConfigs(this Xunit2Settings toolSettings, string targetAssemblyWithConfigsKey, params string[] targetAssemblyWithConfigsValues)
         {
@@ -176,7 +302,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.TargetAssemblyWithConfigsInternal.AddRange(targetAssemblyWithConfigsKey, targetAssemblyWithConfigsValues);
             return toolSettings;
         }
-        /// <summary><p><em>Adds new values for the given key to <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/>.</em></p><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
+        /// <summary>
+        ///   <p><em>Adds new values for the given key to <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/></em></p>
+        ///   <p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings AddTargetAssemblyWithConfigs(this Xunit2Settings toolSettings, string targetAssemblyWithConfigsKey, IEnumerable<string> targetAssemblyWithConfigsValues)
         {
@@ -184,7 +313,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.TargetAssemblyWithConfigsInternal.AddRange(targetAssemblyWithConfigsKey, targetAssemblyWithConfigsValues);
             return toolSettings;
         }
-        /// <summary><p><em>Removes a single targetAssemblyWithConfig from <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/>.</em></p><p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p></summary>
+        /// <summary>
+        ///   <p><em>Removes a single targetAssemblyWithConfig from <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/></em></p>
+        ///   <p>Assemblies to test, and their related related configuration files (ending with .json or .config).</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings RemoveTargetAssemblyWithConfig(this Xunit2Settings toolSettings, string targetAssemblyWithConfigsKey, string targetAssemblyWithConfigsValue)
         {
@@ -194,7 +326,10 @@ namespace Nuke.Common.Tools.Xunit
         }
         #endregion
         #region NoLogo
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.NoLogo"/>.</em></p><p>Do not show the copyright message.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.NoLogo"/></em></p>
+        ///   <p>Do not show the copyright message.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetNoLogo(this Xunit2Settings toolSettings, bool? noLogo)
         {
@@ -202,7 +337,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.NoLogo = noLogo;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="Xunit2Settings.NoLogo"/>.</em></p><p>Do not show the copyright message.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="Xunit2Settings.NoLogo"/></em></p>
+        ///   <p>Do not show the copyright message.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ResetNoLogo(this Xunit2Settings toolSettings)
         {
@@ -210,7 +348,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.NoLogo = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="Xunit2Settings.NoLogo"/>.</em></p><p>Do not show the copyright message.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="Xunit2Settings.NoLogo"/></em></p>
+        ///   <p>Do not show the copyright message.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings EnableNoLogo(this Xunit2Settings toolSettings)
         {
@@ -218,7 +359,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.NoLogo = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="Xunit2Settings.NoLogo"/>.</em></p><p>Do not show the copyright message.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="Xunit2Settings.NoLogo"/></em></p>
+        ///   <p>Do not show the copyright message.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings DisableNoLogo(this Xunit2Settings toolSettings)
         {
@@ -226,7 +370,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.NoLogo = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="Xunit2Settings.NoLogo"/>.</em></p><p>Do not show the copyright message.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="Xunit2Settings.NoLogo"/></em></p>
+        ///   <p>Do not show the copyright message.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ToggleNoLogo(this Xunit2Settings toolSettings)
         {
@@ -236,7 +383,10 @@ namespace Nuke.Common.Tools.Xunit
         }
         #endregion
         #region NoColor
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.NoColor"/>.</em></p><p>Do not output results with colors.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.NoColor"/></em></p>
+        ///   <p>Do not output results with colors.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetNoColor(this Xunit2Settings toolSettings, bool? noColor)
         {
@@ -244,7 +394,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.NoColor = noColor;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="Xunit2Settings.NoColor"/>.</em></p><p>Do not output results with colors.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="Xunit2Settings.NoColor"/></em></p>
+        ///   <p>Do not output results with colors.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ResetNoColor(this Xunit2Settings toolSettings)
         {
@@ -252,7 +405,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.NoColor = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="Xunit2Settings.NoColor"/>.</em></p><p>Do not output results with colors.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="Xunit2Settings.NoColor"/></em></p>
+        ///   <p>Do not output results with colors.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings EnableNoColor(this Xunit2Settings toolSettings)
         {
@@ -260,7 +416,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.NoColor = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="Xunit2Settings.NoColor"/>.</em></p><p>Do not output results with colors.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="Xunit2Settings.NoColor"/></em></p>
+        ///   <p>Do not output results with colors.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings DisableNoColor(this Xunit2Settings toolSettings)
         {
@@ -268,7 +427,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.NoColor = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="Xunit2Settings.NoColor"/>.</em></p><p>Do not output results with colors.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="Xunit2Settings.NoColor"/></em></p>
+        ///   <p>Do not output results with colors.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ToggleNoColor(this Xunit2Settings toolSettings)
         {
@@ -278,7 +440,10 @@ namespace Nuke.Common.Tools.Xunit
         }
         #endregion
         #region FailSkips
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.FailSkips"/>.</em></p><p>Convert skipped tests into failures.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.FailSkips"/></em></p>
+        ///   <p>Convert skipped tests into failures.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetFailSkips(this Xunit2Settings toolSettings, bool? failSkips)
         {
@@ -286,7 +451,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.FailSkips = failSkips;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="Xunit2Settings.FailSkips"/>.</em></p><p>Convert skipped tests into failures.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="Xunit2Settings.FailSkips"/></em></p>
+        ///   <p>Convert skipped tests into failures.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ResetFailSkips(this Xunit2Settings toolSettings)
         {
@@ -294,7 +462,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.FailSkips = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="Xunit2Settings.FailSkips"/>.</em></p><p>Convert skipped tests into failures.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="Xunit2Settings.FailSkips"/></em></p>
+        ///   <p>Convert skipped tests into failures.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings EnableFailSkips(this Xunit2Settings toolSettings)
         {
@@ -302,7 +473,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.FailSkips = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="Xunit2Settings.FailSkips"/>.</em></p><p>Convert skipped tests into failures.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="Xunit2Settings.FailSkips"/></em></p>
+        ///   <p>Convert skipped tests into failures.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings DisableFailSkips(this Xunit2Settings toolSettings)
         {
@@ -310,7 +484,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.FailSkips = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="Xunit2Settings.FailSkips"/>.</em></p><p>Convert skipped tests into failures.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="Xunit2Settings.FailSkips"/></em></p>
+        ///   <p>Convert skipped tests into failures.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ToggleFailSkips(this Xunit2Settings toolSettings)
         {
@@ -320,7 +497,10 @@ namespace Nuke.Common.Tools.Xunit
         }
         #endregion
         #region StopOnFail
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.StopOnFail"/>.</em></p><p>Stop on first test failure.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.StopOnFail"/></em></p>
+        ///   <p>Stop on first test failure.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetStopOnFail(this Xunit2Settings toolSettings, bool? stopOnFail)
         {
@@ -328,7 +508,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.StopOnFail = stopOnFail;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="Xunit2Settings.StopOnFail"/>.</em></p><p>Stop on first test failure.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="Xunit2Settings.StopOnFail"/></em></p>
+        ///   <p>Stop on first test failure.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ResetStopOnFail(this Xunit2Settings toolSettings)
         {
@@ -336,7 +519,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.StopOnFail = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="Xunit2Settings.StopOnFail"/>.</em></p><p>Stop on first test failure.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="Xunit2Settings.StopOnFail"/></em></p>
+        ///   <p>Stop on first test failure.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings EnableStopOnFail(this Xunit2Settings toolSettings)
         {
@@ -344,7 +530,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.StopOnFail = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="Xunit2Settings.StopOnFail"/>.</em></p><p>Stop on first test failure.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="Xunit2Settings.StopOnFail"/></em></p>
+        ///   <p>Stop on first test failure.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings DisableStopOnFail(this Xunit2Settings toolSettings)
         {
@@ -352,7 +541,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.StopOnFail = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="Xunit2Settings.StopOnFail"/>.</em></p><p>Stop on first test failure.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="Xunit2Settings.StopOnFail"/></em></p>
+        ///   <p>Stop on first test failure.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ToggleStopOnFail(this Xunit2Settings toolSettings)
         {
@@ -362,7 +554,10 @@ namespace Nuke.Common.Tools.Xunit
         }
         #endregion
         #region Parallel
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.Parallel"/>.</em></p><p>Set parallelization based on option:<ul><li><b>none:</b> turn off all parallelization</li><li><b>collections:</b> only parallelize collections</li><li><b>assemblies:</b> only parallelize assemblies</li><li><b>all:</b> parallelize assemblies &amp; collections</li></ul></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.Parallel"/></em></p>
+        ///   <p>Set parallelization based on option:<ul><li><b>none:</b> turn off all parallelization</li><li><b>collections:</b> only parallelize collections</li><li><b>assemblies:</b> only parallelize assemblies</li><li><b>all:</b> parallelize assemblies &amp; collections</li></ul></p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetParallel(this Xunit2Settings toolSettings, Xunit2ParallelOption parallel)
         {
@@ -370,7 +565,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.Parallel = parallel;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="Xunit2Settings.Parallel"/>.</em></p><p>Set parallelization based on option:<ul><li><b>none:</b> turn off all parallelization</li><li><b>collections:</b> only parallelize collections</li><li><b>assemblies:</b> only parallelize assemblies</li><li><b>all:</b> parallelize assemblies &amp; collections</li></ul></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="Xunit2Settings.Parallel"/></em></p>
+        ///   <p>Set parallelization based on option:<ul><li><b>none:</b> turn off all parallelization</li><li><b>collections:</b> only parallelize collections</li><li><b>assemblies:</b> only parallelize assemblies</li><li><b>all:</b> parallelize assemblies &amp; collections</li></ul></p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ResetParallel(this Xunit2Settings toolSettings)
         {
@@ -380,7 +578,10 @@ namespace Nuke.Common.Tools.Xunit
         }
         #endregion
         #region MaxThreads
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.MaxThreads"/>.</em></p><p>Maximum thread count for collection parallelization:<br/><ul><li><b>default:</b> run with default (1 thread per CPU thread)</li><li><b>unlimited:</b> run with unbounded thread count</li><li><b>(number):</b> limit task thread pool size to 'count'</li></ul></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.MaxThreads"/></em></p>
+        ///   <p>Maximum thread count for collection parallelization:<br/><ul><li><b>default:</b> run with default (1 thread per CPU thread)</li><li><b>unlimited:</b> run with unbounded thread count</li><li><b>(number):</b> limit task thread pool size to 'count'</li></ul></p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetMaxThreads(this Xunit2Settings toolSettings, int? maxThreads)
         {
@@ -388,7 +589,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.MaxThreads = maxThreads;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="Xunit2Settings.MaxThreads"/>.</em></p><p>Maximum thread count for collection parallelization:<br/><ul><li><b>default:</b> run with default (1 thread per CPU thread)</li><li><b>unlimited:</b> run with unbounded thread count</li><li><b>(number):</b> limit task thread pool size to 'count'</li></ul></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="Xunit2Settings.MaxThreads"/></em></p>
+        ///   <p>Maximum thread count for collection parallelization:<br/><ul><li><b>default:</b> run with default (1 thread per CPU thread)</li><li><b>unlimited:</b> run with unbounded thread count</li><li><b>(number):</b> limit task thread pool size to 'count'</li></ul></p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ResetMaxThreads(this Xunit2Settings toolSettings)
         {
@@ -398,7 +602,10 @@ namespace Nuke.Common.Tools.Xunit
         }
         #endregion
         #region AppDomainMode
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.AppDomainMode"/>.</em></p><p>AppDomain modes:<ul><li><c>-ifavailable</c>: choose based on library type</li><li><c>-required</c>: force app domains on</li><li><c>-denied</c>: force app domains off</li></ul></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.AppDomainMode"/></em></p>
+        ///   <p>AppDomain modes:<ul><li><c>-ifavailable</c>: choose based on library type</li><li><c>-required</c>: force app domains on</li><li><c>-denied</c>: force app domains off</li></ul></p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetAppDomainMode(this Xunit2Settings toolSettings, Xunit2AppDomainMode appDomainMode)
         {
@@ -406,7 +613,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.AppDomainMode = appDomainMode;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="Xunit2Settings.AppDomainMode"/>.</em></p><p>AppDomain modes:<ul><li><c>-ifavailable</c>: choose based on library type</li><li><c>-required</c>: force app domains on</li><li><c>-denied</c>: force app domains off</li></ul></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="Xunit2Settings.AppDomainMode"/></em></p>
+        ///   <p>AppDomain modes:<ul><li><c>-ifavailable</c>: choose based on library type</li><li><c>-required</c>: force app domains on</li><li><c>-denied</c>: force app domains off</li></ul></p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ResetAppDomainMode(this Xunit2Settings toolSettings)
         {
@@ -416,7 +626,10 @@ namespace Nuke.Common.Tools.Xunit
         }
         #endregion
         #region NoShadowCopying
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.NoShadowCopying"/>.</em></p><p>Do not shadow copy assemblies.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.NoShadowCopying"/></em></p>
+        ///   <p>Do not shadow copy assemblies.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetNoShadowCopying(this Xunit2Settings toolSettings, bool? noShadowCopying)
         {
@@ -424,7 +637,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.NoShadowCopying = noShadowCopying;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="Xunit2Settings.NoShadowCopying"/>.</em></p><p>Do not shadow copy assemblies.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="Xunit2Settings.NoShadowCopying"/></em></p>
+        ///   <p>Do not shadow copy assemblies.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ResetNoShadowCopying(this Xunit2Settings toolSettings)
         {
@@ -432,7 +648,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.NoShadowCopying = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="Xunit2Settings.NoShadowCopying"/>.</em></p><p>Do not shadow copy assemblies.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="Xunit2Settings.NoShadowCopying"/></em></p>
+        ///   <p>Do not shadow copy assemblies.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings EnableNoShadowCopying(this Xunit2Settings toolSettings)
         {
@@ -440,7 +659,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.NoShadowCopying = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="Xunit2Settings.NoShadowCopying"/>.</em></p><p>Do not shadow copy assemblies.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="Xunit2Settings.NoShadowCopying"/></em></p>
+        ///   <p>Do not shadow copy assemblies.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings DisableNoShadowCopying(this Xunit2Settings toolSettings)
         {
@@ -448,7 +670,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.NoShadowCopying = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="Xunit2Settings.NoShadowCopying"/>.</em></p><p>Do not shadow copy assemblies.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="Xunit2Settings.NoShadowCopying"/></em></p>
+        ///   <p>Do not shadow copy assemblies.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ToggleNoShadowCopying(this Xunit2Settings toolSettings)
         {
@@ -458,7 +683,10 @@ namespace Nuke.Common.Tools.Xunit
         }
         #endregion
         #region Wait
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.Wait"/>.</em></p><p>Wait for input after completion.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.Wait"/></em></p>
+        ///   <p>Wait for input after completion.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetWait(this Xunit2Settings toolSettings, bool? wait)
         {
@@ -466,7 +694,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.Wait = wait;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="Xunit2Settings.Wait"/>.</em></p><p>Wait for input after completion.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="Xunit2Settings.Wait"/></em></p>
+        ///   <p>Wait for input after completion.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ResetWait(this Xunit2Settings toolSettings)
         {
@@ -474,7 +705,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.Wait = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="Xunit2Settings.Wait"/>.</em></p><p>Wait for input after completion.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="Xunit2Settings.Wait"/></em></p>
+        ///   <p>Wait for input after completion.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings EnableWait(this Xunit2Settings toolSettings)
         {
@@ -482,7 +716,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.Wait = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="Xunit2Settings.Wait"/>.</em></p><p>Wait for input after completion.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="Xunit2Settings.Wait"/></em></p>
+        ///   <p>Wait for input after completion.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings DisableWait(this Xunit2Settings toolSettings)
         {
@@ -490,7 +727,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.Wait = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="Xunit2Settings.Wait"/>.</em></p><p>Wait for input after completion.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="Xunit2Settings.Wait"/></em></p>
+        ///   <p>Wait for input after completion.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ToggleWait(this Xunit2Settings toolSettings)
         {
@@ -500,7 +740,10 @@ namespace Nuke.Common.Tools.Xunit
         }
         #endregion
         #region Diagnostics
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.Diagnostics"/>.</em></p><p>Enable diagnostics messages for all test assemblies.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.Diagnostics"/></em></p>
+        ///   <p>Enable diagnostics messages for all test assemblies.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetDiagnostics(this Xunit2Settings toolSettings, bool? diagnostics)
         {
@@ -508,7 +751,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.Diagnostics = diagnostics;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="Xunit2Settings.Diagnostics"/>.</em></p><p>Enable diagnostics messages for all test assemblies.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="Xunit2Settings.Diagnostics"/></em></p>
+        ///   <p>Enable diagnostics messages for all test assemblies.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ResetDiagnostics(this Xunit2Settings toolSettings)
         {
@@ -516,7 +762,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.Diagnostics = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="Xunit2Settings.Diagnostics"/>.</em></p><p>Enable diagnostics messages for all test assemblies.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="Xunit2Settings.Diagnostics"/></em></p>
+        ///   <p>Enable diagnostics messages for all test assemblies.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings EnableDiagnostics(this Xunit2Settings toolSettings)
         {
@@ -524,7 +773,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.Diagnostics = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="Xunit2Settings.Diagnostics"/>.</em></p><p>Enable diagnostics messages for all test assemblies.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="Xunit2Settings.Diagnostics"/></em></p>
+        ///   <p>Enable diagnostics messages for all test assemblies.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings DisableDiagnostics(this Xunit2Settings toolSettings)
         {
@@ -532,7 +784,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.Diagnostics = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="Xunit2Settings.Diagnostics"/>.</em></p><p>Enable diagnostics messages for all test assemblies.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="Xunit2Settings.Diagnostics"/></em></p>
+        ///   <p>Enable diagnostics messages for all test assemblies.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ToggleDiagnostics(this Xunit2Settings toolSettings)
         {
@@ -542,7 +797,10 @@ namespace Nuke.Common.Tools.Xunit
         }
         #endregion
         #region Pause
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.Pause"/>.</em></p><p>Pause before doing any work, to help attach a debugger.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.Pause"/></em></p>
+        ///   <p>Pause before doing any work, to help attach a debugger.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetPause(this Xunit2Settings toolSettings, bool? pause)
         {
@@ -550,7 +808,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.Pause = pause;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="Xunit2Settings.Pause"/>.</em></p><p>Pause before doing any work, to help attach a debugger.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="Xunit2Settings.Pause"/></em></p>
+        ///   <p>Pause before doing any work, to help attach a debugger.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ResetPause(this Xunit2Settings toolSettings)
         {
@@ -558,7 +819,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.Pause = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="Xunit2Settings.Pause"/>.</em></p><p>Pause before doing any work, to help attach a debugger.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="Xunit2Settings.Pause"/></em></p>
+        ///   <p>Pause before doing any work, to help attach a debugger.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings EnablePause(this Xunit2Settings toolSettings)
         {
@@ -566,7 +830,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.Pause = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="Xunit2Settings.Pause"/>.</em></p><p>Pause before doing any work, to help attach a debugger.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="Xunit2Settings.Pause"/></em></p>
+        ///   <p>Pause before doing any work, to help attach a debugger.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings DisablePause(this Xunit2Settings toolSettings)
         {
@@ -574,7 +841,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.Pause = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="Xunit2Settings.Pause"/>.</em></p><p>Pause before doing any work, to help attach a debugger.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="Xunit2Settings.Pause"/></em></p>
+        ///   <p>Pause before doing any work, to help attach a debugger.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings TogglePause(this Xunit2Settings toolSettings)
         {
@@ -584,7 +854,10 @@ namespace Nuke.Common.Tools.Xunit
         }
         #endregion
         #region Debug
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.Debug"/>.</em></p><p>Launch the debugger to debug the tests.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.Debug"/></em></p>
+        ///   <p>Launch the debugger to debug the tests.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetDebug(this Xunit2Settings toolSettings, bool? debug)
         {
@@ -592,7 +865,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.Debug = debug;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="Xunit2Settings.Debug"/>.</em></p><p>Launch the debugger to debug the tests.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="Xunit2Settings.Debug"/></em></p>
+        ///   <p>Launch the debugger to debug the tests.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ResetDebug(this Xunit2Settings toolSettings)
         {
@@ -600,7 +876,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.Debug = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="Xunit2Settings.Debug"/>.</em></p><p>Launch the debugger to debug the tests.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="Xunit2Settings.Debug"/></em></p>
+        ///   <p>Launch the debugger to debug the tests.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings EnableDebug(this Xunit2Settings toolSettings)
         {
@@ -608,7 +887,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.Debug = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="Xunit2Settings.Debug"/>.</em></p><p>Launch the debugger to debug the tests.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="Xunit2Settings.Debug"/></em></p>
+        ///   <p>Launch the debugger to debug the tests.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings DisableDebug(this Xunit2Settings toolSettings)
         {
@@ -616,7 +898,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.Debug = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="Xunit2Settings.Debug"/>.</em></p><p>Launch the debugger to debug the tests.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="Xunit2Settings.Debug"/></em></p>
+        ///   <p>Launch the debugger to debug the tests.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ToggleDebug(this Xunit2Settings toolSettings)
         {
@@ -626,7 +911,10 @@ namespace Nuke.Common.Tools.Xunit
         }
         #endregion
         #region Serialization
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.Serialization"/>.</em></p><p>Serialize all test cases (for diagnostic purposes only).</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.Serialization"/></em></p>
+        ///   <p>Serialize all test cases (for diagnostic purposes only).</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetSerialization(this Xunit2Settings toolSettings, bool? serialization)
         {
@@ -634,7 +922,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.Serialization = serialization;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="Xunit2Settings.Serialization"/>.</em></p><p>Serialize all test cases (for diagnostic purposes only).</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="Xunit2Settings.Serialization"/></em></p>
+        ///   <p>Serialize all test cases (for diagnostic purposes only).</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ResetSerialization(this Xunit2Settings toolSettings)
         {
@@ -642,7 +933,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.Serialization = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="Xunit2Settings.Serialization"/>.</em></p><p>Serialize all test cases (for diagnostic purposes only).</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="Xunit2Settings.Serialization"/></em></p>
+        ///   <p>Serialize all test cases (for diagnostic purposes only).</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings EnableSerialization(this Xunit2Settings toolSettings)
         {
@@ -650,7 +944,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.Serialization = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="Xunit2Settings.Serialization"/>.</em></p><p>Serialize all test cases (for diagnostic purposes only).</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="Xunit2Settings.Serialization"/></em></p>
+        ///   <p>Serialize all test cases (for diagnostic purposes only).</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings DisableSerialization(this Xunit2Settings toolSettings)
         {
@@ -658,7 +955,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.Serialization = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="Xunit2Settings.Serialization"/>.</em></p><p>Serialize all test cases (for diagnostic purposes only).</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="Xunit2Settings.Serialization"/></em></p>
+        ///   <p>Serialize all test cases (for diagnostic purposes only).</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ToggleSerialization(this Xunit2Settings toolSettings)
         {
@@ -668,7 +968,10 @@ namespace Nuke.Common.Tools.Xunit
         }
         #endregion
         #region Traits
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.Traits"/> to a new lookup table.</em></p><p>Only run tests with matching name/value traits.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.Traits"/> to a new lookup table</em></p>
+        ///   <p>Only run tests with matching name/value traits.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetTraits(this Xunit2Settings toolSettings, ILookup<string, string> traits)
         {
@@ -676,7 +979,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.TraitsInternal = traits.ToLookupTable(StringComparer.OrdinalIgnoreCase);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="Xunit2Settings.Traits"/>.</em></p><p>Only run tests with matching name/value traits.</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="Xunit2Settings.Traits"/></em></p>
+        ///   <p>Only run tests with matching name/value traits.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ClearTraits(this Xunit2Settings toolSettings)
         {
@@ -684,7 +990,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.TraitsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Adds new values for the given key to <see cref="Xunit2Settings.Traits"/>.</em></p><p>Only run tests with matching name/value traits.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds new values for the given key to <see cref="Xunit2Settings.Traits"/></em></p>
+        ///   <p>Only run tests with matching name/value traits.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings AddTraits(this Xunit2Settings toolSettings, string traitsKey, params string[] traitsValues)
         {
@@ -692,7 +1001,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.TraitsInternal.AddRange(traitsKey, traitsValues);
             return toolSettings;
         }
-        /// <summary><p><em>Adds new values for the given key to <see cref="Xunit2Settings.Traits"/>.</em></p><p>Only run tests with matching name/value traits.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds new values for the given key to <see cref="Xunit2Settings.Traits"/></em></p>
+        ///   <p>Only run tests with matching name/value traits.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings AddTraits(this Xunit2Settings toolSettings, string traitsKey, IEnumerable<string> traitsValues)
         {
@@ -700,7 +1012,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.TraitsInternal.AddRange(traitsKey, traitsValues);
             return toolSettings;
         }
-        /// <summary><p><em>Removes a single trait from <see cref="Xunit2Settings.Traits"/>.</em></p><p>Only run tests with matching name/value traits.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes a single trait from <see cref="Xunit2Settings.Traits"/></em></p>
+        ///   <p>Only run tests with matching name/value traits.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings RemoveTrait(this Xunit2Settings toolSettings, string traitsKey, string traitsValue)
         {
@@ -710,7 +1025,10 @@ namespace Nuke.Common.Tools.Xunit
         }
         #endregion
         #region ExcludedTraits
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.ExcludedTraits"/> to a new lookup table.</em></p><p>Do not run tests with matching name/value traits.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.ExcludedTraits"/> to a new lookup table</em></p>
+        ///   <p>Do not run tests with matching name/value traits.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetExcludedTraits(this Xunit2Settings toolSettings, ILookup<string, string> excludedTraits)
         {
@@ -718,7 +1036,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.ExcludedTraitsInternal = excludedTraits.ToLookupTable(StringComparer.OrdinalIgnoreCase);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="Xunit2Settings.ExcludedTraits"/>.</em></p><p>Do not run tests with matching name/value traits.</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="Xunit2Settings.ExcludedTraits"/></em></p>
+        ///   <p>Do not run tests with matching name/value traits.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ClearExcludedTraits(this Xunit2Settings toolSettings)
         {
@@ -726,7 +1047,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.ExcludedTraitsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Adds new values for the given key to <see cref="Xunit2Settings.ExcludedTraits"/>.</em></p><p>Do not run tests with matching name/value traits.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds new values for the given key to <see cref="Xunit2Settings.ExcludedTraits"/></em></p>
+        ///   <p>Do not run tests with matching name/value traits.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings AddExcludedTraits(this Xunit2Settings toolSettings, string excludedTraitsKey, params string[] excludedTraitsValues)
         {
@@ -734,7 +1058,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.ExcludedTraitsInternal.AddRange(excludedTraitsKey, excludedTraitsValues);
             return toolSettings;
         }
-        /// <summary><p><em>Adds new values for the given key to <see cref="Xunit2Settings.ExcludedTraits"/>.</em></p><p>Do not run tests with matching name/value traits.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds new values for the given key to <see cref="Xunit2Settings.ExcludedTraits"/></em></p>
+        ///   <p>Do not run tests with matching name/value traits.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings AddExcludedTraits(this Xunit2Settings toolSettings, string excludedTraitsKey, IEnumerable<string> excludedTraitsValues)
         {
@@ -742,7 +1069,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.ExcludedTraitsInternal.AddRange(excludedTraitsKey, excludedTraitsValues);
             return toolSettings;
         }
-        /// <summary><p><em>Removes a single excludedTrait from <see cref="Xunit2Settings.ExcludedTraits"/>.</em></p><p>Do not run tests with matching name/value traits.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes a single excludedTrait from <see cref="Xunit2Settings.ExcludedTraits"/></em></p>
+        ///   <p>Do not run tests with matching name/value traits.</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings RemoveExcludedTrait(this Xunit2Settings toolSettings, string excludedTraitsKey, string excludedTraitsValue)
         {
@@ -752,7 +1082,10 @@ namespace Nuke.Common.Tools.Xunit
         }
         #endregion
         #region Methods
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.Methods"/> to a new list.</em></p><p>Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.Methods"/> to a new list</em></p>
+        ///   <p>Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetMethods(this Xunit2Settings toolSettings, params string[] methods)
         {
@@ -760,7 +1093,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.MethodsInternal = methods.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.Methods"/> to a new list.</em></p><p>Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.Methods"/> to a new list</em></p>
+        ///   <p>Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetMethods(this Xunit2Settings toolSettings, IEnumerable<string> methods)
         {
@@ -768,7 +1104,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.MethodsInternal = methods.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="Xunit2Settings.Methods"/>.</em></p><p>Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="Xunit2Settings.Methods"/></em></p>
+        ///   <p>Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings AddMethods(this Xunit2Settings toolSettings, params string[] methods)
         {
@@ -776,7 +1115,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.MethodsInternal.AddRange(methods);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="Xunit2Settings.Methods"/>.</em></p><p>Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="Xunit2Settings.Methods"/></em></p>
+        ///   <p>Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings AddMethods(this Xunit2Settings toolSettings, IEnumerable<string> methods)
         {
@@ -784,7 +1126,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.MethodsInternal.AddRange(methods);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="Xunit2Settings.Methods"/>.</em></p><p>Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="Xunit2Settings.Methods"/></em></p>
+        ///   <p>Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ClearMethods(this Xunit2Settings toolSettings)
         {
@@ -792,7 +1137,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.MethodsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="Xunit2Settings.Methods"/>.</em></p><p>Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="Xunit2Settings.Methods"/></em></p>
+        ///   <p>Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings RemoveMethods(this Xunit2Settings toolSettings, params string[] methods)
         {
@@ -801,7 +1149,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.MethodsInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="Xunit2Settings.Methods"/>.</em></p><p>Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="Xunit2Settings.Methods"/></em></p>
+        ///   <p>Run a given test method (can be fully specified or use a wildcard; i.e., 'MyNamespace.MyClass.MyTestMethod' or '*.MyTestMethod').</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings RemoveMethods(this Xunit2Settings toolSettings, IEnumerable<string> methods)
         {
@@ -812,7 +1163,10 @@ namespace Nuke.Common.Tools.Xunit
         }
         #endregion
         #region Classes
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.Classes"/> to a new list.</em></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.Classes"/> to a new list</em></p>
+        ///   <p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetClasses(this Xunit2Settings toolSettings, params string[] classes)
         {
@@ -820,7 +1174,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.ClassesInternal = classes.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.Classes"/> to a new list.</em></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.Classes"/> to a new list</em></p>
+        ///   <p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetClasses(this Xunit2Settings toolSettings, IEnumerable<string> classes)
         {
@@ -828,7 +1185,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.ClassesInternal = classes.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="Xunit2Settings.Classes"/>.</em></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="Xunit2Settings.Classes"/></em></p>
+        ///   <p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings AddClasses(this Xunit2Settings toolSettings, params string[] classes)
         {
@@ -836,7 +1196,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.ClassesInternal.AddRange(classes);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="Xunit2Settings.Classes"/>.</em></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="Xunit2Settings.Classes"/></em></p>
+        ///   <p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings AddClasses(this Xunit2Settings toolSettings, IEnumerable<string> classes)
         {
@@ -844,7 +1207,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.ClassesInternal.AddRange(classes);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="Xunit2Settings.Classes"/>.</em></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="Xunit2Settings.Classes"/></em></p>
+        ///   <p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ClearClasses(this Xunit2Settings toolSettings)
         {
@@ -852,7 +1218,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.ClassesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="Xunit2Settings.Classes"/>.</em></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="Xunit2Settings.Classes"/></em></p>
+        ///   <p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings RemoveClasses(this Xunit2Settings toolSettings, params string[] classes)
         {
@@ -861,7 +1230,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.ClassesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="Xunit2Settings.Classes"/>.</em></p><p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="Xunit2Settings.Classes"/></em></p>
+        ///   <p>Run all methods in a given test class (should be fully specified; i.e., 'MyNamespace.MyClass').</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings RemoveClasses(this Xunit2Settings toolSettings, IEnumerable<string> classes)
         {
@@ -872,7 +1244,10 @@ namespace Nuke.Common.Tools.Xunit
         }
         #endregion
         #region Namespaces
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.Namespaces"/> to a new list.</em></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.Namespaces"/> to a new list</em></p>
+        ///   <p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetNamespaces(this Xunit2Settings toolSettings, params string[] namespaces)
         {
@@ -880,7 +1255,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.NamespacesInternal = namespaces.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.Namespaces"/> to a new list.</em></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.Namespaces"/> to a new list</em></p>
+        ///   <p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetNamespaces(this Xunit2Settings toolSettings, IEnumerable<string> namespaces)
         {
@@ -888,7 +1266,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.NamespacesInternal = namespaces.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="Xunit2Settings.Namespaces"/>.</em></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="Xunit2Settings.Namespaces"/></em></p>
+        ///   <p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings AddNamespaces(this Xunit2Settings toolSettings, params string[] namespaces)
         {
@@ -896,7 +1277,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.NamespacesInternal.AddRange(namespaces);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="Xunit2Settings.Namespaces"/>.</em></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="Xunit2Settings.Namespaces"/></em></p>
+        ///   <p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings AddNamespaces(this Xunit2Settings toolSettings, IEnumerable<string> namespaces)
         {
@@ -904,7 +1288,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.NamespacesInternal.AddRange(namespaces);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="Xunit2Settings.Namespaces"/>.</em></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="Xunit2Settings.Namespaces"/></em></p>
+        ///   <p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ClearNamespaces(this Xunit2Settings toolSettings)
         {
@@ -912,7 +1299,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.NamespacesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="Xunit2Settings.Namespaces"/>.</em></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="Xunit2Settings.Namespaces"/></em></p>
+        ///   <p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings RemoveNamespaces(this Xunit2Settings toolSettings, params string[] namespaces)
         {
@@ -921,7 +1311,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.NamespacesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="Xunit2Settings.Namespaces"/>.</em></p><p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="Xunit2Settings.Namespaces"/></em></p>
+        ///   <p>Run all methods in a given namespace (i.e., 'MyNamespace.MySubNamespace').</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings RemoveNamespaces(this Xunit2Settings toolSettings, IEnumerable<string> namespaces)
         {
@@ -932,7 +1325,10 @@ namespace Nuke.Common.Tools.Xunit
         }
         #endregion
         #region NoAutoReporters
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.NoAutoReporters"/>.</em></p><p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.NoAutoReporters"/></em></p>
+        ///   <p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetNoAutoReporters(this Xunit2Settings toolSettings, bool? noAutoReporters)
         {
@@ -940,7 +1336,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.NoAutoReporters = noAutoReporters;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="Xunit2Settings.NoAutoReporters"/>.</em></p><p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="Xunit2Settings.NoAutoReporters"/></em></p>
+        ///   <p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ResetNoAutoReporters(this Xunit2Settings toolSettings)
         {
@@ -948,7 +1347,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.NoAutoReporters = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="Xunit2Settings.NoAutoReporters"/>.</em></p><p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="Xunit2Settings.NoAutoReporters"/></em></p>
+        ///   <p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings EnableNoAutoReporters(this Xunit2Settings toolSettings)
         {
@@ -956,7 +1358,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.NoAutoReporters = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="Xunit2Settings.NoAutoReporters"/>.</em></p><p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="Xunit2Settings.NoAutoReporters"/></em></p>
+        ///   <p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings DisableNoAutoReporters(this Xunit2Settings toolSettings)
         {
@@ -964,7 +1369,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.NoAutoReporters = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="Xunit2Settings.NoAutoReporters"/>.</em></p><p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="Xunit2Settings.NoAutoReporters"/></em></p>
+        ///   <p>Do not allow reporters to be auto-enabled by environment for example, auto-detecting TeamCity or AppVeyor).</p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ToggleNoAutoReporters(this Xunit2Settings toolSettings)
         {
@@ -974,7 +1382,10 @@ namespace Nuke.Common.Tools.Xunit
         }
         #endregion
         #region Reporter
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.Reporter"/>.</em></p><p>Reporters:<ul><li><c>-appveyor</c>: forces AppVeyor CI mode (normally auto-detected)</li><li><c>-json</c>: show progress messages in JSON format</li><li><c>-quiet</c>: do not show progress messages</li><li><c>-teamcity</c>: forces TeamCity mode (normally auto-detected)</li><li><c>-verbose</c>: show verbose progress messages</li></ul></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.Reporter"/></em></p>
+        ///   <p>Reporters:<ul><li><c>-appveyor</c>: forces AppVeyor CI mode (normally auto-detected)</li><li><c>-json</c>: show progress messages in JSON format</li><li><c>-quiet</c>: do not show progress messages</li><li><c>-teamcity</c>: forces TeamCity mode (normally auto-detected)</li><li><c>-verbose</c>: show verbose progress messages</li></ul></p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetReporter(this Xunit2Settings toolSettings, Xunit2ReporterType reporter)
         {
@@ -982,7 +1393,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.Reporter = reporter;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="Xunit2Settings.Reporter"/>.</em></p><p>Reporters:<ul><li><c>-appveyor</c>: forces AppVeyor CI mode (normally auto-detected)</li><li><c>-json</c>: show progress messages in JSON format</li><li><c>-quiet</c>: do not show progress messages</li><li><c>-teamcity</c>: forces TeamCity mode (normally auto-detected)</li><li><c>-verbose</c>: show verbose progress messages</li></ul></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="Xunit2Settings.Reporter"/></em></p>
+        ///   <p>Reporters:<ul><li><c>-appveyor</c>: forces AppVeyor CI mode (normally auto-detected)</li><li><c>-json</c>: show progress messages in JSON format</li><li><c>-quiet</c>: do not show progress messages</li><li><c>-teamcity</c>: forces TeamCity mode (normally auto-detected)</li><li><c>-verbose</c>: show verbose progress messages</li></ul></p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ResetReporter(this Xunit2Settings toolSettings)
         {
@@ -992,7 +1406,10 @@ namespace Nuke.Common.Tools.Xunit
         }
         #endregion
         #region ResultReports
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.ResultReports"/> to a new dictionary.</em></p><p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.ResultReports"/> to a new dictionary</em></p>
+        ///   <p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetResultReports(this Xunit2Settings toolSettings, IDictionary<Xunit2ResultFormat, string> resultReports)
         {
@@ -1000,7 +1417,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.ResultReportsInternal = resultReports.ToDictionary(x => x.Key, x => x.Value, EqualityComparer<Xunit2ResultFormat>.Default);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="Xunit2Settings.ResultReports"/>.</em></p><p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="Xunit2Settings.ResultReports"/></em></p>
+        ///   <p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ClearResultReports(this Xunit2Settings toolSettings)
         {
@@ -1008,7 +1428,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.ResultReportsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Adds a new key-value-pair <see cref="Xunit2Settings.ResultReports"/>.</em></p><p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p></summary>
+        /// <summary>
+        ///   <p><em>Adds a new key-value-pair <see cref="Xunit2Settings.ResultReports"/></em></p>
+        ///   <p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings AddResultReport(this Xunit2Settings toolSettings, Xunit2ResultFormat resultReportKey, string resultReportValue)
         {
@@ -1016,7 +1439,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.ResultReportsInternal.Add(resultReportKey, resultReportValue);
             return toolSettings;
         }
-        /// <summary><p><em>Removes a key-value-pair from <see cref="Xunit2Settings.ResultReports"/>.</em></p><p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p></summary>
+        /// <summary>
+        ///   <p><em>Removes a key-value-pair from <see cref="Xunit2Settings.ResultReports"/></em></p>
+        ///   <p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings RemoveResultReport(this Xunit2Settings toolSettings, Xunit2ResultFormat resultReportKey)
         {
@@ -1024,7 +1450,10 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.ResultReportsInternal.Remove(resultReportKey);
             return toolSettings;
         }
-        /// <summary><p><em>Sets a key-value-pair in <see cref="Xunit2Settings.ResultReports"/>.</em></p><p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p></summary>
+        /// <summary>
+        ///   <p><em>Sets a key-value-pair in <see cref="Xunit2Settings.ResultReports"/></em></p>
+        ///   <p>Result formats:<ul><li><c>-xml</c>: output results to xUnit.net v2 XML file</li><li><c>-xmlv1</c>: output results to xUnit.net v1 XML file</li><li><c>-nunit</c>: output results to NUnit v2.5 XML file</li><li><c>-html</c>: output results to HTML file</li></ul></p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetResultReport(this Xunit2Settings toolSettings, Xunit2ResultFormat resultReportKey, string resultReportValue)
         {
@@ -1034,7 +1463,9 @@ namespace Nuke.Common.Tools.Xunit
         }
         #endregion
         #region Framework
-        /// <summary><p><em>Sets <see cref="Xunit2Settings.Framework"/>.</em></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="Xunit2Settings.Framework"/></em></p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings SetFramework(this Xunit2Settings toolSettings, string framework)
         {
@@ -1042,7 +1473,9 @@ namespace Nuke.Common.Tools.Xunit
             toolSettings.Framework = framework;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="Xunit2Settings.Framework"/>.</em></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="Xunit2Settings.Framework"/></em></p>
+        /// </summary>
         [Pure]
         public static Xunit2Settings ResetFramework(this Xunit2Settings toolSettings)
         {
@@ -1054,7 +1487,9 @@ namespace Nuke.Common.Tools.Xunit
     }
     #endregion
     #region Xunit2ReporterType
-    /// <summary><p>Used within <see cref="XunitTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="XunitTasks"/>.
+    /// </summary>
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
@@ -1069,7 +1504,9 @@ namespace Nuke.Common.Tools.Xunit
     }
     #endregion
     #region Xunit2ResultFormat
-    /// <summary><p>Used within <see cref="XunitTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="XunitTasks"/>.
+    /// </summary>
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
@@ -1083,21 +1520,25 @@ namespace Nuke.Common.Tools.Xunit
     }
     #endregion
     #region Xunit2ParallelOption
-    /// <summary><p>Used within <see cref="XunitTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="XunitTasks"/>.
+    /// </summary>
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
     [TypeConverter(typeof(TypeConverter<Xunit2ParallelOption>))]
     public partial class Xunit2ParallelOption : Enumeration
     {
-        public static Xunit2ParallelOption None = new Xunit2ParallelOption { Value = "None" };
-        public static Xunit2ParallelOption Collections = new Xunit2ParallelOption { Value = "Collections" };
-        public static Xunit2ParallelOption Assemblies = new Xunit2ParallelOption { Value = "Assemblies" };
-        public static Xunit2ParallelOption All = new Xunit2ParallelOption { Value = "All" };
+        public static Xunit2ParallelOption none = new Xunit2ParallelOption { Value = "none" };
+        public static Xunit2ParallelOption collections = new Xunit2ParallelOption { Value = "collections" };
+        public static Xunit2ParallelOption assemblies = new Xunit2ParallelOption { Value = "assemblies" };
+        public static Xunit2ParallelOption all = new Xunit2ParallelOption { Value = "all" };
     }
     #endregion
     #region Xunit2AppDomainMode
-    /// <summary><p>Used within <see cref="XunitTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="XunitTasks"/>.
+    /// </summary>
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]

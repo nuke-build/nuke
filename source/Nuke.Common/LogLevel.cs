@@ -12,7 +12,7 @@ namespace Nuke.Common
     public enum LogLevel
     {
         Trace,
-        Information,
+        Normal,
         Warning,
         Error
     }

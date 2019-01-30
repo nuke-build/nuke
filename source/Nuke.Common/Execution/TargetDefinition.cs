@@ -23,6 +23,8 @@ namespace Nuke.Common.Execution
         internal List<Target> DependentForTargets { get; } = new List<Target>();
         internal List<Action> Actions { get; } = new List<Action>();
         internal DependencyBehavior DependencyBehavior { get; private set; }
+        internal bool ContinueOnFailure { get; private set; }
+        internal bool AssureAfterFailure { get; private set; }
         internal List<Target> BeforeTargets { get; private set; } = new List<Target>();
         internal List<Target> AfterTargets { get; private set; } = new List<Target>();
         internal List<Target> TriggersTargets { get; private set; } = new List<Target>();
@@ -121,6 +123,18 @@ namespace Nuke.Common.Execution
         public ITargetDefinition TriggeredBy(params Target[] targets)
         {
             TriggeredByTargets.AddRange(targets);
+            return this;
+        }
+
+        public ITargetDefinition AssuredAfterFailure()
+        {
+            AssureAfterFailure = true;
+            return this;
+        }
+
+        public ITargetDefinition ContinuesOnFailure()
+        {
+            ContinueOnFailure = true;
             return this;
         }
     }

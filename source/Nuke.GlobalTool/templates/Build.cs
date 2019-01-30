@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Linq;
 using Nuke.Common;
+using Nuke.Common.Execution;
 using Nuke.Common.Git;                                                                          // GIT
 using Nuke.Common.ProjectModel;
+using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;                                                                 // DOTNET
 using Nuke.Common.Tools.GitVersion;                                                             // GITVERSION
 using Nuke.Common.Tools.MSBuild;                                                                // MSBUILD
 using Nuke.Common.Tools.NuGet;                                                                  // NUGET && MSBUILD
+using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.ChangeLog.ChangelogTasks;                                              // CHANGELOG
 using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.FileSystemTasks;
@@ -15,13 +18,14 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;                              
 using static Nuke.Common.Tools.MSBuild.MSBuildTasks;                                            // MSBUILD
 using static Nuke.Common.Tools.NuGet.NuGetTasks;                                                // NUGET && MSBUILD
 
+[CheckBuildProjectConfigurations]                                                               // SOLUTION_FILE
 class Build : NukeBuild
 {
-    // Support plugins are available for:
-    //   - JetBrains ReSharper        https://nuke.build/resharper
-    //   - JetBrains Rider            https://nuke.build/rider
-    //   - Microsoft VisualStudio     https://nuke.build/visualstudio
-    //   - Microsoft VSCode           https://nuke.build/vscode
+    /// Support plugins are available for:
+    ///   - JetBrains ReSharper        https://nuke.build/resharper
+    ///   - JetBrains Rider            https://nuke.build/rider
+    ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
+    ///   - Microsoft VSCode           https://nuke.build/vscode
 
     public static int Main () => Execute<Build>(x => x.Compile);
 
@@ -46,17 +50,16 @@ class Build : NukeBuild
     AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";                             // ARTIFACTS_DIR
 
     Target Clean => _ => _
+        .Before(Restore)
         .Executes(() =>
         {
-            DeleteDirectories(GlobDirectories(SourceDirectory, "**/bin", "**/obj"));            // SOURCE_DIR
-            DeleteDirectories(GlobDirectories(SourceDirectory, "**/bin", "**/obj"));            // SRC_DIR
-            DeleteDirectories(GlobDirectories(TestsDirectory, "**/bin", "**/obj"));             // TESTS_DIR
+            SourceDirectory.GlobDirectories("**/bin", "**/obj").ForEach(DeleteDirectory);       // SOURCE_DIR || SRC_DIR
+            TestsDirectory.GlobDirectories("**/bin", "**/obj").ForEach(DeleteDirectory);        // TESTS_DIR
             EnsureCleanDirectory(OutputDirectory);                                              // OUTPUT_DIR
             EnsureCleanDirectory(ArtifactsDirectory);                                           // ARTIFACTS_DIR
         });
 
     Target Restore => _ => _
-        .DependsOn(Clean)
         .Executes(() =>
         {
             MSBuild(s => s                                                                      // MSBUILD
@@ -122,14 +125,16 @@ class Build : NukeBuild
         .Requires(() => Configuration.Equals(Configuration.Release))                            // NUGET
         .Executes(() =>                                                                         // NUGET
         {                                                                                       // NUGET
-            GlobFiles(OutputDirectory, "*.nupkg")                                               // NUGET && OUTPUT_DOR
-            GlobFiles(ArtifactsDirectory, "*.nupkg")                                            // NUGET && ARTIFACTS_DIR
-                .NotEmpty()                                                                     // NUGET
-                .ForEach(x => DotNetNuGetPush(s => s                                            // NUGET && MSBUILD
-                .ForEach(x => NuGetPush(s => s                                                  // NUGET && DOTNET
-                    .SetTargetPath(x)                                                           // NUGET
+            DotNetNuGetPush(s => s                                                              // NUGET && DOTNET
+            NuGetPush(s => s                                                                    // NUGET && MSBUILD
                     .SetSource(Source)                                                          // NUGET
                     .SetSymbolSource(SymbolSource)                                              // NUGET
-                    .SetApiKey(ApiKey)));                                                       // NUGET
+                    .SetApiKey(ApiKey)                                                          // NUGET
+                    .CombineWith(                                                               // NUGET
+                        OutputDirectory.GlobFiles("*.nupkg"), (cs, v) => v)                     // NUGET && OUTPUT_DIR
+                        ArtifactsDirectory.GlobFiles("*.nupkg"), (cs, v) => v                   // NUGET && ARTIFACTS_DIR
+                            .SetTargetPath(v)),                                                 // NUGET
+                degreeOfParallelism: 5,                                                         // NUGET
+                completeOnFailure: true);                                                       // NUGET
         });                                                                                     // NUGET
 }

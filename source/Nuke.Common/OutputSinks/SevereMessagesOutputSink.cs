@@ -25,9 +25,9 @@ namespace Nuke.Common.OutputSinks
 
         public IReadOnlyList<Tuple<LogLevel, string>> SevereMessages => _severeMessages;
 
-        public void Write(string text)
+        public void WriteNormal(string text)
         {
-            _outputSink.Write(text);
+            _outputSink.WriteNormal(text);
         }
 
         public IDisposable WriteBlock(string text)
@@ -35,31 +35,31 @@ namespace Nuke.Common.OutputSinks
             return _outputSink.WriteBlock(text);
         }
 
-        public void Trace(string text)
+        public void WriteTrace(string text)
         {
-            _outputSink.Trace(text);
+            _outputSink.WriteTrace(text);
         }
 
-        public void Info(string text)
+        public void WriteInformation(string text)
         {
-            _outputSink.Info(text);
+            _outputSink.WriteInformation(text);
         }
 
-        public void Warn(string text, string details = null)
+        public void WriteWarning(string text, string details = null)
         {
             _severeMessages.Add(Tuple.Create(LogLevel.Warning, text));
-            _outputSink.Warn(text, details);
+            _outputSink.WriteWarning(text, details);
         }
 
-        public void Error(string text, string details = null)
+        public void WriteError(string text, string details = null)
         {
             _severeMessages.Add(Tuple.Create(LogLevel.Error, text));
-            _outputSink.Error(text, details);
+            _outputSink.WriteError(text, details);
         }
 
-        public void Success(string text)
+        public void WriteSuccess(string text)
         {
-            _outputSink.Success(text);
+            _outputSink.WriteSuccess(text);
         }
     }
 }

@@ -16,53 +16,12 @@ namespace Nuke.Common.ProjectModel
     [PublicAPI]
     public static class ProjectExtensions
     {
-        private static Lazy<string> s_msbuildPathResolver = new Lazy<string>(() =>
-        {
-            var dotnet = ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE") ??
-                         ToolPathResolver.GetPathExecutable("dotnet");
-            var output = ProcessTasks.StartProcess(dotnet, "--info", EnvironmentInfo.WorkingDirectory, logOutput: false).AssertZeroExitCode().Output;
-            var basePath = (PathConstruction.AbsolutePath) output
-                .Select(x => x.Text.Trim())
-                .Single(x => x.StartsWith("Base Path:"))
-                .TrimStart("Base Path:").Trim();
-
-            return basePath / "MSBuild.dll";
-        });
-
         public static Microsoft.Build.Evaluation.Project GetMSBuildProject(
             this Project project,
             string configuration = null,
             string targetFramework = null)
         {
-            Environment.SetEnvironmentVariable("MSBUILD_EXE_PATH", s_msbuildPathResolver.Value);
-
-            var projectCollection = new ProjectCollection();
-            var msbuildProject = new Microsoft.Build.Evaluation.Project(
-                project.Path,
-                GetProperties(configuration, targetFramework),
-                projectCollection.DefaultToolsVersion,
-                projectCollection);
-            var targetFrameworks = msbuildProject.AllEvaluatedItems
-                .Where(x => x.ItemType == "_TargetFrameworks")
-                .Select(x => x.EvaluatedInclude)
-                .OrderBy(x => x).ToList();
-
-            if (targetFramework == null && targetFrameworks.Count > 1)
-            {
-                projectCollection.UnloadProject(msbuildProject);
-                targetFramework = targetFrameworks.First();
-
-                Logger.Warn($"Project '{project.Path}' has multiple target frameworks ({targetFrameworks.JoinComma()}).");
-                Logger.Warn($"Evaluating using '{targetFramework}'...");
-
-                msbuildProject = new Microsoft.Build.Evaluation.Project(
-                    project.Path,
-                    GetProperties(configuration, targetFramework),
-                    projectCollection.DefaultToolsVersion,
-                    projectCollection);
-            }
-
-            return msbuildProject;
+            return ProjectModelTasks.ParseProject(project.Path, configuration, targetFramework);
         }
 
         [CanBeNull]
@@ -90,16 +49,6 @@ namespace Nuke.Common.ProjectModel
                 return targetFrameworksProperty.EvaluatedValue.Split(';');
 
             return new string[0];
-        }
-
-        private static Dictionary<string, string> GetProperties([CanBeNull] string configuration, [CanBeNull] string targetFramework)
-        {
-            var properties = new Dictionary<string, string>();
-            if (configuration != null)
-                properties.Add("Configuration", configuration);
-            if (targetFramework != null)
-                properties.Add("TargetFramework", targetFramework);
-            return properties;
         }
     }
 }

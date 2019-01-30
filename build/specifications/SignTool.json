@@ -218,7 +218,7 @@
           {
             "name": "AuthenticodeDigestSignPassUnmodified",
             "type": "string",
-            "format": "dmdf {value}",
+            "format": "/dmdf {value}",
             "help": "When used with the <c>/dlib</c> option, passes the file's contents to the AuthenticodeDigestSign function without modification."
           },
           {

@@ -24,7 +24,7 @@ namespace Nuke.Common.Tooling
             IReadOnlyDictionary<string, string> environmentVariables = null,
             int? timeout = null,
             bool logOutput = true,
-            Func<string, LogLevel> logLevelParser = null,
+            Action<OutputType, string> customLogger = null,
             Func<string, string> outputFilter = null)
         {
             return ProcessManager.Instance.StartProcess(toolPath,
@@ -34,7 +34,7 @@ namespace Nuke.Common.Tooling
                 environmentVariables,
                 timeout,
                 logOutput,
-                logLevelParser,
+                customLogger,
                 outputFilter);
         }
 

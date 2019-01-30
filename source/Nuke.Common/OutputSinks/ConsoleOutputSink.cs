@@ -3,72 +3,76 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.OutputSinks
 {
-    [UsedImplicitly]
-    [ExcludeFromCodeCoverage]
-    internal class ConsoleOutputSink : IOutputSink
+    internal abstract class ConsoleOutputSink : IOutputSink
     {
-        public virtual void Write(string text)
+        public static IOutputSink Default
         {
-            WriteWithColors(text, Console.ForegroundColor);
+            get
+            {
+                var term = Environment.GetEnvironmentVariable("TERM");
+                return term == null || !term.StartsWithOrdinalIgnoreCase("xterm")
+                    ? (IOutputSink) new SystemColorOutputSink()
+                    : new AnsiColorOutputSink();
+            }
+        }
+
+        public static void WriteTest()
+        {
+            Console.WriteLine("╔═╗");
+            Console.WriteLine("║ ║");
+            Console.WriteLine("╚═╝");
+            
+            Logger.Warn("Warn");
+            Logger.Error("Error");
+            Logger.Normal("Normal");
+            Logger.Info("Info");
+            Logger.Trace("Trace");
+            Logger.Success("Success");
+            
+            const string ESC = "\u001b[";
+            const string RESET = "\u001b[0m";
+
+            for (var i = 0; i < 120; i++)
+            {
+                Console.Write($"{ESC}{i}m{i}{RESET}  ");
+                Console.Write($"{ESC}{i};1m{i};1{RESET}  ");
+                if (i%10==0)
+                    Console.WriteLine();
+            }
         }
 
         public virtual IDisposable WriteBlock(string text)
         {
-            Info(FigletTransform.GetText(text));
-
             return DelegateDisposable.CreateBracket(
-                () => Console.Title = $"Executing: {text}",
-                () => Console.Title = $"Finished: {text}");
+                () =>
+                {
+                    var formattedBlockText = FormatBlockText(text)
+                        .Split(new[] { EnvironmentInfo.NewLine }, StringSplitOptions.None);
+
+                    Console.WriteLine();
+                    Console.WriteLine("╬" + new string(c: '═', text.Length + 5));
+                    formattedBlockText.ForEach(x => Console.WriteLine($"║ {x}"));
+                    Console.WriteLine("╬" + new string(c: '═', Math.Max(text.Length - 4, 2)));
+                    Console.WriteLine();
+                });
         }
 
-        public virtual void Trace(string text)
+        protected virtual string FormatBlockText(string text)
         {
-            WriteWithColors(text, ConsoleColor.Gray);
+            return text;
         }
 
-        public virtual void Info(string text)
-        {
-            WriteWithColors(text, Console.ForegroundColor);
-        }
-
-        public virtual void Warn(string text, string details = null)
-        {
-            WriteWithColors(text, ConsoleColor.Yellow);
-            if (details != null)
-                WriteWithColors(details, ConsoleColor.Yellow);
-        }
-
-        public virtual void Error(string text, string details = null)
-        {
-            WriteWithColors(text, ConsoleColor.Red);
-            if (details != null)
-                WriteWithColors(details, ConsoleColor.Red);
-        }
-
-        public virtual void Success(string text)
-        {
-            WriteWithColors(text, ConsoleColor.Green);
-        }
-        
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        private void WriteWithColors(string text, ConsoleColor foregroundColor)
-        {
-            var previousForegroundColor = Console.ForegroundColor;
-
-            using (DelegateDisposable.CreateBracket(
-                () => Console.ForegroundColor = foregroundColor,
-                () => Console.ForegroundColor = previousForegroundColor))
-            {
-                Console.WriteLine(text);
-            }
-        }
+        public abstract void WriteNormal(string text);
+        public abstract void WriteTrace(string text);
+        public abstract void WriteInformation(string text);
+        public abstract void WriteWarning(string text, string details = null);
+        public abstract void WriteError(string text, string details = null);
+        public abstract void WriteSuccess(string text);
     }
 }

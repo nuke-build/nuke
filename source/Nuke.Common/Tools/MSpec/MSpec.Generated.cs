@@ -23,18 +23,26 @@ namespace Nuke.Common.Tools.MSpec
     [ExcludeFromCodeCoverage]
     public static partial class MSpecTasks
     {
-        /// <summary><p>Path to the MSpec executable.</p></summary>
+        /// <summary>
+        ///   Path to the MSpec executable.
+        /// </summary>
         public static string MSpecPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("MSPEC_EXE") ??
             GetToolPath();
-        /// <summary><p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p></summary>
+        public static Action<OutputType, string> MSpecLogger { get; set; } = ProcessManager.DefaultLogger;
+        /// <summary>
+        ///   MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.
+        /// </summary>
         public static IReadOnlyCollection<Output> MSpec(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(MSpecPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
+            var process = ProcessTasks.StartProcess(MSpecPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, MSpecLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p><p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p>
+        ///   <p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p>
+        /// </summary>
         public static IReadOnlyCollection<Output> MSpec(MSpecSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new MSpecSettings();
@@ -42,59 +50,134 @@ namespace Nuke.Common.Tools.MSpec
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p><p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p>
+        ///   <p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;assemblies&gt;</c> via <see cref="MSpecSettings.Assemblies"/></li>
+        ///     <li><c>--appveyor</c> via <see cref="MSpecSettings.AppVeyor"/></li>
+        ///     <li><c>--html</c> via <see cref="MSpecSettings.HtmlOutput"/></li>
+        ///     <li><c>--no-appveyor-autodetect</c> via <see cref="MSpecSettings.NoAppVeyor"/></li>
+        ///     <li><c>--no-color</c> via <see cref="MSpecSettings.NoColor"/></li>
+        ///     <li><c>--no-teamcity-autodetect</c> via <see cref="MSpecSettings.NoTeamCity"/></li>
+        ///     <li><c>--progress</c> via <see cref="MSpecSettings.DottedProgress"/></li>
+        ///     <li><c>--silent</c> via <see cref="MSpecSettings.Silent"/></li>
+        ///     <li><c>--teamcity</c> via <see cref="MSpecSettings.TeamCity"/></li>
+        ///     <li><c>--timeinfo</c> via <see cref="MSpecSettings.TimeInfo"/></li>
+        ///     <li><c>--xml</c> via <see cref="MSpecSettings.XmlOutput"/></li>
+        ///     <li><c>-f</c> via <see cref="MSpecSettings.Filters"/></li>
+        ///     <li><c>-i</c> via <see cref="MSpecSettings.Includes"/></li>
+        ///     <li><c>-x</c> via <see cref="MSpecSettings.Excludes"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> MSpec(Configure<MSpecSettings> configurator)
         {
             return MSpec(configurator(new MSpecSettings()));
         }
-        /// <summary><p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p><p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p></summary>
-        public static IEnumerable<(MSpecSettings Settings, IReadOnlyCollection<Output> Output)> MSpec(CombinatorialConfigure<MSpecSettings> configurator)
+        /// <summary>
+        ///   <p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p>
+        ///   <p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;assemblies&gt;</c> via <see cref="MSpecSettings.Assemblies"/></li>
+        ///     <li><c>--appveyor</c> via <see cref="MSpecSettings.AppVeyor"/></li>
+        ///     <li><c>--html</c> via <see cref="MSpecSettings.HtmlOutput"/></li>
+        ///     <li><c>--no-appveyor-autodetect</c> via <see cref="MSpecSettings.NoAppVeyor"/></li>
+        ///     <li><c>--no-color</c> via <see cref="MSpecSettings.NoColor"/></li>
+        ///     <li><c>--no-teamcity-autodetect</c> via <see cref="MSpecSettings.NoTeamCity"/></li>
+        ///     <li><c>--progress</c> via <see cref="MSpecSettings.DottedProgress"/></li>
+        ///     <li><c>--silent</c> via <see cref="MSpecSettings.Silent"/></li>
+        ///     <li><c>--teamcity</c> via <see cref="MSpecSettings.TeamCity"/></li>
+        ///     <li><c>--timeinfo</c> via <see cref="MSpecSettings.TimeInfo"/></li>
+        ///     <li><c>--xml</c> via <see cref="MSpecSettings.XmlOutput"/></li>
+        ///     <li><c>-f</c> via <see cref="MSpecSettings.Filters"/></li>
+        ///     <li><c>-i</c> via <see cref="MSpecSettings.Includes"/></li>
+        ///     <li><c>-x</c> via <see cref="MSpecSettings.Excludes"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(MSpecSettings Settings, IReadOnlyCollection<Output> Output)> MSpec(CombinatorialConfigure<MSpecSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator(new MSpecSettings())
-                .Select(x => (ToolSettings: x, ReturnValue: MSpec(x)))
-                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+            return configurator.Invoke(MSpec, MSpecLogger, degreeOfParallelism, completeOnFailure);
         }
     }
     #region MSpecSettings
-    /// <summary><p>Used within <see cref="MSpecTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="MSpecTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
     public partial class MSpecSettings : ToolSettings
     {
-        /// <summary><p>Path to the MSpec executable.</p></summary>
+        /// <summary>
+        ///   Path to the MSpec executable.
+        /// </summary>
         public override string ToolPath => base.ToolPath ?? GetToolPath();
-        /// <summary><p>Assemblies with tests to be executed.</p></summary>
+        public override Action<OutputType, string> CustomLogger => MSpecTasks.MSpecLogger;
+        /// <summary>
+        ///   Assemblies with tests to be executed.
+        /// </summary>
         public virtual IReadOnlyList<string> Assemblies => AssembliesInternal.AsReadOnly();
         internal List<string> AssembliesInternal { get; set; } = new List<string>();
-        /// <summary><p>Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.</p></summary>
+        /// <summary>
+        ///   Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.
+        /// </summary>
         public virtual IReadOnlyList<string> Filters => FiltersInternal.AsReadOnly();
         internal List<string> FiltersInternal { get; set; } = new List<string>();
-        /// <summary><p>Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.</p></summary>
+        /// <summary>
+        ///   Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.
+        /// </summary>
         public virtual IReadOnlyList<string> Includes => IncludesInternal.AsReadOnly();
         internal List<string> IncludesInternal { get; set; } = new List<string>();
-        /// <summary><p>Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.</p></summary>
+        /// <summary>
+        ///   Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.
+        /// </summary>
         public virtual IReadOnlyList<string> Excludes => ExcludesInternal.AsReadOnly();
         internal List<string> ExcludesInternal { get; set; } = new List<string>();
-        /// <summary><p>Outputs the HTML report to path, one-per-assembly w/ index.html (if directory, otherwise all are in one file). Ex. <c>--html=output/reports/</c></p></summary>
+        /// <summary>
+        ///   Outputs the HTML report to path, one-per-assembly w/ index.html (if directory, otherwise all are in one file). Ex. <c>--html=output/reports/</c>
+        /// </summary>
         public virtual string HtmlOutput { get; internal set; }
-        /// <summary><p>Outputs the XML report to the file referenced by the path. Ex. <c>--xml=output/reports/MSpecResults.xml</c></p></summary>
+        /// <summary>
+        ///   Outputs the XML report to the file referenced by the path. Ex. <c>--xml=output/reports/MSpecResults.xml</c>
+        /// </summary>
         public virtual string XmlOutput { get; internal set; }
-        /// <summary><p>Reporting for TeamCity CI integration (also auto-detected).</p></summary>
+        /// <summary>
+        ///   Reporting for TeamCity CI integration (also auto-detected).
+        /// </summary>
         public virtual bool? TeamCity { get; internal set; }
-        /// <summary><p>Disables TeamCity autodetection.</p></summary>
+        /// <summary>
+        ///   Disables TeamCity autodetection.
+        /// </summary>
         public virtual bool? NoTeamCity { get; internal set; }
-        /// <summary><p>Reporting for AppVeyor CI integration (also auto-detected).</p></summary>
+        /// <summary>
+        ///   Reporting for AppVeyor CI integration (also auto-detected).
+        /// </summary>
         public virtual bool? AppVeyor { get; internal set; }
-        /// <summary><p>Disables AppVeyor autodetection.</p></summary>
+        /// <summary>
+        ///   Disables AppVeyor autodetection.
+        /// </summary>
         public virtual bool? NoAppVeyor { get; internal set; }
-        /// <summary><p>Shows time-related information in HTML output.</p></summary>
+        /// <summary>
+        ///   Shows time-related information in HTML output.
+        /// </summary>
         public virtual bool? TimeInfo { get; internal set; }
-        /// <summary><p>Suppress progress output (print fatal errors, failures and summary).</p></summary>
+        /// <summary>
+        ///   Suppress progress output (print fatal errors, failures and summary).
+        /// </summary>
         public virtual bool? Silent { get; internal set; }
-        /// <summary><p>Print dotted progress output.</p></summary>
+        /// <summary>
+        ///   Print dotted progress output.
+        /// </summary>
         public virtual bool? DottedProgress { get; internal set; }
-        /// <summary><p>Suppress colored console output.</p></summary>
+        /// <summary>
+        ///   Suppress colored console output.
+        /// </summary>
         public virtual bool? NoColor { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -118,13 +201,18 @@ namespace Nuke.Common.Tools.MSpec
     }
     #endregion
     #region MSpecSettingsExtensions
-    /// <summary><p>Used within <see cref="MSpecTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="MSpecTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class MSpecSettingsExtensions
     {
         #region Assemblies
-        /// <summary><p><em>Sets <see cref="MSpecSettings.Assemblies"/> to a new list.</em></p><p>Assemblies with tests to be executed.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSpecSettings.Assemblies"/> to a new list</em></p>
+        ///   <p>Assemblies with tests to be executed.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings SetAssemblies(this MSpecSettings toolSettings, params string[] assemblies)
         {
@@ -132,7 +220,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.AssembliesInternal = assemblies.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="MSpecSettings.Assemblies"/> to a new list.</em></p><p>Assemblies with tests to be executed.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSpecSettings.Assemblies"/> to a new list</em></p>
+        ///   <p>Assemblies with tests to be executed.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings SetAssemblies(this MSpecSettings toolSettings, IEnumerable<string> assemblies)
         {
@@ -140,7 +231,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.AssembliesInternal = assemblies.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="MSpecSettings.Assemblies"/>.</em></p><p>Assemblies with tests to be executed.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="MSpecSettings.Assemblies"/></em></p>
+        ///   <p>Assemblies with tests to be executed.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings AddAssemblies(this MSpecSettings toolSettings, params string[] assemblies)
         {
@@ -148,7 +242,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.AssembliesInternal.AddRange(assemblies);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="MSpecSettings.Assemblies"/>.</em></p><p>Assemblies with tests to be executed.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="MSpecSettings.Assemblies"/></em></p>
+        ///   <p>Assemblies with tests to be executed.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings AddAssemblies(this MSpecSettings toolSettings, IEnumerable<string> assemblies)
         {
@@ -156,7 +253,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.AssembliesInternal.AddRange(assemblies);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="MSpecSettings.Assemblies"/>.</em></p><p>Assemblies with tests to be executed.</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="MSpecSettings.Assemblies"/></em></p>
+        ///   <p>Assemblies with tests to be executed.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings ClearAssemblies(this MSpecSettings toolSettings)
         {
@@ -164,7 +264,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.AssembliesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="MSpecSettings.Assemblies"/>.</em></p><p>Assemblies with tests to be executed.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="MSpecSettings.Assemblies"/></em></p>
+        ///   <p>Assemblies with tests to be executed.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings RemoveAssemblies(this MSpecSettings toolSettings, params string[] assemblies)
         {
@@ -173,7 +276,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.AssembliesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="MSpecSettings.Assemblies"/>.</em></p><p>Assemblies with tests to be executed.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="MSpecSettings.Assemblies"/></em></p>
+        ///   <p>Assemblies with tests to be executed.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings RemoveAssemblies(this MSpecSettings toolSettings, IEnumerable<string> assemblies)
         {
@@ -184,7 +290,10 @@ namespace Nuke.Common.Tools.MSpec
         }
         #endregion
         #region Filters
-        /// <summary><p><em>Sets <see cref="MSpecSettings.Filters"/> to a new list.</em></p><p>Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSpecSettings.Filters"/> to a new list</em></p>
+        ///   <p>Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings SetFilters(this MSpecSettings toolSettings, params string[] filters)
         {
@@ -192,7 +301,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.FiltersInternal = filters.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="MSpecSettings.Filters"/> to a new list.</em></p><p>Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSpecSettings.Filters"/> to a new list</em></p>
+        ///   <p>Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings SetFilters(this MSpecSettings toolSettings, IEnumerable<string> filters)
         {
@@ -200,7 +312,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.FiltersInternal = filters.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="MSpecSettings.Filters"/>.</em></p><p>Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="MSpecSettings.Filters"/></em></p>
+        ///   <p>Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings AddFilters(this MSpecSettings toolSettings, params string[] filters)
         {
@@ -208,7 +323,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.FiltersInternal.AddRange(filters);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="MSpecSettings.Filters"/>.</em></p><p>Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="MSpecSettings.Filters"/></em></p>
+        ///   <p>Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings AddFilters(this MSpecSettings toolSettings, IEnumerable<string> filters)
         {
@@ -216,7 +334,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.FiltersInternal.AddRange(filters);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="MSpecSettings.Filters"/>.</em></p><p>Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="MSpecSettings.Filters"/></em></p>
+        ///   <p>Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings ClearFilters(this MSpecSettings toolSettings)
         {
@@ -224,7 +345,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.FiltersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="MSpecSettings.Filters"/>.</em></p><p>Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="MSpecSettings.Filters"/></em></p>
+        ///   <p>Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings RemoveFilters(this MSpecSettings toolSettings, params string[] filters)
         {
@@ -233,7 +357,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.FiltersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="MSpecSettings.Filters"/>.</em></p><p>Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="MSpecSettings.Filters"/></em></p>
+        ///   <p>Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings RemoveFilters(this MSpecSettings toolSettings, IEnumerable<string> filters)
         {
@@ -244,7 +371,10 @@ namespace Nuke.Common.Tools.MSpec
         }
         #endregion
         #region Includes
-        /// <summary><p><em>Sets <see cref="MSpecSettings.Includes"/> to a new list.</em></p><p>Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSpecSettings.Includes"/> to a new list</em></p>
+        ///   <p>Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings SetIncludes(this MSpecSettings toolSettings, params string[] includes)
         {
@@ -252,7 +382,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.IncludesInternal = includes.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="MSpecSettings.Includes"/> to a new list.</em></p><p>Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSpecSettings.Includes"/> to a new list</em></p>
+        ///   <p>Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings SetIncludes(this MSpecSettings toolSettings, IEnumerable<string> includes)
         {
@@ -260,7 +393,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.IncludesInternal = includes.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="MSpecSettings.Includes"/>.</em></p><p>Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="MSpecSettings.Includes"/></em></p>
+        ///   <p>Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings AddIncludes(this MSpecSettings toolSettings, params string[] includes)
         {
@@ -268,7 +404,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.IncludesInternal.AddRange(includes);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="MSpecSettings.Includes"/>.</em></p><p>Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="MSpecSettings.Includes"/></em></p>
+        ///   <p>Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings AddIncludes(this MSpecSettings toolSettings, IEnumerable<string> includes)
         {
@@ -276,7 +415,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.IncludesInternal.AddRange(includes);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="MSpecSettings.Includes"/>.</em></p><p>Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="MSpecSettings.Includes"/></em></p>
+        ///   <p>Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings ClearIncludes(this MSpecSettings toolSettings)
         {
@@ -284,7 +426,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.IncludesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="MSpecSettings.Includes"/>.</em></p><p>Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="MSpecSettings.Includes"/></em></p>
+        ///   <p>Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings RemoveIncludes(this MSpecSettings toolSettings, params string[] includes)
         {
@@ -293,7 +438,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.IncludesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="MSpecSettings.Includes"/>.</em></p><p>Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="MSpecSettings.Includes"/></em></p>
+        ///   <p>Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings RemoveIncludes(this MSpecSettings toolSettings, IEnumerable<string> includes)
         {
@@ -304,7 +452,10 @@ namespace Nuke.Common.Tools.MSpec
         }
         #endregion
         #region Excludes
-        /// <summary><p><em>Sets <see cref="MSpecSettings.Excludes"/> to a new list.</em></p><p>Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSpecSettings.Excludes"/> to a new list</em></p>
+        ///   <p>Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings SetExcludes(this MSpecSettings toolSettings, params string[] excludes)
         {
@@ -312,7 +463,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.ExcludesInternal = excludes.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="MSpecSettings.Excludes"/> to a new list.</em></p><p>Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSpecSettings.Excludes"/> to a new list</em></p>
+        ///   <p>Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings SetExcludes(this MSpecSettings toolSettings, IEnumerable<string> excludes)
         {
@@ -320,7 +474,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.ExcludesInternal = excludes.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="MSpecSettings.Excludes"/>.</em></p><p>Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="MSpecSettings.Excludes"/></em></p>
+        ///   <p>Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings AddExcludes(this MSpecSettings toolSettings, params string[] excludes)
         {
@@ -328,7 +485,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.ExcludesInternal.AddRange(excludes);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="MSpecSettings.Excludes"/>.</em></p><p>Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="MSpecSettings.Excludes"/></em></p>
+        ///   <p>Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings AddExcludes(this MSpecSettings toolSettings, IEnumerable<string> excludes)
         {
@@ -336,7 +496,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.ExcludesInternal.AddRange(excludes);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="MSpecSettings.Excludes"/>.</em></p><p>Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="MSpecSettings.Excludes"/></em></p>
+        ///   <p>Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings ClearExcludes(this MSpecSettings toolSettings)
         {
@@ -344,7 +507,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.ExcludesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="MSpecSettings.Excludes"/>.</em></p><p>Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="MSpecSettings.Excludes"/></em></p>
+        ///   <p>Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings RemoveExcludes(this MSpecSettings toolSettings, params string[] excludes)
         {
@@ -353,7 +519,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.ExcludesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="MSpecSettings.Excludes"/>.</em></p><p>Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="MSpecSettings.Excludes"/></em></p>
+        ///   <p>Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings RemoveExcludes(this MSpecSettings toolSettings, IEnumerable<string> excludes)
         {
@@ -364,7 +533,10 @@ namespace Nuke.Common.Tools.MSpec
         }
         #endregion
         #region HtmlOutput
-        /// <summary><p><em>Sets <see cref="MSpecSettings.HtmlOutput"/>.</em></p><p>Outputs the HTML report to path, one-per-assembly w/ index.html (if directory, otherwise all are in one file). Ex. <c>--html=output/reports/</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSpecSettings.HtmlOutput"/></em></p>
+        ///   <p>Outputs the HTML report to path, one-per-assembly w/ index.html (if directory, otherwise all are in one file). Ex. <c>--html=output/reports/</c></p>
+        /// </summary>
         [Pure]
         public static MSpecSettings SetHtmlOutput(this MSpecSettings toolSettings, string htmlOutput)
         {
@@ -372,7 +544,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.HtmlOutput = htmlOutput;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="MSpecSettings.HtmlOutput"/>.</em></p><p>Outputs the HTML report to path, one-per-assembly w/ index.html (if directory, otherwise all are in one file). Ex. <c>--html=output/reports/</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="MSpecSettings.HtmlOutput"/></em></p>
+        ///   <p>Outputs the HTML report to path, one-per-assembly w/ index.html (if directory, otherwise all are in one file). Ex. <c>--html=output/reports/</c></p>
+        /// </summary>
         [Pure]
         public static MSpecSettings ResetHtmlOutput(this MSpecSettings toolSettings)
         {
@@ -382,7 +557,10 @@ namespace Nuke.Common.Tools.MSpec
         }
         #endregion
         #region XmlOutput
-        /// <summary><p><em>Sets <see cref="MSpecSettings.XmlOutput"/>.</em></p><p>Outputs the XML report to the file referenced by the path. Ex. <c>--xml=output/reports/MSpecResults.xml</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSpecSettings.XmlOutput"/></em></p>
+        ///   <p>Outputs the XML report to the file referenced by the path. Ex. <c>--xml=output/reports/MSpecResults.xml</c></p>
+        /// </summary>
         [Pure]
         public static MSpecSettings SetXmlOutput(this MSpecSettings toolSettings, string xmlOutput)
         {
@@ -390,7 +568,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.XmlOutput = xmlOutput;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="MSpecSettings.XmlOutput"/>.</em></p><p>Outputs the XML report to the file referenced by the path. Ex. <c>--xml=output/reports/MSpecResults.xml</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="MSpecSettings.XmlOutput"/></em></p>
+        ///   <p>Outputs the XML report to the file referenced by the path. Ex. <c>--xml=output/reports/MSpecResults.xml</c></p>
+        /// </summary>
         [Pure]
         public static MSpecSettings ResetXmlOutput(this MSpecSettings toolSettings)
         {
@@ -400,7 +581,10 @@ namespace Nuke.Common.Tools.MSpec
         }
         #endregion
         #region TeamCity
-        /// <summary><p><em>Sets <see cref="MSpecSettings.TeamCity"/>.</em></p><p>Reporting for TeamCity CI integration (also auto-detected).</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSpecSettings.TeamCity"/></em></p>
+        ///   <p>Reporting for TeamCity CI integration (also auto-detected).</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings SetTeamCity(this MSpecSettings toolSettings, bool? teamCity)
         {
@@ -408,7 +592,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.TeamCity = teamCity;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="MSpecSettings.TeamCity"/>.</em></p><p>Reporting for TeamCity CI integration (also auto-detected).</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="MSpecSettings.TeamCity"/></em></p>
+        ///   <p>Reporting for TeamCity CI integration (also auto-detected).</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings ResetTeamCity(this MSpecSettings toolSettings)
         {
@@ -416,7 +603,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.TeamCity = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="MSpecSettings.TeamCity"/>.</em></p><p>Reporting for TeamCity CI integration (also auto-detected).</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="MSpecSettings.TeamCity"/></em></p>
+        ///   <p>Reporting for TeamCity CI integration (also auto-detected).</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings EnableTeamCity(this MSpecSettings toolSettings)
         {
@@ -424,7 +614,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.TeamCity = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="MSpecSettings.TeamCity"/>.</em></p><p>Reporting for TeamCity CI integration (also auto-detected).</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="MSpecSettings.TeamCity"/></em></p>
+        ///   <p>Reporting for TeamCity CI integration (also auto-detected).</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings DisableTeamCity(this MSpecSettings toolSettings)
         {
@@ -432,7 +625,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.TeamCity = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="MSpecSettings.TeamCity"/>.</em></p><p>Reporting for TeamCity CI integration (also auto-detected).</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="MSpecSettings.TeamCity"/></em></p>
+        ///   <p>Reporting for TeamCity CI integration (also auto-detected).</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings ToggleTeamCity(this MSpecSettings toolSettings)
         {
@@ -442,7 +638,10 @@ namespace Nuke.Common.Tools.MSpec
         }
         #endregion
         #region NoTeamCity
-        /// <summary><p><em>Sets <see cref="MSpecSettings.NoTeamCity"/>.</em></p><p>Disables TeamCity autodetection.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSpecSettings.NoTeamCity"/></em></p>
+        ///   <p>Disables TeamCity autodetection.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings SetNoTeamCity(this MSpecSettings toolSettings, bool? noTeamCity)
         {
@@ -450,7 +649,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.NoTeamCity = noTeamCity;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="MSpecSettings.NoTeamCity"/>.</em></p><p>Disables TeamCity autodetection.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="MSpecSettings.NoTeamCity"/></em></p>
+        ///   <p>Disables TeamCity autodetection.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings ResetNoTeamCity(this MSpecSettings toolSettings)
         {
@@ -458,7 +660,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.NoTeamCity = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="MSpecSettings.NoTeamCity"/>.</em></p><p>Disables TeamCity autodetection.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="MSpecSettings.NoTeamCity"/></em></p>
+        ///   <p>Disables TeamCity autodetection.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings EnableNoTeamCity(this MSpecSettings toolSettings)
         {
@@ -466,7 +671,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.NoTeamCity = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="MSpecSettings.NoTeamCity"/>.</em></p><p>Disables TeamCity autodetection.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="MSpecSettings.NoTeamCity"/></em></p>
+        ///   <p>Disables TeamCity autodetection.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings DisableNoTeamCity(this MSpecSettings toolSettings)
         {
@@ -474,7 +682,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.NoTeamCity = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="MSpecSettings.NoTeamCity"/>.</em></p><p>Disables TeamCity autodetection.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="MSpecSettings.NoTeamCity"/></em></p>
+        ///   <p>Disables TeamCity autodetection.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings ToggleNoTeamCity(this MSpecSettings toolSettings)
         {
@@ -484,7 +695,10 @@ namespace Nuke.Common.Tools.MSpec
         }
         #endregion
         #region AppVeyor
-        /// <summary><p><em>Sets <see cref="MSpecSettings.AppVeyor"/>.</em></p><p>Reporting for AppVeyor CI integration (also auto-detected).</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSpecSettings.AppVeyor"/></em></p>
+        ///   <p>Reporting for AppVeyor CI integration (also auto-detected).</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings SetAppVeyor(this MSpecSettings toolSettings, bool? appVeyor)
         {
@@ -492,7 +706,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.AppVeyor = appVeyor;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="MSpecSettings.AppVeyor"/>.</em></p><p>Reporting for AppVeyor CI integration (also auto-detected).</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="MSpecSettings.AppVeyor"/></em></p>
+        ///   <p>Reporting for AppVeyor CI integration (also auto-detected).</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings ResetAppVeyor(this MSpecSettings toolSettings)
         {
@@ -500,7 +717,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.AppVeyor = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="MSpecSettings.AppVeyor"/>.</em></p><p>Reporting for AppVeyor CI integration (also auto-detected).</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="MSpecSettings.AppVeyor"/></em></p>
+        ///   <p>Reporting for AppVeyor CI integration (also auto-detected).</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings EnableAppVeyor(this MSpecSettings toolSettings)
         {
@@ -508,7 +728,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.AppVeyor = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="MSpecSettings.AppVeyor"/>.</em></p><p>Reporting for AppVeyor CI integration (also auto-detected).</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="MSpecSettings.AppVeyor"/></em></p>
+        ///   <p>Reporting for AppVeyor CI integration (also auto-detected).</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings DisableAppVeyor(this MSpecSettings toolSettings)
         {
@@ -516,7 +739,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.AppVeyor = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="MSpecSettings.AppVeyor"/>.</em></p><p>Reporting for AppVeyor CI integration (also auto-detected).</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="MSpecSettings.AppVeyor"/></em></p>
+        ///   <p>Reporting for AppVeyor CI integration (also auto-detected).</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings ToggleAppVeyor(this MSpecSettings toolSettings)
         {
@@ -526,7 +752,10 @@ namespace Nuke.Common.Tools.MSpec
         }
         #endregion
         #region NoAppVeyor
-        /// <summary><p><em>Sets <see cref="MSpecSettings.NoAppVeyor"/>.</em></p><p>Disables AppVeyor autodetection.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSpecSettings.NoAppVeyor"/></em></p>
+        ///   <p>Disables AppVeyor autodetection.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings SetNoAppVeyor(this MSpecSettings toolSettings, bool? noAppVeyor)
         {
@@ -534,7 +763,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.NoAppVeyor = noAppVeyor;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="MSpecSettings.NoAppVeyor"/>.</em></p><p>Disables AppVeyor autodetection.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="MSpecSettings.NoAppVeyor"/></em></p>
+        ///   <p>Disables AppVeyor autodetection.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings ResetNoAppVeyor(this MSpecSettings toolSettings)
         {
@@ -542,7 +774,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.NoAppVeyor = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="MSpecSettings.NoAppVeyor"/>.</em></p><p>Disables AppVeyor autodetection.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="MSpecSettings.NoAppVeyor"/></em></p>
+        ///   <p>Disables AppVeyor autodetection.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings EnableNoAppVeyor(this MSpecSettings toolSettings)
         {
@@ -550,7 +785,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.NoAppVeyor = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="MSpecSettings.NoAppVeyor"/>.</em></p><p>Disables AppVeyor autodetection.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="MSpecSettings.NoAppVeyor"/></em></p>
+        ///   <p>Disables AppVeyor autodetection.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings DisableNoAppVeyor(this MSpecSettings toolSettings)
         {
@@ -558,7 +796,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.NoAppVeyor = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="MSpecSettings.NoAppVeyor"/>.</em></p><p>Disables AppVeyor autodetection.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="MSpecSettings.NoAppVeyor"/></em></p>
+        ///   <p>Disables AppVeyor autodetection.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings ToggleNoAppVeyor(this MSpecSettings toolSettings)
         {
@@ -568,7 +809,10 @@ namespace Nuke.Common.Tools.MSpec
         }
         #endregion
         #region TimeInfo
-        /// <summary><p><em>Sets <see cref="MSpecSettings.TimeInfo"/>.</em></p><p>Shows time-related information in HTML output.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSpecSettings.TimeInfo"/></em></p>
+        ///   <p>Shows time-related information in HTML output.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings SetTimeInfo(this MSpecSettings toolSettings, bool? timeInfo)
         {
@@ -576,7 +820,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.TimeInfo = timeInfo;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="MSpecSettings.TimeInfo"/>.</em></p><p>Shows time-related information in HTML output.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="MSpecSettings.TimeInfo"/></em></p>
+        ///   <p>Shows time-related information in HTML output.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings ResetTimeInfo(this MSpecSettings toolSettings)
         {
@@ -584,7 +831,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.TimeInfo = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="MSpecSettings.TimeInfo"/>.</em></p><p>Shows time-related information in HTML output.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="MSpecSettings.TimeInfo"/></em></p>
+        ///   <p>Shows time-related information in HTML output.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings EnableTimeInfo(this MSpecSettings toolSettings)
         {
@@ -592,7 +842,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.TimeInfo = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="MSpecSettings.TimeInfo"/>.</em></p><p>Shows time-related information in HTML output.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="MSpecSettings.TimeInfo"/></em></p>
+        ///   <p>Shows time-related information in HTML output.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings DisableTimeInfo(this MSpecSettings toolSettings)
         {
@@ -600,7 +853,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.TimeInfo = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="MSpecSettings.TimeInfo"/>.</em></p><p>Shows time-related information in HTML output.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="MSpecSettings.TimeInfo"/></em></p>
+        ///   <p>Shows time-related information in HTML output.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings ToggleTimeInfo(this MSpecSettings toolSettings)
         {
@@ -610,7 +866,10 @@ namespace Nuke.Common.Tools.MSpec
         }
         #endregion
         #region Silent
-        /// <summary><p><em>Sets <see cref="MSpecSettings.Silent"/>.</em></p><p>Suppress progress output (print fatal errors, failures and summary).</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSpecSettings.Silent"/></em></p>
+        ///   <p>Suppress progress output (print fatal errors, failures and summary).</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings SetSilent(this MSpecSettings toolSettings, bool? silent)
         {
@@ -618,7 +877,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.Silent = silent;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="MSpecSettings.Silent"/>.</em></p><p>Suppress progress output (print fatal errors, failures and summary).</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="MSpecSettings.Silent"/></em></p>
+        ///   <p>Suppress progress output (print fatal errors, failures and summary).</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings ResetSilent(this MSpecSettings toolSettings)
         {
@@ -626,7 +888,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.Silent = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="MSpecSettings.Silent"/>.</em></p><p>Suppress progress output (print fatal errors, failures and summary).</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="MSpecSettings.Silent"/></em></p>
+        ///   <p>Suppress progress output (print fatal errors, failures and summary).</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings EnableSilent(this MSpecSettings toolSettings)
         {
@@ -634,7 +899,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.Silent = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="MSpecSettings.Silent"/>.</em></p><p>Suppress progress output (print fatal errors, failures and summary).</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="MSpecSettings.Silent"/></em></p>
+        ///   <p>Suppress progress output (print fatal errors, failures and summary).</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings DisableSilent(this MSpecSettings toolSettings)
         {
@@ -642,7 +910,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.Silent = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="MSpecSettings.Silent"/>.</em></p><p>Suppress progress output (print fatal errors, failures and summary).</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="MSpecSettings.Silent"/></em></p>
+        ///   <p>Suppress progress output (print fatal errors, failures and summary).</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings ToggleSilent(this MSpecSettings toolSettings)
         {
@@ -652,7 +923,10 @@ namespace Nuke.Common.Tools.MSpec
         }
         #endregion
         #region DottedProgress
-        /// <summary><p><em>Sets <see cref="MSpecSettings.DottedProgress"/>.</em></p><p>Print dotted progress output.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSpecSettings.DottedProgress"/></em></p>
+        ///   <p>Print dotted progress output.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings SetDottedProgress(this MSpecSettings toolSettings, bool? dottedProgress)
         {
@@ -660,7 +934,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.DottedProgress = dottedProgress;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="MSpecSettings.DottedProgress"/>.</em></p><p>Print dotted progress output.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="MSpecSettings.DottedProgress"/></em></p>
+        ///   <p>Print dotted progress output.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings ResetDottedProgress(this MSpecSettings toolSettings)
         {
@@ -668,7 +945,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.DottedProgress = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="MSpecSettings.DottedProgress"/>.</em></p><p>Print dotted progress output.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="MSpecSettings.DottedProgress"/></em></p>
+        ///   <p>Print dotted progress output.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings EnableDottedProgress(this MSpecSettings toolSettings)
         {
@@ -676,7 +956,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.DottedProgress = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="MSpecSettings.DottedProgress"/>.</em></p><p>Print dotted progress output.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="MSpecSettings.DottedProgress"/></em></p>
+        ///   <p>Print dotted progress output.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings DisableDottedProgress(this MSpecSettings toolSettings)
         {
@@ -684,7 +967,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.DottedProgress = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="MSpecSettings.DottedProgress"/>.</em></p><p>Print dotted progress output.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="MSpecSettings.DottedProgress"/></em></p>
+        ///   <p>Print dotted progress output.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings ToggleDottedProgress(this MSpecSettings toolSettings)
         {
@@ -694,7 +980,10 @@ namespace Nuke.Common.Tools.MSpec
         }
         #endregion
         #region NoColor
-        /// <summary><p><em>Sets <see cref="MSpecSettings.NoColor"/>.</em></p><p>Suppress colored console output.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSpecSettings.NoColor"/></em></p>
+        ///   <p>Suppress colored console output.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings SetNoColor(this MSpecSettings toolSettings, bool? noColor)
         {
@@ -702,7 +991,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.NoColor = noColor;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="MSpecSettings.NoColor"/>.</em></p><p>Suppress colored console output.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="MSpecSettings.NoColor"/></em></p>
+        ///   <p>Suppress colored console output.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings ResetNoColor(this MSpecSettings toolSettings)
         {
@@ -710,7 +1002,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.NoColor = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="MSpecSettings.NoColor"/>.</em></p><p>Suppress colored console output.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="MSpecSettings.NoColor"/></em></p>
+        ///   <p>Suppress colored console output.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings EnableNoColor(this MSpecSettings toolSettings)
         {
@@ -718,7 +1013,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.NoColor = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="MSpecSettings.NoColor"/>.</em></p><p>Suppress colored console output.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="MSpecSettings.NoColor"/></em></p>
+        ///   <p>Suppress colored console output.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings DisableNoColor(this MSpecSettings toolSettings)
         {
@@ -726,7 +1024,10 @@ namespace Nuke.Common.Tools.MSpec
             toolSettings.NoColor = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="MSpecSettings.NoColor"/>.</em></p><p>Suppress colored console output.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="MSpecSettings.NoColor"/></em></p>
+        ///   <p>Suppress colored console output.</p>
+        /// </summary>
         [Pure]
         public static MSpecSettings ToggleNoColor(this MSpecSettings toolSettings)
         {

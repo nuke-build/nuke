@@ -5,10 +5,23 @@
 using System;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Tools.MSBuild
 {
+    public class MSBuildVerbosityMappingAttribute : VerbosityMappingAttribute
+    {
+        public MSBuildVerbosityMappingAttribute()
+            : base(typeof(MSBuildVerbosity))
+        {
+            Quiet = nameof(MSBuildVerbosity.Quiet);
+            Minimal = nameof(MSBuildVerbosity.Minimal);
+            Normal = nameof(MSBuildVerbosity.Normal);
+            Verbose = nameof(MSBuildVerbosity.Detailed);
+        }
+    }
+    
     partial class MSBuildSettings
     {
         [CanBeNull]

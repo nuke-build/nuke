@@ -23,18 +23,26 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
     [ExcludeFromCodeCoverage]
     public static partial class WebConfigTransformRunnerTasks
     {
-        /// <summary><p>Path to the WebConfigTransformRunner executable.</p></summary>
+        /// <summary>
+        ///   Path to the WebConfigTransformRunner executable.
+        /// </summary>
         public static string WebConfigTransformRunnerPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("WEBCONFIGTRANSFORMRUNNER_EXE") ??
             ToolPathResolver.GetPackageExecutable("WebConfigTransformRunner", "WebConfigTransformRunner.exe");
-        /// <summary><p>This is a commandline tool to run an ASP.Net web.config tranformation.</p></summary>
+        public static Action<OutputType, string> WebConfigTransformRunnerLogger { get; set; } = ProcessManager.DefaultLogger;
+        /// <summary>
+        ///   This is a commandline tool to run an ASP.Net web.config tranformation.
+        /// </summary>
         public static IReadOnlyCollection<Output> WebConfigTransformRunner(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(WebConfigTransformRunnerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
+            var process = ProcessTasks.StartProcess(WebConfigTransformRunnerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, WebConfigTransformRunnerLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>This is a commandline tool to run an ASP.Net web.config tranformation.</p><p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>This is a commandline tool to run an ASP.Net web.config tranformation.</p>
+        ///   <p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p>
+        /// </summary>
         public static IReadOnlyCollection<Output> WebConfigTransformRunner(WebConfigTransformRunnerSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new WebConfigTransformRunnerSettings();
@@ -42,33 +50,64 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>This is a commandline tool to run an ASP.Net web.config tranformation.</p><p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>This is a commandline tool to run an ASP.Net web.config tranformation.</p>
+        ///   <p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;outputFilename&gt;</c> via <see cref="WebConfigTransformRunnerSettings.OutputFilename"/></li>
+        ///     <li><c>&lt;transformFilename&gt;</c> via <see cref="WebConfigTransformRunnerSettings.TransformFilename"/></li>
+        ///     <li><c>&lt;webConfigFilename&gt;</c> via <see cref="WebConfigTransformRunnerSettings.WebConfigFilename"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> WebConfigTransformRunner(Configure<WebConfigTransformRunnerSettings> configurator)
         {
             return WebConfigTransformRunner(configurator(new WebConfigTransformRunnerSettings()));
         }
-        /// <summary><p>This is a commandline tool to run an ASP.Net web.config tranformation.</p><p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p></summary>
-        public static IEnumerable<(WebConfigTransformRunnerSettings Settings, IReadOnlyCollection<Output> Output)> WebConfigTransformRunner(CombinatorialConfigure<WebConfigTransformRunnerSettings> configurator)
+        /// <summary>
+        ///   <p>This is a commandline tool to run an ASP.Net web.config tranformation.</p>
+        ///   <p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;outputFilename&gt;</c> via <see cref="WebConfigTransformRunnerSettings.OutputFilename"/></li>
+        ///     <li><c>&lt;transformFilename&gt;</c> via <see cref="WebConfigTransformRunnerSettings.TransformFilename"/></li>
+        ///     <li><c>&lt;webConfigFilename&gt;</c> via <see cref="WebConfigTransformRunnerSettings.WebConfigFilename"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(WebConfigTransformRunnerSettings Settings, IReadOnlyCollection<Output> Output)> WebConfigTransformRunner(CombinatorialConfigure<WebConfigTransformRunnerSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator(new WebConfigTransformRunnerSettings())
-                .Select(x => (ToolSettings: x, ReturnValue: WebConfigTransformRunner(x)))
-                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+            return configurator.Invoke(WebConfigTransformRunner, WebConfigTransformRunnerLogger, degreeOfParallelism, completeOnFailure);
         }
     }
     #region WebConfigTransformRunnerSettings
-    /// <summary><p>Used within <see cref="WebConfigTransformRunnerTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="WebConfigTransformRunnerTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
     public partial class WebConfigTransformRunnerSettings : ToolSettings
     {
-        /// <summary><p>Path to the WebConfigTransformRunner executable.</p></summary>
+        /// <summary>
+        ///   Path to the WebConfigTransformRunner executable.
+        /// </summary>
         public override string ToolPath => base.ToolPath ?? WebConfigTransformRunnerTasks.WebConfigTransformRunnerPath;
-        /// <summary><p>The base web.config file</p></summary>
+        public override Action<OutputType, string> CustomLogger => WebConfigTransformRunnerTasks.WebConfigTransformRunnerLogger;
+        /// <summary>
+        ///   The base web.config file
+        /// </summary>
         public virtual string WebConfigFilename { get; internal set; }
-        /// <summary><p>The transformation web.config file</p></summary>
+        /// <summary>
+        ///   The transformation web.config file
+        /// </summary>
         public virtual string TransformFilename { get; internal set; }
-        /// <summary><p>The path to the output web.config file</p></summary>
+        /// <summary>
+        ///   The path to the output web.config file
+        /// </summary>
         public virtual string OutputFilename { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -81,13 +120,18 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
     }
     #endregion
     #region WebConfigTransformRunnerSettingsExtensions
-    /// <summary><p>Used within <see cref="WebConfigTransformRunnerTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="WebConfigTransformRunnerTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class WebConfigTransformRunnerSettingsExtensions
     {
         #region WebConfigFilename
-        /// <summary><p><em>Sets <see cref="WebConfigTransformRunnerSettings.WebConfigFilename"/>.</em></p><p>The base web.config file</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="WebConfigTransformRunnerSettings.WebConfigFilename"/></em></p>
+        ///   <p>The base web.config file</p>
+        /// </summary>
         [Pure]
         public static WebConfigTransformRunnerSettings SetWebConfigFilename(this WebConfigTransformRunnerSettings toolSettings, string webConfigFilename)
         {
@@ -95,7 +139,10 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
             toolSettings.WebConfigFilename = webConfigFilename;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="WebConfigTransformRunnerSettings.WebConfigFilename"/>.</em></p><p>The base web.config file</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="WebConfigTransformRunnerSettings.WebConfigFilename"/></em></p>
+        ///   <p>The base web.config file</p>
+        /// </summary>
         [Pure]
         public static WebConfigTransformRunnerSettings ResetWebConfigFilename(this WebConfigTransformRunnerSettings toolSettings)
         {
@@ -105,7 +152,10 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         }
         #endregion
         #region TransformFilename
-        /// <summary><p><em>Sets <see cref="WebConfigTransformRunnerSettings.TransformFilename"/>.</em></p><p>The transformation web.config file</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="WebConfigTransformRunnerSettings.TransformFilename"/></em></p>
+        ///   <p>The transformation web.config file</p>
+        /// </summary>
         [Pure]
         public static WebConfigTransformRunnerSettings SetTransformFilename(this WebConfigTransformRunnerSettings toolSettings, string transformFilename)
         {
@@ -113,7 +163,10 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
             toolSettings.TransformFilename = transformFilename;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="WebConfigTransformRunnerSettings.TransformFilename"/>.</em></p><p>The transformation web.config file</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="WebConfigTransformRunnerSettings.TransformFilename"/></em></p>
+        ///   <p>The transformation web.config file</p>
+        /// </summary>
         [Pure]
         public static WebConfigTransformRunnerSettings ResetTransformFilename(this WebConfigTransformRunnerSettings toolSettings)
         {
@@ -123,7 +176,10 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         }
         #endregion
         #region OutputFilename
-        /// <summary><p><em>Sets <see cref="WebConfigTransformRunnerSettings.OutputFilename"/>.</em></p><p>The path to the output web.config file</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="WebConfigTransformRunnerSettings.OutputFilename"/></em></p>
+        ///   <p>The path to the output web.config file</p>
+        /// </summary>
         [Pure]
         public static WebConfigTransformRunnerSettings SetOutputFilename(this WebConfigTransformRunnerSettings toolSettings, string outputFilename)
         {
@@ -131,7 +187,10 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
             toolSettings.OutputFilename = outputFilename;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="WebConfigTransformRunnerSettings.OutputFilename"/>.</em></p><p>The path to the output web.config file</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="WebConfigTransformRunnerSettings.OutputFilename"/></em></p>
+        ///   <p>The path to the output web.config file</p>
+        /// </summary>
         [Pure]
         public static WebConfigTransformRunnerSettings ResetOutputFilename(this WebConfigTransformRunnerSettings toolSettings)
         {

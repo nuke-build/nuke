@@ -70,8 +70,8 @@ namespace Nuke.Common.IO
             if (Directory.Exists(directory))
             {
                 Logger.Info($"Cleaning directory '{directory}'...");
-                DeleteDirectoryInternal(directory);
-                Directory.CreateDirectory(directory);
+                Directory.GetFiles(directory).ForEach(DeleteFileInternal);
+                Directory.GetDirectories(directory).ForEach(DeleteDirectoryInternal);
             }
             else
             {
@@ -82,6 +82,11 @@ namespace Nuke.Common.IO
         public static void EnsureCleanDirectories(IEnumerable<string> directories)
         {
             directories.ForEach(EnsureCleanDirectory);
+        }
+
+        public static void DeleteDirectory(PathConstruction.AbsolutePath directory)
+        {
+            DeleteDirectory((string) directory);
         }
 
         public static void DeleteDirectory(string directory)
@@ -116,6 +121,11 @@ namespace Nuke.Common.IO
             Logger.Trace($"Deleting file '{file}'...");
             EnsureFileAttributes(file);
             File.Delete(file);
+        }
+
+        public static void DeleteFile(PathConstruction.AbsolutePath file)
+        {
+            DeleteFile((string) file);
         }
 
         public static void DeleteFile(string file)

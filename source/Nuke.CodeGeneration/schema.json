@@ -19,10 +19,6 @@
           "description": "Enables generation of extension methods for modification.",
           "type": "boolean"
         },
-        "argumentConstruction": {
-          "description": "Enables argument construction.",
-          "type": "boolean"
-        },
         "properties": {
           "description": "Properties of the data class.",
           "type": "array",
@@ -165,10 +161,6 @@
           "description": "Enables generation of extension methods for modification.",
           "type": "boolean"
         },
-        "argumentConstruction": {
-          "description": "Enables argument construction.",
-          "type": "boolean"
-        },
         "properties": {
           "description": "Properties of the data class.",
           "type": "array",
@@ -293,8 +285,8 @@
       "description": "Defines that locating the executable is implemented customly.",
       "type": "boolean"
     },
-    "logLevelParsing": {
-      "description": "Enables custom log level parsing.",
+    "customLogger": {
+      "description": "Enables custom logger.",
       "type": "boolean"
     },
     "tasks": {

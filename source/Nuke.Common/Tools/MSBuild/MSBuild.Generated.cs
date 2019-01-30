@@ -23,18 +23,26 @@ namespace Nuke.Common.Tools.MSBuild
     [ExcludeFromCodeCoverage]
     public static partial class MSBuildTasks
     {
-        /// <summary><p>Path to the MSBuild executable.</p></summary>
+        /// <summary>
+        ///   Path to the MSBuild executable.
+        /// </summary>
         public static string MSBuildPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("MSBUILD_EXE") ??
             GetToolPath();
-        /// <summary><p>The Microsoft Build Engine is a platform for building applications. This engine, which is also known as MSBuild, provides an XML schema for a project file that controls how the build platform processes and builds software. Visual Studio uses MSBuild, but it doesn't depend on Visual Studio. By invoking msbuild.exe on your project or solution file, you can orchestrate and build products in environments where Visual Studio isn't installed. Visual Studio uses MSBuild to load and build managed projects. The project files in Visual Studio (.csproj,.vbproj, vcxproj, and others) contain MSBuild XML code that executes when you build a project by using the IDE. Visual Studio projects import all the necessary settings and build processes to do typical development work, but you can extend or modify them from within Visual Studio or by using an XML editor.</p></summary>
+        public static Action<OutputType, string> MSBuildLogger { get; set; } = ProcessManager.DefaultLogger;
+        /// <summary>
+        ///   The Microsoft Build Engine is a platform for building applications. This engine, which is also known as MSBuild, provides an XML schema for a project file that controls how the build platform processes and builds software. Visual Studio uses MSBuild, but it doesn't depend on Visual Studio. By invoking msbuild.exe on your project or solution file, you can orchestrate and build products in environments where Visual Studio isn't installed. Visual Studio uses MSBuild to load and build managed projects. The project files in Visual Studio (.csproj,.vbproj, vcxproj, and others) contain MSBuild XML code that executes when you build a project by using the IDE. Visual Studio projects import all the necessary settings and build processes to do typical development work, but you can extend or modify them from within Visual Studio or by using an XML editor.
+        /// </summary>
         public static IReadOnlyCollection<Output> MSBuild(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(MSBuildPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
+            var process = ProcessTasks.StartProcess(MSBuildPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, MSBuildLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>The Microsoft Build Engine is a platform for building applications. This engine, which is also known as MSBuild, provides an XML schema for a project file that controls how the build platform processes and builds software. Visual Studio uses MSBuild, but it doesn't depend on Visual Studio. By invoking msbuild.exe on your project or solution file, you can orchestrate and build products in environments where Visual Studio isn't installed. Visual Studio uses MSBuild to load and build managed projects. The project files in Visual Studio (.csproj,.vbproj, vcxproj, and others) contain MSBuild XML code that executes when you build a project by using the IDE. Visual Studio projects import all the necessary settings and build processes to do typical development work, but you can extend or modify them from within Visual Studio or by using an XML editor.</p><p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/ms164311.aspx">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>The Microsoft Build Engine is a platform for building applications. This engine, which is also known as MSBuild, provides an XML schema for a project file that controls how the build platform processes and builds software. Visual Studio uses MSBuild, but it doesn't depend on Visual Studio. By invoking msbuild.exe on your project or solution file, you can orchestrate and build products in environments where Visual Studio isn't installed. Visual Studio uses MSBuild to load and build managed projects. The project files in Visual Studio (.csproj,.vbproj, vcxproj, and others) contain MSBuild XML code that executes when you build a project by using the IDE. Visual Studio projects import all the necessary settings and build processes to do typical development work, but you can extend or modify them from within Visual Studio or by using an XML editor.</p>
+        ///   <p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/ms164311.aspx">official website</a>.</p>
+        /// </summary>
         public static IReadOnlyCollection<Output> MSBuild(MSBuildSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new MSBuildSettings();
@@ -42,60 +50,135 @@ namespace Nuke.Common.Tools.MSBuild
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>The Microsoft Build Engine is a platform for building applications. This engine, which is also known as MSBuild, provides an XML schema for a project file that controls how the build platform processes and builds software. Visual Studio uses MSBuild, but it doesn't depend on Visual Studio. By invoking msbuild.exe on your project or solution file, you can orchestrate and build products in environments where Visual Studio isn't installed. Visual Studio uses MSBuild to load and build managed projects. The project files in Visual Studio (.csproj,.vbproj, vcxproj, and others) contain MSBuild XML code that executes when you build a project by using the IDE. Visual Studio projects import all the necessary settings and build processes to do typical development work, but you can extend or modify them from within Visual Studio or by using an XML editor.</p><p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/ms164311.aspx">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>The Microsoft Build Engine is a platform for building applications. This engine, which is also known as MSBuild, provides an XML schema for a project file that controls how the build platform processes and builds software. Visual Studio uses MSBuild, but it doesn't depend on Visual Studio. By invoking msbuild.exe on your project or solution file, you can orchestrate and build products in environments where Visual Studio isn't installed. Visual Studio uses MSBuild to load and build managed projects. The project files in Visual Studio (.csproj,.vbproj, vcxproj, and others) contain MSBuild XML code that executes when you build a project by using the IDE. Visual Studio projects import all the necessary settings and build processes to do typical development work, but you can extend or modify them from within Visual Studio or by using an XML editor.</p>
+        ///   <p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/ms164311.aspx">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;targetPath&gt;</c> via <see cref="MSBuildSettings.TargetPath"/></li>
+        ///     <li><c>/detailedsummary</c> via <see cref="MSBuildSettings.DetailedSummary"/></li>
+        ///     <li><c>/logger</c> via <see cref="MSBuildSettings.Loggers"/></li>
+        ///     <li><c>/maxcpucount</c> via <see cref="MSBuildSettings.MaxCpuCount"/></li>
+        ///     <li><c>/noconsolelogger</c> via <see cref="MSBuildSettings.NoConsoleLogger"/></li>
+        ///     <li><c>/nodeReuse</c> via <see cref="MSBuildSettings.NodeReuse"/></li>
+        ///     <li><c>/nologo</c> via <see cref="MSBuildSettings.NoLogo"/></li>
+        ///     <li><c>/p</c> via <see cref="MSBuildSettings.Properties"/></li>
+        ///     <li><c>/p:Platform</c> via <see cref="MSBuildSettings.TargetPlatform"/></li>
+        ///     <li><c>/restore</c> via <see cref="MSBuildSettings.Restore"/></li>
+        ///     <li><c>/target</c> via <see cref="MSBuildSettings.Targets"/></li>
+        ///     <li><c>/toolsversion</c> via <see cref="MSBuildSettings.ToolsVersion"/></li>
+        ///     <li><c>/verbosity</c> via <see cref="MSBuildSettings.Verbosity"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> MSBuild(Configure<MSBuildSettings> configurator)
         {
             return MSBuild(configurator(new MSBuildSettings()));
         }
-        /// <summary><p>The Microsoft Build Engine is a platform for building applications. This engine, which is also known as MSBuild, provides an XML schema for a project file that controls how the build platform processes and builds software. Visual Studio uses MSBuild, but it doesn't depend on Visual Studio. By invoking msbuild.exe on your project or solution file, you can orchestrate and build products in environments where Visual Studio isn't installed. Visual Studio uses MSBuild to load and build managed projects. The project files in Visual Studio (.csproj,.vbproj, vcxproj, and others) contain MSBuild XML code that executes when you build a project by using the IDE. Visual Studio projects import all the necessary settings and build processes to do typical development work, but you can extend or modify them from within Visual Studio or by using an XML editor.</p><p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/ms164311.aspx">official website</a>.</p></summary>
-        public static IEnumerable<(MSBuildSettings Settings, IReadOnlyCollection<Output> Output)> MSBuild(CombinatorialConfigure<MSBuildSettings> configurator)
+        /// <summary>
+        ///   <p>The Microsoft Build Engine is a platform for building applications. This engine, which is also known as MSBuild, provides an XML schema for a project file that controls how the build platform processes and builds software. Visual Studio uses MSBuild, but it doesn't depend on Visual Studio. By invoking msbuild.exe on your project or solution file, you can orchestrate and build products in environments where Visual Studio isn't installed. Visual Studio uses MSBuild to load and build managed projects. The project files in Visual Studio (.csproj,.vbproj, vcxproj, and others) contain MSBuild XML code that executes when you build a project by using the IDE. Visual Studio projects import all the necessary settings and build processes to do typical development work, but you can extend or modify them from within Visual Studio or by using an XML editor.</p>
+        ///   <p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/ms164311.aspx">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;targetPath&gt;</c> via <see cref="MSBuildSettings.TargetPath"/></li>
+        ///     <li><c>/detailedsummary</c> via <see cref="MSBuildSettings.DetailedSummary"/></li>
+        ///     <li><c>/logger</c> via <see cref="MSBuildSettings.Loggers"/></li>
+        ///     <li><c>/maxcpucount</c> via <see cref="MSBuildSettings.MaxCpuCount"/></li>
+        ///     <li><c>/noconsolelogger</c> via <see cref="MSBuildSettings.NoConsoleLogger"/></li>
+        ///     <li><c>/nodeReuse</c> via <see cref="MSBuildSettings.NodeReuse"/></li>
+        ///     <li><c>/nologo</c> via <see cref="MSBuildSettings.NoLogo"/></li>
+        ///     <li><c>/p</c> via <see cref="MSBuildSettings.Properties"/></li>
+        ///     <li><c>/p:Platform</c> via <see cref="MSBuildSettings.TargetPlatform"/></li>
+        ///     <li><c>/restore</c> via <see cref="MSBuildSettings.Restore"/></li>
+        ///     <li><c>/target</c> via <see cref="MSBuildSettings.Targets"/></li>
+        ///     <li><c>/toolsversion</c> via <see cref="MSBuildSettings.ToolsVersion"/></li>
+        ///     <li><c>/verbosity</c> via <see cref="MSBuildSettings.Verbosity"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(MSBuildSettings Settings, IReadOnlyCollection<Output> Output)> MSBuild(CombinatorialConfigure<MSBuildSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator(new MSBuildSettings())
-                .Select(x => (ToolSettings: x, ReturnValue: MSBuild(x)))
-                .Select(x => (x.ToolSettings, x.ReturnValue)).ToList();
+            return configurator.Invoke(MSBuild, MSBuildLogger, degreeOfParallelism, completeOnFailure);
         }
     }
     #region MSBuildSettings
-    /// <summary><p>Used within <see cref="MSBuildTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="MSBuildTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
     public partial class MSBuildSettings : ToolSettings
     {
-        /// <summary><p>Path to the MSBuild executable.</p></summary>
+        /// <summary>
+        ///   Path to the MSBuild executable.
+        /// </summary>
         public override string ToolPath => base.ToolPath ?? GetToolPath();
-        /// <summary><p>The solution or project file on which MSBuild is executed.</p></summary>
+        public override Action<OutputType, string> CustomLogger => MSBuildTasks.MSBuildLogger;
+        /// <summary>
+        ///   The solution or project file on which MSBuild is executed.
+        /// </summary>
         public virtual string TargetPath { get; internal set; }
-        /// <summary><p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p></summary>
+        /// <summary>
+        ///   Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.
+        /// </summary>
         public virtual bool? DetailedSummary { get; internal set; }
-        /// <summary><p>Specifies the maximum number of concurrent processes to use when building. If you don't include this switch, the default value is 1. If you include this switch without specifying a value, MSBuild will use up to the number of processors in the computer. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb651793.aspx">Building Multiple Projects in Parallel</a>.</p><p>The following example instructs MSBuild to build using three MSBuild processes, which allows three projects to build at the same time:</p><p><c>msbuild myproject.proj /maxcpucount:3</c></p></summary>
+        /// <summary>
+        ///   <p>Specifies the maximum number of concurrent processes to use when building. If you don't include this switch, the default value is 1. If you include this switch without specifying a value, MSBuild will use up to the number of processors in the computer. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb651793.aspx">Building Multiple Projects in Parallel</a>.</p><p>The following example instructs MSBuild to build using three MSBuild processes, which allows three projects to build at the same time:</p><p><c>msbuild myproject.proj /maxcpucount:3</c></p>
+        /// </summary>
         public virtual int? MaxCpuCount { get; internal set; }
-        /// <summary><p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p></summary>
+        /// <summary>
+        ///   <p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p>
+        /// </summary>
         public virtual bool? NodeReuse { get; internal set; }
-        /// <summary><p>Don't display the startup banner or the copyright message.</p></summary>
+        /// <summary>
+        ///   Don't display the startup banner or the copyright message.
+        /// </summary>
         public virtual bool? NoLogo { get; internal set; }
-        /// <summary><p>The target platform for which the project is built to run on.</p></summary>
+        /// <summary>
+        ///   The target platform for which the project is built to run on.
+        /// </summary>
         public virtual MSBuildTargetPlatform TargetPlatform { get; internal set; }
-        /// <summary><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
         internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-        /// <summary><p>Runs the <c>Restore</c> target prior to building the actual targets.</p></summary>
+        /// <summary>
+        ///   Runs the <c>Restore</c> target prior to building the actual targets.
+        /// </summary>
         public virtual bool? Restore { get; internal set; }
-        /// <summary><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
+        /// <summary>
+        ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
+        /// </summary>
         public virtual IReadOnlyList<string> Targets => TargetsInternal.AsReadOnly();
         internal List<string> TargetsInternal { get; set; } = new List<string>();
-        /// <summary><p>Specifies the version of the Toolset to use to build the project, as the following example shows: <c>/toolsversion:3.5</c></p><p>By using this switch, you can build a project and specify a version that differs from the version that's specified in the <a href="https://msdn.microsoft.com/en-us/library/bcxfsh87.aspx">Project Element (MSBuild)</a>. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb383985.aspx">Overriding ToolsVersion Settings</a>.</p><p>For MSBuild 4.5, you can specify the following values for version: 2.0, 3.5, and 4.0. If you specify 4.0, the VisualStudioVersion build property specifies which sub-toolset to use. For more information, see the Sub-toolsets section of <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>.</p><p>A Toolset consists of tasks, targets, and tools that are used to build an application. The tools include compilers such as csc.exe and vbc.exe. For more information about Toolsets, see <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>, <a href="https://msdn.microsoft.com/en-us/library/bb397428.aspx">Standard and Custom Toolset Configurations</a>, and <a href="https://msdn.microsoft.com/en-us/library/hh264223.aspx">Multitargeting</a>. Note: The toolset version isn't the same as the target framework, which is the version of the .NET Framework on which a project is built to run. For more information, see <a href="https://msdn.microsoft.com/en-us/library/hh264221.aspx">Target Framework and Target Platform</a>.</p></summary>
+        /// <summary>
+        ///   <p>Specifies the version of the Toolset to use to build the project, as the following example shows: <c>/toolsversion:3.5</c></p><p>By using this switch, you can build a project and specify a version that differs from the version that's specified in the <a href="https://msdn.microsoft.com/en-us/library/bcxfsh87.aspx">Project Element (MSBuild)</a>. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb383985.aspx">Overriding ToolsVersion Settings</a>.</p><p>For MSBuild 4.5, you can specify the following values for version: 2.0, 3.5, and 4.0. If you specify 4.0, the VisualStudioVersion build property specifies which sub-toolset to use. For more information, see the Sub-toolsets section of <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>.</p><p>A Toolset consists of tasks, targets, and tools that are used to build an application. The tools include compilers such as csc.exe and vbc.exe. For more information about Toolsets, see <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>, <a href="https://msdn.microsoft.com/en-us/library/bb397428.aspx">Standard and Custom Toolset Configurations</a>, and <a href="https://msdn.microsoft.com/en-us/library/hh264223.aspx">Multitargeting</a>. Note: The toolset version isn't the same as the target framework, which is the version of the .NET Framework on which a project is built to run. For more information, see <a href="https://msdn.microsoft.com/en-us/library/hh264221.aspx">Target Framework and Target Platform</a>.</p>
+        /// </summary>
         public virtual MSBuildToolsVersion ToolsVersion { get; internal set; }
-        /// <summary><p>Specifies the version of MSBuild for building.</p></summary>
+        /// <summary>
+        ///   Specifies the version of MSBuild for building.
+        /// </summary>
         public virtual MSBuildVersion? MSBuildVersion { get; internal set; }
-        /// <summary><p>Specifies the amount of information to display in the build log. Each logger displays events based on the verbosity level that you set for that logger.</p><p>You can specify the following verbosity levels: <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p><p>The following setting is an example: <c>/verbosity:quiet</c></p></summary>
+        /// <summary>
+        ///   <p>Specifies the amount of information to display in the build log. Each logger displays events based on the verbosity level that you set for that logger.</p><p>You can specify the following verbosity levels: <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p><p>The following setting is an example: <c>/verbosity:quiet</c></p>
+        /// </summary>
         public virtual MSBuildVerbosity Verbosity { get; internal set; }
-        /// <summary><p>Specifies the platform to use when building.</p></summary>
+        /// <summary>
+        ///   Specifies the platform to use when building.
+        /// </summary>
         public virtual MSBuildPlatform? MSBuildPlatform { get; internal set; }
-        /// <summary><p>Specifies the loggers to use to log events from MSBuild.</p></summary>
+        /// <summary>
+        ///   Specifies the loggers to use to log events from MSBuild.
+        /// </summary>
         public virtual IReadOnlyList<string> Loggers => LoggersInternal.AsReadOnly();
         internal List<string> LoggersInternal { get; set; } = new List<string>();
-        /// <summary><p>Disable the default console logger, and don't log events to the console.</p></summary>
+        /// <summary>
+        ///   Disable the default console logger, and don't log events to the console.
+        /// </summary>
         public virtual bool? NoConsoleLogger { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -118,13 +201,18 @@ namespace Nuke.Common.Tools.MSBuild
     }
     #endregion
     #region MSBuildSettingsExtensions
-    /// <summary><p>Used within <see cref="MSBuildTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="MSBuildTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class MSBuildSettingsExtensions
     {
         #region TargetPath
-        /// <summary><p><em>Sets <see cref="MSBuildSettings.TargetPath"/>.</em></p><p>The solution or project file on which MSBuild is executed.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSBuildSettings.TargetPath"/></em></p>
+        ///   <p>The solution or project file on which MSBuild is executed.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetTargetPath(this MSBuildSettings toolSettings, string targetPath)
         {
@@ -132,7 +220,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.TargetPath = targetPath;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="MSBuildSettings.TargetPath"/>.</em></p><p>The solution or project file on which MSBuild is executed.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="MSBuildSettings.TargetPath"/></em></p>
+        ///   <p>The solution or project file on which MSBuild is executed.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetTargetPath(this MSBuildSettings toolSettings)
         {
@@ -142,7 +233,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region DetailedSummary
-        /// <summary><p><em>Sets <see cref="MSBuildSettings.DetailedSummary"/>.</em></p><p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSBuildSettings.DetailedSummary"/></em></p>
+        ///   <p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetDetailedSummary(this MSBuildSettings toolSettings, bool? detailedSummary)
         {
@@ -150,7 +244,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.DetailedSummary = detailedSummary;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="MSBuildSettings.DetailedSummary"/>.</em></p><p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="MSBuildSettings.DetailedSummary"/></em></p>
+        ///   <p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetDetailedSummary(this MSBuildSettings toolSettings)
         {
@@ -158,7 +255,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.DetailedSummary = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="MSBuildSettings.DetailedSummary"/>.</em></p><p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="MSBuildSettings.DetailedSummary"/></em></p>
+        ///   <p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings EnableDetailedSummary(this MSBuildSettings toolSettings)
         {
@@ -166,7 +266,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.DetailedSummary = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="MSBuildSettings.DetailedSummary"/>.</em></p><p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="MSBuildSettings.DetailedSummary"/></em></p>
+        ///   <p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings DisableDetailedSummary(this MSBuildSettings toolSettings)
         {
@@ -174,7 +277,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.DetailedSummary = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="MSBuildSettings.DetailedSummary"/>.</em></p><p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="MSBuildSettings.DetailedSummary"/></em></p>
+        ///   <p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ToggleDetailedSummary(this MSBuildSettings toolSettings)
         {
@@ -184,7 +290,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region MaxCpuCount
-        /// <summary><p><em>Sets <see cref="MSBuildSettings.MaxCpuCount"/>.</em></p><p>Specifies the maximum number of concurrent processes to use when building. If you don't include this switch, the default value is 1. If you include this switch without specifying a value, MSBuild will use up to the number of processors in the computer. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb651793.aspx">Building Multiple Projects in Parallel</a>.</p><p>The following example instructs MSBuild to build using three MSBuild processes, which allows three projects to build at the same time:</p><p><c>msbuild myproject.proj /maxcpucount:3</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSBuildSettings.MaxCpuCount"/></em></p>
+        ///   <p>Specifies the maximum number of concurrent processes to use when building. If you don't include this switch, the default value is 1. If you include this switch without specifying a value, MSBuild will use up to the number of processors in the computer. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb651793.aspx">Building Multiple Projects in Parallel</a>.</p><p>The following example instructs MSBuild to build using three MSBuild processes, which allows three projects to build at the same time:</p><p><c>msbuild myproject.proj /maxcpucount:3</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetMaxCpuCount(this MSBuildSettings toolSettings, int? maxCpuCount)
         {
@@ -192,7 +301,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.MaxCpuCount = maxCpuCount;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="MSBuildSettings.MaxCpuCount"/>.</em></p><p>Specifies the maximum number of concurrent processes to use when building. If you don't include this switch, the default value is 1. If you include this switch without specifying a value, MSBuild will use up to the number of processors in the computer. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb651793.aspx">Building Multiple Projects in Parallel</a>.</p><p>The following example instructs MSBuild to build using three MSBuild processes, which allows three projects to build at the same time:</p><p><c>msbuild myproject.proj /maxcpucount:3</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="MSBuildSettings.MaxCpuCount"/></em></p>
+        ///   <p>Specifies the maximum number of concurrent processes to use when building. If you don't include this switch, the default value is 1. If you include this switch without specifying a value, MSBuild will use up to the number of processors in the computer. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb651793.aspx">Building Multiple Projects in Parallel</a>.</p><p>The following example instructs MSBuild to build using three MSBuild processes, which allows three projects to build at the same time:</p><p><c>msbuild myproject.proj /maxcpucount:3</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetMaxCpuCount(this MSBuildSettings toolSettings)
         {
@@ -202,7 +314,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region NodeReuse
-        /// <summary><p><em>Sets <see cref="MSBuildSettings.NodeReuse"/>.</em></p><p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSBuildSettings.NodeReuse"/></em></p>
+        ///   <p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetNodeReuse(this MSBuildSettings toolSettings, bool? nodeReuse)
         {
@@ -210,7 +325,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.NodeReuse = nodeReuse;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="MSBuildSettings.NodeReuse"/>.</em></p><p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="MSBuildSettings.NodeReuse"/></em></p>
+        ///   <p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetNodeReuse(this MSBuildSettings toolSettings)
         {
@@ -218,7 +336,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.NodeReuse = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="MSBuildSettings.NodeReuse"/>.</em></p><p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="MSBuildSettings.NodeReuse"/></em></p>
+        ///   <p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings EnableNodeReuse(this MSBuildSettings toolSettings)
         {
@@ -226,7 +347,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.NodeReuse = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="MSBuildSettings.NodeReuse"/>.</em></p><p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="MSBuildSettings.NodeReuse"/></em></p>
+        ///   <p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings DisableNodeReuse(this MSBuildSettings toolSettings)
         {
@@ -234,7 +358,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.NodeReuse = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="MSBuildSettings.NodeReuse"/>.</em></p><p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="MSBuildSettings.NodeReuse"/></em></p>
+        ///   <p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ToggleNodeReuse(this MSBuildSettings toolSettings)
         {
@@ -244,7 +371,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region NoLogo
-        /// <summary><p><em>Sets <see cref="MSBuildSettings.NoLogo"/>.</em></p><p>Don't display the startup banner or the copyright message.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSBuildSettings.NoLogo"/></em></p>
+        ///   <p>Don't display the startup banner or the copyright message.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetNoLogo(this MSBuildSettings toolSettings, bool? noLogo)
         {
@@ -252,7 +382,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.NoLogo = noLogo;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="MSBuildSettings.NoLogo"/>.</em></p><p>Don't display the startup banner or the copyright message.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="MSBuildSettings.NoLogo"/></em></p>
+        ///   <p>Don't display the startup banner or the copyright message.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetNoLogo(this MSBuildSettings toolSettings)
         {
@@ -260,7 +393,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.NoLogo = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="MSBuildSettings.NoLogo"/>.</em></p><p>Don't display the startup banner or the copyright message.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="MSBuildSettings.NoLogo"/></em></p>
+        ///   <p>Don't display the startup banner or the copyright message.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings EnableNoLogo(this MSBuildSettings toolSettings)
         {
@@ -268,7 +404,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.NoLogo = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="MSBuildSettings.NoLogo"/>.</em></p><p>Don't display the startup banner or the copyright message.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="MSBuildSettings.NoLogo"/></em></p>
+        ///   <p>Don't display the startup banner or the copyright message.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings DisableNoLogo(this MSBuildSettings toolSettings)
         {
@@ -276,7 +415,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.NoLogo = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="MSBuildSettings.NoLogo"/>.</em></p><p>Don't display the startup banner or the copyright message.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="MSBuildSettings.NoLogo"/></em></p>
+        ///   <p>Don't display the startup banner or the copyright message.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ToggleNoLogo(this MSBuildSettings toolSettings)
         {
@@ -286,7 +428,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region TargetPlatform
-        /// <summary><p><em>Sets <see cref="MSBuildSettings.TargetPlatform"/>.</em></p><p>The target platform for which the project is built to run on.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSBuildSettings.TargetPlatform"/></em></p>
+        ///   <p>The target platform for which the project is built to run on.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetTargetPlatform(this MSBuildSettings toolSettings, MSBuildTargetPlatform targetPlatform)
         {
@@ -294,7 +439,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.TargetPlatform = targetPlatform;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="MSBuildSettings.TargetPlatform"/>.</em></p><p>The target platform for which the project is built to run on.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="MSBuildSettings.TargetPlatform"/></em></p>
+        ///   <p>The target platform for which the project is built to run on.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetTargetPlatform(this MSBuildSettings toolSettings)
         {
@@ -304,7 +452,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region Properties
-        /// <summary><p><em>Sets <see cref="MSBuildSettings.Properties"/> to a new dictionary.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSBuildSettings.Properties"/> to a new dictionary</em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetProperties(this MSBuildSettings toolSettings, IDictionary<string, object> properties)
         {
@@ -312,7 +463,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ClearProperties(this MSBuildSettings toolSettings)
         {
@@ -320,7 +474,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Adds a new key-value-pair <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Adds a new key-value-pair <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings AddProperty(this MSBuildSettings toolSettings, string propertyKey, object propertyValue)
         {
@@ -328,7 +485,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
             return toolSettings;
         }
-        /// <summary><p><em>Removes a key-value-pair from <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Removes a key-value-pair from <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings RemoveProperty(this MSBuildSettings toolSettings, string propertyKey)
         {
@@ -336,7 +496,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal.Remove(propertyKey);
             return toolSettings;
         }
-        /// <summary><p><em>Sets a key-value-pair in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets a key-value-pair in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetProperty(this MSBuildSettings toolSettings, string propertyKey, object propertyValue)
         {
@@ -345,7 +508,10 @@ namespace Nuke.Common.Tools.MSBuild
             return toolSettings;
         }
         #region OutDir
-        /// <summary><p><em>Sets <c>OutDir</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>OutDir</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetOutDir(this MSBuildSettings toolSettings, string outDir)
         {
@@ -353,7 +519,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["OutDir"] = outDir;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>OutDir</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>OutDir</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetOutDir(this MSBuildSettings toolSettings)
         {
@@ -363,7 +532,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region RunCodeAnalysis
-        /// <summary><p><em>Sets <c>RunCodeAnalysis</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>RunCodeAnalysis</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetRunCodeAnalysis(this MSBuildSettings toolSettings, bool? runCodeAnalysis)
         {
@@ -371,7 +543,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["RunCodeAnalysis"] = runCodeAnalysis;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>RunCodeAnalysis</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>RunCodeAnalysis</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetRunCodeAnalysis(this MSBuildSettings toolSettings)
         {
@@ -379,7 +554,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal.Remove("RunCodeAnalysis");
             return toolSettings;
         }
-        /// <summary><p><em>Enables <c>RunCodeAnalysis</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Enables <c>RunCodeAnalysis</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings EnableRunCodeAnalysis(this MSBuildSettings toolSettings)
         {
@@ -387,7 +565,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["RunCodeAnalysis"] = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <c>RunCodeAnalysis</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Disables <c>RunCodeAnalysis</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings DisableRunCodeAnalysis(this MSBuildSettings toolSettings)
         {
@@ -395,7 +576,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["RunCodeAnalysis"] = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <c>RunCodeAnalysis</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <c>RunCodeAnalysis</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ToggleRunCodeAnalysis(this MSBuildSettings toolSettings)
         {
@@ -405,7 +589,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region NoWarn
-        /// <summary><p><em>Sets <c>NoWarn</c> in <see cref="MSBuildSettings.Properties"/> to a new collection.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>NoWarn</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetNoWarns(this MSBuildSettings toolSettings, params int[] noWarn)
         {
@@ -413,7 +600,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
             return toolSettings;
         }
-        /// <summary><p><em>Sets <c>NoWarn</c> in <see cref="MSBuildSettings.Properties"/> to a new collection.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>NoWarn</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetNoWarns(this MSBuildSettings toolSettings, IEnumerable<int> noWarn)
         {
@@ -421,7 +611,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <c>NoWarn</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <c>NoWarn</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings AddNoWarns(this MSBuildSettings toolSettings, params int[] noWarn)
         {
@@ -429,7 +622,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <c>NoWarn</c> in existing <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <c>NoWarn</c> in existing <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings AddNoWarns(this MSBuildSettings toolSettings, IEnumerable<int> noWarn)
         {
@@ -437,7 +633,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
             return toolSettings;
         }
-        /// <summary><p><em>Clears <c>NoWarn</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Clears <c>NoWarn</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ClearNoWarns(this MSBuildSettings toolSettings)
         {
@@ -445,7 +644,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal.Remove("NoWarn");
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <c>NoWarn</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <c>NoWarn</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings RemoveNoWarns(this MSBuildSettings toolSettings, params int[] noWarn)
         {
@@ -453,7 +655,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <c>NoWarn</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <c>NoWarn</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings RemoveNoWarns(this MSBuildSettings toolSettings, IEnumerable<int> noWarn)
         {
@@ -463,7 +668,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region WarningsAsErrors
-        /// <summary><p><em>Sets <c>WarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/> to a new collection.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>WarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetWarningsAsErrors(this MSBuildSettings toolSettings, params int[] warningsAsErrors)
         {
@@ -471,7 +679,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
             return toolSettings;
         }
-        /// <summary><p><em>Sets <c>WarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/> to a new collection.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>WarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetWarningsAsErrors(this MSBuildSettings toolSettings, IEnumerable<int> warningsAsErrors)
         {
@@ -479,7 +690,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <c>WarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <c>WarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings AddWarningsAsErrors(this MSBuildSettings toolSettings, params int[] warningsAsErrors)
         {
@@ -487,7 +701,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <c>WarningsAsErrors</c> in existing <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <c>WarningsAsErrors</c> in existing <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings AddWarningsAsErrors(this MSBuildSettings toolSettings, IEnumerable<int> warningsAsErrors)
         {
@@ -495,7 +712,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
             return toolSettings;
         }
-        /// <summary><p><em>Clears <c>WarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Clears <c>WarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ClearWarningsAsErrors(this MSBuildSettings toolSettings)
         {
@@ -503,7 +723,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal.Remove("WarningsAsErrors");
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings RemoveWarningsAsErrors(this MSBuildSettings toolSettings, params int[] warningsAsErrors)
         {
@@ -511,7 +734,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings RemoveWarningsAsErrors(this MSBuildSettings toolSettings, IEnumerable<int> warningsAsErrors)
         {
@@ -521,7 +747,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region WarningLevel
-        /// <summary><p><em>Sets <c>WarningLevel</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>WarningLevel</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetWarningLevel(this MSBuildSettings toolSettings, int? warningLevel)
         {
@@ -529,7 +758,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["WarningLevel"] = warningLevel;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>WarningLevel</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>WarningLevel</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetWarningLevel(this MSBuildSettings toolSettings)
         {
@@ -539,7 +771,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region Configuration
-        /// <summary><p><em>Sets <c>Configuration</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>Configuration</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetConfiguration(this MSBuildSettings toolSettings, string configuration)
         {
@@ -547,7 +782,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["Configuration"] = configuration;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>Configuration</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>Configuration</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetConfiguration(this MSBuildSettings toolSettings)
         {
@@ -557,7 +795,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region TreatWarningsAsErrors
-        /// <summary><p><em>Sets <c>TreatWarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>TreatWarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetTreatWarningsAsErrors(this MSBuildSettings toolSettings, bool? treatWarningsAsErrors)
         {
@@ -565,7 +806,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = treatWarningsAsErrors;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>TreatWarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>TreatWarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetTreatWarningsAsErrors(this MSBuildSettings toolSettings)
         {
@@ -573,7 +817,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal.Remove("TreatWarningsAsErrors");
             return toolSettings;
         }
-        /// <summary><p><em>Enables <c>TreatWarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Enables <c>TreatWarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings EnableTreatWarningsAsErrors(this MSBuildSettings toolSettings)
         {
@@ -581,7 +828,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <c>TreatWarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Disables <c>TreatWarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings DisableTreatWarningsAsErrors(this MSBuildSettings toolSettings)
         {
@@ -589,7 +839,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <c>TreatWarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <c>TreatWarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ToggleTreatWarningsAsErrors(this MSBuildSettings toolSettings)
         {
@@ -599,7 +852,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region AssemblyVersion
-        /// <summary><p><em>Sets <c>AssemblyVersion</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>AssemblyVersion</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetAssemblyVersion(this MSBuildSettings toolSettings, string assemblyVersion)
         {
@@ -607,7 +863,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["AssemblyVersion"] = assemblyVersion;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>AssemblyVersion</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>AssemblyVersion</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetAssemblyVersion(this MSBuildSettings toolSettings)
         {
@@ -617,7 +876,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region FileVersion
-        /// <summary><p><em>Sets <c>FileVersion</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>FileVersion</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetFileVersion(this MSBuildSettings toolSettings, string fileVersion)
         {
@@ -625,7 +887,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["FileVersion"] = fileVersion;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>FileVersion</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>FileVersion</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetFileVersion(this MSBuildSettings toolSettings)
         {
@@ -635,7 +900,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region InformationalVersion
-        /// <summary><p><em>Sets <c>InformationalVersion</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>InformationalVersion</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetInformationalVersion(this MSBuildSettings toolSettings, string informationalVersion)
         {
@@ -643,7 +911,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["InformationalVersion"] = informationalVersion;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>InformationalVersion</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>InformationalVersion</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetInformationalVersion(this MSBuildSettings toolSettings)
         {
@@ -653,7 +924,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region PackageOutputPath
-        /// <summary><p><em>Sets <c>PackageOutputPath</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>PackageOutputPath</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetPackageOutputPath(this MSBuildSettings toolSettings, string packageOutputPath)
         {
@@ -661,7 +935,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["PackageOutputPath"] = packageOutputPath;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>PackageOutputPath</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>PackageOutputPath</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetPackageOutputPath(this MSBuildSettings toolSettings)
         {
@@ -671,7 +948,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region IncludeSymbols
-        /// <summary><p><em>Sets <c>IncludeSymbols</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>IncludeSymbols</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetIncludeSymbols(this MSBuildSettings toolSettings, bool? includeSymbols)
         {
@@ -679,7 +959,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["IncludeSymbols"] = includeSymbols;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>IncludeSymbols</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>IncludeSymbols</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetIncludeSymbols(this MSBuildSettings toolSettings)
         {
@@ -687,7 +970,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal.Remove("IncludeSymbols");
             return toolSettings;
         }
-        /// <summary><p><em>Enables <c>IncludeSymbols</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Enables <c>IncludeSymbols</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings EnableIncludeSymbols(this MSBuildSettings toolSettings)
         {
@@ -695,7 +981,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["IncludeSymbols"] = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <c>IncludeSymbols</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Disables <c>IncludeSymbols</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings DisableIncludeSymbols(this MSBuildSettings toolSettings)
         {
@@ -703,7 +992,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["IncludeSymbols"] = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <c>IncludeSymbols</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <c>IncludeSymbols</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ToggleIncludeSymbols(this MSBuildSettings toolSettings)
         {
@@ -713,7 +1005,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region PackageId
-        /// <summary><p><em>Sets <c>PackageId</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>PackageId</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetPackageId(this MSBuildSettings toolSettings, string packageId)
         {
@@ -721,7 +1016,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["PackageId"] = packageId;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>PackageId</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>PackageId</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetPackageId(this MSBuildSettings toolSettings)
         {
@@ -731,7 +1029,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region PackageVersion
-        /// <summary><p><em>Sets <c>PackageVersion</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>PackageVersion</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetPackageVersion(this MSBuildSettings toolSettings, string packageVersion)
         {
@@ -739,7 +1040,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["PackageVersion"] = packageVersion;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>PackageVersion</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>PackageVersion</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetPackageVersion(this MSBuildSettings toolSettings)
         {
@@ -749,7 +1053,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region PackageVersionPrefix
-        /// <summary><p><em>Sets <c>PackageVersionPrefix</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>PackageVersionPrefix</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetPackageVersionPrefix(this MSBuildSettings toolSettings, string packageVersionPrefix)
         {
@@ -757,7 +1064,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["PackageVersionPrefix"] = packageVersionPrefix;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>PackageVersionPrefix</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>PackageVersionPrefix</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetPackageVersionPrefix(this MSBuildSettings toolSettings)
         {
@@ -767,7 +1077,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region PackageVersionSuffix
-        /// <summary><p><em>Sets <c>PackageVersionSuffix</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>PackageVersionSuffix</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetPackageVersionSuffix(this MSBuildSettings toolSettings, string packageVersionSuffix)
         {
@@ -775,7 +1088,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["PackageVersionSuffix"] = packageVersionSuffix;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>PackageVersionSuffix</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>PackageVersionSuffix</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetPackageVersionSuffix(this MSBuildSettings toolSettings)
         {
@@ -785,7 +1101,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region Authors
-        /// <summary><p><em>Sets <c>Authors</c> in <see cref="MSBuildSettings.Properties"/> to a new collection.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>Authors</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetAuthors(this MSBuildSettings toolSettings, params string[] authors)
         {
@@ -793,7 +1112,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "Authors", authors, ',');
             return toolSettings;
         }
-        /// <summary><p><em>Sets <c>Authors</c> in <see cref="MSBuildSettings.Properties"/> to a new collection.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>Authors</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetAuthors(this MSBuildSettings toolSettings, IEnumerable<string> authors)
         {
@@ -801,7 +1123,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "Authors", authors, ',');
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <c>Authors</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <c>Authors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings AddAuthors(this MSBuildSettings toolSettings, params string[] authors)
         {
@@ -809,7 +1134,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <c>Authors</c> in existing <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <c>Authors</c> in existing <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings AddAuthors(this MSBuildSettings toolSettings, IEnumerable<string> authors)
         {
@@ -817,7 +1145,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
             return toolSettings;
         }
-        /// <summary><p><em>Clears <c>Authors</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Clears <c>Authors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ClearAuthors(this MSBuildSettings toolSettings)
         {
@@ -825,7 +1156,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal.Remove("Authors");
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <c>Authors</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <c>Authors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings RemoveAuthors(this MSBuildSettings toolSettings, params string[] authors)
         {
@@ -833,7 +1167,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <c>Authors</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <c>Authors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings RemoveAuthors(this MSBuildSettings toolSettings, IEnumerable<string> authors)
         {
@@ -843,7 +1180,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region Title
-        /// <summary><p><em>Sets <c>Title</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>Title</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetTitle(this MSBuildSettings toolSettings, string title)
         {
@@ -851,7 +1191,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["Title"] = title;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>Title</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>Title</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetTitle(this MSBuildSettings toolSettings)
         {
@@ -861,7 +1204,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region Description
-        /// <summary><p><em>Sets <c>Description</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>Description</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetDescription(this MSBuildSettings toolSettings, string description)
         {
@@ -869,7 +1215,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["Description"] = description;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>Description</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>Description</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetDescription(this MSBuildSettings toolSettings)
         {
@@ -879,7 +1228,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region Copyright
-        /// <summary><p><em>Sets <c>Copyright</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>Copyright</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetCopyright(this MSBuildSettings toolSettings, string copyright)
         {
@@ -887,7 +1239,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["Copyright"] = copyright;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>Copyright</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>Copyright</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetCopyright(this MSBuildSettings toolSettings)
         {
@@ -897,7 +1252,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region PackageRequireLicenseAcceptance
-        /// <summary><p><em>Sets <c>PackageRequireLicenseAcceptance</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>PackageRequireLicenseAcceptance</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetPackageRequireLicenseAcceptance(this MSBuildSettings toolSettings, bool? packageRequireLicenseAcceptance)
         {
@@ -905,7 +1263,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = packageRequireLicenseAcceptance;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>PackageRequireLicenseAcceptance</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>PackageRequireLicenseAcceptance</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetPackageRequireLicenseAcceptance(this MSBuildSettings toolSettings)
         {
@@ -913,7 +1274,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal.Remove("PackageRequireLicenseAcceptance");
             return toolSettings;
         }
-        /// <summary><p><em>Enables <c>PackageRequireLicenseAcceptance</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Enables <c>PackageRequireLicenseAcceptance</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings EnablePackageRequireLicenseAcceptance(this MSBuildSettings toolSettings)
         {
@@ -921,7 +1285,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <c>PackageRequireLicenseAcceptance</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Disables <c>PackageRequireLicenseAcceptance</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings DisablePackageRequireLicenseAcceptance(this MSBuildSettings toolSettings)
         {
@@ -929,7 +1296,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <c>PackageRequireLicenseAcceptance</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <c>PackageRequireLicenseAcceptance</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings TogglePackageRequireLicenseAcceptance(this MSBuildSettings toolSettings)
         {
@@ -939,7 +1309,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region PackageLicenseUrl
-        /// <summary><p><em>Sets <c>PackageLicenseUrl</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>PackageLicenseUrl</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetPackageLicenseUrl(this MSBuildSettings toolSettings, string packageLicenseUrl)
         {
@@ -947,7 +1320,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["PackageLicenseUrl"] = packageLicenseUrl;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>PackageLicenseUrl</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>PackageLicenseUrl</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetPackageLicenseUrl(this MSBuildSettings toolSettings)
         {
@@ -957,7 +1333,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region PackageProjectUrl
-        /// <summary><p><em>Sets <c>PackageProjectUrl</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>PackageProjectUrl</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetPackageProjectUrl(this MSBuildSettings toolSettings, string packageProjectUrl)
         {
@@ -965,7 +1344,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["PackageProjectUrl"] = packageProjectUrl;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>PackageProjectUrl</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>PackageProjectUrl</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetPackageProjectUrl(this MSBuildSettings toolSettings)
         {
@@ -975,7 +1357,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region PackageIconUrl
-        /// <summary><p><em>Sets <c>PackageIconUrl</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>PackageIconUrl</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetPackageIconUrl(this MSBuildSettings toolSettings, string packageIconUrl)
         {
@@ -983,7 +1368,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["PackageIconUrl"] = packageIconUrl;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>PackageIconUrl</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>PackageIconUrl</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetPackageIconUrl(this MSBuildSettings toolSettings)
         {
@@ -993,7 +1381,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region PackageTags
-        /// <summary><p><em>Sets <c>PackageTags</c> in <see cref="MSBuildSettings.Properties"/> to a new collection.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>PackageTags</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetPackageTags(this MSBuildSettings toolSettings, params string[] packageTags)
         {
@@ -1001,7 +1392,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
             return toolSettings;
         }
-        /// <summary><p><em>Sets <c>PackageTags</c> in <see cref="MSBuildSettings.Properties"/> to a new collection.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>PackageTags</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetPackageTags(this MSBuildSettings toolSettings, IEnumerable<string> packageTags)
         {
@@ -1009,7 +1403,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <c>PackageTags</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <c>PackageTags</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings AddPackageTags(this MSBuildSettings toolSettings, params string[] packageTags)
         {
@@ -1017,7 +1414,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <c>PackageTags</c> in existing <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <c>PackageTags</c> in existing <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings AddPackageTags(this MSBuildSettings toolSettings, IEnumerable<string> packageTags)
         {
@@ -1025,7 +1425,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
             return toolSettings;
         }
-        /// <summary><p><em>Clears <c>PackageTags</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Clears <c>PackageTags</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ClearPackageTags(this MSBuildSettings toolSettings)
         {
@@ -1033,7 +1436,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal.Remove("PackageTags");
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <c>PackageTags</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <c>PackageTags</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings RemovePackageTags(this MSBuildSettings toolSettings, params string[] packageTags)
         {
@@ -1041,7 +1447,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <c>PackageTags</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <c>PackageTags</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings RemovePackageTags(this MSBuildSettings toolSettings, IEnumerable<string> packageTags)
         {
@@ -1051,7 +1460,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region PackageReleaseNotes
-        /// <summary><p><em>Sets <c>PackageReleaseNotes</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>PackageReleaseNotes</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetPackageReleaseNotes(this MSBuildSettings toolSettings, string packageReleaseNotes)
         {
@@ -1059,7 +1471,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["PackageReleaseNotes"] = packageReleaseNotes;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>PackageReleaseNotes</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>PackageReleaseNotes</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetPackageReleaseNotes(this MSBuildSettings toolSettings)
         {
@@ -1069,7 +1484,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region RepositoryUrl
-        /// <summary><p><em>Sets <c>RepositoryUrl</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>RepositoryUrl</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetRepositoryUrl(this MSBuildSettings toolSettings, string repositoryUrl)
         {
@@ -1077,7 +1495,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["RepositoryUrl"] = repositoryUrl;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>RepositoryUrl</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>RepositoryUrl</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetRepositoryUrl(this MSBuildSettings toolSettings)
         {
@@ -1087,7 +1508,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region RepositoryType
-        /// <summary><p><em>Sets <c>RepositoryType</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>RepositoryType</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetRepositoryType(this MSBuildSettings toolSettings, string repositoryType)
         {
@@ -1095,7 +1519,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["RepositoryType"] = repositoryType;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>RepositoryType</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>RepositoryType</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetRepositoryType(this MSBuildSettings toolSettings)
         {
@@ -1105,7 +1532,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region RestoreSources
-        /// <summary><p><em>Sets <c>RestoreSources</c> in <see cref="MSBuildSettings.Properties"/> to a new collection.</em></p><p>List of package sources.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>RestoreSources</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
+        ///   <p>List of package sources.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetRestoreSources(this MSBuildSettings toolSettings, params string[] restoreSources)
         {
@@ -1113,7 +1543,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "RestoreSources", restoreSources, ';');
             return toolSettings;
         }
-        /// <summary><p><em>Sets <c>RestoreSources</c> in <see cref="MSBuildSettings.Properties"/> to a new collection.</em></p><p>List of package sources.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>RestoreSources</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
+        ///   <p>List of package sources.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetRestoreSources(this MSBuildSettings toolSettings, IEnumerable<string> restoreSources)
         {
@@ -1121,7 +1554,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "RestoreSources", restoreSources, ';');
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <c>RestoreSources</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>List of package sources.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <c>RestoreSources</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>List of package sources.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings AddRestoreSources(this MSBuildSettings toolSettings, params string[] restoreSources)
         {
@@ -1129,7 +1565,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "RestoreSources", restoreSources, ';');
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <c>RestoreSources</c> in existing <see cref="MSBuildSettings.Properties"/>.</em></p><p>List of package sources.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <c>RestoreSources</c> in existing <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>List of package sources.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings AddRestoreSources(this MSBuildSettings toolSettings, IEnumerable<string> restoreSources)
         {
@@ -1137,7 +1576,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "RestoreSources", restoreSources, ';');
             return toolSettings;
         }
-        /// <summary><p><em>Clears <c>RestoreSources</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>List of package sources.</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <c>RestoreSources</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>List of package sources.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ClearRestoreSources(this MSBuildSettings toolSettings)
         {
@@ -1145,7 +1587,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal.Remove("RestoreSources");
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <c>RestoreSources</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>List of package sources.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <c>RestoreSources</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>List of package sources.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings RemoveRestoreSources(this MSBuildSettings toolSettings, params string[] restoreSources)
         {
@@ -1153,7 +1598,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "RestoreSources", restoreSources, ';');
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <c>RestoreSources</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>List of package sources.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <c>RestoreSources</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>List of package sources.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings RemoveRestoreSources(this MSBuildSettings toolSettings, IEnumerable<string> restoreSources)
         {
@@ -1163,7 +1611,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region RestorePackagesPath
-        /// <summary><p><em>Sets <c>RestorePackagesPath</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>User packages folder path.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>RestorePackagesPath</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>User packages folder path.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetRestorePackagesPath(this MSBuildSettings toolSettings, string restorePackagesPath)
         {
@@ -1171,7 +1622,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["RestorePackagesPath"] = restorePackagesPath;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>RestorePackagesPath</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>User packages folder path.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>RestorePackagesPath</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>User packages folder path.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetRestorePackagesPath(this MSBuildSettings toolSettings)
         {
@@ -1181,7 +1635,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region RestoreDisableParallel
-        /// <summary><p><em>Sets <c>RestoreDisableParallel</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Limit downloads to one at a time.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>RestoreDisableParallel</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Limit downloads to one at a time.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetRestoreDisableParallel(this MSBuildSettings toolSettings, bool? restoreDisableParallel)
         {
@@ -1189,7 +1646,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["RestoreDisableParallel"] = restoreDisableParallel;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>RestoreDisableParallel</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Limit downloads to one at a time.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>RestoreDisableParallel</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Limit downloads to one at a time.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetRestoreDisableParallel(this MSBuildSettings toolSettings)
         {
@@ -1197,7 +1657,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal.Remove("RestoreDisableParallel");
             return toolSettings;
         }
-        /// <summary><p><em>Enables <c>RestoreDisableParallel</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Enables <c>RestoreDisableParallel</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings EnableRestoreDisableParallel(this MSBuildSettings toolSettings)
         {
@@ -1205,7 +1668,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["RestoreDisableParallel"] = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <c>RestoreDisableParallel</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Disables <c>RestoreDisableParallel</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings DisableRestoreDisableParallel(this MSBuildSettings toolSettings)
         {
@@ -1213,7 +1679,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["RestoreDisableParallel"] = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <c>RestoreDisableParallel</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <c>RestoreDisableParallel</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ToggleRestoreDisableParallel(this MSBuildSettings toolSettings)
         {
@@ -1223,7 +1692,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region RestoreConfigFile
-        /// <summary><p><em>Sets <c>RestoreConfigFile</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Path to a Nuget.Config file to apply.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>RestoreConfigFile</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Path to a Nuget.Config file to apply.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetRestoreConfigFile(this MSBuildSettings toolSettings, string restoreConfigFile)
         {
@@ -1231,7 +1703,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["RestoreConfigFile"] = restoreConfigFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>RestoreConfigFile</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Path to a Nuget.Config file to apply.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>RestoreConfigFile</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Path to a Nuget.Config file to apply.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetRestoreConfigFile(this MSBuildSettings toolSettings)
         {
@@ -1241,7 +1716,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region RestoreNoCache
-        /// <summary><p><em>Sets <c>RestoreNoCache</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>If true, avoids using the web cache.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>RestoreNoCache</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>If true, avoids using the web cache.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetRestoreNoCache(this MSBuildSettings toolSettings, bool? restoreNoCache)
         {
@@ -1249,7 +1727,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["RestoreNoCache"] = restoreNoCache;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>RestoreNoCache</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>If true, avoids using the web cache.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>RestoreNoCache</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>If true, avoids using the web cache.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetRestoreNoCache(this MSBuildSettings toolSettings)
         {
@@ -1257,7 +1738,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal.Remove("RestoreNoCache");
             return toolSettings;
         }
-        /// <summary><p><em>Enables <c>RestoreNoCache</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Enables <c>RestoreNoCache</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings EnableRestoreNoCache(this MSBuildSettings toolSettings)
         {
@@ -1265,7 +1749,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["RestoreNoCache"] = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <c>RestoreNoCache</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Disables <c>RestoreNoCache</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings DisableRestoreNoCache(this MSBuildSettings toolSettings)
         {
@@ -1273,7 +1760,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["RestoreNoCache"] = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <c>RestoreNoCache</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <c>RestoreNoCache</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ToggleRestoreNoCache(this MSBuildSettings toolSettings)
         {
@@ -1283,7 +1773,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region RestoreIgnoreFailedSources
-        /// <summary><p><em>Sets <c>RestoreIgnoreFailedSources</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>If true, ignores failing or missing package sources.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>RestoreIgnoreFailedSources</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>If true, ignores failing or missing package sources.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetRestoreIgnoreFailedSources(this MSBuildSettings toolSettings, bool? restoreIgnoreFailedSources)
         {
@@ -1291,7 +1784,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["RestoreIgnoreFailedSources"] = restoreIgnoreFailedSources;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>RestoreIgnoreFailedSources</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>If true, ignores failing or missing package sources.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>RestoreIgnoreFailedSources</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>If true, ignores failing or missing package sources.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetRestoreIgnoreFailedSources(this MSBuildSettings toolSettings)
         {
@@ -1299,7 +1795,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal.Remove("RestoreIgnoreFailedSources");
             return toolSettings;
         }
-        /// <summary><p><em>Enables <c>RestoreIgnoreFailedSources</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Enables <c>RestoreIgnoreFailedSources</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings EnableRestoreIgnoreFailedSources(this MSBuildSettings toolSettings)
         {
@@ -1307,7 +1806,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["RestoreIgnoreFailedSources"] = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <c>RestoreIgnoreFailedSources</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Disables <c>RestoreIgnoreFailedSources</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings DisableRestoreIgnoreFailedSources(this MSBuildSettings toolSettings)
         {
@@ -1315,7 +1817,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["RestoreIgnoreFailedSources"] = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <c>RestoreIgnoreFailedSources</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <c>RestoreIgnoreFailedSources</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ToggleRestoreIgnoreFailedSources(this MSBuildSettings toolSettings)
         {
@@ -1325,7 +1830,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region RestoreTaskAssemblyFile
-        /// <summary><p><em>Sets <c>RestoreTaskAssemblyFile</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Path to <c>NuGet.Build.Tasks.dll</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>RestoreTaskAssemblyFile</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Path to <c>NuGet.Build.Tasks.dll</c>.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetRestoreTaskAssemblyFile(this MSBuildSettings toolSettings, string restoreTaskAssemblyFile)
         {
@@ -1333,7 +1841,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["RestoreTaskAssemblyFile"] = restoreTaskAssemblyFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>RestoreTaskAssemblyFile</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Path to <c>NuGet.Build.Tasks.dll</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>RestoreTaskAssemblyFile</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Path to <c>NuGet.Build.Tasks.dll</c>.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetRestoreTaskAssemblyFile(this MSBuildSettings toolSettings)
         {
@@ -1343,7 +1854,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region RestoreGraphProjectInput
-        /// <summary><p><em>Sets <c>RestoreGraphProjectInput</c> in <see cref="MSBuildSettings.Properties"/> to a new collection.</em></p><p>Semicolon-delimited list of projects to restore, which should contain absolute paths.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>RestoreGraphProjectInput</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
+        ///   <p>Semicolon-delimited list of projects to restore, which should contain absolute paths.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetRestoreGraphProjectInputs(this MSBuildSettings toolSettings, params string[] restoreGraphProjectInput)
         {
@@ -1351,7 +1865,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "RestoreGraphProjectInput", restoreGraphProjectInput, ';');
             return toolSettings;
         }
-        /// <summary><p><em>Sets <c>RestoreGraphProjectInput</c> in <see cref="MSBuildSettings.Properties"/> to a new collection.</em></p><p>Semicolon-delimited list of projects to restore, which should contain absolute paths.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>RestoreGraphProjectInput</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
+        ///   <p>Semicolon-delimited list of projects to restore, which should contain absolute paths.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetRestoreGraphProjectInputs(this MSBuildSettings toolSettings, IEnumerable<string> restoreGraphProjectInput)
         {
@@ -1359,7 +1876,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "RestoreGraphProjectInput", restoreGraphProjectInput, ';');
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <c>RestoreGraphProjectInput</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Semicolon-delimited list of projects to restore, which should contain absolute paths.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <c>RestoreGraphProjectInput</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Semicolon-delimited list of projects to restore, which should contain absolute paths.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings AddRestoreGraphProjectInputs(this MSBuildSettings toolSettings, params string[] restoreGraphProjectInput)
         {
@@ -1367,7 +1887,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "RestoreGraphProjectInput", restoreGraphProjectInput, ';');
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <c>RestoreGraphProjectInput</c> in existing <see cref="MSBuildSettings.Properties"/>.</em></p><p>Semicolon-delimited list of projects to restore, which should contain absolute paths.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <c>RestoreGraphProjectInput</c> in existing <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Semicolon-delimited list of projects to restore, which should contain absolute paths.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings AddRestoreGraphProjectInputs(this MSBuildSettings toolSettings, IEnumerable<string> restoreGraphProjectInput)
         {
@@ -1375,7 +1898,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "RestoreGraphProjectInput", restoreGraphProjectInput, ';');
             return toolSettings;
         }
-        /// <summary><p><em>Clears <c>RestoreGraphProjectInput</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Semicolon-delimited list of projects to restore, which should contain absolute paths.</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <c>RestoreGraphProjectInput</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Semicolon-delimited list of projects to restore, which should contain absolute paths.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ClearRestoreGraphProjectInputs(this MSBuildSettings toolSettings)
         {
@@ -1383,7 +1909,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal.Remove("RestoreGraphProjectInput");
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <c>RestoreGraphProjectInput</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Semicolon-delimited list of projects to restore, which should contain absolute paths.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <c>RestoreGraphProjectInput</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Semicolon-delimited list of projects to restore, which should contain absolute paths.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings RemoveRestoreGraphProjectInputs(this MSBuildSettings toolSettings, params string[] restoreGraphProjectInput)
         {
@@ -1391,7 +1920,10 @@ namespace Nuke.Common.Tools.MSBuild
             ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "RestoreGraphProjectInput", restoreGraphProjectInput, ';');
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <c>RestoreGraphProjectInput</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Semicolon-delimited list of projects to restore, which should contain absolute paths.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <c>RestoreGraphProjectInput</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Semicolon-delimited list of projects to restore, which should contain absolute paths.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings RemoveRestoreGraphProjectInputs(this MSBuildSettings toolSettings, IEnumerable<string> restoreGraphProjectInput)
         {
@@ -1401,7 +1933,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region RestoreOutputPath
-        /// <summary><p><em>Sets <c>RestoreOutputPath</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Output folder, defaulting to the obj folder.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>RestoreOutputPath</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Output folder, defaulting to the obj folder.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetRestoreOutputPath(this MSBuildSettings toolSettings, string restoreOutputPath)
         {
@@ -1409,7 +1944,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["RestoreOutputPath"] = restoreOutputPath;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>RestoreOutputPath</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Output folder, defaulting to the obj folder.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>RestoreOutputPath</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Output folder, defaulting to the obj folder.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetRestoreOutputPath(this MSBuildSettings toolSettings)
         {
@@ -1419,7 +1957,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region SymbolPackageFormat
-        /// <summary><p><em>Sets <c>SymbolPackageFormat</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <c>SymbolPackageFormat</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Format for packaging symbols.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetSymbolPackageFormat(this MSBuildSettings toolSettings, MSBuildSymbolPackageFormat symbolPackageFormat)
         {
@@ -1427,7 +1968,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <c>SymbolPackageFormat</c> in <see cref="MSBuildSettings.Properties"/>.</em></p><p>Format for packaging symbols.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <c>SymbolPackageFormat</c> in <see cref="MSBuildSettings.Properties"/></em></p>
+        ///   <p>Format for packaging symbols.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetSymbolPackageFormat(this MSBuildSettings toolSettings)
         {
@@ -1438,7 +1982,10 @@ namespace Nuke.Common.Tools.MSBuild
         #endregion
         #endregion
         #region Restore
-        /// <summary><p><em>Sets <see cref="MSBuildSettings.Restore"/>.</em></p><p>Runs the <c>Restore</c> target prior to building the actual targets.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSBuildSettings.Restore"/></em></p>
+        ///   <p>Runs the <c>Restore</c> target prior to building the actual targets.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetRestore(this MSBuildSettings toolSettings, bool? restore)
         {
@@ -1446,7 +1993,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.Restore = restore;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="MSBuildSettings.Restore"/>.</em></p><p>Runs the <c>Restore</c> target prior to building the actual targets.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="MSBuildSettings.Restore"/></em></p>
+        ///   <p>Runs the <c>Restore</c> target prior to building the actual targets.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetRestore(this MSBuildSettings toolSettings)
         {
@@ -1454,7 +2004,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.Restore = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="MSBuildSettings.Restore"/>.</em></p><p>Runs the <c>Restore</c> target prior to building the actual targets.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="MSBuildSettings.Restore"/></em></p>
+        ///   <p>Runs the <c>Restore</c> target prior to building the actual targets.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings EnableRestore(this MSBuildSettings toolSettings)
         {
@@ -1462,7 +2015,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.Restore = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="MSBuildSettings.Restore"/>.</em></p><p>Runs the <c>Restore</c> target prior to building the actual targets.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="MSBuildSettings.Restore"/></em></p>
+        ///   <p>Runs the <c>Restore</c> target prior to building the actual targets.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings DisableRestore(this MSBuildSettings toolSettings)
         {
@@ -1470,7 +2026,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.Restore = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="MSBuildSettings.Restore"/>.</em></p><p>Runs the <c>Restore</c> target prior to building the actual targets.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="MSBuildSettings.Restore"/></em></p>
+        ///   <p>Runs the <c>Restore</c> target prior to building the actual targets.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ToggleRestore(this MSBuildSettings toolSettings)
         {
@@ -1480,7 +2039,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region Targets
-        /// <summary><p><em>Sets <see cref="MSBuildSettings.Targets"/> to a new list.</em></p><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSBuildSettings.Targets"/> to a new list</em></p>
+        ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetTargets(this MSBuildSettings toolSettings, params string[] targets)
         {
@@ -1488,7 +2050,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.TargetsInternal = targets.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="MSBuildSettings.Targets"/> to a new list.</em></p><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSBuildSettings.Targets"/> to a new list</em></p>
+        ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetTargets(this MSBuildSettings toolSettings, IEnumerable<string> targets)
         {
@@ -1496,7 +2061,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.TargetsInternal = targets.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="MSBuildSettings.Targets"/>.</em></p><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="MSBuildSettings.Targets"/></em></p>
+        ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings AddTargets(this MSBuildSettings toolSettings, params string[] targets)
         {
@@ -1504,7 +2072,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.TargetsInternal.AddRange(targets);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="MSBuildSettings.Targets"/>.</em></p><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="MSBuildSettings.Targets"/></em></p>
+        ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings AddTargets(this MSBuildSettings toolSettings, IEnumerable<string> targets)
         {
@@ -1512,7 +2083,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.TargetsInternal.AddRange(targets);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="MSBuildSettings.Targets"/>.</em></p><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="MSBuildSettings.Targets"/></em></p>
+        ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ClearTargets(this MSBuildSettings toolSettings)
         {
@@ -1520,7 +2094,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.TargetsInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="MSBuildSettings.Targets"/>.</em></p><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="MSBuildSettings.Targets"/></em></p>
+        ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings RemoveTargets(this MSBuildSettings toolSettings, params string[] targets)
         {
@@ -1529,7 +2106,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.TargetsInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="MSBuildSettings.Targets"/>.</em></p><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="MSBuildSettings.Targets"/></em></p>
+        ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings RemoveTargets(this MSBuildSettings toolSettings, IEnumerable<string> targets)
         {
@@ -1540,7 +2120,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region ToolsVersion
-        /// <summary><p><em>Sets <see cref="MSBuildSettings.ToolsVersion"/>.</em></p><p>Specifies the version of the Toolset to use to build the project, as the following example shows: <c>/toolsversion:3.5</c></p><p>By using this switch, you can build a project and specify a version that differs from the version that's specified in the <a href="https://msdn.microsoft.com/en-us/library/bcxfsh87.aspx">Project Element (MSBuild)</a>. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb383985.aspx">Overriding ToolsVersion Settings</a>.</p><p>For MSBuild 4.5, you can specify the following values for version: 2.0, 3.5, and 4.0. If you specify 4.0, the VisualStudioVersion build property specifies which sub-toolset to use. For more information, see the Sub-toolsets section of <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>.</p><p>A Toolset consists of tasks, targets, and tools that are used to build an application. The tools include compilers such as csc.exe and vbc.exe. For more information about Toolsets, see <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>, <a href="https://msdn.microsoft.com/en-us/library/bb397428.aspx">Standard and Custom Toolset Configurations</a>, and <a href="https://msdn.microsoft.com/en-us/library/hh264223.aspx">Multitargeting</a>. Note: The toolset version isn't the same as the target framework, which is the version of the .NET Framework on which a project is built to run. For more information, see <a href="https://msdn.microsoft.com/en-us/library/hh264221.aspx">Target Framework and Target Platform</a>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSBuildSettings.ToolsVersion"/></em></p>
+        ///   <p>Specifies the version of the Toolset to use to build the project, as the following example shows: <c>/toolsversion:3.5</c></p><p>By using this switch, you can build a project and specify a version that differs from the version that's specified in the <a href="https://msdn.microsoft.com/en-us/library/bcxfsh87.aspx">Project Element (MSBuild)</a>. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb383985.aspx">Overriding ToolsVersion Settings</a>.</p><p>For MSBuild 4.5, you can specify the following values for version: 2.0, 3.5, and 4.0. If you specify 4.0, the VisualStudioVersion build property specifies which sub-toolset to use. For more information, see the Sub-toolsets section of <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>.</p><p>A Toolset consists of tasks, targets, and tools that are used to build an application. The tools include compilers such as csc.exe and vbc.exe. For more information about Toolsets, see <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>, <a href="https://msdn.microsoft.com/en-us/library/bb397428.aspx">Standard and Custom Toolset Configurations</a>, and <a href="https://msdn.microsoft.com/en-us/library/hh264223.aspx">Multitargeting</a>. Note: The toolset version isn't the same as the target framework, which is the version of the .NET Framework on which a project is built to run. For more information, see <a href="https://msdn.microsoft.com/en-us/library/hh264221.aspx">Target Framework and Target Platform</a>.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetToolsVersion(this MSBuildSettings toolSettings, MSBuildToolsVersion toolsVersion)
         {
@@ -1548,7 +2131,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.ToolsVersion = toolsVersion;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="MSBuildSettings.ToolsVersion"/>.</em></p><p>Specifies the version of the Toolset to use to build the project, as the following example shows: <c>/toolsversion:3.5</c></p><p>By using this switch, you can build a project and specify a version that differs from the version that's specified in the <a href="https://msdn.microsoft.com/en-us/library/bcxfsh87.aspx">Project Element (MSBuild)</a>. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb383985.aspx">Overriding ToolsVersion Settings</a>.</p><p>For MSBuild 4.5, you can specify the following values for version: 2.0, 3.5, and 4.0. If you specify 4.0, the VisualStudioVersion build property specifies which sub-toolset to use. For more information, see the Sub-toolsets section of <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>.</p><p>A Toolset consists of tasks, targets, and tools that are used to build an application. The tools include compilers such as csc.exe and vbc.exe. For more information about Toolsets, see <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>, <a href="https://msdn.microsoft.com/en-us/library/bb397428.aspx">Standard and Custom Toolset Configurations</a>, and <a href="https://msdn.microsoft.com/en-us/library/hh264223.aspx">Multitargeting</a>. Note: The toolset version isn't the same as the target framework, which is the version of the .NET Framework on which a project is built to run. For more information, see <a href="https://msdn.microsoft.com/en-us/library/hh264221.aspx">Target Framework and Target Platform</a>.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="MSBuildSettings.ToolsVersion"/></em></p>
+        ///   <p>Specifies the version of the Toolset to use to build the project, as the following example shows: <c>/toolsversion:3.5</c></p><p>By using this switch, you can build a project and specify a version that differs from the version that's specified in the <a href="https://msdn.microsoft.com/en-us/library/bcxfsh87.aspx">Project Element (MSBuild)</a>. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb383985.aspx">Overriding ToolsVersion Settings</a>.</p><p>For MSBuild 4.5, you can specify the following values for version: 2.0, 3.5, and 4.0. If you specify 4.0, the VisualStudioVersion build property specifies which sub-toolset to use. For more information, see the Sub-toolsets section of <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>.</p><p>A Toolset consists of tasks, targets, and tools that are used to build an application. The tools include compilers such as csc.exe and vbc.exe. For more information about Toolsets, see <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>, <a href="https://msdn.microsoft.com/en-us/library/bb397428.aspx">Standard and Custom Toolset Configurations</a>, and <a href="https://msdn.microsoft.com/en-us/library/hh264223.aspx">Multitargeting</a>. Note: The toolset version isn't the same as the target framework, which is the version of the .NET Framework on which a project is built to run. For more information, see <a href="https://msdn.microsoft.com/en-us/library/hh264221.aspx">Target Framework and Target Platform</a>.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetToolsVersion(this MSBuildSettings toolSettings)
         {
@@ -1558,7 +2144,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region MSBuildVersion
-        /// <summary><p><em>Sets <see cref="MSBuildSettings.MSBuildVersion"/>.</em></p><p>Specifies the version of MSBuild for building.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSBuildSettings.MSBuildVersion"/></em></p>
+        ///   <p>Specifies the version of MSBuild for building.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetMSBuildVersion(this MSBuildSettings toolSettings, MSBuildVersion? msbuildVersion)
         {
@@ -1566,7 +2155,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.MSBuildVersion = msbuildVersion;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="MSBuildSettings.MSBuildVersion"/>.</em></p><p>Specifies the version of MSBuild for building.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="MSBuildSettings.MSBuildVersion"/></em></p>
+        ///   <p>Specifies the version of MSBuild for building.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetMSBuildVersion(this MSBuildSettings toolSettings)
         {
@@ -1576,7 +2168,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region Verbosity
-        /// <summary><p><em>Sets <see cref="MSBuildSettings.Verbosity"/>.</em></p><p>Specifies the amount of information to display in the build log. Each logger displays events based on the verbosity level that you set for that logger.</p><p>You can specify the following verbosity levels: <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p><p>The following setting is an example: <c>/verbosity:quiet</c></p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSBuildSettings.Verbosity"/></em></p>
+        ///   <p>Specifies the amount of information to display in the build log. Each logger displays events based on the verbosity level that you set for that logger.</p><p>You can specify the following verbosity levels: <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p><p>The following setting is an example: <c>/verbosity:quiet</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetVerbosity(this MSBuildSettings toolSettings, MSBuildVerbosity verbosity)
         {
@@ -1584,7 +2179,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.Verbosity = verbosity;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="MSBuildSettings.Verbosity"/>.</em></p><p>Specifies the amount of information to display in the build log. Each logger displays events based on the verbosity level that you set for that logger.</p><p>You can specify the following verbosity levels: <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p><p>The following setting is an example: <c>/verbosity:quiet</c></p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="MSBuildSettings.Verbosity"/></em></p>
+        ///   <p>Specifies the amount of information to display in the build log. Each logger displays events based on the verbosity level that you set for that logger.</p><p>You can specify the following verbosity levels: <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p><p>The following setting is an example: <c>/verbosity:quiet</c></p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetVerbosity(this MSBuildSettings toolSettings)
         {
@@ -1594,7 +2192,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region MSBuildPlatform
-        /// <summary><p><em>Sets <see cref="MSBuildSettings.MSBuildPlatform"/>.</em></p><p>Specifies the platform to use when building.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSBuildSettings.MSBuildPlatform"/></em></p>
+        ///   <p>Specifies the platform to use when building.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetMSBuildPlatform(this MSBuildSettings toolSettings, MSBuildPlatform? msbuildPlatform)
         {
@@ -1602,7 +2203,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.MSBuildPlatform = msbuildPlatform;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="MSBuildSettings.MSBuildPlatform"/>.</em></p><p>Specifies the platform to use when building.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="MSBuildSettings.MSBuildPlatform"/></em></p>
+        ///   <p>Specifies the platform to use when building.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetMSBuildPlatform(this MSBuildSettings toolSettings)
         {
@@ -1612,7 +2216,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region Loggers
-        /// <summary><p><em>Sets <see cref="MSBuildSettings.Loggers"/> to a new list.</em></p><p>Specifies the loggers to use to log events from MSBuild.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSBuildSettings.Loggers"/> to a new list</em></p>
+        ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetLoggers(this MSBuildSettings toolSettings, params string[] loggers)
         {
@@ -1620,7 +2227,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.LoggersInternal = loggers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Sets <see cref="MSBuildSettings.Loggers"/> to a new list.</em></p><p>Specifies the loggers to use to log events from MSBuild.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSBuildSettings.Loggers"/> to a new list</em></p>
+        ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetLoggers(this MSBuildSettings toolSettings, IEnumerable<string> loggers)
         {
@@ -1628,7 +2238,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.LoggersInternal = loggers.ToList();
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="MSBuildSettings.Loggers"/>.</em></p><p>Specifies the loggers to use to log events from MSBuild.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="MSBuildSettings.Loggers"/></em></p>
+        ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings AddLoggers(this MSBuildSettings toolSettings, params string[] loggers)
         {
@@ -1636,7 +2249,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.LoggersInternal.AddRange(loggers);
             return toolSettings;
         }
-        /// <summary><p><em>Adds values to <see cref="MSBuildSettings.Loggers"/>.</em></p><p>Specifies the loggers to use to log events from MSBuild.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="MSBuildSettings.Loggers"/></em></p>
+        ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings AddLoggers(this MSBuildSettings toolSettings, IEnumerable<string> loggers)
         {
@@ -1644,7 +2260,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.LoggersInternal.AddRange(loggers);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="MSBuildSettings.Loggers"/>.</em></p><p>Specifies the loggers to use to log events from MSBuild.</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="MSBuildSettings.Loggers"/></em></p>
+        ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ClearLoggers(this MSBuildSettings toolSettings)
         {
@@ -1652,7 +2271,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.LoggersInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="MSBuildSettings.Loggers"/>.</em></p><p>Specifies the loggers to use to log events from MSBuild.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="MSBuildSettings.Loggers"/></em></p>
+        ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings RemoveLoggers(this MSBuildSettings toolSettings, params string[] loggers)
         {
@@ -1661,7 +2283,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.LoggersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
-        /// <summary><p><em>Removes values from <see cref="MSBuildSettings.Loggers"/>.</em></p><p>Specifies the loggers to use to log events from MSBuild.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="MSBuildSettings.Loggers"/></em></p>
+        ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings RemoveLoggers(this MSBuildSettings toolSettings, IEnumerable<string> loggers)
         {
@@ -1672,7 +2297,10 @@ namespace Nuke.Common.Tools.MSBuild
         }
         #endregion
         #region NoConsoleLogger
-        /// <summary><p><em>Sets <see cref="MSBuildSettings.NoConsoleLogger"/>.</em></p><p>Disable the default console logger, and don't log events to the console.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="MSBuildSettings.NoConsoleLogger"/></em></p>
+        ///   <p>Disable the default console logger, and don't log events to the console.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings SetNoConsoleLogger(this MSBuildSettings toolSettings, bool? noConsoleLogger)
         {
@@ -1680,7 +2308,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.NoConsoleLogger = noConsoleLogger;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="MSBuildSettings.NoConsoleLogger"/>.</em></p><p>Disable the default console logger, and don't log events to the console.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="MSBuildSettings.NoConsoleLogger"/></em></p>
+        ///   <p>Disable the default console logger, and don't log events to the console.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ResetNoConsoleLogger(this MSBuildSettings toolSettings)
         {
@@ -1688,7 +2319,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.NoConsoleLogger = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="MSBuildSettings.NoConsoleLogger"/>.</em></p><p>Disable the default console logger, and don't log events to the console.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="MSBuildSettings.NoConsoleLogger"/></em></p>
+        ///   <p>Disable the default console logger, and don't log events to the console.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings EnableNoConsoleLogger(this MSBuildSettings toolSettings)
         {
@@ -1696,7 +2330,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.NoConsoleLogger = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="MSBuildSettings.NoConsoleLogger"/>.</em></p><p>Disable the default console logger, and don't log events to the console.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="MSBuildSettings.NoConsoleLogger"/></em></p>
+        ///   <p>Disable the default console logger, and don't log events to the console.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings DisableNoConsoleLogger(this MSBuildSettings toolSettings)
         {
@@ -1704,7 +2341,10 @@ namespace Nuke.Common.Tools.MSBuild
             toolSettings.NoConsoleLogger = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="MSBuildSettings.NoConsoleLogger"/>.</em></p><p>Disable the default console logger, and don't log events to the console.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="MSBuildSettings.NoConsoleLogger"/></em></p>
+        ///   <p>Disable the default console logger, and don't log events to the console.</p>
+        /// </summary>
         [Pure]
         public static MSBuildSettings ToggleNoConsoleLogger(this MSBuildSettings toolSettings)
         {
@@ -1716,7 +2356,9 @@ namespace Nuke.Common.Tools.MSBuild
     }
     #endregion
     #region MSBuildToolsVersion
-    /// <summary><p>Used within <see cref="MSBuildTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="MSBuildTasks"/>.
+    /// </summary>
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
@@ -1732,7 +2374,9 @@ namespace Nuke.Common.Tools.MSBuild
     }
     #endregion
     #region MSBuildVerbosity
-    /// <summary><p>Used within <see cref="MSBuildTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="MSBuildTasks"/>.
+    /// </summary>
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
@@ -1747,7 +2391,9 @@ namespace Nuke.Common.Tools.MSBuild
     }
     #endregion
     #region MSBuildTargetPlatform
-    /// <summary><p>Used within <see cref="MSBuildTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="MSBuildTasks"/>.
+    /// </summary>
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
@@ -1762,7 +2408,9 @@ namespace Nuke.Common.Tools.MSBuild
     }
     #endregion
     #region MSBuildSymbolPackageFormat
-    /// <summary><p>Used within <see cref="MSBuildTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="MSBuildTasks"/>.
+    /// </summary>
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]

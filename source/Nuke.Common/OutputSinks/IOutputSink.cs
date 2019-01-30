@@ -9,13 +9,13 @@ namespace Nuke.Common.OutputSinks
 {
     public interface IOutputSink
     {
-        void Write(string text);
         IDisposable WriteBlock(string text);
 
-        void Trace(string text);
-        void Info(string text);
-        void Warn(string text, string details = null);
-        void Error(string text, string details = null);
-        void Success(string text);
+        void WriteNormal(string text);
+        void WriteTrace(string text);
+        void WriteInformation(string text);
+        void WriteWarning(string text, string details = null);
+        void WriteError(string text, string details = null);
+        void WriteSuccess(string text);
     }
 }

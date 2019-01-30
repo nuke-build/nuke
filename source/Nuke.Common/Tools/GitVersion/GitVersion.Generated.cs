@@ -23,18 +23,26 @@ namespace Nuke.Common.Tools.GitVersion
     [ExcludeFromCodeCoverage]
     public static partial class GitVersionTasks
     {
-        /// <summary><p>Path to the GitVersion executable.</p></summary>
+        /// <summary>
+        ///   Path to the GitVersion executable.
+        /// </summary>
         public static string GitVersionPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("GITVERSION_EXE") ??
             GetToolPath();
-        /// <summary><p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p></summary>
+        public static Action<OutputType, string> GitVersionLogger { get; set; } = ProcessManager.DefaultLogger;
+        /// <summary>
+        ///   GitVersion is a tool to help you achieve Semantic Versioning on your project.
+        /// </summary>
         public static IReadOnlyCollection<Output> GitVersion(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(GitVersionPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, null, outputFilter);
+            var process = ProcessTasks.StartProcess(GitVersionPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, GitVersionLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
-        /// <summary><p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p><p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p>
+        ///   <p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p>
+        /// </summary>
         public static (GitVersion Result, IReadOnlyCollection<Output> Output) GitVersion(GitVersionSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new GitVersionSettings();
@@ -42,76 +50,191 @@ namespace Nuke.Common.Tools.GitVersion
             process.AssertZeroExitCode();
             return (GetResult(process, toolSettings), process.Output);
         }
-        /// <summary><p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p><p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p></summary>
+        /// <summary>
+        ///   <p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p>
+        ///   <p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;targetPath&gt;</c> via <see cref="GitVersionSettings.TargetPath"/></li>
+        ///     <li><c>/b</c> via <see cref="GitVersionSettings.Branch"/></li>
+        ///     <li><c>/c</c> via <see cref="GitVersionSettings.Commit"/></li>
+        ///     <li><c>/diag</c> via <see cref="GitVersionSettings.Diagnostics"/></li>
+        ///     <li><c>/dynamicRepoLocation</c> via <see cref="GitVersionSettings.DynamicRepositoryLocation"/></li>
+        ///     <li><c>/ensureassemblyinfo</c> via <see cref="GitVersionSettings.EnsureAssemblyInfo"/></li>
+        ///     <li><c>/exec</c> via <see cref="GitVersionSettings.Executable"/></li>
+        ///     <li><c>/execargs</c> via <see cref="GitVersionSettings.ExecutableArguments"/></li>
+        ///     <li><c>/l</c> via <see cref="GitVersionSettings.LogFile"/></li>
+        ///     <li><c>/nocache</c> via <see cref="GitVersionSettings.NoCache"/></li>
+        ///     <li><c>/nofetch</c> via <see cref="GitVersionSettings.NoFetch"/></li>
+        ///     <li><c>/output</c> via <see cref="GitVersionSettings.Output"/></li>
+        ///     <li><c>/overrideconfig</c> via <see cref="GitVersionSettings.ConfigurationOverride"/></li>
+        ///     <li><c>/p</c> via <see cref="GitVersionSettings.Password"/></li>
+        ///     <li><c>/proj</c> via <see cref="GitVersionSettings.MSBuildProject"/></li>
+        ///     <li><c>/projargs</c> via <see cref="GitVersionSettings.MSBuildProjectArguments"/></li>
+        ///     <li><c>/showconfig</c> via <see cref="GitVersionSettings.ShowConfig"/></li>
+        ///     <li><c>/showvariable</c> via <see cref="GitVersionSettings.ShowVariable"/></li>
+        ///     <li><c>/u</c> via <see cref="GitVersionSettings.Username"/></li>
+        ///     <li><c>/updateassemblyinfo</c> via <see cref="GitVersionSettings.UpdateAssemblyInfo"/></li>
+        ///     <li><c>/updateassemblyinfofilename</c> via <see cref="GitVersionSettings.UpdateAssemblyInfoFileName"/></li>
+        ///     <li><c>/url</c> via <see cref="GitVersionSettings.Url"/></li>
+        ///     <li><c>/verbosity</c> via <see cref="GitVersionSettings.Verbosity"/></li>
+        ///     <li><c>/version</c> via <see cref="GitVersionSettings.Version"/></li>
+        ///   </ul>
+        /// </remarks>
         public static (GitVersion Result, IReadOnlyCollection<Output> Output) GitVersion(Configure<GitVersionSettings> configurator)
         {
             return GitVersion(configurator(new GitVersionSettings()));
         }
-        /// <summary><p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p><p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p></summary>
-        public static IEnumerable<(GitVersionSettings Settings, GitVersion Result, IReadOnlyCollection<Output> Output)> GitVersion(CombinatorialConfigure<GitVersionSettings> configurator)
+        /// <summary>
+        ///   <p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p>
+        ///   <p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;targetPath&gt;</c> via <see cref="GitVersionSettings.TargetPath"/></li>
+        ///     <li><c>/b</c> via <see cref="GitVersionSettings.Branch"/></li>
+        ///     <li><c>/c</c> via <see cref="GitVersionSettings.Commit"/></li>
+        ///     <li><c>/diag</c> via <see cref="GitVersionSettings.Diagnostics"/></li>
+        ///     <li><c>/dynamicRepoLocation</c> via <see cref="GitVersionSettings.DynamicRepositoryLocation"/></li>
+        ///     <li><c>/ensureassemblyinfo</c> via <see cref="GitVersionSettings.EnsureAssemblyInfo"/></li>
+        ///     <li><c>/exec</c> via <see cref="GitVersionSettings.Executable"/></li>
+        ///     <li><c>/execargs</c> via <see cref="GitVersionSettings.ExecutableArguments"/></li>
+        ///     <li><c>/l</c> via <see cref="GitVersionSettings.LogFile"/></li>
+        ///     <li><c>/nocache</c> via <see cref="GitVersionSettings.NoCache"/></li>
+        ///     <li><c>/nofetch</c> via <see cref="GitVersionSettings.NoFetch"/></li>
+        ///     <li><c>/output</c> via <see cref="GitVersionSettings.Output"/></li>
+        ///     <li><c>/overrideconfig</c> via <see cref="GitVersionSettings.ConfigurationOverride"/></li>
+        ///     <li><c>/p</c> via <see cref="GitVersionSettings.Password"/></li>
+        ///     <li><c>/proj</c> via <see cref="GitVersionSettings.MSBuildProject"/></li>
+        ///     <li><c>/projargs</c> via <see cref="GitVersionSettings.MSBuildProjectArguments"/></li>
+        ///     <li><c>/showconfig</c> via <see cref="GitVersionSettings.ShowConfig"/></li>
+        ///     <li><c>/showvariable</c> via <see cref="GitVersionSettings.ShowVariable"/></li>
+        ///     <li><c>/u</c> via <see cref="GitVersionSettings.Username"/></li>
+        ///     <li><c>/updateassemblyinfo</c> via <see cref="GitVersionSettings.UpdateAssemblyInfo"/></li>
+        ///     <li><c>/updateassemblyinfofilename</c> via <see cref="GitVersionSettings.UpdateAssemblyInfoFileName"/></li>
+        ///     <li><c>/url</c> via <see cref="GitVersionSettings.Url"/></li>
+        ///     <li><c>/verbosity</c> via <see cref="GitVersionSettings.Verbosity"/></li>
+        ///     <li><c>/version</c> via <see cref="GitVersionSettings.Version"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(GitVersionSettings Settings, GitVersion Result, IReadOnlyCollection<Output> Output)> GitVersion(CombinatorialConfigure<GitVersionSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
-            return configurator(new GitVersionSettings())
-                .Select(x => (ToolSettings: x, ReturnValue: GitVersion(x)))
-                .Select(x => (x.ToolSettings, x.ReturnValue.Result, x.ReturnValue.Output)).ToList();
+            return configurator.Invoke(GitVersion, GitVersionLogger, degreeOfParallelism, completeOnFailure);
         }
     }
     #region GitVersionSettings
-    /// <summary><p>Used within <see cref="GitVersionTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="GitVersionTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
     public partial class GitVersionSettings : ToolSettings
     {
-        /// <summary><p>Path to the GitVersion executable.</p></summary>
+        /// <summary>
+        ///   Path to the GitVersion executable.
+        /// </summary>
         public override string ToolPath => base.ToolPath ?? GitVersionTasks.GitVersionPath;
-        /// <summary><p>The directory containing .git. If not defined current directory is used. (Must be first argument).</p></summary>
+        public override Action<OutputType, string> CustomLogger => GitVersionTasks.GitVersionLogger;
+        /// <summary>
+        ///   The directory containing .git. If not defined current directory is used. (Must be first argument).
+        /// </summary>
         public virtual string TargetPath { get; internal set; }
-        /// <summary><p>Displays the version of GitVersion.</p></summary>
+        /// <summary>
+        ///   Displays the version of GitVersion.
+        /// </summary>
         public virtual bool? Version { get; internal set; }
-        /// <summary><p>Runs GitVersion with additional diagnostic information (requires git.exe to be installed).</p></summary>
+        /// <summary>
+        ///   Runs GitVersion with additional diagnostic information (requires git.exe to be installed).
+        /// </summary>
         public virtual bool? Diagnostics { get; internal set; }
-        /// <summary><p>Determines the output to the console. Can be either <em>json</em> or <em>buildserver</em>, will default to <em>json</em>.</p></summary>
+        /// <summary>
+        ///   Determines the output to the console. Can be either <em>json</em> or <em>buildserver</em>, will default to <em>json</em>.
+        /// </summary>
         public virtual GitVersionOutput Output { get; internal set; }
-        /// <summary><p>Used in conjuntion with <c>/output</c> json, will output just a particular variable. E.g., <c>/output json /showvariable SemVer</c> - will output <c>1.2.3+beta.4</c>.</p></summary>
+        /// <summary>
+        ///   Used in conjuntion with <c>/output</c> json, will output just a particular variable. E.g., <c>/output json /showvariable SemVer</c> - will output <c>1.2.3+beta.4</c>.
+        /// </summary>
         public virtual string ShowVariable { get; internal set; }
-        /// <summary><p>Path to logfile.</p></summary>
+        /// <summary>
+        ///   Path to logfile.
+        /// </summary>
         public virtual string LogFile { get; internal set; }
-        /// <summary><p>Outputs the effective GitVersion config (defaults + custom from GitVersion.yml) in yaml format.</p></summary>
+        /// <summary>
+        ///   Outputs the effective GitVersion config (defaults + custom from GitVersion.yml) in yaml format.
+        /// </summary>
         public virtual bool? ShowConfig { get; internal set; }
-        /// <summary><p>Overrides GitVersion config values inline (semicolon-separated key value pairs e.g. <c>/overrideconfig tag-prefix=Foo</c>). Currently supported config overrides: <c>tag-prefix</c>.</p></summary>
+        /// <summary>
+        ///   Overrides GitVersion config values inline (semicolon-separated key value pairs e.g. <c>/overrideconfig tag-prefix=Foo</c>). Currently supported config overrides: <c>tag-prefix</c>.
+        /// </summary>
         public virtual IReadOnlyDictionary<string, object> ConfigurationOverride => ConfigurationOverrideInternal.AsReadOnly();
         internal Dictionary<string, object> ConfigurationOverrideInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-        /// <summary><p>Bypasses the cache, result will not be written to the cache.</p></summary>
+        /// <summary>
+        ///   Bypasses the cache, result will not be written to the cache.
+        /// </summary>
         public virtual bool? NoCache { get; internal set; }
-        /// <summary><p>Will recursively search for all 'AssemblyInfo.cs' files in the git repo and update them.</p></summary>
+        /// <summary>
+        ///   Will recursively search for all 'AssemblyInfo.cs' files in the git repo and update them.
+        /// </summary>
         public virtual bool? UpdateAssemblyInfo { get; internal set; }
-        /// <summary><p>Specify name of AssemblyInfo file.</p></summary>
+        /// <summary>
+        ///   Specify name of AssemblyInfo file.
+        /// </summary>
         public virtual bool? UpdateAssemblyInfoFileName { get; internal set; }
-        /// <summary><p>If the assembly info file specified with <c>/updateassemblyinfo</c> or <c>/updateassemblyinfofilename</c> is not found, it will be created with these attributes: AssemblyFileVersion, AssemblyVersion and AssemblyInformationalVersion.</p></summary>
+        /// <summary>
+        ///   If the assembly info file specified with <c>/updateassemblyinfo</c> or <c>/updateassemblyinfofilename</c> is not found, it will be created with these attributes: AssemblyFileVersion, AssemblyVersion and AssemblyInformationalVersion.
+        /// </summary>
         public virtual bool? EnsureAssemblyInfo { get; internal set; }
-        /// <summary><p>Url to remote git repository.</p></summary>
+        /// <summary>
+        ///   Url to remote git repository.
+        /// </summary>
         public virtual string Url { get; internal set; }
-        /// <summary><p>Name of the branch to use on the remote repository, must be used in combination with <c>/url</c>.</p></summary>
+        /// <summary>
+        ///   Name of the branch to use on the remote repository, must be used in combination with <c>/url</c>.
+        /// </summary>
         public virtual string Branch { get; internal set; }
-        /// <summary><p>Username in case authentication is required.</p></summary>
+        /// <summary>
+        ///   Username in case authentication is required.
+        /// </summary>
         public virtual string Username { get; internal set; }
-        /// <summary><p>Password in case authentication is required.</p></summary>
+        /// <summary>
+        ///   Password in case authentication is required.
+        /// </summary>
         public virtual string Password { get; internal set; }
-        /// <summary><p>The commit id to check. If not specified, the latest available commit on the specified branch will be used.</p></summary>
+        /// <summary>
+        ///   The commit id to check. If not specified, the latest available commit on the specified branch will be used.
+        /// </summary>
         public virtual string Commit { get; internal set; }
-        /// <summary><p>By default dynamic repositories will be cloned to %tmp%. Use this switch to override.</p></summary>
+        /// <summary>
+        ///   By default dynamic repositories will be cloned to %tmp%. Use this switch to override.
+        /// </summary>
         public virtual string DynamicRepositoryLocation { get; internal set; }
-        /// <summary><p>Disables <c>git fetch</c> during version calculation. Might cause GitVersion to not calculate your version as expected.</p></summary>
+        /// <summary>
+        ///   Disables <c>git fetch</c> during version calculation. Might cause GitVersion to not calculate your version as expected.
+        /// </summary>
         public virtual bool? NoFetch { get; internal set; }
-        /// <summary><p>Executes target executable making GitVersion variables available as environmental variables.</p></summary>
+        /// <summary>
+        ///   Executes target executable making GitVersion variables available as environmental variables.
+        /// </summary>
         public virtual string Executable { get; internal set; }
-        /// <summary><p>Arguments for the executable specified by <c>/exec</c>.</p></summary>
+        /// <summary>
+        ///   Arguments for the executable specified by <c>/exec</c>.
+        /// </summary>
         public virtual string ExecutableArguments { get; internal set; }
-        /// <summary><p>Build an MSBuild file, GitVersion variables will be passed as MSBuild properties.</p></summary>
+        /// <summary>
+        ///   Build an MSBuild file, GitVersion variables will be passed as MSBuild properties.
+        /// </summary>
         public virtual string MSBuildProject { get; internal set; }
-        /// <summary><p>Additional arguments to pass to MSBuild.</p></summary>
+        /// <summary>
+        ///   Additional arguments to pass to MSBuild.
+        /// </summary>
         public virtual string MSBuildProjectArguments { get; internal set; }
-        /// <summary><p>Set Verbosity level (<c>debug</c>, <c>info</c>, <c>warn</c>, <c>error</c>, <c>none</c>). Default is <c>info</c>.</p></summary>
+        /// <summary>
+        ///   Set Verbosity level (<c>debug</c>, <c>info</c>, <c>warn</c>, <c>error</c>, <c>none</c>). Default is <c>info</c>.
+        /// </summary>
         public virtual GitVersionVerbosity Verbosity { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
@@ -145,7 +268,9 @@ namespace Nuke.Common.Tools.GitVersion
     }
     #endregion
     #region GitVersion
-    /// <summary><p>Used within <see cref="GitVersionTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="GitVersionTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     [Serializable]
@@ -180,13 +305,18 @@ namespace Nuke.Common.Tools.GitVersion
     }
     #endregion
     #region GitVersionSettingsExtensions
-    /// <summary><p>Used within <see cref="GitVersionTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="GitVersionTasks"/>.
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class GitVersionSettingsExtensions
     {
         #region TargetPath
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.TargetPath"/>.</em></p><p>The directory containing .git. If not defined current directory is used. (Must be first argument).</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.TargetPath"/></em></p>
+        ///   <p>The directory containing .git. If not defined current directory is used. (Must be first argument).</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetTargetPath(this GitVersionSettings toolSettings, string targetPath)
         {
@@ -194,7 +324,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.TargetPath = targetPath;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="GitVersionSettings.TargetPath"/>.</em></p><p>The directory containing .git. If not defined current directory is used. (Must be first argument).</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.TargetPath"/></em></p>
+        ///   <p>The directory containing .git. If not defined current directory is used. (Must be first argument).</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ResetTargetPath(this GitVersionSettings toolSettings)
         {
@@ -204,7 +337,10 @@ namespace Nuke.Common.Tools.GitVersion
         }
         #endregion
         #region Version
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.Version"/>.</em></p><p>Displays the version of GitVersion.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.Version"/></em></p>
+        ///   <p>Displays the version of GitVersion.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetVersion(this GitVersionSettings toolSettings, bool? version)
         {
@@ -212,7 +348,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.Version = version;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="GitVersionSettings.Version"/>.</em></p><p>Displays the version of GitVersion.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.Version"/></em></p>
+        ///   <p>Displays the version of GitVersion.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ResetVersion(this GitVersionSettings toolSettings)
         {
@@ -220,7 +359,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.Version = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="GitVersionSettings.Version"/>.</em></p><p>Displays the version of GitVersion.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="GitVersionSettings.Version"/></em></p>
+        ///   <p>Displays the version of GitVersion.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings EnableVersion(this GitVersionSettings toolSettings)
         {
@@ -228,7 +370,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.Version = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="GitVersionSettings.Version"/>.</em></p><p>Displays the version of GitVersion.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="GitVersionSettings.Version"/></em></p>
+        ///   <p>Displays the version of GitVersion.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings DisableVersion(this GitVersionSettings toolSettings)
         {
@@ -236,7 +381,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.Version = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="GitVersionSettings.Version"/>.</em></p><p>Displays the version of GitVersion.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="GitVersionSettings.Version"/></em></p>
+        ///   <p>Displays the version of GitVersion.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ToggleVersion(this GitVersionSettings toolSettings)
         {
@@ -246,7 +394,10 @@ namespace Nuke.Common.Tools.GitVersion
         }
         #endregion
         #region Diagnostics
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.Diagnostics"/>.</em></p><p>Runs GitVersion with additional diagnostic information (requires git.exe to be installed).</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.Diagnostics"/></em></p>
+        ///   <p>Runs GitVersion with additional diagnostic information (requires git.exe to be installed).</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetDiagnostics(this GitVersionSettings toolSettings, bool? diagnostics)
         {
@@ -254,7 +405,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.Diagnostics = diagnostics;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="GitVersionSettings.Diagnostics"/>.</em></p><p>Runs GitVersion with additional diagnostic information (requires git.exe to be installed).</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.Diagnostics"/></em></p>
+        ///   <p>Runs GitVersion with additional diagnostic information (requires git.exe to be installed).</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ResetDiagnostics(this GitVersionSettings toolSettings)
         {
@@ -262,7 +416,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.Diagnostics = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="GitVersionSettings.Diagnostics"/>.</em></p><p>Runs GitVersion with additional diagnostic information (requires git.exe to be installed).</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="GitVersionSettings.Diagnostics"/></em></p>
+        ///   <p>Runs GitVersion with additional diagnostic information (requires git.exe to be installed).</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings EnableDiagnostics(this GitVersionSettings toolSettings)
         {
@@ -270,7 +427,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.Diagnostics = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="GitVersionSettings.Diagnostics"/>.</em></p><p>Runs GitVersion with additional diagnostic information (requires git.exe to be installed).</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="GitVersionSettings.Diagnostics"/></em></p>
+        ///   <p>Runs GitVersion with additional diagnostic information (requires git.exe to be installed).</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings DisableDiagnostics(this GitVersionSettings toolSettings)
         {
@@ -278,7 +438,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.Diagnostics = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="GitVersionSettings.Diagnostics"/>.</em></p><p>Runs GitVersion with additional diagnostic information (requires git.exe to be installed).</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="GitVersionSettings.Diagnostics"/></em></p>
+        ///   <p>Runs GitVersion with additional diagnostic information (requires git.exe to be installed).</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ToggleDiagnostics(this GitVersionSettings toolSettings)
         {
@@ -288,7 +451,10 @@ namespace Nuke.Common.Tools.GitVersion
         }
         #endregion
         #region Output
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.Output"/>.</em></p><p>Determines the output to the console. Can be either <em>json</em> or <em>buildserver</em>, will default to <em>json</em>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.Output"/></em></p>
+        ///   <p>Determines the output to the console. Can be either <em>json</em> or <em>buildserver</em>, will default to <em>json</em>.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetOutput(this GitVersionSettings toolSettings, GitVersionOutput output)
         {
@@ -296,7 +462,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.Output = output;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="GitVersionSettings.Output"/>.</em></p><p>Determines the output to the console. Can be either <em>json</em> or <em>buildserver</em>, will default to <em>json</em>.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.Output"/></em></p>
+        ///   <p>Determines the output to the console. Can be either <em>json</em> or <em>buildserver</em>, will default to <em>json</em>.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ResetOutput(this GitVersionSettings toolSettings)
         {
@@ -306,7 +475,10 @@ namespace Nuke.Common.Tools.GitVersion
         }
         #endregion
         #region ShowVariable
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.ShowVariable"/>.</em></p><p>Used in conjuntion with <c>/output</c> json, will output just a particular variable. E.g., <c>/output json /showvariable SemVer</c> - will output <c>1.2.3+beta.4</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.ShowVariable"/></em></p>
+        ///   <p>Used in conjuntion with <c>/output</c> json, will output just a particular variable. E.g., <c>/output json /showvariable SemVer</c> - will output <c>1.2.3+beta.4</c>.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetShowVariable(this GitVersionSettings toolSettings, string showVariable)
         {
@@ -314,7 +486,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.ShowVariable = showVariable;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="GitVersionSettings.ShowVariable"/>.</em></p><p>Used in conjuntion with <c>/output</c> json, will output just a particular variable. E.g., <c>/output json /showvariable SemVer</c> - will output <c>1.2.3+beta.4</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.ShowVariable"/></em></p>
+        ///   <p>Used in conjuntion with <c>/output</c> json, will output just a particular variable. E.g., <c>/output json /showvariable SemVer</c> - will output <c>1.2.3+beta.4</c>.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ResetShowVariable(this GitVersionSettings toolSettings)
         {
@@ -324,7 +499,10 @@ namespace Nuke.Common.Tools.GitVersion
         }
         #endregion
         #region LogFile
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.LogFile"/>.</em></p><p>Path to logfile.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.LogFile"/></em></p>
+        ///   <p>Path to logfile.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetLogFile(this GitVersionSettings toolSettings, string logFile)
         {
@@ -332,7 +510,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.LogFile = logFile;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="GitVersionSettings.LogFile"/>.</em></p><p>Path to logfile.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.LogFile"/></em></p>
+        ///   <p>Path to logfile.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ResetLogFile(this GitVersionSettings toolSettings)
         {
@@ -342,7 +523,10 @@ namespace Nuke.Common.Tools.GitVersion
         }
         #endregion
         #region ShowConfig
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.ShowConfig"/>.</em></p><p>Outputs the effective GitVersion config (defaults + custom from GitVersion.yml) in yaml format.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.ShowConfig"/></em></p>
+        ///   <p>Outputs the effective GitVersion config (defaults + custom from GitVersion.yml) in yaml format.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetShowConfig(this GitVersionSettings toolSettings, bool? showConfig)
         {
@@ -350,7 +534,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.ShowConfig = showConfig;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="GitVersionSettings.ShowConfig"/>.</em></p><p>Outputs the effective GitVersion config (defaults + custom from GitVersion.yml) in yaml format.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.ShowConfig"/></em></p>
+        ///   <p>Outputs the effective GitVersion config (defaults + custom from GitVersion.yml) in yaml format.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ResetShowConfig(this GitVersionSettings toolSettings)
         {
@@ -358,7 +545,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.ShowConfig = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="GitVersionSettings.ShowConfig"/>.</em></p><p>Outputs the effective GitVersion config (defaults + custom from GitVersion.yml) in yaml format.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="GitVersionSettings.ShowConfig"/></em></p>
+        ///   <p>Outputs the effective GitVersion config (defaults + custom from GitVersion.yml) in yaml format.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings EnableShowConfig(this GitVersionSettings toolSettings)
         {
@@ -366,7 +556,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.ShowConfig = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="GitVersionSettings.ShowConfig"/>.</em></p><p>Outputs the effective GitVersion config (defaults + custom from GitVersion.yml) in yaml format.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="GitVersionSettings.ShowConfig"/></em></p>
+        ///   <p>Outputs the effective GitVersion config (defaults + custom from GitVersion.yml) in yaml format.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings DisableShowConfig(this GitVersionSettings toolSettings)
         {
@@ -374,7 +567,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.ShowConfig = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="GitVersionSettings.ShowConfig"/>.</em></p><p>Outputs the effective GitVersion config (defaults + custom from GitVersion.yml) in yaml format.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="GitVersionSettings.ShowConfig"/></em></p>
+        ///   <p>Outputs the effective GitVersion config (defaults + custom from GitVersion.yml) in yaml format.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ToggleShowConfig(this GitVersionSettings toolSettings)
         {
@@ -384,7 +580,10 @@ namespace Nuke.Common.Tools.GitVersion
         }
         #endregion
         #region ConfigurationOverride
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.ConfigurationOverride"/> to a new dictionary.</em></p><p>Overrides GitVersion config values inline (semicolon-separated key value pairs e.g. <c>/overrideconfig tag-prefix=Foo</c>). Currently supported config overrides: <c>tag-prefix</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.ConfigurationOverride"/> to a new dictionary</em></p>
+        ///   <p>Overrides GitVersion config values inline (semicolon-separated key value pairs e.g. <c>/overrideconfig tag-prefix=Foo</c>). Currently supported config overrides: <c>tag-prefix</c>.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetConfigurationOverride(this GitVersionSettings toolSettings, IDictionary<string, object> configurationOverride)
         {
@@ -392,7 +591,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.ConfigurationOverrideInternal = configurationOverride.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
             return toolSettings;
         }
-        /// <summary><p><em>Clears <see cref="GitVersionSettings.ConfigurationOverride"/>.</em></p><p>Overrides GitVersion config values inline (semicolon-separated key value pairs e.g. <c>/overrideconfig tag-prefix=Foo</c>). Currently supported config overrides: <c>tag-prefix</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Clears <see cref="GitVersionSettings.ConfigurationOverride"/></em></p>
+        ///   <p>Overrides GitVersion config values inline (semicolon-separated key value pairs e.g. <c>/overrideconfig tag-prefix=Foo</c>). Currently supported config overrides: <c>tag-prefix</c>.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ClearConfigurationOverride(this GitVersionSettings toolSettings)
         {
@@ -400,7 +602,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.ConfigurationOverrideInternal.Clear();
             return toolSettings;
         }
-        /// <summary><p><em>Adds a new key-value-pair <see cref="GitVersionSettings.ConfigurationOverride"/>.</em></p><p>Overrides GitVersion config values inline (semicolon-separated key value pairs e.g. <c>/overrideconfig tag-prefix=Foo</c>). Currently supported config overrides: <c>tag-prefix</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Adds a new key-value-pair <see cref="GitVersionSettings.ConfigurationOverride"/></em></p>
+        ///   <p>Overrides GitVersion config values inline (semicolon-separated key value pairs e.g. <c>/overrideconfig tag-prefix=Foo</c>). Currently supported config overrides: <c>tag-prefix</c>.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings AddConfigurationOverride(this GitVersionSettings toolSettings, string configurationOverrideKey, object configurationOverrideValue)
         {
@@ -408,7 +613,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.ConfigurationOverrideInternal.Add(configurationOverrideKey, configurationOverrideValue);
             return toolSettings;
         }
-        /// <summary><p><em>Removes a key-value-pair from <see cref="GitVersionSettings.ConfigurationOverride"/>.</em></p><p>Overrides GitVersion config values inline (semicolon-separated key value pairs e.g. <c>/overrideconfig tag-prefix=Foo</c>). Currently supported config overrides: <c>tag-prefix</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Removes a key-value-pair from <see cref="GitVersionSettings.ConfigurationOverride"/></em></p>
+        ///   <p>Overrides GitVersion config values inline (semicolon-separated key value pairs e.g. <c>/overrideconfig tag-prefix=Foo</c>). Currently supported config overrides: <c>tag-prefix</c>.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings RemoveConfigurationOverride(this GitVersionSettings toolSettings, string configurationOverrideKey)
         {
@@ -416,7 +624,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.ConfigurationOverrideInternal.Remove(configurationOverrideKey);
             return toolSettings;
         }
-        /// <summary><p><em>Sets a key-value-pair in <see cref="GitVersionSettings.ConfigurationOverride"/>.</em></p><p>Overrides GitVersion config values inline (semicolon-separated key value pairs e.g. <c>/overrideconfig tag-prefix=Foo</c>). Currently supported config overrides: <c>tag-prefix</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets a key-value-pair in <see cref="GitVersionSettings.ConfigurationOverride"/></em></p>
+        ///   <p>Overrides GitVersion config values inline (semicolon-separated key value pairs e.g. <c>/overrideconfig tag-prefix=Foo</c>). Currently supported config overrides: <c>tag-prefix</c>.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetConfigurationOverride(this GitVersionSettings toolSettings, string configurationOverrideKey, object configurationOverrideValue)
         {
@@ -426,7 +637,10 @@ namespace Nuke.Common.Tools.GitVersion
         }
         #endregion
         #region NoCache
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.NoCache"/>.</em></p><p>Bypasses the cache, result will not be written to the cache.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.NoCache"/></em></p>
+        ///   <p>Bypasses the cache, result will not be written to the cache.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetNoCache(this GitVersionSettings toolSettings, bool? noCache)
         {
@@ -434,7 +648,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.NoCache = noCache;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="GitVersionSettings.NoCache"/>.</em></p><p>Bypasses the cache, result will not be written to the cache.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.NoCache"/></em></p>
+        ///   <p>Bypasses the cache, result will not be written to the cache.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ResetNoCache(this GitVersionSettings toolSettings)
         {
@@ -442,7 +659,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.NoCache = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="GitVersionSettings.NoCache"/>.</em></p><p>Bypasses the cache, result will not be written to the cache.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="GitVersionSettings.NoCache"/></em></p>
+        ///   <p>Bypasses the cache, result will not be written to the cache.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings EnableNoCache(this GitVersionSettings toolSettings)
         {
@@ -450,7 +670,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.NoCache = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="GitVersionSettings.NoCache"/>.</em></p><p>Bypasses the cache, result will not be written to the cache.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="GitVersionSettings.NoCache"/></em></p>
+        ///   <p>Bypasses the cache, result will not be written to the cache.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings DisableNoCache(this GitVersionSettings toolSettings)
         {
@@ -458,7 +681,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.NoCache = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="GitVersionSettings.NoCache"/>.</em></p><p>Bypasses the cache, result will not be written to the cache.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="GitVersionSettings.NoCache"/></em></p>
+        ///   <p>Bypasses the cache, result will not be written to the cache.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ToggleNoCache(this GitVersionSettings toolSettings)
         {
@@ -468,7 +694,10 @@ namespace Nuke.Common.Tools.GitVersion
         }
         #endregion
         #region UpdateAssemblyInfo
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</em></p><p>Will recursively search for all 'AssemblyInfo.cs' files in the git repo and update them.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.UpdateAssemblyInfo"/></em></p>
+        ///   <p>Will recursively search for all 'AssemblyInfo.cs' files in the git repo and update them.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetUpdateAssemblyInfo(this GitVersionSettings toolSettings, bool? updateAssemblyInfo)
         {
@@ -476,7 +705,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.UpdateAssemblyInfo = updateAssemblyInfo;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</em></p><p>Will recursively search for all 'AssemblyInfo.cs' files in the git repo and update them.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.UpdateAssemblyInfo"/></em></p>
+        ///   <p>Will recursively search for all 'AssemblyInfo.cs' files in the git repo and update them.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ResetUpdateAssemblyInfo(this GitVersionSettings toolSettings)
         {
@@ -484,7 +716,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.UpdateAssemblyInfo = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</em></p><p>Will recursively search for all 'AssemblyInfo.cs' files in the git repo and update them.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="GitVersionSettings.UpdateAssemblyInfo"/></em></p>
+        ///   <p>Will recursively search for all 'AssemblyInfo.cs' files in the git repo and update them.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings EnableUpdateAssemblyInfo(this GitVersionSettings toolSettings)
         {
@@ -492,7 +727,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.UpdateAssemblyInfo = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</em></p><p>Will recursively search for all 'AssemblyInfo.cs' files in the git repo and update them.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="GitVersionSettings.UpdateAssemblyInfo"/></em></p>
+        ///   <p>Will recursively search for all 'AssemblyInfo.cs' files in the git repo and update them.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings DisableUpdateAssemblyInfo(this GitVersionSettings toolSettings)
         {
@@ -500,7 +738,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.UpdateAssemblyInfo = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="GitVersionSettings.UpdateAssemblyInfo"/>.</em></p><p>Will recursively search for all 'AssemblyInfo.cs' files in the git repo and update them.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="GitVersionSettings.UpdateAssemblyInfo"/></em></p>
+        ///   <p>Will recursively search for all 'AssemblyInfo.cs' files in the git repo and update them.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ToggleUpdateAssemblyInfo(this GitVersionSettings toolSettings)
         {
@@ -510,7 +751,10 @@ namespace Nuke.Common.Tools.GitVersion
         }
         #endregion
         #region UpdateAssemblyInfoFileName
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.UpdateAssemblyInfoFileName"/>.</em></p><p>Specify name of AssemblyInfo file.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.UpdateAssemblyInfoFileName"/></em></p>
+        ///   <p>Specify name of AssemblyInfo file.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetUpdateAssemblyInfoFileName(this GitVersionSettings toolSettings, bool? updateAssemblyInfoFileName)
         {
@@ -518,7 +762,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.UpdateAssemblyInfoFileName = updateAssemblyInfoFileName;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="GitVersionSettings.UpdateAssemblyInfoFileName"/>.</em></p><p>Specify name of AssemblyInfo file.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.UpdateAssemblyInfoFileName"/></em></p>
+        ///   <p>Specify name of AssemblyInfo file.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ResetUpdateAssemblyInfoFileName(this GitVersionSettings toolSettings)
         {
@@ -526,7 +773,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.UpdateAssemblyInfoFileName = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="GitVersionSettings.UpdateAssemblyInfoFileName"/>.</em></p><p>Specify name of AssemblyInfo file.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="GitVersionSettings.UpdateAssemblyInfoFileName"/></em></p>
+        ///   <p>Specify name of AssemblyInfo file.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings EnableUpdateAssemblyInfoFileName(this GitVersionSettings toolSettings)
         {
@@ -534,7 +784,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.UpdateAssemblyInfoFileName = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="GitVersionSettings.UpdateAssemblyInfoFileName"/>.</em></p><p>Specify name of AssemblyInfo file.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="GitVersionSettings.UpdateAssemblyInfoFileName"/></em></p>
+        ///   <p>Specify name of AssemblyInfo file.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings DisableUpdateAssemblyInfoFileName(this GitVersionSettings toolSettings)
         {
@@ -542,7 +795,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.UpdateAssemblyInfoFileName = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="GitVersionSettings.UpdateAssemblyInfoFileName"/>.</em></p><p>Specify name of AssemblyInfo file.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="GitVersionSettings.UpdateAssemblyInfoFileName"/></em></p>
+        ///   <p>Specify name of AssemblyInfo file.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ToggleUpdateAssemblyInfoFileName(this GitVersionSettings toolSettings)
         {
@@ -552,7 +808,10 @@ namespace Nuke.Common.Tools.GitVersion
         }
         #endregion
         #region EnsureAssemblyInfo
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.EnsureAssemblyInfo"/>.</em></p><p>If the assembly info file specified with <c>/updateassemblyinfo</c> or <c>/updateassemblyinfofilename</c> is not found, it will be created with these attributes: AssemblyFileVersion, AssemblyVersion and AssemblyInformationalVersion.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.EnsureAssemblyInfo"/></em></p>
+        ///   <p>If the assembly info file specified with <c>/updateassemblyinfo</c> or <c>/updateassemblyinfofilename</c> is not found, it will be created with these attributes: AssemblyFileVersion, AssemblyVersion and AssemblyInformationalVersion.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetEnsureAssemblyInfo(this GitVersionSettings toolSettings, bool? ensureAssemblyInfo)
         {
@@ -560,7 +819,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.EnsureAssemblyInfo = ensureAssemblyInfo;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="GitVersionSettings.EnsureAssemblyInfo"/>.</em></p><p>If the assembly info file specified with <c>/updateassemblyinfo</c> or <c>/updateassemblyinfofilename</c> is not found, it will be created with these attributes: AssemblyFileVersion, AssemblyVersion and AssemblyInformationalVersion.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.EnsureAssemblyInfo"/></em></p>
+        ///   <p>If the assembly info file specified with <c>/updateassemblyinfo</c> or <c>/updateassemblyinfofilename</c> is not found, it will be created with these attributes: AssemblyFileVersion, AssemblyVersion and AssemblyInformationalVersion.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ResetEnsureAssemblyInfo(this GitVersionSettings toolSettings)
         {
@@ -568,7 +830,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.EnsureAssemblyInfo = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="GitVersionSettings.EnsureAssemblyInfo"/>.</em></p><p>If the assembly info file specified with <c>/updateassemblyinfo</c> or <c>/updateassemblyinfofilename</c> is not found, it will be created with these attributes: AssemblyFileVersion, AssemblyVersion and AssemblyInformationalVersion.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="GitVersionSettings.EnsureAssemblyInfo"/></em></p>
+        ///   <p>If the assembly info file specified with <c>/updateassemblyinfo</c> or <c>/updateassemblyinfofilename</c> is not found, it will be created with these attributes: AssemblyFileVersion, AssemblyVersion and AssemblyInformationalVersion.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings EnableEnsureAssemblyInfo(this GitVersionSettings toolSettings)
         {
@@ -576,7 +841,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.EnsureAssemblyInfo = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="GitVersionSettings.EnsureAssemblyInfo"/>.</em></p><p>If the assembly info file specified with <c>/updateassemblyinfo</c> or <c>/updateassemblyinfofilename</c> is not found, it will be created with these attributes: AssemblyFileVersion, AssemblyVersion and AssemblyInformationalVersion.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="GitVersionSettings.EnsureAssemblyInfo"/></em></p>
+        ///   <p>If the assembly info file specified with <c>/updateassemblyinfo</c> or <c>/updateassemblyinfofilename</c> is not found, it will be created with these attributes: AssemblyFileVersion, AssemblyVersion and AssemblyInformationalVersion.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings DisableEnsureAssemblyInfo(this GitVersionSettings toolSettings)
         {
@@ -584,7 +852,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.EnsureAssemblyInfo = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="GitVersionSettings.EnsureAssemblyInfo"/>.</em></p><p>If the assembly info file specified with <c>/updateassemblyinfo</c> or <c>/updateassemblyinfofilename</c> is not found, it will be created with these attributes: AssemblyFileVersion, AssemblyVersion and AssemblyInformationalVersion.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="GitVersionSettings.EnsureAssemblyInfo"/></em></p>
+        ///   <p>If the assembly info file specified with <c>/updateassemblyinfo</c> or <c>/updateassemblyinfofilename</c> is not found, it will be created with these attributes: AssemblyFileVersion, AssemblyVersion and AssemblyInformationalVersion.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ToggleEnsureAssemblyInfo(this GitVersionSettings toolSettings)
         {
@@ -594,7 +865,10 @@ namespace Nuke.Common.Tools.GitVersion
         }
         #endregion
         #region Url
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.Url"/>.</em></p><p>Url to remote git repository.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.Url"/></em></p>
+        ///   <p>Url to remote git repository.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetUrl(this GitVersionSettings toolSettings, string url)
         {
@@ -602,7 +876,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.Url = url;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="GitVersionSettings.Url"/>.</em></p><p>Url to remote git repository.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.Url"/></em></p>
+        ///   <p>Url to remote git repository.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ResetUrl(this GitVersionSettings toolSettings)
         {
@@ -612,7 +889,10 @@ namespace Nuke.Common.Tools.GitVersion
         }
         #endregion
         #region Branch
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.Branch"/>.</em></p><p>Name of the branch to use on the remote repository, must be used in combination with <c>/url</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.Branch"/></em></p>
+        ///   <p>Name of the branch to use on the remote repository, must be used in combination with <c>/url</c>.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetBranch(this GitVersionSettings toolSettings, string branch)
         {
@@ -620,7 +900,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.Branch = branch;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="GitVersionSettings.Branch"/>.</em></p><p>Name of the branch to use on the remote repository, must be used in combination with <c>/url</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.Branch"/></em></p>
+        ///   <p>Name of the branch to use on the remote repository, must be used in combination with <c>/url</c>.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ResetBranch(this GitVersionSettings toolSettings)
         {
@@ -630,7 +913,10 @@ namespace Nuke.Common.Tools.GitVersion
         }
         #endregion
         #region Username
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.Username"/>.</em></p><p>Username in case authentication is required.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.Username"/></em></p>
+        ///   <p>Username in case authentication is required.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetUsername(this GitVersionSettings toolSettings, string username)
         {
@@ -638,7 +924,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.Username = username;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="GitVersionSettings.Username"/>.</em></p><p>Username in case authentication is required.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.Username"/></em></p>
+        ///   <p>Username in case authentication is required.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ResetUsername(this GitVersionSettings toolSettings)
         {
@@ -648,7 +937,10 @@ namespace Nuke.Common.Tools.GitVersion
         }
         #endregion
         #region Password
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.Password"/>.</em></p><p>Password in case authentication is required.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.Password"/></em></p>
+        ///   <p>Password in case authentication is required.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetPassword(this GitVersionSettings toolSettings, string password)
         {
@@ -656,7 +948,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.Password = password;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="GitVersionSettings.Password"/>.</em></p><p>Password in case authentication is required.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.Password"/></em></p>
+        ///   <p>Password in case authentication is required.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ResetPassword(this GitVersionSettings toolSettings)
         {
@@ -666,7 +961,10 @@ namespace Nuke.Common.Tools.GitVersion
         }
         #endregion
         #region Commit
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.Commit"/>.</em></p><p>The commit id to check. If not specified, the latest available commit on the specified branch will be used.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.Commit"/></em></p>
+        ///   <p>The commit id to check. If not specified, the latest available commit on the specified branch will be used.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetCommit(this GitVersionSettings toolSettings, string commit)
         {
@@ -674,7 +972,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.Commit = commit;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="GitVersionSettings.Commit"/>.</em></p><p>The commit id to check. If not specified, the latest available commit on the specified branch will be used.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.Commit"/></em></p>
+        ///   <p>The commit id to check. If not specified, the latest available commit on the specified branch will be used.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ResetCommit(this GitVersionSettings toolSettings)
         {
@@ -684,7 +985,10 @@ namespace Nuke.Common.Tools.GitVersion
         }
         #endregion
         #region DynamicRepositoryLocation
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.DynamicRepositoryLocation"/>.</em></p><p>By default dynamic repositories will be cloned to %tmp%. Use this switch to override.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.DynamicRepositoryLocation"/></em></p>
+        ///   <p>By default dynamic repositories will be cloned to %tmp%. Use this switch to override.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetDynamicRepositoryLocation(this GitVersionSettings toolSettings, string dynamicRepositoryLocation)
         {
@@ -692,7 +996,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.DynamicRepositoryLocation = dynamicRepositoryLocation;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="GitVersionSettings.DynamicRepositoryLocation"/>.</em></p><p>By default dynamic repositories will be cloned to %tmp%. Use this switch to override.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.DynamicRepositoryLocation"/></em></p>
+        ///   <p>By default dynamic repositories will be cloned to %tmp%. Use this switch to override.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ResetDynamicRepositoryLocation(this GitVersionSettings toolSettings)
         {
@@ -702,7 +1009,10 @@ namespace Nuke.Common.Tools.GitVersion
         }
         #endregion
         #region NoFetch
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.NoFetch"/>.</em></p><p>Disables <c>git fetch</c> during version calculation. Might cause GitVersion to not calculate your version as expected.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.NoFetch"/></em></p>
+        ///   <p>Disables <c>git fetch</c> during version calculation. Might cause GitVersion to not calculate your version as expected.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetNoFetch(this GitVersionSettings toolSettings, bool? noFetch)
         {
@@ -710,7 +1020,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.NoFetch = noFetch;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="GitVersionSettings.NoFetch"/>.</em></p><p>Disables <c>git fetch</c> during version calculation. Might cause GitVersion to not calculate your version as expected.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.NoFetch"/></em></p>
+        ///   <p>Disables <c>git fetch</c> during version calculation. Might cause GitVersion to not calculate your version as expected.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ResetNoFetch(this GitVersionSettings toolSettings)
         {
@@ -718,7 +1031,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.NoFetch = null;
             return toolSettings;
         }
-        /// <summary><p><em>Enables <see cref="GitVersionSettings.NoFetch"/>.</em></p><p>Disables <c>git fetch</c> during version calculation. Might cause GitVersion to not calculate your version as expected.</p></summary>
+        /// <summary>
+        ///   <p><em>Enables <see cref="GitVersionSettings.NoFetch"/></em></p>
+        ///   <p>Disables <c>git fetch</c> during version calculation. Might cause GitVersion to not calculate your version as expected.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings EnableNoFetch(this GitVersionSettings toolSettings)
         {
@@ -726,7 +1042,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.NoFetch = true;
             return toolSettings;
         }
-        /// <summary><p><em>Disables <see cref="GitVersionSettings.NoFetch"/>.</em></p><p>Disables <c>git fetch</c> during version calculation. Might cause GitVersion to not calculate your version as expected.</p></summary>
+        /// <summary>
+        ///   <p><em>Disables <see cref="GitVersionSettings.NoFetch"/></em></p>
+        ///   <p>Disables <c>git fetch</c> during version calculation. Might cause GitVersion to not calculate your version as expected.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings DisableNoFetch(this GitVersionSettings toolSettings)
         {
@@ -734,7 +1053,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.NoFetch = false;
             return toolSettings;
         }
-        /// <summary><p><em>Toggles <see cref="GitVersionSettings.NoFetch"/>.</em></p><p>Disables <c>git fetch</c> during version calculation. Might cause GitVersion to not calculate your version as expected.</p></summary>
+        /// <summary>
+        ///   <p><em>Toggles <see cref="GitVersionSettings.NoFetch"/></em></p>
+        ///   <p>Disables <c>git fetch</c> during version calculation. Might cause GitVersion to not calculate your version as expected.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ToggleNoFetch(this GitVersionSettings toolSettings)
         {
@@ -744,7 +1066,10 @@ namespace Nuke.Common.Tools.GitVersion
         }
         #endregion
         #region Executable
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.Executable"/>.</em></p><p>Executes target executable making GitVersion variables available as environmental variables.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.Executable"/></em></p>
+        ///   <p>Executes target executable making GitVersion variables available as environmental variables.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetExecutable(this GitVersionSettings toolSettings, string executable)
         {
@@ -752,7 +1077,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.Executable = executable;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="GitVersionSettings.Executable"/>.</em></p><p>Executes target executable making GitVersion variables available as environmental variables.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.Executable"/></em></p>
+        ///   <p>Executes target executable making GitVersion variables available as environmental variables.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ResetExecutable(this GitVersionSettings toolSettings)
         {
@@ -762,7 +1090,10 @@ namespace Nuke.Common.Tools.GitVersion
         }
         #endregion
         #region ExecutableArguments
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.ExecutableArguments"/>.</em></p><p>Arguments for the executable specified by <c>/exec</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.ExecutableArguments"/></em></p>
+        ///   <p>Arguments for the executable specified by <c>/exec</c>.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetExecutableArguments(this GitVersionSettings toolSettings, string executableArguments)
         {
@@ -770,7 +1101,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.ExecutableArguments = executableArguments;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="GitVersionSettings.ExecutableArguments"/>.</em></p><p>Arguments for the executable specified by <c>/exec</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.ExecutableArguments"/></em></p>
+        ///   <p>Arguments for the executable specified by <c>/exec</c>.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ResetExecutableArguments(this GitVersionSettings toolSettings)
         {
@@ -780,7 +1114,10 @@ namespace Nuke.Common.Tools.GitVersion
         }
         #endregion
         #region MSBuildProject
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.MSBuildProject"/>.</em></p><p>Build an MSBuild file, GitVersion variables will be passed as MSBuild properties.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.MSBuildProject"/></em></p>
+        ///   <p>Build an MSBuild file, GitVersion variables will be passed as MSBuild properties.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetMSBuildProject(this GitVersionSettings toolSettings, string msbuildProject)
         {
@@ -788,7 +1125,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.MSBuildProject = msbuildProject;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="GitVersionSettings.MSBuildProject"/>.</em></p><p>Build an MSBuild file, GitVersion variables will be passed as MSBuild properties.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.MSBuildProject"/></em></p>
+        ///   <p>Build an MSBuild file, GitVersion variables will be passed as MSBuild properties.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ResetMSBuildProject(this GitVersionSettings toolSettings)
         {
@@ -798,7 +1138,10 @@ namespace Nuke.Common.Tools.GitVersion
         }
         #endregion
         #region MSBuildProjectArguments
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.MSBuildProjectArguments"/>.</em></p><p>Additional arguments to pass to MSBuild.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.MSBuildProjectArguments"/></em></p>
+        ///   <p>Additional arguments to pass to MSBuild.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetMSBuildProjectArguments(this GitVersionSettings toolSettings, string msbuildProjectArguments)
         {
@@ -806,7 +1149,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.MSBuildProjectArguments = msbuildProjectArguments;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="GitVersionSettings.MSBuildProjectArguments"/>.</em></p><p>Additional arguments to pass to MSBuild.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.MSBuildProjectArguments"/></em></p>
+        ///   <p>Additional arguments to pass to MSBuild.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ResetMSBuildProjectArguments(this GitVersionSettings toolSettings)
         {
@@ -816,7 +1162,10 @@ namespace Nuke.Common.Tools.GitVersion
         }
         #endregion
         #region Verbosity
-        /// <summary><p><em>Sets <see cref="GitVersionSettings.Verbosity"/>.</em></p><p>Set Verbosity level (<c>debug</c>, <c>info</c>, <c>warn</c>, <c>error</c>, <c>none</c>). Default is <c>info</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Sets <see cref="GitVersionSettings.Verbosity"/></em></p>
+        ///   <p>Set Verbosity level (<c>debug</c>, <c>info</c>, <c>warn</c>, <c>error</c>, <c>none</c>). Default is <c>info</c>.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings SetVerbosity(this GitVersionSettings toolSettings, GitVersionVerbosity verbosity)
         {
@@ -824,7 +1173,10 @@ namespace Nuke.Common.Tools.GitVersion
             toolSettings.Verbosity = verbosity;
             return toolSettings;
         }
-        /// <summary><p><em>Resets <see cref="GitVersionSettings.Verbosity"/>.</em></p><p>Set Verbosity level (<c>debug</c>, <c>info</c>, <c>warn</c>, <c>error</c>, <c>none</c>). Default is <c>info</c>.</p></summary>
+        /// <summary>
+        ///   <p><em>Resets <see cref="GitVersionSettings.Verbosity"/></em></p>
+        ///   <p>Set Verbosity level (<c>debug</c>, <c>info</c>, <c>warn</c>, <c>error</c>, <c>none</c>). Default is <c>info</c>.</p>
+        /// </summary>
         [Pure]
         public static GitVersionSettings ResetVerbosity(this GitVersionSettings toolSettings)
         {
@@ -836,7 +1188,9 @@ namespace Nuke.Common.Tools.GitVersion
     }
     #endregion
     #region GitVersionOutput
-    /// <summary><p>Used within <see cref="GitVersionTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="GitVersionTasks"/>.
+    /// </summary>
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]
@@ -848,7 +1202,9 @@ namespace Nuke.Common.Tools.GitVersion
     }
     #endregion
     #region GitVersionVerbosity
-    /// <summary><p>Used within <see cref="GitVersionTasks"/>.</p></summary>
+    /// <summary>
+    ///   Used within <see cref="GitVersionTasks"/>.
+    /// </summary>
     [PublicAPI]
     [Serializable]
     [ExcludeFromCodeCoverage]

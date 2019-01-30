@@ -31,7 +31,7 @@ namespace Nuke.Common.Tooling
                 toolSettings.EnvironmentVariables,
                 toolSettings.ExecutionTimeout,
                 toolSettings.LogOutput,
-                toolSettings.LogLevelParser,
+                toolSettings.CustomLogger,
                 arguments.FilterSecrets);
         }
 
@@ -43,7 +43,7 @@ namespace Nuke.Common.Tooling
             IReadOnlyDictionary<string, string> environmentVariables = null,
             int? timeout = null,
             bool logOutput = true,
-            Func<string, LogLevel> logLevelParser = null,
+            Action<OutputType, string> customLogger = null,
             Func<string, string> outputFilter = null)
         {
             ControlFlow.Assert(toolPath != null, "ToolPath was not set.");
@@ -68,7 +68,7 @@ namespace Nuke.Common.Tooling
                 environmentVariables,
                 timeout,
                 logOutput,
-                logLevelParser,
+                customLogger,
                 outputFilter ?? (x => x));
         }
 
@@ -98,7 +98,7 @@ namespace Nuke.Common.Tooling
             [CanBeNull] IReadOnlyDictionary<string, string> environmentVariables,
             int? timeout,
             bool logOutput,
-            [CanBeNull] Func<string, LogLevel> logLevelParser,
+            [CanBeNull] Action<OutputType, string> customLogger,
             [CanBeNull] Func<string, string> outputFilter)
         {
             ControlFlow.Assert(workingDirectory == null || Directory.Exists(workingDirectory),
@@ -108,7 +108,7 @@ namespace Nuke.Common.Tooling
                             {
                                 FileName = toolPath,
                                 Arguments = arguments ?? string.Empty,
-                                WorkingDirectory = workingDirectory ?? string.Empty,
+                                WorkingDirectory = workingDirectory ?? EnvironmentInfo.WorkingDirectory,
                                 RedirectStandardOutput = true,
                                 RedirectStandardError = true,
                                 UseShellExecute = false
@@ -121,7 +121,7 @@ namespace Nuke.Common.Tooling
             if (process == null)
                 return null;
 
-            var output = GetOutputCollection(process, logOutput, logLevelParser, outputFilter);
+            var output = GetOutputCollection(process, logOutput, customLogger ?? DefaultLogger, outputFilter);
             return new Process2(process, outputFilter, timeout, output);
         }
 
@@ -141,11 +141,10 @@ namespace Nuke.Common.Tooling
         private static BlockingCollection<Output> GetOutputCollection(
             Process process,
             bool logOutput,
-            Func<string, LogLevel> logLevelParser,
+            Action<OutputType, string> logger,
             Func<string, string> outputFilter)
         {
             var output = new BlockingCollection<Output>();
-            logLevelParser = logLevelParser ?? (x => LogLevel.Information);
 
             process.OutputDataReceived += (s, e) =>
             {
@@ -155,25 +154,7 @@ namespace Nuke.Common.Tooling
                 output.Add(new Output { Text = e.Data, Type = OutputType.Std });
 
                 if (logOutput)
-                {
-                    var logLevel = logLevelParser(e.Data);
-                    var text = outputFilter(e.Data);
-                    switch (logLevel)
-                    {
-                        case LogLevel.Trace:
-                            Logger.Trace(text);
-                            break;
-                        case LogLevel.Information:
-                            Logger.Info(text);
-                            break;
-                        case LogLevel.Warning:
-                            Logger.Warn(text);
-                            break;
-                        case LogLevel.Error:
-                            Logger.Error(text);
-                            break;
-                    }
-                }
+                    logger(OutputType.Std, outputFilter(e.Data));
             };
             process.ErrorDataReceived += (s, e) =>
             {
@@ -183,13 +164,21 @@ namespace Nuke.Common.Tooling
                 output.Add(new Output { Text = e.Data, Type = OutputType.Err });
 
                 if (logOutput)
-                    Logger.Error(outputFilter(e.Data));
+                    logger(OutputType.Err, outputFilter(e.Data));
             };
 
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
 
             return output;
+        }
+
+        public static void DefaultLogger(OutputType type, string output)
+        {
+            if (type == OutputType.Std)
+                Logger.Normal(output);
+            else
+                Logger.Error(output);
         }
 
         private static void PrintEnvironmentVariables(ProcessStartInfo startInfo)
@@ -217,7 +206,7 @@ namespace Nuke.Common.Tooling
 
         public static void CheckPathEnvironmentVariable()
         {
-            if (Logger.LogLevel >= LogLevel.Information)
+            if (Logger.LogLevel >= LogLevel.Normal)
                 return;
             
             EnvironmentInfo.Variables

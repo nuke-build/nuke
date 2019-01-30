@@ -102,12 +102,12 @@ namespace Nuke.Common.Tools.Unity
 
         private static void LogBlockEnd(MatchedBlock block)
         {
-            Logger.Log("End: " + block.Name.TrimEnd('\r', '\n'));
+            Logger.Normal("End: " + block.Name.TrimEnd('\r', '\n'));
         }
 
         private static void LogBlockStart(MatchedBlock block)
         {
-            Logger.Log("Start: " + block.Name.TrimEnd('\r', '\n'));
+            Logger.Normal("Start: " + block.Name.TrimEnd('\r', '\n'));
         }
     }
 }

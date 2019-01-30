@@ -6,6 +6,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.16.0] / 2019-01-30
+- Changed setting of default working directory for process invocations
+- Changed `Logger.Log` to `Logger.Normal`
+- Added `NukeBuild.Execute` overload without default target
+- Added `ContinueOnFailure` and `AssuredAfterFailure` as target definition methods
+- Added `AbsolutePath` extensions for `GlobDirectories/Files`
+- Added `AggregateException` handling to show number as prefix when flattening
+- Added `AnsiColorOutputSink` for Bitrise, TeamCity, Travis, TeamServices
+- Added `ProjectModelTasks.ParseProject` based on `Microsoft.Build` packages
+- Added `LocalExecutableAttribute`
+- Added `degreeOfParallelism` and `completeOnError` for combinatorial invocations
+- Added `[Tool].[Tool]Logger` as settable field for custom logging
+- Added `VerbosityMappingAttribute`
+- Added format-property map for CLI tasks
+- Fixed `EnsureCleanDirectory` to only clean instead of delete and recreate
+- Fixed `TeamCityOutputSink` to not report errors as build problems
+- Fixed `SolutionAttribute` to resolve first by constructor argument
+- Fixed `Xunit2ParallelOption` to use lower-case text
+
 ## [0.15.0] / 2019-01-16
 - Changed `OnlyWhen` to `OnlyWhenStatic` and `OnlyWhenDynamic`
 - Changed `graph` parameter to `plan`
@@ -268,7 +287,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/common/compare/0.15.0...HEAD
+[vNext]: https://github.com/nuke-build/common/compare/0.16.0...HEAD
+[0.16.0]: https://github.com/nuke-build/common/compare/0.15.0...0.16.0
 [0.15.0]: https://github.com/nuke-build/common/compare/0.14.1...0.15.0
 [0.14.1]: https://github.com/nuke-build/common/compare/0.14.0...0.14.1
 [0.14.0]: https://github.com/nuke-build/common/compare/0.13.0...0.14.0

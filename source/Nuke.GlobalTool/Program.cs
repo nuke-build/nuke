@@ -66,7 +66,7 @@ namespace Nuke.GlobalTool
 
             // TODO: docker
             
-            Logger.Log($"NUKE Global Tool {typeof(Program).Assembly.GetInformationalText()}");
+            Logger.Normal($"NUKE Global Tool {typeof(Program).Assembly.GetInformationalText()}");
 
             var arguments = args.Select(x => x.DoubleQuoteIfNeeded()).JoinSpace();
             var process = Build(buildScript, arguments);
@@ -93,7 +93,7 @@ namespace Nuke.GlobalTool
             ConsoleKey response;
             do
             {
-                Logger.Log($"{question} [y/n]");
+                Logger.Normal($"{question} [y/n]");
                 response = Console.ReadKey(intercept: true).Key;
             } while (response != ConsoleKey.Y && response != ConsoleKey.N);
 

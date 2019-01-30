@@ -4,9 +4,22 @@
 
 using System;
 using System.Linq;
+using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.DotNet
 {
+    public class DotNetVerbosityMappingAttribute : VerbosityMappingAttribute
+    {
+        public DotNetVerbosityMappingAttribute()
+            : base(typeof(DotNetVerbosity))
+        {
+            Quiet = nameof(DotNetVerbosity.Quiet);
+            Minimal = nameof(DotNetVerbosity.Minimal);
+            Normal = nameof(DotNetVerbosity.Normal);
+            Verbose = nameof(DotNetVerbosity.Detailed);
+        }
+    }
+
     partial class DotNetRunSettings
     {
         private string GetApplicationArguments()
@@ -17,37 +30,49 @@ namespace Nuke.Common.Tools.DotNet
 
     public static partial class DotNetTasks
     {
-        internal static LogLevel ParseLogLevel(string arg)
+        internal static void CustomLogger(OutputType type, string output)
         {
-            var spaces = 0;
-            for (var i = 0; i < arg.Length && spaces < 3; i++)
+            if (type == OutputType.Err)
             {
-                if (arg[i] == ' ')
+                Logger.Error(output);
+                return;
+            }
+
+            var spaces = 0;
+            for (var i = 0; i < output.Length && spaces < 3; i++)
+            {
+                if (output[i] == ' ')
                 {
                     spaces++;
                     continue;
                 }
 
                 if (i >= 4 &&
-                    'e' == arg[i - 4] &&
-                    'r' == arg[i - 3] &&
-                    'r' == arg[i - 2] &&
-                    'o' == arg[i - 1] &&
-                    'r' == arg[i])
-                    return LogLevel.Error;
+                    'e' == output[i - 4] &&
+                    'r' == output[i - 3] &&
+                    'r' == output[i - 2] &&
+                    'o' == output[i - 1] &&
+                    'r' == output[i])
+                {
+                    Logger.Error(output);
+                    return;
+                }
 
                 if (i >= 6 &&
-                    'w' == arg[i - 6] &&
-                    'a' == arg[i - 5] &&
-                    'r' == arg[i - 4] &&
-                    'n' == arg[i - 3] &&
-                    'i' == arg[i - 2] &&
-                    'n' == arg[i - 1] &&
-                    'g' == arg[i])
-                    return LogLevel.Warning;
+                    'w' == output[i - 6] &&
+                    'a' == output[i - 5] &&
+                    'r' == output[i - 4] &&
+                    'n' == output[i - 3] &&
+                    'i' == output[i - 2] &&
+                    'n' == output[i - 1] &&
+                    'g' == output[i])
+                {
+                    Logger.Warn(output);
+                    return;
+                }
             }
 
-            return LogLevel.Information;
+            Logger.Normal(output);
         }
     }
 }
