@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [0.16.0] / 2019-01-30
 - Changed setting of default working directory for process invocations
 - Changed `Logger.Log` to `Logger.Normal`
 - Added `NukeBuild.Execute` overload without default target
@@ -285,7 +287,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/common/compare/0.15.0...HEAD
+[vNext]: https://github.com/nuke-build/common/compare/0.16.0...HEAD
+[0.16.0]: https://github.com/nuke-build/common/compare/0.15.0...0.16.0
 [0.15.0]: https://github.com/nuke-build/common/compare/0.14.1...0.15.0
 [0.14.1]: https://github.com/nuke-build/common/compare/0.14.0...0.14.1
 [0.14.0]: https://github.com/nuke-build/common/compare/0.13.0...0.14.0
