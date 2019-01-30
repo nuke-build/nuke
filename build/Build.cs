@@ -15,6 +15,7 @@ using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.InspectCode;
 using Nuke.Common.Tools.Slack;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.ControlFlow;
 using static Nuke.Common.Gitter.GitterTasks;
@@ -58,7 +59,7 @@ partial class Build : NukeBuild
         .Before(Restore)
         .Executes(() =>
         {
-            DeleteDirectories(GlobDirectories(SourceDirectory, "*/bin", "*/obj"));
+            SourceDirectory.GlobDirectories("*/bin", "*/obj").ForEach(DeleteDirectory);
             EnsureCleanDirectory(OutputDirectory);
         });
 
