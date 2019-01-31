@@ -21,7 +21,6 @@ namespace Nuke.Common.Tooling
         {
             var variables = EnvironmentInfo.GetVariables();
             EnvironmentVariablesInternal = new Dictionary<string, string>(variables, variables.Comparer);
-            LogOutput = true; // TODO: could be controlled by NukeBuild parameter
             VerbosityMapping.Apply(this);
         }
 
@@ -32,6 +31,7 @@ namespace Nuke.Common.Tooling
         internal Dictionary<string, string> EnvironmentVariablesInternal { get; set; }
         public int? ExecutionTimeout { get; internal set; }
         public bool LogOutput { get; internal set; }
+        public bool LogInvocation { get; internal set; }
 
         public abstract Action<OutputType, string> CustomLogger { get; }
 

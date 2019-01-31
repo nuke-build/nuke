@@ -20,7 +20,7 @@ namespace Nuke.Common.Tooling
 
         public static IProcessManager Instance { get; private set; } = new ProcessManager();
 
-        public virtual IProcess StartProcess(ToolSettings toolSettings)
+        public IProcess StartProcess(ToolSettings toolSettings)
         {
             var arguments = toolSettings.GetArguments();
 
@@ -31,18 +31,20 @@ namespace Nuke.Common.Tooling
                 toolSettings.EnvironmentVariables,
                 toolSettings.ExecutionTimeout,
                 toolSettings.LogOutput,
+                toolSettings.LogInvocation,
                 toolSettings.CustomLogger,
                 arguments.FilterSecrets);
         }
 
-        public virtual IProcess StartProcess(
+        public IProcess StartProcess(
             string toolPath,
             string executionArguments = null,
             string outputArguments = null,
             string workingDirectory = null,
             IReadOnlyDictionary<string, string> environmentVariables = null,
             int? timeout = null,
-            bool logOutput = true,
+            bool? logOutput = null,
+            bool? logInvocation = null,
             Action<OutputType, string> customLogger = null,
             Func<string, string> outputFilter = null)
         {
@@ -60,14 +62,15 @@ namespace Nuke.Common.Tooling
 
             outputArguments = outputArguments ?? (outputFilter == null ? executionArguments : outputFilter(executionArguments));
             ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
-            Logger.Info($"> {Path.GetFullPath(toolPath).DoubleQuoteIfNeeded()} {outputArguments}");
+            if (logInvocation ?? ProcessTasks.DefaultLogInvocation)
+                Logger.Info($"> {Path.GetFullPath(toolPath).DoubleQuoteIfNeeded()} {outputArguments}");
 
             return StartProcessInternal(toolPath,
                 executionArguments,
                 workingDirectory,
                 environmentVariables,
                 timeout,
-                logOutput,
+                logOutput ?? ProcessTasks.DefaultLogOutput,
                 customLogger,
                 outputFilter ?? (x => x));
         }
@@ -91,7 +94,7 @@ namespace Nuke.Common.Tooling
 
         // TODO: add default values
         [CanBeNull]
-        internal static IProcess StartProcessInternal(
+        private static IProcess StartProcessInternal(
             string toolPath,
             [CanBeNull] string arguments,
             [CanBeNull] string workingDirectory,

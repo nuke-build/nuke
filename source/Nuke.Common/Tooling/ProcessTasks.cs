@@ -13,6 +13,9 @@ namespace Nuke.Common.Tooling
     [PublicAPI]
     public static class ProcessTasks
     {
+        public static bool DefaultLogOutput = true;
+        public static bool DefaultLogInvocation = true;
+        
         /// <summary>
         /// Starts a process using <see cref="Process"/>.
         /// </summary>
@@ -23,7 +26,8 @@ namespace Nuke.Common.Tooling
             string workingDirectory = null,
             IReadOnlyDictionary<string, string> environmentVariables = null,
             int? timeout = null,
-            bool logOutput = true,
+            bool? logOutput = null,
+            bool? logInvocation = null,
             Action<OutputType, string> customLogger = null,
             Func<string, string> outputFilter = null)
         {
@@ -34,6 +38,7 @@ namespace Nuke.Common.Tooling
                 environmentVariables,
                 timeout,
                 logOutput,
+                logInvocation,
                 customLogger,
                 outputFilter);
         }

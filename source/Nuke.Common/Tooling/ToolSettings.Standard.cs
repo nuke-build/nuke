@@ -95,6 +95,36 @@ namespace Nuke.Common.Tooling
             newToolSettings.LogOutput = false;
             return newToolSettings;
         }
+        
+        ///<summary>Sets <see cref="ToolSettings.LogInvocation"/> -- <inheritdoc cref="ToolSettings.LogInvocation" /></summary>
+        [Pure]
+        public static T SetLogInvocation<T>(this T toolSettings, bool enableInvocation)
+            where T : ToolSettings
+        {
+            var newToolSettings = toolSettings.NewInstance();
+            newToolSettings.LogInvocation = enableInvocation;
+            return newToolSettings;
+        }
+
+        ///<summary>Enables <see cref="ToolSettings.LogInvocation"/> -- <inheritdoc cref="ToolSettings.LogInvocation" /></summary>
+        [Pure]
+        public static T EnableLogInvocation<T>(this T toolSettings)
+            where T : ToolSettings
+        {
+            var newToolSettings = toolSettings.NewInstance();
+            newToolSettings.LogInvocation = true;
+            return newToolSettings;
+        }
+
+        ///<summary>Disables <see cref="ToolSettings.LogInvocation"/> -- <inheritdoc cref="ToolSettings.LogInvocation" /></summary>
+        [Pure]
+        public static T DisableLogInvocation<T>(this T toolSettings)
+            where T : ToolSettings
+        {
+            var newToolSettings = toolSettings.NewInstance();
+            newToolSettings.LogInvocation = false;
+            return newToolSettings;
+        }
 
         ///<summary>Sets <see cref="ToolSettings.ToolPath"/> -- <inheritdoc cref="ToolSettings.ToolPath" /></summary>
         [Pure]
