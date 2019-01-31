@@ -15,7 +15,7 @@ namespace Nuke.Common.Execution
     {
         public void Execute(NukeBuild build)
         {
-            ProcessManager.CheckPathEnvironmentVariable();
+            ProcessTasks.CheckPathEnvironmentVariable();
         }
     }
 }

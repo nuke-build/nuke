@@ -79,7 +79,7 @@ namespace Nuke.Common.Tooling
                 ? @"C:\Windows\System32\where.exe"
                 : "/usr/bin/which";
 
-            var locateProcess = ProcessManager.Instance.StartProcess(
+            var locateProcess = ProcessTasks.StartProcess(
                 locateExecutable,
                 pathExecutable,
                 logOutput: false,
