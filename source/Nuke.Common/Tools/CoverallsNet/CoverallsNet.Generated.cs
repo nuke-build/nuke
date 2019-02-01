@@ -29,13 +29,13 @@ namespace Nuke.Common.Tools.CoverallsNet
         public static string CoverallsNetPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("COVERALLSNET_EXE") ??
             ToolPathResolver.GetPackageExecutable("coveralls.net", "csmacnz.Coveralls.exe");
-        public static Action<OutputType, string> CoverallsNetLogger { get; set; } = ProcessManager.DefaultLogger;
+        public static Action<OutputType, string> CoverallsNetLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.
         /// </summary>
-        public static IReadOnlyCollection<Output> CoverallsNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> CoverallsNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(CoverallsNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, CoverallsNetLogger, outputFilter);
+            var process = ProcessTasks.StartProcess(CoverallsNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, CoverallsNetLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

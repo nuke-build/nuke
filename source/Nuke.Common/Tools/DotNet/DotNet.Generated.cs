@@ -30,9 +30,9 @@ namespace Nuke.Common.Tools.DotNet
             ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE") ??
             ToolPathResolver.GetPathExecutable("dotnet");
         public static Action<OutputType, string> DotNetLogger { get; set; } = CustomLogger;
-        public static IReadOnlyCollection<Output> DotNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> DotNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(DotNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, DotNetLogger, outputFilter);
+            var process = ProcessTasks.StartProcess(DotNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, DotNetLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

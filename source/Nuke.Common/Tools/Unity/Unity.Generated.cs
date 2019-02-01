@@ -29,13 +29,13 @@ namespace Nuke.Common.Tools.Unity
         public static string UnityPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("UNITY_EXE") ??
             GetToolPath();
-        public static Action<OutputType, string> UnityLogger { get; set; } = ProcessManager.DefaultLogger;
+        public static Action<OutputType, string> UnityLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   Unity is usually launched by double-clicking its icon from the desktop. However, it is also possible to run it from the command line (from the macOS Terminal or the Windows Command Prompt). When launched in this way, Unity can receive commands and information on startup, which can be very useful for test suites, automated builds and other production tasks.
         /// </summary>
-        public static IReadOnlyCollection<Output> Unity(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Unity(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(UnityPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, UnityLogger, outputFilter);
+            var process = ProcessTasks.StartProcess(UnityPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, UnityLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

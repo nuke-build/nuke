@@ -29,13 +29,13 @@ namespace Nuke.Common.Tools.GitVersion
         public static string GitVersionPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("GITVERSION_EXE") ??
             GetToolPath();
-        public static Action<OutputType, string> GitVersionLogger { get; set; } = ProcessManager.DefaultLogger;
+        public static Action<OutputType, string> GitVersionLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   GitVersion is a tool to help you achieve Semantic Versioning on your project.
         /// </summary>
-        public static IReadOnlyCollection<Output> GitVersion(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> GitVersion(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(GitVersionPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, GitVersionLogger, outputFilter);
+            var process = ProcessTasks.StartProcess(GitVersionPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, GitVersionLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

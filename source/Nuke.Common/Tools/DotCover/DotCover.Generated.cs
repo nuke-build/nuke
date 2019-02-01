@@ -29,13 +29,13 @@ namespace Nuke.Common.Tools.DotCover
         public static string DotCoverPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("DOTCOVER_EXE") ??
             ToolPathResolver.GetPackageExecutable("JetBrains.dotCover.CommandLineTools", "dotCover.exe");
-        public static Action<OutputType, string> DotCoverLogger { get; set; } = ProcessManager.DefaultLogger;
+        public static Action<OutputType, string> DotCoverLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.
         /// </summary>
-        public static IReadOnlyCollection<Output> DotCover(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> DotCover(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(DotCoverPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, DotCoverLogger, outputFilter);
+            var process = ProcessTasks.StartProcess(DotCoverPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, DotCoverLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

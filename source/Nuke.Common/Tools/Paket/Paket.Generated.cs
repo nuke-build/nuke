@@ -29,13 +29,13 @@ namespace Nuke.Common.Tools.Paket
         public static string PaketPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("PAKET_EXE") ??
             ToolPathResolver.GetPackageExecutable("Paket", "paket.exe");
-        public static Action<OutputType, string> PaketLogger { get; set; } = ProcessManager.DefaultLogger;
+        public static Action<OutputType, string> PaketLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href="https://www.nuget.org/">NuGet</a> packages and also enables referencing files directly from <a href="https://fsprojects.github.io/Paket/git-dependencies.html">Git repositories</a> or any <a href="https://fsprojects.github.io/Paket/http-dependencies.html">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href="https://fsprojects.github.io/Paket/getting-started.html"><em>Getting started</em> tutorial</a> and take a look at the <a href="https://fsprojects.github.io/Paket/faq.html">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href="https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion">convert from NuGet</a> section.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Paket(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Paket(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(PaketPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, PaketLogger, outputFilter);
+            var process = ProcessTasks.StartProcess(PaketPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, PaketLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

@@ -29,13 +29,13 @@ namespace Nuke.Common.Tools.Squirrel
         public static string SquirrelPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("SQUIRREL_EXE") ??
             ToolPathResolver.GetPackageExecutable("Squirrel.Windows", "Squirrel.exe");
-        public static Action<OutputType, string> SquirrelLogger { get; set; } = ProcessManager.DefaultLogger;
+        public static Action<OutputType, string> SquirrelLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).
         /// </summary>
-        public static IReadOnlyCollection<Output> Squirrel(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Squirrel(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(SquirrelPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, SquirrelLogger, outputFilter);
+            var process = ProcessTasks.StartProcess(SquirrelPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, SquirrelLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

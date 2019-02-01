@@ -29,13 +29,13 @@ namespace Nuke.Common.Tools.SonarScanner
         public static string SonarScannerPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("SONARSCANNER_EXE") ??
             ToolPathResolver.GetPackageExecutable("MSBuild.SonarQube.Runner.Tool", "SonarScanner.MSBuild.exe");
-        public static Action<OutputType, string> SonarScannerLogger { get; set; } = ProcessManager.DefaultLogger;
+        public static Action<OutputType, string> SonarScannerLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.
         /// </summary>
-        public static IReadOnlyCollection<Output> SonarScanner(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> SonarScanner(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(SonarScannerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, SonarScannerLogger, outputFilter);
+            var process = ProcessTasks.StartProcess(SonarScannerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, SonarScannerLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

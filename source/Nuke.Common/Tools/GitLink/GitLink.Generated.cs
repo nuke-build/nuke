@@ -29,13 +29,13 @@ namespace Nuke.Common.Tools.GitLink
         public static string GitLinkPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("GITLINK_EXE") ??
             ToolPathResolver.GetPackageExecutable("gitlink", "GitLink.exe");
-        public static Action<OutputType, string> GitLinkLogger { get; set; } = ProcessManager.DefaultLogger;
+        public static Action<OutputType, string> GitLinkLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.
         /// </summary>
-        public static IReadOnlyCollection<Output> GitLink(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> GitLink(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(GitLinkPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, GitLinkLogger, outputFilter);
+            var process = ProcessTasks.StartProcess(GitLinkPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, GitLinkLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

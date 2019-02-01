@@ -29,13 +29,13 @@ namespace Nuke.Common.Tools.DupFinder
         public static string DupFinderPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("DUPFINDER_EXE") ??
             ToolPathResolver.GetPackageExecutable("JetBrains.ReSharper.CommandLineTools", "dupfinder.exe");
-        public static Action<OutputType, string> DupFinderLogger { get; set; } = ProcessManager.DefaultLogger;
+        public static Action<OutputType, string> DupFinderLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   dupFinder is a free command line tool that finds duplicates in C# and Visual Basic .NET code - no more, no less. But being a JetBrains tool, dupFinder does it in a smart way. By default, it considers code fragments as duplicates not only if they are identical, but also if they are structurally similar, even if they contain different variables, fields, methods, types or literals. Of course, you can configure the allowed similarity as well as the minimum relative size of duplicated fragments.
         /// </summary>
-        public static IReadOnlyCollection<Output> DupFinder(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> DupFinder(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(DupFinderPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, DupFinderLogger, outputFilter);
+            var process = ProcessTasks.StartProcess(DupFinderPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, DupFinderLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

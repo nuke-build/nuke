@@ -29,13 +29,13 @@ namespace Nuke.Common.Tools.NuGet
         public static string NuGetPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("NUGET_EXE") ??
             ToolPathResolver.GetPackageExecutable("NuGet.CommandLine", "nuget.exe");
-        public static Action<OutputType, string> NuGetLogger { get; set; } = ProcessManager.DefaultLogger;
+        public static Action<OutputType, string> NuGetLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.
         /// </summary>
-        public static IReadOnlyCollection<Output> NuGet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> NuGet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(NuGetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, NuGetLogger, outputFilter);
+            var process = ProcessTasks.StartProcess(NuGetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, NuGetLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
