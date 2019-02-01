@@ -48,7 +48,8 @@ namespace Nuke.CodeGeneration.Generators
                                  "string workingDirectory = null",
                                  "IReadOnlyDictionary<string, string> environmentVariables = null",
                                  "int? timeout = null",
-                                 "bool logOutput = true",
+                                 "bool? logOutput = null",
+                                 "bool? logInvocation = null",
                                  "Func<string, string> outputFilter = null"
                              };
             var arguments = new[]
@@ -59,6 +60,7 @@ namespace Nuke.CodeGeneration.Generators
                                 "environmentVariables",
                                 "timeout",
                                 "logOutput",
+                                "logInvocation",
                                 $"{tool.Name}Logger",
                                 "outputFilter"
                             };
@@ -178,7 +180,7 @@ namespace Nuke.CodeGeneration.Generators
         private static ToolWriter WriteLogger(this ToolWriter writer)
         {
             var tool = writer.Tool;
-            var logger = tool.CustomLogger ? "CustomLogger" : "ProcessManager.DefaultLogger";
+            var logger = tool.CustomLogger ? "CustomLogger" : "ProcessTasks.DefaultLogger";
             return writer
                 .WriteLine($"public static Action<OutputType, string> {tool.Name}Logger {{ get; set; }} = {logger};");
         }
