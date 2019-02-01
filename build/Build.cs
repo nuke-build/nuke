@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Nuke.Common;
 using Nuke.Common.Git;
+using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -14,6 +15,7 @@ using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.IO.SerializationTasks;
 using static Nuke.Common.IO.TextTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
+using static Nuke.Common.Utilities.TemplateUtility;
 using static TeamCityManager;
 
 partial class Build : NukeBuild
@@ -90,7 +92,7 @@ partial class Build : NukeBuild
     string ProjectNameDashed => ProjectName.ToLowerInvariant().Replace(".", "-");
     [Parameter] readonly string[] Description;
     [Parameter] readonly string DefaultBranch = "master";
-    [PathExecutable] readonly Tool Hub;
+    // [PathExecutable] readonly Tool Hub;
     
     Target Add => _ => _
         .Requires(() => ProjectName)
@@ -100,49 +102,53 @@ partial class Build : NukeBuild
             var repositoryDirectory = RepositoriesDirectory / Organization / ProjectNameDashed;
             using (SwitchWorkingDirectory(repositoryDirectory))
             {
-                CopyTemplate(repositoryDirectory);
-                EnsureCleanDirectory(repositoryDirectory / ".git");
-                ExecuteWithRetry(() => PrepareSolution(GlobalSolutionFile), retryAttempts: 5);
+                var templateDirectory = RepositoriesDirectory / Organization / "template";
+                CopyDirectoryRecursively(
+                    templateDirectory,
+                    repositoryDirectory,
+                    excludeDirectory: IsDotDirectory,
+                    directoryPolicy: DirectoryExistsPolicy.Merge);
+        
+                FillTemplateDirectoryRecursively(
+                    repositoryDirectory,
+                    replacements: new Dictionary<string, string>
+                                  {
+                                      { "Template", ProjectName },
+                                      { "template", ProjectNameDashed }
+                                  },
+                    excludeDirectory: IsDotDirectory,
+                    excludeFile: x => x.FullName.EndsWithOrdinalIgnoreCase("DotSettings"));
+                
+                // ExecuteWithRetry(() => PrepareSolution(GlobalSolutionFile), retryAttempts: 5);
 
-                Git("init");
-                Git($"checkout -b {DefaultBranch}");
-                Git($"commit -m {"Initialize repository".DoubleQuote()} --allow-empty");
-                Git("add .");
-                Git($"commit -m {"Add template files".DoubleQuote()}");
+                // Git("init");
+                // Git($"checkout -b {DefaultBranch}");
+                // Git($"commit -m {"Initialize repository".DoubleQuote()} --allow-empty");
+                // Git("add .");
+                // Git($"commit -m {"Add template files".DoubleQuote()}");
                 // Hub($"create {Organization}/{LispName} -d {Description.JoinSpace().DoubleQuoteIfNeeded()} -h https://nuke.build");
             }
 
-            var updatedRepositories = Repositories
-                .Concat(GitRepository.FromUrl($"https://github.com/{Organization}/{ProjectNameDashed}", DefaultBranch))
-                .Select(x => $"{x.HttpsUrl}#{x.Branch}").OrderBy(x => x).ToList();
-            YamlSerializeToFile(updatedRepositories, RepositoriesFile);
-            Git($"add {RepositoriesFile}");
-            Git($"commit -m {$"Add {ProjectNameDashed}".DoubleQuote()}");
+            // var updatedRepositories = Repositories
+            //     .Concat(GitRepository.FromUrl($"https://github.com/{Organization}/{ProjectNameDashed}", DefaultBranch))
+            //     .Select(x => $"{x.HttpsUrl}#{x.Branch}").OrderBy(x => x).ToList();
+            // YamlSerializeToFile(updatedRepositories, RepositoriesFile);
+            // Git($"add {RepositoriesFile}");
+            // Git($"commit -m {$"Add {ProjectNameDashed}".DoubleQuote()}");
         });
 
     void CopyTemplate(AbsolutePath repositoryDirectory)
     {
         var templateDirectory = RepositoriesDirectory / Organization / "template";
-        CopyDirectoryRecursively(templateDirectory, repositoryDirectory);
-
-        var replacements = new Dictionary<string, string>
-                           {
-                               { "Template", ProjectName },
-                               { "template", ProjectNameDashed }
-                           };
-        new[]
-        {
-            (RelativePath) ".nuke",
-            (RelativePath) "nuke-template.sln",
-            (RelativePath) "src" / "Nuke.Template.Tests" / "Nuke.Template.Tests.csproj"
-        }.ForEach(x => FillTemplateFile(repositoryDirectory / x, replacements: replacements));
-
-        GlobDirectories(repositoryDirectory, "**/Nuke.*").ToList()
-            .ForEach(x => Directory.Move(x, x.Replace("Template", ProjectName)));
-        GlobFiles(repositoryDirectory, "**/Nuke.*").ToList()
-            .ForEach(x => File.Move(x, x.Replace("Template", ProjectName)));
-        GlobFiles(repositoryDirectory, "nuke-*").ToList()
-            .ForEach(x => File.Move(x, x.Replace("template", ProjectNameDashed)));
+        CopyDirectoryRecursively(templateDirectory, repositoryDirectory, excludeDirectory: IsDotDirectory);
+        
+        FillTemplateDirectoryRecursively(
+            repositoryDirectory,
+            replacements: new Dictionary<string, string>
+                          {
+                              { "Template", ProjectName },
+                              { "template", ProjectNameDashed }
+                          });
     }
 
     Target Readme => _ => _
@@ -158,13 +164,4 @@ partial class Build : NukeBuild
         {
             WriteTeamCityConfiguration(TeamCityFile, Repositories.ToList());
         });
-
-    void FillTemplateFile(
-        string templateFile,
-        IReadOnlyCollection<string> definitions = null,
-        IReadOnlyDictionary<string, string> replacements = null)
-    {
-        var templateContent = ReadAllText(templateFile);
-        WriteAllText(templateFile, TemplateUtility.FillTemplate(templateContent, definitions, replacements));
-    }
 }

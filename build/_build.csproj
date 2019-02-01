@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Nuke.Common" Version="0.*  " />
+    <PackageReference Include="Nuke.Common" Version="0.*" />
     <PackageReference Include="GitVersion.CommandLine" Version="3.6.5" />
   </ItemGroup>
 
