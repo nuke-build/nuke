@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Tooling;
@@ -13,7 +14,7 @@ namespace Nuke.Common.Execution
     [AttributeUsage(AttributeTargets.Class)]
     public class CheckPathEnvironmentVariableAttribute : Attribute, IPostLogoBuildExtension
     {
-        public void Execute(NukeBuild build)
+        public void Execute(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             ProcessTasks.CheckPathEnvironmentVariable();
         }
