@@ -262,6 +262,7 @@ namespace Nuke.Common.IO
                 : path.TrimEnd(WinSeparator, UnixSeparator, UncSeparator);
         }
 
+        [Serializable]
         [DebuggerDisplay("{" + nameof(_path) + "}")]
         public class RelativePath
         {
@@ -299,6 +300,7 @@ namespace Nuke.Common.IO
             }
         }
 
+        [Serializable]
         public class UnixRelativePath : RelativePath
         {
             protected UnixRelativePath(string path, char? separator)
@@ -312,6 +314,7 @@ namespace Nuke.Common.IO
             }
         }
 
+        [Serializable]
         public class WinRelativePath : RelativePath
         {
             protected WinRelativePath(string path, char? separator)
@@ -325,8 +328,9 @@ namespace Nuke.Common.IO
             }
         }
 
-        [DebuggerDisplay("{" + nameof(_path) + "}")]
+        [Serializable]
         [TypeConverter(typeof(TypeConverter))]
+        [DebuggerDisplay("{" + nameof(_path) + "}")]
         public class AbsolutePath
         {
             public class TypeConverter : System.ComponentModel.TypeConverter
