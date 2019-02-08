@@ -4,9 +4,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using JetBrains.Annotations;
+using static Nuke.Common.Execution.ReflectionService;
 
 namespace Nuke.Common.ProjectModel
 {
@@ -68,22 +68,6 @@ namespace Nuke.Common.ProjectModel
                 return targetFrameworksProperty.EvaluatedValue.Split(';');
 
             return new string[0];
-        }
-        
-        [CanBeNull]
-        private static T Convert<T>(string value)
-        {
-            try
-            {
-                var typeConverter = TypeDescriptor.GetConverter(typeof(T));
-                return (T)typeConverter.ConvertFromInvariantString(value);
-            }
-            catch
-            {
-                ControlFlow.Fail($"Value '{value}' could not be converted to '{typeof(T).Name}'.");
-                // ReSharper disable once HeuristicUnreachableCode
-                return default;
-            }
         }
     }
 }

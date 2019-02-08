@@ -5,9 +5,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Nuke.Common.Utilities;
+using static Nuke.Common.Execution.ReflectionService;
 
 namespace Nuke.Common.Tooling
 {
@@ -15,7 +15,7 @@ namespace Nuke.Common.Tooling
     {
         public static void ToggleBoolean(IDictionary dictionary, string key)
         {
-            dictionary[key] = !dictionary.Contains(key) || !Convert<bool>(dictionary[key]);
+            dictionary[key] = !dictionary.Contains(key) || !Convert<bool>(dictionary[key].ToString());
         }
 
         public static void SetCollection<T>(IDictionary dictionary, string key, IEnumerable<T> values, char separator)
@@ -53,12 +53,6 @@ namespace Nuke.Common.Tooling
         private static string CollectionToString<T>(IEnumerable<T> collection, char separator)
         {
             return collection.Select(x => x.ToString()).Join(separator);
-        }
-
-        private static T Convert<T>(object value)
-        {
-            var typeConverter = TypeDescriptor.GetConverter(typeof(T));
-            return (T) typeConverter.ConvertFromInvariantString(value.ToString());
         }
     }
 }

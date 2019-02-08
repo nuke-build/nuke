@@ -11,6 +11,7 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using static Nuke.Common.Execution.ReflectionService;
 
 namespace Nuke.Common.Execution
 {
@@ -270,44 +271,16 @@ namespace Nuke.Common.Execution
             var convertedValues = values.Select(x => Convert(x, elementType)).ToList();
             if (!destinationType.IsArray)
             {
-                ControlFlow.Assert(convertedValues.Count == 1, $"Value [ {values.JoinComma()} ] cannot be assigned to '{GetName(destinationType)}'.");
+                ControlFlow.Assert(convertedValues.Count == 1, $"Value [ {values.JoinComma()} ] cannot be assigned to '{GetPresentableName(destinationType)}'.");
                 return convertedValues.Single();
             }
 
             var array = Array.CreateInstance(elementType, convertedValues.Count);
             convertedValues.ForEach((x, i) => array.SetValue(x, i));
             ControlFlow.Assert(destinationType.IsInstanceOfType(array),
-                $"Type '{GetName(array.GetType())}' is not an instance of '{GetName(destinationType)}'.");
+                $"Type '{GetPresentableName(array.GetType())}' is not an instance of '{GetPresentableName(destinationType)}'.");
 
             return array;
-        }
-
-        [CanBeNull]
-        private object Convert(string value, Type destinationType)
-        {
-            try
-            {
-                var typeConverter = TypeDescriptor.GetConverter(destinationType);
-                return typeConverter.ConvertFromInvariantString(value);
-            }
-            catch
-            {
-                ControlFlow.Fail($"Value '{value}' could not be converted to '{GetName(destinationType)}'.");
-                // ReSharper disable once HeuristicUnreachableCode
-                return null;
-            }
-        }
-
-        private string GetName(Type type)
-        {
-            if (type.IsArray)
-                return $"{type.GetElementType().NotNull().Name}[]";
-
-            var underlyingType = Nullable.GetUnderlyingType(type);
-            if (underlyingType != null)
-                return underlyingType.Name + "?";
-
-            return type.Name;
         }
 
         private void CheckNames(string name, IEnumerable<string> candidates)

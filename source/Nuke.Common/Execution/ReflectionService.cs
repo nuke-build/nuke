@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -67,7 +68,54 @@ namespace Nuke.Common.Execution
 
         public static Type GetFieldOrPropertyType(this MemberInfo member)
         {
-            return (member as FieldInfo)?.FieldType ?? ((PropertyInfo) member).PropertyType;
+            switch (member)
+            {
+                case FieldInfo fieldInfo:
+                    return fieldInfo.FieldType;
+                case PropertyInfo propertyInfo:
+                    return propertyInfo.PropertyType;
+                default:
+                    throw new NotSupportedException();
+            }
+        }
+
+        public static T Convert<T>(string value)
+        {
+            return (T) Convert(value, typeof(T));
+        }
+
+        [CanBeNull]
+        public static object Convert(object value, Type destinationType)
+        {
+            if (destinationType.IsInstanceOfType(value))
+                return value;
+
+            if (destinationType == typeof(string) && value == null)
+                return null;
+            
+            try
+            {
+                var typeConverter = TypeDescriptor.GetConverter(destinationType);
+                return typeConverter.ConvertFromInvariantString(value?.ToString());
+            }
+            catch
+            {
+                ControlFlow.Fail($"Value '{value}' could not be converted to '{GetPresentableName(destinationType)}'.");
+                // ReSharper disable once HeuristicUnreachableCode
+                return null;
+            }
+        }
+
+        public static string GetPresentableName(Type type)
+        {
+            if (type.IsArray)
+                return $"{type.GetElementType().NotNull().Name}[]";
+
+            var underlyingType = Nullable.GetUnderlyingType(type);
+            if (underlyingType != null)
+                return underlyingType.Name + "?";
+
+            return type.Name;
         }
     }
 }
