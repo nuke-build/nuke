@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using JetBrains.Annotations;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Execution
@@ -18,23 +19,27 @@ namespace Nuke.Common.Execution
         public const BindingFlags Instance = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
         public const BindingFlags Static = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
 
-        public static void SetValue(object instance, string memberName, object value)
+        public static T GetValue<T>(this MemberInfo member, object obj = null, object[] args = null)
         {
-            var member = instance.GetType().GetMember(memberName, All)
-                .SingleOrDefault()
-                .NotNull($"Could not find member '{memberName}' on type '{instance.GetType()}'.");
-            SetValue(instance, member, value);
-        }
-        
-        public static void SetValue(Type type, string memberName, object value)
-        {
-            var member = type.GetMember(memberName, All)
-                .SingleOrDefault()
-                .NotNull($"Could not find member '{memberName}' on type '{type}'.");
-            SetValue(instance: null, member, value);
+            return (T) GetValue(member, obj, args);
         }
 
-        public static void SetValue(object instance, MemberInfo member, object value)
+        public static object GetValue(this MemberInfo member, object obj = null, object[] args = null)
+        {
+            switch (member)
+            {
+                case FieldInfo fieldInfo:
+                    return fieldInfo.GetValue(obj);
+                case PropertyInfo propertyInfo:
+                    return propertyInfo.GetValue(obj);
+                case MethodInfo methodInfo:
+                    return methodInfo.Invoke(obj, args);
+                default:
+                    throw new NotSupportedException();
+            }
+        }
+
+        public static void SetValue(this MemberInfo member, object instance, object value)
         {
             if (member is FieldInfo field)
             {
@@ -66,7 +71,7 @@ namespace Nuke.Common.Execution
             return memberExpression.Member;
         }
 
-        public static Type GetFieldOrPropertyType(this MemberInfo member)
+        public static Type GetMemberType(this MemberInfo member)
         {
             switch (member)
             {
@@ -74,6 +79,8 @@ namespace Nuke.Common.Execution
                     return fieldInfo.FieldType;
                 case PropertyInfo propertyInfo:
                     return propertyInfo.PropertyType;
+                case MethodInfo methodInfo:
+                    return methodInfo.ReturnType;
                 default:
                     throw new NotSupportedException();
             }
