@@ -97,13 +97,16 @@ namespace Nuke.Common.Tooling
             }
             finally
             {
-                invocations
-                    .Where(x => x.Settings.LogOutput)
-                    .SelectMany(x =>
-                        !(x.Exception is ProcessException processException)
-                            ? outputSelector(x.Result)
-                            : processException.Process.Output)
-                    .ForEach(x => logger(x.Type, x.Text));
+                if (!singleExecution)
+                {
+                    invocations
+                        .Where(x => x.Settings.LogOutput ?? ProcessTasks.DefaultLogOutput)
+                        .SelectMany(x =>
+                            !(x.Exception is ProcessException processException)
+                                ? outputSelector(x.Result)
+                                : processException.Process.Output)
+                        .ForEach(x => logger(x.Type, x.Text));
+                }
             }
         }
 
