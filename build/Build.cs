@@ -87,17 +87,18 @@ partial class Build : NukeBuild
                 .SetInformationalVersion(GitVersion.InformationalVersion));
 
             DotNetPublish(s => s
-                .EnableNoRestore()
-                .SetConfiguration(Configuration)
-                .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())
-                .SetFileVersion(GitVersion.GetNormalizedFileVersion())
-                .SetInformationalVersion(GitVersion.InformationalVersion)
-                .CombineWith(
-                    from project in new[] { GlobalToolProject, CommonProject, CodeGenerationProject }
-                    from framework in project.GetTargetFrameworks()
-                    select new { project, framework }, (cs, v) => cs
-                        .SetProject(v.project)
-                        .SetFramework(v.framework)));
+                    .EnableNoRestore()
+                    .SetConfiguration(Configuration)
+                    .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())
+                    .SetFileVersion(GitVersion.GetNormalizedFileVersion())
+                    .SetInformationalVersion(GitVersion.InformationalVersion)
+                    .CombineWith(
+                        from project in new[] { GlobalToolProject, CommonProject, CodeGenerationProject }
+                        from framework in project.GetTargetFrameworks()
+                        select new { project, framework }, (cs, v) => cs
+                            .SetProject(v.project)
+                            .SetFramework(v.framework)),
+                degreeOfParallelism: 10);
         });
 
     string ChangelogFile => RootDirectory / "CHANGELOG.md";
