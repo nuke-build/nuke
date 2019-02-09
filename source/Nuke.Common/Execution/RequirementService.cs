@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Execution
 {
@@ -26,22 +27,35 @@ namespace Nuke.Common.Execution
                 else
                 {
                     var member = requirement.GetMemberInfo();
-                    switch (member)
+
+                    if (NukeBuild.Host == HostType.Console)
                     {
-                       case FieldInfo field:
-                           ControlFlow.Assert(
-                               field.GetValue(build) != null,
-                               $"Target '{target.Name}' requires that field '{field.Name}' must be not null.");
-                           break;
-                       case PropertyInfo property:
-                           ControlFlow.Assert(
-                               property.GetValue(build) != null,
-                               $"Target '{target.Name}' requires that property '{property.Name}' must be not null.");
-                           break;
-                       default:
-                           throw new Exception($"Member type {member} not supported.");
+                        InjectValueInteractive(build, member);
+                    }
+                    else
+                    {
+                        var value = member.GetValue(build);
+                        ControlFlow.Assert(value != null, $"Target '{target.Name}' requires member '{member.Name}' to be not null.");
                     }
                 }
+            }
+        }
+
+        private static void InjectValueInteractive(NukeBuild build, MemberInfo member)
+        {
+            var memberType = member.GetMemberType();
+            var nameOrDescription = ParameterService.Instance.GetParameterDescription(member) ??
+                                    ParameterService.Instance.GetParameterName(member);
+            var text = $"{nameOrDescription.TrimEnd('.')}:";
+            
+            while (member.GetValue(build) == null)
+            {
+                var valueSet = ParameterService.Instance.GetParameterValueSet(member, build);
+                var value = valueSet == null
+                    ? ConsoleUtility.PromptForInput(text, defaultValue: null)
+                    : ConsoleUtility.PromptForChoice(text, valueSet.Select(x => (x, x)).ToArray());
+
+                member.SetValue(build, ReflectionService.Convert(value, memberType));
             }
         }
     }

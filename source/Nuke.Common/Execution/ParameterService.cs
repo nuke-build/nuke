@@ -4,11 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using JetBrains.Annotations;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.Execution.ReflectionService;
@@ -46,6 +46,37 @@ namespace Nuke.Common.Execution
         }
 
         [CanBeNull]
+        public string GetParameterDescription(MemberInfo member)
+        {
+            var attribute = member.GetCustomAttribute<ParameterAttribute>();
+            return attribute.Description?.TrimEnd('.');
+        }
+
+        [CanBeNull]
+        public IEnumerable<string> GetParameterValueSet(MemberInfo member, object instance = null)
+        {
+            var attribute = member.GetCustomAttribute<ParameterAttribute>();
+            if (instance != null && attribute.ValueProvider != null)
+            {
+                var valueProvider = instance.GetType().GetMember(attribute.ValueProvider, All)
+                    .SingleOrDefault()
+                    .NotNull($"No single provider '{attribute.ValueProvider}' found for member '{member.Name}'.");
+                ControlFlow.Assert(valueProvider.GetMemberType() == typeof(IEnumerable<string>),
+                    "valueProvider.GetReturnType() == typeof(IEnumerable<string>)");
+                
+                return valueProvider.GetValue<IEnumerable<string>>(instance);
+            }
+
+            var memberType = member.GetMemberType();
+            if (memberType.IsEnum)
+                return memberType.GetEnumNames();
+            if (memberType.IsSubclassOf(typeof(Enumeration)))
+                return memberType.GetFields(Static).Select(x => x.Name);
+            
+            return null;
+        }
+
+        [CanBeNull]
         public object GetParameter(Expression<Func<object>> expression)
         {
             return GetParameter<object>(expression.GetMemberInfo());
@@ -67,7 +98,7 @@ namespace Nuke.Common.Execution
         public T GetParameter<T>(MemberInfo member)
         {
             var attribute = member.GetCustomAttribute<ParameterAttribute>();
-            var memberType = typeof(T) != typeof(object) ? typeof(T) : member.GetFieldOrPropertyType();
+            var memberType = typeof(T) != typeof(object) ? typeof(T) : member.GetMemberType();
             var separator = (attribute.Separator ?? string.Empty).SingleOrDefault();
             return (T) GetParameter(attribute.Name ?? member.Name, memberType, separator);
         }

@@ -34,7 +34,7 @@ namespace Nuke.Common
     {
         public ParameterAttribute(string description = null)
         {
-            Description = description ?? "<no description>";
+            Description = description;
         }
 
         public string Description { get; }
@@ -44,6 +44,9 @@ namespace Nuke.Common
         
         [CanBeNull]
         public string Separator { get; set; }
+
+        [CanBeNull]
+        public string ValueProvider { get; set; }
 
         [CanBeNull]
         public override object GetValue(MemberInfo member, object instance)

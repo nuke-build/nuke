@@ -21,22 +21,14 @@ namespace Nuke.Common.Execution
             completionItems[Constants.InvokedTargetsParameterName] = targetNames.ToArray();
             completionItems[Constants.SkippedTargetsParameterName] = targetNames.ToArray();
 
-            string[] GetSubItems(Type type)
-            {
-                if (type.IsEnum)
-                    return type.GetEnumNames();
-                if (type.IsSubclassOf(typeof(Enumeration)))
-                    return type.GetFields(ReflectionService.Static).Select(x => x.Name).ToArray();
-                return null;
-            }
-
             foreach (var parameter in InjectionUtility.GetParameterMembers(build.GetType()))
             {
                 var parameterName = ParameterService.Instance.GetParameterName(parameter);
                 if (completionItems.ContainsKey(parameterName))
                     continue;
 
-                completionItems[parameterName] = GetSubItems(parameter.GetFieldOrPropertyType())?.OrderBy(x => x).ToArray();
+                var subItems = ParameterService.Instance.GetParameterValueSet(parameter);
+                completionItems[parameterName] = subItems?.OrderBy(x => x).ToArray();
             }
 
             SerializationTasks.YamlSerializeToFile(completionItems, Constants.GetCompletionFile(NukeBuild.RootDirectory));
