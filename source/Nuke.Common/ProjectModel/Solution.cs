@@ -21,6 +21,12 @@ namespace Nuke.Common.ProjectModel
         public PathConstruction.AbsolutePath Path { get; set; }
 
         [CanBeNull]
+        public string Name => System.IO.Path.GetFileNameWithoutExtension(Path);
+
+        [CanBeNull]
+        public string FileName => System.IO.Path.GetFileName(Path);
+
+        [CanBeNull]
         public PathConstruction.AbsolutePath Directory => Path?.Parent;
         
         public string[] Header { get; set; }
