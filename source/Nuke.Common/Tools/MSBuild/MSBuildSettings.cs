@@ -17,7 +17,7 @@ namespace Nuke.Common.Tools.MSBuild
         {
             Quiet = nameof(MSBuildVerbosity.Quiet);
             Minimal = nameof(MSBuildVerbosity.Minimal);
-            Normal = nameof(MSBuildVerbosity.Normal);
+            Normal = nameof(MSBuildVerbosity.Minimal);
             Verbose = nameof(MSBuildVerbosity.Detailed);
         }
     }

@@ -15,7 +15,7 @@ namespace Nuke.Common.Tools.DotNet
         {
             Quiet = nameof(DotNetVerbosity.Quiet);
             Minimal = nameof(DotNetVerbosity.Minimal);
-            Normal = nameof(DotNetVerbosity.Normal);
+            Normal = nameof(DotNetVerbosity.Minimal);
             Verbose = nameof(DotNetVerbosity.Detailed);
         }
     }
