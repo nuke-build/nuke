@@ -27,7 +27,7 @@ namespace Nuke.Common.Execution
                 if (completionItems.ContainsKey(parameterName))
                     continue;
 
-                var subItems = ParameterService.Instance.GetParameterValueSet(parameter);
+                var subItems = ParameterService.Instance.GetParameterValueSet(parameter, build)?.Select(x => x.Text);
                 completionItems[parameterName] = subItems?.OrderBy(x => x).ToArray();
             }
 

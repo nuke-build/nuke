@@ -6,29 +6,32 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using JetBrains.Annotations;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Execution
 {
     internal static class InjectionUtility
     {
-        public static void InjectValues<T>(T instance = default)
+        public static void InjectValues<T>(T instance = default, Func<InjectionAttributeBase, bool> filter = null)
         {
-            var anyInjected = false;
+            filter = filter ?? (x => true);
+            InjectValuesInternal(instance, GetInjectionMembers(typeof(T)).Where(x => filter(x.Attribute)));
+        }
 
-            var injectionMembers = GetInjectionMembers(typeof(T))
-                .OrderByDescending(x => x.GetCustomAttribute<ParameterAttribute>() != null);
-
-            foreach (var member in injectionMembers)
+        private static void InjectValuesInternal<T>(
+            [CanBeNull] T instance,
+            IEnumerable<(MemberInfo Member, InjectionAttributeBase Attribute)> tuples)
+        {
+            tuples = tuples
+                .OrderBy(x => x.Member.DeclaringType.Descendants(y => y.BaseType).Count())
+                .ThenByDescending(x => x.Attribute.Priority);
+            
+            foreach (var (member, attribute) in tuples)
             {
                 if (member.DeclaringType == typeof(NukeBuild))
                     continue;
                 
-                var attributes = member.GetCustomAttributes().OfType<InjectionAttributeBase>().ToList();
-                if (attributes.Count == 0)
-                    continue;
-                ControlFlow.Assert(attributes.Count == 1, $"Member '{member.Name}' has multiple injection attributes applied.");
-
-                var attribute = attributes.Single();
                 var value = attribute.GetValue(member, instance);
                 if (value == null)
                     continue;
@@ -37,32 +40,22 @@ namespace Nuke.Common.Execution
                 ControlFlow.Assert(member.GetMemberType().IsAssignableFrom(valueType),
                     $"Member '{member.Name}' must be of type '{valueType.Name}' to get its valued injected from '{attribute.GetType().Name}'.");
                 member.SetValue(instance, value);
-
-                anyInjected = true;
             }
-
-            if (anyInjected)
-                Logger.Normal();
         }
         
         public static IReadOnlyCollection<MemberInfo> GetParameterMembers(Type type)
         {
             return GetInjectionMembers(type)
-                .Where(x => x.GetCustomAttribute<ParameterAttribute>() != null).ToList();
+                .Where(x => x.Attribute is ParameterAttribute)
+                .Select(x => x.Member).ToList();
         }
 
-        public static IReadOnlyCollection<MemberInfo> GetInjectionMembers(Type type)
+        public static IReadOnlyCollection<(MemberInfo Member, InjectionAttributeBase Attribute)> GetInjectionMembers(Type type)
         {
-            var members = type
+            return type
                 .GetMembers(ReflectionService.All)
-                .Where(x => x.GetCustomAttributes<InjectionAttributeBase>().Any()).ToList();
-
-            var transitiveMembers = members
-                .SelectMany(x => x.GetCustomAttributes<InjectionAttributeBase>())
-                .SelectMany(x => x.GetType().GetMembers(ReflectionService.All))
-                .Where(x => x.GetCustomAttributes<InjectionAttributeBase>().Any()).ToList();
-
-            return members.Concat(transitiveMembers).ToList();
+                .Select(x => (Member: x, Attribute: x.GetCustomAttribute<InjectionAttributeBase>()))
+                .Where(x => x.Attribute != null).ToList();
         }
     }
 }

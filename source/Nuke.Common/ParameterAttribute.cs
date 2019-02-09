@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
@@ -37,7 +38,7 @@ namespace Nuke.Common
             Description = description;
         }
 
-        public string Description { get; }
+        public virtual string Description { get; }
 
         [CanBeNull]
         public string Name { get; set; }
@@ -48,10 +49,26 @@ namespace Nuke.Common
         [CanBeNull]
         public string ValueProvider { get; set; }
 
+        public override bool IsFast => true;
+
         [CanBeNull]
         public override object GetValue(MemberInfo member, object instance)
         {
             return ParameterService.Instance.GetParameter<object>(member);
+        }
+
+        public virtual IEnumerable<(string, object)> GetValueSet(MemberInfo member, object instance)
+        {
+            if (ValueProvider == null)
+                return null;
+            
+            var valueProvider = instance.GetType().GetMember(ValueProvider, ReflectionService.All)
+                .SingleOrDefault()
+                .NotNull($"No single provider '{ValueProvider}' found for member '{member.Name}'.");
+            ControlFlow.Assert(valueProvider.GetMemberType() == typeof(IEnumerable<string>),
+                "valueProvider.GetReturnType() == typeof(IEnumerable<string>)");
+                
+            return valueProvider.GetValue<IEnumerable<(string, object)>>(instance);
         }
     }
 }

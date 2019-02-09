@@ -34,6 +34,8 @@ namespace Nuke.Common.Execution
             
             try
             {
+                InjectionUtility.InjectValues(build, x => x.IsFast);
+                
                 build.ExecuteExtensions<IPreLogoBuildExtension>();
                 build.OnBuildCreated();
                 
@@ -51,7 +53,7 @@ namespace Nuke.Common.Execution
                     ParameterService.Instance.GetPositionalCommandLineArguments<string>(separator: Constants.TargetsSeparator.Single()));
                 CancellationHandler += Finish;
                 
-                InjectionUtility.InjectValues(build);
+                InjectionUtility.InjectValues(build, x => !x.IsFast);
                 RequirementService.ValidateRequirements(build);
                 
                 build.OnBuildInitialized();
