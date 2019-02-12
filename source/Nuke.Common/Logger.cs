@@ -19,13 +19,57 @@ namespace Nuke.Common
     {
         public static IOutputSink OutputSink = ConsoleOutputSink.Default;
         public static LogLevel LogLevel = LogLevel.Normal;
-        
+
         public static IDisposable Block(string text)
         {
             return OutputSink.WriteBlock(text);
         }
 
         #region Log
+
+        /// <summary>
+        /// Logs a message with <paramref name="level"/> severity if it is lower or equal to <see cref="NukeBuild.LogLevel"/>.
+        /// </summary>
+        [StringFormatMethod("format")]
+        public static void Log(LogLevel level, string format, params object[] args)
+        {
+            Log(level, string.Format(format, args));
+        }
+
+        /// <summary>
+        /// Logs a message with <paramref name="level"/> severity if it is lower or equal to <see cref="NukeBuild.LogLevel"/>.
+        /// </summary>
+        public static void Log(LogLevel level, object value)
+        {
+            Log(level, value?.ToString());
+        }
+
+        /// <summary>
+        /// Logs a message with <paramref name="level"/> severity if it is lower or equal to <see cref="NukeBuild.LogLevel"/>.
+        /// </summary>
+        public static void Log(LogLevel level, string text = null)
+        {
+            switch (level) {
+                case LogLevel.Trace:
+                    Trace(text);
+                    break;
+                case LogLevel.Normal:
+                    Normal(text);
+                    break;
+                case LogLevel.Warning:
+                    Warn(text);
+                    break;
+                case LogLevel.Error:
+                    Error(text);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(level));
+            }
+        }
+
+        #endregion
+
+        #region Normal
 
         /// <summary>
         /// Logs a message as information if <see cref="LogLevel"/> is lower or equal to <see cref="Common.LogLevel.Normal"/>.
@@ -54,7 +98,7 @@ namespace Nuke.Common
         }
 
         #endregion
-        
+
         #region Success
 
         /// <summary>
@@ -180,7 +224,7 @@ namespace Nuke.Common
             if (LogLevel <= LogLevel.Warning)
                 HandleException(exception, OutputSink.WriteWarning);
         }
-        
+
         #endregion
 
         #region Error
