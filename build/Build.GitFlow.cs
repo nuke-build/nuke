@@ -16,7 +16,7 @@ partial class Build
 {
     Target Changelog => _ => _
         .OnlyWhenStatic(
-            () => GitRepository.Branch.NotNull().StartsWith("release") ||
+            () => GitRepository.Branch.StartsWith("release") ||
                   GitRepository.Branch.StartsWith("hotfix"))
         .Executes(() =>
         {

@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using FluentAssertions;
 using Nuke.Common.Execution;
 using Nuke.Common.Utilities.Collections;
@@ -17,8 +18,8 @@ namespace Nuke.Common.Tests.Execution
         private ExecutableTarget B = new ExecutableTarget { Name = nameof(B) };
         private ExecutableTarget C = new ExecutableTarget { Name = nameof(C) };
 
-        private Func<bool> True = () => true;
-        private Func<bool> False = () => false;
+        private Expression<Func<bool>> True = () => true;
+        private Expression<Func<bool>> False = () => false;
 
         public BuildExecutorTest()
         {

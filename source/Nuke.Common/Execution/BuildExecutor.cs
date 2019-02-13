@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using JetBrains.Annotations;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
@@ -57,7 +58,7 @@ namespace Nuke.Common.Execution
         {
             if (target.Status == ExecutionStatus.Skipped ||
                 previouslyExecutedTargets.Contains(target.Name) ||
-                target.DynamicConditions.Any(x => !x()))
+                HasSkippingCondition(target, target.DynamicConditions))
             {
                 target.Status = ExecutionStatus.Skipped;
                 build.OnTargetSkipped(target.Name);
@@ -120,12 +121,26 @@ namespace Nuke.Common.Execution
             {
                 build.ExecutionPlan
                     .Where(x => skippedTargets.Count == 0 || skippedTargets.Contains(x.Name, StringComparer.OrdinalIgnoreCase))
+                    .ForEachLazy(x => x.SkipReason = "via --skip parameter")
                     .ForEach(MarkTargetSkipped);
             }
 
             build.ExecutionPlan
-                .Where(x => x.StaticConditions.Any(y => !y()))
+                .Where(x => HasSkippingCondition(x, x.StaticConditions))
                 .ForEach(MarkTargetSkipped);
+        }
+
+        private static bool HasSkippingCondition(ExecutableTarget target, IEnumerable<Expression<Func<bool>>> conditions)
+        {
+            target.SkipReason = null; // solely for testing
+            
+            foreach (var condition in conditions)
+            {
+                if (!condition.Compile().Invoke())
+                    target.SkipReason = condition.Body.ToString();
+            }
+
+            return target.SkipReason != null;
         }
 
         private static string GetInvocationHash()

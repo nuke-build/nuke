@@ -109,16 +109,18 @@ namespace Nuke.Common.Execution
 
         private static void WriteSummary(IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
+            Logger.LogLevel = LogLevel.Trace;
             var firstColumn = Math.Max(executionPlan.Max(x => x.Name.Length) + 4, val2: 19);
             var secondColumn = 10;
             var thirdColumn = 10;
             var allColumns = firstColumn + secondColumn + thirdColumn;
             var totalDuration = executionPlan.Aggregate(TimeSpan.Zero, (t, x) => t.Add(x.Duration));
 
-            string CreateLine(string target, string executionStatus, string duration)
+            string CreateLine(string target, string executionStatus, string duration, string appendix = null)
                 => target.PadRight(firstColumn, paddingChar: ' ')
                    + executionStatus.PadRight(secondColumn, paddingChar: ' ')
-                   + duration.PadLeft(thirdColumn, paddingChar: ' ');
+                   + duration.PadLeft(thirdColumn, paddingChar: ' ')
+                   + (appendix != null ? $"   // {appendix}" : string.Empty);
 
             string ToMinutesAndSeconds(TimeSpan duration)
                 => $"{(int) duration.TotalMinutes}:{duration:ss}";
@@ -128,7 +130,7 @@ namespace Nuke.Common.Execution
             Logger.Normal(new string(c: '-', count: allColumns));
             foreach (var target in executionPlan)
             {
-                var line = CreateLine(target.Name, target.Status.ToString(), ToMinutesAndSeconds(target.Duration));
+                var line = CreateLine(target.Name, target.Status.ToString(), ToMinutesAndSeconds(target.Duration), target.SkipReason);
                 switch (target.Status)
                 {
                     case ExecutionStatus.Skipped:

@@ -24,8 +24,8 @@ namespace Nuke.Common.Execution
         public string Description { get; internal set; }
         public bool Listed { get; internal set; }
         internal Target Factory { get; set; }
-        internal ICollection<Func<bool>> DynamicConditions { get; set; } = new List<Func<bool>>();
-        internal ICollection<Func<bool>> StaticConditions { get; set; } = new List<Func<bool>>();
+        internal ICollection<Expression<Func<bool>>> DynamicConditions { get; set; } = new List<Expression<Func<bool>>>();
+        internal ICollection<Expression<Func<bool>>> StaticConditions { get; set; } = new List<Expression<Func<bool>>>();
         internal DependencyBehavior DependencyBehavior { get; set; }
         internal bool AssuredAfterFailure { get; set; }
         internal bool ProceedAfterFailure { get; set; }
@@ -42,6 +42,7 @@ namespace Nuke.Common.Execution
         public ExecutionStatus Status { get; internal set; }
         public TimeSpan Duration { get; internal set; }
         public bool Invoked { get; internal set; }
+        public string SkipReason { get; internal set; }
 
         internal string ToDebugString()
         {

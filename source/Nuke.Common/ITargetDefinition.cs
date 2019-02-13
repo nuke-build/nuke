@@ -49,12 +49,12 @@ namespace Nuke.Common
         /// <summary>
         ///   Adds a set of conditions that will be checked before executing this target.
         /// </summary>
-        ITargetDefinition OnlyWhenDynamic(params Func<bool>[] conditions);
+        ITargetDefinition OnlyWhenDynamic(params Expression<Func<bool>>[] conditions);
 
         /// <summary>
         ///   Adds a set of conditions that will be checked prior to build execution.
         /// </summary>
-        ITargetDefinition OnlyWhenStatic(params Func<bool>[] conditions);
+        ITargetDefinition OnlyWhenStatic(params Expression<Func<bool>>[] conditions);
 
         /// <summary>
         ///   Adds a required parameter that will be checked prior to build execution.

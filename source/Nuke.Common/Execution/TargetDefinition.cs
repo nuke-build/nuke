@@ -16,8 +16,8 @@ namespace Nuke.Common.Execution
         internal bool IsDefault { get; set; }
         internal TimeSpan Duration { get; set; }
         internal ExecutionStatus Status { get; set; }
-        internal List<Func<bool>> DynamicConditions { get; } = new List<Func<bool>>();
-        internal List<Func<bool>> StaticConditions { get; } = new List<Func<bool>>();
+        internal List<Expression<Func<bool>>> DynamicConditions { get; } = new List<Expression<Func<bool>>>();
+        internal List<Expression<Func<bool>>> StaticConditions { get; } = new List<Expression<Func<bool>>>();
         internal List<LambdaExpression> Requirements { get; } = new List<LambdaExpression>();
         internal List<Target> DependsOnTargets { get; } = new List<Target>();
         internal List<Target> DependentForTargets { get; } = new List<Target>();
@@ -65,13 +65,13 @@ namespace Nuke.Common.Execution
             return this;
         }
 
-        public ITargetDefinition OnlyWhenDynamic(params Func<bool>[] conditions)
+        public ITargetDefinition OnlyWhenDynamic(params Expression<Func<bool>>[] conditions)
         {
             DynamicConditions.AddRange(conditions);
             return this;
         }
 
-        public ITargetDefinition OnlyWhenStatic(params Func<bool>[] conditions)
+        public ITargetDefinition OnlyWhenStatic(params Expression<Func<bool>>[] conditions)
         {
             StaticConditions.AddRange(conditions);
             return this;
