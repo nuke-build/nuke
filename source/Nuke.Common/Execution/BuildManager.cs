@@ -16,7 +16,9 @@ namespace Nuke.Common.Execution
 {
     internal static class BuildManager
     {
-        private static LinkedList<Action> s_cancellationHandlers = new LinkedList<Action>();
+        private const int c_errorExitCode = -1;
+        
+        private static readonly LinkedList<Action> s_cancellationHandlers = new LinkedList<Action>();
         
         public static event Action CancellationHandler
         {
@@ -61,13 +63,13 @@ namespace Nuke.Common.Execution
                 BuildExecutor.Execute(
                     build,
                     ParameterService.Instance.GetParameter<string[]>(() => build.SkippedTargets));
-                
-                return 0;
+
+                return IsSuccessful(build) ? 0 : c_errorExitCode;
             }
             catch (Exception exception)
             {
                 Logger.Error(exception);
-                return -1;
+                return c_errorExitCode;
             }
             finally
             {
@@ -90,7 +92,7 @@ namespace Nuke.Common.Execution
                 if (build.ExecutionPlan != null)
                 {
                     Logger.Normal();
-                    WriteSummary(build.ExecutionPlan);
+                    WriteSummary(build);
                 }
 
                 build.OnBuildFinished();
@@ -107,14 +109,14 @@ namespace Nuke.Common.Execution
             return Activator.CreateInstance<T>();
         }
 
-        private static void WriteSummary(IReadOnlyCollection<ExecutableTarget> executionPlan)
+        private static void WriteSummary(NukeBuild build)
         {
             Logger.LogLevel = LogLevel.Trace;
-            var firstColumn = Math.Max(executionPlan.Max(x => x.Name.Length) + 4, val2: 19);
+            var firstColumn = Math.Max(build.ExecutionPlan.Max(x => x.Name.Length) + 4, val2: 19);
             var secondColumn = 10;
             var thirdColumn = 10;
             var allColumns = firstColumn + secondColumn + thirdColumn;
-            var totalDuration = executionPlan.Aggregate(TimeSpan.Zero, (t, x) => t.Add(x.Duration));
+            var totalDuration = build.ExecutionPlan.Aggregate(TimeSpan.Zero, (t, x) => t.Add(x.Duration));
 
             string CreateLine(string target, string executionStatus, string duration, string appendix = null)
                 => target.PadRight(firstColumn, paddingChar: ' ')
@@ -128,7 +130,7 @@ namespace Nuke.Common.Execution
             Logger.Normal(new string(c: '=', count: allColumns));
             Logger.Info(CreateLine("Target", "Status", "Duration"));
             Logger.Normal(new string(c: '-', count: allColumns));
-            foreach (var target in executionPlan)
+            foreach (var target in build.ExecutionPlan)
             {
                 var line = CreateLine(target.Name, target.Status.ToString(), ToMinutesAndSeconds(target.Duration), target.SkipReason);
                 switch (target.Status)
@@ -152,17 +154,22 @@ namespace Nuke.Common.Execution
             Logger.Normal(new string(c: '=', count: allColumns));
             Logger.Normal();
 
-            var buildSucceeded = executionPlan
-                .All(x => x.Status != ExecutionStatus.Failed &&
-                          x.Status != ExecutionStatus.NotRun &&
-                          x.Status != ExecutionStatus.Aborted);
+            var buildSucceeded = IsSuccessful(build);
             if (buildSucceeded)
                 Logger.Success($"Build succeeded on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}.");
             else
                 Logger.Error($"Build failed on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}.");
             Logger.Normal();
         }
-        
+
+        private static bool IsSuccessful(NukeBuild build)
+        {
+            return build.ExecutionPlan
+                .All(x => x.Status != ExecutionStatus.Failed &&
+                          x.Status != ExecutionStatus.NotRun &&
+                          x.Status != ExecutionStatus.Aborted);
+        }
+
         public static void WriteWarningsAndErrors(SevereMessagesOutputSink outputSink)
         {
             if (outputSink.SevereMessages.Count <= 0)
