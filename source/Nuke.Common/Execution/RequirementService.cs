@@ -21,24 +21,25 @@ namespace Nuke.Common.Execution
             foreach (var requirement in target.Requirements)
             {
                 if (requirement is Expression<Func<bool>> boolExpression)
-                {
                     ControlFlow.Assert(boolExpression.Compile().Invoke(), $"Target '{target.Name}' requires '{requirement.Body}'.");
-                }
-                else
-                {
-                    var member = requirement.GetMemberInfo();
-
-                    if (NukeBuild.Host == HostType.Console)
-                    {
-                        InjectValueInteractive(build, member);
-                    }
-                    else
-                    {
-                        var value = member.GetValue(build);
-                        ControlFlow.Assert(value != null, $"Target '{target.Name}' requires member '{member.Name}' to be not null.");
-                    }
-                }
+                else if (IsMemberNull(requirement.GetMemberInfo(), build))
+                    ControlFlow.Fail($"Target '{target.Name}' requires member '{requirement.GetMemberInfo().Name}' to be not null.");
             }
+
+            var requiredMembers = InjectionUtility.GetParameterMembers(build.GetType()).Where(x => x.HasCustomAttribute<RequiredAttribute>());
+            foreach (var member in requiredMembers)
+            {
+                if (IsMemberNull(member, build))
+                    ControlFlow.Fail($"Member '{member.Name}' is required to be not null.");
+            }
+        }
+
+        private static bool IsMemberNull(MemberInfo member, NukeBuild build)
+        {
+            if (NukeBuild.Host == HostType.Console)
+                InjectValueInteractive(build, member);
+            
+            return member.GetValue(build) == null;
         }
 
         private static void InjectValueInteractive(NukeBuild build, MemberInfo member)

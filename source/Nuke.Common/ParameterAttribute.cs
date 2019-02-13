@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
+using Nuke.Common.Tooling;
 
 namespace Nuke.Common
 {
@@ -59,16 +60,29 @@ namespace Nuke.Common
 
         public virtual IEnumerable<(string, object)> GetValueSet(MemberInfo member, object instance)
         {
-            if (ValueProvider == null)
-                return null;
+            if (ValueProvider != null)
+            {
+                var valueProvider = instance.GetType().GetMember(ValueProvider, ReflectionService.All)
+                    .SingleOrDefault()
+                    .NotNull($"No single provider '{ValueProvider}' found for member '{member.Name}'.");
+                ControlFlow.Assert(valueProvider.GetMemberType() == typeof(IEnumerable<string>),
+                    "valueProvider.GetReturnType() == typeof(IEnumerable<string>)");
+
+                return valueProvider.GetValue<IEnumerable<(string, object)>>(instance);
+            }
             
-            var valueProvider = instance.GetType().GetMember(ValueProvider, ReflectionService.All)
-                .SingleOrDefault()
-                .NotNull($"No single provider '{ValueProvider}' found for member '{member.Name}'.");
-            ControlFlow.Assert(valueProvider.GetMemberType() == typeof(IEnumerable<string>),
-                "valueProvider.GetReturnType() == typeof(IEnumerable<string>)");
-                
-            return valueProvider.GetValue<IEnumerable<(string, object)>>(instance);
+            var memberType = member.GetMemberType();
+            if (memberType.IsEnum)
+                return memberType.GetEnumNames().Select(x => (x, Enum.Parse(memberType, x)));
+            if (memberType.IsSubclassOf(typeof(Enumeration)))
+                return memberType.GetFields(ReflectionService.Static).Select(x => (x.Name, x.GetValue()));
+
+            return null;
         }
+    }
+
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
+    public class RequiredAttribute : Attribute
+    {
     }
 }

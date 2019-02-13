@@ -56,20 +56,7 @@ namespace Nuke.Common.Execution
         public IEnumerable<(string Text, object Object)> GetParameterValueSet(MemberInfo member, object instance)
         {
             var attribute = member.GetCustomAttribute<ParameterAttribute>();
-            if (instance != null)
-            {
-                var valueSet = attribute.GetValueSet(member, instance);
-                if (valueSet != null)
-                    return valueSet;
-            }
-
-            var memberType = member.GetMemberType();
-            if (memberType.IsEnum)
-                return memberType.GetEnumNames().Select(x => (x, Enum.Parse(memberType, x)));
-            if (memberType.IsSubclassOf(typeof(Enumeration)))
-                return memberType.GetFields(Static).Select(x => (x.Name, x.GetValue()));
-            
-            return null;
+            return attribute.GetValueSet(member, instance);
         }
 
         [CanBeNull]

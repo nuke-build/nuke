@@ -63,6 +63,12 @@ namespace Nuke.Common.Execution
             }
         }
 
+        public static bool HasCustomAttribute<T>(this MemberInfo member)
+            where T : Attribute
+        {
+            return member.GetCustomAttribute<T>() != null;
+        }
+
         public static MemberInfo GetMemberInfo(this LambdaExpression expression)
         {
             var memberExpression = !(expression.Body is UnaryExpression unaryExpression)
