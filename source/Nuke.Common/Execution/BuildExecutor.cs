@@ -66,6 +66,12 @@ namespace Nuke.Common.Execution
                 return;
             }
 
+            if (target.Actions.Count == 0)
+            {
+                target.Status = ExecutionStatus.Collective;
+                return;
+            }
+
             using (Logger.Block(target.Name))
             {
                 target.Status = ExecutionStatus.Executing;
