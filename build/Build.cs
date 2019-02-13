@@ -36,12 +36,12 @@ partial class Build : NukeBuild
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
-    [Parameter("ApiKey for the specified source.")] readonly string ApiKey;
+    [Parameter("ApiKey for the specified source")] readonly string ApiKey;
     [Parameter] readonly string Source = "https://api.nuget.org/v3/index.json";
     [Parameter] readonly string SymbolSource = "https://nuget.smbsrc.net/";
 
-    [Parameter("Gitter authtoken.")] readonly string GitterAuthToken;
-    [Parameter("Slack webhook.")] readonly string SlackWebhook;
+    [Parameter("Gitter authtoken")] readonly string GitterAuthToken;
+    [Parameter("Slack webhook")] readonly string SlackWebhook;
 
     [Solution] readonly Solution Solution;
     [GitRepository] readonly GitRepository GitRepository;
@@ -70,9 +70,9 @@ partial class Build : NukeBuild
                 .SetProjectFile(Solution));
         });
 
-    Project CommonProject => Solution.GetProject("Nuke.Common").NotNull();
-    Project GlobalToolProject => Solution.GetProject("Nuke.GlobalTool").NotNull();
-    Project CodeGenerationProject => Solution.GetProject("Nuke.CodeGeneration").NotNull();
+    [ProjectFrom(nameof(Solution))] Project CommonProject;
+    [ProjectFrom(nameof(Solution))] Project GlobalToolProject;
+    [ProjectFrom(nameof(Solution))] Project CodeGenerationProject;
 
     Target Compile => _ => _
         .DependsOn(Restore)
