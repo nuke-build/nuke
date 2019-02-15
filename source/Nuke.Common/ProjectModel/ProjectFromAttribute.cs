@@ -57,6 +57,9 @@ namespace Nuke.Common.ProjectModel
 
         public override IEnumerable<(string, object)> GetValueSet(MemberInfo member, object instance)
         {
+            if (member.GetValue(instance) != null)
+                return null;
+            
             var solution = GetSolution(instance);
             return solution.AllProjects.Select(x => (x.Name, (object) x));
         }

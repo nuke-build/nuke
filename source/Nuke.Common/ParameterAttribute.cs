@@ -85,4 +85,9 @@ namespace Nuke.Common
     public class RequiredAttribute : Attribute
     {
     }
+
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
+    public class UnlistedAttribute : Attribute
+    {
+    }
 }
