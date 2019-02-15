@@ -31,7 +31,7 @@ namespace Nuke.Common.Execution
                     continue;
 
                 var subItems = ParameterService.Instance.GetParameterValueSet(parameter, build)?.Select(x => x.Text);
-                completionItems[parameterName] = subItems?.OrderBy(x => x).ToArray();
+                completionItems[parameterName] = subItems?.ToArray();
             }
 
             SerializationTasks.YamlSerializeToFile(completionItems, Constants.GetCompletionFile(NukeBuild.RootDirectory));

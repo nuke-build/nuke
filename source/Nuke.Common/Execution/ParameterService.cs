@@ -56,7 +56,7 @@ namespace Nuke.Common.Execution
         public IEnumerable<(string Text, object Object)> GetParameterValueSet(MemberInfo member, object instance)
         {
             var attribute = member.GetCustomAttribute<ParameterAttribute>();
-            return attribute.GetValueSet(member, instance);
+            return attribute.GetValueSet(member, instance)?.OrderBy(x => x.Item1);
         }
 
         [CanBeNull]
