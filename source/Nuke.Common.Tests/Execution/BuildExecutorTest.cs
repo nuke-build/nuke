@@ -25,6 +25,11 @@ namespace Nuke.Common.Tests.Execution
         {
             C.ExecutionDependencies.Add(B);
             B.ExecutionDependencies.Add(A);
+            
+            // otherwise marked as Collective
+            A.Actions.Add(() => { });
+            B.Actions.Add(() => { });
+            C.Actions.Add(() => { });
         }
 
         [Fact]
