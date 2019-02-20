@@ -60,30 +60,30 @@ namespace Nuke.Common.Execution
         }
 
         [CanBeNull]
-        public object GetParameter(Expression<Func<object>> expression)
-        {
-            return GetParameter<object>(expression.GetMemberInfo());
-        }
-
-        [CanBeNull]
         public T GetParameter<T>(Expression<Func<T>> expression)
         {
-            return GetParameter<T>(expression.GetMemberInfo());
+            return (T) GetParameter(expression.GetMemberInfo(), typeof(T));
         }
 
         [CanBeNull]
         public T GetParameter<T>(Expression<Func<object>> expression)
         {
-            return GetParameter<T>(expression.GetMemberInfo());
+            return (T) GetParameter(expression.GetMemberInfo(), typeof(T));
         }
 
         [CanBeNull]
         public T GetParameter<T>(MemberInfo member)
         {
+            return (T) GetParameter(member, typeof(T));
+        }
+
+        [CanBeNull]
+        internal object GetParameter(MemberInfo member, Type destinationType = null)
+        {
+            destinationType = destinationType ?? member.GetMemberType();
             var attribute = member.GetCustomAttribute<ParameterAttribute>();
-            var memberType = typeof(T) != typeof(object) ? typeof(T) : member.GetMemberType();
             var separator = (attribute.Separator ?? string.Empty).SingleOrDefault();
-            return (T) GetParameter(attribute.Name ?? member.Name, memberType, separator);
+            return GetParameter(attribute.Name ?? member.Name, destinationType, separator);
         }
 
         [CanBeNull]
@@ -241,12 +241,7 @@ namespace Nuke.Common.Execution
         [CanBeNull]
         private object GetDefaultValue(Type type)
         {
-            if (Nullable.GetUnderlyingType(type) == null && 
-                type != typeof(string) && 
-                !type.IsClass &&
-                !type.IsArray)
-                return Activator.CreateInstance(type);
-            return null;
+            return type.IsNullableType() ? null : Activator.CreateInstance(type);
         }
 
         [CanBeNull]

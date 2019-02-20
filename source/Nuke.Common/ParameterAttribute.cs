@@ -55,7 +55,7 @@ namespace Nuke.Common
         [CanBeNull]
         public override object GetValue(MemberInfo member, object instance)
         {
-            return ParameterService.Instance.GetParameter<object>(member);
+            return ParameterService.Instance.GetParameter(member, member.GetMemberType().GetNullableType());
         }
 
         public virtual IEnumerable<(string, object)> GetValueSet(MemberInfo member, object instance)

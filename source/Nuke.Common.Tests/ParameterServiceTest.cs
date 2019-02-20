@@ -159,5 +159,31 @@ namespace Nuke.Common.Tests
             var service = GetService(commandLineArgs);
             service.GetCommandLineArgument(position, destinationType).Should().Be(expectedValue);
         }
+
+        [Fact]
+        public void TestExpression()
+        {
+            var service = GetService(
+                new[]
+                {
+                    "--root",
+                    "--set",
+                    "1",
+                    "2",
+                    "3"
+                });
+            
+            service.GetParameter<PathConstruction.AbsolutePath>(() => RootDirectory)
+                .Should().BeNull();
+            
+            service.GetParameter<bool>(() => RootDirectory)
+                .Should().BeTrue();
+
+            service.GetParameter(() => Set)
+                .Should().BeEquivalentTo(1, 2, 3);
+        }
+
+        [Parameter(Name = "root")] private string RootDirectory { get; }
+        [Parameter] private int[] Set { get; }
     }
 }

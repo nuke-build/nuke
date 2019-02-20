@@ -63,6 +63,19 @@ namespace Nuke.Common.Execution
             }
         }
 
+        public static bool IsNullableType(this Type type)
+        {
+            return Nullable.GetUnderlyingType(type) != null ||
+                   type == typeof(string) ||
+                   type.IsClass ||
+                   type.IsArray;
+        }
+
+        public static Type GetNullableType(this Type type)
+        {
+            return type.IsNullableType() ? type : typeof(Nullable<>).MakeGenericType(type);
+        }
+
         public static bool HasCustomAttribute<T>(this MemberInfo member)
             where T : Attribute
         {
