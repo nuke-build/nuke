@@ -5,10 +5,22 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Removed collection-based tasks in `FileSystemTasks`
 - Changed `ContinueOnFailure` to `ProceedAfterFailure`
+- Changed summary output to not include collective targets
 - Added `logInvocation` parameter and `ToolSettings.LogInvocation` property
+- Added interactive parameter resolution
+- Added `RequiredAttribute` for globally required parameters
+- Added skip reason to summary
+- Added `FileGlobbingAttribute` and `DirectoryGlobbingAttribute`
 - Added `GetProperty<T>`, `GetItems<T>`, and `GetItemMetadata<T>` as `ProjectExtensions`
 - Added `Unlisted` for target declarations
+- Added `ToolResolver` for custom delegate resolution
+- Fixed parameter resolution for value types
+- Fixed `AbsolutePath` to be serializable
+- Fixed output for parallel task execution
+- Fixed exit code for failing targets using `ProceedAfterFailure`
+- Fixed exception message for circular dependencies
 
 ## [0.16.0] / 2019-01-30
 - Changed setting of default working directory for process invocations
