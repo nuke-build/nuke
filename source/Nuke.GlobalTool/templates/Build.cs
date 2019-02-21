@@ -19,6 +19,7 @@ using static Nuke.Common.Tools.MSBuild.MSBuildTasks;                            
 using static Nuke.Common.Tools.NuGet.NuGetTasks;                                                // NUGET && MSBUILD
 
 [CheckBuildProjectConfigurations]                                                               // SOLUTION_FILE
+[UnsetVisualStudioEnvironmentVariables]
 class Build : NukeBuild
 {
     /// Support plugins are available for:
