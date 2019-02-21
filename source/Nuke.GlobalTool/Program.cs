@@ -57,7 +57,7 @@ namespace Nuke.GlobalTool
                 return (int) commandHandler.Invoke(obj: null, commandArguments);
             }
 
-            if (rootDirectory == null)
+            if (buildScript == null)
             {
                 if (UserConfirms($"Could not find {Constants.ConfigurationFileName} file. Do you want to setup a build?"))
                     return Setup(new string[0], rootDirectory, buildScript: null);
