@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `GetProperty<T>`, `GetItems<T>`, and `GetItemMetadata<T>` as `ProjectExtensions`
 - Added `Unlisted` for target declarations
 - Added `ToolResolver` for custom delegate resolution
+- Added `DotNetToolInstall`, `DotNetToolUninstall`, and `DotNetToolUpdate`
+- Added `UnsetVisualStudioEnvironmentVariablesAttribute`
+- Added universal log methods with severity as parameter
 - Fixed parameter resolution for value types
 - Fixed `AbsolutePath` to be serializable
 - Fixed output for parallel task execution
