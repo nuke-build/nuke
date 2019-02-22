@@ -8,7 +8,10 @@
     "https://raw.githubusercontent.com/dotnet/docs/master/docs/core/tools/dotnet-build.md",
     "https://raw.githubusercontent.com/dotnet/docs/master/docs/core/tools/dotnet-clean.md",
     "https://raw.githubusercontent.com/dotnet/docs/master/docs/core/tools/dotnet-publish.md",
-    "https://raw.githubusercontent.com/dotnet/docs/master/docs/core/tools/dotnet-nuget-push.md"
+    "https://raw.githubusercontent.com/dotnet/docs/master/docs/core/tools/dotnet-nuget-push.md",
+    "https://raw.githubusercontent.com/dotnet/docs/master/docs/core/tools/dotnet-tool-install.md",
+    "https://raw.githubusercontent.com/dotnet/docs/master/docs/core/tools/dotnet-tool-uninstall.md",
+    "https://raw.githubusercontent.com/dotnet/docs/master/docs/core/tools/dotnet-tool-update.md"
   ],
   "name": "DotNet",
   "officialUrl": "https://docs.microsoft.com/en-us/dotnet/core/tools/",
@@ -539,6 +542,141 @@
             "type": "bool",
             "format": "--force-english-output",
             "help": "Forces all logged output in English."
+          }
+        ]
+      }
+    },
+    {
+      "help": "<c>dotnet tool install</c> command installs the specified .NET Core Global Tool on your machine.",
+      "postfix": "ToolInstall",
+      "definiteArgument": "tool install",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "PackageName",
+            "type": "string",
+            "format": "{value}",
+            "help": "The Name/ID of the NuGet package that contains the .NET Core Global Tool to install."
+          },
+          {
+            "name": "AddSource",
+            "type": "string",
+            "format": "--add-source {value}",
+            "help": "Adds an additional NuGet package source to use during installation."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--configfile {value}",
+            "help": "Specifies the NuGet configuration (nuget.config) file to use."
+          },
+          {
+            "name": "Framework",
+            "type": "string",
+            "format": "--framework {value}",
+            "help": "Specifies the target framework to install the tool for. By default, the .NET Core SDK tries to choose the most appropriate target framework."
+          },
+          {
+            "name": "Global",
+            "type": "bool",
+            "format": "--global",
+            "help": "Specifies that the installation is user wide. Can't be combined with the --tool-path option. If you don't specify this option, you must specify the --tool-path option."
+          },
+          {
+            "name": "InstallPath",
+            "type": "string",
+            "format": "--tool-path {value}",
+            "help": "Specifies the location where to install the Global Tool."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
+          }
+        ]
+      }
+    },
+    {
+      "help": "<c>dotnet tool uninstall</c> command uninstalls the specified .NET Core Global Tool from your machine.",
+      "postfix": "ToolUninstall",
+      "definiteArgument": "tool uninstall",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "PackageName",
+            "type": "string",
+            "format": "{value}",
+            "help": "The Name/ID of the NuGet package that contains the .NET Core Global Tool to install."
+          },
+          {
+            "name": "Global",
+            "type": "bool",
+            "format": "--global",
+            "help": "Specifies the server URL. This option is required unless <c>DefaultPushSource</c> config value is set in the NuGet config file."
+          },
+          {
+            "name": "InstallPath",
+            "type": "string",
+            "format": "--tool-path {value}",
+            "help": "Specifies the location where to install the Global Tool."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
+          }
+        ]
+      }
+    },
+    {
+      "help": "<c>dotnet tool update</c> command updates the specified .NET Core Global Tool on your machine.",
+      "postfix": "ToolUpdate",
+      "definiteArgument": "tool update",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "PackageName",
+            "type": "string",
+            "format": "{value}",
+            "help": "The Name/ID of the NuGet package that contains the .NET Core Global Tool to install."
+          },
+          {
+            "name": "AddSource",
+            "type": "string",
+            "format": "--add-source {value}",
+            "help": "Adds an additional NuGet package source to use during installation."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--configfile {value}",
+            "help": "Specifies the NuGet configuration (nuget.config) file to use."
+          },
+          {
+            "name": "Framework",
+            "type": "string",
+            "format": "--framework {value}",
+            "help": "Specifies the target framework to install the tool for. By default, the .NET Core SDK tries to choose the most appropriate target framework."
+          },
+          {
+            "name": "Global",
+            "type": "bool",
+            "format": "--global",
+            "help": "Specifies that the installation is user wide. Can't be combined with the --tool-path option. If you don't specify this option, you must specify the --tool-path option."
+          },
+          {
+            "name": "InstallPath",
+            "type": "string",
+            "format": "--tool-path {value}",
+            "help": "Specifies the location where to install the Global Tool."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
           }
         ]
       }
