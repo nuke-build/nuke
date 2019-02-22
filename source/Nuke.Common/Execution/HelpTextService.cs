@@ -21,7 +21,7 @@ namespace Nuke.Common.Execution
             var padRightTargets = Math.Max(longestTargetName, val2: 20);
             builder.AppendLine("Targets (with their direct dependencies):");
             builder.AppendLine();
-            foreach (var target in executableTargets.Where(x => x.Show))
+            foreach (var target in executableTargets.Where(x => x.Listed))
             {
                 var dependencies = target.ExecutionDependencies.Count > 0
                     ? $" -> {target.ExecutionDependencies.Select(x => x.Name).JoinComma()}"
@@ -40,16 +40,19 @@ namespace Nuke.Common.Execution
             var defaultTarget = build.ExecutableTargets.Single(x => x.IsDefault);
             var builder = new StringBuilder();
 
-            var parameters = InjectionUtility.GetParameterMembers(build.GetType()).OrderBy(x => x.Name).ToList();
+            var parameters = InjectionUtility.GetParameterMembers(build.GetType())
+                .Where(x => !x.HasCustomAttribute<UnlistedAttribute>())
+                .OrderBy(x => x.Name).ToList();
             var padRightParameter = Math.Max(parameters.Max(x => x.Name.Length), val2: 16);
 
             void PrintParameter(MemberInfo parameter)
             {
-                var attribute = parameter.GetCustomAttribute<ParameterAttribute>().NotNull();
                 var description = SplitLines(
                     // TODO: remove
-                    attribute.Description.Replace("{default_target}", defaultTarget.Name));
-                var parameterName = (attribute.Name ?? parameter.Name).SplitCamelHumpsWithSeparator("-");
+                    ParameterService.Instance.GetParameterDescription(parameter)
+                        ?.Replace("{default_target}", defaultTarget.Name).Append(".")
+                    ?? "<no description>");
+                var parameterName = ParameterService.Instance.GetParameterName(parameter).SplitCamelHumpsWithSeparator("-");
                 builder.AppendLine($"  --{parameterName.PadRight(padRightParameter)}  {description.First()}");
                 foreach (var line in description.Skip(count: 1))
                     builder.AppendLine($"{new string(c: ' ', count: padRightParameter + 6)}{line}");

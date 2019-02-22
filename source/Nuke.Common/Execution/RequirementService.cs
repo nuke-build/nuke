@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Execution
 {
@@ -20,28 +21,42 @@ namespace Nuke.Common.Execution
             foreach (var requirement in target.Requirements)
             {
                 if (requirement is Expression<Func<bool>> boolExpression)
-                {
                     ControlFlow.Assert(boolExpression.Compile().Invoke(), $"Target '{target.Name}' requires '{requirement.Body}'.");
-                }
-                else
-                {
-                    var member = requirement.GetMemberInfo();
-                    switch (member)
-                    {
-                       case FieldInfo field:
-                           ControlFlow.Assert(
-                               field.GetValue(build) != null,
-                               $"Target '{target.Name}' requires that field '{field.Name}' must be not null.");
-                           break;
-                       case PropertyInfo property:
-                           ControlFlow.Assert(
-                               property.GetValue(build) != null,
-                               $"Target '{target.Name}' requires that property '{property.Name}' must be not null.");
-                           break;
-                       default:
-                           throw new Exception($"Member type {member} not supported.");
-                    }
-                }
+                else if (IsMemberNull(requirement.GetMemberInfo(), build))
+                    ControlFlow.Fail($"Target '{target.Name}' requires member '{requirement.GetMemberInfo().Name}' to be not null.");
+            }
+
+            var requiredMembers = InjectionUtility.GetParameterMembers(build.GetType()).Where(x => x.HasCustomAttribute<RequiredAttribute>());
+            foreach (var member in requiredMembers)
+            {
+                if (IsMemberNull(member, build))
+                    ControlFlow.Fail($"Member '{member.Name}' is required to be not null.");
+            }
+        }
+
+        private static bool IsMemberNull(MemberInfo member, NukeBuild build)
+        {
+            if (NukeBuild.Host == HostType.Console)
+                InjectValueInteractive(build, member);
+            
+            return member.GetValue(build) == null;
+        }
+
+        private static void InjectValueInteractive(NukeBuild build, MemberInfo member)
+        {
+            var memberType = member.GetMemberType();
+            var nameOrDescription = ParameterService.Instance.GetParameterDescription(member) ??
+                                    ParameterService.Instance.GetParameterName(member);
+            var text = $"{nameOrDescription.TrimEnd('.')}:";
+            
+            while (member.GetValue(build) == null)
+            {
+                var valueSet = ParameterService.Instance.GetParameterValueSet(member, build);
+                var value = valueSet == null
+                    ? ConsoleUtility.PromptForInput(text, defaultValue: null)
+                    : ConsoleUtility.PromptForChoice(text, valueSet.Select(x => (x.Object, x.Text)).ToArray());
+
+                member.SetValue(build, ReflectionService.Convert(value, memberType));
             }
         }
     }

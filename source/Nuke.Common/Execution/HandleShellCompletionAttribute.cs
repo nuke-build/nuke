@@ -13,7 +13,7 @@ namespace Nuke.Common.Execution
     [AttributeUsage(AttributeTargets.Class)]
     internal class HandleShellCompletionAttribute : Attribute, IPreLogoBuildExtension
     {
-        public void Execute(NukeBuild build)
+        public void Execute(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             var completionItems = new SortedDictionary<string, string[]>();
 
@@ -21,22 +21,17 @@ namespace Nuke.Common.Execution
             completionItems[Constants.InvokedTargetsParameterName] = targetNames.ToArray();
             completionItems[Constants.SkippedTargetsParameterName] = targetNames.ToArray();
 
-            string[] GetSubItems(Type type)
-            {
-                if (type.IsEnum)
-                    return type.GetEnumNames();
-                if (type.IsSubclassOf(typeof(Enumeration)))
-                    return type.GetFields(ReflectionService.Static).Select(x => x.Name).ToArray();
-                return null;
-            }
-
-            foreach (var parameter in InjectionUtility.GetParameterMembers(build.GetType()))
+            var parameters = InjectionUtility.GetParameterMembers(build.GetType())
+                .Where(x => !x.HasCustomAttribute<UnlistedAttribute>());
+            
+            foreach (var parameter in parameters)
             {
                 var parameterName = ParameterService.Instance.GetParameterName(parameter);
                 if (completionItems.ContainsKey(parameterName))
                     continue;
 
-                completionItems[parameterName] = GetSubItems(parameter.GetFieldOrPropertyType())?.OrderBy(x => x).ToArray();
+                var subItems = ParameterService.Instance.GetParameterValueSet(parameter, build)?.Select(x => x.Text);
+                completionItems[parameterName] = subItems?.ToArray();
             }
 
             SerializationTasks.YamlSerializeToFile(completionItems, Constants.GetCompletionFile(NukeBuild.RootDirectory));

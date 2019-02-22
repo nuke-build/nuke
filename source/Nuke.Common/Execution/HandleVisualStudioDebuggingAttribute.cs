@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Nuke.Common.Execution
     {
         public int TimeoutInMilliseconds { get; } = 10_000;
 
-        public void Execute(NukeBuild build)
+        public void Execute(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             if (!ParameterService.Instance.GetParameter<bool>(Constants.VisualStudioDebugParameterName))
                 return;

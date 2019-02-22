@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Metadata;
 using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.Tooling;
@@ -57,11 +58,15 @@ namespace Nuke.GlobalTool
                 return (int) commandHandler.Invoke(obj: null, commandArguments);
             }
 
-            if (buildScript == null)
+            if (rootDirectory == null || buildScript == null)
             {
-                if (UserConfirms($"Could not find {Constants.ConfigurationFileName} file. Do you want to setup a build?"))
-                    return Setup(new string[0], rootDirectory, buildScript: null);
-                return 0;
+                var missingFile = rootDirectory == null
+                    ? Constants.ConfigurationFileName
+                    : "build.ps1/sh";
+                
+                return UserConfirms($"Could not find {missingFile} file. Do you want to setup a build?")
+                    ? Setup(new string[0], rootDirectory, buildScript: null)
+                    : 0;
             }
 
             // TODO: docker

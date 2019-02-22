@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace Nuke.Common.Execution
     {
         public int TimeoutInMilliseconds { get; } = 500;
         
-        public void Execute(NukeBuild build)
+        public void Execute(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             ControlFlow.AssertWarn(Task.Run(CheckConfiguration).Wait(TimeoutInMilliseconds),
                 $"Could not complete checking build configurations within {TimeoutInMilliseconds} milliseconds.");

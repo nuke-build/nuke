@@ -30,33 +30,33 @@ namespace Nuke.Common.ProjectModel
     [UsedImplicitly(ImplicitUseKindFlags.Assign)]
     public class SolutionAttribute : ParameterAttribute
     {
-        private readonly string _solutionFileRootRelativePath;
+        private readonly string _relativePath;
 
         public SolutionAttribute()
-            : this(solutionFileRootRelativePath: null)
+            : this(relativePath: null)
         {
         }
 
-        public SolutionAttribute(string solutionFileRootRelativePath)
+        public SolutionAttribute(string relativePath)
             : base("Path to a solution file that is automatically loaded."
-                   + (solutionFileRootRelativePath != null ? $" Default is {solutionFileRootRelativePath}." : string.Empty))
+                   + (relativePath != null ? $" Default is {relativePath}." : string.Empty))
         {
-            _solutionFileRootRelativePath = solutionFileRootRelativePath;
+            _relativePath = relativePath;
         }
         
         public override object GetValue(MemberInfo member, object instance)
         {
-            return ProjectModelTasks.ParseSolution(GetSolutionFile(member.Name));
+            return ProjectModelTasks.ParseSolution(GetSolutionFile(member));
         }
         
         // TODO: allow wildcard matching? [Solution("nuke-*.sln")] -- no globbing?
         // TODO: for just [Solution] without parameter being passed, do wildcard search?
-        private string GetSolutionFile(string memberName)
+        private string GetSolutionFile(MemberInfo member)
         {
-            if (_solutionFileRootRelativePath != null)
-                return PathConstruction.Combine(NukeBuild.RootDirectory, _solutionFileRootRelativePath);
+            if (_relativePath != null)
+                return PathConstruction.Combine(NukeBuild.RootDirectory, _relativePath);
             
-            var parameterValue = ParameterService.Instance.GetParameter<PathConstruction.AbsolutePath>(memberName);
+            var parameterValue = ParameterService.Instance.GetParameter<PathConstruction.AbsolutePath>(member);
             if (parameterValue != null)
                 return parameterValue;
 

@@ -29,13 +29,13 @@ namespace Nuke.Common.Tools.InspectCode
         public static string InspectCodePath =>
             ToolPathResolver.TryGetEnvironmentExecutable("INSPECTCODE_EXE") ??
             ToolPathResolver.GetPackageExecutable("JetBrains.ReSharper.CommandLineTools", GetPackageExecutable());
-        public static Action<OutputType, string> InspectCodeLogger { get; set; } = ProcessManager.DefaultLogger;
+        public static Action<OutputType, string> InspectCodeLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.
         /// </summary>
-        public static IReadOnlyCollection<Output> InspectCode(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> InspectCode(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(InspectCodePath, arguments, workingDirectory, environmentVariables, timeout, logOutput, InspectCodeLogger, outputFilter);
+            var process = ProcessTasks.StartProcess(InspectCodePath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, InspectCodeLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

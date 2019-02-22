@@ -18,7 +18,7 @@ namespace Nuke.Common.ProjectModel
     {
         public static Solution Deserialize(string solutionFile)
         {
-            return Deserialize(solutionFile, File.ReadAllLines(solutionFile));
+            return Deserialize(solutionFile, TextTasks.ReadAllLines(solutionFile));
         }
 
         public static Solution Deserialize(string solutionFile, string[] content)

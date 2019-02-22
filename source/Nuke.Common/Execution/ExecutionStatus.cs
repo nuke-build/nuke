@@ -14,6 +14,7 @@ namespace Nuke.Common.Execution
         Executed,
         Failed,
         Executing,
-        Aborted
+        Aborted,
+        Collective
     }
 }

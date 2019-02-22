@@ -54,6 +54,7 @@ namespace Nuke.Common.Utilities
 
                 input = Console.ReadKey(intercept: true);
                 if (ConsoleKey.A <= input.Key && input.Key <= ConsoleKey.Z
+                    || ConsoleKey.D0 <= input.Key && input.Key <= ConsoleKey.D9
                     || new[] { '.', '/', '\\', '_', '-' }.Any(x => x == input.KeyChar))
                     inputBuilder.Append(input.KeyChar);
                 else if (input.Key == ConsoleKey.Backspace && inputBuilder.Length > 0)

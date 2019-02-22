@@ -86,7 +86,7 @@ namespace Nuke.Common
         internal void ExecuteExtensions<T>()
             where T : IBuildExtension
         {
-            GetType().GetCustomAttributes().OfType<T>().ForEach(x => x.Execute(this));
+            GetType().GetCustomAttributes().OfType<T>().ForEach(x => x.Execute(this, ExecutableTargets));
         }
 
         protected internal virtual IOutputSink OutputSink

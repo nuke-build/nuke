@@ -29,13 +29,13 @@ namespace Nuke.Common.Tools.VSTest
         public static string VSTestPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("VSTEST_EXE") ??
             ToolPathResolver.GetPackageExecutable("Microsoft.TestPlatform", "vstest.console.exe");
-        public static Action<OutputType, string> VSTestLogger { get; set; } = ProcessManager.DefaultLogger;
+        public static Action<OutputType, string> VSTestLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.
         /// </summary>
-        public static IReadOnlyCollection<Output> VSTest(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> VSTest(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(VSTestPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, VSTestLogger, outputFilter);
+            var process = ProcessTasks.StartProcess(VSTestPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, VSTestLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

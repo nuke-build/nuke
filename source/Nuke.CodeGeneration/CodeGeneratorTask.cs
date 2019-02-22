@@ -20,10 +20,10 @@ namespace Nuke.CodeGeneration
         public IBuildEngine BuildEngine { get; set; }
         public ITaskHost HostObject { get; set; }
 
-        [Required]
+        [Microsoft.Build.Framework.Required]
         public ITaskItem[] SpecificationFiles { get; set; }
 
-        [Required]
+        [Microsoft.Build.Framework.Required]
         public string BaseDirectory { get; set; }
 
         public bool UseNestedNamespaces { get; set; }

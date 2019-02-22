@@ -13,7 +13,8 @@ namespace Nuke.Common.Tooling
         string workingDirectory = null,
         IReadOnlyDictionary<string, string> environmentVariables = null,
         int? timeout = null,
-        bool logOutput = true,
+        bool? logOutput = null,
+        bool? logInvocation = null,
         Action<OutputType, string> customLogger = null,
         Func<string, string> outputFilter = null);
 }

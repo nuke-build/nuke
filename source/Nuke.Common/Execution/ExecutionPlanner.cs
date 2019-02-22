@@ -46,6 +46,16 @@ namespace Nuke.Common.Execution
             var vertexDictionary = GetVertexDictionary(executableTargets);
             var graphAsList = vertexDictionary.Values.ToList();
             var executingTargets = new List<ExecutableTarget>();
+            
+            var scc = new StronglyConnectedComponentFinder<ExecutableTarget>();
+            var cycles = scc.DetectCycle(graphAsList).Cycles().ToList();
+            if (cycles.Count > 0)
+            {
+                ControlFlow.Fail(
+                    new[] { "Circular dependencies between targets:" }
+                        .Concat(cycles.Select(x => $" - {x.Select(y => y.Value.Name).JoinComma()}"))
+                        .JoinNewLine());
+            }
 
             while (graphAsList.Any())
             {
@@ -58,20 +68,7 @@ namespace Nuke.Common.Execution
                             .JoinNewLine());
                 }
 
-                var independent = independents.FirstOrDefault();
-                if (independent == null)
-                {
-                    var scc = new StronglyConnectedComponentFinder<ExecutableTarget>();
-                    var cycles = scc.DetectCycle(graphAsList)
-                        .Cycles()
-                        .Select(x => string.Join(" -> ", x.Select(y => y.Value.Name)));
-
-                    ControlFlow.Fail(
-                        new[] { "Circular dependencies between target definitions." }
-                            .Concat(independents.Select(x => $"  - {cycles}"))
-                            .JoinNewLine());
-                }
-
+                var independent = independents.First();
                 graphAsList.Remove(independent);
 
                 var executableTarget = independent.Value;

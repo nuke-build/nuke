@@ -56,8 +56,8 @@ namespace Nuke.Common.Tests.Execution
             public string Description = "description";
             public Action Action = () => { };
             public Expression<Func<bool>> Requirement = () => true;
-            public Func<bool> StaticCondition = () => true;
-            public Func<bool> DynamicCondition = () => false;
+            public Expression<Func<bool>> StaticCondition = () => true;
+            public Expression<Func<bool>> DynamicCondition = () => false;
 
             public Target A => _ => _
                 .Description(Description)

@@ -29,13 +29,13 @@ namespace Nuke.Common.Tools.Npm
         public static string NpmPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("NPM_EXE") ??
             ToolPathResolver.GetPathExecutable("npm");
-        public static Action<OutputType, string> NpmLogger { get; set; } = ProcessManager.DefaultLogger;
+        public static Action<OutputType, string> NpmLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   npm is the package manager for the Node JavaScript platform. It puts modules in place so that node can find them, and manages dependency conflicts intelligently.<para/>It is extremely configurable to support a wide variety of use cases. Most commonly, it is used to publish, discover, install, and develop node programs.
         /// </summary>
-        public static IReadOnlyCollection<Output> Npm(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Npm(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(NpmPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, NpmLogger, outputFilter);
+            var process = ProcessTasks.StartProcess(NpmPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, NpmLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

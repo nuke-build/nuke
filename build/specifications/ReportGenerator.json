@@ -87,9 +87,12 @@
       "name": "ReportTypes",
       "values": [
         "Badges",
+        "Cobertura",
         "CsvSummary",
         "Html",
         "HtmlInline",
+        "HtmlInline_AzurePipelines",
+        "HtmlInline_AzurePipelines_Dark",
         "HtmlChart",
         "HtmlSummary",
         "Latex",
@@ -98,7 +101,8 @@
         "PngChart",
         "TextSummary",
         "Xml",
-        "XmlSummary"
+        "XmlSummary",
+        "SonarQube"
       ]
     },
     {

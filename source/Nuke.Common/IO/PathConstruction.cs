@@ -72,27 +72,27 @@ namespace Nuke.Common.IO
         }
 
         [Pure]
-        public static IEnumerable<string> GlobFiles(string directory, params string[] globPatterns)
+        public static IEnumerable<string> GlobFiles(string directory, params string[] patterns)
         {
             var directoryInfo = new DirectoryInfo(directory);
-            return globPatterns.SelectMany(x => directoryInfo.GlobFiles(x)).Select(x => x.FullName);
+            return patterns.SelectMany(x => directoryInfo.GlobFiles(x)).Select(x => x.FullName);
         }
 
         [Pure]
-        public static IEnumerable<string> GlobDirectories(string directory, params string[] globPatterns)
+        public static IEnumerable<string> GlobDirectories(string directory, params string[] patterns)
         {
             var directoryInfo = new DirectoryInfo(directory);
-            return globPatterns.SelectMany(x => directoryInfo.GlobDirectories(x)).Select(x => x.FullName);
+            return patterns.SelectMany(x => directoryInfo.GlobDirectories(x)).Select(x => x.FullName);
         }
         
-        public static IEnumerable<AbsolutePath> GlobDirectories(this AbsolutePath directory, params string[] globPatterns)
+        public static IEnumerable<AbsolutePath> GlobDirectories(this AbsolutePath directory, params string[] patterns)
         {
-            return GlobDirectories((string) directory, globPatterns).Select(x => (AbsolutePath) x);
+            return GlobDirectories((string) directory, patterns).Select(x => (AbsolutePath) x);
         }
         
-        public static IEnumerable<AbsolutePath> GlobFiles(this AbsolutePath directory, params string[] globPatterns)
+        public static IEnumerable<AbsolutePath> GlobFiles(this AbsolutePath directory, params string[] patterns)
         {
-            return GlobFiles((string) directory, globPatterns).Select(x => (AbsolutePath) x);
+            return GlobFiles((string) directory, patterns).Select(x => (AbsolutePath) x);
         }
 
         private const char WinSeparator = '\\';
@@ -262,6 +262,7 @@ namespace Nuke.Common.IO
                 : path.TrimEnd(WinSeparator, UnixSeparator, UncSeparator);
         }
 
+        [Serializable]
         [DebuggerDisplay("{" + nameof(_path) + "}")]
         public class RelativePath
         {
@@ -299,6 +300,7 @@ namespace Nuke.Common.IO
             }
         }
 
+        [Serializable]
         public class UnixRelativePath : RelativePath
         {
             protected UnixRelativePath(string path, char? separator)
@@ -312,6 +314,7 @@ namespace Nuke.Common.IO
             }
         }
 
+        [Serializable]
         public class WinRelativePath : RelativePath
         {
             protected WinRelativePath(string path, char? separator)
@@ -325,8 +328,9 @@ namespace Nuke.Common.IO
             }
         }
 
-        [DebuggerDisplay("{" + nameof(_path) + "}")]
+        [Serializable]
         [TypeConverter(typeof(TypeConverter))]
+        [DebuggerDisplay("{" + nameof(_path) + "}")]
         public class AbsolutePath
         {
             public class TypeConverter : System.ComponentModel.TypeConverter
@@ -344,6 +348,9 @@ namespace Nuke.Common.IO
                             ? stringValue
                             : Combine(EnvironmentInfo.WorkingDirectory, stringValue));
                     }
+
+                    if (value is null)
+                        return null;
 
                     return base.ConvertFrom(context, culture, value);
                 }

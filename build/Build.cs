@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Nuke.Common;
+using Nuke.Common.Execution;
 using Nuke.Common.Git;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
@@ -28,7 +29,9 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
 
 // ReSharper disable HeapView.DelegateAllocation
 
-// [DotNetVerbosityMapping]
+[CheckBuildProjectConfigurations]
+[DotNetVerbosityMapping]
+[UnsetVisualStudioEnvironmentVariables]
 partial class Build : NukeBuild
 {
     public static int Main() => Execute<Build>(x => x.Pack);
@@ -36,12 +39,12 @@ partial class Build : NukeBuild
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
-    [Parameter("ApiKey for the specified source.")] readonly string ApiKey;
+    [Parameter("ApiKey for the specified source")] readonly string ApiKey;
     [Parameter] readonly string Source = "https://api.nuget.org/v3/index.json";
     [Parameter] readonly string SymbolSource = "https://nuget.smbsrc.net/";
 
-    [Parameter("Gitter authtoken.")] readonly string GitterAuthToken;
-    [Parameter("Slack webhook.")] readonly string SlackWebhook;
+    [Parameter("Gitter authtoken")] readonly string GitterAuthToken;
+    [Parameter("Slack webhook")] readonly string SlackWebhook;
 
     [Solution] readonly Solution Solution;
     [GitRepository] readonly GitRepository GitRepository;
@@ -70,9 +73,9 @@ partial class Build : NukeBuild
                 .SetProjectFile(Solution));
         });
 
-    Project CommonProject => Solution.GetProject("Nuke.Common").NotNull();
-    Project GlobalToolProject => Solution.GetProject("Nuke.GlobalTool").NotNull();
-    Project CodeGenerationProject => Solution.GetProject("Nuke.CodeGeneration").NotNull();
+    [Unlisted] [ProjectFrom(nameof(Solution))] Project CommonProject;
+    [Unlisted] [ProjectFrom(nameof(Solution))] Project GlobalToolProject;
+    [Unlisted] [ProjectFrom(nameof(Solution))] Project CodeGenerationProject;
 
     Target Compile => _ => _
         .DependsOn(Restore)
@@ -87,17 +90,18 @@ partial class Build : NukeBuild
                 .SetInformationalVersion(GitVersion.InformationalVersion));
 
             DotNetPublish(s => s
-                .EnableNoRestore()
-                .SetConfiguration(Configuration)
-                .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())
-                .SetFileVersion(GitVersion.GetNormalizedFileVersion())
-                .SetInformationalVersion(GitVersion.InformationalVersion)
-                .CombineWith(
-                    from project in new[] { GlobalToolProject, CommonProject, CodeGenerationProject }
-                    from framework in project.GetMSBuildProject().GetTargetFrameworks()
-                    select new { project, framework }, (cs, v) => cs
-                        .SetProject(v.project)
-                        .SetFramework(v.framework)));
+                    .EnableNoRestore()
+                    .SetConfiguration(Configuration)
+                    .SetAssemblyVersion(GitVersion.GetNormalizedAssemblyVersion())
+                    .SetFileVersion(GitVersion.GetNormalizedFileVersion())
+                    .SetInformationalVersion(GitVersion.InformationalVersion)
+                    .CombineWith(
+                        from project in new[] { GlobalToolProject, CommonProject, CodeGenerationProject }
+                        from framework in project.GetTargetFrameworks()
+                        select new { project, framework }, (cs, v) => cs
+                            .SetProject(v.project)
+                            .SetFramework(v.framework)),
+                degreeOfParallelism: 10);
         });
 
     string ChangelogFile => RootDirectory / "CHANGELOG.md";

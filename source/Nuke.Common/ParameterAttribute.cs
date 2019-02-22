@@ -3,10 +3,12 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
+using Nuke.Common.Tooling;
 
 namespace Nuke.Common
 {
@@ -34,10 +36,10 @@ namespace Nuke.Common
     {
         public ParameterAttribute(string description = null)
         {
-            Description = description ?? "<no description>";
+            Description = description;
         }
 
-        public string Description { get; }
+        public virtual string Description { get; }
 
         [CanBeNull]
         public string Name { get; set; }
@@ -46,9 +48,46 @@ namespace Nuke.Common
         public string Separator { get; set; }
 
         [CanBeNull]
+        public string ValueProvider { get; set; }
+
+        public override bool IsFast => true;
+
+        [CanBeNull]
         public override object GetValue(MemberInfo member, object instance)
         {
-            return ParameterService.Instance.GetParameter<object>(member);
+            return ParameterService.Instance.GetParameter(member, member.GetMemberType().GetNullableType());
         }
+
+        public virtual IEnumerable<(string, object)> GetValueSet(MemberInfo member, object instance)
+        {
+            if (ValueProvider != null)
+            {
+                var valueProvider = instance.GetType().GetMember(ValueProvider, ReflectionService.All)
+                    .SingleOrDefault()
+                    .NotNull($"No single provider '{ValueProvider}' found for member '{member.Name}'.");
+                ControlFlow.Assert(valueProvider.GetMemberType() == typeof(IEnumerable<string>),
+                    "valueProvider.GetReturnType() == typeof(IEnumerable<string>)");
+
+                return valueProvider.GetValue<IEnumerable<(string, object)>>(instance);
+            }
+            
+            var memberType = member.GetMemberType();
+            if (memberType.IsEnum)
+                return memberType.GetEnumNames().Select(x => (x, Enum.Parse(memberType, x)));
+            if (memberType.IsSubclassOf(typeof(Enumeration)))
+                return memberType.GetFields(ReflectionService.Static).Select(x => (x.Name, x.GetValue()));
+
+            return null;
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
+    public class RequiredAttribute : Attribute
+    {
+    }
+
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
+    public class UnlistedAttribute : Attribute
+    {
     }
 }

@@ -16,15 +16,16 @@ namespace Nuke.Common.Execution
         internal bool IsDefault { get; set; }
         internal TimeSpan Duration { get; set; }
         internal ExecutionStatus Status { get; set; }
-        internal List<Func<bool>> DynamicConditions { get; } = new List<Func<bool>>();
-        internal List<Func<bool>> StaticConditions { get; } = new List<Func<bool>>();
+        internal List<Expression<Func<bool>>> DynamicConditions { get; } = new List<Expression<Func<bool>>>();
+        internal List<Expression<Func<bool>>> StaticConditions { get; } = new List<Expression<Func<bool>>>();
         internal List<LambdaExpression> Requirements { get; } = new List<LambdaExpression>();
         internal List<Target> DependsOnTargets { get; } = new List<Target>();
         internal List<Target> DependentForTargets { get; } = new List<Target>();
         internal List<Action> Actions { get; } = new List<Action>();
         internal DependencyBehavior DependencyBehavior { get; private set; }
-        internal bool ContinueOnFailure { get; private set; }
-        internal bool AssureAfterFailure { get; private set; }
+        internal bool IsProceedAfterFailure { get; private set; }
+        internal bool IsAssuredAfterFailure { get; private set; }
+        internal bool IsInternal { get; private set; }
         internal List<Target> BeforeTargets { get; private set; } = new List<Target>();
         internal List<Target> AfterTargets { get; private set; } = new List<Target>();
         internal List<Target> TriggersTargets { get; private set; } = new List<Target>();
@@ -64,13 +65,13 @@ namespace Nuke.Common.Execution
             return this;
         }
 
-        public ITargetDefinition OnlyWhenDynamic(params Func<bool>[] conditions)
+        public ITargetDefinition OnlyWhenDynamic(params Expression<Func<bool>>[] conditions)
         {
             DynamicConditions.AddRange(conditions);
             return this;
         }
 
-        public ITargetDefinition OnlyWhenStatic(params Func<bool>[] conditions)
+        public ITargetDefinition OnlyWhenStatic(params Expression<Func<bool>>[] conditions)
         {
             StaticConditions.AddRange(conditions);
             return this;
@@ -128,13 +129,19 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition AssuredAfterFailure()
         {
-            AssureAfterFailure = true;
+            IsAssuredAfterFailure = true;
             return this;
         }
 
-        public ITargetDefinition ContinuesOnFailure()
+        public ITargetDefinition ProceedAfterFailure()
         {
-            ContinueOnFailure = true;
+            IsProceedAfterFailure = true;
+            return this;
+        }
+
+        public ITargetDefinition Unlisted()
+        {
+            IsInternal = true;
             return this;
         }
     }

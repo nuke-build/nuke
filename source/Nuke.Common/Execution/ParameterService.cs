@@ -4,13 +4,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using JetBrains.Annotations;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using static Nuke.Common.Execution.ReflectionService;
 
 namespace Nuke.Common.Execution
 {
@@ -45,30 +46,44 @@ namespace Nuke.Common.Execution
         }
 
         [CanBeNull]
-        public object GetParameter(Expression<Func<object>> expression)
+        public string GetParameterDescription(MemberInfo member)
         {
-            return GetParameter<object>(expression.GetMemberInfo());
+            var attribute = member.GetCustomAttribute<ParameterAttribute>();
+            return attribute.Description?.TrimEnd('.');
+        }
+
+        [CanBeNull]
+        public IEnumerable<(string Text, object Object)> GetParameterValueSet(MemberInfo member, object instance)
+        {
+            var attribute = member.GetCustomAttribute<ParameterAttribute>();
+            return attribute.GetValueSet(member, instance)?.OrderBy(x => x.Item1);
         }
 
         [CanBeNull]
         public T GetParameter<T>(Expression<Func<T>> expression)
         {
-            return GetParameter<T>(expression.GetMemberInfo());
+            return (T) GetParameter(expression.GetMemberInfo(), typeof(T));
         }
 
         [CanBeNull]
         public T GetParameter<T>(Expression<Func<object>> expression)
         {
-            return GetParameter<T>(expression.GetMemberInfo());
+            return (T) GetParameter(expression.GetMemberInfo(), typeof(T));
         }
 
         [CanBeNull]
         public T GetParameter<T>(MemberInfo member)
         {
+            return (T) GetParameter(member, typeof(T));
+        }
+
+        [CanBeNull]
+        internal object GetParameter(MemberInfo member, Type destinationType = null)
+        {
+            destinationType = destinationType ?? member.GetMemberType();
             var attribute = member.GetCustomAttribute<ParameterAttribute>();
-            var memberType = typeof(T) != typeof(object) ? typeof(T) : member.GetFieldOrPropertyType();
             var separator = (attribute.Separator ?? string.Empty).SingleOrDefault();
-            return (T) GetParameter(attribute.Name ?? member.Name, memberType, separator);
+            return GetParameter(attribute.Name ?? member.Name, destinationType, separator);
         }
 
         [CanBeNull]
@@ -226,12 +241,7 @@ namespace Nuke.Common.Execution
         [CanBeNull]
         private object GetDefaultValue(Type type)
         {
-            if (Nullable.GetUnderlyingType(type) == null && 
-                type != typeof(string) && 
-                !type.IsClass &&
-                !type.IsArray)
-                return Activator.CreateInstance(type);
-            return null;
+            return type.IsNullableType() ? null : Activator.CreateInstance(type);
         }
 
         [CanBeNull]
@@ -270,44 +280,16 @@ namespace Nuke.Common.Execution
             var convertedValues = values.Select(x => Convert(x, elementType)).ToList();
             if (!destinationType.IsArray)
             {
-                ControlFlow.Assert(convertedValues.Count == 1, $"Value [ {values.JoinComma()} ] cannot be assigned to '{GetName(destinationType)}'.");
+                ControlFlow.Assert(convertedValues.Count == 1, $"Value [ {values.JoinComma()} ] cannot be assigned to '{GetPresentableName(destinationType)}'.");
                 return convertedValues.Single();
             }
 
             var array = Array.CreateInstance(elementType, convertedValues.Count);
             convertedValues.ForEach((x, i) => array.SetValue(x, i));
             ControlFlow.Assert(destinationType.IsInstanceOfType(array),
-                $"Type '{GetName(array.GetType())}' is not an instance of '{GetName(destinationType)}'.");
+                $"Type '{GetPresentableName(array.GetType())}' is not an instance of '{GetPresentableName(destinationType)}'.");
 
             return array;
-        }
-
-        [CanBeNull]
-        private object Convert(string value, Type destinationType)
-        {
-            try
-            {
-                var typeConverter = TypeDescriptor.GetConverter(destinationType);
-                return typeConverter.ConvertFromInvariantString(value);
-            }
-            catch
-            {
-                ControlFlow.Fail($"Value '{value}' could not be converted to '{GetName(destinationType)}'.");
-                // ReSharper disable once HeuristicUnreachableCode
-                return null;
-            }
-        }
-
-        private string GetName(Type type)
-        {
-            if (type.IsArray)
-                return $"{type.GetElementType().NotNull().Name}[]";
-
-            var underlyingType = Nullable.GetUnderlyingType(type);
-            if (underlyingType != null)
-                return underlyingType.Name + "?";
-
-            return type.Name;
         }
 
         private void CheckNames(string name, IEnumerable<string> candidates)

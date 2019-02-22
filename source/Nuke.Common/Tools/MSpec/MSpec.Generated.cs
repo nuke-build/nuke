@@ -29,13 +29,13 @@ namespace Nuke.Common.Tools.MSpec
         public static string MSpecPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("MSPEC_EXE") ??
             GetToolPath();
-        public static Action<OutputType, string> MSpecLogger { get; set; } = ProcessManager.DefaultLogger;
+        public static Action<OutputType, string> MSpecLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.
         /// </summary>
-        public static IReadOnlyCollection<Output> MSpec(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> MSpec(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(MSpecPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, MSpecLogger, outputFilter);
+            var process = ProcessTasks.StartProcess(MSpecPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, MSpecLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

@@ -30,9 +30,9 @@ namespace Nuke.Common.Tools.DotNet
             ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE") ??
             ToolPathResolver.GetPathExecutable("dotnet");
         public static Action<OutputType, string> DotNetLogger { get; set; } = CustomLogger;
-        public static IReadOnlyCollection<Output> DotNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool logOutput = true, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> DotNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            var process = ProcessTasks.StartProcess(DotNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, DotNetLogger, outputFilter);
+            var process = ProcessTasks.StartProcess(DotNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, DotNetLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -627,6 +627,155 @@ namespace Nuke.Common.Tools.DotNet
         public static IEnumerable<(DotNetNuGetPushSettings Settings, IReadOnlyCollection<Output> Output)> DotNetNuGetPush(CombinatorialConfigure<DotNetNuGetPushSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
             return configurator.Invoke(DotNetNuGetPush, DotNetLogger, degreeOfParallelism, completeOnFailure);
+        }
+        /// <summary>
+        ///   <p>The <c>dotnet tool install</c> command provides a way for you to install .NET Core Global Tools on your machine. To use the command, you either have to specify that you want a user-wide installation using the <c>--global</c> option or you specify a path to install it using the <c>--tool-path</c> option.<para/>Global Tools are installed in the following directories by default when you specify the <c>-g</c> (or <c>--global</c>) option:<ul><li>Linux/macOS: <c>$HOME/.dotnet/tools</c></li><li>Windows: <c>%USERPROFILE%\.dotnet\tools</c></li></ul></p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+        /// </summary>
+        public static IReadOnlyCollection<Output> DotNetToolInstall(DotNetToolInstallSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new DotNetToolInstallSettings();
+            var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary>
+        ///   <p>The <c>dotnet tool install</c> command provides a way for you to install .NET Core Global Tools on your machine. To use the command, you either have to specify that you want a user-wide installation using the <c>--global</c> option or you specify a path to install it using the <c>--tool-path</c> option.<para/>Global Tools are installed in the following directories by default when you specify the <c>-g</c> (or <c>--global</c>) option:<ul><li>Linux/macOS: <c>$HOME/.dotnet/tools</c></li><li>Windows: <c>%USERPROFILE%\.dotnet\tools</c></li></ul></p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;packageName&gt;</c> via <see cref="DotNetToolInstallSettings.PackageName"/></li>
+        ///     <li><c>--add-source</c> via <see cref="DotNetToolInstallSettings.Sources"/></li>
+        ///     <li><c>--configfile</c> via <see cref="DotNetToolInstallSettings.ConfigFile"/></li>
+        ///     <li><c>--framework</c> via <see cref="DotNetToolInstallSettings.Framework"/></li>
+        ///     <li><c>--global</c> via <see cref="DotNetToolInstallSettings.Global"/></li>
+        ///     <li><c>--tool-path</c> via <see cref="DotNetToolInstallSettings.ToolInstallationPath"/></li>
+        ///     <li><c>--verbosity</c> via <see cref="DotNetToolInstallSettings.Verbosity"/></li>
+        ///     <li><c>--version</c> via <see cref="DotNetToolInstallSettings.Version"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> DotNetToolInstall(Configure<DotNetToolInstallSettings> configurator)
+        {
+            return DotNetToolInstall(configurator(new DotNetToolInstallSettings()));
+        }
+        /// <summary>
+        ///   <p>The <c>dotnet tool install</c> command provides a way for you to install .NET Core Global Tools on your machine. To use the command, you either have to specify that you want a user-wide installation using the <c>--global</c> option or you specify a path to install it using the <c>--tool-path</c> option.<para/>Global Tools are installed in the following directories by default when you specify the <c>-g</c> (or <c>--global</c>) option:<ul><li>Linux/macOS: <c>$HOME/.dotnet/tools</c></li><li>Windows: <c>%USERPROFILE%\.dotnet\tools</c></li></ul></p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;packageName&gt;</c> via <see cref="DotNetToolInstallSettings.PackageName"/></li>
+        ///     <li><c>--add-source</c> via <see cref="DotNetToolInstallSettings.Sources"/></li>
+        ///     <li><c>--configfile</c> via <see cref="DotNetToolInstallSettings.ConfigFile"/></li>
+        ///     <li><c>--framework</c> via <see cref="DotNetToolInstallSettings.Framework"/></li>
+        ///     <li><c>--global</c> via <see cref="DotNetToolInstallSettings.Global"/></li>
+        ///     <li><c>--tool-path</c> via <see cref="DotNetToolInstallSettings.ToolInstallationPath"/></li>
+        ///     <li><c>--verbosity</c> via <see cref="DotNetToolInstallSettings.Verbosity"/></li>
+        ///     <li><c>--version</c> via <see cref="DotNetToolInstallSettings.Version"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(DotNetToolInstallSettings Settings, IReadOnlyCollection<Output> Output)> DotNetToolInstall(CombinatorialConfigure<DotNetToolInstallSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+        {
+            return configurator.Invoke(DotNetToolInstall, DotNetLogger, degreeOfParallelism, completeOnFailure);
+        }
+        /// <summary>
+        ///   <p>The <c>dotnet tool uninstall</c> command provides a way for you to uninstall .NET Core Global Tools from your machine. To use the command, you either have to specify that you want to remove a user-wide tool using the <c>--global</c> option or specify a path to where the tool is installed using the <c>--tool-path</c> option.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+        /// </summary>
+        public static IReadOnlyCollection<Output> DotNetToolUninstall(DotNetToolUninstallSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new DotNetToolUninstallSettings();
+            var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary>
+        ///   <p>The <c>dotnet tool uninstall</c> command provides a way for you to uninstall .NET Core Global Tools from your machine. To use the command, you either have to specify that you want to remove a user-wide tool using the <c>--global</c> option or specify a path to where the tool is installed using the <c>--tool-path</c> option.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;packageName&gt;</c> via <see cref="DotNetToolUninstallSettings.PackageName"/></li>
+        ///     <li><c>--global</c> via <see cref="DotNetToolUninstallSettings.Global"/></li>
+        ///     <li><c>--tool-path</c> via <see cref="DotNetToolUninstallSettings.ToolInstallationPath"/></li>
+        ///     <li><c>--verbosity</c> via <see cref="DotNetToolUninstallSettings.Verbosity"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> DotNetToolUninstall(Configure<DotNetToolUninstallSettings> configurator)
+        {
+            return DotNetToolUninstall(configurator(new DotNetToolUninstallSettings()));
+        }
+        /// <summary>
+        ///   <p>The <c>dotnet tool uninstall</c> command provides a way for you to uninstall .NET Core Global Tools from your machine. To use the command, you either have to specify that you want to remove a user-wide tool using the <c>--global</c> option or specify a path to where the tool is installed using the <c>--tool-path</c> option.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;packageName&gt;</c> via <see cref="DotNetToolUninstallSettings.PackageName"/></li>
+        ///     <li><c>--global</c> via <see cref="DotNetToolUninstallSettings.Global"/></li>
+        ///     <li><c>--tool-path</c> via <see cref="DotNetToolUninstallSettings.ToolInstallationPath"/></li>
+        ///     <li><c>--verbosity</c> via <see cref="DotNetToolUninstallSettings.Verbosity"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(DotNetToolUninstallSettings Settings, IReadOnlyCollection<Output> Output)> DotNetToolUninstall(CombinatorialConfigure<DotNetToolUninstallSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+        {
+            return configurator.Invoke(DotNetToolUninstall, DotNetLogger, degreeOfParallelism, completeOnFailure);
+        }
+        /// <summary>
+        ///   <p>The <c>dotnet tool update</c> command provides a way for you to update .NET Core Global Tools on your machine to the latest stable version of the package. The command uninstalls and re-installs a tool, effectively updating it. To use the command, you either have to specify that you want to update a tool from a user-wide installation using the <c>--global</c> option or specify a path to where the tool is installed using the <c>--tool-path</c> option.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+        /// </summary>
+        public static IReadOnlyCollection<Output> DotNetToolUpdate(DotNetToolUpdateSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new DotNetToolUpdateSettings();
+            var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary>
+        ///   <p>The <c>dotnet tool update</c> command provides a way for you to update .NET Core Global Tools on your machine to the latest stable version of the package. The command uninstalls and re-installs a tool, effectively updating it. To use the command, you either have to specify that you want to update a tool from a user-wide installation using the <c>--global</c> option or specify a path to where the tool is installed using the <c>--tool-path</c> option.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;packageName&gt;</c> via <see cref="DotNetToolUpdateSettings.PackageName"/></li>
+        ///     <li><c>--add-source</c> via <see cref="DotNetToolUpdateSettings.Sources"/></li>
+        ///     <li><c>--configfile</c> via <see cref="DotNetToolUpdateSettings.ConfigFile"/></li>
+        ///     <li><c>--framework</c> via <see cref="DotNetToolUpdateSettings.Framework"/></li>
+        ///     <li><c>--global</c> via <see cref="DotNetToolUpdateSettings.Global"/></li>
+        ///     <li><c>--tool-path</c> via <see cref="DotNetToolUpdateSettings.ToolInstallationPath"/></li>
+        ///     <li><c>--verbosity</c> via <see cref="DotNetToolUpdateSettings.Verbosity"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> DotNetToolUpdate(Configure<DotNetToolUpdateSettings> configurator)
+        {
+            return DotNetToolUpdate(configurator(new DotNetToolUpdateSettings()));
+        }
+        /// <summary>
+        ///   <p>The <c>dotnet tool update</c> command provides a way for you to update .NET Core Global Tools on your machine to the latest stable version of the package. The command uninstalls and re-installs a tool, effectively updating it. To use the command, you either have to specify that you want to update a tool from a user-wide installation using the <c>--global</c> option or specify a path to where the tool is installed using the <c>--tool-path</c> option.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;packageName&gt;</c> via <see cref="DotNetToolUpdateSettings.PackageName"/></li>
+        ///     <li><c>--add-source</c> via <see cref="DotNetToolUpdateSettings.Sources"/></li>
+        ///     <li><c>--configfile</c> via <see cref="DotNetToolUpdateSettings.ConfigFile"/></li>
+        ///     <li><c>--framework</c> via <see cref="DotNetToolUpdateSettings.Framework"/></li>
+        ///     <li><c>--global</c> via <see cref="DotNetToolUpdateSettings.Global"/></li>
+        ///     <li><c>--tool-path</c> via <see cref="DotNetToolUpdateSettings.ToolInstallationPath"/></li>
+        ///     <li><c>--verbosity</c> via <see cref="DotNetToolUpdateSettings.Verbosity"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(DotNetToolUpdateSettings Settings, IReadOnlyCollection<Output> Output)> DotNetToolUpdate(CombinatorialConfigure<DotNetToolUpdateSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+        {
+            return configurator.Invoke(DotNetToolUpdate, DotNetLogger, degreeOfParallelism, completeOnFailure);
         }
     }
     #region DotNetTestSettings
@@ -1554,6 +1703,169 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--disable-buffering", DisableBuffering)
               .Add("--no-symbols", NoSymbols)
               .Add("--force-english-output", ForceEnglishOutput);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
+    #region DotNetToolInstallSettings
+    /// <summary>
+    ///   Used within <see cref="DotNetTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class DotNetToolInstallSettings : ToolSettings
+    {
+        /// <summary>
+        ///   Path to the DotNet executable.
+        /// </summary>
+        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        /// <summary>
+        ///   The Name/ID of the NuGet package that contains the .NET Core Global Tool to install.
+        /// </summary>
+        public virtual string PackageName { get; internal set; }
+        /// <summary>
+        ///   Adds an additional NuGet package source to use during installation.
+        /// </summary>
+        public virtual IReadOnlyList<string> Sources => SourcesInternal.AsReadOnly();
+        internal List<string> SourcesInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Specifies the NuGet configuration (<em>nuget.config</em>) file to use.
+        /// </summary>
+        public virtual string ConfigFile { get; internal set; }
+        /// <summary>
+        ///   Specifies the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a> to install the tool for. By default, the .NET Core SDK tries to choose the most appropriate target framework.
+        /// </summary>
+        public virtual string Framework { get; internal set; }
+        /// <summary>
+        ///   Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.
+        /// </summary>
+        public virtual bool? Global { get; internal set; }
+        /// <summary>
+        ///   Specifies the location where to install the Global Tool. The path can be absolute or relative. If the path doesn't exist, the command tries to create it. Can't be combined with the <c>--global</c> option. If you don't specify this option, you must specify the <c>--global</c> option.
+        /// </summary>
+        public virtual string ToolInstallationPath { get; internal set; }
+        /// <summary>
+        ///   Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.
+        /// </summary>
+        public virtual DotNetVerbosity Verbosity { get; internal set; }
+        /// <summary>
+        ///   The version of the tool to install. By default, the latest stable package version is installed. Use this option to install preview or older versions of the tool.
+        /// </summary>
+        public virtual string Version { get; internal set; }
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("tool install")
+              .Add("{value}", PackageName)
+              .Add("--add-source {value}", Sources)
+              .Add("--configfile {value}", ConfigFile)
+              .Add("--framework {value}", Framework)
+              .Add("--global", Global)
+              .Add("--tool-path {value}", ToolInstallationPath)
+              .Add("--verbosity {value}", Verbosity)
+              .Add("--version {value}", Version);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
+    #region DotNetToolUninstallSettings
+    /// <summary>
+    ///   Used within <see cref="DotNetTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class DotNetToolUninstallSettings : ToolSettings
+    {
+        /// <summary>
+        ///   Path to the DotNet executable.
+        /// </summary>
+        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        /// <summary>
+        ///   The Name/ID of the NuGet package that contains the .NET Core Global Tool to uninstall. You can find the package name using the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-list">dotnet tool list</a> command.
+        /// </summary>
+        public virtual string PackageName { get; internal set; }
+        /// <summary>
+        ///   Specifies that the tool to be removed is from a user-wide installation. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.
+        /// </summary>
+        public virtual bool? Global { get; internal set; }
+        /// <summary>
+        ///   Specifies the location where to uninstall the Global Tool. The path can be absolute or relative. Can't be combined with the <c>--global</c> option. If you don't specify this option, you must specify the <c>--global</c> option.
+        /// </summary>
+        public virtual string ToolInstallationPath { get; internal set; }
+        /// <summary>
+        ///   Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.
+        /// </summary>
+        public virtual DotNetVerbosity Verbosity { get; internal set; }
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("tool uninstall")
+              .Add("{value}", PackageName)
+              .Add("--global", Global)
+              .Add("--tool-path {value}", ToolInstallationPath)
+              .Add("--verbosity {value}", Verbosity);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
+    #region DotNetToolUpdateSettings
+    /// <summary>
+    ///   Used within <see cref="DotNetTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class DotNetToolUpdateSettings : ToolSettings
+    {
+        /// <summary>
+        ///   Path to the DotNet executable.
+        /// </summary>
+        public override string ToolPath => base.ToolPath ?? DotNetTasks.DotNetPath;
+        public override Action<OutputType, string> CustomLogger => DotNetTasks.DotNetLogger;
+        /// <summary>
+        ///   The Name/ID of the NuGet package that contains the .NET Core Global Tool to install.
+        /// </summary>
+        public virtual string PackageName { get; internal set; }
+        /// <summary>
+        ///   Adds an additional NuGet package source to use during installation.
+        /// </summary>
+        public virtual IReadOnlyList<string> Sources => SourcesInternal.AsReadOnly();
+        internal List<string> SourcesInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Specifies the NuGet configuration (<em>nuget.config</em>) file to use.
+        /// </summary>
+        public virtual string ConfigFile { get; internal set; }
+        /// <summary>
+        ///   Specifies the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a> to update the tool for.
+        /// </summary>
+        public virtual string Framework { get; internal set; }
+        /// <summary>
+        ///   Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.
+        /// </summary>
+        public virtual bool? Global { get; internal set; }
+        /// <summary>
+        ///   Specifies the location where the Global Tool is installed. The path can be absolute or relative. Can't be combined with the <c>--global</c> option. If you don't specify this option, you must specify the <c>--global</c> option.
+        /// </summary>
+        public virtual string ToolInstallationPath { get; internal set; }
+        /// <summary>
+        ///   Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.
+        /// </summary>
+        public virtual DotNetVerbosity Verbosity { get; internal set; }
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("tool update")
+              .Add("{value}", PackageName)
+              .Add("--add-source {value}", Sources)
+              .Add("--configfile {value}", ConfigFile)
+              .Add("--framework {value}", Framework)
+              .Add("--global", Global)
+              .Add("--tool-path {value}", ToolInstallationPath)
+              .Add("--verbosity {value}", Verbosity);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -14234,6 +14546,705 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ForceEnglishOutput = !toolSettings.ForceEnglishOutput;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region DotNetToolInstallSettingsExtensions
+    /// <summary>
+    ///   Used within <see cref="DotNetTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class DotNetToolInstallSettingsExtensions
+    {
+        #region PackageName
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolInstallSettings.PackageName"/></em></p>
+        ///   <p>The Name/ID of the NuGet package that contains the .NET Core Global Tool to install.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings SetPackageName(this DotNetToolInstallSettings toolSettings, string packageName)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageName = packageName;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolInstallSettings.PackageName"/></em></p>
+        ///   <p>The Name/ID of the NuGet package that contains the .NET Core Global Tool to install.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings ResetPackageName(this DotNetToolInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageName = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Sources
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolInstallSettings.Sources"/> to a new list</em></p>
+        ///   <p>Adds an additional NuGet package source to use during installation.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings SetSources(this DotNetToolInstallSettings toolSettings, params string[] sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal = sources.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolInstallSettings.Sources"/> to a new list</em></p>
+        ///   <p>Adds an additional NuGet package source to use during installation.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings SetSources(this DotNetToolInstallSettings toolSettings, IEnumerable<string> sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal = sources.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotNetToolInstallSettings.Sources"/></em></p>
+        ///   <p>Adds an additional NuGet package source to use during installation.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings AddSources(this DotNetToolInstallSettings toolSettings, params string[] sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.AddRange(sources);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotNetToolInstallSettings.Sources"/></em></p>
+        ///   <p>Adds an additional NuGet package source to use during installation.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings AddSources(this DotNetToolInstallSettings toolSettings, IEnumerable<string> sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.AddRange(sources);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="DotNetToolInstallSettings.Sources"/></em></p>
+        ///   <p>Adds an additional NuGet package source to use during installation.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings ClearSources(this DotNetToolInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotNetToolInstallSettings.Sources"/></em></p>
+        ///   <p>Adds an additional NuGet package source to use during installation.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings RemoveSources(this DotNetToolInstallSettings toolSettings, params string[] sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(sources);
+            toolSettings.SourcesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotNetToolInstallSettings.Sources"/></em></p>
+        ///   <p>Adds an additional NuGet package source to use during installation.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings RemoveSources(this DotNetToolInstallSettings toolSettings, IEnumerable<string> sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(sources);
+            toolSettings.SourcesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region ConfigFile
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolInstallSettings.ConfigFile"/></em></p>
+        ///   <p>Specifies the NuGet configuration (<em>nuget.config</em>) file to use.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings SetConfigFile(this DotNetToolInstallSettings toolSettings, string configFile)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = configFile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolInstallSettings.ConfigFile"/></em></p>
+        ///   <p>Specifies the NuGet configuration (<em>nuget.config</em>) file to use.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings ResetConfigFile(this DotNetToolInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Framework
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolInstallSettings.Framework"/></em></p>
+        ///   <p>Specifies the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a> to install the tool for. By default, the .NET Core SDK tries to choose the most appropriate target framework.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings SetFramework(this DotNetToolInstallSettings toolSettings, string framework)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = framework;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolInstallSettings.Framework"/></em></p>
+        ///   <p>Specifies the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a> to install the tool for. By default, the .NET Core SDK tries to choose the most appropriate target framework.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings ResetFramework(this DotNetToolInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Global
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolInstallSettings.Global"/></em></p>
+        ///   <p>Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings SetGlobal(this DotNetToolInstallSettings toolSettings, bool? global)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Global = global;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolInstallSettings.Global"/></em></p>
+        ///   <p>Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings ResetGlobal(this DotNetToolInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Global = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotNetToolInstallSettings.Global"/></em></p>
+        ///   <p>Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings EnableGlobal(this DotNetToolInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Global = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotNetToolInstallSettings.Global"/></em></p>
+        ///   <p>Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings DisableGlobal(this DotNetToolInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Global = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotNetToolInstallSettings.Global"/></em></p>
+        ///   <p>Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings ToggleGlobal(this DotNetToolInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Global = !toolSettings.Global;
+            return toolSettings;
+        }
+        #endregion
+        #region ToolInstallationPath
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolInstallSettings.ToolInstallationPath"/></em></p>
+        ///   <p>Specifies the location where to install the Global Tool. The path can be absolute or relative. If the path doesn't exist, the command tries to create it. Can't be combined with the <c>--global</c> option. If you don't specify this option, you must specify the <c>--global</c> option.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings SetToolInstallationPath(this DotNetToolInstallSettings toolSettings, string toolInstallationPath)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ToolInstallationPath = toolInstallationPath;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolInstallSettings.ToolInstallationPath"/></em></p>
+        ///   <p>Specifies the location where to install the Global Tool. The path can be absolute or relative. If the path doesn't exist, the command tries to create it. Can't be combined with the <c>--global</c> option. If you don't specify this option, you must specify the <c>--global</c> option.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings ResetToolInstallationPath(this DotNetToolInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ToolInstallationPath = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Verbosity
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolInstallSettings.Verbosity"/></em></p>
+        ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings SetVerbosity(this DotNetToolInstallSettings toolSettings, DotNetVerbosity verbosity)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = verbosity;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolInstallSettings.Verbosity"/></em></p>
+        ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings ResetVerbosity(this DotNetToolInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Version
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolInstallSettings.Version"/></em></p>
+        ///   <p>The version of the tool to install. By default, the latest stable package version is installed. Use this option to install preview or older versions of the tool.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings SetVersion(this DotNetToolInstallSettings toolSettings, string version)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Version = version;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolInstallSettings.Version"/></em></p>
+        ///   <p>The version of the tool to install. By default, the latest stable package version is installed. Use this option to install preview or older versions of the tool.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolInstallSettings ResetVersion(this DotNetToolInstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Version = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region DotNetToolUninstallSettingsExtensions
+    /// <summary>
+    ///   Used within <see cref="DotNetTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class DotNetToolUninstallSettingsExtensions
+    {
+        #region PackageName
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolUninstallSettings.PackageName"/></em></p>
+        ///   <p>The Name/ID of the NuGet package that contains the .NET Core Global Tool to uninstall. You can find the package name using the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-list">dotnet tool list</a> command.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUninstallSettings SetPackageName(this DotNetToolUninstallSettings toolSettings, string packageName)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageName = packageName;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolUninstallSettings.PackageName"/></em></p>
+        ///   <p>The Name/ID of the NuGet package that contains the .NET Core Global Tool to uninstall. You can find the package name using the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-list">dotnet tool list</a> command.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUninstallSettings ResetPackageName(this DotNetToolUninstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageName = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Global
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolUninstallSettings.Global"/></em></p>
+        ///   <p>Specifies that the tool to be removed is from a user-wide installation. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUninstallSettings SetGlobal(this DotNetToolUninstallSettings toolSettings, bool? global)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Global = global;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolUninstallSettings.Global"/></em></p>
+        ///   <p>Specifies that the tool to be removed is from a user-wide installation. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUninstallSettings ResetGlobal(this DotNetToolUninstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Global = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotNetToolUninstallSettings.Global"/></em></p>
+        ///   <p>Specifies that the tool to be removed is from a user-wide installation. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUninstallSettings EnableGlobal(this DotNetToolUninstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Global = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotNetToolUninstallSettings.Global"/></em></p>
+        ///   <p>Specifies that the tool to be removed is from a user-wide installation. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUninstallSettings DisableGlobal(this DotNetToolUninstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Global = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotNetToolUninstallSettings.Global"/></em></p>
+        ///   <p>Specifies that the tool to be removed is from a user-wide installation. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUninstallSettings ToggleGlobal(this DotNetToolUninstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Global = !toolSettings.Global;
+            return toolSettings;
+        }
+        #endregion
+        #region ToolInstallationPath
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolUninstallSettings.ToolInstallationPath"/></em></p>
+        ///   <p>Specifies the location where to uninstall the Global Tool. The path can be absolute or relative. Can't be combined with the <c>--global</c> option. If you don't specify this option, you must specify the <c>--global</c> option.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUninstallSettings SetToolInstallationPath(this DotNetToolUninstallSettings toolSettings, string toolInstallationPath)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ToolInstallationPath = toolInstallationPath;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolUninstallSettings.ToolInstallationPath"/></em></p>
+        ///   <p>Specifies the location where to uninstall the Global Tool. The path can be absolute or relative. Can't be combined with the <c>--global</c> option. If you don't specify this option, you must specify the <c>--global</c> option.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUninstallSettings ResetToolInstallationPath(this DotNetToolUninstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ToolInstallationPath = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Verbosity
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolUninstallSettings.Verbosity"/></em></p>
+        ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUninstallSettings SetVerbosity(this DotNetToolUninstallSettings toolSettings, DotNetVerbosity verbosity)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = verbosity;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolUninstallSettings.Verbosity"/></em></p>
+        ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUninstallSettings ResetVerbosity(this DotNetToolUninstallSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region DotNetToolUpdateSettingsExtensions
+    /// <summary>
+    ///   Used within <see cref="DotNetTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class DotNetToolUpdateSettingsExtensions
+    {
+        #region PackageName
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolUpdateSettings.PackageName"/></em></p>
+        ///   <p>The Name/ID of the NuGet package that contains the .NET Core Global Tool to install.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUpdateSettings SetPackageName(this DotNetToolUpdateSettings toolSettings, string packageName)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageName = packageName;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolUpdateSettings.PackageName"/></em></p>
+        ///   <p>The Name/ID of the NuGet package that contains the .NET Core Global Tool to install.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUpdateSettings ResetPackageName(this DotNetToolUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PackageName = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Sources
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolUpdateSettings.Sources"/> to a new list</em></p>
+        ///   <p>Adds an additional NuGet package source to use during installation.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUpdateSettings SetSources(this DotNetToolUpdateSettings toolSettings, params string[] sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal = sources.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolUpdateSettings.Sources"/> to a new list</em></p>
+        ///   <p>Adds an additional NuGet package source to use during installation.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUpdateSettings SetSources(this DotNetToolUpdateSettings toolSettings, IEnumerable<string> sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal = sources.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotNetToolUpdateSettings.Sources"/></em></p>
+        ///   <p>Adds an additional NuGet package source to use during installation.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUpdateSettings AddSources(this DotNetToolUpdateSettings toolSettings, params string[] sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.AddRange(sources);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotNetToolUpdateSettings.Sources"/></em></p>
+        ///   <p>Adds an additional NuGet package source to use during installation.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUpdateSettings AddSources(this DotNetToolUpdateSettings toolSettings, IEnumerable<string> sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.AddRange(sources);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="DotNetToolUpdateSettings.Sources"/></em></p>
+        ///   <p>Adds an additional NuGet package source to use during installation.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUpdateSettings ClearSources(this DotNetToolUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourcesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotNetToolUpdateSettings.Sources"/></em></p>
+        ///   <p>Adds an additional NuGet package source to use during installation.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUpdateSettings RemoveSources(this DotNetToolUpdateSettings toolSettings, params string[] sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(sources);
+            toolSettings.SourcesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotNetToolUpdateSettings.Sources"/></em></p>
+        ///   <p>Adds an additional NuGet package source to use during installation.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUpdateSettings RemoveSources(this DotNetToolUpdateSettings toolSettings, IEnumerable<string> sources)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(sources);
+            toolSettings.SourcesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region ConfigFile
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolUpdateSettings.ConfigFile"/></em></p>
+        ///   <p>Specifies the NuGet configuration (<em>nuget.config</em>) file to use.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUpdateSettings SetConfigFile(this DotNetToolUpdateSettings toolSettings, string configFile)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = configFile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolUpdateSettings.ConfigFile"/></em></p>
+        ///   <p>Specifies the NuGet configuration (<em>nuget.config</em>) file to use.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUpdateSettings ResetConfigFile(this DotNetToolUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ConfigFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Framework
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolUpdateSettings.Framework"/></em></p>
+        ///   <p>Specifies the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a> to update the tool for.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUpdateSettings SetFramework(this DotNetToolUpdateSettings toolSettings, string framework)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = framework;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolUpdateSettings.Framework"/></em></p>
+        ///   <p>Specifies the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a> to update the tool for.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUpdateSettings ResetFramework(this DotNetToolUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Global
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolUpdateSettings.Global"/></em></p>
+        ///   <p>Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUpdateSettings SetGlobal(this DotNetToolUpdateSettings toolSettings, bool? global)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Global = global;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolUpdateSettings.Global"/></em></p>
+        ///   <p>Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUpdateSettings ResetGlobal(this DotNetToolUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Global = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotNetToolUpdateSettings.Global"/></em></p>
+        ///   <p>Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUpdateSettings EnableGlobal(this DotNetToolUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Global = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotNetToolUpdateSettings.Global"/></em></p>
+        ///   <p>Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUpdateSettings DisableGlobal(this DotNetToolUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Global = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotNetToolUpdateSettings.Global"/></em></p>
+        ///   <p>Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUpdateSettings ToggleGlobal(this DotNetToolUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Global = !toolSettings.Global;
+            return toolSettings;
+        }
+        #endregion
+        #region ToolInstallationPath
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolUpdateSettings.ToolInstallationPath"/></em></p>
+        ///   <p>Specifies the location where the Global Tool is installed. The path can be absolute or relative. Can't be combined with the <c>--global</c> option. If you don't specify this option, you must specify the <c>--global</c> option.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUpdateSettings SetToolInstallationPath(this DotNetToolUpdateSettings toolSettings, string toolInstallationPath)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ToolInstallationPath = toolInstallationPath;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolUpdateSettings.ToolInstallationPath"/></em></p>
+        ///   <p>Specifies the location where the Global Tool is installed. The path can be absolute or relative. Can't be combined with the <c>--global</c> option. If you don't specify this option, you must specify the <c>--global</c> option.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUpdateSettings ResetToolInstallationPath(this DotNetToolUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ToolInstallationPath = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Verbosity
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetToolUpdateSettings.Verbosity"/></em></p>
+        ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUpdateSettings SetVerbosity(this DotNetToolUpdateSettings toolSettings, DotNetVerbosity verbosity)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = verbosity;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetToolUpdateSettings.Verbosity"/></em></p>
+        ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
+        /// </summary>
+        [Pure]
+        public static DotNetToolUpdateSettings ResetVerbosity(this DotNetToolUpdateSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbosity = null;
             return toolSettings;
         }
         #endregion

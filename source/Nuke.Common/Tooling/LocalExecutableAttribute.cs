@@ -25,18 +25,16 @@ namespace Nuke.Common.Tooling
     /// </example>
     public class LocalExecutableAttribute : InjectionAttributeBase
     {
-        private readonly string _path;
+        private readonly string _rootDirectoryRelativePath;
 
-        public LocalExecutableAttribute(string path)
+        public LocalExecutableAttribute(string rootDirectoryRelativePath)
         {
-            _path = path;
+            _rootDirectoryRelativePath = rootDirectoryRelativePath;
         }
 
         public override object GetValue(MemberInfo member, object instance)
         {
-            var toolPath = Path.Combine(NukeBuild.RootDirectory, _path);
-            ControlFlow.Assert(File.Exists(toolPath), $"File.Exists({toolPath})");
-            return new Tool(new ToolExecutor(toolPath).Execute);
+            return ToolResolver.GetLocalTool(_rootDirectoryRelativePath);
         }
     }
 }

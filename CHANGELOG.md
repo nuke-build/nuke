@@ -6,6 +6,27 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.17.0] / 2019-02-23
+- Removed collection-based tasks in `FileSystemTasks`
+- Changed `ContinueOnFailure` to `ProceedAfterFailure`
+- Changed summary output to not include collective targets
+- Added `logInvocation` parameter and `ToolSettings.LogInvocation` property
+- Added interactive parameter resolution
+- Added `RequiredAttribute` for globally required parameters
+- Added skip reason to summary
+- Added `FileGlobbingAttribute` and `DirectoryGlobbingAttribute`
+- Added `GetProperty<T>`, `GetItems<T>`, and `GetItemMetadata<T>` as `ProjectExtensions`
+- Added `Unlisted` for target declarations
+- Added `ToolResolver` for custom delegate resolution
+- Added `DotNetToolInstall`, `DotNetToolUninstall`, and `DotNetToolUpdate`
+- Added `UnsetVisualStudioEnvironmentVariablesAttribute`
+- Added universal log methods with severity as parameter
+- Fixed parameter resolution for value types
+- Fixed `AbsolutePath` to be serializable
+- Fixed output for parallel task execution
+- Fixed exit code for failing targets using `ProceedAfterFailure`
+- Fixed exception message for circular dependencies
+
 ## [0.16.0] / 2019-01-30
 - Changed setting of default working directory for process invocations
 - Changed `Logger.Log` to `Logger.Normal`
@@ -16,8 +37,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `AnsiColorOutputSink` for Bitrise, TeamCity, Travis, TeamServices
 - Added `ProjectModelTasks.ParseProject` based on `Microsoft.Build` packages
 - Added `LocalExecutableAttribute`
-- Added `degreeOfParallelism` and `completeOnError` for combinatorial invocations
-- Added `[Tool].[Tool]Logger` as settable field for custom logging
+- Added `degreeOfParallelism` and `completeOnFailure` for combinatorial invocations
+- Added `[Tool]Tasks.[Tool]Logger` as settable field for custom logging
 - Added `VerbosityMappingAttribute`
 - Added format-property map for CLI tasks
 - Fixed `EnsureCleanDirectory` to only clean instead of delete and recreate
@@ -287,7 +308,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/common/compare/0.16.0...HEAD
+[vNext]: https://github.com/nuke-build/common/compare/0.17.0...HEAD
+[0.17.0]: https://github.com/nuke-build/common/compare/0.16.0...0.17.0
 [0.16.0]: https://github.com/nuke-build/common/compare/0.15.0...0.16.0
 [0.15.0]: https://github.com/nuke-build/common/compare/0.14.1...0.15.0
 [0.14.1]: https://github.com/nuke-build/common/compare/0.14.0...0.14.1

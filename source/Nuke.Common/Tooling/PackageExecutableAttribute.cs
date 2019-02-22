@@ -51,9 +51,8 @@ namespace Nuke.Common.Tooling
 
         public override object GetValue(MemberInfo member, object instance)
         {
-            var toolPath = ToolPathResolver.TryGetEnvironmentExecutable($"{member.Name.ToUpperInvariant()}_EXE") ??
-                           ToolPathResolver.GetPackageExecutable(_packageId, _packageExecutable, Framework);
-            return new Tool(new ToolExecutor(toolPath).Execute);
+            return ToolResolver.TryGetEnvironmentTool(member.Name) ??
+                   ToolResolver.GetPackageTool(_packageId, _packageExecutable, Framework);
         }
     }
 }
