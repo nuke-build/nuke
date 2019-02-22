@@ -73,9 +73,9 @@ partial class Build : NukeBuild
                 .SetProjectFile(Solution));
         });
 
-    [ProjectFrom(nameof(Solution))] Project CommonProject;
-    [ProjectFrom(nameof(Solution))] Project GlobalToolProject;
-    [ProjectFrom(nameof(Solution))] Project CodeGenerationProject;
+    [Unlisted] [ProjectFrom(nameof(Solution))] Project CommonProject;
+    [Unlisted] [ProjectFrom(nameof(Solution))] Project GlobalToolProject;
+    [Unlisted] [ProjectFrom(nameof(Solution))] Project CodeGenerationProject;
 
     Target Compile => _ => _
         .DependsOn(Restore)

@@ -5,6 +5,7 @@
 using System.IO;
 using System.Linq;
 using Nuke.Common;
+using Nuke.Common.Git;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Utilities;
@@ -16,8 +17,8 @@ partial class Build
 {
     Target Changelog => _ => _
         .OnlyWhenStatic(
-            () => GitRepository.Branch.StartsWith("release") ||
-                  GitRepository.Branch.StartsWith("hotfix"))
+            () => GitRepository.IsOnReleaseBranch() ||
+                  GitRepository.IsOnHotfixBranch())
         .Executes(() =>
         {
             FinalizeChangelog(ChangelogFile, GitVersion.MajorMinorPatch, GitRepository);
@@ -30,7 +31,7 @@ partial class Build
         .Requires(() => GitHasCleanWorkingCopy())
         .Executes(() =>
         {
-            if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase(ReleaseBranchPrefix))
+            if (!GitRepository.IsOnReleaseBranch())
                 Git($"checkout -b {ReleaseBranchPrefix}/{GitVersion.MajorMinorPatch} {DevelopBranch}");
             else
                 FinishReleaseOrHotfix();
@@ -46,7 +47,7 @@ partial class Build
                 .SetBranch(MasterBranch)
                 .DisableLogOutput()).Result;
 
-            if (!GitRepository.Branch.StartsWithOrdinalIgnoreCase(HotfixBranchPrefix))
+            if (!GitRepository.IsOnHotfixBranch())
                 Git($"checkout -b {HotfixBranchPrefix}/{masterVersion.Major}.{masterVersion.Minor}.{masterVersion.Patch + 1} {MasterBranch}");
             else
                 FinishReleaseOrHotfix();
