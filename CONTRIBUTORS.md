@@ -15,6 +15,7 @@
 - Michael Bisbjerg
 - Mikhail Filippov
 - Robert Schili
+- Rodney Littles II
 - Sebastian Karasek
 - Stefan Bertels
 - TdMxm
