@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [0.17.2] / 2019-02-24
 - Fixed parsing of changelog
 
 ## [0.17.1] / 2019-02-23
@@ -312,7 +314,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/common/compare/0.17.1...HEAD
+[vNext]: https://github.com/nuke-build/common/compare/0.17.2...HEAD
+[0.17.2]: https://github.com/nuke-build/common/compare/0.17.1...0.17.2
 [0.17.1]: https://github.com/nuke-build/common/compare/0.17.0...0.17.1
 [0.17.0]: https://github.com/nuke-build/common/compare/0.16.0...0.17.0
 [0.16.0]: https://github.com/nuke-build/common/compare/0.15.0...0.16.0
