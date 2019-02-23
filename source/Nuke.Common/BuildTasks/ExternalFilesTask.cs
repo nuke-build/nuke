@@ -19,7 +19,7 @@ namespace Nuke.Common.BuildTasks
         public IBuildEngine BuildEngine { get; set; }
         public ITaskHost HostObject { get; set; }
 
-        [Required]
+        [Microsoft.Build.Framework.Required]
         public ITaskItem[] ExternalFiles { get; set; }
 
         public int Timeout { get; set; }
