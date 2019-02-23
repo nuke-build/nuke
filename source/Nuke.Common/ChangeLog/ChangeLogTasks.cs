@@ -202,7 +202,7 @@ namespace Nuke.Common.ChangeLog
                     {
                         Caption = caption,
                         StartIndex = index,
-                        EndIndex = nextNonReleaseContentIndex != 1
+                        EndIndex = nextNonReleaseContentIndex != -1
                             ? nextNonReleaseContentIndex - 1
                             : content.Count - 1
                     };
