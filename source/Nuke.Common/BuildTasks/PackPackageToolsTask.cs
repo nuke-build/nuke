@@ -24,13 +24,13 @@ namespace Nuke.Common.BuildTasks
         public IBuildEngine BuildEngine { get; set; }
         public ITaskHost HostObject { get; set; }
 
-        [Required]
+        [Microsoft.Build.Framework.Required]
         public string ProjectAssetsFile { get; set; }
 
-        [Required]
+        [Microsoft.Build.Framework.Required]
         public string NuGetPackageRoot { get; set; }
 
-        [Required]
+        [Microsoft.Build.Framework.Required]
         public string TargetFramework { get; set; }
 
         [Output]
