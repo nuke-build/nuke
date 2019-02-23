@@ -28,7 +28,7 @@ partial class Build
     
     Target Release => _ => _
         .DependsOn(Changelog)
-        .Requires(() => GitHasCleanWorkingCopy())
+        .Requires(() => !GitRepository.IsOnReleaseBranch() || GitHasCleanWorkingCopy())
         .Executes(() =>
         {
             if (!GitRepository.IsOnReleaseBranch())
@@ -39,7 +39,7 @@ partial class Build
 
     Target Hotfix => _ => _
         .DependsOn(Changelog)
-        .Requires(() => GitHasCleanWorkingCopy())
+        .Requires(() => !GitRepository.IsOnHotfixBranch() || GitHasCleanWorkingCopy())
         .Executes(() =>
         {
             var masterVersion = GitVersion(s => s
