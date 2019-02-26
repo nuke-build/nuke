@@ -17,7 +17,7 @@ namespace Nuke.Common.Execution
     [AttributeUsage(AttributeTargets.Class)]
     public class CheckBuildProjectConfigurationsAttribute : Attribute, IPostLogoBuildExtension
     {
-        public int TimeoutInMilliseconds { get; } = 500;
+        public int TimeoutInMilliseconds { get; set; } = 500;
         
         public void Execute(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
