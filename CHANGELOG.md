@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [0.17.4] / 2019-03-02
 - Fixed bootstrapping script to not set `NUGET_XMLDOC_MODE`
 
 ## [0.17.3] / 2019-02-27
@@ -319,7 +321,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/common/compare/0.17.3...HEAD
+[vNext]: https://github.com/nuke-build/common/compare/0.17.4...HEAD
+[0.17.4]: https://github.com/nuke-build/common/compare/0.17.3...0.17.4
 [0.17.3]: https://github.com/nuke-build/common/compare/0.17.2...0.17.3
 [0.17.2]: https://github.com/nuke-build/common/compare/0.17.1...0.17.2
 [0.17.1]: https://github.com/nuke-build/common/compare/0.17.0...0.17.1
