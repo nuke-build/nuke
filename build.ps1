@@ -23,7 +23,6 @@ $DotNetReleasesUrl = "https://raw.githubusercontent.com/dotnet/core/master/relea
 
 $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1
 $env:DOTNET_CLI_TELEMETRY_OPTOUT = 1
-$env:NUGET_XMLDOC_MODE = "skip"
 
 ###########################################################################
 # EXECUTION

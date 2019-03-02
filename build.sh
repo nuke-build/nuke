@@ -28,7 +28,6 @@ DOTNET_RELEASES_URL="https://raw.githubusercontent.com/dotnet/core/master/releas
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
-export NUGET_XMLDOC_MODE="skip"
 
 ###########################################################################
 # EXECUTION
