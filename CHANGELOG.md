@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.17.5] / 2019-03-03
+- Fixed `GlobDirectories` and `GlobFiles` to not collect items lazily
+
 ## [0.17.4] / 2019-03-02
 - Fixed bootstrapping script to not set `NUGET_XMLDOC_MODE`
 
@@ -321,7 +324,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/common/compare/0.17.4...HEAD
+[vNext]: https://github.com/nuke-build/common/compare/0.17.5...HEAD
+[0.17.5]: https://github.com/nuke-build/common/compare/0.17.4...0.17.5
 [0.17.4]: https://github.com/nuke-build/common/compare/0.17.3...0.17.4
 [0.17.3]: https://github.com/nuke-build/common/compare/0.17.2...0.17.3
 [0.17.2]: https://github.com/nuke-build/common/compare/0.17.1...0.17.2
