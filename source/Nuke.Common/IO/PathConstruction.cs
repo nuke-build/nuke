@@ -72,27 +72,27 @@ namespace Nuke.Common.IO
         }
 
         [Pure]
-        public static IEnumerable<string> GlobFiles(string directory, params string[] patterns)
+        public static IReadOnlyCollection<string> GlobFiles(string directory, params string[] patterns)
         {
             var directoryInfo = new DirectoryInfo(directory);
-            return patterns.SelectMany(x => directoryInfo.GlobFiles(x)).Select(x => x.FullName);
+            return patterns.SelectMany(x => directoryInfo.GlobFiles(x)).Select(x => x.FullName).ToList();
+        }
+
+        public static IReadOnlyCollection<AbsolutePath> GlobFiles(this AbsolutePath directory, params string[] patterns)
+        {
+            return GlobFiles((string) directory, patterns).Select(x => (AbsolutePath) x).ToList();
         }
 
         [Pure]
-        public static IEnumerable<string> GlobDirectories(string directory, params string[] patterns)
+        public static IReadOnlyCollection<string> GlobDirectories(string directory, params string[] patterns)
         {
             var directoryInfo = new DirectoryInfo(directory);
-            return patterns.SelectMany(x => directoryInfo.GlobDirectories(x)).Select(x => x.FullName);
+            return patterns.SelectMany(x => directoryInfo.GlobDirectories(x)).Select(x => x.FullName).ToList();
         }
-        
-        public static IEnumerable<AbsolutePath> GlobDirectories(this AbsolutePath directory, params string[] patterns)
+
+        public static IReadOnlyCollection<AbsolutePath> GlobDirectories(this AbsolutePath directory, params string[] patterns)
         {
-            return GlobDirectories((string) directory, patterns).Select(x => (AbsolutePath) x);
-        }
-        
-        public static IEnumerable<AbsolutePath> GlobFiles(this AbsolutePath directory, params string[] patterns)
-        {
-            return GlobFiles((string) directory, patterns).Select(x => (AbsolutePath) x);
+            return GlobDirectories((string) directory, patterns).Select(x => (AbsolutePath) x).ToList();
         }
 
         private const char WinSeparator = '\\';
