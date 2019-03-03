@@ -161,7 +161,7 @@ partial class Build : NukeBuild
         });
 
     Target Publish => _ => _
-        .DependsOn(Test, Pack)
+        .DependsOn(Clean, Test, Pack)
         .Requires(() => ApiKey, () => SlackWebhook, () => GitterAuthToken)
         .Requires(() => GitHasCleanWorkingCopy())
         .Requires(() => Configuration.Equals(Configuration.Release))
