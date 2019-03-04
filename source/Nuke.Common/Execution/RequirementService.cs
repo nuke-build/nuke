@@ -22,7 +22,7 @@ namespace Nuke.Common.Execution
             {
                 if (requirement is Expression<Func<bool>> boolExpression)
                     ControlFlow.Assert(boolExpression.Compile().Invoke(), $"Target '{target.Name}' requires '{requirement.Body}'.");
-                else if (IsMemberNull(requirement.GetMemberInfo(), build))
+                else if (IsMemberNull(requirement.GetMemberInfo(), build, target))
                     ControlFlow.Fail($"Target '{target.Name}' requires member '{requirement.GetMemberInfo().Name}' to be not null.");
             }
 
@@ -34,8 +34,12 @@ namespace Nuke.Common.Execution
             }
         }
 
-        private static bool IsMemberNull(MemberInfo member, NukeBuild build)
+        private static bool IsMemberNull(MemberInfo member, NukeBuild build, ExecutableTarget target = null)
         {
+            var from = target != null ? $"from target '{target.Name}' " : string.Empty;
+            ControlFlow.Assert(member.HasCustomAttribute<ParameterAttribute>(),
+                $"Member '{member.Name}' is required {from}but not marked with a {nameof(ParameterAttribute)}.");
+
             if (NukeBuild.Host == HostType.Console)
                 InjectValueInteractive(build, member);
             
