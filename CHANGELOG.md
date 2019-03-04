@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [0.17.6] / 2019-03-04
 - Fixed `RequirementService` to check for `ParameterAttribute` when injecting values interactively
 
 ## [0.17.5] / 2019-03-03
@@ -325,7 +327,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/common/compare/0.17.5...HEAD
+[vNext]: https://github.com/nuke-build/common/compare/0.17.6...HEAD
+[0.17.6]: https://github.com/nuke-build/common/compare/0.17.5...0.17.6
 [0.17.5]: https://github.com/nuke-build/common/compare/0.17.4...0.17.5
 [0.17.4]: https://github.com/nuke-build/common/compare/0.17.3...0.17.4
 [0.17.3]: https://github.com/nuke-build/common/compare/0.17.2...0.17.3
