@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed `RequirementService` to check for `ParameterAttribute` when injecting values interactively
 
 ## [0.17.5] / 2019-03-03
 - Fixed `GlobDirectories` and `GlobFiles` to not collect items lazily
