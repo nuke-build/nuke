@@ -11,7 +11,7 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Execution
 {
-    internal static class InjectionUtility
+    public static class InjectionUtility
     {
         public static void InjectValues<T>(T instance = default, Func<InjectionAttributeBase, bool> filter = null)
         {
