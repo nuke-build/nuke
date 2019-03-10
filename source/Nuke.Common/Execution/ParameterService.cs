@@ -205,13 +205,11 @@ namespace Nuke.Common.Execution
         private int GetCommandLineArgumentIndex(string argumentName, bool checkNames)
         {
             var index = Array.FindLastIndex(_commandLineArguments,
-                x => x.StartsWith("-") &&
-                     (x.TrimStart('-').EqualsOrdinalIgnoreCase(argumentName) ||
-                      x.TrimStart('-').EqualsOrdinalIgnoreCase(argumentName.SplitCamelHumpsWithSeparator("-"))));
+                x => x.StartsWith("-") && x.Replace("-", string.Empty).EqualsOrdinalIgnoreCase(argumentName));
 
             if (index == -1 && checkNames)
             {
-                var candidates = _commandLineArguments.Where(x => x.StartsWith("-")).Select(x => x.TrimStart("-").Replace("-", string.Empty));
+                var candidates = _commandLineArguments.Where(x => x.StartsWith("-")).Select(x => x.Replace("-", string.Empty));
                 CheckNames(argumentName, candidates);
             }
 
