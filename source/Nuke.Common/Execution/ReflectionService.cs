@@ -41,6 +41,7 @@ namespace Nuke.Common.Execution
 
         public static void SetValue(this MemberInfo member, object instance, object value)
         {
+            // TODO: check if member is not (static && readonly)
             if (member is FieldInfo field)
             {
                 field.SetValue(field.IsStatic ? null : instance, value);
