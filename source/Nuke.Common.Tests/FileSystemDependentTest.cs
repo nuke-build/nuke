@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers and Contributors of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -23,16 +23,16 @@ namespace Nuke.Common.Tests
         protected FileSystemDependentTest(ITestOutputHelper testOutputHelper)
         {
             TestOutputHelper = testOutputHelper;
-            
+
             TestName = ((ITest) testOutputHelper.GetType()
                 .GetField("test", BindingFlags.NonPublic | BindingFlags.Instance).NotNull()
                 .GetValue(testOutputHelper)).TestCase.TestMethod.Method.Name;
-            
+
             ExecutionDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location).NotNull();
             RootDirectory = FileSystemTasks.FindParentDirectory(ExecutionDirectory, x => x.GetFiles(".nuke").Any());
             TestProjectDirectory = FileSystemTasks.FindParentDirectory(ExecutionDirectory, x => x.GetFiles("*.csproj").Any());
             TestTempDirectory = Path.Combine(ExecutionDirectory, "temp", $"{GetType().Name}.{TestName}");
-            
+
             FileSystemTasks.EnsureCleanDirectory(TestTempDirectory);
         }
     }

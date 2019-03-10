@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -32,7 +32,7 @@ namespace Nuke.CodeGeneration.Generators
             paragraphs.Add(GetOfficialUrlText(task.OfficialUrl ?? task.Tool.OfficialUrl).Paragraph());
             return writerWrapper.WriteSummary(paragraphs.ToArray());
         }
-        
+
         public static T WriteRemarks<T>(this T writerWrapper, Task task)
             where T : IWriterWrapper
         {
@@ -54,7 +54,7 @@ namespace Nuke.CodeGeneration.Generators
                 yield break;
 
             yield return "<ul>";
-            
+
             string GetArgument(Property property)
             {
                 var valueIndex = property.Format.IndexOf(value: '{');
@@ -67,9 +67,9 @@ namespace Nuke.CodeGeneration.Generators
                     Logger.Warn($"Format for property {property.Name} in {property.DataClass.Tool.Name} is all non-letters.");
                 return argument;
             }
-            
+
             var propertiesWithArgument = properties
-                .Select(x => new { Property = settingsClass.Name + "." + x.Name, Argument = GetArgument(x)})
+                .Select(x => new { Property = settingsClass.Name + "." + x.Name, Argument = GetArgument(x) })
                 .OrderBy(x => !x.Argument.StartsWith("&lt;"))
                 .ThenBy(x => x.Argument);
             foreach (var pair in propertiesWithArgument)
@@ -120,7 +120,7 @@ namespace Nuke.CodeGeneration.Generators
             where T : IWriterWrapper
         {
             lines = lines.Where(x => !string.IsNullOrEmpty(x)).ToArray();
-            
+
             if (lines.Length == 0)
                 return writerWrapper;
 
@@ -128,7 +128,7 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteLine("/// <summary>")
                 .ForEachWriteLine(lines.Select(x => $"///   {x}"))
                 .WriteLine("/// </summary>");
-                
+
             return writerWrapper;
         }
     }

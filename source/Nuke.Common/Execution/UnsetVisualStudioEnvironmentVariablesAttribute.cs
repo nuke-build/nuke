@@ -13,7 +13,7 @@ namespace Nuke.Common.Execution
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Class)]
     public class UnsetVisualStudioEnvironmentVariablesAttribute : Attribute, IPreLogoBuildExtension
-    {   
+    {
         public void Execute(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             new[]

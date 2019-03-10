@@ -21,7 +21,7 @@ namespace Nuke.Common.ProjectModel
         {
             _solutionMember = solutionMember;
         }
-        
+
         public override int Priority => -1;
 
         public override string Description => $"Project from solution";
@@ -47,11 +47,11 @@ namespace Nuke.Common.ProjectModel
                 .EndsWithOrdinalIgnoreCase(projectNamePart));
             if (project != null)
                 return project;
-            
+
             var parameterValue = ParameterService.Instance.GetParameter<string>(member);
             if (parameterValue != null)
                 return GetProject(parameterValue);
-            
+
             return null;
         }
 
@@ -59,7 +59,7 @@ namespace Nuke.Common.ProjectModel
         {
             if (member.GetValue(instance) != null)
                 return null;
-            
+
             var solution = GetSolution(instance);
             return solution.AllProjects.Select(x => (x.Name, (object) x));
         }

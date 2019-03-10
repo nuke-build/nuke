@@ -18,7 +18,7 @@ namespace Nuke.Common.Tooling
         private static string FormatMessage(IProcess process)
         {
             const string indentation = "   ";
-            
+
             var messageBuilder = new StringBuilder()
                 .AppendLine($"Process '{Path.GetFileName(process.FileName)}' exited with code {process.ExitCode}.")
                 .AppendLine($"{indentation}> {process.FileName.DoubleQuoteIfNeeded()} {process.Arguments}")

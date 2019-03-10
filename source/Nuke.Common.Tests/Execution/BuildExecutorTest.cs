@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,7 +25,7 @@ namespace Nuke.Common.Tests.Execution
         {
             C.ExecutionDependencies.Add(B);
             B.ExecutionDependencies.Add(A);
-            
+
             // otherwise marked as Collective
             A.Actions.Add(() => { });
             B.Actions.Add(() => { });
@@ -38,47 +38,47 @@ namespace Nuke.Common.Tests.Execution
             ExecuteBuild();
             AssertExecuted(A, B, C);
         }
-        
+
         [Fact]
         public void TestUserSkipped()
         {
             ExecuteBuild(skippedTargets: new ExecutableTarget[0]);
             AssertSkipped(A, B, C);
-            
-            ExecuteBuild(skippedTargets: new[]{ A });
+
+            ExecuteBuild(skippedTargets: new[] { A });
             AssertExecuted(B, C);
             AssertSkipped(A);
-            
-            ExecuteBuild(skippedTargets: new[]{ A, B });
+
+            ExecuteBuild(skippedTargets: new[] { A, B });
             AssertExecuted(C);
             AssertSkipped(A, B);
 
             B.DependencyBehavior = DependencyBehavior.Skip;
-            ExecuteBuild(skippedTargets: new[]{ B });
+            ExecuteBuild(skippedTargets: new[] { B });
             AssertExecuted(C);
             AssertSkipped(A, B);
         }
-        
+
         [Fact]
         public void TestStaticCondition()
         {
             B.StaticConditions.Add(True);
             ExecuteBuild();
             AssertExecuted(A, B, C);
-            
+
             B.StaticConditions.Add(False);
-            
+
             B.DependencyBehavior = DependencyBehavior.Execute;
             ExecuteBuild();
             AssertExecuted(A, C);
             AssertSkipped(B);
-            
+
             B.DependencyBehavior = DependencyBehavior.Skip;
             ExecuteBuild();
             AssertExecuted(C);
             AssertSkipped(A, B);
         }
-        
+
         [Fact]
         public void TestDynamicCondition()
         {
@@ -88,7 +88,7 @@ namespace Nuke.Common.Tests.Execution
             ExecuteBuild();
             AssertExecuted(A, C);
             AssertSkipped(B);
-            
+
             A.Actions.Add(() => condition = true);
             ExecuteBuild();
             AssertExecuted(A, B, C);
@@ -97,7 +97,7 @@ namespace Nuke.Common.Tests.Execution
         private void ExecuteBuild(ExecutableTarget[] skippedTargets = null)
         {
             string[] SelectNames(ExecutableTarget[] targets) => targets?.Select(x => x.Name).ToArray();
-            
+
             var build = new TestBuild();
             build.ExecutableTargets = new[] { A, B, C };
             build.ExecutionPlan = new[] { A, B, C };
@@ -109,17 +109,17 @@ namespace Nuke.Common.Tests.Execution
         {
             targets.ForEach(x => x.Status.Should().Be(ExecutionStatus.Executed));
         }
-        
+
         private static void AssertSkipped(params ExecutableTarget[] targets)
         {
             targets.ForEach(x => x.Status.Should().Be(ExecutionStatus.Skipped));
         }
-        
+
         private static void AssertUnscheduled(params ExecutableTarget[] targets)
         {
             targets.ForEach(x => x.Status.Should().BeNull());
         }
-        
+
         private static void AssertNotRun(params ExecutableTarget[] targets)
         {
             targets.ForEach(x => x.Status.Should().Be(ExecutionStatus.NotRun));

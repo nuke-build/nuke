@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -28,7 +28,7 @@ namespace Nuke.Common.ProjectModel
 
         public PathConstruction.AbsolutePath Path { get; }
         public PathConstruction.AbsolutePath Directory => Path.Parent;
-        
+
         public IDictionary<string, string> Configurations { get; }
 
         public static implicit operator string(Project project)

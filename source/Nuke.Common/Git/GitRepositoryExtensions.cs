@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,29 +25,29 @@ namespace Nuke.Common.Git
         {
             return repository.Branch?.EqualsOrdinalIgnoreCase("master") ?? false;
         }
-        
+
         public static bool IsOnDevelopBranch(this GitRepository repository)
         {
             return (repository.Branch?.EqualsOrdinalIgnoreCase("dev") ?? false) ||
                    (repository.Branch?.EqualsOrdinalIgnoreCase("develop") ?? false) ||
                    (repository.Branch?.EqualsOrdinalIgnoreCase("development") ?? false);
         }
-        
+
         public static bool IsOnFeatureBranch(this GitRepository repository)
         {
             return repository.Branch?.StartsWithOrdinalIgnoreCase("feature/") ?? false;
         }
-        
+
         // public static bool IsOnBugfixBranch(this GitRepository repository)
         // {
         //     return repository.Branch?.StartsWithOrdinalIgnoreCase("feature/fix-") ?? false;
         // }
-        
+
         public static bool IsOnReleaseBranch(this GitRepository repository)
         {
             return repository.Branch?.StartsWithOrdinalIgnoreCase("release/") ?? false;
         }
-        
+
         public static bool IsOnHotfixBranch(this GitRepository repository)
         {
             return repository.Branch?.StartsWithOrdinalIgnoreCase("hotfix/") ?? false;
@@ -57,18 +57,18 @@ namespace Nuke.Common.Git
         {
             return repository != null && repository.Endpoint.EqualsOrdinalIgnoreCase("github.com");
         }
-        
+
         public static string GetGitHubOwner(this GitRepository repository)
         {
             ControlFlow.Assert(repository.IsGitHubRepository(), "repository.IsGitHubRepository()");
-            
+
             return repository.Identifier.Split('/')[0];
         }
 
         public static string GetGitHubName(this GitRepository repository)
         {
             ControlFlow.Assert(repository.IsGitHubRepository(), "repository.IsGitHubRepository()");
-            
+
             return repository.Identifier.Split('/')[1];
         }
 

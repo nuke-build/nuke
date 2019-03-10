@@ -22,7 +22,7 @@ namespace Nuke.Common.Tests.Execution
         {
             GetPlan().Should().BeEquivalentTo(A);
         }
-        
+
         [Fact]
         public void TestInvoked()
         {
@@ -30,7 +30,7 @@ namespace Nuke.Common.Tests.Execution
             A.Invoked.Should().BeFalse();
             B.Invoked.Should().BeTrue();
             C.Invoked.Should().BeFalse();
-            
+
             GetPlan(invokedTargets: new[] { A, B }).Should().BeEquivalentTo(A, B);
             A.Invoked.Should().BeTrue();
             B.Invoked.Should().BeTrue();
@@ -42,7 +42,7 @@ namespace Nuke.Common.Tests.Execution
         {
             A.ExecutionDependencies.Add(B);
             GetPlan().Should().Equal(B, A);
-            
+
             B.ExecutionDependencies.Add(C);
             GetPlan().Should().Equal(C, B, A);
         }
@@ -52,7 +52,7 @@ namespace Nuke.Common.Tests.Execution
         {
             AddTrigger(A, B);
             GetPlan().Should().Equal(A, B);
-            
+
             AddTrigger(B, C);
             GetPlan().Should().Equal(A, B, C);
         }
@@ -63,7 +63,7 @@ namespace Nuke.Common.Tests.Execution
             B.OrderDependencies.Add(A);
             C.OrderDependencies.Add(A);
             GetPlan(invokedTargets: new[] { B, A, C }).First().Should().Be(A);
-            
+
             C.OrderDependencies.Add(B);
             GetPlan(invokedTargets: new[] { A, C, B }).Should().Equal(A, B, C);
         }

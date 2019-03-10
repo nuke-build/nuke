@@ -1,3 +1,7 @@
+// Copyright 2019 Maintainers of NUKE.
+// Distributed under the MIT License.
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
+
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -40,7 +44,7 @@ namespace Nuke.Common.OutputSinks
         {
             WriteWithColors(text, ConsoleColor.Green);
         }
-        
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         private void WriteWithColors(string text, ConsoleColor foregroundColor)
         {

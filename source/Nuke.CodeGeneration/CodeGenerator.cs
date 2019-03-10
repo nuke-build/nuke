@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -44,7 +44,7 @@ namespace Nuke.CodeGeneration
                 var tool = ToolSerializer.Load(specificationFile);
                 // for formatting and ordering of properties
                 ToolSerializer.Save(tool, specificationFile);
-                
+
                 tool.SpecificationFile = specificationFile;
                 tool.SourceFile = sourceFileProvider?.Invoke(tool);
                 tool.Namespace = namespaceProvider?.Invoke(tool);
@@ -74,7 +74,7 @@ namespace Nuke.CodeGeneration
         private static void ApplyRuntimeInformation(
             Tool tool,
             string specificationFile,
-            [CanBeNull] Func<Tool, string> sourceFileProvider, 
+            [CanBeNull] Func<Tool, string> sourceFileProvider,
             [CanBeNull] Func<Tool, string> namespaceProvider)
         {
             foreach (var task in tool.Tasks)
@@ -89,7 +89,7 @@ namespace Nuke.CodeGeneration
                         $"commonPropertySets[{commonPropertySet}] != null");
                     properties.ForEach(x => task.SettingsClass.Properties.Add(x.Clone()));
                 }
-                
+
                 if (!task.OmitCommonProperties)
                     tool.CommonTaskProperties.ForEach(x => task.SettingsClass.Properties.Add(x.Clone()));
 

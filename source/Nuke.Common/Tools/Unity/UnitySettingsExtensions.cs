@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers and Contributors of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -12,6 +12,7 @@ namespace Nuke.Common.Tools.Unity
     public static partial class UnitySettingsExtensions
     {
         #region BuildTarget
+
         /// <summary><p><em>Sets <see cref="UnitySettings.BuildTarget"/>.</em></p><p>Allows the selection of an active build target before a project is loaded.</p></summary>
         [Pure]
         public static UnitySettings SetBuildTarget(this UnitySettings toolSettings, UnityBuildTarget buildTarget)
@@ -20,6 +21,7 @@ namespace Nuke.Common.Tools.Unity
             toolSettings.BuildTarget = buildTarget.ToString();
             return toolSettings;
         }
+
         #endregion
     }
 }

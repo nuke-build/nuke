@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -61,9 +61,10 @@ namespace Nuke.Common.Git
 
         private static (string endpoint, string identifier) ParseUrl(string url)
         {
-            var regex = new Regex(@"^(?'protocol'\w+\:\/\/)?(?>(?'user'.*)@)?(?'endpoint'[^\/:]+)(?>\:(?'port'\d+))?[\/:](?'identifier'.*?)\/?(?>\.git)?$");
+            var regex = new Regex(
+                @"^(?'protocol'\w+\:\/\/)?(?>(?'user'.*)@)?(?'endpoint'[^\/:]+)(?>\:(?'port'\d+))?[\/:](?'identifier'.*?)\/?(?>\.git)?$");
             var match = regex.Match(url.Trim());
-            
+
             ControlFlow.Assert(match.Success, $"Url '{url}' could not be parsed.");
             return (match.Groups["endpoint"].Value, match.Groups["identifier"].Value);
         }

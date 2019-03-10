@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -79,9 +79,11 @@ namespace Nuke.Common.Tooling
 
             string Format(T value) => value.ToString().DoubleQuoteIfNeeded(separator, disallowed, c_space);
 
-            AddInternal(argumentFormat, separator.HasValue
-                ? new[] { FormatMultiple(list, Format, separator.Value, quoteMultiple) }
-                : list.Select(Format).ToArray());
+            AddInternal(
+                argumentFormat,
+                separator.HasValue
+                    ? new[] { FormatMultiple(list, Format, separator.Value, quoteMultiple) }
+                    : list.Select(Format).ToArray());
 
             return this;
         }
@@ -109,10 +111,12 @@ namespace Nuke.Common.Tooling
                     .Replace("{value}", Format(pair.Value));
 
             var pairs = dictionary.Where(x => x.Value.NotNullWarn($"Value for '{x.Key}' is 'null', omitting...") != null).ToList();
-            
-            AddInternal(argumentFormat, separator.HasValue
-                ? new[] { FormatMultiple(pairs, FormatPair, separator.Value, quoteMultiple) }
-                : pairs.Select(FormatPair).ToArray());
+
+            AddInternal(
+                argumentFormat,
+                separator.HasValue
+                    ? new[] { FormatMultiple(pairs, FormatPair, separator.Value, quoteMultiple) }
+                    : pairs.Select(FormatPair).ToArray());
 
             return this;
         }
@@ -141,9 +145,11 @@ namespace Nuke.Common.Tooling
 
             foreach (var list in lookup)
             {
-                AddInternal(argumentFormat, separator.HasValue
-                    ? new[] { FormatLookup(list.Key, FormatMultiple(list, x => Format(x), separator.NotNull().Value, quoteMultiple)) }
-                    : list.Select(x => FormatLookup(list.Key, Format(x))).ToArray());
+                AddInternal(
+                    argumentFormat,
+                    separator.HasValue
+                        ? new[] { FormatLookup(list.Key, FormatMultiple(list, x => Format(x), separator.NotNull().Value, quoteMultiple)) }
+                        : list.Select(x => FormatLookup(list.Key, Format(x))).ToArray());
             }
 
             return this;

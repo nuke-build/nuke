@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -159,7 +159,7 @@ namespace Nuke.Common.Execution
             var positionalArguments = _commandLineArguments.TakeWhile(x => !x.StartsWith("-")).ToArray();
             if (positionalArguments.Length == 0)
                 return GetDefaultValue(destinationType);
-            
+
             return ConvertCommandLineArguments(
                 $"$all-positional",
                 positionalArguments,
@@ -280,7 +280,8 @@ namespace Nuke.Common.Execution
             var convertedValues = values.Select(x => Convert(x, elementType)).ToList();
             if (!destinationType.IsArray)
             {
-                ControlFlow.Assert(convertedValues.Count == 1, $"Value [ {values.JoinComma()} ] cannot be assigned to '{GetPresentableName(destinationType)}'.");
+                ControlFlow.Assert(convertedValues.Count == 1,
+                    $"Value [ {values.JoinComma()} ] cannot be assigned to '{GetPresentableName(destinationType)}'.");
                 return convertedValues.Single();
             }
 

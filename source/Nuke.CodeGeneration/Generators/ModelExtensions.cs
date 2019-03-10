@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -85,8 +85,7 @@ namespace Nuke.CodeGeneration.Generators
         {
             return property.Type.StartsWith("bool");
         }
-    
-        
+
         public static string GetClassName(this Tool tool)
         {
             return $"{tool.Name}Tasks";

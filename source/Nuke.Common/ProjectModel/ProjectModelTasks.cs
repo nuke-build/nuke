@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -20,7 +20,7 @@ namespace Nuke.Common.ProjectModel
         {
             return SolutionSerializer.Deserialize(solutionFile);
         }
-        
+
         private static Lazy<string> s_msbuildPathResolver = new Lazy<string>(() =>
         {
             var dotnet = ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE") ??
@@ -69,7 +69,7 @@ namespace Nuke.Common.ProjectModel
 
             return msbuildProject;
         }
-        
+
         private static Dictionary<string, string> GetProperties([CanBeNull] string configuration, [CanBeNull] string targetFramework)
         {
             var properties = new Dictionary<string, string>();

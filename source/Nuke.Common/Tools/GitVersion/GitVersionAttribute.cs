@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -30,10 +30,10 @@ namespace Nuke.Common.Tools.GitVersion
             }
 
             return ControlFlow.SuppressErrors(() =>
-                GitVersionTasks.GitVersion(s => s
-                        .SetWorkingDirectory(NukeBuild.RootDirectory)
-                        .DisableLogOutput())
-                    .Result,
+                    GitVersionTasks.GitVersion(s => s
+                            .SetWorkingDirectory(NukeBuild.RootDirectory)
+                            .DisableLogOutput())
+                        .Result,
                 includeStackTrace: true);
         }
     }

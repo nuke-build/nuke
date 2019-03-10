@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -22,7 +22,7 @@ namespace Nuke.Common.ChangeLog
         {
             var changelogSectionNotes = ExtractChangelogSectionNotes(changelogFile)
                 .Select(x => x.Replace("- ", "\u2022 ").Replace("`", string.Empty).Replace(",", "%2C")).ToList();
-            
+
             if (repository.IsGitHubRepository())
             {
                 changelogSectionNotes.Add(string.Empty);
@@ -99,7 +99,8 @@ namespace Nuke.Common.ChangeLog
 
             ControlFlow.Assert(unreleasedNotes != null, "Changelog should have draft section.");
             ControlFlow.Assert(releaseNotes.Any(x => x.Version != null && x.Version.Equals(tag)), $"Tag '{tag}' already exists.");
-            ControlFlow.Assert(lastReleased != null && tag.CompareTo(lastReleased.Version) > 0, $"Tag '{tag}' is not greater compared to last tag '{lastReleased.NotNull().Version}'.");
+            ControlFlow.Assert(lastReleased != null && tag.CompareTo(lastReleased.Version) > 0,
+                $"Tag '{tag}' is not greater compared to last tag '{lastReleased.NotNull().Version}'.");
 
             var path = changelogFile.Path;
 

@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -46,7 +46,7 @@ namespace Nuke.Common.BuildTasks
 
                 var outputFile = externalFile.Substring(startIndex: 0, length: externalFile.Length - 4);
                 var previousHash = File.Exists(outputFile) ? FileSystemTasks.GetFileHash(outputFile) : null;
-                
+
                 var template = (await HttpTasks.HttpDownloadStringAsync(uri.OriginalString)).SplitLineBreaks();
                 var replacements = lines.Skip(1)
                     .Where(x => x.Contains('='))
@@ -59,7 +59,7 @@ namespace Nuke.Common.BuildTasks
                     .Where(x => !x.Contains('=') && !string.IsNullOrWhiteSpace(x))
                     .Select(x => x.ToUpperInvariant())
                     .ToList();
-                
+
                 File.WriteAllLines(outputFile, TemplateUtility.FillTemplate(template, definitions, replacements));
                 var newHash = FileSystemTasks.GetFileHash(outputFile);
 

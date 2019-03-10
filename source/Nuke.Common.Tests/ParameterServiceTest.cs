@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -172,10 +172,10 @@ namespace Nuke.Common.Tests
                     "2",
                     "3"
                 });
-            
+
             service.GetParameter<PathConstruction.AbsolutePath>(() => RootDirectory)
                 .Should().BeNull();
-            
+
             service.GetParameter<bool>(() => RootDirectory)
                 .Should().BeTrue();
 

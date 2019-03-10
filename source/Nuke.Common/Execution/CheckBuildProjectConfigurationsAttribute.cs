@@ -18,7 +18,7 @@ namespace Nuke.Common.Execution
     public class CheckBuildProjectConfigurationsAttribute : Attribute, IPostLogoBuildExtension
     {
         public int TimeoutInMilliseconds { get; set; } = 500;
-        
+
         public void Execute(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             ControlFlow.AssertWarn(Task.Run(CheckConfiguration).Wait(TimeoutInMilliseconds),

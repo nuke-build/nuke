@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -43,7 +43,7 @@ namespace Nuke.Common
 
         [CanBeNull]
         public string Name { get; set; }
-        
+
         [CanBeNull]
         public string Separator { get; set; }
 
@@ -70,7 +70,7 @@ namespace Nuke.Common
 
                 return valueProvider.GetValue<IEnumerable<(string, object)>>(instance);
             }
-            
+
             var memberType = member.GetMemberType();
             if (memberType.IsEnum)
                 return memberType.GetEnumNames().Select(x => (x, Enum.Parse(memberType, x)));

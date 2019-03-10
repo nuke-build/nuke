@@ -1,6 +1,7 @@
-// Copyright 2018 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
+
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
@@ -20,7 +21,7 @@ namespace Nuke.Common.ChangeLog
         /// The unreleased release notes section.
         /// </summary>
         [CanBeNull] public ReleaseNotes Unreleased { get; }
-        
+
         /// <summary>
         /// Release notes sorted by version.
         /// </summary>

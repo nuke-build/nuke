@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -16,7 +16,7 @@ namespace Nuke.Common
     {
         public static Configuration Debug = new Configuration { Value = nameof(Debug) };
         public static Configuration Release = new Configuration { Value = nameof(Release) };
-        
+
         public static implicit operator string(Configuration configuration)
         {
             return configuration.Value;

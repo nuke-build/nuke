@@ -1,4 +1,4 @@
-﻿// Copyright Matthias Koch, Sebastian Karasek 2018.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,7 +25,7 @@ partial class Build
             Git($"add {ChangelogFile}");
             Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.MajorMinorPatch}\"");
         });
-    
+
     Target Release => _ => _
         .DependsOn(Changelog)
         .Requires(() => !GitRepository.IsOnReleaseBranch() || GitHasCleanWorkingCopy())
@@ -58,10 +58,10 @@ partial class Build
         Git($"checkout {MasterBranch}");
         Git($"merge --no-ff --no-edit {GitRepository.Branch}");
         Git($"tag {GitVersion.MajorMinorPatch}");
-        
+
         Git($"checkout {DevelopBranch}");
         Git($"merge --no-ff --no-edit {GitRepository.Branch}");
-        
+
         Git($"branch -D {GitRepository.Branch}");
 
         Git($"push origin {MasterBranch} {DevelopBranch} {GitVersion.MajorMinorPatch}");

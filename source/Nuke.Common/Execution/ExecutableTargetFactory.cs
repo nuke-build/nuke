@@ -32,7 +32,7 @@ namespace Nuke.Common.Execution
                 var factory = (Target) property.GetValue(build);
                 var definition = new TargetDefinition();
                 factory.Invoke(definition);
-                
+
                 var target = new ExecutableTarget
                              {
                                  Name = property.Name,
@@ -50,7 +50,7 @@ namespace Nuke.Common.Execution
                                  Actions = definition.Actions,
                                  Listed = !definition.IsInternal,
                              };
-                
+
                 executables.Add(target);
             }
 
@@ -70,7 +70,7 @@ namespace Nuke.Common.Execution
                             yield return otherExecutables;
                     }
                 }
-                
+
                 executable.ExecutionDependencies.AddRange(GetDependencies(x => x.DependsOnTargets, x => x.DependentForTargets));
                 executable.OrderDependencies.AddRange(GetDependencies(x => x.AfterTargets, x => x.BeforeTargets));
                 executable.TriggerDependencies.AddRange(GetDependencies(x => x.TriggeredByTargets, x => x.TriggersTargets));

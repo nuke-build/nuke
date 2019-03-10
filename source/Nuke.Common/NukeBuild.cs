@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -59,10 +59,10 @@ namespace Nuke.Common
         {
             return BuildManager.Execute(defaultTargetExpression);
         }
-        
+
         internal IReadOnlyCollection<ExecutableTarget> ExecutableTargets { get; set; }
         internal IReadOnlyCollection<ExecutableTarget> ExecutionPlan { get; set; }
-        
+
         /// <summary>
         /// Gets the list of targets that were invoked.
         /// </summary>
@@ -70,18 +70,19 @@ namespace Nuke.Common
             Name = InvokedTargetsParameterName,
             Separator = TargetsSeparator)]
         public IReadOnlyCollection<ExecutableTarget> InvokedTargets => ExecutionPlan.Where(x => x.Invoked).ToList();
-        
+
         /// <summary>
         /// Gets the list of targets that are skipped.
         /// </summary>
-        [Parameter("List of targets to be skipped. Empty list skips all dependencies.", Name = SkippedTargetsParameterName, Separator = TargetsSeparator)]
+        [Parameter("List of targets to be skipped. Empty list skips all dependencies.",
+            Name = SkippedTargetsParameterName,
+            Separator = TargetsSeparator)]
         public IReadOnlyCollection<ExecutableTarget> SkippedTargets => ExecutionPlan.Where(x => x.Status == ExecutionStatus.Skipped).ToList();
 
         /// <summary>
         /// Gets the list of targets that are executing.
         /// </summary>
         public IReadOnlyCollection<ExecutableTarget> ExecutingTargets => ExecutionPlan.Where(x => x.Status != ExecutionStatus.Skipped).ToList();
-
 
         internal void ExecuteExtensions<T>()
             where T : IBuildExtension
@@ -94,7 +95,7 @@ namespace Nuke.Common
             get
             {
                 IOutputSink innerOutputSink;
-                
+
                 switch (Host)
                 {
                     case HostType.Bitrise:
@@ -117,7 +118,7 @@ namespace Nuke.Common
                 return new SevereMessagesOutputSink(innerOutputSink);
             }
         }
-        
+
         [CanBeNull]
         protected internal virtual string NuGetPackagesConfigFile =>
             BuildProjectDirectory != null

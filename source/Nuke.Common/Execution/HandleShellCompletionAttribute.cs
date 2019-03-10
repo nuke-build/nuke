@@ -23,7 +23,7 @@ namespace Nuke.Common.Execution
 
             var parameters = InjectionUtility.GetParameterMembers(build.GetType())
                 .Where(x => !x.HasCustomAttribute<UnlistedAttribute>());
-            
+
             foreach (var parameter in parameters)
             {
                 var parameterName = ParameterService.Instance.GetParameterName(parameter);

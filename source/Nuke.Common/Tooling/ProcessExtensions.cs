@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -30,7 +30,7 @@ namespace Nuke.Common.Tooling
             this IProcess process)
         {
             process.AssertWaitForExit();
-            
+
             if (process.ExitCode != 0)
                 throw new ProcessException(process);
 

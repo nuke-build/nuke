@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers and Contributors of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -17,8 +17,10 @@ namespace Nuke.Common.Tools.Unity
     {
         [ThreadStatic]
         private static FileWatcher s_watcher;
+
         [ThreadStatic]
         private static LogParser s_logParser;
+
         [ThreadStatic]
         private static bool s_minimalOutput;
 

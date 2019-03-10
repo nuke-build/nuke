@@ -46,7 +46,7 @@ namespace Nuke.Common.Execution
             var vertexDictionary = GetVertexDictionary(executableTargets);
             var graphAsList = vertexDictionary.Values.ToList();
             var executingTargets = new List<ExecutableTarget>();
-            
+
             var scc = new StronglyConnectedComponentFinder<ExecutableTarget>();
             var cycles = scc.DetectCycle(graphAsList).Cycles().ToList();
             if (cycles.Count > 0)
@@ -90,7 +90,7 @@ namespace Nuke.Common.Execution
             var vertexDictionary = executableTargets.ToDictionary(x => x, x => new Vertex<ExecutableTarget>(x));
             foreach (var (executable, vertex) in vertexDictionary)
                 vertex.Dependencies.AddRange(executable.AllDependencies.Select(x => vertexDictionary[x]));
-            
+
             return vertexDictionary;
         }
 
@@ -110,7 +110,7 @@ namespace Nuke.Common.Execution
             var target = executableTargets.SingleOrDefault(x => x.IsDefault);
             if (target == null)
                 Fail("No target has been marked to be the default.", executableTargets);
-            
+
             return new[] { target };
         }
 

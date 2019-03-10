@@ -35,10 +35,11 @@ namespace Nuke.Common.Execution
         internal ICollection<ExecutableTarget> OrderDependencies { get; } = new List<ExecutableTarget>();
         internal ICollection<ExecutableTarget> TriggerDependencies { get; } = new List<ExecutableTarget>();
         internal ICollection<ExecutableTarget> Triggers { get; } = new List<ExecutableTarget>();
+
         internal IReadOnlyCollection<ExecutableTarget> AllDependencies
             => ExecutionDependencies.Concat(OrderDependencies).Concat(TriggerDependencies).ToList();
-        public bool IsDefault { get; internal set; }
 
+        public bool IsDefault { get; internal set; }
         public ExecutionStatus Status { get; internal set; }
         public TimeSpan Duration { get; internal set; }
         public bool Invoked { get; internal set; }

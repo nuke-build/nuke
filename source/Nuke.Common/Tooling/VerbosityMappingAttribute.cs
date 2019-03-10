@@ -24,7 +24,7 @@ namespace Nuke.Common.Tooling
         public string Minimal { get; set; }
         public string Normal { get; set; }
         public string Verbose { get; set; }
-        
+
         public void Execute(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             object GetMappedValue(string name)

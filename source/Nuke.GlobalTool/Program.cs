@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -30,7 +30,7 @@ namespace Nuke.GlobalTool
                         .EnumerateFiles($"build.{(EnvironmentInfo.IsWin ? "ps1" : "sh")}", maxDepth: 2)
                         .FirstOrDefault()?.FullName.DoubleQuoteIfNeeded()
                     : null;
-                
+
                 return Handle(args, rootDirectory, buildScript);
             }
             catch (Exception exception)
@@ -63,14 +63,14 @@ namespace Nuke.GlobalTool
                 var missingFile = rootDirectory == null
                     ? Constants.ConfigurationFileName
                     : "build.ps1/sh";
-                
+
                 return UserConfirms($"Could not find {missingFile} file. Do you want to setup a build?")
                     ? Setup(new string[0], rootDirectory, buildScript: null)
                     : 0;
             }
 
             // TODO: docker
-            
+
             Logger.Normal($"NUKE Global Tool {typeof(Program).Assembly.GetInformationalText()}");
 
             var arguments = args.Select(x => x.DoubleQuoteIfNeeded()).JoinSpace();
@@ -84,8 +84,8 @@ namespace Nuke.GlobalTool
             return Process.Start(
                 new ProcessStartInfo
                 {
-                    FileName = EnvironmentInfo.IsWin 
-                        ? ToolPathResolver.GetPathExecutable("powershell") 
+                    FileName = EnvironmentInfo.IsWin
+                        ? ToolPathResolver.GetPathExecutable("powershell")
                         : ToolPathResolver.GetPathExecutable("bash"),
                     Arguments = EnvironmentInfo.IsWin
                         ? $"-ExecutionPolicy ByPass -NoProfile -File {buildScript} {arguments}"

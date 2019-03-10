@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -45,14 +45,14 @@ namespace Nuke.Common.Tooling
         {
             return Value.NotNull("Value != null");
         }
-        
+
         public class TypeConverter<T> : TypeConverter
         {
             public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
             {
                 return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
             }
-        
+
             public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
             {
                 if (value is string stringValue)
