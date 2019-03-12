@@ -34,43 +34,52 @@ namespace Nuke.Common.Tooling
         {
             ControlFlow.Assert(packageId != null && packageExecutable != null, "packageId != null && packageExecutable != null");
 
-            string GetEmbeddedPackagesDirectory()
+            string GetEmbeddedPackagesDirectory(string singlePackageId)
             {
                 var assemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                var embeddedDirectory = (PathConstruction.AbsolutePath) assemblyDirectory / packageId;
+                var embeddedDirectory = (PathConstruction.AbsolutePath) assemblyDirectory / singlePackageId;
                 return Directory.Exists(embeddedDirectory) ? embeddedDirectory : null;
             }
 
-            string GetNuGetPackagesDirectory() =>
+            string GetNuGetPackagesDirectory(string singlePackageId) =>
                 NuGetPackagesConfigFile != null
                     ? NuGetPackageResolver.GetLocalInstalledPackage(
-                            packageId,
+                            singlePackageId,
                             NuGetPackagesConfigFile,
                             resolveDependencies: false)
                         ?.Directory
                     : null;
 
-            string GetPaketPackagesDirectory() =>
+            string GetPaketPackagesDirectory(string singlePackageId) =>
                 PaketPackagesConfigFile != null
                     ? PaketPackageResolver.GetLocalInstalledPackageDirectory(
-                        packageId,
+                        singlePackageId,
                         PaketPackagesConfigFile)
                     : null;
 
-            var packageDirectory = (GetEmbeddedPackagesDirectory() ??
-                                    GetNuGetPackagesDirectory() ??
-                                    GetPaketPackagesDirectory()).NotNull("packageDirectory != null");
+            var packageIds = packageId.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+            var packageDirectory = packageIds
+                .Select(x =>
+                    GetEmbeddedPackagesDirectory(x) ??
+                    GetNuGetPackagesDirectory(x) ??
+                    GetPaketPackagesDirectory(x))
+                .FirstOrDefault().NotNull("packageDirectory != null");
 
-            var executables = Directory.GetFiles(packageDirectory, packageExecutable, SearchOption.AllDirectories);
-            ControlFlow.Assert(executables.Length > 0, $"Could not find '{packageExecutable}' inside '{packageDirectory}'.");
-            if (executables.Length == 1 && framework == null)
-                return executables.Single();
+            var packageExecutables = packageExecutable.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+            var absolutePackageExecutables = packageExecutables
+                .Select(x => Directory.GetFiles(packageDirectory, x, SearchOption.AllDirectories))
+                .FirstOrDefault(x => x.Length > 0)?.ToList();
 
-            var frameworks = executables.Select(x => new FileInfo(x).Directory.NotNull().Name).ToList();
+            ControlFlow.Assert(absolutePackageExecutables != null,
+                $"Could not find {packageExecutables.Select(x => x.SingleQuote()).Join(", or")} inside '{packageDirectory}'.");
+            if (absolutePackageExecutables.Count == 1 && framework == null)
+                return absolutePackageExecutables.Single();
+
+            var frameworks = absolutePackageExecutables.Select(x => new FileInfo(x).Directory.NotNull().Name).ToList();
             ControlFlow.Assert(frameworks.Contains(framework, StringComparer.OrdinalIgnoreCase),
                 $"Package executable {packageExecutable} [{packageId}] requires a framework: {frameworks.JoinComma()}");
 
-            return executables.Single(x => new FileInfo(x).Directory.NotNull().Name.EqualsOrdinalIgnoreCase(framework));
+            return absolutePackageExecutables.Single(x => new FileInfo(x).Directory.NotNull().Name.EqualsOrdinalIgnoreCase(framework));
         }
 
         public static string GetPathExecutable(string pathExecutable)
