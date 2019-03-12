@@ -54,9 +54,9 @@ namespace Nuke.Common.OutputSinks
         {
             var previousForegroundColor = Console.ForegroundColor;
 
-            // using (DelegateDisposable.CreateBracket(
-            //     () => Console.ForegroundColor = foregroundColor,
-            //     () => Console.ForegroundColor = previousForegroundColor))
+            using (DelegateDisposable.CreateBracket(
+                () => Console.ForegroundColor = foregroundColor,
+                () => Console.ForegroundColor = previousForegroundColor))
             {
                 Console.WriteLine(text);
             }
