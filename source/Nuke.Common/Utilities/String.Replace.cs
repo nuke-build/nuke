@@ -18,7 +18,7 @@ namespace Nuke.Common.Utilities
         [Pure]
         public static string ReplaceRegex(
             this string str,
-            string pattern,
+            [RegexPattern] string pattern,
             MatchEvaluator matchEvaluator,
             RegexOptions options = RegexOptions.None)
         {
