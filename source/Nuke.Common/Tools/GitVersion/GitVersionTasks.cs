@@ -34,21 +34,6 @@ namespace Nuke.Common.Tools.GitVersion
                 return property;
             }
         }
-
-        private static string GetToolPath()
-        {
-            var package = new[]
-                          {
-                              "GitVersion.CommandLine.DotNetCore",
-                              "GitVersion.CommandLine"
-                          }
-                .Select(x => NuGetPackageResolver.TryGetLocalInstalledPackage(x, ToolPathResolver.NuGetPackagesConfigFile))
-                .WhereNotNull()
-                .FirstOrDefault().NotNull("package != null");
-            return Directory.GetFiles(package.Directory, "GitVersion.*", SearchOption.AllDirectories)
-                .FirstOrDefault(x => x.EndsWithOrdinalIgnoreCase(".dll") || x.EndsWithOrdinalIgnoreCase(".exe"))
-                .NotNull("executable != null");
-        }
     }
 
     [PublicAPI]
