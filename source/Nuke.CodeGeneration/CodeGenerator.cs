@@ -12,6 +12,7 @@ using Nuke.CodeGeneration.Model;
 using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.CodeGeneration
 {
@@ -83,15 +84,22 @@ namespace Nuke.CodeGeneration
                 task.SettingsClass.Tool = tool;
                 task.SettingsClass.Task = task;
 
+                bool NotExistent(Property property)
+                {
+                    var nonExistent = task.SettingsClass.Properties.All(x => x.Name != property.Name);
+                    ControlFlow.AssertWarn(nonExistent, $"Property '{property.Name}' for task '{task.GetTaskMethodName()}' already exists.");
+                    return nonExistent;
+                }
+
                 foreach (var commonPropertySet in task.CommonPropertySets)
                 {
                     ControlFlow.Assert(tool.CommonTaskPropertySets.TryGetValue(commonPropertySet, out var properties),
                         $"commonPropertySets[{commonPropertySet}] != null");
-                    properties.ForEach(x => task.SettingsClass.Properties.Add(x.Clone()));
+                    properties.Where(NotExistent).ForEach(x => task.SettingsClass.Properties.Add(x.Clone()));
                 }
 
                 if (!task.OmitCommonProperties)
-                    tool.CommonTaskProperties.ForEach(x => task.SettingsClass.Properties.Add(x.Clone()));
+                    tool.CommonTaskProperties.Where(NotExistent).ForEach(x => task.SettingsClass.Properties.Add(x.Clone()));
 
                 foreach (var property in task.SettingsClass.Properties)
                 {
