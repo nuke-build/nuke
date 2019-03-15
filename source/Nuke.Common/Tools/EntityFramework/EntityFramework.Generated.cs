@@ -297,7 +297,6 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>&lt;provider&gt;</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Provider"/></li>
         ///     <li><c>--configuration</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Configuration"/></li>
         ///     <li><c>--context</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Context"/></li>
-        ///     <li><c>--context</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Context"/></li>
         ///     <li><c>--context-dir</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.ContextDirectory"/></li>
         ///     <li><c>--data-annotations</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.DataAnnotations"/></li>
         ///     <li><c>--force</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Force"/></li>
@@ -329,7 +328,6 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>&lt;connection&gt;</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Connection"/></li>
         ///     <li><c>&lt;provider&gt;</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Provider"/></li>
         ///     <li><c>--configuration</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Configuration"/></li>
-        ///     <li><c>--context</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Context"/></li>
         ///     <li><c>--context</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Context"/></li>
         ///     <li><c>--context-dir</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.ContextDirectory"/></li>
         ///     <li><c>--data-annotations</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.DataAnnotations"/></li>
@@ -964,10 +962,6 @@ namespace Nuke.Common.Tools.EntityFramework
         /// </summary>
         public virtual bool? Json { get; internal set; }
         /// <summary>
-        ///   The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.
-        /// </summary>
-        public virtual string Context { get; internal set; }
-        /// <summary>
         ///   Relative path to the project folder of the target project. Default value is the current folder.
         /// </summary>
         public virtual string Project { get; internal set; }
@@ -1014,7 +1008,6 @@ namespace Nuke.Common.Tools.EntityFramework
               .Add("--table {value}", Tables)
               .Add("--use-database-names", UseDatabaseNames)
               .Add("--json", Json)
-              .Add("--context {value}", Context)
               .Add("--project {value}", Project)
               .Add("--startup-project {value}", StartupProject)
               .Add("--framework {value}", Framework)
@@ -3588,30 +3581,6 @@ namespace Nuke.Common.Tools.EntityFramework
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Json = !toolSettings.Json;
-            return toolSettings;
-        }
-        #endregion
-        #region Context
-        /// <summary>
-        ///   <p><em>Sets <see cref="EntityFrameworkDbContextScaffoldSettings.Context"/></em></p>
-        ///   <p>The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.</p>
-        /// </summary>
-        [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings SetContext(this EntityFrameworkDbContextScaffoldSettings toolSettings, string context)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Context = context;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <see cref="EntityFrameworkDbContextScaffoldSettings.Context"/></em></p>
-        ///   <p>The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.</p>
-        /// </summary>
-        [Pure]
-        public static EntityFrameworkDbContextScaffoldSettings ResetContext(this EntityFrameworkDbContextScaffoldSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Context = null;
             return toolSettings;
         }
         #endregion
