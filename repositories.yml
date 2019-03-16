@@ -1,5 +1,6 @@
 - https://github.com/nuke-build/azure-keyvault.git#master
 - https://github.com/nuke-build/common.git#develop
+- https://github.com/nuke-build/docfx.git#master
 - https://github.com/nuke-build/docker.git#master
 - https://github.com/nuke-build/nswag.git#master
 - https://github.com/nuke-build/presentation.git#master
