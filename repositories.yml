@@ -3,6 +3,7 @@
 - https://github.com/nuke-build/docfx.git#master
 - https://github.com/nuke-build/docker.git#master
 - https://github.com/nuke-build/helm.git#master
+- https://github.com/nuke-build/kubernetes.git#master
 - https://github.com/nuke-build/nswag.git#master
 - https://github.com/nuke-build/presentation.git#master
 - https://github.com/nuke-build/resharper.git#master
