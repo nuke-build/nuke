@@ -90,16 +90,28 @@ partial class Build : NukeBuild
 
     [Parameter] readonly string ProjectName;
     string ProjectNameDashed => ProjectName.ToLowerInvariant().Replace(".", "-");
-    [Parameter] readonly string[] Description;
+    [Parameter] readonly string Description;
     [Parameter] readonly string DefaultBranch = "master";
-    // [PathExecutable] readonly Tool Hub;
     
     Target Add => _ => _
         .Requires(() => ProjectName)
         .Requires(() => Description)
         .Executes(() =>
         {
+            var updatedRepositories = Repositories
+                .Concat(GitRepository.FromUrl($"https://github.com/{Organization}/{ProjectNameDashed}", DefaultBranch))
+                .Select(x => $"{x.HttpsUrl}#{x.Branch}").OrderBy(x => x).ToList();
+            YamlSerializeToFile(updatedRepositories, RepositoriesFile);
+            Git($"add {RepositoriesFile}");
+            Git($"commit -m {$"Add {ProjectNameDashed}".DoubleQuote()}");
+            
             var repositoryDirectory = RepositoriesDirectory / Organization / ProjectNameDashed;
+            if (Directory.Exists(repositoryDirectory))
+            {
+                Logger.Warn($"Repository directory '{repositoryDirectory}' already exists.");
+                return;
+            }
+
             using (SwitchWorkingDirectory(repositoryDirectory))
             {
                 var templateDirectory = RepositoriesDirectory / Organization / "template";
@@ -119,38 +131,24 @@ partial class Build : NukeBuild
                     excludeDirectory: IsDotDirectory,
                     excludeFile: x => x.FullName.EndsWithOrdinalIgnoreCase("DotSettings"));
                 
-                // ExecuteWithRetry(() => PrepareSolution(GlobalSolutionFile), retryAttempts: 5);
-
-                // Git("init");
-                // Git($"checkout -b {DefaultBranch}");
-                // Git($"commit -m {"Initialize repository".DoubleQuote()} --allow-empty");
-                // Git("add .");
-                // Git($"commit -m {"Add template files".DoubleQuote()}");
-                // Hub($"create {Organization}/{LispName} -d {Description.JoinSpace().DoubleQuoteIfNeeded()} -h https://nuke.build");
+               // ExecuteWithRetry(() => PrepareSolution(GlobalSolutionFile), retryAttempts: 5);
+               //
+               //  Git("init");
+               //  Git($"checkout -b {DefaultBranch}");
+               //  Git($"commit -m {"Initialize repository".DoubleQuote()} --allow-empty");
+               //  Git("add .");
+               //  Git($"commit -m {"Add template files".DoubleQuote()}");
+               //
+               //  if (IsOsx)
+               //  {
+               //      ToolResolver.GetPathTool("hub")
+               //          .Invoke($"create {Organization}/{ProjectNameDashed} "
+               //                  + $"-d {Description.DoubleQuoteIfNeeded()} "
+               //                  + $"-h https://nuke.build");
+               //  } 
             }
-
-            // var updatedRepositories = Repositories
-            //     .Concat(GitRepository.FromUrl($"https://github.com/{Organization}/{ProjectNameDashed}", DefaultBranch))
-            //     .Select(x => $"{x.HttpsUrl}#{x.Branch}").OrderBy(x => x).ToList();
-            // YamlSerializeToFile(updatedRepositories, RepositoriesFile);
-            // Git($"add {RepositoriesFile}");
-            // Git($"commit -m {$"Add {ProjectNameDashed}".DoubleQuote()}");
         });
-
-    void CopyTemplate(AbsolutePath repositoryDirectory)
-    {
-        var templateDirectory = RepositoriesDirectory / Organization / "template";
-        CopyDirectoryRecursively(templateDirectory, repositoryDirectory, excludeDirectory: IsDotDirectory);
-        
-        FillTemplateDirectoryRecursively(
-            repositoryDirectory,
-            replacements: new Dictionary<string, string>
-                          {
-                              { "Template", ProjectName },
-                              { "template", ProjectNameDashed }
-                          });
-    }
-
+    
     Target Readme => _ => _
         .Executes(() =>
         {
