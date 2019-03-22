@@ -10,6 +10,7 @@
 - Jörg Preiß
 - kysel
 - MadMathMike
+- Magnus Lindhe
 - Markus Amshove
 - Matthias Koch
 - Michael Bisbjerg
