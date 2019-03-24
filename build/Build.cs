@@ -180,22 +180,25 @@ partial class Build : NukeBuild
                             .SetTargetPath(v)),
                 degreeOfParallelism: 5,
                 completeOnFailure: true);
+        });
 
-            if (GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch))
-            {
-                SendSlackMessage(m => m
-                        .SetText(new StringBuilder()
-                            .AppendLine($"<!here> :mega::shipit: *NUKE {GitVersion.SemVer} IS OUT!!!*")
-                            .AppendLine()
-                            .AppendLine(ChangelogSectionNotes.Select(x => x.Replace("- ", "• ")).JoinNewLine()).ToString()),
-                    SlackWebhook);
-
-                SendGitterMessage(new StringBuilder()
-                        .AppendLine($"@/all :mega::shipit: **NUKE {GitVersion.SemVer} IS OUT!!!**")
+    Target Announce => _ => _
+        .TriggeredBy(Publish)
+        .OnlyWhenStatic(() => GitRepository.IsOnMasterBranch())
+        .Executes(() =>
+        {
+            SendSlackMessage(m => m
+                    .SetText(new StringBuilder()
+                        .AppendLine($"<!here> :mega::shipit: *NUKE {GitVersion.SemVer} IS OUT!!!*")
                         .AppendLine()
-                        .AppendLine(ChangelogSectionNotes.Select(x => x.Replace("- ", "* ")).JoinNewLine()).ToString(),
-                    "593f3dadd73408ce4f66db89",
-                    GitterAuthToken);
-            }
+                        .AppendLine(ChangelogSectionNotes.Select(x => x.Replace("- ", "• ")).JoinNewLine()).ToString()),
+                SlackWebhook);
+
+            SendGitterMessage(new StringBuilder()
+                    .AppendLine($"@/all :mega::shipit: **NUKE {GitVersion.SemVer} IS OUT!!!**")
+                    .AppendLine()
+                    .AppendLine(ChangelogSectionNotes.Select(x => x.Replace("- ", "* ")).JoinNewLine()).ToString(),
+                "593f3dadd73408ce4f66db89",
+                GitterAuthToken);
         });
 }
