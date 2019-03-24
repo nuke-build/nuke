@@ -6,9 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 - Changed `ParameterService` to strip dashes when resolving value
+- Changed formatting of skip reason
 - Added `CompressionTasks`
 - Added `EntityFrameworkTasks`
+- Fixed `UnityTasks.UnityPath` for Windows
 - Fixed `SystemColorOutputSink` to print warning and error details
+- Fixed `SonarScannerTasks` to also resolve from netstandard package
 
 ## [0.17.7] / 2019-03-12
 - Fixed `SystemColorOutputSink` to set `ForegroundColor`
