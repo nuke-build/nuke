@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,11 +13,11 @@ namespace Nuke.Common
     internal static class Constants
     {
         internal const string ConfigurationFileName = ".nuke";
-        
+
         internal const string TargetsSeparator = "+";
         internal const string InvokedTargetsParameterName = "Target";
         internal const string SkippedTargetsParameterName = "Skip";
-        
+
         public const string VisualStudioDebugParameterName = "visual-studio-debug";
         internal const string CompletionParameterName = "shell-completion";
 
@@ -41,12 +41,12 @@ namespace Nuke.Common
                 ? rootDirectory / completionFileName
                 : GetTemporaryDirectory(rootDirectory) / completionFileName;
         }
-        
+
         internal static PathConstruction.AbsolutePath GetBuildAttemptFile(PathConstruction.AbsolutePath rootDirectory)
         {
             return GetTemporaryDirectory(rootDirectory) / "build-attempt.log";
         }
-        
+
         public static PathConstruction.AbsolutePath GetVisualStudioDebugFile(PathConstruction.AbsolutePath rootDirectory)
         {
             return GetTemporaryDirectory(rootDirectory) / $"{VisualStudioDebugParameterName}.log";

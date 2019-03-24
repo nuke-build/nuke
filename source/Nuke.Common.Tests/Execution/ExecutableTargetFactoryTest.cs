@@ -18,14 +18,14 @@ namespace Nuke.Common.Tests.Execution
         {
             var build = new TestBuild();
             var targets = ExecutableTargetFactory.CreateAll(build, x => x.A);
-            
+
             var a = targets.Single(x => x.Name == nameof(TestBuild.A));
             var b = targets.Single(x => x.Name == nameof(TestBuild.B));
             var c = targets.Single(x => x.Name == nameof(TestBuild.C));
             var d = targets.Single(x => x.Name == nameof(TestBuild.D));
 
             targets.Single(x => x.IsDefault).Should().Be(a);
-            
+
             a.Factory.Should().Be(build.A);
             a.Description.Should().Be(build.Description);
             a.Requirements.Should().Equal(build.Requirement);
@@ -43,7 +43,7 @@ namespace Nuke.Common.Tests.Execution
             c.ExecutionDependencies.Should().Equal(b);
             c.OrderDependencies.Should().Equal(d);
             c.AllDependencies.Should().NotBeEmpty();
-            
+
             d.DependencyBehavior.Should().Be(DependencyBehavior.Skip);
             d.DynamicConditions.Should().Equal(build.DynamicCondition);
             d.OrderDependencies.Should().Equal(b);

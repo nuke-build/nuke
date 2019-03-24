@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -17,49 +17,49 @@ namespace Nuke.Common.Execution
     internal static class BuildManager
     {
         private const int c_errorExitCode = -1;
-        
+
         private static readonly LinkedList<Action> s_cancellationHandlers = new LinkedList<Action>();
-        
+
         public static event Action CancellationHandler
         {
             add => s_cancellationHandlers.AddFirst(value);
             remove => s_cancellationHandlers.Remove(value);
-        } 
-        
+        }
+
         public static int Execute<T>(Expression<Func<T, Target>> defaultTargetExpression)
             where T : NukeBuild
         {
             Console.CancelKeyPress += (s, e) => s_cancellationHandlers.ForEach(x => x());
-            
+
             var build = Create<T>();
             build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpression);
-            
+
             try
             {
                 InjectionUtility.InjectValues(build, x => x.IsFast);
-                
+
                 build.ExecuteExtensions<IPreLogoBuildExtension>();
                 build.OnBuildCreated();
-                
+
                 Logger.OutputSink = build.OutputSink;
                 Logger.LogLevel = NukeBuild.LogLevel;
                 ToolPathResolver.NuGetPackagesConfigFile = build.NuGetPackagesConfigFile;
 
                 Logger.Normal($"NUKE Execution Engine {typeof(BuildManager).Assembly.GetInformationalText()}");
                 Logger.Normal(FigletTransform.GetText("NUKE"));
-                
+
                 build.ExecuteExtensions<IPostLogoBuildExtension>();
                 build.ExecutionPlan = ExecutionPlanner.GetExecutionPlan(
                     build.ExecutableTargets,
                     ParameterService.Instance.GetParameter<string[]>(() => build.InvokedTargets) ??
                     ParameterService.Instance.GetPositionalCommandLineArguments<string>(separator: Constants.TargetsSeparator.Single()));
                 CancellationHandler += Finish;
-                
+
                 InjectionUtility.InjectValues(build, x => !x.IsFast);
                 RequirementService.ValidateRequirements(build);
-                
+
                 build.OnBuildInitialized();
-                
+
                 BuildExecutor.Execute(
                     build,
                     ParameterService.Instance.GetParameter<string[]>(() => build.SkippedTargets));
@@ -76,13 +76,13 @@ namespace Nuke.Common.Execution
                 if (build.ExecutionPlan != null)
                     Finish();
             }
-            
+
             void Finish()
             {
                 build.ExecutionPlan
                     .Where(x => x.Status == ExecutionStatus.Executing)
                     .ForEach(x => x.Status = ExecutionStatus.Aborted);
-                
+
                 if (Logger.OutputSink is SevereMessagesOutputSink outputSink)
                 {
                     Logger.Normal();

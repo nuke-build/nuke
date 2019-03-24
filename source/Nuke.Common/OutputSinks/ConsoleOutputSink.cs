@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -27,14 +27,14 @@ namespace Nuke.Common.OutputSinks
             Console.WriteLine("╔═╗");
             Console.WriteLine("║ ║");
             Console.WriteLine("╚═╝");
-            
+
             Logger.Warn("Warn");
             Logger.Error("Error");
             Logger.Normal("Normal");
             Logger.Info("Info");
             Logger.Trace("Trace");
             Logger.Success("Success");
-            
+
             const string ESC = "\u001b[";
             const string RESET = "\u001b[0m";
 
@@ -42,7 +42,7 @@ namespace Nuke.Common.OutputSinks
             {
                 Console.Write($"{ESC}{i}m{i}{RESET}  ");
                 Console.Write($"{ESC}{i};1m{i};1{RESET}  ");
-                if (i%10==0)
+                if (i % 10 == 0)
                     Console.WriteLine();
             }
         }

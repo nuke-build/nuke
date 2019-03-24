@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -24,7 +24,7 @@ namespace Nuke.Common.Execution
             var contents = resourceText
                 .Replace("__GRAPH__", GetGraphDefinition(executableTargets))
                 .Replace("__EVENTS__", GetEvents(executableTargets));
-            
+
             var path = Path.Combine(NukeBuild.TemporaryDirectory, c_htmlFileName);
             File.WriteAllText(path, contents);
 
@@ -85,7 +85,6 @@ namespace Nuke.Common.Execution
                 builder
                     .AppendLine("    });");
             }
-            
 
             return builder.ToString();
         }

@@ -1,3 +1,7 @@
+// Copyright 2019 Maintainers of NUKE.
+// Distributed under the MIT License.
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
+
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -29,18 +33,22 @@ namespace Nuke.Common.OutputSinks
         public override void WriteWarning(string text, string details = null)
         {
             WriteWithColors(text, ConsoleColor.Yellow);
+            if (details != null)
+                WriteWithColors(details, ConsoleColor.Yellow);
         }
 
         public override void WriteError(string text, string details = null)
         {
             WriteWithColors(text, ConsoleColor.Red);
+            if (details != null)
+                WriteWithColors(details, ConsoleColor.Red);
         }
 
         public override void WriteSuccess(string text)
         {
             WriteWithColors(text, ConsoleColor.Green);
         }
-        
+
         [MethodImpl(MethodImplOptions.Synchronized)]
         private void WriteWithColors(string text, ConsoleColor foregroundColor)
         {

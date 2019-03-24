@@ -12,7 +12,6 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.IO
 {
-    
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public class FileGlobbingAttribute : FileSystemGlobbingAttributeBase
     {
@@ -21,7 +20,7 @@ namespace Nuke.Common.IO
         {
         }
     }
-    
+
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public class DirectoryGlobbingAttribute : FileSystemGlobbingAttributeBase
     {
@@ -30,13 +29,15 @@ namespace Nuke.Common.IO
         {
         }
     }
-    
+
     public abstract class FileSystemGlobbingAttributeBase : ParameterAttribute
     {
         private readonly string[] _patterns;
         private readonly Func<PathConstruction.AbsolutePath, string[], IEnumerable<PathConstruction.AbsolutePath>> _globber;
 
-        protected FileSystemGlobbingAttributeBase(string[] patterns, Func<PathConstruction.AbsolutePath, string[], IEnumerable<PathConstruction.AbsolutePath>> globber)
+        protected FileSystemGlobbingAttributeBase(
+            string[] patterns,
+            Func<PathConstruction.AbsolutePath, string[], IEnumerable<PathConstruction.AbsolutePath>> globber)
         {
             _patterns = patterns;
             _globber = globber;
@@ -49,7 +50,7 @@ namespace Nuke.Common.IO
                 $"Member '{member.Name}' attributed with {GetType().Name} must be of type AbsolutePath or AbsolutePath[].");
 
             var globbedElements = GetGlobbedElements(member);
-            
+
             var parameterValue = ParameterService.Instance.GetParameter<PathConstruction.AbsolutePath[]>(member);
             if (parameterValue != null)
             {
@@ -61,7 +62,7 @@ namespace Nuke.Common.IO
                     new[] { $"Member '{member.Name}' can only accept a single value but got:" }
                         .Concat(parameterValue.Select(x => x.ToString()))
                         .JoinNewLine());
-                
+
                 return memberType == typeof(PathConstruction.AbsolutePath)
                     ? parameterValue.Single()
                     : (object) parameterValue;

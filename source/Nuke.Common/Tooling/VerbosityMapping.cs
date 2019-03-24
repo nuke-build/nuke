@@ -18,7 +18,7 @@ namespace Nuke.Common.Tooling
             {
                 if (!Mappings.Contains(property.PropertyType))
                     continue;
-                
+
                 var mappings = Mappings[property.PropertyType];
                 foreach (var mapping in mappings)
                 {

@@ -13,7 +13,7 @@ namespace Nuke.Common.Utilities
     public static class CompletionUtility
     {
         public static IEnumerable<string> GetRelevantCompletionItems(
-            string words, 
+            string words,
             IDictionary<string, string[]> completionItems)
         {
             completionItems = new Dictionary<string, string[]>(completionItems, StringComparer.OrdinalIgnoreCase);
@@ -27,7 +27,7 @@ namespace Nuke.Common.Utilities
             void AddSubItems(string parameter)
             {
                 var passedItems = parts.Reverse().TakeWhile(x => !x.IsParameter());
-                var items = completionItems.GetValueOrDefault(parameter)?.Except(passedItems, StringComparer.OrdinalIgnoreCase) ?? 
+                var items = completionItems.GetValueOrDefault(parameter)?.Except(passedItems, StringComparer.OrdinalIgnoreCase) ??
                             new string[0];
                 foreach (var item in items)
                 {
@@ -50,7 +50,7 @@ namespace Nuke.Common.Utilities
                 {
                     // if (currentWord == null && completionItems.GetValueOrDefault(lastParameter.GetParameterName())?.Length > 0)
                     //     continue;
-                
+
                     if (parameters.Contains(item, StringComparer.OrdinalIgnoreCase))
                         continue;
 

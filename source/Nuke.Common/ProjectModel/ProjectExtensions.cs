@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -27,7 +27,7 @@ namespace Nuke.Common.ProjectModel
             var property = project.GetMSBuildProject().GetProperty(propertyName);
             return property?.EvaluatedValue;
         }
-        
+
         [CanBeNull]
         public static T GetProperty<T>(this Project project, string propertyName)
         {
@@ -55,14 +55,14 @@ namespace Nuke.Common.ProjectModel
         {
             return project.GetItemMetadata(itemGroupName, metadataName).Select(Convert<T>);
         }
-        
+
         public static IReadOnlyCollection<string> GetTargetFrameworks(this Project project)
         {
             var msbuildProject = project.GetMSBuildProject();
             var targetFrameworkProperty = msbuildProject.GetProperty("TargetFramework");
             if (targetFrameworkProperty != null)
-                return new[]{ targetFrameworkProperty.EvaluatedValue };
-            
+                return new[] { targetFrameworkProperty.EvaluatedValue };
+
             var targetFrameworksProperty = msbuildProject.GetProperty("TargetFrameworks");
             if (targetFrameworksProperty != null)
                 return targetFrameworksProperty.EvaluatedValue.Split(';');

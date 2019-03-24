@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers and Contributors of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -17,18 +17,30 @@ namespace Nuke.Common.Tools.Unity
     {
         [ThreadStatic]
         private static FileWatcher s_watcher;
+
         [ThreadStatic]
         private static LogParser s_logParser;
+
         [ThreadStatic]
         private static bool s_minimalOutput;
 
         public static string GetToolPath()
         {
-            return EnvironmentInfo.IsWin
-                ? EnvironmentInfo.SpecialFolder(SpecialFolders.ProgramFiles) + "/Editor/Unity.exe"
-                : EnvironmentInfo.IsOsx
-                    ? "/Applications/Unity/Unity.app/Contents/MacOS/Unity"
-                    : null;
+            switch (EnvironmentInfo.Platform)
+            {
+                case PlatformFamily.Windows:
+                    var programDirectory = EnvironmentInfo.SpecialFolder(
+                        EnvironmentInfo.Is32Bit
+                            ? SpecialFolders.ProgramFilesX86
+                            : SpecialFolders.ProgramFiles);
+                    return $@"{programDirectory}\Unity\Editor\Unity.exe";
+                case PlatformFamily.OSX:
+                    return "/Applications/Unity/Unity.app/Contents/MacOS/Unity";
+                case PlatformFamily.Linux:
+                case PlatformFamily.Unknown:
+                default:
+                    return null;
+            }
         }
 
         private static void PreProcess<T>(ref T unitySettings)

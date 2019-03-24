@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -41,6 +41,7 @@ namespace Nuke.Common.Execution
 
         public static void SetValue(this MemberInfo member, object instance, object value)
         {
+            // TODO: check if member is not (static && readonly)
             if (member is FieldInfo field)
             {
                 field.SetValue(field.IsStatic ? null : instance, value);
@@ -118,7 +119,7 @@ namespace Nuke.Common.Execution
 
             if (destinationType == typeof(string) && value == null)
                 return null;
-            
+
             try
             {
                 var typeConverter = TypeDescriptor.GetConverter(destinationType);

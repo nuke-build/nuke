@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -19,7 +19,7 @@ namespace Nuke.Common.Tooling
     {
         public static bool DefaultLogOutput = true;
         public static bool DefaultLogInvocation = true;
-        
+
         private static readonly char[] s_pathSeparators = { EnvironmentInfo.IsWin ? ';' : ':' };
 
         public static IProcess StartProcess(ToolSettings toolSettings)
@@ -76,18 +76,18 @@ namespace Nuke.Common.Tooling
 
         [CanBeNull]
         private static string GetToolPathOverride(string toolPath)
-        {       
+        {
             if (toolPath.EndsWithOrdinalIgnoreCase(".dll"))
             {
                 return ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE") ??
                        ToolPathResolver.GetPathExecutable("dotnet");
             }
-            
+
 #if NETCORE
             if (EnvironmentInfo.IsUnix && toolPath.EndsWithOrdinalIgnoreCase(".exe"))
                 return ToolPathResolver.GetPathExecutable("mono");
 #endif
-            
+
             return null;
         }
 
@@ -210,7 +210,7 @@ namespace Nuke.Common.Tooling
         {
             if (Logger.LogLevel >= LogLevel.Normal)
                 return;
-            
+
             EnvironmentInfo.Variables
                 .SingleOrDefault(x => x.Key.EqualsOrdinalIgnoreCase("path"))
                 .Value.Split(s_pathSeparators, StringSplitOptions.RemoveEmptyEntries)

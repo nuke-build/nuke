@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -24,7 +24,7 @@ namespace Nuke.Common.ProjectModel
         public static Solution Deserialize(string solutionFile, string[] content)
         {
             var trimmedContent = content.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
-            
+
             var solution = new Solution
                            {
                                Path = (PathConstruction.AbsolutePath) solutionFile,
@@ -33,7 +33,7 @@ namespace Nuke.Common.ProjectModel
                                ExtensibilityGlobals = trimmedContent.GetGlobalSection("ExtensibilityGlobals"),
                                Configurations = trimmedContent.GetGlobalSection("SolutionConfigurationPlatforms")
                            };
-            
+
             var primitiveProjects = GetPrimitiveProjects(solution, trimmedContent).ToList();
             foreach (var primitiveProject in primitiveProjects)
                 solution.AddPrimitiveProject(primitiveProject);
@@ -78,7 +78,7 @@ namespace Nuke.Common.ProjectModel
         }
 
         private static IEnumerable<PrimitiveProject> GetPrimitiveProjects(Solution solution, string[] content)
-        {   
+        {
             string GuidPattern(string text)
                 => $@"\{{(?<{Regex.Escape(text)}>[0-9a-fA-F]{{8}}-[0-9a-fA-F]{{4}}-[0-9a-fA-F]{{4}}-[0-9a-fA-F]{{4}}-[0-9a-fA-F]{{12}})\}}";
 
@@ -135,7 +135,7 @@ namespace Nuke.Common.ProjectModel
                         .Where(x => x.StartsWith("\t\t"))
                         .Select(x => x.Split('='))
                         .ToDictionary(x => x[0].Trim(), x => x[1].Trim());
-                    
+
                     yield return new SolutionFolder(
                         solution: solution,
                         projectId: projectId,
@@ -156,7 +156,7 @@ namespace Nuke.Common.ProjectModel
         public static void Serialize(Solution solution, Stream stream)
         {
             ControlFlow.Assert(solution.Path != null, "solution.Path != null");
-            
+
             using (var writer = new StreamWriter(stream, Encoding.UTF8))
             {
                 void Write(string text) => writer.WriteLine(text);

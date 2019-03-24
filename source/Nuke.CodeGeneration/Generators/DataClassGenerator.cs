@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -45,15 +45,15 @@ namespace Nuke.CodeGeneration.Generators
                     .WriteConfigureArguments())
                 .WriteLine("#endregion");
         }
-        
+
         private static void CheckMissingValue(Property property)
         {
             if (property.NoArgument)
                 return;
-            
+
             if (property.Format != null && property.Format.Contains("{value}"))
                 return;
-            
+
             if (new[] { "int", "bool" }.Contains(property.Type))
                 return;
 
@@ -64,12 +64,12 @@ namespace Nuke.CodeGeneration.Generators
         {
             if (property.Secret.HasValue)
                 return;
-            
+
             if (!property.Name.ContainsOrdinalIgnoreCase("key") &&
                 !property.Name.ContainsOrdinalIgnoreCase("password") &&
                 !property.Name.ContainsOrdinalIgnoreCase("token"))
                 return;
-            
+
             Logger.Warn($"Property {property.DataClass.Name}.{property.Name} should have explicit secret definition.");
         }
 
@@ -92,7 +92,7 @@ namespace Nuke.CodeGeneration.Generators
         {
             if (!writer.DataClass.IsToolSettingsClass)
                 return writer;
-            
+
             var tool = writer.DataClass.Tool;
             var logger = $"{tool.GetClassName()}.{tool.Name}Logger";
             return writer.WriteLine($"public override Action<OutputType, string> CustomLogger => {logger};");

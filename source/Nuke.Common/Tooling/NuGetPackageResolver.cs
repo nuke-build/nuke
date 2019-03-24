@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -22,7 +22,7 @@ namespace Nuke.Common.Tooling
     public static class NuGetPackageResolver
     {
         private const int c_defaultTimeout = 2000;
-        
+
         public static async Task<string> GetLatestPackageVersion(string packageId, bool includePrereleases, int? timeout = null)
         {
             try
@@ -47,7 +47,7 @@ namespace Nuke.Common.Tooling
             return GetLocalInstalledPackages(packagesConfigFile, includeDependencies)
                 .FirstOrDefault(x => x.Id.EqualsOrdinalIgnoreCase(packageId));
         }
-        
+
         public static InstalledPackage GetLocalInstalledPackage(
             string packageId,
             string packagesConfigFile,
@@ -81,7 +81,7 @@ namespace Nuke.Common.Tooling
                     IsLegacyFile(packagesConfigFile)
                         ? $".//package[@id='{packageId}']/@version"
                         : $".//*[local-name() = 'PackageReference'][@Include='{packageId}']/@Version");
-                
+
                 var packageData = GetGlobalInstalledPackage(packageId, version, packagesDirectory);
                 if (packageData == null)
                     continue;
@@ -166,7 +166,8 @@ namespace Nuke.Common.Tooling
         {
             var projectDirectoryInfo = new DirectoryInfo(projectDirectory);
             var packagesConfigFile = projectDirectoryInfo.GetFiles("packages.config").SingleOrDefault()
-                                    ?? projectDirectoryInfo.GetFiles("*.csproj").SingleOrDefaultOrError("Directory contains multiple project files.");
+                                     ?? projectDirectoryInfo.GetFiles("*.csproj")
+                                         .SingleOrDefaultOrError("Directory contains multiple project files.");
             return packagesConfigFile?.FullName;
         }
 
@@ -206,9 +207,9 @@ namespace Nuke.Common.Tooling
                         ?.FullName
                     : null;
 
-            var packagesDirectory = TryGetFromEnvironmentVariable() ?? 
-                                    TryGetGlobalDirectoryFromConfig() ?? 
-                                    TryGetDefaultGlobalDirectory() ?? 
+            var packagesDirectory = TryGetFromEnvironmentVariable() ??
+                                    TryGetGlobalDirectoryFromConfig() ??
+                                    TryGetDefaultGlobalDirectory() ??
                                     TryGetLocalDirectory();
             ControlFlow.Assert(Directory.Exists(packagesDirectory), $"Directory.Exists({packagesDirectory})");
             return packagesDirectory;

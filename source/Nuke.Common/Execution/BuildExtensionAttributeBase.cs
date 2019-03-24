@@ -16,7 +16,7 @@ namespace Nuke.Common.Execution
     public interface IPreLogoBuildExtension : IBuildExtension
     {
     }
-    
+
     public interface IPostLogoBuildExtension : IBuildExtension
     {
     }

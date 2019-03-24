@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -42,7 +42,7 @@ namespace Nuke.Common.Execution
 
             if (NukeBuild.Host == HostType.Console)
                 InjectValueInteractive(build, member);
-            
+
             return member.GetValue(build) == null;
         }
 
@@ -52,7 +52,7 @@ namespace Nuke.Common.Execution
             var nameOrDescription = ParameterService.Instance.GetParameterDescription(member) ??
                                     ParameterService.Instance.GetParameterName(member);
             var text = $"{nameOrDescription.TrimEnd('.')}:";
-            
+
             while (member.GetValue(build) == null)
             {
                 var valueSet = ParameterService.Instance.GetParameterValueSet(member, build);

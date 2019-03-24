@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,7 +13,7 @@ namespace Nuke.Common.Tooling
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class ToolSettingsExtensions
-    {        
+    {
         [Pure]
         public static T AddEnvironmentVariable<T>(
             this T toolSettings,
@@ -95,7 +95,7 @@ namespace Nuke.Common.Tooling
             newToolSettings.LogOutput = false;
             return newToolSettings;
         }
-        
+
         ///<summary>Sets <see cref="ToolSettings.LogInvocation"/> -- <inheritdoc cref="ToolSettings.LogInvocation" /></summary>
         [Pure]
         public static T SetLogInvocation<T>(this T toolSettings, bool enableInvocation)

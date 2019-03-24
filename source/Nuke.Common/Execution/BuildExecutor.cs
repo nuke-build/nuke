@@ -28,7 +28,7 @@ namespace Nuke.Common.Execution
             var invocationHash = GetInvocationHash();
             var previouslyExecutedTargets = GetPreviouslyExecutedTargets(invocationHash);
             File.WriteAllLines(BuildAttemptFile, new[] { invocationHash });
-            
+
             MarkSkippedTargets(build, skippedTargets);
 
             BuildManager.CancellationHandler += ExecuteAssuredTargets;
@@ -104,12 +104,12 @@ namespace Nuke.Common.Execution
             {
                 if (build.InvokedTargets.Contains(target))
                     return;
-                
+
                 target.Status = ExecutionStatus.Skipped;
 
                 if (target.DependencyBehavior == DependencyBehavior.Execute)
                     return;
-            
+
                 target.ExecutionDependencies.ForEach(TryMarkTargetSkipped);
                 target.Triggers.ForEach(TryMarkTargetSkipped);
             }
@@ -138,12 +138,22 @@ namespace Nuke.Common.Execution
 
         private static bool HasSkippingCondition(ExecutableTarget target, IEnumerable<Expression<Func<bool>>> conditions)
         {
+            // TODO: trim outer parenthesis
+            string GetSkipReason(Expression<Func<bool>> condition) =>
+                condition.Body.ToString()
+                    .Replace("False", "false")
+                    .Replace("True", "true")
+                    .Replace("OrElse", "||")
+                    .Replace("AndAlso", "&&")
+                    // TODO: should get actual build type name
+                    .Replace("value(Build).", string.Empty);
+
             target.SkipReason = null; // solely for testing
-            
+
             foreach (var condition in conditions)
             {
                 if (!condition.Compile().Invoke())
-                    target.SkipReason = condition.Body.ToString();
+                    target.SkipReason = GetSkipReason(condition);
             }
 
             return target.SkipReason != null;
@@ -157,13 +167,13 @@ namespace Nuke.Common.Execution
                 .JoinSpace();
             return invocation.GetMD5Hash();
         }
-        
+
         private static IReadOnlyCollection<string> GetPreviouslyExecutedTargets(string invocationHash)
         {
             if (!NukeBuild.Continue ||
                 !File.Exists(BuildAttemptFile))
                 return new string[0];
-                
+
             var previousBuild = File.ReadAllLines(BuildAttemptFile);
             if (previousBuild.FirstOrDefault() != invocationHash)
             {

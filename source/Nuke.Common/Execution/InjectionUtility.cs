@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -11,7 +11,7 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Execution
 {
-    internal static class InjectionUtility
+    public static class InjectionUtility
     {
         public static void InjectValues<T>(T instance = default, Func<InjectionAttributeBase, bool> filter = null)
         {
@@ -26,12 +26,12 @@ namespace Nuke.Common.Execution
             tuples = tuples
                 .OrderBy(x => x.Member.DeclaringType.Descendants(y => y.BaseType).Count())
                 .ThenByDescending(x => x.Attribute.Priority);
-            
+
             foreach (var (member, attribute) in tuples)
             {
                 if (member.DeclaringType == typeof(NukeBuild))
                     continue;
-                
+
                 var value = attribute.GetValue(member, instance);
                 if (value == null)
                     continue;
@@ -42,7 +42,7 @@ namespace Nuke.Common.Execution
                 member.SetValue(instance, value);
             }
         }
-        
+
         public static IReadOnlyCollection<MemberInfo> GetParameterMembers(Type type)
         {
             return GetInjectionMembers(type)

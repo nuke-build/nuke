@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -18,7 +18,7 @@ namespace Nuke.Common.Utilities
         [Pure]
         public static string ReplaceRegex(
             this string str,
-            string pattern,
+            [RegexPattern] string pattern,
             MatchEvaluator matchEvaluator,
             RegexOptions options = RegexOptions.None)
         {

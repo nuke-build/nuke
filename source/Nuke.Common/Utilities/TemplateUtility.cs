@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers and Contributors of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,7 +13,6 @@ using Nuke.Common.Utilities.Collections;
 namespace Nuke.Common.Utilities
 {
     [PublicAPI]
-    
     public static class TemplateUtility
     {
         public static void FillTemplateDirectoryRecursively(
@@ -36,7 +35,7 @@ namespace Nuke.Common.Utilities
         {
             if (excludeDirectory != null && excludeDirectory(directory))
                 return;
-            
+
             bool ShouldMove(FileSystemInfo info) => replacements?.Keys.Any(x => info.Name.Contains(x)) ?? false;
 
             foreach (var file in directory.GetFiles())
@@ -50,7 +49,8 @@ namespace Nuke.Common.Utilities
                     FileSystemTasks.RenameFile(file.FullName, file.Name.Replace(replacements), FileExistsPolicy.OverwriteIfNewer);
             }
 
-            directory.GetDirectories().ForEach(x => FillTemplateDirectoryRecursivelyInternal(x, definitions, replacements, excludeDirectory, excludeFile));
+            directory.GetDirectories()
+                .ForEach(x => FillTemplateDirectoryRecursivelyInternal(x, definitions, replacements, excludeDirectory, excludeFile));
 
             if (ShouldMove(directory))
             {
@@ -71,13 +71,13 @@ namespace Nuke.Common.Utilities
         }
 
         public static string[] FillTemplate(
-            IEnumerable<string> template, 
+            IEnumerable<string> template,
             IReadOnlyCollection<string> definitions = null,
             IReadOnlyDictionary<string, string> replacements = null)
         {
             definitions = definitions ?? new List<string>();
             replacements = replacements ?? new Dictionary<string, string>();
-            
+
             // TODO: checked build?
             // definitions.ForEach(x => ControlFlow.Assert(template.Contains(x),
             //     $"Definition '{x}' is not contained in template."));
@@ -113,7 +113,7 @@ namespace Nuke.Common.Utilities
         {
             if (commentIndex == -1)
                 return true;
-            
+
             var requiredDefinitionText = line.Substring(commentIndex + 4).Replace(" ", string.Empty);
             var requiredDefinitions = requiredDefinitionText.Split(new[] { "||", "&&" }, StringSplitOptions.RemoveEmptyEntries);
             var orConjunction = requiredDefinitionText.Contains("||");

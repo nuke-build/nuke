@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -159,7 +159,7 @@ namespace Nuke.Common.Execution
             var positionalArguments = _commandLineArguments.TakeWhile(x => !x.StartsWith("-")).ToArray();
             if (positionalArguments.Length == 0)
                 return GetDefaultValue(destinationType);
-            
+
             return ConvertCommandLineArguments(
                 $"$all-positional",
                 positionalArguments,
@@ -205,13 +205,11 @@ namespace Nuke.Common.Execution
         private int GetCommandLineArgumentIndex(string argumentName, bool checkNames)
         {
             var index = Array.FindLastIndex(_commandLineArguments,
-                x => x.StartsWith("-") &&
-                     (x.TrimStart('-').EqualsOrdinalIgnoreCase(argumentName) ||
-                      x.TrimStart('-').EqualsOrdinalIgnoreCase(argumentName.SplitCamelHumpsWithSeparator("-"))));
+                x => x.StartsWith("-") && x.Replace("-", string.Empty).EqualsOrdinalIgnoreCase(argumentName));
 
             if (index == -1 && checkNames)
             {
-                var candidates = _commandLineArguments.Where(x => x.StartsWith("-")).Select(x => x.TrimStart("-").Replace("-", string.Empty));
+                var candidates = _commandLineArguments.Where(x => x.StartsWith("-")).Select(x => x.Replace("-", string.Empty));
                 CheckNames(argumentName, candidates);
             }
 
@@ -280,7 +278,8 @@ namespace Nuke.Common.Execution
             var convertedValues = values.Select(x => Convert(x, elementType)).ToList();
             if (!destinationType.IsArray)
             {
-                ControlFlow.Assert(convertedValues.Count == 1, $"Value [ {values.JoinComma()} ] cannot be assigned to '{GetPresentableName(destinationType)}'.");
+                ControlFlow.Assert(convertedValues.Count == 1,
+                    $"Value [ {values.JoinComma()} ] cannot be assigned to '{GetPresentableName(destinationType)}'.");
                 return convertedValues.Single();
             }
 

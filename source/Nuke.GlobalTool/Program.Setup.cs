@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -45,13 +45,13 @@ namespace Nuke.GlobalTool
                     EnvironmentInfo.WorkingDirectory,
                     x => rootDirectoryItems.Any(y => x.GetFileSystemInfos(y, SearchOption.TopDirectoryOnly).Any()));
             }
-            
+
             if (rootDirectory == null)
             {
                 Logger.Warn("Could not find root directory. Falling back to working directory.");
                 rootDirectory = EnvironmentInfo.WorkingDirectory;
             }
-            
+
             var buildProjectName = ConsoleUtility.PromptForInput("How should the build project be named?", "_build");
             var buildDirectoryName = ConsoleUtility.PromptForInput("Where should the build project be located?", "./build");
 
@@ -78,7 +78,7 @@ namespace Nuke.GlobalTool
                     .Where(x => x.Item2 != null)
                     .Distinct(x => x.Item2)
                     .Select(x => (x.Item2, $"{x.Item2} ({x.Item1})")).ToArray());
-            
+
             var solutionFile = ConsoleUtility.PromptForChoice(
                 "Which solution should be the default?",
                 options: new DirectoryInfo(rootDirectory)
@@ -170,7 +170,7 @@ namespace Nuke.GlobalTool
                 TextTasks.WriteAllText(
                     Path.Combine(rootDirectory, Constants.ConfigurationFileName),
                     GetRelativePath(rootDirectory, solutionFile).Replace(oldChar: '\\', newChar: '/'));
-                
+
                 definitions.Add("SOLUTION_FILE");
 
                 var solutionFileContent = TextTasks.ReadAllLines(solutionFile).ToList();
@@ -209,7 +209,7 @@ namespace Nuke.GlobalTool
                 $"{buildProjectFile}.DotSettings",
                 TemplateUtility.FillTemplate(
                     GetTemplate("_build.csproj.DotSettings")));
-            
+
             TextTasks.WriteAllLines(
                 Path.Combine(buildDirectory, ".editorconfig"),
                 TemplateUtility.FillTemplate(
@@ -250,7 +250,7 @@ namespace Nuke.GlobalTool
                             buildProjectName,
                             nugetVersion = "latest"
                         })));
-            
+
             if (definitions.Contains("SRC_DIR"))
                 FileSystemTasks.EnsureExistingDirectory(Path.Combine(rootDirectory, "src"));
             if (definitions.Contains("SOURCE_DIR"))
@@ -262,7 +262,7 @@ namespace Nuke.GlobalTool
 
             #region Wizard+Generation (addon)
 
-            if (new[]{"addon", "addin", "plugin"}.Any(x => x.EqualsOrdinalIgnoreCase(args.FirstOrDefault())))
+            if (new[] { "addon", "addin", "plugin" }.Any(x => x.EqualsOrdinalIgnoreCase(args.FirstOrDefault())))
             {
                 ControlFlow.Assert(definitions.Contains("SOURCE_DIR"), "definitions.Contains('SOURCE_DIR')");
 
@@ -283,7 +283,7 @@ namespace Nuke.GlobalTool
                                 authors,
                                 packageName
                             })));
-                
+
                 TextTasks.WriteAllLines(
                     Path.Combine(rootDirectory, "LICENSE"),
                     TemplateUtility.FillTemplate(
@@ -294,7 +294,7 @@ namespace Nuke.GlobalTool
                                 year = DateTime.Now.Year,
                                 authors
                             })));
-                
+
                 TextTasks.WriteAllLines(
                     Path.Combine(rootDirectory, "CHANGELOG.md"),
                     TemplateUtility.FillTemplate(
@@ -328,7 +328,7 @@ namespace Nuke.GlobalTool
         {
             if (content.Any(x => x.Contains(buildProjectFileRelative)))
                 return;
-            
+
             var globalIndex = content.IndexOf("Global");
             ControlFlow.Assert(globalIndex != -1, "Could not find a 'Global' section in solution file.");
 

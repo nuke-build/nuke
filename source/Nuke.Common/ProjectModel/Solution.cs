@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -28,7 +28,7 @@ namespace Nuke.Common.ProjectModel
 
         [CanBeNull]
         public PathConstruction.AbsolutePath Directory => Path?.Parent;
-        
+
         public string[] Header { get; set; }
         public IDictionary<string, string> Properties { get; set; }
         public IDictionary<string, string> ExtensibilityGlobals { get; set; }
@@ -36,7 +36,7 @@ namespace Nuke.Common.ProjectModel
 
         public IReadOnlyCollection<Project> AllProjects => PrimitiveProjects.OfType<Project>().ToList();
         public IReadOnlyCollection<SolutionFolder> AllSolutionFolders => PrimitiveProjects.OfType<SolutionFolder>().ToList();
-        
+
         public IReadOnlyCollection<Project> Projects => AllProjects.Where(x => x.SolutionFolder == null).ToList();
         public IReadOnlyCollection<SolutionFolder> SolutionFolders => AllSolutionFolders.Where(x => x.SolutionFolder == null).ToList();
 
@@ -55,7 +55,7 @@ namespace Nuke.Common.ProjectModel
         {
             return AllSolutionFolders.SingleOrDefault(x => name.Equals(x.Name, StringComparison.Ordinal));
         }
-        
+
         [CanBeNull]
         public Project GetProject(string name)
         {
@@ -98,7 +98,7 @@ namespace Nuke.Common.ProjectModel
             var otherProject = PrimitiveProjects.FirstOrDefault(x => x.ProjectId.Equals(primitiveProject.ProjectId));
             ControlFlow.Assert(otherProject == null,
                 $"Cannot add '{primitiveProject.Name}' because its id '{primitiveProject.ProjectId}' is already taken by '{otherProject?.Name}'.");
-            
+
             PrimitiveProjects.Add(primitiveProject);
             PrimitiveProjectParents.Add(primitiveProject, solutionFolder);
         }
@@ -110,7 +110,7 @@ namespace Nuke.Common.ProjectModel
                 SetSolutionFolder(solutionFolder.SolutionFolder, child);
 
             PrimitiveProjects.Remove(solutionFolder);
-            
+
             return children;
         }
 
@@ -133,8 +133,8 @@ namespace Nuke.Common.ProjectModel
 
         internal void SetSolutionFolder([CanBeNull] SolutionFolder solutionFolder, PrimitiveProject primitiveProject)
         {
-            if (solutionFolder != null)
-                ControlFlow.Assert(solutionFolder.Solution == primitiveProject.Solution, "Project and solution folder must belong to the same solution.");
+            ControlFlow.Assert(solutionFolder == null || solutionFolder.Solution == primitiveProject.Solution,
+                "Project and solution folder must belong to the same solution.");
 
             PrimitiveProjectParents[primitiveProject] = solutionFolder;
         }

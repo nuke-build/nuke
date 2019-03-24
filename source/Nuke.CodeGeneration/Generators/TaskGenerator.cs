@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -31,7 +31,7 @@ namespace Nuke.CodeGeneration.Generators
                         .WriteToolPath()
                         .WriteLogger()
                         .WriteGenericTask();
-                    
+
                     tool.Tasks.ForEach(x => new TaskWriter(x, toolWriter)
                         .WriteToolSettingsTask()
                         .WriteConfiguratorTask()
@@ -111,29 +111,30 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteBlock(w => w
                     .WriteLine($"return {task.GetTaskMethodName()}(configurator(new {task.SettingsClass.Name}()));"));
         }
-        
+
         private static TaskWriter WriteCombinatorialConfiguratorTask(this TaskWriter writer)
         {
             var task = writer.Task;
-            
+
             var returnType = !task.HasReturnValue()
                 ? $"IEnumerable<({task.SettingsClass.Name} Settings, IReadOnlyCollection<Output> Output)>"
                 : $"IEnumerable<({task.SettingsClass.Name} Settings, {task.ReturnType} Result, IReadOnlyCollection<Output> Output)>";
-            
+
             var parameters = new[]
                              {
                                  $"CombinatorialConfigure<{task.SettingsClass.Name}> configurator",
                                  "int degreeOfParallelism = 1",
                                  "bool completeOnFailure = false"
                              }.JoinComma();
-            
+
             return writer
                 .WriteSummary(task)
                 .WriteRemarks(task)
                 .WriteObsoleteAttributeWhenObsolete(task)
                 .WriteLine($"public static {returnType} {task.GetTaskMethodName()}({parameters})")
                 .WriteBlock(w => w
-                    .WriteLine($"return configurator.Invoke({task.GetTaskMethodName()}, {task.Tool.Name}Logger, degreeOfParallelism, completeOnFailure);"));
+                    .WriteLine(
+                        $"return configurator.Invoke({task.GetTaskMethodName()}, {task.Tool.Name}Logger, degreeOfParallelism, completeOnFailure);"));
         }
 
         private static string GetProcessStart(Task task)

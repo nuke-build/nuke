@@ -28,7 +28,7 @@ namespace Nuke.Common.Tools.GitVersion
         /// </summary>
         public static string GitVersionPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("GITVERSION_EXE") ??
-            GetToolPath();
+            ToolPathResolver.GetPackageExecutable("GitVersion.CommandLine.DotNetCore|GitVersion.CommandLine", "GitVersion.dll|GitVersion.exe");
         public static Action<OutputType, string> GitVersionLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   GitVersion is a tool to help you achieve Semantic Versioning on your project.

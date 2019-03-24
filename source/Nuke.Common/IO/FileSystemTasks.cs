@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -27,7 +27,7 @@ namespace Nuke.Common.IO
         Overwrite,
         OverwriteIfNewer
     }
-    
+
     [PublicAPI]
     public static class FileSystemTasks
     {
@@ -40,7 +40,7 @@ namespace Nuke.Common.IO
         {
             return File.Exists(path);
         }
-        
+
         public static bool DirectoryExists(PathConstruction.AbsolutePath path)
         {
             return Directory.Exists(path);
@@ -126,7 +126,7 @@ namespace Nuke.Common.IO
         {
             if (!ShouldCopyFile(source, target, policy))
                 return;
-            
+
             if (createDirectories)
                 EnsureExistingParentDirectory(target);
 
@@ -171,7 +171,7 @@ namespace Nuke.Common.IO
         {
             if (Path.GetFileName(file) == newName)
                 return;
-            
+
             MoveFile(file, Path.Combine(Path.GetDirectoryName(file).NotNull(), newName), policy);
         }
 
@@ -245,7 +245,7 @@ namespace Nuke.Common.IO
 
             ControlFlow.Assert(!Directory.Exists(target) || directoryPolicy != DirectoryExistsPolicy.Fail,
                 $"!Directory.Exists({target}) || directoryPolicy != DirectoryExistsPolicy.Fail");
-            
+
             string GetDestinationPath(string path)
                 => Path.Combine(target, PathConstruction.GetRelativePath(source, path));
 
@@ -254,7 +254,7 @@ namespace Nuke.Common.IO
             {
                 if (excludeFile != null && excludeFile(new FileInfo(sourceFile)))
                     continue;
-                
+
                 var targetFile = GetDestinationPath(sourceFile);
                 if (!ShouldCopyFile(sourceFile, targetFile, filePolicy))
                     continue;
@@ -262,7 +262,7 @@ namespace Nuke.Common.IO
                 //EnsureFileAttributes(sourceFile);
                 File.Copy(sourceFile, targetFile, overwrite: true);
             }
-            
+
             Directory.GetDirectories(source)
                 .ForEach(x => CopyRecursivelyInternal(
                     x,
@@ -304,7 +304,7 @@ namespace Nuke.Common.IO
 
             if (!File.Exists(path))
                 File.WriteAllBytes(path, new byte[0]);
-            
+
             File.SetLastWriteTime(path, time ?? DateTime.UtcNow);
         }
 

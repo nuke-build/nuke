@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.18.0] / 2019-03-24
+- Changed `ParameterService` to strip dashes when resolving value
+- Changed formatting of skip reason
+- Added `CompressionTasks`
+- Added `EntityFrameworkTasks`
+- Fixed `UnityTasks.UnityPath` for Windows
+- Fixed `SystemColorOutputSink` to print warning and error details
+- Fixed `SonarScannerTasks` to also resolve from netstandard package
+
 ## [0.17.7] / 2019-03-12
 - Fixed `SystemColorOutputSink` to set `ForegroundColor`
 
@@ -330,7 +339,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/common/compare/0.17.7...HEAD
+[vNext]: https://github.com/nuke-build/common/compare/0.18.0...HEAD
+[0.18.0]: https://github.com/nuke-build/common/compare/0.17.7...0.18.0
 [0.17.7]: https://github.com/nuke-build/common/compare/0.17.6...0.17.7
 [0.17.6]: https://github.com/nuke-build/common/compare/0.17.5...0.17.6
 [0.17.5]: https://github.com/nuke-build/common/compare/0.17.4...0.17.5

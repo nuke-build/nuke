@@ -1,11 +1,12 @@
-// Copyright 2018 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
+
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using NuGet.Versioning;
-    
+
 namespace Nuke.Common.ChangeLog
 {
     [PublicAPI]
@@ -25,7 +26,7 @@ namespace Nuke.Common.ChangeLog
         /// The version of the release notes. Null if unreleased (vNext).
         /// </summary>
         [CanBeNull] public NuGetVersion Version { get; }
-        
+
         /// <summary>
         /// The release notes in this release notes section.
         /// </summary>
@@ -48,7 +49,8 @@ namespace Nuke.Common.ChangeLog
         /// <param name="notes">The release notes.</param>
         /// <param name="startIndex">The start index of the section in the changelog file.</param>
         /// <param name="endIndex">The end index of the section in the changelog file.</param>
-        public ReleaseNotes(NuGetVersion version, IReadOnlyList<string> notes, int startIndex, int endIndex) : this(notes, startIndex, endIndex)
+        public ReleaseNotes(NuGetVersion version, IReadOnlyList<string> notes, int startIndex, int endIndex)
+            : this(notes, startIndex, endIndex)
         {
             Version = version;
             ControlFlow.Assert(notes.Count > 0, "Release Notes should not be empty");
@@ -66,7 +68,7 @@ namespace Nuke.Common.ChangeLog
             StartIndex = startIndex;
             EndIndex = endIndex;
         }
-      
+
         public override string ToString()
         {
             return string.Join(EnvironmentInfo.NewLine, Notes);

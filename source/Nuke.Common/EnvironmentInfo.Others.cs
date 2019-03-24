@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -69,7 +69,7 @@ namespace Nuke.Common
                 ? environmentVariables
                 : new Dictionary<string, string>(environmentVariables, StringComparer.OrdinalIgnoreCase);
         }
-        
+
         public static IReadOnlyDictionary<string, string> Variables => GetVariables();
 
         public static string[] CommandLineArguments { get; } = GetSurrogateArguments() ?? Environment.GetCommandLineArgs();

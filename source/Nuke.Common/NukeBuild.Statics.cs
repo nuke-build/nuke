@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -26,8 +26,8 @@ namespace Nuke.Common
             BuildAssemblyDirectory = GetBuildAssemblyDirectory();
             BuildProjectDirectory = GetBuildProjectDirectory(BuildAssemblyDirectory);
 
-            Verbosity = ParameterService.Instance.GetParameter<Verbosity?>(()  => Verbosity) ?? Verbosity.Normal;
-            Host = ParameterService.Instance.GetParameter<HostType?>(()  => Host) ?? GetHostType();
+            Verbosity = ParameterService.Instance.GetParameter<Verbosity?>(() => Verbosity) ?? Verbosity.Normal;
+            Host = ParameterService.Instance.GetParameter<HostType?>(() => Host) ?? GetHostType();
             Continue = ParameterService.Instance.GetParameter(() => Continue);
             Plan = ParameterService.Instance.GetParameter(() => Plan);
             Help = ParameterService.Instance.GetParameter(() => Help);
@@ -55,7 +55,7 @@ namespace Nuke.Common
         /// </summary>
         [CanBeNull]
         public static PathConstruction.AbsolutePath BuildProjectDirectory { get; }
-        
+
         /// <summary>
         /// Gets the logging verbosity during build execution. Default is <see cref="Nuke.Common.Verbosity.Normal"/>.
         /// </summary>
@@ -111,7 +111,7 @@ namespace Nuke.Common
             var entryAssembly = Assembly.GetEntryAssembly();
             if (entryAssembly == null || entryAssembly.GetTypes().All(x => !x.IsSubclassOf(typeof(NukeBuild))))
                 return null;
-            
+
             return (PathConstruction.AbsolutePath) Path.GetDirectoryName(entryAssembly.Location).NotNull();
         }
 
@@ -120,7 +120,7 @@ namespace Nuke.Common
         {
             if (buildAssemblyDirectory == null)
                 return null;
-            
+
             return (PathConstruction.AbsolutePath) new DirectoryInfo(buildAssemblyDirectory)
                 .DescendantsAndSelf(x => x.Parent)
                 .Select(x => x.GetFiles("*.csproj", SearchOption.TopDirectoryOnly)
@@ -128,7 +128,7 @@ namespace Nuke.Common
                 .FirstOrDefault(x => x != null)
                 ?.DirectoryName;
         }
-        
+
         private static HostType GetHostType()
         {
             if (AppVeyor.IsRunningAppVeyor)

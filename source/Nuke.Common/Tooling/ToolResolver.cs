@@ -24,7 +24,7 @@ namespace Nuke.Common.Tooling
             var toolPath = ToolPathResolver.TryGetEnvironmentExecutable($"{name.ToUpperInvariant()}_EXE");
             if (toolPath == null)
                 return null;
-            
+
             return new ToolExecutor(toolPath).Execute;
         }
 

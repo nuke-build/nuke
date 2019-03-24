@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -43,19 +43,19 @@ namespace Nuke.Common.ProjectModel
         {
             _relativePath = relativePath;
         }
-        
+
         public override object GetValue(MemberInfo member, object instance)
         {
             return ProjectModelTasks.ParseSolution(GetSolutionFile(member));
         }
-        
+
         // TODO: allow wildcard matching? [Solution("nuke-*.sln")] -- no globbing?
         // TODO: for just [Solution] without parameter being passed, do wildcard search?
         private string GetSolutionFile(MemberInfo member)
         {
             if (_relativePath != null)
                 return PathConstruction.Combine(NukeBuild.RootDirectory, _relativePath);
-            
+
             var parameterValue = ParameterService.Instance.GetParameter<PathConstruction.AbsolutePath>(member);
             if (parameterValue != null)
                 return parameterValue;

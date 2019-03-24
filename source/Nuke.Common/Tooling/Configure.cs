@@ -1,4 +1,4 @@
-// Copyright 2018 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,6 +13,7 @@ using Nuke.Common.Utilities.Collections;
 namespace Nuke.Common.Tooling
 {
     public delegate T Configure<T>(T settings);
+
     public delegate IEnumerable<T> CombinatorialConfigure<T>(T settings);
 
     public static class ConfigureExtensions
@@ -38,7 +39,7 @@ namespace Nuke.Common.Tooling
                 degreeOfParallelism,
                 completeOnFailure);
         }
-        
+
         public static IReadOnlyCollection<(TSettings Settings, TResult Result, IReadOnlyCollection<Output> Output)> Invoke<TSettings, TResult>(
             this CombinatorialConfigure<TSettings> configurator,
             Func<TSettings, (TResult Result, IReadOnlyCollection<Output> Output)> executor,
@@ -84,12 +85,12 @@ namespace Nuke.Common.Tooling
                         catch (Exception exception)
                         {
                             invocations.Add((x, default, exception));
-                            
+
                             if (!completeOnFailure)
                                 throw;
                         }
                     });
-                
+
                 if (invocations.Any(x => x.Exception != null))
                     throw new AggregateException(invocations.Select(x => x.Exception).WhereNotNull());
 
@@ -109,6 +110,5 @@ namespace Nuke.Common.Tooling
                 }
             }
         }
-
     }
 }

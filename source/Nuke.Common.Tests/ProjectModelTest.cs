@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -16,7 +16,7 @@ namespace Nuke.Common.Tests
     {
         private static AbsolutePath RootDirectory => Constants.TryGetRootDirectoryFrom(Directory.GetCurrentDirectory()).NotNull();
 
-        private static AbsolutePath SolutionFile  => RootDirectory / "nuke-common.sln";
+        private static AbsolutePath SolutionFile => RootDirectory / "nuke-common.sln";
 
         [Fact]
         public void SolutionTest()
@@ -42,7 +42,7 @@ namespace Nuke.Common.Tests
         }
 
         [Fact]
-        public void ProjectTest ()
+        public void ProjectTest()
         {
             var solution = ProjectModelTasks.ParseSolution(SolutionFile);
             solution.Projects.First().GetMSBuildProject();

@@ -1,4 +1,4 @@
-﻿// Copyright 2018 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -33,21 +33,6 @@ namespace Nuke.Common.Tools.GitVersion
                 property.Writable = true;
                 return property;
             }
-        }
-
-        private static string GetToolPath()
-        {
-            var package = new[]
-                          {
-                              "GitVersion.CommandLine.DotNetCore",
-                              "GitVersion.CommandLine"
-                          }
-                .Select(x => NuGetPackageResolver.TryGetLocalInstalledPackage(x, ToolPathResolver.NuGetPackagesConfigFile))
-                .WhereNotNull()
-                .FirstOrDefault().NotNull("package != null");
-            return Directory.GetFiles(package.Directory, "GitVersion.*", SearchOption.AllDirectories)
-                .FirstOrDefault(x => x.EndsWithOrdinalIgnoreCase(".dll") || x.EndsWithOrdinalIgnoreCase(".exe"))
-                .NotNull("executable != null");
         }
     }
 
