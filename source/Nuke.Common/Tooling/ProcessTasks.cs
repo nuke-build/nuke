@@ -19,6 +19,7 @@ namespace Nuke.Common.Tooling
     {
         public static bool DefaultLogOutput = true;
         public static bool DefaultLogInvocation = true;
+        public static bool LogWorkingDirectory = true;
 
         private static readonly char[] s_pathSeparators = { EnvironmentInfo.IsWin ? ';' : ':' };
 
@@ -62,7 +63,11 @@ namespace Nuke.Common.Tooling
             outputFilter = outputFilter ?? (x => x);
             ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
             if (logInvocation ?? DefaultLogInvocation)
+            {
                 Logger.Info($"> {Path.GetFullPath(toolPath).DoubleQuoteIfNeeded()} {outputFilter(arguments)}");
+                if (LogWorkingDirectory && workingDirectory != null)
+                    Logger.Info($"@ {workingDirectory}");
+            }
 
             return StartProcessInternal(toolPath,
                 arguments,

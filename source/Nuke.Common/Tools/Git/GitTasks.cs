@@ -11,7 +11,7 @@ namespace Nuke.Common.Tools.Git
     {
         public static bool GitIsDetached()
         {
-            return GitIsDetached(EnvironmentInfo.WorkingDirectory);
+            return GitIsDetached(workingDirectory: null);
         }
 
         public static bool GitIsDetached(string workingDirectory)
@@ -21,7 +21,7 @@ namespace Nuke.Common.Tools.Git
 
         public static bool GitHasCleanWorkingCopy()
         {
-            return GitHasCleanWorkingCopy(EnvironmentInfo.WorkingDirectory);
+            return GitHasCleanWorkingCopy(workingDirectory: null);
         }
 
         public static bool GitHasCleanWorkingCopy(string workingDirectory)
@@ -31,7 +31,7 @@ namespace Nuke.Common.Tools.Git
 
         public static string GitCurrentBranch()
         {
-            return GitCurrentBranch(EnvironmentInfo.WorkingDirectory);
+            return GitCurrentBranch(workingDirectory: null);
         }
 
         private static string GitCurrentBranch(string workingDirectory)
