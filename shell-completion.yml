@@ -14,6 +14,7 @@ Host:
 - TeamCity
 - TeamServices
 - Travis
+NoLogo: 
 Plan: 
 Root: 
 Skip:

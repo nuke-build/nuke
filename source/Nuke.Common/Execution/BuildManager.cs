@@ -45,8 +45,20 @@ namespace Nuke.Common.Execution
                 Logger.LogLevel = NukeBuild.LogLevel;
                 ToolPathResolver.NuGetPackagesConfigFile = build.NuGetPackagesConfigFile;
 
-                Logger.Normal($"NUKE Execution Engine {typeof(BuildManager).Assembly.GetInformationalText()}");
-                Logger.Normal(FigletTransform.GetText("NUKE"));
+                if (!NukeBuild.NoLogo)
+                {
+                    Logger.Normal();
+                    Logger.Normal("███╗   ██╗██╗   ██╗██╗  ██╗███████╗");
+                    Logger.Normal("████╗  ██║██║   ██║██║ ██╔╝██╔════╝");
+                    Logger.Normal("██╔██╗ ██║██║   ██║█████╔╝ █████╗  ");
+                    Logger.Normal("██║╚██╗██║██║   ██║██╔═██╗ ██╔══╝  ");
+                    Logger.Normal("██║ ╚████║╚██████╔╝██║  ██╗███████╗");
+                    Logger.Normal("╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝");
+                    Logger.Normal();
+                }
+
+                Logger.Info($"NUKE Execution Engine {typeof(BuildManager).Assembly.GetInformationalText()}");
+                Logger.Normal();
 
                 build.ExecuteExtensions<IPostLogoBuildExtension>();
                 build.ExecutionPlan = ExecutionPlanner.GetExecutionPlan(
@@ -127,9 +139,9 @@ namespace Nuke.Common.Execution
             string ToMinutesAndSeconds(TimeSpan duration)
                 => $"{(int) duration.TotalMinutes}:{duration:ss}";
 
-            Logger.Normal(new string(c: '=', count: allColumns));
+            Logger.Normal(new string(c: '═', count: allColumns));
             Logger.Info(CreateLine("Target", "Status", "Duration"));
-            Logger.Normal(new string(c: '-', count: allColumns));
+            Logger.Normal(new string(c: '─', count: allColumns));
             foreach (var target in build.ExecutionPlan)
             {
                 var line = CreateLine(target.Name, target.Status.ToString(), ToMinutesAndSeconds(target.Duration), target.SkipReason);
@@ -149,9 +161,9 @@ namespace Nuke.Common.Execution
                 }
             }
 
-            Logger.Normal(new string(c: '-', count: allColumns));
+            Logger.Normal(new string(c: '─', count: allColumns));
             Logger.Info(CreateLine("Total", "", ToMinutesAndSeconds(totalDuration)));
-            Logger.Normal(new string(c: '=', count: allColumns));
+            Logger.Normal(new string(c: '═', count: allColumns));
             Logger.Normal();
 
             var buildSucceeded = IsSuccessful(build);
