@@ -3,12 +3,9 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using AutoMapper.XpressionMapper;
 using Colorful;
 using Nuke.Common.Utilities;
 

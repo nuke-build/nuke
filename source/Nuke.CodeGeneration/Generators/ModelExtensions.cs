@@ -5,7 +5,6 @@
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using JetBrains.Annotations;
 using Nuke.CodeGeneration.Model;
 using Nuke.Common;
 using Nuke.Common.Utilities;

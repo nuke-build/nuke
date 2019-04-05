@@ -8,7 +8,6 @@ using Nuke.Common;
 using Nuke.Common.Git;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.GitVersion;
-using Nuke.Common.Utilities;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
 using static Nuke.Common.Tools.GitVersion.GitVersionTasks;
