@@ -299,6 +299,7 @@ namespace Nuke.Common.Tools.GitVersion
         public virtual string NuGetVersion { get; internal set; }
         public virtual string NuGetPreReleaseTagV2 { get; internal set; }
         public virtual string NuGetPreReleaseTag { get; internal set; }
+        public virtual string VersionSourceSha { get; internal set; }
         public virtual string CommitsSinceVersionSource { get; internal set; }
         public virtual string CommitsSinceVersionSourcePadded { get; internal set; }
         public virtual string CommitDate { get; internal set; }

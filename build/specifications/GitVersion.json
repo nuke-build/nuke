@@ -261,6 +261,10 @@
           "type": "string"
         },
         {
+          "name": "VersionSourceSha",
+          "type": "string"
+        },
+        {
           "name": "CommitsSinceVersionSource",
           "type": "string"
         },
