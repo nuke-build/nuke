@@ -8,10 +8,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-#if LOCATOR
-using Nuke.MSBuildLocator;
-#endif
-
 namespace Nuke.Common.Tools.MSBuild
 {
     public static class MSBuildToolPathResolver
