@@ -51,10 +51,11 @@ namespace Nuke.Common.Execution
             var cycles = scc.DetectCycle(graphAsList).Cycles().ToList();
             if (cycles.Count > 0)
             {
-                ControlFlow.Fail(
+                Logger.Error(
                     new[] { "Circular dependencies between targets:" }
                         .Concat(cycles.Select(x => $" - {x.Select(y => y.Value.Name).JoinComma()}"))
                         .JoinNewLine());
+                Environment.Exit(exitCode: -1);
             }
 
             while (graphAsList.Any())
@@ -62,10 +63,11 @@ namespace Nuke.Common.Execution
                 var independents = graphAsList.Where(x => !graphAsList.Any(y => y.Dependencies.Contains(x))).ToList();
                 if (EnvironmentInfo.ArgumentSwitch("strict") && independents.Count > 1)
                 {
-                    ControlFlow.Fail(
-                        new[] { "Incomplete target definition order." }
+                    Logger.Error(
+                        new[]{"Incomplete target definition order."}
                             .Concat(independents.Select(x => $"  - {x.Value.Name}"))
                             .JoinNewLine());
+                    Environment.Exit(exitCode: -1);
                 }
 
                 var independent = independents.First();
@@ -100,7 +102,13 @@ namespace Nuke.Common.Execution
         {
             var executableTarget = executableTargets.SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(targetName));
             if (executableTarget == null)
-                ControlFlow.Fail($"Target with name '{targetName}' is not available.");
+            {
+                Logger.Error(
+                    new[] { $"Target with name '{targetName}' does not exist. Available targets are:" }
+                        .Concat(executableTargets.Select(x => $"  - {x.Name}").OrderBy(x => x))
+                        .JoinNewLine());
+                Environment.Exit(exitCode: -1);
+            }
 
             return executableTarget;
         }
@@ -108,10 +116,7 @@ namespace Nuke.Common.Execution
         private static ExecutableTarget[] GetDefaultTarget(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             var target = executableTargets.SingleOrDefault(x => x.IsDefault);
-            if (target == null)
-                Fail("No target has been marked to be the default.", executableTargets);
-
-            return new[] { target };
+            return target != null ? new[] { target } : new ExecutableTarget[0];
         }
 
         private static void Fail(string message, IReadOnlyCollection<ExecutableTarget> executableTargets)

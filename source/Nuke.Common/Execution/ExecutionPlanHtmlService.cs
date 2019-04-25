@@ -65,7 +65,10 @@ namespace Nuke.Common.Execution
             var builder = new StringBuilder();
 
             // When not hovering anything, highlight the default plan
-            var defaultPlan = ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { executableTargets.Single(x => x.IsDefault).Name });
+            var defaultTarget = executableTargets.SingleOrDefault(x => x.IsDefault);
+            var defaultPlan = defaultTarget != null
+                ? ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { defaultTarget?.Name })
+                : new ExecutableTarget[0];
             defaultPlan.ForEach(x => builder.AppendLine($@"  $(""#{x.Name}"").addClass('highlight');"));
 
             foreach (var executableTarget in executableTargets)

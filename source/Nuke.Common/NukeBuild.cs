@@ -28,13 +28,13 @@ namespace Nuke.Common
     /// class DefaultBuild : NukeBuild
     /// {
     ///     public static int Main () => Execute&lt;DefaultBuild&gt;(x => x.Compile);
-    /// 
+    ///
     ///     Target Clean =&gt; _ =&gt; _
     ///         .Executes(() =&gt;
     ///         {
     ///             EnsureCleanDirectory(OutputDirectory);
     ///         });
-    /// 
+    ///
     ///     Target Compile =&gt; _ =&gt; _
     ///         .DependsOn(Clean)
     ///         .Executes(() =&gt;
@@ -45,7 +45,8 @@ namespace Nuke.Common
     /// </code>
     /// </example>
     [PublicAPI]
-    [HandleHelpRequests]
+    [HandleHelpRequest]
+    [HandlePlanRequest]
     [HandleShellCompletion]
     [HandleVisualStudioDebugging]
     public abstract partial class NukeBuild
@@ -87,7 +88,7 @@ namespace Nuke.Common
         internal void ExecuteExtensions<T>()
             where T : IBuildExtension
         {
-            GetType().GetCustomAttributes().OfType<T>().ForEach(x => x.Execute(this, ExecutableTargets));
+            GetType().GetCustomAttributes().OfType<T>().ForEach(x => x.Execute(this, ExecutableTargets, ExecutionPlan));
         }
 
         protected internal virtual IOutputSink OutputSink

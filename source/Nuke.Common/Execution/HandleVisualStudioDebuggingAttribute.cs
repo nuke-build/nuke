@@ -18,7 +18,10 @@ namespace Nuke.Common.Execution
     {
         public int TimeoutInMilliseconds { get; } = 10_000;
 
-        public void Execute(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void Execute(
+            NukeBuild build,
+            IReadOnlyCollection<ExecutableTarget> executableTargets,
+            IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
             if (!ParameterService.Instance.GetParameter<bool>(Constants.VisualStudioDebugParameterName))
                 return;

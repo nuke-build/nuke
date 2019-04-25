@@ -10,7 +10,7 @@ namespace Nuke.Common.Execution
 {
     public interface IBuildExtension
     {
-        void Execute(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets);
+        void Execute(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets, IReadOnlyCollection<ExecutableTarget> executionPlan);
     }
 
     public interface IPreLogoBuildExtension : IBuildExtension

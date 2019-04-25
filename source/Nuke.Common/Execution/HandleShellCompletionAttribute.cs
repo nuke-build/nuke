@@ -12,7 +12,10 @@ namespace Nuke.Common.Execution
     [AttributeUsage(AttributeTargets.Class)]
     internal class HandleShellCompletionAttribute : Attribute, IPreLogoBuildExtension
     {
-        public void Execute(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void Execute(
+            NukeBuild build,
+            IReadOnlyCollection<ExecutableTarget> executableTargets,
+            IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
             var completionItems = new SortedDictionary<string, string[]>();
 

@@ -25,7 +25,10 @@ namespace Nuke.Common.Tooling
         public string Normal { get; set; }
         public string Verbose { get; set; }
 
-        public void Execute(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void Execute(
+            NukeBuild build,
+            IReadOnlyCollection<ExecutableTarget> executableTargets,
+            IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
             object GetMappedValue(string name)
                 => _targetType

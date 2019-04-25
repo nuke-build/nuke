@@ -60,11 +60,12 @@ namespace Nuke.Common.Execution
                 Logger.Info($"NUKE Execution Engine {typeof(BuildManager).Assembly.GetInformationalText()}");
                 Logger.Normal();
 
-                build.ExecuteExtensions<IPostLogoBuildExtension>();
                 build.ExecutionPlan = ExecutionPlanner.GetExecutionPlan(
                     build.ExecutableTargets,
                     ParameterService.Instance.GetParameter<string[]>(() => build.InvokedTargets) ??
                     ParameterService.Instance.GetPositionalCommandLineArguments<string>(separator: Constants.TargetsSeparator.Single()));
+
+                build.ExecuteExtensions<IPostLogoBuildExtension>();
                 CancellationHandler += Finish;
 
                 InjectionUtility.InjectValues(build, x => !x.IsFast);

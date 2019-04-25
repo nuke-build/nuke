@@ -5,21 +5,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
-using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Execution
 {
-    [PublicAPI]
     [AttributeUsage(AttributeTargets.Class)]
-    public class CheckPathEnvironmentVariableAttribute : Attribute, IPostLogoBuildExtension
+    internal class HandlePlanRequestAttribute : Attribute, IPostLogoBuildExtension
     {
         public void Execute(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
-            ProcessTasks.CheckPathEnvironmentVariable();
+            if (!NukeBuild.Plan)
+                return;
+
+            ExecutionPlanHtmlService.ShowPlan(build.ExecutableTargets);
+            Environment.Exit(exitCode: 0);
         }
     }
 }
