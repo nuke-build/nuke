@@ -160,7 +160,7 @@ namespace Nuke.Common.Execution
                 return GetDefaultValue(destinationType);
 
             return ConvertCommandLineArguments(
-                $"$all-positional",
+                "$all-positional",
                 positionalArguments,
                 destinationType,
                 _commandLineArguments,
@@ -204,7 +204,7 @@ namespace Nuke.Common.Execution
         private int GetCommandLineArgumentIndex(string argumentName, bool checkNames)
         {
             var index = Array.FindLastIndex(_commandLineArguments,
-                x => x.StartsWith("-") && x.Replace("-", string.Empty).EqualsOrdinalIgnoreCase(argumentName));
+                x => x.StartsWith("-") && x.Replace("-", string.Empty).EqualsOrdinalIgnoreCase(argumentName.Replace("-", string.Empty)));
 
             if (index == -1 && checkNames)
             {
