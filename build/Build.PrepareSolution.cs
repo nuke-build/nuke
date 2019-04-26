@@ -28,7 +28,7 @@ EndProject
             string GetSolutionFolderName(string s)
             {
                 var directoryInfo = new FileInfo(s).Directory.NotNull();
-                return $"{directoryInfo.Parent.NotNull().Name}/{directoryInfo.Name}";
+                return $"{directoryInfo.Parent.NotNull().Name}-{directoryInfo.Name}";
             }
 
             var solutions = GlobFiles(RepositoriesDirectory, "*/*/*.sln")
