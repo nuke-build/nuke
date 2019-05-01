@@ -11,12 +11,11 @@
 
   <ItemGroup>
     <PackageReference Include="Nuke.Common" Version="_NUKE_VERSION_" />
-    <PackageReference Include="Nuke.CodeGeneration" Version="_NUKE_VERSION_" />                  // GENERATION
     <PackageReference Include="GitVersion.CommandLine.DotNetCore" Version="4.0.1-beta1-49" />    // GITVERSION
   </ItemGroup>
 
   <ItemGroup>
-    <NukeMetadata Include="**\*.json" Exclude="bin\**;obj\**" />
+    <NukeSpecificationFiles Include="**\*.json" Exclude="bin\**;obj\**" />
     <NukeExternalFiles Include="**\*.*.ext" Exclude="bin\**;obj\**" />
     <None Remove="*.csproj.DotSettings;*.ref.*.txt" />
 

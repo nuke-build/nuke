@@ -50,6 +50,8 @@ namespace Nuke.Common.ProjectModel
             if (parameterValue != null)
                 return GetProject(parameterValue);
 
+            ControlFlow.Assert(member.GetCustomAttribute<UnlistedAttribute>() == null,
+                $"No project for member '{member.Name}' found in solution '{solution.FileName}'.");
             return null;
         }
 

@@ -73,9 +73,8 @@ partial class Build : NukeBuild
                 .SetProjectFile(Solution));
         });
 
-    [Unlisted] [ProjectFrom(nameof(Solution))] Project CommonProject;
     [Unlisted] [ProjectFrom(nameof(Solution))] Project GlobalToolProject;
-    [Unlisted] [ProjectFrom(nameof(Solution))] Project CodeGenerationProject;
+    [Unlisted] [ProjectFrom(nameof(Solution))] Project MSBuildTaskRunnerProject;
 
     Target Compile => _ => _
         .DependsOn(Restore)
@@ -96,7 +95,7 @@ partial class Build : NukeBuild
                     .SetFileVersion(GitVersion.GetNormalizedFileVersion())
                     .SetInformationalVersion(GitVersion.InformationalVersion)
                     .CombineWith(
-                        from project in new[] { GlobalToolProject, CommonProject, CodeGenerationProject }
+                        from project in new[] { GlobalToolProject, MSBuildTaskRunnerProject }
                         from framework in project.GetTargetFrameworks()
                         select new { project, framework }, (cs, v) => cs
                             .SetProject(v.project)

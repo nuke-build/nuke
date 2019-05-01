@@ -51,10 +51,7 @@ namespace Nuke.CodeGeneration
                 tool.Namespace = namespaceProvider?.Invoke(tool);
                 ApplyRuntimeInformation(tool, specificationFile, sourceFileProvider, namespaceProvider);
 
-                var outputFile = outputFileProvider?.Invoke(tool) ??
-                                 Path.Combine(Path.GetDirectoryName(tool.SpecificationFile).NotNull(), tool.DefaultOutputFileName);
-
-                GenerateCode(tool, outputFile);
+                GenerateCode(tool, outputFileProvider?.Invoke(tool) ?? tool.DefaultOutputFile);
             }
         }
 

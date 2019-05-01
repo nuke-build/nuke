@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  
+
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.6.3" />
     <PackageReference Include="Humanizer" Version="2.2.0" />
@@ -11,20 +11,13 @@
     <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.5" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.4.1" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\Nuke.Common\Nuke.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == ''">
-    <None Include="$(MSBuildProjectName).targets" PackagePath="build\netstandard2.0" Pack="true" />
-    <None Include="$(MSBuildProjectName).targets" PackagePath="build\net461" Pack="true" />
-    <None Include="bin\$(Configuration)\netstandard2.0\publish\**\*.*" PackagePath="build\netstandard2.0" Pack="true" />
-    <None Include="bin\$(Configuration)\net461\publish\**\*.*" PackagePath="build\net461" Pack="true" />
-  </ItemGroup>
-  
   <ItemGroup>
     <Nuke Include="..\..\build\Build.CodeGeneration.cs" />
   </ItemGroup>
-  
+
 </Project>
