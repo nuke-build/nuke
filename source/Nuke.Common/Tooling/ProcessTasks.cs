@@ -89,7 +89,9 @@ namespace Nuke.Common.Tooling
             }
 
 #if NETCORE
-            if (EnvironmentInfo.IsUnix && toolPath.EndsWithOrdinalIgnoreCase(".exe"))
+            if (EnvironmentInfo.IsUnix &&
+                toolPath.EndsWithOrdinalIgnoreCase(".exe") &&
+                !EnvironmentInfo.IsWsl)
                 return ToolPathResolver.GetPathExecutable("mono");
 #endif
 
