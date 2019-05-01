@@ -793,6 +793,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         public static ReportTypes Xml = new ReportTypes { Value = "Xml" };
         public static ReportTypes XmlSummary = new ReportTypes { Value = "XmlSummary" };
         public static ReportTypes SonarQube = new ReportTypes { Value = "SonarQube" };
+        public static ReportTypes TeamCitySummary = new ReportTypes { Value = "TeamCitySummary" };
     }
     #endregion
     #region ReportGeneratorVerbosity
