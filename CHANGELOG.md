@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [0.19.1] / 2019-05-03
 - Fixed `RequirementService` to check for `InjectionAttributeBase`
 
 ## [0.19.0] / 2019-05-03
@@ -350,7 +352,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/common/compare/0.19.0...HEAD
+[vNext]: https://github.com/nuke-build/common/compare/0.19.1...HEAD
+[0.19.1]: https://github.com/nuke-build/common/compare/0.19.0...0.19.1
 [0.19.0]: https://github.com/nuke-build/common/compare/0.18.0...0.19.0
 [0.18.0]: https://github.com/nuke-build/common/compare/0.17.7...0.18.0
 [0.17.7]: https://github.com/nuke-build/common/compare/0.17.6...0.17.7
