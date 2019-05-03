@@ -37,8 +37,8 @@ namespace Nuke.Common.Execution
         private static bool IsMemberNull(MemberInfo member, NukeBuild build, ExecutableTarget target = null)
         {
             var from = target != null ? $"from target '{target.Name}' " : string.Empty;
-            ControlFlow.Assert(member.HasCustomAttribute<ParameterAttribute>(),
-                $"Member '{member.Name}' is required {from}but not marked with a {nameof(ParameterAttribute)}.");
+            ControlFlow.Assert(member.HasCustomAttribute<InjectionAttributeBase>(),
+                $"Member '{member.Name}' is required {from}but not marked with an injection attribute.");
 
             if (NukeBuild.Host == HostType.Console)
                 InjectValueInteractive(build, member);
