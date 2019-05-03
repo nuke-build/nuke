@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -73,9 +73,8 @@ partial class Build : NukeBuild
                 .SetProjectFile(Solution));
         });
 
-    [Unlisted] [ProjectFrom(nameof(Solution))] Project CommonProject;
     [Unlisted] [ProjectFrom(nameof(Solution))] Project GlobalToolProject;
-    [Unlisted] [ProjectFrom(nameof(Solution))] Project CodeGenerationProject;
+    [Unlisted] [ProjectFrom(nameof(Solution))] Project MSBuildTaskRunnerProject;
 
     Target Compile => _ => _
         .DependsOn(Restore)
@@ -96,7 +95,7 @@ partial class Build : NukeBuild
                     .SetFileVersion(GitVersion.GetNormalizedFileVersion())
                     .SetInformationalVersion(GitVersion.InformationalVersion)
                     .CombineWith(
-                        from project in new[] { GlobalToolProject, CommonProject, CodeGenerationProject }
+                        from project in new[] { GlobalToolProject, MSBuildTaskRunnerProject }
                         from framework in project.GetTargetFrameworks()
                         select new { project, framework }, (cs, v) => cs
                             .SetProject(v.project)
@@ -180,22 +179,26 @@ partial class Build : NukeBuild
                             .SetTargetPath(v)),
                 degreeOfParallelism: 5,
                 completeOnFailure: true);
+        });
 
-            if (GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch))
-            {
-                SendSlackMessage(m => m
-                        .SetText(new StringBuilder()
-                            .AppendLine($"<!here> :mega::shipit: *NUKE {GitVersion.SemVer} IS OUT!!!*")
-                            .AppendLine()
-                            .AppendLine(ChangelogSectionNotes.Select(x => x.Replace("- ", "• ")).JoinNewLine()).ToString()),
-                    SlackWebhook);
-
-                SendGitterMessage(new StringBuilder()
-                        .AppendLine($"@/all :mega::shipit: **NUKE {GitVersion.SemVer} IS OUT!!!**")
+    Target Announce => _ => _
+        .TriggeredBy(Publish)
+        .AssuredAfterFailure()
+        .OnlyWhenStatic(() => GitRepository.IsOnMasterBranch())
+        .Executes(() =>
+        {
+            SendSlackMessage(m => m
+                    .SetText(new StringBuilder()
+                        .AppendLine($"<!here> :mega::shipit: *NUKE {GitVersion.SemVer} IS OUT!!!*")
                         .AppendLine()
-                        .AppendLine(ChangelogSectionNotes.Select(x => x.Replace("- ", "* ")).JoinNewLine()).ToString(),
-                    "593f3dadd73408ce4f66db89",
-                    GitterAuthToken);
-            }
+                        .AppendLine(ChangelogSectionNotes.Select(x => x.Replace("- ", "• ")).JoinNewLine()).ToString()),
+                SlackWebhook);
+
+            SendGitterMessage(new StringBuilder()
+                    .AppendLine($"@/all :mega::shipit: **NUKE {GitVersion.SemVer} IS OUT!!!**")
+                    .AppendLine()
+                    .AppendLine(ChangelogSectionNotes.Select(x => x.Replace("- ", "* ")).JoinNewLine()).ToString(),
+                "593f3dadd73408ce4f66db89",
+                GitterAuthToken);
         });
 }

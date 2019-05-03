@@ -3,9 +3,11 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common
 {
@@ -53,6 +55,25 @@ namespace Nuke.Common
         /// Returns whether the operating system is a OSX system.
         /// </summary>
         public static bool IsOsx => Platform == PlatformFamily.OSX;
+
+        /// <summary>
+        /// Returns whether the operating system is running under Windows Subsystem for Linux.
+        /// </summary>
+        public static bool IsWsl { get; } = GetIsWsl();
+
+        private static bool GetIsWsl() {
+
+            if (!IsLinux)
+                return false;
+
+            try {
+                var version = File.ReadAllText("/proc/version");
+                return version.ContainsOrdinalIgnoreCase("Microsoft");
+            }
+            catch (IOException) {
+                return false;
+            }
+        }
 
         /// <summary>
         /// Returns the framework the build is running on.

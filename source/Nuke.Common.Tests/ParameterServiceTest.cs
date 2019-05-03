@@ -52,6 +52,7 @@ namespace Nuke.Common.Tests
         [Theory]
         [InlineData("MSBuildConfiguration", typeof(string), "msbcfg")]
         [InlineData("dockerConfiguration", typeof(string), "dkrcfg")]
+        [InlineData("publish-dir", typeof(string), "dir")]
         public void TestSplitted(string argument, Type destinationType, object expectedValue)
         {
             GetService(
@@ -60,7 +61,9 @@ namespace Nuke.Common.Tests
                     "-msbuild-configuration",
                     "msbcfg",
                     "-docker-configuration",
-                    "dkrcfg"
+                    "dkrcfg",
+                    "--publish-dir",
+                    "dir"
                 }).GetCommandLineArgument(argument, destinationType).Should().Be(expectedValue);
         }
 

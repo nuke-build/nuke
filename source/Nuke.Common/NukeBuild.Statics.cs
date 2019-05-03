@@ -31,6 +31,7 @@ namespace Nuke.Common
             Continue = ParameterService.Instance.GetParameter(() => Continue);
             Plan = ParameterService.Instance.GetParameter(() => Plan);
             Help = ParameterService.Instance.GetParameter(() => Help);
+            NoLogo = ParameterService.Instance.GetParameter(() => NoLogo);
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace Nuke.Common
         public static PathConstruction.AbsolutePath BuildAssemblyDirectory { get; }
 
         /// <summary>
-        /// Gets the full path to the build project directory, or <c>null</c> 
+        /// Gets the full path to the build project directory, or <c>null</c>
         /// </summary>
         [CanBeNull]
         public static PathConstruction.AbsolutePath BuildProjectDirectory { get; }
@@ -79,6 +80,12 @@ namespace Nuke.Common
         /// </summary>
         [Parameter("Shows the help text for this build assembly.")]
         public static bool Help { get; }
+
+        /// <summary>
+        /// Gets a value whether to display the NUKE logo.
+        /// </summary>
+        [Parameter("Disables displaying the NUKE logo.")]
+        public static bool NoLogo { get; }
 
         public static bool IsLocalBuild => Host == HostType.Console;
         public static bool IsServerBuild => Host != HostType.Console;

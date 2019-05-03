@@ -14,33 +14,33 @@ namespace Nuke.MSBuildLocator
 {
     public static class Program
     {
-        private const string c_msBuildComponent = "Microsoft.Component.MSBuild";
-        private const string c_netCoreComponent = "Microsoft.Net.Core.Component.SDK";
-        private const string c_vsWhereExecutableName = "vswhere.exe";
+        private const string c_msbuildComponent = "Microsoft.Component.MSBuild";
+        private const string c_netcoreComponent = "Microsoft.Net.Core.Component.SDK";
+        private const string c_vswhereExecutableName = "vswhere.exe";
 
         [STAThread]
         public static void Main(string[] args)
         {
-            var vsWherePath = args.FirstOrDefault();
-            if (vsWherePath != null && !vsWherePath.EndsWith(c_vsWhereExecutableName))
-                vsWherePath = Path.Combine(vsWherePath, c_vsWhereExecutableName);
+            var vswherePath = args.FirstOrDefault();
+            if (vswherePath != null && !vswherePath.EndsWith(c_vswhereExecutableName))
+                vswherePath = Path.Combine(vswherePath, c_vswhereExecutableName);
 
-            Trace.Assert(vsWherePath != null, $"Path to {c_vsWhereExecutableName} must be passed");
-            Trace.Assert(File.Exists(vsWherePath), $"File '{vsWherePath}' does not exists");
+            Trace.Assert(vswherePath != null, $"Path to {c_vswhereExecutableName} must be passed");
+            Trace.Assert(File.Exists(vswherePath), $"File '{vswherePath}' does not exists");
 
-            var msBuildLocator = new MSBuildLocator(vsWherePath);
-            var msBuildPath = msBuildLocator.Resolve();
-            Trace.Assert(msBuildPath != null, "msBuildPath != null");
-            Console.WriteLine(msBuildPath);
+            var msbuildLocator = new MSBuildLocator(vswherePath);
+            var msbuildPath = msbuildLocator.Resolve();
+            Trace.Assert(msbuildPath != null, "msbuildPath != null");
+            Console.WriteLine(msbuildPath);
         }
 
         private class MSBuildLocator
         {
-            private readonly string _vsWherePath;
+            private readonly string _vswherePath;
 
-            public MSBuildLocator(string vsWherePath)
+            public MSBuildLocator(string vswherePath)
             {
-                _vsWherePath = vsWherePath;
+                _vswherePath = vswherePath;
             }
 
             [CanBeNull]
@@ -53,8 +53,8 @@ namespace Nuke.MSBuildLocator
                           "/usr/local/bin/msbuild",
                           "/Library/Frameworks/Mono.framework/Versions/Current/Commands/msbuild"
                       }.FirstOrDefault(File.Exists)
-                    : TryGetMSBuildPath(products: "*", requires: new[] { c_msBuildComponent, c_netCoreComponent }, legacy: false) ??
-                      TryGetMSBuildPath(products: "*", requires: new[] { c_msBuildComponent }, legacy: false) ??
+                    : TryGetMSBuildPath(products: "*", requires: new[] { c_msbuildComponent, c_netcoreComponent }, legacy: false) ??
+                      TryGetMSBuildPath(products: "*", requires: new[] { c_msbuildComponent }, legacy: false) ??
                       TryGetMSBuildPath(products: null, requires: null, legacy: true);
             }
 
@@ -74,10 +74,15 @@ namespace Nuke.MSBuildLocator
                 if (installation == null)
                     return null;
 
+                var msbuildMajorVersion = installation.Version.Split('.')[0];
+                var msbuildVersionDirectoryName = int.TryParse(msbuildMajorVersion, out var major) && major < 16
+                    ? $"{installation.Version.Split('.')[0]}.0"
+                    : "Current";
+
                 var msbuildPath = Path.Combine(
                     installation.Path,
                     "MSBuild",
-                    $"{installation.Version.Split('.')[0]}.0",
+                    msbuildVersionDirectoryName,
                     "Bin",
                     Environment.Is64BitOperatingSystem ? "amd64" : ".",
                     "MSBuild.exe");
@@ -122,7 +127,7 @@ namespace Nuke.MSBuildLocator
 
             private string GetProcessOutput(string arguments)
             {
-                var info = new ProcessStartInfo(_vsWherePath, arguments)
+                var info = new ProcessStartInfo(_vswherePath, arguments)
                            {
                                RedirectStandardOutput = true,
                                RedirectStandardError = true,

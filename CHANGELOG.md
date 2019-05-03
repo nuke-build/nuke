@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.19.0] / 2019-05-03
+- Changed MSBuild targets to be invoked with `Exec` task
+- Changed `ProcessTasks` to avoid Mono when using WSL
+- Added output for non-default working directories
+- Added `GitVersion.VersionSourceSha`
+- Added `ReportTypes.TeamCitySummary`
+- Fixed parameter resolution to handle hyphens
+- Fixed MSBuild resolution for Visual Studio 2019
+- Fixed issues when build has no default target defined
+
 ## [0.18.0] / 2019-03-24
 - Changed `ParameterService` to strip dashes when resolving value
 - Changed formatting of skip reason
@@ -146,7 +156,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Fixed bootstrapping scripts to exit without closing PowerShell
 - Fixed expansion for Unix environment variables
 - Fixed separator for target parameters
-- Fixed `ToolPathResolver` to resolve decidedly 
+- Fixed `ToolPathResolver` to resolve decidedly
 - Fixed `GitVersionTasks` to resolve based on `GitVersion.CommandLine.DotNetCore` package
 - Fixed `InjectionAttributeBase` to pass build instance
 - Fixed `ReflectionService` to be public to allow usage in addons
@@ -154,7 +164,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.12.0] / 2018-11-15
 - Changed `NukeBuild` properties to be static
-- Changed `NukeBuild.RootDirectory` to allow resolution from parameter 
+- Changed `NukeBuild.RootDirectory` to allow resolution from parameter
 - Added package resolution for Paket
 - Added shell-completion for global tool
 - Added parameter resolution for `Enumeration` subclasses
@@ -237,7 +247,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.6.1] / 2018-08-09
 - Fixed global tool to have 'same as global tool' as fallback version
-- Fixed PowerShell invocation to use `-ExecutionPolicy ByPass` and `-NoProfile` 
+- Fixed PowerShell invocation to use `-ExecutionPolicy ByPass` and `-NoProfile`
 
 ## [0.6.0] / 2018-08-05
 - Removed setup scripts in favor of `:setup` command in global tool
@@ -339,7 +349,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/common/compare/0.18.0...HEAD
+[vNext]: https://github.com/nuke-build/common/compare/0.19.0...HEAD
+[0.19.0]: https://github.com/nuke-build/common/compare/0.18.0...0.19.0
 [0.18.0]: https://github.com/nuke-build/common/compare/0.17.7...0.18.0
 [0.17.7]: https://github.com/nuke-build/common/compare/0.17.6...0.17.7
 [0.17.6]: https://github.com/nuke-build/common/compare/0.17.5...0.17.6

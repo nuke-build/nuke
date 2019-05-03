@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Reflection.Metadata;
 using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.Tooling;

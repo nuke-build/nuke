@@ -31,7 +31,6 @@ namespace Nuke.Common.Tools.GitVersion
 
             return ControlFlow.SuppressErrors(() =>
                     GitVersionTasks.GitVersion(s => s
-                            .SetWorkingDirectory(NukeBuild.RootDirectory)
                             .DisableLogOutput())
                         .Result,
                 includeStackTrace: true);

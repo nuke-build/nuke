@@ -14,10 +14,12 @@ Host:
 - TeamCity
 - TeamServices
 - Travis
+NoLogo: 
 Plan: 
 Root: 
 Skip:
 - Analysis
+- Announce
 - Changelog
 - Clean
 - Compile
@@ -36,6 +38,7 @@ Source:
 SymbolSource: 
 Target:
 - Analysis
+- Announce
 - Changelog
 - Clean
 - Compile

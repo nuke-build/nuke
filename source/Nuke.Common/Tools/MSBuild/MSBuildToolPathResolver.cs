@@ -7,10 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-
-#if LOCATOR
-using Nuke.MSBuildLocator;
-#endif
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Tools.MSBuild
 {
@@ -42,9 +39,10 @@ namespace Nuke.Common.Tools.MSBuild
             var instances = new List<Instance>();
 
             instances.AddRange(
-                from vs2017Edition in new[] { "Enterprise", "Professional", "Community", "BuildTools" }
-                from platform1 in s_platforms
-                select GetVs2017Instance(platform1, vs2017Edition));
+                from version in new[]{MSBuildVersion.VS2019, MSBuildVersion.VS2017}
+                from platform in s_platforms
+                from edition in new[] { "Enterprise", "Professional", "Community", "BuildTools" }
+                select GetFromVs2017Instance(version, platform, edition));
 
             instances.AddRange(
                 from version in new[] { MSBuildVersion.VS2015, MSBuildVersion.VS2013 }
@@ -63,14 +61,15 @@ namespace Nuke.Common.Tools.MSBuild
             return filteredInstances.Select(x => x.ToolPath);
         }
 
-        private static Instance GetVs2017Instance(MSBuildPlatform platform, string vs2017Edition)
+        private static Instance GetFromVs2017Instance(MSBuildVersion version, MSBuildPlatform platform, string edition)
         {
+            var versionDirectoryName = version.ToString().TrimStart("VS");
             var basePath = Path.Combine(
                 EnvironmentInfo.SpecialFolder(SpecialFolders.ProgramFilesX86).NotNull("path1 != null"),
-                $@"Microsoft Visual Studio\2017\{vs2017Edition}\MSBuild\{GetVersionFolder(MSBuildVersion.VS2017)}\Bin");
+                $@"Microsoft Visual Studio\{versionDirectoryName}\{edition}\MSBuild\{GetVersionFolder(version)}\Bin");
 
             return new Instance(
-                MSBuildVersion.VS2017,
+                version,
                 platform,
                 platform == MSBuildPlatform.x64
                     ? Path.Combine(basePath, "amd64")
@@ -95,6 +94,8 @@ namespace Nuke.Common.Tools.MSBuild
         {
             switch (version)
             {
+                case MSBuildVersion.VS2019:
+                    return "Current";
                 case MSBuildVersion.VS2017:
                     return "15.0";
                 case MSBuildVersion.VS2015:

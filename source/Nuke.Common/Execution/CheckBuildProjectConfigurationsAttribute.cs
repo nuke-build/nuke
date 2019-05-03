@@ -19,7 +19,10 @@ namespace Nuke.Common.Execution
     {
         public int TimeoutInMilliseconds { get; set; } = 500;
 
-        public void Execute(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void Execute(
+            NukeBuild build,
+            IReadOnlyCollection<ExecutableTarget> executableTargets,
+            IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
             ControlFlow.AssertWarn(Task.Run(CheckConfiguration).Wait(TimeoutInMilliseconds),
                 $"Could not complete checking build configurations within {TimeoutInMilliseconds} milliseconds.");

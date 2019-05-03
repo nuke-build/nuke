@@ -37,7 +37,7 @@ namespace Nuke.Common.Execution
 
         public static string GetParametersText(NukeBuild build)
         {
-            var defaultTarget = build.ExecutableTargets.Single(x => x.IsDefault);
+            var defaultTarget = build.ExecutableTargets.SingleOrDefault(x => x.IsDefault);
             var builder = new StringBuilder();
 
             var parameters = InjectionUtility.GetParameterMembers(build.GetType())
@@ -50,7 +50,7 @@ namespace Nuke.Common.Execution
                 var description = SplitLines(
                     // TODO: remove
                     ParameterService.Instance.GetParameterDescription(parameter)
-                        ?.Replace("{default_target}", defaultTarget.Name).Append(".")
+                        ?.Replace("{default_target}", defaultTarget?.Name).Append(".")
                     ?? "<no description>");
                 var parameterName = ParameterService.Instance.GetParameterName(parameter).SplitCamelHumpsWithSeparator("-");
                 builder.AppendLine($"  --{parameterName.PadRight(padRightParameter)}  {description.First()}");

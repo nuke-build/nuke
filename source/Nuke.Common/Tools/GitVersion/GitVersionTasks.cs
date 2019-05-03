@@ -3,15 +3,12 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Nuke.Common.Tooling;
-using Nuke.Common.Utilities;
-using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Tools.GitVersion
 {

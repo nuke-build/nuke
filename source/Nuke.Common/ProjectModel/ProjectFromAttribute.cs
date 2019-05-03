@@ -4,11 +4,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using Nuke.Common.Execution;
-using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.ProjectModel
@@ -52,6 +50,8 @@ namespace Nuke.Common.ProjectModel
             if (parameterValue != null)
                 return GetProject(parameterValue);
 
+            ControlFlow.Assert(member.GetCustomAttribute<UnlistedAttribute>() == null,
+                $"No project for member '{member.Name}' found in solution '{solution.FileName}'.");
             return null;
         }
 
