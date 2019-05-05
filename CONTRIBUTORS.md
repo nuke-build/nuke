@@ -4,6 +4,7 @@
 - dos36
 - Elijah
 - Georg Dangl
+- hayhay27
 - Jiří Kyzlink
 - Jonathan Robson
 - Jonathan Ziller
