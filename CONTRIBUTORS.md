@@ -8,6 +8,7 @@
 - Jonathan Robson
 - Jonathan Ziller
 - Jörg Preiß
+- Kevin Thompson
 - kysel
 - MadMathMike
 - Magnus Lindhe
