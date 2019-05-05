@@ -6,6 +6,7 @@
 - Georg Dangl
 - hayhay27
 - Jiří Kyzlink
+- Jonas S
 - Jonathan Robson
 - Jonathan Ziller
 - Jörg Preiß
