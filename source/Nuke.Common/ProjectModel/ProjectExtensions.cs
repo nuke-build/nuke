@@ -69,5 +69,11 @@ namespace Nuke.Common.ProjectModel
 
             return new string[0];
         }
+
+        public static string GetOutputType(this Project project)
+        {
+            var msbuildProject = project.GetMSBuildProject();
+            return msbuildProject.GetProperty("OutputType").EvaluatedValue;
+        }
     }
 }

@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [vNext]
 - Changed `Solution.GetProject` to allow resolution from full path
 - Added `When` overload for combinatorial settings
+- Added `Project.GetOutputType` method for convenience
 
 ## [0.19.2] / 2019-05-10
 - Fixed `ProjectModelTasks` to use existing `MSBUILD_EXE_PATH` value
