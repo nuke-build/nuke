@@ -39,7 +39,9 @@ namespace Nuke.Common.ProjectModel
             string configuration = null,
             string targetFramework = null)
         {
-            Environment.SetEnvironmentVariable("MSBUILD_EXE_PATH", s_msbuildPathResolver.Value);
+            Environment.SetEnvironmentVariable("MSBUILD_EXE_PATH",
+                Environment.GetEnvironmentVariable("MSBUILD_EXE_PATH") ??
+                s_msbuildPathResolver.Value);
 
             var projectCollection = new ProjectCollection();
             var msbuildProject = new Microsoft.Build.Evaluation.Project(

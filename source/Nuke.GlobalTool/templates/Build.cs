@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Nuke.Common;
 using Nuke.Common.Execution;
@@ -132,8 +132,8 @@ class Build : NukeBuild
                     .SetSymbolSource(SymbolSource)                                              // NUGET
                     .SetApiKey(ApiKey)                                                          // NUGET
                     .CombineWith(                                                               // NUGET
-                        OutputDirectory.GlobFiles("*.nupkg"), (cs, v) => v)                     // NUGET && OUTPUT_DIR
-                        ArtifactsDirectory.GlobFiles("*.nupkg"), (cs, v) => v                   // NUGET && ARTIFACTS_DIR
+                        OutputDirectory.GlobFiles("*.nupkg"), (cs, v) => cs                     // NUGET && OUTPUT_DIR
+                        ArtifactsDirectory.GlobFiles("*.nupkg"), (cs, v) => cs                  // NUGET && ARTIFACTS_DIR
                             .SetTargetPath(v)),                                                 // NUGET
                 degreeOfParallelism: 5,                                                         // NUGET
                 completeOnFailure: true);                                                       // NUGET

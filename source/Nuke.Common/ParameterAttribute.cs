@@ -72,10 +72,17 @@ namespace Nuke.Common
             }
 
             var memberType = member.GetMemberType();
-            if (memberType.IsEnum)
-                return memberType.GetEnumNames().Select(x => (x, Enum.Parse(memberType, x)));
+
             if (memberType.IsSubclassOf(typeof(Enumeration)))
                 return memberType.GetFields(ReflectionService.Static).Select(x => (x.Name, x.GetValue()));
+
+            var enumType = memberType.IsEnum
+                ? memberType
+                : Nullable.GetUnderlyingType(memberType) is Type underlyingType && underlyingType.IsEnum
+                    ? underlyingType
+                    : null;
+            if (enumType != null)
+                return enumType.GetEnumNames().Select(x => (x, Enum.Parse(enumType, x)));
 
             return null;
         }
