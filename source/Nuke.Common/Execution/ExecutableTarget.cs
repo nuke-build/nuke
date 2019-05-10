@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace Nuke.Common.Execution
 {
-    [DebuggerDisplay("{" + nameof(ToDebugString) + "}")]
+    [DebuggerDisplay("{" + nameof(Name) + "}")]
     public class ExecutableTarget
     {
         internal ExecutableTarget()
@@ -44,10 +44,5 @@ namespace Nuke.Common.Execution
         public TimeSpan Duration { get; internal set; }
         public bool Invoked { get; internal set; }
         public string SkipReason { get; internal set; }
-
-        internal string ToDebugString()
-        {
-            return Name;
-        }
     }
 }
