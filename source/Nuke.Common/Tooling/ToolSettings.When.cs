@@ -14,5 +14,11 @@ namespace Nuke.Common.Tooling
         {
             return condition ? configurator(settings) : settings;
         }
+
+        public static T[] When<T>(this T[] settings, Func<T, bool> condition, Configure<T> configurator)
+            where T : ToolSettings
+        {
+            return settings.Select(x => condition(x) ? x : configurator(x)).ToArray();
+        }
     }
 }
