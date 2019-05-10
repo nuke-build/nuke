@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed `ProjectModelTasks` to use existing `MSBUILD_EXE_PATH` value
+- Fixed `ParameterService` to consider nullable enum types in value set calculation
+- Fixed compile errors in build template
 
 ## [0.19.1] / 2019-05-03
 - Fixed `RequirementService` to check for `InjectionAttributeBase`
