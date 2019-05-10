@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 - Changed `Solution.GetProject` to allow resolution from full path
+- Changed HTML execution plan to be shown left-to-right
 - Added `When` overload for combinatorial settings
 - Added `Project.GetOutputType` method for convenience
 
