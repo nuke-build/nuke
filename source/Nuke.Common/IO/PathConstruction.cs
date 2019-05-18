@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using GlobExpressions;
 using JetBrains.Annotations;
+using Nuke.Common.Execution;
 using Nuke.Common.Utilities;
 
 // ReSharper disable ArrangeMethodOrOperatorBody
@@ -18,11 +19,31 @@ using Nuke.Common.Utilities;
 namespace Nuke.Common.IO
 {
     /// <summary>
+    /// Indicates the case sensitivity used for globbing.
+    /// </summary>
+    public enum GlobbingCaseSensitivity
+    {
+        /// <summary>
+        /// Automatically determines whether to use case-sensitive or case-insensitive matching when globbing. This
+        /// means using case-insensitive matching when running on Windows, and case-sensitive otherwise.
+        /// </summary>
+        Auto,
+        /// <summary>
+        /// Globbing patterns will be case-sensitive.
+        /// </summary>
+        CaseSensitive,
+        /// <summary>
+        /// Globbing patterns will be case-insensitive.
+        /// </summary>
+        CaseInsensitive
+    }
+
+    /// <summary>
     /// <p>Provides an abstraction for generating Windows/Unix/UNC-compliant
     /// file-system paths independently of the underlying operating system. Usages should be restricted to the moment
     /// of construction, i.e., avoid using it as part of an API.</p>
     /// <p>Casting a string with <c>(RelativePath)</c> will construct any intermediate part of a path using the specific separators
-    /// for the currently running operating-system. By using <c>(WinRelativePath)</c> and <c>(UnixRelativePath)</c> other separators can be 
+    /// for the currently running operating-system. By using <c>(WinRelativePath)</c> and <c>(UnixRelativePath)</c> other separators can be
     /// used intentionally. Casting with <c>(AbsolutePath)</c> ensures that the path is rooted as Windows/Unix/UNC-path. The operators
     /// <c>/</c> and <c>+</c> allow to append sub-directories.</p>
     /// <p>Resulting paths are automatically normalized if possible. So <c>C:\foo\..\bar\.</c> will become <c>C:\bar</c>.</p>
@@ -45,6 +66,24 @@ namespace Nuke.Common.IO
     [PublicAPI]
     public static class PathConstruction
     {
+        internal static GlobbingCaseSensitivity GlobbingCaseSensitivity;
+
+        private static GlobOptions GlobOptions
+        {
+            get
+            {
+                switch (GlobbingCaseSensitivity)
+                {
+                    case GlobbingCaseSensitivity.CaseSensitive:
+                        return GlobOptions.None;
+                    case GlobbingCaseSensitivity.CaseInsensitive:
+                        return GlobOptions.CaseInsensitive;
+                    default:
+                        return EnvironmentInfo.IsWin ? GlobOptions.CaseInsensitive : GlobOptions.None;
+                }
+            }
+        }
+
         // TODO: check usages
         [Pure]
         public static string GetRelativePath(string basePath, string destinationPath, bool normalize = true)
@@ -75,7 +114,7 @@ namespace Nuke.Common.IO
         public static IReadOnlyCollection<string> GlobFiles(string directory, params string[] patterns)
         {
             var directoryInfo = new DirectoryInfo(directory);
-            return patterns.SelectMany(x => directoryInfo.GlobFiles(x)).Select(x => x.FullName).ToList();
+            return patterns.SelectMany(x => Glob.Files(directoryInfo, x, GlobOptions)).Select(x => x.FullName).ToList();
         }
 
         public static IReadOnlyCollection<AbsolutePath> GlobFiles(this AbsolutePath directory, params string[] patterns)
@@ -87,7 +126,7 @@ namespace Nuke.Common.IO
         public static IReadOnlyCollection<string> GlobDirectories(string directory, params string[] patterns)
         {
             var directoryInfo = new DirectoryInfo(directory);
-            return patterns.SelectMany(x => directoryInfo.GlobDirectories(x)).Select(x => x.FullName).ToList();
+            return patterns.SelectMany(x => Glob.Directories(directoryInfo, x, GlobOptions)).Select(x => x.FullName).ToList();
         }
 
         public static IReadOnlyCollection<AbsolutePath> GlobDirectories(this AbsolutePath directory, params string[] patterns)
@@ -413,6 +452,26 @@ namespace Nuke.Common.IO
             {
                 return _path;
             }
+        }
+    }
+
+    /// <summary>
+    /// Allows to configure the case-sensitivity used for globbing operations in <see cref="PathConstruction"/>.
+    /// </summary>
+    [PublicAPI]
+    [AttributeUsage(AttributeTargets.Class)]
+    public sealed class GlobbingOptionsAttribute : Attribute, IPreLogoBuildExtension
+    {
+        private readonly GlobbingCaseSensitivity _caseSensitivity;
+
+        public GlobbingOptionsAttribute(GlobbingCaseSensitivity caseSensitivity)
+        {
+            _caseSensitivity = caseSensitivity;
+        }
+
+        public void Execute(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets, IReadOnlyCollection<ExecutableTarget> executionPlan)
+        {
+            PathConstruction.GlobbingCaseSensitivity = _caseSensitivity;
         }
     }
 }

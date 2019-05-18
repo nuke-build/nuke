@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Changed HTML execution plan to be shown left-to-right
 - Added `When` overload for combinatorial settings
 - Added `Project.GetOutputType` method for convenience
+- Added `GlobbingOptionsAttribute` for configuration of case-sensitivity
 - Fixed casing of `NuGet.exe`
 - Fixed `TeamServices` to resolve `BuildNumber` as `string`
 
