@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using Nuke.Common.IO;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.ProjectModel
 {
@@ -57,9 +58,10 @@ namespace Nuke.Common.ProjectModel
         }
 
         [CanBeNull]
-        public Project GetProject(string name)
+        public Project GetProject(string nameOrFullPath)
         {
-            return AllProjects.SingleOrDefault(x => name.Equals(x.Name, StringComparison.Ordinal));
+            return AllProjects.SingleOrDefault(x => nameOrFullPath.Equals(x.Name, StringComparison.Ordinal)) ??
+                   AllProjects.SingleOrDefault(x => x.Path.ToString().EqualsOrdinalIgnoreCase(nameOrFullPath));
         }
 
         public IEnumerable<Project> GetProjects(string wildcardPattern)

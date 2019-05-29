@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.20.0] / 2019-05-29
+- Changed `Solution.GetProject` to allow resolution from full path
+- Changed HTML execution plan to be shown left-to-right
+- Added `When` overload for combinatorial settings
+- Added `Project.GetOutputType` method for convenience
+- Added `GlobbingOptionsAttribute` for configuration of case-sensitivity
+- Fixed casing of `NuGet.exe`
+- Fixed `TeamServices` to resolve `BuildNumber` as `string`
+
 ## [0.19.2] / 2019-05-10
 - Fixed `ProjectModelTasks` to use existing `MSBUILD_EXE_PATH` value
 - Fixed `ParameterService` to consider nullable enum types in value set calculation
@@ -357,7 +366,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/common/compare/0.19.2...HEAD
+[vNext]: https://github.com/nuke-build/common/compare/0.20.0...HEAD
+[0.20.0]: https://github.com/nuke-build/common/compare/0.19.2...0.20.0
 [0.19.2]: https://github.com/nuke-build/common/compare/0.19.1...0.19.2
 [0.19.1]: https://github.com/nuke-build/common/compare/0.19.0...0.19.1
 [0.19.0]: https://github.com/nuke-build/common/compare/0.18.0...0.19.0
