@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [0.20.0] / 2019-05-29
 - Changed `Solution.GetProject` to allow resolution from full path
 - Changed HTML execution plan to be shown left-to-right
 - Added `When` overload for combinatorial settings
@@ -364,7 +366,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/common/compare/0.19.2...HEAD
+[vNext]: https://github.com/nuke-build/common/compare/0.20.0...HEAD
+[0.20.0]: https://github.com/nuke-build/common/compare/0.19.2...0.20.0
 [0.19.2]: https://github.com/nuke-build/common/compare/0.19.1...0.19.2
 [0.19.1]: https://github.com/nuke-build/common/compare/0.19.0...0.19.1
 [0.19.0]: https://github.com/nuke-build/common/compare/0.18.0...0.19.0
