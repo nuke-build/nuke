@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Changed HTML execution plan to be shown left-to-right
 - Added `When` overload for combinatorial settings
 - Added `Project.GetOutputType` method for convenience
+- Fixed casing of `NuGet.exe`
 
 ## [0.19.2] / 2019-05-10
 - Fixed `ProjectModelTasks` to use existing `MSBUILD_EXE_PATH` value
