@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.20.1] / 2019-06-02
+- Fixed MSBuild evaluation issues by updating NuGet.Packaging to v4.9.2
+
 ## [0.20.0] / 2019-05-29
 - Changed `Solution.GetProject` to allow resolution from full path
 - Changed HTML execution plan to be shown left-to-right
@@ -366,7 +369,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/common/compare/0.20.0...HEAD
+[vNext]: https://github.com/nuke-build/common/compare/0.20.1...HEAD
+[0.20.1]: https://github.com/nuke-build/common/compare/0.20.0...0.20.1
 [0.20.0]: https://github.com/nuke-build/common/compare/0.19.2...0.20.0
 [0.19.2]: https://github.com/nuke-build/common/compare/0.19.1...0.19.2
 [0.19.1]: https://github.com/nuke-build/common/compare/0.19.0...0.19.1
