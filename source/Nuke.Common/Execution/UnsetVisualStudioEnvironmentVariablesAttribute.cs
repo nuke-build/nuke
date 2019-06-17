@@ -29,7 +29,6 @@ namespace Nuke.Common.Execution
                 "VSAPPIDNAME",
                 "VSLANG",
                 "VSLOGGER_UNIQUEID",
-                "VSSKUEDITION",
                 "VSSKUEDITION"
             }.ForEach(x => Environment.SetEnvironmentVariable(x, value: null));
         }
