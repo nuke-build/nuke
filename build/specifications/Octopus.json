@@ -518,6 +518,18 @@
       "format": "--proxyPass={value}",
       "secret": true,
       "help": "The password for the proxy. If both the username and password are omitted and proxyAddress is specified, the default credentials are used."
+    },
+    {
+      "name": "Space",
+      "type": "string",
+      "format": "--space={value}",
+      "help": "The name of a space within which this command will be executed. The default space will be used if it is omitted."
+    },
+    {
+      "name": "LogLevel",
+      "type": "string",
+      "format": "--logLevel={value}",
+      "help": "The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'."
     }
   ],
   "enumerations": [
