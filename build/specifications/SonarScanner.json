@@ -86,6 +86,35 @@
             "separator": ",",
             "help": "Comma separated list of xUnit report files to include."
           },
+
+          {
+            "name": "SourceExclusions",
+            "type": "List<string>",
+            "format": "/d:sonar.exclusions={value}",
+            "separator": ",",
+            "help": "Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?)."
+          },
+          {
+            "name": "SourceInclusions",
+            "type": "List<string>",
+            "format": "/d:sonar.inclusions={value}",
+            "separator": ",",
+            "help": "Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?)."
+          },
+          {
+            "name": "TestFileExclusions",
+            "type": "List<string>",
+            "format": "/d:sonar.test.exclusions={value}",
+            "separator": ",",
+            "help": "Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?)."
+          },
+          {
+            "name": "TestFileInclusions",
+            "type": "List<string>",
+            "format": "/d:sonar.test.inclusions={value}",
+            "separator": ",",
+            "help": "Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?)."
+          },
           {
             "name": "CoverageExclusions",
             "type": "List<string>",
