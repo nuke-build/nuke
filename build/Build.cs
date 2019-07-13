@@ -172,8 +172,9 @@ partial class Build : NukeBuild
         {
             DotNetNuGetPush(s => s
                     .SetSource(Source)
-                    .SetSymbolSource(SymbolSource)
                     .SetApiKey(ApiKey)
+                    .SetSymbolSource(SymbolSource)
+                    .SetSymbolApiKey(ApiKey)
                     .CombineWith(
                         OutputDirectory.GlobFiles("*.nupkg").NotEmpty(), (cs, v) => cs
                             .SetTargetPath(v)),
