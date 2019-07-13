@@ -39,37 +39,45 @@ namespace Nuke.Common.ProjectModel
             string configuration = null,
             string targetFramework = null)
         {
-            Environment.SetEnvironmentVariable("MSBUILD_EXE_PATH",
-                Environment.GetEnvironmentVariable("MSBUILD_EXE_PATH") ??
-                s_msbuildPathResolver.Value);
+            var msbuildPath = Environment.GetEnvironmentVariable("MSBUILD_EXE_PATH");
 
-            var projectCollection = new ProjectCollection();
-            var msbuildProject = new Microsoft.Build.Evaluation.Project(
-                projectFile,
-                GetProperties(configuration, targetFramework),
-                projectCollection.DefaultToolsVersion,
-                projectCollection);
-            var targetFrameworks = msbuildProject.AllEvaluatedItems
-                .Where(x => x.ItemType == "_TargetFrameworks")
-                .Select(x => x.EvaluatedInclude)
-                .OrderBy(x => x).ToList();
-
-            if (targetFramework == null && targetFrameworks.Count > 1)
+            try
             {
-                projectCollection.UnloadProject(msbuildProject);
-                targetFramework = targetFrameworks.First();
+                if (string.IsNullOrEmpty(msbuildPath))
+                    Environment.SetEnvironmentVariable("MSBUILD_EXE_PATH", s_msbuildPathResolver.Value);
 
-                Logger.Warn($"Project '{projectFile}' has multiple target frameworks ({targetFrameworks.JoinComma()}).");
-                Logger.Warn($"Evaluating using '{targetFramework}'...");
-
-                msbuildProject = new Microsoft.Build.Evaluation.Project(
+                var projectCollection = new ProjectCollection();
+                var msbuildProject = new Microsoft.Build.Evaluation.Project(
                     projectFile,
                     GetProperties(configuration, targetFramework),
                     projectCollection.DefaultToolsVersion,
                     projectCollection);
-            }
+                var targetFrameworks = msbuildProject.AllEvaluatedItems
+                    .Where(x => x.ItemType == "_TargetFrameworks")
+                    .Select(x => x.EvaluatedInclude)
+                    .OrderBy(x => x).ToList();
 
-            return msbuildProject;
+                if (targetFramework == null && targetFrameworks.Count > 1)
+                {
+                    projectCollection.UnloadProject(msbuildProject);
+                    targetFramework = targetFrameworks.First();
+
+                    Logger.Warn($"Project '{projectFile}' has multiple target frameworks ({targetFrameworks.JoinComma()}).");
+                    Logger.Warn($"Evaluating using '{targetFramework}'...");
+
+                    msbuildProject = new Microsoft.Build.Evaluation.Project(
+                        projectFile,
+                        GetProperties(configuration, targetFramework),
+                        projectCollection.DefaultToolsVersion,
+                        projectCollection);
+                }
+
+                return msbuildProject;
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("MSBUILD_EXE_PATH", msbuildPath);
+            }
         }
 
         private static Dictionary<string, string> GetProperties([CanBeNull] string configuration, [CanBeNull] string targetFramework)
