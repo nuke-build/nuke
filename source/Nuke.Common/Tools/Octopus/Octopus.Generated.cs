@@ -125,6 +125,7 @@ namespace Nuke.Common.Tools.Octopus
         ///     <li><c>--debug</c> via <see cref="OctopusPushSettings.Debug"/></li>
         ///     <li><c>--enableServiceMessages</c> via <see cref="OctopusPushSettings.EnableServiceMessages"/></li>
         ///     <li><c>--ignoreSslErrors</c> via <see cref="OctopusPushSettings.IgnoreSslErrors"/></li>
+        ///     <li><c>--logLevel</c> via <see cref="OctopusPushSettings.LogLevel"/></li>
         ///     <li><c>--package</c> via <see cref="OctopusPushSettings.Package"/></li>
         ///     <li><c>--pass</c> via <see cref="OctopusPushSettings.Password"/></li>
         ///     <li><c>--proxy</c> via <see cref="OctopusPushSettings.Proxy"/></li>
@@ -132,6 +133,7 @@ namespace Nuke.Common.Tools.Octopus
         ///     <li><c>--proxyUser</c> via <see cref="OctopusPushSettings.ProxyUsername"/></li>
         ///     <li><c>--replace-existing</c> via <see cref="OctopusPushSettings.ReplaceExisting"/></li>
         ///     <li><c>--server</c> via <see cref="OctopusPushSettings.Server"/></li>
+        ///     <li><c>--space</c> via <see cref="OctopusPushSettings.Space"/></li>
         ///     <li><c>--timeout</c> via <see cref="OctopusPushSettings.Timeout"/></li>
         ///     <li><c>--user</c> via <see cref="OctopusPushSettings.Username"/></li>
         ///   </ul>
@@ -152,6 +154,7 @@ namespace Nuke.Common.Tools.Octopus
         ///     <li><c>--debug</c> via <see cref="OctopusPushSettings.Debug"/></li>
         ///     <li><c>--enableServiceMessages</c> via <see cref="OctopusPushSettings.EnableServiceMessages"/></li>
         ///     <li><c>--ignoreSslErrors</c> via <see cref="OctopusPushSettings.IgnoreSslErrors"/></li>
+        ///     <li><c>--logLevel</c> via <see cref="OctopusPushSettings.LogLevel"/></li>
         ///     <li><c>--package</c> via <see cref="OctopusPushSettings.Package"/></li>
         ///     <li><c>--pass</c> via <see cref="OctopusPushSettings.Password"/></li>
         ///     <li><c>--proxy</c> via <see cref="OctopusPushSettings.Proxy"/></li>
@@ -159,6 +162,7 @@ namespace Nuke.Common.Tools.Octopus
         ///     <li><c>--proxyUser</c> via <see cref="OctopusPushSettings.ProxyUsername"/></li>
         ///     <li><c>--replace-existing</c> via <see cref="OctopusPushSettings.ReplaceExisting"/></li>
         ///     <li><c>--server</c> via <see cref="OctopusPushSettings.Server"/></li>
+        ///     <li><c>--space</c> via <see cref="OctopusPushSettings.Space"/></li>
         ///     <li><c>--timeout</c> via <see cref="OctopusPushSettings.Timeout"/></li>
         ///     <li><c>--user</c> via <see cref="OctopusPushSettings.Username"/></li>
         ///   </ul>
@@ -201,6 +205,7 @@ namespace Nuke.Common.Tools.Octopus
         ///     <li><c>--ignorechannelrules</c> via <see cref="OctopusCreateReleaseSettings.IgnoreChannelRules"/></li>
         ///     <li><c>--ignoreexisting</c> via <see cref="OctopusCreateReleaseSettings.IgnoreExisting"/></li>
         ///     <li><c>--ignoreSslErrors</c> via <see cref="OctopusCreateReleaseSettings.IgnoreSslErrors"/></li>
+        ///     <li><c>--logLevel</c> via <see cref="OctopusCreateReleaseSettings.LogLevel"/></li>
         ///     <li><c>--norawlog</c> via <see cref="OctopusCreateReleaseSettings.NoRawLog"/></li>
         ///     <li><c>--package</c> via <see cref="OctopusCreateReleaseSettings.PackageVersions"/></li>
         ///     <li><c>--packageprerelease</c> via <see cref="OctopusCreateReleaseSettings.PackagePrerelease"/></li>
@@ -217,6 +222,7 @@ namespace Nuke.Common.Tools.Octopus
         ///     <li><c>--releasenotesfile</c> via <see cref="OctopusCreateReleaseSettings.ReleaseNotesFile"/></li>
         ///     <li><c>--server</c> via <see cref="OctopusCreateReleaseSettings.Server"/></li>
         ///     <li><c>--skip</c> via <see cref="OctopusCreateReleaseSettings.Skip"/></li>
+        ///     <li><c>--space</c> via <see cref="OctopusCreateReleaseSettings.Space"/></li>
         ///     <li><c>--specificmachines</c> via <see cref="OctopusCreateReleaseSettings.SpecificMachines"/></li>
         ///     <li><c>--tenant</c> via <see cref="OctopusCreateReleaseSettings.Tenant"/></li>
         ///     <li><c>--tenanttag</c> via <see cref="OctopusCreateReleaseSettings.TenantTag"/></li>
@@ -255,6 +261,7 @@ namespace Nuke.Common.Tools.Octopus
         ///     <li><c>--ignorechannelrules</c> via <see cref="OctopusCreateReleaseSettings.IgnoreChannelRules"/></li>
         ///     <li><c>--ignoreexisting</c> via <see cref="OctopusCreateReleaseSettings.IgnoreExisting"/></li>
         ///     <li><c>--ignoreSslErrors</c> via <see cref="OctopusCreateReleaseSettings.IgnoreSslErrors"/></li>
+        ///     <li><c>--logLevel</c> via <see cref="OctopusCreateReleaseSettings.LogLevel"/></li>
         ///     <li><c>--norawlog</c> via <see cref="OctopusCreateReleaseSettings.NoRawLog"/></li>
         ///     <li><c>--package</c> via <see cref="OctopusCreateReleaseSettings.PackageVersions"/></li>
         ///     <li><c>--packageprerelease</c> via <see cref="OctopusCreateReleaseSettings.PackagePrerelease"/></li>
@@ -271,6 +278,7 @@ namespace Nuke.Common.Tools.Octopus
         ///     <li><c>--releasenotesfile</c> via <see cref="OctopusCreateReleaseSettings.ReleaseNotesFile"/></li>
         ///     <li><c>--server</c> via <see cref="OctopusCreateReleaseSettings.Server"/></li>
         ///     <li><c>--skip</c> via <see cref="OctopusCreateReleaseSettings.Skip"/></li>
+        ///     <li><c>--space</c> via <see cref="OctopusCreateReleaseSettings.Space"/></li>
         ///     <li><c>--specificmachines</c> via <see cref="OctopusCreateReleaseSettings.SpecificMachines"/></li>
         ///     <li><c>--tenant</c> via <see cref="OctopusCreateReleaseSettings.Tenant"/></li>
         ///     <li><c>--tenanttag</c> via <see cref="OctopusCreateReleaseSettings.TenantTag"/></li>
@@ -318,6 +326,7 @@ namespace Nuke.Common.Tools.Octopus
         ///     <li><c>--forcepackagedownload</c> via <see cref="OctopusDeployReleaseSettings.ForcePackageDownload"/></li>
         ///     <li><c>--guidedfailure</c> via <see cref="OctopusDeployReleaseSettings.GuidedFailure"/></li>
         ///     <li><c>--ignoreSslErrors</c> via <see cref="OctopusDeployReleaseSettings.IgnoreSslErrors"/></li>
+        ///     <li><c>--logLevel</c> via <see cref="OctopusDeployReleaseSettings.LogLevel"/></li>
         ///     <li><c>--norawlog</c> via <see cref="OctopusDeployReleaseSettings.NoRawLog"/></li>
         ///     <li><c>--pass</c> via <see cref="OctopusDeployReleaseSettings.Password"/></li>
         ///     <li><c>--progress</c> via <see cref="OctopusDeployReleaseSettings.Progress"/></li>
@@ -328,6 +337,7 @@ namespace Nuke.Common.Tools.Octopus
         ///     <li><c>--rawlogfile</c> via <see cref="OctopusDeployReleaseSettings.RawLogFile"/></li>
         ///     <li><c>--server</c> via <see cref="OctopusDeployReleaseSettings.Server"/></li>
         ///     <li><c>--skip</c> via <see cref="OctopusDeployReleaseSettings.Skip"/></li>
+        ///     <li><c>--space</c> via <see cref="OctopusDeployReleaseSettings.Space"/></li>
         ///     <li><c>--specificmachines</c> via <see cref="OctopusDeployReleaseSettings.SpecificMachines"/></li>
         ///     <li><c>--tenant</c> via <see cref="OctopusDeployReleaseSettings.Tenant"/></li>
         ///     <li><c>--tenanttag</c> via <see cref="OctopusDeployReleaseSettings.TenantTag"/></li>
@@ -364,6 +374,7 @@ namespace Nuke.Common.Tools.Octopus
         ///     <li><c>--forcepackagedownload</c> via <see cref="OctopusDeployReleaseSettings.ForcePackageDownload"/></li>
         ///     <li><c>--guidedfailure</c> via <see cref="OctopusDeployReleaseSettings.GuidedFailure"/></li>
         ///     <li><c>--ignoreSslErrors</c> via <see cref="OctopusDeployReleaseSettings.IgnoreSslErrors"/></li>
+        ///     <li><c>--logLevel</c> via <see cref="OctopusDeployReleaseSettings.LogLevel"/></li>
         ///     <li><c>--norawlog</c> via <see cref="OctopusDeployReleaseSettings.NoRawLog"/></li>
         ///     <li><c>--pass</c> via <see cref="OctopusDeployReleaseSettings.Password"/></li>
         ///     <li><c>--progress</c> via <see cref="OctopusDeployReleaseSettings.Progress"/></li>
@@ -374,6 +385,7 @@ namespace Nuke.Common.Tools.Octopus
         ///     <li><c>--rawlogfile</c> via <see cref="OctopusDeployReleaseSettings.RawLogFile"/></li>
         ///     <li><c>--server</c> via <see cref="OctopusDeployReleaseSettings.Server"/></li>
         ///     <li><c>--skip</c> via <see cref="OctopusDeployReleaseSettings.Skip"/></li>
+        ///     <li><c>--space</c> via <see cref="OctopusDeployReleaseSettings.Space"/></li>
         ///     <li><c>--specificmachines</c> via <see cref="OctopusDeployReleaseSettings.SpecificMachines"/></li>
         ///     <li><c>--tenant</c> via <see cref="OctopusDeployReleaseSettings.Tenant"/></li>
         ///     <li><c>--tenanttag</c> via <see cref="OctopusDeployReleaseSettings.TenantTag"/></li>
@@ -549,6 +561,14 @@ namespace Nuke.Common.Tools.Octopus
         ///   The password for the proxy. If both the username and password are omitted and proxyAddress is specified, the default credentials are used.
         /// </summary>
         public virtual string ProxyPassword { get; internal set; }
+        /// <summary>
+        ///   The name of a space within which this command will be executed. The default space will be used if it is omitted.
+        /// </summary>
+        public virtual string Space { get; internal set; }
+        /// <summary>
+        ///   The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.
+        /// </summary>
+        public virtual string LogLevel { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -566,7 +586,9 @@ namespace Nuke.Common.Tools.Octopus
               .Add("--timeout={value}", Timeout)
               .Add("--proxy={value}", Proxy)
               .Add("--proxyUser={value}", ProxyUsername)
-              .Add("--proxyPass={value}", ProxyPassword, secret: true);
+              .Add("--proxyPass={value}", ProxyPassword, secret: true)
+              .Add("--space={value}", Space)
+              .Add("--logLevel={value}", LogLevel);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -753,6 +775,14 @@ namespace Nuke.Common.Tools.Octopus
         ///   The password for the proxy. If both the username and password are omitted and proxyAddress is specified, the default credentials are used.
         /// </summary>
         public virtual string ProxyPassword { get; internal set; }
+        /// <summary>
+        ///   The name of a space within which this command will be executed. The default space will be used if it is omitted.
+        /// </summary>
+        public virtual string Space { get; internal set; }
+        /// <summary>
+        ///   The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.
+        /// </summary>
+        public virtual string LogLevel { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -797,7 +827,9 @@ namespace Nuke.Common.Tools.Octopus
               .Add("--timeout={value}", Timeout)
               .Add("--proxy={value}", Proxy)
               .Add("--proxyUser={value}", ProxyUsername)
-              .Add("--proxyPass={value}", ProxyPassword, secret: true);
+              .Add("--proxyPass={value}", ProxyPassword, secret: true)
+              .Add("--space={value}", Space)
+              .Add("--logLevel={value}", LogLevel);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -951,6 +983,14 @@ namespace Nuke.Common.Tools.Octopus
         ///   The password for the proxy. If both the username and password are omitted and proxyAddress is specified, the default credentials are used.
         /// </summary>
         public virtual string ProxyPassword { get; internal set; }
+        /// <summary>
+        ///   The name of a space within which this command will be executed. The default space will be used if it is omitted.
+        /// </summary>
+        public virtual string Space { get; internal set; }
+        /// <summary>
+        ///   The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.
+        /// </summary>
+        public virtual string LogLevel { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -987,7 +1027,9 @@ namespace Nuke.Common.Tools.Octopus
               .Add("--timeout={value}", Timeout)
               .Add("--proxy={value}", Proxy)
               .Add("--proxyUser={value}", ProxyUsername)
-              .Add("--proxyPass={value}", ProxyPassword, secret: true);
+              .Add("--proxyPass={value}", ProxyPassword, secret: true)
+              .Add("--space={value}", Space)
+              .Add("--logLevel={value}", LogLevel);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -1967,6 +2009,54 @@ namespace Nuke.Common.Tools.Octopus
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProxyPassword = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Space
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusPushSettings.Space"/></em></p>
+        ///   <p>The name of a space within which this command will be executed. The default space will be used if it is omitted.</p>
+        /// </summary>
+        [Pure]
+        public static OctopusPushSettings SetSpace(this OctopusPushSettings toolSettings, string space)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Space = space;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusPushSettings.Space"/></em></p>
+        ///   <p>The name of a space within which this command will be executed. The default space will be used if it is omitted.</p>
+        /// </summary>
+        [Pure]
+        public static OctopusPushSettings ResetSpace(this OctopusPushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Space = null;
+            return toolSettings;
+        }
+        #endregion
+        #region LogLevel
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusPushSettings.LogLevel"/></em></p>
+        ///   <p>The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.</p>
+        /// </summary>
+        [Pure]
+        public static OctopusPushSettings SetLogLevel(this OctopusPushSettings toolSettings, string logLevel)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogLevel = logLevel;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusPushSettings.LogLevel"/></em></p>
+        ///   <p>The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.</p>
+        /// </summary>
+        [Pure]
+        public static OctopusPushSettings ResetLogLevel(this OctopusPushSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogLevel = null;
             return toolSettings;
         }
         #endregion
@@ -3573,6 +3663,54 @@ namespace Nuke.Common.Tools.Octopus
             return toolSettings;
         }
         #endregion
+        #region Space
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusCreateReleaseSettings.Space"/></em></p>
+        ///   <p>The name of a space within which this command will be executed. The default space will be used if it is omitted.</p>
+        /// </summary>
+        [Pure]
+        public static OctopusCreateReleaseSettings SetSpace(this OctopusCreateReleaseSettings toolSettings, string space)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Space = space;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusCreateReleaseSettings.Space"/></em></p>
+        ///   <p>The name of a space within which this command will be executed. The default space will be used if it is omitted.</p>
+        /// </summary>
+        [Pure]
+        public static OctopusCreateReleaseSettings ResetSpace(this OctopusCreateReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Space = null;
+            return toolSettings;
+        }
+        #endregion
+        #region LogLevel
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusCreateReleaseSettings.LogLevel"/></em></p>
+        ///   <p>The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.</p>
+        /// </summary>
+        [Pure]
+        public static OctopusCreateReleaseSettings SetLogLevel(this OctopusCreateReleaseSettings toolSettings, string logLevel)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogLevel = logLevel;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusCreateReleaseSettings.LogLevel"/></em></p>
+        ///   <p>The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.</p>
+        /// </summary>
+        [Pure]
+        public static OctopusCreateReleaseSettings ResetLogLevel(this OctopusCreateReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogLevel = null;
+            return toolSettings;
+        }
+        #endregion
     }
     #endregion
     #region OctopusDeployReleaseSettingsExtensions
@@ -4882,6 +5020,54 @@ namespace Nuke.Common.Tools.Octopus
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ProxyPassword = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Space
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusDeployReleaseSettings.Space"/></em></p>
+        ///   <p>The name of a space within which this command will be executed. The default space will be used if it is omitted.</p>
+        /// </summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetSpace(this OctopusDeployReleaseSettings toolSettings, string space)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Space = space;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusDeployReleaseSettings.Space"/></em></p>
+        ///   <p>The name of a space within which this command will be executed. The default space will be used if it is omitted.</p>
+        /// </summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetSpace(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Space = null;
+            return toolSettings;
+        }
+        #endregion
+        #region LogLevel
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctopusDeployReleaseSettings.LogLevel"/></em></p>
+        ///   <p>The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.</p>
+        /// </summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings SetLogLevel(this OctopusDeployReleaseSettings toolSettings, string logLevel)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogLevel = logLevel;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctopusDeployReleaseSettings.LogLevel"/></em></p>
+        ///   <p>The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'.</p>
+        /// </summary>
+        [Pure]
+        public static OctopusDeployReleaseSettings ResetLogLevel(this OctopusDeployReleaseSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogLevel = null;
             return toolSettings;
         }
         #endregion

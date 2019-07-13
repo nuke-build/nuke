@@ -86,7 +86,6 @@
             "separator": ",",
             "help": "Comma separated list of xUnit report files to include."
           },
-
           {
             "name": "SourceExclusions",
             "type": "List<string>",
