@@ -1,0 +1,643 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/common/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://docs.cloudfoundry.org/cf-cli/cf-help.html",
+    "https://github.com/cloudfoundry/cli"
+  ],
+  "name": "CloudFoundry",
+  "officialUrl": "https://docs.cloudfoundry.org/cf-cli/cf-help.html",
+  "help": "Cloud Foundry CLI is the official command line client for Cloud Foundry",
+  "tasks": [
+    {
+      "help": "Push a new app or sync changes to an existing app",
+      "postfix": "Push",
+      "definiteArgument": "push",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AppName",
+            "type": "string",
+            "format": "{value}",
+            "help": "The name of the application."
+          },
+          {
+            "name": "Buildpack",
+            "type": "List<string>",
+            "format": "-b {value}",
+            "help": "Buildpack to be used"
+          },
+          {
+            "name": "Command",
+            "type": "string",
+            "format": "-c {value}",
+            "help": "Startup command"
+          },
+          {
+            "name": "Domain",
+            "type": "string",
+            "format": "-d {value}",
+            "help": "Specify a custom domain (e.g. private-domain.example.com, apps.internal.com) to use instead of the default domain"
+          },
+          {
+            "name": "DockerImage",
+            "type": "string",
+            "format": "-o {value}",
+            "help": "Docker-image to be used (e.g. user/docker-image-name)"
+          },
+          {
+            "name": "DockerUsername",
+            "type": "string",
+            "format": "--docker-username {value}",
+            "help": "Docker-image to be used (e.g. user/docker-image-name)"
+          },
+          {
+            "name": "DockerPassword",
+            "type": "string",
+            "customImpl": true,
+            "help": "Docker password"
+          },
+          {
+            "name": "Droplet",
+            "type": "string",
+            "format": "--droplet {value}",
+            "help": "Path to a tgz file with a pre-staged app"
+          },
+          {
+            "name": "Manifest",
+            "type": "string",
+            "format": "-f {value}",
+            "help": "Path to manifest"
+          },
+          {
+            "name": "HealthCheckType",
+            "type": "HealthCheckType",
+            "format": "-u {value}",
+            "help": "Application health check type"
+          },
+          {
+            "name": "Hostname",
+            "type": "string",
+            "format": "-n {value}",
+            "help": "Hostname (e.g. my-subdomain)"
+          },
+          {
+            "name": "IgnoreManifest",
+            "type": "bool",
+            "format": "--no-manifest",
+            "help": "Ignore manifest file"
+          },
+          {
+            "name": "NoRoute",
+            "type": "bool",
+            "format": "--no-route",
+            "help": "Do not map a route to this app and remove routes from previous pushes of this app"
+          },
+          {
+            "name": "NoStart",
+            "type": "bool",
+            "format": "--no-start",
+            "help": "Do not start an app after pushing"
+          },
+          {
+            "name": "Path",
+            "type": "string",
+            "format": "-p {value}",
+            "help": "Path to app directory or to a zip file of the contents of the app directory"
+          },
+          {
+            "name": "RandomRoute",
+            "type": "bool",
+            "format": "--random-route",
+            "help": "Create a random route for this app"
+          },
+          {
+            "name": "RoutePath",
+            "type": "string",
+            "format": "--route-path {value}",
+            "help": "Path for the route"
+          },
+          {
+            "name": "Stack",
+            "type": "Stack",
+            "format": "-s {value}",
+            "help": "Stack to use (a stack is a pre-built file system, including an operating system, that can run apps)"
+          },
+          {
+            "name": "VariablesFile",
+            "type": "string",
+            "format": "-vars-file {value}",
+            "help": "Path to a variable substitution file for manifest; can specify multiple times"
+          },
+          {
+            "name": "Variables",
+            "type": "Dictionary<string,string>",
+            "format": "-var {value}",
+            "itemFormat": "{key}={value}",
+            "help": "Variable key value pair for variable substitution in manifest"
+          },
+          {
+            "name": "StartupTimeout",
+            "type": "int",
+            "format": "-t {value}",
+            "help": "Time (in seconds) allowed to elapse between starting up an app and the first healthy response from the app"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Log user in to specific endpoint and optionally set target",
+      "postfix": "Login",
+      "definiteArgument": "login",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Username",
+            "type": "string",
+            "format": "-u {value}"
+          },
+          {
+            "name": "Password",
+            "type": "string",
+            "format": "-p {value}",
+            "secret": true
+          },
+          {
+            "name": "ApiEndpoint",
+            "type": "string",
+            "format": "-a {value}",
+            "help": "API endpoint (e.g. https://api.example.com)"
+          },
+          {
+            "name": "Org",
+            "type": "string",
+            "format": "-o {value}"
+          },
+          {
+            "name": "Space",
+            "type": "string",
+            "format": "-s {value}"
+          },
+          {
+            "name": "SkipSslValidation",
+            "type": "bool",
+            "format": "--skip-ssl-validation",
+            "help": "Skip verification of the API endpoint"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Start an app",
+      "postfix": "Start",
+      "definiteArgument": "start",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AppName",
+            "type": "string",
+            "format": "{value}",
+            "createOverload": true
+          }
+        ]
+      }
+    },
+    {
+      "help": "Stop an app",
+      "postfix": "Stop",
+      "definiteArgument": "stop",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AppName",
+            "type": "string",
+            "format": "{value}",
+            "createOverload": true
+          }
+        ]
+      }
+    },
+    {
+      "help": "Stop all instances of the app, then start them again. This causes downtime.",
+      "postfix": "Restart",
+      "definiteArgument": "restart",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AppName",
+            "type": "string",
+            "format": "{value}",
+            "createOverload": true
+          }
+        ]
+      }
+    },
+    {
+      "help": "Recreate the app's executable artifact using the latest pushed app files and the latest environment (variables, service bindings, buildpack, stack, etc.). This action will cause app downtime.",
+      "postfix": "Restage",
+      "definiteArgument": "restage",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AppName",
+            "type": "string",
+            "format": "{value}",
+            "createOverload": true
+          }
+        ]
+      }
+    },
+    {
+      "help": "Delete an app",
+      "postfix": "DeleteApplication",
+      "definiteArgument": "delete",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AppName",
+            "type": "string",
+            "format": "{value} -f",
+            "createOverload": true
+          },
+          {
+            "name": "DeleteRoutes",
+            "type": "bool",
+            "format": "-r",
+            "help": "Also delete any mapped routes"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Create a service instance",
+      "postfix": "CreateService",
+      "definiteArgument": "create-service",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Service",
+            "type": "string",
+            "format": "{value}",
+            "createOverload": true,
+            "help": "Service type"
+          },
+          {
+            "name": "Plan",
+            "type": "string",
+            "format": "{value}",
+            "createOverload": true,
+            "help": "Service plan"
+          },
+          {
+            "name": "InstanceName",
+            "type": "string",
+            "format": "{value}",
+            "help": "Instance name"
+          },
+          {
+            "name": "ConfigurationParameters",
+            "type": "string",
+            "format": "-c {value}",
+            "help": "Valid JSON object containing service-specific configuration parameters, provided either in-line or in a file"
+          },
+          {
+            "name": "Tags",
+            "type": "List<string>",
+            "format": "-t {value}",
+            "help": "User provided tags"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Delete a service instance",
+      "postfix": "DeleteService",
+      "definiteArgument": "delete-service",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ServiceInstance",
+            "type": "string",
+            "format": "{value} -f",
+            "createOverload": true,
+            "help": "Service Instance"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Show service instance info",
+      "postfix": "GetServiceInfo",
+      "definiteArgument": "service",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ServiceInstance",
+            "type": "string",
+            "format": "{value}",
+            "help": "Service Instance"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Bind service instance",
+      "postfix": "BindService",
+      "definiteArgument": "bind-service",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AppName",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
+            "name": "ServiceInstance",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
+            "name": "BindingName",
+            "type": "string",
+            "format": "--binding-name {value}",
+            "help": "Name to expose service instance to app process with (Default: service instance name)"
+          },
+          {
+            "name": "ConfigurationParameters",
+            "type": "string",
+            "format": "-c {value}",
+            "help": "Valid JSON object containing service-specific configuration parameters, provided either in-line or in a file"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Bind service instance",
+      "postfix": "UnbindService",
+      "definiteArgument": "bind-service",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AppName",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
+            "name": "ServiceInstance",
+            "type": "string",
+            "format": "{value}"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Set an env variable for an app",
+      "postfix": "SetEnv",
+      "definiteArgument": "set-env",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AppName",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
+            "name": "EnvironmentalVariableName",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
+            "name": "EnvironmentalVariableValue",
+            "type": "string",
+            "format": "{value}"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Remove an env variable from an app",
+      "postfix": "UnsetEnv",
+      "definiteArgument": "set-env",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AppName",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
+            "name": "EnvironmentalVariableName",
+            "type": "string",
+            "format": "{value}"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Create a url route in a space for later use",
+      "postfix": "CreateRoute",
+      "definiteArgument": "create-route",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Space",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
+            "name": "Domain",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
+            "name": "Hostname",
+            "type": "string",
+            "format": "--hostname {value}",
+            "help": "Hostname for the HTTP route (required for shared domains)"
+          },
+          {
+            "name": "Path",
+            "type": "string",
+            "format": "--path {value}",
+            "help": "Path for the HTTP route"
+          },
+          {
+            "name": "Port",
+            "type": "int",
+            "format": "--port {value}",
+            "help": "Port for the TCP route"
+          },
+          {
+            "name": "RandomPort",
+            "type": "bool",
+            "format": "--random-port",
+            "help": "Create a random port for the TCP route"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Add a url route to an app",
+      "postfix": "MapRoute",
+      "definiteArgument": "map-route",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AppName",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
+            "name": "Domain",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
+            "name": "Hostname",
+            "type": "string",
+            "format": "--hostname {value}",
+            "help": "Hostname for the HTTP route (required for shared domains)"
+          },
+          {
+            "name": "Path",
+            "type": "string",
+            "format": "--path {value}",
+            "help": "Path for the HTTP route"
+          },
+          {
+            "name": "Port",
+            "type": "int",
+            "format": "--port {value}",
+            "help": "Port for the TCP route"
+          },
+          {
+            "name": "RandomPort",
+            "type": "bool",
+            "format": "--random-port",
+            "help": "Create a random port for the TCP route"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Remove a url route from an app",
+      "postfix": "UnmapRoute",
+      "definiteArgument": "unmap-route",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AppName",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
+            "name": "Domain",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
+            "name": "Hostname",
+            "type": "string",
+            "format": "--hostname {value}",
+            "help": "Hostname for the HTTP route (required for shared domains)"
+          },
+          {
+            "name": "Path",
+            "type": "string",
+            "format": "--path {value}",
+            "help": "Path for the HTTP route"
+          },
+          {
+            "name": "Port",
+            "type": "int",
+            "format": "--port {value}",
+            "help": "Port for the TCP route"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Create a space",
+      "postfix": "CreateSpace",
+      "definiteArgument": "create-space",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Space",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
+            "name": "Org",
+            "type": "string",
+            "format": "-o {value}"
+          },
+          {
+            "name": "Quota",
+            "type": "string",
+            "format": "-q {value}",
+            "help": "Quota to assign to the newly created space"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Delete a space",
+      "postfix": "DeleteSpace",
+      "definiteArgument": "delete-space",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Space",
+            "type": "string",
+            "format": "{value} -f"
+          },
+          {
+            "name": "Org",
+            "type": "string",
+            "format": "-o {value}"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Set or view the targeted org or space",
+      "postfix": "Target",
+      "definiteArgument": "target",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Space",
+            "type": "string",
+            "format": "-s {value}"
+          },
+          {
+            "name": "Org",
+            "type": "string",
+            "format": "-o {value}"
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "HealthCheckType",
+      "values": [
+        "None",
+        "Process",
+        "Port",
+        "Http"
+      ]
+    },
+    {
+      "name": "Stack",
+      "values": [
+        "cflinuxfs2",
+        "cflinuxfs3",
+        "windows",
+        "windows2012R2",
+        "windows2016"
+      ]
+    }
+  ]
+}
