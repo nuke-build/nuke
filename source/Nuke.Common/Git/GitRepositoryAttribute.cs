@@ -41,6 +41,7 @@ namespace Nuke.Common.Git
                 Bitrise.Instance?.GitBranch ??
                 GitLab.Instance?.CommitRefName ??
                 Jenkins.Instance?.GitBranch ??
+                Jenkins.Instance?.BranchName ??
                 TeamCity.Instance?.BranchName ??
                 TeamServices.Instance?.SourceBranchName ??
                 Travis.Instance?.Branch ??

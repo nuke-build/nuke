@@ -65,7 +65,9 @@ namespace Nuke.Common.Tools.SonarScanner
         ///     <li><c>/d:sonar.cs.vscoveragexml.reportsPaths</c> via <see cref="SonarScannerBeginSettings.VisualStudioCoveragePaths"/></li>
         ///     <li><c>/d:sonar.cs.vstest.reportsPaths</c> via <see cref="SonarScannerBeginSettings.VSTestReports"/></li>
         ///     <li><c>/d:sonar.cs.xunit.reportsPaths</c> via <see cref="SonarScannerBeginSettings.XUnitTestReports"/></li>
+        ///     <li><c>/d:sonar.exclusions</c> via <see cref="SonarScannerBeginSettings.SourceExclusions"/></li>
         ///     <li><c>/d:sonar.host.url</c> via <see cref="SonarScannerBeginSettings.Server"/></li>
+        ///     <li><c>/d:sonar.inclusions</c> via <see cref="SonarScannerBeginSettings.SourceInclusions"/></li>
         ///     <li><c>/d:sonar.links.ci</c> via <see cref="SonarScannerBeginSettings.ContinuousIntegrationUrl"/></li>
         ///     <li><c>/d:sonar.links.homepage</c> via <see cref="SonarScannerBeginSettings.Homepage"/></li>
         ///     <li><c>/d:sonar.links.issue</c> via <see cref="SonarScannerBeginSettings.IssueTrackerUrl"/></li>
@@ -74,6 +76,8 @@ namespace Nuke.Common.Tools.SonarScanner
         ///     <li><c>/d:sonar.password</c> via <see cref="SonarScannerBeginSettings.Password"/></li>
         ///     <li><c>/d:sonar.projectDescription</c> via <see cref="SonarScannerBeginSettings.Description"/></li>
         ///     <li><c>/d:sonar.sourceEncoding</c> via <see cref="SonarScannerBeginSettings.SourceEncoding"/></li>
+        ///     <li><c>/d:sonar.test.exclusions</c> via <see cref="SonarScannerBeginSettings.TestFileExclusions"/></li>
+        ///     <li><c>/d:sonar.test.inclusions</c> via <see cref="SonarScannerBeginSettings.TestFileInclusions"/></li>
         ///     <li><c>/d:sonar.verbose</c> via <see cref="SonarScannerBeginSettings.Verbose"/></li>
         ///     <li><c>/d:sonar.ws.timeout</c> via <see cref="SonarScannerBeginSettings.WebServiceTimeout"/></li>
         ///     <li><c>/k</c> via <see cref="SonarScannerBeginSettings.ProjectKey"/></li>
@@ -100,7 +104,9 @@ namespace Nuke.Common.Tools.SonarScanner
         ///     <li><c>/d:sonar.cs.vscoveragexml.reportsPaths</c> via <see cref="SonarScannerBeginSettings.VisualStudioCoveragePaths"/></li>
         ///     <li><c>/d:sonar.cs.vstest.reportsPaths</c> via <see cref="SonarScannerBeginSettings.VSTestReports"/></li>
         ///     <li><c>/d:sonar.cs.xunit.reportsPaths</c> via <see cref="SonarScannerBeginSettings.XUnitTestReports"/></li>
+        ///     <li><c>/d:sonar.exclusions</c> via <see cref="SonarScannerBeginSettings.SourceExclusions"/></li>
         ///     <li><c>/d:sonar.host.url</c> via <see cref="SonarScannerBeginSettings.Server"/></li>
+        ///     <li><c>/d:sonar.inclusions</c> via <see cref="SonarScannerBeginSettings.SourceInclusions"/></li>
         ///     <li><c>/d:sonar.links.ci</c> via <see cref="SonarScannerBeginSettings.ContinuousIntegrationUrl"/></li>
         ///     <li><c>/d:sonar.links.homepage</c> via <see cref="SonarScannerBeginSettings.Homepage"/></li>
         ///     <li><c>/d:sonar.links.issue</c> via <see cref="SonarScannerBeginSettings.IssueTrackerUrl"/></li>
@@ -109,6 +115,8 @@ namespace Nuke.Common.Tools.SonarScanner
         ///     <li><c>/d:sonar.password</c> via <see cref="SonarScannerBeginSettings.Password"/></li>
         ///     <li><c>/d:sonar.projectDescription</c> via <see cref="SonarScannerBeginSettings.Description"/></li>
         ///     <li><c>/d:sonar.sourceEncoding</c> via <see cref="SonarScannerBeginSettings.SourceEncoding"/></li>
+        ///     <li><c>/d:sonar.test.exclusions</c> via <see cref="SonarScannerBeginSettings.TestFileExclusions"/></li>
+        ///     <li><c>/d:sonar.test.inclusions</c> via <see cref="SonarScannerBeginSettings.TestFileInclusions"/></li>
         ///     <li><c>/d:sonar.verbose</c> via <see cref="SonarScannerBeginSettings.Verbose"/></li>
         ///     <li><c>/d:sonar.ws.timeout</c> via <see cref="SonarScannerBeginSettings.WebServiceTimeout"/></li>
         ///     <li><c>/k</c> via <see cref="SonarScannerBeginSettings.ProjectKey"/></li>
@@ -224,6 +232,26 @@ namespace Nuke.Common.Tools.SonarScanner
         public virtual IReadOnlyList<string> XUnitTestReports => XUnitTestReportsInternal.AsReadOnly();
         internal List<string> XUnitTestReportsInternal { get; set; } = new List<string>();
         /// <summary>
+        ///   Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?).
+        /// </summary>
+        public virtual IReadOnlyList<string> SourceExclusions => SourceExclusionsInternal.AsReadOnly();
+        internal List<string> SourceExclusionsInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?).
+        /// </summary>
+        public virtual IReadOnlyList<string> SourceInclusions => SourceInclusionsInternal.AsReadOnly();
+        internal List<string> SourceInclusionsInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?).
+        /// </summary>
+        public virtual IReadOnlyList<string> TestFileExclusions => TestFileExclusionsInternal.AsReadOnly();
+        internal List<string> TestFileExclusionsInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?).
+        /// </summary>
+        public virtual IReadOnlyList<string> TestFileInclusions => TestFileInclusionsInternal.AsReadOnly();
+        internal List<string> TestFileInclusionsInternal { get; set; } = new List<string>();
+        /// <summary>
         ///   Comma separated list of files to exclude from coverage calculations. Supports wildcards (*, **, ?).
         /// </summary>
         public virtual IReadOnlyList<string> CoverageExclusions => CoverageExclusionsInternal.AsReadOnly();
@@ -287,6 +315,10 @@ namespace Nuke.Common.Tools.SonarScanner
               .Add("/d:sonar.cs.vstest.reportsPaths={value}", VSTestReports, separator: ',')
               .Add("/d:sonar.cs.nunit.reportsPaths={value}", NUnitTestReports, separator: ',')
               .Add("/d:sonar.cs.xunit.reportsPaths={value}", XUnitTestReports, separator: ',')
+              .Add("/d:sonar.exclusions={value}", SourceExclusions, separator: ',')
+              .Add("/d:sonar.inclusions={value}", SourceInclusions, separator: ',')
+              .Add("/d:sonar.test.exclusions={value}", TestFileExclusions, separator: ',')
+              .Add("/d:sonar.test.inclusions={value}", TestFileInclusions, separator: ',')
               .Add("/d:sonar.coverage.exclusions={value}", CoverageExclusions, separator: ',')
               .Add("/d:sonar.cs.vscoveragexml.reportsPaths={value}", VisualStudioCoveragePaths, separator: ',')
               .Add("/d:sonar.cs.dotcover.reportsPaths={value}", DotCoverPaths, separator: ',')
@@ -807,6 +839,330 @@ namespace Nuke.Common.Tools.SonarScanner
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<string>(xunitTestReports);
             toolSettings.XUnitTestReportsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region SourceExclusions
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.SourceExclusions"/> to a new list</em></p>
+        ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings SetSourceExclusions(this SonarScannerBeginSettings toolSettings, params string[] sourceExclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceExclusionsInternal = sourceExclusions.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.SourceExclusions"/> to a new list</em></p>
+        ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings SetSourceExclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> sourceExclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceExclusionsInternal = sourceExclusions.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.SourceExclusions"/></em></p>
+        ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings AddSourceExclusions(this SonarScannerBeginSettings toolSettings, params string[] sourceExclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceExclusionsInternal.AddRange(sourceExclusions);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.SourceExclusions"/></em></p>
+        ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings AddSourceExclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> sourceExclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceExclusionsInternal.AddRange(sourceExclusions);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="SonarScannerBeginSettings.SourceExclusions"/></em></p>
+        ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings ClearSourceExclusions(this SonarScannerBeginSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceExclusionsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.SourceExclusions"/></em></p>
+        ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings RemoveSourceExclusions(this SonarScannerBeginSettings toolSettings, params string[] sourceExclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(sourceExclusions);
+            toolSettings.SourceExclusionsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.SourceExclusions"/></em></p>
+        ///   <p>Comma separated list of source files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings RemoveSourceExclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> sourceExclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(sourceExclusions);
+            toolSettings.SourceExclusionsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region SourceInclusions
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.SourceInclusions"/> to a new list</em></p>
+        ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings SetSourceInclusions(this SonarScannerBeginSettings toolSettings, params string[] sourceInclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceInclusionsInternal = sourceInclusions.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.SourceInclusions"/> to a new list</em></p>
+        ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings SetSourceInclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> sourceInclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceInclusionsInternal = sourceInclusions.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.SourceInclusions"/></em></p>
+        ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings AddSourceInclusions(this SonarScannerBeginSettings toolSettings, params string[] sourceInclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceInclusionsInternal.AddRange(sourceInclusions);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.SourceInclusions"/></em></p>
+        ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings AddSourceInclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> sourceInclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceInclusionsInternal.AddRange(sourceInclusions);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="SonarScannerBeginSettings.SourceInclusions"/></em></p>
+        ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings ClearSourceInclusions(this SonarScannerBeginSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SourceInclusionsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.SourceInclusions"/></em></p>
+        ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings RemoveSourceInclusions(this SonarScannerBeginSettings toolSettings, params string[] sourceInclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(sourceInclusions);
+            toolSettings.SourceInclusionsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.SourceInclusions"/></em></p>
+        ///   <p>Comma separated list of source files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings RemoveSourceInclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> sourceInclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(sourceInclusions);
+            toolSettings.SourceInclusionsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region TestFileExclusions
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.TestFileExclusions"/> to a new list</em></p>
+        ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings SetTestFileExclusions(this SonarScannerBeginSettings toolSettings, params string[] testFileExclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TestFileExclusionsInternal = testFileExclusions.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.TestFileExclusions"/> to a new list</em></p>
+        ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings SetTestFileExclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> testFileExclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TestFileExclusionsInternal = testFileExclusions.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.TestFileExclusions"/></em></p>
+        ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings AddTestFileExclusions(this SonarScannerBeginSettings toolSettings, params string[] testFileExclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TestFileExclusionsInternal.AddRange(testFileExclusions);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.TestFileExclusions"/></em></p>
+        ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings AddTestFileExclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> testFileExclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TestFileExclusionsInternal.AddRange(testFileExclusions);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="SonarScannerBeginSettings.TestFileExclusions"/></em></p>
+        ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings ClearTestFileExclusions(this SonarScannerBeginSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TestFileExclusionsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.TestFileExclusions"/></em></p>
+        ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings RemoveTestFileExclusions(this SonarScannerBeginSettings toolSettings, params string[] testFileExclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(testFileExclusions);
+            toolSettings.TestFileExclusionsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.TestFileExclusions"/></em></p>
+        ///   <p>Comma separated list of test files to exclude from analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings RemoveTestFileExclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> testFileExclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(testFileExclusions);
+            toolSettings.TestFileExclusionsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region TestFileInclusions
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.TestFileInclusions"/> to a new list</em></p>
+        ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings SetTestFileInclusions(this SonarScannerBeginSettings toolSettings, params string[] testFileInclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TestFileInclusionsInternal = testFileInclusions.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.TestFileInclusions"/> to a new list</em></p>
+        ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings SetTestFileInclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> testFileInclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TestFileInclusionsInternal = testFileInclusions.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.TestFileInclusions"/></em></p>
+        ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings AddTestFileInclusions(this SonarScannerBeginSettings toolSettings, params string[] testFileInclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TestFileInclusionsInternal.AddRange(testFileInclusions);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="SonarScannerBeginSettings.TestFileInclusions"/></em></p>
+        ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings AddTestFileInclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> testFileInclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TestFileInclusionsInternal.AddRange(testFileInclusions);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="SonarScannerBeginSettings.TestFileInclusions"/></em></p>
+        ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings ClearTestFileInclusions(this SonarScannerBeginSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TestFileInclusionsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.TestFileInclusions"/></em></p>
+        ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings RemoveTestFileInclusions(this SonarScannerBeginSettings toolSettings, params string[] testFileInclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(testFileInclusions);
+            toolSettings.TestFileInclusionsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="SonarScannerBeginSettings.TestFileInclusions"/></em></p>
+        ///   <p>Comma separated list of test files to include in analysis scope. Supports wildcards (*, **, ?).</p>
+        /// </summary>
+        [Pure]
+        public static SonarScannerBeginSettings RemoveTestFileInclusions(this SonarScannerBeginSettings toolSettings, IEnumerable<string> testFileInclusions)
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(testFileInclusions);
+            toolSettings.TestFileInclusionsInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion

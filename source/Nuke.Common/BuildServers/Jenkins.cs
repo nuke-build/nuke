@@ -29,6 +29,11 @@ namespace Nuke.Common.BuildServers
         }
 
         /// <summary>
+        /// Name of the branch for which this Pipeline is executing, for example <em>master</em>.
+        /// </summary>
+        public string BranchName => Variable("BRANCH_NAME");
+
+        /// <summary>
         /// The current build display name, such as "#14".
         /// </summary>
         public string BuilDisplayName => Variable("BUILD_DISPLAY_NAME");
@@ -42,6 +47,11 @@ namespace Nuke.Common.BuildServers
         /// The current build tag, such as "jenkins-nuke-14".
         /// </summary>
         public string BuildTag => Variable("BUILD_TAG");
+
+        /// <summary>
+        /// An identifier corresponding to some kind of change request, such as a pull request number.
+        /// </summary>
+        public string ChangeId => Variable("CHANGE_ID");
 
         /// <summary>
         /// The number of the executor this build is running on, Equals '0' for first executor.
