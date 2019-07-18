@@ -19,6 +19,7 @@
 - Matthias Koch
 - Michael Bisbjerg
 - Mikhail Filippov
+- Peter Palotas
 - raphasle
 - Rob Van Uden
 - Robert Schili
