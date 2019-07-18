@@ -26,5 +26,6 @@
 - Sebastian Karasek
 - Stefan Bertels
 - TdMxm
+- Todor Todorov
 - Vladislav Khapin
 - Yuuki Wesp
