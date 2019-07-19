@@ -44,8 +44,11 @@ namespace Nuke.Common.ProjectModel
                 var solutionFolders = primitiveProjects.OfType<SolutionFolder>().ToList();
                 foreach (var (projectGuid, solutionFolderGuid) in projectToSolutionFolder)
                 {
-                    var project = primitiveProjects.SingleOrDefault(x => x.ProjectId == projectGuid).NotNull("project != null");
-                    var solutionFolder = solutionFolders.SingleOrDefault(x => x.ProjectId == solutionFolderGuid).NotNull("solutionFolder != null");
+                    var project = primitiveProjects.SingleOrDefault(x => x.ProjectId == projectGuid)
+                        .NotNull($"Project with guid '{projectGuid}' not found.");
+                    var solutionFolder = solutionFolders.SingleOrDefault(x => x.ProjectId == solutionFolderGuid)
+                        .NotNull($"Solution folder with guid '{solutionFolderGuid}' not found.");
+
                     solution.SetSolutionFolder(solutionFolder, project);
                 }
             }
