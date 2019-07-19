@@ -14,7 +14,7 @@ Founded in April 2017, NUKE is a free, open-source build automation system for C
 
 Thanks to all the great people who've contributed to the project! 
 
-[![Contributors](https://opencollective.com/nuke/contributors.svg?button=false&avatarHeight=75)](CONTRIBUTORS.md)
+[![Contributors](https://opencollective.com/nuke/contributors.svg?button=false&avatarHeight=75&width=1400)](CONTRIBUTORS.md)
 
 # Backers & Sponsors
 
@@ -23,7 +23,7 @@ Thanks to all the great people who've contributed to the project!
 
 This project is driven by contributors investing their private free time. If it helps you improving your productivity and thus financial situation, please consider becoming a [backer](https://opencollective.com/nuke/order/7399) (individuals) or [sponsor](https://opencollective.com/nuke/order/7400) (companies). Your monetary contributions will be used to further promote the project (website, stickers, cups). Additional profits will be forwarded to non-profit associations.
 
-<!--<img src="https://opencollective.com/nuke/sponsor.svg?width=890&avatarHeight=50&button=false"><img src="https://opencollective.com/nuke/backer.svg?width=890&avatarHeight=50&button=false">-->
+<img src="https://opencollective.com/nuke/sponsor.svg?avatarHeight=100&button=false"><img src="https://opencollective.com/nuke/backer.svg?&avatarHeight=100&button=false">
 
 # Acknowledgements
 
