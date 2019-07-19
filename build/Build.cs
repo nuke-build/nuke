@@ -41,7 +41,6 @@ partial class Build : NukeBuild
 
     [Parameter("ApiKey for the specified source")] readonly string ApiKey;
     [Parameter] readonly string Source = "https://api.nuget.org/v3/index.json";
-    [Parameter] readonly string SymbolSource = "https://nuget.smbsrc.net/";
 
     [Parameter("Gitter authtoken")] readonly string GitterAuthToken;
     [Parameter("Slack webhook")] readonly string SlackWebhook;
@@ -173,8 +172,6 @@ partial class Build : NukeBuild
             DotNetNuGetPush(s => s
                     .SetSource(Source)
                     .SetApiKey(ApiKey)
-                    .SetSymbolSource(SymbolSource)
-                    .SetSymbolApiKey(ApiKey)
                     .CombineWith(
                         OutputDirectory.GlobFiles("*.nupkg").NotEmpty(), (cs, v) => cs
                             .SetTargetPath(v)),
