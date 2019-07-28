@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.21.2] / 2019-07-28
+- Fixed validation to exclude requirements of skipped targets
+- Fixed solution serialization to include malicious project GUID in error message
+
 ## [0.21.1] / 2019-07-19
 - Fixed logging of warnings
 
@@ -379,7 +383,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/common/compare/0.21.1...HEAD
+[vNext]: https://github.com/nuke-build/common/compare/0.21.2...HEAD
+[0.21.2]: https://github.com/nuke-build/common/compare/0.21.1...0.21.2
 [0.21.1]: https://github.com/nuke-build/common/compare/0.21.0...0.21.1
 [0.21.0]: https://github.com/nuke-build/common/compare/0.20.1...0.21.0
 [0.20.1]: https://github.com/nuke-build/common/compare/0.20.0...0.20.1
