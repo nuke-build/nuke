@@ -25,11 +25,9 @@ namespace Nuke.Common.Execution
 
         public static void Execute(NukeBuild build, [CanBeNull] IReadOnlyCollection<string> skippedTargets)
         {
-            var invocationHash = GetInvocationHash();
-            var previouslyExecutedTargets = GetPreviouslyExecutedTargets(invocationHash);
-            File.WriteAllLines(BuildAttemptFile, new[] { invocationHash });
-
             MarkSkippedTargets(build, skippedTargets);
+            RequirementService.ValidateRequirements(build, build.ExecutingTargets.ToList());
+            var previouslyExecutedTargets = UpdateInvocationHash();
 
             BuildManager.CancellationHandler += ExecuteAssuredTargets;
 
@@ -48,6 +46,35 @@ namespace Nuke.Common.Execution
                 var assuredTargets = build.ExecutionPlan.Where(x => x.AssuredAfterFailure && x.Status == ExecutionStatus.NotRun);
                 assuredTargets.ForEach(x => Execute(build, x, previouslyExecutedTargets, failureMode: true));
             }
+        }
+
+        private static IReadOnlyCollection<string> UpdateInvocationHash()
+        {
+            var continueParameterName = ParameterService.Instance.GetParameterName(() => NukeBuild.Continue);
+            var invocation = EnvironmentInfo.CommandLineArguments
+                .Where(x => !x.StartsWith("-") || x.TrimStart("-").EqualsOrdinalIgnoreCase(continueParameterName))
+                .JoinSpace();
+            var invocationHash = invocation.GetMD5Hash();
+
+            IReadOnlyCollection<string> GetPreviouslyExecutedTargets()
+            {
+                if (!NukeBuild.Continue ||
+                    !File.Exists(BuildAttemptFile))
+                    return new string[0];
+
+                var previousBuild = File.ReadAllLines(BuildAttemptFile);
+                if (previousBuild.FirstOrDefault() != invocationHash)
+                {
+                    Logger.Warn("Build invocation changed. Starting over...");
+                    return new string[0];
+                }
+
+                return previousBuild.Skip(1).ToArray();
+            }
+
+            var previouslyExecutedTargets = GetPreviouslyExecutedTargets();
+            File.WriteAllLines(BuildAttemptFile, new[] { invocationHash });
+            return previouslyExecutedTargets;
         }
 
         private static void Execute(
@@ -157,31 +184,6 @@ namespace Nuke.Common.Execution
             }
 
             return target.SkipReason != null;
-        }
-
-        private static string GetInvocationHash()
-        {
-            var continueParameterName = ParameterService.Instance.GetParameterName(() => NukeBuild.Continue);
-            var invocation = EnvironmentInfo.CommandLineArguments
-                .Where(x => !x.StartsWith("-") || x.TrimStart("-").EqualsOrdinalIgnoreCase(continueParameterName))
-                .JoinSpace();
-            return invocation.GetMD5Hash();
-        }
-
-        private static IReadOnlyCollection<string> GetPreviouslyExecutedTargets(string invocationHash)
-        {
-            if (!NukeBuild.Continue ||
-                !File.Exists(BuildAttemptFile))
-                return new string[0];
-
-            var previousBuild = File.ReadAllLines(BuildAttemptFile);
-            if (previousBuild.FirstOrDefault() != invocationHash)
-            {
-                Logger.Warn("Build invocation changed. Starting over...");
-                return new string[0];
-            }
-
-            return previousBuild.Skip(1).ToArray();
         }
 
         private static void AppendToBuildAttemptFile(string value)

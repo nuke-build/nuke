@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -15,9 +16,9 @@ namespace Nuke.Common.Execution
     /// </summary>
     internal static class RequirementService
     {
-        public static void ValidateRequirements(NukeBuild build)
+        public static void ValidateRequirements(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executingTargets)
         {
-            foreach (var target in build.ExecutionPlan)
+            foreach (var target in executingTargets)
             foreach (var requirement in target.Requirements)
             {
                 if (requirement is Expression<Func<bool>> boolExpression)
