@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed validation to exclude requirements of skipped targets
+- Fixed solution serialization to include malicious project GUID in error message
 
 ## [0.21.1] / 2019-07-19
 - Fixed logging of warnings
