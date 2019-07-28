@@ -69,7 +69,6 @@ namespace Nuke.Common.Execution
                 CancellationHandler += Finish;
 
                 InjectionUtility.InjectValues(build, x => !x.IsFast);
-                RequirementService.ValidateRequirements(build);
 
                 build.OnBuildInitialized();
 
