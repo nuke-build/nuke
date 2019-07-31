@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/CloudFoundry.json
-// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -58,20 +58,20 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;appName&gt;</c> via <see cref="CloudFoundryPushSettings.AppName"/></li>
-        ///     <li><c>--docker-username</c> via <see cref="CloudFoundryPushSettings.DockerUsername"/></li>
-        ///     <li><c>--droplet</c> via <see cref="CloudFoundryPushSettings.Droplet"/></li>
-        ///     <li><c>--no-manifest</c> via <see cref="CloudFoundryPushSettings.IgnoreManifest"/></li>
-        ///     <li><c>--no-route</c> via <see cref="CloudFoundryPushSettings.NoRoute"/></li>
-        ///     <li><c>--no-start</c> via <see cref="CloudFoundryPushSettings.NoStart"/></li>
-        ///     <li><c>--random-route</c> via <see cref="CloudFoundryPushSettings.RandomRoute"/></li>
-        ///     <li><c>--route-path</c> via <see cref="CloudFoundryPushSettings.RoutePath"/></li>
         ///     <li><c>-b</c> via <see cref="CloudFoundryPushSettings.Buildpack"/></li>
         ///     <li><c>-c</c> via <see cref="CloudFoundryPushSettings.Command"/></li>
         ///     <li><c>-d</c> via <see cref="CloudFoundryPushSettings.Domain"/></li>
+        ///     <li><c>--docker-username</c> via <see cref="CloudFoundryPushSettings.DockerUsername"/></li>
+        ///     <li><c>--droplet</c> via <see cref="CloudFoundryPushSettings.Droplet"/></li>
         ///     <li><c>-f</c> via <see cref="CloudFoundryPushSettings.Manifest"/></li>
         ///     <li><c>-n</c> via <see cref="CloudFoundryPushSettings.Hostname"/></li>
+        ///     <li><c>--no-manifest</c> via <see cref="CloudFoundryPushSettings.IgnoreManifest"/></li>
+        ///     <li><c>--no-route</c> via <see cref="CloudFoundryPushSettings.NoRoute"/></li>
+        ///     <li><c>--no-start</c> via <see cref="CloudFoundryPushSettings.NoStart"/></li>
         ///     <li><c>-o</c> via <see cref="CloudFoundryPushSettings.DockerImage"/></li>
         ///     <li><c>-p</c> via <see cref="CloudFoundryPushSettings.Path"/></li>
+        ///     <li><c>--random-route</c> via <see cref="CloudFoundryPushSettings.RandomRoute"/></li>
+        ///     <li><c>--route-path</c> via <see cref="CloudFoundryPushSettings.RoutePath"/></li>
         ///     <li><c>-s</c> via <see cref="CloudFoundryPushSettings.Stack"/></li>
         ///     <li><c>-t</c> via <see cref="CloudFoundryPushSettings.StartupTimeout"/></li>
         ///     <li><c>-u</c> via <see cref="CloudFoundryPushSettings.HealthCheckType"/></li>
@@ -91,20 +91,20 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;appName&gt;</c> via <see cref="CloudFoundryPushSettings.AppName"/></li>
-        ///     <li><c>--docker-username</c> via <see cref="CloudFoundryPushSettings.DockerUsername"/></li>
-        ///     <li><c>--droplet</c> via <see cref="CloudFoundryPushSettings.Droplet"/></li>
-        ///     <li><c>--no-manifest</c> via <see cref="CloudFoundryPushSettings.IgnoreManifest"/></li>
-        ///     <li><c>--no-route</c> via <see cref="CloudFoundryPushSettings.NoRoute"/></li>
-        ///     <li><c>--no-start</c> via <see cref="CloudFoundryPushSettings.NoStart"/></li>
-        ///     <li><c>--random-route</c> via <see cref="CloudFoundryPushSettings.RandomRoute"/></li>
-        ///     <li><c>--route-path</c> via <see cref="CloudFoundryPushSettings.RoutePath"/></li>
         ///     <li><c>-b</c> via <see cref="CloudFoundryPushSettings.Buildpack"/></li>
         ///     <li><c>-c</c> via <see cref="CloudFoundryPushSettings.Command"/></li>
         ///     <li><c>-d</c> via <see cref="CloudFoundryPushSettings.Domain"/></li>
+        ///     <li><c>--docker-username</c> via <see cref="CloudFoundryPushSettings.DockerUsername"/></li>
+        ///     <li><c>--droplet</c> via <see cref="CloudFoundryPushSettings.Droplet"/></li>
         ///     <li><c>-f</c> via <see cref="CloudFoundryPushSettings.Manifest"/></li>
         ///     <li><c>-n</c> via <see cref="CloudFoundryPushSettings.Hostname"/></li>
+        ///     <li><c>--no-manifest</c> via <see cref="CloudFoundryPushSettings.IgnoreManifest"/></li>
+        ///     <li><c>--no-route</c> via <see cref="CloudFoundryPushSettings.NoRoute"/></li>
+        ///     <li><c>--no-start</c> via <see cref="CloudFoundryPushSettings.NoStart"/></li>
         ///     <li><c>-o</c> via <see cref="CloudFoundryPushSettings.DockerImage"/></li>
         ///     <li><c>-p</c> via <see cref="CloudFoundryPushSettings.Path"/></li>
+        ///     <li><c>--random-route</c> via <see cref="CloudFoundryPushSettings.RandomRoute"/></li>
+        ///     <li><c>--route-path</c> via <see cref="CloudFoundryPushSettings.RoutePath"/></li>
         ///     <li><c>-s</c> via <see cref="CloudFoundryPushSettings.Stack"/></li>
         ///     <li><c>-t</c> via <see cref="CloudFoundryPushSettings.StartupTimeout"/></li>
         ///     <li><c>-u</c> via <see cref="CloudFoundryPushSettings.HealthCheckType"/></li>
@@ -134,11 +134,11 @@ namespace Nuke.Common.Tools.CloudFoundry
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
-        ///     <li><c>--skip-ssl-validation</c> via <see cref="CloudFoundryLoginSettings.SkipSslValidation"/></li>
         ///     <li><c>-a</c> via <see cref="CloudFoundryLoginSettings.ApiEndpoint"/></li>
         ///     <li><c>-o</c> via <see cref="CloudFoundryLoginSettings.Org"/></li>
         ///     <li><c>-p</c> via <see cref="CloudFoundryLoginSettings.Password"/></li>
         ///     <li><c>-s</c> via <see cref="CloudFoundryLoginSettings.Space"/></li>
+        ///     <li><c>--skip-ssl-validation</c> via <see cref="CloudFoundryLoginSettings.SkipSslValidation"/></li>
         ///     <li><c>-u</c> via <see cref="CloudFoundryLoginSettings.Username"/></li>
         ///   </ul>
         /// </remarks>
@@ -153,17 +153,283 @@ namespace Nuke.Common.Tools.CloudFoundry
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
-        ///     <li><c>--skip-ssl-validation</c> via <see cref="CloudFoundryLoginSettings.SkipSslValidation"/></li>
         ///     <li><c>-a</c> via <see cref="CloudFoundryLoginSettings.ApiEndpoint"/></li>
         ///     <li><c>-o</c> via <see cref="CloudFoundryLoginSettings.Org"/></li>
         ///     <li><c>-p</c> via <see cref="CloudFoundryLoginSettings.Password"/></li>
         ///     <li><c>-s</c> via <see cref="CloudFoundryLoginSettings.Space"/></li>
+        ///     <li><c>--skip-ssl-validation</c> via <see cref="CloudFoundryLoginSettings.SkipSslValidation"/></li>
         ///     <li><c>-u</c> via <see cref="CloudFoundryLoginSettings.Username"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(CloudFoundryLoginSettings Settings, IReadOnlyCollection<Output> Output)> CloudFoundryLogin(CombinatorialConfigure<CloudFoundryLoginSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
             return configurator.Invoke(CloudFoundryLogin, CloudFoundryLogger, degreeOfParallelism, completeOnFailure);
+        }
+        /// <summary>
+        ///   <p>Authenticate non-interactively</p>
+        ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
+        /// </summary>
+        public static IReadOnlyCollection<Output> CloudFoundryAuth(CloudFoundryAuthSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new CloudFoundryAuthSettings();
+            var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary>
+        ///   <p>Authenticate non-interactively</p>
+        ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;password&gt;</c> via <see cref="CloudFoundryAuthSettings.Password"/></li>
+        ///     <li><c>&lt;username&gt;</c> via <see cref="CloudFoundryAuthSettings.Username"/></li>
+        ///     <li><c>--client-credentials</c> via <see cref="CloudFoundryAuthSettings.ClientCredentials"/></li>
+        ///     <li><c>-origin</c> via <see cref="CloudFoundryAuthSettings.Origin"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> CloudFoundryAuth(Configure<CloudFoundryAuthSettings> configurator)
+        {
+            return CloudFoundryAuth(configurator(new CloudFoundryAuthSettings()));
+        }
+        /// <summary>
+        ///   <p>Authenticate non-interactively</p>
+        ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;password&gt;</c> via <see cref="CloudFoundryAuthSettings.Password"/></li>
+        ///     <li><c>&lt;username&gt;</c> via <see cref="CloudFoundryAuthSettings.Username"/></li>
+        ///     <li><c>--client-credentials</c> via <see cref="CloudFoundryAuthSettings.ClientCredentials"/></li>
+        ///     <li><c>-origin</c> via <see cref="CloudFoundryAuthSettings.Origin"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(CloudFoundryAuthSettings Settings, IReadOnlyCollection<Output> Output)> CloudFoundryAuth(CombinatorialConfigure<CloudFoundryAuthSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+        {
+            return configurator.Invoke(CloudFoundryAuth, CloudFoundryLogger, degreeOfParallelism, completeOnFailure);
+        }
+        /// <summary>
+        ///   <p>Change or view the instance count, disk space limit, and memory limit for an app</p>
+        ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
+        /// </summary>
+        public static IReadOnlyCollection<Output> CloudFoundryScale(CloudFoundryScaleSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new CloudFoundryScaleSettings();
+            var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary>
+        ///   <p>Change or view the instance count, disk space limit, and memory limit for an app</p>
+        ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>-i</c> via <see cref="CloudFoundryScaleSettings.Instances"/></li>
+        ///     <li><c>-k</c> via <see cref="CloudFoundryScaleSettings.Disk"/></li>
+        ///     <li><c>-m</c> via <see cref="CloudFoundryScaleSettings.Memory"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> CloudFoundryScale(Configure<CloudFoundryScaleSettings> configurator)
+        {
+            return CloudFoundryScale(configurator(new CloudFoundryScaleSettings()));
+        }
+        /// <summary>
+        ///   <p>Change or view the instance count, disk space limit, and memory limit for an app</p>
+        ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>-i</c> via <see cref="CloudFoundryScaleSettings.Instances"/></li>
+        ///     <li><c>-k</c> via <see cref="CloudFoundryScaleSettings.Disk"/></li>
+        ///     <li><c>-m</c> via <see cref="CloudFoundryScaleSettings.Memory"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(CloudFoundryScaleSettings Settings, IReadOnlyCollection<Output> Output)> CloudFoundryScale(CombinatorialConfigure<CloudFoundryScaleSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+        {
+            return configurator.Invoke(CloudFoundryScale, CloudFoundryLogger, degreeOfParallelism, completeOnFailure);
+        }
+        /// <summary>
+        ///   <p>Set an env variable for an app</p>
+        ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
+        /// </summary>
+        public static IReadOnlyCollection<Output> CloudFoundrySetEnv(CloudFoundrySetEnvSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new CloudFoundrySetEnvSettings();
+            var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary>
+        ///   <p>Set an env variable for an app</p>
+        ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;appName&gt;</c> via <see cref="CloudFoundrySetEnvSettings.AppName"/></li>
+        ///     <li><c>&lt;envVarName&gt;</c> via <see cref="CloudFoundrySetEnvSettings.EnvVarName"/></li>
+        ///     <li><c>&lt;envVarValue&gt;</c> via <see cref="CloudFoundrySetEnvSettings.EnvVarValue"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> CloudFoundrySetEnv(Configure<CloudFoundrySetEnvSettings> configurator)
+        {
+            return CloudFoundrySetEnv(configurator(new CloudFoundrySetEnvSettings()));
+        }
+        /// <summary>
+        ///   <p>Set an env variable for an app</p>
+        ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;appName&gt;</c> via <see cref="CloudFoundrySetEnvSettings.AppName"/></li>
+        ///     <li><c>&lt;envVarName&gt;</c> via <see cref="CloudFoundrySetEnvSettings.EnvVarName"/></li>
+        ///     <li><c>&lt;envVarValue&gt;</c> via <see cref="CloudFoundrySetEnvSettings.EnvVarValue"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(CloudFoundrySetEnvSettings Settings, IReadOnlyCollection<Output> Output)> CloudFoundrySetEnv(CombinatorialConfigure<CloudFoundrySetEnvSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+        {
+            return configurator.Invoke(CloudFoundrySetEnv, CloudFoundryLogger, degreeOfParallelism, completeOnFailure);
+        }
+        /// <summary>
+        ///   <p>Executes a request to the targeted API endpoint</p>
+        ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
+        /// </summary>
+        public static IReadOnlyCollection<Output> CloudFoundryCurl(CloudFoundryCurlSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new CloudFoundryCurlSettings();
+            var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary>
+        ///   <p>Executes a request to the targeted API endpoint</p>
+        ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;path&gt;</c> via <see cref="CloudFoundryCurlSettings.Path"/></li>
+        ///     <li><c>-d</c> via <see cref="CloudFoundryCurlSettings.HttpData"/></li>
+        ///     <li><c>-i</c> via <see cref="CloudFoundryCurlSettings.IncludeResponseHeaders"/></li>
+        ///     <li><c>-X</c> via <see cref="CloudFoundryCurlSettings.HttpMethod"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> CloudFoundryCurl(Configure<CloudFoundryCurlSettings> configurator)
+        {
+            return CloudFoundryCurl(configurator(new CloudFoundryCurlSettings()));
+        }
+        /// <summary>
+        ///   <p>Executes a request to the targeted API endpoint</p>
+        ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;path&gt;</c> via <see cref="CloudFoundryCurlSettings.Path"/></li>
+        ///     <li><c>-d</c> via <see cref="CloudFoundryCurlSettings.HttpData"/></li>
+        ///     <li><c>-i</c> via <see cref="CloudFoundryCurlSettings.IncludeResponseHeaders"/></li>
+        ///     <li><c>-X</c> via <see cref="CloudFoundryCurlSettings.HttpMethod"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(CloudFoundryCurlSettings Settings, IReadOnlyCollection<Output> Output)> CloudFoundryCurl(CombinatorialConfigure<CloudFoundryCurlSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+        {
+            return configurator.Invoke(CloudFoundryCurl, CloudFoundryLogger, degreeOfParallelism, completeOnFailure);
+        }
+        /// <summary>
+        ///   <p>Set or view target api url</p>
+        ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
+        /// </summary>
+        public static IReadOnlyCollection<Output> CloudFoundryApi(CloudFoundryApiSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new CloudFoundryApiSettings();
+            var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary>
+        ///   <p>Set or view target api url</p>
+        ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;url&gt;</c> via <see cref="CloudFoundryApiSettings.Url"/></li>
+        ///     <li><c>--skip-ssl-validation</c> via <see cref="CloudFoundryApiSettings.SkipSSLValidation"/></li>
+        ///     <li><c>--unset</c> via <see cref="CloudFoundryApiSettings.Unset"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> CloudFoundryApi(Configure<CloudFoundryApiSettings> configurator)
+        {
+            return CloudFoundryApi(configurator(new CloudFoundryApiSettings()));
+        }
+        /// <summary>
+        ///   <p>Set or view target api url</p>
+        ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;url&gt;</c> via <see cref="CloudFoundryApiSettings.Url"/></li>
+        ///     <li><c>--skip-ssl-validation</c> via <see cref="CloudFoundryApiSettings.SkipSSLValidation"/></li>
+        ///     <li><c>--unset</c> via <see cref="CloudFoundryApiSettings.Unset"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(CloudFoundryApiSettings Settings, IReadOnlyCollection<Output> Output)> CloudFoundryApi(CombinatorialConfigure<CloudFoundryApiSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+        {
+            return configurator.Invoke(CloudFoundryApi, CloudFoundryLogger, degreeOfParallelism, completeOnFailure);
+        }
+        /// <summary>
+        ///   <p>Make a user-provided service instance available to CF apps</p>
+        ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
+        /// </summary>
+        public static IReadOnlyCollection<Output> CloudFoundryCreateUserProvidedService(CloudFoundryCreateUserProvidedServiceSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new CloudFoundryCreateUserProvidedServiceSettings();
+            var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary>
+        ///   <p>Make a user-provided service instance available to CF apps</p>
+        ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;serviceInstanceName&gt;</c> via <see cref="CloudFoundryCreateUserProvidedServiceSettings.ServiceInstanceName"/></li>
+        ///     <li><c>-l</c> via <see cref="CloudFoundryCreateUserProvidedServiceSettings.LogUrl"/></li>
+        ///     <li><c>-p</c> via <see cref="CloudFoundryCreateUserProvidedServiceSettings.Credentials"/></li>
+        ///     <li><c>-r</c> via <see cref="CloudFoundryCreateUserProvidedServiceSettings.RouteUrl"/></li>
+        ///     <li><c>-t</c> via <see cref="CloudFoundryCreateUserProvidedServiceSettings.Tags"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> CloudFoundryCreateUserProvidedService(Configure<CloudFoundryCreateUserProvidedServiceSettings> configurator)
+        {
+            return CloudFoundryCreateUserProvidedService(configurator(new CloudFoundryCreateUserProvidedServiceSettings()));
+        }
+        /// <summary>
+        ///   <p>Make a user-provided service instance available to CF apps</p>
+        ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;serviceInstanceName&gt;</c> via <see cref="CloudFoundryCreateUserProvidedServiceSettings.ServiceInstanceName"/></li>
+        ///     <li><c>-l</c> via <see cref="CloudFoundryCreateUserProvidedServiceSettings.LogUrl"/></li>
+        ///     <li><c>-p</c> via <see cref="CloudFoundryCreateUserProvidedServiceSettings.Credentials"/></li>
+        ///     <li><c>-r</c> via <see cref="CloudFoundryCreateUserProvidedServiceSettings.RouteUrl"/></li>
+        ///     <li><c>-t</c> via <see cref="CloudFoundryCreateUserProvidedServiceSettings.Tags"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(CloudFoundryCreateUserProvidedServiceSettings Settings, IReadOnlyCollection<Output> Output)> CloudFoundryCreateUserProvidedService(CombinatorialConfigure<CloudFoundryCreateUserProvidedServiceSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+        {
+            return configurator.Invoke(CloudFoundryCreateUserProvidedService, CloudFoundryLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary>
         ///   <p>Start an app</p>
@@ -572,49 +838,6 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static IEnumerable<(CloudFoundryUnbindServiceSettings Settings, IReadOnlyCollection<Output> Output)> CloudFoundryUnbindService(CombinatorialConfigure<CloudFoundryUnbindServiceSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
         {
             return configurator.Invoke(CloudFoundryUnbindService, CloudFoundryLogger, degreeOfParallelism, completeOnFailure);
-        }
-        /// <summary>
-        ///   <p>Set an env variable for an app</p>
-        ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
-        /// </summary>
-        public static IReadOnlyCollection<Output> CloudFoundrySetEnv(CloudFoundrySetEnvSettings toolSettings = null)
-        {
-            toolSettings = toolSettings ?? new CloudFoundrySetEnvSettings();
-            var process = ProcessTasks.StartProcess(toolSettings);
-            process.AssertZeroExitCode();
-            return process.Output;
-        }
-        /// <summary>
-        ///   <p>Set an env variable for an app</p>
-        ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
-        /// </summary>
-        /// <remarks>
-        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-        ///   <ul>
-        ///     <li><c>&lt;appName&gt;</c> via <see cref="CloudFoundrySetEnvSettings.AppName"/></li>
-        ///     <li><c>&lt;environmentalVariableName&gt;</c> via <see cref="CloudFoundrySetEnvSettings.EnvironmentalVariableName"/></li>
-        ///     <li><c>&lt;environmentalVariableValue&gt;</c> via <see cref="CloudFoundrySetEnvSettings.EnvironmentalVariableValue"/></li>
-        ///   </ul>
-        /// </remarks>
-        public static IReadOnlyCollection<Output> CloudFoundrySetEnv(Configure<CloudFoundrySetEnvSettings> configurator)
-        {
-            return CloudFoundrySetEnv(configurator(new CloudFoundrySetEnvSettings()));
-        }
-        /// <summary>
-        ///   <p>Set an env variable for an app</p>
-        ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
-        /// </summary>
-        /// <remarks>
-        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-        ///   <ul>
-        ///     <li><c>&lt;appName&gt;</c> via <see cref="CloudFoundrySetEnvSettings.AppName"/></li>
-        ///     <li><c>&lt;environmentalVariableName&gt;</c> via <see cref="CloudFoundrySetEnvSettings.EnvironmentalVariableName"/></li>
-        ///     <li><c>&lt;environmentalVariableValue&gt;</c> via <see cref="CloudFoundrySetEnvSettings.EnvironmentalVariableValue"/></li>
-        ///   </ul>
-        /// </remarks>
-        public static IEnumerable<(CloudFoundrySetEnvSettings Settings, IReadOnlyCollection<Output> Output)> CloudFoundrySetEnv(CombinatorialConfigure<CloudFoundrySetEnvSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
-        {
-            return configurator.Invoke(CloudFoundrySetEnv, CloudFoundryLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary>
         ///   <p>Remove an env variable from an app</p>
@@ -1092,6 +1315,229 @@ namespace Nuke.Common.Tools.CloudFoundry
         }
     }
     #endregion
+    #region CloudFoundryAuthSettings
+    /// <summary>
+    ///   Used within <see cref="CloudFoundryTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class CloudFoundryAuthSettings : ToolSettings
+    {
+        /// <summary>
+        ///   Path to the CloudFoundry executable.
+        /// </summary>
+        public override string ToolPath => base.ToolPath ?? CloudFoundryTasks.CloudFoundryPath;
+        public override Action<OutputType, string> CustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public virtual string Username { get; internal set; }
+        public virtual string Password { get; internal set; }
+        public virtual string Origin { get; internal set; }
+        /// <summary>
+        ///   Use (non-user) service account (also called client credentials)
+        /// </summary>
+        public virtual bool? ClientCredentials { get; internal set; }
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("auth")
+              .Add("{value}", Username)
+              .Add("{value}", Password, secret: true)
+              .Add("-origin {value}", Origin)
+              .Add("--client-credentials", ClientCredentials);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
+    #region CloudFoundryScaleSettings
+    /// <summary>
+    ///   Used within <see cref="CloudFoundryTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class CloudFoundryScaleSettings : ToolSettings
+    {
+        /// <summary>
+        ///   Path to the CloudFoundry executable.
+        /// </summary>
+        public override string ToolPath => base.ToolPath ?? CloudFoundryTasks.CloudFoundryPath;
+        public override Action<OutputType, string> CustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        /// <summary>
+        ///   Number of instances
+        /// </summary>
+        public virtual string Instances { get; internal set; }
+        /// <summary>
+        ///   Disk limit (e.g. 256M, 1024M, 1G)
+        /// </summary>
+        public virtual string Disk { get; internal set; }
+        /// <summary>
+        ///   Memory limit (e.g. 256M, 1024M, 1G)
+        /// </summary>
+        public virtual string Memory { get; internal set; }
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("scale -f")
+              .Add("-i {value}", Instances)
+              .Add("-k {value}", Disk)
+              .Add("-m {value}", Memory);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
+    #region CloudFoundrySetEnvSettings
+    /// <summary>
+    ///   Used within <see cref="CloudFoundryTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class CloudFoundrySetEnvSettings : ToolSettings
+    {
+        /// <summary>
+        ///   Path to the CloudFoundry executable.
+        /// </summary>
+        public override string ToolPath => base.ToolPath ?? CloudFoundryTasks.CloudFoundryPath;
+        public override Action<OutputType, string> CustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        /// <summary>
+        ///   App Name
+        /// </summary>
+        public virtual string AppName { get; internal set; }
+        /// <summary>
+        ///   Name of the environmental variable
+        /// </summary>
+        public virtual string EnvVarName { get; internal set; }
+        /// <summary>
+        ///   Value of the environmental variable
+        /// </summary>
+        public virtual string EnvVarValue { get; internal set; }
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("set-env")
+              .Add("{value}", AppName)
+              .Add("{value}", EnvVarName)
+              .Add("{value}", EnvVarValue);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
+    #region CloudFoundryCurlSettings
+    /// <summary>
+    ///   Used within <see cref="CloudFoundryTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class CloudFoundryCurlSettings : ToolSettings
+    {
+        /// <summary>
+        ///   Path to the CloudFoundry executable.
+        /// </summary>
+        public override string ToolPath => base.ToolPath ?? CloudFoundryTasks.CloudFoundryPath;
+        public override Action<OutputType, string> CustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        /// <summary>
+        ///   CAPI Path to invoke (ex. /v2/info)
+        /// </summary>
+        public virtual string Path { get; internal set; }
+        /// <summary>
+        ///   Include response headers in the output
+        /// </summary>
+        public virtual bool? IncludeResponseHeaders { get; internal set; }
+        /// <summary>
+        ///   HTTP method (GET,POST,PUT,DELETE,etc). Default is GET
+        /// </summary>
+        public virtual string HttpMethod { get; internal set; }
+        /// <summary>
+        ///   HTTP method (GET,POST,PUT,DELETE,etc). Default is GET
+        /// </summary>
+        public virtual string HttpData { get; internal set; }
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("curl")
+              .Add("{value}", Path)
+              .Add("-i", IncludeResponseHeaders)
+              .Add("-X {value}", HttpMethod)
+              .Add("-d {value}", HttpData);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
+    #region CloudFoundryApiSettings
+    /// <summary>
+    ///   Used within <see cref="CloudFoundryTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class CloudFoundryApiSettings : ToolSettings
+    {
+        /// <summary>
+        ///   Path to the CloudFoundry executable.
+        /// </summary>
+        public override string ToolPath => base.ToolPath ?? CloudFoundryTasks.CloudFoundryPath;
+        public override Action<OutputType, string> CustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public virtual string Url { get; internal set; }
+        /// <summary>
+        ///   Skip verification of the API endpoint
+        /// </summary>
+        public virtual bool? SkipSSLValidation { get; internal set; }
+        /// <summary>
+        ///   Remove all api endpoint targeting
+        /// </summary>
+        public virtual bool? Unset { get; internal set; }
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("api")
+              .Add("{value}", Url)
+              .Add("--skip-ssl-validation", SkipSSLValidation)
+              .Add("--unset", Unset);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
+    #region CloudFoundryCreateUserProvidedServiceSettings
+    /// <summary>
+    ///   Used within <see cref="CloudFoundryTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class CloudFoundryCreateUserProvidedServiceSettings : ToolSettings
+    {
+        /// <summary>
+        ///   Path to the CloudFoundry executable.
+        /// </summary>
+        public override string ToolPath => base.ToolPath ?? CloudFoundryTasks.CloudFoundryPath;
+        public override Action<OutputType, string> CustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public virtual string ServiceInstanceName { get; internal set; }
+        /// <summary>
+        ///   URL to which requests for bound routes will be forwarded. Scheme for this URL must be https
+        /// </summary>
+        public virtual string RouteUrl { get; internal set; }
+        /// <summary>
+        ///   URL to which logs for bound applications will be streamed
+        /// </summary>
+        public virtual string LogUrl { get; internal set; }
+        /// <summary>
+        ///   Comma separated list of tags to assign to service. ex. 'db, relational'
+        /// </summary>
+        public virtual string Tags { get; internal set; }
+        protected override Arguments ConfigureArguments(Arguments arguments)
+        {
+            arguments
+              .Add("cups")
+              .Add("{value}", ServiceInstanceName)
+              .Add("-p {value}", GetCredentials(), customValue: true)
+              .Add("-r {value}", RouteUrl)
+              .Add("-l {value}", LogUrl)
+              .Add("-t {value}", Tags);
+            return base.ConfigureArguments(arguments);
+        }
+    }
+    #endregion
     #region CloudFoundryStartSettings
     /// <summary>
     ///   Used within <see cref="CloudFoundryTasks"/>.
@@ -1377,34 +1823,6 @@ namespace Nuke.Common.Tools.CloudFoundry
               .Add("bind-service")
               .Add("{value}", AppName)
               .Add("{value}", ServiceInstance);
-            return base.ConfigureArguments(arguments);
-        }
-    }
-    #endregion
-    #region CloudFoundrySetEnvSettings
-    /// <summary>
-    ///   Used within <see cref="CloudFoundryTasks"/>.
-    /// </summary>
-    [PublicAPI]
-    [ExcludeFromCodeCoverage]
-    [Serializable]
-    public partial class CloudFoundrySetEnvSettings : ToolSettings
-    {
-        /// <summary>
-        ///   Path to the CloudFoundry executable.
-        /// </summary>
-        public override string ToolPath => base.ToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> CustomLogger => CloudFoundryTasks.CloudFoundryLogger;
-        public virtual string AppName { get; internal set; }
-        public virtual string EnvironmentalVariableName { get; internal set; }
-        public virtual string EnvironmentalVariableValue { get; internal set; }
-        protected override Arguments ConfigureArguments(Arguments arguments)
-        {
-            arguments
-              .Add("set-env")
-              .Add("{value}", AppName)
-              .Add("{value}", EnvironmentalVariableName)
-              .Add("{value}", EnvironmentalVariableValue);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -2542,6 +2960,692 @@ namespace Nuke.Common.Tools.CloudFoundry
         #endregion
     }
     #endregion
+    #region CloudFoundryAuthSettingsExtensions
+    /// <summary>
+    ///   Used within <see cref="CloudFoundryTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class CloudFoundryAuthSettingsExtensions
+    {
+        #region Username
+        /// <summary>
+        ///   <p><em>Sets <see cref="CloudFoundryAuthSettings.Username"/></em></p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryAuthSettings SetUsername(this CloudFoundryAuthSettings toolSettings, string username)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Username = username;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="CloudFoundryAuthSettings.Username"/></em></p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryAuthSettings ResetUsername(this CloudFoundryAuthSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Username = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Password
+        /// <summary>
+        ///   <p><em>Sets <see cref="CloudFoundryAuthSettings.Password"/></em></p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryAuthSettings SetPassword(this CloudFoundryAuthSettings toolSettings, string password)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Password = password;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="CloudFoundryAuthSettings.Password"/></em></p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryAuthSettings ResetPassword(this CloudFoundryAuthSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Password = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Origin
+        /// <summary>
+        ///   <p><em>Sets <see cref="CloudFoundryAuthSettings.Origin"/></em></p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryAuthSettings SetOrigin(this CloudFoundryAuthSettings toolSettings, string origin)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Origin = origin;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="CloudFoundryAuthSettings.Origin"/></em></p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryAuthSettings ResetOrigin(this CloudFoundryAuthSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Origin = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ClientCredentials
+        /// <summary>
+        ///   <p><em>Sets <see cref="CloudFoundryAuthSettings.ClientCredentials"/></em></p>
+        ///   <p>Use (non-user) service account (also called client credentials)</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryAuthSettings SetClientCredentials(this CloudFoundryAuthSettings toolSettings, bool? clientCredentials)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ClientCredentials = clientCredentials;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="CloudFoundryAuthSettings.ClientCredentials"/></em></p>
+        ///   <p>Use (non-user) service account (also called client credentials)</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryAuthSettings ResetClientCredentials(this CloudFoundryAuthSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ClientCredentials = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="CloudFoundryAuthSettings.ClientCredentials"/></em></p>
+        ///   <p>Use (non-user) service account (also called client credentials)</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryAuthSettings EnableClientCredentials(this CloudFoundryAuthSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ClientCredentials = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="CloudFoundryAuthSettings.ClientCredentials"/></em></p>
+        ///   <p>Use (non-user) service account (also called client credentials)</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryAuthSettings DisableClientCredentials(this CloudFoundryAuthSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ClientCredentials = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="CloudFoundryAuthSettings.ClientCredentials"/></em></p>
+        ///   <p>Use (non-user) service account (also called client credentials)</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryAuthSettings ToggleClientCredentials(this CloudFoundryAuthSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ClientCredentials = !toolSettings.ClientCredentials;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region CloudFoundryScaleSettingsExtensions
+    /// <summary>
+    ///   Used within <see cref="CloudFoundryTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class CloudFoundryScaleSettingsExtensions
+    {
+        #region Instances
+        /// <summary>
+        ///   <p><em>Sets <see cref="CloudFoundryScaleSettings.Instances"/></em></p>
+        ///   <p>Number of instances</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryScaleSettings SetInstances(this CloudFoundryScaleSettings toolSettings, string instances)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Instances = instances;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="CloudFoundryScaleSettings.Instances"/></em></p>
+        ///   <p>Number of instances</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryScaleSettings ResetInstances(this CloudFoundryScaleSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Instances = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Disk
+        /// <summary>
+        ///   <p><em>Sets <see cref="CloudFoundryScaleSettings.Disk"/></em></p>
+        ///   <p>Disk limit (e.g. 256M, 1024M, 1G)</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryScaleSettings SetDisk(this CloudFoundryScaleSettings toolSettings, string disk)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Disk = disk;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="CloudFoundryScaleSettings.Disk"/></em></p>
+        ///   <p>Disk limit (e.g. 256M, 1024M, 1G)</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryScaleSettings ResetDisk(this CloudFoundryScaleSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Disk = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Memory
+        /// <summary>
+        ///   <p><em>Sets <see cref="CloudFoundryScaleSettings.Memory"/></em></p>
+        ///   <p>Memory limit (e.g. 256M, 1024M, 1G)</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryScaleSettings SetMemory(this CloudFoundryScaleSettings toolSettings, string memory)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Memory = memory;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="CloudFoundryScaleSettings.Memory"/></em></p>
+        ///   <p>Memory limit (e.g. 256M, 1024M, 1G)</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryScaleSettings ResetMemory(this CloudFoundryScaleSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Memory = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region CloudFoundrySetEnvSettingsExtensions
+    /// <summary>
+    ///   Used within <see cref="CloudFoundryTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class CloudFoundrySetEnvSettingsExtensions
+    {
+        #region AppName
+        /// <summary>
+        ///   <p><em>Sets <see cref="CloudFoundrySetEnvSettings.AppName"/></em></p>
+        ///   <p>App Name</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundrySetEnvSettings SetAppName(this CloudFoundrySetEnvSettings toolSettings, string appName)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AppName = appName;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="CloudFoundrySetEnvSettings.AppName"/></em></p>
+        ///   <p>App Name</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundrySetEnvSettings ResetAppName(this CloudFoundrySetEnvSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AppName = null;
+            return toolSettings;
+        }
+        #endregion
+        #region EnvVarName
+        /// <summary>
+        ///   <p><em>Sets <see cref="CloudFoundrySetEnvSettings.EnvVarName"/></em></p>
+        ///   <p>Name of the environmental variable</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundrySetEnvSettings SetEnvVarName(this CloudFoundrySetEnvSettings toolSettings, string envVarName)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnvVarName = envVarName;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="CloudFoundrySetEnvSettings.EnvVarName"/></em></p>
+        ///   <p>Name of the environmental variable</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundrySetEnvSettings ResetEnvVarName(this CloudFoundrySetEnvSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnvVarName = null;
+            return toolSettings;
+        }
+        #endregion
+        #region EnvVarValue
+        /// <summary>
+        ///   <p><em>Sets <see cref="CloudFoundrySetEnvSettings.EnvVarValue"/></em></p>
+        ///   <p>Value of the environmental variable</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundrySetEnvSettings SetEnvVarValue(this CloudFoundrySetEnvSettings toolSettings, string envVarValue)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnvVarValue = envVarValue;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="CloudFoundrySetEnvSettings.EnvVarValue"/></em></p>
+        ///   <p>Value of the environmental variable</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundrySetEnvSettings ResetEnvVarValue(this CloudFoundrySetEnvSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.EnvVarValue = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region CloudFoundryCurlSettingsExtensions
+    /// <summary>
+    ///   Used within <see cref="CloudFoundryTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class CloudFoundryCurlSettingsExtensions
+    {
+        #region Path
+        /// <summary>
+        ///   <p><em>Sets <see cref="CloudFoundryCurlSettings.Path"/></em></p>
+        ///   <p>CAPI Path to invoke (ex. /v2/info)</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryCurlSettings SetPath(this CloudFoundryCurlSettings toolSettings, string path)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Path = path;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="CloudFoundryCurlSettings.Path"/></em></p>
+        ///   <p>CAPI Path to invoke (ex. /v2/info)</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryCurlSettings ResetPath(this CloudFoundryCurlSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Path = null;
+            return toolSettings;
+        }
+        #endregion
+        #region IncludeResponseHeaders
+        /// <summary>
+        ///   <p><em>Sets <see cref="CloudFoundryCurlSettings.IncludeResponseHeaders"/></em></p>
+        ///   <p>Include response headers in the output</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryCurlSettings SetIncludeResponseHeaders(this CloudFoundryCurlSettings toolSettings, bool? includeResponseHeaders)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeResponseHeaders = includeResponseHeaders;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="CloudFoundryCurlSettings.IncludeResponseHeaders"/></em></p>
+        ///   <p>Include response headers in the output</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryCurlSettings ResetIncludeResponseHeaders(this CloudFoundryCurlSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeResponseHeaders = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="CloudFoundryCurlSettings.IncludeResponseHeaders"/></em></p>
+        ///   <p>Include response headers in the output</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryCurlSettings EnableIncludeResponseHeaders(this CloudFoundryCurlSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeResponseHeaders = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="CloudFoundryCurlSettings.IncludeResponseHeaders"/></em></p>
+        ///   <p>Include response headers in the output</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryCurlSettings DisableIncludeResponseHeaders(this CloudFoundryCurlSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeResponseHeaders = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="CloudFoundryCurlSettings.IncludeResponseHeaders"/></em></p>
+        ///   <p>Include response headers in the output</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryCurlSettings ToggleIncludeResponseHeaders(this CloudFoundryCurlSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeResponseHeaders = !toolSettings.IncludeResponseHeaders;
+            return toolSettings;
+        }
+        #endregion
+        #region HttpMethod
+        /// <summary>
+        ///   <p><em>Sets <see cref="CloudFoundryCurlSettings.HttpMethod"/></em></p>
+        ///   <p>HTTP method (GET,POST,PUT,DELETE,etc). Default is GET</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryCurlSettings SetHttpMethod(this CloudFoundryCurlSettings toolSettings, string httpMethod)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HttpMethod = httpMethod;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="CloudFoundryCurlSettings.HttpMethod"/></em></p>
+        ///   <p>HTTP method (GET,POST,PUT,DELETE,etc). Default is GET</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryCurlSettings ResetHttpMethod(this CloudFoundryCurlSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HttpMethod = null;
+            return toolSettings;
+        }
+        #endregion
+        #region HttpData
+        /// <summary>
+        ///   <p><em>Sets <see cref="CloudFoundryCurlSettings.HttpData"/></em></p>
+        ///   <p>HTTP method (GET,POST,PUT,DELETE,etc). Default is GET</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryCurlSettings SetHttpData(this CloudFoundryCurlSettings toolSettings, string httpData)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HttpData = httpData;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="CloudFoundryCurlSettings.HttpData"/></em></p>
+        ///   <p>HTTP method (GET,POST,PUT,DELETE,etc). Default is GET</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryCurlSettings ResetHttpData(this CloudFoundryCurlSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.HttpData = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region CloudFoundryApiSettingsExtensions
+    /// <summary>
+    ///   Used within <see cref="CloudFoundryTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class CloudFoundryApiSettingsExtensions
+    {
+        #region Url
+        /// <summary>
+        ///   <p><em>Sets <see cref="CloudFoundryApiSettings.Url"/></em></p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryApiSettings SetUrl(this CloudFoundryApiSettings toolSettings, string url)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Url = url;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="CloudFoundryApiSettings.Url"/></em></p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryApiSettings ResetUrl(this CloudFoundryApiSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Url = null;
+            return toolSettings;
+        }
+        #endregion
+        #region SkipSSLValidation
+        /// <summary>
+        ///   <p><em>Sets <see cref="CloudFoundryApiSettings.SkipSSLValidation"/></em></p>
+        ///   <p>Skip verification of the API endpoint</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryApiSettings SetSkipSSLValidation(this CloudFoundryApiSettings toolSettings, bool? skipSSLValidation)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipSSLValidation = skipSSLValidation;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="CloudFoundryApiSettings.SkipSSLValidation"/></em></p>
+        ///   <p>Skip verification of the API endpoint</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryApiSettings ResetSkipSSLValidation(this CloudFoundryApiSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipSSLValidation = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="CloudFoundryApiSettings.SkipSSLValidation"/></em></p>
+        ///   <p>Skip verification of the API endpoint</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryApiSettings EnableSkipSSLValidation(this CloudFoundryApiSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipSSLValidation = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="CloudFoundryApiSettings.SkipSSLValidation"/></em></p>
+        ///   <p>Skip verification of the API endpoint</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryApiSettings DisableSkipSSLValidation(this CloudFoundryApiSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipSSLValidation = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="CloudFoundryApiSettings.SkipSSLValidation"/></em></p>
+        ///   <p>Skip verification of the API endpoint</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryApiSettings ToggleSkipSSLValidation(this CloudFoundryApiSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SkipSSLValidation = !toolSettings.SkipSSLValidation;
+            return toolSettings;
+        }
+        #endregion
+        #region Unset
+        /// <summary>
+        ///   <p><em>Sets <see cref="CloudFoundryApiSettings.Unset"/></em></p>
+        ///   <p>Remove all api endpoint targeting</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryApiSettings SetUnset(this CloudFoundryApiSettings toolSettings, bool? unset)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Unset = unset;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="CloudFoundryApiSettings.Unset"/></em></p>
+        ///   <p>Remove all api endpoint targeting</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryApiSettings ResetUnset(this CloudFoundryApiSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Unset = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="CloudFoundryApiSettings.Unset"/></em></p>
+        ///   <p>Remove all api endpoint targeting</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryApiSettings EnableUnset(this CloudFoundryApiSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Unset = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="CloudFoundryApiSettings.Unset"/></em></p>
+        ///   <p>Remove all api endpoint targeting</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryApiSettings DisableUnset(this CloudFoundryApiSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Unset = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="CloudFoundryApiSettings.Unset"/></em></p>
+        ///   <p>Remove all api endpoint targeting</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryApiSettings ToggleUnset(this CloudFoundryApiSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Unset = !toolSettings.Unset;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region CloudFoundryCreateUserProvidedServiceSettingsExtensions
+    /// <summary>
+    ///   Used within <see cref="CloudFoundryTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class CloudFoundryCreateUserProvidedServiceSettingsExtensions
+    {
+        #region ServiceInstanceName
+        /// <summary>
+        ///   <p><em>Sets <see cref="CloudFoundryCreateUserProvidedServiceSettings.ServiceInstanceName"/></em></p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryCreateUserProvidedServiceSettings SetServiceInstanceName(this CloudFoundryCreateUserProvidedServiceSettings toolSettings, string serviceInstanceName)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ServiceInstanceName = serviceInstanceName;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="CloudFoundryCreateUserProvidedServiceSettings.ServiceInstanceName"/></em></p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryCreateUserProvidedServiceSettings ResetServiceInstanceName(this CloudFoundryCreateUserProvidedServiceSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ServiceInstanceName = null;
+            return toolSettings;
+        }
+        #endregion
+        #region RouteUrl
+        /// <summary>
+        ///   <p><em>Sets <see cref="CloudFoundryCreateUserProvidedServiceSettings.RouteUrl"/></em></p>
+        ///   <p>URL to which requests for bound routes will be forwarded. Scheme for this URL must be https</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryCreateUserProvidedServiceSettings SetRouteUrl(this CloudFoundryCreateUserProvidedServiceSettings toolSettings, string routeUrl)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RouteUrl = routeUrl;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="CloudFoundryCreateUserProvidedServiceSettings.RouteUrl"/></em></p>
+        ///   <p>URL to which requests for bound routes will be forwarded. Scheme for this URL must be https</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryCreateUserProvidedServiceSettings ResetRouteUrl(this CloudFoundryCreateUserProvidedServiceSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.RouteUrl = null;
+            return toolSettings;
+        }
+        #endregion
+        #region LogUrl
+        /// <summary>
+        ///   <p><em>Sets <see cref="CloudFoundryCreateUserProvidedServiceSettings.LogUrl"/></em></p>
+        ///   <p>URL to which logs for bound applications will be streamed</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryCreateUserProvidedServiceSettings SetLogUrl(this CloudFoundryCreateUserProvidedServiceSettings toolSettings, string logUrl)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogUrl = logUrl;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="CloudFoundryCreateUserProvidedServiceSettings.LogUrl"/></em></p>
+        ///   <p>URL to which logs for bound applications will be streamed</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryCreateUserProvidedServiceSettings ResetLogUrl(this CloudFoundryCreateUserProvidedServiceSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LogUrl = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Tags
+        /// <summary>
+        ///   <p><em>Sets <see cref="CloudFoundryCreateUserProvidedServiceSettings.Tags"/></em></p>
+        ///   <p>Comma separated list of tags to assign to service. ex. 'db, relational'</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryCreateUserProvidedServiceSettings SetTags(this CloudFoundryCreateUserProvidedServiceSettings toolSettings, string tags)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Tags = tags;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="CloudFoundryCreateUserProvidedServiceSettings.Tags"/></em></p>
+        ///   <p>Comma separated list of tags to assign to service. ex. 'db, relational'</p>
+        /// </summary>
+        [Pure]
+        public static CloudFoundryCreateUserProvidedServiceSettings ResetTags(this CloudFoundryCreateUserProvidedServiceSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Tags = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
     #region CloudFoundryStartSettingsExtensions
     /// <summary>
     ///   Used within <see cref="CloudFoundryTasks"/>.
@@ -3165,82 +4269,6 @@ namespace Nuke.Common.Tools.CloudFoundry
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ServiceInstance = null;
-            return toolSettings;
-        }
-        #endregion
-    }
-    #endregion
-    #region CloudFoundrySetEnvSettingsExtensions
-    /// <summary>
-    ///   Used within <see cref="CloudFoundryTasks"/>.
-    /// </summary>
-    [PublicAPI]
-    [ExcludeFromCodeCoverage]
-    public static partial class CloudFoundrySetEnvSettingsExtensions
-    {
-        #region AppName
-        /// <summary>
-        ///   <p><em>Sets <see cref="CloudFoundrySetEnvSettings.AppName"/></em></p>
-        /// </summary>
-        [Pure]
-        public static CloudFoundrySetEnvSettings SetAppName(this CloudFoundrySetEnvSettings toolSettings, string appName)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.AppName = appName;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <see cref="CloudFoundrySetEnvSettings.AppName"/></em></p>
-        /// </summary>
-        [Pure]
-        public static CloudFoundrySetEnvSettings ResetAppName(this CloudFoundrySetEnvSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.AppName = null;
-            return toolSettings;
-        }
-        #endregion
-        #region EnvironmentalVariableName
-        /// <summary>
-        ///   <p><em>Sets <see cref="CloudFoundrySetEnvSettings.EnvironmentalVariableName"/></em></p>
-        /// </summary>
-        [Pure]
-        public static CloudFoundrySetEnvSettings SetEnvironmentalVariableName(this CloudFoundrySetEnvSettings toolSettings, string environmentalVariableName)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.EnvironmentalVariableName = environmentalVariableName;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <see cref="CloudFoundrySetEnvSettings.EnvironmentalVariableName"/></em></p>
-        /// </summary>
-        [Pure]
-        public static CloudFoundrySetEnvSettings ResetEnvironmentalVariableName(this CloudFoundrySetEnvSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.EnvironmentalVariableName = null;
-            return toolSettings;
-        }
-        #endregion
-        #region EnvironmentalVariableValue
-        /// <summary>
-        ///   <p><em>Sets <see cref="CloudFoundrySetEnvSettings.EnvironmentalVariableValue"/></em></p>
-        /// </summary>
-        [Pure]
-        public static CloudFoundrySetEnvSettings SetEnvironmentalVariableValue(this CloudFoundrySetEnvSettings toolSettings, string environmentalVariableValue)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.EnvironmentalVariableValue = environmentalVariableValue;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <see cref="CloudFoundrySetEnvSettings.EnvironmentalVariableValue"/></em></p>
-        /// </summary>
-        [Pure]
-        public static CloudFoundrySetEnvSettings ResetEnvironmentalVariableValue(this CloudFoundrySetEnvSettings toolSettings)
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.EnvironmentalVariableValue = null;
             return toolSettings;
         }
         #endregion

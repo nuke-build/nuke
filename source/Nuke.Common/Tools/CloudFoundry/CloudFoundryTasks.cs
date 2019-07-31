@@ -20,9 +20,7 @@ namespace Nuke.Common.Tools.CloudFoundry
     {
         public static string GetToolPath()
         {
-            return ToolPathResolver.GetPackageExecutable(
-                $"CloudFoundry.CommandLine.{CurrentOsRid}",
-                IsWindows ? "cf.exe" : "cf");
+            return ToolPathResolver.GetPackageExecutable($"CloudFoundry.CommandLine.{CurrentOsRid}", IsWindows ? "cf.exe" : "cf");
         }
 
         private static bool IsWindows => Environment.OSVersion.Platform == PlatformID.Win32NT;
@@ -45,6 +43,10 @@ namespace Nuke.Common.Tools.CloudFoundry
             }
         }
 
+        /// <summary>
+        ///   Create task which will complete when creation of an asynchronous service is complete.
+        ///   This uses polling to query it repeatedly
+        /// </summary>
         public static async Task CloudFoundryEnsureServiceReady(string serviceInstance)
         {
             bool IsCreating()
