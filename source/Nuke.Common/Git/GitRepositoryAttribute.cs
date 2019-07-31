@@ -43,7 +43,7 @@ namespace Nuke.Common.Git
                 Jenkins.Instance?.GitBranch ??
                 Jenkins.Instance?.BranchName ??
                 TeamCity.Instance?.BranchName ??
-                TeamServices.Instance?.SourceBranchName ??
+                AzureDevOps.Instance?.SourceBranchName ??
                 Travis.Instance?.Branch ??
                 GitTasks.GitCurrentBranch();
         }

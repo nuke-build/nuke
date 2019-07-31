@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -9,15 +9,15 @@ using JetBrains.Annotations;
 namespace Nuke.Common.BuildServers
 {
     [PublicAPI]
-    public enum TeamServicesRepositoryType
+    public enum AzureDevOpsRepositoryType
     {
         /// <summary>
-        /// <a href="https://docs.microsoft.com/en-us/vsts/git/overview">TFS Git repository</a>.
+        /// <a href="https://docs.microsoft.com/en-us/azure/devops/repos/git/overview?view=azure-devops">Azure DevOps Git repository</a>.
         /// </summary>
-        TfsGit,
+        AzureRepos,
 
         /// <summary>
-        /// <a href="https://docs.microsoft.com/en-us/vsts/tfvc/overview">Team Foundation Version Control</a>.
+        /// <a href="https://docs.microsoft.com/en-us/azure/devops/repos/tfvc/overview?view=azure-devops">Team Foundation Version Control</a>.
         /// </summary>
         TfsVersionControl,
 

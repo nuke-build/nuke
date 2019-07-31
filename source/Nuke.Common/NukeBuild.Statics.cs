@@ -144,8 +144,8 @@ namespace Nuke.Common
                 return HostType.Jenkins;
             if (TeamCity.IsRunningTeamCity)
                 return HostType.TeamCity;
-            if (TeamServices.IsRunningTeamServices)
-                return HostType.TeamServices;
+            if (AzureDevOps.IsRunningAzureDevOps)
+                return HostType.AzureDevOps;
             if (Bitrise.IsRunningBitrise)
                 return HostType.Bitrise;
             if (GitLab.IsRunningGitLab)

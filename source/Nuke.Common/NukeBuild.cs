@@ -107,8 +107,8 @@ namespace Nuke.Common
                     case HostType.TeamCity:
                         innerOutputSink = new TeamCityOutputSink(new TeamCity());
                         break;
-                    case HostType.TeamServices:
-                        innerOutputSink = new TeamServicesOutputSink(new TeamServices());
+                    case HostType.AzureDevOps:
+                        innerOutputSink = new AzureDevOpsOutputSink(new AzureDevOps());
                         break;
                     default:
                         innerOutputSink = ConsoleOutputSink.Default;

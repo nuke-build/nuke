@@ -45,9 +45,9 @@ namespace Nuke.Common.Tests
             AssertProperty(instance, property);
         }
 
-        [BuildServerTheory(typeof(TeamServices))]
-        [MemberData(nameof(Properties), typeof(TeamServices))]
-        public void TestTeamServices(PropertyInfo property, TeamServices instance)
+        [BuildServerTheory(typeof(AzureDevOps))]
+        [MemberData(nameof(Properties), typeof(AzureDevOps))]
+        public void TestTeamServices(PropertyInfo property, AzureDevOps instance)
         {
             AssertProperty(instance, property);
         }

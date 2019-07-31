@@ -4,18 +4,14 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 
-namespace Nuke.Common
+namespace Nuke.Common.BuildServers
 {
-    public enum HostType
+    [PublicAPI]
+    public enum AzureDevOpsIssueType
     {
-        Console,
-        TeamCity,
-        AzureDevOps,
-        Bitrise,
-        AppVeyor,
-        Jenkins,
-        Travis,
-        GitLab
+        Warning,
+        Error
     }
 }

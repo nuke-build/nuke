@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -12,25 +12,26 @@ namespace Nuke.Common.BuildServers
 {
     [UsedImplicitly]
     [ExcludeFromCodeCoverage]
-    internal class TeamServicesOutputSink : AnsiColorOutputSink
+    internal class AzureDevOpsOutputSink : AnsiColorOutputSink
     {
-        private readonly TeamServices _teamServices;
+        private readonly AzureDevOps _azureDevOps;
 
-        internal TeamServicesOutputSink(TeamServices teamServices)
+        internal AzureDevOpsOutputSink(AzureDevOps azureDevOps)
         {
-            _teamServices = teamServices;
+            WriteTest();
+            _azureDevOps = azureDevOps;
         }
 
         public override void WriteWarning(string text, string details = null)
         {
-            _teamServices.LogIssue(TeamServicesIssueType.Warning, text);
+            _azureDevOps.LogIssue(AzureDevOpsIssueType.Warning, text);
             if (details != null)
                 WriteNormal(details);
         }
 
         public override void WriteError(string text, string details = null)
         {
-            _teamServices.LogIssue(TeamServicesIssueType.Error, text);
+            _azureDevOps.LogIssue(AzureDevOpsIssueType.Error, text);
             if (details != null)
                 WriteNormal(details);
         }

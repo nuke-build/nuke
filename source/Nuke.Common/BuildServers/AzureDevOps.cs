@@ -3,7 +3,9 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using static Nuke.Common.EnvironmentInfo;
@@ -11,22 +13,26 @@ using static Nuke.Common.EnvironmentInfo;
 namespace Nuke.Common.BuildServers
 {
     /// <summary>
-    /// Interface according to the <a href="https://www.visualstudio.com/en-us/docs/build/define/variables">official website</a>.
+    /// Interface according to the <a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&amp;tabs=yaml">official website</a>.
+    /// <a href="https://github.com/Microsoft/azure-pipelines-tasks/blob/master/docs/authoring/commands.md">Azure Pipeline Tasks Documentation</a>
     /// </summary>
     [PublicAPI]
     [BuildServer]
     [ExcludeFromCodeCoverage]
-    public class TeamServices
+    public class AzureDevOps
     {
-        private static Lazy<TeamServices> s_instance = new Lazy<TeamServices>(() => new TeamServices());
+        private static Lazy<AzureDevOps> s_instance = new Lazy<AzureDevOps>(() => new AzureDevOps());
 
-        public static TeamServices Instance => NukeBuild.Host == HostType.TeamServices ? s_instance.Value : null;
+        public static AzureDevOps Instance => NukeBuild.Host == HostType.AzureDevOps ? s_instance.Value : null;
 
-        internal static bool IsRunningTeamServices => Environment.GetEnvironmentVariable("TF_BUILD") != null;
+        internal static bool IsRunningAzureDevOps => Environment.GetEnvironmentVariable("TF_BUILD") != null;
+
+        internal static bool IsHostedAgent =>
+            !string.IsNullOrWhiteSpace(Variable("AGENT_NAME")) && Variable("AGENT_NAME").StartsWith("Hosted");
 
         private readonly Action<string> _messageSink;
 
-        internal TeamServices(Action<string> messageSink = null)
+        internal AzureDevOps(Action<string> messageSink = null)
         {
             _messageSink = messageSink ?? Console.WriteLine;
         }
@@ -34,7 +40,7 @@ namespace Nuke.Common.BuildServers
         public string AgentBuildDirectory => Variable("AGENT_BUILDDIRECTORY");
         public string AgentHomeDirectory => Variable("AGENT_HOMEDIRECTORY");
         public long AgentId => Variable<long>("AGENT_ID");
-        public TeamServicesJobStatus AgentJobStatus => Variable<TeamServicesJobStatus>("AGENT_JOBSTATUS");
+        public AzureDevOpsJobStatus AgentJobStatus => Variable<AzureDevOpsJobStatus>("AGENT_JOBSTATUS");
         public string AgentMachineName => Variable("AGENT_MACHINENAME");
         public string AgentName => Variable("AGENT_NAME");
         public string AgentWorkFolder => Variable("AGENT_WORKFOLDER");
@@ -47,11 +53,11 @@ namespace Nuke.Common.BuildServers
         public long DefinitionVersion => Variable<long>("BUILD_DEFINITIONVERSION");
         public string QueuedBy => Variable("BUILD_QUEUEDBY");
         public Guid QueuedById => Variable<Guid>("BUILD_QUEUEDBYID");
-        public TeamServicesBuildReason BuildReason => Variable<TeamServicesBuildReason>("BUILD_REASON");
+        public AzureDevOpsBuildReason BuildReason => Variable<AzureDevOpsBuildReason>("BUILD_REASON");
         public bool RepositoryClean => Variable<bool>("BUILD_REPOSITORY_CLEAN");
         public string RepositoryLocalPath => Variable("BUILD_REPOSITORY_LOCALPATH");
         public string RepositoryName => Variable("BUILD_REPOSITORY_NAME");
-        public TeamServicesRepositoryType RepositoryProvider => Variable<TeamServicesRepositoryType>("BUILD_REPOSITORY_PROVIDER");
+        public AzureDevOpsRepositoryType RepositoryProvider => Variable<AzureDevOpsRepositoryType>("BUILD_REPOSITORY_PROVIDER");
         [CanBeNull] public string RepositoryTfvcWorkspace => Variable("BUILD_REPOSITORY_TFVC_WORKSPACE");
         public string RepositoryUri => Variable("BUILD_REPOSITORY_URI");
         public string RequestedFor => Variable("BUILD_REQUESTEDFOR");
@@ -91,6 +97,23 @@ namespace Nuke.Common.BuildServers
             _messageSink($"##vso[build.addbuildtag]{buildTag}");
         }
 
+        public void UploadAzureDevOpsArtifacts(string containerFolder, string artifactName, string packageDirectory)
+        {
+            _messageSink($"##vso[artifact.upload containerfolder={containerFolder};artifactname={artifactName};]{packageDirectory}");
+        }
+
+        public void PublishAzureDevOpsTestResults(
+            IEnumerable<FileInfo> files,
+            string title,
+            bool mergeResults = false,
+            string platform = "x64",
+            string configuration = "Release",
+            string testType = "VSTest")
+        {
+            var resultFiles = string.Join(",", files.Select(x => x.FullName.Replace('\\', Path.DirectorySeparatorChar)));
+            _messageSink($"##vso[results.publish type={testType};mergeResults={mergeResults};platform={platform}4;config={configuration};runTitle='{title}';publishRunAttachments=true;resultFiles={resultFiles};]");
+        }
+
         public void LogError(
             string message,
             string sourcePath = null,
@@ -98,7 +121,7 @@ namespace Nuke.Common.BuildServers
             string columnNumber = null,
             string code = null)
         {
-            LogIssue(TeamServicesIssueType.Error, message, sourcePath, lineNumber, columnNumber, code);
+            LogIssue(AzureDevOpsIssueType.Error, message, sourcePath, lineNumber, columnNumber, code);
         }
 
         public void LogWarning(
@@ -108,11 +131,11 @@ namespace Nuke.Common.BuildServers
             string columnNumber = null,
             string code = null)
         {
-            LogIssue(TeamServicesIssueType.Warning, message, sourcePath, lineNumber, columnNumber, code);
+            LogIssue(AzureDevOpsIssueType.Warning, message, sourcePath, lineNumber, columnNumber, code);
         }
 
         public void LogIssue(
-            TeamServicesIssueType type,
+            AzureDevOpsIssueType type,
             string message,
             string sourcePath = null,
             string lineNumber = null,
@@ -135,13 +158,13 @@ namespace Nuke.Common.BuildServers
             _messageSink($"##vso[task.logissue {properties}]{message}");
         }
 
-        private string GetText(TeamServicesIssueType type)
+        private string GetText(AzureDevOpsIssueType type)
         {
             switch (type)
             {
-                case TeamServicesIssueType.Warning:
+                case AzureDevOpsIssueType.Warning:
                     return "warning";
-                case TeamServicesIssueType.Error:
+                case AzureDevOpsIssueType.Error:
                     return "error";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, message: null);
