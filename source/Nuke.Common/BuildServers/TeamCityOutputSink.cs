@@ -3,11 +3,13 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.BuildServers
 {
@@ -25,9 +27,22 @@ namespace Nuke.Common.BuildServers
 
         public override IDisposable WriteBlock(string text)
         {
+            var stopWatch = new Stopwatch();
+
             return DelegateDisposable.CreateBracket(
-                () => _teamCity.OpenBlock(text),
-                () => _teamCity.CloseBlock(text));
+                () =>
+                {
+                    _teamCity.OpenBlock(text);
+                    stopWatch.Start();
+                },
+                () =>
+                {
+                    _teamCity.CloseBlock(text);
+                    _teamCity.AddStatisticValue(
+                        $"NUKE_DURATION_{text.SplitCamelHumpsWithSeparator("_").ToUpper()}",
+                        stopWatch.ElapsedMilliseconds.ToString());
+                    stopWatch.Stop();
+                });
         }
     }
 }
