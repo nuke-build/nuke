@@ -16,7 +16,12 @@ namespace Nuke.Common.BuildServers
     internal class BitriseOutputSink : AnsiColorOutputSink
     {
         public BitriseOutputSink()
-            : base(traceCode: "37", informationCode: "36;1", warningCode: "33;1", errorCode: "31;1", successCode: "32;1")
+            : base(
+                traceCode: "37",
+                informationCode: "36;1",
+                warningCode: "33;1",
+                errorCode: "31;1",
+                successCode: "32;1")
         {
         }
 

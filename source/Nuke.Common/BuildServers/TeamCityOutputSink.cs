@@ -20,7 +20,12 @@ namespace Nuke.Common.BuildServers
         private readonly TeamCity _teamCity;
 
         public TeamCityOutputSink(TeamCity teamCity)
-            : base(traceCode: "37", informationCode: "36", warningCode: "33", errorCode: "31", successCode: "32")
+            : base(
+                traceCode: "37",
+                informationCode: "36",
+                warningCode: "33",
+                errorCode: "31",
+                successCode: "32")
         {
             _teamCity = teamCity;
         }

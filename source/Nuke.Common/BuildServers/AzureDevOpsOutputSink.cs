@@ -17,8 +17,13 @@ namespace Nuke.Common.BuildServers
         private readonly AzureDevOps _azureDevOps;
 
         internal AzureDevOpsOutputSink(AzureDevOps azureDevOps)
+            : base(
+                traceCode: "90",
+                informationCode: "36;1",
+                warningCode: "33;1",
+                errorCode: "31;1",
+                successCode: "32;1")
         {
-            WriteTest();
             _azureDevOps = azureDevOps;
         }
 
