@@ -155,6 +155,8 @@ namespace Nuke.Common.Execution
                         break;
                     case ExecutionStatus.Aborted:
                     case ExecutionStatus.NotRun:
+                        Logger.Warn(line);
+                        break;
                     case ExecutionStatus.Failed:
                         Logger.Error(line);
                         break;

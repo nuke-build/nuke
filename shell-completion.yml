@@ -7,12 +7,12 @@ GitterAuthToken:
 Help: 
 Host:
 - AppVeyor
+- AzureDevOps
 - Bitrise
 - Console
 - GitLab
 - Jenkins
 - TeamCity
-- TeamServices
 - Travis
 NoLogo: 
 Plan: 
