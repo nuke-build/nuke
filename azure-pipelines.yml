@@ -34,4 +34,4 @@ jobs:
         displayName: 'Run .\\build.ps1'
         inputs:
           script: |
-            .\build.ps1
+            powershell .\build.ps1
