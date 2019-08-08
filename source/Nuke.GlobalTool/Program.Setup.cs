@@ -16,6 +16,7 @@ using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.IO.PathConstruction;
+using static Nuke.Common.Utilities.TemplateUtility;
 
 namespace Nuke.GlobalTool
 {
@@ -181,7 +182,7 @@ namespace Nuke.GlobalTool
 
             TextTasks.WriteAllLines(
                 buildProjectFile,
-                TemplateUtility.FillTemplate(
+                FillTemplate(
                     GetTemplate($"_build.{projectFormat}.csproj"),
                     definitions,
                     replacements: GetDictionary(
@@ -200,30 +201,30 @@ namespace Nuke.GlobalTool
             {
                 TextTasks.WriteAllLines(
                     Path.Combine(buildDirectory, "packages.config"),
-                    TemplateUtility.FillTemplate(
+                    FillTemplate(
                         GetTemplate("_build.legacy.packages.config"),
                         replacements: GetDictionary(new { nukeVersion })));
             }
 
             TextTasks.WriteAllLines(
                 $"{buildProjectFile}.DotSettings",
-                TemplateUtility.FillTemplate(
+                FillTemplate(
                     GetTemplate("_build.csproj.DotSettings")));
 
             TextTasks.WriteAllLines(
                 Path.Combine(buildDirectory, ".editorconfig"),
-                TemplateUtility.FillTemplate(
+                FillTemplate(
                     GetTemplate(".editorconfig")));
 
             TextTasks.WriteAllLines(
                 Path.Combine(buildDirectory, "Build.cs"),
-                TemplateUtility.FillTemplate(
+                FillTemplate(
                     GetTemplate("Build.cs"),
                     definitions));
 
             TextTasks.WriteAllLines(
                 Path.Combine(EnvironmentInfo.WorkingDirectory, "build.ps1"),
-                TemplateUtility.FillTemplate(
+                FillTemplate(
                     GetTemplate($"build.{targetPlatform}.ps1"),
                     replacements: GetDictionary(
                         new
@@ -238,7 +239,7 @@ namespace Nuke.GlobalTool
 
             TextTasks.WriteAllLines(
                 Path.Combine(EnvironmentInfo.WorkingDirectory, "build.sh"),
-                TemplateUtility.FillTemplate(
+                FillTemplate(
                     GetTemplate($"build.{targetPlatform}.sh"),
                     replacements: GetDictionary(
                         new
@@ -273,7 +274,7 @@ namespace Nuke.GlobalTool
 
                 TextTasks.WriteAllLines(
                     Path.Combine(rootDirectory, "README.md"),
-                    TemplateUtility.FillTemplate(
+                    FillTemplate(
                         GetTemplate("README.md"),
                         replacements: GetDictionary(
                             new
@@ -286,7 +287,7 @@ namespace Nuke.GlobalTool
 
                 TextTasks.WriteAllLines(
                     Path.Combine(rootDirectory, "LICENSE"),
-                    TemplateUtility.FillTemplate(
+                    FillTemplate(
                         GetTemplate("LICENSE"),
                         replacements: GetDictionary(
                             new
@@ -297,7 +298,7 @@ namespace Nuke.GlobalTool
 
                 TextTasks.WriteAllLines(
                     Path.Combine(rootDirectory, "CHANGELOG.md"),
-                    TemplateUtility.FillTemplate(
+                    FillTemplate(
                         GetTemplate("CHANGELOG.md")));
 
                 TextTasks.WriteAllText(
@@ -366,17 +367,6 @@ namespace Nuke.GlobalTool
         private static string[] GetTemplate(string templateName)
         {
             return ResourceUtility.GetResourceAllLines<Program>($"templates.{templateName}");
-        }
-
-        // TODO: move to TemplateUtility
-        private static IReadOnlyDictionary<string, string> GetDictionary<T>(T obj)
-            where T : class
-        {
-            return obj != null
-                ? obj.ToPropertyDictionary(
-                    x => $"_{x.Name.SplitCamelHumps().Join(separator: '_').ToUpper()}_",
-                    x => x?.ToString() ?? string.Empty)
-                : new Dictionary<string, string>();
         }
     }
 }

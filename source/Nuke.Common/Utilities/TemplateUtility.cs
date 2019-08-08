@@ -15,6 +15,16 @@ namespace Nuke.Common.Utilities
     [PublicAPI]
     public static class TemplateUtility
     {
+        public static IReadOnlyDictionary<string, string> GetDictionary<T>(T obj)
+            where T : class
+        {
+            return obj != null
+                ? obj.ToPropertyDictionary(
+                    x => $"_{x.Name.SplitCamelHumpsWithSeparator("_").ToUpper()}_",
+                    x => x?.ToString() ?? string.Empty)
+                : new Dictionary<string, string>();
+        }
+
         public static void FillTemplateDirectoryRecursively(
             string directory,
             IReadOnlyCollection<string> definitions = null,
