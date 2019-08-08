@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.IO;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Utilities
@@ -15,6 +16,35 @@ namespace Nuke.Common.Utilities
     [PublicAPI]
     public static class TemplateUtility
     {
+        public static void AddRegion(List<string> content, string section, IEnumerable<string> lines)
+        {
+            var index = content.FindIndex(x => x.TrimStart().StartsWith(section)) + 1;
+            foreach (var line in lines)
+                content.Insert(index++, line);
+        }
+
+        public static ILookup<string, string> ExtractAndRemoveRegions(List<string> content, string beginPrefix, string endPrefix)
+        {
+            var regions = new LookupTable<string, string>(StringComparer.OrdinalIgnoreCase);
+
+            for (var i = 0; i < content.Count; i++)
+            {
+                if (!content[i].TrimStart().StartsWith(beginPrefix))
+                    continue;
+
+                var regionName = content[i].TrimStart().TrimStart(beginPrefix).TrimStart();
+                i++;
+
+                while (i < content.Count && !content[i].TrimStart().StartsWith(endPrefix))
+                {
+                    regions.Add(regionName, content[i]);
+                    content.RemoveAt(i);
+                }
+            }
+
+            return regions;
+        }
+
         public static IReadOnlyDictionary<string, string> GetDictionary<T>(T obj)
             where T : class
         {
