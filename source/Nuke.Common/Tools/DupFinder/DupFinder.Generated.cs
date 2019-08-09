@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/DupFinder.json
-// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.DupFinder
 {
+    /// <summary>
+    ///   <p>dupFinder is a free command line tool that finds duplicates in C# and Visual Basic .NET code - no more, no less. But being a JetBrains tool, dupFinder does it in a smart way. By default, it considers code fragments as duplicates not only if they are identical, but also if they are structurally similar, even if they contain different variables, fields, methods, types or literals. Of course, you can configure the allowed similarity as well as the minimum relative size of duplicated fragments.</p>
+    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/dupFinder.html">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class DupFinderTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.DupFinder
             ToolPathResolver.GetPackageExecutable("JetBrains.ReSharper.CommandLineTools", "dupfinder.exe");
         public static Action<OutputType, string> DupFinderLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   dupFinder is a free command line tool that finds duplicates in C# and Visual Basic .NET code - no more, no less. But being a JetBrains tool, dupFinder does it in a smart way. By default, it considers code fragments as duplicates not only if they are identical, but also if they are structurally similar, even if they contain different variables, fields, methods, types or literals. Of course, you can configure the allowed similarity as well as the minimum relative size of duplicated fragments.
+        ///   <p>dupFinder is a free command line tool that finds duplicates in C# and Visual Basic .NET code - no more, no less. But being a JetBrains tool, dupFinder does it in a smart way. By default, it considers code fragments as duplicates not only if they are identical, but also if they are structurally similar, even if they contain different variables, fields, methods, types or literals. Of course, you can configure the allowed similarity as well as the minimum relative size of duplicated fragments.</p>
+        ///   <p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/dupFinder.html">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> DupFinder(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,26 @@ namespace Nuke.Common.Tools.DupFinder
         ///   <p>dupFinder is a free command line tool that finds duplicates in C# and Visual Basic .NET code - no more, no less. But being a JetBrains tool, dupFinder does it in a smart way. By default, it considers code fragments as duplicates not only if they are identical, but also if they are structurally similar, even if they contain different variables, fields, methods, types or literals. Of course, you can configure the allowed similarity as well as the minimum relative size of duplicated fragments.</p>
         ///   <p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/dupFinder.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;source&gt;</c> via <see cref="DupFinderSettings.Source"/></li>
+        ///     <li><c>--config</c> via <see cref="DupFinderSettings.ConfigFile"/></li>
+        ///     <li><c>--config-create</c> via <see cref="DupFinderSettings.CreateConfigFile"/></li>
+        ///     <li><c>--discard-cost</c> via <see cref="DupFinderSettings.DiscardCost"/></li>
+        ///     <li><c>--discard-fields</c> via <see cref="DupFinderSettings.DiscardFields"/></li>
+        ///     <li><c>--discard-literals</c> via <see cref="DupFinderSettings.DiscardLiterals"/></li>
+        ///     <li><c>--discard-local-vars</c> via <see cref="DupFinderSettings.DiscardLocalVars"/></li>
+        ///     <li><c>--discard-types</c> via <see cref="DupFinderSettings.DiscardTypes"/></li>
+        ///     <li><c>--exclude</c> via <see cref="DupFinderSettings.ExcludeFiles"/></li>
+        ///     <li><c>--exclude-by-comment</c> via <see cref="DupFinderSettings.ExcludeComments"/></li>
+        ///     <li><c>--exclude-code-regions</c> via <see cref="DupFinderSettings.ExcludeCodeRegions"/></li>
+        ///     <li><c>--normalize-types</c> via <see cref="DupFinderSettings.NormalizeTypes"/></li>
+        ///     <li><c>--output</c> via <see cref="DupFinderSettings.OutputFile"/></li>
+        ///     <li><c>--properties</c> via <see cref="DupFinderSettings.Properties"/></li>
+        ///     <li><c>--show-text</c> via <see cref="DupFinderSettings.ShowText"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> DupFinder(DupFinderSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DupFinderSettings();

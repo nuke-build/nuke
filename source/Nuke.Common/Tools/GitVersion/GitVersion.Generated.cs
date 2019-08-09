@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/GitVersion.json
-// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.GitVersion
 {
+    /// <summary>
+    ///   <p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p>
+    ///   <p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class GitVersionTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.GitVersion
             ToolPathResolver.GetPackageExecutable("GitVersion.CommandLine.DotNetCore|GitVersion.CommandLine", "GitVersion.dll|GitVersion.exe");
         public static Action<OutputType, string> GitVersionLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   GitVersion is a tool to help you achieve Semantic Versioning on your project.
+        ///   <p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p>
+        ///   <p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> GitVersion(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,35 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p>
         ///   <p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;targetPath&gt;</c> via <see cref="GitVersionSettings.TargetPath"/></li>
+        ///     <li><c>/b</c> via <see cref="GitVersionSettings.Branch"/></li>
+        ///     <li><c>/c</c> via <see cref="GitVersionSettings.Commit"/></li>
+        ///     <li><c>/diag</c> via <see cref="GitVersionSettings.Diagnostics"/></li>
+        ///     <li><c>/dynamicRepoLocation</c> via <see cref="GitVersionSettings.DynamicRepositoryLocation"/></li>
+        ///     <li><c>/ensureassemblyinfo</c> via <see cref="GitVersionSettings.EnsureAssemblyInfo"/></li>
+        ///     <li><c>/exec</c> via <see cref="GitVersionSettings.Executable"/></li>
+        ///     <li><c>/execargs</c> via <see cref="GitVersionSettings.ExecutableArguments"/></li>
+        ///     <li><c>/l</c> via <see cref="GitVersionSettings.LogFile"/></li>
+        ///     <li><c>/nocache</c> via <see cref="GitVersionSettings.NoCache"/></li>
+        ///     <li><c>/nofetch</c> via <see cref="GitVersionSettings.NoFetch"/></li>
+        ///     <li><c>/output</c> via <see cref="GitVersionSettings.Output"/></li>
+        ///     <li><c>/overrideconfig</c> via <see cref="GitVersionSettings.ConfigurationOverride"/></li>
+        ///     <li><c>/p</c> via <see cref="GitVersionSettings.Password"/></li>
+        ///     <li><c>/proj</c> via <see cref="GitVersionSettings.MSBuildProject"/></li>
+        ///     <li><c>/projargs</c> via <see cref="GitVersionSettings.MSBuildProjectArguments"/></li>
+        ///     <li><c>/showconfig</c> via <see cref="GitVersionSettings.ShowConfig"/></li>
+        ///     <li><c>/showvariable</c> via <see cref="GitVersionSettings.ShowVariable"/></li>
+        ///     <li><c>/u</c> via <see cref="GitVersionSettings.Username"/></li>
+        ///     <li><c>/updateassemblyinfo</c> via <see cref="GitVersionSettings.UpdateAssemblyInfo"/></li>
+        ///     <li><c>/updateassemblyinfofilename</c> via <see cref="GitVersionSettings.UpdateAssemblyInfoFileName"/></li>
+        ///     <li><c>/url</c> via <see cref="GitVersionSettings.Url"/></li>
+        ///     <li><c>/verbosity</c> via <see cref="GitVersionSettings.Verbosity"/></li>
+        ///     <li><c>/version</c> via <see cref="GitVersionSettings.Version"/></li>
+        ///   </ul>
+        /// </remarks>
         public static (GitVersion Result, IReadOnlyCollection<Output> Output) GitVersion(GitVersionSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new GitVersionSettings();

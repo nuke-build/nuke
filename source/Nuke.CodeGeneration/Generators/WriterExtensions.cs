@@ -24,6 +24,15 @@ namespace Nuke.CodeGeneration.Generators
             return writerWrapper.WriteLine($"[Obsolete{obsoleteText}]");
         }
 
+        public static T WriteSummary<T>(this T writerWrapper, Tool tool)
+            where T : IWriterWrapper
+        {
+            var paragraphs = new List<string>();
+            paragraphs.Add((tool.Help).Paragraph());
+            paragraphs.Add(GetOfficialUrlText(tool.OfficialUrl).Paragraph());
+            return writerWrapper.WriteSummary(paragraphs.ToArray());
+        }
+
         public static T WriteSummary<T>(this T writerWrapper, Task task)
             where T : IWriterWrapper
         {

@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/Unity.json
-// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.Unity
 {
+    /// <summary>
+    ///   <p>Unity is usually launched by double-clicking its icon from the desktop. However, it is also possible to run it from the command line (from the macOS Terminal or the Windows Command Prompt). When launched in this way, Unity can receive commands and information on startup, which can be very useful for test suites, automated builds and other production tasks.</p>
+    ///   <p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class UnityTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.Unity
             GetToolPath();
         public static Action<OutputType, string> UnityLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   Unity is usually launched by double-clicking its icon from the desktop. However, it is also possible to run it from the command line (from the macOS Terminal or the Windows Command Prompt). When launched in this way, Unity can receive commands and information on startup, which can be very useful for test suites, automated builds and other production tasks.
+        ///   <p>Unity is usually launched by double-clicking its icon from the desktop. However, it is also possible to run it from the command line (from the macOS Terminal or the Windows Command Prompt). When launched in this way, Unity can receive commands and information on startup, which can be very useful for test suites, automated builds and other production tasks.</p>
+        ///   <p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> Unity(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,18 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(2018.2+) Exports the currently activated license to the path of the Unity executable or either the default Unity license location, see the logs or <a href="https://docs.unity3d.com/Manual/ActivationFAQ.html">Activation FAQ</a> for more information.</p>
         ///   <p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>-batchmode</c> via <see cref="UnityCreateManualActivationFileSettings.BatchMode"/></li>
+        ///     <li><c>-nographics</c> via <see cref="UnityCreateManualActivationFileSettings.NoGraphics"/></li>
+        ///     <li><c>-password</c> via <see cref="UnityCreateManualActivationFileSettings.Password"/></li>
+        ///     <li><c>-quit</c> via <see cref="UnityCreateManualActivationFileSettings.Quit"/></li>
+        ///     <li><c>-serial</c> via <see cref="UnityCreateManualActivationFileSettings.Serial"/></li>
+        ///     <li><c>-silent-crashes</c> via <see cref="UnityCreateManualActivationFileSettings.SilentCrashes"/></li>
+        ///     <li><c>-username</c> via <see cref="UnityCreateManualActivationFileSettings.Username"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> UnityCreateManualActivationFile(UnityCreateManualActivationFileSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new UnityCreateManualActivationFileSettings();
@@ -95,6 +112,19 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(2018.2+) Activates Unity with a license file.</p>
         ///   <p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>-batchmode</c> via <see cref="UnityManualLicenseFileSettings.BatchMode"/></li>
+        ///     <li><c>-manualLicenseFile</c> via <see cref="UnityManualLicenseFileSettings.LicenseFile"/></li>
+        ///     <li><c>-nographics</c> via <see cref="UnityManualLicenseFileSettings.NoGraphics"/></li>
+        ///     <li><c>-password</c> via <see cref="UnityManualLicenseFileSettings.Password"/></li>
+        ///     <li><c>-quit</c> via <see cref="UnityManualLicenseFileSettings.Quit"/></li>
+        ///     <li><c>-serial</c> via <see cref="UnityManualLicenseFileSettings.Serial"/></li>
+        ///     <li><c>-silent-crashes</c> via <see cref="UnityManualLicenseFileSettings.SilentCrashes"/></li>
+        ///     <li><c>-username</c> via <see cref="UnityManualLicenseFileSettings.Username"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> UnityManualLicenseFile(UnityManualLicenseFileSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new UnityManualLicenseFileSettings();
@@ -149,6 +179,53 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Execute Unity.</p>
         ///   <p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;customArguments&gt;</c> via <see cref="UnitySettings.CustomArguments"/></li>
+        ///     <li><c>-accept-apiupdate</c> via <see cref="UnitySettings.AcceptApiUpdate"/></li>
+        ///     <li><c>-assetServerUpdate</c> via <see cref="UnitySettings.AssetServerUpdate"/></li>
+        ///     <li><c>-batchmode</c> via <see cref="UnitySettings.BatchMode"/></li>
+        ///     <li><c>-buildLinux32Player</c> via <see cref="UnitySettings.BuildLinux32Player"/></li>
+        ///     <li><c>-buildLinux64Player</c> via <see cref="UnitySettings.BuildLinux64Player"/></li>
+        ///     <li><c>-buildLinuxUniversalPlayer</c> via <see cref="UnitySettings.BuildLinuxUniversalPlayer"/></li>
+        ///     <li><c>-buildOSX64Player</c> via <see cref="UnitySettings.BuildOSX64Player"/></li>
+        ///     <li><c>-buildOSXPlayer</c> via <see cref="UnitySettings.BuildOSXPlayer"/></li>
+        ///     <li><c>-buildOSXUniversalPlayer</c> via <see cref="UnitySettings.BuildOSXUniversalPlayer"/></li>
+        ///     <li><c>-buildTarget</c> via <see cref="UnitySettings.BuildTarget"/></li>
+        ///     <li><c>-buildWindows64Player</c> via <see cref="UnitySettings.BuildWindows64Player"/></li>
+        ///     <li><c>-buildWindowsPlayer</c> via <see cref="UnitySettings.BuildWindowsPlayer"/></li>
+        ///     <li><c>-cacheServerIPAddress</c> via <see cref="UnitySettings.CacheServerIPAddress"/></li>
+        ///     <li><c>-createProject</c> via <see cref="UnitySettings.CreateProject"/></li>
+        ///     <li><c>-disable-assembly-updater</c> via <see cref="UnitySettings.DisableAssemblyUpdater"/></li>
+        ///     <li><c>-editorTestsCategories</c> via <see cref="UnitySettings.EditorTestsCategories"/></li>
+        ///     <li><c>-editorTestsFilter</c> via <see cref="UnitySettings.EditorTestsFilter"/></li>
+        ///     <li><c>-editorTestsResultFile</c> via <see cref="UnitySettings.EditorTestsResultFile"/></li>
+        ///     <li><c>-executeMethod</c> via <see cref="UnitySettings.ExecuteMethod"/></li>
+        ///     <li><c>-exportPackage</c> via <see cref="UnitySettings.ExportPackage"/></li>
+        ///     <li><c>-force-clamped</c> via <see cref="UnitySettings.ForceClamped"/></li>
+        ///     <li><c>-force-d3d11</c> via <see cref="UnitySettings.ForceD3d11"/></li>
+        ///     <li><c>-force-device-index</c> via <see cref="UnitySettings.ForceDeviceIndex"/></li>
+        ///     <li><c>-force-gfx-metal</c> via <see cref="UnitySettings.ForceGfxMetal"/></li>
+        ///     <li><c>-force-glcore</c> via <see cref="UnitySettings.ForceGLCore"/></li>
+        ///     <li><c>-force-glcore</c> via <see cref="UnitySettings.ForceGLCoreXY"/></li>
+        ///     <li><c>-force-gles</c> via <see cref="UnitySettings.ForceGLES"/></li>
+        ///     <li><c>-force-gles</c> via <see cref="UnitySettings.ForceGLESXY"/></li>
+        ///     <li><c>-force-low-power-device</c> via <see cref="UnitySettings.ForceLowPowerDevice"/></li>
+        ///     <li><c>-importPackage</c> via <see cref="UnitySettings.ImportPackage"/></li>
+        ///     <li><c>-nographics</c> via <see cref="UnitySettings.NoGraphics"/></li>
+        ///     <li><c>-noUpm</c> via <see cref="UnitySettings.NoUpm"/></li>
+        ///     <li><c>-password</c> via <see cref="UnitySettings.Password"/></li>
+        ///     <li><c>-projectPath</c> via <see cref="UnitySettings.ProjectPath"/></li>
+        ///     <li><c>-quit</c> via <see cref="UnitySettings.Quit"/></li>
+        ///     <li><c>-runEditorTests</c> via <see cref="UnitySettings.RunEditorTests"/></li>
+        ///     <li><c>-serial</c> via <see cref="UnitySettings.Serial"/></li>
+        ///     <li><c>-setDefaultPlatformTextureFormat</c> via <see cref="UnitySettings.DefaultPlatformTextureFormat"/></li>
+        ///     <li><c>-silent-crashes</c> via <see cref="UnitySettings.SilentCrashes"/></li>
+        ///     <li><c>-stackTraceLogType</c> via <see cref="UnitySettings.StackTraceLogType"/></li>
+        ///     <li><c>-username</c> via <see cref="UnitySettings.Username"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> Unity(UnitySettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new UnitySettings();
@@ -271,6 +348,18 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Return the currenlty activated Unity license.</p>
         ///   <p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>-batchmode</c> via <see cref="UnityReturnLicenseSettings.BatchMode"/></li>
+        ///     <li><c>-nographics</c> via <see cref="UnityReturnLicenseSettings.NoGraphics"/></li>
+        ///     <li><c>-password</c> via <see cref="UnityReturnLicenseSettings.Password"/></li>
+        ///     <li><c>-quit</c> via <see cref="UnityReturnLicenseSettings.Quit"/></li>
+        ///     <li><c>-serial</c> via <see cref="UnityReturnLicenseSettings.Serial"/></li>
+        ///     <li><c>-silent-crashes</c> via <see cref="UnityReturnLicenseSettings.SilentCrashes"/></li>
+        ///     <li><c>-username</c> via <see cref="UnityReturnLicenseSettings.Username"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> UnityReturnLicense(UnityReturnLicenseSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new UnityReturnLicenseSettings();

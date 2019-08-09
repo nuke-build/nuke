@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/SpecFlow.json
-// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.SpecFlow
 {
+    /// <summary>
+    ///   <p>Use SpecFlow to define, manage and automatically execute human-readable acceptance tests in .NET projects. Writing easily understandable tests is a cornerstone of the BDD paradigm and also helps build up a living documentation of your system.</p>
+    ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class SpecFlowTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.SpecFlow
             ToolPathResolver.GetPackageExecutable("SpecFlow", "specflow.exe");
         public static Action<OutputType, string> SpecFlowLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   Use SpecFlow to define, manage and automatically execute human-readable acceptance tests in .NET projects. Writing easily understandable tests is a cornerstone of the BDD paradigm and also helps build up a living documentation of your system.
+        ///   <p>Use SpecFlow to define, manage and automatically execute human-readable acceptance tests in .NET projects. Writing easily understandable tests is a cornerstone of the BDD paradigm and also helps build up a living documentation of your system.</p>
+        ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> SpecFlow(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,18 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   <p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p>
         ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--FeatureLanguage</c> via <see cref="SpecFlowNUnitExecutionReportSettings.FeatureLanguage"/></li>
+        ///     <li><c>--OutputFile</c> via <see cref="SpecFlowNUnitExecutionReportSettings.OutputFile"/></li>
+        ///     <li><c>--ProjectFile</c> via <see cref="SpecFlowNUnitExecutionReportSettings.ProjectFile"/></li>
+        ///     <li><c>--ProjectName</c> via <see cref="SpecFlowNUnitExecutionReportSettings.ProjectName"/></li>
+        ///     <li><c>--testOutput</c> via <see cref="SpecFlowNUnitExecutionReportSettings.TestOutput"/></li>
+        ///     <li><c>--xmlTestResult</c> via <see cref="SpecFlowNUnitExecutionReportSettings.XmlTestResult"/></li>
+        ///     <li><c>--XsltFile</c> via <see cref="SpecFlowNUnitExecutionReportSettings.XsltFile"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> SpecFlowNUnitExecutionReport(SpecFlowNUnitExecutionReportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowNUnitExecutionReportSettings();
@@ -94,6 +111,15 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   <p>This report provides a formatted HTML report of a test execution. The report contains a summary about the executed tests and the result and also a detailed report for the individual scenario executions.</p>
         ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;projectFile&gt;</c> via <see cref="SpecFlowMSTestExecutionReportSettings.ProjectFile"/></li>
+        ///     <li><c>/out</c> via <see cref="SpecFlowMSTestExecutionReportSettings.OutputFile"/></li>
+        ///     <li><c>/testResult</c> via <see cref="SpecFlowMSTestExecutionReportSettings.TestResult"/></li>
+        ///     <li><c>/xsltFile</c> via <see cref="SpecFlowMSTestExecutionReportSettings.XsltFile"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> SpecFlowMSTestExecutionReport(SpecFlowMSTestExecutionReportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowMSTestExecutionReportSettings();
@@ -139,6 +165,15 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   <p>This report shows the usage and binding status of the steps for the entire project. You can use this report to find both unused code in the automation layer and scenario steps that have no definition yet.</p>
         ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;projectFile&gt;</c> via <see cref="SpecFlowStepDefinitionReportSettings.ProjectFile"/></li>
+        ///     <li><c>/out</c> via <see cref="SpecFlowStepDefinitionReportSettings.OutputFile"/></li>
+        ///     <li><c>/testResult</c> via <see cref="SpecFlowStepDefinitionReportSettings.BinFolder"/></li>
+        ///     <li><c>/xsltFile</c> via <see cref="SpecFlowStepDefinitionReportSettings.XsltFile"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> SpecFlowStepDefinitionReport(SpecFlowStepDefinitionReportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowStepDefinitionReportSettings();
@@ -184,6 +219,18 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   <p>Use <c>SpecRun.exe run</c> to execute your tests.</p>
         ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>/basefolder</c> via <see cref="SpecFlowRunSettings.BaseFolder"/></li>
+        ///     <li><c>/debug</c> via <see cref="SpecFlowRunSettings.Debug"/></li>
+        ///     <li><c>/filter</c> via <see cref="SpecFlowRunSettings.Filter"/></li>
+        ///     <li><c>/log</c> via <see cref="SpecFlowRunSettings.LogFile"/></li>
+        ///     <li><c>/outputfolder</c> via <see cref="SpecFlowRunSettings.OutputFolder"/></li>
+        ///     <li><c>/report</c> via <see cref="SpecFlowRunSettings.ReportFile"/></li>
+        ///     <li><c>/toolIntegration</c> via <see cref="SpecFlowRunSettings.ToolIntegration"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> SpecFlowRun(SpecFlowRunSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowRunSettings();
@@ -235,6 +282,18 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   <p>Use <c>SpecRun.exe buildserverrun</c> to execute your tests in build server mode.</p>
         ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;target&gt;</c> via <see cref="SpecFlowBuildServerRunSettings.Target"/></li>
+        ///     <li><c>/basefolder</c> via <see cref="SpecFlowBuildServerRunSettings.BaseFolder"/></li>
+        ///     <li><c>/buildserver</c> via <see cref="SpecFlowBuildServerRunSettings.BuildServerName"/></li>
+        ///     <li><c>/filter</c> via <see cref="SpecFlowBuildServerRunSettings.Filter"/></li>
+        ///     <li><c>/log</c> via <see cref="SpecFlowBuildServerRunSettings.LogFile"/></li>
+        ///     <li><c>/outputfolder</c> via <see cref="SpecFlowBuildServerRunSettings.OutputFolder"/></li>
+        ///     <li><c>/report</c> via <see cref="SpecFlowBuildServerRunSettings.ReportFile"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> SpecFlowBuildServerRun(SpecFlowBuildServerRunSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowBuildServerRunSettings();
@@ -286,6 +345,13 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   <p>Use <c>SpecRun.exe register</c> to register your SpecFlow+ license. You only need to register your license once per user per machine. The license is valid for all SpecFlow+ components.</p>
         ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;issuedTo&gt;</c> via <see cref="SpecFlowRegisterSettings.IssuedTo"/></li>
+        ///     <li><c>&lt;licenseKey&gt;</c> via <see cref="SpecFlowRegisterSettings.LicenseKey"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> SpecFlowRegister(SpecFlowRegisterSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowRegisterSettings();
@@ -327,6 +393,9 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   <p>Use <c>SpecRun.exe unregister</c> to unregister your SpecFlow+ license.</p>
         ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        /// </remarks>
         public static IReadOnlyCollection<Output> SpecFlowUnregister(SpecFlowUnregisterSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowUnregisterSettings();
@@ -360,6 +429,9 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   <p>Use <c>SpecRun.exe about</c> to display information such as your version number, build date and license information (licensee, upgrade until date/expiry date).</p>
         ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        /// </remarks>
         public static IReadOnlyCollection<Output> SpecFlowAbout(SpecFlowAboutSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SpecFlowAboutSettings();

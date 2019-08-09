@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/DotCover.json
-// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.DotCover
 {
+    /// <summary>
+    ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
+    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class DotCoverTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.DotCover
             ToolPathResolver.GetPackageExecutable("JetBrains.dotCover.CommandLineTools", "dotCover.exe");
         public static Action<OutputType, string> DotCoverLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.
+        ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
+        ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> DotCover(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,30 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
         ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverAnalyseSettings.Configuration"/></li>
+        ///     <li><c>/AllowSymbolServerAccess</c> via <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/></li>
+        ///     <li><c>/AnalyseTargetArguments</c> via <see cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/></li>
+        ///     <li><c>/AttributeFilters</c> via <see cref="DotCoverAnalyseSettings.AttributeFilters"/></li>
+        ///     <li><c>/DisableDefaultFilters</c> via <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/></li>
+        ///     <li><c>/Filters</c> via <see cref="DotCoverAnalyseSettings.Filters"/></li>
+        ///     <li><c>/HideAutoProperties</c> via <see cref="DotCoverAnalyseSettings.HideAutoProperties"/></li>
+        ///     <li><c>/InheritConsole</c> via <see cref="DotCoverAnalyseSettings.InheritConsole"/></li>
+        ///     <li><c>/LogFile</c> via <see cref="DotCoverAnalyseSettings.LogFile"/></li>
+        ///     <li><c>/Output</c> via <see cref="DotCoverAnalyseSettings.OutputFile"/></li>
+        ///     <li><c>/ProcessFilters</c> via <see cref="DotCoverAnalyseSettings.ProcessFilters"/></li>
+        ///     <li><c>/ReportType</c> via <see cref="DotCoverAnalyseSettings.ReportType"/></li>
+        ///     <li><c>/ReturnTargetExitCode</c> via <see cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/></li>
+        ///     <li><c>/Scope</c> via <see cref="DotCoverAnalyseSettings.Scope"/></li>
+        ///     <li><c>/SymbolSearchPaths</c> via <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/></li>
+        ///     <li><c>/TargetArguments</c> via <see cref="DotCoverAnalyseSettings.TargetArguments"/></li>
+        ///     <li><c>/TargetExecutable</c> via <see cref="DotCoverAnalyseSettings.TargetExecutable"/></li>
+        ///     <li><c>/TargetWorkingDir</c> via <see cref="DotCoverAnalyseSettings.TargetWorkingDirectory"/></li>
+        ///     <li><c>/TempDir</c> via <see cref="DotCoverAnalyseSettings.TempDirectory"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> DotCoverAnalyse(DotCoverAnalyseSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotCoverAnalyseSettings();
@@ -118,6 +147,28 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
         ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverCoverSettings.Configuration"/></li>
+        ///     <li><c>/AllowSymbolServerAccess</c> via <see cref="DotCoverCoverSettings.AllowSymbolServerAccess"/></li>
+        ///     <li><c>/AnalyseTargetArguments</c> via <see cref="DotCoverCoverSettings.AnalyseTargetArguments"/></li>
+        ///     <li><c>/AttributeFilters</c> via <see cref="DotCoverCoverSettings.AttributeFilters"/></li>
+        ///     <li><c>/DisableDefaultFilters</c> via <see cref="DotCoverCoverSettings.DisableDefaultFilters"/></li>
+        ///     <li><c>/Filters</c> via <see cref="DotCoverCoverSettings.Filters"/></li>
+        ///     <li><c>/InheritConsole</c> via <see cref="DotCoverCoverSettings.InheritConsole"/></li>
+        ///     <li><c>/LogFile</c> via <see cref="DotCoverCoverSettings.LogFile"/></li>
+        ///     <li><c>/Output</c> via <see cref="DotCoverCoverSettings.OutputFile"/></li>
+        ///     <li><c>/ProcessFilters</c> via <see cref="DotCoverCoverSettings.ProcessFilters"/></li>
+        ///     <li><c>/ReturnTargetExitCode</c> via <see cref="DotCoverCoverSettings.ReturnTargetExitCode"/></li>
+        ///     <li><c>/Scope</c> via <see cref="DotCoverCoverSettings.Scope"/></li>
+        ///     <li><c>/SymbolSearchPaths</c> via <see cref="DotCoverCoverSettings.SymbolSearchPaths"/></li>
+        ///     <li><c>/TargetArguments</c> via <see cref="DotCoverCoverSettings.TargetArguments"/></li>
+        ///     <li><c>/TargetExecutable</c> via <see cref="DotCoverCoverSettings.TargetExecutable"/></li>
+        ///     <li><c>/TargetWorkingDir</c> via <see cref="DotCoverCoverSettings.TargetWorkingDirectory"/></li>
+        ///     <li><c>/TempDir</c> via <see cref="DotCoverCoverSettings.TempDirectory"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> DotCoverCover(DotCoverCoverSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotCoverCoverSettings();
@@ -189,6 +240,14 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
         ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverDeleteSettings.Configuration"/></li>
+        ///     <li><c>/LogFile</c> via <see cref="DotCoverDeleteSettings.LogFile"/></li>
+        ///     <li><c>/Source</c> via <see cref="DotCoverDeleteSettings.Source"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> DotCoverDelete(DotCoverDeleteSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotCoverDeleteSettings();
@@ -232,6 +291,16 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
         ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverMergeSettings.Configuration"/></li>
+        ///     <li><c>/LogFile</c> via <see cref="DotCoverMergeSettings.LogFile"/></li>
+        ///     <li><c>/Output</c> via <see cref="DotCoverMergeSettings.OutputFile"/></li>
+        ///     <li><c>/Source</c> via <see cref="DotCoverMergeSettings.Source"/></li>
+        ///     <li><c>/TempDir</c> via <see cref="DotCoverMergeSettings.TempDirectory"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> DotCoverMerge(DotCoverMergeSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotCoverMergeSettings();
@@ -279,6 +348,17 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
         ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverReportSettings.Configuration"/></li>
+        ///     <li><c>/HideAutoProperties</c> via <see cref="DotCoverReportSettings.HideAutoProperties"/></li>
+        ///     <li><c>/LogFile</c> via <see cref="DotCoverReportSettings.LogFile"/></li>
+        ///     <li><c>/Output</c> via <see cref="DotCoverReportSettings.OutputFile"/></li>
+        ///     <li><c>/ReportType</c> via <see cref="DotCoverReportSettings.ReportType"/></li>
+        ///     <li><c>/Source</c> via <see cref="DotCoverReportSettings.Source"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> DotCoverReport(DotCoverReportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotCoverReportSettings();
@@ -328,6 +408,15 @@ namespace Nuke.Common.Tools.DotCover
         ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
         ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverZipSettings.Configuration"/></li>
+        ///     <li><c>/LogFile</c> via <see cref="DotCoverZipSettings.LogFile"/></li>
+        ///     <li><c>/Output</c> via <see cref="DotCoverZipSettings.OutputFile"/></li>
+        ///     <li><c>/Source</c> via <see cref="DotCoverZipSettings.Source"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> DotCoverZip(DotCoverZipSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new DotCoverZipSettings();

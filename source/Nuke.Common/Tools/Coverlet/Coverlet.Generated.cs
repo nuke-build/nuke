@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/Coverlet.json
-// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.Coverlet
 {
+    /// <summary>
+    ///   <p><c>Coverlet</c> is a cross platform code coverage library for .NET Core, with support for line, branch and method coverage.The <c>dotnet test</c> command is used to execute unit tests in a given project. Unit tests are console application projects that have dependencies on the unit test framework (for example, MSTest, NUnit, or xUnit) and the dotnet test runner for the unit testing framework. These are packaged as NuGet packages and are restored as ordinary dependencies for the project.</p>
+    ///   <p>For more details, visit the <a href="https://github.com/tonerdo/coverlet/">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class CoverletTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.Coverlet
             ToolPathResolver.GetPackageExecutable("coverlet.console", "coverlet.console.dll");
         public static Action<OutputType, string> CoverletLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   <c>Coverlet</c> is a cross platform code coverage library for .NET Core, with support for line, branch and method coverage.The <c>dotnet test</c> command is used to execute unit tests in a given project. Unit tests are console application projects that have dependencies on the unit test framework (for example, MSTest, NUnit, or xUnit) and the dotnet test runner for the unit testing framework. These are packaged as NuGet packages and are restored as ordinary dependencies for the project.
+        ///   <p><c>Coverlet</c> is a cross platform code coverage library for .NET Core, with support for line, branch and method coverage.The <c>dotnet test</c> command is used to execute unit tests in a given project. Unit tests are console application projects that have dependencies on the unit test framework (for example, MSTest, NUnit, or xUnit) and the dotnet test runner for the unit testing framework. These are packaged as NuGet packages and are restored as ordinary dependencies for the project.</p>
+        ///   <p>For more details, visit the <a href="https://github.com/tonerdo/coverlet/">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> Coverlet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,22 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p><c>Coverlet</c> is a cross platform code coverage library for .NET Core, with support for line, branch and method coverage.The <c>dotnet test</c> command is used to execute unit tests in a given project. Unit tests are console application projects that have dependencies on the unit test framework (for example, MSTest, NUnit, or xUnit) and the dotnet test runner for the unit testing framework. These are packaged as NuGet packages and are restored as ordinary dependencies for the project.</p>
         ///   <p>For more details, visit the <a href="https://github.com/tonerdo/coverlet/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;assembly&gt;</c> via <see cref="CoverletSettings.Assembly"/></li>
+        ///     <li><c>--exclude</c> via <see cref="CoverletSettings.Exclude"/></li>
+        ///     <li><c>--exclude-by-file</c> via <see cref="CoverletSettings.ExcludeByFile"/></li>
+        ///     <li><c>--format</c> via <see cref="CoverletSettings.Format"/></li>
+        ///     <li><c>--include</c> via <see cref="CoverletSettings.Include"/></li>
+        ///     <li><c>--output</c> via <see cref="CoverletSettings.Output"/></li>
+        ///     <li><c>--target</c> via <see cref="CoverletSettings.Target"/></li>
+        ///     <li><c>--targetargs</c> via <see cref="CoverletSettings.TargetArgs"/></li>
+        ///     <li><c>--threshold</c> via <see cref="CoverletSettings.Threshold"/></li>
+        ///     <li><c>--threshold-type</c> via <see cref="CoverletSettings.ThresholdType"/></li>
+        ///     <li><c>--version</c> via <see cref="CoverletSettings.Version"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> Coverlet(CoverletSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CoverletSettings();

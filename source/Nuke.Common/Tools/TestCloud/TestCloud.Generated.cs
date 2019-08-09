@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/TestCloud.json
-// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.TestCloud
 {
+    /// <summary>
+    ///   <p>Test Cloud is a cloud based service consisting of thousands of physical mobile devices. Users upload their apps and tests to Test Cloud, which will install the apps on the devices and run the tests. When the tests are complete, Test Cloud, the results made available to users through an easy to use and informative web-based front end.</p>
+    ///   <p>For more details, visit the <a href="https://developer.xamarin.com/guides/testcloud/">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class TestCloudTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.TestCloud
             ToolPathResolver.GetPackageExecutable("Xamarin.UITest", "test-cloud.exe");
         public static Action<OutputType, string> TestCloudLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   Test Cloud is a cloud based service consisting of thousands of physical mobile devices. Users upload their apps and tests to Test Cloud, which will install the apps on the devices and run the tests. When the tests are complete, Test Cloud, the results made available to users through an easy to use and informative web-based front end.
+        ///   <p>Test Cloud is a cloud based service consisting of thousands of physical mobile devices. Users upload their apps and tests to Test Cloud, which will install the apps on the devices and run the tests. When the tests are complete, Test Cloud, the results made available to users through an easy to use and informative web-based front end.</p>
+        ///   <p>For more details, visit the <a href="https://developer.xamarin.com/guides/testcloud/">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> TestCloud(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,23 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Test Cloud is a cloud based service consisting of thousands of physical mobile devices. Users upload their apps and tests to Test Cloud, which will install the apps on the devices and run the tests. When the tests are complete, Test Cloud, the results made available to users through an easy to use and informative web-based front end.</p>
         ///   <p>For more details, visit the <a href="https://developer.xamarin.com/guides/testcloud/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--assembly-dir</c> via <see cref="TestCloudSettings.AssemblyDirectory"/></li>
+        ///     <li><c>--data</c> via <see cref="TestCloudSettings.DataPaths"/></li>
+        ///     <li><c>--devices</c> via <see cref="TestCloudSettings.Devices"/></li>
+        ///     <li><c>--dsym</c> via <see cref="TestCloudSettings.DsymFile"/></li>
+        ///     <li><c>--exclude</c> via <see cref="TestCloudSettings.ExcludeCategories"/></li>
+        ///     <li><c>--fixture</c> via <see cref="TestCloudSettings.Fixtures"/></li>
+        ///     <li><c>--fixture-chunk</c> via <see cref="TestCloudSettings.FixtureChunk"/></li>
+        ///     <li><c>--include</c> via <see cref="TestCloudSettings.IncludeCategories"/></li>
+        ///     <li><c>--nunit-xml</c> via <see cref="TestCloudSettings.NunitResultsFile"/></li>
+        ///     <li><c>--sign-info</c> via <see cref="TestCloudSettings.SignInfoFile"/></li>
+        ///     <li><c>--test-chunk</c> via <see cref="TestCloudSettings.TestChunk"/></li>
+        ///     <li><c>--user</c> via <see cref="TestCloudSettings.UserEmail"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> TestCloud(TestCloudSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new TestCloudSettings();

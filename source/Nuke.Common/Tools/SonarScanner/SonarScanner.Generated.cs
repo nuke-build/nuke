@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/SonarScanner.json
-// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.SonarScanner
 {
+    /// <summary>
+    ///   <p>The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.</p>
+    ///   <p>For more details, visit the <a href="https://www.sonarqube.org/">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class SonarScannerTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.SonarScanner
             ToolPathResolver.GetPackageExecutable("dotnet-sonarscanner|MSBuild.SonarQube.Runner.Tool", "SonarScanner.MSBuild.dll|SonarScanner.MSBuild.exe");
         public static Action<OutputType, string> SonarScannerLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.
+        ///   <p>The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.</p>
+        ///   <p>For more details, visit the <a href="https://www.sonarqube.org/">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> SonarScanner(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,37 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.</p>
         ///   <p>For more details, visit the <a href="https://www.sonarqube.org/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>/d:sonar.coverage.exclusions</c> via <see cref="SonarScannerBeginSettings.CoverageExclusions"/></li>
+        ///     <li><c>/d:sonar.cpd.exclusions</c> via <see cref="SonarScannerBeginSettings.DuplicationExclusions"/></li>
+        ///     <li><c>/d:sonar.cs.dotcover.reportsPaths</c> via <see cref="SonarScannerBeginSettings.DotCoverPaths"/></li>
+        ///     <li><c>/d:sonar.cs.nunit.reportsPaths</c> via <see cref="SonarScannerBeginSettings.NUnitTestReports"/></li>
+        ///     <li><c>/d:sonar.cs.opencover.reportsPaths</c> via <see cref="SonarScannerBeginSettings.OpenCoverPaths"/></li>
+        ///     <li><c>/d:sonar.cs.vscoveragexml.reportsPaths</c> via <see cref="SonarScannerBeginSettings.VisualStudioCoveragePaths"/></li>
+        ///     <li><c>/d:sonar.cs.vstest.reportsPaths</c> via <see cref="SonarScannerBeginSettings.VSTestReports"/></li>
+        ///     <li><c>/d:sonar.cs.xunit.reportsPaths</c> via <see cref="SonarScannerBeginSettings.XUnitTestReports"/></li>
+        ///     <li><c>/d:sonar.exclusions</c> via <see cref="SonarScannerBeginSettings.SourceExclusions"/></li>
+        ///     <li><c>/d:sonar.host.url</c> via <see cref="SonarScannerBeginSettings.Server"/></li>
+        ///     <li><c>/d:sonar.inclusions</c> via <see cref="SonarScannerBeginSettings.SourceInclusions"/></li>
+        ///     <li><c>/d:sonar.links.ci</c> via <see cref="SonarScannerBeginSettings.ContinuousIntegrationUrl"/></li>
+        ///     <li><c>/d:sonar.links.homepage</c> via <see cref="SonarScannerBeginSettings.Homepage"/></li>
+        ///     <li><c>/d:sonar.links.issue</c> via <see cref="SonarScannerBeginSettings.IssueTrackerUrl"/></li>
+        ///     <li><c>/d:sonar.links.scm</c> via <see cref="SonarScannerBeginSettings.SCMUrl"/></li>
+        ///     <li><c>/d:sonar.login</c> via <see cref="SonarScannerBeginSettings.Login"/></li>
+        ///     <li><c>/d:sonar.password</c> via <see cref="SonarScannerBeginSettings.Password"/></li>
+        ///     <li><c>/d:sonar.projectDescription</c> via <see cref="SonarScannerBeginSettings.Description"/></li>
+        ///     <li><c>/d:sonar.sourceEncoding</c> via <see cref="SonarScannerBeginSettings.SourceEncoding"/></li>
+        ///     <li><c>/d:sonar.test.exclusions</c> via <see cref="SonarScannerBeginSettings.TestFileExclusions"/></li>
+        ///     <li><c>/d:sonar.test.inclusions</c> via <see cref="SonarScannerBeginSettings.TestFileInclusions"/></li>
+        ///     <li><c>/d:sonar.verbose</c> via <see cref="SonarScannerBeginSettings.Verbose"/></li>
+        ///     <li><c>/d:sonar.ws.timeout</c> via <see cref="SonarScannerBeginSettings.WebServiceTimeout"/></li>
+        ///     <li><c>/k</c> via <see cref="SonarScannerBeginSettings.ProjectKey"/></li>
+        ///     <li><c>/n</c> via <see cref="SonarScannerBeginSettings.Name"/></li>
+        ///     <li><c>/v</c> via <see cref="SonarScannerBeginSettings.Version"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> SonarScannerBegin(SonarScannerBeginSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SonarScannerBeginSettings();
@@ -132,6 +168,13 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.</p>
         ///   <p>For more details, visit the <a href="https://www.sonarqube.org/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>/d:sonar.login</c> via <see cref="SonarScannerEndSettings.Login"/></li>
+        ///     <li><c>/d:sonar.password</c> via <see cref="SonarScannerEndSettings.Password"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> SonarScannerEnd(SonarScannerEndSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SonarScannerEndSettings();

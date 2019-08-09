@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/OpenCover.json
-// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.OpenCover
 {
+    /// <summary>
+    ///   <p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p>
+    ///   <p>For more details, visit the <a href="https://github.com/OpenCover/opencover">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class OpenCoverTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.OpenCover
             ToolPathResolver.GetPackageExecutable("OpenCover", "OpenCover.Console.exe");
         public static Action<OutputType, string> OpenCoverLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.
+        ///   <p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p>
+        ///   <p>For more details, visit the <a href="https://github.com/OpenCover/opencover">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> OpenCover(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,35 @@ namespace Nuke.Common.Tools.OpenCover
         ///   <p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p>
         ///   <p>For more details, visit the <a href="https://github.com/OpenCover/opencover">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>-coverbytest</c> via <see cref="OpenCoverSettings.CoverByTests"/></li>
+        ///     <li><c>-enableperformancecounters</c> via <see cref="OpenCoverSettings.PerformanceCounters"/></li>
+        ///     <li><c>-excludebyattribute</c> via <see cref="OpenCoverSettings.ExcludeByAttributes"/></li>
+        ///     <li><c>-excludebyfile</c> via <see cref="OpenCoverSettings.ExcludeByFile"/></li>
+        ///     <li><c>-excludedirs</c> via <see cref="OpenCoverSettings.ExcludeDirectories"/></li>
+        ///     <li><c>-filter</c> via <see cref="OpenCoverSettings.Filters"/></li>
+        ///     <li><c>-hideskipped</c> via <see cref="OpenCoverSettings.HideSkippedKinds"/></li>
+        ///     <li><c>-log</c> via <see cref="OpenCoverSettings.Verbosity"/></li>
+        ///     <li><c>-mergebyhash</c> via <see cref="OpenCoverSettings.MergeByHash"/></li>
+        ///     <li><c>-mergeoutput</c> via <see cref="OpenCoverSettings.MergeOutput"/></li>
+        ///     <li><c>-nodefaultfilters</c> via <see cref="OpenCoverSettings.NoDefaultFilters"/></li>
+        ///     <li><c>-oldStyle</c> via <see cref="OpenCoverSettings.OldStyle"/></li>
+        ///     <li><c>-output</c> via <see cref="OpenCoverSettings.Output"/></li>
+        ///     <li><c>-register</c> via <see cref="OpenCoverSettings.Registration"/></li>
+        ///     <li><c>-returntargetcode</c> via <see cref="OpenCoverSettings.TargetExitCodeOffset"/></li>
+        ///     <li><c>-safemode</c> via <see cref="OpenCoverSettings.SafeMode"/></li>
+        ///     <li><c>-searchdirs</c> via <see cref="OpenCoverSettings.SearchDirectories"/></li>
+        ///     <li><c>-service</c> via <see cref="OpenCoverSettings.Service"/></li>
+        ///     <li><c>-showunvisited</c> via <see cref="OpenCoverSettings.ShowUnvisited"/></li>
+        ///     <li><c>-skipautoprops</c> via <see cref="OpenCoverSettings.SkipAutoProperties"/></li>
+        ///     <li><c>-target</c> via <see cref="OpenCoverSettings.TargetPath"/></li>
+        ///     <li><c>-targetargs</c> via <see cref="OpenCoverSettings.TargetArguments"/></li>
+        ///     <li><c>-targetdir</c> via <see cref="OpenCoverSettings.TargetDirectory"/></li>
+        ///     <li><c>-threshold</c> via <see cref="OpenCoverSettings.MaximumVisitCount"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> OpenCover(OpenCoverSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new OpenCoverSettings();

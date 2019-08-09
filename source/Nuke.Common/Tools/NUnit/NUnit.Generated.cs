@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/NUnit.json
-// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.NUnit
 {
+    /// <summary>
+    ///   <p>NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href="http://www.junit.org/">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.</p>
+    ///   <p>For more details, visit the <a href="https://www.nunit.org/">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class NUnitTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.NUnit
             ToolPathResolver.GetPackageExecutable("NUnit.ConsoleRunner", "nunit3-console.exe");
         public static Action<OutputType, string> NUnitLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href="http://www.junit.org/">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.
+        ///   <p>NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href="http://www.junit.org/">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.</p>
+        ///   <p>For more details, visit the <a href="https://www.nunit.org/">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> NUnit(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,49 @@ namespace Nuke.Common.Tools.NUnit
         ///   <p>NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href="http://www.junit.org/">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.</p>
         ///   <p>For more details, visit the <a href="https://www.nunit.org/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;inputFiles&gt;</c> via <see cref="NUnit3Settings.InputFiles"/></li>
+        ///     <li><c>--agents</c> via <see cref="NUnit3Settings.Agents"/></li>
+        ///     <li><c>--config</c> via <see cref="NUnit3Settings.Configuration"/></li>
+        ///     <li><c>--debug</c> via <see cref="NUnit3Settings.Debug"/></li>
+        ///     <li><c>--debug-agent</c> via <see cref="NUnit3Settings.DebugAgent"/></li>
+        ///     <li><c>--dispose-runners</c> via <see cref="NUnit3Settings.DisposeRunners"/></li>
+        ///     <li><c>--domain</c> via <see cref="NUnit3Settings.Domain"/></li>
+        ///     <li><c>--encoding</c> via <see cref="NUnit3Settings.Encoding"/></li>
+        ///     <li><c>--err</c> via <see cref="NUnit3Settings.ErrorFile"/></li>
+        ///     <li><c>--explore</c> via <see cref="NUnit3Settings.Explores"/></li>
+        ///     <li><c>--framework</c> via <see cref="NUnit3Settings.Framework"/></li>
+        ///     <li><c>--inprocess</c> via <see cref="NUnit3Settings.InProcess"/></li>
+        ///     <li><c>--labels</c> via <see cref="NUnit3Settings.Labels"/></li>
+        ///     <li><c>--list-extensions</c> via <see cref="NUnit3Settings.ListExtensions"/></li>
+        ///     <li><c>--loaduserprofile</c> via <see cref="NUnit3Settings.LoadUserProfile"/></li>
+        ///     <li><c>--nocolor</c> via <see cref="NUnit3Settings.NoColor"/></li>
+        ///     <li><c>--noheader</c> via <see cref="NUnit3Settings.NoHeader"/></li>
+        ///     <li><c>--noresult</c> via <see cref="NUnit3Settings.NoResults"/></li>
+        ///     <li><c>--output</c> via <see cref="NUnit3Settings.OutputFile"/></li>
+        ///     <li><c>--params</c> via <see cref="NUnit3Settings.Parameters"/></li>
+        ///     <li><c>--pause</c> via <see cref="NUnit3Settings.Pause"/></li>
+        ///     <li><c>--process</c> via <see cref="NUnit3Settings.Process"/></li>
+        ///     <li><c>--result</c> via <see cref="NUnit3Settings.Results"/></li>
+        ///     <li><c>--seed</c> via <see cref="NUnit3Settings.Seed"/></li>
+        ///     <li><c>--set-principal-policy</c> via <see cref="NUnit3Settings.SetPrincipalPolicy"/></li>
+        ///     <li><c>--shadowcopy</c> via <see cref="NUnit3Settings.ShadowCopy"/></li>
+        ///     <li><c>--skipnontestassemblies</c> via <see cref="NUnit3Settings.SkipNonTestAssemblies"/></li>
+        ///     <li><c>--stoponerror</c> via <see cref="NUnit3Settings.StopOnError"/></li>
+        ///     <li><c>--teamcity</c> via <see cref="NUnit3Settings.TeamCity"/></li>
+        ///     <li><c>--test</c> via <see cref="NUnit3Settings.Tests"/></li>
+        ///     <li><c>--testlist</c> via <see cref="NUnit3Settings.TestListFile"/></li>
+        ///     <li><c>--timeout</c> via <see cref="NUnit3Settings.Timeout"/></li>
+        ///     <li><c>--trace</c> via <see cref="NUnit3Settings.Trace"/></li>
+        ///     <li><c>--wait</c> via <see cref="NUnit3Settings.Wait"/></li>
+        ///     <li><c>--where</c> via <see cref="NUnit3Settings.WhereExpression"/></li>
+        ///     <li><c>--work</c> via <see cref="NUnit3Settings.WorkPath"/></li>
+        ///     <li><c>--workers</c> via <see cref="NUnit3Settings.Workers"/></li>
+        ///     <li><c>--x86</c> via <see cref="NUnit3Settings.X86"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> NUnit3(NUnit3Settings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NUnit3Settings();

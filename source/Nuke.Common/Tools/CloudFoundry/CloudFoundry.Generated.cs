@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.CloudFoundry
 {
+    /// <summary>
+    ///   <p>Cloud Foundry CLI is the official command line client for Cloud Foundry</p>
+    ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class CloudFoundryTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.CloudFoundry
             GetToolPath();
         public static Action<OutputType, string> CloudFoundryLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   Cloud Foundry CLI is the official command line client for Cloud Foundry
+        ///   <p>Cloud Foundry CLI is the official command line client for Cloud Foundry</p>
+        ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> CloudFoundry(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,31 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Push a new app or sync changes to an existing app</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;appName&gt;</c> via <see cref="CloudFoundryPushSettings.AppName"/></li>
+        ///     <li><c>-b</c> via <see cref="CloudFoundryPushSettings.Buildpack"/></li>
+        ///     <li><c>-c</c> via <see cref="CloudFoundryPushSettings.Command"/></li>
+        ///     <li><c>-d</c> via <see cref="CloudFoundryPushSettings.Domain"/></li>
+        ///     <li><c>--docker-username</c> via <see cref="CloudFoundryPushSettings.DockerUsername"/></li>
+        ///     <li><c>--droplet</c> via <see cref="CloudFoundryPushSettings.Droplet"/></li>
+        ///     <li><c>-f</c> via <see cref="CloudFoundryPushSettings.Manifest"/></li>
+        ///     <li><c>-n</c> via <see cref="CloudFoundryPushSettings.Hostname"/></li>
+        ///     <li><c>--no-manifest</c> via <see cref="CloudFoundryPushSettings.IgnoreManifest"/></li>
+        ///     <li><c>--no-route</c> via <see cref="CloudFoundryPushSettings.NoRoute"/></li>
+        ///     <li><c>--no-start</c> via <see cref="CloudFoundryPushSettings.NoStart"/></li>
+        ///     <li><c>-o</c> via <see cref="CloudFoundryPushSettings.DockerImage"/></li>
+        ///     <li><c>-p</c> via <see cref="CloudFoundryPushSettings.Path"/></li>
+        ///     <li><c>--random-route</c> via <see cref="CloudFoundryPushSettings.RandomRoute"/></li>
+        ///     <li><c>--route-path</c> via <see cref="CloudFoundryPushSettings.RoutePath"/></li>
+        ///     <li><c>-s</c> via <see cref="CloudFoundryPushSettings.Stack"/></li>
+        ///     <li><c>-t</c> via <see cref="CloudFoundryPushSettings.StartupTimeout"/></li>
+        ///     <li><c>-u</c> via <see cref="CloudFoundryPushSettings.HealthCheckType"/></li>
+        ///     <li><c>-var</c> via <see cref="CloudFoundryPushSettings.Variables"/></li>
+        ///     <li><c>-vars-file</c> via <see cref="CloudFoundryPushSettings.VariablesFile"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryPush(CloudFoundryPushSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryPushSettings();
@@ -120,6 +150,17 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Log user in to specific endpoint and optionally set target</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>-a</c> via <see cref="CloudFoundryLoginSettings.ApiEndpoint"/></li>
+        ///     <li><c>-o</c> via <see cref="CloudFoundryLoginSettings.Org"/></li>
+        ///     <li><c>-p</c> via <see cref="CloudFoundryLoginSettings.Password"/></li>
+        ///     <li><c>-s</c> via <see cref="CloudFoundryLoginSettings.Space"/></li>
+        ///     <li><c>--skip-ssl-validation</c> via <see cref="CloudFoundryLoginSettings.SkipSslValidation"/></li>
+        ///     <li><c>-u</c> via <see cref="CloudFoundryLoginSettings.Username"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryLogin(CloudFoundryLoginSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryLoginSettings();
@@ -169,6 +210,15 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Authenticate non-interactively</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;password&gt;</c> via <see cref="CloudFoundryAuthSettings.Password"/></li>
+        ///     <li><c>&lt;username&gt;</c> via <see cref="CloudFoundryAuthSettings.Username"/></li>
+        ///     <li><c>--client-credentials</c> via <see cref="CloudFoundryAuthSettings.ClientCredentials"/></li>
+        ///     <li><c>-origin</c> via <see cref="CloudFoundryAuthSettings.Origin"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryAuth(CloudFoundryAuthSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryAuthSettings();
@@ -214,6 +264,14 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Change or view the instance count, disk space limit, and memory limit for an app</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>-i</c> via <see cref="CloudFoundryScaleSettings.Instances"/></li>
+        ///     <li><c>-k</c> via <see cref="CloudFoundryScaleSettings.Disk"/></li>
+        ///     <li><c>-m</c> via <see cref="CloudFoundryScaleSettings.Memory"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryScale(CloudFoundryScaleSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryScaleSettings();
@@ -257,6 +315,14 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Set an env variable for an app</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;appName&gt;</c> via <see cref="CloudFoundrySetEnvSettings.AppName"/></li>
+        ///     <li><c>&lt;envVarName&gt;</c> via <see cref="CloudFoundrySetEnvSettings.EnvVarName"/></li>
+        ///     <li><c>&lt;envVarValue&gt;</c> via <see cref="CloudFoundrySetEnvSettings.EnvVarValue"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundrySetEnv(CloudFoundrySetEnvSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundrySetEnvSettings();
@@ -300,6 +366,15 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Executes a request to the targeted API endpoint</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;path&gt;</c> via <see cref="CloudFoundryCurlSettings.Path"/></li>
+        ///     <li><c>-d</c> via <see cref="CloudFoundryCurlSettings.HttpData"/></li>
+        ///     <li><c>-i</c> via <see cref="CloudFoundryCurlSettings.IncludeResponseHeaders"/></li>
+        ///     <li><c>-X</c> via <see cref="CloudFoundryCurlSettings.HttpMethod"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryCurl(CloudFoundryCurlSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryCurlSettings();
@@ -345,6 +420,14 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Set or view target api url</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;url&gt;</c> via <see cref="CloudFoundryApiSettings.Url"/></li>
+        ///     <li><c>--skip-ssl-validation</c> via <see cref="CloudFoundryApiSettings.SkipSSLValidation"/></li>
+        ///     <li><c>--unset</c> via <see cref="CloudFoundryApiSettings.Unset"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryApi(CloudFoundryApiSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryApiSettings();
@@ -388,6 +471,16 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Make a user-provided service instance available to CF apps</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;serviceInstanceName&gt;</c> via <see cref="CloudFoundryCreateUserProvidedServiceSettings.ServiceInstanceName"/></li>
+        ///     <li><c>-l</c> via <see cref="CloudFoundryCreateUserProvidedServiceSettings.LogUrl"/></li>
+        ///     <li><c>-p</c> via <see cref="CloudFoundryCreateUserProvidedServiceSettings.Credentials"/></li>
+        ///     <li><c>-r</c> via <see cref="CloudFoundryCreateUserProvidedServiceSettings.RouteUrl"/></li>
+        ///     <li><c>-t</c> via <see cref="CloudFoundryCreateUserProvidedServiceSettings.Tags"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryCreateUserProvidedService(CloudFoundryCreateUserProvidedServiceSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryCreateUserProvidedServiceSettings();
@@ -435,6 +528,12 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Start an app</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;appName&gt;</c> via <see cref="CloudFoundryStartSettings.AppName"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryStart(CloudFoundryStartSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryStartSettings();
@@ -474,6 +573,12 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Stop an app</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;appName&gt;</c> via <see cref="CloudFoundryStopSettings.AppName"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryStop(CloudFoundryStopSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryStopSettings();
@@ -513,6 +618,12 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Stop all instances of the app, then start them again. This causes downtime.</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;appName&gt;</c> via <see cref="CloudFoundryRestartSettings.AppName"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryRestart(CloudFoundryRestartSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryRestartSettings();
@@ -552,6 +663,12 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Recreate the app's executable artifact using the latest pushed app files and the latest environment (variables, service bindings, buildpack, stack, etc.). This action will cause app downtime.</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;appName&gt;</c> via <see cref="CloudFoundryRestageSettings.AppName"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryRestage(CloudFoundryRestageSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryRestageSettings();
@@ -591,6 +708,13 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Delete an app</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;appName&gt;</c> via <see cref="CloudFoundryDeleteApplicationSettings.AppName"/></li>
+        ///     <li><c>-r</c> via <see cref="CloudFoundryDeleteApplicationSettings.DeleteRoutes"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryDeleteApplication(CloudFoundryDeleteApplicationSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryDeleteApplicationSettings();
@@ -632,6 +756,16 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Create a service instance</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;instanceName&gt;</c> via <see cref="CloudFoundryCreateServiceSettings.InstanceName"/></li>
+        ///     <li><c>&lt;plan&gt;</c> via <see cref="CloudFoundryCreateServiceSettings.Plan"/></li>
+        ///     <li><c>&lt;service&gt;</c> via <see cref="CloudFoundryCreateServiceSettings.Service"/></li>
+        ///     <li><c>-c</c> via <see cref="CloudFoundryCreateServiceSettings.ConfigurationParameters"/></li>
+        ///     <li><c>-t</c> via <see cref="CloudFoundryCreateServiceSettings.Tags"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryCreateService(CloudFoundryCreateServiceSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryCreateServiceSettings();
@@ -679,6 +813,12 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Delete a service instance</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;serviceInstance&gt;</c> via <see cref="CloudFoundryDeleteServiceSettings.ServiceInstance"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryDeleteService(CloudFoundryDeleteServiceSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryDeleteServiceSettings();
@@ -718,6 +858,12 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Show service instance info</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;serviceInstance&gt;</c> via <see cref="CloudFoundryGetServiceInfoSettings.ServiceInstance"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryGetServiceInfo(CloudFoundryGetServiceInfoSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryGetServiceInfoSettings();
@@ -757,6 +903,15 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Bind service instance</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;appName&gt;</c> via <see cref="CloudFoundryBindServiceSettings.AppName"/></li>
+        ///     <li><c>&lt;serviceInstance&gt;</c> via <see cref="CloudFoundryBindServiceSettings.ServiceInstance"/></li>
+        ///     <li><c>--binding-name</c> via <see cref="CloudFoundryBindServiceSettings.BindingName"/></li>
+        ///     <li><c>-c</c> via <see cref="CloudFoundryBindServiceSettings.ConfigurationParameters"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryBindService(CloudFoundryBindServiceSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryBindServiceSettings();
@@ -802,6 +957,13 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Bind service instance</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;appName&gt;</c> via <see cref="CloudFoundryUnbindServiceSettings.AppName"/></li>
+        ///     <li><c>&lt;serviceInstance&gt;</c> via <see cref="CloudFoundryUnbindServiceSettings.ServiceInstance"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryUnbindService(CloudFoundryUnbindServiceSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryUnbindServiceSettings();
@@ -843,6 +1005,13 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Remove an env variable from an app</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;appName&gt;</c> via <see cref="CloudFoundryUnsetEnvSettings.AppName"/></li>
+        ///     <li><c>&lt;environmentalVariableName&gt;</c> via <see cref="CloudFoundryUnsetEnvSettings.EnvironmentalVariableName"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryUnsetEnv(CloudFoundryUnsetEnvSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryUnsetEnvSettings();
@@ -884,6 +1053,17 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Create a url route in a space for later use</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;domain&gt;</c> via <see cref="CloudFoundryCreateRouteSettings.Domain"/></li>
+        ///     <li><c>&lt;space&gt;</c> via <see cref="CloudFoundryCreateRouteSettings.Space"/></li>
+        ///     <li><c>--hostname</c> via <see cref="CloudFoundryCreateRouteSettings.Hostname"/></li>
+        ///     <li><c>--path</c> via <see cref="CloudFoundryCreateRouteSettings.Path"/></li>
+        ///     <li><c>--port</c> via <see cref="CloudFoundryCreateRouteSettings.Port"/></li>
+        ///     <li><c>--random-port</c> via <see cref="CloudFoundryCreateRouteSettings.RandomPort"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryCreateRoute(CloudFoundryCreateRouteSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryCreateRouteSettings();
@@ -933,6 +1113,17 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Add a url route to an app</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;appName&gt;</c> via <see cref="CloudFoundryMapRouteSettings.AppName"/></li>
+        ///     <li><c>&lt;domain&gt;</c> via <see cref="CloudFoundryMapRouteSettings.Domain"/></li>
+        ///     <li><c>--hostname</c> via <see cref="CloudFoundryMapRouteSettings.Hostname"/></li>
+        ///     <li><c>--path</c> via <see cref="CloudFoundryMapRouteSettings.Path"/></li>
+        ///     <li><c>--port</c> via <see cref="CloudFoundryMapRouteSettings.Port"/></li>
+        ///     <li><c>--random-port</c> via <see cref="CloudFoundryMapRouteSettings.RandomPort"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryMapRoute(CloudFoundryMapRouteSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryMapRouteSettings();
@@ -982,6 +1173,16 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Remove a url route from an app</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;appName&gt;</c> via <see cref="CloudFoundryUnmapRouteSettings.AppName"/></li>
+        ///     <li><c>&lt;domain&gt;</c> via <see cref="CloudFoundryUnmapRouteSettings.Domain"/></li>
+        ///     <li><c>--hostname</c> via <see cref="CloudFoundryUnmapRouteSettings.Hostname"/></li>
+        ///     <li><c>--path</c> via <see cref="CloudFoundryUnmapRouteSettings.Path"/></li>
+        ///     <li><c>--port</c> via <see cref="CloudFoundryUnmapRouteSettings.Port"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryUnmapRoute(CloudFoundryUnmapRouteSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryUnmapRouteSettings();
@@ -1029,6 +1230,14 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Create a space</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;space&gt;</c> via <see cref="CloudFoundryCreateSpaceSettings.Space"/></li>
+        ///     <li><c>-o</c> via <see cref="CloudFoundryCreateSpaceSettings.Org"/></li>
+        ///     <li><c>-q</c> via <see cref="CloudFoundryCreateSpaceSettings.Quota"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryCreateSpace(CloudFoundryCreateSpaceSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryCreateSpaceSettings();
@@ -1072,6 +1281,13 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Delete a space</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;space&gt;</c> via <see cref="CloudFoundryDeleteSpaceSettings.Space"/></li>
+        ///     <li><c>-o</c> via <see cref="CloudFoundryDeleteSpaceSettings.Org"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryDeleteSpace(CloudFoundryDeleteSpaceSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryDeleteSpaceSettings();
@@ -1113,6 +1329,13 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Set or view the targeted org or space</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>-o</c> via <see cref="CloudFoundryTargetSettings.Org"/></li>
+        ///     <li><c>-s</c> via <see cref="CloudFoundryTargetSettings.Space"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CloudFoundryTarget(CloudFoundryTargetSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CloudFoundryTargetSettings();

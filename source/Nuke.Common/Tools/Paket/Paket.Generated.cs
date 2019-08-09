@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/Paket.json
-// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.Paket
 {
+    /// <summary>
+    ///   <p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href="https://www.nuget.org/">NuGet</a> packages and also enables referencing files directly from <a href="https://fsprojects.github.io/Paket/git-dependencies.html">Git repositories</a> or any <a href="https://fsprojects.github.io/Paket/http-dependencies.html">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href="https://fsprojects.github.io/Paket/getting-started.html"><em>Getting started</em> tutorial</a> and take a look at the <a href="https://fsprojects.github.io/Paket/faq.html">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href="https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion">convert from NuGet</a> section.</p>
+    ///   <p>For more details, visit the <a href="https://fsprojects.github.io/paket">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class PaketTasks
@@ -32,6 +36,7 @@ namespace Nuke.Common.Tools.Paket
         public static Action<OutputType, string> PaketLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href="https://www.nuget.org/">NuGet</a> packages and also enables referencing files directly from <a href="https://fsprojects.github.io/Paket/git-dependencies.html">Git repositories</a> or any <a href="https://fsprojects.github.io/Paket/http-dependencies.html">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href="https://fsprojects.github.io/Paket/getting-started.html"><em>Getting started</em> tutorial</a> and take a look at the <a href="https://fsprojects.github.io/Paket/faq.html">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href="https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion">convert from NuGet</a> section.</p>
+        ///   <p>For more details, visit the <a href="https://fsprojects.github.io/paket">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> Paket(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,28 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href="https://www.nuget.org/">NuGet</a> packages and also enables referencing files directly from <a href="https://fsprojects.github.io/Paket/git-dependencies.html">Git repositories</a> or any <a href="https://fsprojects.github.io/Paket/http-dependencies.html">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href="https://fsprojects.github.io/Paket/getting-started.html"><em>Getting started</em> tutorial</a> and take a look at the <a href="https://fsprojects.github.io/Paket/faq.html">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href="https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion">convert from NuGet</a> section.</p>
         ///   <p>For more details, visit the <a href="https://fsprojects.github.io/paket">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;packageId&gt;</c> via <see cref="PaketUpdateSettings.PackageId"/></li>
+        ///     <li><c>--clean-redirects</c> via <see cref="PaketUpdateSettings.CleanRedirects"/></li>
+        ///     <li><c>--create-new-binding-files</c> via <see cref="PaketUpdateSettings.CreateNewBindingFiles"/></li>
+        ///     <li><c>--filter</c> via <see cref="PaketUpdateSettings.Filter"/></li>
+        ///     <li><c>--force</c> via <see cref="PaketUpdateSettings.Force"/></li>
+        ///     <li><c>--from-bootstrapper</c> via <see cref="PaketUpdateSettings.FromBootstrapper"/></li>
+        ///     <li><c>--group</c> via <see cref="PaketUpdateSettings.DependencyGroup"/></li>
+        ///     <li><c>--keep-major</c> via <see cref="PaketUpdateSettings.KeepMajor"/></li>
+        ///     <li><c>--keep-minor</c> via <see cref="PaketUpdateSettings.KeepMinor"/></li>
+        ///     <li><c>--keep-patch</c> via <see cref="PaketUpdateSettings.KeepPatch"/></li>
+        ///     <li><c>--log-file</c> via <see cref="PaketUpdateSettings.LogFile"/></li>
+        ///     <li><c>--no-install</c> via <see cref="PaketUpdateSettings.NoInstall"/></li>
+        ///     <li><c>--redirects</c> via <see cref="PaketUpdateSettings.Redirects"/></li>
+        ///     <li><c>--silent</c> via <see cref="PaketUpdateSettings.Silent"/></li>
+        ///     <li><c>--touch-affected-refs</c> via <see cref="PaketUpdateSettings.TouchAffectedReferences"/></li>
+        ///     <li><c>--verbose</c> via <see cref="PaketUpdateSettings.Verbose"/></li>
+        ///     <li><c>--version</c> via <see cref="PaketUpdateSettings.PackageVersion"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> PaketUpdate(PaketUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new PaketUpdateSettings();
@@ -114,6 +141,24 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href="https://www.nuget.org/">NuGet</a> packages and also enables referencing files directly from <a href="https://fsprojects.github.io/Paket/git-dependencies.html">Git repositories</a> or any <a href="https://fsprojects.github.io/Paket/http-dependencies.html">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href="https://fsprojects.github.io/Paket/getting-started.html"><em>Getting started</em> tutorial</a> and take a look at the <a href="https://fsprojects.github.io/Paket/faq.html">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href="https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion">convert from NuGet</a> section.</p>
         ///   <p>For more details, visit the <a href="https://fsprojects.github.io/paket">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--fail-on-checks</c> via <see cref="PaketRestoreSettings.FailOnChecks"/></li>
+        ///     <li><c>--force</c> via <see cref="PaketRestoreSettings.Force"/></li>
+        ///     <li><c>--from-bootstrapper</c> via <see cref="PaketRestoreSettings.FromBootstrapper"/></li>
+        ///     <li><c>--group</c> via <see cref="PaketRestoreSettings.DependencyGroup"/></li>
+        ///     <li><c>--ignore-checks</c> via <see cref="PaketRestoreSettings.IgnoreChecks"/></li>
+        ///     <li><c>--log-file</c> via <see cref="PaketRestoreSettings.LogFile"/></li>
+        ///     <li><c>--only-referenced</c> via <see cref="PaketRestoreSettings.OnlyReferenced"/></li>
+        ///     <li><c>--project</c> via <see cref="PaketRestoreSettings.ProjectFile"/></li>
+        ///     <li><c>--references-files</c> via <see cref="PaketRestoreSettings.ReferencesFiles"/></li>
+        ///     <li><c>--silent</c> via <see cref="PaketRestoreSettings.Silent"/></li>
+        ///     <li><c>--target-framework</c> via <see cref="PaketRestoreSettings.TargetFramework"/></li>
+        ///     <li><c>--touch-affected-refs</c> via <see cref="PaketRestoreSettings.TouchAffectedRefs"/></li>
+        ///     <li><c>--verbose</c> via <see cref="PaketRestoreSettings.Verbose"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> PaketRestore(PaketRestoreSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new PaketRestoreSettings();
@@ -177,6 +222,19 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href="https://www.nuget.org/">NuGet</a> packages and also enables referencing files directly from <a href="https://fsprojects.github.io/Paket/git-dependencies.html">Git repositories</a> or any <a href="https://fsprojects.github.io/Paket/http-dependencies.html">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href="https://fsprojects.github.io/Paket/getting-started.html"><em>Getting started</em> tutorial</a> and take a look at the <a href="https://fsprojects.github.io/Paket/faq.html">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href="https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion">convert from NuGet</a> section.</p>
         ///   <p>For more details, visit the <a href="https://fsprojects.github.io/paket">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--api-key</c> via <see cref="PaketPushSettings.ApiKey"/></li>
+        ///     <li><c>--endpoint</c> via <see cref="PaketPushSettings.Endpoint"/></li>
+        ///     <li><c>file</c> via <see cref="PaketPushSettings.File"/></li>
+        ///     <li><c>--from-bootstrapper</c> via <see cref="PaketPushSettings.FromBootstrapper"/></li>
+        ///     <li><c>--log-file</c> via <see cref="PaketPushSettings.LogFile"/></li>
+        ///     <li><c>--silent</c> via <see cref="PaketPushSettings.Silent"/></li>
+        ///     <li><c>--url</c> via <see cref="PaketPushSettings.Url"/></li>
+        ///     <li><c>--verbose</c> via <see cref="PaketPushSettings.Verbose"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> PaketPush(PaketPushSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new PaketPushSettings();
@@ -193,12 +251,12 @@ namespace Nuke.Common.Tools.Paket
         ///   <ul>
         ///     <li><c>--api-key</c> via <see cref="PaketPushSettings.ApiKey"/></li>
         ///     <li><c>--endpoint</c> via <see cref="PaketPushSettings.Endpoint"/></li>
+        ///     <li><c>file</c> via <see cref="PaketPushSettings.File"/></li>
         ///     <li><c>--from-bootstrapper</c> via <see cref="PaketPushSettings.FromBootstrapper"/></li>
         ///     <li><c>--log-file</c> via <see cref="PaketPushSettings.LogFile"/></li>
         ///     <li><c>--silent</c> via <see cref="PaketPushSettings.Silent"/></li>
         ///     <li><c>--url</c> via <see cref="PaketPushSettings.Url"/></li>
         ///     <li><c>--verbose</c> via <see cref="PaketPushSettings.Verbose"/></li>
-        ///     <li><c>file</c> via <see cref="PaketPushSettings.File"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> PaketPush(Configure<PaketPushSettings> configurator)
@@ -214,12 +272,12 @@ namespace Nuke.Common.Tools.Paket
         ///   <ul>
         ///     <li><c>--api-key</c> via <see cref="PaketPushSettings.ApiKey"/></li>
         ///     <li><c>--endpoint</c> via <see cref="PaketPushSettings.Endpoint"/></li>
+        ///     <li><c>file</c> via <see cref="PaketPushSettings.File"/></li>
         ///     <li><c>--from-bootstrapper</c> via <see cref="PaketPushSettings.FromBootstrapper"/></li>
         ///     <li><c>--log-file</c> via <see cref="PaketPushSettings.LogFile"/></li>
         ///     <li><c>--silent</c> via <see cref="PaketPushSettings.Silent"/></li>
         ///     <li><c>--url</c> via <see cref="PaketPushSettings.Url"/></li>
         ///     <li><c>--verbose</c> via <see cref="PaketPushSettings.Verbose"/></li>
-        ///     <li><c>file</c> via <see cref="PaketPushSettings.File"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(PaketPushSettings Settings, IReadOnlyCollection<Output> Output)> PaketPush(CombinatorialConfigure<PaketPushSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -230,6 +288,29 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>Paket is a dependency manager for .NET and mono projects, which is designed to work well with <a href="https://www.nuget.org/">NuGet</a> packages and also enables referencing files directly from <a href="https://fsprojects.github.io/Paket/git-dependencies.html">Git repositories</a> or any <a href="https://fsprojects.github.io/Paket/http-dependencies.html">HTTP resource</a>. It enables precise and predictable control over what packages the projects within your application reference.</p><p>If you want to learn how to use Paket then read the <a href="https://fsprojects.github.io/Paket/getting-started.html"><em>Getting started</em> tutorial</a> and take a look at the <a href="https://fsprojects.github.io/Paket/faq.html">FAQs</a>.</p><p>If you are already using NuGet for package management in your solution then you can learn about the upgrade process in the <a href="https://fsprojects.github.io/Paket/getting-started.html#Automatic-NuGet-conversion">convert from NuGet</a> section.</p>
         ///   <p>For more details, visit the <a href="https://fsprojects.github.io/paket">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;outputDirectory&gt;</c> via <see cref="PaketPackSettings.OutputDirectory"/></li>
+        ///     <li><c>--build-config</c> via <see cref="PaketPackSettings.BuildConfiguration"/></li>
+        ///     <li><c>--build-platform</c> via <see cref="PaketPackSettings.BuildPlatform"/></li>
+        ///     <li><c>--exclude</c> via <see cref="PaketPackSettings.Exclude"/></li>
+        ///     <li><c>--from-bootstrapper</c> via <see cref="PaketPackSettings.FromBootstrapper"/></li>
+        ///     <li><c>--include-referenced-projects</c> via <see cref="PaketPackSettings.IncludeReferencedProjects"/></li>
+        ///     <li><c>--lock-dependencies</c> via <see cref="PaketPackSettings.LockDependencies"/></li>
+        ///     <li><c>--log-file</c> via <see cref="PaketPackSettings.LogFile"/></li>
+        ///     <li><c>--minimum-from-lock-file</c> via <see cref="PaketPackSettings.MinimumFromLockFile"/></li>
+        ///     <li><c>--pin-project-references</c> via <see cref="PaketPackSettings.PinProjectReferences"/></li>
+        ///     <li><c>--project-url</c> via <see cref="PaketPackSettings.ProjectUrl"/></li>
+        ///     <li><c>--release-notes</c> via <see cref="PaketPackSettings.ReleaseNotes"/></li>
+        ///     <li><c>--silent</c> via <see cref="PaketPackSettings.Silent"/></li>
+        ///     <li><c>--specific-version</c> via <see cref="PaketPackSettings.SpecificVersions"/></li>
+        ///     <li><c>--symbols</c> via <see cref="PaketPackSettings.Symbols"/></li>
+        ///     <li><c>--template</c> via <see cref="PaketPackSettings.TemplateFile"/></li>
+        ///     <li><c>--verbose</c> via <see cref="PaketPackSettings.Verbose"/></li>
+        ///     <li><c>--version</c> via <see cref="PaketPackSettings.PackageVersion"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> PaketPack(PaketPackSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new PaketPackSettings();

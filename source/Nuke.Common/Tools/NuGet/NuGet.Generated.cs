@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/NuGet.json
-// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.NuGet
 {
+    /// <summary>
+    ///   <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>
+    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class NuGetTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.NuGet
             ToolPathResolver.GetPackageExecutable("NuGet.CommandLine", "NuGet.exe");
         public static Action<OutputType, string> NuGetLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.
+        ///   <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> NuGet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,23 @@ namespace Nuke.Common.Tools.NuGet
         ///   <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;targetPath&gt;</c> via <see cref="NuGetPushSettings.TargetPath"/></li>
+        ///     <li><c>-ApiKey</c> via <see cref="NuGetPushSettings.ApiKey"/></li>
+        ///     <li><c>-ConfigFile</c> via <see cref="NuGetPushSettings.ConfigFile"/></li>
+        ///     <li><c>-DisableBuffering</c> via <see cref="NuGetPushSettings.DisableBuffering"/></li>
+        ///     <li><c>-ForceEnglishOutput</c> via <see cref="NuGetPushSettings.ForceEnglishOutput"/></li>
+        ///     <li><c>-NonInteractive</c> via <see cref="NuGetPushSettings.NonInteractive"/></li>
+        ///     <li><c>-NoSymbols</c> via <see cref="NuGetPushSettings.NoSymbols"/></li>
+        ///     <li><c>-Source</c> via <see cref="NuGetPushSettings.Source"/></li>
+        ///     <li><c>-SymbolApiKey</c> via <see cref="NuGetPushSettings.SymbolApiKey"/></li>
+        ///     <li><c>-SymbolSource</c> via <see cref="NuGetPushSettings.SymbolSource"/></li>
+        ///     <li><c>-Timeout</c> via <see cref="NuGetPushSettings.Timeout"/></li>
+        ///     <li><c>-Verbosity</c> via <see cref="NuGetPushSettings.Verbosity"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> NuGetPush(NuGetPushSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetPushSettings();
@@ -104,6 +126,31 @@ namespace Nuke.Common.Tools.NuGet
         ///   <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;targetPath&gt;</c> via <see cref="NuGetPackSettings.TargetPath"/></li>
+        ///     <li><c>-BasePath</c> via <see cref="NuGetPackSettings.BasePath"/></li>
+        ///     <li><c>-Build</c> via <see cref="NuGetPackSettings.Build"/></li>
+        ///     <li><c>-Exclude</c> via <see cref="NuGetPackSettings.Exclude"/></li>
+        ///     <li><c>-ExcludeEmptyDirectories</c> via <see cref="NuGetPackSettings.ExcludeEmptyDirectories"/></li>
+        ///     <li><c>-ForceEnglishOutput</c> via <see cref="NuGetPackSettings.ForceEnglishOutput"/></li>
+        ///     <li><c>-IncludeReferencedProjects</c> via <see cref="NuGetPackSettings.IncludeReferencedProjects"/></li>
+        ///     <li><c>-MinClientVersion</c> via <see cref="NuGetPackSettings.MinClientVersion"/></li>
+        ///     <li><c>-MSBuildPath</c> via <see cref="NuGetPackSettings.MSBuildPath"/></li>
+        ///     <li><c>-MSBuildVersion</c> via <see cref="NuGetPackSettings.MSBuildVersion"/></li>
+        ///     <li><c>-NoDefaultExcludes</c> via <see cref="NuGetPackSettings.NoDefaultExcludes"/></li>
+        ///     <li><c>-NoPackageAnalysis</c> via <see cref="NuGetPackSettings.NoPackageAnalysis"/></li>
+        ///     <li><c>-OutputDirectory</c> via <see cref="NuGetPackSettings.OutputDirectory"/></li>
+        ///     <li><c>-Properties</c> via <see cref="NuGetPackSettings.Properties"/></li>
+        ///     <li><c>-Suffix</c> via <see cref="NuGetPackSettings.Suffix"/></li>
+        ///     <li><c>-SymbolPackageFormat</c> via <see cref="NuGetPackSettings.SymbolPackageFormat"/></li>
+        ///     <li><c>-Symbols</c> via <see cref="NuGetPackSettings.Symbols"/></li>
+        ///     <li><c>-Tool</c> via <see cref="NuGetPackSettings.Tool"/></li>
+        ///     <li><c>-Verbosity</c> via <see cref="NuGetPackSettings.Verbosity"/></li>
+        ///     <li><c>-Version</c> via <see cref="NuGetPackSettings.Version"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> NuGetPack(NuGetPackSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetPackSettings();
@@ -181,6 +228,30 @@ namespace Nuke.Common.Tools.NuGet
         ///   <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;targetPath&gt;</c> via <see cref="NuGetRestoreSettings.TargetPath"/></li>
+        ///     <li><c>-ConfigFile</c> via <see cref="NuGetRestoreSettings.ConfigFile"/></li>
+        ///     <li><c>-DirectDownload</c> via <see cref="NuGetRestoreSettings.DirectDownload"/></li>
+        ///     <li><c>-DisableParallelProcessing</c> via <see cref="NuGetRestoreSettings.DisableParallelProcessing"/></li>
+        ///     <li><c>-FallbackSource</c> via <see cref="NuGetRestoreSettings.FallbackSource"/></li>
+        ///     <li><c>-ForceEnglishOutput</c> via <see cref="NuGetRestoreSettings.ForceEnglishOutput"/></li>
+        ///     <li><c>-MSBuildPath</c> via <see cref="NuGetRestoreSettings.MSBuildPath"/></li>
+        ///     <li><c>-MSBuildVersion</c> via <see cref="NuGetRestoreSettings.MSBuildVersion"/></li>
+        ///     <li><c>-NoCache</c> via <see cref="NuGetRestoreSettings.NoCache"/></li>
+        ///     <li><c>-NonInteractive</c> via <see cref="NuGetRestoreSettings.NonInteractive"/></li>
+        ///     <li><c>-OutputDirectory</c> via <see cref="NuGetRestoreSettings.OutputDirectory"/></li>
+        ///     <li><c>-PackageSaveMode</c> via <see cref="NuGetRestoreSettings.PackageSaveMode"/></li>
+        ///     <li><c>-PackagesDirectory</c> via <see cref="NuGetRestoreSettings.PackagesDirectory"/></li>
+        ///     <li><c>-Project2ProjectTimeOut</c> via <see cref="NuGetRestoreSettings.Project2ProjectTimeOut"/></li>
+        ///     <li><c>-Recursive</c> via <see cref="NuGetRestoreSettings.Recursive"/></li>
+        ///     <li><c>-RequireConsent</c> via <see cref="NuGetRestoreSettings.RequireConsent"/></li>
+        ///     <li><c>-SolutionDirectory</c> via <see cref="NuGetRestoreSettings.SolutionDirectory"/></li>
+        ///     <li><c>-Source</c> via <see cref="NuGetRestoreSettings.Source"/></li>
+        ///     <li><c>-Verbosity</c> via <see cref="NuGetRestoreSettings.Verbosity"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> NuGetRestore(NuGetRestoreSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetRestoreSettings();
@@ -256,6 +327,20 @@ namespace Nuke.Common.Tools.NuGet
         ///   <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>-ConfigFile</c> via <see cref="NuGetSourcesAddSettings.ConfigFile"/></li>
+        ///     <li><c>-ForceEnglishOutput</c> via <see cref="NuGetSourcesAddSettings.ForceEnglishOutput"/></li>
+        ///     <li><c>-Name</c> via <see cref="NuGetSourcesAddSettings.Name"/></li>
+        ///     <li><c>-NonInteractive</c> via <see cref="NuGetSourcesAddSettings.NonInteractive"/></li>
+        ///     <li><c>-Password</c> via <see cref="NuGetSourcesAddSettings.Password"/></li>
+        ///     <li><c>-Source</c> via <see cref="NuGetSourcesAddSettings.Source"/></li>
+        ///     <li><c>-StorePasswordInClearText</c> via <see cref="NuGetSourcesAddSettings.StorePasswordInClearText"/></li>
+        ///     <li><c>-UserName</c> via <see cref="NuGetSourcesAddSettings.UserName"/></li>
+        ///     <li><c>-Verbosity</c> via <see cref="NuGetSourcesAddSettings.Verbosity"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> NuGetSourcesAdd(NuGetSourcesAddSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetSourcesAddSettings();
@@ -311,6 +396,20 @@ namespace Nuke.Common.Tools.NuGet
         ///   <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>-ConfigFile</c> via <see cref="NuGetSourcesUpdateSettings.ConfigFile"/></li>
+        ///     <li><c>-ForceEnglishOutput</c> via <see cref="NuGetSourcesUpdateSettings.ForceEnglishOutput"/></li>
+        ///     <li><c>-Name</c> via <see cref="NuGetSourcesUpdateSettings.Name"/></li>
+        ///     <li><c>-NonInteractive</c> via <see cref="NuGetSourcesUpdateSettings.NonInteractive"/></li>
+        ///     <li><c>-Password</c> via <see cref="NuGetSourcesUpdateSettings.Password"/></li>
+        ///     <li><c>-Source</c> via <see cref="NuGetSourcesUpdateSettings.Source"/></li>
+        ///     <li><c>-StorePasswordInClearText</c> via <see cref="NuGetSourcesUpdateSettings.StorePasswordInClearText"/></li>
+        ///     <li><c>-UserName</c> via <see cref="NuGetSourcesUpdateSettings.UserName"/></li>
+        ///     <li><c>-Verbosity</c> via <see cref="NuGetSourcesUpdateSettings.Verbosity"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> NuGetSourcesUpdate(NuGetSourcesUpdateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetSourcesUpdateSettings();
@@ -366,6 +465,16 @@ namespace Nuke.Common.Tools.NuGet
         ///   <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>-ConfigFile</c> via <see cref="NuGetSourcesRemoveSettings.ConfigFile"/></li>
+        ///     <li><c>-ForceEnglishOutput</c> via <see cref="NuGetSourcesRemoveSettings.ForceEnglishOutput"/></li>
+        ///     <li><c>-Name</c> via <see cref="NuGetSourcesRemoveSettings.Name"/></li>
+        ///     <li><c>-NonInteractive</c> via <see cref="NuGetSourcesRemoveSettings.NonInteractive"/></li>
+        ///     <li><c>-Verbosity</c> via <see cref="NuGetSourcesRemoveSettings.Verbosity"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> NuGetSourcesRemove(NuGetSourcesRemoveSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetSourcesRemoveSettings();
@@ -413,6 +522,16 @@ namespace Nuke.Common.Tools.NuGet
         ///   <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>-ConfigFile</c> via <see cref="NuGetSourcesEnableSettings.ConfigFile"/></li>
+        ///     <li><c>-ForceEnglishOutput</c> via <see cref="NuGetSourcesEnableSettings.ForceEnglishOutput"/></li>
+        ///     <li><c>-Name</c> via <see cref="NuGetSourcesEnableSettings.Name"/></li>
+        ///     <li><c>-NonInteractive</c> via <see cref="NuGetSourcesEnableSettings.NonInteractive"/></li>
+        ///     <li><c>-Verbosity</c> via <see cref="NuGetSourcesEnableSettings.Verbosity"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> NuGetSourcesEnable(NuGetSourcesEnableSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetSourcesEnableSettings();
@@ -460,6 +579,16 @@ namespace Nuke.Common.Tools.NuGet
         ///   <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>-ConfigFile</c> via <see cref="NuGetSourcesDisableSettings.ConfigFile"/></li>
+        ///     <li><c>-ForceEnglishOutput</c> via <see cref="NuGetSourcesDisableSettings.ForceEnglishOutput"/></li>
+        ///     <li><c>-Name</c> via <see cref="NuGetSourcesDisableSettings.Name"/></li>
+        ///     <li><c>-NonInteractive</c> via <see cref="NuGetSourcesDisableSettings.NonInteractive"/></li>
+        ///     <li><c>-Verbosity</c> via <see cref="NuGetSourcesDisableSettings.Verbosity"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> NuGetSourcesDisable(NuGetSourcesDisableSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetSourcesDisableSettings();
@@ -507,6 +636,16 @@ namespace Nuke.Common.Tools.NuGet
         ///   <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>-ConfigFile</c> via <see cref="NuGetSourcesListSettings.ConfigFile"/></li>
+        ///     <li><c>-ForceEnglishOutput</c> via <see cref="NuGetSourcesListSettings.ForceEnglishOutput"/></li>
+        ///     <li><c>-Format</c> via <see cref="NuGetSourcesListSettings.Format"/></li>
+        ///     <li><c>-NonInteractive</c> via <see cref="NuGetSourcesListSettings.NonInteractive"/></li>
+        ///     <li><c>-Verbosity</c> via <see cref="NuGetSourcesListSettings.Verbosity"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> NuGetSourcesList(NuGetSourcesListSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NuGetSourcesListSettings();

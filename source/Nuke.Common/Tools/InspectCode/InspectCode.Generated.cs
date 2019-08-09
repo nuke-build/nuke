@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/InspectCode.json
-// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.InspectCode
 {
+    /// <summary>
+    ///   <p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p>
+    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class InspectCodeTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.InspectCode
             ToolPathResolver.GetPackageExecutable("JetBrains.ReSharper.CommandLineTools", GetPackageExecutable());
         public static Action<OutputType, string> InspectCodeLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.
+        ///   <p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p>
+        ///   <p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> InspectCode(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,22 @@ namespace Nuke.Common.Tools.InspectCode
         ///   <p>One of ReSharper's most notable features, code inspection, is available even without opening Visual Studio. InspectCode, a free command line tool requires a minimum of one parameter- your solution file- to apply all of ReSharper's inspections.</p>
         ///   <p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/InspectCode.html/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;targetPath&gt;</c> via <see cref="InspectCodeSettings.TargetPath"/></li>
+        ///     <li><c>--caches-home</c> via <see cref="InspectCodeSettings.CachesHome"/></li>
+        ///     <li><c>--disable-settings-layers</c> via <see cref="InspectCodeSettings.DisableSettingsLayers"/></li>
+        ///     <li><c>--dumpIssuesTypes</c> via <see cref="InspectCodeSettings.DumpIssuesTypes"/></li>
+        ///     <li><c>--no-buildin-settings</c> via <see cref="InspectCodeSettings.NoBuiltinSettings"/></li>
+        ///     <li><c>--no-swea</c> via <see cref="InspectCodeSettings.NoSwea"/></li>
+        ///     <li><c>--output</c> via <see cref="InspectCodeSettings.Output"/></li>
+        ///     <li><c>--profile</c> via <see cref="InspectCodeSettings.Profile"/></li>
+        ///     <li><c>--project</c> via <see cref="InspectCodeSettings.Project"/></li>
+        ///     <li><c>--properties</c> via <see cref="InspectCodeSettings.Properties"/></li>
+        ///     <li><c>--toolset</c> via <see cref="InspectCodeSettings.Toolset"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> InspectCode(InspectCodeSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new InspectCodeSettings();

@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/Npm.json
-// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.Npm
 {
+    /// <summary>
+    ///   <p>npm is the package manager for the Node JavaScript platform. It puts modules in place so that node can find them, and manages dependency conflicts intelligently.<para/>It is extremely configurable to support a wide variety of use cases. Most commonly, it is used to publish, discover, install, and develop node programs.</p>
+    ///   <p>For more details, visit the <a href="https://www.npmjs.com/">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class NpmTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.Npm
             ToolPathResolver.GetPathExecutable("npm");
         public static Action<OutputType, string> NpmLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   npm is the package manager for the Node JavaScript platform. It puts modules in place so that node can find them, and manages dependency conflicts intelligently.<para/>It is extremely configurable to support a wide variety of use cases. Most commonly, it is used to publish, discover, install, and develop node programs.
+        ///   <p>npm is the package manager for the Node JavaScript platform. It puts modules in place so that node can find them, and manages dependency conflicts intelligently.<para/>It is extremely configurable to support a wide variety of use cases. Most commonly, it is used to publish, discover, install, and develop node programs.</p>
+        ///   <p>For more details, visit the <a href="https://www.npmjs.com/">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> Npm(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,24 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Installs a package, and any packages that it depends on. If the package has a package-lock or shrinkwrap file, the installation of dependencies will be driven by that, with an <b>npm-shrinkwrap.json</b> taking precedence if both files exist. See <a href="https://docs.npmjs.com/files/package-lock.json">package-lock.json</a> and <a href="https://docs.npmjs.com/cli/shrinkwrap">npm-shrinkwrap</a>.<para/>A package is: <ul><li>a) A folder containing a program described by a <a href="https://docs.npmjs.com/files/package.json">package.json file</a></li><li>b) A gzipped tarball containing (b)</li><li>c) A url that resolves to (b)</li><li>d) a <c>&lt;name&gt;@&lt;version&gt;</c> that is published on the registry (see <a href="https://docs.npmjs.com/misc/registry">npm-registry</a>) with (c)</li><li>e) a <c>&lt;name&gt;@&lt;tag&gt;</c> (see <a href="https://docs.npmjs.com/cli/dist-tag">npm-dist-tag</a>) that points to (d)</li><li>f) a <c>&lt;name&gt;</c> that has a "latest" tag satisfying (e)</li><li>g) a <c>&lt;git remote url&gt;</c> that resolves to (a)</li></ul></p>
         ///   <p>For more details, visit the <a href="https://www.npmjs.com/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;packages&gt;</c> via <see cref="NpmInstallSettings.Packages"/></li>
+        ///     <li><c>--force</c> via <see cref="NpmInstallSettings.Force"/></li>
+        ///     <li><c>--global</c> via <see cref="NpmInstallSettings.Global"/></li>
+        ///     <li><c>--global-style</c> via <see cref="NpmInstallSettings.GlobalStyle"/></li>
+        ///     <li><c>--ignore-scripts</c> via <see cref="NpmInstallSettings.IgnoreScripts"/></li>
+        ///     <li><c>--legacy-bundling</c> via <see cref="NpmInstallSettings.LegacyBundling"/></li>
+        ///     <li><c>--link</c> via <see cref="NpmInstallSettings.Link"/></li>
+        ///     <li><c>--no-bin-links</c> via <see cref="NpmInstallSettings.NoBinLinks"/></li>
+        ///     <li><c>--nodedir</c> via <see cref="NpmInstallSettings.NodeDir"/></li>
+        ///     <li><c>--no-optional</c> via <see cref="NpmInstallSettings.NoOptional"/></li>
+        ///     <li><c>--no-shrinkwrap</c> via <see cref="NpmInstallSettings.NoShrinkWrap"/></li>
+        ///     <li><c>--only</c> via <see cref="NpmInstallSettings.Only"/></li>
+        ///     <li><c>--production</c> via <see cref="NpmInstallSettings.Production"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> NpmInstall(NpmInstallSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NpmInstallSettings();
@@ -65,9 +88,9 @@ namespace Nuke.Common.Tools.Npm
         ///     <li><c>--legacy-bundling</c> via <see cref="NpmInstallSettings.LegacyBundling"/></li>
         ///     <li><c>--link</c> via <see cref="NpmInstallSettings.Link"/></li>
         ///     <li><c>--no-bin-links</c> via <see cref="NpmInstallSettings.NoBinLinks"/></li>
+        ///     <li><c>--nodedir</c> via <see cref="NpmInstallSettings.NodeDir"/></li>
         ///     <li><c>--no-optional</c> via <see cref="NpmInstallSettings.NoOptional"/></li>
         ///     <li><c>--no-shrinkwrap</c> via <see cref="NpmInstallSettings.NoShrinkWrap"/></li>
-        ///     <li><c>--nodedir</c> via <see cref="NpmInstallSettings.NodeDir"/></li>
         ///     <li><c>--only</c> via <see cref="NpmInstallSettings.Only"/></li>
         ///     <li><c>--production</c> via <see cref="NpmInstallSettings.Production"/></li>
         ///   </ul>
@@ -91,9 +114,9 @@ namespace Nuke.Common.Tools.Npm
         ///     <li><c>--legacy-bundling</c> via <see cref="NpmInstallSettings.LegacyBundling"/></li>
         ///     <li><c>--link</c> via <see cref="NpmInstallSettings.Link"/></li>
         ///     <li><c>--no-bin-links</c> via <see cref="NpmInstallSettings.NoBinLinks"/></li>
+        ///     <li><c>--nodedir</c> via <see cref="NpmInstallSettings.NodeDir"/></li>
         ///     <li><c>--no-optional</c> via <see cref="NpmInstallSettings.NoOptional"/></li>
         ///     <li><c>--no-shrinkwrap</c> via <see cref="NpmInstallSettings.NoShrinkWrap"/></li>
-        ///     <li><c>--nodedir</c> via <see cref="NpmInstallSettings.NodeDir"/></li>
         ///     <li><c>--only</c> via <see cref="NpmInstallSettings.Only"/></li>
         ///     <li><c>--production</c> via <see cref="NpmInstallSettings.Production"/></li>
         ///   </ul>
@@ -106,6 +129,13 @@ namespace Nuke.Common.Tools.Npm
         ///   <p>Runs an arbitrary command from a package's <c>"scripts"</c> object. If no <c>"command"</c> is provided, it will list the available scripts. <c>run[-script]</c> is used by the test, start, restart, and stop commands, but can be called directly, as well. When the scripts in the package are printed out, they're separated into lifecycle (test, start, restart) and directly-run scripts."</p>
         ///   <p>For more details, visit the <a href="https://www.npmjs.com/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;command&gt;</c> via <see cref="NpmRunSettings.Command"/></li>
+        ///     <li><c>--</c> via <see cref="NpmRunSettings.Arguments"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> NpmRun(NpmRunSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new NpmRunSettings();

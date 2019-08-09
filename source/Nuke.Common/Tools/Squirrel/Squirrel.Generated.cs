@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/Squirrel.json
-// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.Squirrel
 {
+    /// <summary>
+    ///   <p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p>
+    ///   <p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class SquirrelTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.Squirrel
             ToolPathResolver.GetPackageExecutable("Squirrel.Windows", "Squirrel.exe");
         public static Action<OutputType, string> SquirrelLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).
+        ///   <p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p>
+        ///   <p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> Squirrel(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,35 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p>
         ///   <p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--baseUrl</c> via <see cref="SquirrelSettings.BaseUrl"/></li>
+        ///     <li><c>--bootstrapperExe</c> via <see cref="SquirrelSettings.BootstrapperExecutable"/></li>
+        ///     <li><c>--checkForUpdate</c> via <see cref="SquirrelSettings.CheckForUpdate"/></li>
+        ///     <li><c>--createShortcut</c> via <see cref="SquirrelSettings.CreateShortcut"/></li>
+        ///     <li><c>--download</c> via <see cref="SquirrelSettings.Download"/></li>
+        ///     <li><c>--framework-version</c> via <see cref="SquirrelSettings.FrameworkVersion"/></li>
+        ///     <li><c>--icon</c> via <see cref="SquirrelSettings.Icon"/></li>
+        ///     <li><c>--install</c> via <see cref="SquirrelSettings.Install"/></li>
+        ///     <li><c>--loadingGif</c> via <see cref="SquirrelSettings.LoadingGif"/></li>
+        ///     <li><c>--no-delta</c> via <see cref="SquirrelSettings.GenerateNoDelta"/></li>
+        ///     <li><c>--no-msi</c> via <see cref="SquirrelSettings.GenerateNoMsi"/></li>
+        ///     <li><c>--packagesDir</c> via <see cref="SquirrelSettings.PackagesDirectory"/></li>
+        ///     <li><c>--processStart</c> via <see cref="SquirrelSettings.ProcessStart"/></li>
+        ///     <li><c>--processStartAndWait</c> via <see cref="SquirrelSettings.ProcessStartAndWait"/></li>
+        ///     <li><c>--process-start-args</c> via <see cref="SquirrelSettings.ProcessStartArguments"/></li>
+        ///     <li><c>--releaseDir</c> via <see cref="SquirrelSettings.ReleaseDirectory"/></li>
+        ///     <li><c>--releasify</c> via <see cref="SquirrelSettings.Releasify"/></li>
+        ///     <li><c>--removeShortcut</c> via <see cref="SquirrelSettings.RemoveShortcut"/></li>
+        ///     <li><c>--setupIcon</c> via <see cref="SquirrelSettings.SetupIcon"/></li>
+        ///     <li><c>--shortcut-locations</c> via <see cref="SquirrelSettings.ShortcutLocations"/></li>
+        ///     <li><c>--signWithParams</c> via <see cref="SquirrelSettings.SignWithParameters"/></li>
+        ///     <li><c>--uninstall</c> via <see cref="SquirrelSettings.Uninstall"/></li>
+        ///     <li><c>--update</c> via <see cref="SquirrelSettings.Update"/></li>
+        ///     <li><c>--updateSelf</c> via <see cref="SquirrelSettings.UpdateSelf"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> Squirrel(SquirrelSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SquirrelSettings();
@@ -69,9 +103,9 @@ namespace Nuke.Common.Tools.Squirrel
         ///     <li><c>--no-delta</c> via <see cref="SquirrelSettings.GenerateNoDelta"/></li>
         ///     <li><c>--no-msi</c> via <see cref="SquirrelSettings.GenerateNoMsi"/></li>
         ///     <li><c>--packagesDir</c> via <see cref="SquirrelSettings.PackagesDirectory"/></li>
-        ///     <li><c>--process-start-args</c> via <see cref="SquirrelSettings.ProcessStartArguments"/></li>
         ///     <li><c>--processStart</c> via <see cref="SquirrelSettings.ProcessStart"/></li>
         ///     <li><c>--processStartAndWait</c> via <see cref="SquirrelSettings.ProcessStartAndWait"/></li>
+        ///     <li><c>--process-start-args</c> via <see cref="SquirrelSettings.ProcessStartArguments"/></li>
         ///     <li><c>--releaseDir</c> via <see cref="SquirrelSettings.ReleaseDirectory"/></li>
         ///     <li><c>--releasify</c> via <see cref="SquirrelSettings.Releasify"/></li>
         ///     <li><c>--removeShortcut</c> via <see cref="SquirrelSettings.RemoveShortcut"/></li>
@@ -106,9 +140,9 @@ namespace Nuke.Common.Tools.Squirrel
         ///     <li><c>--no-delta</c> via <see cref="SquirrelSettings.GenerateNoDelta"/></li>
         ///     <li><c>--no-msi</c> via <see cref="SquirrelSettings.GenerateNoMsi"/></li>
         ///     <li><c>--packagesDir</c> via <see cref="SquirrelSettings.PackagesDirectory"/></li>
-        ///     <li><c>--process-start-args</c> via <see cref="SquirrelSettings.ProcessStartArguments"/></li>
         ///     <li><c>--processStart</c> via <see cref="SquirrelSettings.ProcessStart"/></li>
         ///     <li><c>--processStartAndWait</c> via <see cref="SquirrelSettings.ProcessStartAndWait"/></li>
+        ///     <li><c>--process-start-args</c> via <see cref="SquirrelSettings.ProcessStartArguments"/></li>
         ///     <li><c>--releaseDir</c> via <see cref="SquirrelSettings.ReleaseDirectory"/></li>
         ///     <li><c>--releasify</c> via <see cref="SquirrelSettings.Releasify"/></li>
         ///     <li><c>--removeShortcut</c> via <see cref="SquirrelSettings.RemoveShortcut"/></li>

@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/CoverallsNet.json
-// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.CoverallsNet
 {
+    /// <summary>
+    ///   <p>Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.</p>
+    ///   <p>For more details, visit the <a href="https://coverallsnet.readthedocs.io">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class CoverallsNetTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.CoverallsNet
             ToolPathResolver.GetPackageExecutable("coveralls.net", "csmacnz.Coveralls.dll");
         public static Action<OutputType, string> CoverallsNetLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.
+        ///   <p>Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.</p>
+        ///   <p>For more details, visit the <a href="https://coverallsnet.readthedocs.io">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> CoverallsNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,30 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.</p>
         ///   <p>For more details, visit the <a href="https://coverallsnet.readthedocs.io">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--basePath</c> via <see cref="CoverallsNetSettings.BasePath"/></li>
+        ///     <li><c>--commitAuthor</c> via <see cref="CoverallsNetSettings.CommitAuthor"/></li>
+        ///     <li><c>--commitBranch</c> via <see cref="CoverallsNetSettings.CommitBranch"/></li>
+        ///     <li><c>--commitEmail</c> via <see cref="CoverallsNetSettings.CommitEmail"/></li>
+        ///     <li><c>--commitId</c> via <see cref="CoverallsNetSettings.CommitId"/></li>
+        ///     <li><c>--commitMessage</c> via <see cref="CoverallsNetSettings.CommitMessage"/></li>
+        ///     <li><c>--dryrun</c> via <see cref="CoverallsNetSettings.DryRun"/></li>
+        ///     <li><c>--dynamiccodecoverage</c> via <see cref="CoverallsNetSettings.DynamicCodeCoverage"/></li>
+        ///     <li><c>--exportcodecoverage</c> via <see cref="CoverallsNetSettings.ExportCodeCoverage"/></li>
+        ///     <li><c>--input</c> via <see cref="CoverallsNetSettings.Input"/></li>
+        ///     <li><c>--jobId</c> via <see cref="CoverallsNetSettings.JobId"/></li>
+        ///     <li><c>--monocov</c> via <see cref="CoverallsNetSettings.Monocov"/></li>
+        ///     <li><c>--opencover</c> via <see cref="CoverallsNetSettings.OpenCover"/></li>
+        ///     <li><c>--output</c> via <see cref="CoverallsNetSettings.Output"/></li>
+        ///     <li><c>--pullRequest</c> via <see cref="CoverallsNetSettings.PullRequest"/></li>
+        ///     <li><c>--repoToken</c> via <see cref="CoverallsNetSettings.RepoToken"/></li>
+        ///     <li><c>--repoTokenVariable</c> via <see cref="CoverallsNetSettings.RepoTokenVariable"/></li>
+        ///     <li><c>--serviceName</c> via <see cref="CoverallsNetSettings.ServiceName"/></li>
+        ///     <li><c>--useRelativePaths</c> via <see cref="CoverallsNetSettings.UserRelativePaths"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> CoverallsNet(CoverallsNetSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CoverallsNetSettings();
