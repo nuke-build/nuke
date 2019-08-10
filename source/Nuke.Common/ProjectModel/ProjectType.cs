@@ -32,6 +32,8 @@ namespace Nuke.Common.ProjectModel
         
         public static ProjectType SqlProject = new ProjectType("00D1A9C2-B5F0-4AF3-8072-F6C62B433612");
 
+        public static ProjectType DockerComposeProject = new ProjectType("E53339B2-1760-4266-BCC7-CA923CBCF16C");
+        
         public static ProjectType WindowsPhoneProject = new ProjectType("76F1466A-8B6D-4E39-A767-685A06062A39",
             "C089C8C0-30E0-4E22-80C0-CE093F111A43",
             "DB03555F-0C8B-43BE-9FF9-57896B3C5E56");
