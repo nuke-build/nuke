@@ -24,27 +24,7 @@ namespace Nuke.Common.Utilities
             var parameters = parts.Where(x => x.IsParameter()).Select(x => x.GetParameterName()).ToList();
             var lastParameter = parameters.LastOrDefault();
 
-            void AddSubItems(string parameter)
-            {
-                var passedItems = parts.Reverse().TakeWhile(x => !x.IsParameter());
-                var items = completionItems.GetValueOrDefault(parameter)?.Except(passedItems, StringComparer.OrdinalIgnoreCase) ??
-                            new string[0];
-                foreach (var item in items)
-                {
-                    if (currentWord == null)
-                        suggestedItems.Add(item);
-                    if (currentWord != null && item.StartsWith(currentWord, StringComparison.OrdinalIgnoreCase))
-                        suggestedItems.Add(item.ReplaceCurrentWord(currentWord));
-                }
-            }
-
-            if (lastParameter == null)
-                AddSubItems(Constants.InvokedTargetsParameterName);
-
-            if (lastParameter != null && currentWord != lastParameter)
-                AddSubItems(lastParameter);
-
-            if (currentWord == null || currentWord.IsParameter())
+            void AddParameters()
             {
                 foreach (var item in completionItems.Keys)
                 {
@@ -72,6 +52,28 @@ namespace Nuke.Common.Utilities
                     }
                 }
             }
+
+            void AddTargetsOrValues(string parameter)
+            {
+                var passedItems = parts.Reverse().TakeWhile(x => !x.IsParameter());
+                var items = completionItems.GetValueOrDefault(parameter)?.Except(passedItems, StringComparer.OrdinalIgnoreCase) ??
+                            new string[0];
+                foreach (var item in items)
+                {
+                    if (currentWord == null)
+                        suggestedItems.Add(item);
+                    if (currentWord != null && item.StartsWith(currentWord, StringComparison.OrdinalIgnoreCase))
+                        suggestedItems.Add(item.ReplaceCurrentWord(currentWord));
+                }
+            }
+
+            if (lastParameter == null)
+                AddTargetsOrValues(Constants.InvokedTargetsParameterName);
+            else if (currentWord != lastParameter)
+                AddTargetsOrValues(lastParameter);
+
+            if (currentWord == null || currentWord.IsParameter())
+                AddParameters();
 
             return suggestedItems;
         }
