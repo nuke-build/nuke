@@ -31,7 +31,7 @@ jobs:
       vmImage: 'windows-2019'
     steps:
       - task: CmdLine@2
-        displayName: 'Run .\\build.ps1'
+        displayName: 'Run .\build.ps1'
         inputs:
           script: |
             powershell .\build.ps1

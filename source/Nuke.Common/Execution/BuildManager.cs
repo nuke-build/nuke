@@ -48,12 +48,12 @@ namespace Nuke.Common.Execution
                 if (!NukeBuild.NoLogo)
                 {
                     Logger.Normal();
-                    Logger.Normal("███╗   ██╗██╗   ██╗██╗  ██╗███████╗");
-                    Logger.Normal("████╗  ██║██║   ██║██║ ██╔╝██╔════╝");
-                    Logger.Normal("██╔██╗ ██║██║   ██║█████╔╝ █████╗  ");
-                    Logger.Normal("██║╚██╗██║██║   ██║██╔═██╗ ██╔══╝  ");
-                    Logger.Normal("██║ ╚████║╚██████╔╝██║  ██╗███████╗");
-                    Logger.Normal("╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝");
+                    Logger.Normal("███╗   ██╗██╗   ██╗██╗  ██╗███████╗");
+                    Logger.Normal("████╗  ██║██║   ██║██║ ██╔╝██╔════╝");
+                    Logger.Normal("██╔██╗ ██║██║   ██║█████╔╝ █████╗  ");
+                    Logger.Normal("██║╚██╗██║██║   ██║██╔═██╗ ██╔══╝  ");
+                    Logger.Normal("██║ ╚████║╚██████╔╝██║  ██╗███████╗");
+                    Logger.Normal("╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝");
                     Logger.Normal();
                 }
 
