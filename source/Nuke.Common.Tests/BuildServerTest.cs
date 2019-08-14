@@ -16,14 +16,6 @@ namespace Nuke.Common.Tests
 {
     public class BuildServerTest
     {
-        [BuildServerFact(typeof(TeamCity))]
-        public void TestTeamCityRestClient()
-        {
-            CreateInstance<TeamCity>().RestClient
-                .GetBuildQueue().Result
-                .Builds.Length.Should().BeGreaterThan(expected: 0);
-        }
-
         [BuildServerTheory(typeof(AppVeyor))]
         [MemberData(nameof(Properties), typeof(AppVeyor))]
         public void TestAppVeyor(PropertyInfo property, AppVeyor instance)
