@@ -146,9 +146,19 @@ namespace Nuke.Common.BuildServers
             Write("buildNumber", number);
         }
 
-        public void SetParameter(string key, string value)
+        public void SetConfigurationParameter(string name, string value)
         {
-            Write("setParameter", x => x.AddKeyValue(key, value));
+            Write("setParameter", x => x.AddKeyValue("name", name).AddKeyValue("value", value));
+        }
+
+        public void SetEnvironmentVariable(string name, string value)
+        {
+            Write("setParameter", x => x.AddKeyValue("name", $"env.{name}").AddKeyValue("value", value));
+        }
+
+        public void SetSystemProperty(string name, string value)
+        {
+            Write("setParameter", x => x.AddKeyValue("name", $"system.{name}").AddKeyValue("value", value));
         }
 
         public void AddStatisticValue(string key, string value)
