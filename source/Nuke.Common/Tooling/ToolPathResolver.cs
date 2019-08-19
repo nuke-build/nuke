@@ -30,7 +30,7 @@ namespace Nuke.Common.Tooling
             return environmentExecutablePath;
         }
 
-        public static string GetPackageExecutable(string packageId, string packageExecutable, string framework = null)
+        public static string GetPackageExecutable(string packageId, string packageExecutable, string version = null, string framework = null)
         {
             ControlFlow.Assert(packageId != null && packageExecutable != null, "packageId != null && packageExecutable != null");
 
@@ -46,6 +46,7 @@ namespace Nuke.Common.Tooling
                     ? NuGetPackageResolver.GetLocalInstalledPackage(
                             singlePackageId,
                             NuGetPackagesConfigFile,
+                            version,
                             resolveDependencies: false)
                         ?.Directory
                     : null;

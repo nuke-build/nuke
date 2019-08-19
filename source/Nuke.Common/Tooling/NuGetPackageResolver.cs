@@ -38,23 +38,27 @@ namespace Nuke.Common.Tooling
             }
         }
 
+        public static InstalledPackage GetLocalInstalledPackage(
+            string packageId,
+            string packagesConfigFile,
+            string version = null,
+            bool resolveDependencies = true)
+        {
+            return TryGetLocalInstalledPackage(packageId, packagesConfigFile, version, resolveDependencies)
+                .NotNull($"Could not find package '{packageId}'{(version != null ? $" ({version})" : string.Empty)} via '{packagesConfigFile}'.");
+        }
+
         [CanBeNull]
         public static InstalledPackage TryGetLocalInstalledPackage(
             string packageId,
             string packagesConfigFile,
+            string version = null,
             bool includeDependencies = false)
         {
             return GetLocalInstalledPackages(packagesConfigFile, includeDependencies)
-                .FirstOrDefault(x => x.Id.EqualsOrdinalIgnoreCase(packageId));
-        }
-
-        public static InstalledPackage GetLocalInstalledPackage(
-            string packageId,
-            string packagesConfigFile,
-            bool resolveDependencies = true)
-        {
-            return TryGetLocalInstalledPackage(packageId, packagesConfigFile, resolveDependencies)
-                .NotNull($"Could not find package '{packageId}' via '{packagesConfigFile}'.");
+                .SingleOrDefaultOrError(
+                    x => x.Id.EqualsOrdinalIgnoreCase(packageId) && (x.Version.ToString() == version || version == null),
+                    $"Package '{packageId}' is referenced with multiple versions. Use NuGetPackageResolver and SetToolPath.");
         }
 
         // TODO: add HasLocalInstalledPackage() ?
@@ -69,25 +73,29 @@ namespace Nuke.Common.Tooling
                 packagesConfigFile,
                 IsLegacyFile(packagesConfigFile)
                     ? ".//package/@id"
-                    : ".//*[local-name() = 'PackageReference']/@Include");
+                    : ".//*[local-name() = 'PackageReference']/@Include")
+                .Distinct();
 
             var installedPackages = new HashSet<InstalledPackage>(InstalledPackage.Comparer.Instance);
             foreach (var packageId in packageIds)
             {
                 // TODO: use xml namespaces
                 // TODO: version as tag
-                var version = XmlTasks.XmlPeekSingle(
+                var versions = XmlTasks.XmlPeek(
                     packagesConfigFile,
                     IsLegacyFile(packagesConfigFile)
                         ? $".//package[@id='{packageId}']/@version"
                         : $".//*[local-name() = 'PackageReference'][@Include='{packageId}']/@Version");
 
-                var packageData = GetGlobalInstalledPackage(packageId, version, packagesDirectory);
-                if (packageData == null)
-                    continue;
+                foreach (var version in versions)
+                {
+                    var packageData = GetGlobalInstalledPackage(packageId, version, packagesDirectory);
+                    if (packageData == null)
+                        continue;
 
-                installedPackages.Add(packageData);
-                yield return packageData;
+                    installedPackages.Add(packageData);
+                    yield return packageData;
+                }
             }
 
             if (resolveDependencies && !IsLegacyFile(packagesConfigFile))

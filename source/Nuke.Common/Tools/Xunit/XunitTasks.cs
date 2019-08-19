@@ -24,7 +24,7 @@ namespace Nuke.Common.Tools.Xunit
             return ToolPathResolver.GetPackageExecutable(
                 packageId: "xunit.runner.console",
                 packageExecutable: EnvironmentInfo.Is64Bit ? "xunit.console.exe" : "xunit.console.x86.exe",
-                framework);
+                framework: framework);
         }
 
         public static void Xunit2(
