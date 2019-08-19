@@ -19,6 +19,7 @@ namespace Nuke.Common.Tools.GitVersion
     public class GitVersionAttribute : InjectionAttributeBase
     {
         public bool DisableOnUnix { get; set; }
+        public bool UpdateAssemblyInfo { get; set; }
 
         public override object GetValue(MemberInfo member, object instance)
         {
@@ -31,7 +32,8 @@ namespace Nuke.Common.Tools.GitVersion
 
             return ControlFlow.SuppressErrors(() =>
                     GitVersionTasks.GitVersion(s => s
-                            .DisableLogOutput())
+                            .DisableLogOutput()
+                            .SetUpdateAssemblyInfo(UpdateAssemblyInfo))
                         .Result,
                 includeStackTrace: true);
         }
