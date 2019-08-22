@@ -43,10 +43,10 @@ namespace Nuke.Common.Execution
             }
         }
 
-        public static IReadOnlyCollection<MemberInfo> GetParameterMembers(Type type)
+        public static IReadOnlyCollection<MemberInfo> GetParameterMembers(Type type, bool includeUnlisted)
         {
             return GetInjectionMembers(type)
-                .Where(x => x.Attribute is ParameterAttribute)
+                .Where(x => x.Attribute is ParameterAttribute attribute && (includeUnlisted || attribute.List))
                 .Select(x => x.Member).ToList();
         }
 

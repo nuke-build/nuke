@@ -27,7 +27,8 @@ namespace Nuke.Common.Execution
                     ControlFlow.Fail($"Target '{target.Name}' requires member '{requirement.GetMemberInfo().Name}' to be not null.");
             }
 
-            var requiredMembers = InjectionUtility.GetParameterMembers(build.GetType()).Where(x => x.HasCustomAttribute<RequiredAttribute>());
+            var requiredMembers = InjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: true)
+                .Where(x => x.HasCustomAttribute<RequiredAttribute>());
             foreach (var member in requiredMembers)
             {
                 if (IsMemberNull(member, build))

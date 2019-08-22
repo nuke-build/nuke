@@ -44,6 +44,8 @@ namespace Nuke.Common.ProjectModel
             _relativePath = relativePath;
         }
 
+        public override bool List { get; set; }
+
         public override object GetValue(MemberInfo member, object instance)
         {
             return ProjectModelTasks.ParseSolution(GetSolutionFile(member));

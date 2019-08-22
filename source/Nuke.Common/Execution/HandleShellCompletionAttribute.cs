@@ -23,9 +23,7 @@ namespace Nuke.Common.Execution
             completionItems[Constants.InvokedTargetsParameterName] = targetNames.ToArray();
             completionItems[Constants.SkippedTargetsParameterName] = targetNames.ToArray();
 
-            var parameters = InjectionUtility.GetParameterMembers(build.GetType())
-                .Where(x => !x.HasCustomAttribute<UnlistedAttribute>());
-
+            var parameters = InjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false);
             foreach (var parameter in parameters)
             {
                 var parameterName = ParameterService.Instance.GetParameterName(parameter);

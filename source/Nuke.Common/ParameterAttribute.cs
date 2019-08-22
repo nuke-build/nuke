@@ -47,6 +47,8 @@ namespace Nuke.Common
         [CanBeNull]
         public string Separator { get; set; }
 
+        public virtual bool List { get; set; } = true;
+
         [CanBeNull]
         public string ValueProvider { get; set; }
 
@@ -90,11 +92,6 @@ namespace Nuke.Common
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public class RequiredAttribute : Attribute
-    {
-    }
-
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-    public class UnlistedAttribute : Attribute
     {
     }
 }

@@ -72,8 +72,8 @@ partial class Build : NukeBuild
                 .SetProjectFile(Solution));
         });
 
-    [Unlisted] [ProjectFrom(nameof(Solution))] Project GlobalToolProject;
-    [Unlisted] [ProjectFrom(nameof(Solution))] Project MSBuildTaskRunnerProject;
+    [ProjectFrom(nameof(Solution))] Project GlobalToolProject;
+    [ProjectFrom(nameof(Solution))] Project MSBuildTaskRunnerProject;
 
     Target Compile => _ => _
         .DependsOn(Restore)

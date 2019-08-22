@@ -22,7 +22,9 @@ namespace Nuke.Common.ProjectModel
 
         public override int Priority => -1;
 
-        public override string Description => $"Project from solution";
+        public override string Description => "Project from solution";
+
+        public override bool List { get; set; }
 
         public override object GetValue(MemberInfo member, object instance)
         {
@@ -50,8 +52,7 @@ namespace Nuke.Common.ProjectModel
             if (parameterValue != null)
                 return GetProject(parameterValue);
 
-            ControlFlow.Assert(member.GetCustomAttribute<UnlistedAttribute>() == null,
-                $"No project for member '{member.Name}' found in solution '{solution.FileName}'.");
+            ControlFlow.Fail($"No project for member '{member.Name}' found in solution '{solution.FileName}'.");
             return null;
         }
 
