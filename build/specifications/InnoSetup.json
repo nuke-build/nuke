@@ -1,0 +1,83 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "http://www.jrsoftware.org/ishelp/index.php?topic=compilercmdline"
+  ],
+  "name": "InnoSetup",
+  "officialUrl": "http://www.jrsoftware.org/isinfo.php",
+  "help": "Inno Setup is a free installer for Windows programs by Jordan Russell and Martijn Laan. First introduced in 1997, Inno Setup today rivals and even surpasses many commercial installers in feature set and stability.",
+  "pathExecutable": "iscc",
+  "tasks": [
+    {
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ScriptFile",
+            "type": "string",
+            "format": "{value}",
+            "help": "The .iss script file to compile"
+          },
+          {
+            "name": "Output",
+            "type": "bool",
+            "format": "/O{value}",
+            "customValue": true,
+            "help": "Enable or disable output (overrides <c>Output</c>)"
+          },
+          {
+            "name": "OutputDir",
+            "type": "string",
+            "format": "/O{value}",
+            "help": "Output files to specified path (overrides <c>OutputDir</c>)"
+          },
+          {
+            "name": "OutputBaseFilename",
+            "type": "string",
+            "format": "/F{value}",
+            "help": "Overrides OutputBaseFilename with the specified filename"
+          },
+          {
+            "name": "SignTools",
+            "type": "Dictionary<string, string>",
+            "format": "/S{value}",
+            "itemFormat": "{key}={value}",
+            "help": "Sets a SignTool with the specified name and command"
+          },
+          {
+            "name": "Quiet",
+            "type": "bool",
+            "format": "/Q",
+            "help": "Quiet compile (print error messages only)"
+          },
+          {
+            "name": "QuietWithProgress",
+            "type": "bool",
+            "format": "/Qp",
+            "help": "Enable quiet compile while still displaying progress"
+          },
+          {
+            "name": "KeyValueDefinitions",
+            "type": "Dictionary<string, string>",
+            "format": "/D{value}",
+            "itemFormat": "{key}={value}",
+            "secret": false,
+            "help": "Emulate <c>#define public {name} {value}</c>"
+          },
+          {
+            "name": "KeyDefinitions",
+            "type": "List<string>",
+            "format": "/D{value}",
+            "secret": false,
+            "help": "Emulate <c>#define public {name}</c>"
+          },
+          {
+            "name": "Verbosity",
+            "type": "int",
+            "format": "/V{value}",
+            "help": "Emulate <c>#pragma verboselevel {number}</c> (highest level is 9)"
+          }
+        ]
+      }
+    }
+  ]
+}
