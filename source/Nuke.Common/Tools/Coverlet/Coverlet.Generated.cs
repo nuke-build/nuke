@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/Coverlet.json
-// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -803,10 +803,14 @@ namespace Nuke.Common.Tools.Coverlet
     [TypeConverter(typeof(TypeConverter<CoverletOutputFormat>))]
     public partial class CoverletOutputFormat : Enumeration
     {
-        public static CoverletOutputFormat json = new CoverletOutputFormat { Value = "json" };
-        public static CoverletOutputFormat Icov = new CoverletOutputFormat { Value = "Icov" };
-        public static CoverletOutputFormat opencover = new CoverletOutputFormat { Value = "opencover" };
-        public static CoverletOutputFormat cobertura = new CoverletOutputFormat { Value = "cobertura" };
+        public static CoverletOutputFormat json = (CoverletOutputFormat) "json";
+        public static CoverletOutputFormat Icov = (CoverletOutputFormat) "Icov";
+        public static CoverletOutputFormat opencover = (CoverletOutputFormat) "opencover";
+        public static CoverletOutputFormat cobertura = (CoverletOutputFormat) "cobertura";
+        public static explicit operator CoverletOutputFormat(string value)
+        {
+            return new CoverletOutputFormat { Value = value };
+        }
     }
     #endregion
     #region CoverletThresholdType
@@ -819,9 +823,13 @@ namespace Nuke.Common.Tools.Coverlet
     [TypeConverter(typeof(TypeConverter<CoverletThresholdType>))]
     public partial class CoverletThresholdType : Enumeration
     {
-        public static CoverletThresholdType line = new CoverletThresholdType { Value = "line" };
-        public static CoverletThresholdType branch = new CoverletThresholdType { Value = "branch" };
-        public static CoverletThresholdType method = new CoverletThresholdType { Value = "method" };
+        public static CoverletThresholdType line = (CoverletThresholdType) "line";
+        public static CoverletThresholdType branch = (CoverletThresholdType) "branch";
+        public static CoverletThresholdType method = (CoverletThresholdType) "method";
+        public static explicit operator CoverletThresholdType(string value)
+        {
+            return new CoverletThresholdType { Value = value };
+        }
     }
     #endregion
 }

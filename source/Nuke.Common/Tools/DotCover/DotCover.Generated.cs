@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/DotCover.json
-// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -3347,10 +3347,14 @@ namespace Nuke.Common.Tools.DotCover
     [TypeConverter(typeof(TypeConverter<DotCoverReportType>))]
     public partial class DotCoverReportType : Enumeration
     {
-        public static DotCoverReportType Html = new DotCoverReportType { Value = "Html" };
-        public static DotCoverReportType Json = new DotCoverReportType { Value = "Json" };
-        public static DotCoverReportType Xml = new DotCoverReportType { Value = "Xml" };
-        public static DotCoverReportType DetailedXml = new DotCoverReportType { Value = "DetailedXml" };
+        public static DotCoverReportType Html = (DotCoverReportType) "Html";
+        public static DotCoverReportType Json = (DotCoverReportType) "Json";
+        public static DotCoverReportType Xml = (DotCoverReportType) "Xml";
+        public static DotCoverReportType DetailedXml = (DotCoverReportType) "DetailedXml";
+        public static explicit operator DotCoverReportType(string value)
+        {
+            return new DotCoverReportType { Value = value };
+        }
     }
     #endregion
 }

@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/GitVersion.json
-// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -1232,8 +1232,12 @@ namespace Nuke.Common.Tools.GitVersion
     [TypeConverter(typeof(TypeConverter<GitVersionOutput>))]
     public partial class GitVersionOutput : Enumeration
     {
-        public static GitVersionOutput json = new GitVersionOutput { Value = "json" };
-        public static GitVersionOutput buildserver = new GitVersionOutput { Value = "buildserver" };
+        public static GitVersionOutput json = (GitVersionOutput) "json";
+        public static GitVersionOutput buildserver = (GitVersionOutput) "buildserver";
+        public static explicit operator GitVersionOutput(string value)
+        {
+            return new GitVersionOutput { Value = value };
+        }
     }
     #endregion
     #region GitVersionVerbosity
@@ -1246,11 +1250,15 @@ namespace Nuke.Common.Tools.GitVersion
     [TypeConverter(typeof(TypeConverter<GitVersionVerbosity>))]
     public partial class GitVersionVerbosity : Enumeration
     {
-        public static GitVersionVerbosity debug = new GitVersionVerbosity { Value = "debug" };
-        public static GitVersionVerbosity info = new GitVersionVerbosity { Value = "info" };
-        public static GitVersionVerbosity warn = new GitVersionVerbosity { Value = "warn" };
-        public static GitVersionVerbosity error = new GitVersionVerbosity { Value = "error" };
-        public static GitVersionVerbosity none = new GitVersionVerbosity { Value = "none" };
+        public static GitVersionVerbosity debug = (GitVersionVerbosity) "debug";
+        public static GitVersionVerbosity info = (GitVersionVerbosity) "info";
+        public static GitVersionVerbosity warn = (GitVersionVerbosity) "warn";
+        public static GitVersionVerbosity error = (GitVersionVerbosity) "error";
+        public static GitVersionVerbosity none = (GitVersionVerbosity) "none";
+        public static explicit operator GitVersionVerbosity(string value)
+        {
+            return new GitVersionVerbosity { Value = value };
+        }
     }
     #endregion
 }

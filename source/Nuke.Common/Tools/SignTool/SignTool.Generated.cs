@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/SignTool.json
-// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -2157,8 +2157,12 @@ namespace Nuke.Common.Tools.SignTool
     [TypeConverter(typeof(TypeConverter<SignToolContentMethod>))]
     public partial class SignToolContentMethod : Enumeration
     {
-        public static SignToolContentMethod Embedded = new SignToolContentMethod { Value = "Embedded" };
-        public static SignToolContentMethod DetachedSignedData = new SignToolContentMethod { Value = "DetachedSignedData" };
+        public static SignToolContentMethod Embedded = (SignToolContentMethod) "Embedded";
+        public static SignToolContentMethod DetachedSignedData = (SignToolContentMethod) "DetachedSignedData";
+        public static explicit operator SignToolContentMethod(string value)
+        {
+            return new SignToolContentMethod { Value = value };
+        }
     }
     #endregion
 }

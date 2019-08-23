@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/Npm.json
-// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -59,9 +59,9 @@ namespace Nuke.Common.Tools.Npm
         ///     <li><c>--legacy-bundling</c> via <see cref="NpmInstallSettings.LegacyBundling"/></li>
         ///     <li><c>--link</c> via <see cref="NpmInstallSettings.Link"/></li>
         ///     <li><c>--no-bin-links</c> via <see cref="NpmInstallSettings.NoBinLinks"/></li>
-        ///     <li><c>--nodedir</c> via <see cref="NpmInstallSettings.NodeDir"/></li>
         ///     <li><c>--no-optional</c> via <see cref="NpmInstallSettings.NoOptional"/></li>
         ///     <li><c>--no-shrinkwrap</c> via <see cref="NpmInstallSettings.NoShrinkWrap"/></li>
+        ///     <li><c>--nodedir</c> via <see cref="NpmInstallSettings.NodeDir"/></li>
         ///     <li><c>--only</c> via <see cref="NpmInstallSettings.Only"/></li>
         ///     <li><c>--production</c> via <see cref="NpmInstallSettings.Production"/></li>
         ///   </ul>
@@ -88,9 +88,9 @@ namespace Nuke.Common.Tools.Npm
         ///     <li><c>--legacy-bundling</c> via <see cref="NpmInstallSettings.LegacyBundling"/></li>
         ///     <li><c>--link</c> via <see cref="NpmInstallSettings.Link"/></li>
         ///     <li><c>--no-bin-links</c> via <see cref="NpmInstallSettings.NoBinLinks"/></li>
-        ///     <li><c>--nodedir</c> via <see cref="NpmInstallSettings.NodeDir"/></li>
         ///     <li><c>--no-optional</c> via <see cref="NpmInstallSettings.NoOptional"/></li>
         ///     <li><c>--no-shrinkwrap</c> via <see cref="NpmInstallSettings.NoShrinkWrap"/></li>
+        ///     <li><c>--nodedir</c> via <see cref="NpmInstallSettings.NodeDir"/></li>
         ///     <li><c>--only</c> via <see cref="NpmInstallSettings.Only"/></li>
         ///     <li><c>--production</c> via <see cref="NpmInstallSettings.Production"/></li>
         ///   </ul>
@@ -114,9 +114,9 @@ namespace Nuke.Common.Tools.Npm
         ///     <li><c>--legacy-bundling</c> via <see cref="NpmInstallSettings.LegacyBundling"/></li>
         ///     <li><c>--link</c> via <see cref="NpmInstallSettings.Link"/></li>
         ///     <li><c>--no-bin-links</c> via <see cref="NpmInstallSettings.NoBinLinks"/></li>
-        ///     <li><c>--nodedir</c> via <see cref="NpmInstallSettings.NodeDir"/></li>
         ///     <li><c>--no-optional</c> via <see cref="NpmInstallSettings.NoOptional"/></li>
         ///     <li><c>--no-shrinkwrap</c> via <see cref="NpmInstallSettings.NoShrinkWrap"/></li>
+        ///     <li><c>--nodedir</c> via <see cref="NpmInstallSettings.NodeDir"/></li>
         ///     <li><c>--only</c> via <see cref="NpmInstallSettings.Only"/></li>
         ///     <li><c>--production</c> via <see cref="NpmInstallSettings.Production"/></li>
         ///   </ul>
@@ -1129,8 +1129,12 @@ namespace Nuke.Common.Tools.Npm
     [TypeConverter(typeof(TypeConverter<NpmOnlyMode>))]
     public partial class NpmOnlyMode : Enumeration
     {
-        public static NpmOnlyMode production = new NpmOnlyMode { Value = "production" };
-        public static NpmOnlyMode development = new NpmOnlyMode { Value = "development" };
+        public static NpmOnlyMode production = (NpmOnlyMode) "production";
+        public static NpmOnlyMode development = (NpmOnlyMode) "development";
+        public static explicit operator NpmOnlyMode(string value)
+        {
+            return new NpmOnlyMode { Value = value };
+        }
     }
     #endregion
 }

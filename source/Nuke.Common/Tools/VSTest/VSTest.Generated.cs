@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/VSTest.json
-// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -1118,9 +1118,13 @@ namespace Nuke.Common.Tools.VSTest
     [TypeConverter(typeof(TypeConverter<VsTestPlatform>))]
     public partial class VsTestPlatform : Enumeration
     {
-        public static VsTestPlatform x86 = new VsTestPlatform { Value = "x86" };
-        public static VsTestPlatform x64 = new VsTestPlatform { Value = "x64" };
-        public static VsTestPlatform ARM = new VsTestPlatform { Value = "ARM" };
+        public static VsTestPlatform x86 = (VsTestPlatform) "x86";
+        public static VsTestPlatform x64 = (VsTestPlatform) "x64";
+        public static VsTestPlatform ARM = (VsTestPlatform) "ARM";
+        public static explicit operator VsTestPlatform(string value)
+        {
+            return new VsTestPlatform { Value = value };
+        }
     }
     #endregion
     #region VsTestFramework
@@ -1133,9 +1137,13 @@ namespace Nuke.Common.Tools.VSTest
     [TypeConverter(typeof(TypeConverter<VsTestFramework>))]
     public partial class VsTestFramework : Enumeration
     {
-        public static VsTestFramework Framework35 = new VsTestFramework { Value = "Framework35" };
-        public static VsTestFramework Framework40 = new VsTestFramework { Value = "Framework40" };
-        public static VsTestFramework Framework45 = new VsTestFramework { Value = "Framework45" };
+        public static VsTestFramework Framework35 = (VsTestFramework) "Framework35";
+        public static VsTestFramework Framework40 = (VsTestFramework) "Framework40";
+        public static VsTestFramework Framework45 = (VsTestFramework) "Framework45";
+        public static explicit operator VsTestFramework(string value)
+        {
+            return new VsTestFramework { Value = value };
+        }
     }
     #endregion
 }

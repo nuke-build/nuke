@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/VSWhere.json
-// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -917,10 +917,14 @@ namespace Nuke.Common.Tools.VSWhere
     [TypeConverter(typeof(TypeConverter<VSWhereFormat>))]
     public partial class VSWhereFormat : Enumeration
     {
-        public static VSWhereFormat json = new VSWhereFormat { Value = "json" };
-        public static VSWhereFormat text = new VSWhereFormat { Value = "text" };
-        public static VSWhereFormat value = new VSWhereFormat { Value = "value" };
-        public static VSWhereFormat xml = new VSWhereFormat { Value = "xml" };
+        public static VSWhereFormat json = (VSWhereFormat) "json";
+        public static VSWhereFormat text = (VSWhereFormat) "text";
+        public static VSWhereFormat value = (VSWhereFormat) "value";
+        public static VSWhereFormat xml = (VSWhereFormat) "xml";
+        public static explicit operator VSWhereFormat(string value)
+        {
+            return new VSWhereFormat { Value = value };
+        }
     }
     #endregion
 }

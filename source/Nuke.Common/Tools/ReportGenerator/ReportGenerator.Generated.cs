@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/ReportGenerator.json
-// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -796,24 +796,28 @@ namespace Nuke.Common.Tools.ReportGenerator
     [TypeConverter(typeof(TypeConverter<ReportTypes>))]
     public partial class ReportTypes : Enumeration
     {
-        public static ReportTypes Badges = new ReportTypes { Value = "Badges" };
-        public static ReportTypes Cobertura = new ReportTypes { Value = "Cobertura" };
-        public static ReportTypes CsvSummary = new ReportTypes { Value = "CsvSummary" };
-        public static ReportTypes Html = new ReportTypes { Value = "Html" };
-        public static ReportTypes HtmlInline = new ReportTypes { Value = "HtmlInline" };
-        public static ReportTypes HtmlInline_AzurePipelines = new ReportTypes { Value = "HtmlInline_AzurePipelines" };
-        public static ReportTypes HtmlInline_AzurePipelines_Dark = new ReportTypes { Value = "HtmlInline_AzurePipelines_Dark" };
-        public static ReportTypes HtmlChart = new ReportTypes { Value = "HtmlChart" };
-        public static ReportTypes HtmlSummary = new ReportTypes { Value = "HtmlSummary" };
-        public static ReportTypes Latex = new ReportTypes { Value = "Latex" };
-        public static ReportTypes LatexSummary = new ReportTypes { Value = "LatexSummary" };
-        public static ReportTypes MHtml = new ReportTypes { Value = "MHtml" };
-        public static ReportTypes PngChart = new ReportTypes { Value = "PngChart" };
-        public static ReportTypes TextSummary = new ReportTypes { Value = "TextSummary" };
-        public static ReportTypes Xml = new ReportTypes { Value = "Xml" };
-        public static ReportTypes XmlSummary = new ReportTypes { Value = "XmlSummary" };
-        public static ReportTypes SonarQube = new ReportTypes { Value = "SonarQube" };
-        public static ReportTypes TeamCitySummary = new ReportTypes { Value = "TeamCitySummary" };
+        public static ReportTypes Badges = (ReportTypes) "Badges";
+        public static ReportTypes Cobertura = (ReportTypes) "Cobertura";
+        public static ReportTypes CsvSummary = (ReportTypes) "CsvSummary";
+        public static ReportTypes Html = (ReportTypes) "Html";
+        public static ReportTypes HtmlInline = (ReportTypes) "HtmlInline";
+        public static ReportTypes HtmlInline_AzurePipelines = (ReportTypes) "HtmlInline_AzurePipelines";
+        public static ReportTypes HtmlInline_AzurePipelines_Dark = (ReportTypes) "HtmlInline_AzurePipelines_Dark";
+        public static ReportTypes HtmlChart = (ReportTypes) "HtmlChart";
+        public static ReportTypes HtmlSummary = (ReportTypes) "HtmlSummary";
+        public static ReportTypes Latex = (ReportTypes) "Latex";
+        public static ReportTypes LatexSummary = (ReportTypes) "LatexSummary";
+        public static ReportTypes MHtml = (ReportTypes) "MHtml";
+        public static ReportTypes PngChart = (ReportTypes) "PngChart";
+        public static ReportTypes TextSummary = (ReportTypes) "TextSummary";
+        public static ReportTypes Xml = (ReportTypes) "Xml";
+        public static ReportTypes XmlSummary = (ReportTypes) "XmlSummary";
+        public static ReportTypes SonarQube = (ReportTypes) "SonarQube";
+        public static ReportTypes TeamCitySummary = (ReportTypes) "TeamCitySummary";
+        public static explicit operator ReportTypes(string value)
+        {
+            return new ReportTypes { Value = value };
+        }
     }
     #endregion
     #region ReportGeneratorVerbosity
@@ -826,11 +830,15 @@ namespace Nuke.Common.Tools.ReportGenerator
     [TypeConverter(typeof(TypeConverter<ReportGeneratorVerbosity>))]
     public partial class ReportGeneratorVerbosity : Enumeration
     {
-        public static ReportGeneratorVerbosity Off = new ReportGeneratorVerbosity { Value = "Off" };
-        public static ReportGeneratorVerbosity Verbose = new ReportGeneratorVerbosity { Value = "Verbose" };
-        public static ReportGeneratorVerbosity Info = new ReportGeneratorVerbosity { Value = "Info" };
-        public static ReportGeneratorVerbosity Warning = new ReportGeneratorVerbosity { Value = "Warning" };
-        public static ReportGeneratorVerbosity Error = new ReportGeneratorVerbosity { Value = "Error" };
+        public static ReportGeneratorVerbosity Off = (ReportGeneratorVerbosity) "Off";
+        public static ReportGeneratorVerbosity Verbose = (ReportGeneratorVerbosity) "Verbose";
+        public static ReportGeneratorVerbosity Info = (ReportGeneratorVerbosity) "Info";
+        public static ReportGeneratorVerbosity Warning = (ReportGeneratorVerbosity) "Warning";
+        public static ReportGeneratorVerbosity Error = (ReportGeneratorVerbosity) "Error";
+        public static explicit operator ReportGeneratorVerbosity(string value)
+        {
+            return new ReportGeneratorVerbosity { Value = value };
+        }
     }
     #endregion
 }

@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/Paket.json
-// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -227,12 +227,12 @@ namespace Nuke.Common.Tools.Paket
         ///   <ul>
         ///     <li><c>--api-key</c> via <see cref="PaketPushSettings.ApiKey"/></li>
         ///     <li><c>--endpoint</c> via <see cref="PaketPushSettings.Endpoint"/></li>
-        ///     <li><c>file</c> via <see cref="PaketPushSettings.File"/></li>
         ///     <li><c>--from-bootstrapper</c> via <see cref="PaketPushSettings.FromBootstrapper"/></li>
         ///     <li><c>--log-file</c> via <see cref="PaketPushSettings.LogFile"/></li>
         ///     <li><c>--silent</c> via <see cref="PaketPushSettings.Silent"/></li>
         ///     <li><c>--url</c> via <see cref="PaketPushSettings.Url"/></li>
         ///     <li><c>--verbose</c> via <see cref="PaketPushSettings.Verbose"/></li>
+        ///     <li><c>file</c> via <see cref="PaketPushSettings.File"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> PaketPush(PaketPushSettings toolSettings = null)
@@ -251,12 +251,12 @@ namespace Nuke.Common.Tools.Paket
         ///   <ul>
         ///     <li><c>--api-key</c> via <see cref="PaketPushSettings.ApiKey"/></li>
         ///     <li><c>--endpoint</c> via <see cref="PaketPushSettings.Endpoint"/></li>
-        ///     <li><c>file</c> via <see cref="PaketPushSettings.File"/></li>
         ///     <li><c>--from-bootstrapper</c> via <see cref="PaketPushSettings.FromBootstrapper"/></li>
         ///     <li><c>--log-file</c> via <see cref="PaketPushSettings.LogFile"/></li>
         ///     <li><c>--silent</c> via <see cref="PaketPushSettings.Silent"/></li>
         ///     <li><c>--url</c> via <see cref="PaketPushSettings.Url"/></li>
         ///     <li><c>--verbose</c> via <see cref="PaketPushSettings.Verbose"/></li>
+        ///     <li><c>file</c> via <see cref="PaketPushSettings.File"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> PaketPush(Configure<PaketPushSettings> configurator)
@@ -272,12 +272,12 @@ namespace Nuke.Common.Tools.Paket
         ///   <ul>
         ///     <li><c>--api-key</c> via <see cref="PaketPushSettings.ApiKey"/></li>
         ///     <li><c>--endpoint</c> via <see cref="PaketPushSettings.Endpoint"/></li>
-        ///     <li><c>file</c> via <see cref="PaketPushSettings.File"/></li>
         ///     <li><c>--from-bootstrapper</c> via <see cref="PaketPushSettings.FromBootstrapper"/></li>
         ///     <li><c>--log-file</c> via <see cref="PaketPushSettings.LogFile"/></li>
         ///     <li><c>--silent</c> via <see cref="PaketPushSettings.Silent"/></li>
         ///     <li><c>--url</c> via <see cref="PaketPushSettings.Url"/></li>
         ///     <li><c>--verbose</c> via <see cref="PaketPushSettings.Verbose"/></li>
+        ///     <li><c>file</c> via <see cref="PaketPushSettings.File"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(PaketPushSettings Settings, IReadOnlyCollection<Output> Output)> PaketPush(CombinatorialConfigure<PaketPushSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)

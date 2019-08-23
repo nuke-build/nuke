@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/DotNet.json
-// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -50,7 +50,6 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;projectFile&gt;</c> via <see cref="DotNetTestSettings.ProjectFile"/></li>
-        ///     <li><c>/property</c> via <see cref="DotNetTestSettings.Properties"/></li>
         ///     <li><c>--collect</c> via <see cref="DotNetTestSettings.DataCollector"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetTestSettings.Configuration"/></li>
         ///     <li><c>--diag</c> via <see cref="DotNetTestSettings.DiagnosticsFile"/></li>
@@ -61,8 +60,8 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--framework</c> via <see cref="DotNetTestSettings.Framework"/></li>
         ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetTestSettings.IgnoreFailedSources"/></li>
         ///     <li><c>--list-tests</c> via <see cref="DotNetTestSettings.ListTests"/></li>
-        ///     <li><c>--locked-mode</c> via <see cref="DotNetTestSettings.LockedMode"/></li>
         ///     <li><c>--lock-file-path</c> via <see cref="DotNetTestSettings.LockFilePath"/></li>
+        ///     <li><c>--locked-mode</c> via <see cref="DotNetTestSettings.LockedMode"/></li>
         ///     <li><c>--logger</c> via <see cref="DotNetTestSettings.Logger"/></li>
         ///     <li><c>--no-build</c> via <see cref="DotNetTestSettings.NoBuild"/></li>
         ///     <li><c>--no-cache</c> via <see cref="DotNetTestSettings.NoCache"/></li>
@@ -77,6 +76,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--test-adapter-path</c> via <see cref="DotNetTestSettings.TestAdapterPath"/></li>
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetTestSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetTestSettings.Verbosity"/></li>
+        ///     <li><c>/property</c> via <see cref="DotNetTestSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotNetTest(DotNetTestSettings toolSettings = null)
@@ -94,7 +94,6 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;projectFile&gt;</c> via <see cref="DotNetTestSettings.ProjectFile"/></li>
-        ///     <li><c>/property</c> via <see cref="DotNetTestSettings.Properties"/></li>
         ///     <li><c>--collect</c> via <see cref="DotNetTestSettings.DataCollector"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetTestSettings.Configuration"/></li>
         ///     <li><c>--diag</c> via <see cref="DotNetTestSettings.DiagnosticsFile"/></li>
@@ -105,8 +104,8 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--framework</c> via <see cref="DotNetTestSettings.Framework"/></li>
         ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetTestSettings.IgnoreFailedSources"/></li>
         ///     <li><c>--list-tests</c> via <see cref="DotNetTestSettings.ListTests"/></li>
-        ///     <li><c>--locked-mode</c> via <see cref="DotNetTestSettings.LockedMode"/></li>
         ///     <li><c>--lock-file-path</c> via <see cref="DotNetTestSettings.LockFilePath"/></li>
+        ///     <li><c>--locked-mode</c> via <see cref="DotNetTestSettings.LockedMode"/></li>
         ///     <li><c>--logger</c> via <see cref="DotNetTestSettings.Logger"/></li>
         ///     <li><c>--no-build</c> via <see cref="DotNetTestSettings.NoBuild"/></li>
         ///     <li><c>--no-cache</c> via <see cref="DotNetTestSettings.NoCache"/></li>
@@ -121,6 +120,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--test-adapter-path</c> via <see cref="DotNetTestSettings.TestAdapterPath"/></li>
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetTestSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetTestSettings.Verbosity"/></li>
+        ///     <li><c>/property</c> via <see cref="DotNetTestSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotNetTest(Configure<DotNetTestSettings> configurator)
@@ -135,7 +135,6 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;projectFile&gt;</c> via <see cref="DotNetTestSettings.ProjectFile"/></li>
-        ///     <li><c>/property</c> via <see cref="DotNetTestSettings.Properties"/></li>
         ///     <li><c>--collect</c> via <see cref="DotNetTestSettings.DataCollector"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetTestSettings.Configuration"/></li>
         ///     <li><c>--diag</c> via <see cref="DotNetTestSettings.DiagnosticsFile"/></li>
@@ -146,8 +145,8 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--framework</c> via <see cref="DotNetTestSettings.Framework"/></li>
         ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetTestSettings.IgnoreFailedSources"/></li>
         ///     <li><c>--list-tests</c> via <see cref="DotNetTestSettings.ListTests"/></li>
-        ///     <li><c>--locked-mode</c> via <see cref="DotNetTestSettings.LockedMode"/></li>
         ///     <li><c>--lock-file-path</c> via <see cref="DotNetTestSettings.LockFilePath"/></li>
+        ///     <li><c>--locked-mode</c> via <see cref="DotNetTestSettings.LockedMode"/></li>
         ///     <li><c>--logger</c> via <see cref="DotNetTestSettings.Logger"/></li>
         ///     <li><c>--no-build</c> via <see cref="DotNetTestSettings.NoBuild"/></li>
         ///     <li><c>--no-cache</c> via <see cref="DotNetTestSettings.NoCache"/></li>
@@ -162,6 +161,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--test-adapter-path</c> via <see cref="DotNetTestSettings.TestAdapterPath"/></li>
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetTestSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetTestSettings.Verbosity"/></li>
+        ///     <li><c>/property</c> via <see cref="DotNetTestSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(DotNetTestSettings Settings, IReadOnlyCollection<Output> Output)> DotNetTest(CombinatorialConfigure<DotNetTestSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -176,7 +176,6 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>--</c> via <see cref="DotNetRunSettings.ApplicationArguments"/></li>
-        ///     <li><c>/property</c> via <see cref="DotNetRunSettings.Properties"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetRunSettings.Configuration"/></li>
         ///     <li><c>--disable-parallel</c> via <see cref="DotNetRunSettings.DisableParallel"/></li>
         ///     <li><c>--force</c> via <see cref="DotNetRunSettings.Force"/></li>
@@ -184,8 +183,8 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--framework</c> via <see cref="DotNetRunSettings.Framework"/></li>
         ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetRunSettings.IgnoreFailedSources"/></li>
         ///     <li><c>--launch-profile</c> via <see cref="DotNetRunSettings.LaunchProfile"/></li>
-        ///     <li><c>--locked-mode</c> via <see cref="DotNetRunSettings.LockedMode"/></li>
         ///     <li><c>--lock-file-path</c> via <see cref="DotNetRunSettings.LockFilePath"/></li>
+        ///     <li><c>--locked-mode</c> via <see cref="DotNetRunSettings.LockedMode"/></li>
         ///     <li><c>--no-build</c> via <see cref="DotNetRunSettings.NoBuild"/></li>
         ///     <li><c>--no-cache</c> via <see cref="DotNetRunSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetRunSettings.NoDependencies"/></li>
@@ -196,6 +195,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--runtime</c> via <see cref="DotNetRunSettings.Runtime"/></li>
         ///     <li><c>--source</c> via <see cref="DotNetRunSettings.Sources"/></li>
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetRunSettings.UseLockFile"/></li>
+        ///     <li><c>/property</c> via <see cref="DotNetRunSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotNetRun(DotNetRunSettings toolSettings = null)
@@ -213,7 +213,6 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>--</c> via <see cref="DotNetRunSettings.ApplicationArguments"/></li>
-        ///     <li><c>/property</c> via <see cref="DotNetRunSettings.Properties"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetRunSettings.Configuration"/></li>
         ///     <li><c>--disable-parallel</c> via <see cref="DotNetRunSettings.DisableParallel"/></li>
         ///     <li><c>--force</c> via <see cref="DotNetRunSettings.Force"/></li>
@@ -221,8 +220,8 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--framework</c> via <see cref="DotNetRunSettings.Framework"/></li>
         ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetRunSettings.IgnoreFailedSources"/></li>
         ///     <li><c>--launch-profile</c> via <see cref="DotNetRunSettings.LaunchProfile"/></li>
-        ///     <li><c>--locked-mode</c> via <see cref="DotNetRunSettings.LockedMode"/></li>
         ///     <li><c>--lock-file-path</c> via <see cref="DotNetRunSettings.LockFilePath"/></li>
+        ///     <li><c>--locked-mode</c> via <see cref="DotNetRunSettings.LockedMode"/></li>
         ///     <li><c>--no-build</c> via <see cref="DotNetRunSettings.NoBuild"/></li>
         ///     <li><c>--no-cache</c> via <see cref="DotNetRunSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetRunSettings.NoDependencies"/></li>
@@ -233,6 +232,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--runtime</c> via <see cref="DotNetRunSettings.Runtime"/></li>
         ///     <li><c>--source</c> via <see cref="DotNetRunSettings.Sources"/></li>
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetRunSettings.UseLockFile"/></li>
+        ///     <li><c>/property</c> via <see cref="DotNetRunSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotNetRun(Configure<DotNetRunSettings> configurator)
@@ -247,7 +247,6 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>--</c> via <see cref="DotNetRunSettings.ApplicationArguments"/></li>
-        ///     <li><c>/property</c> via <see cref="DotNetRunSettings.Properties"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetRunSettings.Configuration"/></li>
         ///     <li><c>--disable-parallel</c> via <see cref="DotNetRunSettings.DisableParallel"/></li>
         ///     <li><c>--force</c> via <see cref="DotNetRunSettings.Force"/></li>
@@ -255,8 +254,8 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--framework</c> via <see cref="DotNetRunSettings.Framework"/></li>
         ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetRunSettings.IgnoreFailedSources"/></li>
         ///     <li><c>--launch-profile</c> via <see cref="DotNetRunSettings.LaunchProfile"/></li>
-        ///     <li><c>--locked-mode</c> via <see cref="DotNetRunSettings.LockedMode"/></li>
         ///     <li><c>--lock-file-path</c> via <see cref="DotNetRunSettings.LockFilePath"/></li>
+        ///     <li><c>--locked-mode</c> via <see cref="DotNetRunSettings.LockedMode"/></li>
         ///     <li><c>--no-build</c> via <see cref="DotNetRunSettings.NoBuild"/></li>
         ///     <li><c>--no-cache</c> via <see cref="DotNetRunSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetRunSettings.NoDependencies"/></li>
@@ -267,6 +266,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--runtime</c> via <see cref="DotNetRunSettings.Runtime"/></li>
         ///     <li><c>--source</c> via <see cref="DotNetRunSettings.Sources"/></li>
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetRunSettings.UseLockFile"/></li>
+        ///     <li><c>/property</c> via <see cref="DotNetRunSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(DotNetRunSettings Settings, IReadOnlyCollection<Output> Output)> DotNetRun(CombinatorialConfigure<DotNetRunSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -281,14 +281,13 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;projectFile&gt;</c> via <see cref="DotNetRestoreSettings.ProjectFile"/></li>
-        ///     <li><c>/property</c> via <see cref="DotNetRestoreSettings.Properties"/></li>
         ///     <li><c>--configfile</c> via <see cref="DotNetRestoreSettings.ConfigFile"/></li>
         ///     <li><c>--disable-parallel</c> via <see cref="DotNetRestoreSettings.DisableParallel"/></li>
         ///     <li><c>--force</c> via <see cref="DotNetRestoreSettings.Force"/></li>
         ///     <li><c>--force-evaluate</c> via <see cref="DotNetRestoreSettings.ForceEvaluate"/></li>
         ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetRestoreSettings.IgnoreFailedSources"/></li>
-        ///     <li><c>--locked-mode</c> via <see cref="DotNetRestoreSettings.LockedMode"/></li>
         ///     <li><c>--lock-file-path</c> via <see cref="DotNetRestoreSettings.LockFilePath"/></li>
+        ///     <li><c>--locked-mode</c> via <see cref="DotNetRestoreSettings.LockedMode"/></li>
         ///     <li><c>--no-cache</c> via <see cref="DotNetRestoreSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetRestoreSettings.NoDependencies"/></li>
         ///     <li><c>--packages</c> via <see cref="DotNetRestoreSettings.PackageDirectory"/></li>
@@ -296,6 +295,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--source</c> via <see cref="DotNetRestoreSettings.Sources"/></li>
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetRestoreSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetRestoreSettings.Verbosity"/></li>
+        ///     <li><c>/property</c> via <see cref="DotNetRestoreSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotNetRestore(DotNetRestoreSettings toolSettings = null)
@@ -313,14 +313,13 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;projectFile&gt;</c> via <see cref="DotNetRestoreSettings.ProjectFile"/></li>
-        ///     <li><c>/property</c> via <see cref="DotNetRestoreSettings.Properties"/></li>
         ///     <li><c>--configfile</c> via <see cref="DotNetRestoreSettings.ConfigFile"/></li>
         ///     <li><c>--disable-parallel</c> via <see cref="DotNetRestoreSettings.DisableParallel"/></li>
         ///     <li><c>--force</c> via <see cref="DotNetRestoreSettings.Force"/></li>
         ///     <li><c>--force-evaluate</c> via <see cref="DotNetRestoreSettings.ForceEvaluate"/></li>
         ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetRestoreSettings.IgnoreFailedSources"/></li>
-        ///     <li><c>--locked-mode</c> via <see cref="DotNetRestoreSettings.LockedMode"/></li>
         ///     <li><c>--lock-file-path</c> via <see cref="DotNetRestoreSettings.LockFilePath"/></li>
+        ///     <li><c>--locked-mode</c> via <see cref="DotNetRestoreSettings.LockedMode"/></li>
         ///     <li><c>--no-cache</c> via <see cref="DotNetRestoreSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetRestoreSettings.NoDependencies"/></li>
         ///     <li><c>--packages</c> via <see cref="DotNetRestoreSettings.PackageDirectory"/></li>
@@ -328,6 +327,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--source</c> via <see cref="DotNetRestoreSettings.Sources"/></li>
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetRestoreSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetRestoreSettings.Verbosity"/></li>
+        ///     <li><c>/property</c> via <see cref="DotNetRestoreSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotNetRestore(Configure<DotNetRestoreSettings> configurator)
@@ -342,14 +342,13 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;projectFile&gt;</c> via <see cref="DotNetRestoreSettings.ProjectFile"/></li>
-        ///     <li><c>/property</c> via <see cref="DotNetRestoreSettings.Properties"/></li>
         ///     <li><c>--configfile</c> via <see cref="DotNetRestoreSettings.ConfigFile"/></li>
         ///     <li><c>--disable-parallel</c> via <see cref="DotNetRestoreSettings.DisableParallel"/></li>
         ///     <li><c>--force</c> via <see cref="DotNetRestoreSettings.Force"/></li>
         ///     <li><c>--force-evaluate</c> via <see cref="DotNetRestoreSettings.ForceEvaluate"/></li>
         ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetRestoreSettings.IgnoreFailedSources"/></li>
-        ///     <li><c>--locked-mode</c> via <see cref="DotNetRestoreSettings.LockedMode"/></li>
         ///     <li><c>--lock-file-path</c> via <see cref="DotNetRestoreSettings.LockFilePath"/></li>
+        ///     <li><c>--locked-mode</c> via <see cref="DotNetRestoreSettings.LockedMode"/></li>
         ///     <li><c>--no-cache</c> via <see cref="DotNetRestoreSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetRestoreSettings.NoDependencies"/></li>
         ///     <li><c>--packages</c> via <see cref="DotNetRestoreSettings.PackageDirectory"/></li>
@@ -357,6 +356,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--source</c> via <see cref="DotNetRestoreSettings.Sources"/></li>
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetRestoreSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetRestoreSettings.Verbosity"/></li>
+        ///     <li><c>/property</c> via <see cref="DotNetRestoreSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(DotNetRestoreSettings Settings, IReadOnlyCollection<Output> Output)> DotNetRestore(CombinatorialConfigure<DotNetRestoreSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -371,7 +371,6 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;project&gt;</c> via <see cref="DotNetPackSettings.Project"/></li>
-        ///     <li><c>/property</c> via <see cref="DotNetPackSettings.Properties"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetPackSettings.Configuration"/></li>
         ///     <li><c>--disable-parallel</c> via <see cref="DotNetPackSettings.DisableParallel"/></li>
         ///     <li><c>--force</c> via <see cref="DotNetPackSettings.Force"/></li>
@@ -379,8 +378,8 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetPackSettings.IgnoreFailedSources"/></li>
         ///     <li><c>--include-source</c> via <see cref="DotNetPackSettings.IncludeSource"/></li>
         ///     <li><c>--include-symbols</c> via <see cref="DotNetPackSettings.IncludeSymbols"/></li>
-        ///     <li><c>--locked-mode</c> via <see cref="DotNetPackSettings.LockedMode"/></li>
         ///     <li><c>--lock-file-path</c> via <see cref="DotNetPackSettings.LockFilePath"/></li>
+        ///     <li><c>--locked-mode</c> via <see cref="DotNetPackSettings.LockedMode"/></li>
         ///     <li><c>--no-build</c> via <see cref="DotNetPackSettings.NoBuild"/></li>
         ///     <li><c>--no-cache</c> via <see cref="DotNetPackSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetPackSettings.NoDependencies"/></li>
@@ -393,6 +392,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetPackSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetPackSettings.Verbostiy"/></li>
         ///     <li><c>--version-suffix</c> via <see cref="DotNetPackSettings.VersionSuffix"/></li>
+        ///     <li><c>/property</c> via <see cref="DotNetPackSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotNetPack(DotNetPackSettings toolSettings = null)
@@ -410,7 +410,6 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;project&gt;</c> via <see cref="DotNetPackSettings.Project"/></li>
-        ///     <li><c>/property</c> via <see cref="DotNetPackSettings.Properties"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetPackSettings.Configuration"/></li>
         ///     <li><c>--disable-parallel</c> via <see cref="DotNetPackSettings.DisableParallel"/></li>
         ///     <li><c>--force</c> via <see cref="DotNetPackSettings.Force"/></li>
@@ -418,8 +417,8 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetPackSettings.IgnoreFailedSources"/></li>
         ///     <li><c>--include-source</c> via <see cref="DotNetPackSettings.IncludeSource"/></li>
         ///     <li><c>--include-symbols</c> via <see cref="DotNetPackSettings.IncludeSymbols"/></li>
-        ///     <li><c>--locked-mode</c> via <see cref="DotNetPackSettings.LockedMode"/></li>
         ///     <li><c>--lock-file-path</c> via <see cref="DotNetPackSettings.LockFilePath"/></li>
+        ///     <li><c>--locked-mode</c> via <see cref="DotNetPackSettings.LockedMode"/></li>
         ///     <li><c>--no-build</c> via <see cref="DotNetPackSettings.NoBuild"/></li>
         ///     <li><c>--no-cache</c> via <see cref="DotNetPackSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetPackSettings.NoDependencies"/></li>
@@ -432,6 +431,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetPackSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetPackSettings.Verbostiy"/></li>
         ///     <li><c>--version-suffix</c> via <see cref="DotNetPackSettings.VersionSuffix"/></li>
+        ///     <li><c>/property</c> via <see cref="DotNetPackSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotNetPack(Configure<DotNetPackSettings> configurator)
@@ -446,7 +446,6 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;project&gt;</c> via <see cref="DotNetPackSettings.Project"/></li>
-        ///     <li><c>/property</c> via <see cref="DotNetPackSettings.Properties"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetPackSettings.Configuration"/></li>
         ///     <li><c>--disable-parallel</c> via <see cref="DotNetPackSettings.DisableParallel"/></li>
         ///     <li><c>--force</c> via <see cref="DotNetPackSettings.Force"/></li>
@@ -454,8 +453,8 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetPackSettings.IgnoreFailedSources"/></li>
         ///     <li><c>--include-source</c> via <see cref="DotNetPackSettings.IncludeSource"/></li>
         ///     <li><c>--include-symbols</c> via <see cref="DotNetPackSettings.IncludeSymbols"/></li>
-        ///     <li><c>--locked-mode</c> via <see cref="DotNetPackSettings.LockedMode"/></li>
         ///     <li><c>--lock-file-path</c> via <see cref="DotNetPackSettings.LockFilePath"/></li>
+        ///     <li><c>--locked-mode</c> via <see cref="DotNetPackSettings.LockedMode"/></li>
         ///     <li><c>--no-build</c> via <see cref="DotNetPackSettings.NoBuild"/></li>
         ///     <li><c>--no-cache</c> via <see cref="DotNetPackSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetPackSettings.NoDependencies"/></li>
@@ -468,6 +467,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetPackSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetPackSettings.Verbostiy"/></li>
         ///     <li><c>--version-suffix</c> via <see cref="DotNetPackSettings.VersionSuffix"/></li>
+        ///     <li><c>/property</c> via <see cref="DotNetPackSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(DotNetPackSettings Settings, IReadOnlyCollection<Output> Output)> DotNetPack(CombinatorialConfigure<DotNetPackSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -482,15 +482,14 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;projectFile&gt;</c> via <see cref="DotNetBuildSettings.ProjectFile"/></li>
-        ///     <li><c>/property</c> via <see cref="DotNetBuildSettings.Properties"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetBuildSettings.Configuration"/></li>
         ///     <li><c>--disable-parallel</c> via <see cref="DotNetBuildSettings.DisableParallel"/></li>
         ///     <li><c>--force</c> via <see cref="DotNetBuildSettings.Force"/></li>
         ///     <li><c>--force-evaluate</c> via <see cref="DotNetBuildSettings.ForceEvaluate"/></li>
         ///     <li><c>--framework</c> via <see cref="DotNetBuildSettings.Framework"/></li>
         ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetBuildSettings.IgnoreFailedSources"/></li>
-        ///     <li><c>--locked-mode</c> via <see cref="DotNetBuildSettings.LockedMode"/></li>
         ///     <li><c>--lock-file-path</c> via <see cref="DotNetBuildSettings.LockFilePath"/></li>
+        ///     <li><c>--locked-mode</c> via <see cref="DotNetBuildSettings.LockedMode"/></li>
         ///     <li><c>--no-cache</c> via <see cref="DotNetBuildSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetBuildSettings.NoDependencies"/></li>
         ///     <li><c>--no-incremental</c> via <see cref="DotNetBuildSettings.NoIncremental"/></li>
@@ -502,6 +501,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetBuildSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetBuildSettings.Verbosity"/></li>
         ///     <li><c>--version-suffix</c> via <see cref="DotNetBuildSettings.VersionSuffix"/></li>
+        ///     <li><c>/property</c> via <see cref="DotNetBuildSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotNetBuild(DotNetBuildSettings toolSettings = null)
@@ -519,15 +519,14 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;projectFile&gt;</c> via <see cref="DotNetBuildSettings.ProjectFile"/></li>
-        ///     <li><c>/property</c> via <see cref="DotNetBuildSettings.Properties"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetBuildSettings.Configuration"/></li>
         ///     <li><c>--disable-parallel</c> via <see cref="DotNetBuildSettings.DisableParallel"/></li>
         ///     <li><c>--force</c> via <see cref="DotNetBuildSettings.Force"/></li>
         ///     <li><c>--force-evaluate</c> via <see cref="DotNetBuildSettings.ForceEvaluate"/></li>
         ///     <li><c>--framework</c> via <see cref="DotNetBuildSettings.Framework"/></li>
         ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetBuildSettings.IgnoreFailedSources"/></li>
-        ///     <li><c>--locked-mode</c> via <see cref="DotNetBuildSettings.LockedMode"/></li>
         ///     <li><c>--lock-file-path</c> via <see cref="DotNetBuildSettings.LockFilePath"/></li>
+        ///     <li><c>--locked-mode</c> via <see cref="DotNetBuildSettings.LockedMode"/></li>
         ///     <li><c>--no-cache</c> via <see cref="DotNetBuildSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetBuildSettings.NoDependencies"/></li>
         ///     <li><c>--no-incremental</c> via <see cref="DotNetBuildSettings.NoIncremental"/></li>
@@ -539,6 +538,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetBuildSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetBuildSettings.Verbosity"/></li>
         ///     <li><c>--version-suffix</c> via <see cref="DotNetBuildSettings.VersionSuffix"/></li>
+        ///     <li><c>/property</c> via <see cref="DotNetBuildSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotNetBuild(Configure<DotNetBuildSettings> configurator)
@@ -553,15 +553,14 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;projectFile&gt;</c> via <see cref="DotNetBuildSettings.ProjectFile"/></li>
-        ///     <li><c>/property</c> via <see cref="DotNetBuildSettings.Properties"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetBuildSettings.Configuration"/></li>
         ///     <li><c>--disable-parallel</c> via <see cref="DotNetBuildSettings.DisableParallel"/></li>
         ///     <li><c>--force</c> via <see cref="DotNetBuildSettings.Force"/></li>
         ///     <li><c>--force-evaluate</c> via <see cref="DotNetBuildSettings.ForceEvaluate"/></li>
         ///     <li><c>--framework</c> via <see cref="DotNetBuildSettings.Framework"/></li>
         ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetBuildSettings.IgnoreFailedSources"/></li>
-        ///     <li><c>--locked-mode</c> via <see cref="DotNetBuildSettings.LockedMode"/></li>
         ///     <li><c>--lock-file-path</c> via <see cref="DotNetBuildSettings.LockFilePath"/></li>
+        ///     <li><c>--locked-mode</c> via <see cref="DotNetBuildSettings.LockedMode"/></li>
         ///     <li><c>--no-cache</c> via <see cref="DotNetBuildSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetBuildSettings.NoDependencies"/></li>
         ///     <li><c>--no-incremental</c> via <see cref="DotNetBuildSettings.NoIncremental"/></li>
@@ -573,6 +572,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetBuildSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetBuildSettings.Verbosity"/></li>
         ///     <li><c>--version-suffix</c> via <see cref="DotNetBuildSettings.VersionSuffix"/></li>
+        ///     <li><c>/property</c> via <see cref="DotNetBuildSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(DotNetBuildSettings Settings, IReadOnlyCollection<Output> Output)> DotNetBuild(CombinatorialConfigure<DotNetBuildSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -587,12 +587,12 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;project&gt;</c> via <see cref="DotNetCleanSettings.Project"/></li>
-        ///     <li><c>/property</c> via <see cref="DotNetCleanSettings.Properties"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetCleanSettings.Configuration"/></li>
         ///     <li><c>--framework</c> via <see cref="DotNetCleanSettings.Framework"/></li>
         ///     <li><c>--output</c> via <see cref="DotNetCleanSettings.Output"/></li>
         ///     <li><c>--runtime</c> via <see cref="DotNetCleanSettings.Runtime"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetCleanSettings.Verbosity"/></li>
+        ///     <li><c>/property</c> via <see cref="DotNetCleanSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotNetClean(DotNetCleanSettings toolSettings = null)
@@ -610,12 +610,12 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;project&gt;</c> via <see cref="DotNetCleanSettings.Project"/></li>
-        ///     <li><c>/property</c> via <see cref="DotNetCleanSettings.Properties"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetCleanSettings.Configuration"/></li>
         ///     <li><c>--framework</c> via <see cref="DotNetCleanSettings.Framework"/></li>
         ///     <li><c>--output</c> via <see cref="DotNetCleanSettings.Output"/></li>
         ///     <li><c>--runtime</c> via <see cref="DotNetCleanSettings.Runtime"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetCleanSettings.Verbosity"/></li>
+        ///     <li><c>/property</c> via <see cref="DotNetCleanSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotNetClean(Configure<DotNetCleanSettings> configurator)
@@ -630,12 +630,12 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;project&gt;</c> via <see cref="DotNetCleanSettings.Project"/></li>
-        ///     <li><c>/property</c> via <see cref="DotNetCleanSettings.Properties"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetCleanSettings.Configuration"/></li>
         ///     <li><c>--framework</c> via <see cref="DotNetCleanSettings.Framework"/></li>
         ///     <li><c>--output</c> via <see cref="DotNetCleanSettings.Output"/></li>
         ///     <li><c>--runtime</c> via <see cref="DotNetCleanSettings.Runtime"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetCleanSettings.Verbosity"/></li>
+        ///     <li><c>/property</c> via <see cref="DotNetCleanSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(DotNetCleanSettings Settings, IReadOnlyCollection<Output> Output)> DotNetClean(CombinatorialConfigure<DotNetCleanSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -650,15 +650,14 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;project&gt;</c> via <see cref="DotNetPublishSettings.Project"/></li>
-        ///     <li><c>/property</c> via <see cref="DotNetPublishSettings.Properties"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetPublishSettings.Configuration"/></li>
         ///     <li><c>--disable-parallel</c> via <see cref="DotNetPublishSettings.DisableParallel"/></li>
         ///     <li><c>--force</c> via <see cref="DotNetPublishSettings.Force"/></li>
         ///     <li><c>--force-evaluate</c> via <see cref="DotNetPublishSettings.ForceEvaluate"/></li>
         ///     <li><c>--framework</c> via <see cref="DotNetPublishSettings.Framework"/></li>
         ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetPublishSettings.IgnoreFailedSources"/></li>
-        ///     <li><c>--locked-mode</c> via <see cref="DotNetPublishSettings.LockedMode"/></li>
         ///     <li><c>--lock-file-path</c> via <see cref="DotNetPublishSettings.LockFilePath"/></li>
+        ///     <li><c>--locked-mode</c> via <see cref="DotNetPublishSettings.LockedMode"/></li>
         ///     <li><c>--manifest</c> via <see cref="DotNetPublishSettings.Manifest"/></li>
         ///     <li><c>--no-build</c> via <see cref="DotNetPublishSettings.NoBuild"/></li>
         ///     <li><c>--no-cache</c> via <see cref="DotNetPublishSettings.NoCache"/></li>
@@ -672,6 +671,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetPublishSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetPublishSettings.Verbosity"/></li>
         ///     <li><c>--version-suffix</c> via <see cref="DotNetPublishSettings.VersionSuffix"/></li>
+        ///     <li><c>/property</c> via <see cref="DotNetPublishSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotNetPublish(DotNetPublishSettings toolSettings = null)
@@ -689,15 +689,14 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;project&gt;</c> via <see cref="DotNetPublishSettings.Project"/></li>
-        ///     <li><c>/property</c> via <see cref="DotNetPublishSettings.Properties"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetPublishSettings.Configuration"/></li>
         ///     <li><c>--disable-parallel</c> via <see cref="DotNetPublishSettings.DisableParallel"/></li>
         ///     <li><c>--force</c> via <see cref="DotNetPublishSettings.Force"/></li>
         ///     <li><c>--force-evaluate</c> via <see cref="DotNetPublishSettings.ForceEvaluate"/></li>
         ///     <li><c>--framework</c> via <see cref="DotNetPublishSettings.Framework"/></li>
         ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetPublishSettings.IgnoreFailedSources"/></li>
-        ///     <li><c>--locked-mode</c> via <see cref="DotNetPublishSettings.LockedMode"/></li>
         ///     <li><c>--lock-file-path</c> via <see cref="DotNetPublishSettings.LockFilePath"/></li>
+        ///     <li><c>--locked-mode</c> via <see cref="DotNetPublishSettings.LockedMode"/></li>
         ///     <li><c>--manifest</c> via <see cref="DotNetPublishSettings.Manifest"/></li>
         ///     <li><c>--no-build</c> via <see cref="DotNetPublishSettings.NoBuild"/></li>
         ///     <li><c>--no-cache</c> via <see cref="DotNetPublishSettings.NoCache"/></li>
@@ -711,6 +710,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetPublishSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetPublishSettings.Verbosity"/></li>
         ///     <li><c>--version-suffix</c> via <see cref="DotNetPublishSettings.VersionSuffix"/></li>
+        ///     <li><c>/property</c> via <see cref="DotNetPublishSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> DotNetPublish(Configure<DotNetPublishSettings> configurator)
@@ -725,15 +725,14 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;project&gt;</c> via <see cref="DotNetPublishSettings.Project"/></li>
-        ///     <li><c>/property</c> via <see cref="DotNetPublishSettings.Properties"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetPublishSettings.Configuration"/></li>
         ///     <li><c>--disable-parallel</c> via <see cref="DotNetPublishSettings.DisableParallel"/></li>
         ///     <li><c>--force</c> via <see cref="DotNetPublishSettings.Force"/></li>
         ///     <li><c>--force-evaluate</c> via <see cref="DotNetPublishSettings.ForceEvaluate"/></li>
         ///     <li><c>--framework</c> via <see cref="DotNetPublishSettings.Framework"/></li>
         ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetPublishSettings.IgnoreFailedSources"/></li>
-        ///     <li><c>--locked-mode</c> via <see cref="DotNetPublishSettings.LockedMode"/></li>
         ///     <li><c>--lock-file-path</c> via <see cref="DotNetPublishSettings.LockFilePath"/></li>
+        ///     <li><c>--locked-mode</c> via <see cref="DotNetPublishSettings.LockedMode"/></li>
         ///     <li><c>--manifest</c> via <see cref="DotNetPublishSettings.Manifest"/></li>
         ///     <li><c>--no-build</c> via <see cref="DotNetPublishSettings.NoBuild"/></li>
         ///     <li><c>--no-cache</c> via <see cref="DotNetPublishSettings.NoCache"/></li>
@@ -747,6 +746,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetPublishSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetPublishSettings.Verbosity"/></li>
         ///     <li><c>--version-suffix</c> via <see cref="DotNetPublishSettings.VersionSuffix"/></li>
+        ///     <li><c>/property</c> via <see cref="DotNetPublishSettings.Properties"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(DotNetPublishSettings Settings, IReadOnlyCollection<Output> Output)> DotNetPublish(CombinatorialConfigure<DotNetPublishSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -15488,11 +15488,15 @@ namespace Nuke.Common.Tools.DotNet
     [TypeConverter(typeof(TypeConverter<DotNetVerbosity>))]
     public partial class DotNetVerbosity : Enumeration
     {
-        public static DotNetVerbosity Quiet = new DotNetVerbosity { Value = "Quiet" };
-        public static DotNetVerbosity Minimal = new DotNetVerbosity { Value = "Minimal" };
-        public static DotNetVerbosity Normal = new DotNetVerbosity { Value = "Normal" };
-        public static DotNetVerbosity Detailed = new DotNetVerbosity { Value = "Detailed" };
-        public static DotNetVerbosity Diagnostic = new DotNetVerbosity { Value = "Diagnostic" };
+        public static DotNetVerbosity Quiet = (DotNetVerbosity) "Quiet";
+        public static DotNetVerbosity Minimal = (DotNetVerbosity) "Minimal";
+        public static DotNetVerbosity Normal = (DotNetVerbosity) "Normal";
+        public static DotNetVerbosity Detailed = (DotNetVerbosity) "Detailed";
+        public static DotNetVerbosity Diagnostic = (DotNetVerbosity) "Diagnostic";
+        public static explicit operator DotNetVerbosity(string value)
+        {
+            return new DotNetVerbosity { Value = value };
+        }
     }
     #endregion
     #region DotNetSymbolPackageFormat
@@ -15505,8 +15509,12 @@ namespace Nuke.Common.Tools.DotNet
     [TypeConverter(typeof(TypeConverter<DotNetSymbolPackageFormat>))]
     public partial class DotNetSymbolPackageFormat : Enumeration
     {
-        public static DotNetSymbolPackageFormat symbols_nupkg = new DotNetSymbolPackageFormat { Value = "symbols.nupkg" };
-        public static DotNetSymbolPackageFormat snupkg = new DotNetSymbolPackageFormat { Value = "snupkg" };
+        public static DotNetSymbolPackageFormat symbols_nupkg = (DotNetSymbolPackageFormat) "symbols.nupkg";
+        public static DotNetSymbolPackageFormat snupkg = (DotNetSymbolPackageFormat) "snupkg";
+        public static explicit operator DotNetSymbolPackageFormat(string value)
+        {
+            return new DotNetSymbolPackageFormat { Value = value };
+        }
     }
     #endregion
 }

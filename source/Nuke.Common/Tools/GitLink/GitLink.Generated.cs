@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/GitLink.json
-// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -976,8 +976,12 @@ namespace Nuke.Common.Tools.GitLink
     [TypeConverter(typeof(TypeConverter<GitLinkSourceCodeRetrieval>))]
     public partial class GitLinkSourceCodeRetrieval : Enumeration
     {
-        public static GitLinkSourceCodeRetrieval Http = new GitLinkSourceCodeRetrieval { Value = "Http" };
-        public static GitLinkSourceCodeRetrieval Powershell = new GitLinkSourceCodeRetrieval { Value = "Powershell" };
+        public static GitLinkSourceCodeRetrieval Http = (GitLinkSourceCodeRetrieval) "Http";
+        public static GitLinkSourceCodeRetrieval Powershell = (GitLinkSourceCodeRetrieval) "Powershell";
+        public static explicit operator GitLinkSourceCodeRetrieval(string value)
+        {
+            return new GitLinkSourceCodeRetrieval { Value = value };
+        }
     }
     #endregion
 }

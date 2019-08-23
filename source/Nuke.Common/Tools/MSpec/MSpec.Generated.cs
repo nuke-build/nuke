@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/MSpec.json
-// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -53,9 +53,7 @@ namespace Nuke.Common.Tools.MSpec
         ///   <ul>
         ///     <li><c>&lt;assemblies&gt;</c> via <see cref="MSpecSettings.Assemblies"/></li>
         ///     <li><c>--appveyor</c> via <see cref="MSpecSettings.AppVeyor"/></li>
-        ///     <li><c>-f</c> via <see cref="MSpecSettings.Filters"/></li>
         ///     <li><c>--html</c> via <see cref="MSpecSettings.HtmlOutput"/></li>
-        ///     <li><c>-i</c> via <see cref="MSpecSettings.Includes"/></li>
         ///     <li><c>--no-appveyor-autodetect</c> via <see cref="MSpecSettings.NoAppVeyor"/></li>
         ///     <li><c>--no-color</c> via <see cref="MSpecSettings.NoColor"/></li>
         ///     <li><c>--no-teamcity-autodetect</c> via <see cref="MSpecSettings.NoTeamCity"/></li>
@@ -63,8 +61,10 @@ namespace Nuke.Common.Tools.MSpec
         ///     <li><c>--silent</c> via <see cref="MSpecSettings.Silent"/></li>
         ///     <li><c>--teamcity</c> via <see cref="MSpecSettings.TeamCity"/></li>
         ///     <li><c>--timeinfo</c> via <see cref="MSpecSettings.TimeInfo"/></li>
-        ///     <li><c>-x</c> via <see cref="MSpecSettings.Excludes"/></li>
         ///     <li><c>--xml</c> via <see cref="MSpecSettings.XmlOutput"/></li>
+        ///     <li><c>-f</c> via <see cref="MSpecSettings.Filters"/></li>
+        ///     <li><c>-i</c> via <see cref="MSpecSettings.Includes"/></li>
+        ///     <li><c>-x</c> via <see cref="MSpecSettings.Excludes"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> MSpec(MSpecSettings toolSettings = null)
@@ -83,9 +83,7 @@ namespace Nuke.Common.Tools.MSpec
         ///   <ul>
         ///     <li><c>&lt;assemblies&gt;</c> via <see cref="MSpecSettings.Assemblies"/></li>
         ///     <li><c>--appveyor</c> via <see cref="MSpecSettings.AppVeyor"/></li>
-        ///     <li><c>-f</c> via <see cref="MSpecSettings.Filters"/></li>
         ///     <li><c>--html</c> via <see cref="MSpecSettings.HtmlOutput"/></li>
-        ///     <li><c>-i</c> via <see cref="MSpecSettings.Includes"/></li>
         ///     <li><c>--no-appveyor-autodetect</c> via <see cref="MSpecSettings.NoAppVeyor"/></li>
         ///     <li><c>--no-color</c> via <see cref="MSpecSettings.NoColor"/></li>
         ///     <li><c>--no-teamcity-autodetect</c> via <see cref="MSpecSettings.NoTeamCity"/></li>
@@ -93,8 +91,10 @@ namespace Nuke.Common.Tools.MSpec
         ///     <li><c>--silent</c> via <see cref="MSpecSettings.Silent"/></li>
         ///     <li><c>--teamcity</c> via <see cref="MSpecSettings.TeamCity"/></li>
         ///     <li><c>--timeinfo</c> via <see cref="MSpecSettings.TimeInfo"/></li>
-        ///     <li><c>-x</c> via <see cref="MSpecSettings.Excludes"/></li>
         ///     <li><c>--xml</c> via <see cref="MSpecSettings.XmlOutput"/></li>
+        ///     <li><c>-f</c> via <see cref="MSpecSettings.Filters"/></li>
+        ///     <li><c>-i</c> via <see cref="MSpecSettings.Includes"/></li>
+        ///     <li><c>-x</c> via <see cref="MSpecSettings.Excludes"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> MSpec(Configure<MSpecSettings> configurator)
@@ -110,9 +110,7 @@ namespace Nuke.Common.Tools.MSpec
         ///   <ul>
         ///     <li><c>&lt;assemblies&gt;</c> via <see cref="MSpecSettings.Assemblies"/></li>
         ///     <li><c>--appveyor</c> via <see cref="MSpecSettings.AppVeyor"/></li>
-        ///     <li><c>-f</c> via <see cref="MSpecSettings.Filters"/></li>
         ///     <li><c>--html</c> via <see cref="MSpecSettings.HtmlOutput"/></li>
-        ///     <li><c>-i</c> via <see cref="MSpecSettings.Includes"/></li>
         ///     <li><c>--no-appveyor-autodetect</c> via <see cref="MSpecSettings.NoAppVeyor"/></li>
         ///     <li><c>--no-color</c> via <see cref="MSpecSettings.NoColor"/></li>
         ///     <li><c>--no-teamcity-autodetect</c> via <see cref="MSpecSettings.NoTeamCity"/></li>
@@ -120,8 +118,10 @@ namespace Nuke.Common.Tools.MSpec
         ///     <li><c>--silent</c> via <see cref="MSpecSettings.Silent"/></li>
         ///     <li><c>--teamcity</c> via <see cref="MSpecSettings.TeamCity"/></li>
         ///     <li><c>--timeinfo</c> via <see cref="MSpecSettings.TimeInfo"/></li>
-        ///     <li><c>-x</c> via <see cref="MSpecSettings.Excludes"/></li>
         ///     <li><c>--xml</c> via <see cref="MSpecSettings.XmlOutput"/></li>
+        ///     <li><c>-f</c> via <see cref="MSpecSettings.Filters"/></li>
+        ///     <li><c>-i</c> via <see cref="MSpecSettings.Includes"/></li>
+        ///     <li><c>-x</c> via <see cref="MSpecSettings.Excludes"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(MSpecSettings Settings, IReadOnlyCollection<Output> Output)> MSpec(CombinatorialConfigure<MSpecSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)

@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/SpecFlow.json
-// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -1660,11 +1660,15 @@ namespace Nuke.Common.Tools.SpecFlow
     [TypeConverter(typeof(TypeConverter<SpecFlowToolIntegration>))]
     public partial class SpecFlowToolIntegration : Enumeration
     {
-        public static SpecFlowToolIntegration None = new SpecFlowToolIntegration { Value = "None" };
-        public static SpecFlowToolIntegration VS2010 = new SpecFlowToolIntegration { Value = "VS2010" };
-        public static SpecFlowToolIntegration VS2012 = new SpecFlowToolIntegration { Value = "VS2012" };
-        public static SpecFlowToolIntegration VS2013 = new SpecFlowToolIntegration { Value = "VS2013" };
-        public static SpecFlowToolIntegration TFS = new SpecFlowToolIntegration { Value = "TFS" };
+        public static SpecFlowToolIntegration None = (SpecFlowToolIntegration) "None";
+        public static SpecFlowToolIntegration VS2010 = (SpecFlowToolIntegration) "VS2010";
+        public static SpecFlowToolIntegration VS2012 = (SpecFlowToolIntegration) "VS2012";
+        public static SpecFlowToolIntegration VS2013 = (SpecFlowToolIntegration) "VS2013";
+        public static SpecFlowToolIntegration TFS = (SpecFlowToolIntegration) "TFS";
+        public static explicit operator SpecFlowToolIntegration(string value)
+        {
+            return new SpecFlowToolIntegration { Value = value };
+        }
     }
     #endregion
 }

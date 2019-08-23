@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/MSBuild.json
-// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -2388,12 +2388,16 @@ namespace Nuke.Common.Tools.MSBuild
     [TypeConverter(typeof(TypeConverter<MSBuildToolsVersion>))]
     public partial class MSBuildToolsVersion : Enumeration
     {
-        public static MSBuildToolsVersion _2_0 = new MSBuildToolsVersion { Value = "2.0" };
-        public static MSBuildToolsVersion _3_5 = new MSBuildToolsVersion { Value = "3.5" };
-        public static MSBuildToolsVersion _4_0 = new MSBuildToolsVersion { Value = "4.0" };
-        public static MSBuildToolsVersion _12_0 = new MSBuildToolsVersion { Value = "12.0" };
-        public static MSBuildToolsVersion _14_0 = new MSBuildToolsVersion { Value = "14.0" };
-        public static MSBuildToolsVersion _15_0 = new MSBuildToolsVersion { Value = "15.0" };
+        public static MSBuildToolsVersion _2_0 = (MSBuildToolsVersion) "2.0";
+        public static MSBuildToolsVersion _3_5 = (MSBuildToolsVersion) "3.5";
+        public static MSBuildToolsVersion _4_0 = (MSBuildToolsVersion) "4.0";
+        public static MSBuildToolsVersion _12_0 = (MSBuildToolsVersion) "12.0";
+        public static MSBuildToolsVersion _14_0 = (MSBuildToolsVersion) "14.0";
+        public static MSBuildToolsVersion _15_0 = (MSBuildToolsVersion) "15.0";
+        public static explicit operator MSBuildToolsVersion(string value)
+        {
+            return new MSBuildToolsVersion { Value = value };
+        }
     }
     #endregion
     #region MSBuildVerbosity
@@ -2406,11 +2410,15 @@ namespace Nuke.Common.Tools.MSBuild
     [TypeConverter(typeof(TypeConverter<MSBuildVerbosity>))]
     public partial class MSBuildVerbosity : Enumeration
     {
-        public static MSBuildVerbosity Quiet = new MSBuildVerbosity { Value = "Quiet" };
-        public static MSBuildVerbosity Minimal = new MSBuildVerbosity { Value = "Minimal" };
-        public static MSBuildVerbosity Normal = new MSBuildVerbosity { Value = "Normal" };
-        public static MSBuildVerbosity Detailed = new MSBuildVerbosity { Value = "Detailed" };
-        public static MSBuildVerbosity Diagnostic = new MSBuildVerbosity { Value = "Diagnostic" };
+        public static MSBuildVerbosity Quiet = (MSBuildVerbosity) "Quiet";
+        public static MSBuildVerbosity Minimal = (MSBuildVerbosity) "Minimal";
+        public static MSBuildVerbosity Normal = (MSBuildVerbosity) "Normal";
+        public static MSBuildVerbosity Detailed = (MSBuildVerbosity) "Detailed";
+        public static MSBuildVerbosity Diagnostic = (MSBuildVerbosity) "Diagnostic";
+        public static explicit operator MSBuildVerbosity(string value)
+        {
+            return new MSBuildVerbosity { Value = value };
+        }
     }
     #endregion
     #region MSBuildTargetPlatform
@@ -2423,11 +2431,15 @@ namespace Nuke.Common.Tools.MSBuild
     [TypeConverter(typeof(TypeConverter<MSBuildTargetPlatform>))]
     public partial class MSBuildTargetPlatform : Enumeration
     {
-        public static MSBuildTargetPlatform MSIL = new MSBuildTargetPlatform { Value = "MSIL" };
-        public static MSBuildTargetPlatform x86 = new MSBuildTargetPlatform { Value = "x86" };
-        public static MSBuildTargetPlatform x64 = new MSBuildTargetPlatform { Value = "x64" };
-        public static MSBuildTargetPlatform arm = new MSBuildTargetPlatform { Value = "arm" };
-        public static MSBuildTargetPlatform Win32 = new MSBuildTargetPlatform { Value = "Win32" };
+        public static MSBuildTargetPlatform MSIL = (MSBuildTargetPlatform) "MSIL";
+        public static MSBuildTargetPlatform x86 = (MSBuildTargetPlatform) "x86";
+        public static MSBuildTargetPlatform x64 = (MSBuildTargetPlatform) "x64";
+        public static MSBuildTargetPlatform arm = (MSBuildTargetPlatform) "arm";
+        public static MSBuildTargetPlatform Win32 = (MSBuildTargetPlatform) "Win32";
+        public static explicit operator MSBuildTargetPlatform(string value)
+        {
+            return new MSBuildTargetPlatform { Value = value };
+        }
     }
     #endregion
     #region MSBuildSymbolPackageFormat
@@ -2440,8 +2452,12 @@ namespace Nuke.Common.Tools.MSBuild
     [TypeConverter(typeof(TypeConverter<MSBuildSymbolPackageFormat>))]
     public partial class MSBuildSymbolPackageFormat : Enumeration
     {
-        public static MSBuildSymbolPackageFormat symbols_nupkg = new MSBuildSymbolPackageFormat { Value = "symbols.nupkg" };
-        public static MSBuildSymbolPackageFormat snupkg = new MSBuildSymbolPackageFormat { Value = "snupkg" };
+        public static MSBuildSymbolPackageFormat symbols_nupkg = (MSBuildSymbolPackageFormat) "symbols.nupkg";
+        public static MSBuildSymbolPackageFormat snupkg = (MSBuildSymbolPackageFormat) "snupkg";
+        public static explicit operator MSBuildSymbolPackageFormat(string value)
+        {
+            return new MSBuildSymbolPackageFormat { Value = value };
+        }
     }
     #endregion
 }

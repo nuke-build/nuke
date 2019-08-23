@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/Octopus.json
-// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -5215,8 +5215,12 @@ namespace Nuke.Common.Tools.Octopus
     [TypeConverter(typeof(TypeConverter<OctopusPackFormat>))]
     public partial class OctopusPackFormat : Enumeration
     {
-        public static OctopusPackFormat NuPkg = new OctopusPackFormat { Value = "NuPkg" };
-        public static OctopusPackFormat Zip = new OctopusPackFormat { Value = "Zip" };
+        public static OctopusPackFormat NuPkg = (OctopusPackFormat) "NuPkg";
+        public static OctopusPackFormat Zip = (OctopusPackFormat) "Zip";
+        public static explicit operator OctopusPackFormat(string value)
+        {
+            return new OctopusPackFormat { Value = value };
+        }
     }
     #endregion
 }

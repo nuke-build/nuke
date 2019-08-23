@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/CloudFoundry.json
-// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -52,20 +52,20 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;appName&gt;</c> via <see cref="CloudFoundryPushSettings.AppName"/></li>
-        ///     <li><c>-b</c> via <see cref="CloudFoundryPushSettings.Buildpack"/></li>
-        ///     <li><c>-c</c> via <see cref="CloudFoundryPushSettings.Command"/></li>
-        ///     <li><c>-d</c> via <see cref="CloudFoundryPushSettings.Domain"/></li>
         ///     <li><c>--docker-username</c> via <see cref="CloudFoundryPushSettings.DockerUsername"/></li>
         ///     <li><c>--droplet</c> via <see cref="CloudFoundryPushSettings.Droplet"/></li>
-        ///     <li><c>-f</c> via <see cref="CloudFoundryPushSettings.Manifest"/></li>
-        ///     <li><c>-n</c> via <see cref="CloudFoundryPushSettings.Hostname"/></li>
         ///     <li><c>--no-manifest</c> via <see cref="CloudFoundryPushSettings.IgnoreManifest"/></li>
         ///     <li><c>--no-route</c> via <see cref="CloudFoundryPushSettings.NoRoute"/></li>
         ///     <li><c>--no-start</c> via <see cref="CloudFoundryPushSettings.NoStart"/></li>
-        ///     <li><c>-o</c> via <see cref="CloudFoundryPushSettings.DockerImage"/></li>
-        ///     <li><c>-p</c> via <see cref="CloudFoundryPushSettings.Path"/></li>
         ///     <li><c>--random-route</c> via <see cref="CloudFoundryPushSettings.RandomRoute"/></li>
         ///     <li><c>--route-path</c> via <see cref="CloudFoundryPushSettings.RoutePath"/></li>
+        ///     <li><c>-b</c> via <see cref="CloudFoundryPushSettings.Buildpack"/></li>
+        ///     <li><c>-c</c> via <see cref="CloudFoundryPushSettings.Command"/></li>
+        ///     <li><c>-d</c> via <see cref="CloudFoundryPushSettings.Domain"/></li>
+        ///     <li><c>-f</c> via <see cref="CloudFoundryPushSettings.Manifest"/></li>
+        ///     <li><c>-n</c> via <see cref="CloudFoundryPushSettings.Hostname"/></li>
+        ///     <li><c>-o</c> via <see cref="CloudFoundryPushSettings.DockerImage"/></li>
+        ///     <li><c>-p</c> via <see cref="CloudFoundryPushSettings.Path"/></li>
         ///     <li><c>-s</c> via <see cref="CloudFoundryPushSettings.Stack"/></li>
         ///     <li><c>-t</c> via <see cref="CloudFoundryPushSettings.StartupTimeout"/></li>
         ///     <li><c>-u</c> via <see cref="CloudFoundryPushSettings.HealthCheckType"/></li>
@@ -88,20 +88,20 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;appName&gt;</c> via <see cref="CloudFoundryPushSettings.AppName"/></li>
-        ///     <li><c>-b</c> via <see cref="CloudFoundryPushSettings.Buildpack"/></li>
-        ///     <li><c>-c</c> via <see cref="CloudFoundryPushSettings.Command"/></li>
-        ///     <li><c>-d</c> via <see cref="CloudFoundryPushSettings.Domain"/></li>
         ///     <li><c>--docker-username</c> via <see cref="CloudFoundryPushSettings.DockerUsername"/></li>
         ///     <li><c>--droplet</c> via <see cref="CloudFoundryPushSettings.Droplet"/></li>
-        ///     <li><c>-f</c> via <see cref="CloudFoundryPushSettings.Manifest"/></li>
-        ///     <li><c>-n</c> via <see cref="CloudFoundryPushSettings.Hostname"/></li>
         ///     <li><c>--no-manifest</c> via <see cref="CloudFoundryPushSettings.IgnoreManifest"/></li>
         ///     <li><c>--no-route</c> via <see cref="CloudFoundryPushSettings.NoRoute"/></li>
         ///     <li><c>--no-start</c> via <see cref="CloudFoundryPushSettings.NoStart"/></li>
-        ///     <li><c>-o</c> via <see cref="CloudFoundryPushSettings.DockerImage"/></li>
-        ///     <li><c>-p</c> via <see cref="CloudFoundryPushSettings.Path"/></li>
         ///     <li><c>--random-route</c> via <see cref="CloudFoundryPushSettings.RandomRoute"/></li>
         ///     <li><c>--route-path</c> via <see cref="CloudFoundryPushSettings.RoutePath"/></li>
+        ///     <li><c>-b</c> via <see cref="CloudFoundryPushSettings.Buildpack"/></li>
+        ///     <li><c>-c</c> via <see cref="CloudFoundryPushSettings.Command"/></li>
+        ///     <li><c>-d</c> via <see cref="CloudFoundryPushSettings.Domain"/></li>
+        ///     <li><c>-f</c> via <see cref="CloudFoundryPushSettings.Manifest"/></li>
+        ///     <li><c>-n</c> via <see cref="CloudFoundryPushSettings.Hostname"/></li>
+        ///     <li><c>-o</c> via <see cref="CloudFoundryPushSettings.DockerImage"/></li>
+        ///     <li><c>-p</c> via <see cref="CloudFoundryPushSettings.Path"/></li>
         ///     <li><c>-s</c> via <see cref="CloudFoundryPushSettings.Stack"/></li>
         ///     <li><c>-t</c> via <see cref="CloudFoundryPushSettings.StartupTimeout"/></li>
         ///     <li><c>-u</c> via <see cref="CloudFoundryPushSettings.HealthCheckType"/></li>
@@ -121,20 +121,20 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;appName&gt;</c> via <see cref="CloudFoundryPushSettings.AppName"/></li>
-        ///     <li><c>-b</c> via <see cref="CloudFoundryPushSettings.Buildpack"/></li>
-        ///     <li><c>-c</c> via <see cref="CloudFoundryPushSettings.Command"/></li>
-        ///     <li><c>-d</c> via <see cref="CloudFoundryPushSettings.Domain"/></li>
         ///     <li><c>--docker-username</c> via <see cref="CloudFoundryPushSettings.DockerUsername"/></li>
         ///     <li><c>--droplet</c> via <see cref="CloudFoundryPushSettings.Droplet"/></li>
-        ///     <li><c>-f</c> via <see cref="CloudFoundryPushSettings.Manifest"/></li>
-        ///     <li><c>-n</c> via <see cref="CloudFoundryPushSettings.Hostname"/></li>
         ///     <li><c>--no-manifest</c> via <see cref="CloudFoundryPushSettings.IgnoreManifest"/></li>
         ///     <li><c>--no-route</c> via <see cref="CloudFoundryPushSettings.NoRoute"/></li>
         ///     <li><c>--no-start</c> via <see cref="CloudFoundryPushSettings.NoStart"/></li>
-        ///     <li><c>-o</c> via <see cref="CloudFoundryPushSettings.DockerImage"/></li>
-        ///     <li><c>-p</c> via <see cref="CloudFoundryPushSettings.Path"/></li>
         ///     <li><c>--random-route</c> via <see cref="CloudFoundryPushSettings.RandomRoute"/></li>
         ///     <li><c>--route-path</c> via <see cref="CloudFoundryPushSettings.RoutePath"/></li>
+        ///     <li><c>-b</c> via <see cref="CloudFoundryPushSettings.Buildpack"/></li>
+        ///     <li><c>-c</c> via <see cref="CloudFoundryPushSettings.Command"/></li>
+        ///     <li><c>-d</c> via <see cref="CloudFoundryPushSettings.Domain"/></li>
+        ///     <li><c>-f</c> via <see cref="CloudFoundryPushSettings.Manifest"/></li>
+        ///     <li><c>-n</c> via <see cref="CloudFoundryPushSettings.Hostname"/></li>
+        ///     <li><c>-o</c> via <see cref="CloudFoundryPushSettings.DockerImage"/></li>
+        ///     <li><c>-p</c> via <see cref="CloudFoundryPushSettings.Path"/></li>
         ///     <li><c>-s</c> via <see cref="CloudFoundryPushSettings.Stack"/></li>
         ///     <li><c>-t</c> via <see cref="CloudFoundryPushSettings.StartupTimeout"/></li>
         ///     <li><c>-u</c> via <see cref="CloudFoundryPushSettings.HealthCheckType"/></li>
@@ -153,11 +153,11 @@ namespace Nuke.Common.Tools.CloudFoundry
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>--skip-ssl-validation</c> via <see cref="CloudFoundryLoginSettings.SkipSslValidation"/></li>
         ///     <li><c>-a</c> via <see cref="CloudFoundryLoginSettings.ApiEndpoint"/></li>
         ///     <li><c>-o</c> via <see cref="CloudFoundryLoginSettings.Org"/></li>
         ///     <li><c>-p</c> via <see cref="CloudFoundryLoginSettings.Password"/></li>
         ///     <li><c>-s</c> via <see cref="CloudFoundryLoginSettings.Space"/></li>
-        ///     <li><c>--skip-ssl-validation</c> via <see cref="CloudFoundryLoginSettings.SkipSslValidation"/></li>
         ///     <li><c>-u</c> via <see cref="CloudFoundryLoginSettings.Username"/></li>
         ///   </ul>
         /// </remarks>
@@ -175,11 +175,11 @@ namespace Nuke.Common.Tools.CloudFoundry
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>--skip-ssl-validation</c> via <see cref="CloudFoundryLoginSettings.SkipSslValidation"/></li>
         ///     <li><c>-a</c> via <see cref="CloudFoundryLoginSettings.ApiEndpoint"/></li>
         ///     <li><c>-o</c> via <see cref="CloudFoundryLoginSettings.Org"/></li>
         ///     <li><c>-p</c> via <see cref="CloudFoundryLoginSettings.Password"/></li>
         ///     <li><c>-s</c> via <see cref="CloudFoundryLoginSettings.Space"/></li>
-        ///     <li><c>--skip-ssl-validation</c> via <see cref="CloudFoundryLoginSettings.SkipSslValidation"/></li>
         ///     <li><c>-u</c> via <see cref="CloudFoundryLoginSettings.Username"/></li>
         ///   </ul>
         /// </remarks>
@@ -194,11 +194,11 @@ namespace Nuke.Common.Tools.CloudFoundry
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>--skip-ssl-validation</c> via <see cref="CloudFoundryLoginSettings.SkipSslValidation"/></li>
         ///     <li><c>-a</c> via <see cref="CloudFoundryLoginSettings.ApiEndpoint"/></li>
         ///     <li><c>-o</c> via <see cref="CloudFoundryLoginSettings.Org"/></li>
         ///     <li><c>-p</c> via <see cref="CloudFoundryLoginSettings.Password"/></li>
         ///     <li><c>-s</c> via <see cref="CloudFoundryLoginSettings.Space"/></li>
-        ///     <li><c>--skip-ssl-validation</c> via <see cref="CloudFoundryLoginSettings.SkipSslValidation"/></li>
         ///     <li><c>-u</c> via <see cref="CloudFoundryLoginSettings.Username"/></li>
         ///   </ul>
         /// </remarks>
@@ -5239,10 +5239,14 @@ namespace Nuke.Common.Tools.CloudFoundry
     [TypeConverter(typeof(TypeConverter<HealthCheckType>))]
     public partial class HealthCheckType : Enumeration
     {
-        public static HealthCheckType None = new HealthCheckType { Value = "None" };
-        public static HealthCheckType Process = new HealthCheckType { Value = "Process" };
-        public static HealthCheckType Port = new HealthCheckType { Value = "Port" };
-        public static HealthCheckType Http = new HealthCheckType { Value = "Http" };
+        public static HealthCheckType None = (HealthCheckType) "None";
+        public static HealthCheckType Process = (HealthCheckType) "Process";
+        public static HealthCheckType Port = (HealthCheckType) "Port";
+        public static HealthCheckType Http = (HealthCheckType) "Http";
+        public static explicit operator HealthCheckType(string value)
+        {
+            return new HealthCheckType { Value = value };
+        }
     }
     #endregion
     #region Stack
@@ -5255,11 +5259,15 @@ namespace Nuke.Common.Tools.CloudFoundry
     [TypeConverter(typeof(TypeConverter<Stack>))]
     public partial class Stack : Enumeration
     {
-        public static Stack cflinuxfs2 = new Stack { Value = "cflinuxfs2" };
-        public static Stack cflinuxfs3 = new Stack { Value = "cflinuxfs3" };
-        public static Stack windows = new Stack { Value = "windows" };
-        public static Stack windows2012R2 = new Stack { Value = "windows2012R2" };
-        public static Stack windows2016 = new Stack { Value = "windows2016" };
+        public static Stack cflinuxfs2 = (Stack) "cflinuxfs2";
+        public static Stack cflinuxfs3 = (Stack) "cflinuxfs3";
+        public static Stack windows = (Stack) "windows";
+        public static Stack windows2012R2 = (Stack) "windows2012R2";
+        public static Stack windows2016 = (Stack) "windows2016";
+        public static explicit operator Stack(string value)
+        {
+            return new Stack { Value = value };
+        }
     }
     #endregion
 }

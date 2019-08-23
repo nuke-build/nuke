@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/NuGet.json
-// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -4923,9 +4923,13 @@ namespace Nuke.Common.Tools.NuGet
     [TypeConverter(typeof(TypeConverter<NuGetVerbosity>))]
     public partial class NuGetVerbosity : Enumeration
     {
-        public static NuGetVerbosity Normal = new NuGetVerbosity { Value = "Normal" };
-        public static NuGetVerbosity Quiet = new NuGetVerbosity { Value = "Quiet" };
-        public static NuGetVerbosity Detailed = new NuGetVerbosity { Value = "Detailed" };
+        public static NuGetVerbosity Normal = (NuGetVerbosity) "Normal";
+        public static NuGetVerbosity Quiet = (NuGetVerbosity) "Quiet";
+        public static NuGetVerbosity Detailed = (NuGetVerbosity) "Detailed";
+        public static explicit operator NuGetVerbosity(string value)
+        {
+            return new NuGetVerbosity { Value = value };
+        }
     }
     #endregion
     #region PackageSaveMode
@@ -4938,8 +4942,12 @@ namespace Nuke.Common.Tools.NuGet
     [TypeConverter(typeof(TypeConverter<PackageSaveMode>))]
     public partial class PackageSaveMode : Enumeration
     {
-        public static PackageSaveMode Nuspec = new PackageSaveMode { Value = "Nuspec" };
-        public static PackageSaveMode Nupkg = new PackageSaveMode { Value = "Nupkg" };
+        public static PackageSaveMode Nuspec = (PackageSaveMode) "Nuspec";
+        public static PackageSaveMode Nupkg = (PackageSaveMode) "Nupkg";
+        public static explicit operator PackageSaveMode(string value)
+        {
+            return new PackageSaveMode { Value = value };
+        }
     }
     #endregion
     #region NuGetMSBuildVersion
@@ -4952,9 +4960,13 @@ namespace Nuke.Common.Tools.NuGet
     [TypeConverter(typeof(TypeConverter<NuGetMSBuildVersion>))]
     public partial class NuGetMSBuildVersion : Enumeration
     {
-        public static NuGetMSBuildVersion _4 = new NuGetMSBuildVersion { Value = "4" };
-        public static NuGetMSBuildVersion _12 = new NuGetMSBuildVersion { Value = "12" };
-        public static NuGetMSBuildVersion _14 = new NuGetMSBuildVersion { Value = "14" };
+        public static NuGetMSBuildVersion _4 = (NuGetMSBuildVersion) "4";
+        public static NuGetMSBuildVersion _12 = (NuGetMSBuildVersion) "12";
+        public static NuGetMSBuildVersion _14 = (NuGetMSBuildVersion) "14";
+        public static explicit operator NuGetMSBuildVersion(string value)
+        {
+            return new NuGetMSBuildVersion { Value = value };
+        }
     }
     #endregion
     #region NuGetSymbolPackageFormat
@@ -4967,8 +4979,12 @@ namespace Nuke.Common.Tools.NuGet
     [TypeConverter(typeof(TypeConverter<NuGetSymbolPackageFormat>))]
     public partial class NuGetSymbolPackageFormat : Enumeration
     {
-        public static NuGetSymbolPackageFormat symbols_nupkg = new NuGetSymbolPackageFormat { Value = "symbols.nupkg" };
-        public static NuGetSymbolPackageFormat snupkg = new NuGetSymbolPackageFormat { Value = "snupkg" };
+        public static NuGetSymbolPackageFormat symbols_nupkg = (NuGetSymbolPackageFormat) "symbols.nupkg";
+        public static NuGetSymbolPackageFormat snupkg = (NuGetSymbolPackageFormat) "snupkg";
+        public static explicit operator NuGetSymbolPackageFormat(string value)
+        {
+            return new NuGetSymbolPackageFormat { Value = value };
+        }
     }
     #endregion
     #region NuGetSourcesListFormat
@@ -4981,8 +4997,12 @@ namespace Nuke.Common.Tools.NuGet
     [TypeConverter(typeof(TypeConverter<NuGetSourcesListFormat>))]
     public partial class NuGetSourcesListFormat : Enumeration
     {
-        public static NuGetSourcesListFormat Detailed = new NuGetSourcesListFormat { Value = "Detailed" };
-        public static NuGetSourcesListFormat Short = new NuGetSourcesListFormat { Value = "Short" };
+        public static NuGetSourcesListFormat Detailed = (NuGetSourcesListFormat) "Detailed";
+        public static NuGetSourcesListFormat Short = (NuGetSourcesListFormat) "Short";
+        public static explicit operator NuGetSourcesListFormat(string value)
+        {
+            return new NuGetSourcesListFormat { Value = value };
+        }
     }
     #endregion
 }

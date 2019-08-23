@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/Squirrel.json
-// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -63,9 +63,9 @@ namespace Nuke.Common.Tools.Squirrel
         ///     <li><c>--no-delta</c> via <see cref="SquirrelSettings.GenerateNoDelta"/></li>
         ///     <li><c>--no-msi</c> via <see cref="SquirrelSettings.GenerateNoMsi"/></li>
         ///     <li><c>--packagesDir</c> via <see cref="SquirrelSettings.PackagesDirectory"/></li>
+        ///     <li><c>--process-start-args</c> via <see cref="SquirrelSettings.ProcessStartArguments"/></li>
         ///     <li><c>--processStart</c> via <see cref="SquirrelSettings.ProcessStart"/></li>
         ///     <li><c>--processStartAndWait</c> via <see cref="SquirrelSettings.ProcessStartAndWait"/></li>
-        ///     <li><c>--process-start-args</c> via <see cref="SquirrelSettings.ProcessStartArguments"/></li>
         ///     <li><c>--releaseDir</c> via <see cref="SquirrelSettings.ReleaseDirectory"/></li>
         ///     <li><c>--releasify</c> via <see cref="SquirrelSettings.Releasify"/></li>
         ///     <li><c>--removeShortcut</c> via <see cref="SquirrelSettings.RemoveShortcut"/></li>
@@ -103,9 +103,9 @@ namespace Nuke.Common.Tools.Squirrel
         ///     <li><c>--no-delta</c> via <see cref="SquirrelSettings.GenerateNoDelta"/></li>
         ///     <li><c>--no-msi</c> via <see cref="SquirrelSettings.GenerateNoMsi"/></li>
         ///     <li><c>--packagesDir</c> via <see cref="SquirrelSettings.PackagesDirectory"/></li>
+        ///     <li><c>--process-start-args</c> via <see cref="SquirrelSettings.ProcessStartArguments"/></li>
         ///     <li><c>--processStart</c> via <see cref="SquirrelSettings.ProcessStart"/></li>
         ///     <li><c>--processStartAndWait</c> via <see cref="SquirrelSettings.ProcessStartAndWait"/></li>
-        ///     <li><c>--process-start-args</c> via <see cref="SquirrelSettings.ProcessStartArguments"/></li>
         ///     <li><c>--releaseDir</c> via <see cref="SquirrelSettings.ReleaseDirectory"/></li>
         ///     <li><c>--releasify</c> via <see cref="SquirrelSettings.Releasify"/></li>
         ///     <li><c>--removeShortcut</c> via <see cref="SquirrelSettings.RemoveShortcut"/></li>
@@ -140,9 +140,9 @@ namespace Nuke.Common.Tools.Squirrel
         ///     <li><c>--no-delta</c> via <see cref="SquirrelSettings.GenerateNoDelta"/></li>
         ///     <li><c>--no-msi</c> via <see cref="SquirrelSettings.GenerateNoMsi"/></li>
         ///     <li><c>--packagesDir</c> via <see cref="SquirrelSettings.PackagesDirectory"/></li>
+        ///     <li><c>--process-start-args</c> via <see cref="SquirrelSettings.ProcessStartArguments"/></li>
         ///     <li><c>--processStart</c> via <see cref="SquirrelSettings.ProcessStart"/></li>
         ///     <li><c>--processStartAndWait</c> via <see cref="SquirrelSettings.ProcessStartAndWait"/></li>
-        ///     <li><c>--process-start-args</c> via <see cref="SquirrelSettings.ProcessStartArguments"/></li>
         ///     <li><c>--releaseDir</c> via <see cref="SquirrelSettings.ReleaseDirectory"/></li>
         ///     <li><c>--releasify</c> via <see cref="SquirrelSettings.Releasify"/></li>
         ///     <li><c>--removeShortcut</c> via <see cref="SquirrelSettings.RemoveShortcut"/></li>

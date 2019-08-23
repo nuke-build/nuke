@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/InspectCode.json
-// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -759,10 +759,14 @@ namespace Nuke.Common.Tools.InspectCode
     [TypeConverter(typeof(TypeConverter<InspectCodeSettingsLayers>))]
     public partial class InspectCodeSettingsLayers : Enumeration
     {
-        public static InspectCodeSettingsLayers GlobalAll = new InspectCodeSettingsLayers { Value = "GlobalAll" };
-        public static InspectCodeSettingsLayers GlobalPerProduct = new InspectCodeSettingsLayers { Value = "GlobalPerProduct" };
-        public static InspectCodeSettingsLayers SolutionShared = new InspectCodeSettingsLayers { Value = "SolutionShared" };
-        public static InspectCodeSettingsLayers SolutionPersonal = new InspectCodeSettingsLayers { Value = "SolutionPersonal" };
+        public static InspectCodeSettingsLayers GlobalAll = (InspectCodeSettingsLayers) "GlobalAll";
+        public static InspectCodeSettingsLayers GlobalPerProduct = (InspectCodeSettingsLayers) "GlobalPerProduct";
+        public static InspectCodeSettingsLayers SolutionShared = (InspectCodeSettingsLayers) "SolutionShared";
+        public static InspectCodeSettingsLayers SolutionPersonal = (InspectCodeSettingsLayers) "SolutionPersonal";
+        public static explicit operator InspectCodeSettingsLayers(string value)
+        {
+            return new InspectCodeSettingsLayers { Value = value };
+        }
     }
     #endregion
     #region InspectCodeMSBuildToolset
@@ -775,9 +779,13 @@ namespace Nuke.Common.Tools.InspectCode
     [TypeConverter(typeof(TypeConverter<InspectCodeMSBuildToolset>))]
     public partial class InspectCodeMSBuildToolset : Enumeration
     {
-        public static InspectCodeMSBuildToolset _12_0 = new InspectCodeMSBuildToolset { Value = "12.0" };
-        public static InspectCodeMSBuildToolset _14_0 = new InspectCodeMSBuildToolset { Value = "14.0" };
-        public static InspectCodeMSBuildToolset _15_0 = new InspectCodeMSBuildToolset { Value = "15.0" };
+        public static InspectCodeMSBuildToolset _12_0 = (InspectCodeMSBuildToolset) "12.0";
+        public static InspectCodeMSBuildToolset _14_0 = (InspectCodeMSBuildToolset) "14.0";
+        public static InspectCodeMSBuildToolset _15_0 = (InspectCodeMSBuildToolset) "15.0";
+        public static explicit operator InspectCodeMSBuildToolset(string value)
+        {
+            return new InspectCodeMSBuildToolset { Value = value };
+        }
     }
     #endregion
 }

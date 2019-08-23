@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/OpenCover.json
-// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -1599,14 +1599,18 @@ namespace Nuke.Common.Tools.OpenCover
     [TypeConverter(typeof(TypeConverter<OpenCoverVerbosity>))]
     public partial class OpenCoverVerbosity : Enumeration
     {
-        public static OpenCoverVerbosity Off = new OpenCoverVerbosity { Value = "Off" };
-        public static OpenCoverVerbosity Fatal = new OpenCoverVerbosity { Value = "Fatal" };
-        public static OpenCoverVerbosity Error = new OpenCoverVerbosity { Value = "Error" };
-        public static OpenCoverVerbosity Warn = new OpenCoverVerbosity { Value = "Warn" };
-        public static OpenCoverVerbosity Info = new OpenCoverVerbosity { Value = "Info" };
-        public static OpenCoverVerbosity Debug = new OpenCoverVerbosity { Value = "Debug" };
-        public static OpenCoverVerbosity Verbose = new OpenCoverVerbosity { Value = "Verbose" };
-        public static OpenCoverVerbosity All = new OpenCoverVerbosity { Value = "All" };
+        public static OpenCoverVerbosity Off = (OpenCoverVerbosity) "Off";
+        public static OpenCoverVerbosity Fatal = (OpenCoverVerbosity) "Fatal";
+        public static OpenCoverVerbosity Error = (OpenCoverVerbosity) "Error";
+        public static OpenCoverVerbosity Warn = (OpenCoverVerbosity) "Warn";
+        public static OpenCoverVerbosity Info = (OpenCoverVerbosity) "Info";
+        public static OpenCoverVerbosity Debug = (OpenCoverVerbosity) "Debug";
+        public static OpenCoverVerbosity Verbose = (OpenCoverVerbosity) "Verbose";
+        public static OpenCoverVerbosity All = (OpenCoverVerbosity) "All";
+        public static explicit operator OpenCoverVerbosity(string value)
+        {
+            return new OpenCoverVerbosity { Value = value };
+        }
     }
     #endregion
     #region OpenCoverSkipping
@@ -1619,10 +1623,14 @@ namespace Nuke.Common.Tools.OpenCover
     [TypeConverter(typeof(TypeConverter<OpenCoverSkipping>))]
     public partial class OpenCoverSkipping : Enumeration
     {
-        public static OpenCoverSkipping File = new OpenCoverSkipping { Value = "File" };
-        public static OpenCoverSkipping Filter = new OpenCoverSkipping { Value = "Filter" };
-        public static OpenCoverSkipping Attribute = new OpenCoverSkipping { Value = "Attribute" };
-        public static OpenCoverSkipping MissingPdb = new OpenCoverSkipping { Value = "MissingPdb" };
+        public static OpenCoverSkipping File = (OpenCoverSkipping) "File";
+        public static OpenCoverSkipping Filter = (OpenCoverSkipping) "Filter";
+        public static OpenCoverSkipping Attribute = (OpenCoverSkipping) "Attribute";
+        public static OpenCoverSkipping MissingPdb = (OpenCoverSkipping) "MissingPdb";
+        public static explicit operator OpenCoverSkipping(string value)
+        {
+            return new OpenCoverSkipping { Value = value };
+        }
     }
     #endregion
     #region RegistrationType
@@ -1635,9 +1643,13 @@ namespace Nuke.Common.Tools.OpenCover
     [TypeConverter(typeof(TypeConverter<RegistrationType>))]
     public partial class RegistrationType : Enumeration
     {
-        public static RegistrationType User = new RegistrationType { Value = "User" };
-        public static RegistrationType Path32 = new RegistrationType { Value = "Path32" };
-        public static RegistrationType Path64 = new RegistrationType { Value = "Path64" };
+        public static RegistrationType User = (RegistrationType) "User";
+        public static RegistrationType Path32 = (RegistrationType) "Path32";
+        public static RegistrationType Path64 = (RegistrationType) "Path64";
+        public static explicit operator RegistrationType(string value)
+        {
+            return new RegistrationType { Value = value };
+        }
     }
     #endregion
 }

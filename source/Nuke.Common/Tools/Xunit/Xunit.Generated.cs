@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/Xunit.json
-// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -1528,11 +1528,15 @@ namespace Nuke.Common.Tools.Xunit
     [TypeConverter(typeof(TypeConverter<Xunit2ReporterType>))]
     public partial class Xunit2ReporterType : Enumeration
     {
-        public static Xunit2ReporterType AppVeyor = new Xunit2ReporterType { Value = "AppVeyor" };
-        public static Xunit2ReporterType JSON = new Xunit2ReporterType { Value = "JSON" };
-        public static Xunit2ReporterType Quiet = new Xunit2ReporterType { Value = "Quiet" };
-        public static Xunit2ReporterType TeamCity = new Xunit2ReporterType { Value = "TeamCity" };
-        public static Xunit2ReporterType Verbose = new Xunit2ReporterType { Value = "Verbose" };
+        public static Xunit2ReporterType AppVeyor = (Xunit2ReporterType) "AppVeyor";
+        public static Xunit2ReporterType JSON = (Xunit2ReporterType) "JSON";
+        public static Xunit2ReporterType Quiet = (Xunit2ReporterType) "Quiet";
+        public static Xunit2ReporterType TeamCity = (Xunit2ReporterType) "TeamCity";
+        public static Xunit2ReporterType Verbose = (Xunit2ReporterType) "Verbose";
+        public static explicit operator Xunit2ReporterType(string value)
+        {
+            return new Xunit2ReporterType { Value = value };
+        }
     }
     #endregion
     #region Xunit2ResultFormat
@@ -1545,10 +1549,14 @@ namespace Nuke.Common.Tools.Xunit
     [TypeConverter(typeof(TypeConverter<Xunit2ResultFormat>))]
     public partial class Xunit2ResultFormat : Enumeration
     {
-        public static Xunit2ResultFormat Xml = new Xunit2ResultFormat { Value = "Xml" };
-        public static Xunit2ResultFormat XmlV1 = new Xunit2ResultFormat { Value = "XmlV1" };
-        public static Xunit2ResultFormat NUnit = new Xunit2ResultFormat { Value = "NUnit" };
-        public static Xunit2ResultFormat HTML = new Xunit2ResultFormat { Value = "HTML" };
+        public static Xunit2ResultFormat Xml = (Xunit2ResultFormat) "Xml";
+        public static Xunit2ResultFormat XmlV1 = (Xunit2ResultFormat) "XmlV1";
+        public static Xunit2ResultFormat NUnit = (Xunit2ResultFormat) "NUnit";
+        public static Xunit2ResultFormat HTML = (Xunit2ResultFormat) "HTML";
+        public static explicit operator Xunit2ResultFormat(string value)
+        {
+            return new Xunit2ResultFormat { Value = value };
+        }
     }
     #endregion
     #region Xunit2ParallelOption
@@ -1561,10 +1569,14 @@ namespace Nuke.Common.Tools.Xunit
     [TypeConverter(typeof(TypeConverter<Xunit2ParallelOption>))]
     public partial class Xunit2ParallelOption : Enumeration
     {
-        public static Xunit2ParallelOption none = new Xunit2ParallelOption { Value = "none" };
-        public static Xunit2ParallelOption collections = new Xunit2ParallelOption { Value = "collections" };
-        public static Xunit2ParallelOption assemblies = new Xunit2ParallelOption { Value = "assemblies" };
-        public static Xunit2ParallelOption all = new Xunit2ParallelOption { Value = "all" };
+        public static Xunit2ParallelOption none = (Xunit2ParallelOption) "none";
+        public static Xunit2ParallelOption collections = (Xunit2ParallelOption) "collections";
+        public static Xunit2ParallelOption assemblies = (Xunit2ParallelOption) "assemblies";
+        public static Xunit2ParallelOption all = (Xunit2ParallelOption) "all";
+        public static explicit operator Xunit2ParallelOption(string value)
+        {
+            return new Xunit2ParallelOption { Value = value };
+        }
     }
     #endregion
     #region Xunit2AppDomainMode
@@ -1577,9 +1589,13 @@ namespace Nuke.Common.Tools.Xunit
     [TypeConverter(typeof(TypeConverter<Xunit2AppDomainMode>))]
     public partial class Xunit2AppDomainMode : Enumeration
     {
-        public static Xunit2AppDomainMode IfAvailable = new Xunit2AppDomainMode { Value = "IfAvailable" };
-        public static Xunit2AppDomainMode Required = new Xunit2AppDomainMode { Value = "Required" };
-        public static Xunit2AppDomainMode Denied = new Xunit2AppDomainMode { Value = "Denied" };
+        public static Xunit2AppDomainMode IfAvailable = (Xunit2AppDomainMode) "IfAvailable";
+        public static Xunit2AppDomainMode Required = (Xunit2AppDomainMode) "Required";
+        public static Xunit2AppDomainMode Denied = (Xunit2AppDomainMode) "Denied";
+        public static explicit operator Xunit2AppDomainMode(string value)
+        {
+            return new Xunit2AppDomainMode { Value = value };
+        }
     }
     #endregion
 }

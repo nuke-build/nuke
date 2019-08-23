@@ -1,5 +1,5 @@
 // Generated from https://github.com/nuke-build/common/blob/master/build/specifications/Unity.json
-// Generated with Nuke.CodeGeneration version LOCAL (Windows,.NETStandard,Version=v2.0)
+// Generated with Nuke.CodeGeneration version LOCAL (OSX,.NETStandard,Version=v2.0)
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -3751,26 +3751,30 @@ namespace Nuke.Common.Tools.Unity
     [TypeConverter(typeof(TypeConverter<UnityBuildTarget>))]
     public partial class UnityBuildTarget : Enumeration
     {
-        public static UnityBuildTarget standalone = new UnityBuildTarget { Value = "standalone" };
-        public static UnityBuildTarget Win = new UnityBuildTarget { Value = "Win" };
-        public static UnityBuildTarget Win64 = new UnityBuildTarget { Value = "Win64" };
-        public static UnityBuildTarget OSXUniversal = new UnityBuildTarget { Value = "OSXUniversal" };
-        public static UnityBuildTarget Linux = new UnityBuildTarget { Value = "Linux" };
-        public static UnityBuildTarget Linux64 = new UnityBuildTarget { Value = "Linux64" };
-        public static UnityBuildTarget LinuxUniversal = new UnityBuildTarget { Value = "LinuxUniversal" };
-        public static UnityBuildTarget iOS = new UnityBuildTarget { Value = "iOS" };
-        public static UnityBuildTarget Android = new UnityBuildTarget { Value = "Android" };
-        public static UnityBuildTarget Web = new UnityBuildTarget { Value = "Web" };
-        public static UnityBuildTarget WebStreamed = new UnityBuildTarget { Value = "WebStreamed" };
-        public static UnityBuildTarget WebGL = new UnityBuildTarget { Value = "WebGL" };
-        public static UnityBuildTarget XboxOne = new UnityBuildTarget { Value = "XboxOne" };
-        public static UnityBuildTarget PS4 = new UnityBuildTarget { Value = "PS4" };
-        public static UnityBuildTarget PSP2 = new UnityBuildTarget { Value = "PSP2" };
-        public static UnityBuildTarget WindowsStoreApps = new UnityBuildTarget { Value = "WindowsStoreApps" };
-        public static UnityBuildTarget Switch = new UnityBuildTarget { Value = "Switch" };
-        public static UnityBuildTarget N3DS = new UnityBuildTarget { Value = "N3DS" };
-        public static UnityBuildTarget tvOS = new UnityBuildTarget { Value = "tvOS" };
-        public static UnityBuildTarget PSM = new UnityBuildTarget { Value = "PSM" };
+        public static UnityBuildTarget standalone = (UnityBuildTarget) "standalone";
+        public static UnityBuildTarget Win = (UnityBuildTarget) "Win";
+        public static UnityBuildTarget Win64 = (UnityBuildTarget) "Win64";
+        public static UnityBuildTarget OSXUniversal = (UnityBuildTarget) "OSXUniversal";
+        public static UnityBuildTarget Linux = (UnityBuildTarget) "Linux";
+        public static UnityBuildTarget Linux64 = (UnityBuildTarget) "Linux64";
+        public static UnityBuildTarget LinuxUniversal = (UnityBuildTarget) "LinuxUniversal";
+        public static UnityBuildTarget iOS = (UnityBuildTarget) "iOS";
+        public static UnityBuildTarget Android = (UnityBuildTarget) "Android";
+        public static UnityBuildTarget Web = (UnityBuildTarget) "Web";
+        public static UnityBuildTarget WebStreamed = (UnityBuildTarget) "WebStreamed";
+        public static UnityBuildTarget WebGL = (UnityBuildTarget) "WebGL";
+        public static UnityBuildTarget XboxOne = (UnityBuildTarget) "XboxOne";
+        public static UnityBuildTarget PS4 = (UnityBuildTarget) "PS4";
+        public static UnityBuildTarget PSP2 = (UnityBuildTarget) "PSP2";
+        public static UnityBuildTarget WindowsStoreApps = (UnityBuildTarget) "WindowsStoreApps";
+        public static UnityBuildTarget Switch = (UnityBuildTarget) "Switch";
+        public static UnityBuildTarget N3DS = (UnityBuildTarget) "N3DS";
+        public static UnityBuildTarget tvOS = (UnityBuildTarget) "tvOS";
+        public static UnityBuildTarget PSM = (UnityBuildTarget) "PSM";
+        public static explicit operator UnityBuildTarget(string value)
+        {
+            return new UnityBuildTarget { Value = value };
+        }
     }
     #endregion
     #region UnityGLCore
@@ -3783,14 +3787,18 @@ namespace Nuke.Common.Tools.Unity
     [TypeConverter(typeof(TypeConverter<UnityGLCore>))]
     public partial class UnityGLCore : Enumeration
     {
-        public static UnityGLCore _32 = new UnityGLCore { Value = "32" };
-        public static UnityGLCore _33 = new UnityGLCore { Value = "33" };
-        public static UnityGLCore _40 = new UnityGLCore { Value = "40" };
-        public static UnityGLCore _41 = new UnityGLCore { Value = "41" };
-        public static UnityGLCore _42 = new UnityGLCore { Value = "42" };
-        public static UnityGLCore _43 = new UnityGLCore { Value = "43" };
-        public static UnityGLCore _44 = new UnityGLCore { Value = "44" };
-        public static UnityGLCore _45 = new UnityGLCore { Value = "45" };
+        public static UnityGLCore _32 = (UnityGLCore) "32";
+        public static UnityGLCore _33 = (UnityGLCore) "33";
+        public static UnityGLCore _40 = (UnityGLCore) "40";
+        public static UnityGLCore _41 = (UnityGLCore) "41";
+        public static UnityGLCore _42 = (UnityGLCore) "42";
+        public static UnityGLCore _43 = (UnityGLCore) "43";
+        public static UnityGLCore _44 = (UnityGLCore) "44";
+        public static UnityGLCore _45 = (UnityGLCore) "45";
+        public static explicit operator UnityGLCore(string value)
+        {
+            return new UnityGLCore { Value = value };
+        }
     }
     #endregion
     #region UnityGLES
@@ -3803,9 +3811,13 @@ namespace Nuke.Common.Tools.Unity
     [TypeConverter(typeof(TypeConverter<UnityGLES>))]
     public partial class UnityGLES : Enumeration
     {
-        public static UnityGLES _30 = new UnityGLES { Value = "30" };
-        public static UnityGLES _31 = new UnityGLES { Value = "31" };
-        public static UnityGLES _32 = new UnityGLES { Value = "32" };
+        public static UnityGLES _30 = (UnityGLES) "30";
+        public static UnityGLES _31 = (UnityGLES) "31";
+        public static UnityGLES _32 = (UnityGLES) "32";
+        public static explicit operator UnityGLES(string value)
+        {
+            return new UnityGLES { Value = value };
+        }
     }
     #endregion
     #region UnityStackTraceLogType
@@ -3818,9 +3830,13 @@ namespace Nuke.Common.Tools.Unity
     [TypeConverter(typeof(TypeConverter<UnityStackTraceLogType>))]
     public partial class UnityStackTraceLogType : Enumeration
     {
-        public static UnityStackTraceLogType None = new UnityStackTraceLogType { Value = "None" };
-        public static UnityStackTraceLogType Script_Only = new UnityStackTraceLogType { Value = "Script Only" };
-        public static UnityStackTraceLogType Full = new UnityStackTraceLogType { Value = "Full" };
+        public static UnityStackTraceLogType None = (UnityStackTraceLogType) "None";
+        public static UnityStackTraceLogType Script_Only = (UnityStackTraceLogType) "Script Only";
+        public static UnityStackTraceLogType Full = (UnityStackTraceLogType) "Full";
+        public static explicit operator UnityStackTraceLogType(string value)
+        {
+            return new UnityStackTraceLogType { Value = value };
+        }
     }
     #endregion
     #region UnityPlatformTextureFormat
@@ -3833,12 +3849,16 @@ namespace Nuke.Common.Tools.Unity
     [TypeConverter(typeof(TypeConverter<UnityPlatformTextureFormat>))]
     public partial class UnityPlatformTextureFormat : Enumeration
     {
-        public static UnityPlatformTextureFormat dxt = new UnityPlatformTextureFormat { Value = "dxt" };
-        public static UnityPlatformTextureFormat pvrtc = new UnityPlatformTextureFormat { Value = "pvrtc" };
-        public static UnityPlatformTextureFormat atc = new UnityPlatformTextureFormat { Value = "atc" };
-        public static UnityPlatformTextureFormat etc = new UnityPlatformTextureFormat { Value = "etc" };
-        public static UnityPlatformTextureFormat etc2 = new UnityPlatformTextureFormat { Value = "etc2" };
-        public static UnityPlatformTextureFormat astc = new UnityPlatformTextureFormat { Value = "astc" };
+        public static UnityPlatformTextureFormat dxt = (UnityPlatformTextureFormat) "dxt";
+        public static UnityPlatformTextureFormat pvrtc = (UnityPlatformTextureFormat) "pvrtc";
+        public static UnityPlatformTextureFormat atc = (UnityPlatformTextureFormat) "atc";
+        public static UnityPlatformTextureFormat etc = (UnityPlatformTextureFormat) "etc";
+        public static UnityPlatformTextureFormat etc2 = (UnityPlatformTextureFormat) "etc2";
+        public static UnityPlatformTextureFormat astc = (UnityPlatformTextureFormat) "astc";
+        public static explicit operator UnityPlatformTextureFormat(string value)
+        {
+            return new UnityPlatformTextureFormat { Value = value };
+        }
     }
     #endregion
 }
