@@ -469,7 +469,7 @@ namespace Nuke.Common.IO
             _caseSensitivity = caseSensitivity;
         }
 
-        public void Execute(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets, IReadOnlyCollection<ExecutableTarget> executionPlan)
+        public void PreLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             PathConstruction.GlobbingCaseSensitivity = _caseSensitivity;
         }

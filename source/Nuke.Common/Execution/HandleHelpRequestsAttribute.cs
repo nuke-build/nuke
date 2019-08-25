@@ -11,7 +11,7 @@ namespace Nuke.Common.Execution
     [AttributeUsage(AttributeTargets.Class)]
     internal class HandleHelpRequestsAttribute : Attribute, IPostLogoBuildExtension
     {
-        public void Execute(
+        public void PostLogo(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)

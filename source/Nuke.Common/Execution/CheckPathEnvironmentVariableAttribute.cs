@@ -14,7 +14,7 @@ namespace Nuke.Common.Execution
     [AttributeUsage(AttributeTargets.Class)]
     public class CheckPathEnvironmentVariableAttribute : Attribute, IPostLogoBuildExtension
     {
-        public void Execute(
+        public void PostLogo(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)

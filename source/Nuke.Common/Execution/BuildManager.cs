@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using Nuke.Common.OutputSinks;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
@@ -34,11 +35,16 @@ namespace Nuke.Common.Execution
             var build = Create<T>();
             build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpression);
 
+            void ExecuteExtension<TExtension>(Action<TExtension> action)
+                where TExtension : IBuildExtension
+                => build.GetType().GetCustomAttributes()
+                    .OfType<TExtension>().ForEach(action);
+
             try
             {
                 InjectionUtility.InjectValues(build, x => x.IsFast);
 
-                build.ExecuteExtensions<IPreLogoBuildExtension>();
+                ExecuteExtension<IPreLogoBuildExtension>(x => x.PreLogo(build, build.ExecutableTargets));
                 build.OnBuildCreated();
 
                 Logger.OutputSink = build.OutputSink;
@@ -65,7 +71,7 @@ namespace Nuke.Common.Execution
                     ParameterService.Instance.GetParameter<string[]>(() => build.InvokedTargets) ??
                     ParameterService.Instance.GetPositionalCommandLineArguments<string>(separator: Constants.TargetsSeparator.Single()));
 
-                build.ExecuteExtensions<IPostLogoBuildExtension>();
+                ExecuteExtension<IPostLogoBuildExtension>(x => x.PostLogo(build, build.ExecutableTargets, build.ExecutionPlan));
                 CancellationHandler += Finish;
 
                 InjectionUtility.InjectValues(build, x => !x.IsFast);

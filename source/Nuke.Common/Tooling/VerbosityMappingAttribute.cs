@@ -25,7 +25,7 @@ namespace Nuke.Common.Tooling
         public string Normal { get; set; }
         public string Verbose { get; set; }
 
-        public void Execute(
+        public void PostLogo(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)

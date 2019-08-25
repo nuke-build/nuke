@@ -84,12 +84,6 @@ namespace Nuke.Common
         /// </summary>
         public IReadOnlyCollection<ExecutableTarget> ExecutingTargets => ExecutionPlan.Where(x => x.Status != ExecutionStatus.Skipped).ToList();
 
-        internal void ExecuteExtensions<T>()
-            where T : IBuildExtension
-        {
-            GetType().GetCustomAttributes().OfType<T>().ForEach(x => x.Execute(this, ExecutableTargets, ExecutionPlan));
-        }
-
         protected internal virtual IOutputSink OutputSink
         {
             get

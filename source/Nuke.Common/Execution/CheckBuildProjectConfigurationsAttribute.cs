@@ -19,7 +19,7 @@ namespace Nuke.Common.Execution
     {
         public int TimeoutInMilliseconds { get; set; } = 500;
 
-        public void Execute(
+        public void PostLogo(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)
