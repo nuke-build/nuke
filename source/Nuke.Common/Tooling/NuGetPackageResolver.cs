@@ -73,7 +73,7 @@ namespace Nuke.Common.Tooling
                 packagesConfigFile,
                 IsLegacyFile(packagesConfigFile)
                     ? ".//package/@id"
-                    : ".//*[local-name() = 'PackageReference']/@Include")
+                    : ".//*[local-name() = 'PackageReference' or local-name() = 'PackageDownload']/@Include")
                 .Distinct();
 
             var installedPackages = new HashSet<InstalledPackage>(InstalledPackage.Comparer.Instance);
@@ -85,7 +85,7 @@ namespace Nuke.Common.Tooling
                     packagesConfigFile,
                     IsLegacyFile(packagesConfigFile)
                         ? $".//package[@id='{packageId}']/@version"
-                        : $".//*[local-name() = 'PackageReference'][@Include='{packageId}']/@Version");
+                        : $".//*[local-name() = 'PackageReference' or local-name() = 'PackageDownload'][@Include='{packageId}']/@Version");
 
                 foreach (var version in versions)
                 {
