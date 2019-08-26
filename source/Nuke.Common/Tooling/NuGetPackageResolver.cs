@@ -70,10 +70,10 @@ namespace Nuke.Common.Tooling
             var packagesDirectory = GetPackagesDirectory(packagesConfigFile);
 
             var packageIds = XmlTasks.XmlPeek(
-                packagesConfigFile,
-                IsLegacyFile(packagesConfigFile)
-                    ? ".//package/@id"
-                    : ".//*[local-name() = 'PackageReference' or local-name() = 'PackageDownload']/@Include")
+                    packagesConfigFile,
+                    IsLegacyFile(packagesConfigFile)
+                        ? ".//package/@id"
+                        : ".//*[local-name() = 'PackageReference' or local-name() = 'PackageDownload']/@Include")
                 .Distinct();
 
             var installedPackages = new HashSet<InstalledPackage>(InstalledPackage.Comparer.Instance);
@@ -131,7 +131,13 @@ namespace Nuke.Common.Tooling
         [CanBeNull]
         public static InstalledPackage GetGlobalInstalledPackage(string packageId, [CanBeNull] string version, [CanBeNull] string packagesConfigFile)
         {
-            VersionRange.TryParse(version != null && version.Contains("*") ? $"{version}" : $"[{version}]", out var versionRange);
+            if (version != null &&
+                !version.Contains("*") &&
+                !version.StartsWith("[") &&
+                !version.EndsWith("]"))
+                version = $"[{version}]";
+
+            VersionRange.TryParse(version, out var versionRange);
             return GetGlobalInstalledPackage(packageId, versionRange, packagesConfigFile);
         }
 
