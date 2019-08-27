@@ -27,13 +27,13 @@ namespace Nuke.Common.Execution
             remove => s_cancellationHandlers.Remove(value);
         }
 
-        public static int Execute<T>(Expression<Func<T, Target>> defaultTargetExpression)
+        public static int Execute<T>(Expression<Func<T, Target>>[] defaultTargetExpressions)
             where T : NukeBuild
         {
             Console.CancelKeyPress += (s, e) => s_cancellationHandlers.ForEach(x => x());
 
             var build = Create<T>();
-            build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpression);
+            build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpressions);
 
             void ExecuteExtension<TExtension>(Action<TExtension> action)
                 where TExtension : IBuildExtension

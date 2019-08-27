@@ -21,7 +21,7 @@ namespace Nuke.Common
 {
     /// <summary>
     /// Base class for build definitions. Derived types must declare <c>static int Main</c> which calls
-    /// <see cref="Execute{T}(System.Linq.Expressions.Expression{System.Func{T,Nuke.Common.Target}})"/> for the exit code.
+    /// <see cref="Execute{T}"/> for the exit code.
     /// </summary>
     /// <example>
     /// <code>
@@ -54,10 +54,10 @@ namespace Nuke.Common
         /// Executes the build. The provided expression defines the <em>default</em> target that is invoked,
         /// if no targets have been specified via command-line arguments.
         /// </summary>
-        protected static int Execute<T>(Expression<Func<T, Target>> defaultTargetExpression = null)
+        protected static int Execute<T>(params Expression<Func<T, Target>>[] defaultTargetExpressions)
             where T : NukeBuild
         {
-            return BuildManager.Execute(defaultTargetExpression);
+            return BuildManager.Execute(defaultTargetExpressions);
         }
 
         internal IReadOnlyCollection<ExecutableTarget> ExecutableTargets { get; set; }

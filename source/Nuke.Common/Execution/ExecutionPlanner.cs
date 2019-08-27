@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using JetBrains.Annotations;
 using NuGet.Packaging;
 using Nuke.Common.Utilities;
@@ -22,8 +21,8 @@ namespace Nuke.Common.Execution
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             [CanBeNull] IReadOnlyCollection<string> invokedTargetNames)
         {
-            var invokedTargets = invokedTargetNames?.Select(x => GetExecutableTarget(x, executableTargets)).ToArray() ??
-                                 GetDefaultTarget(executableTargets);
+            var invokedTargets = invokedTargetNames?.Select(x => GetExecutableTarget(x, executableTargets)).ToList() ??
+                                 executableTargets.Where(x => x.IsDefault).ToList();
             invokedTargets.ForEach(x => x.Invoked = true);
 
             // Repeat to create the plan with triggers taken into account until plan doesn't change
@@ -33,7 +32,7 @@ namespace Nuke.Common.Execution
             {
                 executionPlan = GetExecutionPlanInternal(executableTargets, invokedTargets);
                 additionallyTriggered = executionPlan.SelectMany(x => x.Triggers).Except(executionPlan).ToList();
-                invokedTargets = executionPlan.Concat(additionallyTriggered).ToArray();
+                invokedTargets = executionPlan.Concat(additionallyTriggered).ToList();
             } while (additionallyTriggered.Count > 0);
 
             return executionPlan;
@@ -64,7 +63,7 @@ namespace Nuke.Common.Execution
                 if (EnvironmentInfo.ArgumentSwitch("strict") && independents.Count > 1)
                 {
                     Logger.Error(
-                        new[]{"Incomplete target definition order."}
+                        new[] { "Incomplete target definition order." }
                             .Concat(independents.Select(x => $"  - {x.Value.Name}"))
                             .JoinNewLine());
                     Environment.Exit(exitCode: -1);
@@ -111,20 +110,6 @@ namespace Nuke.Common.Execution
             }
 
             return executableTarget;
-        }
-
-        private static ExecutableTarget[] GetDefaultTarget(IReadOnlyCollection<ExecutableTarget> executableTargets)
-        {
-            var target = executableTargets.SingleOrDefault(x => x.IsDefault);
-            return target != null ? new[] { target } : new ExecutableTarget[0];
-        }
-
-        private static void Fail(string message, IReadOnlyCollection<ExecutableTarget> executableTargets)
-        {
-            ControlFlow.Fail(new StringBuilder()
-                .AppendLine(message)
-                .AppendLine()
-                .AppendLine(HelpTextService.GetTargetsText(executableTargets)).ToString());
         }
     }
 }
