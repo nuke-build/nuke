@@ -204,7 +204,7 @@ namespace Nuke.Common
             {
                 try
                 {
-                    action();
+                    action.Invoke();
                     return;
                 }
                 catch (Exception exception)
@@ -217,6 +217,10 @@ namespace Nuke.Common
 
                     Logger.Warn($"Waiting {waitInSeconds} seconds before next attempt...");
                     Task.Delay(TimeSpan.FromSeconds(waitInSeconds)).Wait();
+                }
+                finally
+                {
+                    cleanup?.Invoke();
                 }
             }
 
