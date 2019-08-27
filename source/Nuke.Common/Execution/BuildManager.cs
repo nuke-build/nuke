@@ -82,7 +82,7 @@ namespace Nuke.Common.Execution
                     build,
                     ParameterService.Instance.GetParameter<string[]>(() => build.SkippedTargets));
 
-                return IsSuccessful(build) ? 0 : c_errorExitCode;
+                return build.IsSuccessful ? 0 : c_errorExitCode;
             }
             catch (Exception exception)
             {
@@ -174,20 +174,11 @@ namespace Nuke.Common.Execution
             Logger.Normal(new string(c: '═', count: allColumns));
             Logger.Normal();
 
-            var buildSucceeded = IsSuccessful(build);
-            if (buildSucceeded)
+            if (build.IsSuccessful)
                 Logger.Success($"Build succeeded on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}.");
             else
                 Logger.Error($"Build failed on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}.");
             Logger.Normal();
-        }
-
-        private static bool IsSuccessful(NukeBuild build)
-        {
-            return build.ExecutionPlan
-                .All(x => x.Status != ExecutionStatus.Failed &&
-                          x.Status != ExecutionStatus.NotRun &&
-                          x.Status != ExecutionStatus.Aborted);
         }
 
         public static void WriteWarningsAndErrors(SevereMessagesOutputSink outputSink)

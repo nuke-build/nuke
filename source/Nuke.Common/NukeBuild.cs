@@ -118,5 +118,10 @@ namespace Nuke.Common
             BuildProjectDirectory != null
                 ? NuGetPackageResolver.GetPackagesConfigFile(BuildProjectDirectory)
                 : null;
+
+        internal bool IsSuccessful => ExecutionPlan
+            .All(x => x.Status != ExecutionStatus.Failed &&
+                      x.Status != ExecutionStatus.NotRun &&
+                      x.Status != ExecutionStatus.Aborted);
     }
 }
