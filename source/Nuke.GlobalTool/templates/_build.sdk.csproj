@@ -11,7 +11,8 @@
 
   <ItemGroup>
     <PackageReference Include="Nuke.Common" Version="_NUKE_VERSION_" />
-    <PackageReference Include="GitVersion.CommandLine.DotNetCore" Version="4.0.1-beta1-49" />    // GITVERSION
+    <PackageReference Include="GitVersion.CommandLine.DotNetCore" Version="5.0.1"/>
+    // GITVERSION
   </ItemGroup>
 
   <ItemGroup>
