@@ -169,11 +169,14 @@ partial class Build : NukeBuild
                         GitRepository.Branch.StartsWithOrdinalIgnoreCase(HotfixBranchPrefix))
         .Executes(() =>
         {
+            var packages = OutputDirectory.GlobFiles("*.nupkg");
+            Assert(packages.Count == 4, "packages.Count == 4");
+
             DotNetNuGetPush(s => s
                     .SetSource(Source)
                     .SetApiKey(ApiKey)
                     .CombineWith(
-                        OutputDirectory.GlobFiles("*.nupkg").NotEmpty(), (cs, v) => cs
+                        packages, (cs, v) => cs
                             .SetTargetPath(v)),
                 degreeOfParallelism: 5,
                 completeOnFailure: true);
