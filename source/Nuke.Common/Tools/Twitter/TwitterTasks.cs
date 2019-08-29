@@ -11,14 +11,20 @@ using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Tools.Twitter
 {
+    [PublicAPI]
     public static class TwitterTasks
     {
+        // Based on...
+        // https://blog.dantup.com/2016/07/simplest-csharp-code-to-post-a-tweet-using-oauth/
+        // https://www.thatsoftwaredude.com/content/6289/how-to-post-a-tweet-using-c-for-single-user
+
         private const string c_url = "https://api.twitter.com/1.1/statuses/update.json";
 
         public static void SendTweet(
