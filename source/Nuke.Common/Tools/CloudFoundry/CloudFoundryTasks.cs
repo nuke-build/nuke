@@ -23,19 +23,19 @@ namespace Nuke.Common.Tools.CloudFoundry
             return ToolPathResolver.GetPackageExecutable($"CloudFoundry.CommandLine.{CurrentOsRid}", IsWindows ? "cf.exe" : "cf");
         }
 
-        private static bool IsWindows => Environment.OSVersion.Platform == PlatformID.Win32NT;
+        private static bool IsWindows => EnvironmentInfo.Platform == PlatformFamily.Windows;
 
         private static string CurrentOsRid
         {
             get
             {
-                switch (Environment.OSVersion.Platform)
+                switch (EnvironmentInfo.Platform)
                 {
-                    case PlatformID.Win32NT:
+                    case PlatformFamily.Windows:
                         return Environment.Is64BitOperatingSystem ? "win-x64" : "win-x32";
-                    case PlatformID.Unix:
+                    case PlatformFamily.Linux:
                         return Environment.Is64BitOperatingSystem ? "linux-x64" : "linux-x32";
-                    case PlatformID.MacOSX:
+                    case PlatformFamily.OSX:
                         return "osx-x64";
                     default:
                         throw new PlatformNotSupportedException();
