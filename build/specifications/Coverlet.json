@@ -79,6 +79,12 @@
             "type": "bool",
             "format": "--version",
             "help": "Show version information."
+          },
+          {
+            "name": "MergeWith",
+            "type": "string",
+            "format": "--merge-with {value}",
+            "help": "Path to existing coverage result to merge."
           }
         ]
       }

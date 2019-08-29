@@ -56,6 +56,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///     <li><c>--exclude-by-file</c> via <see cref="CoverletSettings.ExcludeByFile"/></li>
         ///     <li><c>--format</c> via <see cref="CoverletSettings.Format"/></li>
         ///     <li><c>--include</c> via <see cref="CoverletSettings.Include"/></li>
+        ///     <li><c>--merge-with</c> via <see cref="CoverletSettings.MergeWith"/></li>
         ///     <li><c>--output</c> via <see cref="CoverletSettings.Output"/></li>
         ///     <li><c>--target</c> via <see cref="CoverletSettings.Target"/></li>
         ///     <li><c>--targetargs</c> via <see cref="CoverletSettings.TargetArgs"/></li>
@@ -83,6 +84,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///     <li><c>--exclude-by-file</c> via <see cref="CoverletSettings.ExcludeByFile"/></li>
         ///     <li><c>--format</c> via <see cref="CoverletSettings.Format"/></li>
         ///     <li><c>--include</c> via <see cref="CoverletSettings.Include"/></li>
+        ///     <li><c>--merge-with</c> via <see cref="CoverletSettings.MergeWith"/></li>
         ///     <li><c>--output</c> via <see cref="CoverletSettings.Output"/></li>
         ///     <li><c>--target</c> via <see cref="CoverletSettings.Target"/></li>
         ///     <li><c>--targetargs</c> via <see cref="CoverletSettings.TargetArgs"/></li>
@@ -107,6 +109,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///     <li><c>--exclude-by-file</c> via <see cref="CoverletSettings.ExcludeByFile"/></li>
         ///     <li><c>--format</c> via <see cref="CoverletSettings.Format"/></li>
         ///     <li><c>--include</c> via <see cref="CoverletSettings.Include"/></li>
+        ///     <li><c>--merge-with</c> via <see cref="CoverletSettings.MergeWith"/></li>
         ///     <li><c>--output</c> via <see cref="CoverletSettings.Output"/></li>
         ///     <li><c>--target</c> via <see cref="CoverletSettings.Target"/></li>
         ///     <li><c>--targetargs</c> via <see cref="CoverletSettings.TargetArgs"/></li>
@@ -183,6 +186,10 @@ namespace Nuke.Common.Tools.Coverlet
         ///   Show version information.
         /// </summary>
         public virtual bool? Version { get; internal set; }
+        /// <summary>
+        ///   Path to existing coverage result to merge.
+        /// </summary>
+        public virtual string MergeWith { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -196,7 +203,8 @@ namespace Nuke.Common.Tools.Coverlet
               .Add("--exclude {value}", Exclude)
               .Add("--include {value}", Include)
               .Add("--exclude-by-file {value}", ExcludeByFile)
-              .Add("--version", Version);
+              .Add("--version", Version)
+              .Add("--merge-with {value}", MergeWith);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -788,6 +796,30 @@ namespace Nuke.Common.Tools.Coverlet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = !toolSettings.Version;
+            return toolSettings;
+        }
+        #endregion
+        #region MergeWith
+        /// <summary>
+        ///   <p><em>Sets <see cref="CoverletSettings.MergeWith"/></em></p>
+        ///   <p>Path to existing coverage result to merge.</p>
+        /// </summary>
+        [Pure]
+        public static CoverletSettings SetMergeWith(this CoverletSettings toolSettings, string mergeWith)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MergeWith = mergeWith;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="CoverletSettings.MergeWith"/></em></p>
+        ///   <p>Path to existing coverage result to merge.</p>
+        /// </summary>
+        [Pure]
+        public static CoverletSettings ResetMergeWith(this CoverletSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MergeWith = null;
             return toolSettings;
         }
         #endregion
