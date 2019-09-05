@@ -32,20 +32,37 @@ namespace Nuke.Common.Execution
 
         public static ParameterService Instance => s_instance ?? (s_instance = new ParameterService());
 
-        public string GetParameterName<T>(Expression<Func<T>> expression)
+        public static bool IsParameter(string value)
         {
-            var member = expression.GetMemberInfo();
-            return GetParameterName(member);
+            return value != null && value.StartsWith("-");
         }
 
-        public string GetParameterName(MemberInfo member)
+        public static string GetParameterMemberName(string value)
+        {
+            ControlFlow.Assert(IsParameter(value), "IsParameter(value)");
+            return value.Replace("-", string.Empty);
+        }
+
+        public string GetParameterDashedName(MemberInfo member)
+        {
+            var memberName = GetParameterMemberName(member);
+            return memberName.SplitCamelHumpsWithSeparator("-", Constants.KnownWords);
+        }
+
+        public static string GetParameterMemberName<T>(Expression<Func<T>> expression)
+        {
+            var member = expression.GetMemberInfo();
+            return GetParameterMemberName(member);
+        }
+
+        public static string GetParameterMemberName(MemberInfo member)
         {
             var attribute = member.GetCustomAttribute<ParameterAttribute>();
             return attribute.Name ?? member.Name;
         }
 
         [CanBeNull]
-        public string GetParameterDescription(MemberInfo member)
+        public static string GetParameterDescription(MemberInfo member)
         {
             var attribute = member.GetCustomAttribute<ParameterAttribute>();
             return attribute.Description?.TrimEnd('.');

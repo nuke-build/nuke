@@ -99,6 +99,7 @@ namespace Nuke.Common.Execution
             string targetName,
             IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
+            targetName = targetName.Replace("-", string.Empty);
             var executableTarget = executableTargets.SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(targetName));
             if (executableTarget == null)
             {

@@ -50,7 +50,7 @@ namespace Nuke.Common.Execution
 
         private static IReadOnlyCollection<string> UpdateInvocationHash()
         {
-            var continueParameterName = ParameterService.Instance.GetParameterName(() => NukeBuild.Continue);
+            var continueParameterName = ParameterService.GetParameterMemberName(() => NukeBuild.Continue);
             var invocation = EnvironmentInfo.CommandLineArguments
                 .Where(x => !x.StartsWith("-") || x.TrimStart("-").EqualsOrdinalIgnoreCase(continueParameterName))
                 .JoinSpace();

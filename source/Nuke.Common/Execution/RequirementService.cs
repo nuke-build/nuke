@@ -51,8 +51,8 @@ namespace Nuke.Common.Execution
         private static void InjectValueInteractive(NukeBuild build, MemberInfo member)
         {
             var memberType = member.GetMemberType();
-            var nameOrDescription = ParameterService.Instance.GetParameterDescription(member) ??
-                                    ParameterService.Instance.GetParameterName(member);
+            var nameOrDescription = ParameterService.GetParameterDescription(member) ??
+                                    ParameterService.GetParameterMemberName(member);
             var text = $"{nameOrDescription.TrimEnd('.')}:";
 
             while (member.GetValue(build) == null)

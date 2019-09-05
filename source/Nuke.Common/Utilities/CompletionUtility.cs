@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Nuke.Common.Execution;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Utilities
@@ -21,49 +22,59 @@ namespace Nuke.Common.Utilities
 
             var parts = words.Split(separator: ' ');
             var currentWord = parts.Last() != string.Empty ? parts.Last() : null;
-            var parameters = parts.Where(x => x.IsParameter()).Select(x => x.GetParameterName()).ToList();
+            var parameters = parts.Where(ParameterService.IsParameter).Select(ParameterService.GetParameterMemberName).ToList();
             var lastParameter = parameters.LastOrDefault();
 
             void AddParameters()
             {
-                foreach (var item in completionItems.Keys)
-                {
-                    // if (currentWord == null && completionItems.GetValueOrDefault(lastParameter.GetParameterName())?.Length > 0)
-                    //     continue;
+                var useDashes = currentWord == null ||
+                                currentWord.TrimStart('-').Length == 0 ||
+                                currentWord.StartsWith("--");
+                var items = completionItems.Keys
+                    .Except(parameters, StringComparer.InvariantCultureIgnoreCase)
+                    .Select(x => useDashes
+                        ? $"--{x.SplitCamelHumpsWithSeparator("-", Constants.KnownWords).ToLowerInvariant()}"
+                        : $"-{x}");
 
-                    if (parameters.Contains(item, StringComparer.OrdinalIgnoreCase))
-                        continue;
-
-                    if (currentWord == null || currentWord.TrimStart("-").Length == 0)
-                    {
-                        suggestedItems.Add(
-                            new[] { "NuGet", "MSBuild", "GitHub" }
-                                .Aggregate(
-                                    $"--{item.SplitCamelHumpsWithSeparator("-")}",
-                                    (i, t) => i.Replace(t.SplitCamelHumpsWithSeparator("-"), t.ToLowerInvariant())));
-                    }
-                    else if (currentWord.IsParameter() && item.StartsWithOrdinalIgnoreCase(currentWord.GetParameterName()))
-                    {
-                        suggestedItems.Add(
-                            (currentWord.StartsWith("--")
-                                ? $"--{item.SplitCamelHumpsWithSeparator("-")}"
-                                : $"-{item}")
-                            .ReplaceCurrentWord(currentWord));
-                    }
-                }
+                AddItems(items);
             }
 
             void AddTargetsOrValues(string parameter)
             {
-                var passedItems = parts.Reverse().TakeWhile(x => !x.IsParameter());
+                var passedItems = parts
+                    .Reverse()
+                    .TakeWhile(x => !ParameterService.IsParameter(x))
+                    .Select(x => x.Replace("-", string.Empty));
+
                 var items = completionItems.GetValueOrDefault(parameter)?.Except(passedItems, StringComparer.OrdinalIgnoreCase) ??
                             new string[0];
+
+                if (parameter.EqualsOrdinalIgnoreCase(Constants.InvokedTargetsParameterName))
+                    items = items.Select(x => x.SplitCamelHumpsWithSeparator("-", Constants.KnownWords));
+
+                AddItems(items);
+            }
+
+            void AddItems(IEnumerable<string> items)
+            {
                 foreach (var item in items)
                 {
                     if (currentWord == null)
                         suggestedItems.Add(item);
-                    if (currentWord != null && item.StartsWith(currentWord, StringComparison.OrdinalIgnoreCase))
-                        suggestedItems.Add(item.ReplaceCurrentWord(currentWord));
+                    else if (item.StartsWithOrdinalIgnoreCase(currentWord))
+                    {
+                        var normalizedItem = item.ReplaceRegex(currentWord, x => currentWord, RegexOptions.IgnoreCase);
+                        if (normalizedItem != item)
+                        {
+                            var letters = currentWord.Where(char.IsLetter).ToList();
+                            if (letters.All(char.IsUpper))
+                                normalizedItem = normalizedItem.ToUpperInvariant();
+                            else if (letters.All(char.IsLower))
+                                normalizedItem = normalizedItem.ToLowerInvariant();
+                        }
+
+                        suggestedItems.Add(normalizedItem);
+                    }
                 }
             }
 
@@ -72,26 +83,10 @@ namespace Nuke.Common.Utilities
             else if (currentWord != lastParameter)
                 AddTargetsOrValues(lastParameter);
 
-            if (currentWord == null || currentWord.IsParameter())
+            if (currentWord == null || ParameterService.IsParameter(currentWord))
                 AddParameters();
 
             return suggestedItems;
-        }
-
-        private static string ReplaceCurrentWord(this string str, string currentWord)
-        {
-            return str.ReplaceRegex(currentWord, x => currentWord, RegexOptions.IgnoreCase);
-        }
-
-        private static bool IsParameter(this string value)
-        {
-            return value != null && value.StartsWith("-");
-        }
-
-        private static string GetParameterName(this string value)
-        {
-            ControlFlow.Assert(value.IsParameter(), "value.IsParameter()");
-            return value.Replace("-", string.Empty);
         }
     }
 }
