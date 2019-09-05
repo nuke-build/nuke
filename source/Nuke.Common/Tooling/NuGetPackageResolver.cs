@@ -23,6 +23,7 @@ namespace Nuke.Common.Tooling
     {
         private const int c_defaultTimeout = 2000;
 
+        [ItemCanBeNull]
         public static async Task<string> GetLatestPackageVersion(string packageId, bool includePrereleases, int? timeout = null)
         {
             try
@@ -38,18 +39,8 @@ namespace Nuke.Common.Tooling
             }
         }
 
-        public static InstalledPackage GetLocalInstalledPackage(
-            string packageId,
-            string packagesConfigFile,
-            string version = null,
-            bool resolveDependencies = true)
-        {
-            return TryGetLocalInstalledPackage(packageId, packagesConfigFile, version, resolveDependencies)
-                .NotNull($"Could not find package '{packageId}'{(version != null ? $" ({version})" : string.Empty)} via '{packagesConfigFile}'.");
-        }
-
         [CanBeNull]
-        public static InstalledPackage TryGetLocalInstalledPackage(
+        public static InstalledPackage GetLocalInstalledPackage(
             string packageId,
             string packagesConfigFile,
             string version = null,
@@ -67,8 +58,6 @@ namespace Nuke.Common.Tooling
             string packagesConfigFile,
             bool resolveDependencies = true)
         {
-            var packagesDirectory = GetPackagesDirectory(packagesConfigFile);
-
             var packageIds = XmlTasks.XmlPeek(
                     packagesConfigFile,
                     IsLegacyFile(packagesConfigFile)
@@ -89,7 +78,7 @@ namespace Nuke.Common.Tooling
 
                 foreach (var version in versions)
                 {
-                    var packageData = GetGlobalInstalledPackage(packageId, version, packagesDirectory);
+                    var packageData = GetGlobalInstalledPackage(packageId, version, packagesConfigFile);
                     if (packageData == null)
                         continue;
 
@@ -105,7 +94,7 @@ namespace Nuke.Common.Tooling
                 {
                     var packageToCheck = packagesToCheck.Dequeue();
 
-                    foreach (var dependentPackage in GetDependentPackages(packageToCheck, packagesDirectory))
+                    foreach (var dependentPackage in GetDependentPackages(packageToCheck, packagesConfigFile))
                     {
                         if (installedPackages.Contains(dependentPackage))
                             continue;
@@ -119,11 +108,11 @@ namespace Nuke.Common.Tooling
             }
         }
 
-        private static IEnumerable<InstalledPackage> GetDependentPackages(InstalledPackage packageToCheck, string packagesDirectory)
+        private static IEnumerable<InstalledPackage> GetDependentPackages(InstalledPackage packageToCheck, string packagesConfigFile)
         {
             return packageToCheck.Metadata.GetDependencyGroups()
                 .SelectMany(x => x.Packages)
-                .Select(x => GetGlobalInstalledPackage(x.Id, x.VersionRange, packagesDirectory))
+                .Select(x => GetGlobalInstalledPackage(x.Id, x.VersionRange, packagesConfigFile))
                 .WhereNotNull()
                 .Distinct(x => new { x.Id, x.Version });
         }
@@ -152,6 +141,8 @@ namespace Nuke.Common.Tooling
         {
             packageId = packageId.ToLowerInvariant();
             var packagesDirectory = GetPackagesDirectory(packagesConfigFile);
+            if (packagesDirectory == null)
+                return null;
 
             var packagesDirectoryInfo = new DirectoryInfo(packagesDirectory);
             var packages = packagesDirectoryInfo
@@ -186,7 +177,8 @@ namespace Nuke.Common.Tooling
         }
 
         // TODO: check for config ( repositoryPath / globalPackagesFolder )
-        public static string GetPackagesDirectory([CanBeNull] string packagesConfigFile)
+        [CanBeNull]
+        private static string GetPackagesDirectory([CanBeNull] string packagesConfigFile)
         {
             string TryGetFromEnvironmentVariable()
                 => EnvironmentInfo.GetVariable<string>("NUGET_PACKAGES");
@@ -225,8 +217,9 @@ namespace Nuke.Common.Tooling
                                     TryGetGlobalDirectoryFromConfig() ??
                                     TryGetDefaultGlobalDirectory() ??
                                     TryGetLocalDirectory();
-            ControlFlow.Assert(Directory.Exists(packagesDirectory), $"Directory.Exists({packagesDirectory})");
-            return packagesDirectory;
+            return packagesDirectory != null && Directory.Exists(packagesDirectory)
+                ? packagesDirectory
+                : null;
         }
 
         public static bool IsLegacyFile(string packagesConfigFile)

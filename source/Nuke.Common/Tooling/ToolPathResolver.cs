@@ -46,8 +46,7 @@ namespace Nuke.Common.Tooling
                     ? NuGetPackageResolver.GetLocalInstalledPackage(
                             singlePackageId,
                             NuGetPackagesConfigFile,
-                            version,
-                            resolveDependencies: false)
+                            version)
                         ?.Directory
                     : null;
 
