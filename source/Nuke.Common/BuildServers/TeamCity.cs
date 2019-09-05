@@ -87,7 +87,7 @@ namespace Nuke.Common.BuildServers
         {
             _messageSink = messageSink ?? Console.WriteLine;
 
-            _systemProperties = GetLazy(() => ParseDictionary(Variable("TEAMCITY_BUILD_PROPERTIES_FILE")));
+            _systemProperties = GetLazy(() => ParseDictionary(GetVariable<string>("TEAMCITY_BUILD_PROPERTIES_FILE")));
             _configurationProperties = GetLazy(() => ParseDictionary(SystemProperties?["TEAMCITY_CONFIGURATION_PROPERTIES_FILE"]));
             _runnerProperties = GetLazy(() => ParseDictionary(SystemProperties?["TEAMCITY_RUNNER_PROPERTIES_FILE"]));
 
@@ -105,10 +105,10 @@ namespace Nuke.Common.BuildServers
 
         public ITeamCityRestClient RestClient => _restClient.Value;
 
-        public string BuildConfiguration => Variable("TEAMCITY_BUILDCONF_NAME");
-        [NoConvert] public string BuildNumber => Variable("BUILD_NUMBER");
-        public string Version => Variable("TEAMCITY_VERSION");
-        public string ProjectName => Variable("TEAMCITY_PROJECT_NAME");
+        public string BuildConfiguration => GetVariable<string>("TEAMCITY_BUILDCONF_NAME");
+        [NoConvert] public string BuildNumber => GetVariable<string>("BUILD_NUMBER");
+        public string Version => GetVariable<string>("TEAMCITY_VERSION");
+        public string ProjectName => GetVariable<string>("TEAMCITY_PROJECT_NAME");
         public string ServerUrl => ConfigurationProperties?["TEAMCITY_SERVERURL"];
         [NoConvert] public string BranchName => ConfigurationProperties?["TEAMCITY_BUILD_BRANCH"];
 
@@ -179,9 +179,10 @@ namespace Nuke.Common.BuildServers
 
         public void AddStatisticValue(string key, string value)
         {
-            Write("buildStatisticValue", x => x
-                .AddKeyValue("key", key)
-                .AddKeyValue("value", value));
+            Write("buildStatisticValue",
+                x => x
+                    .AddKeyValue("key", key)
+                    .AddKeyValue("value", value));
         }
 
         public void SetProgress(string text)
@@ -206,9 +207,10 @@ namespace Nuke.Common.BuildServers
 
         public void OpenBlock(string name, string description = null)
         {
-            Write("blockOpened", x => x
-                .AddKeyValue("name", name)
-                .AddKeyValue("description", description));
+            Write("blockOpened",
+                x => x
+                    .AddKeyValue("name", name)
+                    .AddKeyValue("description", description));
         }
 
         public void CloseBlock(string name)
@@ -228,31 +230,35 @@ namespace Nuke.Common.BuildServers
 
         public void WriteMessage(string text)
         {
-            Write("message", x => x
-                .AddKeyValue("text", text)
-                .AddKeyValue("status", TeamCityStatus.NORMAL));
+            Write("message",
+                x => x
+                    .AddKeyValue("text", text)
+                    .AddKeyValue("status", TeamCityStatus.NORMAL));
         }
 
         public void WriteWarning(string text)
         {
-            Write("message", x => x
-                .AddKeyValue("text", text)
-                .AddKeyValue("status", TeamCityStatus.WARNING));
+            Write("message",
+                x => x
+                    .AddKeyValue("text", text)
+                    .AddKeyValue("status", TeamCityStatus.WARNING));
         }
 
         public void WriteFailure(string text)
         {
-            Write("message", x => x
-                .AddKeyValue("text", text)
-                .AddKeyValue("status", TeamCityStatus.FAILURE));
+            Write("message",
+                x => x
+                    .AddKeyValue("text", text)
+                    .AddKeyValue("status", TeamCityStatus.FAILURE));
         }
 
         public void WriteError(string text, string errorDetails = null)
         {
-            Write("message", x => x
-                .AddKeyValue("text", text)
-                .AddKeyValue("status", TeamCityStatus.ERROR)
-                .AddKeyValue("errorDetails", errorDetails));
+            Write("message",
+                x => x
+                    .AddKeyValue("text", text)
+                    .AddKeyValue("status", TeamCityStatus.ERROR)
+                    .AddKeyValue("errorDetails", errorDetails));
         }
 
         public void Write(string command, Func<IDictionary<string, object>, IDictionary<string, object>> dictionaryConfigurator)

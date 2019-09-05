@@ -26,6 +26,7 @@ namespace Nuke.GlobalTool
         public const string PLATFORM_NETCORE = "netcore";
         public const string PLATFORM_NETFX = "netfx";
         public const string FORMAT_SDK = "sdk";
+
         public const string FORMAT_LEGACY = "legacy";
         // ReSharper restore InconsistentNaming
 
@@ -56,7 +57,7 @@ namespace Nuke.GlobalTool
             var buildProjectName = ConsoleUtility.PromptForInput("How should the build project be named?", "_build");
             var buildDirectoryName = ConsoleUtility.PromptForInput("Where should the build project be located?", "./build");
 
-            var targetPlatform = !ParameterService.Instance.GetParameter<bool>("boot")
+            var targetPlatform = !EnvironmentInfo.GetParameter<bool>("boot")
                 ? PLATFORM_NETCORE
                 : ConsoleUtility.PromptForChoice("What bootstrapping method should be used?",
                     (PLATFORM_NETCORE, ".NET Core SDK"),
@@ -230,7 +231,8 @@ namespace Nuke.GlobalTool
                         new
                         {
                             rootDirectory = (WinRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, rootDirectory),
-                            solutionDirectory = (WinRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, solutionDirectory ?? rootDirectory),
+                            solutionDirectory =
+                                (WinRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, solutionDirectory ?? rootDirectory),
                             scriptDirectory = (WinRelativePath) GetRelativePath(buildDirectory, EnvironmentInfo.WorkingDirectory),
                             buildDirectory = (WinRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, buildDirectory),
                             buildProjectName,
@@ -245,7 +247,8 @@ namespace Nuke.GlobalTool
                         new
                         {
                             rootDirectory = (UnixRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, rootDirectory),
-                            solutionDirectory = (UnixRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, solutionDirectory ?? rootDirectory),
+                            solutionDirectory =
+                                (UnixRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, solutionDirectory ?? rootDirectory),
                             scriptDirectory = (UnixRelativePath) GetRelativePath(buildDirectory, EnvironmentInfo.WorkingDirectory),
                             buildDirectory = (UnixRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, buildDirectory),
                             buildProjectName,

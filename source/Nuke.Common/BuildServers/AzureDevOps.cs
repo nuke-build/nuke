@@ -28,7 +28,7 @@ namespace Nuke.Common.BuildServers
         internal static bool IsRunningAzureDevOps => Environment.GetEnvironmentVariable("TF_BUILD") != null;
 
         internal static bool IsHostedAgent =>
-            !string.IsNullOrWhiteSpace(Variable("AGENT_NAME")) && Variable("AGENT_NAME").StartsWith("Hosted");
+            !string.IsNullOrWhiteSpace(GetVariable<string>("AGENT_NAME")) && GetVariable<string>("AGENT_NAME").StartsWith("Hosted");
 
         private readonly Action<string> _messageSink;
 
@@ -37,50 +37,50 @@ namespace Nuke.Common.BuildServers
             _messageSink = messageSink ?? Console.WriteLine;
         }
 
-        public string AgentBuildDirectory => Variable("AGENT_BUILDDIRECTORY");
-        public string AgentHomeDirectory => Variable("AGENT_HOMEDIRECTORY");
-        public long AgentId => Variable<long>("AGENT_ID");
-        public AzureDevOpsJobStatus AgentJobStatus => Variable<AzureDevOpsJobStatus>("AGENT_JOBSTATUS");
-        public string AgentMachineName => Variable("AGENT_MACHINENAME");
-        public string AgentName => Variable("AGENT_NAME");
-        public string AgentWorkFolder => Variable("AGENT_WORKFOLDER");
-        public string ArtifactStagingDirectory => Variable("BUILD_ARTIFACTSTAGINGDIRECTORY");
-        public long BuildId => Variable<long>("BUILD_BUILDID");
-        [NoConvert] public string BuildNumber => Variable<string>("BUILD_BUILDNUMBER");
-        public string BuildUri => Variable("BUILD_BUILDURI");
-        public string BinariesDirectory => Variable("BUILD_BINARIESDIRECTORY");
-        public string DefinitionName => Variable("BUILD_DEFINITIONNAME");
-        public long DefinitionVersion => Variable<long>("BUILD_DEFINITIONVERSION");
-        public string QueuedBy => Variable("BUILD_QUEUEDBY");
-        public Guid QueuedById => Variable<Guid>("BUILD_QUEUEDBYID");
-        public AzureDevOpsBuildReason BuildReason => Variable<AzureDevOpsBuildReason>("BUILD_REASON");
-        public bool RepositoryClean => Variable<bool>("BUILD_REPOSITORY_CLEAN");
-        public string RepositoryLocalPath => Variable("BUILD_REPOSITORY_LOCALPATH");
-        public string RepositoryName => Variable("BUILD_REPOSITORY_NAME");
-        public AzureDevOpsRepositoryType RepositoryProvider => Variable<AzureDevOpsRepositoryType>("BUILD_REPOSITORY_PROVIDER");
-        [CanBeNull] public string RepositoryTfvcWorkspace => Variable("BUILD_REPOSITORY_TFVC_WORKSPACE");
-        public string RepositoryUri => Variable("BUILD_REPOSITORY_URI");
-        public string RequestedFor => Variable("BUILD_REQUESTEDFOR");
-        public string RequestedForEmail => Variable("BUILD_REQUESTEDFOREMAIL");
-        public Guid RequestedForId => Variable<Guid>("BUILD_REQUESTEDFORID");
-        public string SourceBranch => Variable("BUILD_SOURCEBRANCH");
-        public string SourceBranchName => Variable("BUILD_SOURCEBRANCHNAME");
-        public string SourceDirectory => Variable("BUILD_SOURCESDIRECTORY");
-        public string SourceVersion => Variable("BUILD_SOURCEVERSION");
-        public string StagingDirectory => Variable("BUILD_STAGINGDIRECTORY");
-        public bool RepositoryGitSubmoduleCheckout => Variable<bool>("BUILD_REPOSITORY_GIT_SUBMODULECHECKOUT");
-        [CanBeNull] public string SourceTfvcShelveset => Variable("BUILD_SOURCETFVCSHELVESET");
-        public string TestResultsDirectory => Variable("COMMON_TESTRESULTSDIRECTORY");
-        [CanBeNull] public string AccessToken => Variable("SYSTEM_ACCESSTOKEN");
-        public Guid CollectionId => Variable<Guid>("SYSTEM_COLLECTIONID");
-        public string DefaultWorkingDirectory => Variable("SYSTEM_DEFAULTWORKINGDIRECTORY");
-        public long DefinitionId => Variable<long>("SYSTEM_DEFINITIONID");
-        [CanBeNull] public long? PullRequestId => Variable<long?>("SYSTEM_PULLREQUEST_PULLREQUESTID");
-        [CanBeNull] public string PullRequestSourceBranch => Variable("SYSTEM_PULLREQUEST_SOURCEBRANCH");
-        [CanBeNull] public string PullRequestTargetBranch => Variable("SYSTEM_PULLREQUEST_TARGETBRANCH");
-        public string TeamFoundationCollectionUri => Variable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI");
-        public string TeamProject => Variable("SYSTEM_TEAMPROJECT");
-        public Guid TeamProjectId => Variable<Guid>("SYSTEM_TEAMPROJECTID");
+        public string AgentBuildDirectory => GetVariable<string>("AGENT_BUILDDIRECTORY");
+        public string AgentHomeDirectory => GetVariable<string>("AGENT_HOMEDIRECTORY");
+        public long AgentId => GetVariable<long>("AGENT_ID");
+        public AzureDevOpsJobStatus AgentJobStatus => GetVariable<AzureDevOpsJobStatus>("AGENT_JOBSTATUS");
+        public string AgentMachineName => GetVariable<string>("AGENT_MACHINENAME");
+        public string AgentName => GetVariable<string>("AGENT_NAME");
+        public string AgentWorkFolder => GetVariable<string>("AGENT_WORKFOLDER");
+        public string ArtifactStagingDirectory => GetVariable<string>("BUILD_ARTIFACTSTAGINGDIRECTORY");
+        public long BuildId => GetVariable<long>("BUILD_BUILDID");
+        [NoConvert] public string BuildNumber => GetVariable<string>("BUILD_BUILDNUMBER");
+        public string BuildUri => GetVariable<string>("BUILD_BUILDURI");
+        public string BinariesDirectory => GetVariable<string>("BUILD_BINARIESDIRECTORY");
+        public string DefinitionName => GetVariable<string>("BUILD_DEFINITIONNAME");
+        public long DefinitionVersion => GetVariable<long>("BUILD_DEFINITIONVERSION");
+        public string QueuedBy => GetVariable<string>("BUILD_QUEUEDBY");
+        public Guid QueuedById => GetVariable<Guid>("BUILD_QUEUEDBYID");
+        public AzureDevOpsBuildReason BuildReason => GetVariable<AzureDevOpsBuildReason>("BUILD_REASON");
+        public bool RepositoryClean => GetVariable<bool>("BUILD_REPOSITORY_CLEAN");
+        public string RepositoryLocalPath => GetVariable<string>("BUILD_REPOSITORY_LOCALPATH");
+        public string RepositoryName => GetVariable<string>("BUILD_REPOSITORY_NAME");
+        public AzureDevOpsRepositoryType RepositoryProvider => GetVariable<AzureDevOpsRepositoryType>("BUILD_REPOSITORY_PROVIDER");
+        [CanBeNull] public string RepositoryTfvcWorkspace => GetVariable<string>("BUILD_REPOSITORY_TFVC_WORKSPACE");
+        public string RepositoryUri => GetVariable<string>("BUILD_REPOSITORY_URI");
+        public string RequestedFor => GetVariable<string>("BUILD_REQUESTEDFOR");
+        public string RequestedForEmail => GetVariable<string>("BUILD_REQUESTEDFOREMAIL");
+        public Guid RequestedForId => GetVariable<Guid>("BUILD_REQUESTEDFORID");
+        public string SourceBranch => GetVariable<string>("BUILD_SOURCEBRANCH");
+        public string SourceBranchName => GetVariable<string>("BUILD_SOURCEBRANCHNAME");
+        public string SourceDirectory => GetVariable<string>("BUILD_SOURCESDIRECTORY");
+        public string SourceVersion => GetVariable<string>("BUILD_SOURCEVERSION");
+        public string StagingDirectory => GetVariable<string>("BUILD_STAGINGDIRECTORY");
+        public bool RepositoryGitSubmoduleCheckout => GetVariable<bool>("BUILD_REPOSITORY_GIT_SUBMODULECHECKOUT");
+        [CanBeNull] public string SourceTfvcShelveset => GetVariable<string>("BUILD_SOURCETFVCSHELVESET");
+        public string TestResultsDirectory => GetVariable<string>("COMMON_TESTRESULTSDIRECTORY");
+        [CanBeNull] public string AccessToken => GetVariable<string>("SYSTEM_ACCESSTOKEN");
+        public Guid CollectionId => GetVariable<Guid>("SYSTEM_COLLECTIONID");
+        public string DefaultWorkingDirectory => GetVariable<string>("SYSTEM_DEFAULTWORKINGDIRECTORY");
+        public long DefinitionId => GetVariable<long>("SYSTEM_DEFINITIONID");
+        [CanBeNull] public long? PullRequestId => GetVariable<long?>("SYSTEM_PULLREQUEST_PULLREQUESTID");
+        [CanBeNull] public string PullRequestSourceBranch => GetVariable<string>("SYSTEM_PULLREQUEST_SOURCEBRANCH");
+        [CanBeNull] public string PullRequestTargetBranch => GetVariable<string>("SYSTEM_PULLREQUEST_TARGETBRANCH");
+        public string TeamFoundationCollectionUri => GetVariable<string>("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI");
+        public string TeamProject => GetVariable<string>("SYSTEM_TEAMPROJECT");
+        public Guid TeamProjectId => GetVariable<Guid>("SYSTEM_TEAMPROJECTID");
 
         public void UploadLog(string localFilePath)
         {
@@ -111,7 +111,8 @@ namespace Nuke.Common.BuildServers
             string testType = "VSTest")
         {
             var resultFiles = string.Join(",", files.Select(x => x.FullName.Replace('\\', Path.DirectorySeparatorChar)));
-            _messageSink($"##vso[results.publish type={testType};mergeResults={mergeResults};platform={platform}4;config={configuration};runTitle='{title}';publishRunAttachments=true;resultFiles={resultFiles};]");
+            _messageSink(
+                $"##vso[results.publish type={testType};mergeResults={mergeResults};platform={platform}4;config={configuration};runTitle='{title}';publishRunAttachments=true;resultFiles={resultFiles};]");
         }
 
         public void LogError(

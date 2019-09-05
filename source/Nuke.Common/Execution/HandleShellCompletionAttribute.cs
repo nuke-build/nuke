@@ -29,13 +29,13 @@ namespace Nuke.Common.Execution
                 if (completionItems.ContainsKey(parameterName))
                     continue;
 
-                var subItems = ParameterService.Instance.GetParameterValueSet(parameter, build)?.Select(x => x.Text);
+                var subItems = ParameterService.GetParameterValueSet(parameter, build)?.Select(x => x.Text);
                 completionItems[parameterName] = subItems?.ToArray();
             }
 
             SerializationTasks.YamlSerializeToFile(completionItems, Constants.GetCompletionFile(NukeBuild.RootDirectory));
 
-            if (EnvironmentInfo.ParameterSwitch(Constants.CompletionParameterName))
+            if (EnvironmentInfo.GetParameter<bool>(Constants.CompletionParameterName))
                 Environment.Exit(exitCode: 0);
         }
     }

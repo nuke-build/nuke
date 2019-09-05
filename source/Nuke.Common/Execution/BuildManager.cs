@@ -68,8 +68,7 @@ namespace Nuke.Common.Execution
 
                 build.ExecutionPlan = ExecutionPlanner.GetExecutionPlan(
                     build.ExecutableTargets,
-                    ParameterService.Instance.GetParameter<string[]>(() => build.InvokedTargets) ??
-                    ParameterService.Instance.GetPositionalCommandLineArguments<string>(separator: Constants.TargetsSeparator.Single()));
+                    EnvironmentInfo.GetParameter<string[]>(() => build.InvokedTargets));
 
                 ExecuteExtension<IPostLogoBuildExtension>(x => x.PostLogo(build, build.ExecutableTargets, build.ExecutionPlan));
                 CancellationHandler += Finish;
@@ -80,7 +79,7 @@ namespace Nuke.Common.Execution
 
                 BuildExecutor.Execute(
                     build,
-                    ParameterService.Instance.GetParameter<string[]>(() => build.SkippedTargets));
+                    EnvironmentInfo.GetParameter<string[]>(() => build.SkippedTargets));
 
                 return build.IsSuccessful ? 0 : c_errorExitCode;
             }

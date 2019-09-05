@@ -21,7 +21,7 @@ namespace Nuke.Common.Tooling
         [CanBeNull]
         public static string TryGetEnvironmentExecutable(string environmentExecutable)
         {
-            var environmentExecutablePath = EnvironmentInfo.Variable(environmentExecutable);
+            var environmentExecutablePath = EnvironmentInfo.GetVariable<string>(environmentExecutable);
             if (environmentExecutablePath == null)
                 return null;
 

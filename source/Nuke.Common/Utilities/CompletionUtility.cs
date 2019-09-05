@@ -33,7 +33,7 @@ namespace Nuke.Common.Utilities
                 var items = completionItems.Keys
                     .Except(parameters, StringComparer.InvariantCultureIgnoreCase)
                     .Select(x => useDashes
-                        ? $"--{x.SplitCamelHumpsWithSeparator("-", Constants.KnownWords).ToLowerInvariant()}"
+                        ? $"--{ParameterService.GetParameterDashedName(x)}"
                         : $"-{x}");
 
                 AddItems(items);
@@ -44,7 +44,7 @@ namespace Nuke.Common.Utilities
                 var passedItems = parts
                     .Reverse()
                     .TakeWhile(x => !ParameterService.IsParameter(x))
-                    .Select(x => x.Replace("-", string.Empty));
+                    .Select(ParameterService.GetParameterMemberName);
 
                 var items = completionItems.GetValueOrDefault(parameter)?.Except(passedItems, StringComparer.OrdinalIgnoreCase) ??
                             new string[0];

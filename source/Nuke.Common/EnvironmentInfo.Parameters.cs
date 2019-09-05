@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
 using Nuke.Common.Utilities;
@@ -17,203 +19,98 @@ namespace Nuke.Common
     [DebuggerStepThrough]
     public static partial class EnvironmentInfo
     {
+        private static readonly ParameterService s_parameterService =
+            new ParameterService(
+                () => CommandLineArguments.Skip(count: 1).ToArray(),
+                () => Variables);
+
         public static void SetVariable(string name, string value)
         {
             Environment.SetEnvironmentVariable(name, value);
         }
 
-        public static void SetVariable<T>(string name, IEnumerable<T> values, char separator)
-        {
-            SetVariable(name, values.Select(x => x.ToString()).Join(separator));
-        }
-
-        #region Parameter
-
-        /// <summary>
-        /// Provides access to a command-line argument or environment variable switch.
-        /// </summary>
-        public static bool ParameterSwitch(string name)
-        {
-            return ParameterService.Instance.GetParameter<bool>(name);
-        }
-
-        /// <summary>
-        /// Provides access to a command-line argument or environment variable.
-        /// </summary>
         [CanBeNull]
-        public static string Parameter(string name)
+        public static T GetParameter<T>(string name, char? separator = null)
         {
-            return ParameterService.Instance.GetParameter<string>(name);
+            return (T) s_parameterService.GetParameter(name, typeof(T), separator);
         }
 
-        /// <summary>
-        /// Provides access to a converted command-line argument or environment variable.
-        /// </summary>
         [CanBeNull]
-        public static T Parameter<T>(string name)
+        public static T GetParameter<T>(Expression<Func<T>> expression)
         {
-            return ParameterService.Instance.GetParameter<T>(name);
+            return GetParameter<T>(expression.GetMemberInfo());
         }
 
-        /// <summary>
-        /// Provides access to a command-line argument or environment variable set.
-        /// </summary>
         [CanBeNull]
-        public static T[] ParameterSet<T>(string name, char? separator = null)
+        public static T GetParameter<T>(Expression<Func<object>> expression)
         {
-            return ParameterService.Instance.GetParameter<T[]>(name, separator);
+            return GetParameter<T>(expression.GetMemberInfo());
         }
 
-        /// <summary>
-        /// Provides ensured access to a command-line argument or environment variable.
-        /// </summary>
-        public static string EnsureParameter(string name)
-        {
-            return Parameter(name).NotNull($"Parameter('{name}') != null");
-        }
-
-        /// <summary>
-        /// Provides ensured access to a converted command-line argument or environment variable.
-        /// </summary>
-        public static T EnsureParameter<T>(string name)
-        {
-            return Parameter<T>(name).NotNull($"Parameter<{typeof(T).Name}>('{name}') != null");
-        }
-
-        /// <summary>
-        /// Provides ensured access to a command-line argument or environment variable set.
-        /// </summary>
-        public static T[] EnsureParameterSet<T>(string name, char? separator = null)
-        {
-            return ParameterSet<T>(name, separator).NotNull($"ParameterSet<{typeof(T).Name}>('{name}', '{separator}') != null");
-        }
-
-        #endregion
-
-        #region Variable
-
-        /// <summary>
-        /// Provides access to an environment variable switch.
-        /// </summary>
-        public static bool VariableSwitch(string name)
-        {
-            return ParameterService.Instance.GetEnvironmentVariable<bool>(name);
-        }
-
-        /// <summary>
-        /// Provides access to an environment variable.
-        /// </summary>
         [CanBeNull]
-        public static string Variable(string name)
+        public static T GetParameter<T>(MemberInfo member, Type destinationType = null)
         {
-            return ParameterService.Instance.GetEnvironmentVariable<string>(name);
+            return (T) s_parameterService.GetFromMemberInfo(member, destinationType ?? typeof(T), s_parameterService.GetParameter);
         }
 
-        /// <summary>
-        /// Provides access to a converted environment variable.
-        /// </summary>
         [CanBeNull]
-        public static T Variable<T>(string name)
+        public static T GetNamedArgument<T>(string parameterName, char? separator = null)
         {
-            return ParameterService.Instance.GetEnvironmentVariable<T>(name);
+            return (T) s_parameterService.GetCommandLineArgument(parameterName, typeof(T), separator);
         }
 
-        /// <summary>
-        /// Provides access to an environment variable set.
-        /// </summary>
         [CanBeNull]
-        public static T[] VariableSet<T>(string name, char? separator = null)
+        public static T GetNamedArgument<T>(Expression<Func<T>> expression)
         {
-            return ParameterService.Instance.GetEnvironmentVariable<T[]>(name, separator);
+            return GetNamedArgument<T>(expression.GetMemberInfo());
         }
 
-        /// <summary>
-        /// Provides ensured access to an environment variable.
-        /// </summary>
-        public static string EnsureVariable(string name)
-        {
-            return Variable(name).NotNull($"Variable('{name}') != null");
-        }
-
-        /// <summary>
-        /// Provides ensured access to a converted environment variable.
-        /// </summary>
-        public static T EnsureVariable<T>(string name)
-        {
-            return Variable<T>(name).NotNull($"Variable<{typeof(T).Name}>('{name}') != null");
-        }
-
-        /// <summary>
-        /// Provides ensured access to an environment variable set.
-        /// </summary>
-        public static T[] EnsureVariableSet<T>(string name, char? separator = null)
-        {
-            return VariableSet<T>(name, separator).NotNull($"VariableSet<{typeof(T).Name}>('{name}', '{separator}') != null");
-        }
-
-        #endregion
-
-        #region Argument
-
-        /// <summary>
-        /// Provides access to a command-line argument switch.
-        /// </summary>
-        public static bool ArgumentSwitch(string name)
-        {
-            return ParameterService.Instance.GetCommandLineArgument<bool>(name);
-        }
-
-        /// <summary>
-        /// Provides access to a command-line argument.
-        /// </summary>
         [CanBeNull]
-        public static string Argument(string name)
+        public static T GetNamedArgument<T>(Expression<Func<object>> expression)
         {
-            return ParameterService.Instance.GetCommandLineArgument<string>(name);
+            return GetNamedArgument<T>(expression.GetMemberInfo());
         }
 
-        /// <summary>
-        /// Provides access to a converted command-line argument.
-        /// </summary>
         [CanBeNull]
-        public static T Argument<T>(string name)
+        public static T GetNamedArgument<T>(MemberInfo member, Type destinationType = null)
         {
-            return ParameterService.Instance.GetCommandLineArgument<T>(name);
+            return (T) s_parameterService.GetFromMemberInfo(member, destinationType ?? typeof(T), s_parameterService.GetCommandLineArgument);
         }
 
-        /// <summary>
-        /// Provides access to a command-line argument set.
-        /// </summary>
         [CanBeNull]
-        public static T[] ArgumentSet<T>(string name, char? separator = null)
+        public static T GetPositionalArgument<T>(int position, char? separator = null)
         {
-            return ParameterService.Instance.GetCommandLineArgument<T[]>(name, separator);
+            return (T) s_parameterService.GetCommandLineArgument(position, typeof(T), separator);
         }
 
-        /// <summary>
-        /// Provides ensured access to a command-line argument.
-        /// </summary>
-        public static string EnsureArgument(string name)
+        [CanBeNull]
+        public static T[] GetAllPositionalArguments<T>(char? separator = null)
         {
-            return Argument(name).NotNull($"Argument('{name}') != null");
+            return (T[]) s_parameterService.GetPositionalCommandLineArguments(typeof(T), separator);
         }
 
-        /// <summary>
-        /// Provides ensured access to a converted command-line argument.
-        /// </summary>
-        public static T EnsureArgument<T>(string name)
+        [CanBeNull]
+        public static T GetVariable<T>(Expression<Func<T>> expression)
         {
-            return Argument<T>(name).NotNull($"Argument<{typeof(T).Name}>('{name}') != null");
+            return GetVariable<T>(expression.GetMemberInfo());
         }
 
-        /// <summary>
-        /// Provides ensured access to a command-line argument set.
-        /// </summary>
-        public static T[] EnsureArgumentSet<T>(string name, char? separator = null)
+        [CanBeNull]
+        public static T GetVariable<T>(Expression<Func<object>> expression)
         {
-            return ArgumentSet<T>(name, separator).NotNull($"ArgumentSet<{typeof(T).Name}>('{name}', '{separator}') != null");
+            return GetVariable<T>(expression.GetMemberInfo());
         }
 
-        #endregion
+        [CanBeNull]
+        public static T GetVariable<T>(MemberInfo member, Type destinationType = null)
+        {
+            return (T) s_parameterService.GetFromMemberInfo(member, destinationType ?? typeof(T), s_parameterService.GetEnvironmentVariable);
+        }
+
+        [CanBeNull]
+        public static T GetVariable<T>(string parameterName, char? separator = null)
+        {
+            return (T) s_parameterService.GetEnvironmentVariable(parameterName, typeof(T), separator);
+        }
     }
 }

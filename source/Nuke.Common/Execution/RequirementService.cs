@@ -57,7 +57,7 @@ namespace Nuke.Common.Execution
 
             while (member.GetValue(build) == null)
             {
-                var valueSet = ParameterService.Instance.GetParameterValueSet(member, build);
+                var valueSet = ParameterService.GetParameterValueSet(member, build);
                 var value = valueSet == null
                     ? ConsoleUtility.PromptForInput(text, defaultValue: null)
                     : ConsoleUtility.PromptForChoice(text, valueSet.Select(x => (x.Object, x.Text)).ToArray());

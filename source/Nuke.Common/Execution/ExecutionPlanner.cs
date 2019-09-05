@@ -60,7 +60,7 @@ namespace Nuke.Common.Execution
             while (graphAsList.Any())
             {
                 var independents = graphAsList.Where(x => !graphAsList.Any(y => y.Dependencies.Contains(x))).ToList();
-                if (EnvironmentInfo.ArgumentSwitch("strict") && independents.Count > 1)
+                if (EnvironmentInfo.GetNamedArgument<bool>("strict") && independents.Count > 1)
                 {
                     Logger.Error(
                         new[] { "Incomplete target definition order." }

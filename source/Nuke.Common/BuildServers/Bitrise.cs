@@ -35,21 +35,21 @@ namespace Nuke.Common.BuildServers
         {
         }
 
-        public string BuildUrl => Variable("BITRISE_BUILD_URL");
-        public long BuildNumber => Variable<long>("BITRISE_BUILD_NUMBER");
-        public string AppTitle => Variable("BITRISE_APP_TITLE");
-        public string AppUrl => Variable("BITRISE_APP_URL");
-        public string AppSlug => Variable("BITRISE_APP_SLUG");
-        public string BuildSlug => Variable("BITRISE_BUILD_SLUG");
-        public DateTime BuildTriggerTimestamp => ConvertUnixTimestamp(Variable<long>("BITRISE_BUILD_TRIGGER_TIMESTAMP"));
-        public string RepositoryUrl => Variable("GIT_REPOSITORY_URL");
-        public string GitBranch => Variable("BITRISE_GIT_BRANCH");
-        [CanBeNull] public string GitTag => Variable("BITRISE_GIT_TAG");
-        [CanBeNull] public string GitCommit => Variable("BITRISE_GIT_COMMIT");
-        [CanBeNull] public string GitMessage => Variable("BITRISE_GIT_MESSAGE");
-        [CanBeNull] public long? PullRequest => Variable<long?>("BITRISE_PULL_REQUEST");
-        [CanBeNull] public string ProvisionUrl => Variable("BITRISE_PROVISION_URL");
-        [CanBeNull] public string CertificateUrl => Variable("BITRISE_CERTIFICATE_URL");
-        [CanBeNull] public string CertificatePassphrase => Variable("BITRISE_CERTIFICATE_PASSPHRASE");
+        public string BuildUrl => GetVariable<string>("BITRISE_BUILD_URL");
+        public long BuildNumber => GetVariable<long>("BITRISE_BUILD_NUMBER");
+        public string AppTitle => GetVariable<string>("BITRISE_APP_TITLE");
+        public string AppUrl => GetVariable<string>("BITRISE_APP_URL");
+        public string AppSlug => GetVariable<string>("BITRISE_APP_SLUG");
+        public string BuildSlug => GetVariable<string>("BITRISE_BUILD_SLUG");
+        public DateTime BuildTriggerTimestamp => ConvertUnixTimestamp(GetVariable<long>("BITRISE_BUILD_TRIGGER_TIMESTAMP"));
+        public string RepositoryUrl => GetVariable<string>("GIT_REPOSITORY_URL");
+        public string GitBranch => GetVariable<string>("BITRISE_GIT_BRANCH");
+        [CanBeNull] public string GitTag => GetVariable<string>("BITRISE_GIT_TAG");
+        [CanBeNull] public string GitCommit => GetVariable<string>("BITRISE_GIT_COMMIT");
+        [CanBeNull] public string GitMessage => GetVariable<string>("BITRISE_GIT_MESSAGE");
+        [CanBeNull] public long? PullRequest => GetVariable<long?>("BITRISE_PULL_REQUEST");
+        [CanBeNull] public string ProvisionUrl => GetVariable<string>("BITRISE_PROVISION_URL");
+        [CanBeNull] public string CertificateUrl => GetVariable<string>("BITRISE_CERTIFICATE_URL");
+        [CanBeNull] public string CertificatePassphrase => GetVariable<string>("BITRISE_CERTIFICATE_PASSPHRASE");
     }
 }

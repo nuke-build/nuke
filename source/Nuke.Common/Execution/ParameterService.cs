@@ -8,45 +8,47 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using JetBrains.Annotations;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.Execution.ReflectionService;
 
 namespace Nuke.Common.Execution
 {
-    [PublicAPI]
-    public class ParameterService
+    internal class ParameterService
     {
-        private static ParameterService s_instance;
-
-        private readonly string[] _commandLineArguments;
+        private readonly Func<string[]> _commandLineArgumentsProvider;
         private readonly Func<IReadOnlyDictionary<string, string>> _environmentVariablesProvider;
 
         public ParameterService(
-            [CanBeNull] string[] commandLineArguments = null,
-            [CanBeNull] IReadOnlyDictionary<string, string> environmentVariables = null)
+            [CanBeNull] Func<string[]> commandLineArgumentsProvider,
+            [CanBeNull] Func<IReadOnlyDictionary<string, string>> environmentVariablesProvider)
         {
-            _environmentVariablesProvider = () => environmentVariables ?? EnvironmentInfo.Variables;
-            _commandLineArguments = commandLineArguments ?? EnvironmentInfo.CommandLineArguments.Skip(count: 1).ToArray();
+            _commandLineArgumentsProvider = commandLineArgumentsProvider;
+            _environmentVariablesProvider = environmentVariablesProvider;
         }
 
-        public static ParameterService Instance => s_instance ?? (s_instance = new ParameterService());
+        private string[] Arguments => _commandLineArgumentsProvider.Invoke();
+        private IReadOnlyDictionary<string, string> Variables => _environmentVariablesProvider.Invoke();
 
         public static bool IsParameter(string value)
         {
             return value != null && value.StartsWith("-");
         }
 
-        public static string GetParameterMemberName(string value)
+        public static string GetParameterDashedName(MemberInfo member)
         {
-            ControlFlow.Assert(IsParameter(value), "IsParameter(value)");
-            return value.Replace("-", string.Empty);
+            return GetParameterDashedName(GetParameterMemberName(member));
         }
 
-        public string GetParameterDashedName(MemberInfo member)
+        public static string GetParameterDashedName(string name)
         {
-            var memberName = GetParameterMemberName(member);
-            return memberName.SplitCamelHumpsWithSeparator("-", Constants.KnownWords);
+            return name.SplitCamelHumpsWithSeparator("-", Constants.KnownWords).ToLowerInvariant();
+        }
+
+        public static string GetParameterMemberName(string name)
+        {
+            return name.Replace("-", string.Empty);
         }
 
         public static string GetParameterMemberName<T>(Expression<Func<T>> expression)
@@ -69,92 +71,93 @@ namespace Nuke.Common.Execution
         }
 
         [CanBeNull]
-        public IEnumerable<(string Text, object Object)> GetParameterValueSet(MemberInfo member, object instance)
+        public static IEnumerable<(string Text, object Object)> GetParameterValueSet(MemberInfo member, object instance)
         {
             var attribute = member.GetCustomAttribute<ParameterAttribute>();
-            return attribute.GetValueSet(member, instance)?.OrderBy(x => x.Item1);
+            var memberType = member.GetMemberType();
+
+            IEnumerable<(string Text, object Object)> TryGetFromValueProvider()
+            {
+                if (attribute.ValueProvider == null)
+                    return null;
+
+                var valueProvider = instance.GetType().GetMember(attribute.ValueProvider, All)
+                    .SingleOrDefault()
+                    .NotNull($"No single provider '{attribute.ValueProvider}' found for member '{member.Name}'.");
+                ControlFlow.Assert(valueProvider.GetMemberType() == typeof(IEnumerable<string>),
+                    "valueProvider.GetReturnType() == typeof(IEnumerable<string>)");
+
+                return valueProvider.GetValue<IEnumerable<(string, object)>>(instance);
+            }
+
+            IEnumerable<(string Text, object Object)> TryGetFromEnumerationClass() =>
+                memberType.IsSubclassOf(typeof(Enumeration))
+                    ? memberType.GetFields(Static).Select(x => (x.Name, x.GetValue()))
+                    : null;
+
+            IEnumerable<(string Text, object Object)> TryGetFromEnum()
+            {
+                var enumType = memberType.IsEnum
+                    ? memberType
+                    : Nullable.GetUnderlyingType(memberType) is Type underlyingType && underlyingType.IsEnum
+                        ? underlyingType
+                        : null;
+                return enumType != null
+                    ? enumType.GetEnumNames().Select(x => (x, Enum.Parse(enumType, x)))
+                    : null;
+            }
+
+            return (attribute.GetValueSet(member, instance) ??
+                    TryGetFromValueProvider() ??
+                    TryGetFromEnumerationClass() ??
+                    TryGetFromEnum())
+                ?.OrderBy(x => x.Item1);
         }
 
         [CanBeNull]
-        public T GetParameter<T>(Expression<Func<T>> expression)
+        public object GetFromMemberInfo(MemberInfo member, [CanBeNull] Type destinationType, Func<string, Type, char?, object> provider)
         {
-            return (T) GetParameter(expression.GetMemberInfo(), typeof(T));
-        }
-
-        [CanBeNull]
-        public T GetParameter<T>(Expression<Func<object>> expression)
-        {
-            return (T) GetParameter(expression.GetMemberInfo(), typeof(T));
-        }
-
-        [CanBeNull]
-        public T GetParameter<T>(MemberInfo member)
-        {
-            return (T) GetParameter(member, typeof(T));
-        }
-
-        [CanBeNull]
-        internal object GetParameter(MemberInfo member, Type destinationType = null)
-        {
-            destinationType = destinationType ?? member.GetMemberType();
             var attribute = member.GetCustomAttribute<ParameterAttribute>();
             var separator = (attribute.Separator ?? string.Empty).SingleOrDefault();
-            return GetParameter(attribute.Name ?? member.Name, destinationType, separator);
+            return provider.Invoke(attribute.Name ?? member.Name, destinationType ?? member.GetMemberType(), separator);
         }
 
         [CanBeNull]
-        public T GetParameter<T>(string parameterName, char? separator = null)
+        public object GetParameter(string parameterName, Type destinationType, char? separator)
         {
-            return (T) GetParameter(parameterName, typeof(T), separator);
+            object TryFromCommandLineArguments() =>
+                HasCommandLineArgument(parameterName)
+                    ? GetCommandLineArgument(parameterName, destinationType, separator)
+                    : null;
+
+            object TryFromCommandLinePositionalArguments() =>
+                parameterName == Constants.InvokedTargetsParameterName
+                    ? GetPositionalCommandLineArguments(destinationType, separator)
+                    : null;
+
+            object TryFromEnvironmentVariables() =>
+                GetEnvironmentVariable(parameterName, destinationType, separator);
+
+            return TryFromCommandLineArguments() ??
+                   TryFromCommandLinePositionalArguments() ??
+                   TryFromEnvironmentVariables();
         }
 
         [CanBeNull]
-        public T GetCommandLineArgument<T>(string parameterName, char? separator = null)
+        public object GetCommandLineArgument(string argumentName, Type destinationType, char? separator)
         {
-            return (T) GetCommandLineArgument(parameterName, typeof(T), separator);
-        }
-
-        [CanBeNull]
-        public T GetCommandLineArgument<T>(int position, char? separator = null)
-        {
-            return (T) GetCommandLineArgument(position, typeof(T), separator);
-        }
-
-        [CanBeNull]
-        public T[] GetPositionalCommandLineArguments<T>(char? separator = null)
-        {
-            return (T[]) GetPositionalCommandLineArguments(typeof(T[]), separator);
-        }
-
-        [CanBeNull]
-        public T GetEnvironmentVariable<T>(string parameterName, char? separator = null)
-        {
-            return (T) GetEnvironmentVariable(parameterName, typeof(T), separator);
-        }
-
-        [CanBeNull]
-        public object GetParameter(string parameterName, Type destinationType, char? separator = null, bool checkNames = false)
-        {
-            return HasCommandLineArgument(parameterName, checkNames)
-                ? GetCommandLineArgument(parameterName, destinationType, separator)
-                : GetEnvironmentVariable(parameterName, destinationType, separator);
-        }
-
-        [CanBeNull]
-        public object GetCommandLineArgument(string argumentName, Type destinationType, char? separator = null, bool checkNames = false)
-        {
-            var index = GetCommandLineArgumentIndex(argumentName, checkNames);
+            var index = GetCommandLineArgumentIndex(argumentName);
             if (index == -1)
                 return GetDefaultValue(destinationType);
 
-            var values = _commandLineArguments.Skip(index + 1).TakeWhile(x => !x.StartsWith("-")).ToArray();
-            return ConvertCommandLineArguments(argumentName, values, destinationType, _commandLineArguments, separator);
+            var values = Arguments.Skip(index + 1).TakeWhile(x => !x.StartsWith("-")).ToArray();
+            return ConvertCommandLineArguments(argumentName, values, destinationType, Arguments, separator);
         }
 
         [CanBeNull]
-        public object GetCommandLineArgument(int position, Type destinationType, char? separator = null)
+        public object GetCommandLineArgument(int position, Type destinationType, char? separator)
         {
-            var positionalParametersCount = _commandLineArguments.TakeWhile(x => !x.StartsWith("-")).Count();
+            var positionalParametersCount = Arguments.TakeWhile(x => !x.StartsWith("-")).Count();
             if (position < 0)
                 position = positionalParametersCount + position % positionalParametersCount;
 
@@ -163,16 +166,16 @@ namespace Nuke.Common.Execution
 
             return ConvertCommandLineArguments(
                 $"$positional[{position}]",
-                new[] { _commandLineArguments[position] },
+                new[] { Arguments[position] },
                 destinationType,
-                _commandLineArguments,
+                Arguments,
                 separator);
         }
 
         [CanBeNull]
         public object GetPositionalCommandLineArguments(Type destinationType, char? separator = null)
         {
-            var positionalArguments = _commandLineArguments.TakeWhile(x => !x.StartsWith("-")).ToArray();
+            var positionalArguments = Arguments.TakeWhile(x => !x.StartsWith("-")).ToArray();
             if (positionalArguments.Length == 0)
                 return GetDefaultValue(destinationType);
 
@@ -180,12 +183,12 @@ namespace Nuke.Common.Execution
                 "$all-positional",
                 positionalArguments,
                 destinationType,
-                _commandLineArguments,
+                Arguments,
                 separator);
         }
 
         [CanBeNull]
-        public object ConvertCommandLineArguments(
+        private object ConvertCommandLineArguments(
             string argumentName,
             string[] values,
             Type destinationType,
@@ -213,31 +216,29 @@ namespace Nuke.Common.Execution
             }
         }
 
-        private bool HasCommandLineArgument(string argumentName, bool checkNames)
+        private bool HasCommandLineArgument(string argumentName)
         {
-            return GetCommandLineArgumentIndex(argumentName, checkNames) != -1;
+            return GetCommandLineArgumentIndex(argumentName) != -1;
         }
 
-        private int GetCommandLineArgumentIndex(string argumentName, bool checkNames)
+        private int GetCommandLineArgumentIndex(string argumentName)
         {
-            var index = Array.FindLastIndex(_commandLineArguments,
+            var index = Array.FindLastIndex(Arguments,
                 x => x.StartsWith("-") && x.Replace("-", string.Empty).EqualsOrdinalIgnoreCase(argumentName.Replace("-", string.Empty)));
 
-            if (index == -1 && checkNames)
-            {
-                var candidates = _commandLineArguments.Where(x => x.StartsWith("-")).Select(x => x.Replace("-", string.Empty));
-                CheckNames(argumentName, candidates);
-            }
+            // if (index == -1 && checkNames)
+            // {
+            //     var candidates = Arguments.Where(x => x.StartsWith("-")).Select(x => x.Replace("-", string.Empty));
+            //     CheckNames(argumentName, candidates);
+            // }
 
             return index;
         }
 
         [CanBeNull]
-        public object GetEnvironmentVariable(string variableName, Type destinationType, char? separator = null)
+        public object GetEnvironmentVariable(string variableName, Type destinationType, char? separator)
         {
-            var variables = _environmentVariablesProvider.Invoke();
-
-            if (!variables.TryGetValue(variableName, out var value))
+            if (!Variables.TryGetValue(variableName, out var value))
                 return GetDefaultValue(destinationType);
 
             try

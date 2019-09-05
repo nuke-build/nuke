@@ -51,7 +51,7 @@ namespace Nuke.Common.Execution
                     ParameterService.GetParameterDescription(parameter)
                         ?.Replace("{default_target}", defaultTarget?.Name).Append(".")
                     ?? "<no description>");
-                var parameterName = ParameterService.Instance.GetParameterDashedName(parameter);
+                var parameterName = ParameterService.GetParameterDashedName(parameter);
                 builder.AppendLine($"  --{parameterName.PadRight(padRightParameter)}  {description.First()}");
                 foreach (var line in description.Skip(count: 1))
                     builder.AppendLine($"{new string(c: ' ', count: padRightParameter + 6)}{line}");

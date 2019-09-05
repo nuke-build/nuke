@@ -48,7 +48,7 @@ namespace Nuke.Common.ProjectModel
             if (project != null)
                 return project;
 
-            var parameterValue = ParameterService.Instance.GetParameter<string>(member);
+            var parameterValue = EnvironmentInfo.GetParameter<string>(member);
             if (parameterValue != null)
                 return GetProject(parameterValue);
 

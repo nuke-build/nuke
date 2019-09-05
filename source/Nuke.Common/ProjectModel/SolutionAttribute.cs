@@ -58,7 +58,7 @@ namespace Nuke.Common.ProjectModel
             if (_relativePath != null)
                 return PathConstruction.Combine(NukeBuild.RootDirectory, _relativePath);
 
-            var parameterValue = ParameterService.Instance.GetParameter<PathConstruction.AbsolutePath>(member);
+            var parameterValue = EnvironmentInfo.GetParameter<PathConstruction.AbsolutePath>(member);
             if (parameterValue != null)
                 return parameterValue;
 
