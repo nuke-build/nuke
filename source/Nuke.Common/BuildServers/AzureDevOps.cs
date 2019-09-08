@@ -27,9 +27,6 @@ namespace Nuke.Common.BuildServers
 
         internal static bool IsRunningAzureDevOps => Environment.GetEnvironmentVariable("TF_BUILD") != null;
 
-        internal static bool IsHostedAgent =>
-            !string.IsNullOrWhiteSpace(GetVariable<string>("AGENT_NAME")) && GetVariable<string>("AGENT_NAME").StartsWith("Hosted");
-
         private readonly Action<string> _messageSink;
 
         internal AzureDevOps(Action<string> messageSink = null)
