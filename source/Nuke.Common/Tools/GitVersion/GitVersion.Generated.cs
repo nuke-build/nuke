@@ -325,6 +325,7 @@ namespace Nuke.Common.Tools.GitVersion
         public virtual string LegacySemVer { get; internal set; }
         public virtual string LegacySemVerPadded { get; internal set; }
         public virtual string AssemblySemVer { get; internal set; }
+        public virtual string AssemblySemFileVer { get; internal set; }
         public virtual string FullSemVer { get; internal set; }
         public virtual string InformationalVersion { get; internal set; }
         public virtual string BranchName { get; internal set; }
