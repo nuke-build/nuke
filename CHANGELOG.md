@@ -5,6 +5,23 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Changed `UnlistedAttribute` to `List` property on `ParameterAttribute`
+- Changed summary to show aborted and not-run targets as warning
+- Changed `TeamServices` to `AzureDevOps`
+- Added support for multiple default targets
+- Added support for `PackageDownload` item group
+- Added support for hyphens in target names
+- Added XML serialization for .NET Core
+- Added reporting of TeamCity statistical values
+- Added additional methods for `CloudFoundryTasks`
+- Added `ProjectType` for Docker and SQL projects
+- Added implicit cast operator for generated enumerations
+- Added `InnoSetupTasks`
+- Added `TwitterTasks`
+- Fixed XML documentation for generated CLI tasks
+- Fixed `MSBuildToolPathResolver` to consider preview editions
+- Fixed `NuGetPackageResolver` to allow multiple versions of the same package
+- Fixed `TeamCity.SetParameter` and `TeamCity.ImportData`
 
 ## [0.21.2] / 2019-07-28
 - Fixed validation to exclude requirements of skipped targets
