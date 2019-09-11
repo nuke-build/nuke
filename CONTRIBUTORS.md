@@ -17,6 +17,7 @@
 - Magnus Lindhe
 - Markus Amshove
 - Matthias Koch
+- Melvyn Laïly
 - Michael Bisbjerg
 - Mikhail Filippov
 - Peter Palotas
