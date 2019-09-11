@@ -1,6 +1,7 @@
 - Alexander Puzynia
 - Andrew Stakhov
 - Christian Thillemann
+- Daniel Pottenger
 - Dariel Marlow
 - dos36
 - Elijah
