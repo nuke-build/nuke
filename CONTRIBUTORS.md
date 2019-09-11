@@ -30,5 +30,6 @@
 - TdMxm
 - Todor Todorov
 - Vladislav Khapin
+- Volkmar Rigo
 - Wael Rabadi
 - Yuuki Wesp
