@@ -10,9 +10,9 @@ using Nuke.Common.IO;
 namespace Nuke.Common.Execution
 {
     [AttributeUsage(AttributeTargets.Class)]
-    internal class HandleShellCompletionAttribute : Attribute, IPreLogoBuildExtension
+    internal class HandleShellCompletionAttribute : Attribute, IOnBeforeLogo
     {
-        public void PreLogo(
+        public void OnBeforeLogo(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets)
         {

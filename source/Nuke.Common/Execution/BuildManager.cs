@@ -44,7 +44,7 @@ namespace Nuke.Common.Execution
             {
                 InjectionUtility.InjectValues(build, x => x.IsFast);
 
-                ExecuteExtension<IPreLogoBuildExtension>(x => x.PreLogo(build, build.ExecutableTargets));
+                ExecuteExtension<IOnBeforeLogo>(x => x.OnBeforeLogo(build, build.ExecutableTargets));
                 build.OnBuildCreated();
 
                 Logger.OutputSink = build.OutputSink;
@@ -70,7 +70,7 @@ namespace Nuke.Common.Execution
                     build.ExecutableTargets,
                     EnvironmentInfo.GetParameter<string[]>(() => build.InvokedTargets));
 
-                ExecuteExtension<IPostLogoBuildExtension>(x => x.PostLogo(build, build.ExecutableTargets, build.ExecutionPlan));
+                ExecuteExtension<IOnAfterLogo>(x => x.OnAfterLogo(build, build.ExecutableTargets, build.ExecutionPlan));
                 CancellationHandler += Finish;
 
                 InjectionUtility.InjectValues(build, x => !x.IsFast);
@@ -106,13 +106,14 @@ namespace Nuke.Common.Execution
                     WriteWarningsAndErrors(outputSink);
                 }
 
-                if (build.ExecutionPlan != null)
+                if (build.ExecutionPlan != null) // TODO: can be removed?
                 {
                     Logger.Normal();
                     WriteSummary(build);
                 }
 
                 build.OnBuildFinished();
+                ExecuteExtension<IOnBuildFinished>(x => x.OnBuildFinished(build));
             }
         }
 
@@ -146,6 +147,7 @@ namespace Nuke.Common.Execution
 
             Logger.Normal(new string(c: '═', count: allColumns));
             Logger.Info(CreateLine("Target", "Status", "Duration"));
+            //Logger.Info($"{{0,-{firstColumn}}}{{1,-{secondColumn}}}{{2,{thirdColumn}}}{{3,1}}", "Target", "Status", "Duration", "Test");
             Logger.Normal(new string(c: '─', count: allColumns));
             foreach (var target in build.ExecutionPlan)
             {

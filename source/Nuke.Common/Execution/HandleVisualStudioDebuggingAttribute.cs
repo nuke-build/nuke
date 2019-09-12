@@ -14,11 +14,11 @@ namespace Nuke.Common.Execution
 {
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Class)]
-    public class HandleVisualStudioDebuggingAttribute : Attribute, IPreLogoBuildExtension
+    public class HandleVisualStudioDebuggingAttribute : Attribute, IOnBeforeLogo
     {
         public int TimeoutInMilliseconds { get; } = 10_000;
 
-        public void PreLogo(
+        public void OnBeforeLogo(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets)
         {

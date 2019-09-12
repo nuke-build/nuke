@@ -12,9 +12,9 @@ namespace Nuke.Common.Execution
 {
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Class)]
-    public class UnsetVisualStudioEnvironmentVariablesAttribute : Attribute, IPreLogoBuildExtension
+    public class UnsetVisualStudioEnvironmentVariablesAttribute : Attribute, IOnBeforeLogo
     {
-        public void PreLogo(
+        public void OnBeforeLogo(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
