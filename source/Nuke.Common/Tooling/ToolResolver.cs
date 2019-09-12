@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.IO;
 
 namespace Nuke.Common.Tooling
 {
@@ -28,9 +29,11 @@ namespace Nuke.Common.Tooling
             return new ToolExecutor(toolPath).Execute;
         }
 
-        public static Tool GetLocalTool(string relativePath)
+        public static Tool GetLocalTool(string absoluteOrRelativePath)
         {
-            var toolPath = Path.Combine(NukeBuild.RootDirectory, relativePath);
+            var toolPath = PathConstruction.HasPathRoot(absoluteOrRelativePath)
+                ? absoluteOrRelativePath
+                : Path.Combine(NukeBuild.RootDirectory, absoluteOrRelativePath);
             ControlFlow.Assert(File.Exists(toolPath), $"File.Exists({toolPath})");
             return new ToolExecutor(toolPath).Execute;
         }
