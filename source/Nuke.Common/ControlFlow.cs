@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
@@ -75,14 +76,15 @@ namespace Nuke.Common
         /// Asserts an object to be not null, halts otherwise.
         /// </summary>
         [AssertionMethod]
-        [ContractAnnotation("obj: null => halt")]
+        [ContractAnnotation("obj: null => void; => notnull")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T NotNull<T>(
             [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
             this T obj,
             string text = null)
         {
             if (obj == null)
-                Fail($"Assertion failed: {text ?? "obj != null"}");
+                Fail($"Assertion failed: {text ?? $"{typeof(T).FullName} != null"}");
             return obj;
         }
 
@@ -90,11 +92,12 @@ namespace Nuke.Common
         /// Checks an object to be not null, calling <see cref="Logger.Warn(string)"/> otherwise.
         /// </summary>
         [CanBeNull]
-        [AssertionMethod]
+        [ContractAnnotation("obj: null => void; => notnull")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T NotNullWarn<T>([CanBeNull] this T obj, string text = null)
         {
             if (obj == null)
-                Logger.Warn($"Check failed: {text ?? "obj != null"}");
+                Logger.Warn($"Check failed: {text ?? $"{typeof(T).FullName} != null"}");
             return obj;
         }
 
@@ -105,7 +108,7 @@ namespace Nuke.Common
         public static IReadOnlyCollection<T> NotEmpty<T>([CanBeNull] this IEnumerable<T> enumerable, string message = null)
         {
             var collection = enumerable.NotNull("enumerable != null").ToList().AsReadOnly();
-            Assert(collection.Count > 0, message ?? "collection.Count > 0");
+            Assert(collection.Count > 0, message ?? $"IEnumerable{typeof(T).FullName}.Count > 0");
             return collection;
         }
 
@@ -116,7 +119,7 @@ namespace Nuke.Common
         public static IReadOnlyCollection<T> NoNullItems<T>([CanBeNull] this IEnumerable<T> enumerable)
         {
             var collection = enumerable.NotNull("enumerable != null").ToList().AsReadOnly();
-            Assert(collection.All(x => x != null), "collection.All(x => x != null)");
+            Assert(collection.All(x => x != null), $"IEnumerable{typeof(T).FullName}.All(x => x != null)");
             return collection;
         }
 
