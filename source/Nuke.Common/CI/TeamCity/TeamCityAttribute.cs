@@ -22,16 +22,12 @@ using static Nuke.Common.IO.PathConstruction;
 namespace Nuke.Common.CI.TeamCity
 {
     [PublicAPI]
-    public class TeamCityAttribute : Attribute, IOnBeforeLogo, IOnBuildFinished
+    public class TeamCityAttribute : ConfigurationGenerationAttributeBase, IOnBuildFinished
     {
-        public const string ConfigurationParameterName = "configure-build-server";
-
         public TeamCityAttribute(TeamCityAgentPlatform platform)
         {
             Platform = platform;
         }
-
-        public bool AutoGenerate { get; set; } = true;
 
         public TeamCityAgentPlatform Platform { get; }
         public string Description { get; set; }
@@ -49,29 +45,6 @@ namespace Nuke.Common.CI.TeamCity
         public string[] NonEntryTargets { get; set; } = new string[0];
         public string[] ExcludedTargets { get; set; } = new string[0];
 
-        public void OnBeforeLogo(
-            NukeBuild build,
-            IReadOnlyCollection<ExecutableTarget> executableTargets)
-        {
-            if (!EnvironmentInfo.GetParameter<bool>(ConfigurationParameterName))
-            {
-                if (AutoGenerate)
-                {
-                    ProcessTasks.StartProcess(
-                        Assembly.GetEntryAssembly().Location,
-                        $"--{ConfigurationParameterName} --host teamcity",
-                        logInvocation: false,
-                        logOutput: false);
-                }
-
-                return;
-            }
-
-            Generate(build, executableTargets);
-
-            Environment.Exit(0);
-        }
-
         public void OnBuildFinished(NukeBuild build)
         {
             if (TeamCity.Instance == null)
@@ -85,7 +58,9 @@ namespace Nuke.Common.CI.TeamCity
             // TeamCity.Instance.PublishArtifacts($"+:{stateFile} => .teamcity/states");
         }
 
-        private void Generate(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        protected override HostType HostType => HostType.TeamCity;
+
+        protected override void Generate(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             ControlFlow.Assert(NukeBuild.RootDirectory != null, "NukeBuild.RootDirectory != null");
             var teamcityDirectory = NukeBuild.RootDirectory / ".teamcity";
