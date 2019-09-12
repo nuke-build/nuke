@@ -22,7 +22,7 @@
     <PackageReference Include="ReportGenerator" Version="4.2.16"/>
     <PackageReference Include="xunit.runner.console" Version="2.4.1"/>
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\source\Nuke.Common\Nuke.Common.csproj" />
     <ProjectReference Include="..\source\Nuke.CodeGeneration\Nuke.CodeGeneration.csproj" />
@@ -36,6 +36,7 @@
     <None Include="..\.nuke" />
     <None Include="..\global.json" Condition="Exists('..\global.json')" />
     <None Include="..\nuget.config" Condition="Exists('..\nuget.config')" />
+    <None Include="..\.teamcity\settings.kts" Condition="Exists('..\.teamcity\settings.kts')"/>
     <None Include="..\azure-pipelines.yml" Condition="Exists('..\azure-pipelines.yml')" />
     <None Include="..\Jenkinsfile" Condition="Exists('..\Jenkinsfile')" />
     <None Include="..\appveyor.yml" Condition="Exists('..\appveyor.yml')" />

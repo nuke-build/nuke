@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Nuke.Common;
+using Nuke.Common.CI;
+using Nuke.Common.CI.TeamCity;
 using Nuke.Common.Execution;
 using Nuke.Common.Git;
 using Nuke.Common.ProjectModel;
@@ -32,6 +34,15 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
 [CheckBuildProjectConfigurations]
 [DotNetVerbosityMapping]
 [UnsetVisualStudioEnvironmentVariables]
+[CustomTeamCity(
+    TeamCityAgentPlatform.Windows,
+    AutoGenerate = true,
+    DefaultBranch = "develop",
+    VcsTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
+    NightlyTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
+    ManuallyTriggeredTargets = new[] { nameof(Publish) },
+    NonEntryTargets = new[] { nameof(Restore) },
+    ExcludedTargets = new[] { nameof(Clean) })]
 partial class Build : NukeBuild
 {
     /// Support plugins are available for:
@@ -113,11 +124,12 @@ partial class Build : NukeBuild
 
     Target Pack => _ => _
         .DependsOn(Compile)
+        .Produces(OutputDirectory / "*.nupkg")
         .Executes(() =>
         {
             DotNetPack(s => s
                 .SetProject(Solution)
-                .EnableNoBuild()
+                .SetNoBuild(IsLocalBuild)
                 .SetConfiguration(Configuration)
                 .EnableIncludeSymbols()
                 .SetSymbolPackageFormat(DotNetSymbolPackageFormat.snupkg)
@@ -134,17 +146,20 @@ partial class Build : NukeBuild
             DotNet($"tool install -g {GlobalToolProject.Name} --add-source {OutputDirectory} --version {GitVersion.NuGetVersionV2}");
         });
 
+    [Partition(2)] readonly Partition TestPartition;
+
     Target Test => _ => _
         .DependsOn(Compile)
+        .Produces(OutputDirectory / "*.trx")
+        .Partition(() => TestPartition)
         .Executes(() =>
         {
             DotNetTest(s => s
                 .SetConfiguration(Configuration)
-                .EnableNoBuild()
-                .SetLogger("trx")
-                .SetResultsDirectory(OutputDirectory)
+                .SetNoBuild(IsLocalBuild)
+                .SetVerbosity(DotNetVerbosity.Normal)
                 .CombineWith(
-                    Solution.GetProjects("*.Tests"), (cs, v) => cs
+                    TestPartition.GetCurrent(Solution.GetProjects("*.Tests")), (cs, v) => cs
                         .SetProjectFile(v)));
         });
 
@@ -165,7 +180,10 @@ partial class Build : NukeBuild
 
     Target Publish => _ => _
         .DependsOn(Clean, Test, Pack)
-        .Requires(() => ApiKey, () => SlackWebhook, () => GitterAuthToken)
+        .Consumes(Pack)
+        .Requires(() => ApiKey)
+        .Requires(() => SlackWebhook)
+        .Requires(() => GitterAuthToken)
         .Requires(() => GitHasCleanWorkingCopy())
         .Requires(() => Configuration.Equals(Configuration.Release))
         .Requires(() => GitRepository.Branch.EqualsOrdinalIgnoreCase(MasterBranch) ||
