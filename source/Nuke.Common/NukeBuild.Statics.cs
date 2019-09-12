@@ -7,8 +7,13 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using Nuke.Common.BuildServers;
-using Nuke.Common.Execution;
+using Nuke.Common.CI.AppVeyor;
+using Nuke.Common.CI.AzureDevOps;
+using Nuke.Common.CI.Bitrise;
+using Nuke.Common.CI.GitLab;
+using Nuke.Common.CI.Jenkins;
+using Nuke.Common.CI.TeamCity;
+using Nuke.Common.CI.TravisCI;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -150,7 +155,7 @@ namespace Nuke.Common
                 return HostType.Bitrise;
             if (GitLab.IsRunningGitLab)
                 return HostType.GitLab;
-            if (Travis.IsRunningTravis)
+            if (TravisCI.IsRunningTravis)
                 return HostType.Travis;
 
             return HostType.Console;

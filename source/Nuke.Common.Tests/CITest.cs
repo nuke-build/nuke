@@ -9,58 +9,65 @@ using System.Linq;
 using System.Reflection;
 using FluentAssertions;
 using JetBrains.Annotations;
-using Nuke.Common.BuildServers;
+using Nuke.Common.CI;
+using Nuke.Common.CI.AppVeyor;
+using Nuke.Common.CI.AzureDevOps;
+using Nuke.Common.CI.Bitrise;
+using Nuke.Common.CI.GitLab;
+using Nuke.Common.CI.Jenkins;
+using Nuke.Common.CI.TeamCity;
+using Nuke.Common.CI.TravisCI;
 using Xunit;
 
 namespace Nuke.Common.Tests
 {
-    public class BuildServerTest
+    public class CITest
     {
-        [BuildServerTheory(typeof(AppVeyor))]
+        [CITheory(typeof(AppVeyor))]
         [MemberData(nameof(Properties), typeof(AppVeyor))]
         public void TestAppVeyor(PropertyInfo property, AppVeyor instance)
         {
             AssertProperty(instance, property);
         }
 
-        [BuildServerTheory(typeof(Bitrise))]
+        [CITheory(typeof(Bitrise))]
         [MemberData(nameof(Properties), typeof(Bitrise))]
         public void TestBitrise(PropertyInfo property, Bitrise instance)
         {
             AssertProperty(instance, property);
         }
 
-        [BuildServerTheory(typeof(TeamCity))]
+        [CITheory(typeof(TeamCity))]
         [MemberData(nameof(Properties), typeof(TeamCity))]
         public void TestTeamCity(PropertyInfo property, TeamCity instance)
         {
             AssertProperty(instance, property);
         }
 
-        [BuildServerTheory(typeof(AzureDevOps))]
+        [CITheory(typeof(AzureDevOps))]
         [MemberData(nameof(Properties), typeof(AzureDevOps))]
-        public void TestTeamServices(PropertyInfo property, AzureDevOps instance)
+        public void TestAzureDevOps(PropertyInfo property, AzureDevOps instance)
         {
             AssertProperty(instance, property);
         }
 
-        [BuildServerTheory(typeof(Jenkins))]
+        [CITheory(typeof(Jenkins))]
         [MemberData(nameof(Properties), typeof(Jenkins))]
         public void TestJenkins(PropertyInfo property, Jenkins instance)
         {
             AssertProperty(instance, property);
         }
 
-        [BuildServerTheory(typeof(Travis))]
-        [MemberData(nameof(Properties), typeof(Travis))]
-        public void TestTravis(PropertyInfo property, Travis instance)
+        [CITheory(typeof(TravisCI))]
+        [MemberData(nameof(Properties), typeof(TravisCI))]
+        public void TestTravisCI(PropertyInfo property, TravisCI instance)
         {
             AssertProperty(instance, property);
             Assert.True(instance.Ci);
             Assert.True(instance.ContinousIntegration);
         }
 
-        [BuildServerTheory(typeof(GitLab))]
+        [CITheory(typeof(GitLab))]
         [MemberData(nameof(Properties), typeof(GitLab))]
         public void TestGitLab(PropertyInfo property, GitLab instance)
         {
@@ -123,11 +130,11 @@ namespace Nuke.Common.Tests
             return (bool) property.GetValue(obj: null);
         }
 
-        private class BuildServerTheoryAttribute : TheoryAttribute
+        private class CITheoryAttribute : TheoryAttribute
         {
             private readonly Type _type;
 
-            public BuildServerTheoryAttribute(Type type)
+            public CITheoryAttribute(Type type)
             {
                 _type = type;
             }

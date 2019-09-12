@@ -9,13 +9,13 @@ using JetBrains.Annotations;
 using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities;
 
-namespace Nuke.Common.BuildServers
+namespace Nuke.Common.CI.TravisCI
 {
     [UsedImplicitly]
     [ExcludeFromCodeCoverage]
-    internal class TravisOutputSink : AnsiColorOutputSink
+    internal class TravisCIOutputSink : AnsiColorOutputSink
     {
-        public TravisOutputSink()
+        public TravisCIOutputSink()
             : base(
                 traceCode: "37",
                 informationCode: "36;1",

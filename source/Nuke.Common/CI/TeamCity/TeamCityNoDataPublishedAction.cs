@@ -3,19 +3,17 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.BuildServers
+namespace Nuke.Common.CI.TeamCity
 {
     [PublicAPI]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public enum TeamCityStatus
+    public enum TeamCityNoDataPublishedAction
     {
-        NORMAL,
-        WARNING,
-        ERROR,
-        FAILURE
+        info,
+        nothing,
+        warning,
+        error
     }
 }

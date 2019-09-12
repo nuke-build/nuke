@@ -4,7 +4,7 @@
 
 using System;
 using System.Linq;
-using Nuke.Common.BuildServers;
+using Nuke.Common.CI.TeamCity;
 
 namespace Nuke.Common.Tools.MSBuild
 {

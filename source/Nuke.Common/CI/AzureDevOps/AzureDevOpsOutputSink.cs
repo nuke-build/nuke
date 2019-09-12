@@ -8,7 +8,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.OutputSinks;
 
-namespace Nuke.Common.BuildServers
+namespace Nuke.Common.CI.AzureDevOps
 {
     [UsedImplicitly]
     [ExcludeFromCodeCoverage]

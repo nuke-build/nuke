@@ -9,9 +9,8 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities;
-using Nuke.Common.Utilities.Collections;
 
-namespace Nuke.Common.BuildServers
+namespace Nuke.Common.CI.TeamCity
 {
     [UsedImplicitly]
     [ExcludeFromCodeCoverage]

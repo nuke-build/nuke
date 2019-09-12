@@ -4,14 +4,11 @@
 
 using System;
 using System.Linq;
-using JetBrains.Annotations;
 
-namespace Nuke.Common.BuildServers
+namespace Nuke.Common.CI
 {
-    [PublicAPI]
-    public enum AzureDevOpsCodeCoverageToolType
+    [AttributeUsage(AttributeTargets.Property)]
+    public class NoConvertAttribute : Attribute
     {
-        JaCoCo,
-        Cobertura
     }
 }

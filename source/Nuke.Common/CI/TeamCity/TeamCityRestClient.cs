@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Refit;
 
-namespace Nuke.Common.BuildServers
+namespace Nuke.Common.CI.TeamCity
 {
     [PublicAPI]
     [Headers("Accept: application/json")]

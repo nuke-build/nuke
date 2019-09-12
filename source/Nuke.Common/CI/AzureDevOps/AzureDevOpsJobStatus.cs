@@ -6,13 +6,14 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.BuildServers
+namespace Nuke.Common.CI.AzureDevOps
 {
     [PublicAPI]
-    public enum GitLabProjectVisibility
+    public enum AzureDevOpsJobStatus
     {
-        Private,
-        Internal,
-        Public
+        Canceled,
+        Failed,
+        Succeeded,
+        SucceededWithIssues
     }
 }

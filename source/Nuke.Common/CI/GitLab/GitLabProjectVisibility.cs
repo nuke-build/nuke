@@ -6,11 +6,13 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.BuildServers
+namespace Nuke.Common.CI.GitLab
 {
-    [MeansImplicitUse(ImplicitUseTargetFlags.WithMembers)]
-    [AttributeUsage(AttributeTargets.Class)]
-    public class BuildServerAttribute : Attribute
+    [PublicAPI]
+    public enum GitLabProjectVisibility
     {
+        Private,
+        Internal,
+        Public
     }
 }

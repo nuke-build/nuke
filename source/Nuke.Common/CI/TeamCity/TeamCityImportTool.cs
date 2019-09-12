@@ -2,9 +2,11 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
+using System;
+using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.BuildServers
+namespace Nuke.Common.CI.TeamCity
 {
     [PublicAPI]
     public enum TeamCityImportTool

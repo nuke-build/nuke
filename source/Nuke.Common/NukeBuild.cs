@@ -6,13 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using JetBrains.Annotations;
-using Nuke.Common.BuildServers;
+using Nuke.Common.CI.AzureDevOps;
+using Nuke.Common.CI.Bitrise;
+using Nuke.Common.CI.TeamCity;
+using Nuke.Common.CI.TravisCI;
 using Nuke.Common.Execution;
 using Nuke.Common.OutputSinks;
 using Nuke.Common.Tooling;
-using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.Constants;
 
 // ReSharper disable VirtualMemberNeverOverridden.Global
@@ -96,7 +97,7 @@ namespace Nuke.Common
                         innerOutputSink = new BitriseOutputSink();
                         break;
                     case HostType.Travis:
-                        innerOutputSink = new TravisOutputSink();
+                        innerOutputSink = new TravisCIOutputSink();
                         break;
                     case HostType.TeamCity:
                         innerOutputSink = new TeamCityOutputSink(new TeamCity());

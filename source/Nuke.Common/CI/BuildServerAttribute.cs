@@ -6,14 +6,11 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.BuildServers
+namespace Nuke.Common.CI
 {
-    [PublicAPI]
-    public enum AzureDevOpsJobStatus
+    [MeansImplicitUse(ImplicitUseTargetFlags.WithMembers)]
+    [AttributeUsage(AttributeTargets.Class)]
+    public class BuildServerAttribute : Attribute
     {
-        Canceled,
-        Failed,
-        Succeeded,
-        SucceededWithIssues
     }
 }

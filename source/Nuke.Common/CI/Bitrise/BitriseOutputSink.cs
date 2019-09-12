@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities;
 
-namespace Nuke.Common.BuildServers
+namespace Nuke.Common.CI.Bitrise
 {
     [UsedImplicitly]
     [ExcludeFromCodeCoverage]
