@@ -50,9 +50,9 @@ project {
     }
 }
 object VcsRoot : GitVcsRoot({
-    name = "https://github.com/nuke-build/common.git#refs/heads/feature/teamcity-generation"
+    name = "https://github.com/nuke-build/common.git#refs/heads/develop"
     url = "https://github.com/nuke-build/common.git"
-    branch = "refs/heads/feature/teamcity-generation"
+    branch = "refs/heads/develop"
     pollInterval = 60
     branchSpec = """
         +:refs/heads/*
@@ -122,7 +122,7 @@ object Test_P1T2 : BuildType({
     steps {
         powerShell {
             scriptMode = file { path = "build.ps1" }
-            param("jetbrains_powershell_scriptArguments","Test --skip --partition-test 1/2")
+            param("jetbrains_powershell_scriptArguments","Test --skip --partition-Test 1/2")
             noProfile = true
         }
     }
@@ -144,7 +144,7 @@ object Test_P2T2 : BuildType({
     steps {
         powerShell {
             scriptMode = file { path = "build.ps1" }
-            param("jetbrains_powershell_scriptArguments","Test --skip --partition-test 2/2")
+            param("jetbrains_powershell_scriptArguments","Test --skip --partition-Test 2/2")
             noProfile = true
         }
     }

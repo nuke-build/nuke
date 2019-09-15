@@ -67,7 +67,7 @@ namespace Nuke.Common.CI.TeamCity
 
             TextTasks.WriteAllLines(
                 teamcityDirectory / "pom.xml",
-                ResourceUtility.GetResourceAllLines<TeamCityAttribute>("pom.xml"));
+                ResourceUtility.GetResourceAllLines<TeamCityConfigurationEntity>("pom.xml"));
 
             using (var fileStream = File.Open(teamcityDirectory / "settings.kts", FileMode.Create))
             using (var streamWriter = new StreamWriter(fileStream))
