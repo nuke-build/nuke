@@ -33,15 +33,18 @@
 
     <None Include="..\build.ps1" />
     <None Include="..\build.sh" />
-    <None Include="..\.nuke" />
-    <None Include="..\global.json" Condition="Exists('..\global.json')" />
-    <None Include="..\nuget.config" Condition="Exists('..\nuget.config')" />
-    <None Include="..\.teamcity\settings.kts" Condition="Exists('..\.teamcity\settings.kts')"/>
-    <None Include="..\azure-pipelines.yml" Condition="Exists('..\azure-pipelines.yml')" />
-    <None Include="..\Jenkinsfile" Condition="Exists('..\Jenkinsfile')" />
-    <None Include="..\appveyor.yml" Condition="Exists('..\appveyor.yml')" />
-    <None Include="..\.travis.yml" Condition="Exists('..\.travis.yml')" />
-    <None Include="..\GitVersion.yml" Condition="Exists('..\GitVersion.yml')" />
+
+    <None Include="..\.nuke" LinkBase="config" />
+    <None Include="..\global.json" LinkBase="config" Condition="Exists('..\global.json')" />
+    <None Include="..\nuget.config" LinkBase="config" Condition="Exists('..\nuget.config')" />
+    <None Include="..\GitVersion.yml" LinkBase="config" Condition="Exists('..\GitVersion.yml')" />
+
+    <None Include="..\.github\workflows\*.yml" LinkBase="ci" />
+    <None Include="..\.teamcity\settings.kts" LinkBase="ci" Condition="Exists('..\.teamcity\settings.kts')" />
+    <None Include="..\azure-pipelines.yml" LinkBase="ci" Condition="Exists('..\azure-pipelines.yml')" />
+    <None Include="..\Jenkinsfile" LinkBase="ci" Condition="Exists('..\Jenkinsfile')" />
+    <None Include="..\appveyor.yml" LinkBase="ci" Condition="Exists('..\appveyor.yml')" />
+    <None Include="..\.travis.yml" LinkBase="ci" Condition="Exists('..\.travis.yml')" />
   </ItemGroup>
 
 </Project>

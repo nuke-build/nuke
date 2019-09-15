@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Nuke.Common" Version="_NUKE_VERSION_" />
-    <PackageReference Include="GitVersion.CommandLine.DotNetCore" Version="5.0.1"/>    // GITVERSION
+    <PackageReference Include="GitVersion.CommandLine.DotNetCore" Version="5.0.1" />    // GITVERSION
   </ItemGroup>
 
   <ItemGroup>
@@ -22,15 +22,18 @@
     <!-- Common build related files -->
     <None Include="_SCRIPT_DIRECTORY_\build.ps1" />
     <None Include="_SCRIPT_DIRECTORY_\build.sh" />
-    <None Include="_ROOT_DIRECTORY_\.nuke" />
-    <None Include="_ROOT_DIRECTORY_\global.json" Condition="Exists('_ROOT_DIRECTORY_\global.json')" />
-    <None Include="_ROOT_DIRECTORY_\nuget.config" Condition="Exists('_ROOT_DIRECTORY_\nuget.config')" />
-    <None Include="_ROOT_DIRECTORY_\.teamcity\settings.kts" Condition="Exists('_ROOT_DIRECTORY_\.teamcity\settings.kts')"/>
-    <None Include="_ROOT_DIRECTORY_\azure-pipelines.yml" Condition="Exists('_ROOT_DIRECTORY_\azure-pipelines.yml')" />
-    <None Include="_ROOT_DIRECTORY_\Jenkinsfile" Condition="Exists('_ROOT_DIRECTORY_\Jenkinsfile')" />
-    <None Include="_ROOT_DIRECTORY_\appveyor.yml" Condition="Exists('_ROOT_DIRECTORY_\appveyor.yml')" />
-    <None Include="_ROOT_DIRECTORY_\.travis.yml" Condition="Exists('_ROOT_DIRECTORY_\.travis.yml')" />
-    <None Include="_ROOT_DIRECTORY_\GitVersion.yml" Condition="Exists('_ROOT_DIRECTORY_\GitVersion.yml')" />
+
+    <None Include="_ROOT_DIRECTORY_\.nuke" LinkBase="config" />
+    <None Include="_ROOT_DIRECTORY_\global.json" LinkBase="config" Condition="Exists('_ROOT_DIRECTORY_\global.json')" />
+    <None Include="_ROOT_DIRECTORY_\nuget.config" LinkBase="config" Condition="Exists('_ROOT_DIRECTORY_\nuget.config')" />
+    <None Include="_ROOT_DIRECTORY_\GitVersion.yml" LinkBase="config" Condition="Exists('_ROOT_DIRECTORY_\GitVersion.yml')" />
+
+    <None Include="_ROOT_DIRECTORY_\.teamcity\settings.kts" LinkBase="ci" Condition="Exists('_ROOT_DIRECTORY_\.teamcity\settings.kts')" />
+    <None Include="_ROOT_DIRECTORY_\.github\workflows\*.yml" LinkBase="ci" />
+    <None Include="_ROOT_DIRECTORY_\azure-pipelines.yml" LinkBase="ci" Condition="Exists('_ROOT_DIRECTORY_\azure-pipelines.yml')" />
+    <None Include="_ROOT_DIRECTORY_\Jenkinsfile" LinkBase="ci" Condition="Exists('_ROOT_DIRECTORY_\Jenkinsfile')" />
+    <None Include="_ROOT_DIRECTORY_\appveyor.yml" LinkBase="ci" Condition="Exists('_ROOT_DIRECTORY_\appveyor.yml')" />
+    <None Include="_ROOT_DIRECTORY_\.travis.yml" LinkBase="ci" Condition="Exists('_ROOT_DIRECTORY_\.travis.yml')" />
   </ItemGroup>
 
 </Project>
