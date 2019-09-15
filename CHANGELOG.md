@@ -8,9 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Changed `UnlistedAttribute` to `List` property on `ParameterAttribute`
 - Changed summary to show aborted and not-run targets as warning
 - Changed `TeamServices` to `AzureDevOps`
+- Changed namespace `Nuke.Common.BuildServers` to `Nuke.Common.CI.*`
 - Added support for multiple default targets
 - Added support for `PackageDownload` item group
 - Added support for hyphens in target names
+- Added support for absolute paths in `LocalExecutableAttribute`
+- Added support for `GitHubActions`
+- Added TeamCity configuration generation via `TeamCityAttribute`
 - Added XML serialization for .NET Core
 - Added reporting of TeamCity statistical values
 - Added additional methods for `CloudFoundryTasks`
@@ -18,6 +22,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added implicit cast operator for generated enumerations
 - Added `InnoSetupTasks`
 - Added `TwitterTasks`
+- Added `IOnBuildFinished` build extension
+- Fixed `--boot` in setup for .NET Framework/Mono support
 - Fixed XML documentation for generated CLI tasks
 - Fixed `MSBuildToolPathResolver` to consider preview editions
 - Fixed `NuGetPackageResolver` to allow multiple versions of the same package
