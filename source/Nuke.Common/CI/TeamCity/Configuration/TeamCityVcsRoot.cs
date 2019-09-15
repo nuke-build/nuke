@@ -17,7 +17,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
         public int? PollInterval { get; set; }
         public string[] BranchSpec { get; set; }
 
-        public override void Write(TeamCityConfigurationWriter writer)
+        public override void Write(CustomFileWriter writer)
         {
             writer.WriteLine($"object {Id} : GitVcsRoot({{");
             using (writer.Indent())

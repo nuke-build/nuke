@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.TeamCity.Configuration
 {
@@ -12,7 +13,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
         public TeamCityBuildType BuildType { get; set; }
         public string[] ArtifactRules { get; set; }
 
-        public override void Write(TeamCityConfigurationWriter writer)
+        public override void Write(CustomFileWriter writer)
         {
             using (writer.WriteBlock($"artifacts({BuildType.Id})"))
             {

@@ -20,7 +20,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
         public bool AllowMultiple { get; set; }
         public string ValueSeparator { get; set; }
 
-        public override void Write(TeamCityConfigurationWriter writer)
+        public override void Write(CustomFileWriter writer)
         {
             writer.WriteLine($"{Type.ToString().ToLowerInvariant()} (");
             using (writer.Indent())

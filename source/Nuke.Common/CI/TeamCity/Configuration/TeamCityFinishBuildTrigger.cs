@@ -12,7 +12,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
     {
         public TeamCityBuildType BuildType { get; set; }
 
-        public override void Write(TeamCityConfigurationWriter writer)
+        public override void Write(CustomFileWriter writer)
         {
             using (writer.WriteBlock("finishBuildTrigger"))
             {

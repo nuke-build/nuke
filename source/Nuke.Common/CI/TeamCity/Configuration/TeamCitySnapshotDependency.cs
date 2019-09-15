@@ -14,7 +14,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
         public TeamCityDependencyFailureAction FailureAction { get; set; }
         public TeamCityDependencyFailureAction CancelAction { get; set; }
 
-        public override void Write(TeamCityConfigurationWriter writer)
+        public override void Write(CustomFileWriter writer)
         {
             string FormatAction(TeamCityDependencyFailureAction action)
                 => "FailureAction." +

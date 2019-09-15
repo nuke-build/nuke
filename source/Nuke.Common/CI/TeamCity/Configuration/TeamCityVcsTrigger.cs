@@ -13,7 +13,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
         public string BranchFilter { get; set; }
         public string TriggerRules { get; set; }
 
-        public override void Write(TeamCityConfigurationWriter writer)
+        public override void Write(CustomFileWriter writer)
         {
             using (writer.WriteBlock("vcs"))
             {

@@ -15,7 +15,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
         public TeamCityVcsRoot VcsRoot { get; set; }
         public TeamCityBuildType[] BuildTypes { get; set; }
 
-        public override void Write(TeamCityConfigurationWriter writer)
+        public override void Write(CustomFileWriter writer)
         {
             using (writer.WriteBlock("project"))
             {

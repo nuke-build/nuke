@@ -25,7 +25,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
         public TeamCityTrigger[] Triggers { get; set; }
         public TeamCityDependency[] Dependencies { get; set; }
 
-        public override void Write(TeamCityConfigurationWriter writer)
+        public override void Write(CustomFileWriter writer)
         {
             writer.WriteLine($"object {Id} : BuildType({{");
             using (writer.Indent())
@@ -52,7 +52,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
             writer.WriteLine("})");
         }
 
-        public virtual void WriteDependencies(TeamCityConfigurationWriter writer)
+        public virtual void WriteDependencies(CustomFileWriter writer)
         {
             if (!Dependencies?.Any() ?? true)
                 return;
@@ -64,7 +64,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
             }
         }
 
-        public virtual void WriteParameters(TeamCityConfigurationWriter writer)
+        public virtual void WriteParameters(CustomFileWriter writer)
         {
             if (!Parameters?.Any() ?? true)
                 return;
@@ -76,7 +76,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
             }
         }
 
-        public virtual void WriteArtifacts(TeamCityConfigurationWriter writer)
+        public virtual void WriteArtifacts(CustomFileWriter writer)
         {
             if (!ArtifactRules?.Any() ?? true)
                 return;
@@ -91,7 +91,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
             writer.WriteLine("\"\"\".trimIndent()");
         }
 
-        private void WriteTriggers(TeamCityConfigurationWriter writer)
+        private void WriteTriggers(CustomFileWriter writer)
         {
             if (!Triggers?.Any() ?? true)
                 return;
@@ -103,7 +103,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
             }
         }
 
-        public virtual void WriteSteps(TeamCityConfigurationWriter writer)
+        public virtual void WriteSteps(CustomFileWriter writer)
         {
             using (writer.WriteBlock("steps"))
             {
@@ -121,7 +121,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
             }
         }
 
-        public virtual void WriteExecStep(TeamCityConfigurationWriter writer, string arguments)
+        public virtual void WriteExecStep(CustomFileWriter writer, string arguments)
         {
             using (writer.WriteBlock("exec"))
             {
@@ -130,7 +130,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
             }
         }
 
-        public virtual void WritePowerShellStep(TeamCityConfigurationWriter writer, string arguments)
+        public virtual void WritePowerShellStep(CustomFileWriter writer, string arguments)
         {
             using (writer.WriteBlock("powerShell"))
             {

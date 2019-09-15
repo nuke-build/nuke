@@ -13,7 +13,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
         public string Key { get; set; }
         public string Value { get; set; }
 
-        public override void Write(TeamCityConfigurationWriter writer)
+        public override void Write(CustomFileWriter writer)
         {
             writer.WriteLine("param(");
             using (writer.Indent())
