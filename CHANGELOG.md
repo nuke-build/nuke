@@ -23,11 +23,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `InnoSetupTasks`
 - Added `TwitterTasks`
 - Added `IOnBuildFinished` build extension
+- Added missing arguments for `CoverletTasks`
 - Fixed `--boot` in setup for .NET Framework/Mono support
 - Fixed XML documentation for generated CLI tasks
 - Fixed `MSBuildToolPathResolver` to consider preview editions
 - Fixed `NuGetPackageResolver` to allow multiple versions of the same package
 - Fixed `TeamCity.SetParameter` and `TeamCity.ImportData`
+- Fixed `SolutionSerializer` to fall back to `ProjectConfiguration` section
 
 ## [0.21.2] / 2019-07-28
 - Fixed validation to exclude requirements of skipped targets
