@@ -1,4 +1,5 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿#if NETFRAMEWORK
+// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -17,11 +18,12 @@ namespace Nuke.Common.Utilities.Collections
     {
         [CanBeNull]
         public static TValue GetValueOrDefault<TKey, TValue>(
-            this IDictionary<TKey, TValue> dictionary,
+            this IReadOnlyDictionary<TKey, TValue> dictionary,
             TKey key,
-            TValue defaultValue = default(TValue))
+            TValue defaultValue = default)
         {
             return dictionary.TryGetValue(key, out var value) ? value : defaultValue;
         }
     }
 }
+#endif
