@@ -72,20 +72,12 @@ namespace Nuke.Common.IO
         internal static GlobbingCaseSensitivity GlobbingCaseSensitivity;
 
         private static GlobOptions GlobOptions
-        {
-            get
+            => GlobbingCaseSensitivity switch
             {
-                switch (GlobbingCaseSensitivity)
-                {
-                    case GlobbingCaseSensitivity.CaseSensitive:
-                        return GlobOptions.None;
-                    case GlobbingCaseSensitivity.CaseInsensitive:
-                        return GlobOptions.CaseInsensitive;
-                    default:
-                        return EnvironmentInfo.IsWin ? GlobOptions.CaseInsensitive : GlobOptions.None;
-                }
-            }
-        }
+                GlobbingCaseSensitivity.CaseSensitive => GlobOptions.None,
+                GlobbingCaseSensitivity.CaseInsensitive => GlobOptions.CaseInsensitive,
+                _ => (EnvironmentInfo.IsWin ? GlobOptions.CaseInsensitive : GlobOptions.None)
+            };
 
         // TODO: check usages
         [Pure]

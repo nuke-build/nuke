@@ -92,19 +92,14 @@ namespace Nuke.Common.Tools.MSBuild
 
         private static string GetVersionFolder(MSBuildVersion version)
         {
-            switch (version)
+            return version switch
             {
-                case MSBuildVersion.VS2019:
-                    return "Current";
-                case MSBuildVersion.VS2017:
-                    return "15.0";
-                case MSBuildVersion.VS2015:
-                    return "14.0";
-                case MSBuildVersion.VS2013:
-                    return "12.0";
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(version), version, message: null);
-            }
+                MSBuildVersion.VS2019 => "Current",
+                MSBuildVersion.VS2017 => "15.0",
+                MSBuildVersion.VS2015 => "14.0",
+                MSBuildVersion.VS2013 => "12.0",
+                _ => throw new ArgumentOutOfRangeException(nameof(version), version, message: null)
+            };
         }
 
         [DebuggerDisplay("{" + nameof(ToolPath) + "}")]

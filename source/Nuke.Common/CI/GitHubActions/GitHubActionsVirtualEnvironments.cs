@@ -25,24 +25,18 @@ namespace Nuke.Common.CI.GitHubActions
     {
         public static string ConvertToString(this GitHubActionsVirtualEnvironments environment)
         {
-            switch (environment)
+            return environment switch
             {
-                case GitHubActionsVirtualEnvironments.WindowsServer2019:
-                case GitHubActionsVirtualEnvironments.WindowsLatest:
-                    return "windows-2019";
-                case GitHubActionsVirtualEnvironments.WindowsServer2016R2:
-                    return "windows-2016";
-                case GitHubActionsVirtualEnvironments.Ubuntu1804:
-                case GitHubActionsVirtualEnvironments.UbuntuLatest:
-                    return "ubuntu-18.04";
-                case GitHubActionsVirtualEnvironments.Ubuntu1604:
-                    return "ubuntu-16.04";
-                case GitHubActionsVirtualEnvironments.MacOs1014:
-                case GitHubActionsVirtualEnvironments.MacOsLatest:
-                    return "macOS-10.14";
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(environment), environment, message: null);
-            }
+                GitHubActionsVirtualEnvironments.WindowsServer2019 => "windows-2019",
+                GitHubActionsVirtualEnvironments.WindowsLatest => "windows-2019",
+                GitHubActionsVirtualEnvironments.WindowsServer2016R2 => "windows-2016",
+                GitHubActionsVirtualEnvironments.Ubuntu1804 => "ubuntu-18.04",
+                GitHubActionsVirtualEnvironments.UbuntuLatest => "ubuntu-18.04",
+                GitHubActionsVirtualEnvironments.Ubuntu1604 => "ubuntu-16.04",
+                GitHubActionsVirtualEnvironments.MacOs1014 => "macOS-10.14",
+                GitHubActionsVirtualEnvironments.MacOsLatest => "macOS-10.14",
+                _ => throw new ArgumentOutOfRangeException(nameof(environment), environment, message: null)
+            };
         }
     }
 }

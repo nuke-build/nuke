@@ -276,21 +276,14 @@ namespace Nuke.Common.IO
             if (!File.Exists(targetFile))
                 return true;
 
-            switch (policy)
+            return policy switch
             {
-                case FileExistsPolicy.Fail:
-                    ControlFlow.Fail($"File '{targetFile}' already exists.");
-                    // ReSharper disable once HeuristicUnreachableCode
-                    return false;
-                case FileExistsPolicy.Skip:
-                    return false;
-                case FileExistsPolicy.Overwrite:
-                    return true;
-                case FileExistsPolicy.OverwriteIfNewer:
-                    return File.GetLastWriteTimeUtc(targetFile) < File.GetLastWriteTimeUtc(sourceFile);
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(policy), policy, message: null);
-            }
+                FileExistsPolicy.Fail => throw new Exception($"File '{targetFile}' already exists."),
+                FileExistsPolicy.Skip => false,
+                FileExistsPolicy.Overwrite => true,
+                FileExistsPolicy.OverwriteIfNewer => (File.GetLastWriteTimeUtc(targetFile) < File.GetLastWriteTimeUtc(sourceFile)),
+                _ => throw new ArgumentOutOfRangeException(nameof(policy), policy, message: null)
+            };
         }
 
         public static void Touch(string path, DateTime? time = null, bool createDirectories = true)

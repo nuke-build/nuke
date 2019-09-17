@@ -301,29 +301,19 @@ namespace Nuke.Common.CI.TeamCity
 
         private string Escape(string str)
         {
-            return str.Aggregate(new StringBuilder(), (sb, c) => sb.Append(Escape(c)), sb => sb.ToString());
-        }
-
-        private string Escape(char c)
-        {
-            switch (c)
-            {
-                case '\n':
-                    return "|n";
-                case '\'':
-                    return "|'";
-                case '\r':
-                    return "|r";
-                case '|':
-                    return "||";
-                case '[':
-                    return "|[";
-                case ']':
-                    return "|]";
-                default:
-                    // TODO: unicode
-                    return c.ToString();
-            }
+            return str.Aggregate(
+                new StringBuilder(),
+                (sb, c) => sb.Append(c switch
+                {
+                    '\n' => "|n",
+                    '\'' => "|'",
+                    '\r' => "|r",
+                    '|' => "||",
+                    '[' => "|[",
+                    ']' => "|]",
+                    _ => c.ToString()
+                }),
+                sb => sb.ToString());
         }
     }
 }

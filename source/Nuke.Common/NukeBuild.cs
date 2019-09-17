@@ -91,32 +91,16 @@ namespace Nuke.Common
         {
             get
             {
-                IOutputSink innerOutputSink;
-
-                switch (Host)
+                var innerOutputSink = Host switch
                 {
-                    case HostType.Bitrise:
-                        innerOutputSink = new BitriseOutputSink();
-                        break;
-                    case HostType.Travis:
-                        innerOutputSink = new TravisCIOutputSink();
-                        break;
-                    case HostType.TeamCity:
-                        innerOutputSink = new TeamCityOutputSink(new TeamCity());
-                        break;
-                    case HostType.AzureDevOps:
-                        innerOutputSink = new AzureDevOpsOutputSink(new AzureDevOps());
-                        break;
-                    case HostType.GitHubActions:
-                        innerOutputSink = new GitHubActionsOutputSink(new GitHubActions());
-                        break;
-                    case HostType.AppVeyor:
-                        innerOutputSink = new AppVeyorOutputSink();
-                        break;
-                    default:
-                        innerOutputSink = ConsoleOutputSink.Default;
-                        break;
-                }
+                    HostType.Bitrise => new BitriseOutputSink(),
+                    HostType.Travis => new TravisCIOutputSink(),
+                    HostType.TeamCity => new TeamCityOutputSink(new TeamCity()),
+                    HostType.AzureDevOps => new AzureDevOpsOutputSink(new AzureDevOps()),
+                    HostType.GitHubActions => new GitHubActionsOutputSink(new GitHubActions()),
+                    HostType.AppVeyor => new AppVeyorOutputSink(),
+                    _ => ConsoleOutputSink.Default
+                };
 
                 return new SevereMessagesOutputSink(innerOutputSink);
             }

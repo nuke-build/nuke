@@ -17,13 +17,12 @@ namespace Nuke.Common.Tools.InnoSetup
     {
         private static string GetInnoSetupBool(bool? value)
         {
-            switch (value)
+            return value switch
             {
-                case null: return null;
-                case true: return "+";
-                case false: return "-";
-                default: throw new NotSupportedException();
-            }
+                null => null,
+                true => "+",
+                false => "-"
+            };
         }
 
         private string GetOutput()

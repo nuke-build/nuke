@@ -167,15 +167,12 @@ namespace Nuke.Common.CI.AzureDevOps
 
         private string GetText(AzureDevOpsIssueType type)
         {
-            switch (type)
+            return type switch
             {
-                case AzureDevOpsIssueType.Warning:
-                    return "warning";
-                case AzureDevOpsIssueType.Error:
-                    return "error";
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, message: null);
-            }
+                AzureDevOpsIssueType.Warning => "warning",
+                AzureDevOpsIssueType.Error => "error",
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, message: null)
+            };
         }
     }
 }
