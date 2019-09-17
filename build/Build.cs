@@ -37,7 +37,7 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
 [CustomTeamCity(
     TeamCityAgentPlatform.Windows,
     AutoGenerate = true,
-    DefaultBranch = "develop",
+    DefaultBranch = DevelopBranch,
     VcsTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
     NightlyTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
     ManuallyTriggeredTargets = new[] { nameof(Publish) },
@@ -68,10 +68,10 @@ partial class Build : NukeBuild
     AbsolutePath OutputDirectory => RootDirectory / "output";
     AbsolutePath SourceDirectory => RootDirectory / "source";
 
-    readonly string MasterBranch = "master";
-    readonly string DevelopBranch = "develop";
-    readonly string ReleaseBranchPrefix = "release";
-    readonly string HotfixBranchPrefix = "hotfix";
+    const string MasterBranch = "master";
+    const string DevelopBranch = "develop";
+    const string ReleaseBranchPrefix = "release";
+    const string HotfixBranchPrefix = "hotfix";
 
     Target Clean => _ => _
         .Before(Restore)
