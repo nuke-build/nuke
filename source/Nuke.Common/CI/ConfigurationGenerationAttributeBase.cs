@@ -10,6 +10,7 @@ using Nuke.Common.Tooling;
 
 namespace Nuke.Common.CI
 {
+    [AttributeUsage(AttributeTargets.Class)]
     public abstract class ConfigurationGenerationAttributeBase : Attribute, IOnBeforeLogo
     {
         public const string ConfigurationParameterName = "configure-build-server";
@@ -20,22 +21,27 @@ namespace Nuke.Common.CI
         {
             if (!EnvironmentInfo.GetParameter<bool>(ConfigurationParameterName))
             {
-                if (AutoGenerate)
+                if (NukeBuild.IsLocalBuild && AutoGenerate)
                 {
+                    Logger.LogLevel = LogLevel.Trace;
+
                     var assembly = Assembly.GetEntryAssembly().NotNull("assembly != null");
                     ProcessTasks.StartProcess(
-                        assembly.Location,
-                        $"--{ConfigurationParameterName} --host {HostType}",
-                        logInvocation: false,
-                        logOutput: false);
+                            assembly.Location,
+                            $"--{ConfigurationParameterName} --host {HostType}",
+                            logInvocation: false,
+                            logOutput: false)
+                        .AssertZeroExitCode();
                 }
 
                 return;
             }
 
-            Generate(build, executableTargets);
-
-            Environment.Exit(0);
+            if (NukeBuild.Host == HostType)
+            {
+                Generate(build, executableTargets);
+                Environment.Exit(0);
+            }
         }
 
         protected abstract HostType HostType { get; }
