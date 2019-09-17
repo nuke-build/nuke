@@ -157,7 +157,7 @@ partial class Build : NukeBuild
             DotNetTest(s => s
                 .SetConfiguration(Configuration)
                 .SetNoBuild(IsLocalBuild)
-                .SetVerbosity(DotNetVerbosity.Normal)
+                .ResetVerbosity()
                 .CombineWith(
                     TestPartition.GetCurrent(Solution.GetProjects("*.Tests")), (cs, v) => cs
                         .SetProjectFile(v)));
