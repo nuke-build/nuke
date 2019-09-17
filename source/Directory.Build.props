@@ -42,6 +42,10 @@
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
 
+  <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.2" PrivateAssets="All" />
+  </ItemGroup>
+
   <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
     <PackageReference Include="FluentAssertions" Version="5.9.0"/>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0"/>
