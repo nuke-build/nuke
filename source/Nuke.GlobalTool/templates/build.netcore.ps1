@@ -4,7 +4,7 @@ Param(
     [string[]]$BuildArguments
 )
 
-Write-Output "Windows PowerShell $($Host.Version)"
+Write-Output "PowerShell $($PSVersionTable.PSEdition) version $($PSVersionTable.PSVersion)"
 
 Set-StrictMode -Version 2.0; $ErrorActionPreference = "Stop"; $ConfirmPreference = "None"; trap { exit 1 }
 $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
