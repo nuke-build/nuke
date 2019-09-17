@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.VSTest
 {
+    /// <summary>
+    ///   <p>VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.</p>
+    ///   <p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/jj155796.aspx">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class VSTestTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.VSTest
             ToolPathResolver.GetPackageExecutable("Microsoft.TestPlatform", "vstest.console.exe");
         public static Action<OutputType, string> VSTestLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.
+        ///   <p>VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.</p>
+        ///   <p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/jj155796.aspx">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> VSTest(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,29 @@ namespace Nuke.Common.Tools.VSTest
         ///   <p>VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.</p>
         ///   <p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/jj155796.aspx">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;testAssemblies&gt;</c> via <see cref="VSTestSettings.TestAssemblies"/></li>
+        ///     <li><c>/Diag</c> via <see cref="VSTestSettings.DiagnosticsFile"/></li>
+        ///     <li><c>/EnableCodeCoverage</c> via <see cref="VSTestSettings.EnableCodeCoverage"/></li>
+        ///     <li><c>/Framework</c> via <see cref="VSTestSettings.Framework"/></li>
+        ///     <li><c>/InIsolation</c> via <see cref="VSTestSettings.InIsolation"/></li>
+        ///     <li><c>/ListDiscoverers</c> via <see cref="VSTestSettings.ListDiscoverers"/></li>
+        ///     <li><c>/ListExecutors</c> via <see cref="VSTestSettings.ListExecutors"/></li>
+        ///     <li><c>/ListLoggers</c> via <see cref="VSTestSettings.ListLoggers"/></li>
+        ///     <li><c>/ListSettingsProviders</c> via <see cref="VSTestSettings.ListSettingsProviders"/></li>
+        ///     <li><c>/ListTests</c> via <see cref="VSTestSettings.ListTests"/></li>
+        ///     <li><c>/Logger</c> via <see cref="VSTestSettings.Logger"/></li>
+        ///     <li><c>/Parallel</c> via <see cref="VSTestSettings.Parallel"/></li>
+        ///     <li><c>/Platform</c> via <see cref="VSTestSettings.Platform"/></li>
+        ///     <li><c>/Settings</c> via <see cref="VSTestSettings.SettingsFile"/></li>
+        ///     <li><c>/TestAdapterPath</c> via <see cref="VSTestSettings.TestAdapterPath"/></li>
+        ///     <li><c>/TestCaseFilter</c> via <see cref="VSTestSettings.TestCaseFilters"/></li>
+        ///     <li><c>/Tests</c> via <see cref="VSTestSettings.Tests"/></li>
+        ///     <li><c>/UseVsixExtensions</c> via <see cref="VSTestSettings.UseVsixExtensions"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> VSTest(VSTestSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new VSTestSettings();
@@ -1090,9 +1118,13 @@ namespace Nuke.Common.Tools.VSTest
     [TypeConverter(typeof(TypeConverter<VsTestPlatform>))]
     public partial class VsTestPlatform : Enumeration
     {
-        public static VsTestPlatform x86 = new VsTestPlatform { Value = "x86" };
-        public static VsTestPlatform x64 = new VsTestPlatform { Value = "x64" };
-        public static VsTestPlatform ARM = new VsTestPlatform { Value = "ARM" };
+        public static VsTestPlatform x86 = (VsTestPlatform) "x86";
+        public static VsTestPlatform x64 = (VsTestPlatform) "x64";
+        public static VsTestPlatform ARM = (VsTestPlatform) "ARM";
+        public static explicit operator VsTestPlatform(string value)
+        {
+            return new VsTestPlatform { Value = value };
+        }
     }
     #endregion
     #region VsTestFramework
@@ -1105,9 +1137,13 @@ namespace Nuke.Common.Tools.VSTest
     [TypeConverter(typeof(TypeConverter<VsTestFramework>))]
     public partial class VsTestFramework : Enumeration
     {
-        public static VsTestFramework Framework35 = new VsTestFramework { Value = "Framework35" };
-        public static VsTestFramework Framework40 = new VsTestFramework { Value = "Framework40" };
-        public static VsTestFramework Framework45 = new VsTestFramework { Value = "Framework45" };
+        public static VsTestFramework Framework35 = (VsTestFramework) "Framework35";
+        public static VsTestFramework Framework40 = (VsTestFramework) "Framework40";
+        public static VsTestFramework Framework45 = (VsTestFramework) "Framework45";
+        public static explicit operator VsTestFramework(string value)
+        {
+            return new VsTestFramework { Value = value };
+        }
     }
     #endregion
 }

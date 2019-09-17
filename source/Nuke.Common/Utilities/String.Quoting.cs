@@ -34,10 +34,7 @@ namespace Nuke.Common.Utilities
         [Pure]
         public static string DoubleQuote([CanBeNull] this string str)
         {
-            if (string.IsNullOrWhiteSpace(str))
-                return string.Empty;
-
-            return $"\"{str.NotNull().Replace("\"", "\\\"")}\"";
+            return $"\"{str?.Replace("\"", "\\\"")}\"";
         }
 
         [Pure]
@@ -64,10 +61,7 @@ namespace Nuke.Common.Utilities
         [Pure]
         public static string SingleQuote([CanBeNull] this string str)
         {
-            if (string.IsNullOrWhiteSpace(str))
-                return string.Empty;
-
-            return $"'{str.NotNull().Replace("'", "\\'")}'";
+            return $"'{str?.Replace("'", "\\'")}'";
         }
 
         [Pure]

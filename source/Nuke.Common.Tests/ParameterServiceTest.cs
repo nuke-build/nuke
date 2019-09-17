@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using FluentAssertions;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
@@ -21,7 +23,9 @@ namespace Nuke.Common.Tests
             commandLineArguments = commandLineArguments ?? new string[0];
             environmentVariables = environmentVariables ?? new Dictionary<string, string>();
 
-            return new ParameterService(commandLineArguments, environmentVariables.AsReadOnly());
+            return new ParameterService(
+                () => commandLineArguments,
+                () => environmentVariables.AsReadOnly());
         }
 
         [Theory]
@@ -46,7 +50,7 @@ namespace Nuke.Common.Tests
                     "--no-deps",
                     "false",
                     "--root"
-                }).GetCommandLineArgument(argument, destinationType).Should().Be(expectedValue);
+                }).GetCommandLineArgument(argument, destinationType, separator: null).Should().Be(expectedValue);
         }
 
         [Theory]
@@ -64,7 +68,7 @@ namespace Nuke.Common.Tests
                     "dkrcfg",
                     "--publish-dir",
                     "dir"
-                }).GetCommandLineArgument(argument, destinationType).Should().Be(expectedValue);
+                }).GetCommandLineArgument(argument, destinationType, separator: null).Should().Be(expectedValue);
         }
 
         [Theory]
@@ -77,7 +81,7 @@ namespace Nuke.Common.Tests
         [InlineData(typeof(PathConstruction.AbsolutePath), null)]
         public void TestNotSupplied(Type destinationType, object expectedValue)
         {
-            GetService().GetCommandLineArgument("notsupplied", destinationType).Should().Be(expectedValue);
+            GetService().GetCommandLineArgument("notsupplied", destinationType, separator: null).Should().Be(expectedValue);
         }
 
         [Theory]
@@ -89,7 +93,7 @@ namespace Nuke.Common.Tests
         [InlineData("notsupplied2", typeof(int?), null)]
         public void TestEnvironmentVariables(string parameter, Type destinationType, object expectedValue)
         {
-            GetService(
+            var service = GetService(
                 new[]
                 {
                     "-arg1",
@@ -102,7 +106,8 @@ namespace Nuke.Common.Tests
                     { "arg2", "value3" },
                     { "switch2", "true" },
                     { "switch3", "false" }
-                }).GetParameter(parameter, destinationType).Should().Be(expectedValue);
+                });
+            service.GetParameter(parameter, destinationType, separator: null).Should().Be(expectedValue);
         }
 
         [Fact]
@@ -121,9 +126,14 @@ namespace Nuke.Common.Tests
                     "/bin/etc"
                 });
 
-            service.GetParameter<DateTime>("datetime").Should().BeCloseTo(dateTime, precision: 1000);
-            service.GetParameter<Guid>("guid").Should().Be(guid);
-            service.GetParameter<PathConstruction.AbsolutePath>("root").ToString().Should().Be("/bin/etc");
+            service.GetParameter("datetime", destinationType: typeof(DateTime), separator: null)
+                .Should().BeOfType<DateTime>().Subject.Should().BeCloseTo(dateTime, precision: 1000);
+
+            service.GetParameter("guid", destinationType: typeof(Guid), separator: null)
+                .Should().BeOfType<Guid>().Subject.Should().Be(guid);
+
+            service.GetParameter("root", destinationType: typeof(PathConstruction.AbsolutePath), separator: null)
+                .Should().BeOfType<PathConstruction.AbsolutePath>().Subject.ToString().Should().Be("/bin/etc");
         }
 
         [Fact]
@@ -143,8 +153,11 @@ namespace Nuke.Common.Tests
                     { "values", "A+B+C" }
                 });
 
-            service.GetParameter<string[]>("files").Should().BeEquivalentTo("C:\\new folder\\file.txt", "C:\\file.txt");
-            service.GetParameter<string[]>("values", separator: '+').Should().BeEquivalentTo("A", "B", "C");
+            service.GetParameter("files", destinationType: typeof(string[]), separator: null)
+                .Should().BeOfType<string[]>().Subject.Should().BeEquivalentTo("C:\\new folder\\file.txt", "C:\\file.txt");
+
+            service.GetParameter("values", destinationType: typeof(string[]), separator: '+')
+                .Should().BeOfType<string[]>().Subject.Should().BeEquivalentTo("A", "B", "C");
         }
 
         [Theory]
@@ -160,7 +173,7 @@ namespace Nuke.Common.Tests
         public void TestPositionalCommandLineArguments(string[] commandLineArgs, int position, Type destinationType, object expectedValue)
         {
             var service = GetService(commandLineArgs);
-            service.GetCommandLineArgument(position, destinationType).Should().Be(expectedValue);
+            service.GetCommandLineArgument(position, destinationType, separator: null).Should().Be(expectedValue);
         }
 
         [Fact]
@@ -176,14 +189,19 @@ namespace Nuke.Common.Tests
                     "3"
                 });
 
-            service.GetParameter<PathConstruction.AbsolutePath>(() => RootDirectory)
+            service.GetFromMemberInfo(GetMemberInfo(() => RootDirectory), typeof(PathConstruction.AbsolutePath), service.GetParameter)
                 .Should().BeNull();
 
-            service.GetParameter<bool>(() => RootDirectory)
-                .Should().BeTrue();
+            service.GetFromMemberInfo(GetMemberInfo(() => RootDirectory), typeof(bool), service.GetParameter)
+                .Should().BeOfType<bool>().Subject.Should().BeTrue();
 
-            service.GetParameter(() => Set)
-                .Should().BeEquivalentTo(1, 2, 3);
+            service.GetFromMemberInfo(GetMemberInfo(() => Set), destinationType: null, service.GetParameter)
+                .Should().BeOfType<int[]>().Subject.Should().BeEquivalentTo(1, 2, 3);
+        }
+
+        private MemberInfo GetMemberInfo<T>(Expression<Func<T>> expression)
+        {
+            return expression.GetMemberInfo();
         }
 
         [Parameter(Name = "root")] private string RootDirectory { get; }

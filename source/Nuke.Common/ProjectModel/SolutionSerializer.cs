@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -91,8 +91,8 @@ namespace Nuke.Common.ProjectModel
             var projectRegex = new Regex(
                 $@"^Project\(""{GuidPattern("typeId")}""\)\s*=\s*{TextPattern("name")},\s*{TextPattern("path")},\s*""{GuidPattern("projectId")}""$");
 
-            var configurations = content
-                .GetGlobalSection("ProjectConfigurationPlatforms").NotNull()
+            var configurations = (content.GetGlobalSection("ProjectConfigurationPlatforms") ??
+                                  content.GetGlobalSection("ProjectConfiguration")).NotNull()
                 .Select(x => new
                              {
                                  ProjectId = Guid.Parse(x.Key.Substring(startIndex: 1, length: 36)),

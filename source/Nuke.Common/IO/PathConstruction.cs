@@ -28,10 +28,12 @@ namespace Nuke.Common.IO
         /// means using case-insensitive matching when running on Windows, and case-sensitive otherwise.
         /// </summary>
         Auto,
+
         /// <summary>
         /// Globbing patterns will be case-sensitive.
         /// </summary>
         CaseSensitive,
+
         /// <summary>
         /// Globbing patterns will be case-insensitive.
         /// </summary>
@@ -460,7 +462,7 @@ namespace Nuke.Common.IO
     /// </summary>
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Class)]
-    public sealed class GlobbingOptionsAttribute : Attribute, IPreLogoBuildExtension
+    public sealed class GlobbingOptionsAttribute : Attribute, IOnBeforeLogo
     {
         private readonly GlobbingCaseSensitivity _caseSensitivity;
 
@@ -469,7 +471,7 @@ namespace Nuke.Common.IO
             _caseSensitivity = caseSensitivity;
         }
 
-        public void Execute(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets, IReadOnlyCollection<ExecutableTarget> executionPlan)
+        public void OnBeforeLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             PathConstruction.GlobbingCaseSensitivity = _caseSensitivity;
         }

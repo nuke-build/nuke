@@ -187,6 +187,190 @@
       }
     },
     {
+      "help": "Authenticate non-interactively",
+      "postfix": "Auth",
+      "definiteArgument": "auth",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Username",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
+            "name": "Password",
+            "type": "string",
+            "format": "{value}",
+            "secret": true
+          },
+          {
+            "name": "Origin",
+            "type": "string",
+            "format": "-origin {value}"
+          },
+          {
+            "name": "ClientCredentials",
+            "type": "bool",
+            "format": "--client-credentials",
+            "help": "Use (non-user) service account (also called client credentials)"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Change or view the instance count, disk space limit, and memory limit for an app",
+      "postfix": "Scale",
+      "definiteArgument": "scale -f",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Instances",
+            "type": "string",
+            "format": "-i {value}",
+            "help": "Number of instances"
+          },
+          {
+            "name": "Disk",
+            "type": "string",
+            "format": "-k {value}",
+            "help": "Disk limit (e.g. 256M, 1024M, 1G)"
+          },
+          {
+            "name": "Memory",
+            "type": "string",
+            "format": "-m {value}",
+            "help": "Memory limit (e.g. 256M, 1024M, 1G)"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Set an env variable for an app",
+      "postfix": "SetEnv",
+      "definiteArgument": "set-env",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AppName",
+            "type": "string",
+            "format": "{value}",
+            "help": "App Name"
+          },
+          {
+            "name": "EnvVarName",
+            "type": "string",
+            "format": "{value}",
+            "help": "Name of the environmental variable"
+          },
+          {
+            "name": "EnvVarValue",
+            "type": "string",
+            "format": "{value}",
+            "help": "Value of the environmental variable"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Executes a request to the targeted API endpoint",
+      "postfix": "Curl",
+      "definiteArgument": "curl",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Path",
+            "type": "string",
+            "format": "{value}",
+            "help": "CAPI Path to invoke (ex. /v2/info)"
+          },
+          {
+            "name": "IncludeResponseHeaders",
+            "type": "bool",
+            "format": "-i",
+            "help": "Include response headers in the output"
+          },
+          {
+            "name": "HttpMethod",
+            "type": "string",
+            "format": "-X {value}",
+            "help": "HTTP method (GET,POST,PUT,DELETE,etc). Default is GET"
+          },
+          {
+            "name": "HttpData",
+            "type": "string",
+            "format": "-d {value}",
+            "help": "HTTP method (GET,POST,PUT,DELETE,etc). Default is GET"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Set or view target api url",
+      "postfix": "Api",
+      "definiteArgument": "api",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Url",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
+            "name": "SkipSSLValidation",
+            "type": "bool",
+            "format": "--skip-ssl-validation",
+            "help": "Skip verification of the API endpoint"
+          },
+          {
+            "name": "Unset",
+            "type": "bool",
+            "format": "--unset",
+            "help": "Remove all api endpoint targeting"
+          }
+        ]
+      }
+    },
+    {
+      "help": "Make a user-provided service instance available to CF apps",
+      "postfix": "CreateUserProvidedService",
+      "definiteArgument": "cups",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ServiceInstanceName",
+            "type": "string",
+            "format": "{value}"
+          },
+          {
+            "name": "Credentials",
+            "type": "Newtonsoft.Json.Linq.JObject",
+            "format": "-p {value}",
+            "customImpl": true,
+            "customValue": true,
+            "help": "Skip verification of the API endpoint"
+          },
+          {
+            "name": "RouteUrl",
+            "type": "string",
+            "format": "-r {value}",
+            "help": "URL to which requests for bound routes will be forwarded. Scheme for this URL must be https"
+          },
+          {
+            "name": "LogUrl",
+            "type": "string",
+            "format": "-l {value}",
+            "help": "URL to which logs for bound applications will be streamed"
+          },
+          {
+            "name": "Tags",
+            "type": "string",
+            "format": "-t {value}",
+            "help": "Comma separated list of tags to assign to service. ex. 'db, relational'"
+          }
+        ]
+      }
+    },
+    {
       "help": "Start an app",
       "postfix": "Start",
       "definiteArgument": "start",
@@ -383,30 +567,6 @@
           },
           {
             "name": "ServiceInstance",
-            "type": "string",
-            "format": "{value}"
-          }
-        ]
-      }
-    },
-    {
-      "help": "Set an env variable for an app",
-      "postfix": "SetEnv",
-      "definiteArgument": "set-env",
-      "settingsClass": {
-        "properties": [
-          {
-            "name": "AppName",
-            "type": "string",
-            "format": "{value}"
-          },
-          {
-            "name": "EnvironmentalVariableName",
-            "type": "string",
-            "format": "{value}"
-          },
-          {
-            "name": "EnvironmentalVariableValue",
             "type": "string",
             "format": "{value}"
           }

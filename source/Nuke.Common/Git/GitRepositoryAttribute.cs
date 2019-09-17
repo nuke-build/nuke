@@ -6,7 +6,13 @@ using System;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using Nuke.Common.BuildServers;
+using Nuke.Common.CI.AppVeyor;
+using Nuke.Common.CI.AzureDevOps;
+using Nuke.Common.CI.Bitrise;
+using Nuke.Common.CI.GitLab;
+using Nuke.Common.CI.Jenkins;
+using Nuke.Common.CI.TeamCity;
+using Nuke.Common.CI.TravisCI;
 using Nuke.Common.Execution;
 using Nuke.Common.Tools.Git;
 
@@ -43,8 +49,8 @@ namespace Nuke.Common.Git
                 Jenkins.Instance?.GitBranch ??
                 Jenkins.Instance?.BranchName ??
                 TeamCity.Instance?.BranchName ??
-                TeamServices.Instance?.SourceBranchName ??
-                Travis.Instance?.Branch ??
+                AzureDevOps.Instance?.SourceBranchName ??
+                TravisCI.Instance?.Branch ??
                 GitTasks.GitCurrentBranch();
         }
     }

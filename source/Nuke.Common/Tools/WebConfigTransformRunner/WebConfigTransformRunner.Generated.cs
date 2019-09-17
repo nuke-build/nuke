@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.WebConfigTransformRunner
 {
+    /// <summary>
+    ///   <p>This is a commandline tool to run an ASP.Net web.config tranformation.</p>
+    ///   <p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class WebConfigTransformRunnerTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
             ToolPathResolver.GetPackageExecutable("WebConfigTransformRunner", "WebConfigTransformRunner.exe");
         public static Action<OutputType, string> WebConfigTransformRunnerLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   This is a commandline tool to run an ASP.Net web.config tranformation.
+        ///   <p>This is a commandline tool to run an ASP.Net web.config tranformation.</p>
+        ///   <p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> WebConfigTransformRunner(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,14 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         ///   <p>This is a commandline tool to run an ASP.Net web.config tranformation.</p>
         ///   <p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;outputFilename&gt;</c> via <see cref="WebConfigTransformRunnerSettings.OutputFilename"/></li>
+        ///     <li><c>&lt;transformFilename&gt;</c> via <see cref="WebConfigTransformRunnerSettings.TransformFilename"/></li>
+        ///     <li><c>&lt;webConfigFilename&gt;</c> via <see cref="WebConfigTransformRunnerSettings.WebConfigFilename"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> WebConfigTransformRunner(WebConfigTransformRunnerSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new WebConfigTransformRunnerSettings();

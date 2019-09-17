@@ -10,12 +10,11 @@ using Nuke.Common.IO;
 namespace Nuke.Common.Execution
 {
     [AttributeUsage(AttributeTargets.Class)]
-    internal class HandleShellCompletionAttribute : Attribute, IPreLogoBuildExtension
+    internal class HandleShellCompletionAttribute : Attribute, IOnBeforeLogo
     {
-        public void Execute(
+        public void OnBeforeLogo(
             NukeBuild build,
-            IReadOnlyCollection<ExecutableTarget> executableTargets,
-            IReadOnlyCollection<ExecutableTarget> executionPlan)
+            IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             var completionItems = new SortedDictionary<string, string[]>();
 
@@ -23,22 +22,20 @@ namespace Nuke.Common.Execution
             completionItems[Constants.InvokedTargetsParameterName] = targetNames.ToArray();
             completionItems[Constants.SkippedTargetsParameterName] = targetNames.ToArray();
 
-            var parameters = InjectionUtility.GetParameterMembers(build.GetType())
-                .Where(x => !x.HasCustomAttribute<UnlistedAttribute>());
-
+            var parameters = InjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false);
             foreach (var parameter in parameters)
             {
-                var parameterName = ParameterService.Instance.GetParameterName(parameter);
+                var parameterName = ParameterService.GetParameterMemberName(parameter);
                 if (completionItems.ContainsKey(parameterName))
                     continue;
 
-                var subItems = ParameterService.Instance.GetParameterValueSet(parameter, build)?.Select(x => x.Text);
+                var subItems = ParameterService.GetParameterValueSet(parameter, build)?.Select(x => x.Text);
                 completionItems[parameterName] = subItems?.ToArray();
             }
 
             SerializationTasks.YamlSerializeToFile(completionItems, Constants.GetCompletionFile(NukeBuild.RootDirectory));
 
-            if (EnvironmentInfo.ParameterSwitch(Constants.CompletionParameterName))
+            if (EnvironmentInfo.GetParameter<bool>(Constants.CompletionParameterName))
                 Environment.Exit(exitCode: 0);
         }
     }

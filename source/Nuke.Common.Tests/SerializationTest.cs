@@ -57,6 +57,7 @@ namespace Nuke.Common.Tests
 
                 yield return GetSerialization("Json", x => SerializationTasks.JsonDeserialize<Data>(SerializationTasks.JsonSerialize(x)));
                 yield return GetSerialization("Yaml", x => SerializationTasks.YamlDeserialize<Data>(SerializationTasks.YamlSerialize(x)));
+                yield return GetSerialization("Xml", x => SerializationTasks.XmlDeserialize<Data>(SerializationTasks.XmlSerialize(x)));
                 //yield return GetSerialization(x => XmlSerialize(x), x => XmlDeserialize<Data>(x));
             }
         }

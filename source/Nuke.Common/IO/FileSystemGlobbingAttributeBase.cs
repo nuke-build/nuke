@@ -51,7 +51,7 @@ namespace Nuke.Common.IO
 
             var globbedElements = GetGlobbedElements(member);
 
-            var parameterValue = ParameterService.Instance.GetParameter<PathConstruction.AbsolutePath[]>(member);
+            var parameterValue = EnvironmentInfo.GetParameter<PathConstruction.AbsolutePath[]>(member);
             if (parameterValue != null)
             {
                 parameterValue.ForEach(x =>

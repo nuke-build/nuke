@@ -24,16 +24,16 @@ namespace Nuke.Common.Tooling
     /// </example>
     public class LocalExecutableAttribute : InjectionAttributeBase
     {
-        private readonly string _rootDirectoryRelativePath;
+        private readonly string _absoluteOrRelativePath;
 
-        public LocalExecutableAttribute(string rootDirectoryRelativePath)
+        public LocalExecutableAttribute(string absoluteOrRelativePath)
         {
-            _rootDirectoryRelativePath = rootDirectoryRelativePath;
+            _absoluteOrRelativePath = absoluteOrRelativePath;
         }
 
         public override object GetValue(MemberInfo member, object instance)
         {
-            return ToolResolver.GetLocalTool(_rootDirectoryRelativePath);
+            return ToolResolver.GetLocalTool(_absoluteOrRelativePath);
         }
     }
 }

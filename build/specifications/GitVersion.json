@@ -229,6 +229,10 @@
           "type": "string"
         },
         {
+          "name": "AssemblySemFileVer",
+          "type": "string"
+        },
+        {
           "name": "FullSemVer",
           "type": "string"
         },

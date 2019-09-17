@@ -38,6 +38,9 @@ namespace Nuke.Common.Tooling
         [CanBeNull]
         public string Framework { get; set; }
 
+        [CanBeNull]
+        public string Version { get; set; }
+
         public PackageExecutableAttribute(string packageId, string packageExecutable)
             : this(packageId, packageExecutable32: packageExecutable, packageExecutable64: packageExecutable)
         {
@@ -52,7 +55,7 @@ namespace Nuke.Common.Tooling
         public override object GetValue(MemberInfo member, object instance)
         {
             return ToolResolver.TryGetEnvironmentTool(member.Name) ??
-                   ToolResolver.GetPackageTool(_packageId, _packageExecutable, Framework);
+                   ToolResolver.GetPackageTool(_packageId, _packageExecutable, Version, Framework);
         }
     }
 }

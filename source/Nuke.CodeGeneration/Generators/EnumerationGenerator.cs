@@ -33,9 +33,13 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteLine("[ExcludeFromCodeCoverage]")
                 .WriteLine($"[TypeConverter(typeof(TypeConverter<{enumeration.Name}>))]")
                 .WriteLine($"public partial class {enumeration.Name} : Enumeration")
-                .WriteBlock(w => w.ForEach(enumeration.Values,
-                    x => w.WriteLine(
-                        $"public static {enumeration.Name} {GetIdentifier(x).EscapeProperty()} = new {enumeration.Name} {{ Value = {x.DoubleQuote()} }};")))
+                .WriteBlock(w => w
+                    .ForEach(enumeration.Values,
+                        x => w.WriteLine(
+                            $"public static {enumeration.Name} {GetIdentifier(x).EscapeProperty()} = ({enumeration.Name}) {x.DoubleQuote()};"))
+                    .WriteLine($"public static explicit operator {enumeration.Name}(string value)")
+                    .WriteBlock(w2 => w2
+                        .WriteLine($"return new {enumeration.Name} {{ Value = value }};")))
                 .WriteLine("#endregion");
         }
     }

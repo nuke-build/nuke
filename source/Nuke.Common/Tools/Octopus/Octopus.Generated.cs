@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.Octopus
 {
+    /// <summary>
+    ///   <p>Octopus Deploy is an automated deployment server, which you install yourself, much like you would install SQL Server, Team Foundation Server or JetBrains TeamCity. Octopus makes it easy to automate deployment of ASP.NET web applications and Windows Services into development, test and production environments.<para/>Along with the Octopus Deploy server, you'll also install a lightweight agent service on each of the machines that you plan to deploy to, for example your web and application servers. We call this the Tentacle agent; the idea being that one Octopus server controls many Tentacles, potentially a lot more than 8! With Octopus and Tentacle, you can easily deploy to your own servers, or cloud services from providers like Amazon Web Services or Microsoft Azure.</p>
+    ///   <p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class OctopusTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.Octopus
             ToolPathResolver.GetPackageExecutable("OctopusTools", "Octo.exe");
         public static Action<OutputType, string> OctopusLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   Octopus Deploy is an automated deployment server, which you install yourself, much like you would install SQL Server, Team Foundation Server or JetBrains TeamCity. Octopus makes it easy to automate deployment of ASP.NET web applications and Windows Services into development, test and production environments.<para/>Along with the Octopus Deploy server, you'll also install a lightweight agent service on each of the machines that you plan to deploy to, for example your web and application servers. We call this the Tentacle agent; the idea being that one Octopus server controls many Tentacles, potentially a lot more than 8! With Octopus and Tentacle, you can easily deploy to your own servers, or cloud services from providers like Amazon Web Services or Microsoft Azure.
+        ///   <p>Octopus Deploy is an automated deployment server, which you install yourself, much like you would install SQL Server, Team Foundation Server or JetBrains TeamCity. Octopus makes it easy to automate deployment of ASP.NET web applications and Windows Services into development, test and production environments.<para/>Along with the Octopus Deploy server, you'll also install a lightweight agent service on each of the machines that you plan to deploy to, for example your web and application servers. We call this the Tentacle agent; the idea being that one Octopus server controls many Tentacles, potentially a lot more than 8! With Octopus and Tentacle, you can easily deploy to your own servers, or cloud services from providers like Amazon Web Services or Microsoft Azure.</p>
+        ///   <p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> Octopus(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,24 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The <c>Octo.exe pack</c> command provides a number of other useful parameters that can be used to customize the way your package gets created, such as output folder, files to include and release notes.</p>
         ///   <p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--author</c> via <see cref="OctopusPackSettings.Authors"/></li>
+        ///     <li><c>--basePath</c> via <see cref="OctopusPackSettings.BasePath"/></li>
+        ///     <li><c>--description</c> via <see cref="OctopusPackSettings.Description"/></li>
+        ///     <li><c>--format</c> via <see cref="OctopusPackSettings.Format"/></li>
+        ///     <li><c>--id</c> via <see cref="OctopusPackSettings.Id"/></li>
+        ///     <li><c>--include</c> via <see cref="OctopusPackSettings.Include"/></li>
+        ///     <li><c>--outFolder</c> via <see cref="OctopusPackSettings.OutputFolder"/></li>
+        ///     <li><c>--overwrite</c> via <see cref="OctopusPackSettings.Overwrite"/></li>
+        ///     <li><c>--releaseNotes</c> via <see cref="OctopusPackSettings.ReleaseNotes"/></li>
+        ///     <li><c>--releaseNotesFile</c> via <see cref="OctopusPackSettings.ReleaseNotesFile"/></li>
+        ///     <li><c>--title</c> via <see cref="OctopusPackSettings.Title"/></li>
+        ///     <li><c>--verbose</c> via <see cref="OctopusPackSettings.Verbose"/></li>
+        ///     <li><c>--version</c> via <see cref="OctopusPackSettings.Version"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> OctopusPack(OctopusPackSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new OctopusPackSettings();
@@ -106,6 +129,27 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The <c>Octo.exe push</c> command can push any of the supported packages types listed on this <a href="https://octopus.com/docs/packaging-applications/supported-packages">page</a>.</p>
         ///   <p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--apiKey</c> via <see cref="OctopusPushSettings.ApiKey"/></li>
+        ///     <li><c>--configFile</c> via <see cref="OctopusPushSettings.ConfigFile"/></li>
+        ///     <li><c>--debug</c> via <see cref="OctopusPushSettings.Debug"/></li>
+        ///     <li><c>--enableServiceMessages</c> via <see cref="OctopusPushSettings.EnableServiceMessages"/></li>
+        ///     <li><c>--ignoreSslErrors</c> via <see cref="OctopusPushSettings.IgnoreSslErrors"/></li>
+        ///     <li><c>--logLevel</c> via <see cref="OctopusPushSettings.LogLevel"/></li>
+        ///     <li><c>--package</c> via <see cref="OctopusPushSettings.Package"/></li>
+        ///     <li><c>--pass</c> via <see cref="OctopusPushSettings.Password"/></li>
+        ///     <li><c>--proxy</c> via <see cref="OctopusPushSettings.Proxy"/></li>
+        ///     <li><c>--proxyPass</c> via <see cref="OctopusPushSettings.ProxyPassword"/></li>
+        ///     <li><c>--proxyUser</c> via <see cref="OctopusPushSettings.ProxyUsername"/></li>
+        ///     <li><c>--replace-existing</c> via <see cref="OctopusPushSettings.ReplaceExisting"/></li>
+        ///     <li><c>--server</c> via <see cref="OctopusPushSettings.Server"/></li>
+        ///     <li><c>--space</c> via <see cref="OctopusPushSettings.Space"/></li>
+        ///     <li><c>--timeout</c> via <see cref="OctopusPushSettings.Timeout"/></li>
+        ///     <li><c>--user</c> via <see cref="OctopusPushSettings.Username"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> OctopusPush(OctopusPushSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new OctopusPushSettings();
@@ -175,6 +219,54 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The <c>Octo.exe create-release</c> can be used to automate the creation of releases. This allows you to easily integrate Octopus with other continuous integration servers.</p>
         ///   <p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--apiKey</c> via <see cref="OctopusCreateReleaseSettings.ApiKey"/></li>
+        ///     <li><c>--cancelontimeout</c> via <see cref="OctopusCreateReleaseSettings.CancelOnTimeout"/></li>
+        ///     <li><c>--channel</c> via <see cref="OctopusCreateReleaseSettings.Channel"/></li>
+        ///     <li><c>--configFile</c> via <see cref="OctopusCreateReleaseSettings.ConfigFile"/></li>
+        ///     <li><c>--debug</c> via <see cref="OctopusCreateReleaseSettings.Debug"/></li>
+        ///     <li><c>--deployat</c> via <see cref="OctopusCreateReleaseSettings.DeployAt"/></li>
+        ///     <li><c>--deploymentchecksleepcycle</c> via <see cref="OctopusCreateReleaseSettings.DeploymentCheckSleepCycle"/></li>
+        ///     <li><c>--deploymenttimeout</c> via <see cref="OctopusCreateReleaseSettings.DeploymentTimeout"/></li>
+        ///     <li><c>--deployto</c> via <see cref="OctopusCreateReleaseSettings.DeployTo"/></li>
+        ///     <li><c>--enableServiceMessages</c> via <see cref="OctopusCreateReleaseSettings.EnableServiceMessages"/></li>
+        ///     <li><c>--force</c> via <see cref="OctopusCreateReleaseSettings.Force"/></li>
+        ///     <li><c>--forcepackagedownload</c> via <see cref="OctopusCreateReleaseSettings.ForcePackageDownload"/></li>
+        ///     <li><c>--guidedfailure</c> via <see cref="OctopusCreateReleaseSettings.GuidedFailure"/></li>
+        ///     <li><c>--ignorechannelrules</c> via <see cref="OctopusCreateReleaseSettings.IgnoreChannelRules"/></li>
+        ///     <li><c>--ignoreexisting</c> via <see cref="OctopusCreateReleaseSettings.IgnoreExisting"/></li>
+        ///     <li><c>--ignoreSslErrors</c> via <see cref="OctopusCreateReleaseSettings.IgnoreSslErrors"/></li>
+        ///     <li><c>--logLevel</c> via <see cref="OctopusCreateReleaseSettings.LogLevel"/></li>
+        ///     <li><c>--norawlog</c> via <see cref="OctopusCreateReleaseSettings.NoRawLog"/></li>
+        ///     <li><c>--package</c> via <see cref="OctopusCreateReleaseSettings.PackageVersions"/></li>
+        ///     <li><c>--packageprerelease</c> via <see cref="OctopusCreateReleaseSettings.PackagePrerelease"/></li>
+        ///     <li><c>--packagesFolder</c> via <see cref="OctopusCreateReleaseSettings.PackagesFolder"/></li>
+        ///     <li><c>--packageversion</c> via <see cref="OctopusCreateReleaseSettings.DefaultPackageVersion"/></li>
+        ///     <li><c>--pass</c> via <see cref="OctopusCreateReleaseSettings.Password"/></li>
+        ///     <li><c>--progress</c> via <see cref="OctopusCreateReleaseSettings.Progress"/></li>
+        ///     <li><c>--project</c> via <see cref="OctopusCreateReleaseSettings.Project"/></li>
+        ///     <li><c>--proxy</c> via <see cref="OctopusCreateReleaseSettings.Proxy"/></li>
+        ///     <li><c>--proxyPass</c> via <see cref="OctopusCreateReleaseSettings.ProxyPassword"/></li>
+        ///     <li><c>--proxyUser</c> via <see cref="OctopusCreateReleaseSettings.ProxyUsername"/></li>
+        ///     <li><c>--rawlogfile</c> via <see cref="OctopusCreateReleaseSettings.RawLogFile"/></li>
+        ///     <li><c>--releasenotes</c> via <see cref="OctopusCreateReleaseSettings.ReleaseNotes"/></li>
+        ///     <li><c>--releasenotesfile</c> via <see cref="OctopusCreateReleaseSettings.ReleaseNotesFile"/></li>
+        ///     <li><c>--server</c> via <see cref="OctopusCreateReleaseSettings.Server"/></li>
+        ///     <li><c>--skip</c> via <see cref="OctopusCreateReleaseSettings.Skip"/></li>
+        ///     <li><c>--space</c> via <see cref="OctopusCreateReleaseSettings.Space"/></li>
+        ///     <li><c>--specificmachines</c> via <see cref="OctopusCreateReleaseSettings.SpecificMachines"/></li>
+        ///     <li><c>--tenant</c> via <see cref="OctopusCreateReleaseSettings.Tenant"/></li>
+        ///     <li><c>--tenanttag</c> via <see cref="OctopusCreateReleaseSettings.TenantTag"/></li>
+        ///     <li><c>--timeout</c> via <see cref="OctopusCreateReleaseSettings.Timeout"/></li>
+        ///     <li><c>--user</c> via <see cref="OctopusCreateReleaseSettings.Username"/></li>
+        ///     <li><c>--variable</c> via <see cref="OctopusCreateReleaseSettings.Variables"/></li>
+        ///     <li><c>--version</c> via <see cref="OctopusCreateReleaseSettings.Version"/></li>
+        ///     <li><c>--waitfordeployment</c> via <see cref="OctopusCreateReleaseSettings.WaitForDeployment"/></li>
+        ///     <li><c>--whatif</c> via <see cref="OctopusCreateReleaseSettings.WhatIf"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> OctopusCreateRelease(OctopusCreateReleaseSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new OctopusCreateReleaseSettings();
@@ -298,6 +390,46 @@ namespace Nuke.Common.Tools.Octopus
         ///   <p>The <c>Octo.exe deploy-release</c> can be used to automate the deployment of releases to environments. This allows you to easily integrate Octopus with other continuous integration servers.</p>
         ///   <p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--apiKey</c> via <see cref="OctopusDeployReleaseSettings.ApiKey"/></li>
+        ///     <li><c>--cancelontimeout</c> via <see cref="OctopusDeployReleaseSettings.CancelOnTimeout"/></li>
+        ///     <li><c>--channel</c> via <see cref="OctopusDeployReleaseSettings.Channel"/></li>
+        ///     <li><c>--configFile</c> via <see cref="OctopusDeployReleaseSettings.ConfigFile"/></li>
+        ///     <li><c>--debug</c> via <see cref="OctopusDeployReleaseSettings.Debug"/></li>
+        ///     <li><c>--deployat</c> via <see cref="OctopusDeployReleaseSettings.DeployAt"/></li>
+        ///     <li><c>--deploymentchecksleepcycle</c> via <see cref="OctopusDeployReleaseSettings.DeploymentCheckSleepCycle"/></li>
+        ///     <li><c>--deploymenttimeout</c> via <see cref="OctopusDeployReleaseSettings.DeploymentTimeout"/></li>
+        ///     <li><c>--deployto</c> via <see cref="OctopusDeployReleaseSettings.DeployTo"/></li>
+        ///     <li><c>--enableServiceMessages</c> via <see cref="OctopusDeployReleaseSettings.EnableServiceMessages"/></li>
+        ///     <li><c>--force</c> via <see cref="OctopusDeployReleaseSettings.Force"/></li>
+        ///     <li><c>--forcepackagedownload</c> via <see cref="OctopusDeployReleaseSettings.ForcePackageDownload"/></li>
+        ///     <li><c>--guidedfailure</c> via <see cref="OctopusDeployReleaseSettings.GuidedFailure"/></li>
+        ///     <li><c>--ignoreSslErrors</c> via <see cref="OctopusDeployReleaseSettings.IgnoreSslErrors"/></li>
+        ///     <li><c>--logLevel</c> via <see cref="OctopusDeployReleaseSettings.LogLevel"/></li>
+        ///     <li><c>--norawlog</c> via <see cref="OctopusDeployReleaseSettings.NoRawLog"/></li>
+        ///     <li><c>--pass</c> via <see cref="OctopusDeployReleaseSettings.Password"/></li>
+        ///     <li><c>--progress</c> via <see cref="OctopusDeployReleaseSettings.Progress"/></li>
+        ///     <li><c>--project</c> via <see cref="OctopusDeployReleaseSettings.Project"/></li>
+        ///     <li><c>--proxy</c> via <see cref="OctopusDeployReleaseSettings.Proxy"/></li>
+        ///     <li><c>--proxyPass</c> via <see cref="OctopusDeployReleaseSettings.ProxyPassword"/></li>
+        ///     <li><c>--proxyUser</c> via <see cref="OctopusDeployReleaseSettings.ProxyUsername"/></li>
+        ///     <li><c>--rawlogfile</c> via <see cref="OctopusDeployReleaseSettings.RawLogFile"/></li>
+        ///     <li><c>--server</c> via <see cref="OctopusDeployReleaseSettings.Server"/></li>
+        ///     <li><c>--skip</c> via <see cref="OctopusDeployReleaseSettings.Skip"/></li>
+        ///     <li><c>--space</c> via <see cref="OctopusDeployReleaseSettings.Space"/></li>
+        ///     <li><c>--specificmachines</c> via <see cref="OctopusDeployReleaseSettings.SpecificMachines"/></li>
+        ///     <li><c>--tenant</c> via <see cref="OctopusDeployReleaseSettings.Tenant"/></li>
+        ///     <li><c>--tenanttag</c> via <see cref="OctopusDeployReleaseSettings.TenantTag"/></li>
+        ///     <li><c>--timeout</c> via <see cref="OctopusDeployReleaseSettings.Timeout"/></li>
+        ///     <li><c>--updateVariables</c> via <see cref="OctopusDeployReleaseSettings.UpdateVariables"/></li>
+        ///     <li><c>--user</c> via <see cref="OctopusDeployReleaseSettings.Username"/></li>
+        ///     <li><c>--variable</c> via <see cref="OctopusDeployReleaseSettings.Variables"/></li>
+        ///     <li><c>--version</c> via <see cref="OctopusDeployReleaseSettings.Version"/></li>
+        ///     <li><c>--waitfordeployment</c> via <see cref="OctopusDeployReleaseSettings.WaitForDepployment"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> OctopusDeployRelease(OctopusDeployReleaseSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new OctopusDeployReleaseSettings();
@@ -5083,8 +5215,12 @@ namespace Nuke.Common.Tools.Octopus
     [TypeConverter(typeof(TypeConverter<OctopusPackFormat>))]
     public partial class OctopusPackFormat : Enumeration
     {
-        public static OctopusPackFormat NuPkg = new OctopusPackFormat { Value = "NuPkg" };
-        public static OctopusPackFormat Zip = new OctopusPackFormat { Value = "Zip" };
+        public static OctopusPackFormat NuPkg = (OctopusPackFormat) "NuPkg";
+        public static OctopusPackFormat Zip = (OctopusPackFormat) "Zip";
+        public static explicit operator OctopusPackFormat(string value)
+        {
+            return new OctopusPackFormat { Value = value };
+        }
     }
     #endregion
 }

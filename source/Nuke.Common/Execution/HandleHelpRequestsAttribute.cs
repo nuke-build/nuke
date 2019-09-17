@@ -9,9 +9,9 @@ using System.Linq;
 namespace Nuke.Common.Execution
 {
     [AttributeUsage(AttributeTargets.Class)]
-    internal class HandleHelpRequestsAttribute : Attribute, IPostLogoBuildExtension
+    internal class HandleHelpRequestsAttribute : Attribute, IOnAfterLogo
     {
-        public void Execute(
+        public void OnAfterLogo(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)

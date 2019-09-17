@@ -7,8 +7,13 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using Nuke.Common.BuildServers;
-using Nuke.Common.Execution;
+using Nuke.Common.CI.AppVeyor;
+using Nuke.Common.CI.AzureDevOps;
+using Nuke.Common.CI.Bitrise;
+using Nuke.Common.CI.GitLab;
+using Nuke.Common.CI.Jenkins;
+using Nuke.Common.CI.TeamCity;
+using Nuke.Common.CI.TravisCI;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -26,12 +31,12 @@ namespace Nuke.Common
             BuildAssemblyDirectory = GetBuildAssemblyDirectory();
             BuildProjectDirectory = GetBuildProjectDirectory(BuildAssemblyDirectory);
 
-            Verbosity = ParameterService.Instance.GetParameter<Verbosity?>(() => Verbosity) ?? Verbosity.Normal;
-            Host = ParameterService.Instance.GetParameter<HostType?>(() => Host) ?? GetHostType();
-            Continue = ParameterService.Instance.GetParameter(() => Continue);
-            Plan = ParameterService.Instance.GetParameter(() => Plan);
-            Help = ParameterService.Instance.GetParameter(() => Help);
-            NoLogo = ParameterService.Instance.GetParameter(() => NoLogo);
+            Verbosity = EnvironmentInfo.GetParameter<Verbosity?>(() => Verbosity) ?? Verbosity.Normal;
+            Host = EnvironmentInfo.GetParameter<HostType?>(() => Host) ?? GetHostType();
+            Continue = EnvironmentInfo.GetParameter(() => Continue);
+            Plan = EnvironmentInfo.GetParameter(() => Plan);
+            Help = EnvironmentInfo.GetParameter(() => Help);
+            NoLogo = EnvironmentInfo.GetParameter(() => NoLogo);
         }
 
         /// <summary>
@@ -97,11 +102,11 @@ namespace Nuke.Common
 
         private static PathConstruction.AbsolutePath GetRootDirectory()
         {
-            var parameterValue = ParameterService.Instance.GetParameter(() => RootDirectory);
+            var parameterValue = EnvironmentInfo.GetParameter(() => RootDirectory);
             if (parameterValue != null)
                 return parameterValue;
 
-            if (ParameterService.Instance.GetParameter<bool>(() => RootDirectory))
+            if (EnvironmentInfo.GetParameter<bool>(() => RootDirectory))
                 return (PathConstruction.AbsolutePath) EnvironmentInfo.WorkingDirectory;
 
             return TryGetRootDirectoryFrom(EnvironmentInfo.WorkingDirectory)
@@ -144,13 +149,13 @@ namespace Nuke.Common
                 return HostType.Jenkins;
             if (TeamCity.IsRunningTeamCity)
                 return HostType.TeamCity;
-            if (TeamServices.IsRunningTeamServices)
-                return HostType.TeamServices;
+            if (AzureDevOps.IsRunningAzureDevOps)
+                return HostType.AzureDevOps;
             if (Bitrise.IsRunningBitrise)
                 return HostType.Bitrise;
             if (GitLab.IsRunningGitLab)
                 return HostType.GitLab;
-            if (Travis.IsRunningTravis)
+            if (TravisCI.IsRunningTravis)
                 return HostType.Travis;
 
             return HostType.Console;

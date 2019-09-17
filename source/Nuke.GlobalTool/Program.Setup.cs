@@ -16,16 +16,21 @@ using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.IO.PathConstruction;
+using static Nuke.Common.Utilities.TemplateUtility;
 
 namespace Nuke.GlobalTool
 {
     partial class Program
     {
         // ReSharper disable InconsistentNaming
+
         public const string PLATFORM_NETCORE = "netcore";
         public const string PLATFORM_NETFX = "netfx";
+        public const string FRAMEWORK_NET461 = "net461";
+        public const string FRAMEWORK_NETCOREAPP2 = "netcoreapp2.0";
         public const string FORMAT_SDK = "sdk";
         public const string FORMAT_LEGACY = "legacy";
+
         // ReSharper restore InconsistentNaming
 
         [UsedImplicitly]
@@ -55,11 +60,15 @@ namespace Nuke.GlobalTool
             var buildProjectName = ConsoleUtility.PromptForInput("How should the build project be named?", "_build");
             var buildDirectoryName = ConsoleUtility.PromptForInput("Where should the build project be located?", "./build");
 
-            var targetPlatform = !ParameterService.Instance.GetParameter<bool>("boot")
+            var targetPlatform = !EnvironmentInfo.GetParameter<bool>("boot")
                 ? PLATFORM_NETCORE
                 : ConsoleUtility.PromptForChoice("What bootstrapping method should be used?",
                     (PLATFORM_NETCORE, ".NET Core SDK"),
                     (PLATFORM_NETFX, ".NET Framework/Mono"));
+
+            var targetFramework = targetPlatform == PLATFORM_NETFX
+                ? FRAMEWORK_NET461
+                : FRAMEWORK_NETCOREAPP2;
 
             var projectFormat = targetPlatform == PLATFORM_NETCORE
                 ? FORMAT_SDK
@@ -181,7 +190,7 @@ namespace Nuke.GlobalTool
 
             TextTasks.WriteAllLines(
                 buildProjectFile,
-                TemplateUtility.FillTemplate(
+                FillTemplate(
                     GetTemplate($"_build.{projectFormat}.csproj"),
                     definitions,
                     replacements: GetDictionary(
@@ -192,6 +201,7 @@ namespace Nuke.GlobalTool
                             scriptDirectory = (WinRelativePath) GetRelativePath(buildDirectory, EnvironmentInfo.WorkingDirectory),
                             buildProjectName,
                             buildProjectGuid,
+                            targetFramework,
                             nukeVersion,
                             nukeVersionMajorMinor = nukeVersion.Split(".").Take(2).Join(".")
                         })));
@@ -200,36 +210,37 @@ namespace Nuke.GlobalTool
             {
                 TextTasks.WriteAllLines(
                     Path.Combine(buildDirectory, "packages.config"),
-                    TemplateUtility.FillTemplate(
+                    FillTemplate(
                         GetTemplate("_build.legacy.packages.config"),
                         replacements: GetDictionary(new { nukeVersion })));
             }
 
             TextTasks.WriteAllLines(
                 $"{buildProjectFile}.DotSettings",
-                TemplateUtility.FillTemplate(
+                FillTemplate(
                     GetTemplate("_build.csproj.DotSettings")));
 
             TextTasks.WriteAllLines(
                 Path.Combine(buildDirectory, ".editorconfig"),
-                TemplateUtility.FillTemplate(
+                FillTemplate(
                     GetTemplate(".editorconfig")));
 
             TextTasks.WriteAllLines(
                 Path.Combine(buildDirectory, "Build.cs"),
-                TemplateUtility.FillTemplate(
+                FillTemplate(
                     GetTemplate("Build.cs"),
                     definitions));
 
             TextTasks.WriteAllLines(
                 Path.Combine(EnvironmentInfo.WorkingDirectory, "build.ps1"),
-                TemplateUtility.FillTemplate(
+                FillTemplate(
                     GetTemplate($"build.{targetPlatform}.ps1"),
                     replacements: GetDictionary(
                         new
                         {
                             rootDirectory = (WinRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, rootDirectory),
-                            solutionDirectory = (WinRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, solutionDirectory ?? rootDirectory),
+                            solutionDirectory =
+                                (WinRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, solutionDirectory ?? rootDirectory),
                             scriptDirectory = (WinRelativePath) GetRelativePath(buildDirectory, EnvironmentInfo.WorkingDirectory),
                             buildDirectory = (WinRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, buildDirectory),
                             buildProjectName,
@@ -238,13 +249,14 @@ namespace Nuke.GlobalTool
 
             TextTasks.WriteAllLines(
                 Path.Combine(EnvironmentInfo.WorkingDirectory, "build.sh"),
-                TemplateUtility.FillTemplate(
+                FillTemplate(
                     GetTemplate($"build.{targetPlatform}.sh"),
                     replacements: GetDictionary(
                         new
                         {
                             rootDirectory = (UnixRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, rootDirectory),
-                            solutionDirectory = (UnixRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, solutionDirectory ?? rootDirectory),
+                            solutionDirectory =
+                                (UnixRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, solutionDirectory ?? rootDirectory),
                             scriptDirectory = (UnixRelativePath) GetRelativePath(buildDirectory, EnvironmentInfo.WorkingDirectory),
                             buildDirectory = (UnixRelativePath) GetRelativePath(EnvironmentInfo.WorkingDirectory, buildDirectory),
                             buildProjectName,
@@ -273,7 +285,7 @@ namespace Nuke.GlobalTool
 
                 TextTasks.WriteAllLines(
                     Path.Combine(rootDirectory, "README.md"),
-                    TemplateUtility.FillTemplate(
+                    FillTemplate(
                         GetTemplate("README.md"),
                         replacements: GetDictionary(
                             new
@@ -286,7 +298,7 @@ namespace Nuke.GlobalTool
 
                 TextTasks.WriteAllLines(
                     Path.Combine(rootDirectory, "LICENSE"),
-                    TemplateUtility.FillTemplate(
+                    FillTemplate(
                         GetTemplate("LICENSE"),
                         replacements: GetDictionary(
                             new
@@ -297,7 +309,7 @@ namespace Nuke.GlobalTool
 
                 TextTasks.WriteAllLines(
                     Path.Combine(rootDirectory, "CHANGELOG.md"),
-                    TemplateUtility.FillTemplate(
+                    FillTemplate(
                         GetTemplate("CHANGELOG.md")));
 
                 TextTasks.WriteAllText(
@@ -366,17 +378,6 @@ namespace Nuke.GlobalTool
         private static string[] GetTemplate(string templateName)
         {
             return ResourceUtility.GetResourceAllLines<Program>($"templates.{templateName}");
-        }
-
-        // TODO: move to TemplateUtility
-        private static IReadOnlyDictionary<string, string> GetDictionary<T>(T obj)
-            where T : class
-        {
-            return obj != null
-                ? obj.ToPropertyDictionary(
-                    x => $"_{x.Name.SplitCamelHumps().Join(separator: '_').ToUpper()}_",
-                    x => x?.ToString() ?? string.Empty)
-                : new Dictionary<string, string>();
         }
     }
 }

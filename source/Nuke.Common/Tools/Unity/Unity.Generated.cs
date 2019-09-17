@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.Unity
 {
+    /// <summary>
+    ///   <p>Unity is usually launched by double-clicking its icon from the desktop. However, it is also possible to run it from the command line (from the macOS Terminal or the Windows Command Prompt). When launched in this way, Unity can receive commands and information on startup, which can be very useful for test suites, automated builds and other production tasks.</p>
+    ///   <p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class UnityTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.Unity
             GetToolPath();
         public static Action<OutputType, string> UnityLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   Unity is usually launched by double-clicking its icon from the desktop. However, it is also possible to run it from the command line (from the macOS Terminal or the Windows Command Prompt). When launched in this way, Unity can receive commands and information on startup, which can be very useful for test suites, automated builds and other production tasks.
+        ///   <p>Unity is usually launched by double-clicking its icon from the desktop. However, it is also possible to run it from the command line (from the macOS Terminal or the Windows Command Prompt). When launched in this way, Unity can receive commands and information on startup, which can be very useful for test suites, automated builds and other production tasks.</p>
+        ///   <p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> Unity(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,18 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(2018.2+) Exports the currently activated license to the path of the Unity executable or either the default Unity license location, see the logs or <a href="https://docs.unity3d.com/Manual/ActivationFAQ.html">Activation FAQ</a> for more information.</p>
         ///   <p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>-batchmode</c> via <see cref="UnityCreateManualActivationFileSettings.BatchMode"/></li>
+        ///     <li><c>-nographics</c> via <see cref="UnityCreateManualActivationFileSettings.NoGraphics"/></li>
+        ///     <li><c>-password</c> via <see cref="UnityCreateManualActivationFileSettings.Password"/></li>
+        ///     <li><c>-quit</c> via <see cref="UnityCreateManualActivationFileSettings.Quit"/></li>
+        ///     <li><c>-serial</c> via <see cref="UnityCreateManualActivationFileSettings.Serial"/></li>
+        ///     <li><c>-silent-crashes</c> via <see cref="UnityCreateManualActivationFileSettings.SilentCrashes"/></li>
+        ///     <li><c>-username</c> via <see cref="UnityCreateManualActivationFileSettings.Username"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> UnityCreateManualActivationFile(UnityCreateManualActivationFileSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new UnityCreateManualActivationFileSettings();
@@ -95,6 +112,19 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>(2018.2+) Activates Unity with a license file.</p>
         ///   <p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>-batchmode</c> via <see cref="UnityManualLicenseFileSettings.BatchMode"/></li>
+        ///     <li><c>-manualLicenseFile</c> via <see cref="UnityManualLicenseFileSettings.LicenseFile"/></li>
+        ///     <li><c>-nographics</c> via <see cref="UnityManualLicenseFileSettings.NoGraphics"/></li>
+        ///     <li><c>-password</c> via <see cref="UnityManualLicenseFileSettings.Password"/></li>
+        ///     <li><c>-quit</c> via <see cref="UnityManualLicenseFileSettings.Quit"/></li>
+        ///     <li><c>-serial</c> via <see cref="UnityManualLicenseFileSettings.Serial"/></li>
+        ///     <li><c>-silent-crashes</c> via <see cref="UnityManualLicenseFileSettings.SilentCrashes"/></li>
+        ///     <li><c>-username</c> via <see cref="UnityManualLicenseFileSettings.Username"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> UnityManualLicenseFile(UnityManualLicenseFileSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new UnityManualLicenseFileSettings();
@@ -149,6 +179,53 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Execute Unity.</p>
         ///   <p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;customArguments&gt;</c> via <see cref="UnitySettings.CustomArguments"/></li>
+        ///     <li><c>-accept-apiupdate</c> via <see cref="UnitySettings.AcceptApiUpdate"/></li>
+        ///     <li><c>-assetServerUpdate</c> via <see cref="UnitySettings.AssetServerUpdate"/></li>
+        ///     <li><c>-batchmode</c> via <see cref="UnitySettings.BatchMode"/></li>
+        ///     <li><c>-buildLinux32Player</c> via <see cref="UnitySettings.BuildLinux32Player"/></li>
+        ///     <li><c>-buildLinux64Player</c> via <see cref="UnitySettings.BuildLinux64Player"/></li>
+        ///     <li><c>-buildLinuxUniversalPlayer</c> via <see cref="UnitySettings.BuildLinuxUniversalPlayer"/></li>
+        ///     <li><c>-buildOSX64Player</c> via <see cref="UnitySettings.BuildOSX64Player"/></li>
+        ///     <li><c>-buildOSXPlayer</c> via <see cref="UnitySettings.BuildOSXPlayer"/></li>
+        ///     <li><c>-buildOSXUniversalPlayer</c> via <see cref="UnitySettings.BuildOSXUniversalPlayer"/></li>
+        ///     <li><c>-buildTarget</c> via <see cref="UnitySettings.BuildTarget"/></li>
+        ///     <li><c>-buildWindows64Player</c> via <see cref="UnitySettings.BuildWindows64Player"/></li>
+        ///     <li><c>-buildWindowsPlayer</c> via <see cref="UnitySettings.BuildWindowsPlayer"/></li>
+        ///     <li><c>-cacheServerIPAddress</c> via <see cref="UnitySettings.CacheServerIPAddress"/></li>
+        ///     <li><c>-createProject</c> via <see cref="UnitySettings.CreateProject"/></li>
+        ///     <li><c>-disable-assembly-updater</c> via <see cref="UnitySettings.DisableAssemblyUpdater"/></li>
+        ///     <li><c>-editorTestsCategories</c> via <see cref="UnitySettings.EditorTestsCategories"/></li>
+        ///     <li><c>-editorTestsFilter</c> via <see cref="UnitySettings.EditorTestsFilter"/></li>
+        ///     <li><c>-editorTestsResultFile</c> via <see cref="UnitySettings.EditorTestsResultFile"/></li>
+        ///     <li><c>-executeMethod</c> via <see cref="UnitySettings.ExecuteMethod"/></li>
+        ///     <li><c>-exportPackage</c> via <see cref="UnitySettings.ExportPackage"/></li>
+        ///     <li><c>-force-clamped</c> via <see cref="UnitySettings.ForceClamped"/></li>
+        ///     <li><c>-force-d3d11</c> via <see cref="UnitySettings.ForceD3d11"/></li>
+        ///     <li><c>-force-device-index</c> via <see cref="UnitySettings.ForceDeviceIndex"/></li>
+        ///     <li><c>-force-gfx-metal</c> via <see cref="UnitySettings.ForceGfxMetal"/></li>
+        ///     <li><c>-force-glcore</c> via <see cref="UnitySettings.ForceGLCore"/></li>
+        ///     <li><c>-force-glcore</c> via <see cref="UnitySettings.ForceGLCoreXY"/></li>
+        ///     <li><c>-force-gles</c> via <see cref="UnitySettings.ForceGLES"/></li>
+        ///     <li><c>-force-gles</c> via <see cref="UnitySettings.ForceGLESXY"/></li>
+        ///     <li><c>-force-low-power-device</c> via <see cref="UnitySettings.ForceLowPowerDevice"/></li>
+        ///     <li><c>-importPackage</c> via <see cref="UnitySettings.ImportPackage"/></li>
+        ///     <li><c>-nographics</c> via <see cref="UnitySettings.NoGraphics"/></li>
+        ///     <li><c>-noUpm</c> via <see cref="UnitySettings.NoUpm"/></li>
+        ///     <li><c>-password</c> via <see cref="UnitySettings.Password"/></li>
+        ///     <li><c>-projectPath</c> via <see cref="UnitySettings.ProjectPath"/></li>
+        ///     <li><c>-quit</c> via <see cref="UnitySettings.Quit"/></li>
+        ///     <li><c>-runEditorTests</c> via <see cref="UnitySettings.RunEditorTests"/></li>
+        ///     <li><c>-serial</c> via <see cref="UnitySettings.Serial"/></li>
+        ///     <li><c>-setDefaultPlatformTextureFormat</c> via <see cref="UnitySettings.DefaultPlatformTextureFormat"/></li>
+        ///     <li><c>-silent-crashes</c> via <see cref="UnitySettings.SilentCrashes"/></li>
+        ///     <li><c>-stackTraceLogType</c> via <see cref="UnitySettings.StackTraceLogType"/></li>
+        ///     <li><c>-username</c> via <see cref="UnitySettings.Username"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> Unity(UnitySettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new UnitySettings();
@@ -271,6 +348,18 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Return the currenlty activated Unity license.</p>
         ///   <p>For more details, visit the <a href="https://unity3d.com/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>-batchmode</c> via <see cref="UnityReturnLicenseSettings.BatchMode"/></li>
+        ///     <li><c>-nographics</c> via <see cref="UnityReturnLicenseSettings.NoGraphics"/></li>
+        ///     <li><c>-password</c> via <see cref="UnityReturnLicenseSettings.Password"/></li>
+        ///     <li><c>-quit</c> via <see cref="UnityReturnLicenseSettings.Quit"/></li>
+        ///     <li><c>-serial</c> via <see cref="UnityReturnLicenseSettings.Serial"/></li>
+        ///     <li><c>-silent-crashes</c> via <see cref="UnityReturnLicenseSettings.SilentCrashes"/></li>
+        ///     <li><c>-username</c> via <see cref="UnityReturnLicenseSettings.Username"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> UnityReturnLicense(UnityReturnLicenseSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new UnityReturnLicenseSettings();
@@ -3662,26 +3751,30 @@ namespace Nuke.Common.Tools.Unity
     [TypeConverter(typeof(TypeConverter<UnityBuildTarget>))]
     public partial class UnityBuildTarget : Enumeration
     {
-        public static UnityBuildTarget standalone = new UnityBuildTarget { Value = "standalone" };
-        public static UnityBuildTarget Win = new UnityBuildTarget { Value = "Win" };
-        public static UnityBuildTarget Win64 = new UnityBuildTarget { Value = "Win64" };
-        public static UnityBuildTarget OSXUniversal = new UnityBuildTarget { Value = "OSXUniversal" };
-        public static UnityBuildTarget Linux = new UnityBuildTarget { Value = "Linux" };
-        public static UnityBuildTarget Linux64 = new UnityBuildTarget { Value = "Linux64" };
-        public static UnityBuildTarget LinuxUniversal = new UnityBuildTarget { Value = "LinuxUniversal" };
-        public static UnityBuildTarget iOS = new UnityBuildTarget { Value = "iOS" };
-        public static UnityBuildTarget Android = new UnityBuildTarget { Value = "Android" };
-        public static UnityBuildTarget Web = new UnityBuildTarget { Value = "Web" };
-        public static UnityBuildTarget WebStreamed = new UnityBuildTarget { Value = "WebStreamed" };
-        public static UnityBuildTarget WebGL = new UnityBuildTarget { Value = "WebGL" };
-        public static UnityBuildTarget XboxOne = new UnityBuildTarget { Value = "XboxOne" };
-        public static UnityBuildTarget PS4 = new UnityBuildTarget { Value = "PS4" };
-        public static UnityBuildTarget PSP2 = new UnityBuildTarget { Value = "PSP2" };
-        public static UnityBuildTarget WindowsStoreApps = new UnityBuildTarget { Value = "WindowsStoreApps" };
-        public static UnityBuildTarget Switch = new UnityBuildTarget { Value = "Switch" };
-        public static UnityBuildTarget N3DS = new UnityBuildTarget { Value = "N3DS" };
-        public static UnityBuildTarget tvOS = new UnityBuildTarget { Value = "tvOS" };
-        public static UnityBuildTarget PSM = new UnityBuildTarget { Value = "PSM" };
+        public static UnityBuildTarget standalone = (UnityBuildTarget) "standalone";
+        public static UnityBuildTarget Win = (UnityBuildTarget) "Win";
+        public static UnityBuildTarget Win64 = (UnityBuildTarget) "Win64";
+        public static UnityBuildTarget OSXUniversal = (UnityBuildTarget) "OSXUniversal";
+        public static UnityBuildTarget Linux = (UnityBuildTarget) "Linux";
+        public static UnityBuildTarget Linux64 = (UnityBuildTarget) "Linux64";
+        public static UnityBuildTarget LinuxUniversal = (UnityBuildTarget) "LinuxUniversal";
+        public static UnityBuildTarget iOS = (UnityBuildTarget) "iOS";
+        public static UnityBuildTarget Android = (UnityBuildTarget) "Android";
+        public static UnityBuildTarget Web = (UnityBuildTarget) "Web";
+        public static UnityBuildTarget WebStreamed = (UnityBuildTarget) "WebStreamed";
+        public static UnityBuildTarget WebGL = (UnityBuildTarget) "WebGL";
+        public static UnityBuildTarget XboxOne = (UnityBuildTarget) "XboxOne";
+        public static UnityBuildTarget PS4 = (UnityBuildTarget) "PS4";
+        public static UnityBuildTarget PSP2 = (UnityBuildTarget) "PSP2";
+        public static UnityBuildTarget WindowsStoreApps = (UnityBuildTarget) "WindowsStoreApps";
+        public static UnityBuildTarget Switch = (UnityBuildTarget) "Switch";
+        public static UnityBuildTarget N3DS = (UnityBuildTarget) "N3DS";
+        public static UnityBuildTarget tvOS = (UnityBuildTarget) "tvOS";
+        public static UnityBuildTarget PSM = (UnityBuildTarget) "PSM";
+        public static explicit operator UnityBuildTarget(string value)
+        {
+            return new UnityBuildTarget { Value = value };
+        }
     }
     #endregion
     #region UnityGLCore
@@ -3694,14 +3787,18 @@ namespace Nuke.Common.Tools.Unity
     [TypeConverter(typeof(TypeConverter<UnityGLCore>))]
     public partial class UnityGLCore : Enumeration
     {
-        public static UnityGLCore _32 = new UnityGLCore { Value = "32" };
-        public static UnityGLCore _33 = new UnityGLCore { Value = "33" };
-        public static UnityGLCore _40 = new UnityGLCore { Value = "40" };
-        public static UnityGLCore _41 = new UnityGLCore { Value = "41" };
-        public static UnityGLCore _42 = new UnityGLCore { Value = "42" };
-        public static UnityGLCore _43 = new UnityGLCore { Value = "43" };
-        public static UnityGLCore _44 = new UnityGLCore { Value = "44" };
-        public static UnityGLCore _45 = new UnityGLCore { Value = "45" };
+        public static UnityGLCore _32 = (UnityGLCore) "32";
+        public static UnityGLCore _33 = (UnityGLCore) "33";
+        public static UnityGLCore _40 = (UnityGLCore) "40";
+        public static UnityGLCore _41 = (UnityGLCore) "41";
+        public static UnityGLCore _42 = (UnityGLCore) "42";
+        public static UnityGLCore _43 = (UnityGLCore) "43";
+        public static UnityGLCore _44 = (UnityGLCore) "44";
+        public static UnityGLCore _45 = (UnityGLCore) "45";
+        public static explicit operator UnityGLCore(string value)
+        {
+            return new UnityGLCore { Value = value };
+        }
     }
     #endregion
     #region UnityGLES
@@ -3714,9 +3811,13 @@ namespace Nuke.Common.Tools.Unity
     [TypeConverter(typeof(TypeConverter<UnityGLES>))]
     public partial class UnityGLES : Enumeration
     {
-        public static UnityGLES _30 = new UnityGLES { Value = "30" };
-        public static UnityGLES _31 = new UnityGLES { Value = "31" };
-        public static UnityGLES _32 = new UnityGLES { Value = "32" };
+        public static UnityGLES _30 = (UnityGLES) "30";
+        public static UnityGLES _31 = (UnityGLES) "31";
+        public static UnityGLES _32 = (UnityGLES) "32";
+        public static explicit operator UnityGLES(string value)
+        {
+            return new UnityGLES { Value = value };
+        }
     }
     #endregion
     #region UnityStackTraceLogType
@@ -3729,9 +3830,13 @@ namespace Nuke.Common.Tools.Unity
     [TypeConverter(typeof(TypeConverter<UnityStackTraceLogType>))]
     public partial class UnityStackTraceLogType : Enumeration
     {
-        public static UnityStackTraceLogType None = new UnityStackTraceLogType { Value = "None" };
-        public static UnityStackTraceLogType Script_Only = new UnityStackTraceLogType { Value = "Script Only" };
-        public static UnityStackTraceLogType Full = new UnityStackTraceLogType { Value = "Full" };
+        public static UnityStackTraceLogType None = (UnityStackTraceLogType) "None";
+        public static UnityStackTraceLogType Script_Only = (UnityStackTraceLogType) "Script Only";
+        public static UnityStackTraceLogType Full = (UnityStackTraceLogType) "Full";
+        public static explicit operator UnityStackTraceLogType(string value)
+        {
+            return new UnityStackTraceLogType { Value = value };
+        }
     }
     #endregion
     #region UnityPlatformTextureFormat
@@ -3744,12 +3849,16 @@ namespace Nuke.Common.Tools.Unity
     [TypeConverter(typeof(TypeConverter<UnityPlatformTextureFormat>))]
     public partial class UnityPlatformTextureFormat : Enumeration
     {
-        public static UnityPlatformTextureFormat dxt = new UnityPlatformTextureFormat { Value = "dxt" };
-        public static UnityPlatformTextureFormat pvrtc = new UnityPlatformTextureFormat { Value = "pvrtc" };
-        public static UnityPlatformTextureFormat atc = new UnityPlatformTextureFormat { Value = "atc" };
-        public static UnityPlatformTextureFormat etc = new UnityPlatformTextureFormat { Value = "etc" };
-        public static UnityPlatformTextureFormat etc2 = new UnityPlatformTextureFormat { Value = "etc2" };
-        public static UnityPlatformTextureFormat astc = new UnityPlatformTextureFormat { Value = "astc" };
+        public static UnityPlatformTextureFormat dxt = (UnityPlatformTextureFormat) "dxt";
+        public static UnityPlatformTextureFormat pvrtc = (UnityPlatformTextureFormat) "pvrtc";
+        public static UnityPlatformTextureFormat atc = (UnityPlatformTextureFormat) "atc";
+        public static UnityPlatformTextureFormat etc = (UnityPlatformTextureFormat) "etc";
+        public static UnityPlatformTextureFormat etc2 = (UnityPlatformTextureFormat) "etc2";
+        public static UnityPlatformTextureFormat astc = (UnityPlatformTextureFormat) "astc";
+        public static explicit operator UnityPlatformTextureFormat(string value)
+        {
+            return new UnityPlatformTextureFormat { Value = value };
+        }
     }
     #endregion
 }

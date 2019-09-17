@@ -17,10 +17,10 @@ namespace Nuke.Common.Execution
     {
         public static IReadOnlyCollection<ExecutableTarget> CreateAll<T>(
             T build,
-            Expression<Func<T, Target>> defaultTargetExpression)
+            params Expression<Func<T, Target>>[] defaultTargetExpressions)
             where T : NukeBuild
         {
-            var defaultTarget = defaultTargetExpression?.Compile().Invoke(build);
+            var defaultTargets = defaultTargetExpressions.Select(x => x.Compile().Invoke(build)).ToList();
             var properties = build.GetType()
                 .GetProperties(ReflectionService.Instance)
                 .Where(x => x.PropertyType == typeof(Target)).ToList();
@@ -40,7 +40,7 @@ namespace Nuke.Common.Execution
                                  Definition = definition,
                                  Description = definition.Description,
                                  Factory = factory,
-                                 IsDefault = factory == defaultTarget,
+                                 IsDefault = defaultTargets.Contains(factory),
                                  DynamicConditions = definition.DynamicConditions,
                                  StaticConditions = definition.StaticConditions,
                                  DependencyBehavior = definition.DependencyBehavior,

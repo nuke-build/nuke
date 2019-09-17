@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.GitVersion
 {
+    /// <summary>
+    ///   <p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p>
+    ///   <p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class GitVersionTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.GitVersion
             ToolPathResolver.GetPackageExecutable("GitVersion.CommandLine.DotNetCore|GitVersion.CommandLine", "GitVersion.dll|GitVersion.exe");
         public static Action<OutputType, string> GitVersionLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   GitVersion is a tool to help you achieve Semantic Versioning on your project.
+        ///   <p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p>
+        ///   <p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> GitVersion(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,35 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p>
         ///   <p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;targetPath&gt;</c> via <see cref="GitVersionSettings.TargetPath"/></li>
+        ///     <li><c>/b</c> via <see cref="GitVersionSettings.Branch"/></li>
+        ///     <li><c>/c</c> via <see cref="GitVersionSettings.Commit"/></li>
+        ///     <li><c>/diag</c> via <see cref="GitVersionSettings.Diagnostics"/></li>
+        ///     <li><c>/dynamicRepoLocation</c> via <see cref="GitVersionSettings.DynamicRepositoryLocation"/></li>
+        ///     <li><c>/ensureassemblyinfo</c> via <see cref="GitVersionSettings.EnsureAssemblyInfo"/></li>
+        ///     <li><c>/exec</c> via <see cref="GitVersionSettings.Executable"/></li>
+        ///     <li><c>/execargs</c> via <see cref="GitVersionSettings.ExecutableArguments"/></li>
+        ///     <li><c>/l</c> via <see cref="GitVersionSettings.LogFile"/></li>
+        ///     <li><c>/nocache</c> via <see cref="GitVersionSettings.NoCache"/></li>
+        ///     <li><c>/nofetch</c> via <see cref="GitVersionSettings.NoFetch"/></li>
+        ///     <li><c>/output</c> via <see cref="GitVersionSettings.Output"/></li>
+        ///     <li><c>/overrideconfig</c> via <see cref="GitVersionSettings.ConfigurationOverride"/></li>
+        ///     <li><c>/p</c> via <see cref="GitVersionSettings.Password"/></li>
+        ///     <li><c>/proj</c> via <see cref="GitVersionSettings.MSBuildProject"/></li>
+        ///     <li><c>/projargs</c> via <see cref="GitVersionSettings.MSBuildProjectArguments"/></li>
+        ///     <li><c>/showconfig</c> via <see cref="GitVersionSettings.ShowConfig"/></li>
+        ///     <li><c>/showvariable</c> via <see cref="GitVersionSettings.ShowVariable"/></li>
+        ///     <li><c>/u</c> via <see cref="GitVersionSettings.Username"/></li>
+        ///     <li><c>/updateassemblyinfo</c> via <see cref="GitVersionSettings.UpdateAssemblyInfo"/></li>
+        ///     <li><c>/updateassemblyinfofilename</c> via <see cref="GitVersionSettings.UpdateAssemblyInfoFileName"/></li>
+        ///     <li><c>/url</c> via <see cref="GitVersionSettings.Url"/></li>
+        ///     <li><c>/verbosity</c> via <see cref="GitVersionSettings.Verbosity"/></li>
+        ///     <li><c>/version</c> via <see cref="GitVersionSettings.Version"/></li>
+        ///   </ul>
+        /// </remarks>
         public static (GitVersion Result, IReadOnlyCollection<Output> Output) GitVersion(GitVersionSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new GitVersionSettings();
@@ -291,6 +325,7 @@ namespace Nuke.Common.Tools.GitVersion
         public virtual string LegacySemVer { get; internal set; }
         public virtual string LegacySemVerPadded { get; internal set; }
         public virtual string AssemblySemVer { get; internal set; }
+        public virtual string AssemblySemFileVer { get; internal set; }
         public virtual string FullSemVer { get; internal set; }
         public virtual string InformationalVersion { get; internal set; }
         public virtual string BranchName { get; internal set; }
@@ -1198,8 +1233,12 @@ namespace Nuke.Common.Tools.GitVersion
     [TypeConverter(typeof(TypeConverter<GitVersionOutput>))]
     public partial class GitVersionOutput : Enumeration
     {
-        public static GitVersionOutput json = new GitVersionOutput { Value = "json" };
-        public static GitVersionOutput buildserver = new GitVersionOutput { Value = "buildserver" };
+        public static GitVersionOutput json = (GitVersionOutput) "json";
+        public static GitVersionOutput buildserver = (GitVersionOutput) "buildserver";
+        public static explicit operator GitVersionOutput(string value)
+        {
+            return new GitVersionOutput { Value = value };
+        }
     }
     #endregion
     #region GitVersionVerbosity
@@ -1212,11 +1251,15 @@ namespace Nuke.Common.Tools.GitVersion
     [TypeConverter(typeof(TypeConverter<GitVersionVerbosity>))]
     public partial class GitVersionVerbosity : Enumeration
     {
-        public static GitVersionVerbosity debug = new GitVersionVerbosity { Value = "debug" };
-        public static GitVersionVerbosity info = new GitVersionVerbosity { Value = "info" };
-        public static GitVersionVerbosity warn = new GitVersionVerbosity { Value = "warn" };
-        public static GitVersionVerbosity error = new GitVersionVerbosity { Value = "error" };
-        public static GitVersionVerbosity none = new GitVersionVerbosity { Value = "none" };
+        public static GitVersionVerbosity debug = (GitVersionVerbosity) "debug";
+        public static GitVersionVerbosity info = (GitVersionVerbosity) "info";
+        public static GitVersionVerbosity warn = (GitVersionVerbosity) "warn";
+        public static GitVersionVerbosity error = (GitVersionVerbosity) "error";
+        public static GitVersionVerbosity none = (GitVersionVerbosity) "none";
+        public static explicit operator GitVersionVerbosity(string value)
+        {
+            return new GitVersionVerbosity { Value = value };
+        }
     }
     #endregion
 }

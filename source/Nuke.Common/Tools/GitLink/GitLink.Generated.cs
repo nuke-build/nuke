@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.GitLink
 {
+    /// <summary>
+    ///   <p>GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.</p>
+    ///   <p>For more details, visit the <a href="https://github.com/GitTools/GitLink/">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class GitLinkTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.GitLink
             ToolPathResolver.GetPackageExecutable("gitlink", "GitLink.exe");
         public static Action<OutputType, string> GitLinkLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.
+        ///   <p>GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.</p>
+        ///   <p>For more details, visit the <a href="https://github.com/GitTools/GitLink/">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> GitLink(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,24 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.</p>
         ///   <p>For more details, visit the <a href="https://github.com/GitTools/GitLink/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;solutionDirectory&gt;</c> via <see cref="GitLink2Settings.SolutionDirectory"/></li>
+        ///     <li><c>-b</c> via <see cref="GitLink2Settings.BranchName"/></li>
+        ///     <li><c>-c</c> via <see cref="GitLink2Settings.Configuration"/></li>
+        ///     <li><c>-d</c> via <see cref="GitLink2Settings.PdbDirectory"/></li>
+        ///     <li><c>-debug</c> via <see cref="GitLink2Settings.Debug"/></li>
+        ///     <li><c>-errorsaswarnings</c> via <see cref="GitLink2Settings.ErrorsAsWarnings"/></li>
+        ///     <li><c>-f</c> via <see cref="GitLink2Settings.File"/></li>
+        ///     <li><c>-l</c> via <see cref="GitLink2Settings.LogFile"/></li>
+        ///     <li><c>-p</c> via <see cref="GitLink2Settings.Platform"/></li>
+        ///     <li><c>-powershell</c> via <see cref="GitLink2Settings.UsePowershell"/></li>
+        ///     <li><c>-s</c> via <see cref="GitLink2Settings.CommitSha"/></li>
+        ///     <li><c>-skipverify</c> via <see cref="GitLink2Settings.SkipVerification"/></li>
+        ///     <li><c>-u</c> via <see cref="GitLink2Settings.RepositoryUrl"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> GitLink2(GitLink2Settings toolSettings = null)
         {
             toolSettings = toolSettings ?? new GitLink2Settings();
@@ -107,6 +130,17 @@ namespace Nuke.Common.Tools.GitLink
         ///   <p>GitLink makes symbol servers obsolete which saves you both time with uploading source files with symbols and the user no longer has to specify custom symbol servers (such as symbolsource.org). The advantage of GitLink is that it is fully customized for Git. It also works with GitHub or BitBucket urls so it does not require a local git repository to work. This makes it perfectly usable in continuous integration servers such as Continua CI. Updating all the pdb files is very fast. A solution with over 85 projects will be handled in less than 30 seconds. When using GitLink, the user no longer has to specify symbol servers. The only requirement is to ensure the check the Enable source server support option in Visual Studio.</p>
         ///   <p>For more details, visit the <a href="https://github.com/GitTools/GitLink/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;pdbFile&gt;</c> via <see cref="GitLink3Settings.PdbFile"/></li>
+        ///     <li><c>--baseDir</c> via <see cref="GitLink3Settings.BaseDirectory"/></li>
+        ///     <li><c>--commit</c> via <see cref="GitLink3Settings.CommitSha"/></li>
+        ///     <li><c>--method</c> via <see cref="GitLink3Settings.Method"/></li>
+        ///     <li><c>--skipVerify</c> via <see cref="GitLink3Settings.SkipVerification"/></li>
+        ///     <li><c>--url</c> via <see cref="GitLink3Settings.RepositoryUrl"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> GitLink3(GitLink3Settings toolSettings = null)
         {
             toolSettings = toolSettings ?? new GitLink3Settings();
@@ -942,8 +976,12 @@ namespace Nuke.Common.Tools.GitLink
     [TypeConverter(typeof(TypeConverter<GitLinkSourceCodeRetrieval>))]
     public partial class GitLinkSourceCodeRetrieval : Enumeration
     {
-        public static GitLinkSourceCodeRetrieval Http = new GitLinkSourceCodeRetrieval { Value = "Http" };
-        public static GitLinkSourceCodeRetrieval Powershell = new GitLinkSourceCodeRetrieval { Value = "Powershell" };
+        public static GitLinkSourceCodeRetrieval Http = (GitLinkSourceCodeRetrieval) "Http";
+        public static GitLinkSourceCodeRetrieval Powershell = (GitLinkSourceCodeRetrieval) "Powershell";
+        public static explicit operator GitLinkSourceCodeRetrieval(string value)
+        {
+            return new GitLinkSourceCodeRetrieval { Value = value };
+        }
     }
     #endregion
 }

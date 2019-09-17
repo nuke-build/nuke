@@ -6,6 +6,33 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [0.22.0] / 2019-09-17
+- Changed `UnlistedAttribute` to `List` property on `ParameterAttribute`
+- Changed summary to show aborted and not-run targets as warning
+- Changed `TeamServices` to `AzureDevOps`
+- Changed namespace `Nuke.Common.BuildServers` to `Nuke.Common.CI.*`
+- Added support for multiple default targets
+- Added support for `PackageDownload` item group
+- Added support for hyphens in target names
+- Added support for absolute paths in `LocalExecutableAttribute`
+- Added support for `GitHubActions`
+- Added TeamCity configuration generation via `TeamCityAttribute`
+- Added XML serialization for .NET Core
+- Added reporting of TeamCity statistical values
+- Added additional methods for `CloudFoundryTasks`
+- Added `ProjectType` for Docker and SQL projects
+- Added implicit cast operator for generated enumerations
+- Added `InnoSetupTasks`
+- Added `TwitterTasks`
+- Added `IOnBuildFinished` build extension
+- Added missing arguments for `CoverletTasks`
+- Fixed `--boot` in setup for .NET Framework/Mono support
+- Fixed XML documentation for generated CLI tasks
+- Fixed `MSBuildToolPathResolver` to consider preview editions
+- Fixed `NuGetPackageResolver` to allow multiple versions of the same package
+- Fixed `TeamCity.SetParameter` and `TeamCity.ImportData`
+- Fixed `SolutionSerializer` to fall back to `ProjectConfiguration` section
+
 ## [0.21.2] / 2019-07-28
 - Fixed validation to exclude requirements of skipped targets
 - Fixed solution serialization to include malicious project GUID in error message
@@ -383,7 +410,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/common/compare/0.21.2...HEAD
+[vNext]: https://github.com/nuke-build/common/compare/0.22.0...HEAD
+[0.22.0]: https://github.com/nuke-build/common/compare/0.21.2...0.22.0
 [0.21.2]: https://github.com/nuke-build/common/compare/0.21.1...0.21.2
 [0.21.1]: https://github.com/nuke-build/common/compare/0.21.0...0.21.1
 [0.21.0]: https://github.com/nuke-build/common/compare/0.20.1...0.21.0

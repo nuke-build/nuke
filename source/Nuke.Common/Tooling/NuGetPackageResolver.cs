@@ -23,6 +23,7 @@ namespace Nuke.Common.Tooling
     {
         private const int c_defaultTimeout = 2000;
 
+        [ItemCanBeNull]
         public static async Task<string> GetLatestPackageVersion(string packageId, bool includePrereleases, int? timeout = null)
         {
             try
@@ -39,22 +40,16 @@ namespace Nuke.Common.Tooling
         }
 
         [CanBeNull]
-        public static InstalledPackage TryGetLocalInstalledPackage(
-            string packageId,
-            string packagesConfigFile,
-            bool includeDependencies = false)
-        {
-            return GetLocalInstalledPackages(packagesConfigFile, includeDependencies)
-                .FirstOrDefault(x => x.Id.EqualsOrdinalIgnoreCase(packageId));
-        }
-
         public static InstalledPackage GetLocalInstalledPackage(
             string packageId,
             string packagesConfigFile,
-            bool resolveDependencies = true)
+            string version = null,
+            bool includeDependencies = false)
         {
-            return TryGetLocalInstalledPackage(packageId, packagesConfigFile, resolveDependencies)
-                .NotNull($"Could not find package '{packageId}' via '{packagesConfigFile}'.");
+            return GetLocalInstalledPackages(packagesConfigFile, includeDependencies)
+                .SingleOrDefaultOrError(
+                    x => x.Id.EqualsOrdinalIgnoreCase(packageId) && (x.Version.ToString() == version || version == null),
+                    $"Package '{packageId}' is referenced with multiple versions. Use NuGetPackageResolver and SetToolPath.");
         }
 
         // TODO: add HasLocalInstalledPackage() ?
@@ -63,31 +58,33 @@ namespace Nuke.Common.Tooling
             string packagesConfigFile,
             bool resolveDependencies = true)
         {
-            var packagesDirectory = GetPackagesDirectory(packagesConfigFile);
-
             var packageIds = XmlTasks.XmlPeek(
-                packagesConfigFile,
-                IsLegacyFile(packagesConfigFile)
-                    ? ".//package/@id"
-                    : ".//*[local-name() = 'PackageReference']/@Include");
+                    packagesConfigFile,
+                    IsLegacyFile(packagesConfigFile)
+                        ? ".//package/@id"
+                        : ".//*[local-name() = 'PackageReference' or local-name() = 'PackageDownload']/@Include")
+                .Distinct();
 
             var installedPackages = new HashSet<InstalledPackage>(InstalledPackage.Comparer.Instance);
             foreach (var packageId in packageIds)
             {
                 // TODO: use xml namespaces
                 // TODO: version as tag
-                var version = XmlTasks.XmlPeekSingle(
+                var versions = XmlTasks.XmlPeek(
                     packagesConfigFile,
                     IsLegacyFile(packagesConfigFile)
                         ? $".//package[@id='{packageId}']/@version"
-                        : $".//*[local-name() = 'PackageReference'][@Include='{packageId}']/@Version");
+                        : $".//*[local-name() = 'PackageReference' or local-name() = 'PackageDownload'][@Include='{packageId}']/@Version");
 
-                var packageData = GetGlobalInstalledPackage(packageId, version, packagesDirectory);
-                if (packageData == null)
-                    continue;
+                foreach (var version in versions)
+                {
+                    var packageData = GetGlobalInstalledPackage(packageId, version, packagesConfigFile);
+                    if (packageData == null)
+                        continue;
 
-                installedPackages.Add(packageData);
-                yield return packageData;
+                    installedPackages.Add(packageData);
+                    yield return packageData;
+                }
             }
 
             if (resolveDependencies && !IsLegacyFile(packagesConfigFile))
@@ -97,7 +94,7 @@ namespace Nuke.Common.Tooling
                 {
                     var packageToCheck = packagesToCheck.Dequeue();
 
-                    foreach (var dependentPackage in GetDependentPackages(packageToCheck, packagesDirectory))
+                    foreach (var dependentPackage in GetDependentPackages(packageToCheck, packagesConfigFile))
                     {
                         if (installedPackages.Contains(dependentPackage))
                             continue;
@@ -111,11 +108,11 @@ namespace Nuke.Common.Tooling
             }
         }
 
-        private static IEnumerable<InstalledPackage> GetDependentPackages(InstalledPackage packageToCheck, string packagesDirectory)
+        private static IEnumerable<InstalledPackage> GetDependentPackages(InstalledPackage packageToCheck, string packagesConfigFile)
         {
             return packageToCheck.Metadata.GetDependencyGroups()
                 .SelectMany(x => x.Packages)
-                .Select(x => GetGlobalInstalledPackage(x.Id, x.VersionRange, packagesDirectory))
+                .Select(x => GetGlobalInstalledPackage(x.Id, x.VersionRange, packagesConfigFile))
                 .WhereNotNull()
                 .Distinct(x => new { x.Id, x.Version });
         }
@@ -123,7 +120,13 @@ namespace Nuke.Common.Tooling
         [CanBeNull]
         public static InstalledPackage GetGlobalInstalledPackage(string packageId, [CanBeNull] string version, [CanBeNull] string packagesConfigFile)
         {
-            VersionRange.TryParse(version != null && version.Contains("*") ? $"{version}" : $"[{version}]", out var versionRange);
+            if (version != null &&
+                !version.Contains("*") &&
+                !version.StartsWith("[") &&
+                !version.EndsWith("]"))
+                version = $"[{version}]";
+
+            VersionRange.TryParse(version, out var versionRange);
             return GetGlobalInstalledPackage(packageId, versionRange, packagesConfigFile);
         }
 
@@ -138,6 +141,8 @@ namespace Nuke.Common.Tooling
         {
             packageId = packageId.ToLowerInvariant();
             var packagesDirectory = GetPackagesDirectory(packagesConfigFile);
+            if (packagesDirectory == null)
+                return null;
 
             var packagesDirectoryInfo = new DirectoryInfo(packagesDirectory);
             var packages = packagesDirectoryInfo
@@ -172,10 +177,11 @@ namespace Nuke.Common.Tooling
         }
 
         // TODO: check for config ( repositoryPath / globalPackagesFolder )
-        public static string GetPackagesDirectory([CanBeNull] string packagesConfigFile)
+        [CanBeNull]
+        private static string GetPackagesDirectory([CanBeNull] string packagesConfigFile)
         {
             string TryGetFromEnvironmentVariable()
-                => EnvironmentInfo.Variable("NUGET_PACKAGES");
+                => EnvironmentInfo.GetVariable<string>("NUGET_PACKAGES");
 
             string TryGetGlobalDirectoryFromConfig()
                 => GetConfigFiles(packagesConfigFile)
@@ -211,8 +217,9 @@ namespace Nuke.Common.Tooling
                                     TryGetGlobalDirectoryFromConfig() ??
                                     TryGetDefaultGlobalDirectory() ??
                                     TryGetLocalDirectory();
-            ControlFlow.Assert(Directory.Exists(packagesDirectory), $"Directory.Exists({packagesDirectory})");
-            return packagesDirectory;
+            return packagesDirectory != null && Directory.Exists(packagesDirectory)
+                ? packagesDirectory
+                : null;
         }
 
         public static bool IsLegacyFile(string packagesConfigFile)
@@ -260,7 +267,7 @@ namespace Nuke.Common.Tooling
                     ".nuget",
                     "NuGet"));
 
-                var dataHomeDirectoy = EnvironmentInfo.Variable("XDG_DATA_HOME");
+                var dataHomeDirectoy = EnvironmentInfo.GetVariable<string>("XDG_DATA_HOME");
                 if (!string.IsNullOrEmpty(dataHomeDirectoy))
                 {
                     directories.Add(dataHomeDirectoy);

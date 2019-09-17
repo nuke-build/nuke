@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using Nuke.Common.OutputSinks;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
@@ -26,19 +27,24 @@ namespace Nuke.Common.Execution
             remove => s_cancellationHandlers.Remove(value);
         }
 
-        public static int Execute<T>(Expression<Func<T, Target>> defaultTargetExpression)
+        public static int Execute<T>(Expression<Func<T, Target>>[] defaultTargetExpressions)
             where T : NukeBuild
         {
             Console.CancelKeyPress += (s, e) => s_cancellationHandlers.ForEach(x => x());
 
             var build = Create<T>();
-            build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpression);
+            build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpressions);
+
+            void ExecuteExtension<TExtension>(Action<TExtension> action)
+                where TExtension : IBuildExtension
+                => build.GetType().GetCustomAttributes()
+                    .OfType<TExtension>().ForEach(action);
 
             try
             {
                 InjectionUtility.InjectValues(build, x => x.IsFast);
 
-                build.ExecuteExtensions<IPreLogoBuildExtension>();
+                ExecuteExtension<IOnBeforeLogo>(x => x.OnBeforeLogo(build, build.ExecutableTargets));
                 build.OnBuildCreated();
 
                 Logger.OutputSink = build.OutputSink;
@@ -48,12 +54,12 @@ namespace Nuke.Common.Execution
                 if (!NukeBuild.NoLogo)
                 {
                     Logger.Normal();
-                    Logger.Normal("███╗   ██╗██╗   ██╗██╗  ██╗███████╗");
-                    Logger.Normal("████╗  ██║██║   ██║██║ ██╔╝██╔════╝");
-                    Logger.Normal("██╔██╗ ██║██║   ██║█████╔╝ █████╗  ");
-                    Logger.Normal("██║╚██╗██║██║   ██║██╔═██╗ ██╔══╝  ");
-                    Logger.Normal("██║ ╚████║╚██████╔╝██║  ██╗███████╗");
-                    Logger.Normal("╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝");
+                    Logger.Normal("███╗   ██╗██╗   ██╗██╗  ██╗███████╗");
+                    Logger.Normal("████╗  ██║██║   ██║██║ ██╔╝██╔════╝");
+                    Logger.Normal("██╔██╗ ██║██║   ██║█████╔╝ █████╗  ");
+                    Logger.Normal("██║╚██╗██║██║   ██║██╔═██╗ ██╔══╝  ");
+                    Logger.Normal("██║ ╚████║╚██████╔╝██║  ██╗███████╗");
+                    Logger.Normal("╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝");
                     Logger.Normal();
                 }
 
@@ -62,10 +68,9 @@ namespace Nuke.Common.Execution
 
                 build.ExecutionPlan = ExecutionPlanner.GetExecutionPlan(
                     build.ExecutableTargets,
-                    ParameterService.Instance.GetParameter<string[]>(() => build.InvokedTargets) ??
-                    ParameterService.Instance.GetPositionalCommandLineArguments<string>(separator: Constants.TargetsSeparator.Single()));
+                    EnvironmentInfo.GetParameter<string[]>(() => build.InvokedTargets));
 
-                build.ExecuteExtensions<IPostLogoBuildExtension>();
+                ExecuteExtension<IOnAfterLogo>(x => x.OnAfterLogo(build, build.ExecutableTargets, build.ExecutionPlan));
                 CancellationHandler += Finish;
 
                 InjectionUtility.InjectValues(build, x => !x.IsFast);
@@ -74,9 +79,9 @@ namespace Nuke.Common.Execution
 
                 BuildExecutor.Execute(
                     build,
-                    ParameterService.Instance.GetParameter<string[]>(() => build.SkippedTargets));
+                    EnvironmentInfo.GetParameter<string[]>(() => build.SkippedTargets));
 
-                return IsSuccessful(build) ? 0 : c_errorExitCode;
+                return build.IsSuccessful ? 0 : c_errorExitCode;
             }
             catch (Exception exception)
             {
@@ -101,13 +106,14 @@ namespace Nuke.Common.Execution
                     WriteWarningsAndErrors(outputSink);
                 }
 
-                if (build.ExecutionPlan != null)
+                if (build.ExecutionPlan != null) // TODO: can be removed?
                 {
                     Logger.Normal();
                     WriteSummary(build);
                 }
 
                 build.OnBuildFinished();
+                ExecuteExtension<IOnBuildFinished>(x => x.OnBuildFinished(build));
             }
         }
 
@@ -141,6 +147,7 @@ namespace Nuke.Common.Execution
 
             Logger.Normal(new string(c: '═', count: allColumns));
             Logger.Info(CreateLine("Target", "Status", "Duration"));
+            //Logger.Info($"{{0,-{firstColumn}}}{{1,-{secondColumn}}}{{2,{thirdColumn}}}{{3,1}}", "Target", "Status", "Duration", "Test");
             Logger.Normal(new string(c: '─', count: allColumns));
             foreach (var target in build.ExecutionPlan)
             {
@@ -155,6 +162,8 @@ namespace Nuke.Common.Execution
                         break;
                     case ExecutionStatus.Aborted:
                     case ExecutionStatus.NotRun:
+                        Logger.Warn(line);
+                        break;
                     case ExecutionStatus.Failed:
                         Logger.Error(line);
                         break;
@@ -166,20 +175,11 @@ namespace Nuke.Common.Execution
             Logger.Normal(new string(c: '═', count: allColumns));
             Logger.Normal();
 
-            var buildSucceeded = IsSuccessful(build);
-            if (buildSucceeded)
+            if (build.IsSuccessful)
                 Logger.Success($"Build succeeded on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}.");
             else
                 Logger.Error($"Build failed on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}.");
             Logger.Normal();
-        }
-
-        private static bool IsSuccessful(NukeBuild build)
-        {
-            return build.ExecutionPlan
-                .All(x => x.Status != ExecutionStatus.Failed &&
-                          x.Status != ExecutionStatus.NotRun &&
-                          x.Status != ExecutionStatus.Aborted);
         }
 
         public static void WriteWarningsAndErrors(SevereMessagesOutputSink outputSink)

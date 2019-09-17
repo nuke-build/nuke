@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
@@ -6,6 +6,7 @@
   
   <ItemGroup>
     <EmbeddedResource Include="**\*.flf" />
+    <EmbeddedResource Include="CI\TeamCity\Configuration\pom.xml"/>
     <!--<None Remove="execution-plan.html" />-->
     <EmbeddedResource Include="Execution\execution-plan.html" />
   </ItemGroup>

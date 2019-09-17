@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.Xunit
 {
+    /// <summary>
+    ///   <p>xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Written by the original inventor of NUnit v2, xUnit.net is the latest technology for unit testing C#, F#, VB.NET and other .NET languages. xUnit.net works with ReSharper, CodeRush, TestDriven.NET and Xamarin. It is part of the <a href="https://www.dotnetfoundation.org/">.NET Foundation</a>, and operates under their <a href="https://www.dotnetfoundation.org/code-of-conduct">code of conduct</a>. It is licensed under <a href="https://opensource.org/licenses/Apache-2.0">Apache 2</a> (an OSI approved license).</p>
+    ///   <p>For more details, visit the <a href="https://xunit.github.io">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class XunitTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.Xunit
             GetToolPath();
         public static Action<OutputType, string> XunitLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Written by the original inventor of NUnit v2, xUnit.net is the latest technology for unit testing C#, F#, VB.NET and other .NET languages. xUnit.net works with ReSharper, CodeRush, TestDriven.NET and Xamarin. It is part of the <a href="https://www.dotnetfoundation.org/">.NET Foundation</a>, and operates under their <a href="https://www.dotnetfoundation.org/code-of-conduct">code of conduct</a>. It is licensed under <a href="https://opensource.org/licenses/Apache-2.0">Apache 2</a> (an OSI approved license).
+        ///   <p>xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Written by the original inventor of NUnit v2, xUnit.net is the latest technology for unit testing C#, F#, VB.NET and other .NET languages. xUnit.net works with ReSharper, CodeRush, TestDriven.NET and Xamarin. It is part of the <a href="https://www.dotnetfoundation.org/">.NET Foundation</a>, and operates under their <a href="https://www.dotnetfoundation.org/code-of-conduct">code of conduct</a>. It is licensed under <a href="https://opensource.org/licenses/Apache-2.0">Apache 2</a> (an OSI approved license).</p>
+        ///   <p>For more details, visit the <a href="https://xunit.github.io">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> Xunit(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,33 @@ namespace Nuke.Common.Tools.Xunit
         ///   <p>xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Written by the original inventor of NUnit v2, xUnit.net is the latest technology for unit testing C#, F#, VB.NET and other .NET languages. xUnit.net works with ReSharper, CodeRush, TestDriven.NET and Xamarin. It is part of the <a href="https://www.dotnetfoundation.org/">.NET Foundation</a>, and operates under their <a href="https://www.dotnetfoundation.org/code-of-conduct">code of conduct</a>. It is licensed under <a href="https://opensource.org/licenses/Apache-2.0">Apache 2</a> (an OSI approved license).</p>
         ///   <p>For more details, visit the <a href="https://xunit.github.io">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;targetAssemblyWithConfigs&gt;</c> via <see cref="Xunit2Settings.TargetAssemblyWithConfigs"/></li>
+        ///     <li><c>-</c> via <see cref="Xunit2Settings.Reporter"/></li>
+        ///     <li><c>-</c> via <see cref="Xunit2Settings.ResultReports"/></li>
+        ///     <li><c>-appdomains</c> via <see cref="Xunit2Settings.AppDomainMode"/></li>
+        ///     <li><c>-class</c> via <see cref="Xunit2Settings.Classes"/></li>
+        ///     <li><c>-debug</c> via <see cref="Xunit2Settings.Debug"/></li>
+        ///     <li><c>-diagnostics</c> via <see cref="Xunit2Settings.Diagnostics"/></li>
+        ///     <li><c>-failskips</c> via <see cref="Xunit2Settings.FailSkips"/></li>
+        ///     <li><c>-maxthreads</c> via <see cref="Xunit2Settings.MaxThreads"/></li>
+        ///     <li><c>-method</c> via <see cref="Xunit2Settings.Methods"/></li>
+        ///     <li><c>-namespace</c> via <see cref="Xunit2Settings.Namespaces"/></li>
+        ///     <li><c>-noautoreporters</c> via <see cref="Xunit2Settings.NoAutoReporters"/></li>
+        ///     <li><c>-nocolor</c> via <see cref="Xunit2Settings.NoColor"/></li>
+        ///     <li><c>-nologo</c> via <see cref="Xunit2Settings.NoLogo"/></li>
+        ///     <li><c>-noshadow</c> via <see cref="Xunit2Settings.NoShadowCopying"/></li>
+        ///     <li><c>-notrait</c> via <see cref="Xunit2Settings.ExcludedTraits"/></li>
+        ///     <li><c>-parallel</c> via <see cref="Xunit2Settings.Parallel"/></li>
+        ///     <li><c>-pause</c> via <see cref="Xunit2Settings.Pause"/></li>
+        ///     <li><c>-serialize</c> via <see cref="Xunit2Settings.Serialization"/></li>
+        ///     <li><c>-stoponfail</c> via <see cref="Xunit2Settings.StopOnFail"/></li>
+        ///     <li><c>-trait</c> via <see cref="Xunit2Settings.Traits"/></li>
+        ///     <li><c>-wait</c> via <see cref="Xunit2Settings.Wait"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> Xunit2(Xunit2Settings toolSettings = null)
         {
             toolSettings = toolSettings ?? new Xunit2Settings();
@@ -1496,11 +1528,15 @@ namespace Nuke.Common.Tools.Xunit
     [TypeConverter(typeof(TypeConverter<Xunit2ReporterType>))]
     public partial class Xunit2ReporterType : Enumeration
     {
-        public static Xunit2ReporterType AppVeyor = new Xunit2ReporterType { Value = "AppVeyor" };
-        public static Xunit2ReporterType JSON = new Xunit2ReporterType { Value = "JSON" };
-        public static Xunit2ReporterType Quiet = new Xunit2ReporterType { Value = "Quiet" };
-        public static Xunit2ReporterType TeamCity = new Xunit2ReporterType { Value = "TeamCity" };
-        public static Xunit2ReporterType Verbose = new Xunit2ReporterType { Value = "Verbose" };
+        public static Xunit2ReporterType AppVeyor = (Xunit2ReporterType) "AppVeyor";
+        public static Xunit2ReporterType JSON = (Xunit2ReporterType) "JSON";
+        public static Xunit2ReporterType Quiet = (Xunit2ReporterType) "Quiet";
+        public static Xunit2ReporterType TeamCity = (Xunit2ReporterType) "TeamCity";
+        public static Xunit2ReporterType Verbose = (Xunit2ReporterType) "Verbose";
+        public static explicit operator Xunit2ReporterType(string value)
+        {
+            return new Xunit2ReporterType { Value = value };
+        }
     }
     #endregion
     #region Xunit2ResultFormat
@@ -1513,10 +1549,14 @@ namespace Nuke.Common.Tools.Xunit
     [TypeConverter(typeof(TypeConverter<Xunit2ResultFormat>))]
     public partial class Xunit2ResultFormat : Enumeration
     {
-        public static Xunit2ResultFormat Xml = new Xunit2ResultFormat { Value = "Xml" };
-        public static Xunit2ResultFormat XmlV1 = new Xunit2ResultFormat { Value = "XmlV1" };
-        public static Xunit2ResultFormat NUnit = new Xunit2ResultFormat { Value = "NUnit" };
-        public static Xunit2ResultFormat HTML = new Xunit2ResultFormat { Value = "HTML" };
+        public static Xunit2ResultFormat Xml = (Xunit2ResultFormat) "Xml";
+        public static Xunit2ResultFormat XmlV1 = (Xunit2ResultFormat) "XmlV1";
+        public static Xunit2ResultFormat NUnit = (Xunit2ResultFormat) "NUnit";
+        public static Xunit2ResultFormat HTML = (Xunit2ResultFormat) "HTML";
+        public static explicit operator Xunit2ResultFormat(string value)
+        {
+            return new Xunit2ResultFormat { Value = value };
+        }
     }
     #endregion
     #region Xunit2ParallelOption
@@ -1529,10 +1569,14 @@ namespace Nuke.Common.Tools.Xunit
     [TypeConverter(typeof(TypeConverter<Xunit2ParallelOption>))]
     public partial class Xunit2ParallelOption : Enumeration
     {
-        public static Xunit2ParallelOption none = new Xunit2ParallelOption { Value = "none" };
-        public static Xunit2ParallelOption collections = new Xunit2ParallelOption { Value = "collections" };
-        public static Xunit2ParallelOption assemblies = new Xunit2ParallelOption { Value = "assemblies" };
-        public static Xunit2ParallelOption all = new Xunit2ParallelOption { Value = "all" };
+        public static Xunit2ParallelOption none = (Xunit2ParallelOption) "none";
+        public static Xunit2ParallelOption collections = (Xunit2ParallelOption) "collections";
+        public static Xunit2ParallelOption assemblies = (Xunit2ParallelOption) "assemblies";
+        public static Xunit2ParallelOption all = (Xunit2ParallelOption) "all";
+        public static explicit operator Xunit2ParallelOption(string value)
+        {
+            return new Xunit2ParallelOption { Value = value };
+        }
     }
     #endregion
     #region Xunit2AppDomainMode
@@ -1545,9 +1589,13 @@ namespace Nuke.Common.Tools.Xunit
     [TypeConverter(typeof(TypeConverter<Xunit2AppDomainMode>))]
     public partial class Xunit2AppDomainMode : Enumeration
     {
-        public static Xunit2AppDomainMode IfAvailable = new Xunit2AppDomainMode { Value = "IfAvailable" };
-        public static Xunit2AppDomainMode Required = new Xunit2AppDomainMode { Value = "Required" };
-        public static Xunit2AppDomainMode Denied = new Xunit2AppDomainMode { Value = "Denied" };
+        public static Xunit2AppDomainMode IfAvailable = (Xunit2AppDomainMode) "IfAvailable";
+        public static Xunit2AppDomainMode Required = (Xunit2AppDomainMode) "Required";
+        public static Xunit2AppDomainMode Denied = (Xunit2AppDomainMode) "Denied";
+        public static explicit operator Xunit2AppDomainMode(string value)
+        {
+            return new Xunit2AppDomainMode { Value = value };
+        }
     }
     #endregion
 }

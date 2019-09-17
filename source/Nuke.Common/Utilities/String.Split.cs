@@ -12,12 +12,12 @@ namespace Nuke.Common.Utilities
     public static partial class StringExtensions
     {
         [Pure]
-        public static IEnumerable<string> Split(this string str, Func<char, bool> predicate, bool includeSplitCharacter = false)
+        public static IEnumerable<string> Split(this string str, Func<char, int, bool> predicate, bool includeSplitCharacter = false)
         {
             var next = 0;
             for (var i = 0; i < str.Length; i++)
             {
-                if (!predicate(str[i]))
+                if (!predicate(str[i], i))
                     continue;
 
                 yield return str.Substring(next, i - next);
@@ -30,15 +30,29 @@ namespace Nuke.Common.Utilities
         }
 
         [Pure]
-        public static IEnumerable<string> SplitCamelHumps(this string str)
+        public static IEnumerable<string> SplitCamelHumps(this string str, params string[] exclusions)
         {
             var hadLower = false;
-            return str.Split(c =>
+            var exclusionIndex = 0;
+            return str.Split((c, i) =>
                 {
                     var shouldSplit = hadLower && char.IsUpper(c);
                     hadLower = char.IsLower(c) && !shouldSplit;
 
-                    return shouldSplit;
+                    if (exclusions.Length > 0 && i >= exclusionIndex)
+                    {
+                        var currentExclusions = exclusions
+                            .Select(x => (Exclusion: x, Index: str.IndexOf(x, exclusionIndex, StringComparison.InvariantCultureIgnoreCase)))
+                            .Where(x => x.Index == i).ToList();
+
+                        if (currentExclusions.Any())
+                        {
+                            exclusionIndex = currentExclusions.Max(x => x.Index + x.Exclusion.Length - 1);
+                            return i > 0;
+                        }
+                    }
+
+                    return shouldSplit && i > exclusionIndex;
                 },
                 includeSplitCharacter: true);
         }
@@ -49,9 +63,9 @@ namespace Nuke.Common.Utilities
         }
 
         [Pure]
-        public static string SplitCamelHumpsWithSeparator(this string str, string separator)
+        public static string SplitCamelHumpsWithSeparator(this string str, string separator, params string[] exclusions)
         {
-            return str.SplitCamelHumps().Join(separator).ToLowerInvariant();
+            return str.SplitCamelHumps(exclusions).Join(separator);
         }
     }
 }

@@ -12,6 +12,8 @@ namespace Nuke.Common
 {
     internal static class Constants
     {
+        internal static string[] KnownWords = { "GitHub", "NuGet", "MSBuild" };
+
         internal const string ConfigurationFileName = ".nuke";
 
         internal const string TargetsSeparator = "+";

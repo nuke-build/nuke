@@ -16,13 +16,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GitVersion.CommandLine.DotNetCore" Version="4.0.1-beta1-53" />
-    <PackageReference Include="JetBrains.ReSharper.CommandLineTools" Version="2017.1.20170613.162720" />
-    <PackageReference Include="OpenCover" Version="4.6.519" />
-    <PackageReference Include="ReportGenerator" Version="2.5.6" />
-    <PackageReference Include="xunit.runner.console" Version="2.4.0" />
+    <PackageReference Include="GitVersion.CommandLine.DotNetCore" Version="5.0.1"/>
+    <PackageReference Include="JetBrains.ReSharper.CommandLineTools" Version="2019.2.1"/>
+    <PackageReference Include="OpenCover" Version="4.7.922"/>
+    <PackageReference Include="ReportGenerator" Version="4.2.16"/>
+    <PackageReference Include="xunit.runner.console" Version="2.4.1"/>
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\source\Nuke.Common\Nuke.Common.csproj" />
     <ProjectReference Include="..\source\Nuke.CodeGeneration\Nuke.CodeGeneration.csproj" />
@@ -33,14 +33,18 @@
 
     <None Include="..\build.ps1" />
     <None Include="..\build.sh" />
-    <None Include="..\.nuke" />
-    <None Include="..\global.json" Condition="Exists('..\global.json')" />
-    <None Include="..\nuget.config" Condition="Exists('..\nuget.config')" />
-    <None Include="..\azure-pipelines.yml" Condition="Exists('..\azure-pipelines.yml')" />
-    <None Include="..\Jenkinsfile" Condition="Exists('..\Jenkinsfile')" />
-    <None Include="..\appveyor.yml" Condition="Exists('..\appveyor.yml')" />
-    <None Include="..\.travis.yml" Condition="Exists('..\.travis.yml')" />
-    <None Include="..\GitVersion.yml" Condition="Exists('..\GitVersion.yml')" />
+
+    <None Include="..\.nuke" LinkBase="config" />
+    <None Include="..\global.json" LinkBase="config" Condition="Exists('..\global.json')" />
+    <None Include="..\nuget.config" LinkBase="config" Condition="Exists('..\nuget.config')" />
+    <None Include="..\GitVersion.yml" LinkBase="config" Condition="Exists('..\GitVersion.yml')" />
+
+    <None Include="..\.github\workflows\*.yml" LinkBase="ci" />
+    <None Include="..\.teamcity\settings.kts" LinkBase="ci" Condition="Exists('..\.teamcity\settings.kts')" />
+    <None Include="..\azure-pipelines.yml" LinkBase="ci" Condition="Exists('..\azure-pipelines.yml')" />
+    <None Include="..\Jenkinsfile" LinkBase="ci" Condition="Exists('..\Jenkinsfile')" />
+    <None Include="..\appveyor.yml" LinkBase="ci" Condition="Exists('..\appveyor.yml')" />
+    <None Include="..\.travis.yml" LinkBase="ci" Condition="Exists('..\.travis.yml')" />
   </ItemGroup>
 
 </Project>

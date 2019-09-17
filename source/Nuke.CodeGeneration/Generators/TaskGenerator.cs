@@ -22,6 +22,7 @@ namespace Nuke.CodeGeneration.Generators
                 return;
 
             toolWriter
+                .WriteSummary(tool)
                 .WriteLine("[PublicAPI]")
                 .WriteLine("[ExcludeFromCodeCoverage]")
                 .WriteLine($"public static partial class {tool.GetClassName()}")
@@ -65,7 +66,7 @@ namespace Nuke.CodeGeneration.Generators
                                 "outputFilter"
                             };
             writer
-                .WriteSummary(tool.Help)
+                .WriteSummary(tool)
                 .WriteObsoleteAttributeWhenObsolete(tool)
                 .WriteLine($"public static IReadOnlyCollection<Output> {tool.Name}({parameters.JoinComma()})")
                 .WriteBlock(w => w
@@ -83,6 +84,7 @@ namespace Nuke.CodeGeneration.Generators
 
             return writer
                 .WriteSummary(task)
+                .WriteRemarks(task)
                 .WriteObsoleteAttributeWhenObsolete(task)
                 .WriteLine($"public static {returnType} {task.GetTaskMethodName()}({task.SettingsClass.Name} toolSettings = null)")
                 .WriteBlock(w => w

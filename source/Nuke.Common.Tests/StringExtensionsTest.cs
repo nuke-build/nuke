@@ -42,11 +42,17 @@ namespace Nuke.Common.Tests
         [Fact]
         public void TestSplit()
         {
-            "msbuild-configuration".Split(x => !char.IsLetter(x))
+            "msbuild-configuration".Split((x, i) => !char.IsLetter(x))
                 .Should().Equal("msbuild", "configuration");
 
             "MSBuildConfiguration".SplitCamelHumps()
                 .Should().Equal("MSBuild", "Configuration");
+
+            "NuGetGitHubKey".SplitCamelHumps("NuGet", "GitHub")
+                .Should().Equal("NuGet", "GitHub", "Key");
+
+            "NuGetKeyGitHubKey".SplitCamelHumps("NuGet", "GitHub")
+                .Should().Equal("NuGet", "Key", "GitHub", "Key");
         }
     }
 }

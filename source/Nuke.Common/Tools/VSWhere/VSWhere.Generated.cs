@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.VSWhere
 {
+    /// <summary>
+    ///   <p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p>
+    ///   <p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class VSWhereTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.VSWhere
             ToolPathResolver.GetPackageExecutable("vswhere", "vswhere.exe");
         public static Action<OutputType, string> VSWhereLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.
+        ///   <p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p>
+        ///   <p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> VSWhere(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,23 @@ namespace Nuke.Common.Tools.VSWhere
         ///   <p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p>
         ///   <p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>-all</c> via <see cref="VSWhereSettings.All"/></li>
+        ///     <li><c>-format</c> via <see cref="VSWhereSettings.Format"/></li>
+        ///     <li><c>-latest</c> via <see cref="VSWhereSettings.Latest"/></li>
+        ///     <li><c>-legacy</c> via <see cref="VSWhereSettings.Legacy"/></li>
+        ///     <li><c>-nologo</c> via <see cref="VSWhereSettings.NoLogo"/></li>
+        ///     <li><c>-prerelease</c> via <see cref="VSWhereSettings.Prerelease"/></li>
+        ///     <li><c>-products</c> via <see cref="VSWhereSettings.Products"/></li>
+        ///     <li><c>-property</c> via <see cref="VSWhereSettings.Property"/></li>
+        ///     <li><c>-requires</c> via <see cref="VSWhereSettings.Requires"/></li>
+        ///     <li><c>-requiresAny</c> via <see cref="VSWhereSettings.RequiresAny"/></li>
+        ///     <li><c>-utf8</c> via <see cref="VSWhereSettings.UTF8"/></li>
+        ///     <li><c>-version</c> via <see cref="VSWhereSettings.Version"/></li>
+        ///   </ul>
+        /// </remarks>
         public static (List<VSWhereResult> Result, IReadOnlyCollection<Output> Output) VSWhere(VSWhereSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new VSWhereSettings();
@@ -895,10 +917,14 @@ namespace Nuke.Common.Tools.VSWhere
     [TypeConverter(typeof(TypeConverter<VSWhereFormat>))]
     public partial class VSWhereFormat : Enumeration
     {
-        public static VSWhereFormat json = new VSWhereFormat { Value = "json" };
-        public static VSWhereFormat text = new VSWhereFormat { Value = "text" };
-        public static VSWhereFormat value = new VSWhereFormat { Value = "value" };
-        public static VSWhereFormat xml = new VSWhereFormat { Value = "xml" };
+        public static VSWhereFormat json = (VSWhereFormat) "json";
+        public static VSWhereFormat text = (VSWhereFormat) "text";
+        public static VSWhereFormat value = (VSWhereFormat) "value";
+        public static VSWhereFormat xml = (VSWhereFormat) "xml";
+        public static explicit operator VSWhereFormat(string value)
+        {
+            return new VSWhereFormat { Value = value };
+        }
     }
     #endregion
 }

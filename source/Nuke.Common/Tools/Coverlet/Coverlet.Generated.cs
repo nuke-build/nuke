@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.Coverlet
 {
+    /// <summary>
+    ///   <p><c>Coverlet</c> is a cross platform code coverage library for .NET Core, with support for line, branch and method coverage.The <c>dotnet test</c> command is used to execute unit tests in a given project. Unit tests are console application projects that have dependencies on the unit test framework (for example, MSTest, NUnit, or xUnit) and the dotnet test runner for the unit testing framework. These are packaged as NuGet packages and are restored as ordinary dependencies for the project.</p>
+    ///   <p>For more details, visit the <a href="https://github.com/tonerdo/coverlet/">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class CoverletTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.Coverlet
             ToolPathResolver.GetPackageExecutable("coverlet.console", "coverlet.console.dll");
         public static Action<OutputType, string> CoverletLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   <c>Coverlet</c> is a cross platform code coverage library for .NET Core, with support for line, branch and method coverage.The <c>dotnet test</c> command is used to execute unit tests in a given project. Unit tests are console application projects that have dependencies on the unit test framework (for example, MSTest, NUnit, or xUnit) and the dotnet test runner for the unit testing framework. These are packaged as NuGet packages and are restored as ordinary dependencies for the project.
+        ///   <p><c>Coverlet</c> is a cross platform code coverage library for .NET Core, with support for line, branch and method coverage.The <c>dotnet test</c> command is used to execute unit tests in a given project. Unit tests are console application projects that have dependencies on the unit test framework (for example, MSTest, NUnit, or xUnit) and the dotnet test runner for the unit testing framework. These are packaged as NuGet packages and are restored as ordinary dependencies for the project.</p>
+        ///   <p>For more details, visit the <a href="https://github.com/tonerdo/coverlet/">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> Coverlet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,23 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p><c>Coverlet</c> is a cross platform code coverage library for .NET Core, with support for line, branch and method coverage.The <c>dotnet test</c> command is used to execute unit tests in a given project. Unit tests are console application projects that have dependencies on the unit test framework (for example, MSTest, NUnit, or xUnit) and the dotnet test runner for the unit testing framework. These are packaged as NuGet packages and are restored as ordinary dependencies for the project.</p>
         ///   <p>For more details, visit the <a href="https://github.com/tonerdo/coverlet/">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;assembly&gt;</c> via <see cref="CoverletSettings.Assembly"/></li>
+        ///     <li><c>--exclude</c> via <see cref="CoverletSettings.Exclude"/></li>
+        ///     <li><c>--exclude-by-file</c> via <see cref="CoverletSettings.ExcludeByFile"/></li>
+        ///     <li><c>--format</c> via <see cref="CoverletSettings.Format"/></li>
+        ///     <li><c>--include</c> via <see cref="CoverletSettings.Include"/></li>
+        ///     <li><c>--merge-with</c> via <see cref="CoverletSettings.MergeWith"/></li>
+        ///     <li><c>--output</c> via <see cref="CoverletSettings.Output"/></li>
+        ///     <li><c>--target</c> via <see cref="CoverletSettings.Target"/></li>
+        ///     <li><c>--targetargs</c> via <see cref="CoverletSettings.TargetArgs"/></li>
+        ///     <li><c>--threshold</c> via <see cref="CoverletSettings.Threshold"/></li>
+        ///     <li><c>--threshold-type</c> via <see cref="CoverletSettings.ThresholdType"/></li>
+        ///     <li><c>--version</c> via <see cref="CoverletSettings.Version"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> Coverlet(CoverletSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new CoverletSettings();
@@ -62,6 +84,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///     <li><c>--exclude-by-file</c> via <see cref="CoverletSettings.ExcludeByFile"/></li>
         ///     <li><c>--format</c> via <see cref="CoverletSettings.Format"/></li>
         ///     <li><c>--include</c> via <see cref="CoverletSettings.Include"/></li>
+        ///     <li><c>--merge-with</c> via <see cref="CoverletSettings.MergeWith"/></li>
         ///     <li><c>--output</c> via <see cref="CoverletSettings.Output"/></li>
         ///     <li><c>--target</c> via <see cref="CoverletSettings.Target"/></li>
         ///     <li><c>--targetargs</c> via <see cref="CoverletSettings.TargetArgs"/></li>
@@ -86,6 +109,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///     <li><c>--exclude-by-file</c> via <see cref="CoverletSettings.ExcludeByFile"/></li>
         ///     <li><c>--format</c> via <see cref="CoverletSettings.Format"/></li>
         ///     <li><c>--include</c> via <see cref="CoverletSettings.Include"/></li>
+        ///     <li><c>--merge-with</c> via <see cref="CoverletSettings.MergeWith"/></li>
         ///     <li><c>--output</c> via <see cref="CoverletSettings.Output"/></li>
         ///     <li><c>--target</c> via <see cref="CoverletSettings.Target"/></li>
         ///     <li><c>--targetargs</c> via <see cref="CoverletSettings.TargetArgs"/></li>
@@ -162,6 +186,10 @@ namespace Nuke.Common.Tools.Coverlet
         ///   Show version information.
         /// </summary>
         public virtual bool? Version { get; internal set; }
+        /// <summary>
+        ///   Path to existing coverage result to merge.
+        /// </summary>
+        public virtual string MergeWith { get; internal set; }
         protected override Arguments ConfigureArguments(Arguments arguments)
         {
             arguments
@@ -175,7 +203,8 @@ namespace Nuke.Common.Tools.Coverlet
               .Add("--exclude {value}", Exclude)
               .Add("--include {value}", Include)
               .Add("--exclude-by-file {value}", ExcludeByFile)
-              .Add("--version", Version);
+              .Add("--version", Version)
+              .Add("--merge-with {value}", MergeWith);
             return base.ConfigureArguments(arguments);
         }
     }
@@ -770,6 +799,30 @@ namespace Nuke.Common.Tools.Coverlet
             return toolSettings;
         }
         #endregion
+        #region MergeWith
+        /// <summary>
+        ///   <p><em>Sets <see cref="CoverletSettings.MergeWith"/></em></p>
+        ///   <p>Path to existing coverage result to merge.</p>
+        /// </summary>
+        [Pure]
+        public static CoverletSettings SetMergeWith(this CoverletSettings toolSettings, string mergeWith)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MergeWith = mergeWith;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="CoverletSettings.MergeWith"/></em></p>
+        ///   <p>Path to existing coverage result to merge.</p>
+        /// </summary>
+        [Pure]
+        public static CoverletSettings ResetMergeWith(this CoverletSettings toolSettings)
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MergeWith = null;
+            return toolSettings;
+        }
+        #endregion
     }
     #endregion
     #region CoverletOutputFormat
@@ -782,10 +835,14 @@ namespace Nuke.Common.Tools.Coverlet
     [TypeConverter(typeof(TypeConverter<CoverletOutputFormat>))]
     public partial class CoverletOutputFormat : Enumeration
     {
-        public static CoverletOutputFormat json = new CoverletOutputFormat { Value = "json" };
-        public static CoverletOutputFormat Icov = new CoverletOutputFormat { Value = "Icov" };
-        public static CoverletOutputFormat opencover = new CoverletOutputFormat { Value = "opencover" };
-        public static CoverletOutputFormat cobertura = new CoverletOutputFormat { Value = "cobertura" };
+        public static CoverletOutputFormat json = (CoverletOutputFormat) "json";
+        public static CoverletOutputFormat Icov = (CoverletOutputFormat) "Icov";
+        public static CoverletOutputFormat opencover = (CoverletOutputFormat) "opencover";
+        public static CoverletOutputFormat cobertura = (CoverletOutputFormat) "cobertura";
+        public static explicit operator CoverletOutputFormat(string value)
+        {
+            return new CoverletOutputFormat { Value = value };
+        }
     }
     #endregion
     #region CoverletThresholdType
@@ -798,9 +855,13 @@ namespace Nuke.Common.Tools.Coverlet
     [TypeConverter(typeof(TypeConverter<CoverletThresholdType>))]
     public partial class CoverletThresholdType : Enumeration
     {
-        public static CoverletThresholdType line = new CoverletThresholdType { Value = "line" };
-        public static CoverletThresholdType branch = new CoverletThresholdType { Value = "branch" };
-        public static CoverletThresholdType method = new CoverletThresholdType { Value = "method" };
+        public static CoverletThresholdType line = (CoverletThresholdType) "line";
+        public static CoverletThresholdType branch = (CoverletThresholdType) "branch";
+        public static CoverletThresholdType method = (CoverletThresholdType) "method";
+        public static explicit operator CoverletThresholdType(string value)
+        {
+            return new CoverletThresholdType { Value = value };
+        }
     }
     #endregion
 }

@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.GitReleaseManager
 {
+    /// <summary>
+    ///   <p>GitReleaseManager is a tool that will help create a set of release notes for your application/product. It does this using the collection of issues which are stored on the GitHub Issue Tracker for your application/product.<para/>By inspecting the issues that have been assigned to a particular milestone, GitReleaseManager creates a set of release notes, in markdown format, which are then used to create a Release on GitHub.<para/>In addition to creating a Release, GitReleaseManager can be used to publish a release, close a milestone, and also to export the complete set of release notes for your application/product.</p>
+    ///   <p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class GitReleaseManagerTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.GitReleaseManager
             ToolPathResolver.GetPackageExecutable("gitreleasemanager", "GitReleaseManager.exe");
         public static Action<OutputType, string> GitReleaseManagerLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   GitReleaseManager is a tool that will help create a set of release notes for your application/product. It does this using the collection of issues which are stored on the GitHub Issue Tracker for your application/product.<para/>By inspecting the issues that have been assigned to a particular milestone, GitReleaseManager creates a set of release notes, in markdown format, which are then used to create a Release on GitHub.<para/>In addition to creating a Release, GitReleaseManager can be used to publish a release, close a milestone, and also to export the complete set of release notes for your application/product.
+        ///   <p>GitReleaseManager is a tool that will help create a set of release notes for your application/product. It does this using the collection of issues which are stored on the GitHub Issue Tracker for your application/product.<para/>By inspecting the issues that have been assigned to a particular milestone, GitReleaseManager creates a set of release notes, in markdown format, which are then used to create a Release on GitHub.<para/>In addition to creating a Release, GitReleaseManager can be used to publish a release, close a milestone, and also to export the complete set of release notes for your application/product.</p>
+        ///   <p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> GitReleaseManager(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,19 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Adds an asset to an existing release.</p>
         ///   <p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--assets</c> via <see cref="GitReleaseManagerAddAssetsSettings.AssetPaths"/></li>
+        ///     <li><c>--logFilePath</c> via <see cref="GitReleaseManagerAddAssetsSettings.LogFilePath"/></li>
+        ///     <li><c>--owner</c> via <see cref="GitReleaseManagerAddAssetsSettings.RepositoryOwner"/></li>
+        ///     <li><c>--password</c> via <see cref="GitReleaseManagerAddAssetsSettings.Password"/></li>
+        ///     <li><c>--repository</c> via <see cref="GitReleaseManagerAddAssetsSettings.RepositoryName"/></li>
+        ///     <li><c>--tagName</c> via <see cref="GitReleaseManagerAddAssetsSettings.TagName"/></li>
+        ///     <li><c>--targetDirectory</c> via <see cref="GitReleaseManagerAddAssetsSettings.TargetDirectory"/></li>
+        ///     <li><c>--username</c> via <see cref="GitReleaseManagerAddAssetsSettings.UserName"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> GitReleaseManagerAddAssets(GitReleaseManagerAddAssetsSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new GitReleaseManagerAddAssetsSettings();
@@ -96,6 +114,18 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Closes the milestone.</p>
         ///   <p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--logFilePath</c> via <see cref="GitReleaseManagerCloseSettings.LogFilePath"/></li>
+        ///     <li><c>--milestone</c> via <see cref="GitReleaseManagerCloseSettings.Milestone"/></li>
+        ///     <li><c>--owner</c> via <see cref="GitReleaseManagerCloseSettings.RepositoryOwner"/></li>
+        ///     <li><c>--password</c> via <see cref="GitReleaseManagerCloseSettings.Password"/></li>
+        ///     <li><c>--repository</c> via <see cref="GitReleaseManagerCloseSettings.RepositoryName"/></li>
+        ///     <li><c>--targetDirectory</c> via <see cref="GitReleaseManagerCloseSettings.TargetDirectory"/></li>
+        ///     <li><c>--username</c> via <see cref="GitReleaseManagerCloseSettings.UserName"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> GitReleaseManagerClose(GitReleaseManagerCloseSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new GitReleaseManagerCloseSettings();
@@ -147,6 +177,23 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Creates a draft release notes from a milestone.</p>
         ///   <p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--assets</c> via <see cref="GitReleaseManagerCreateSettings.AssetPaths"/></li>
+        ///     <li><c>--inputFilePath</c> via <see cref="GitReleaseManagerCreateSettings.InputFilePath"/></li>
+        ///     <li><c>--logFilePath</c> via <see cref="GitReleaseManagerCreateSettings.LogFilePath"/></li>
+        ///     <li><c>--milestone</c> via <see cref="GitReleaseManagerCreateSettings.Milestone"/></li>
+        ///     <li><c>--name</c> via <see cref="GitReleaseManagerCreateSettings.Name"/></li>
+        ///     <li><c>--owner</c> via <see cref="GitReleaseManagerCreateSettings.RepositoryOwner"/></li>
+        ///     <li><c>--password</c> via <see cref="GitReleaseManagerCreateSettings.Password"/></li>
+        ///     <li><c>--prerelease</c> via <see cref="GitReleaseManagerCreateSettings.Prerelease"/></li>
+        ///     <li><c>--repository</c> via <see cref="GitReleaseManagerCreateSettings.RepositoryName"/></li>
+        ///     <li><c>--targetcommitish</c> via <see cref="GitReleaseManagerCreateSettings.TargetCommitish"/></li>
+        ///     <li><c>--targetDirectory</c> via <see cref="GitReleaseManagerCreateSettings.TargetDirectory"/></li>
+        ///     <li><c>--username</c> via <see cref="GitReleaseManagerCreateSettings.UserName"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> GitReleaseManagerCreate(GitReleaseManagerCreateSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new GitReleaseManagerCreateSettings();
@@ -208,6 +255,19 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Exports all the Release Notes in markdown format.</p>
         ///   <p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--fileOutputPath</c> via <see cref="GitReleaseManagerExportSettings.FileOutputPath"/></li>
+        ///     <li><c>--logFilePath</c> via <see cref="GitReleaseManagerExportSettings.LogFilePath"/></li>
+        ///     <li><c>--owner</c> via <see cref="GitReleaseManagerExportSettings.RepositoryOwner"/></li>
+        ///     <li><c>--password</c> via <see cref="GitReleaseManagerExportSettings.Password"/></li>
+        ///     <li><c>--repository</c> via <see cref="GitReleaseManagerExportSettings.RepositoryName"/></li>
+        ///     <li><c>--tagName</c> via <see cref="GitReleaseManagerExportSettings.TagName"/></li>
+        ///     <li><c>--targetDirectory</c> via <see cref="GitReleaseManagerExportSettings.TargetDirectory"/></li>
+        ///     <li><c>--username</c> via <see cref="GitReleaseManagerExportSettings.UserName"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> GitReleaseManagerExport(GitReleaseManagerExportSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new GitReleaseManagerExportSettings();
@@ -261,6 +321,18 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>Publishes the GitHub Release.</p>
         ///   <p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--logFilePath</c> via <see cref="GitReleaseManagerPublishSettings.LogFilePath"/></li>
+        ///     <li><c>--owner</c> via <see cref="GitReleaseManagerPublishSettings.RepositoryOwner"/></li>
+        ///     <li><c>--password</c> via <see cref="GitReleaseManagerPublishSettings.Password"/></li>
+        ///     <li><c>--repository</c> via <see cref="GitReleaseManagerPublishSettings.RepositoryName"/></li>
+        ///     <li><c>--tagName</c> via <see cref="GitReleaseManagerPublishSettings.TagName"/></li>
+        ///     <li><c>--targetDirectory</c> via <see cref="GitReleaseManagerPublishSettings.TargetDirectory"/></li>
+        ///     <li><c>--username</c> via <see cref="GitReleaseManagerPublishSettings.UserName"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> GitReleaseManagerPublish(GitReleaseManagerPublishSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new GitReleaseManagerPublishSettings();

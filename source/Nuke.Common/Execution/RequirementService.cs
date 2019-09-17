@@ -27,7 +27,8 @@ namespace Nuke.Common.Execution
                     ControlFlow.Fail($"Target '{target.Name}' requires member '{requirement.GetMemberInfo().Name}' to be not null.");
             }
 
-            var requiredMembers = InjectionUtility.GetParameterMembers(build.GetType()).Where(x => x.HasCustomAttribute<RequiredAttribute>());
+            var requiredMembers = InjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: true)
+                .Where(x => x.HasCustomAttribute<RequiredAttribute>());
             foreach (var member in requiredMembers)
             {
                 if (IsMemberNull(member, build))
@@ -50,13 +51,13 @@ namespace Nuke.Common.Execution
         private static void InjectValueInteractive(NukeBuild build, MemberInfo member)
         {
             var memberType = member.GetMemberType();
-            var nameOrDescription = ParameterService.Instance.GetParameterDescription(member) ??
-                                    ParameterService.Instance.GetParameterName(member);
+            var nameOrDescription = ParameterService.GetParameterDescription(member) ??
+                                    ParameterService.GetParameterMemberName(member);
             var text = $"{nameOrDescription.TrimEnd('.')}:";
 
             while (member.GetValue(build) == null)
             {
-                var valueSet = ParameterService.Instance.GetParameterValueSet(member, build);
+                var valueSet = ParameterService.GetParameterValueSet(member, build);
                 var value = valueSet == null
                     ? ConsoleUtility.PromptForInput(text, defaultValue: null)
                     : ConsoleUtility.PromptForChoice(text, valueSet.Select(x => (x.Object, x.Text)).ToArray());

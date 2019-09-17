@@ -19,6 +19,10 @@ using System.Text;
 
 namespace Nuke.Common.Tools.SignTool
 {
+    /// <summary>
+    ///   <p>Sign Tool is a command-line tool that digitally signs files, verifies signatures in files, and time-stamps files.</p>
+    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe">official website</a>.</p>
+    /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
     public static partial class SignToolTasks
@@ -31,7 +35,8 @@ namespace Nuke.Common.Tools.SignTool
             GetToolPath();
         public static Action<OutputType, string> SignToolLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
-        ///   Sign Tool is a command-line tool that digitally signs files, verifies signatures in files, and time-stamps files.
+        ///   <p>Sign Tool is a command-line tool that digitally signs files, verifies signatures in files, and time-stamps files.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe">official website</a>.</p>
         /// </summary>
         public static IReadOnlyCollection<Output> SignTool(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
@@ -43,6 +48,55 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Use the <c>sign</c> command to sign files using embedded signatures. Signing protects a file from tampering, and allows users to verify the signer (you) based on a signing certificate. The options below allow you to specify signing parameters and to select the signing certificate you wish to use.</p>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe">official website</a>.</p>
         /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;files&gt;</c> via <see cref="SignToolSettings.Files"/></li>
+        ///     <li><c>/a</c> via <see cref="SignToolSettings.AutomaticSelection"/></li>
+        ///     <li><c>/ac</c> via <see cref="SignToolSettings.AdditionalCertificate"/></li>
+        ///     <li><c>/as</c> via <see cref="SignToolSettings.AppendSignature"/></li>
+        ///     <li><c>/c</c> via <see cref="SignToolSettings.CertificateTemplateName"/></li>
+        ///     <li><c>/csp</c> via <see cref="SignToolSettings.Csp"/></li>
+        ///     <li><c>/d</c> via <see cref="SignToolSettings.Description"/></li>
+        ///     <li><c>/debug</c> via <see cref="SignToolSettings.Debug"/></li>
+        ///     <li><c>/dg</c> via <see cref="SignToolSettings.SignedDigestAndUnsignedPkcs7Path"/></li>
+        ///     <li><c>/di</c> via <see cref="SignToolSettings.GenerateSignature"/></li>
+        ///     <li><c>/dlib</c> via <see cref="SignToolSettings.AuthenticodeDigestSignLibDll"/></li>
+        ///     <li><c>/dmdf</c> via <see cref="SignToolSettings.AuthenticodeDigestSignPassUnmodified"/></li>
+        ///     <li><c>/ds</c> via <see cref="SignToolSettings.SignDigestOnly"/></li>
+        ///     <li><c>/du</c> via <see cref="SignToolSettings.Url"/></li>
+        ///     <li><c>/dxml</c> via <see cref="SignToolSettings.XmlFile"/></li>
+        ///     <li><c>/f</c> via <see cref="SignToolSettings.File"/></li>
+        ///     <li><c>/fd</c> via <see cref="SignToolSettings.FileDigestAlgorithm"/></li>
+        ///     <li><c>/force</c> via <see cref="SignToolSettings.Force"/></li>
+        ///     <li><c>/i</c> via <see cref="SignToolSettings.Issuer"/></li>
+        ///     <li><c>/itos</c> via <see cref="SignToolSettings.IntentToSealAttribute"/></li>
+        ///     <li><c>/kc</c> via <see cref="SignToolSettings.KeyContainer"/></li>
+        ///     <li><c>/n</c> via <see cref="SignToolSettings.SigningSubjectName"/></li>
+        ///     <li><c>/nosealwarn</c> via <see cref="SignToolSettings.NoSealWarn"/></li>
+        ///     <li><c>/nph</c> via <see cref="SignToolSettings.SuppressPageHashes"/></li>
+        ///     <li><c>/p</c> via <see cref="SignToolSettings.Password"/></li>
+        ///     <li><c>/p7</c> via <see cref="SignToolSettings.ContentFileToPkcs7"/></li>
+        ///     <li><c>/p7ce</c> via <see cref="SignToolSettings.SignedContentMethod"/></li>
+        ///     <li><c>/p7co</c> via <see cref="SignToolSettings.SignedContentIdentifier"/></li>
+        ///     <li><c>/ph</c> via <see cref="SignToolSettings.PageHashes"/></li>
+        ///     <li><c>/q</c> via <see cref="SignToolSettings.Quiet"/></li>
+        ///     <li><c>/r</c> via <see cref="SignToolSettings.RootSubjectName"/></li>
+        ///     <li><c>/rmc</c> via <see cref="SignToolSettings.RelaxedMarkerCheck"/></li>
+        ///     <li><c>/s</c> via <see cref="SignToolSettings.Store"/></li>
+        ///     <li><c>/sa</c> via <see cref="SignToolSettings.AuthenticatedAttributes"/></li>
+        ///     <li><c>/seal</c> via <see cref="SignToolSettings.SealingSignature"/></li>
+        ///     <li><c>/sha1</c> via <see cref="SignToolSettings.Sha1Thumbprint"/></li>
+        ///     <li><c>/sm</c> via <see cref="SignToolSettings.MachineStore"/></li>
+        ///     <li><c>/t</c> via <see cref="SignToolSettings.TimestampServerUrl"/></li>
+        ///     <li><c>/td</c> via <see cref="SignToolSettings.TimestampServerDigestAlgorithm"/></li>
+        ///     <li><c>/tr</c> via <see cref="SignToolSettings.Rfc3161TimestampServerUrl"/></li>
+        ///     <li><c>/tseal</c> via <see cref="SignToolSettings.Rfc3161TimestampServerUrlSealed"/></li>
+        ///     <li><c>/u</c> via <see cref="SignToolSettings.EnhancedKeyUsage"/></li>
+        ///     <li><c>/uw</c> via <see cref="SignToolSettings.WindowsSystemComponentVerification"/></li>
+        ///     <li><c>/v</c> via <see cref="SignToolSettings.Verbose"/></li>
+        ///   </ul>
+        /// </remarks>
         public static IReadOnlyCollection<Output> SignTool(SignToolSettings toolSettings = null)
         {
             toolSettings = toolSettings ?? new SignToolSettings();
@@ -2103,8 +2157,12 @@ namespace Nuke.Common.Tools.SignTool
     [TypeConverter(typeof(TypeConverter<SignToolContentMethod>))]
     public partial class SignToolContentMethod : Enumeration
     {
-        public static SignToolContentMethod Embedded = new SignToolContentMethod { Value = "Embedded" };
-        public static SignToolContentMethod DetachedSignedData = new SignToolContentMethod { Value = "DetachedSignedData" };
+        public static SignToolContentMethod Embedded = (SignToolContentMethod) "Embedded";
+        public static SignToolContentMethod DetachedSignedData = (SignToolContentMethod) "DetachedSignedData";
+        public static explicit operator SignToolContentMethod(string value)
+        {
+            return new SignToolContentMethod { Value = value };
+        }
     }
     #endregion
 }

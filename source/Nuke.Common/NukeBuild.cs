@@ -6,13 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using JetBrains.Annotations;
-using Nuke.Common.BuildServers;
+using Nuke.Common.CI.AzureDevOps;
+using Nuke.Common.CI.Bitrise;
+using Nuke.Common.CI.TeamCity;
+using Nuke.Common.CI.TravisCI;
 using Nuke.Common.Execution;
 using Nuke.Common.OutputSinks;
 using Nuke.Common.Tooling;
-using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.Constants;
 
 // ReSharper disable VirtualMemberNeverOverridden.Global
@@ -21,7 +22,7 @@ namespace Nuke.Common
 {
     /// <summary>
     /// Base class for build definitions. Derived types must declare <c>static int Main</c> which calls
-    /// <see cref="Execute{T}(System.Linq.Expressions.Expression{System.Func{T,Nuke.Common.Target}})"/> for the exit code.
+    /// <see cref="Execute{T}"/> for the exit code.
     /// </summary>
     /// <example>
     /// <code>
@@ -54,10 +55,10 @@ namespace Nuke.Common
         /// Executes the build. The provided expression defines the <em>default</em> target that is invoked,
         /// if no targets have been specified via command-line arguments.
         /// </summary>
-        protected static int Execute<T>(Expression<Func<T, Target>> defaultTargetExpression = null)
+        protected static int Execute<T>(params Expression<Func<T, Target>>[] defaultTargetExpressions)
             where T : NukeBuild
         {
-            return BuildManager.Execute(defaultTargetExpression);
+            return BuildManager.Execute(defaultTargetExpressions);
         }
 
         internal IReadOnlyCollection<ExecutableTarget> ExecutableTargets { get; set; }
@@ -84,12 +85,6 @@ namespace Nuke.Common
         /// </summary>
         public IReadOnlyCollection<ExecutableTarget> ExecutingTargets => ExecutionPlan.Where(x => x.Status != ExecutionStatus.Skipped).ToList();
 
-        internal void ExecuteExtensions<T>()
-            where T : IBuildExtension
-        {
-            GetType().GetCustomAttributes().OfType<T>().ForEach(x => x.Execute(this, ExecutableTargets, ExecutionPlan));
-        }
-
         protected internal virtual IOutputSink OutputSink
         {
             get
@@ -102,13 +97,13 @@ namespace Nuke.Common
                         innerOutputSink = new BitriseOutputSink();
                         break;
                     case HostType.Travis:
-                        innerOutputSink = new TravisOutputSink();
+                        innerOutputSink = new TravisCIOutputSink();
                         break;
                     case HostType.TeamCity:
                         innerOutputSink = new TeamCityOutputSink(new TeamCity());
                         break;
-                    case HostType.TeamServices:
-                        innerOutputSink = new TeamServicesOutputSink(new TeamServices());
+                    case HostType.AzureDevOps:
+                        innerOutputSink = new AzureDevOpsOutputSink(new AzureDevOps());
                         break;
                     default:
                         innerOutputSink = ConsoleOutputSink.Default;
@@ -124,5 +119,10 @@ namespace Nuke.Common
             BuildProjectDirectory != null
                 ? NuGetPackageResolver.GetPackagesConfigFile(BuildProjectDirectory)
                 : null;
+
+        internal bool IsSuccessful => ExecutionPlan
+            .All(x => x.Status != ExecutionStatus.Failed &&
+                      x.Status != ExecutionStatus.NotRun &&
+                      x.Status != ExecutionStatus.Aborted);
     }
 }
