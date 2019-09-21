@@ -47,7 +47,8 @@ namespace Nuke.Common.Tooling
                             singlePackageId,
                             NuGetPackagesConfigFile,
                             version)
-                        ?.Directory
+                        .NotNull($"Could not find package '{packageId}'{(version != null ? $" ({version})" : string.Empty)} via '{NuGetPackagesConfigFile}'.")
+                        .Directory
                     : null;
 
             string GetPaketPackagesDirectory(string singlePackageId) =>
