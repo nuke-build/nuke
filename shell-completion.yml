@@ -10,6 +10,7 @@ Host:
 - AzureDevOps
 - Bitrise
 - Console
+- GitHubActions
 - GitLab
 - Jenkins
 - TeamCity

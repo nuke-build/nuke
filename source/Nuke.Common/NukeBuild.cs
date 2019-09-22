@@ -107,6 +107,9 @@ namespace Nuke.Common
                     case HostType.AzureDevOps:
                         innerOutputSink = new AzureDevOpsOutputSink(new AzureDevOps());
                         break;
+                    case HostType.GitHubActions:
+                        innerOutputSink = new GitHubActionsOutputSink(new GitHubActions());
+                        break;
                     case HostType.AppVeyor:
                         innerOutputSink = new AppVeyorOutputSink();
                         break;

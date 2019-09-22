@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzureDevOps;
 using Nuke.Common.CI.Bitrise;
+using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.CI.GitLab;
 using Nuke.Common.CI.Jenkins;
 using Nuke.Common.CI.TeamCity;
@@ -157,6 +158,8 @@ namespace Nuke.Common
                 return HostType.GitLab;
             if (TravisCI.IsRunningTravis)
                 return HostType.Travis;
+            if (GitHubActions.IsRunningGitHubActions)
+                return HostType.GitHubActions;
 
             return HostType.Console;
         }

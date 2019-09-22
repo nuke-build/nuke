@@ -16,6 +16,7 @@ namespace Nuke.Common
         AppVeyor,
         Jenkins,
         Travis,
-        GitLab
+        GitLab,
+        GitHubActions
     }
 }
