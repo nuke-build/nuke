@@ -7,8 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
+using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzureDevOps;
 using Nuke.Common.CI.Bitrise;
+using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.CI.TeamCity;
 using Nuke.Common.CI.TravisCI;
 using Nuke.Common.Execution;
@@ -104,6 +106,9 @@ namespace Nuke.Common
                         break;
                     case HostType.AzureDevOps:
                         innerOutputSink = new AzureDevOpsOutputSink(new AzureDevOps());
+                        break;
+                    case HostType.AppVeyor:
+                        innerOutputSink = new AppVeyorOutputSink();
                         break;
                     default:
                         innerOutputSink = ConsoleOutputSink.Default;
