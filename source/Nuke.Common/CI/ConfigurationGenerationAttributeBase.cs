@@ -4,9 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Nuke.Common.Execution;
+using Nuke.Common.IO;
 using Nuke.Common.Tooling;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI
 {
@@ -16,6 +19,7 @@ namespace Nuke.Common.CI
         public const string ConfigurationParameterName = "configure-build-server";
 
         public bool AutoGenerate { get; set; } = true;
+        protected abstract IEnumerable<string> GeneratedFiles { get; }
 
         public void OnBeforeLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
@@ -24,14 +28,18 @@ namespace Nuke.Common.CI
                 if (NukeBuild.IsLocalBuild && AutoGenerate)
                 {
                     Logger.LogLevel = LogLevel.Trace;
+                    var previousHash = GetCurrentHash();
 
                     var assembly = Assembly.GetEntryAssembly().NotNull("assembly != null");
                     ProcessTasks.StartProcess(
                             assembly.Location,
                             $"--{ConfigurationParameterName} --host {HostType}",
                             logInvocation: false,
-                            logOutput: false)
+                            logOutput: true)
                         .AssertZeroExitCode();
+
+                    if (GetCurrentHash() != previousHash)
+                        Logger.Warn($"Configuration files for {HostType} have changed.");
                 }
 
                 return;
@@ -42,6 +50,11 @@ namespace Nuke.Common.CI
                 Generate(build, executableTargets);
                 Environment.Exit(0);
             }
+        }
+
+        private string GetCurrentHash()
+        {
+            return GeneratedFiles.Select(FileSystemTasks.GetFileHash).JoinComma();
         }
 
         protected abstract HostType HostType { get; }

@@ -6,7 +6,7 @@
   
   <ItemGroup>
     <EmbeddedResource Include="**\*.flf" />
-    <EmbeddedResource Include="CI\TeamCity\Configuration\pom.xml"/>
+    <EmbeddedResource Include="CI\TeamCity\Configuration\pom.xml" />
     <!--<None Remove="execution-plan.html" />-->
     <EmbeddedResource Include="Execution\execution-plan.html" />
   </ItemGroup>

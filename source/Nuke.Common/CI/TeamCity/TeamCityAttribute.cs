@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -28,6 +27,12 @@ namespace Nuke.Common.CI.TeamCity
         {
             Platform = platform;
         }
+
+        private AbsolutePath TeamcityDirectory => NukeBuild.RootDirectory / ".teamcity";
+        private string SettingsFile => TeamcityDirectory / "settings.kts";
+        private string PomFile => TeamcityDirectory / "pom.xml";
+
+        protected override IEnumerable<string> GeneratedFiles => new[] { PomFile, SettingsFile };
 
         public TeamCityAgentPlatform Platform { get; }
         public string Description { get; set; }
@@ -62,52 +67,31 @@ namespace Nuke.Common.CI.TeamCity
 
         protected override void Generate(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
-            ControlFlow.Assert(NukeBuild.RootDirectory != null, "NukeBuild.RootDirectory != null");
-            var teamcityDirectory = NukeBuild.RootDirectory / ".teamcity";
-
-            TextTasks.WriteAllLines(
-                teamcityDirectory / "pom.xml",
-                ResourceUtility.GetResourceAllLines<TeamCityConfigurationEntity>("pom.xml"));
-
-            using (var writer = new CustomFileWriter(teamcityDirectory / "settings.kts", indentationFactor: 4))
-            {
-                GetHeader().ForEach(writer.WriteLine);
-
-                var project = GetProject(build, executableTargets);
-                project.Write(writer);
-
-                project.VcsRoot.Write(writer);
-                project.BuildTypes.ForEach(x => x.Write(writer));
-            }
-        }
-
-        protected virtual IEnumerable<string> GetHeader()
-        {
-            return new[]
-                   {
-                       "// THIS FILE IS AUTO-GENERATED",
-                       "// ITS CONTENT IS OVERWRITTEN WITH EXCEPTION OF MARKED USER BLOCKS",
-                       "",
-                       "import jetbrains.buildServer.configs.kotlin.v2018_1.*",
-                       "import jetbrains.buildServer.configs.kotlin.v2018_1.buildFeatures.*",
-                       "import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.*",
-                       "import jetbrains.buildServer.configs.kotlin.v2018_1.triggers.*",
-                       "import jetbrains.buildServer.configs.kotlin.v2018_1.vcs.*",
-                       "",
-                       "version = \"2019.1\"",
-                       ""
-                   };
-        }
-
-        protected virtual TeamCityProject GetProject(
-            NukeBuild build,
-            IReadOnlyCollection<ExecutableTarget> executableTargets)
-        {
             var relevantTargets = VcsTriggeredTargets.Concat(ManuallyTriggeredTargets)
                 .SelectMany(x => ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { x }))
                 .Distinct()
                 .Where(x => !ExcludedTargets.Contains(x.Name) && !NonEntryTargets.Contains(x.Name)).ToList();
+            var configuration = GetConfiguration(build, relevantTargets);
 
+            ControlFlow.Assert(NukeBuild.RootDirectory != null, "NukeBuild.RootDirectory != null");
+
+            TextTasks.WriteAllLines(
+                PomFile,
+                ResourceUtility.GetResourceAllLines<TeamCityConfigurationEntity>("pom.xml"));
+
+            using (var writer = new CustomFileWriter(SettingsFile, indentationFactor: 4))
+            {
+                configuration.Write(writer);
+            }
+        }
+
+        protected virtual TeamCityConfiguration GetConfiguration(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        {
+            return new TeamCityConfiguration { Project = GetProject(build, relevantTargets) };
+        }
+
+        protected virtual TeamCityProject GetProject(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        {
             var vcsRoot = GetVcsRoot(build);
             var lookupTable = new LookupTable<ExecutableTarget, TeamCityBuildType>();
             var buildTypes = relevantTargets
