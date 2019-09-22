@@ -78,6 +78,16 @@ namespace Nuke.Common.CI.AzureDevOps
         public string TeamProject => EnvironmentInfo.GetVariable<string>("SYSTEM_TEAMPROJECT");
         public Guid TeamProjectId => EnvironmentInfo.GetVariable<Guid>("SYSTEM_TEAMPROJECTID");
 
+        public void Group(string group)
+        {
+            _messageSink($"##[group]{group}");
+        }
+
+        public void EndGroup(string group)
+        {
+            _messageSink($"##[endgroup]{group}");
+        }
+
         public void UploadLog(string localFilePath)
         {
             _messageSink($"##vso[build.uploadlog]{localFilePath}");

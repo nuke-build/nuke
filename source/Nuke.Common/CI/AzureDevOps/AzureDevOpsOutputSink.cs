@@ -7,6 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.OutputSinks;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.AzureDevOps
 {
@@ -25,6 +26,13 @@ namespace Nuke.Common.CI.AzureDevOps
                 successCode: "32;1")
         {
             _azureDevOps = azureDevOps;
+        }
+
+        public override IDisposable WriteBlock(string text)
+        {
+            return DelegateDisposable.CreateBracket(
+                () => _azureDevOps.Group(text),
+                () => _azureDevOps.EndGroup(text));
         }
 
         public override void WriteWarning(string text, string details = null)
