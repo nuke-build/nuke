@@ -131,8 +131,6 @@ partial class Build : NukeBuild
                 .SetProject(Solution)
                 .SetNoBuild(IsLocalBuild)
                 .SetConfiguration(Configuration)
-                .EnableIncludeSymbols()
-                .SetSymbolPackageFormat(DotNetSymbolPackageFormat.snupkg)
                 .SetOutputDirectory(OutputDirectory)
                 .SetVersion(GitVersion.NuGetVersionV2)
                 .SetPackageReleaseNotes(GetNuGetReleaseNotes(ChangelogFile, GitRepository)));
