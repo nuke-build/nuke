@@ -29,7 +29,11 @@ namespace Nuke.Common.Execution
 
             Task CheckConfiguration()
             {
-                Directory.GetFiles(NukeBuild.RootDirectory, "*.sln", SearchOption.AllDirectories)
+                var rootDirectory = new DirectoryInfo(NukeBuild.RootDirectory);
+                new[] { rootDirectory }
+                    .Concat(rootDirectory.EnumerateDirectories("*", SearchOption.AllDirectories).Where(x => !x.Name.StartsWith(".")))
+                    .SelectMany(x => x.GetFiles("*.sln", SearchOption.TopDirectoryOnly))
+                    .Select(x => x.FullName)
                     .Select(ProjectModelTasks.ParseSolution)
                     .SelectMany(x => x.Projects)
                     .Where(x => x.Directory.Equals(NukeBuild.BuildProjectDirectory))
