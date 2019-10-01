@@ -53,8 +53,41 @@ namespace Nuke.Common.Tooling
         }
 
         // TODO: add HasLocalInstalledPackage() ?
-        // ReSharper disable once CyclomaticComplexity
         public static IEnumerable<InstalledPackage> GetLocalInstalledPackages(
+            string packagesConfigFile,
+            bool resolveDependencies = true)
+        {
+            return packagesConfigFile.EndsWithOrdinalIgnoreCase("json")
+                ? GetLocalInstalledPackagesFromAssetsFile(packagesConfigFile, resolveDependencies)
+                : GetLocalInstalledPackagesFromConfigFile(packagesConfigFile, resolveDependencies);
+        }
+
+        private static IEnumerable<InstalledPackage> GetLocalInstalledPackagesFromAssetsFile(
+            string packagesConfigFile,
+            bool resolveDependencies = true)
+        {
+            var assetsObject = SerializationTasks.JsonDeserializeFromFile<JObject>(packagesConfigFile);
+            var directReferences = assetsObject["project"]["frameworks"]
+                .Single().Single()["dependencies"]
+                .Children<JProperty>()
+                .Select(x => x.Name).ToList();
+
+            var allReferences = assetsObject["libraries"]
+                .Children<JProperty>()
+                .Where(x => x.Value["type"].ToString() == "package")
+                .Select(x => x.Name.Split('/'))
+                .Select(x => (PackageId: x.First(), Version: x.Last())).ToList();
+
+            foreach (var (name, version) in allReferences)
+            {
+                if (!resolveDependencies && !directReferences.Contains(name))
+                    continue;
+
+                yield return GetGlobalInstalledPackage(name, version, packagesConfigFile);
+            }
+        }
+
+        private static IEnumerable<InstalledPackage> GetLocalInstalledPackagesFromConfigFile(
             string packagesConfigFile,
             bool resolveDependencies = true)
         {

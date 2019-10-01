@@ -5,17 +5,18 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using JetBrains.Annotations;
-using Nuke.Common.IO;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Tooling
 {
     [PublicAPI]
     public static class ToolPathResolver
     {
+        public static string ExecutingAssemblyDirectory;
         public static string NuGetPackagesConfigFile;
+        public static string NuGetAssetsConfigFile;
         public static string PaketPackagesConfigFile;
 
         [CanBeNull]
@@ -34,37 +35,48 @@ namespace Nuke.Common.Tooling
         {
             ControlFlow.Assert(packageId != null && packageExecutable != null, "packageId != null && packageExecutable != null");
 
-            string GetEmbeddedPackagesDirectory(string singlePackageId)
-            {
-                var assemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                var embeddedDirectory = (PathConstruction.AbsolutePath) assemblyDirectory / singlePackageId;
-                return Directory.Exists(embeddedDirectory) ? embeddedDirectory : null;
-            }
-
-            string GetNuGetPackagesDirectory(string singlePackageId) =>
-                NuGetPackagesConfigFile != null
-                    ? NuGetPackageResolver.GetLocalInstalledPackage(
-                            singlePackageId,
-                            NuGetPackagesConfigFile,
-                            version)
-                        .NotNull($"Could not find package '{packageId}'{(version != null ? $" ({version})" : string.Empty)} via '{NuGetPackagesConfigFile}'.")
-                        .Directory
-                    : null;
-
-            string GetPaketPackagesDirectory(string singlePackageId) =>
-                PaketPackagesConfigFile != null
-                    ? PaketPackageResolver.GetLocalInstalledPackageDirectory(
-                        singlePackageId,
-                        PaketPackagesConfigFile)
-                    : null;
-
             var packageIds = packageId.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
             var packageDirectory = packageIds
-                .Select(x =>
-                    GetEmbeddedPackagesDirectory(x) ??
-                    GetNuGetPackagesDirectory(x) ??
-                    GetPaketPackagesDirectory(x))
-                .FirstOrDefault().NotNull("packageDirectory != null");
+                .SelectMany(x =>
+                    new[]
+                    {
+                        ExecutingAssemblyDirectory != null
+                            ? Path.Combine(ExecutingAssemblyDirectory, x)
+                            : null,
+                        NuGetAssetsConfigFile != null
+                            ? NuGetPackageResolver.GetLocalInstalledPackage(x, NuGetAssetsConfigFile, version)?.Directory
+                            : null,
+                        NuGetPackagesConfigFile != null
+                            ? NuGetPackageResolver.GetLocalInstalledPackage(x, NuGetPackagesConfigFile, version)?.Directory
+                            : null,
+                        PaketPackagesConfigFile != null
+                            ? PaketPackageResolver.GetLocalInstalledPackageDirectory(x, PaketPackagesConfigFile)
+                            : null
+                    })
+                .FirstOrDefault(Directory.Exists)
+                .NotNull(
+                    new[]
+                        {
+                            $"Could not find package {packageIds.Select(x => x.SingleQuote()).JoinCommaOr()} " +
+                            $"{(version != null ? $"({version}) " : string.Empty)}" +
+                            "using:"
+                        }
+                        .Concat(
+                            new[]
+                            {
+                                NukeBuild.BuildProjectDirectory == null
+                                    ? $"Embedded packages directory at '{ExecutingAssemblyDirectory}'"
+                                    : null,
+                                NuGetAssetsConfigFile != null
+                                    ? $"Project assets file '{NuGetAssetsConfigFile}'"
+                                    : null,
+                                NuGetPackagesConfigFile != null
+                                    ? $"NuGet packages config '{NuGetPackagesConfigFile}'"
+                                    : null,
+                                PaketPackagesConfigFile != null
+                                    ? $"Paket packages config '{PaketPackagesConfigFile}'"
+                                    : null
+                            }.WhereNotNull().Select(x => $" - {x}")).JoinNewLine());
 
             var packageExecutables = packageExecutable.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
             var absolutePackageExecutables = packageExecutables

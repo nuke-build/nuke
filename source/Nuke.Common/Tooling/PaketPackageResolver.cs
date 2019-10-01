@@ -16,9 +16,7 @@ namespace Nuke.Common.Tooling
         public static string GetLocalInstalledPackageDirectory(string packageId, string packagesConfigFile)
         {
             var packagesDirectory = GetPackagesDirectory(packagesConfigFile);
-            var packageDirectory = Path.Combine(packagesDirectory, packageId);
-            ControlFlow.Assert(Directory.Exists(packagesDirectory), $"Directory.Exists({packagesDirectory})");
-            return packageDirectory;
+            return Path.Combine(packagesDirectory, packageId);
         }
 
         private static string GetPackagesDirectory(string packagesConfigFile)
