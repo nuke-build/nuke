@@ -97,8 +97,8 @@ partial class Build : NukeBuild
                 .SetProjectFile(Solution));
         });
 
-    [ProjectFrom(nameof(Solution))] Project GlobalToolProject;
-    [ProjectFrom(nameof(Solution))] Project MSBuildTaskRunnerProject;
+    Project GlobalToolProject => Solution.GetProject("Nuke.GlobalTool");
+    Project MSBuildTaskRunnerProject => Solution.GetProject("Nuke.MSBuildTaskRunner");
 
     Target Compile => _ => _
         .DependsOn(Restore)
