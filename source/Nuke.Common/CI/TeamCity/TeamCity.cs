@@ -131,7 +131,7 @@ namespace Nuke.Common.CI.TeamCity
             TeamCityNoDataPublishedAction? action = null)
         {
             ControlFlow.Assert(type != TeamCityImportType.dotNetCoverage || tool != null,
-                "type != TeamCityImportType.dotNetCoverage || tool != null");
+                $"Importing data of type '{type}' requires to specify the tool.");
 
             Write("importData",
                 x => x
