@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="GitVersion.CommandLine.DotNetCore" Version="5.0.1"/>
+    <PackageReference Include="JetBrains.dotCover.CommandLineTools" Version="2019.2.2"/>
     <PackageReference Include="JetBrains.ReSharper.CommandLineTools" Version="2019.2.1"/>
     <PackageReference Include="OpenCover" Version="4.7.922"/>
     <PackageReference Include="ReportGenerator" Version="4.2.16"/>

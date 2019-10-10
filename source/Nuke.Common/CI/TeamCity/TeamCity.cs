@@ -11,6 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using JetBrains.Annotations;
+using Nuke.Common.Tools.DotCover;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using Refit;
@@ -130,8 +131,18 @@ namespace Nuke.Common.CI.TeamCity
             bool? parseOutOfDate = null,
             TeamCityNoDataPublishedAction? action = null)
         {
-            ControlFlow.Assert(type != TeamCityImportType.dotNetCoverage || tool != null,
+            ControlFlow.Assert(
+                type != TeamCityImportType.dotNetCoverage || tool != null,
                 $"Importing data of type '{type}' requires to specify the tool.");
+            ControlFlow.AssertWarn(
+                tool == TeamCityImportTool.dotcover &&
+                ConfigurationProperties["TEAMCITY_DOTCOVER_HOME"].EndsWithOrdinalIgnoreCase("bundled"),
+                new[]
+                {
+                    "Configuration parameter 'DOTCOVER_HOME' is set to the bundled version.",
+                    $"Adding the '{nameof(TeamCityImportDotCoverPathAttribute)}' will automatically set " +
+                    $"it to '{nameof(DotCoverTasks)}.{DotCoverTasks.DotCoverPath}'."
+                }.JoinNewLine());
 
             Write("importData",
                 x => x
@@ -164,7 +175,7 @@ namespace Nuke.Common.CI.TeamCity
 
         public void SetConfigurationParameter(string name, string value)
         {
-            Write("setParameter", x => x.AddKeyValue("name", name).AddKeyValue("value", value));
+            Write("setParameter", x => x.AddKeyValue("name", name.Replace("_", ".")).AddKeyValue("value", value));
         }
 
         public void SetEnvironmentVariable(string name, string value)

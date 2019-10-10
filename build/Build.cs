@@ -13,6 +13,7 @@ using Nuke.Common.Execution;
 using Nuke.Common.Git;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
+using Nuke.Common.Tools.DotCover;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.InspectCode;
@@ -37,6 +38,7 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
 [CheckBuildProjectConfigurations]
 [DotNetVerbosityMapping]
 [UnsetVisualStudioEnvironmentVariables]
+[TeamCityImportDotCoverPath]
 [CustomTeamCity(
     Windows,
     AutoGenerate = true,
