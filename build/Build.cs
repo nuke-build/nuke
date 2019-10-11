@@ -38,7 +38,7 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
 [CheckBuildProjectConfigurations]
 [DotNetVerbosityMapping]
 [UnsetVisualStudioEnvironmentVariables]
-[TeamCityImportDotCoverPath]
+[TeamCitySetDotCoverHomePath]
 [CustomTeamCity(
     Windows,
     AutoGenerate = true,
