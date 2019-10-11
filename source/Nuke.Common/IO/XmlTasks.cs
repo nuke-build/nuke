@@ -44,10 +44,8 @@ namespace Nuke.Common.IO
             attributes.SingleOrDefault()?.SetValue(value);
 
             var writerSettings = new XmlWriterSettings { OmitXmlDeclaration = document.Declaration == null };
-            using (var xmlWriter = XmlWriter.Create(path, writerSettings))
-            {
-                document.Save(xmlWriter);
-            }
+            using var xmlWriter = XmlWriter.Create(path, writerSettings);
+            document.Save(xmlWriter);
         }
 
         private static (IReadOnlyCollection<XElement> Elements, IReadOnlyCollection<XAttribute> Attributes) GetObjects(

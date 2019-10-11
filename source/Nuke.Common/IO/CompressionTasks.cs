@@ -80,11 +80,9 @@ namespace Nuke.Common.IO
                     var file = PathConstruction.Combine(directory, entry.Name);
                     FileSystemTasks.EnsureExistingParentDirectory(file);
 
-                    using (var entryStream = zipFile.GetInputStream(entry))
-                    using (var outputStream = File.Open(file, FileMode.Create))
-                    {
-                        entryStream.CopyTo(outputStream);
-                    }
+                    using var entryStream = zipFile.GetInputStream(entry);
+                    using var outputStream = File.Open(file, FileMode.Create);
+                    entryStream.CopyTo(outputStream);
                 }
             }
 

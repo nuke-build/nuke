@@ -79,10 +79,8 @@ namespace Nuke.Common.CI.TeamCity
                 PomFile,
                 ResourceUtility.GetResourceAllLines<TeamCityConfigurationEntity>("pom.xml"));
 
-            using (var writer = new CustomFileWriter(SettingsFile, indentationFactor: 4))
-            {
-                configuration.Write(writer);
-            }
+            using var writer = new CustomFileWriter(SettingsFile, indentationFactor: 4);
+            configuration.Write(writer);
         }
 
         protected virtual TeamCityConfiguration GetConfiguration(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)

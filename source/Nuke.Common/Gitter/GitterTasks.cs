@@ -31,12 +31,10 @@ namespace Nuke.Common.Gitter
         public static async Task SendGitterMessageAsync(string message, string roomId, string token)
         {
             // TODO: consolidate response check from Gitter, Slack and Twitter
-            using (var client = new HttpClient(new AuthenticatedHttpClientHandler(token)))
-            {
-                await client.PostAsync(
-                    $"https://api.gitter.im/v1/rooms/{roomId}/chatMessages",
-                    new FormUrlEncodedContent(new Dictionary<string, string> { { "text", message } }));
-            }
+            using var client = new HttpClient(new AuthenticatedHttpClientHandler(token));
+            await client.PostAsync(
+                $"https://api.gitter.im/v1/rooms/{roomId}/chatMessages",
+                new FormUrlEncodedContent(new Dictionary<string, string> { { "text", message } }));
         }
 
         internal class AuthenticatedHttpClientHandler : HttpClientHandler

@@ -43,19 +43,21 @@ namespace Nuke.Common.IO
             ControlFlow.ExecuteWithRetry(() =>
             {
                 FtpMakeDirectory(GetParentPath(hostDestination));
+
                 var request = WebRequest.Create(hostDestination);
                 request.Credentials = FtpCredentials;
                 request.Method = WebRequestMethods.Ftp.UploadFile;
+
                 var content = File.ReadAllBytes(file);
                 request.ContentLength = content.Length;
-                using (var requestStream = request.GetRequestStream())
-                {
-                    requestStream.Write(content, offset: 0, count: content.Length);
-                    requestStream.Close();
-                    // TODO: check response
-                    //var response = (FtpWebResponse) request.GetResponse ();
-                    //response.Close ();
-                }
+
+                using var requestStream = request.GetRequestStream();
+                requestStream.Write(content, offset: 0, count: content.Length);
+                requestStream.Close();
+
+                // TODO: check response
+                //var response = (FtpWebResponse) request.GetResponse ();
+                //response.Close ();
             });
         }
 

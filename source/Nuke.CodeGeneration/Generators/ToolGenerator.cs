@@ -22,22 +22,20 @@ namespace Nuke.CodeGeneration.Generators
 
         public static void Run(Tool tool, StreamWriter streamWriter)
         {
-            using (var writer = new ToolWriter(tool, streamWriter))
-            {
-                writer
-                    // TODO [3]: extract license from dotsettings file
-                    .WriteLineIfTrue(tool.SourceFile != null, $"// Generated from {tool.SourceFile}")
-                    .WriteLine($"// Generated with {s_assembly.GetName().Name} {s_assembly.GetInformationalText()}")
-                    .WriteLine(string.Empty)
-                    .ForEach(GetNamespaceImports(), x => writer.WriteLine($"using {x};"))
-                    .WriteLine(string.Empty)
-                    .WriteLineIfTrue(tool.Namespace != null, $"namespace {tool.Namespace}");
+            using var writer = new ToolWriter(tool, streamWriter);
+            writer
+                // TODO [3]: extract license from dotsettings file
+                .WriteLineIfTrue(tool.SourceFile != null, $"// Generated from {tool.SourceFile}")
+                .WriteLine($"// Generated with {s_assembly.GetName().Name} {s_assembly.GetInformationalText()}")
+                .WriteLine(string.Empty)
+                .ForEach(GetNamespaceImports(), x => writer.WriteLine($"using {x};"))
+                .WriteLine(string.Empty)
+                .WriteLineIfTrue(tool.Namespace != null, $"namespace {tool.Namespace}");
 
-                if (!string.IsNullOrEmpty(tool.Namespace))
-                    writer.WriteBlock(x => x.WriteAll());
-                else
-                    writer.WriteAll();
-            }
+            if (!string.IsNullOrEmpty(tool.Namespace))
+                writer.WriteBlock(x => x.WriteAll());
+            else
+                writer.WriteAll();
         }
 
         private static ToolWriter WriteAll(this ToolWriter w)

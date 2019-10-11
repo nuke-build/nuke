@@ -18,13 +18,12 @@ namespace Nuke.Common.Utilities
     {
         public static T Clone<T>(this T obj)
         {
-            using (var memoryStream = new MemoryStream())
-            {
-                var binaryFormatter = new BinaryFormatter();
-                binaryFormatter.Serialize(memoryStream, obj);
-                memoryStream.Seek(offset: 0, loc: SeekOrigin.Begin);
-                return (T) binaryFormatter.Deserialize(memoryStream);
-            }
+            var binaryFormatter = new BinaryFormatter();
+
+            using var memoryStream = new MemoryStream();
+            binaryFormatter.Serialize(memoryStream, obj);
+            memoryStream.Seek(offset: 0, loc: SeekOrigin.Begin);
+            return (T) binaryFormatter.Deserialize(memoryStream);
         }
     }
 }

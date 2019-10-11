@@ -150,82 +150,79 @@ namespace Nuke.Common.ProjectModel
 
         public static void Serialize(Solution solution)
         {
-            using (var fileStream = File.Create(solution.Path.NotNull("solution.Path != null")))
-            {
-                Serialize(solution, fileStream);
-            }
+            using var fileStream = File.Create(solution.Path.NotNull("solution.Path != null"));
+            Serialize(solution, fileStream);
         }
 
         public static void Serialize(Solution solution, Stream stream)
         {
             ControlFlow.Assert(solution.Path != null, "solution.Path != null");
 
-            using (var writer = new StreamWriter(stream, Encoding.UTF8))
+            using var writer = new StreamWriter(stream, Encoding.UTF8);
+
+            void Write(string text) => writer.WriteLine(text);
+
+            void WriteSection(string start, IDictionary<string, string> dictionary, string end)
             {
-                void Write(string text) => writer.WriteLine(text);
+                if (dictionary == null)
+                    return;
 
-                void WriteSection(string start, IDictionary<string, string> dictionary, string end)
-                {
-                    if (dictionary == null)
-                        return;
-
-                    Write($"\t{start}");
-                    dictionary.ForEach(x => Write($"\t\t{x.Key} = {x.Value}"));
-                    Write($"\t{end}");
-                }
-
-                string Format(Guid guid) => $"{{{guid.ToString("D").ToUpper()}}}";
-
-                solution.Header.ForEach(x => writer.WriteLine(x));
-
-                foreach (var project in solution.PrimitiveProjects)
-                {
-                    var path = (PathConstruction.WinRelativePath) project.RelativePath;
-                    Write($@"Project(""{Format(project.TypeId)}"") = ""{project.Name}"", ""{path}"", ""{Format(project.ProjectId)}""");
-                    WriteSection(
-                        "ProjectSection(SolutionItems) = preProject",
-                        (project as SolutionFolder)?.Items,
-                        "EndProjectSection");
-                    Write("EndProject");
-                }
-
-                Write("Global");
-
-                WriteSection(
-                    "GlobalSection(SolutionConfigurationPlatforms) = preSolution",
-                    solution.Configurations,
-                    "EndGlobalSection");
-
-                WriteSection(
-                    "GlobalSection(ProjectConfigurationPlatforms) = postSolution",
-                    solution.PrimitiveProjects
-                        .OfType<Project>()
-                        .Where(x => x.Configurations != null)
-                        .SelectMany(
-                            x => x.Configurations,
-                            (x, p) => new { Key = $"{Format(x.ProjectId)}.{p.Key}", p.Value })
-                        .ToDictionary(x => x.Key, x => x.Value),
-                    "EndGlobalSection");
-
-                WriteSection(
-                    "GlobalSection(SolutionProperties) = preSolution",
-                    solution.Properties,
-                    "EndGlobalSection");
-
-                WriteSection(
-                    "GlobalSection(NestedProjects) = preSolution",
-                    solution.PrimitiveProjects
-                        .Where(x => x.SolutionFolder != null)
-                        .ToDictionary(x => $"{Format(x.ProjectId)}", x => $"{Format(x.SolutionFolder.NotNull().ProjectId)}"),
-                    "EndGlobalSection");
-
-                WriteSection(
-                    "GlobalSection(ExtensibilityGlobals) = postSolution",
-                    solution.ExtensibilityGlobals,
-                    "EndGlobalSection");
-
-                Write("EndGlobal");
+                Write($"\t{start}");
+                dictionary.ForEach(x => Write($"\t\t{x.Key} = {x.Value}"));
+                Write($"\t{end}");
             }
+
+            string Format(Guid guid) => $"{{{guid.ToString("D").ToUpper()}}}";
+
+            solution.Header.ForEach(x => writer.WriteLine(x));
+
+            foreach (var project in solution.PrimitiveProjects)
+            {
+                var path = (PathConstruction.WinRelativePath) project.RelativePath;
+                Write($@"Project(""{Format(project.TypeId)}"") = ""{project.Name}"", ""{path}"", ""{Format(project.ProjectId)}""");
+                WriteSection(
+                    "ProjectSection(SolutionItems) = preProject",
+                    (project as SolutionFolder)?.Items,
+                    "EndProjectSection");
+                Write("EndProject");
+            }
+
+            Write("Global");
+
+            WriteSection(
+                "GlobalSection(SolutionConfigurationPlatforms) = preSolution",
+                solution.Configurations,
+                "EndGlobalSection");
+
+            WriteSection(
+                "GlobalSection(ProjectConfigurationPlatforms) = postSolution",
+                solution.PrimitiveProjects
+                    .OfType<Project>()
+                    .Where(x => x.Configurations != null)
+                    .SelectMany(
+                        x => x.Configurations,
+                        (x, p) => new { Key = $"{Format(x.ProjectId)}.{p.Key}", p.Value })
+                    .ToDictionary(x => x.Key, x => x.Value),
+                "EndGlobalSection");
+
+            WriteSection(
+                "GlobalSection(SolutionProperties) = preSolution",
+                solution.Properties,
+                "EndGlobalSection");
+
+            WriteSection(
+                "GlobalSection(NestedProjects) = preSolution",
+                solution.PrimitiveProjects
+                    .Where(x => x.SolutionFolder != null)
+                    .ToDictionary(x => $"{Format(x.ProjectId)}", x => $"{Format(x.SolutionFolder.NotNull().ProjectId)}"),
+                "EndGlobalSection");
+
+            WriteSection(
+                "GlobalSection(ExtensibilityGlobals) = postSolution",
+                solution.ExtensibilityGlobals,
+                "EndGlobalSection");
+
+            Write("EndGlobal");
         }
     }
 }

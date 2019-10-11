@@ -63,10 +63,8 @@ namespace Nuke.Common.CI.GitHubActions
                 .Distinct().ToList();
             var configuration = GetConfiguration(build, relevantTargets);
 
-            using (var writer = new CustomFileWriter(ConfigurationFile, indentationFactor: 2))
-            {
-                configuration.Write(writer);
-            }
+            using var writer = new CustomFileWriter(ConfigurationFile, indentationFactor: 2);
+            configuration.Write(writer);
         }
 
         protected virtual GitHubActionsConfiguration GetConfiguration(NukeBuild targets, IReadOnlyCollection<ExecutableTarget> relevantTargets)

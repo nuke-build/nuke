@@ -69,29 +69,28 @@ namespace Nuke.Common.Tools.Unity.Logging
                 _logResetEvent.WaitOne(millisecondsTimeout: 100);
             }
 
-            using (var stream = new FileStream(_file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-            using (var reader = new BinaryReader(stream, _encoding))
+            using var stream = new FileStream(_file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            using var reader = new BinaryReader(stream, _encoding);
+
+            var currentLine = "";
+            while (true)
             {
-                var currentLine = "";
-                while (true)
+                while (reader.BaseStream.Position != reader.BaseStream.Length)
                 {
-                    while (reader.BaseStream.Position != reader.BaseStream.Length)
+                    var currentChar = reader.ReadChar();
+
+                    if (currentChar == '\n')
                     {
-                        var currentChar = reader.ReadChar();
-
-                        if (currentChar == '\n')
-                        {
-                            _processLineAction?.Invoke(currentLine);
-                            currentLine = "";
-                        }
-                        else
-                            currentLine += currentChar;
+                        _processLineAction?.Invoke(currentLine);
+                        currentLine = "";
                     }
-
-                    if (_cancellationTokenSource.IsCancellationRequested)
-                        break;
-                    _logResetEvent.WaitOne(millisecondsTimeout: 100);
+                    else
+                        currentLine += currentChar;
                 }
+
+                if (_cancellationTokenSource.IsCancellationRequested)
+                    break;
+                _logResetEvent.WaitOne(millisecondsTimeout: 100);
             }
         }
     }
