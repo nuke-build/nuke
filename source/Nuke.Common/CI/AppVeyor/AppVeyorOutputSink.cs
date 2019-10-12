@@ -14,7 +14,9 @@ namespace Nuke.Common.CI.AppVeyor
     [ExcludeFromCodeCoverage]
     internal class AppVeyorOutputSink : AnsiColorOutputSink
     {
-        internal AppVeyorOutputSink()
+        private readonly AppVeyor _appVeyor;
+
+        internal AppVeyorOutputSink(AppVeyor appVeyor)
             : base(
                 traceCode: "90",
                 informationCode: "36;1",
@@ -22,6 +24,17 @@ namespace Nuke.Common.CI.AppVeyor
                 errorCode: "31;1",
                 successCode: "32;1")
         {
+            _appVeyor = appVeyor;
+        }
+
+        public override void WriteWarning(string text, string details = null)
+        {
+            _appVeyor.WriteWarning(text, details);
+        }
+
+        public override void WriteError(string text, string details = null)
+        {
+            _appVeyor.WriteError(text, details);
         }
     }
 }

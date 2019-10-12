@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using Nuke.Common;
 using Nuke.Common.CI;
+using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Execution;
 using Nuke.Common.Git;
@@ -53,6 +54,15 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
     AutoGenerate = true,
     RunsOn = new[] { MacOs1014, Ubuntu1604, Ubuntu1804, WindowsServer2016R2, WindowsServer2019 },
     On = new[] { Push },
+    InvokedTargets = new[] { nameof(Test), nameof(Pack) })]
+[AppVeyor(
+    Images =
+        new[]
+        {
+            AppVeyorImages.VisualStudio2019,
+            AppVeyorImages.Ubuntu1804
+        },
+    SkipTags = true,
     InvokedTargets = new[] { nameof(Test), nameof(Pack) })]
 partial class Build : NukeBuild
 {

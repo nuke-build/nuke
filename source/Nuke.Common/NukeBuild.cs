@@ -98,7 +98,7 @@ namespace Nuke.Common
                     HostType.TeamCity => new TeamCityOutputSink(new TeamCity()),
                     HostType.AzureDevOps => new AzureDevOpsOutputSink(new AzureDevOps()),
                     HostType.GitHubActions => new GitHubActionsOutputSink(new GitHubActions()),
-                    HostType.AppVeyor => new AppVeyorOutputSink(),
+                    HostType.AppVeyor => new AppVeyorOutputSink(new AppVeyor()),
                     _ => ConsoleOutputSink.Default
                 };
 
