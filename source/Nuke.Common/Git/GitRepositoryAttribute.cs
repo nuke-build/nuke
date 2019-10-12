@@ -34,11 +34,10 @@ namespace Nuke.Common.Git
 
         public override object GetValue(MemberInfo member, object instance)
         {
-            return ControlFlow.SuppressErrors(() =>
-                GitRepository.FromLocalDirectory(
-                    NukeBuild.RootDirectory,
-                    Branch ?? GetBranch(),
-                    Remote ?? "origin"));
+            return GitRepository.FromLocalDirectory(
+                NukeBuild.RootDirectory,
+                Branch ?? GetBranch(),
+                Remote ?? "origin");
         }
 
         private string GetBranch()
