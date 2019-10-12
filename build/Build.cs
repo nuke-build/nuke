@@ -10,6 +10,7 @@ using Nuke.Common;
 using Nuke.Common.CI;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.GitHubActions;
+using Nuke.Common.CI.TeamCity;
 using Nuke.Common.Execution;
 using Nuke.Common.Git;
 using Nuke.Common.ProjectModel;
@@ -180,7 +181,7 @@ partial class Build : NukeBuild
         {
             DotNetTest(s => s
                 .SetConfiguration(Configuration)
-                .SetNoBuild(IsLocalBuild)
+                .SetNoBuild(TeamCity.Instance == null)
                 .ResetVerbosity()
                 .CombineWith(
                     TestPartition.GetCurrent(Solution.GetProjects("*.Tests")), (cs, v) => cs
