@@ -12,7 +12,7 @@ namespace Nuke.Common.CI.GitHubActions
     /// See <a href="https://help.github.com/en/articles/virtual-environments-for-github-actions#about-virtual-environments">Virtual environments for GitHub Actions</a>
     /// </summary>
     [PublicAPI]
-    public enum GitHubActionsVirtualEnvironments
+    public enum GitHubActionsEnvironments
     {
         WindowsServer2019,
         WindowsServer2016R2,
@@ -26,18 +26,18 @@ namespace Nuke.Common.CI.GitHubActions
 
     public static class GitHubActionsVirtualEnvironmentsExtensions
     {
-        public static string ConvertToString(this GitHubActionsVirtualEnvironments environment)
+        public static string ConvertToString(this GitHubActionsEnvironments environment)
         {
             return environment switch
             {
-                GitHubActionsVirtualEnvironments.WindowsServer2019 => "windows-2019",
-                GitHubActionsVirtualEnvironments.WindowsLatest => "windows-latest",
-                GitHubActionsVirtualEnvironments.WindowsServer2016R2 => "windows-2016",
-                GitHubActionsVirtualEnvironments.Ubuntu1804 => "ubuntu-18.04",
-                GitHubActionsVirtualEnvironments.UbuntuLatest => "ubuntu-latest",
-                GitHubActionsVirtualEnvironments.Ubuntu1604 => "ubuntu-16.04",
-                GitHubActionsVirtualEnvironments.MacOs1014 => "macOS-10.14",
-                GitHubActionsVirtualEnvironments.MacOsLatest => "macOS-latest",
+                GitHubActionsEnvironments.WindowsServer2019 => "windows-2019",
+                GitHubActionsEnvironments.WindowsLatest => "windows-latest",
+                GitHubActionsEnvironments.WindowsServer2016R2 => "windows-2016",
+                GitHubActionsEnvironments.Ubuntu1804 => "ubuntu-18.04",
+                GitHubActionsEnvironments.UbuntuLatest => "ubuntu-latest",
+                GitHubActionsEnvironments.Ubuntu1604 => "ubuntu-16.04",
+                GitHubActionsEnvironments.MacOs1014 => "macOS-10.14",
+                GitHubActionsEnvironments.MacOsLatest => "macOS-latest",
                 _ => throw new ArgumentOutOfRangeException(nameof(environment), environment, message: null)
             };
         }

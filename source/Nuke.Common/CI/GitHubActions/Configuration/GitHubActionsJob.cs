@@ -12,7 +12,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
     public class GitHubActionsJob : GitHubActionsConfigurationEntity
     {
         public string Name { get; set; }
-        public GitHubActionsVirtualEnvironments Environment { get; set; }
+        public GitHubActionsEnvironments Environment { get; set; }
         public GitHubActionsStep[] Steps { get; set; }
 
         public override void Write(CustomFileWriter writer)

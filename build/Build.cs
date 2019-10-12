@@ -23,7 +23,6 @@ using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.CI.GitHubActions.GitHubActionsOn;
-using static Nuke.Common.CI.GitHubActions.GitHubActionsVirtualEnvironments;
 using static Nuke.Common.CI.TeamCity.TeamCityAgentPlatform;
 using static Nuke.Common.ControlFlow;
 using static Nuke.Common.Gitter.GitterTasks;
@@ -42,7 +41,6 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
 [TeamCitySetDotCoverHomePath]
 [CustomTeamCity(
     Windows,
-    AutoGenerate = true,
     DefaultBranch = DevelopBranch,
     VcsTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
     NightlyTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
@@ -51,8 +49,15 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
     ExcludedTargets = new[] { nameof(Clean) })]
 [GitHubActions(
     "continuous",
-    AutoGenerate = true,
-    RunsOn = new[] { MacOs1014, Ubuntu1604, Ubuntu1804, WindowsServer2016R2, WindowsServer2019 },
+    RunsOn =
+        new[]
+        {
+            GitHubActionsEnvironments.MacOs1014,
+            GitHubActionsEnvironments.Ubuntu1604,
+            GitHubActionsEnvironments.Ubuntu1804,
+            GitHubActionsEnvironments.WindowsServer2016R2,
+            GitHubActionsEnvironments.WindowsServer2019
+        },
     On = new[] { Push },
     InvokedTargets = new[] { nameof(Test), nameof(Pack) })]
 [AppVeyor(

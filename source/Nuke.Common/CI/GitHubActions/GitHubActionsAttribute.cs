@@ -36,7 +36,7 @@ namespace Nuke.Common.CI.GitHubActions
 
         protected override HostType HostType => HostType.GitHubActions;
 
-        public GitHubActionsVirtualEnvironments[] RunsOn { get; set; }
+        public GitHubActionsEnvironments[] RunsOn { get; set; }
 
         public GitHubActionsOn[] On { get; set; }
         public string[] OnPushBranches { get; set; }
@@ -82,7 +82,7 @@ namespace Nuke.Common.CI.GitHubActions
             return configuration;
         }
 
-        protected virtual GitHubActionsJob GetJobs(GitHubActionsVirtualEnvironments environment, IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        protected virtual GitHubActionsJob GetJobs(GitHubActionsEnvironments environment, IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             return new GitHubActionsJob
                    {
@@ -92,7 +92,7 @@ namespace Nuke.Common.CI.GitHubActions
                    };
         }
 
-        private IEnumerable<GitHubActionsStep> GetSteps(GitHubActionsVirtualEnvironments environment, IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        private IEnumerable<GitHubActionsStep> GetSteps(GitHubActionsEnvironments environment, IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             yield return new GitHubActionsUsingStep
                          {
