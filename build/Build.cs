@@ -51,7 +51,7 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
 [GitHubActions(
     "continuous",
     AutoGenerate = true,
-    RunsOn = new[] { UbuntuLatest, WindowsLatest, MacOsLatest },
+    RunsOn = new[] { MacOs1014, Ubuntu1604, Ubuntu1804, WindowsServer2016R2, WindowsServer2019 },
     On = new[] { Push },
     InvokedTargets = new[] { nameof(Test), nameof(Pack) })]
 partial class Build : NukeBuild

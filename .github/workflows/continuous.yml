@@ -3,6 +3,28 @@ name: continuous
 on: [push]
 
 jobs:
+  macOS-10_14:
+    name: macOS-10_14
+    runs-on: macOS-10.14
+    steps:
+      - uses: actions/checkout@v1
+      - name: Run './build.sh Test Pack'
+        run: ./build.sh Test Pack
+      - uses: actions/upload-artifact@v1
+        with:
+          name: output
+          path: output
+  ubuntu-16_04:
+    name: ubuntu-16_04
+    runs-on: ubuntu-16.04
+    steps:
+      - uses: actions/checkout@v1
+      - name: Run './build.sh Test Pack'
+        run: ./build.sh Test Pack
+      - uses: actions/upload-artifact@v1
+        with:
+          name: output
+          path: output
   ubuntu-18_04:
     name: ubuntu-18_04
     runs-on: ubuntu-18.04
@@ -14,9 +36,9 @@ jobs:
         with:
           name: output
           path: output
-  windows-2019:
-    name: windows-2019
-    runs-on: windows-2019
+  windows-2016:
+    name: windows-2016
+    runs-on: windows-2016
     steps:
       - uses: actions/checkout@v1
       - name: Run 'powershell .\build.ps1 Test Pack'
@@ -25,13 +47,13 @@ jobs:
         with:
           name: output
           path: output
-  macOS-10_14:
-    name: macOS-10_14
-    runs-on: macOS-10.14
+  windows-2019:
+    name: windows-2019
+    runs-on: windows-2019
     steps:
       - uses: actions/checkout@v1
-      - name: Run './build.sh Test Pack'
-        run: ./build.sh Test Pack
+      - name: Run 'powershell .\build.ps1 Test Pack'
+        run: powershell .\build.ps1 Test Pack
       - uses: actions/upload-artifact@v1
         with:
           name: output
