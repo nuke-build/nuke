@@ -8,5 +8,4 @@ build_script:
   - ps: .\build.ps1 Test Pack
 
 artifacts:
-  - path: output/*.trx
   - path: output/*.nupkg

@@ -175,7 +175,6 @@ partial class Build : NukeBuild
 
     Target Test => _ => _
         .DependsOn(Compile)
-        .Produces(OutputDirectory / "*.trx")
         .Partition(() => TestPartition)
         .Executes(() =>
         {
