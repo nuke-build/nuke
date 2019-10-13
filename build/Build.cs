@@ -182,6 +182,9 @@ partial class Build : NukeBuild
                 .SetConfiguration(Configuration)
                 .SetNoBuild(TeamCity.Instance == null)
                 .ResetVerbosity()
+                .When(TeamCity.Instance != null, cs => cs
+                    .SetProperty("CollectCoverage", propertyValue: true)
+                    .SetProperty("CoverletOutputFormat", "teamcity"))
                 .CombineWith(
                     TestPartition.GetCurrent(Solution.GetProjects("*.Tests")), (cs, v) => cs
                         .SetProjectFile(v)));
