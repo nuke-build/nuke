@@ -13,7 +13,7 @@ namespace Nuke.Common.CI.AppVeyor
     /// See <a href="https://www.appveyor.com/docs/services-databases">Services and databases</a>
     /// </summary>
     [PublicAPI]
-    public enum AppVeyorServices
+    public enum AppVeyorService
     {
         MSSQL2008R2SP2,
         MSSQL2008R2SP2RS,
@@ -34,9 +34,9 @@ namespace Nuke.Common.CI.AppVeyor
         MSMQ
     }
 
-    public static class AppVeyorServicesExtensions
+    public static class AppVeyorServiceExtensions
     {
-        public static string ConvertToString(this AppVeyorServices service)
+        public static string ConvertToString(this AppVeyorService service)
         {
             return service.ToString().ToLowerInvariant();
         }

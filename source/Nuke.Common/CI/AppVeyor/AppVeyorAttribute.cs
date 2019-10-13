@@ -21,14 +21,14 @@ namespace Nuke.Common.CI.AppVeyor
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class AppVeyorAttribute : ConfigurationGenerationAttributeBase
     {
-        private readonly AppVeyorImages[] _images;
+        private readonly AppVeyorImage[] _images;
 
-        public AppVeyorAttribute(AppVeyorImages image, params AppVeyorImages[] images)
+        public AppVeyorAttribute(AppVeyorImage image, params AppVeyorImage[] images)
         {
             _images = new[] { image }.Concat(images).ToArray();
         }
 
-        public AppVeyorServices[] Services { get; set; }
+        public AppVeyorService[] Services { get; set; }
         public string[] InvokedTargets { get; set; }
         public string[] BranchesOnly { get; set; }
         public string[] BranchesExcept { get; set; }

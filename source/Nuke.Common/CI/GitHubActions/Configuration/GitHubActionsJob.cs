@@ -12,7 +12,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
     public class GitHubActionsJob : GitHubActionsConfigurationEntity
     {
         public string Name { get; set; }
-        public GitHubActionsEnvironments Environment { get; set; }
+        public GitHubActionsImage Image { get; set; }
         public GitHubActionsStep[] Steps { get; set; }
 
         public override void Write(CustomFileWriter writer)
@@ -22,7 +22,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
             using (writer.Indent())
             {
                 writer.WriteLine($"name: {Name}");
-                writer.WriteLine($"runs-on: {Environment.ConvertToString()}");
+                writer.WriteLine($"runs-on: {Image.ConvertToString()}");
                 writer.WriteLine("steps:");
                 using (writer.Indent())
                 {

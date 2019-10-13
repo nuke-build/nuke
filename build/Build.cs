@@ -23,7 +23,6 @@ using Nuke.Common.Tools.Slack;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
-using static Nuke.Common.CI.TeamCity.TeamCityAgentPlatform;
 using static Nuke.Common.ControlFlow;
 using static Nuke.Common.Gitter.GitterTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
@@ -40,7 +39,7 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
 [UnsetVisualStudioEnvironmentVariables]
 [TeamCitySetDotCoverHomePath]
 [TeamCity(
-    Windows,
+    TeamCityAgentPlatform.Windows,
     DefaultBranch = DevelopBranch,
     VcsTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
     NightlyTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
@@ -49,18 +48,18 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
     ExcludedTargets = new[] { nameof(Clean) })]
 [GitHubActions(
     "continuous",
-    GitHubActionsEnvironments.MacOs1014,
-    GitHubActionsEnvironments.Ubuntu1604,
-    GitHubActionsEnvironments.Ubuntu1804,
-    GitHubActionsEnvironments.WindowsServer2016R2,
-    GitHubActionsEnvironments.WindowsServer2019,
-    On = new[] { GitHubActionsOn.Push },
+    GitHubActionsImage.MacOs1014,
+    GitHubActionsImage.Ubuntu1604,
+    GitHubActionsImage.Ubuntu1804,
+    GitHubActionsImage.WindowsServer2016R2,
+    GitHubActionsImage.WindowsServer2019,
+    On = new[] { GitHubActionsTrigger.Push },
     InvokedTargets = new[] { nameof(Test), nameof(Pack) },
     ImportGitHubTokenAs = nameof(GitHubToken),
     ImportSecrets = new[] { nameof(SlackWebhook), nameof(GitterAuthToken) })]
 [AppVeyor(
-    AppVeyorImages.VisualStudio2019,
-    AppVeyorImages.Ubuntu1804,
+    AppVeyorImage.VisualStudio2019,
+    AppVeyorImage.Ubuntu1804,
     SkipTags = true,
     InvokedTargets = new[] { nameof(Test), nameof(Pack) })]
 partial class Build : NukeBuild

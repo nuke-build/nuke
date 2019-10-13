@@ -13,7 +13,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
     {
         public string Name { get; set; }
 
-        public GitHubActionsOn[] ShortTriggers { get; set; }
+        public CI.GitHubActions.GitHubActionsTrigger[] ShortTriggers { get; set; }
         public GitHubActionsTrigger[] DetailedTriggers { get; set; }
         public GitHubActionsJob[] Jobs { get; set; }
 

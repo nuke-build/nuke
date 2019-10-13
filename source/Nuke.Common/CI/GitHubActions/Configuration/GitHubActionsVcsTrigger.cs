@@ -11,7 +11,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
 {
     public class GitHubActionsVcsTrigger : GitHubActionsTrigger
     {
-        public GitHubActionsOn Kind { get; set; }
+        public CI.GitHubActions.GitHubActionsTrigger Kind { get; set; }
         public string[] Branches { get; set; }
         public string[] Tags { get; set; }
         public string[] IncludePaths { get; set; }

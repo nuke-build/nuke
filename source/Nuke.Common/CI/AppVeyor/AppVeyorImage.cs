@@ -12,7 +12,7 @@ namespace Nuke.Common.CI.AppVeyor
     /// See <a href="https://www.appveyor.com/docs/build-environment/">Build environment</a>
     /// </summary>
     [PublicAPI]
-    public enum AppVeyorImages
+    public enum AppVeyorImage
     {
         VisualStudio2013,
         VisualStudio2015,
@@ -24,20 +24,20 @@ namespace Nuke.Common.CI.AppVeyor
         UbuntuLatest
     }
 
-    public static class AppVeyorImagesExtensions
+    public static class AppVeyorImageExtensions
     {
-        public static string ConvertToString(this AppVeyorImages image)
+        public static string ConvertToString(this AppVeyorImage image)
         {
             return image switch
             {
-                AppVeyorImages.VisualStudio2013 => "Visual Studio 2013",
-                AppVeyorImages.VisualStudio2015 => "Visual Studio 2015",
-                AppVeyorImages.VisualStudio2017 => "Visual Studio 2017",
-                AppVeyorImages.VisualStudio2019 => "Visual Studio 2019",
-                AppVeyorImages.VisualStudioLatest => ConvertToString(AppVeyorImages.VisualStudio2019),
-                AppVeyorImages.Ubuntu1604 => "Ubuntu1604",
-                AppVeyorImages.Ubuntu1804 => "Ubuntu1804",
-                AppVeyorImages.UbuntuLatest => ConvertToString(AppVeyorImages.Ubuntu1804),
+                AppVeyorImage.VisualStudio2013 => "Visual Studio 2013",
+                AppVeyorImage.VisualStudio2015 => "Visual Studio 2015",
+                AppVeyorImage.VisualStudio2017 => "Visual Studio 2017",
+                AppVeyorImage.VisualStudio2019 => "Visual Studio 2019",
+                AppVeyorImage.VisualStudioLatest => ConvertToString(AppVeyorImage.VisualStudio2019),
+                AppVeyorImage.Ubuntu1604 => "Ubuntu1604",
+                AppVeyorImage.Ubuntu1804 => "Ubuntu1804",
+                AppVeyorImage.UbuntuLatest => ConvertToString(AppVeyorImage.Ubuntu1804),
                 _ => throw new ArgumentOutOfRangeException(nameof(image), image, message: null)
             };
         }

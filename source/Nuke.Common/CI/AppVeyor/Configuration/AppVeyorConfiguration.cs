@@ -11,8 +11,8 @@ namespace Nuke.Common.CI.AppVeyor.Configuration
 {
     public class AppVeyorConfiguration : AppVeyorConfigurationEntity
     {
-        public AppVeyorImages[] Images { get; set; }
-        public AppVeyorServices[] Services { get; set; }
+        public AppVeyorImage[] Images { get; set; }
+        public AppVeyorService[] Services { get; set; }
         public AppVeyorBranches Branches { get; set; }
         public string[] Init { get; set; }
         public string[] Cache { get; set; }

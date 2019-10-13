@@ -22,15 +22,15 @@ namespace Nuke.Common.CI.GitHubActions
     public class GitHubActionsAttribute : ConfigurationGenerationAttributeBase
     {
         private readonly string _name;
-        private readonly GitHubActionsEnvironments[] _environments;
+        private readonly GitHubActionsImage[] _images;
 
         public GitHubActionsAttribute(
             string name,
-            GitHubActionsEnvironments environment,
-            params GitHubActionsEnvironments[] environments)
+            GitHubActionsImage image,
+            params GitHubActionsImage[] images)
         {
             _name = name;
-            _environments = new[] { environment }.Concat(environments).ToArray();
+            _images = new[] { image }.Concat(images).ToArray();
         }
 
         private AbsolutePath GitHubDirectory => NukeBuild.RootDirectory / ".github";
@@ -42,7 +42,7 @@ namespace Nuke.Common.CI.GitHubActions
         protected override HostType HostType => HostType.GitHubActions;
 
 
-        public GitHubActionsOn[] On { get; set; }
+        public GitHubActionsTrigger[] On { get; set; }
         public string[] OnPushBranches { get; set; }
         public string[] OnPushTags { get; set; }
         public string[] OnPushIncludePaths { get; set; }
@@ -78,7 +78,7 @@ namespace Nuke.Common.CI.GitHubActions
                                     Name = _name,
                                     ShortTriggers = On,
                                     DetailedTriggers = GetTriggers().ToArray(),
-                                    Jobs = _environments.Select(x => GetJobs(x, relevantTargets)).ToArray()
+                                    Jobs = _images.Select(x => GetJobs(x, relevantTargets)).ToArray()
                                 };
             ControlFlow.Assert(configuration.ShortTriggers == null || configuration.DetailedTriggers.Length == 0,
                 "configuration.ShortTriggers == null || configuration.DetailedTriggers.Length == 0");
@@ -86,24 +86,24 @@ namespace Nuke.Common.CI.GitHubActions
             return configuration;
         }
 
-        protected virtual GitHubActionsJob GetJobs(GitHubActionsEnvironments environment, IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        protected virtual GitHubActionsJob GetJobs(GitHubActionsImage image, IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             return new GitHubActionsJob
                    {
-                       Name = environment.ConvertToString().Replace(".", "_"),
-                       Steps = GetSteps(environment, relevantTargets).ToArray(),
-                       Environment = environment
+                       Name = image.ConvertToString().Replace(".", "_"),
+                       Steps = GetSteps(image, relevantTargets).ToArray(),
+                       Image = image
                    };
         }
 
-        private IEnumerable<GitHubActionsStep> GetSteps(GitHubActionsEnvironments environment, IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        private IEnumerable<GitHubActionsStep> GetSteps(GitHubActionsImage image, IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             yield return new GitHubActionsUsingStep
                          {
                              Using = "actions/checkout@v1"
                          };
 
-            var invocationCommand = environment.ToString().StartsWithOrdinalIgnoreCase("Windows")
+            var invocationCommand = image.ToString().StartsWithOrdinalIgnoreCase("Windows")
                 ? "powershell .\\build.ps1"
                 : "./build.sh";
             yield return new GitHubActionsRunStep
@@ -140,7 +140,7 @@ namespace Nuke.Common.CI.GitHubActions
                 yield return (secret, GetSecretValue(secret));
         }
 
-        protected virtual IEnumerable<GitHubActionsTrigger> GetTriggers()
+        protected virtual IEnumerable<Configuration.GitHubActionsTrigger> GetTriggers()
         {
             if (OnPushBranches != null ||
                 OnPushTags != null ||
@@ -149,7 +149,7 @@ namespace Nuke.Common.CI.GitHubActions
             {
                 yield return new GitHubActionsVcsTrigger
                              {
-                                 Kind = GitHubActionsOn.Push,
+                                 Kind = GitHubActionsTrigger.Push,
                                  Branches = OnPushBranches,
                                  Tags = OnPushTags,
                                  IncludePaths = OnPushIncludePaths,
@@ -164,7 +164,7 @@ namespace Nuke.Common.CI.GitHubActions
             {
                 yield return new GitHubActionsVcsTrigger
                              {
-                                 Kind = GitHubActionsOn.PullRequest,
+                                 Kind = GitHubActionsTrigger.PullRequest,
                                  Branches = OnPullRequestBranches,
                                  Tags = OnPullRequestTags,
                                  IncludePaths = OnPullRequestIncludePaths,
