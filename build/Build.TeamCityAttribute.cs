@@ -14,9 +14,9 @@ using Nuke.Common.Utilities.Collections;
 
 partial class Build
 {
-    public class CustomTeamCityAttribute : TeamCityAttribute
+    public class TeamCityAttribute : Nuke.Common.CI.TeamCity.TeamCityAttribute
     {
-        public CustomTeamCityAttribute(TeamCityAgentPlatform platform)
+        public TeamCityAttribute(TeamCityAgentPlatform platform)
             : base(platform)
         {
         }

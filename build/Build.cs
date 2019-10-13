@@ -23,7 +23,6 @@ using Nuke.Common.Tools.Slack;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
-using static Nuke.Common.CI.GitHubActions.GitHubActionsOn;
 using static Nuke.Common.CI.TeamCity.TeamCityAgentPlatform;
 using static Nuke.Common.ControlFlow;
 using static Nuke.Common.Gitter.GitterTasks;
@@ -40,7 +39,7 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
 [DotNetVerbosityMapping]
 [UnsetVisualStudioEnvironmentVariables]
 [TeamCitySetDotCoverHomePath]
-[CustomTeamCity(
+[TeamCity(
     Windows,
     DefaultBranch = DevelopBranch,
     VcsTriggeredTargets = new[] { nameof(Pack), nameof(Test) },
@@ -55,7 +54,7 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
     GitHubActionsEnvironments.Ubuntu1804,
     GitHubActionsEnvironments.WindowsServer2016R2,
     GitHubActionsEnvironments.WindowsServer2019,
-    On = new[] { Push },
+    On = new[] { GitHubActionsOn.Push },
     InvokedTargets = new[] { nameof(Test), nameof(Pack) },
     ImportGitHubTokenAs = nameof(GitHubToken),
     ImportSecrets = new[] { nameof(SlackWebhook), nameof(GitterAuthToken) })]
