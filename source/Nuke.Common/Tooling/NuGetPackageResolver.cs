@@ -44,9 +44,9 @@ namespace Nuke.Common.Tooling
             string packageId,
             string packagesConfigFile,
             string version = null,
-            bool includeDependencies = false)
+            bool resolveDependencies = false)
         {
-            return GetLocalInstalledPackages(packagesConfigFile, includeDependencies)
+            return GetLocalInstalledPackages(packagesConfigFile, resolveDependencies)
                 .SingleOrDefaultOrError(
                     x => x.Id.EqualsOrdinalIgnoreCase(packageId) && (x.Version.ToString() == version || version == null),
                     $"Package '{packageId}' is referenced with multiple versions. Use NuGetPackageResolver and SetToolPath.");
@@ -67,16 +67,22 @@ namespace Nuke.Common.Tooling
             bool resolveDependencies = true)
         {
             var assetsObject = SerializationTasks.JsonDeserializeFromFile<JObject>(packagesConfigFile);
-            var directReferences = assetsObject["project"]["frameworks"]
-                .Single().Single()["dependencies"]
-                .Children<JProperty>()
-                .Select(x => x.Name).ToList();
 
-            var allReferences = assetsObject["libraries"]
-                .Children<JProperty>()
-                .Where(x => x.Value["type"].ToString() == "package")
-                .Select(x => x.Name.Split('/'))
-                .Select(x => (PackageId: x.First(), Version: x.Last())).ToList();
+            // ReSharper disable HeapView.BoxingAllocation
+            var directReferences =
+                assetsObject["project"]["frameworks"]
+                    .Single().Single()["dependencies"]
+                    ?.Children<JProperty>()
+                    .Select(x => x.Name).ToList()
+                ?? new List<string>();
+
+            var allReferences =
+                assetsObject["libraries"]
+                    .Children<JProperty>()
+                    .Where(x => x.Value["type"].ToString() == "package")
+                    .Select(x => x.Name.Split('/'))
+                    .Select(x => (PackageId: x.First(), Version: x.Last())).ToList();
+            // ReSharper restore HeapView.BoxingAllocation
 
             foreach (var (name, version) in allReferences)
             {
