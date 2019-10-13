@@ -22,10 +22,15 @@ namespace Nuke.Common.CI.GitHubActions
     public class GitHubActionsAttribute : ConfigurationGenerationAttributeBase
     {
         private readonly string _name;
+        private readonly GitHubActionsEnvironments[] _environments;
 
-        public GitHubActionsAttribute(string name)
+        public GitHubActionsAttribute(
+            string name,
+            GitHubActionsEnvironments environment,
+            params GitHubActionsEnvironments[] environments)
         {
             _name = name;
+            _environments = new[] { environment }.Concat(environments).ToArray();
         }
 
         private AbsolutePath GitHubDirectory => NukeBuild.RootDirectory / ".github";
@@ -36,7 +41,6 @@ namespace Nuke.Common.CI.GitHubActions
 
         protected override HostType HostType => HostType.GitHubActions;
 
-        public GitHubActionsEnvironments[] RunsOn { get; set; }
 
         public GitHubActionsOn[] On { get; set; }
         public string[] OnPushBranches { get; set; }
@@ -74,7 +78,7 @@ namespace Nuke.Common.CI.GitHubActions
                                     Name = _name,
                                     ShortTriggers = On,
                                     DetailedTriggers = GetTriggers().ToArray(),
-                                    Jobs = RunsOn.Select(x => GetJobs(x, relevantTargets)).ToArray()
+                                    Jobs = _environments.Select(x => GetJobs(x, relevantTargets)).ToArray()
                                 };
             ControlFlow.Assert(configuration.ShortTriggers == null || configuration.DetailedTriggers.Length == 0,
                 "configuration.ShortTriggers == null || configuration.DetailedTriggers.Length == 0");

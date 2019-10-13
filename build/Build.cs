@@ -50,26 +50,18 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
     ExcludedTargets = new[] { nameof(Clean) })]
 [GitHubActions(
     "continuous",
-    RunsOn =
-        new[]
-        {
-            GitHubActionsEnvironments.MacOs1014,
-            GitHubActionsEnvironments.Ubuntu1604,
-            GitHubActionsEnvironments.Ubuntu1804,
-            GitHubActionsEnvironments.WindowsServer2016R2,
-            GitHubActionsEnvironments.WindowsServer2019
-        },
+    GitHubActionsEnvironments.MacOs1014,
+    GitHubActionsEnvironments.Ubuntu1604,
+    GitHubActionsEnvironments.Ubuntu1804,
+    GitHubActionsEnvironments.WindowsServer2016R2,
+    GitHubActionsEnvironments.WindowsServer2019,
     On = new[] { Push },
     InvokedTargets = new[] { nameof(Test), nameof(Pack) },
     ImportGitHubTokenAs = nameof(GitHubToken),
     ImportSecrets = new[] { nameof(SlackWebhook), nameof(GitterAuthToken) })]
 [AppVeyor(
-    Images =
-        new[]
-        {
-            AppVeyorImages.VisualStudio2019,
-            AppVeyorImages.Ubuntu1804
-        },
+    AppVeyorImages.VisualStudio2019,
+    AppVeyorImages.Ubuntu1804,
     SkipTags = true,
     InvokedTargets = new[] { nameof(Test), nameof(Pack) })]
 partial class Build : NukeBuild
